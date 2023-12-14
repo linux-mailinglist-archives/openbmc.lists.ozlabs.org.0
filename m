@@ -2,79 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2645181301E
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 13:29:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 812BC81308C
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 13:51:43 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPwYybh5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm1 header.b=ZVA1sBdq;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=LvgBuNts;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SrWrS62mZz2yN8
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:29:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SrXKn1XNnz3d9K
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:51:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPwYybh5;
+	dkim=pass (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm1 header.b=ZVA1sBdq;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=LvgBuNts;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=arndb.de (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=arnd@arndb.de; receiver=lists.ozlabs.org)
+X-Greylist: delayed 375 seconds by postgrey-1.37 at boromir; Thu, 14 Dec 2023 23:51:05 AEDT
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrWqt1vkRz2yGv
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 23:29:13 +1100 (AEDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2cc259392a6so55893011fa.2
-        for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 04:29:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702556948; x=1703161748; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hKkOlqtXnQi1CXioJeNrKbuA1zxevHtK9i/pmWXuhPs=;
-        b=PPwYybh5hsMATtsqRz4eADWpy0ObXfL80nHWKwQR18cGmclQpjt6Dje3xe24Wn3ddW
-         K6KqubVqhL2+1fuXJcXCw5OfXFd8vUFx67yCmPurHPklIQG2o88Pt5H1qc4mhui/l7Rj
-         82cAo4XicDbiov00j3U9OQm1WhHraWBtYUmt2EYvmPhR3IYnXvA3W54/RvK1DSWIIB93
-         meaKWSWoFMgEsX7uTs2vnlyvyzTFdlVC+sCejjgk4p6udzhyBPSRoCCpmoA9oPZRwxs7
-         y3KAJ/v9JqDWPuBJIDyn+khaYY9rL64/QjEIlYfs5BRHECAuYusStLFN6MEXfXBN+2M+
-         4pOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702556948; x=1703161748;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hKkOlqtXnQi1CXioJeNrKbuA1zxevHtK9i/pmWXuhPs=;
-        b=h2fsZCDeqx06tkE0fE+Kr1F2hrERQHQBCiRC7deO+Ctj6sTmA4TD27bvf/gDDj+atZ
-         eCCFNAE6Zv2nXWo+jnbGSvinPFSpZSll+63DRLwplwVMWOgtp7Ne+SzANxnjQWJJBuYH
-         er6xA6dZcvloFO3trABKpuikaxJAFC2HwpdbuNNT52lUrvf7GcP/qIqt6F9oEJ/VQJZ2
-         hm9phXLK0MRvjrCo2ZmmfppD2QVQLzphGc59JyElpMUdIFqLPh80sP70ex9pkFFJHVgp
-         /I+XE3pXzEZVAhvawR5Z78Rh3EWg79xWQ7cT+oyn4DgFNiAdRKJPFSYVVIJEkA7qEsoy
-         SGqA==
-X-Gm-Message-State: AOJu0YzXn918Su67qVXZ0bc//xqbmNVOoKpjFgoCd8aoLyIwmGtUqoEu
-	qQl0Ikr5qsWSP3R2/TemN18=
-X-Google-Smtp-Source: AGHT+IHT6Syfor5yq9T7eo4jSSMy2o+vRuqPr7cfTtYXt59vOt5802fiJ9vq9yDDRmVoosxtqQtXEg==
-X-Received: by 2002:a05:651c:2221:b0:2cc:2012:7509 with SMTP id y33-20020a05651c222100b002cc20127509mr3762737ljq.98.1702556948246;
-        Thu, 14 Dec 2023 04:29:08 -0800 (PST)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id j1-20020a2e8241000000b002c9f70a0419sm2040940ljh.140.2023.12.14.04.29.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 04:29:03 -0800 (PST)
-Date: Thu, 14 Dec 2023 15:28:57 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: Vladimir Oltean <olteanv@gmail.com>
-Subject: Re: [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS
- MDIO-device support
-Message-ID: <wz7h5lvxnhw2rav6s54dhv2xbxsks6tlpx3hvywjn3afmkf2av@tbiigyupuga7>
-References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-11-fancer.lancer@gmail.com>
- <20231205111351.xjjuwpbf7kwg3vuh@skbuf>
- <uivunnjv5vi3w3fkc5w2f4lem5bingrgajgjfsu2ih7fuhz6hd@3naeubr5spak>
- <20231205122316.ihhpklv222f5giz3@skbuf>
- <nflj4ajgx3byqhwna2eslldwulbbafmcwba4dwgxo65o5c7pmj@zbgqt2zje4ix>
- <20231208163343.5s74bmirfna3o7yw@skbuf>
- <xhj7jchcv63y2bmnedxqffnmh3fvdxirccdugnnljruemuiurz@ceafs7mivbqp>
- <20231214120016.wgeip3mdro5ihnxe@skbuf>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrXK573kcz3cXM
+	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 23:51:05 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8AF3B5C01D7;
+	Thu, 14 Dec 2023 07:44:45 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Thu, 14 Dec 2023 07:44:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1702557885; x=1702644285; bh=za/OAT69wn
+	c7BLz2bnsJg1QyrBYVJ8cVLLHhz6zgSpU=; b=ZVA1sBdqV1eibDLWiWeugcQgoA
+	qlJ79ZZaPI+VlNN3T+oNl08cLfM8Y7tV9w3o3E32JoTVuwforRf3u0KBGt9GjZWu
+	ph+s95cK9Ye4F9cYcdkNT5SG318/6cXbIWscnsxmvEJVwdjr2Uv4f4OgtnFfiwl8
+	pil2OpE02p6qJzQj1WZ9FAedGSddtUoEL1QsY2v0Aah0N3X9pM0b3BaHC81OMvOv
+	XtUzgO6Eb1r222+JjyZzOa1h5ZsUtAERo7hIM8OgarCLPU24rR1bmON/cfp/rB+T
+	RIn7XpjJiuTR71QR/rwLEjV+di6X9hZ1nnnnvOvI7nvzxC/l9wP+P5CleXyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1702557885; x=1702644285; bh=za/OAT69wnc7BLz2bnsJg1QyrBYV
+	J8cVLLHhz6zgSpU=; b=LvgBuNtsSv4JTWPvLOveZJ0pVOjDwtgdXDFvgjV30iuA
+	mpBdOiD33FQGMZkGi5Fj9TDDDE9mwc99c9WP0b85TaS5nL2Zng3xDYip8UGcMJer
+	STHQhxoPAzuFlAQx2Un63j5aOIOOsEWUkRe0UTZWspTedRdBvzw+J6LtHXcgj93M
+	DDizkS4ayBT76HGBvlCS2ax390CLj0+7lsPa4q3/tvTvHfhBx/rhHAtmXgbDt7/U
+	DyqQBlIfpQdiTNllPfzeF7fEo/aHCfdGFA9WIX4sgh83TyFgHoczqkRJF8JPTv8P
+	uCwWl7D9DzMsMs4oiI7PDQdCtkYoB8LBkcFAZafivw==
+X-ME-Sender: <xms:vPh6ZaXh20vV4GYCo-V_F_r4_XpaNqbc_CjJEEYXdPO2fTRZw1Xxog>
+    <xme:vPh6ZWltaztuyZOAN1qUKmXJ3RtoHGK2Bur5SF7W6PsNQP-cqjg72oz_I_7ydkIXj
+    _x6ZVOTO0-qaRpd5uI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelledggeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
+    nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
+    htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
+    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    hrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:vPh6ZeZDNrMq7wSaRR4gtTLU-tMY4_yquxgg1y_n_AITHdMGMgjEBg>
+    <xmx:vPh6ZRX5BmBt_RE_Wi0TUuMA0O_q_8bfpB41BiROv59YqJ95XNn2tw>
+    <xmx:vPh6ZUmwYDhuxTghGVJOPUbFzhjmBUwwNC0rhCKubG8JfHKPX5iqmQ>
+    <xmx:vfh6ZSm4Lmlh2HSSLfaRIuSAqKUl2JB4-DRvaHjEuDDxiHx0S5NPcg>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id CACBCB6008D; Thu, 14 Dec 2023 07:44:44 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1283-g327e3ec917-fm-20231207.002-g327e3ec9
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231214120016.wgeip3mdro5ihnxe@skbuf>
+Message-Id: <cf3ce945-2f1c-4dae-86b8-349dae3d962b@app.fastmail.com>
+In-Reply-To: <20231213190528.3751583-4-tmaimon77@gmail.com>
+References: <20231213190528.3751583-1-tmaimon77@gmail.com>
+ <20231213190528.3751583-4-tmaimon77@gmail.com>
+Date: Thu, 14 Dec 2023 13:44:24 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Tomer Maimon" <tmaimon77@gmail.com>, pmenzel@molgen.mpg.de,
+ "Rob Herring" <robh+dt@kernel.org>, krzysztof.kozlowski+dt@linaro.org,
+ "Conor Dooley" <conor+dt@kernel.org>, avifishman70@gmail.com,
+ tali.perry1@gmail.com, "Joel Stanley" <joel@jms.id.au>, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Subject: Re: [PATCH v3 3/3] soc: nuvoton: add NPCM BPC driver
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,37 +98,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Russell King <linux@armlinux.org.uk>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Dec 14, 2023 at 02:00:16PM +0200, Vladimir Oltean wrote:
-> On Thu, Dec 14, 2023 at 02:54:00PM +0300, Serge Semin wrote:
-> > > > > The pcs-rzn1-miic.c driver puts a device_link to the MAC to at least
-> > > > > tear down the whole thing when the PCS is unbound, which is saner than
-> > > > > crashing the kernel. I don't see the equivalent protection mechanism here?
-> > > > 
-> > > > You are right. I don't have any equivalent protection here. Thanks for
-> > > > suggesting a solution.
-> > > 
-> > > I think that a device link between the "ethernet" device and the "mdio"
-> > > device (controller, parent of the PHY or PCS), if the Ethernet is not a
-> > > parent of the MDIO controller, could also solve that. But it would also
-> > > require ACK from PHY maintainers, who may have grander plans to address
-> > > this snag.
-> > 
-> > Ok. I'll add it in v2. Let's see what the maintainers think about
-> > that.
-> 
-> Are you not following the parallel discussion on the topic of PCS
-> devices having bound drivers?
-> https://lore.kernel.org/netdev/ZXnV%2FPk1PYxAm%2FjS@shell.armlinux.org.uk/
-> 
-> Sadly I don't have much spare time to join that discussion, but it looks
-> like you could.
+On Wed, Dec 13, 2023, at 20:05, Tomer Maimon wrote:
+> Add Nuvoton BMC NPCM BIOS post code (BPC) driver.
+>
+> The NPCM BPC monitoring two configurable I/O address written by the host
+> on the bus.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  drivers/soc/nuvoton/Kconfig    |   9 +
+>  drivers/soc/nuvoton/Makefile   |   1 +
+>  drivers/soc/nuvoton/npcm-bpc.c | 387 +++++++++++++++++++++++++++++++++
+>  3 files changed, 397 insertions(+)
+>  create mode 100644 drivers/soc/nuvoton/npcm-bpc.c
 
-Ok. Thanks for sharing the link. At least I'll follow up the
-discussion in order to pick up/wait for a solution they'll come up
-with.
+I try hard to avoid having user interfaces in drivers/soc/, that
+subsystem should primarily be used for things that don't have an
+existing subsystem in the kernel and are used by other in-kernel
+drivers but don't export hteir own misc device.
 
--Serge(y)
+> diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
+> index d5102f5f0c28..ebd162633942 100644
+> --- a/drivers/soc/nuvoton/Kconfig
+> +++ b/drivers/soc/nuvoton/Kconfig
+> @@ -2,6 +2,15 @@
+> 
+>  menu "NUVOTON SoC drivers"
+> 
+> +config NPCM_BPC
+> +	tristate "NPCM BIOS Post Code support"
+> +	depends on (ARCH_NPCM || COMPILE_TEST)
+> +	help
+> +	  Provides NPCM driver to control the BIOS Post Code
+> +	  interface which allows the BMC to monitor and save
+> +	  the data written by the host to an arbitrary I/O port,
+> +	  the BPC is connected to the host thourgh LPC or eSPI bus.
+> +
+
+This one in particular looks like this might be implemented
+by more than one BMC type, it's a fairly generic functionality.
+
+Have you talked to the other maintainers of SoCs used in
+OpenBMC about coming up with a common interface?
+
+> +#define DEVICE_NAME	"npcm-bpc"
+
+[nitpicking] No need for macros like this one, open-coding the
+string is usually more readable.
+
+    Arnd
