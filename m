@@ -1,76 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 960798132DD
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 15:19:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADA4D813396
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 15:51:57 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=biTsTeJ1;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=e8OvA++2;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SrZHQ28fmz3cTL
-	for <lists+openbmc@lfdr.de>; Fri, 15 Dec 2023 01:19:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Srb0W2zScz3cZ1
+	for <lists+openbmc@lfdr.de>; Fri, 15 Dec 2023 01:51:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=biTsTeJ1;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=e8OvA++2;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329; helo=mail-ot1-x329.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrZGs2Wrqz30fp
-	for <openbmc@lists.ozlabs.org>; Fri, 15 Dec 2023 01:19:15 +1100 (AEDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50bf69afa99so10547668e87.3
-        for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 06:19:15 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrZzy54Rhz3cQX
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Dec 2023 01:51:24 +1100 (AEDT)
+Received: by mail-ot1-x329.google.com with SMTP id 46e09a7af769-6d9d84019c5so6274653a34.3
+        for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 06:51:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702563549; x=1703168349; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CQ3bwMUk8X1J9J3ypOy0/pA2DHF8fbOaltjbT7mP9XQ=;
-        b=biTsTeJ13giOjTpGocZ2sl8gtLw3umYHAfSgc/mcmpjescAmUYAUvGeZAbozJQQzRq
-         TMNbFdrxzFlZbbw9mjT+3lN8DVDdbMdDH7qk0hkDw8QEajSsA5mCZMxDRU0eH93DAKb/
-         +O+REZKh6WfLRNmXJcD9S7GQ9nBDMEqnGsaKuLA0SYJ3fR3C+L0jNPDVk2cvpcTMN/3U
-         TqqUExQpjcp1UQ5NVQc99cNG6ZWn3mCCn55cAEIpO0PbVgEaxKOZlaHXgKD0+JBJNMv1
-         EIckeLpf4twn+ILzIr+DkK3OL6JFzjBRKr6xnQAEVa+k7Bz9Ojj67C5c2Sy+CFjO1blp
-         6LlA==
+        d=gmail.com; s=20230601; t=1702565482; x=1703170282; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ruAKoHR9uGWS3VSb+UagxtJ2MsgxlhVIrFdPwcI9KzY=;
+        b=e8OvA++21hJ+E2yCpIR57SZ5tTnE0Y19lKN97VmdGJx7Gn8//5BcovGTiy7bUgDUwq
+         f47dmXOB/Nrwd2cbM9m07Ipnd+c77Uxmfm+1fNe4A2Nc9dRv9Ee0zQkSIUKoNZyGSi/z
+         ssI2nJGS+1okQWH7D9GGDz2fIw0n4ys6DwNz5ftgR3wYkfde9nFKXZApYL8ZEsCg4Vu5
+         BJG3wm6la/mLp62Gf590NB9ioq+uxP+ZdRrRc3PPXvZZaHG/NWLkdhuuQ/fUdBm3Sh09
+         M4YdwaBfiq+lOxMC/CEIBAy0aLdo3CS3a3o6A4Kdeku8M2YpMS5eaVzUL6pV8CouAQD0
+         239Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702563549; x=1703168349;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CQ3bwMUk8X1J9J3ypOy0/pA2DHF8fbOaltjbT7mP9XQ=;
-        b=cING+tT9HGR0N81RU3abrn7moQQJBxYQVo1M0joDTW7L6vrBtggE8PTOR5CYwuzsGg
-         YI0BrEmLv1ya3qKeuYj0UeqKPBaoVcE9ELowlFZ5uucCbtRFQoCLT2LBYyNLawSzUZeu
-         JutX+2esLHtsli2tepdcNpdQm6dTKWph4unRREjssA1Dgv/h2CUeKhgkYW1Ean0IYCPv
-         OGcuUW8wLciARcZfmJ6y3MIc7pG9NrNSpqDMisnb0bNCsgTUw6N+zX2DPbx20SyitfYI
-         RmLUuNxuAhIv4krokNLBqP59agYv3e7X1RqJxhPY4mT2VDMih54my4csBiiDiWJidGxQ
-         iDvQ==
-X-Gm-Message-State: AOJu0YzrE4bKdpehavSPo0p+vB9kzs8szewvN44kQRg1Th2qtxCCgZ+B
-	taVu8NCQHi8STu5elra7rdo=
-X-Google-Smtp-Source: AGHT+IHqRqPM9xCrb8bY2qjbc5gXG+mnTP3vPzOVFwnQVHJHqCdJgI9kYABRRuwhHG1WUCcWt/wOqg==
-X-Received: by 2002:a19:f70b:0:b0:50c:1f:7e00 with SMTP id z11-20020a19f70b000000b0050c001f7e00mr4932096lfe.21.1702563548694;
-        Thu, 14 Dec 2023 06:19:08 -0800 (PST)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id d6-20020ac24c86000000b0050bed336e0csm1881825lfl.162.2023.12.14.06.19.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 06:19:08 -0800 (PST)
-Date: Thu, 14 Dec 2023 17:19:04 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
- MDIO device
-Message-ID: <n44fxxqr6q3fs7z6uhooecn55tvyapdroizsowtmfgrn7vnhlw@dt25gi2dybc4>
-References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
- <ZW8pxM3RvyHJTwqH@shell.armlinux.org.uk>
- <gbkgtb4yp3cwyw7xcuhmkdl3io2wlia2gska2xmjbwjvhigpz3@w52b6tdyugqo>
- <ZXnclVEz10K2XD2+@shell.armlinux.org.uk>
+        d=1e100.net; s=20230601; t=1702565482; x=1703170282;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ruAKoHR9uGWS3VSb+UagxtJ2MsgxlhVIrFdPwcI9KzY=;
+        b=T0d/hw3cyDjvqQvDlXXjw82yd6dZXJYJGaIjqwrLcVSSupXsm2bmAkslBLzOgbSW8I
+         d071M6AKRCWAhuLide45d5Y4v3dJBWeUpICd57KBg5UXr+W9/44neJ1K/Tn+JjzCGbVz
+         NglD5sUfiJ0YDtrGGWExoT2xCtYhaBbiQK8U49/MYAS6jaA0s4Uxf5nYRwYAi0HLnDsR
+         iy9YnmrrZNoXCO6TjFzs2w0k0M+fQaOP8JK3qtb1stMrml6ikC5EFFxecCccNyP5QWg2
+         5/oP7/qkSmytBTmEbSK+5sif4PocNqngCgQJ8N345ckbhbqF9uQsnRvQQgUlvIVZfA/C
+         bQlA==
+X-Gm-Message-State: AOJu0YxZtiwJfF4m0KbrfhAAgjxS2VtREYfgdhycn0XGkcCO+XsaE2Yq
+	QJKiQHr/HIrlFhWUnisxDq06t0Hsh7/GCNWxTXykmTVi6s4=
+X-Google-Smtp-Source: AGHT+IFMhVqRaH9qQ5FOZIJJSqn/UtQVVSzu28dozb9YTq1z+R7QqeguWpsj4xayOnON5yZ4yFe+bX2DxPchSyZbvn8=
+X-Received: by 2002:a05:6870:808d:b0:203:2f07:9c20 with SMTP id
+ q13-20020a056870808d00b002032f079c20mr3202300oab.26.1702565482010; Thu, 14
+ Dec 2023 06:51:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZXnclVEz10K2XD2+@shell.armlinux.org.uk>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 14 Dec 2023 08:51:06 -0600
+Message-ID: <CALLMt=qMrBpSvK7XeuRJefm33tqcDtBpqVOAUj88AQjoDN3jPA@mail.gmail.com>
+Subject: Gerrit Upgrade December 15, 2023
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,82 +70,12 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 13, 2023 at 04:32:21PM +0000, Russell King (Oracle) wrote:
-> On Wed, Dec 13, 2023 at 03:01:45AM +0300, Serge Semin wrote:
-> > On Tue, Dec 05, 2023 at 01:46:44PM +0000, Russell King (Oracle) wrote:
-> > > xpcs_create_mdiodev() as it originally stood creates the mdiodev from
-> > > the bus/address, and then passes that to xpcs_create(). Once
-> > > xpcs_create() has finished its work (irrespective of whether it was
-> > > successful or not) we're done with the mdiodev in this function, so
-> > > the reference is _always_ put.
-> > 
-> > You say that it's required to manage the refcounting twice: when we
-> > get the reference from some external place and internally when the
-> > reference is stored in the XPCS descriptor. What's the point in such
-> > redundancy with the internal ref-counting if we know that the pointer
-> > can be safely stored and utilized afterwards? Better maintainability?
-> > Is it due to having the object retrieval and storing implemented in
-> > different functions?
-> 
-> The point is that the error handling gets simpler:
-> - One can see in xpcs_create_mdiodev() that the reference taken by
->   mdio_device_create() is always dropped if that function was
->   successful, irrespective of whether xpcs_create() was successful.
-> 
-> - xpcs_create() is responsible for managing the refcount on the mdiodev
->   that is passed to it - and if it's successful, it needs to increment
->   the refcount, or leave it in the same state as it was on entry if
->   failing.
-> 
-> This avoids complexities in error paths, which are notorious for things
-> being forgotten - since with this, each of these functions is resposible
-> for managing its refcount.
-> 
-> It's a different style of refcount management, one I think more people
-> should adopt.
-> 
-> > While at it if you happen to know an answer could you please also
-> > clarify the next question. None of the ordinary
-> > platform/PCI/USB/hwmon/etc drivers I've been working with managed
-> > refcounting on storing a passed to probe() device pointer in the
-> > private driver data. Is it wrong not doing that?
-> 
-> If we wanted to do refcounting strictly, then every time a new
-> pointer to a data structure is created, we should be taking a refcount
-> on it, and each time that pointer is destroyed, we should be putting
-> the refcount. That is what refcounting is all about.
-> 
-> However, there are circumstances where this can be done lazily, and
-> for drivers we would prefer driver authors not to end up with
-> refcount errors where they've forgotten to put something.
-> 
-> In the specific case of drivers, we have a well defined lifetime for
-> a device bound to a driver. We guarantee that the struct device will
-> not go away if a driver is bound to the device, until such time that
-> the driver's .remove method has been called. Thus, we guarantee that
-> the device driver will be notified of the struct device going away
-> before it has been freed. This frees the driver author from having
-> to worry about the refcount of the struct device.
-> 
-> As soon as we start doing stuff that is outside of that model, then
-> objects that are refcounted need to be dealt with, and I much prefer
-> the "strict" refcounting implementation such as the one I added to
-> xpcs, because IMHO it's much easier to see that the flow is obviously
-> correct - even if it does need a comment to describe why we always
-> do a put.
+It's that time of the year again. Lets shoot for a gerrit upgrade
+tomorrow morning
+(US Central time). I'll take it down around 8:00am and if all goes
+well it shouldn't be down for more then an hour.
 
-Ok. I fully get your point now: lazy refcounting for the drivers
-following standard model and the 'strict' one for others. It sounds
-reasonable. I'll get that adopted in my future developments. Thank you
-very much for the detailed explanation and for all your comments.
-
--Serge(y)
-
-> 
-> -- 
-> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Andrew
