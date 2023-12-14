@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A85F812F96
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 13:01:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2645181301E
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 13:29:47 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EIavmE1G;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPwYybh5;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SrWCH0y92z3cX0
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:00:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SrWrS62mZz2yN8
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:29:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EIavmE1G;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPwYybh5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::636; helo=mail-ej1-x636.google.com; envelope-from=olteanv@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrWBg6kzNz3cCt
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 23:00:27 +1100 (AEDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-a1f653e3c3dso887753166b.2
-        for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 04:00:27 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrWqt1vkRz2yGv
+	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 23:29:13 +1100 (AEDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2cc259392a6so55893011fa.2
+        for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 04:29:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702555219; x=1703160019; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1702556948; x=1703161748; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uAVjKqO7t1SHEAhnbN0gUIgoq1UKlAq8GC08s1NGUV8=;
-        b=EIavmE1G2NWftHv1lj649zNB0e1NHOiqXW4IbBly2KL3f8SlfG8ZNMj2dVeCXoC9sU
-         hz29suw20wVVWhJyFB2X59NW7WsGSh3/P6P580eUw57KQwnoFarhHj8Or3PRiM7s2YM6
-         V9Bc4anyVhCW3KhzhqyyuhKCwM2sm8//CmduS3pnori6p6WxqTzXh1/n0xxkxL8Ob6VL
-         gSSW8y1G76mEo8KGMr/iSLPHi63AaI3cVd52QH0UMv1gW/p5rdxqfJL3DhQkpspe6Ezn
-         TjshG+BpTYywftKnLQluGXoRVamuMreE8Y+kXlMsUUWVfkDTbiJhwCyeVrI/15pt9m9k
-         KZHA==
+        bh=hKkOlqtXnQi1CXioJeNrKbuA1zxevHtK9i/pmWXuhPs=;
+        b=PPwYybh5hsMATtsqRz4eADWpy0ObXfL80nHWKwQR18cGmclQpjt6Dje3xe24Wn3ddW
+         K6KqubVqhL2+1fuXJcXCw5OfXFd8vUFx67yCmPurHPklIQG2o88Pt5H1qc4mhui/l7Rj
+         82cAo4XicDbiov00j3U9OQm1WhHraWBtYUmt2EYvmPhR3IYnXvA3W54/RvK1DSWIIB93
+         meaKWSWoFMgEsX7uTs2vnlyvyzTFdlVC+sCejjgk4p6udzhyBPSRoCCpmoA9oPZRwxs7
+         y3KAJ/v9JqDWPuBJIDyn+khaYY9rL64/QjEIlYfs5BRHECAuYusStLFN6MEXfXBN+2M+
+         4pOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702555219; x=1703160019;
+        d=1e100.net; s=20230601; t=1702556948; x=1703161748;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uAVjKqO7t1SHEAhnbN0gUIgoq1UKlAq8GC08s1NGUV8=;
-        b=awHZ5mLuVg59mNOHwZOOcDob/W+NtQ4IuoAVpmFvNpSSc4uvyPqAYZTpEhnKC7QrPy
-         Dff9grBdVQxN0GMeCbMsY+RMM4+iRNMuSp15AxtcvB4fcyPwo/lGSAHQwK131GNZFrof
-         0csSovteSKjcAYw4hiJf3l1corvO3cWC4uq5yqDodcm4wtilzcFtSX19PGRxLL99UURU
-         PPGQPlvthDAjNTs4bpAAupaHMLXuSU8bfHYCkchKvgAaGy0SxCHktRm2QoMLqSrO5FVH
-         r7z8BRhiYpQ1WQeL8ouKS+NNgZ3U10oj+b5W2896Ijz7qPENAbDFqn2U/NyKy4FOXEwh
-         HWqw==
-X-Gm-Message-State: AOJu0YzWxHNnGk2D8NP35ncA5Auo4noY5+wpI0cr0c59O2rsD7ZGodrt
-	rIHfsU5MUhJxzRjDmJ/Ec70=
-X-Google-Smtp-Source: AGHT+IFkAF8xyyVRvjbkhV0Imar1p4RnoaCvAzq2XlE+nsr9Wcq6xdWObgKdx8piQfIZ52SF7bMauQ==
-X-Received: by 2002:a17:906:74d6:b0:a23:fb2:e6c4 with SMTP id z22-20020a17090674d600b00a230fb2e6c4mr186158ejl.233.1702555219291;
-        Thu, 14 Dec 2023 04:00:19 -0800 (PST)
-Received: from skbuf ([188.27.185.68])
-        by smtp.gmail.com with ESMTPSA id ss27-20020a170907c01b00b00a1d9afe42f0sm9248350ejc.35.2023.12.14.04.00.18
+        bh=hKkOlqtXnQi1CXioJeNrKbuA1zxevHtK9i/pmWXuhPs=;
+        b=h2fsZCDeqx06tkE0fE+Kr1F2hrERQHQBCiRC7deO+Ctj6sTmA4TD27bvf/gDDj+atZ
+         eCCFNAE6Zv2nXWo+jnbGSvinPFSpZSll+63DRLwplwVMWOgtp7Ne+SzANxnjQWJJBuYH
+         er6xA6dZcvloFO3trABKpuikaxJAFC2HwpdbuNNT52lUrvf7GcP/qIqt6F9oEJ/VQJZ2
+         hm9phXLK0MRvjrCo2ZmmfppD2QVQLzphGc59JyElpMUdIFqLPh80sP70ex9pkFFJHVgp
+         /I+XE3pXzEZVAhvawR5Z78Rh3EWg79xWQ7cT+oyn4DgFNiAdRKJPFSYVVIJEkA7qEsoy
+         SGqA==
+X-Gm-Message-State: AOJu0YzXn918Su67qVXZ0bc//xqbmNVOoKpjFgoCd8aoLyIwmGtUqoEu
+	qQl0Ikr5qsWSP3R2/TemN18=
+X-Google-Smtp-Source: AGHT+IHT6Syfor5yq9T7eo4jSSMy2o+vRuqPr7cfTtYXt59vOt5802fiJ9vq9yDDRmVoosxtqQtXEg==
+X-Received: by 2002:a05:651c:2221:b0:2cc:2012:7509 with SMTP id y33-20020a05651c222100b002cc20127509mr3762737ljq.98.1702556948246;
+        Thu, 14 Dec 2023 04:29:08 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id j1-20020a2e8241000000b002c9f70a0419sm2040940ljh.140.2023.12.14.04.29.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Dec 2023 04:00:19 -0800 (PST)
-Date: Thu, 14 Dec 2023 14:00:16 +0200
-From: Vladimir Oltean <olteanv@gmail.com>
-To: Serge Semin <fancer.lancer@gmail.com>
+        Thu, 14 Dec 2023 04:29:03 -0800 (PST)
+Date: Thu, 14 Dec 2023 15:28:57 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Vladimir Oltean <olteanv@gmail.com>
 Subject: Re: [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS
  MDIO-device support
-Message-ID: <20231214120016.wgeip3mdro5ihnxe@skbuf>
+Message-ID: <wz7h5lvxnhw2rav6s54dhv2xbxsks6tlpx3hvywjn3afmkf2av@tbiigyupuga7>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
  <20231205103559.9605-11-fancer.lancer@gmail.com>
  <20231205111351.xjjuwpbf7kwg3vuh@skbuf>
@@ -70,10 +70,11 @@ References: <20231205103559.9605-1-fancer.lancer@gmail.com>
  <nflj4ajgx3byqhwna2eslldwulbbafmcwba4dwgxo65o5c7pmj@zbgqt2zje4ix>
  <20231208163343.5s74bmirfna3o7yw@skbuf>
  <xhj7jchcv63y2bmnedxqffnmh3fvdxirccdugnnljruemuiurz@ceafs7mivbqp>
+ <20231214120016.wgeip3mdro5ihnxe@skbuf>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xhj7jchcv63y2bmnedxqffnmh3fvdxirccdugnnljruemuiurz@ceafs7mivbqp>
+In-Reply-To: <20231214120016.wgeip3mdro5ihnxe@skbuf>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,26 +90,33 @@ Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Do
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Dec 14, 2023 at 02:54:00PM +0300, Serge Semin wrote:
-> > > > The pcs-rzn1-miic.c driver puts a device_link to the MAC to at least
-> > > > tear down the whole thing when the PCS is unbound, which is saner than
-> > > > crashing the kernel. I don't see the equivalent protection mechanism here?
+On Thu, Dec 14, 2023 at 02:00:16PM +0200, Vladimir Oltean wrote:
+> On Thu, Dec 14, 2023 at 02:54:00PM +0300, Serge Semin wrote:
+> > > > > The pcs-rzn1-miic.c driver puts a device_link to the MAC to at least
+> > > > > tear down the whole thing when the PCS is unbound, which is saner than
+> > > > > crashing the kernel. I don't see the equivalent protection mechanism here?
+> > > > 
+> > > > You are right. I don't have any equivalent protection here. Thanks for
+> > > > suggesting a solution.
 > > > 
-> > > You are right. I don't have any equivalent protection here. Thanks for
-> > > suggesting a solution.
+> > > I think that a device link between the "ethernet" device and the "mdio"
+> > > device (controller, parent of the PHY or PCS), if the Ethernet is not a
+> > > parent of the MDIO controller, could also solve that. But it would also
+> > > require ACK from PHY maintainers, who may have grander plans to address
+> > > this snag.
 > > 
-> > I think that a device link between the "ethernet" device and the "mdio"
-> > device (controller, parent of the PHY or PCS), if the Ethernet is not a
-> > parent of the MDIO controller, could also solve that. But it would also
-> > require ACK from PHY maintainers, who may have grander plans to address
-> > this snag.
+> > Ok. I'll add it in v2. Let's see what the maintainers think about
+> > that.
 > 
-> Ok. I'll add it in v2. Let's see what the maintainers think about
-> that.
+> Are you not following the parallel discussion on the topic of PCS
+> devices having bound drivers?
+> https://lore.kernel.org/netdev/ZXnV%2FPk1PYxAm%2FjS@shell.armlinux.org.uk/
+> 
+> Sadly I don't have much spare time to join that discussion, but it looks
+> like you could.
 
-Are you not following the parallel discussion on the topic of PCS
-devices having bound drivers?
-https://lore.kernel.org/netdev/ZXnV%2FPk1PYxAm%2FjS@shell.armlinux.org.uk/
+Ok. Thanks for sharing the link. At least I'll follow up the
+discussion in order to pick up/wait for a solution they'll come up
+with.
 
-Sadly I don't have much spare time to join that discussion, but it looks
-like you could.
+-Serge(y)
