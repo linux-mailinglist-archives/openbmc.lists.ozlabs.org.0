@@ -2,60 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFCBE813D2A
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:21:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0596B813D6D
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 23:43:14 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=IMWJZBmt;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GxmfHpG3;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Srmzf6vYGz3cYR
-	for <lists+openbmc@lfdr.de>; Fri, 15 Dec 2023 09:21:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SrnSH4wcJz3cBP
+	for <lists+openbmc@lfdr.de>; Fri, 15 Dec 2023 09:43:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=IMWJZBmt;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GxmfHpG3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.11; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Srmyv3Nn5z3bdG;
-	Fri, 15 Dec 2023 09:21:11 +1100 (AEDT)
-Received: from [192.168.68.112] (ppp118-210-187-191.adl-adc-lon-bras34.tpg.internode.on.net [118.210.187.191])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id D39A420034;
-	Fri, 15 Dec 2023 06:21:05 +0800 (AWST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1702592469;
-	bh=BGWPGfhl0ltwnlLE/nuPazf5YbLmd4b70ljGryNav64=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=IMWJZBmtSZGz8fkLlX/NAMm/kPBlN1o06WmMS40kxpap8N23ucFlz0CsPwOLaEKK/
-	 xMU3VCpaU72AIa+e8JbmcCL2FJOxa+/Y9kQCOsCSY+oFD/AEVCI4dxVGSAkMHhbubn
-	 2/hPvLvNg5JNAlqNXTUmx9JomL2xwv9OF5MYmKaL5jYPtPzvVMSZyCKigNeFTf93BA
-	 NA/cFW43MWxHVkgeFMmTDEh+vgM0OjDh0NKNvZh271S8Ve2HIwfU5jKZ90eyseTHiZ
-	 tJsuMEKHJQpBNQLH3bZZ9KNddteV2ouDQ4GCA81DmsUnKgM3KI9uNVJnPkUp2rtJSW
-	 MG+4P0YfwWZsg==
-Message-ID: <54cba87a0df233b8762e43b742afe8e44a77a60c.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v4 2/2] i2c: aspeed: Acknowledge Tx done with and
- without ACK irq late
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Quan Nguyen <quan@os.amperecomputing.com>, Brendan Higgins
- <brendan.higgins@linux.dev>, Benjamin Herrenschmidt
- <benh@kernel.crashing.org>,  Joel Stanley <joel@jms.id.au>, Andi Shyti
- <andi.shyti@kernel.org>, Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo
- <jae.hyun.yoo@linux.intel.com>, Guenter Roeck <linux@roeck-us.net>, 
- linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org, 
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
- linux-kernel@vger.kernel.org
-Date: Fri, 15 Dec 2023 08:51:03 +1030
-In-Reply-To: <2eab42cde34723a195e7a0287db08b25f8388a3b.camel@codeconstruct.com.au>
-References: <20231211102217.2436294-1-quan@os.amperecomputing.com>
-	 <20231211102217.2436294-3-quan@os.amperecomputing.com>
-	 <2eab42cde34723a195e7a0287db08b25f8388a3b.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SrnRg0TnXz3cXh
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Dec 2023 09:42:36 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702593759; x=1734129759;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KU/A3jUQKGkyim74DOJB+aBrQP+MMoH4ytEotxAxkqA=;
+  b=GxmfHpG3xgESEizkNsp4F0bpNqnnR1WxVsSwmfqSjU1WEM0eFfLLMwM/
+   LgALPnSqvR0FC6+FEj9MDd/SZZfGt41WpcyvBKWjj+R/nK5OqOq341rSB
+   JW9qmwLr2cb7xb5L1R5gx8XWntQa4uYBJItnTVOP+Pvc5jhPa5dBiWzlf
+   WHTTt4jWt7eHcm2NmSDeTZ9+FWT5G51ViRpPoGTnLn6L/7SxY+PA9Phk/
+   9BzR7PCz3BEF3VxmURJsJ5hREKmbYkKY/7jKS2ftMNwdvt3McLRkBnXYv
+   pLbnAj3iDu1D7MY0yIDMVaSv7miMi9KukXmrh0BFCC7d6Oed4rSRy1TKI
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="2017245"
+X-IronPort-AV: E=Sophos;i="6.04,276,1695711600"; 
+   d="scan'208";a="2017245"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Dec 2023 14:42:32 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10924"; a="778052218"
+X-IronPort-AV: E=Sophos;i="6.04,276,1695711600"; 
+   d="scan'208";a="778052218"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga007.fm.intel.com with ESMTP; 14 Dec 2023 14:42:28 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rDuPS-000MgM-0L;
+	Thu, 14 Dec 2023 22:42:26 +0000
+Date: Fri, 15 Dec 2023 06:41:46 +0800
+From: kernel test robot <lkp@intel.com>
+To: Tomer Maimon <tmaimon77@gmail.com>, arnd@arndb.de,
+	pmenzel@molgen.mpg.de, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	avifishman70@gmail.com, tali.perry1@gmail.com, joel@jms.id.au,
+	venture@google.com, yuenn@google.com, benjaminfair@google.com,
+	j.neuschaefer@gmx.net
+Subject: Re: [PATCH v3 3/3] soc: nuvoton: add NPCM BPC driver
+Message-ID: <202312150632.EzPYbn6l-lkp@intel.com>
+References: <20231213190528.3751583-4-tmaimon77@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231213190528.3751583-4-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,91 +75,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> On Mon, 2023-12-11 at 17:22 +0700, Quan Nguyen wrote:
-> > Commit 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in
-> > interrupt handler") acknowledges most interrupts early before the slave
-> > irq handler is executed, except for the "Receive Done Interrupt status"
-> > which is acknowledged late in the interrupt.
-> > However, it has been observed that the early acknowledgment of "Transmi=
-t
-> > Done Interrupt Status" (with ACK or NACK) often causes the interrupt to
-> > be raised in READ REQUEST state, that shows the
-> > "Unexpected ACK on read request." complaint messages.
-> >=20
-> > Assuming that the "Transmit Done" interrupt should only be acknowledged
-> > once it is truly processed, this commit fixes that issue by acknowledgi=
-ng
-> > interrupts for both ACK and NACK cases late in the interrupt handler.
-> >=20
-> > Fixes: 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in=
- interrupt handler")
-> > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
->=20
-> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Hi Tomer,
 
-So I just booted this series on v6.7-rc5 under qemu v8.2.0-rc4 and
-found this:
+kernel test robot noticed the following build warnings:
 
-```
-$ qemu-system-arm \
-	-M ast2600-evb \
-	-kernel build.aspeed_g5/arch/arm/boot/zImage \
-	-dtb build.aspeed_g5/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dtb \
-	-initrd ~/src/buildroot.org/buildroot/output/images/rootfs.cpio.xz \
-	-nographic 2>&1 \
-	| ts -s
-...
-00:00:03 [    1.089187] Freeing initrd memory: 3308K
-00:00:05 smbus: error: Unexpected send start condition in state 1
-00:00:05 smbus: error: Unexpected write in state -1
-00:00:06 [    3.685731] aspeed-i2c-bus 1e78a400.i2c-bus: i2c bus 7 register=
-ed, irq 48
-00:00:06 [    3.688918] aspeed-i2c-bus 1e78a480.i2c-bus: i2c bus 8 register=
-ed, irq 49
-00:00:06 [    3.692326] aspeed-i2c-bus 1e78a500.i2c-bus: i2c bus 9 register=
-ed, irq 50
-00:00:06 [    3.693757] aspeed-i2c-bus 1e78a680.i2c-bus: i2c bus 12 registe=
-red, irq 51
-00:00:06 [    3.695070] aspeed-i2c-bus 1e78a700.i2c-bus: i2c bus 13 registe=
-red, irq 52
-00:00:06 [    3.696184] aspeed-i2c-bus 1e78a780.i2c-bus: i2c bus 14 registe=
-red, irq 53
-00:00:06 [    3.697144] aspeed-i2c-bus 1e78a800.i2c-bus: i2c bus 15 registe=
-red, irq 54
-00:00:06 [    3.699061] aspeed-video 1e700000.video: irq 55
-00:00:06 [    3.699254] aspeed-video 1e700000.video: assigned reserved memo=
-ry node video
-00:00:06 [    3.702755] aspeed-video 1e700000.video: alloc mem size(24576) =
-at 0xbc000000 for jpeg header
-00:00:06 [    3.706139] Driver for 1-wire Dallas network protocol.
-00:00:07 smbus: error: Unexpected send start condition in state -1
-00:00:07 smbus: error: Unexpected write in state -1
-00:00:10 smbus: error: Unexpected send start condition in state -1
-00:00:10 smbus: error: Unexpected write in state -1
-00:00:12 smbus: error: Unexpected send start condition in state -1
-00:00:12 smbus: error: Unexpected write in state -1
-00:00:14 smbus: error: Unexpected send start condition in state -1
-00:00:14 smbus: error: Unexpected write in state -1
-00:00:17 smbus: error: Unexpected send start condition in state -1
-00:00:17 smbus: error: Unexpected write in state -1
-00:00:18 [   14.080141] adt7475 7-002e: Error configuring attenuator bypass
-00:00:19 smbus: error: Unexpected send start condition in state -1
-00:00:19 smbus: error: Unexpected write in state -1
-00:00:21 smbus: error: Unexpected send start condition in state -1
-00:00:21 smbus: error: Unexpected write in state -1
-00:00:24 smbus: error: Unexpected send start condition in state -1
-00:00:24 smbus: error: Unexpected write in state -1
-```
+[auto build test WARNING on soc/for-next]
+[also build test WARNING on robh/for-next linus/master v6.7-rc5 next-20231214]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-The smbus errors do not occur if I revert this patch.
+url:    https://github.com/intel-lab-lkp/linux/commits/Tomer-Maimon/dt-bindings-soc-nuvoton-Add-NPCM-BPC/20231214-030714
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/soc/soc.git for-next
+patch link:    https://lore.kernel.org/r/20231213190528.3751583-4-tmaimon77%40gmail.com
+patch subject: [PATCH v3 3/3] soc: nuvoton: add NPCM BPC driver
+config: arm64-randconfig-r123-20231215 (https://download.01.org/0day-ci/archive/20231215/202312150632.EzPYbn6l-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
+reproduce: (https://download.01.org/0day-ci/archive/20231215/202312150632.EzPYbn6l-lkp@intel.com/reproduce)
 
-Can you look into qemu to see if it's a bug in the aspeed i2c
-controller model's state machine?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312150632.EzPYbn6l-lkp@intel.com/
 
-Cheers,
+sparse warnings: (new ones prefixed by >>)
+>> drivers/soc/nuvoton/npcm-bpc.c:105:25: sparse: sparse: cast to restricted __poll_t
+   drivers/soc/nuvoton/npcm-bpc.c:108:26: sparse: sparse: cast to restricted __poll_t
 
-Andrew
+vim +105 drivers/soc/nuvoton/npcm-bpc.c
+
+    97	
+    98	static __poll_t npcm_bpc_poll(struct file *file, struct poll_table_struct *pt)
+    99	{
+   100		struct npcm_bpc_channel *chan = npcm_file_to_ch(file);
+   101		__poll_t mask = 0;
+   102	
+   103		poll_wait(file, &chan->wq, pt);
+   104		if (!kfifo_is_empty(&chan->fifo))
+ > 105			mask = (__poll_t)POLLIN;
+   106	
+   107		if (chan->host_reset) {
+   108			mask |= (__poll_t)POLLHUP;
+   109			chan->host_reset = false;
+   110		}
+   111	
+   112		return mask;
+   113	}
+   114	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
