@@ -2,74 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83AA581664B
-	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 07:10:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C30781688B
+	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 09:47:20 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=L7Ky/FPT;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=PkTKQ1Bt;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4StqDz1RY2z3cLQ
-	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 17:10:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sttjx6XrQz3c20
+	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 19:47:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=L7Ky/FPT;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=PkTKQ1Bt;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::232; helo=mail-oi1-x232.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::72e; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2072e.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::72e])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4StqBR6MHKz3bYQ
-	for <openbmc@lists.ozlabs.org>; Mon, 18 Dec 2023 17:08:15 +1100 (AEDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3b9efed2e6fso2359596b6e.0
-        for <openbmc@lists.ozlabs.org>; Sun, 17 Dec 2023 22:08:15 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SttjD3sCsz2yMJ;
+	Mon, 18 Dec 2023 19:46:37 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aLHrEl5wN3YaFmFN0gg/cgPz4MGFzI7hbcG+gzs7htB/0gn84o/FdD/NeUJLf+Cy+jpYRuaFvee4yiETWqO7lIaaOb6pJ519mifxA/aZXDDJvvgzUlHoTyojT1nXgd1AzCjE6OQivpaKsiw+fx7qebRsmKsh2Z7xLO9enUq7E1VrzlT6PSeQQwUM55Pz8zstWpXerAEhpyQHMyb06XN24x+y24/XjwgibCYnUMY+wkdzR4Jf7ilzvXn67v3f9SoLSCYcwjtYa8o+vNI31poBB0ZXFgnsasjxqCAokh061YlylRT4H0Z37ErEcZks7n0Fqv7hl7sj0dJRwz+rFt91og==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RIpiW3TCP+qtTISIVXS7rVFEFgiPODM6i3q0cX1O/A0=;
+ b=UAko50/nEh6wli0FZdjIQQJZmrWu2rnU5a/tYX+di8n2GnTZ2E4tvwRzhHgkP7B5ThR5EahAZqqzCxdNG7AxmVS2XlqMpfWpGeMac8PU7J462O9biM49VGoBk+1TozeeVNSvz90He2OIZ/TXCth+zwVaofdXzUXIjweXOh2ie19avQGupD6eM5b7QJmdTJK68j26Gw/crSm/LGsxnrDA9GDAWJasKLow1DPuDbHhfuomS3Xs94uzrOkIVAqFVpeAGwKVEZF8+dvP8DgKI4DZC8xR4sSTOfnkKV5gYsQ6GhqMdyGBVNWPdViPc7DyVEQzEs/JnpsVi2ZkKZ4J4mkvgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702879691; x=1703484491; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ulz+5kS975pM8i734nxzZZCsm3GC/t1Bgu+p3EmQ3ew=;
-        b=L7Ky/FPTFGb5di7PDsmZ5kqOI7zae0WMkRL7TCuiQcqMTBK3mFbXIgWef5s66s1waP
-         VrWIZjbVSQNmSo2RFN1ZFzn5/8nmfOe7uwk1oQ0O5htOFNDwU0flJpicWh1nUgf2UXCR
-         conwcYLYs0wvdiU+fMbQL3ujLiYexOHe6If3sgM7bpj18A4S2osC1Sni/DaAVS+KXs4G
-         1zclOTQoCGpEF7l5wtlWtulVca3q/ysYORahLtsYiH5k45R8N65yBoXZ+zXJCLGsHQC3
-         5XFYDg1HyVNy8lT7541YfE97JOEGvh1csIPzlZFTjSS70dc3xStXd1eayODt3eT/qKFj
-         QuEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702879691; x=1703484491;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ulz+5kS975pM8i734nxzZZCsm3GC/t1Bgu+p3EmQ3ew=;
-        b=YLeVxS3riMiWIH3W/hzX9NJo74+7Ww+yoKMM3/7m1bNjsprBUIaUZXWlZHqT9qIYG3
-         91lyUr24LMu1D8svDKwYjPDz1vUXWenpCNlQjLU+tjGBfnDFWVUN9IWWisToHECc0eJc
-         U1FWhcOPcgKhgtwRXPgexQJegKL5WIZ7LqsQYvTQVe0cNalmZMy8kSsW0mMVQcURIXdn
-         jzXAXsdPT4+X3yV70w8y/FO8tIdNPkmnwFcLXgTTfs2zK4aVKNBoJRZ0h1Sy9QCmcTyj
-         wEcsvOy3c2tyAGNPCHYz7puBATt2N4d+jR2cwdeMdBW86NLo/CUKnBX/L+2p8tPoMi33
-         ywLw==
-X-Gm-Message-State: AOJu0Yxb8EMrhMWGRw2pd21jUGeTAt8pEYzo478TX/RhKOYRqUgxIiwO
-	k+Lml3/cSN3hagUoazwGaRkdR69+sJg=
-X-Google-Smtp-Source: AGHT+IFHJr3W5JYZxH1MkYN4E8f6bO53+BFDg7JY33gzYjGqqpZ+d1ugUX/fyzr5UlOuZJH1kz+jEQ==
-X-Received: by 2002:a05:6808:3193:b0:3ba:431:1957 with SMTP id cd19-20020a056808319300b003ba04311957mr15608169oib.1.1702879691411;
-        Sun, 17 Dec 2023 22:08:11 -0800 (PST)
-Received: from localhost.localdomain (1-34-21-66.hinet-ip.hinet.net. [1.34.21.66])
-        by smtp.gmail.com with ESMTPSA id hq10-20020a056a00680a00b006d5b877aa9asm1877689pfb.41.2023.12.17.22.08.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Dec 2023 22:08:10 -0800 (PST)
-From: Potin Lai <potin.lai.pt@gmail.com>
-X-Google-Original-From: Potin Lai <potin.lai@quantatw.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH linux dev-6.6 2/2] hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller
-Date: Mon, 18 Dec 2023 14:05:59 +0800
-Message-Id: <20231218060559.2302459-3-potin.lai@quantatw.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20231218060559.2302459-1-potin.lai@quantatw.com>
-References: <20231218060559.2302459-1-potin.lai@quantatw.com>
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RIpiW3TCP+qtTISIVXS7rVFEFgiPODM6i3q0cX1O/A0=;
+ b=PkTKQ1BtQkQ0396hlR2osq/2Oqlj1HFHRHdeqzKyYvtC1KXgtXcn6K1sJUv5R6vQtlgNES/USOzzBER/pI2WVI8luGkxzeDNE99g+eZHfQ+8Keu9HWZ39Sq0/e5NN8pUu+mfYOZgknRvQkBbzOxLrBlY8NY+3a4x8EkgMBn7wR4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
+ SN4PR01MB7440.prod.exchangelabs.com (2603:10b6:806:1eb::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7091.37; Mon, 18 Dec 2023 08:46:09 +0000
+Received: from SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7091.034; Mon, 18 Dec 2023
+ 08:46:09 +0000
+Message-ID: <7dfc99e5-4c76-413b-aabc-81b26e26249e@os.amperecomputing.com>
+Date: Mon, 18 Dec 2023 15:45:56 +0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] i2c: aspeed: Acknowledge Tx done with and without
+ ACK irq late
+Content-Language: en-CA
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Brendan Higgins <brendan.higgins@linux.dev>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+References: <20231211102217.2436294-1-quan@os.amperecomputing.com>
+ <20231211102217.2436294-3-quan@os.amperecomputing.com>
+ <2eab42cde34723a195e7a0287db08b25f8388a3b.camel@codeconstruct.com.au>
+ <54cba87a0df233b8762e43b742afe8e44a77a60c.camel@codeconstruct.com.au>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <54cba87a0df233b8762e43b742afe8e44a77a60c.camel@codeconstruct.com.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR04CA0101.namprd04.prod.outlook.com
+ (2603:10b6:610:75::16) To SN4PR01MB7455.prod.exchangelabs.com
+ (2603:10b6:806:202::11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|SN4PR01MB7440:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc451b3b-4694-4bd8-3c73-08dbffa5c800
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	ifN4LkZBveMrJclelhbzT+X3jtHeCPUmZV1aHGiSbBylZM8xi+j79yt688ubfbpMsnbPZNRUBLI0w451c/N+mBxlJHaYkhs+uOywXpxGx3n1waotbWNH5ZwfSJrxaFdRuHBQO3cKjuY6fkwUG+EVyqiU6rZp4cq/nCxNy03RYYRS9ScYTz0BC3R+cazQ7nrdP+g4PCc9mZzeDPQJv7cAahTEMrJ8gHxv2t4p+KndwTMzy7Rb0a5GXPIZN+nrCkpBqWrGkZJEO1WcqHL0d+qIphtVa5nlVv1fgiRp4mLBkPTSFUuTT/QBTgH+J8pv7iraJ+KwUIRaEK1wrpPlgiRkZXYSwsA58FOF+kE1kiSJrJcdwMksB71l/0JFH9v0xAf3+w1AL9K+h63jIiy8VvR1PasNlMuEaRuRcCmJT9EepR7gWnWoZbeIH6W+XKi34jfMccqNFi+IW32kS2hS+6m+AE6SQbnTyoAIepVKKkjT9sxe6gZ3jxWp2uQOHiO5L1gm45ArQmwRxBcfNLCHhBYNrZ7EPx7Ek4WybAkJurbTmoP65Vv63MMjoYb6nBi+LRWenTYLH9hwDuGiuvwRUQGSUwAYgpQ4LedeQFBYMPLcDX4KTE1gCEYIXI5KFWubvAWFYqqp/zhcjw8ZWrCMj+ZAOg==
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(346002)(39850400004)(136003)(396003)(230922051799003)(451199024)(1800799012)(64100799003)(186009)(83380400001)(26005)(6506007)(53546011)(2616005)(107886003)(6512007)(5660300002)(4326008)(41300700001)(4001150100001)(2906002)(7416002)(6666004)(6486002)(478600001)(316002)(110136005)(54906003)(8936002)(8676002)(66556008)(66476007)(66946007)(86362001)(31696002)(38100700002)(921008)(31686004)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?bWxGYWV4MTM4ZVlyQmhTWW9NRlBSekxrclpvSmZjbzZNeEpSMGQ2aGl6Tm1q?=
+ =?utf-8?B?Z1JyUnJVSk9WcW5HRjh0VUxIL281dzJQbVhCZnpJcnZHVU9mRE1PN1JVajlo?=
+ =?utf-8?B?a0ZRNDZpR0xhSGJEM1FYL1U2cU9TUXlJYmVqMWY5b3dKby9ZbmZlbTVscDhP?=
+ =?utf-8?B?S2tkSWVXV2Z1OGhTcmRqTktpeUFjR3FiMDZVNi8wUTU0Zm1rWlROQmJxVnNv?=
+ =?utf-8?B?cm1xR21kZGJlY0tMQWJSS3lSWE80ZzdsdEpLT2FRVlBUZ00wODVoN0gxMFdv?=
+ =?utf-8?B?eGpvR3BTMldzN1E0Wi9WRmFucEZqZWcwVDRUbEEzUTVJeEJxb3d3cVk0K0ty?=
+ =?utf-8?B?bXNyY29NbXRnODBsQVpiNU5WdUF3MmJiYVFqSms5eVpRWDN1dUs3MzFEZXRm?=
+ =?utf-8?B?a2c1Ym03T0x0aldNOE51dzB3c0RGT0lxc1JGWnVrT3BFSUVsb0JHRjl5MFFG?=
+ =?utf-8?B?WW9jRUNyYjM0YUNsME90Z1pwWko2L2NsVE1VZXJTUEJnWXI3R0IrZDBSN0VW?=
+ =?utf-8?B?RTJlbWtuNGd2bFpyRldyai9hbEJPRDQ0aDNoUFdqWW8wTWVhWTlEOUhBQzZi?=
+ =?utf-8?B?QjNGQVBmR1Z0WWdQRyt0OEVLRmd6VHlNWlFlRmJGTHlPajVhenBhUUlXdHY5?=
+ =?utf-8?B?ZE8zdnVVZGl1ZFlOZURIbUFqLzVJWCt2VXBZNjcvd1ArOFdIcExlN2k5dTZD?=
+ =?utf-8?B?RHhOSVRmbmoybExWTXJFUFZsaWNNazFEUnJ0MmVPSUp4VU5DM0tTNk5uOUs4?=
+ =?utf-8?B?cDVOQVB5UGJaaDdRT1c4WUZicVVYTlhnYzVIUzRnUG11cURlUDg1V1hWK2ND?=
+ =?utf-8?B?Kyt3VHVPZERDcS9pTGlXK3VYNXkwYVI2eVU5K3JqWHZzM1ljRjduS3gzUXEx?=
+ =?utf-8?B?TFFvR2JGcExrVkZNbjRNeFpUZ05BRFM3NEpKUkRwS0xvbE9RNmZ3UTVYRE8y?=
+ =?utf-8?B?aXRqWU5kaEZLZ0h0VTh2R1VqbFI1R2xhaEhjSkV1WXB2TjhLZ2ExZGxMODJu?=
+ =?utf-8?B?eG84ZjBQTzNJcUxXcU4veitqWmJDeDBRcXVOZHJVakcxS28vbkFTUUxwMms0?=
+ =?utf-8?B?UFlDcnRDbFlPMDJucmZNMGZtaHExcjhNajFWUU1LY0t4eFJja3JqVFRYUWRS?=
+ =?utf-8?B?aGFCa2dGOHZaVHNLVGhlRmlvQm5NUlA1RUJnVld3OFk2K0duaCtQRFZOKzFj?=
+ =?utf-8?B?ZE9MZTZCcEV5ZGI2dEM2bGlGeExSWm5jT0lFSENnVHNrTFUvUXd1NFZjMG55?=
+ =?utf-8?B?cVp2NFFIa2RaaElnWjdSWkoxVXA1dW9OKzVCNjNGZTI3MG9NMFVUc2N4ckxJ?=
+ =?utf-8?B?anRXbndjWWtkbTB5WDQ2UStLSzZwZUZzTE5ZaE10VFJ4OGFyK3RJUGp4K1E2?=
+ =?utf-8?B?TVU1MzdzOVVocUlOeGJneDE5U1AyRWNKamxvSS9QaHExZHFnNXhGVC9obHRr?=
+ =?utf-8?B?bm1PdHE0SUFxSmFJRitlK2ZSNy85ZDRMNUNjdlAzWHozdC9GNFVxVEVrZ3lJ?=
+ =?utf-8?B?Z1htRkQvMFBKYmlYT083OGxJdFdSeWRJWkR0bGJlQnRheGdVTExsRytNQnh6?=
+ =?utf-8?B?cS92UzBTbHdmUVJIaXZLTjJxVkltUUFpRDJudW9WajJ2QklvdnVOL3E2UVJq?=
+ =?utf-8?B?RjlnbTlOdkRRaDFsTzdyN1cyZXc4Q2t4d2R6Q1g1MmhMdi9QN1NOL25SNmlC?=
+ =?utf-8?B?bms5UUNtVllTcURqRldIRGdxT3pOMWJXbTFJbHN2N2xmZTN2Nitrcmt6V1JS?=
+ =?utf-8?B?TC93NlF1cUZSZDgyeGNjMU11emdZdndRTTlhOVZXbGNhVWZ2b05BUGJMQ1Jl?=
+ =?utf-8?B?Ym5RMTZ0dkxUYzBBQ0txNmxTdUNZZmFPMHZ1SzFHaW0xaTBlMm5pdTZVb1ND?=
+ =?utf-8?B?TVI1NFhkcURsOWdnNnpIRlhyYTZjUjhQU3VzVmEzN3Azay9OMXVGK3hkRmtT?=
+ =?utf-8?B?a2tFT0pNalVhb0ZIVUw4a2g2d3h4TUhJWFpqa0Q2Tlo3NVRsd29iUWROWXJ4?=
+ =?utf-8?B?TytsZ0NyUTQrbEFIb29adVNuRWdHa3BLalNDTEZKR3huUzRYR0U0TjhRTHBw?=
+ =?utf-8?B?ZGo0bCtyRnUrcDMxNWpJTE9PQi84VnkranpDVTY3bTVkUW90b1EzbllRbHBU?=
+ =?utf-8?B?VWVYWGdBSkI0aERoQlRaMCtudUg3eDVSRVFYejNTZ0NJQnJ4SWxmT1haU3ZS?=
+ =?utf-8?B?a1E9PQ==?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc451b3b-4694-4bd8-3c73-08dbffa5c800
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2023 08:46:09.5151
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kCc6BkizIgUKHA/3mWWwwf6YfHn/CK5UhtFteX9eKTjXHzPPRX7kd0pIthFO8u6b51QjvoFX9MuD2BjPeZYXdHv+6STR9xz6fxs4NfcA7r4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR01MB7440
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,647 +141,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Peter Yin <peteryin.openbmc@gmail.com>
 
-Add support for mp2856/mp2857 device from Monolithic Power Systems, Inc.
-(MPS) vendor. This is a dual-loop, digital, multi-phase,
-modulation controller.
 
-Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
----
- Documentation/hwmon/index.rst  |   1 +
- Documentation/hwmon/mp2856.rst |  98 +++++++
- drivers/hwmon/pmbus/Kconfig    |   9 +
- drivers/hwmon/pmbus/Makefile   |   1 +
- drivers/hwmon/pmbus/mp2856.c   | 466 +++++++++++++++++++++++++++++++++
- 5 files changed, 575 insertions(+)
- create mode 100644 Documentation/hwmon/mp2856.rst
- create mode 100644 drivers/hwmon/pmbus/mp2856.c
+On 15/12/2023 05:21, Andrew Jeffery wrote:
+>> On Mon, 2023-12-11 at 17:22 +0700, Quan Nguyen wrote:
+>>> Commit 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in
+>>> interrupt handler") acknowledges most interrupts early before the slave
+>>> irq handler is executed, except for the "Receive Done Interrupt status"
+>>> which is acknowledged late in the interrupt.
+>>> However, it has been observed that the early acknowledgment of "Transmit
+>>> Done Interrupt Status" (with ACK or NACK) often causes the interrupt to
+>>> be raised in READ REQUEST state, that shows the
+>>> "Unexpected ACK on read request." complaint messages.
+>>>
+>>> Assuming that the "Transmit Done" interrupt should only be acknowledged
+>>> once it is truly processed, this commit fixes that issue by acknowledging
+>>> interrupts for both ACK and NACK cases late in the interrupt handler.
+>>>
+>>> Fixes: 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in interrupt handler")
+>>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>>
+>> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+> 
+> So I just booted this series on v6.7-rc5 under qemu v8.2.0-rc4 and
+> found this:
+> 
+> ```
+> $ qemu-system-arm \
+> 	-M ast2600-evb \
+> 	-kernel build.aspeed_g5/arch/arm/boot/zImage \
+> 	-dtb build.aspeed_g5/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dtb \
+> 	-initrd ~/src/buildroot.org/buildroot/output/images/rootfs.cpio.xz \
+> 	-nographic 2>&1 \
+> 	| ts -s
+> ...
+> 00:00:03 [    1.089187] Freeing initrd memory: 3308K
+> 00:00:05 smbus: error: Unexpected send start condition in state 1
+> 00:00:05 smbus: error: Unexpected write in state -1
+> 00:00:06 [    3.685731] aspeed-i2c-bus 1e78a400.i2c-bus: i2c bus 7 registered, irq 48
+> 00:00:06 [    3.688918] aspeed-i2c-bus 1e78a480.i2c-bus: i2c bus 8 registered, irq 49
+> 00:00:06 [    3.692326] aspeed-i2c-bus 1e78a500.i2c-bus: i2c bus 9 registered, irq 50
+> 00:00:06 [    3.693757] aspeed-i2c-bus 1e78a680.i2c-bus: i2c bus 12 registered, irq 51
+> 00:00:06 [    3.695070] aspeed-i2c-bus 1e78a700.i2c-bus: i2c bus 13 registered, irq 52
+> 00:00:06 [    3.696184] aspeed-i2c-bus 1e78a780.i2c-bus: i2c bus 14 registered, irq 53
+> 00:00:06 [    3.697144] aspeed-i2c-bus 1e78a800.i2c-bus: i2c bus 15 registered, irq 54
+> 00:00:06 [    3.699061] aspeed-video 1e700000.video: irq 55
+> 00:00:06 [    3.699254] aspeed-video 1e700000.video: assigned reserved memory node video
+> 00:00:06 [    3.702755] aspeed-video 1e700000.video: alloc mem size(24576) at 0xbc000000 for jpeg header
+> 00:00:06 [    3.706139] Driver for 1-wire Dallas network protocol.
+> 00:00:07 smbus: error: Unexpected send start condition in state -1
+> 00:00:07 smbus: error: Unexpected write in state -1
+> 00:00:10 smbus: error: Unexpected send start condition in state -1
+> 00:00:10 smbus: error: Unexpected write in state -1
+> 00:00:12 smbus: error: Unexpected send start condition in state -1
+> 00:00:12 smbus: error: Unexpected write in state -1
+> 00:00:14 smbus: error: Unexpected send start condition in state -1
+> 00:00:14 smbus: error: Unexpected write in state -1
+> 00:00:17 smbus: error: Unexpected send start condition in state -1
+> 00:00:17 smbus: error: Unexpected write in state -1
+> 00:00:18 [   14.080141] adt7475 7-002e: Error configuring attenuator bypass
+> 00:00:19 smbus: error: Unexpected send start condition in state -1
+> 00:00:19 smbus: error: Unexpected write in state -1
+> 00:00:21 smbus: error: Unexpected send start condition in state -1
+> 00:00:21 smbus: error: Unexpected write in state -1
+> 00:00:24 smbus: error: Unexpected send start condition in state -1
+> 00:00:24 smbus: error: Unexpected write in state -1
+> ```
+> 
+> The smbus errors do not occur if I revert this patch.
+> 
+> Can you look into qemu to see if it's a bug in the aspeed i2c
+> controller model's state machine?
+> 
 
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index fac861e2a8ab4..e45999f8e6740 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -156,6 +156,7 @@ Hardware Monitoring Kernel Drivers
-    mcp3021
-    menf21bmc
-    mlxreg-fan
-+   mp2856
-    mp2888
-    mp2975
-    mp5023
-diff --git a/Documentation/hwmon/mp2856.rst b/Documentation/hwmon/mp2856.rst
-new file mode 100644
-index 0000000000000..af625c22b6ea7
---- /dev/null
-+++ b/Documentation/hwmon/mp2856.rst
-@@ -0,0 +1,98 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+Kernel driver mp2856
-+====================
-+
-+Supported chips:
-+
-+  * MPS MP2856
-+
-+    Prefix: 'mp2856'
-+
-+  * MPS MP2857
-+
-+    Prefix: 'mp2857'
-+
-+Author:
-+
-+	Peter Yin <peter.yin@quantatw.com>
-+
-+Description
-+-----------
-+
-+This driver implements support for Monolithic Power Systems, Inc. (MPS)
-+vendor dual-loop, digital, multi-phase controller MP2856/MP2857
-+
-+This device:
-+
-+- Supports up to two power rail.
-+- Supports two pages 0 and 1 for and also pages 2 for configuration.
-+- Can configured VOUT readout in direct or VID format and allows
-+  setting of different formats on rails 1 and 2. For VID the following
-+  protocols are available: AMD SVI3 mode with 5-mV/LSB.
-+
-+Device supports:
-+
-+- SVID interface.
-+- AVSBus interface.
-+
-+Device compliant with:
-+
-+- PMBus rev 1.3 interface.
-+
-+Device supports direct format for reading output current, output voltage,
-+input and output power and temperature.
-+Device supports linear format for reading input voltage and input power.
-+Device supports VID and direct formats for reading output voltage.
-+The below VID modes are supported: AMD SVI3.
-+
-+The driver provides the following sysfs attributes for current measurements:
-+
-+- indexes 1  for "iin";
-+- indexes 2, 3 for "iout";
-+
-+**curr[1-3]_alarm**
-+
-+**curr[1-3]_input**
-+
-+**curr[1-3]_label**
-+
-+The driver provides the following sysfs attributes for voltage measurements.
-+
-+- indexes 1 for "vin";
-+- indexes 2, 3 for "vout";
-+
-+**in[1-3]_crit**
-+
-+**in[1-3]_crit_alarm**
-+
-+**in[1-3]_input**
-+
-+**in[1-3]_label**
-+
-+**in[1-3]_lcrit**
-+
-+**in[1-3]_lcrit_alarm**
-+
-+The driver provides the following sysfs attributes for power measurements.
-+
-+- indexes 1 for "pin";
-+- indexes 2, 3 for "pout";
-+
-+**power[1-3]_alarm**
-+
-+**power[1-3]_input**
-+
-+**power[1-3]_label**
-+
-+The driver provides the following sysfs attributes for temperature measurements.
-+
-+**temp[1-2]_crit**
-+
-+**temp[1-2]_crit_alarm**
-+
-+**temp[1-2]_input**
-+
-+**temp[1-2]_max**
-+
-+**temp[1-2]_max_alarm**
-diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-index 02208d76e8223..95013c95f258a 100644
---- a/drivers/hwmon/pmbus/Kconfig
-+++ b/drivers/hwmon/pmbus/Kconfig
-@@ -308,6 +308,15 @@ config SENSORS_MAX8688
- 	  This driver can also be built as a module. If so, the module will
- 	  be called max8688.
- 
-+config SENSORS_MP2856
-+	tristate "MPS MP2856"
-+	help
-+	  If you say yes here you get hardware monitoring support for MPS
-+	  MP2856 MP2857 Dual Loop Digital Multi-Phase Controller.
-+
-+	  This driver can also be built as a module. If so, the module will
-+	  be called mp2856.
-+
- config SENSORS_MP2888
- 	tristate "MPS MP2888"
- 	help
-diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-index eea38c77ed1db..cf8a767445456 100644
---- a/drivers/hwmon/pmbus/Makefile
-+++ b/drivers/hwmon/pmbus/Makefile
-@@ -33,6 +33,7 @@ obj-$(CONFIG_SENSORS_MAX20751)	+= max20751.o
- obj-$(CONFIG_SENSORS_MAX31785)	+= max31785.o
- obj-$(CONFIG_SENSORS_MAX34440)	+= max34440.o
- obj-$(CONFIG_SENSORS_MAX8688)	+= max8688.o
-+obj-$(CONFIG_SENSORS_MP2856)	+= mp2856.o
- obj-$(CONFIG_SENSORS_MP2888)	+= mp2888.o
- obj-$(CONFIG_SENSORS_MP2975)	+= mp2975.o
- obj-$(CONFIG_SENSORS_MP5023)	+= mp5023.o
-diff --git a/drivers/hwmon/pmbus/mp2856.c b/drivers/hwmon/pmbus/mp2856.c
-new file mode 100644
-index 0000000000000..6969350f5d7d4
---- /dev/null
-+++ b/drivers/hwmon/pmbus/mp2856.c
-@@ -0,0 +1,466 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Hardware monitoring driver for MPS2856/2857
-+ * Monolithic Power Systems VR Controllers
-+ *
-+ * Copyright (C) 2023 Quanta Computer lnc.
-+ */
-+
-+#include <linux/err.h>
-+#include <linux/i2c.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/pmbus.h>
-+#include "pmbus.h"
-+
-+/* Vendor specific registers. */
-+#define MP2856_MFR_VR_MULTI_CONFIG_R1	0x0d
-+#define MP2856_MFR_VR_MULTI_CONFIG_R2	0x1d
-+
-+#define MP2856_MUL1_BOOT_SR_R2		0x10
-+#define MP2856_VR_ACTIVE		BIT(15)
-+
-+#define MP2856_MFR_VR_CONFIG2		0x5e
-+#define MP2856_VOUT_MODE		BIT(11)
-+
-+#define MP2856_MFR_VR_CONFIG1		0x68
-+#define MP2856_DRMOS_KCS		GENMASK(13, 12)
-+
-+#define MP2856_MFR_READ_CS1_2_R1	0x82
-+#define MP2856_MFR_READ_CS3_4_R1	0x83
-+#define MP2856_MFR_READ_CS5_6_R1	0x84
-+#define MP2856_MFR_READ_CS7_8_R1	0x85
-+#define MP2856_MFR_READ_CS9_10_R1	0x86
-+#define MP2856_MFR_READ_CS11_12_R1	0x87
-+
-+#define MP2856_MFR_READ_CS1_2_R2	0x85
-+#define MP2856_MFR_READ_CS3_4_R2	0x86
-+#define MP2856_MFR_READ_CS5_6_R2	0x87
-+
-+#define MP2856_MAX_PHASE_RAIL1		8
-+#define MP2856_MAX_PHASE_RAIL2		4
-+
-+#define MP2857_MAX_PHASE_RAIL1		12
-+#define MP2857_MAX_PHASE_RAIL2		4
-+
-+#define MP2856_PAGE_NUM			2
-+
-+enum chips { mp2856 = 1, mp2857 };
-+
-+static const int mp2856_max_phases[][MP2856_PAGE_NUM] = {
-+	[mp2856] = { MP2856_MAX_PHASE_RAIL1, MP2856_MAX_PHASE_RAIL2 },
-+	[mp2857] = { MP2857_MAX_PHASE_RAIL1, MP2857_MAX_PHASE_RAIL2 },
-+};
-+
-+static const struct i2c_device_id mp2856_id[] = {
-+	{"mp2856", mp2856},
-+	{"mp2857", mp2857},
-+	{}
-+};
-+
-+MODULE_DEVICE_TABLE(i2c, mp2856_id);
-+
-+struct mp2856_data {
-+	struct pmbus_driver_info info;
-+	int vout_format[MP2856_PAGE_NUM];
-+	int curr_sense_gain[MP2856_PAGE_NUM];
-+	int max_phases[MP2856_PAGE_NUM];
-+	enum chips chip_id;
-+};
-+
-+#define to_mp2856_data(x)	container_of(x, struct mp2856_data, info)
-+
-+#define MAX_LIN_MANTISSA	(1023 * 1000)
-+#define MIN_LIN_MANTISSA	(511 * 1000)
-+
-+static u16 val2linear11(s64 val)
-+{
-+	s16 exponent = 0, mantissa;
-+	bool negative = false;
-+
-+	if (val == 0)
-+		return 0;
-+
-+	if (val < 0) {
-+		negative = true;
-+		val = -val;
-+	}
-+
-+	/* Reduce large mantissa until it fits into 10 bit */
-+	while (val >= MAX_LIN_MANTISSA && exponent < 15) {
-+		exponent++;
-+		val >>= 1;
-+	}
-+	/* Increase small mantissa to improve precision */
-+	while (val < MIN_LIN_MANTISSA && exponent > -15) {
-+		exponent--;
-+		val <<= 1;
-+	}
-+
-+	/* Convert mantissa from milli-units to units */
-+	mantissa = clamp_val(DIV_ROUND_CLOSEST_ULL(val, 1000), 0, 0x3ff);
-+
-+	/* restore sign */
-+	if (negative)
-+		mantissa = -mantissa;
-+
-+	/* Convert to 5 bit exponent, 11 bit mantissa */
-+	return (mantissa & 0x7ff) | ((exponent << 11) & 0xf800);
-+}
-+
-+static int
-+mp2856_read_word_helper(struct i2c_client *client, int page, int phase, u8 reg,
-+			u16 mask)
-+{
-+	int ret = pmbus_read_word_data(client, page, phase, reg);
-+
-+	return (ret > 0) ? ret & mask : ret;
-+}
-+
-+static int
-+mp2856_read_vout(struct i2c_client *client, struct mp2856_data *data, int page,
-+		 int phase, u8 reg)
-+{
-+	int ret;
-+
-+	ret = mp2856_read_word_helper(client, page, phase, reg,
-+				      GENMASK(9, 0));
-+	if (ret < 0)
-+		return ret;
-+
-+	/* convert vout result to direct format */
-+	ret = (data->vout_format[page] == vid) ?
-+		((ret + 49) * 5) : ((ret * 1000) >> 8);
-+
-+	return ret;
-+}
-+
-+static int
-+mp2856_read_phase(struct i2c_client *client, struct mp2856_data *data,
-+		  int page, int phase, u8 reg)
-+{
-+	int ret;
-+	int val;
-+
-+	ret = pmbus_read_word_data(client, page, phase, reg);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (!((phase + 1) % MP2856_PAGE_NUM))
-+		ret >>= 8;
-+	ret &= 0xff;
-+
-+	/*
-+	 * Output value is calculated as: (READ_CSx * 12.5mV - 1.23V) / (Kcs * Rcs)
-+	 */
-+	val = (ret * 125) - 12300;
-+
-+	return val2linear11(val);
-+}
-+
-+static int
-+mp2856_read_phases(struct i2c_client *client, struct mp2856_data *data,
-+		   int page, int phase)
-+{
-+	int ret;
-+
-+	if (page == 0) {
-+		switch (phase) {
-+		case 0 ... 1:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS1_2_R1);
-+			break;
-+		case 2 ... 3:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS3_4_R1);
-+			break;
-+		case 4 ... 5:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS5_6_R1);
-+			break;
-+		case 6 ... 7:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS7_8_R1);
-+			break;
-+		default:
-+			return -ENODATA;
-+		}
-+	} else {
-+		switch (phase) {
-+		case 0 ... 1:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS1_2_R2);
-+			break;
-+		case 2 ... 3:
-+			ret = mp2856_read_phase(client, data, page, phase,
-+						MP2856_MFR_READ_CS1_2_R2);
-+			break;
-+		default:
-+			return -ENODATA;
-+		}
-+	}
-+	return ret;
-+}
-+
-+static int
-+mp2856_read_word_data(struct i2c_client *client, int page,
-+		      int phase, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp2856_data *data = to_mp2856_data(info);
-+	int ret;
-+
-+	switch (reg) {
-+	case PMBUS_READ_VOUT:
-+		ret = mp2856_read_vout(client, data, page, phase, reg);
-+		break;
-+	case PMBUS_READ_IOUT:
-+		if (phase != 0xff)
-+			ret = mp2856_read_phases(client, data, page, phase);
-+		else
-+			ret = pmbus_read_word_data(client, page, phase, reg);
-+		break;
-+	default:
-+		return -ENODATA;
-+	}
-+
-+	return ret;
-+}
-+
-+static int
-+mp2856_read_byte_data(struct i2c_client *client, int page, int reg)
-+{
-+	switch (reg) {
-+	case PMBUS_VOUT_MODE:
-+		/* Enforce VOUT direct format. */
-+		return PB_VOUT_MODE_DIRECT;
-+	default:
-+		return -ENODATA;
-+	}
-+}
-+
-+static int
-+mp2856_identify_multiphase(struct i2c_client *client, u8 reg, u8 max_phase,
-+			   u16 mask)
-+{
-+	int ret;
-+
-+	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 2);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = i2c_smbus_read_word_data(client, reg);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret &= mask;
-+	return (ret >= max_phase) ? max_phase : ret;
-+}
-+
-+static int
-+mp2856_identify_multiphase_rail1(struct i2c_client *client,
-+				 struct mp2856_data *data)
-+{
-+	int ret, i;
-+
-+	ret = mp2856_identify_multiphase(client, MP2856_MFR_VR_MULTI_CONFIG_R1,
-+					 MP2856_MAX_PHASE_RAIL1, GENMASK(3, 0));
-+	if (ret < 0)
-+		return ret;
-+
-+	data->info.phases[0] = (ret > data->max_phases[0]) ?
-+				data->max_phases[0] : ret;
-+
-+	for (i = 0 ; i < data->info.phases[0]; i++)
-+		data->info.pfunc[i] |= PMBUS_HAVE_IOUT;
-+
-+	return 0;
-+}
-+
-+static int
-+mp2856_identify_multiphase_rail2(struct i2c_client *client,
-+				 struct mp2856_data *data)
-+{
-+	int ret, i;
-+
-+	ret = mp2856_identify_multiphase(client, MP2856_MFR_VR_MULTI_CONFIG_R2,
-+					 MP2856_MAX_PHASE_RAIL2, GENMASK(2, 0));
-+	if (ret < 0)
-+		return ret;
-+
-+	data->info.phases[1] = (ret > data->max_phases[1]) ?
-+				data->max_phases[1] : ret;
-+
-+	for (i = 0 ; i < data->info.phases[0]; i++)
-+		data->info.pfunc[i] |= PMBUS_HAVE_IOUT;
-+
-+	return 0;
-+}
-+
-+static int
-+mp2856_current_sense_gain_get(struct i2c_client *client,
-+			      struct mp2856_data *data)
-+{
-+	int i, ret;
-+
-+	/*
-+	 * Obtain DrMOS current sense gain of power stage from the register
-+	 * MP2856_MFR_VR_CONFIG1, bits 13-12. The value is selected as below:
-+	 * 00b - 5µA/A, 01b - 8.5µA/A, 10b - 9.7µA/A, 11b - 10µA/A. Other
-+	 * values are invalid.
-+	 */
-+	for (i = 0 ; i < data->info.pages; i++) {
-+		ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
-+		if (ret < 0)
-+			return ret;
-+		ret = i2c_smbus_read_word_data(client,
-+					       MP2856_MFR_VR_CONFIG1);
-+		if (ret < 0)
-+			return ret;
-+
-+		switch ((ret & MP2856_DRMOS_KCS) >> 12) {
-+		case 0:
-+			data->curr_sense_gain[i] = 50;
-+			break;
-+		case 1:
-+			data->curr_sense_gain[i] = 85;
-+			break;
-+		case 2:
-+			data->curr_sense_gain[i] = 97;
-+			break;
-+		default:
-+			data->curr_sense_gain[i] = 100;
-+			break;
-+		}
-+	}
-+	return 0;
-+}
-+
-+static int
-+mp2856_identify_vout_format(struct i2c_client *client,
-+			    struct mp2856_data *data)
-+{
-+	int i, ret;
-+
-+	for (i = 0; i < data->info.pages; i++) {
-+		ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = i2c_smbus_read_word_data(client, MP2856_MFR_VR_CONFIG2);
-+		if (ret < 0)
-+			return ret;
-+
-+		data->vout_format[i] = (ret & MP2856_VOUT_MODE) ? linear : vid;
-+	}
-+	return 0;
-+}
-+
-+static bool
-+mp2856_is_rail2_active(struct i2c_client *client)
-+{
-+	int ret;
-+
-+	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 2);
-+	if (ret < 0)
-+		return true;
-+
-+	ret = i2c_smbus_read_word_data(client, MP2856_MUL1_BOOT_SR_R2);
-+	if (ret < 0)
-+		return true;
-+
-+	return (ret & MP2856_VR_ACTIVE) ? true : false;
-+}
-+
-+static struct pmbus_driver_info mp2856_info = {
-+	.pages = MP2856_PAGE_NUM,
-+	.format[PSC_VOLTAGE_IN] = linear,
-+	.format[PSC_VOLTAGE_OUT] = direct,
-+	.format[PSC_TEMPERATURE] = linear,
-+	.format[PSC_CURRENT_IN] = linear,
-+	.format[PSC_CURRENT_OUT] = linear,
-+	.format[PSC_POWER] = linear,
-+	.m[PSC_VOLTAGE_OUT] = 1,
-+	.R[PSC_VOLTAGE_OUT] = 3,
-+	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
-+		PMBUS_HAVE_IIN | PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT |
-+		PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP | PMBUS_HAVE_POUT |
-+		PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT,
-+	.func[1] = PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_IOUT |
-+		PMBUS_HAVE_STATUS_IOUT | PMBUS_HAVE_POUT | PMBUS_HAVE_TEMP,
-+	.read_byte_data = mp2856_read_byte_data,
-+	.read_word_data = mp2856_read_word_data,
-+};
-+
-+static int mp2856_probe(struct i2c_client *client)
-+{
-+	struct pmbus_driver_info *info;
-+	struct mp2856_data *data;
-+	int ret;
-+
-+	data = devm_kzalloc(&client->dev, sizeof(struct mp2856_data),
-+			    GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	data->chip_id = (enum chips)(uintptr_t)i2c_get_match_data(client);
-+
-+	memcpy(data->max_phases, mp2856_max_phases[data->chip_id],
-+	       sizeof(data->max_phases));
-+
-+	memcpy(&data->info, &mp2856_info, sizeof(*info));
-+	info = &data->info;
-+
-+	/* Identify multiphase configuration. */
-+	ret = mp2856_identify_multiphase_rail1(client, data);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (mp2856_is_rail2_active(client)) {
-+		ret = mp2856_identify_multiphase_rail2(client, data);
-+		if (ret < 0)
-+			return ret;
-+	} else {
-+		/* rail2 is not active */
-+		info->pages = 1;
-+	}
-+
-+	/* Obtain current sense gain of power stage. */
-+	ret = mp2856_current_sense_gain_get(client, data);
-+	if (ret)
-+		return ret;
-+
-+	/* Identify vout format. */
-+	ret = mp2856_identify_vout_format(client, data);
-+	if (ret)
-+		return ret;
-+
-+	/* set the device to page 0 */
-+	i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+
-+	return pmbus_do_probe(client, info);
-+}
-+
-+static const struct of_device_id __maybe_unused mp2856_of_match[] = {
-+	{.compatible = "mps,mp2856", .data = (void *)mp2856},
-+	{.compatible = "mps,mp2857", .data = (void *)mp2857},
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, mp2856_of_match);
-+
-+static struct i2c_driver mp2856_driver = {
-+	.driver = {
-+		.name = "mp2856",
-+		.of_match_table = mp2856_of_match,
-+	},
-+	.probe = mp2856_probe,
-+	.id_table = mp2856_id,
-+};
-+
-+module_i2c_driver(mp2856_driver);
-+
-+MODULE_AUTHOR("Peter Yin <peter.yin@quantatw.com>");
-+MODULE_DESCRIPTION("PMBus driver for MPS MP2856/MP2857 device");
-+MODULE_LICENSE("GPL");
-+MODULE_IMPORT_NS(PMBUS);
--- 
-2.31.1
+Thanks, Andrew, for testing these patches on qemu.
 
+I'll try to look into it to see if anything can be improved, but I have 
+to admit that I'm not so familiar with it. This is my first time trying 
+it on qemu. Just did these tests on real HW with waveform captured 
+sometimes.
+
+So far I could be able to reproduce the issue and start playing around 
+trying to understand the model.
+
+Thanks,
+- Quan
