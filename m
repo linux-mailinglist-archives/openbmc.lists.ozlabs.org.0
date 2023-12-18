@@ -2,134 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C30781688B
-	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 09:47:20 +0100 (CET)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=PkTKQ1Bt;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id DD36581781C
+	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 18:05:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sttjx6XrQz3c20
-	for <lists+openbmc@lfdr.de>; Mon, 18 Dec 2023 19:47:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sv5mL3ppcz3cQL
+	for <lists+openbmc@lfdr.de>; Tue, 19 Dec 2023 04:05:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=PkTKQ1Bt;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::72e; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2072e.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::72e])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=taln60.nuvoton.co.il (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SttjD3sCsz2yMJ;
-	Mon, 18 Dec 2023 19:46:37 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aLHrEl5wN3YaFmFN0gg/cgPz4MGFzI7hbcG+gzs7htB/0gn84o/FdD/NeUJLf+Cy+jpYRuaFvee4yiETWqO7lIaaOb6pJ519mifxA/aZXDDJvvgzUlHoTyojT1nXgd1AzCjE6OQivpaKsiw+fx7qebRsmKsh2Z7xLO9enUq7E1VrzlT6PSeQQwUM55Pz8zstWpXerAEhpyQHMyb06XN24x+y24/XjwgibCYnUMY+wkdzR4Jf7ilzvXn67v3f9SoLSCYcwjtYa8o+vNI31poBB0ZXFgnsasjxqCAokh061YlylRT4H0Z37ErEcZks7n0Fqv7hl7sj0dJRwz+rFt91og==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RIpiW3TCP+qtTISIVXS7rVFEFgiPODM6i3q0cX1O/A0=;
- b=UAko50/nEh6wli0FZdjIQQJZmrWu2rnU5a/tYX+di8n2GnTZ2E4tvwRzhHgkP7B5ThR5EahAZqqzCxdNG7AxmVS2XlqMpfWpGeMac8PU7J462O9biM49VGoBk+1TozeeVNSvz90He2OIZ/TXCth+zwVaofdXzUXIjweXOh2ie19avQGupD6eM5b7QJmdTJK68j26Gw/crSm/LGsxnrDA9GDAWJasKLow1DPuDbHhfuomS3Xs94uzrOkIVAqFVpeAGwKVEZF8+dvP8DgKI4DZC8xR4sSTOfnkKV5gYsQ6GhqMdyGBVNWPdViPc7DyVEQzEs/JnpsVi2ZkKZ4J4mkvgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RIpiW3TCP+qtTISIVXS7rVFEFgiPODM6i3q0cX1O/A0=;
- b=PkTKQ1BtQkQ0396hlR2osq/2Oqlj1HFHRHdeqzKyYvtC1KXgtXcn6K1sJUv5R6vQtlgNES/USOzzBER/pI2WVI8luGkxzeDNE99g+eZHfQ+8Keu9HWZ39Sq0/e5NN8pUu+mfYOZgknRvQkBbzOxLrBlY8NY+3a4x8EkgMBn7wR4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- SN4PR01MB7440.prod.exchangelabs.com (2603:10b6:806:1eb::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7091.37; Mon, 18 Dec 2023 08:46:09 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7091.034; Mon, 18 Dec 2023
- 08:46:09 +0000
-Message-ID: <7dfc99e5-4c76-413b-aabc-81b26e26249e@os.amperecomputing.com>
-Date: Mon, 18 Dec 2023 15:45:56 +0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] i2c: aspeed: Acknowledge Tx done with and without
- ACK irq late
-Content-Language: en-CA
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Brendan Higgins <brendan.higgins@linux.dev>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
- Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
-References: <20231211102217.2436294-1-quan@os.amperecomputing.com>
- <20231211102217.2436294-3-quan@os.amperecomputing.com>
- <2eab42cde34723a195e7a0287db08b25f8388a3b.camel@codeconstruct.com.au>
- <54cba87a0df233b8762e43b742afe8e44a77a60c.camel@codeconstruct.com.au>
-From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <54cba87a0df233b8762e43b742afe8e44a77a60c.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH0PR04CA0101.namprd04.prod.outlook.com
- (2603:10b6:610:75::16) To SN4PR01MB7455.prod.exchangelabs.com
- (2603:10b6:806:202::11)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sv5lr4Jmcz2ykZ
+	for <openbmc@lists.ozlabs.org>; Tue, 19 Dec 2023 04:04:32 +1100 (AEDT)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 3BIH4Jix031692
+	for <openbmc@lists.ozlabs.org>; Mon, 18 Dec 2023 19:04:19 +0200
+Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
+ (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Mon, 18 Dec
+ 2023 19:04:18 +0200
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS02.nuvoton.com
+ (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 19 Dec
+ 2023 01:04:16 +0800
+Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
+ Transport; Tue, 19 Dec 2023 01:04:16 +0800
+Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
+	by taln58.nuvoton.co.il (Postfix) with ESMTP id 979945F607;
+	Mon, 18 Dec 2023 19:04:15 +0200 (IST)
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 80972DC1E33; Mon, 18 Dec 2023 19:04:15 +0200 (IST)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <mturquette@baylibre.com>, <sboyd@kernel.org>, <avifishman70@gmail.com>,
+        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
+        <yuenn@google.com>, <benjaminfair@google.com>
+Subject: [PATCH RESEND v21] clk: npcm8xx: add clock controller
+Date: Mon, 18 Dec 2023 19:04:04 +0200
+Message-ID: <20231218170404.910153-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|SN4PR01MB7440:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc451b3b-4694-4bd8-3c73-08dbffa5c800
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	ifN4LkZBveMrJclelhbzT+X3jtHeCPUmZV1aHGiSbBylZM8xi+j79yt688ubfbpMsnbPZNRUBLI0w451c/N+mBxlJHaYkhs+uOywXpxGx3n1waotbWNH5ZwfSJrxaFdRuHBQO3cKjuY6fkwUG+EVyqiU6rZp4cq/nCxNy03RYYRS9ScYTz0BC3R+cazQ7nrdP+g4PCc9mZzeDPQJv7cAahTEMrJ8gHxv2t4p+KndwTMzy7Rb0a5GXPIZN+nrCkpBqWrGkZJEO1WcqHL0d+qIphtVa5nlVv1fgiRp4mLBkPTSFUuTT/QBTgH+J8pv7iraJ+KwUIRaEK1wrpPlgiRkZXYSwsA58FOF+kE1kiSJrJcdwMksB71l/0JFH9v0xAf3+w1AL9K+h63jIiy8VvR1PasNlMuEaRuRcCmJT9EepR7gWnWoZbeIH6W+XKi34jfMccqNFi+IW32kS2hS+6m+AE6SQbnTyoAIepVKKkjT9sxe6gZ3jxWp2uQOHiO5L1gm45ArQmwRxBcfNLCHhBYNrZ7EPx7Ek4WybAkJurbTmoP65Vv63MMjoYb6nBi+LRWenTYLH9hwDuGiuvwRUQGSUwAYgpQ4LedeQFBYMPLcDX4KTE1gCEYIXI5KFWubvAWFYqqp/zhcjw8ZWrCMj+ZAOg==
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(346002)(39850400004)(136003)(396003)(230922051799003)(451199024)(1800799012)(64100799003)(186009)(83380400001)(26005)(6506007)(53546011)(2616005)(107886003)(6512007)(5660300002)(4326008)(41300700001)(4001150100001)(2906002)(7416002)(6666004)(6486002)(478600001)(316002)(110136005)(54906003)(8936002)(8676002)(66556008)(66476007)(66946007)(86362001)(31696002)(38100700002)(921008)(31686004)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?bWxGYWV4MTM4ZVlyQmhTWW9NRlBSekxrclpvSmZjbzZNeEpSMGQ2aGl6Tm1q?=
- =?utf-8?B?Z1JyUnJVSk9WcW5HRjh0VUxIL281dzJQbVhCZnpJcnZHVU9mRE1PN1JVajlo?=
- =?utf-8?B?a0ZRNDZpR0xhSGJEM1FYL1U2cU9TUXlJYmVqMWY5b3dKby9ZbmZlbTVscDhP?=
- =?utf-8?B?S2tkSWVXV2Z1OGhTcmRqTktpeUFjR3FiMDZVNi8wUTU0Zm1rWlROQmJxVnNv?=
- =?utf-8?B?cm1xR21kZGJlY0tMQWJSS3lSWE80ZzdsdEpLT2FRVlBUZ00wODVoN0gxMFdv?=
- =?utf-8?B?eGpvR3BTMldzN1E0Wi9WRmFucEZqZWcwVDRUbEEzUTVJeEJxb3d3cVk0K0ty?=
- =?utf-8?B?bXNyY29NbXRnODBsQVpiNU5WdUF3MmJiYVFqSms5eVpRWDN1dUs3MzFEZXRm?=
- =?utf-8?B?a2c1Ym03T0x0aldNOE51dzB3c0RGT0lxc1JGWnVrT3BFSUVsb0JHRjl5MFFG?=
- =?utf-8?B?WW9jRUNyYjM0YUNsME90Z1pwWko2L2NsVE1VZXJTUEJnWXI3R0IrZDBSN0VW?=
- =?utf-8?B?RTJlbWtuNGd2bFpyRldyai9hbEJPRDQ0aDNoUFdqWW8wTWVhWTlEOUhBQzZi?=
- =?utf-8?B?QjNGQVBmR1Z0WWdQRyt0OEVLRmd6VHlNWlFlRmJGTHlPajVhenBhUUlXdHY5?=
- =?utf-8?B?ZE8zdnVVZGl1ZFlOZURIbUFqLzVJWCt2VXBZNjcvd1ArOFdIcExlN2k5dTZD?=
- =?utf-8?B?RHhOSVRmbmoybExWTXJFUFZsaWNNazFEUnJ0MmVPSUp4VU5DM0tTNk5uOUs4?=
- =?utf-8?B?cDVOQVB5UGJaaDdRT1c4WUZicVVYTlhnYzVIUzRnUG11cURlUDg1V1hWK2ND?=
- =?utf-8?B?Kyt3VHVPZERDcS9pTGlXK3VYNXkwYVI2eVU5K3JqWHZzM1ljRjduS3gzUXEx?=
- =?utf-8?B?TFFvR2JGcExrVkZNbjRNeFpUZ05BRFM3NEpKUkRwS0xvbE9RNmZ3UTVYRE8y?=
- =?utf-8?B?aXRqWU5kaEZLZ0h0VTh2R1VqbFI1R2xhaEhjSkV1WXB2TjhLZ2ExZGxMODJu?=
- =?utf-8?B?eG84ZjBQTzNJcUxXcU4veitqWmJDeDBRcXVOZHJVakcxS28vbkFTUUxwMms0?=
- =?utf-8?B?UFlDcnRDbFlPMDJucmZNMGZtaHExcjhNajFWUU1LY0t4eFJja3JqVFRYUWRS?=
- =?utf-8?B?aGFCa2dGOHZaVHNLVGhlRmlvQm5NUlA1RUJnVld3OFk2K0duaCtQRFZOKzFj?=
- =?utf-8?B?ZE9MZTZCcEV5ZGI2dEM2bGlGeExSWm5jT0lFSENnVHNrTFUvUXd1NFZjMG55?=
- =?utf-8?B?cVp2NFFIa2RaaElnWjdSWkoxVXA1dW9OKzVCNjNGZTI3MG9NMFVUc2N4ckxJ?=
- =?utf-8?B?anRXbndjWWtkbTB5WDQ2UStLSzZwZUZzTE5ZaE10VFJ4OGFyK3RJUGp4K1E2?=
- =?utf-8?B?TVU1MzdzOVVocUlOeGJneDE5U1AyRWNKamxvSS9QaHExZHFnNXhGVC9obHRr?=
- =?utf-8?B?bm1PdHE0SUFxSmFJRitlK2ZSNy85ZDRMNUNjdlAzWHozdC9GNFVxVEVrZ3lJ?=
- =?utf-8?B?Z1htRkQvMFBKYmlYT083OGxJdFdSeWRJWkR0bGJlQnRheGdVTExsRytNQnh6?=
- =?utf-8?B?cS92UzBTbHdmUVJIaXZLTjJxVkltUUFpRDJudW9WajJ2QklvdnVOL3E2UVJq?=
- =?utf-8?B?RjlnbTlOdkRRaDFsTzdyN1cyZXc4Q2t4d2R6Q1g1MmhMdi9QN1NOL25SNmlC?=
- =?utf-8?B?bms5UUNtVllTcURqRldIRGdxT3pOMWJXbTFJbHN2N2xmZTN2Nitrcmt6V1JS?=
- =?utf-8?B?TC93NlF1cUZSZDgyeGNjMU11emdZdndRTTlhOVZXbGNhVWZ2b05BUGJMQ1Jl?=
- =?utf-8?B?Ym5RMTZ0dkxUYzBBQ0txNmxTdUNZZmFPMHZ1SzFHaW0xaTBlMm5pdTZVb1ND?=
- =?utf-8?B?TVI1NFhkcURsOWdnNnpIRlhyYTZjUjhQU3VzVmEzN3Azay9OMXVGK3hkRmtT?=
- =?utf-8?B?a2tFT0pNalVhb0ZIVUw4a2g2d3h4TUhJWFpqa0Q2Tlo3NVRsd29iUWROWXJ4?=
- =?utf-8?B?TytsZ0NyUTQrbEFIb29adVNuRWdHa3BLalNDTEZKR3huUzRYR0U0TjhRTHBw?=
- =?utf-8?B?ZGo0bCtyRnUrcDMxNWpJTE9PQi84VnkranpDVTY3bTVkUW90b1EzbllRbHBU?=
- =?utf-8?B?VWVYWGdBSkI0aERoQlRaMCtudUg3eDVSRVFYejNTZ0NJQnJ4SWxmT1haU3ZS?=
- =?utf-8?B?a1E9PQ==?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc451b3b-4694-4bd8-3c73-08dbffa5c800
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2023 08:46:09.5151
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: kCc6BkizIgUKHA/3mWWwwf6YfHn/CK5UhtFteX9eKTjXHzPPRX7kd0pIthFO8u6b51QjvoFX9MuD2BjPeZYXdHv+6STR9xz6fxs4NfcA7r4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR01MB7440
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,92 +57,700 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Nuvoton Arbel BMC NPCM8XX contains an integrated clock controller which
+generates and supplies clocks to all modules within the BMC.
 
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Acked-by: Joel Stanley <joel@jms.id.au>
+---
+Addressed comments from:
+ - Stephen Boyd : https://www.spinics.net/lists/kernel/msg5016941.html
 
-On 15/12/2023 05:21, Andrew Jeffery wrote:
->> On Mon, 2023-12-11 at 17:22 +0700, Quan Nguyen wrote:
->>> Commit 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in
->>> interrupt handler") acknowledges most interrupts early before the slave
->>> irq handler is executed, except for the "Receive Done Interrupt status"
->>> which is acknowledged late in the interrupt.
->>> However, it has been observed that the early acknowledgment of "Transmit
->>> Done Interrupt Status" (with ACK or NACK) often causes the interrupt to
->>> be raised in READ REQUEST state, that shows the
->>> "Unexpected ACK on read request." complaint messages.
->>>
->>> Assuming that the "Transmit Done" interrupt should only be acknowledged
->>> once it is truly processed, this commit fixes that issue by acknowledging
->>> interrupts for both ACK and NACK cases late in the interrupt handler.
->>>
->>> Fixes: 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in interrupt handler")
->>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
->>
->> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-> 
-> So I just booted this series on v6.7-rc5 under qemu v8.2.0-rc4 and
-> found this:
-> 
-> ```
-> $ qemu-system-arm \
-> 	-M ast2600-evb \
-> 	-kernel build.aspeed_g5/arch/arm/boot/zImage \
-> 	-dtb build.aspeed_g5/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dtb \
-> 	-initrd ~/src/buildroot.org/buildroot/output/images/rootfs.cpio.xz \
-> 	-nographic 2>&1 \
-> 	| ts -s
-> ...
-> 00:00:03 [    1.089187] Freeing initrd memory: 3308K
-> 00:00:05 smbus: error: Unexpected send start condition in state 1
-> 00:00:05 smbus: error: Unexpected write in state -1
-> 00:00:06 [    3.685731] aspeed-i2c-bus 1e78a400.i2c-bus: i2c bus 7 registered, irq 48
-> 00:00:06 [    3.688918] aspeed-i2c-bus 1e78a480.i2c-bus: i2c bus 8 registered, irq 49
-> 00:00:06 [    3.692326] aspeed-i2c-bus 1e78a500.i2c-bus: i2c bus 9 registered, irq 50
-> 00:00:06 [    3.693757] aspeed-i2c-bus 1e78a680.i2c-bus: i2c bus 12 registered, irq 51
-> 00:00:06 [    3.695070] aspeed-i2c-bus 1e78a700.i2c-bus: i2c bus 13 registered, irq 52
-> 00:00:06 [    3.696184] aspeed-i2c-bus 1e78a780.i2c-bus: i2c bus 14 registered, irq 53
-> 00:00:06 [    3.697144] aspeed-i2c-bus 1e78a800.i2c-bus: i2c bus 15 registered, irq 54
-> 00:00:06 [    3.699061] aspeed-video 1e700000.video: irq 55
-> 00:00:06 [    3.699254] aspeed-video 1e700000.video: assigned reserved memory node video
-> 00:00:06 [    3.702755] aspeed-video 1e700000.video: alloc mem size(24576) at 0xbc000000 for jpeg header
-> 00:00:06 [    3.706139] Driver for 1-wire Dallas network protocol.
-> 00:00:07 smbus: error: Unexpected send start condition in state -1
-> 00:00:07 smbus: error: Unexpected write in state -1
-> 00:00:10 smbus: error: Unexpected send start condition in state -1
-> 00:00:10 smbus: error: Unexpected write in state -1
-> 00:00:12 smbus: error: Unexpected send start condition in state -1
-> 00:00:12 smbus: error: Unexpected write in state -1
-> 00:00:14 smbus: error: Unexpected send start condition in state -1
-> 00:00:14 smbus: error: Unexpected write in state -1
-> 00:00:17 smbus: error: Unexpected send start condition in state -1
-> 00:00:17 smbus: error: Unexpected write in state -1
-> 00:00:18 [   14.080141] adt7475 7-002e: Error configuring attenuator bypass
-> 00:00:19 smbus: error: Unexpected send start condition in state -1
-> 00:00:19 smbus: error: Unexpected write in state -1
-> 00:00:21 smbus: error: Unexpected send start condition in state -1
-> 00:00:21 smbus: error: Unexpected write in state -1
-> 00:00:24 smbus: error: Unexpected send start condition in state -1
-> 00:00:24 smbus: error: Unexpected write in state -1
-> ```
-> 
-> The smbus errors do not occur if I revert this patch.
-> 
-> Can you look into qemu to see if it's a bug in the aspeed i2c
-> controller model's state machine?
-> 
+Changes since version 20:
+ - Using regmap instead of ioremap.
+   the clock and reset modules are sharing the same memory region 
+   and cause failure when using devm_platform_ioremap_resource
+   function, this version uses regmap to handle shared 
+   reset and clock memory region, in case it is approved I will
+   modify the reset driver to use the regmap as well.
+ - Using clk_hw instead of clk_parent_data structre.
+ - Divider clock definition to one line
 
-Thanks, Andrew, for testing these patches on qemu.
+Changes since version 19:
+ - Remove unnecessary free command.
+ - Defining pr_fmt().
+ - Using dev_err_probe.
+ - Return zero in the end of the probe function.
 
-I'll try to look into it to see if anything can be improved, but I have 
-to admit that I'm not so familiar with it. This is my first time trying 
-it on qemu. Just did these tests on real HW with waveform captured 
-sometimes.
+Changes since version 18:
+ - NPCM8XX clock driver did not changed from version 18 only build and tested under kernel 6.6-rc1.
 
-So far I could be able to reproduce the issue and start playing around 
-trying to understand the model.
+Changes since version 17:
+ - NPCM8XX clock driver did not changed from version 17 only build and tested under kernel 6.5-rc3.
 
-Thanks,
-- Quan
+Changes since version 16:
+ - NPCM8XX clock driver
+	- Using devm_kzalloc instead kzalloc.
+	- Remove unnecessary parenthesis.
+	- Modify incorrect spelling.
+
+Changes since version 15:
+ - NPCM8XX clock driver
+	- Remove unused regs parameter from npcm8xx_pll_data structure.
+	- Using index and clk_hw parameters to set the clock parent in the clock structures.
+
+Changes since version 14:
+ - NPCM8XX clock driver
+	- Remove unnecessary register definitions.
+	- Remove the internal reference clock, instead use the external DT reference clock.
+	- rearrange the driver.
+	- using .names parameter in DT to define clock (refclk).
+
+Changes since version 13:
+ - NPCM8XX clock driver
+	- Remove unnecessary definitions and add module.h define
+	- Use in clk_parent_data struct.fw_name and .name.
+	- Add module_exit function.
+	- Add const to divider clock names.
+	- Add MODULE_DESCRIPTION and MODULE_LICENSE
+
+Changes since version 12:
+ - NPCM8XX clock driver
+	- Use clk_parent_data in mux and div clock structure.
+	- Add const to mux tables.
+	- Using devm_clk_hw_register_fixed_rate function.
+	- use only .name clk_parent_data instead .name and .fw_name.
+	- Modify mask values in mux clocks. 
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 10:
+ - NPCM8XX clock driver
+	- Fix const warning.
+
+Changes since version 9:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Using clk_parent_data instead of parent_name
+	- using devm_ioremap instead of ioremap. deeply sorry, I know we had
+	 a long discussion on what should the driver use, from other examples 
+	 (also in other clock drivers) I see the combination of 
+	 platform_get_resource and devm_ioremap are commonly used and it answer
+	 the reset and clock needs.
+
+Changes since version 8:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Add space before and aftre '{' '}'.
+	- Handle devm_of_clk_add_hw_provider function error.
+
+Changes since version 7:
+ - NPCM8XX clock driver
+	- The clock and reset registers using the same memory region, 
+	  due to it the clock driver should claim the ioremap directly 
+	  without checking the memory region.
+
+Changes since version 5:
+ - NPCM8XX clock driver
+	- Remove refclk if devm_of_clk_add_hw_provider function failed.
+
+Changes since version 4:
+ - NPCM8XX clock driver
+	- Use the same quote in the dt-binding file.
+
+Changes since version 3:
+ - NPCM8XX clock driver
+	- Rename NPCM8xx clock dt-binding header file.
+	- Remove unused structures.
+	- Improve Handling the clocks registration.
+
+Changes since version 2:
+ - NPCM8XX clock driver
+	- Add debug new line.
+	- Add 25M fixed rate clock.
+	- Remove unused clocks and clock name from dt-binding.
+
+Changes since version 1:
+ - NPCM8XX clock driver
+	- Modify dt-binding.
+	- Remove unsed definition and include.
+	- Include alphabetically.
+	- Use clock devm.
+
+ drivers/clk/clk-npcm8xx.c | 552 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 552 insertions(+)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
+
+diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
+new file mode 100644
+index 000000000000..e6c5111cc255
+--- /dev/null
++++ b/drivers/clk/clk-npcm8xx.c
+@@ -0,0 +1,552 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Nuvoton NPCM8xx Clock Generator
++ * All the clocks are initialized by the bootloader, so this driver allows only
++ * reading of current settings directly from the hardware.
++ *
++ * Copyright (C) 2020 Nuvoton Technologies
++ * Author: Tomer Maimon <tomer.maimon@nuvoton.com>
++ */
++
++#define pr_fmt(fmt) "npcm8xx_clk: " fmt
++
++#include <linux/bitfield.h>
++#include <linux/clk-provider.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/slab.h>
++#include <linux/regmap.h>
++#include <linux/mfd/syscon.h>
++
++#include <dt-bindings/clock/nuvoton,npcm845-clk.h>
++
++/* npcm8xx clock registers*/
++#define NPCM8XX_CLKSEL		0x04
++#define NPCM8XX_CLKDIV1		0x08
++#define NPCM8XX_CLKDIV2		0x2C
++#define NPCM8XX_CLKDIV3		0x58
++#define NPCM8XX_CLKDIV4		0x7C
++#define NPCM8XX_PLLCON0		0x0C
++#define NPCM8XX_PLLCON1		0x10
++#define NPCM8XX_PLLCON2		0x54
++#define NPCM8XX_PLLCONG		0x60
++#define NPCM8XX_THRTL_CNT	0xC0
++
++#define PLLCON_LOKI	BIT(31)
++#define PLLCON_LOKS	BIT(30)
++#define PLLCON_FBDV	GENMASK(27, 16)
++#define PLLCON_OTDV2	GENMASK(15, 13)
++#define PLLCON_PWDEN	BIT(12)
++#define PLLCON_OTDV1	GENMASK(10, 8)
++#define PLLCON_INDV	GENMASK(5, 0)
++
++struct npcm8xx_clk {
++	struct regmap	*clk_regmap;
++	unsigned int	offset;
++	const char	*name;
++	const u32	*table;
++	u32		mask;
++	u8		shift;
++	unsigned long	width;
++	unsigned long	flags;
++	struct clk_hw	hw;
++};
++
++#define to_npcm8xx_clk(_hw) container_of(_hw, struct npcm8xx_clk, hw)
++
++struct npcm8xx_clk_pll_data {
++	const char *name;
++	struct clk_parent_data parent;
++	unsigned int reg;
++	unsigned long flags;
++	struct clk_hw hw;
++};
++
++struct npcm8xx_clk_div_data {
++	u32 reg;
++	u8 shift;
++	u8 width;
++	const char *name;
++	const struct clk_hw *parent_hw;
++	unsigned long clk_divider_flags;
++	unsigned long flags;
++	int onecell_idx;
++	struct clk_hw hw;
++};
++
++struct npcm8xx_clk_mux_data {
++	u8 shift;
++	u32 mask;
++	const u32 *table;
++	const char *name;
++	const struct clk_parent_data *parent_data;
++	u8 num_parents;
++	unsigned long flags;
++	struct clk_hw hw;
++};
++
++/* external clock definition */
++#define NPCM8XX_CLK_S_REFCLK	"refclk"
++
++/* pll definition */
++#define NPCM8XX_CLK_S_PLL0	"pll0"
++#define NPCM8XX_CLK_S_PLL1	"pll1"
++#define NPCM8XX_CLK_S_PLL2	"pll2"
++#define NPCM8XX_CLK_S_PLL_GFX	"pll_gfx"
++
++/* early divider definition */
++#define NPCM8XX_CLK_S_PLL2_DIV2		"pll2_div2"
++#define NPCM8XX_CLK_S_PLL_GFX_DIV2	"pll_gfx_div2"
++#define NPCM8XX_CLK_S_PLL1_DIV2		"pll1_div2"
++
++/* mux definition */
++#define NPCM8XX_CLK_S_CPU_MUX     "cpu_mux"
++#define NPCM8XX_CLK_S_PIX_MUX     "gfx_pixel_mux"
++#define NPCM8XX_CLK_S_SD_MUX      "sd_mux"
++#define NPCM8XX_CLK_S_UART_MUX    "uart_mux"
++#define NPCM8XX_CLK_S_SU_MUX      "serial_usb_mux"
++#define NPCM8XX_CLK_S_MC_MUX      "mc_mux"
++#define NPCM8XX_CLK_S_ADC_MUX     "adc_mux"
++#define NPCM8XX_CLK_S_GFX_MUX     "gfx_mux"
++#define NPCM8XX_CLK_S_CLKOUT_MUX  "clkout_mux"
++#define NPCM8XX_CLK_S_GFXM_MUX    "gfxm_mux"
++#define NPCM8XX_CLK_S_DVC_MUX     "dvc_mux"
++#define NPCM8XX_CLK_S_RG_MUX	  "rg_mux"
++#define NPCM8XX_CLK_S_RCP_MUX	  "rcp_mux"
++
++/* div definition */
++#define NPCM8XX_CLK_S_MC          "mc"
++#define NPCM8XX_CLK_S_AXI         "axi"
++#define NPCM8XX_CLK_S_AHB         "ahb"
++#define NPCM8XX_CLK_S_SPI0        "spi0"
++#define NPCM8XX_CLK_S_SPI1        "spi1"
++#define NPCM8XX_CLK_S_SPI3        "spi3"
++#define NPCM8XX_CLK_S_SPIX        "spix"
++#define NPCM8XX_CLK_S_APB1        "apb1"
++#define NPCM8XX_CLK_S_APB2        "apb2"
++#define NPCM8XX_CLK_S_APB3        "apb3"
++#define NPCM8XX_CLK_S_APB4        "apb4"
++#define NPCM8XX_CLK_S_APB5        "apb5"
++#define NPCM8XX_CLK_S_APB19       "apb19"
++#define NPCM8XX_CLK_S_TOCK        "tock"
++#define NPCM8XX_CLK_S_CLKOUT      "clkout"
++#define NPCM8XX_CLK_S_PRE_ADC     "pre adc"
++#define NPCM8XX_CLK_S_UART        "uart"
++#define NPCM8XX_CLK_S_UART2       "uart2"
++#define NPCM8XX_CLK_S_TIMER       "timer"
++#define NPCM8XX_CLK_S_MMC         "mmc"
++#define NPCM8XX_CLK_S_SDHC        "sdhc"
++#define NPCM8XX_CLK_S_ADC         "adc"
++#define NPCM8XX_CLK_S_GFX         "gfx0_gfx1_mem"
++#define NPCM8XX_CLK_S_USBIF       "serial_usbif"
++#define NPCM8XX_CLK_S_USB_HOST    "usb_host"
++#define NPCM8XX_CLK_S_USB_BRIDGE  "usb_bridge"
++#define NPCM8XX_CLK_S_PCI         "pci"
++#define NPCM8XX_CLK_S_TH          "th"
++#define NPCM8XX_CLK_S_ATB         "atb"
++#define NPCM8XX_CLK_S_PRE_CLK     "pre_clk"
++#define NPCM8XX_CLK_S_RG	  "rg"
++#define NPCM8XX_CLK_S_RCP	  "rcp"
++
++static struct clk_hw hw_pll1_div2, hw_pll2_div2, hw_gfx_div2, hw_pre_clk;
++static struct npcm8xx_clk_pll_data npcm8xx_pll_clks[] = {
++	{ NPCM8XX_CLK_S_PLL0, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON0, 0 },
++	{ NPCM8XX_CLK_S_PLL1, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON1, 0 },
++	{ NPCM8XX_CLK_S_PLL2, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON2, 0 },
++	{ NPCM8XX_CLK_S_PLL_GFX, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCONG, 0 },
++};
++
++static const u32 cpuck_mux_table[] = { 0, 1, 2, 7 };
++static const struct clk_parent_data cpuck_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .index = 0 },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 pixcksel_mux_table[] = { 0, 2 };
++static const struct clk_parent_data pixcksel_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[3].hw },
++	{ .index = 0 }
++};
++
++static const u32 default_mux_table[] = { 0, 1, 2, 3 };
++static const struct clk_parent_data default_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .index = 0 },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 sucksel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data sucksel_mux_parents[] = {
++	{ .index = 0 },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 mccksel_mux_table[] = { 0, 2 };
++static const struct clk_parent_data mccksel_mux_parents[] = {
++	{ .hw = &hw_pll1_div2 },
++	{ .index = 0 }
++};
++
++static const u32 clkoutsel_mux_table[] = { 0, 1, 2, 3, 4 };
++static const struct clk_parent_data clkoutsel_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .index = 0 },
++	{ .hw = &hw_gfx_div2 },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 gfxmsel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data gfxmsel_mux_parents[] = {
++	{ .index = 0 },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 dvcssel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data dvcssel_mux_parents[] = {
++	{ .index = 0 },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 default3_mux_table[] = { 0, 1, 2 };
++static const struct clk_parent_data default3_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .index = 0 }
++};
++
++static struct npcm8xx_clk_mux_data npcm8xx_muxes[] = {
++	{ 0, 7, cpuck_mux_table, NPCM8XX_CLK_S_CPU_MUX, cpuck_mux_parents,
++		ARRAY_SIZE(cpuck_mux_parents), CLK_IS_CRITICAL },
++	{ 4, 3, pixcksel_mux_table, NPCM8XX_CLK_S_PIX_MUX, pixcksel_mux_parents,
++		ARRAY_SIZE(pixcksel_mux_parents), 0 },
++	{ 6, 3, default_mux_table, NPCM8XX_CLK_S_SD_MUX, default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 8, 3, default_mux_table, NPCM8XX_CLK_S_UART_MUX, default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 10, 3, sucksel_mux_table, NPCM8XX_CLK_S_SU_MUX, sucksel_mux_parents,
++		ARRAY_SIZE(sucksel_mux_parents), 0 },
++	{ 12, 3, mccksel_mux_table, NPCM8XX_CLK_S_MC_MUX, mccksel_mux_parents,
++		ARRAY_SIZE(mccksel_mux_parents), 0 },
++	{ 14, 3, default_mux_table, NPCM8XX_CLK_S_ADC_MUX, default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 16, 3, default_mux_table, NPCM8XX_CLK_S_GFX_MUX, default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 18, 7, clkoutsel_mux_table, NPCM8XX_CLK_S_CLKOUT_MUX, clkoutsel_mux_parents,
++		ARRAY_SIZE(clkoutsel_mux_parents), 0 },
++	{ 21, 3, gfxmsel_mux_table, NPCM8XX_CLK_S_GFXM_MUX, gfxmsel_mux_parents,
++		ARRAY_SIZE(gfxmsel_mux_parents), 0 },
++	{ 23, 3, dvcssel_mux_table, NPCM8XX_CLK_S_DVC_MUX, dvcssel_mux_parents,
++		ARRAY_SIZE(dvcssel_mux_parents), 0 },
++	{ 25, 3, default3_mux_table, NPCM8XX_CLK_S_RG_MUX, default3_mux_parents,
++		ARRAY_SIZE(default3_mux_parents), 0 },
++	{ 27, 3, default3_mux_table, NPCM8XX_CLK_S_RCP_MUX, default3_mux_parents,
++		ARRAY_SIZE(default3_mux_parents), 0 },
++};
++
++static struct npcm8xx_clk_div_data npcm8xx_pre_divs[] = {
++	{ NPCM8XX_CLKDIV1, 21, 5, NPCM8XX_CLK_S_PRE_ADC, &npcm8xx_muxes[6].hw, CLK_DIVIDER_READ_ONLY, 0, -1 },
++	{ NPCM8XX_CLKDIV1, 26, 2, NPCM8XX_CLK_S_AHB, &hw_pre_clk, CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM8XX_CLK_AHB },
++};
++
++/* configurable dividers: */
++static struct npcm8xx_clk_div_data npcm8xx_divs[] = {
++	{ NPCM8XX_CLKDIV1, 28, 3, NPCM8XX_CLK_S_ADC, &npcm8xx_pre_divs[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_ADC },
++	{ NPCM8XX_CLKDIV1, 16, 5, NPCM8XX_CLK_S_UART, &npcm8xx_muxes[3].hw, 0, 0, NPCM8XX_CLK_UART },
++	{ NPCM8XX_CLKDIV1, 11, 5, NPCM8XX_CLK_S_MMC, &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_MMC },
++	{ NPCM8XX_CLKDIV1, 6, 5, NPCM8XX_CLK_S_SPI3, &npcm8xx_pre_divs[1].hw, 0, 0, NPCM8XX_CLK_SPI3 },
++	{ NPCM8XX_CLKDIV1, 2, 4, NPCM8XX_CLK_S_PCI, &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_PCI },
++
++	{ NPCM8XX_CLKDIV2, 30, 2, NPCM8XX_CLK_S_APB4, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB4 },
++	{ NPCM8XX_CLKDIV2, 28, 2, NPCM8XX_CLK_S_APB3, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB3 },
++	{ NPCM8XX_CLKDIV2, 26, 2, NPCM8XX_CLK_S_APB2, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB2 },
++	{ NPCM8XX_CLKDIV2, 24, 2, NPCM8XX_CLK_S_APB1, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB1 },
++	{ NPCM8XX_CLKDIV2, 22, 2, NPCM8XX_CLK_S_APB5, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB5 },
++	{ NPCM8XX_CLKDIV2, 16, 5, NPCM8XX_CLK_S_CLKOUT, &npcm8xx_muxes[8].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_CLKOUT },
++	{ NPCM8XX_CLKDIV2, 13, 3, NPCM8XX_CLK_S_GFX, &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_GFX },
++	{ NPCM8XX_CLKDIV2, 8, 5, NPCM8XX_CLK_S_USB_BRIDGE, &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU },
++	{ NPCM8XX_CLKDIV2, 4, 4, NPCM8XX_CLK_S_USB_HOST, &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU48 },
++	{ NPCM8XX_CLKDIV2, 0, 4, NPCM8XX_CLK_S_SDHC, &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SDHC },
++
++	{ NPCM8XX_CLKDIV3, 16, 8, NPCM8XX_CLK_S_SPI1, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI1 },
++	{ NPCM8XX_CLKDIV3, 11, 5, NPCM8XX_CLK_S_UART2, &npcm8xx_muxes[3].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_UART2 },
++	{ NPCM8XX_CLKDIV3, 6, 5, NPCM8XX_CLK_S_SPI0, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI0 },
++	{ NPCM8XX_CLKDIV3, 1, 5, NPCM8XX_CLK_S_SPIX, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPIX },
++
++	{ NPCM8XX_CLKDIV4, 28, 4, NPCM8XX_CLK_S_RG, &npcm8xx_muxes[11].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RG },
++	{ NPCM8XX_CLKDIV4, 12, 4, NPCM8XX_CLK_S_RCP, &npcm8xx_muxes[12].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RCP },
++
++	{ NPCM8XX_THRTL_CNT, 0, 2, NPCM8XX_CLK_S_TH, &npcm8xx_muxes[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_TH },
++};
++
++static struct clk_hw *
++npcm8xx_clk_register(struct device *dev, const char *name,
++		     struct regmap *clk_regmap, unsigned int offset,
++		     unsigned long flags, const struct clk_ops *npcm8xx_clk_ops,
++		     const struct clk_parent_data *parent_data,
++		     const struct clk_hw *parent_hw, u8 num_parents,
++		     u8 shift, u32 mask, unsigned long width,
++		     const u32 *table, unsigned long clk_flags)
++{
++	struct npcm8xx_clk *clk;
++	struct clk_init_data init = {};
++	int ret;
++
++	clk = devm_kzalloc(dev, sizeof(*clk), GFP_KERNEL);
++	if (!clk)
++		return ERR_PTR(-ENOMEM);
++
++	init.name = name;
++	init.ops = npcm8xx_clk_ops;
++	init.parent_data = parent_data;
++	init.parent_hws = parent_hw ? &parent_hw : NULL;
++	init.num_parents = num_parents;
++	init.flags = flags;
++
++	clk->clk_regmap = clk_regmap;
++	clk->hw.init = &init;
++	clk->offset = offset;
++	clk->shift = shift;
++	clk->mask = mask;
++	clk->width = width;
++	clk->table = table;
++	clk->flags = clk_flags;
++
++	ret = devm_clk_hw_register(dev, &clk->hw);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return &clk->hw;
++}
++
++static unsigned long npcm8xx_clk_pll_recalc_rate(struct clk_hw *hw,
++						 unsigned long parent_rate)
++{
++	struct npcm8xx_clk *pll = to_npcm8xx_clk(hw);
++	unsigned long fbdv, indv, otdv1, otdv2;
++	unsigned int val;
++	u64 ret;
++
++	if (parent_rate == 0) {
++		pr_debug("%s: parent rate is zero\n", __func__);
++		return 0;
++	}
++
++	regmap_read(pll->clk_regmap, pll->offset, &val);
++
++	indv = FIELD_GET(PLLCON_INDV, val);
++	fbdv = FIELD_GET(PLLCON_FBDV, val);
++	otdv1 = FIELD_GET(PLLCON_OTDV1, val);
++	otdv2 = FIELD_GET(PLLCON_OTDV2, val);
++
++	ret = (u64)parent_rate * fbdv;
++	do_div(ret, indv * otdv1 * otdv2);
++
++	return ret;
++}
++
++static const struct clk_ops npcm8xx_clk_pll_ops = {
++	.recalc_rate = npcm8xx_clk_pll_recalc_rate,
++};
++
++static u8 npcm8xx_clk_mux_get_parent(struct clk_hw *hw)
++{
++	struct npcm8xx_clk *mux = to_npcm8xx_clk(hw);
++	u32 val;
++
++	regmap_read(mux->clk_regmap, mux->offset, &val);
++	val = val >> mux->shift;
++	val &= mux->mask;
++
++	return clk_mux_val_to_index(hw, mux->table, mux->flags, val);
++}
++
++static const struct clk_ops npcm8xx_clk_mux_ops = {
++	.get_parent = npcm8xx_clk_mux_get_parent,
++};
++
++static unsigned long npcm8xx_clk_div_get_parent(struct clk_hw *hw,
++						unsigned long parent_rate)
++{
++	struct npcm8xx_clk *div = to_npcm8xx_clk(hw);
++	unsigned int val;
++
++	regmap_read(div->clk_regmap, div->offset, &val);
++	val = val >> div->shift;
++	val &= clk_div_mask(div->width);
++
++	return divider_recalc_rate(hw, parent_rate, val, NULL, div->flags,
++				   div->width);
++}
++
++static const struct clk_ops npcm8xx_clk_div_ops = {
++	.recalc_rate = npcm8xx_clk_div_get_parent,
++};
++
++static int npcm8xx_clk_probe(struct platform_device *pdev)
++{
++	struct clk_hw_onecell_data *npcm8xx_clk_data;
++	struct device_node *np = pdev->dev.of_node;
++	struct device *dev = &pdev->dev;
++	struct regmap *clk_regmap;
++	struct clk_hw *hw;
++	unsigned int i;
++
++	npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
++							 NPCM8XX_NUM_CLOCKS),
++					GFP_KERNEL);
++	if (!npcm8xx_clk_data)
++		return -ENOMEM;
++
++	clk_regmap = syscon_regmap_lookup_by_phandle(np, "nuvoton,sysclk");
++	if (IS_ERR(clk_regmap)) {
++		dev_err(&pdev->dev, "Failed to find nuvoton,sysclk\n");
++		return PTR_ERR(clk_regmap);
++	}
++
++	npcm8xx_clk_data->num = NPCM8XX_NUM_CLOCKS;
++
++	for (i = 0; i < NPCM8XX_NUM_CLOCKS; i++)
++		npcm8xx_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
++
++	/* Register plls */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_pll_clks); i++) {
++		struct npcm8xx_clk_pll_data *pll_clk = &npcm8xx_pll_clks[i];
++
++		hw = npcm8xx_clk_register(dev, pll_clk->name, clk_regmap,
++					  pll_clk->reg, pll_clk->flags,
++					  &npcm8xx_clk_pll_ops, &pll_clk->parent,
++					  NULL, 1, 0, 0, 0, NULL, 0);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register pll\n");
++		pll_clk->hw = *hw;
++	}
++
++	/* Register fixed dividers */
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL1_DIV2,
++					       NPCM8XX_CLK_S_PLL1, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register fixed div\n");
++	hw_pll1_div2 = *hw;
++
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL2_DIV2,
++					       NPCM8XX_CLK_S_PLL2, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register pll2 div2\n");
++	hw_pll2_div2 = *hw;
++
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL_GFX_DIV2,
++					       NPCM8XX_CLK_S_PLL_GFX, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register gfx div2\n");
++	hw_gfx_div2 = *hw;
++
++	/* Register muxes */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_muxes); i++) {
++		struct npcm8xx_clk_mux_data *mux_data = &npcm8xx_muxes[i];
++
++		hw = npcm8xx_clk_register(dev, mux_data->name, clk_regmap,
++					  NPCM8XX_CLKSEL, mux_data->flags,
++					  &npcm8xx_clk_mux_ops,
++					  mux_data->parent_data, NULL,
++					  mux_data->num_parents,
++					  mux_data->shift, mux_data->mask, 0,
++					  mux_data->table, 0);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register mux\n");
++		mux_data->hw = *hw;
++	}
++
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PRE_CLK,
++					       NPCM8XX_CLK_S_CPU_MUX, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register pre clk div2\n");
++	hw_pre_clk = *hw;
++
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_AXI,
++					       NPCM8XX_CLK_S_TH, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register axi div2\n");
++	npcm8xx_clk_data->hws[NPCM8XX_CLK_AXI] = hw;
++
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_ATB,
++					       NPCM8XX_CLK_S_AXI, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register atb div2\n");
++	npcm8xx_clk_data->hws[NPCM8XX_CLK_ATB] = hw;
++
++	/* Register clock pre dividers specified in npcm8xx_divs */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_pre_divs); i++) {
++		struct npcm8xx_clk_div_data *div_data = &npcm8xx_pre_divs[i];
++
++		hw = npcm8xx_clk_register(dev, div_data->name, clk_regmap,
++					  div_data->reg, div_data->flags,
++					  &npcm8xx_clk_div_ops, NULL,
++					  div_data->parent_hw, 1,
++					  div_data->shift, 0, div_data->width,
++					  NULL, div_data->clk_divider_flags);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register pre div table\n");
++		div_data->hw = *hw;
++
++		if (div_data->onecell_idx >= 0)
++			npcm8xx_clk_data->hws[div_data->onecell_idx] = hw;
++	}
++
++	/* Register clock dividers specified in npcm8xx_divs */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_divs); i++) {
++		struct npcm8xx_clk_div_data *div_data = &npcm8xx_divs[i];
++
++		hw = npcm8xx_clk_register(dev, div_data->name, clk_regmap,
++					  div_data->reg, div_data->flags,
++					  &npcm8xx_clk_div_ops, NULL,
++					  div_data->parent_hw, 1,
++					  div_data->shift, 0, div_data->width,
++					  NULL, div_data->clk_divider_flags);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register div table\n");
++
++		if (div_data->onecell_idx >= 0)
++			npcm8xx_clk_data->hws[div_data->onecell_idx] = hw;
++	}
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
++					   npcm8xx_clk_data);
++}
++
++static const struct of_device_id npcm8xx_clk_dt_ids[] = {
++	{ .compatible = "nuvoton,npcm845-clk", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, npcm8xx_clk_dt_ids);
++
++static struct platform_driver npcm8xx_clk_driver = {
++	.probe  = npcm8xx_clk_probe,
++	.driver = {
++		.name = "npcm8xx_clk",
++		.of_match_table = npcm8xx_clk_dt_ids,
++	},
++};
++
++static int __init npcm8xx_clk_driver_init(void)
++{
++	return platform_driver_register(&npcm8xx_clk_driver);
++}
++arch_initcall(npcm8xx_clk_driver_init);
++
++static void __exit npcm8xx_clk_exit(void)
++{
++	platform_driver_unregister(&npcm8xx_clk_driver);
++}
++module_exit(npcm8xx_clk_exit);
++
++MODULE_DESCRIPTION("Clock driver for Nuvoton NPCM8XX BMC SoC");
++MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
++MODULE_LICENSE("GPL v2");
++
+-- 
+2.34.1
+
