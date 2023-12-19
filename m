@@ -1,69 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2698B8191CF
-	for <lists+openbmc@lfdr.de>; Tue, 19 Dec 2023 21:56:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 810188192FC
+	for <lists+openbmc@lfdr.de>; Tue, 19 Dec 2023 23:04:15 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NRTNu4af;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HUxu6JGW;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Svps85wdnz3cQH
-	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 07:56:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SvrM11cF6z3cSP
+	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 09:04:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NRTNu4af;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HUxu6JGW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1; helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=lists.ozlabs.org)
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52d; helo=mail-pg1-x52d.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SvprR6hVtz2ykw;
-	Wed, 20 Dec 2023 07:56:07 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by ams.source.kernel.org (Postfix) with ESMTP id E83AFB81AA4;
-	Tue, 19 Dec 2023 20:56:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3859C433C7;
-	Tue, 19 Dec 2023 20:56:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1703019362;
-	bh=bI7eRgyy5+ORKYRMoLdIMmfFqNe12oOLtPUfljOSAyw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NRTNu4afzfmyVVxHDtB7hzC5xvReRXGZC3oX6gzfNCDxJV9dmI0Qx+K0XKecETC6y
-	 9maVdCXBahsp2UOvHWiQgrzHt+9fpBmshww7mD0gGSvxXCWp0Xv5XgCVzUsiX4unQb
-	 2jBBsQt7f1jfU+bT93hf+je1VMnkQW0WB9vvhxYHmdvkEQi7T91f4xG3JHbB7j3nMb
-	 fJlzoDmOzMJaFsMA7u9vMZC04S37LRZKw9bf+rGzR/YkAYlPbVIuQ67tCmFSCE3yFp
-	 xuaoo0xRMCxtVl/p/82ntXh2VNF1URJ6GVGAvtqZiWPC/UOx1qq1dM+8LSEq5dGQbO
-	 HP0GDTKTyR+Qg==
-Date: Tue, 19 Dec 2023 21:55:58 +0100
-From: Wolfram Sang <wsa@kernel.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v4 1/2] i2c: aspeed: Handle the coalesced stop conditions
- with the start conditions.
-Message-ID: <ZYIDXru48jqk6MH0@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
-	openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Open Source Submission <patches@amperecomputing.com>,
-	Phong Vo <phong@os.amperecomputing.com>,
-	"Thang Q . Nguyen" <thang@os.amperecomputing.com>
-References: <20231211102217.2436294-1-quan@os.amperecomputing.com>
- <20231211102217.2436294-2-quan@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SvTdm3BSwz3vjW
+	for <openbmc@lists.ozlabs.org>; Tue, 19 Dec 2023 19:00:43 +1100 (AEDT)
+Received: by mail-pg1-x52d.google.com with SMTP id 41be03b00d2f7-5c6ce4dffb5so1318133a12.0
+        for <openbmc@lists.ozlabs.org>; Tue, 19 Dec 2023 00:00:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702972841; x=1703577641; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uw+kYnYNk9hZHNMOrj4qxXorwiwE6kTW/ev0nql9iYg=;
+        b=HUxu6JGWf4xEQILdlKeARzQXrwjeAxatmNY3FGj243I22Rsbh2pAiaOb6ivBcQ3HLm
+         4nd0yPuHSGayvvOWvC0j9fwOOUmWlZ7YNhX5Ld7jMHOA8Uke3lkInd3vQW/A8SQYDmVf
+         Xs+g3qSA8UQN2FVUA9WU9x6x2z5d2B45S6m8fTeMNIQMdxUPLHWvtp5QiLac67SemQen
+         DfAQ4c+S+kpwVa22We2z5v5oAOCvV5c0MrDch0XvT/QAHx+CMHn+52ReW5gfbZoWpa9J
+         WX84hiPFvxVXtspjhgIVQzeDYSoqTjZ/OSf2Jn0/YDo4ekz7wz8/uOiIYhnYA+dPkdHT
+         vS2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702972841; x=1703577641;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uw+kYnYNk9hZHNMOrj4qxXorwiwE6kTW/ev0nql9iYg=;
+        b=vEizVvqeoZTagRSz8LKL54gKtmPTLAdCB1/aVEjB+rONvq7isiiZe+M45i06Sd8DE6
+         Tw0Ftk7v/GUy/KWF+vBfhCYgjWvkcSDPyFlrR7QTlPxlZeuyEKD3ZGrJOFacBrtkzzSK
+         f0G6ms0YfKTb7RHoC8dNVjAc0+iwEzlP1CL2HbJ67/RKkIt1myva2L89lNbKzX4EB5Kx
+         9mEuUfkuz8keELM+GpZnpwuGyt6y1etxjbVdro4Hroyx3SefTvuwA/cT3E2Qcs1CEg9R
+         cYfiu6tGrWpaFAn9uDRV/0H9jqEvYbzCeHyoBRMwffkM4qFnzbqLbrcYdI/ejmpi+pUR
+         XVpQ==
+X-Gm-Message-State: AOJu0Yx38Y2ARC5nBel9594poRNsB2HSuoFGHwNrW+V1VnD2yse2xArc
+	27P58/ke4rZxo4THnOy28wo=
+X-Google-Smtp-Source: AGHT+IHDS5YCYIfRlrtW0Hkq+K/JcbqTDdBHtWGryLIVehkw0TtH79JKy50MoK5i0ZaTlsIS8OeNNw==
+X-Received: by 2002:a05:6a20:7fa6:b0:18f:dde5:7211 with SMTP id d38-20020a056a207fa600b0018fdde57211mr8990952pzj.7.1702972840569;
+        Tue, 19 Dec 2023 00:00:40 -0800 (PST)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id jl13-20020a170903134d00b001d0b410271fsm20261005plb.218.2023.12.19.00.00.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Dec 2023 00:00:40 -0800 (PST)
+From: baneric926@gmail.com
+X-Google-Original-From: kcfeng0@nuvoton.com
+To: jdelvare@suse.com,
+	linux@roeck-us.net,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	corbet@lwn.net
+Subject: [PATCH v2 0/2] hwmon: Driver for Nuvoton NCT7363Y
+Date: Tue, 19 Dec 2023 16:00:19 +0800
+Message-Id: <20231219080021.2048889-1-kcfeng0@nuvoton.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="EnB+dRLs7i+8f3ip"
-Content-Disposition: inline
-In-Reply-To: <20231211102217.2436294-2-quan@os.amperecomputing.com>
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Wed, 20 Dec 2023 09:03:45 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,56 +82,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Andi Shyti <andi.shyti@kernel.org>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Brendan Higgins <brendan.higgins@linux.dev>, Joel Stanley <joel@jms.id.au>, Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, kwliu@nuvoton.com, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+From: Ban Feng <kcfeng0@nuvoton.com>
 
---EnB+dRLs7i+8f3ip
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
 
-On Mon, Dec 11, 2023 at 05:22:16PM +0700, Quan Nguyen wrote:
-> Some masters may drive the transfers with low enough latency between
-> the nak/stop phase of the current command and the start/address phase
-> of the following command that the interrupts are coalesced by the
-> time we process them.
-> Handle the stop conditions before processing SLAVE_MATCH to fix the
-> complaints that sometimes occur below.
->=20
-> "aspeed-i2c-bus 1e78a040.i2c-bus: irq handled !=3D irq. Expected
-> 0x00000086, but was 0x00000084"
->=20
-> Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C dri=
-ver")
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Changes since version 1:
+- Modify NCT736X(nct736x) to NCT7363Y(nct7363)
+- Convert to devm_hwmon_device_register_with_info API
+- All ID tables are next to each other and should be consistent
+  between i2c_device_id and of_device_id
+- Ref. fan-common.yaml and modify properties (nuvoton,pwm-mask/
+  nuvoton,fanin-mask) to (pwms/tach-ch)
+- Convert to devm_regmap_init_i2c API
+- Remove unused function (watchdog timer)
+- Fix uninitialized symbol which is reported by kernel test robot
 
-Applied to for-current, thanks!
+Ban Feng (2):
+  dt-bindings: hwmon: Add NCT7363Y documentation
+  hwmon: Driver for Nuvoton NCT7363Y
 
-I'll wait with patch 2. It seems there are issues to be solved before.
+ .../bindings/hwmon/nuvoton,nct7363.yaml       |  62 +++
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/nct7363.rst               |  33 ++
+ MAINTAINERS                                   |   8 +
+ drivers/hwmon/Kconfig                         |  11 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/nct7363.c                       | 515 ++++++++++++++++++
+ 7 files changed, 631 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+ create mode 100644 Documentation/hwmon/nct7363.rst
+ create mode 100644 drivers/hwmon/nct7363.c
 
+-- 
+2.34.1
 
---EnB+dRLs7i+8f3ip
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmWCA14ACgkQFA3kzBSg
-KbZyCA//ccM+CCktAPNx6R6VzRFUXc9PKW3sgI5UZ6kuiBU+ntqHpNArrKZRxWFj
-owkYvvBdo2tg1YZQWQOAEwdzOz3mEQ2py3faQRIEL08bihsZhgSR43jR/D2d9fpI
-tssJghX3Hu3VMt1m0O2PUqX+20IJhYxjuQIVB5VEm7gSvlRoDcl+nqps/xEyICv5
-A+Uftt2ZWHRGVgQ+RZB98BSsfFbPIgw64BfG0iKUF2bVqjPBCAMfPs2bZUSoGdxl
-I9cSyIzWqKmQ3R2R84S+tJw6xCy1aENHHXAaXHDFLtiXieoZrcBSvs3U2YaBcFeA
-VvZNMxPnGETYPsn8Hze1En1wJFimMzxEcpRRu380W+GphZa38oJyfadRh38oh8yf
-pYgu9hsL4vAUefT28PvBTC75T9AabggQifj3KqdxAEWfolcsB219lDgsC8qPnOKI
-IhU4bbtgGNM2z8pUN8zvFxWx9oJGONR8yibrkWhpSAsM1Wi1JREvxfdhOhlJ+84Y
-8j5AhARou0HEOb0mtaIBAT37UWyBX9/HlZatXFeSi4p9AktTpKS9A014Zw5rp3OS
-rZci0/iUupGoc7tg9KkbTQ0Oc4zMA9FhGKnWb+gXFw6lZPVs6w9O+EidfBCKG7iq
-mgpWX0bhPwIsr7IKgR29OeKEbWiD2Uye033m5dfBTQ8cnaL0yuc=
-=mbba
------END PGP SIGNATURE-----
-
---EnB+dRLs7i+8f3ip--
