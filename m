@@ -2,67 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B4A819B83
-	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 10:39:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5D9A819BAB
+	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 10:50:48 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UYB6RosX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=degz+byA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sw7n41rQ5z3cF6
-	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 20:39:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sw82G2v6pz3cLL
+	for <lists+openbmc@lfdr.de>; Wed, 20 Dec 2023 20:50:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UYB6RosX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=degz+byA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::641; helo=mail-pl1-x641.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::344; helo=mail-ot1-x344.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sw7mV5KS4z2xdZ
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Dec 2023 20:38:49 +1100 (AEDT)
-Received: by mail-pl1-x641.google.com with SMTP id d9443c01a7336-1d3ac87553bso17845685ad.3
-        for <openbmc@lists.ozlabs.org>; Wed, 20 Dec 2023 01:38:49 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sw81f5mZ4z30YP
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Dec 2023 20:50:13 +1100 (AEDT)
+Received: by mail-ot1-x344.google.com with SMTP id 46e09a7af769-6da5259e3a3so3735881a34.3
+        for <openbmc@lists.ozlabs.org>; Wed, 20 Dec 2023 01:50:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703065127; x=1703669927; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1703065810; x=1703670610; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PA+ptV78xyz6pZzeaodkQ+dpw630XjAKvXYhuBNs0n4=;
-        b=UYB6RosXcNuOwdSy6tgreE0xXTG8C94D5XafNdfuQvr8cPa+clPRx0w7y2XBODD3jw
-         z5m8w1FD4OBTZpFsoVTV6KlI1KxEUF0AW4RAr0Dm7ahDYV8813GFQkXXFm0ERGoy7YOx
-         uW7/BgKWBJGjNREMe9dTMT3uz40VhLGdaN8pTRIz90zz/jPRvMPjV0WDsvFMfWMAqJTy
-         xuG5DPENXofuJIRMP5N8URwTfF+Qx6oqKly/tbjOCr2xtgBXp2dOyj+WPmF2S9VCWmOG
-         qsU+PK3so64v2gM5ouxEh5ZpRQGfmibGl804PzDsvWzWDHLz+I7HZ/F/n3+/HbKGqUJV
-         Pf7g==
+        bh=0Z7f8MhRLfnTWeVTjHjXGonn3ZgSELxYHUIBfvcoPAE=;
+        b=degz+byAGVrTZCdPULp21s/vX4+733bq+ffqfeoaIklh7rF362SSH79DpyKRGxdOJo
+         ekOf6OyVsjdGPsKFSNPWrC+xgPxiaRTeVarU4YlFolcTyykICpH22rdF/MY8pMjmRQ4N
+         ENfY11P2hDGmhBXO5/OsUI/jzJbSkpvj8lCKSHtoj6EZsWb6kuyI8zRjQ8TEHAXw3pGY
+         aM6s7jl5Dmcdf4YIyeT9zFwKrCdnSpruGHQYqd4nV5MmglhYpvLvUL41WZ3dvJI1esX6
+         gzCdpDaFmE3Yi0yFhBeJvcQ5cW4QCCcDVmbfuk//LeOcM98DuDfT5ugAd/qFVs2lv1bq
+         JKpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703065127; x=1703669927;
+        d=1e100.net; s=20230601; t=1703065810; x=1703670610;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PA+ptV78xyz6pZzeaodkQ+dpw630XjAKvXYhuBNs0n4=;
-        b=LkkuL6nsUFDxseOZM9T+w3iTcQNgC7upXBJnBcede7YgQcPPDBUiNZT60dLo8EKPd3
-         ututxq28y0AMKdK12xcoAqxSkTcxar+BAYoNO1bk13WU+5dC0GPY+yEXkJV9ML/JJguY
-         3dvI2uNaoA2h1ebCE2FV/ay0mM/5kfaabvrCXKBnMUb777N4g9gc4a91ydjgFR3qFJMU
-         lA5EavoybaKYLxisKFly4CHRnQDYwi2pe7SgVnut97xKpui48jMHLJitKytnHFNcxOXh
-         mDHWBsa6Z0SRnZBRcwoTVtovgUBQl/PRYLLcFF9AjfX8b5w/NmXlRnJ3EIp2OjE4sjrs
-         J2ZA==
-X-Gm-Message-State: AOJu0YzKYTMJbBQbKNxlA8813YB2IWfALduCkkammiDe71kFyElHU+G8
-	7ZyPVR9V3kS/HNVmNQII0OM=
-X-Google-Smtp-Source: AGHT+IHUaDdtMM2j4ELKW/sphECUQ+dcNTqrTZBdfjN+8IyDla5NOZa+jKFiCJLFxMHNRp05MQ3WLA==
-X-Received: by 2002:a17:902:d58b:b0:1d3:86d1:4302 with SMTP id k11-20020a170902d58b00b001d386d14302mr6234192plh.33.1703065126473;
-        Wed, 20 Dec 2023 01:38:46 -0800 (PST)
+        bh=0Z7f8MhRLfnTWeVTjHjXGonn3ZgSELxYHUIBfvcoPAE=;
+        b=SZ6gFWRrBO6ANczwP1wl6Oq6yp94/4YOorDU1VorhtheuXSTOA0DYNLfE6aWY478Nt
+         WLTMDsIiyApPbmwuBLaEBL1qKWPxgnvrTY1iRKjNePFLgcHwUDxIQqIUeoowtlpQwDWb
+         Ubng/8gr5waR5w7eqy3jc+0O15ByGTz5drMe72ZGCBlmfWYSxYWfl215Y1IP86Eel6d9
+         ZPV8lJxX5ju2etEySlh3PGJ1ZpVqh4hFG7ikWnmMpW9Eu7zkxJsHHT547Eeswyo7a1RD
+         7N09jkxG2jeb0KJsmLP8lF0aL41Tv4/0AOwqZ2ugC230UClyp+WXGH8ssvTDp+ExPEUI
+         ZILw==
+X-Gm-Message-State: AOJu0Yxxq6xzbL+jYum/npyxionBeqGwvY+7AZ/sk3gkf23+Sj3X8d/2
+	H2ds8v/LkybQMF/HFYNMuN/OFSiCOm5mNMq7Pi4=
+X-Google-Smtp-Source: AGHT+IF7EiGTKNn5fCPbALRjv8XupsBZINCONbyfYHE2RPBGfcuJJV9cEX3e4CDcaz92P5o9fphyqQ==
+X-Received: by 2002:a05:6359:7385:b0:170:accb:e22c with SMTP id uz5-20020a056359738500b00170accbe22cmr15339876rwb.54.1703065808915;
+        Wed, 20 Dec 2023 01:50:08 -0800 (PST)
 Received: from georgeliu.. ([182.45.253.49])
-        by smtp.gmail.com with ESMTPSA id x12-20020a170902ea8c00b001d3aafd228dsm1018777plb.75.2023.12.20.01.38.42
+        by smtp.gmail.com with ESMTPSA id h10-20020a63df4a000000b005cd86cd9055sm6421265pgj.1.2023.12.20.01.50.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Dec 2023 01:38:46 -0800 (PST)
+        Wed, 20 Dec 2023 01:50:08 -0800 (PST)
 From: George Liu <liuxiwei1013@gmail.com>
 X-Google-Original-From: George Liu <liuxiwei@ieisystem.com>
 To: joel@jms.id.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v1 1/2] ARM: dts: aspeed: Add IEISystems FP5280G3 BMC machine
-Date: Wed, 20 Dec 2023 17:38:39 +0800
-Message-Id: <20231220093839.2032368-1-liuxiwei@ieisystem.com>
+Subject: [PATCH v2] ARM: dts: aspeed: Add IEISystems FP5280G3 BMC machine
+Date: Wed, 20 Dec 2023 17:50:04 +0800
+Message-Id: <20231220095004.2036251-1-liuxiwei@ieisystem.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -88,8 +88,8 @@ development.
 
 Signed-off-by: George Liu <liuxiwei@ieisystem.com>
 ---
-v1 1/1 -> v1 1/2
-  - include ibm-power10-quad.dtsi
+v1 -> v2
+  - Include ibm-power10-quad.dtsi
   - Remove redundant blank lines
   - Remove nct7362 driver
   - Remove bus-timeout-ms & bus-recover-timeout-ms
