@@ -1,43 +1,42 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4FC08224EF
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:47:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FDF18224F0
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:48:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T4SfX331Pz3cTp
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:47:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T4Sg72HCMz3cTS
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:48:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=h08.hostsharing.net (client-ip=2a01:37:1000::53df:5f64:0; helo=bmailout1.hostsharing.net; envelope-from=foo00@h08.hostsharing.net; receiver=lists.ozlabs.org)
-X-Greylist: delayed 460 seconds by postgrey-1.37 at boromir; Wed, 20 Dec 2023 19:21:54 AEDT
-Received: from bmailout1.hostsharing.net (bmailout1.hostsharing.net [IPv6:2a01:37:1000::53df:5f64:0])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=h08.hostsharing.net (client-ip=2a01:4f8:150:2161:1:b009:f23e:0; helo=bmailout3.hostsharing.net; envelope-from=foo00@h08.hostsharing.net; receiver=lists.ozlabs.org)
+X-Greylist: delayed 431 seconds by postgrey-1.37 at boromir; Wed, 20 Dec 2023 19:34:31 AEDT
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [IPv6:2a01:4f8:150:2161:1:b009:f23e:0])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sw63k1QKzz30RS;
-	Wed, 20 Dec 2023 19:21:54 +1100 (AEDT)
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sw6LH1Jq9z2yG9
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Dec 2023 19:34:31 +1100 (AEDT)
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
 	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
 	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout1.hostsharing.net (Postfix) with ESMTPS id 218AE300002D8;
-	Wed, 20 Dec 2023 09:14:02 +0100 (CET)
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id E12EE100FC279;
+	Wed, 20 Dec 2023 09:27:14 +0100 (CET)
 Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 10C0DAEC0; Wed, 20 Dec 2023 09:14:02 +0100 (CET)
-Date: Wed, 20 Dec 2023 09:14:02 +0100
+	id ACA1426F31; Wed, 20 Dec 2023 09:27:14 +0100 (CET)
+Date: Wed, 20 Dec 2023 09:27:14 +0100
 From: Lukas Wunner <lukas@wunner.de>
 To: rentao.bupt@gmail.com
-Subject: Re: [PATCH v2 3/6] ARM: dts: aspeed: Common dtsi for Facebook
- AST2600 Network BMCs
-Message-ID: <20231220081402.GA3831@wunner.de>
-References: <20210805222818.8391-1-rentao.bupt@gmail.com>
- <20210805222818.8391-4-rentao.bupt@gmail.com>
+Subject: Re: [PATCH 5/5] ARM: dts: aspeed: Add Facebook Wedge400 BMC
+Message-ID: <20231220082714.GA17989@wunner.de>
+References: <20200824211948.12852-1-rentao.bupt@gmail.com>
+ <20200824211948.12852-6-rentao.bupt@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210805222818.8391-4-rentao.bupt@gmail.com>
+In-Reply-To: <20200824211948.12852-6-rentao.bupt@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 X-Mailman-Approved-At: Wed, 03 Jan 2024 09:46:15 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -55,13 +54,11 @@ Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <a
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 05, 2021 at 03:28:15PM -0700, rentao.bupt@gmail.com wrote:
-> This common descirption is included by all Facebook AST2600 Network BMC
-> platforms to minimize duplicated device entries across Facebook Network
-> BMC device trees.
+On Mon, Aug 24, 2020 at 02:19:48PM -0700, rentao.bupt@gmail.com wrote:
+> Add initial version of device tree for Facebook Wedge400 (AST2500) BMC.
 [...]
 > --- /dev/null
-> +++ b/arch/arm/boot/dts/ast2600-facebook-netbmc-common.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge400.dts
 [...]
 > +		tpmdev@0 {
 > +			compatible = "tcg,tpm_tis-spi";
