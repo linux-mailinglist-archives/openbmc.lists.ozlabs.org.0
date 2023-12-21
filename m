@@ -2,65 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F6BD81B432
-	for <lists+openbmc@lfdr.de>; Thu, 21 Dec 2023 11:47:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CE881B84D
+	for <lists+openbmc@lfdr.de>; Thu, 21 Dec 2023 14:44:08 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Tu/ghz5G;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dvF3TkeQ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SwnFW1rmsz3dRQ
-	for <lists+openbmc@lfdr.de>; Thu, 21 Dec 2023 21:47:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sws922V0Zz3cVN
+	for <lists+openbmc@lfdr.de>; Fri, 22 Dec 2023 00:44:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Tu/ghz5G;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dvF3TkeQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.151; helo=mgamail.intel.com; envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112d; helo=mail-yw1-x112d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Swn8624jrz3vjP
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 21:43:00 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1703155382; x=1734691382;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=JgQqUbGdAtN88usDSap4zsL/ISrWbnsX7wACyNl07Yk=;
-  b=Tu/ghz5G1paz3bJZWWZI6WDeP4sKD78rBvaCP2LRr8cUeQCrphKtE/tK
-   TP/PVmDlPF6eo+1cujkx/pfFNqKjqj7Ie7fKi/K2nrNyXtlS4qWH/z8H+
-   G37gLUi3+OV/0YwP341iz5BeCOe3nkXMFLmn0r8/3d6kodp0Sj9gKEL8q
-   Js/K5ESJ4ckSRwMIssKWtbPHG5P5IvBu/KQj69StymQ++cCFzym07II4r
-   +M7XOJFnyykkKDVP+yS4fu98BQXETFNkDSCZfeYB7DsoZ/hNH7wUj1UP7
-   VdnyNcxYFz/xJIi6NF4sJYGWkMsZku8gwSjAb0toCnzAk98K4tjg3Ph12
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10930"; a="376105773"
-X-IronPort-AV: E=Sophos;i="6.04,293,1695711600"; 
-   d="scan'208";a="376105773"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Dec 2023 02:42:56 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10930"; a="920289947"
-X-IronPort-AV: E=Sophos;i="6.04,293,1695711600"; 
-   d="scan'208";a="920289947"
-Received: from aambroze-mobl4.ger.corp.intel.com (HELO [10.213.28.79]) ([10.213.28.79])
-  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Dec 2023 02:42:55 -0800
-Message-ID: <74ad915f-02b3-4c69-ab27-472bb9332388@linux.intel.com>
-Date: Thu, 21 Dec 2023 11:42:52 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sws8S04brz30hG
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Dec 2023 00:43:34 +1100 (AEDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5c85e8fdd2dso8719037b3.2
+        for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 05:43:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1703166211; x=1703771011; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rfYk2PbsAR6XkUVnp+faUk+Wc6BaNwbjiQpy58miDmQ=;
+        b=dvF3TkeQXOTV710sXac34d8R849QOCDV8+3WibZh/1u/9Y56XlHWbxxXr8hdKFhNIq
+         R12mjUqEI2F9to8xvbQjsdsd4/7797CX/uhEVwrNuAqWW+lXDG8i+qobrBwRWTOBQR4r
+         gFiIzrQPfgd4dXirZkKHtZtD9F99fO2b6yIC4sCYS0fDj1WZ1d+kVKiKAIhR5/hSdYoS
+         TfHzhFBQu5oDY8kKSTeOZtv04MYHYpSTlY0QG89W9uIECEeV6t9VZx5BiGhjaLNuCRuq
+         QE2bVb28tzDTCAloKWJUgEMo8bWqGKLtoSPS3EwObdIk+IQ6Fu1kfyXHU0RPkbRXcpSW
+         wUaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1703166211; x=1703771011;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rfYk2PbsAR6XkUVnp+faUk+Wc6BaNwbjiQpy58miDmQ=;
+        b=L9qm+er1Szor4g9Mi2VxwGwqkV5tOV6qR+BDSQmXhjyRajYCOkE/i4YB20BbJKV9g4
+         SoN8+VYN4hzf9KHFhr5E3Fm0B++NHe6cFU4LHqQpMWR6qOj/c5u5eQ73Q8aPY6YIFBMm
+         NEQE47IXn4Pu9P2CnhW7CWWZi0OVoAaK4Rn8eFCF3PPMVrcFVbLmZ45d2HsuU/yjgTnB
+         Tie1OtxiMg8Q3+IJVl5xT8AAI6Ciby/WA5L011C7XZ5R/Ipiu1Dk8Dvat8MfbCzPTqgB
+         u5vuGjGTeU7KujjUkxZZHrDGHgNey1sVij6k+eihVrpwB/GpbL5HjT9eXtv8fMOue/vn
+         A1Ww==
+X-Gm-Message-State: AOJu0YxzAJL6MGafaKu/xnYZH7igi6ImAM9JffEoOxs/cwB5D7VD7GYV
+	4C9vtE4DtMx0vxw6gaR8ASG+vqxTjK8UFK0XMHA=
+X-Google-Smtp-Source: AGHT+IEisUylWKTPxMtPd7GzMVMg817akVIJdXa3vlzhqH53i4gueNhmmidqStzwVmMFp0eYtYRq7NVu0exvWaK+xDg=
+X-Received: by 2002:a05:690c:2b8d:b0:5e9:d166:2438 with SMTP id
+ en13-20020a05690c2b8d00b005e9d1662438mr122149ywb.86.1703166211485; Thu, 21
+ Dec 2023 05:43:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: openbmc/telemetry: First complaint of unresponsiveness
-Content-Language: pl, en-US
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <47c53da80f585dac8e1450b20c5855ede960d243.camel@codeconstruct.com.au>
- <5296a763-9a24-4828-a648-2de5d78cad76@linux.intel.com>
- <ZYMGqtn9XVgjkBj8@heinlein.vulture-banana.ts.net>
- <fcd703f2-b05b-4c21-9d66-6506b7aafa01@linux.intel.com>
- <ZYMc0jRDhpuaP_KR@heinlein.vulture-banana.ts.net>
-From: "Ambrozewicz, Adrian" <adrian.ambrozewicz@linux.intel.com>
-In-Reply-To: <ZYMc0jRDhpuaP_KR@heinlein.vulture-banana.ts.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20231218170404.910153-1-tmaimon77@gmail.com> <7c322ab2ab59b434429ce471c148c026.sboyd@kernel.org>
+In-Reply-To: <7c322ab2ab59b434429ce471c148c026.sboyd@kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Thu, 21 Dec 2023 15:43:20 +0200
+Message-ID: <CAP6Zq1gYJTRw9=w6cP3KXX2jg3SPk2KBqNrbcs9NoOs2JeUnAg@mail.gmail.com>
+Subject: Re: [PATCH RESEND v21] clk: npcm8xx: add clock controller
+To: Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,118 +73,188 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: cezary.zwolak@intel.com, openbmc@lists.ozlabs.org, liuxiwei@ieisystem.com, jozef.wludzik@intel.com
+Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, joel@jms.id.au, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 20.12.2023 17:56, Patrick Williams wrote:
-> On Wed, Dec 20, 2023 at 05:03:21PM +0100, Ambrozewicz, Adrian wrote:
->> What I mean are functional tests on target, with real BMC, board, and
->> sensors.
-> 
-> openbmc/telemetry doesn't interact with any of these things directly.
-> sensors are covered by dbus-sensors, etc.
-> 
-> What you are describing is an integration test that belongs in
-> openbmc-test-automation with all the other integration / functional
-> tests.
-> 
-> If you want to make sure that openbmc/telemetry reacts to the dbus model
-> correctly (which is the only thing that belongs in a repository-level
-> test) you should mock that out as a unit test.
+Hi Stephen,
 
-Agreed and this is done in unit tests.
+Thanks for your comments
 
->> Could you point me to examples where it's documented or done in
->> automated CI for other subprojects?
-> 
-> See openbmc-test-automation test cases that currently run on QEMU as part of
-> Romulus and you can talk to Andrew about the hardware tests that run on
-> Witherspoon (which are non-blocking but he keeps on top of the
-> failure reports).
-> 
+On Thu, 21 Dec 2023 at 00:09, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Tomer Maimon (2023-12-18 09:04:04)
+> > diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
+> > new file mode 100644
+> > index 000000000000..e6c5111cc255
+> > --- /dev/null
+> > +++ b/drivers/clk/clk-npcm8xx.c
+> > @@ -0,0 +1,552 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Nuvoton NPCM8xx Clock Generator
+> > + * All the clocks are initialized by the bootloader, so this driver allows only
+> > + * reading of current settings directly from the hardware.
+> > + *
+> > + * Copyright (C) 2020 Nuvoton Technologies
+> > + * Author: Tomer Maimon <tomer.maimon@nuvoton.com>
+> > + */
+> > +
+> > +#define pr_fmt(fmt) "npcm8xx_clk: " fmt
+> > +
+> > +#include <linux/bitfield.h>
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/err.h>
+> > +#include <linux/io.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/regmap.h>
+> [...]
+> > +#define NPCM8XX_CLK_S_CLKOUT      "clkout"
+> > +#define NPCM8XX_CLK_S_PRE_ADC     "pre adc"
+> > +#define NPCM8XX_CLK_S_UART        "uart"
+> > +#define NPCM8XX_CLK_S_UART2       "uart2"
+> > +#define NPCM8XX_CLK_S_TIMER       "timer"
+> > +#define NPCM8XX_CLK_S_MMC         "mmc"
+> > +#define NPCM8XX_CLK_S_SDHC        "sdhc"
+> > +#define NPCM8XX_CLK_S_ADC         "adc"
+> > +#define NPCM8XX_CLK_S_GFX         "gfx0_gfx1_mem"
+> > +#define NPCM8XX_CLK_S_USBIF       "serial_usbif"
+> > +#define NPCM8XX_CLK_S_USB_HOST    "usb_host"
+> > +#define NPCM8XX_CLK_S_USB_BRIDGE  "usb_bridge"
+> > +#define NPCM8XX_CLK_S_PCI         "pci"
+> > +#define NPCM8XX_CLK_S_TH          "th"
+> > +#define NPCM8XX_CLK_S_ATB         "atb"
+> > +#define NPCM8XX_CLK_S_PRE_CLK     "pre_clk"
+> > +#define NPCM8XX_CLK_S_RG         "rg"
+> > +#define NPCM8XX_CLK_S_RCP        "rcp"
+> > +
+> > +static struct clk_hw hw_pll1_div2, hw_pll2_div2, hw_gfx_div2, hw_pre_clk;
+> > +static struct npcm8xx_clk_pll_data npcm8xx_pll_clks[] = {
+> > +       { NPCM8XX_CLK_S_PLL0, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON0, 0 },
+>
+> This is a new driver, so please stop using .name in clk_parent_data
+> structures.
+A few versions ago you suggested defining the reference clock in the
+device tree,Can I use .fw_name since the reference clock in the device
+tree
 
-Thanks.
+        refclk: refclk-25mhz {
+                compatible = "fixed-clock";
+                clock-output-names = "refclk";
+                clock-frequency = <25000000>;
+                #clock-cells = <0>;
+        };
 
->> Or perhaps do you meen that maintainer stalling the change until he
->> makes sure it doesn't break various configurations is unacceptable? Then
->> IMHO I won't aggree, as code compiled within unit tests is just one
->> arch, yet alone separated from rest of the system.
-> 
-> There are many problems with your position from an open source
-> perspective.  These are the ones that are top of mind to me:
-> 
-> 1. You have no idea if the breakage is due to the submitters proposed
->     change or because of a change in another repository.
+        clk: clock-controller@f0801000 {
+                 compatible = "nuvoton,npcm845-clk";
+                 nuvoton,sysclk = <&rst>;
+                 #clock-cells = <1>;
+                 clocks = <&refclk>;
+                 clock-names = "refclk";
+         };
 
-Nobody said that tests results are going to be a blind go/no go. That's 
-not the case.
+I will make sure to add refclk-25mhz to NPCM8xx device tree.
+>
+> > +       { NPCM8XX_CLK_S_PLL1, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON1, 0 },
+> > +       { NPCM8XX_CLK_S_PLL2, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON2, 0 },
+> > +       { NPCM8XX_CLK_S_PLL_GFX, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCONG, 0 },
+> > +};
+> > +
+> > +static const u32 cpuck_mux_table[] = { 0, 1, 2, 7 };
+> > +static const struct clk_parent_data cpuck_mux_parents[] = {
+> > +       { .hw = &npcm8xx_pll_clks[0].hw },
+> > +       { .hw = &npcm8xx_pll_clks[1].hw },
+> > +       { .index = 0 },
+>
+> This requires a binding update. As of today, there isn't a 'clocks'
+> property for the nuvoton,npcm845-clk binding.
+Can I use fw_name = NPCM8XX_CLK_S_REFCLK instead of  .index = 0 in
+that way, I will not need to modify nuvoton,npcm845-clk binding.
+>
+> > +       { .hw = &npcm8xx_pll_clks[2].hw }
+> > +};
+> > +
+> > +static const u32 pixcksel_mux_table[] = { 0, 2 };
+> > +static const struct clk_parent_data pixcksel_mux_parents[] = {
+> > +       { .hw = &npcm8xx_pll_clks[3].hw },
+> > +       { .index = 0 }
+> > +};
+> > +
+> [...]
+> > +
+> > +/* configurable dividers: */
+> > +static struct npcm8xx_clk_div_data npcm8xx_divs[] = {
+> > +       { NPCM8XX_CLKDIV1, 28, 3, NPCM8XX_CLK_S_ADC, &npcm8xx_pre_divs[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_ADC },
+> > +       { NPCM8XX_CLKDIV1, 16, 5, NPCM8XX_CLK_S_UART, &npcm8xx_muxes[3].hw, 0, 0, NPCM8XX_CLK_UART },
+> > +       { NPCM8XX_CLKDIV1, 11, 5, NPCM8XX_CLK_S_MMC, &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_MMC },
+> > +       { NPCM8XX_CLKDIV1, 6, 5, NPCM8XX_CLK_S_SPI3, &npcm8xx_pre_divs[1].hw, 0, 0, NPCM8XX_CLK_SPI3 },
+> > +       { NPCM8XX_CLKDIV1, 2, 4, NPCM8XX_CLK_S_PCI, &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_PCI },
+> > +
+> > +       { NPCM8XX_CLKDIV2, 30, 2, NPCM8XX_CLK_S_APB4, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB4 },
+> > +       { NPCM8XX_CLKDIV2, 28, 2, NPCM8XX_CLK_S_APB3, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB3 },
+> > +       { NPCM8XX_CLKDIV2, 26, 2, NPCM8XX_CLK_S_APB2, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB2 },
+> > +       { NPCM8XX_CLKDIV2, 24, 2, NPCM8XX_CLK_S_APB1, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB1 },
+> > +       { NPCM8XX_CLKDIV2, 22, 2, NPCM8XX_CLK_S_APB5, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB5 },
+> > +       { NPCM8XX_CLKDIV2, 16, 5, NPCM8XX_CLK_S_CLKOUT, &npcm8xx_muxes[8].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_CLKOUT },
+> > +       { NPCM8XX_CLKDIV2, 13, 3, NPCM8XX_CLK_S_GFX, &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_GFX },
+> > +       { NPCM8XX_CLKDIV2, 8, 5, NPCM8XX_CLK_S_USB_BRIDGE, &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU },
+>
+> Just put the string where there are any macros that are used once
+> please.
+O.K.
+>
+> > +       { NPCM8XX_CLKDIV2, 4, 4, NPCM8XX_CLK_S_USB_HOST, &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU48 },
+> > +       { NPCM8XX_CLKDIV2, 0, 4, NPCM8XX_CLK_S_SDHC, &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SDHC },
+> > +
+> > +       { NPCM8XX_CLKDIV3, 16, 8, NPCM8XX_CLK_S_SPI1, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI1 },
+> > +       { NPCM8XX_CLKDIV3, 11, 5, NPCM8XX_CLK_S_UART2, &npcm8xx_muxes[3].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_UART2 },
+> > +       { NPCM8XX_CLKDIV3, 6, 5, NPCM8XX_CLK_S_SPI0, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI0 },
+> > +       { NPCM8XX_CLKDIV3, 1, 5, NPCM8XX_CLK_S_SPIX, &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPIX },
+> > +
+> > +       { NPCM8XX_CLKDIV4, 28, 4, NPCM8XX_CLK_S_RG, &npcm8xx_muxes[11].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RG },
+> > +       { NPCM8XX_CLKDIV4, 12, 4, NPCM8XX_CLK_S_RCP, &npcm8xx_muxes[12].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RCP },
+> > +
+> > +       { NPCM8XX_THRTL_CNT, 0, 2, NPCM8XX_CLK_S_TH, &npcm8xx_muxes[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_TH },
+> > +};
+> > +
+> [...]
+> > +
+> > +static int npcm8xx_clk_probe(struct platform_device *pdev)
+> > +{
+> > +       struct clk_hw_onecell_data *npcm8xx_clk_data;
+> > +       struct device_node *np = pdev->dev.of_node;
+> > +       struct device *dev = &pdev->dev;
+> > +       struct regmap *clk_regmap;
+> > +       struct clk_hw *hw;
+> > +       unsigned int i;
+> > +
+> > +       npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
+> > +                                                        NPCM8XX_NUM_CLOCKS),
+> > +                                       GFP_KERNEL);
+> > +       if (!npcm8xx_clk_data)
+> > +               return -ENOMEM;
+> > +
+> > +       clk_regmap = syscon_regmap_lookup_by_phandle(np, "nuvoton,sysclk");
+>
+> I don't see this as part of the binding either. Please update the
+> binding.
+O.K.
+>
+> > +       if (IS_ERR(clk_regmap)) {
+> > +               dev_err(&pdev->dev, "Failed to find nuvoton,sysclk\n");
+> > +               return PTR_ERR(clk_regmap);
+> > +       }
+> > +
+> > +       npcm8xx_clk_data->num = NPCM8XX_NUM_CLOCKS;
+> > +
+> > +       for (i = 0; i < NPCM8XX_NUM_CLOCKS; i++)
+> > +               npcm8xx_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
+> > +
+> > +       /* Register plls */
 
-> 2. You've made up your own test framework that nobody else has
->     visibility to.  That means you're effectively treating
->     openbmc/telemetry as your own sandbox and are not collaborating with
->     the rest of the project.
+Best regards,
 
-That's a bit harsh statement, considering years of development put into 
-the code itself and contributions made by team in other related areas 
-(sensors, entity-manager, sdbusplus etc.).
-
-> 3. Your delay in integrating changes can have velocity impacts to the
->     rest of the project when we _require_ repository-level changes in
->     order to integrate a Yocto update, etc.
-
-Like Andrew stated - this is an really nasty edge case, a total f-up on 
-our side. I believe delay caused by our plain oversight is than how we 
-assess changes before merging. I could be running my own instance of 
-static analysis tool paid from my pocket for all I care. Does it mean 
-it's wrong? We also strive to shorten the timelines but quality comes first.
-
-> 4. Your position is that you will reject someone's commit because it
->     breaks your internal test.  They have no visibility to this test,
->     they have no way to know that they are "breaking you", and they have
->     no possible course of action to recover from any issue you report.
-
-This is similar to #1 and I don't agree - I've never stated that. You're 
-talking to a guy who often debugs _and_ fixes external bug himself while 
-root-causing. We're on the same side!
-
-> If you want to have your own tests to test integration of
-> openbmc/telemetry (along with other open source components) with your own
-> project you are more than welcome to do that (even though I think it would be
-> far more beneficial to enhance openbmc-test-automation).  That should
-> probably be happening when you import openbmc/openbmc into your own
-> internal tree, but if you want to give yourself early signal to these
-> failures, that is okay.
-> 
-> My gripe is that you should not be holding up the open-source project for
-> your own unpublished, undocumented, non-aligned tests.
-
-I see your point and understand your concerns. Thanks for pointing out 
-clearly your arguments.
-
-I would prefer to not dwell into further discussion here as certain 
-topics are far beyond my control. I'll just assure you we're trying to 
-do the best we can with resources available. Whenever similar related 
-issues or decisions to make arise in the future I will be surely better 
-equipped to make informed decisions aligned with general open source 
-consensus.
-
-Regards,
-Adrian
-
->> W dniu 20.12.2023 o 16:22, Patrick Williams pisze:
->>> On Wed, Dec 20, 2023 at 03:18:38PM +0100, Ambrozewicz, Adrian wrote:
->>>>
->>>> Currently we've integrated proposed changes and wait for feedback from
->>>> automated regression test suite.
->>>
->>> Hi Adrian,
->>>
->>> What did you mean by this?  Commits go through CI when they are
->>> submitted.  I don't see any change in Gerrit for any of the 3 commits.
->>>
->>> If you have an internal test suite you haven't contributed upstream and you
->>> are holding off merging commits until you run them through a private test suite,
->>> this is unacceptable for the open source project.
->>>
-> 
+Tomer
