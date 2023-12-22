@@ -1,71 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 008568224F6
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:49:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 156DE8224F7
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:50:41 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=permerror header.d=gmail.com header.i=@gmail.com header.a=rsa-sha1 header.s=20230601 header.b=hrXmcMER;
+	dkim=permerror header.d=gmail.com header.i=@gmail.com header.a=rsa-sha1 header.s=20230601 header.b=KEytw/aX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T4Sj34HPRz3cVF
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:49:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T4Sk65VDWz3bX5
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:50:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hrXmcMER;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=KEytw/aX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2d; helo=mail-io1-xd2d.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12a; helo=mail-il1-x12a.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sx8ml4J0Hz30GC
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Dec 2023 12:27:33 +1100 (AEDT)
-Received: by mail-io1-xd2d.google.com with SMTP id ca18e2360f4ac-7b3708b3eacso55341239f.2
-        for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 17:27:33 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sx8wm0zL1z2xYk
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Dec 2023 12:34:30 +1100 (AEDT)
+Received: by mail-il1-x12a.google.com with SMTP id e9e14a558f8ab-35fd9e40039so2794225ab.1
+        for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 17:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703208448; x=1703813248; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zy8g0lzs7eaKHdXsmVjSrLQ8rBtR4re0URoEliy+E2c=;
-        b=hrXmcMERen7KRdKZDINWyQFwpSuYpzndluz7RdlXw7GJjHrTv7+z51pSK6mNhnU9+p
-         BW5TO18n6Jo4GcFL2tmDADvyX/EH8p2EGV1PyAKWYmm3ndeLjMzwevQsKrfWhenO809v
-         JrrqoDNnHr0TAJd6X8OkPou7SoK/uQRsLO3HDUO/7sXVHaHWanvoDmi+3aGjBSwVPIy0
-         ASDaMX7cSZs5pvZ2AfGvmKF4HzbRRe4eDvRL4GxBDbPe+Xfw+YkDhQmgEZvg4YwUFP5d
-         d6wnOrdV9c8uddTO8DOYLb581YMXEoBbiOAsLEV4XO4k67Qi8/ax2TLdV83cc5Q9tcI3
-         Kz1Q==
+        d=gmail.com; s=20230601; t=1703208867; x=1703813667; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gzd2Vq49cs2OXoA1p9yPTdJ8jRds9If5/Ztk+9Dsun0=;
+        b=KEytw/aXOgoCGJOjts0Y07pmHqoYGxtR37F4X01g0j8UMQxzP/vTYwh5sSWWz3Lg8M
+         DGXTvW9A7ag9nOwjWrAZ2SGcOmFHpSsoosnPhQz37AEw3+G+85kdzC7e07II+uzeUA7P
+         68aCgu7/lvsc1qtXObDdiEd7Y8cbMWbnD1Ig/Y8Cu4ifRlsXpH4l4MYME4nQ9noZa2w/
+         5Ec69Ri1OEZuElgMMMTZeDr+kEKrF4XfnISR8tWhslQyiLOiOWkwPQOSkHdA31FApZlx
+         g1HssDZEGTn/IMkqFasHnx2HL6jFCW3YoVmlWxPD3wJndAyhbFcnYn3u8L92PBUDYAVv
+         eZAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703208448; x=1703813248;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zy8g0lzs7eaKHdXsmVjSrLQ8rBtR4re0URoEliy+E2c=;
-        b=uCqREFijEhzTr5sCkoAeZMwTyHMd9I+Z1P0ht5nSj9YaEjAQYssqXBKnz3vhwanR50
-         1nelLKTouBMKpX2wqrYkkBA1/S5TRCiDrzRZ2Nzz7ujLBGabNk/0+pqoJjMV09xBNjJ7
-         mMF0WxoWvTnAW4EnVNuwjQSq/F8RFRdju0ZwCIJTl7brR+hMF3KGZu9XhAr0aI3Smsen
-         Rajg6MefbKH9D3mXyWbD13nMrfAiuoJDeYNokW2OiJORYefixAG4lsmuPg7lc+b/ghDS
-         17KfzSkItQkMZPdHopXuJa/eWAdW6awj+Q5TNk6O7h9dqBdjsKUNqi86bsd7CfLqWbly
-         1L2w==
-X-Gm-Message-State: AOJu0YxjF8ulB3ZTBDEbLrBVFuFeg02+p7xyMNrePOFANZFIqoWJhBf+
-	iQ30UoYuX2TQPXJHqs1EDBlzC1jGrSbQ8v9gjxE=
-X-Google-Smtp-Source: AGHT+IENIdhp+wVXGkDYH0RYIkfdROfEfqzYbfyIxwYeq1Y0iQANbD+H6pXUx/iczB5ACQ1EdYKX3pHgiXMN2c3RPe0=
-X-Received: by 2002:a5e:da4d:0:b0:7b7:f9fb:8766 with SMTP id
- o13-20020a5eda4d000000b007b7f9fb8766mr607985iop.14.1703208448542; Thu, 21 Dec
- 2023 17:27:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703208867; x=1703813667;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gzd2Vq49cs2OXoA1p9yPTdJ8jRds9If5/Ztk+9Dsun0=;
+        b=IMn9iQcJS4VXkSC5WdcgHYoPjoJyU6FmcRyTBngFwmn2X8NRb4BpHXG/x7mrQGxPkQ
+         IaikPh0Y3gkpVzrXL/qide55BoLBWmSeAVcYUgWXcmCI0UpXrECemnMClojv/F42ONSs
+         nh94mw+R4QnHIhd5aGcjxREixkJw7Nvv8ikz8eb7+yX+MLEh8QXNj78+UA9HApR5aJus
+         smm1Q7bsQs8uakjK3cyl6YNORAVRRtdfMixVBkHkekwdmZ+81pnQFo5oGwnr9R8wEki/
+         XRLsynAoOJ1+o4WtX7UUJsSUfqlhrvyxwwkJYv/xMwlO8ByPB6lqF719IiWMZAidL0Zq
+         tkww==
+X-Gm-Message-State: AOJu0YzE/91YwOjTAKoBq5Wkjx28P4Ba9Gq6Ba2jESFA6dEC4vZRfjfc
+	uSXWpwWsvtAe/0tv/H8qeEU=
+X-Google-Smtp-Source: AGHT+IEVj9D/whIu1FDqQtMmMPwJ51/a3mthgT8d8o+mlufUBen02S7Yk+XNPAXA0+012GUgSPnmRA==
+X-Received: by 2002:a92:c267:0:b0:35f:daa8:5caf with SMTP id h7-20020a92c267000000b0035fdaa85cafmr793821ild.30.1703208867182;
+        Thu, 21 Dec 2023 17:34:27 -0800 (PST)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id 5-20020a170902c24500b001d3d8e718c6sm2258634plg.282.2023.12.21.17.34.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Dec 2023 17:34:26 -0800 (PST)
+From: baneric926@gmail.com
+X-Google-Original-From: kcfeng0@nuvoton.com
+To: jdelvare@suse.com,
+	linux@roeck-us.net,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	corbet@lwn.net
+Subject: [PATCH v3 0/3] hwmon: Driver for Nuvoton NCT7363Y
+Date: Fri, 22 Dec 2023 09:33:49 +0800
+Message-Id: <20231222013352.3873689-1-kcfeng0@nuvoton.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20231219080021.2048889-1-kcfeng0@nuvoton.com> <20231219080021.2048889-2-kcfeng0@nuvoton.com>
- <170297774900.1297817.5593278746406765111.robh@kernel.org>
- <CALz278aJ08fOU2XZMZJJ2Ocp+XwovJ0+nHK-=0dWqbXf+522OA@mail.gmail.com> <9035aff7-49e6-49cf-a8f8-619d3b53c4a5@linaro.org>
-In-Reply-To: <9035aff7-49e6-49cf-a8f8-619d3b53c4a5@linaro.org>
-From: Ban Feng <baneric926@gmail.com>
-Date: Fri, 22 Dec 2023 09:27:17 +0800
-Message-ID: <CALz278Z-KF+NurdXhOQjoP-RMhQfrshEyU=KkumN8Peus7Wdew@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: hwmon: Add NCT7363Y documentation
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Wed, 03 Jan 2024 09:46:15 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,48 +82,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Rob Herring <robh@kernel.org>, conor+dt@kernel.org, jdelvare@suse.com, kwliu@nuvoton.com, openbmc@lists.ozlabs.org, corbet@lwn.net, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, DELPHINE_CHIU@wiwynn.com, krzysztof.kozlowski+dt@linaro.org, linux@roeck-us.net
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, kwliu@nuvoton.com, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof,
+From: Ban Feng <kcfeng0@nuvoton.com>
 
-On Thu, Dec 21, 2023 at 4:20=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 21/12/2023 01:44, Ban Feng wrote:
-> > Hi Rob,
-> >
-> > On Tue, Dec 19, 2023 at 5:22=E2=80=AFPM Rob Herring <robh@kernel.org> w=
-rote:
-> >>
-> >>
-> >> On Tue, 19 Dec 2023 16:00:20 +0800, baneric926@gmail.com wrote:
-> >>> From: Ban Feng <kcfeng0@nuvoton.com>
-> >>>
-> >>> Adding bindings for the Nuvoton NCT7363Y Fan Controller
-> >>>
-> >>> Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
-> >>> ---
-> >>>  .../bindings/hwmon/nuvoton,nct7363.yaml       | 62 +++++++++++++++++=
-++
-> >>>  MAINTAINERS                                   |  6 ++
-> >>>  2 files changed, 68 insertions(+)
-> >>>  create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,n=
-ct7363.yaml
-> >>>
-> >>
-> >> My bot found errors running 'make DT_CHECKER_FLAGS=3D-m dt_binding_che=
-ck'
-> >> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> >
-> > Our design is based on [1], and adds fan-common.yaml to
->
-> Nothing in the patch or cover letter described the dependency.
->
+NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
 
-ok, in v3, I'll attach a relevant patch and describe it in the cover letter=
-.
+Changes since version 2:
+- Cherry-pick the fan-common.yaml in [1]
+- Fix nct736x typo and add unevaluatedProperties
 
-Thanks,
-Ban
+[1]: https://patchwork.kernel.org/project/linux-hwmon/patch/
+     20231107105025.1480561-2-billy_tsai@aspeedtech.com/
+
+Changes since version 1:
+- Modify NCT736X(nct736x) to NCT7363Y(nct7363)
+- Convert to devm_hwmon_device_register_with_info API
+- All ID tables are next to each other and should be consistent
+  between i2c_device_id and of_device_id
+- Ref. fan-common.yaml and modify properties (nuvoton,pwm-mask/
+  nuvoton,fanin-mask) to (pwms/tach-ch)
+- Convert to devm_regmap_init_i2c API
+- Remove unused function (watchdog timer)
+- Fix uninitialized symbol which is reported by kernel test robot
+
+Ban Feng (2):
+  dt-bindings: hwmon: Add NCT7363Y documentation
+  hwmon: Driver for Nuvoton NCT7363Y
+
+Naresh Solanki (1):
+  dt-bindings: hwmon: fan: Add fan binding to schema
+
+ .../devicetree/bindings/hwmon/fan-common.yaml |  76 +++
+ .../bindings/hwmon/nuvoton,nct7363.yaml       |  63 +++
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/nct7363.rst               |  33 ++
+ MAINTAINERS                                   |   8 +
+ drivers/hwmon/Kconfig                         |  11 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/nct7363.c                       | 515 ++++++++++++++++++
+ 8 files changed, 708 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/fan-common.yaml
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+ create mode 100644 Documentation/hwmon/nct7363.rst
+ create mode 100644 drivers/hwmon/nct7363.c
+
+-- 
+2.34.1
+
