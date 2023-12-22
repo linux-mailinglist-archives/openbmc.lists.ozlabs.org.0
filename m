@@ -1,61 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 156DE8224F7
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:50:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F19418224F8
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:51:35 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=permerror header.d=gmail.com header.i=@gmail.com header.a=rsa-sha1 header.s=20230601 header.b=KEytw/aX;
+	dkim=permerror header.d=gmail.com header.i=@gmail.com header.a=rsa-sha1 header.s=20230601 header.b=m54O/YhU;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T4Sk65VDWz3bX5
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:50:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T4Sl94bmCz3cRt
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 09:51:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=KEytw/aX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=m54O/YhU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12a; helo=mail-il1-x12a.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sx8wm0zL1z2xYk
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Dec 2023 12:34:30 +1100 (AEDT)
-Received: by mail-il1-x12a.google.com with SMTP id e9e14a558f8ab-35fd9e40039so2794225ab.1
-        for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 17:34:30 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sx8wm5kxWz2xYk
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Dec 2023 12:34:32 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1d04c097e34so10299045ad.0
+        for <openbmc@lists.ozlabs.org>; Thu, 21 Dec 2023 17:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703208867; x=1703813667; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gzd2Vq49cs2OXoA1p9yPTdJ8jRds9If5/Ztk+9Dsun0=;
-        b=KEytw/aXOgoCGJOjts0Y07pmHqoYGxtR37F4X01g0j8UMQxzP/vTYwh5sSWWz3Lg8M
-         DGXTvW9A7ag9nOwjWrAZ2SGcOmFHpSsoosnPhQz37AEw3+G+85kdzC7e07II+uzeUA7P
-         68aCgu7/lvsc1qtXObDdiEd7Y8cbMWbnD1Ig/Y8Cu4ifRlsXpH4l4MYME4nQ9noZa2w/
-         5Ec69Ri1OEZuElgMMMTZeDr+kEKrF4XfnISR8tWhslQyiLOiOWkwPQOSkHdA31FApZlx
-         g1HssDZEGTn/IMkqFasHnx2HL6jFCW3YoVmlWxPD3wJndAyhbFcnYn3u8L92PBUDYAVv
-         eZAg==
+        d=gmail.com; s=20230601; t=1703208870; x=1703813670; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ETRSFur40AfpBaI78BUa335OqHgbVSXvF5B1Xe3sqDk=;
+        b=m54O/YhUyyIdYfSRMIR1Psnj5/3tBeEQG2gklFgk6DV/dhZUd+Bq8fucsegLByByUt
+         GK+l+E9sj75DIeX6h2xS65uWga5ABRdmUc77jdFMzLm7/VPWK48HoNGzSgWEe8l83TgE
+         82Xf4GcPiZKYI1GWjz1fPoroFTDJIFFHAPcBIk+Am+QCzgvq4gonGGFs0niW9pAz8xtZ
+         e2TP4fbgyeRClPf9ja09UEFww6qYRyKjelulLyiniUTF2yu0gZTDsCPvOTmF0QjMq0Fs
+         lQD5tyAPfSe5nT4jA0dzhCNNMwRZQ9vIFkdwFsoLyTvPKZx6DXQHbKOsrOxkoMUgG3A5
+         TwbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703208867; x=1703813667;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gzd2Vq49cs2OXoA1p9yPTdJ8jRds9If5/Ztk+9Dsun0=;
-        b=IMn9iQcJS4VXkSC5WdcgHYoPjoJyU6FmcRyTBngFwmn2X8NRb4BpHXG/x7mrQGxPkQ
-         IaikPh0Y3gkpVzrXL/qide55BoLBWmSeAVcYUgWXcmCI0UpXrECemnMClojv/F42ONSs
-         nh94mw+R4QnHIhd5aGcjxREixkJw7Nvv8ikz8eb7+yX+MLEh8QXNj78+UA9HApR5aJus
-         smm1Q7bsQs8uakjK3cyl6YNORAVRRtdfMixVBkHkekwdmZ+81pnQFo5oGwnr9R8wEki/
-         XRLsynAoOJ1+o4WtX7UUJsSUfqlhrvyxwwkJYv/xMwlO8ByPB6lqF719IiWMZAidL0Zq
-         tkww==
-X-Gm-Message-State: AOJu0YzE/91YwOjTAKoBq5Wkjx28P4Ba9Gq6Ba2jESFA6dEC4vZRfjfc
-	uSXWpwWsvtAe/0tv/H8qeEU=
-X-Google-Smtp-Source: AGHT+IEVj9D/whIu1FDqQtMmMPwJ51/a3mthgT8d8o+mlufUBen02S7Yk+XNPAXA0+012GUgSPnmRA==
-X-Received: by 2002:a92:c267:0:b0:35f:daa8:5caf with SMTP id h7-20020a92c267000000b0035fdaa85cafmr793821ild.30.1703208867182;
-        Thu, 21 Dec 2023 17:34:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1703208870; x=1703813670;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ETRSFur40AfpBaI78BUa335OqHgbVSXvF5B1Xe3sqDk=;
+        b=O5Fo7owVj8VuBJP7c7hkaomlhnEswDWwlFFVLH71C5dU4BKEd1tUeJqj2xCV86nTEb
+         4UjbzuYEvFa/wtDAX7RAeZjXZt+4ksJLBOfOnSNsQ5tJACrf8EooQZTuoIrvuyZK8w2+
+         aPg0vu3g01jYhYJn6RAPTXit+kjPCjVRqWJF/dC0d2Jr1O25a74AuP/U/9KihqFD0pIq
+         xl18nLHE1wmZXXQGt59Y+2ZXcK1LS+PrM7k4LiQMC9jSz8zSXtcA0tjmrLNlkfK0PRoM
+         uj+zfv+O+ZzhqEyhElUc7YcX8Hi3B5sQPX95Zy07rUVreV8eKgx56vfO79ARvwNHDWyr
+         qlqA==
+X-Gm-Message-State: AOJu0YwbRd49pVN++0fHrhkRRplNbGMp53YSwqwKpsivSxMEYApgJBq7
+	KGh68lm1NKMc/dAAkzgDE6w=
+X-Google-Smtp-Source: AGHT+IHA5GhnBx6vZ62Xk1DYmpIi3B6wwdjPCvbgiKHKyfskJ0cBoGCKQVf5H9xa6q5hyNGxkGvfig==
+X-Received: by 2002:a17:902:7245:b0:1d4:8d6:13b with SMTP id c5-20020a170902724500b001d408d6013bmr1532940pll.39.1703208870104;
+        Thu, 21 Dec 2023 17:34:30 -0800 (PST)
 Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id 5-20020a170902c24500b001d3d8e718c6sm2258634plg.282.2023.12.21.17.34.24
+        by smtp.gmail.com with ESMTPSA id 5-20020a170902c24500b001d3d8e718c6sm2258634plg.282.2023.12.21.17.34.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Dec 2023 17:34:26 -0800 (PST)
+        Thu, 21 Dec 2023 17:34:29 -0800 (PST)
 From: baneric926@gmail.com
 X-Google-Original-From: kcfeng0@nuvoton.com
 To: jdelvare@suse.com,
@@ -64,10 +65,12 @@ To: jdelvare@suse.com,
 	krzysztof.kozlowski+dt@linaro.org,
 	conor+dt@kernel.org,
 	corbet@lwn.net
-Subject: [PATCH v3 0/3] hwmon: Driver for Nuvoton NCT7363Y
-Date: Fri, 22 Dec 2023 09:33:49 +0800
-Message-Id: <20231222013352.3873689-1-kcfeng0@nuvoton.com>
+Subject: [PATCH v3 1/3] dt-bindings: hwmon: fan: Add fan binding to schema
+Date: Fri, 22 Dec 2023 09:33:50 +0800
+Message-Id: <20231222013352.3873689-2-kcfeng0@nuvoton.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231222013352.3873689-1-kcfeng0@nuvoton.com>
+References: <20231222013352.3873689-1-kcfeng0@nuvoton.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Wed, 03 Jan 2024 09:46:15 +1100
@@ -86,49 +89,111 @@ Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Ban Feng <kcfeng0@nuvoton.com>
+From: Naresh Solanki <naresh.solanki@9elements.com>
 
-NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
+Add common fan properties bindings to a schema.
 
-Changes since version 2:
-- Cherry-pick the fan-common.yaml in [1]
-- Fix nct736x typo and add unevaluatedProperties
+Bindings for fan controllers can reference the common schema for the
+fan
 
-[1]: https://patchwork.kernel.org/project/linux-hwmon/patch/
-     20231107105025.1480561-2-billy_tsai@aspeedtech.com/
+child nodes:
 
-Changes since version 1:
-- Modify NCT736X(nct736x) to NCT7363Y(nct7363)
-- Convert to devm_hwmon_device_register_with_info API
-- All ID tables are next to each other and should be consistent
-  between i2c_device_id and of_device_id
-- Ref. fan-common.yaml and modify properties (nuvoton,pwm-mask/
-  nuvoton,fanin-mask) to (pwms/tach-ch)
-- Convert to devm_regmap_init_i2c API
-- Remove unused function (watchdog timer)
-- Fix uninitialized symbol which is reported by kernel test robot
+  patternProperties:
+    "^fan@[0-2]":
+      type: object
+      $ref: fan-common.yaml#
+      unevaluatedProperties: false
 
-Ban Feng (2):
-  dt-bindings: hwmon: Add NCT7363Y documentation
-  hwmon: Driver for Nuvoton NCT7363Y
-
-Naresh Solanki (1):
-  dt-bindings: hwmon: fan: Add fan binding to schema
-
- .../devicetree/bindings/hwmon/fan-common.yaml |  76 +++
- .../bindings/hwmon/nuvoton,nct7363.yaml       |  63 +++
- Documentation/hwmon/index.rst                 |   1 +
- Documentation/hwmon/nct7363.rst               |  33 ++
- MAINTAINERS                                   |   8 +
- drivers/hwmon/Kconfig                         |  11 +
- drivers/hwmon/Makefile                        |   1 +
- drivers/hwmon/nct7363.c                       | 515 ++++++++++++++++++
- 8 files changed, 708 insertions(+)
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+---
+ .../devicetree/bindings/hwmon/fan-common.yaml | 76 +++++++++++++++++++
+ 1 file changed, 76 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/hwmon/fan-common.yaml
- create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
- create mode 100644 Documentation/hwmon/nct7363.rst
- create mode 100644 drivers/hwmon/nct7363.c
 
+diff --git a/Documentation/devicetree/bindings/hwmon/fan-common.yaml b/Documentation/devicetree/bindings/hwmon/fan-common.yaml
+new file mode 100644
+index 000000000000..ba7d6531f01d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/hwmon/fan-common.yaml
+@@ -0,0 +1,76 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/hwmon/fan-common.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Common Fan Properties
++
++maintainers:
++  - Naresh Solanki <naresh.solanki@9elements.com>
++  - Billy Tsai <billy_tsai@aspeedtech.com>
++
++properties:
++  max-rpm:
++    description:
++      Max RPM supported by fan.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    maximum: 100000
++
++  min-rpm:
++    description:
++      Min RPM supported by fan.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    maximum: 1000
++
++  pulses-per-revolution:
++    description:
++      The number of pulse from fan sensor per revolution.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    maximum: 4
++
++  tach-div:
++    description:
++      Divisor for the tach sampling clock, which determines the sensitivity of the tach pin.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
++  target-rpm:
++    description:
++      The default desired fan speed in RPM.
++    $ref: /schemas/types.yaml#/definitions/uint32
++
++  fan-driving-mode:
++    description:
++      Select the driving mode of the fan.(DC, PWM and so on)
++    $ref: /schemas/types.yaml#/definitions/string
++
++  pwms:
++    description:
++      PWM provider.
++    maxItems: 1
++
++  "#cooling-cells":
++    const: 2
++
++  cooling-levels:
++    description:
++      The control value which correspond to thermal cooling states.
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++
++  tach-ch:
++    description:
++      The tach channel used for the fan.
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++
++  label:
++    description:
++      Optional fan label
++
++  fan-supply:
++    description:
++      Power supply for fan.
++
++  reg:
++    maxItems: 1
++
++additionalProperties: true
 -- 
 2.34.1
 
