@@ -1,81 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BD0881FDDF
-	for <lists+openbmc@lfdr.de>; Fri, 29 Dec 2023 08:48:45 +0100 (CET)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Wq8Li3us;
-	dkim-atps=neutral
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7658F820BF0
+	for <lists+openbmc@lfdr.de>; Sun, 31 Dec 2023 17:18:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T1cvH2J3Xz3bsR
-	for <lists+openbmc@lfdr.de>; Fri, 29 Dec 2023 18:48:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T34720JVzz3cSC
+	for <lists+openbmc@lfdr.de>; Mon,  1 Jan 2024 03:18:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Wq8Li3us;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::129; helo=mail-il1-x129.google.com; envelope-from=jim.t90615@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=taln60.nuvoton.co.il (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4T1cqq3wfvz3bWy
-	for <openbmc@lists.ozlabs.org>; Fri, 29 Dec 2023 18:45:43 +1100 (AEDT)
-Received: by mail-il1-x129.google.com with SMTP id e9e14a558f8ab-35fcea0ac1aso32694075ab.1
-        for <openbmc@lists.ozlabs.org>; Thu, 28 Dec 2023 23:45:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703835940; x=1704440740; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fMIfoUSkLSoDGZ5tRbb3bXVs4hbdVpL1OH6EPKJqVS4=;
-        b=Wq8Li3usZQUoESkhlqHoDCgNLZvI+t1uW2XiX7H8e/m78Pyda0WzN+OY/9CT42mFqn
-         xjNOdObuw0s++9TI2ZsnpVFwmh+pxUb5Bo0Bc4cM16ti97CoShgHaswvPtAucgSUnE6X
-         3tFzeFTltlha1qfMMBzjp4TiuAqoWf3BFfnzjd/fcjdVvvhizVAoUQy3juz0/pOY6lKD
-         lDU5+gyHwsF0Hnaif3SbsOYZnaC+ZipL0gBCyZmyRupAgZzr5gqTO5p1BdYFTsK8Es8H
-         nqw/Y8Hh4sQzx9mwM7bXbkrX618VQr34myxiVQAun78kj2K/cupa22t3FOFXWEY6i7D8
-         YVkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703835940; x=1704440740;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fMIfoUSkLSoDGZ5tRbb3bXVs4hbdVpL1OH6EPKJqVS4=;
-        b=IeWBX6UNEsKXNWjyU8aae11gBR4vFXxHXHTlSZG6zaGWOFegLsbssUS/pgJ5XtodzZ
-         ZLXrdIxNALi/CvtLiWHRd3xc87qL54gBQz9wEEaJu9mo+aRXZMTLUPvcS/yFk7e1S1YJ
-         OUNSCBg4XilNv9J3KOAY+uJSCfhJ/jWDTriARsI+d1kC4emZHz/M77ajGIflwVri0Ajl
-         nb2VWz7GGsCB1nGi50HsSFOCrAYxWvFbSq4USdouonFOjMed4xW9RrBXQaR1L8XQQlMk
-         k+WJKbSyClvBOd3JWNZhs4ZcGn6Y5FUz0dWhZd4tyyVQ/Wh3+lhVaf9j9+wzJFYzQswx
-         bDCg==
-X-Gm-Message-State: AOJu0YyV7HKKSsj2ZzHwLHHhZcPGT2QMJsww+8KZBIcHiraFhFazr8pi
-	5o98lCb/wKFjJjuv4KbE8KM=
-X-Google-Smtp-Source: AGHT+IFOWQbvYCSYGznrRgGPUgj4LOiR0e9OWuMLARRpr5JAWfNEpz3eoJ/g1+Y2tv6KiAFp/xarzQ==
-X-Received: by 2002:a05:6e02:1c89:b0:35f:f67b:b004 with SMTP id w9-20020a056e021c8900b0035ff67bb004mr7762429ill.15.1703835940334;
-        Thu, 28 Dec 2023 23:45:40 -0800 (PST)
-Received: from localhost.localdomain ([1.200.140.173])
-        by smtp.gmail.com with ESMTPSA id s188-20020a6377c5000000b005c683937cc5sm10305186pgc.44.2023.12.28.23.45.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Dec 2023 23:45:39 -0800 (PST)
-From: jim.t90615@gmail.com
-X-Google-Original-From: JJLIU0@nuvoton.com
-To: JJLIU0@nuvoton.com,
-	KWLIU@nuvoton.com,
-	jim.t90615@gmail.com,
-	linus.walleij@linaro.org,
-	brgl@bgdev.pl,
-	andy@kernel.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org
-Subject: [PATCH v10 3/3] gpio: nuvoton: Add Nuvoton NPCM sgpio driver
-Date: Fri, 29 Dec 2023 15:45:08 +0800
-Message-Id: <20231229074508.2709093-4-JJLIU0@nuvoton.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231229074508.2709093-1-JJLIU0@nuvoton.com>
-References: <20231229074508.2709093-1-JJLIU0@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4T346d17jTz2xcq
+	for <openbmc@lists.ozlabs.org>; Mon,  1 Jan 2024 03:18:27 +1100 (AEDT)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 3BVGIFIU021683
+	for <openbmc@lists.ozlabs.org>; Sun, 31 Dec 2023 18:18:15 +0200
+Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Sun, 31 Dec
+ 2023 18:18:14 +0200
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01A.nuvoton.com
+ (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Mon, 1 Jan
+ 2024 00:18:12 +0800
+Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
+ Transport; Mon, 1 Jan 2024 00:18:11 +0800
+Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
+	by taln58.nuvoton.co.il (Postfix) with ESMTP id 35B835F64A;
+	Sun, 31 Dec 2023 18:18:11 +0200 (IST)
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 1F5F6DC3724; Sun, 31 Dec 2023 18:18:11 +0200 (IST)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [PATCH linux dev-6.6 v1] clk: npcm8xx: add clock controller
+Date: Sun, 31 Dec 2023 18:18:07 +0200
+Message-ID: <20231231161807.2763130-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,688 +55,568 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc: Joel Stanley <joel@jms.id.au>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Jim Liu <JJLIU0@nuvoton.com>
+Nuvoton Arbel BMC NPCM8XX contains an integrated clock controller which
+generates and supplies clocks to all modules within the BMC.
 
-Add Nuvoton BMC NPCM7xx/NPCM8xx sgpio driver support.
-Nuvoton NPCM SGPIO module is combine serial to parallel IC (HC595)
-and parallel to serial IC (HC165), and use APB3 clock to control it.
-This interface has 4 pins  (D_out , D_in, S_CLK, LDSH).
-BMC can use this driver to increase 64 GPI pins and 64 GPO pins to use.
-
-Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
-Changes for v10:
-   - use HZ_PER_MHZ
-   - check blank line and spaces wrongs
-   - use dev_err_probe
-   - Instead of conditionals use arithmetics
-Changes for v9:
-   - fix kernel rebot test warning
-Changes for v8:
-   - Remove OF_GPIO/GPIO_GENERIC and redundant assignments
-   - Use GENMASK() and BIT()
-   - Use dev_WARN and dev_err_probe
-   - Check indentation issue
-   - Use raw_spinlock_t
----
- drivers/gpio/Kconfig           |   7 +
- drivers/gpio/Makefile          |   1 +
- drivers/gpio/gpio-npcm-sgpio.c | 612 +++++++++++++++++++++++++++++++++
- 3 files changed, 620 insertions(+)
- create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
+ drivers/clk/Kconfig       |   8 +
+ drivers/clk/Makefile      |   1 +
+ drivers/clk/clk-npcm8xx.c | 510 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 519 insertions(+)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index b3a133ed31ee..efbdc93819d4 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -478,6 +478,13 @@ config GPIO_MXS
- 	select GPIO_GENERIC
- 	select GENERIC_IRQ_CHIP
+diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+index c30099866174..9bc5f2dfc7e2 100644
+--- a/drivers/clk/Kconfig
++++ b/drivers/clk/Kconfig
+@@ -325,6 +325,14 @@ config COMMON_CLK_LOCHNAGAR
+ 	  This driver supports the clocking features of the Cirrus Logic
+ 	  Lochnagar audio development board.
  
-+config GPIO_NPCM_SGPIO
-+	bool "Nuvoton SGPIO support"
++config COMMON_CLK_NPCM8XX
++	tristate "Clock driver for the NPCM8XX SoC Family"
 +	depends on ARCH_NPCM || COMPILE_TEST
-+	select GPIOLIB_IRQCHIP
 +	help
-+	  Say Y here to support Nuvoton NPCM7XX/NPCM8XX SGPIO functionality.
++	  This driver supports the clocks on the Nuvoton BMC NPCM8XX SoC Family,
++	  all the clocks are initialized by the bootloader, so this driver
++	  allows only reading of current settings directly from the hardware.
 +
- config GPIO_OCTEON
- 	tristate "Cavium OCTEON GPIO"
- 	depends on CAVIUM_OCTEON_SOC
-diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
-index eb73b5d633eb..373aa2943de5 100644
---- a/drivers/gpio/Makefile
-+++ b/drivers/gpio/Makefile
-@@ -116,6 +116,7 @@ obj-$(CONFIG_GPIO_MT7621)		+= gpio-mt7621.o
- obj-$(CONFIG_GPIO_MVEBU)		+= gpio-mvebu.o
- obj-$(CONFIG_GPIO_MXC)			+= gpio-mxc.o
- obj-$(CONFIG_GPIO_MXS)			+= gpio-mxs.o
-+obj-$(CONFIG_GPIO_NPCM_SGPIO)		+= gpio-npcm-sgpio.o
- obj-$(CONFIG_GPIO_OCTEON)		+= gpio-octeon.o
- obj-$(CONFIG_GPIO_OMAP)			+= gpio-omap.o
- obj-$(CONFIG_GPIO_PALMAS)		+= gpio-palmas.o
-diff --git a/drivers/gpio/gpio-npcm-sgpio.c b/drivers/gpio/gpio-npcm-sgpio.c
+ config COMMON_CLK_LOONGSON2
+ 	bool "Clock driver for Loongson-2 SoC"
+ 	depends on LOONGARCH || COMPILE_TEST
+diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+index 18969cbd4bb1..e2cbc6cceb8c 100644
+--- a/drivers/clk/Makefile
++++ b/drivers/clk/Makefile
+@@ -51,6 +51,7 @@ obj-$(CONFIG_ARCH_MILBEAUT_M10V)	+= clk-milbeaut.o
+ obj-$(CONFIG_ARCH_MOXART)		+= clk-moxart.o
+ obj-$(CONFIG_ARCH_NOMADIK)		+= clk-nomadik.o
+ obj-$(CONFIG_ARCH_NPCM7XX)	    	+= clk-npcm7xx.o
++obj-$(CONFIG_COMMON_CLK_NPCM8XX)	+= clk-npcm8xx.o
+ obj-$(CONFIG_ARCH_NSPIRE)		+= clk-nspire.o
+ obj-$(CONFIG_COMMON_CLK_PALMAS)		+= clk-palmas.o
+ obj-$(CONFIG_CLK_LS1028A_PLLDIG)	+= clk-plldig.o
+diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
 new file mode 100644
-index 000000000000..e9057c4a658d
+index 000000000000..7c118720e569
 --- /dev/null
-+++ b/drivers/gpio/gpio-npcm-sgpio.c
-@@ -0,0 +1,612 @@
++++ b/drivers/clk/clk-npcm8xx.c
+@@ -0,0 +1,510 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * Nuvoton NPCM Serial GPIO Driver
++ * Nuvoton NPCM8xx Clock Generator
++ * All the clocks are initialized by the bootloader, so this driver allows only
++ * reading of current settings directly from the hardware.
 + *
-+ * Copyright (C) 2021 Nuvoton Technologies
++ * Copyright (C) 2020 Nuvoton Technologies
++ * Author: Tomer Maimon <tomer.maimon@nuvoton.com>
 + */
++
++#define pr_fmt(fmt) "npcm8xx_clk: " fmt
 +
 +#include <linux/bitfield.h>
-+#include <linux/clk.h>
-+#include <linux/gpio/driver.h>
-+#include <linux/hashtable.h>
-+#include <linux/init.h>
++#include <linux/clk-provider.h>
++#include <linux/err.h>
 +#include <linux/io.h>
++#include <linux/kernel.h>
 +#include <linux/module.h>
 +#include <linux/platform_device.h>
-+#include <linux/spinlock.h>
-+#include <linux/string.h>
-+#include <linux/units.h>
++#include <linux/slab.h>
++#include <linux/regmap.h>
++#include <linux/mfd/syscon.h>
 +
-+#define MAX_NR_HW_SGPIO		64
++#include <dt-bindings/clock/nuvoton,npcm845-clk.h>
 +
-+#define  NPCM_IOXCFG1		0x2A
-+#define  NPCM_IOXCFG1_SFT_CLK	GENMASK(3, 0)
-+#define  NPCM_IOXCFG1_SCLK_POL	BIT(4)
-+#define  NPCM_IOXCFG1_LDSH_POL	BIT(5)
++/* npcm8xx clock registers*/
++#define NPCM8XX_CLKSEL		0x04
++#define NPCM8XX_CLKDIV1		0x08
++#define NPCM8XX_CLKDIV2		0x2C
++#define NPCM8XX_CLKDIV3		0x58
++#define NPCM8XX_CLKDIV4		0x7C
++#define NPCM8XX_PLLCON0		0x0C
++#define NPCM8XX_PLLCON1		0x10
++#define NPCM8XX_PLLCON2		0x54
++#define NPCM8XX_PLLCONG		0x60
++#define NPCM8XX_THRTL_CNT	0xC0
 +
-+#define  NPCM_IOXCTS			0x28
-+#define  NPCM_IOXCTS_IOXIF_EN		BIT(7)
-+#define  NPCM_IOXCTS_RD_MODE		GENMASK(2, 1)
-+#define  NPCM_IOXCTS_RD_MODE_PERIODIC	BIT(2)
++#define PLLCON_LOKI	BIT(31)
++#define PLLCON_LOKS	BIT(30)
++#define PLLCON_FBDV	GENMASK(27, 16)
++#define PLLCON_OTDV2	GENMASK(15, 13)
++#define PLLCON_PWDEN	BIT(12)
++#define PLLCON_OTDV1	GENMASK(10, 8)
++#define PLLCON_INDV	GENMASK(5, 0)
 +
-+#define  NPCM_IOXCFG2		0x2B
-+#define  NPCM_IOXCFG2_PORT	GENMASK(3, 0)
-+
-+#define  NPCM_IXOEVCFG_MASK	GENMASK(1, 0)
-+#define  NPCM_IXOEVCFG_FALLING	BIT(1)
-+#define  NPCM_IXOEVCFG_RISING	BIT(0)
-+#define  NPCM_IXOEVCFG_BOTH	(NPCM_IXOEVCFG_FALLING | NPCM_IXOEVCFG_RISING)
-+
-+#define NPCM_CLK_MHZ	(8 * HZ_PER_MHZ)
-+#define NPCM_750_OPT	6
-+#define NPCM_845_OPT	5
-+
-+#define GPIO_BANK(x)    ((x) / 8)
-+#define GPIO_BIT(x)     ((x) % 8)
-+
-+/*
-+ * Select the frequency of shift clock.
-+ * The shift clock is a division of the APB clock.
-+ */
-+struct npcm_clk_cfg {
-+	unsigned int	*sft_clk;
-+	unsigned int	*clk_sel;
-+	unsigned int	cfg_opt;
++struct npcm8xx_clk {
++	struct regmap	*clk_regmap;
++	unsigned int	offset;
++	const char	*name;
++	const u32	*table;
++	u32		mask;
++	u8		shift;
++	unsigned long	width;
++	unsigned long	flags;
++	struct clk_hw	hw;
 +};
 +
-+struct npcm_sgpio {
-+	struct gpio_chip chip;
-+	struct clk *pclk;
-+	struct irq_chip intc;
-+	raw_spinlock_t lock;
++#define to_npcm8xx_clk(_hw) container_of(_hw, struct npcm8xx_clk, hw)
 +
-+	void __iomem *base;
-+	int irq;
-+	u8 nin_sgpio;
-+	u8 nout_sgpio;
-+	u8 in_port;
-+	u8 out_port;
-+	u8 int_type[MAX_NR_HW_SGPIO];
++struct npcm8xx_clk_pll_data {
++	const char *name;
++	struct clk_parent_data parent;
++	unsigned int reg;
++	unsigned long flags;
++	struct clk_hw hw;
 +};
 +
-+struct npcm_sgpio_bank {
-+	u8 rdata_reg;
-+	u8 wdata_reg;
-+	u8 event_config;
-+	u8 event_status;
++struct npcm8xx_clk_div_data {
++	u32 reg;
++	u8 shift;
++	u8 width;
++	const char *name;
++	const struct clk_hw *parent_hw;
++	unsigned long clk_divider_flags;
++	unsigned long flags;
++	int onecell_idx;
++	struct clk_hw hw;
 +};
 +
-+enum npcm_sgpio_reg {
-+	READ_DATA,
-+	WRITE_DATA,
-+	EVENT_CFG,
-+	EVENT_STS,
++struct npcm8xx_clk_mux_data {
++	u8 shift;
++	u32 mask;
++	const u32 *table;
++	const char *name;
++	const struct clk_parent_data *parent_data;
++	u8 num_parents;
++	unsigned long flags;
++	struct clk_hw hw;
 +};
 +
-+static const struct npcm_sgpio_bank npcm_sgpio_banks[] = {
-+	{
-+		.wdata_reg = 0x00,
-+		.rdata_reg = 0x08,
-+		.event_config = 0x10,
-+		.event_status = 0x20,
-+	},
-+	{
-+		.wdata_reg = 0x01,
-+		.rdata_reg = 0x09,
-+		.event_config = 0x12,
-+		.event_status = 0x21,
-+	},
-+	{
-+		.wdata_reg = 0x02,
-+		.rdata_reg = 0x0a,
-+		.event_config = 0x14,
-+		.event_status = 0x22,
-+	},
-+	{
-+		.wdata_reg = 0x03,
-+		.rdata_reg = 0x0b,
-+		.event_config = 0x16,
-+		.event_status = 0x23,
-+	},
-+	{
-+		.wdata_reg = 0x04,
-+		.rdata_reg = 0x0c,
-+		.event_config = 0x18,
-+		.event_status = 0x24,
-+	},
-+	{
-+		.wdata_reg = 0x05,
-+		.rdata_reg = 0x0d,
-+		.event_config = 0x1a,
-+		.event_status = 0x25,
-+	},
-+	{
-+		.wdata_reg = 0x06,
-+		.rdata_reg = 0x0e,
-+		.event_config = 0x1c,
-+		.event_status = 0x26,
-+	},
-+	{
-+		.wdata_reg = 0x07,
-+		.rdata_reg = 0x0f,
-+		.event_config = 0x1e,
-+		.event_status = 0x27,
-+	},
++/* external clock definition */
++#define NPCM8XX_CLK_S_REFCLK	"refclk"
++
++/* pll definition */
++#define NPCM8XX_CLK_S_PLL0	"pll0"
++#define NPCM8XX_CLK_S_PLL1	"pll1"
++#define NPCM8XX_CLK_S_PLL2	"pll2"
++#define NPCM8XX_CLK_S_PLL_GFX	"pll_gfx"
++
++/* early divider definition */
++#define NPCM8XX_CLK_S_PLL2_DIV2		"pll2_div2"
++#define NPCM8XX_CLK_S_PLL_GFX_DIV2	"pll_gfx_div2"
++#define NPCM8XX_CLK_S_PLL1_DIV2		"pll1_div2"
++
++/* mux definition */
++#define NPCM8XX_CLK_S_CPU_MUX     "cpu_mux"
++
++/* div definition */
++#define NPCM8XX_CLK_S_TH          "th"
++#define NPCM8XX_CLK_S_AXI         "axi"
++
++static struct clk_hw hw_pll1_div2, hw_pll2_div2, hw_gfx_div2, hw_pre_clk;
++static struct npcm8xx_clk_pll_data npcm8xx_pll_clks[] = {
++	{ NPCM8XX_CLK_S_PLL0, { .fw_name  = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON0, 0 },
++	{ NPCM8XX_CLK_S_PLL1, { .fw_name  = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON1, 0 },
++	{ NPCM8XX_CLK_S_PLL2, { .fw_name  = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON2, 0 },
++	{ NPCM8XX_CLK_S_PLL_GFX, { .fw_name  = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCONG, 0 },
 +};
 +
-+static void __iomem *bank_reg(struct npcm_sgpio *gpio,
-+			      const struct npcm_sgpio_bank *bank,
-+			      const enum npcm_sgpio_reg reg)
++static const u32 cpuck_mux_table[] = { 0, 1, 2, 7 };
++static const struct clk_parent_data cpuck_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 pixcksel_mux_table[] = { 0, 2 };
++static const struct clk_parent_data pixcksel_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[3].hw },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK }
++};
++
++static const u32 default_mux_table[] = { 0, 1, 2, 3 };
++static const struct clk_parent_data default_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 sucksel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data sucksel_mux_parents[] = {
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 mccksel_mux_table[] = { 0, 2 };
++static const struct clk_parent_data mccksel_mux_parents[] = {
++	{ .hw = &hw_pll1_div2 },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK }
++};
++
++static const u32 clkoutsel_mux_table[] = { 0, 1, 2, 3, 4 };
++static const struct clk_parent_data clkoutsel_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &hw_gfx_div2 },
++	{ .hw = &hw_pll2_div2 }
++};
++
++static const u32 gfxmsel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data gfxmsel_mux_parents[] = {
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 dvcssel_mux_table[] = { 2, 3 };
++static const struct clk_parent_data dvcssel_mux_parents[] = {
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK },
++	{ .hw = &npcm8xx_pll_clks[2].hw }
++};
++
++static const u32 default3_mux_table[] = { 0, 1, 2 };
++static const struct clk_parent_data default3_mux_parents[] = {
++	{ .hw = &npcm8xx_pll_clks[0].hw },
++	{ .hw = &npcm8xx_pll_clks[1].hw },
++	{ .fw_name  = NPCM8XX_CLK_S_REFCLK }
++};
++
++static struct npcm8xx_clk_mux_data npcm8xx_muxes[] = {
++	{ 0, 7, cpuck_mux_table, NPCM8XX_CLK_S_CPU_MUX, cpuck_mux_parents,
++		ARRAY_SIZE(cpuck_mux_parents), CLK_IS_CRITICAL },
++	{ 4, 3, pixcksel_mux_table, "gfx_pixel_mux", pixcksel_mux_parents,
++		ARRAY_SIZE(pixcksel_mux_parents), 0 },
++	{ 6, 3, default_mux_table, "sd_mux", default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 8, 3, default_mux_table, "uart_mux", default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 10, 3, sucksel_mux_table, "serial_usb_mux", sucksel_mux_parents,
++		ARRAY_SIZE(sucksel_mux_parents), 0 },
++	{ 12, 3, mccksel_mux_table, "mc_mux", mccksel_mux_parents,
++		ARRAY_SIZE(mccksel_mux_parents), 0 },
++	{ 14, 3, default_mux_table, "adc_mux", default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 16, 3, default_mux_table, "gfx_mux", default_mux_parents,
++		ARRAY_SIZE(default_mux_parents), 0 },
++	{ 18, 7, clkoutsel_mux_table, "clkout_mux", clkoutsel_mux_parents,
++		ARRAY_SIZE(clkoutsel_mux_parents), 0 },
++	{ 21, 3, gfxmsel_mux_table, "gfxm_mux", gfxmsel_mux_parents,
++		ARRAY_SIZE(gfxmsel_mux_parents), 0 },
++	{ 23, 3, dvcssel_mux_table, "dvc_mux", dvcssel_mux_parents,
++		ARRAY_SIZE(dvcssel_mux_parents), 0 },
++	{ 25, 3, default3_mux_table, "rg_mux", default3_mux_parents,
++		ARRAY_SIZE(default3_mux_parents), 0 },
++	{ 27, 3, default3_mux_table, "rcp_mux", default3_mux_parents,
++		ARRAY_SIZE(default3_mux_parents), 0 },
++};
++
++static struct npcm8xx_clk_div_data npcm8xx_pre_divs[] = {
++	{ NPCM8XX_CLKDIV1, 21, 5, "pre_adc", &npcm8xx_muxes[6].hw, CLK_DIVIDER_READ_ONLY, 0, -1 },
++	{ NPCM8XX_CLKDIV1, 26, 2, "ahb", &hw_pre_clk, CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM8XX_CLK_AHB },
++};
++
++/* configurable dividers: */
++static struct npcm8xx_clk_div_data npcm8xx_divs[] = {
++	{ NPCM8XX_CLKDIV1, 28, 3, "adc", &npcm8xx_pre_divs[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_ADC },
++	{ NPCM8XX_CLKDIV1, 16, 5, "uart", &npcm8xx_muxes[3].hw, 0, 0, NPCM8XX_CLK_UART },
++	{ NPCM8XX_CLKDIV1, 11, 5, "mmc", &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_MMC },
++	{ NPCM8XX_CLKDIV1, 6, 5, "spi3", &npcm8xx_pre_divs[1].hw, 0, 0, NPCM8XX_CLK_SPI3 },
++	{ NPCM8XX_CLKDIV1, 2, 4, "pci", &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_PCI },
++
++	{ NPCM8XX_CLKDIV2, 30, 2, "apb4", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB4 },
++	{ NPCM8XX_CLKDIV2, 28, 2, "apb3", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB3 },
++	{ NPCM8XX_CLKDIV2, 26, 2, "apb2", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB2 },
++	{ NPCM8XX_CLKDIV2, 24, 2, "apb1", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB1 },
++	{ NPCM8XX_CLKDIV2, 22, 2, "apb5", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB5 },
++	{ NPCM8XX_CLKDIV2, 16, 5, "clkout", &npcm8xx_muxes[8].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_CLKOUT },
++	{ NPCM8XX_CLKDIV2, 13, 3, "gfx", &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_GFX },
++	{ NPCM8XX_CLKDIV2, 8, 5, "usb_bridge", &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU },
++	{ NPCM8XX_CLKDIV2, 4, 4, "usb_host", &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU48 },
++	{ NPCM8XX_CLKDIV2, 0, 4, "sdhc", &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SDHC },
++
++	{ NPCM8XX_CLKDIV3, 16, 8, "spi1", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI1 },
++	{ NPCM8XX_CLKDIV3, 11, 5, "uart2", &npcm8xx_muxes[3].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_UART2 },
++	{ NPCM8XX_CLKDIV3, 6, 5, "spi0", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI0 },
++	{ NPCM8XX_CLKDIV3, 1, 5, "spix", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPIX },
++
++	{ NPCM8XX_CLKDIV4, 28, 4, "rg", &npcm8xx_muxes[11].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RG },
++	{ NPCM8XX_CLKDIV4, 12, 4, "rcp", &npcm8xx_muxes[12].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RCP },
++
++	{ NPCM8XX_THRTL_CNT, 0, 2, NPCM8XX_CLK_S_TH, &npcm8xx_muxes[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_TH },
++};
++
++static struct clk_hw *
++npcm8xx_clk_register(struct device *dev, const char *name,
++		     struct regmap *clk_regmap, unsigned int offset,
++		     unsigned long flags, const struct clk_ops *npcm8xx_clk_ops,
++		     const struct clk_parent_data *parent_data,
++		     const struct clk_hw *parent_hw, u8 num_parents,
++		     u8 shift, u32 mask, unsigned long width,
++		     const u32 *table, unsigned long clk_flags)
 +{
-+	switch (reg) {
-+	case READ_DATA:
-+		return gpio->base + bank->rdata_reg;
-+	case WRITE_DATA:
-+		return gpio->base + bank->wdata_reg;
-+	case EVENT_CFG:
-+		return gpio->base + bank->event_config;
-+	case EVENT_STS:
-+		return gpio->base + bank->event_status;
-+	default:
-+		/* actually if code runs to here, it's an error case */
-+		dev_WARN(gpio->chip.parent, "Getting here is an error condition");
-+		return NULL;
++	struct npcm8xx_clk *clk;
++	struct clk_init_data init = {};
++	int ret;
++
++	clk = devm_kzalloc(dev, sizeof(*clk), GFP_KERNEL);
++	if (!clk)
++		return ERR_PTR(-ENOMEM);
++
++	init.name = name;
++	init.ops = npcm8xx_clk_ops;
++	init.parent_data = parent_data;
++	init.parent_hws = parent_hw ? &parent_hw : NULL;
++	init.num_parents = num_parents;
++	init.flags = flags;
++
++	clk->clk_regmap = clk_regmap;
++	clk->hw.init = &init;
++	clk->offset = offset;
++	clk->shift = shift;
++	clk->mask = mask;
++	clk->width = width;
++	clk->table = table;
++	clk->flags = clk_flags;
++
++	ret = devm_clk_hw_register(dev, &clk->hw);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return &clk->hw;
++}
++
++static unsigned long npcm8xx_clk_pll_recalc_rate(struct clk_hw *hw,
++						 unsigned long parent_rate)
++{
++	struct npcm8xx_clk *pll = to_npcm8xx_clk(hw);
++	unsigned long fbdv, indv, otdv1, otdv2;
++	unsigned int val;
++	u64 ret;
++
++	if (parent_rate == 0) {
++		pr_debug("%s: parent rate is zero\n", __func__);
++		return 0;
 +	}
++
++	regmap_read(pll->clk_regmap, pll->offset, &val);
++
++	indv = FIELD_GET(PLLCON_INDV, val);
++	fbdv = FIELD_GET(PLLCON_FBDV, val);
++	otdv1 = FIELD_GET(PLLCON_OTDV1, val);
++	otdv2 = FIELD_GET(PLLCON_OTDV2, val);
++
++	ret = (u64)parent_rate * fbdv;
++	do_div(ret, indv * otdv1 * otdv2);
++
++	return ret;
 +}
 +
-+static const struct npcm_sgpio_bank *offset_to_bank(unsigned int offset)
++static const struct clk_ops npcm8xx_clk_pll_ops = {
++	.recalc_rate = npcm8xx_clk_pll_recalc_rate,
++};
++
++static u8 npcm8xx_clk_mux_get_parent(struct clk_hw *hw)
 +{
-+	unsigned int bank = GPIO_BANK(offset);
-+
-+	return &npcm_sgpio_banks[bank];
-+}
-+
-+static void npcm_sgpio_irqd_to_data(struct irq_data *d,
-+				    struct npcm_sgpio **gpio,
-+				    const struct npcm_sgpio_bank **bank,
-+				    u8 *bit, unsigned int *offset)
-+{
-+	struct npcm_sgpio *internal;
-+
-+	*offset = irqd_to_hwirq(d);
-+	internal = irq_data_get_irq_chip_data(d);
-+
-+	*gpio = internal;
-+	*offset -= internal->nout_sgpio;
-+	*bank = offset_to_bank(*offset);
-+	*bit = GPIO_BIT(*offset);
-+}
-+
-+static int npcm_sgpio_init_port(struct npcm_sgpio *gpio)
-+{
-+	u8 in_port, out_port, set_port, reg;
-+
-+	in_port = GPIO_BANK(gpio->nin_sgpio);
-+	if (GPIO_BIT(gpio->nin_sgpio) > 0)
-+		in_port += 1;
-+
-+	out_port = GPIO_BANK(gpio->nout_sgpio);
-+	if (GPIO_BIT(gpio->nout_sgpio) > 0)
-+		out_port += 1;
-+
-+	gpio->in_port = in_port;
-+	gpio->out_port = out_port;
-+	set_port = (out_port & NPCM_IOXCFG2_PORT) << 4 | (in_port & NPCM_IOXCFG2_PORT);
-+	iowrite8(set_port, gpio->base + NPCM_IOXCFG2);
-+
-+	reg = ioread8(gpio->base + NPCM_IOXCFG2);
-+
-+	return reg == set_port ? 0 : -EINVAL;
-+
-+}
-+
-+static int npcm_sgpio_dir_in(struct gpio_chip *gc, unsigned int offset)
-+{
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+
-+	return offset <	gpio->nout_sgpio ? -EINVAL : 0;
-+
-+}
-+
-+static int npcm_sgpio_dir_out(struct gpio_chip *gc, unsigned int offset, int val)
-+{
-+	gc->set(gc, offset, val);
-+
-+	return 0;
-+}
-+
-+static int npcm_sgpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-+{
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+
-+	if (offset < gpio->nout_sgpio)
-+		return GPIO_LINE_DIRECTION_OUT;
-+
-+	return GPIO_LINE_DIRECTION_IN;
-+}
-+
-+static void npcm_sgpio_set(struct gpio_chip *gc, unsigned int offset, int val)
-+{
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+	const struct  npcm_sgpio_bank *bank = offset_to_bank(offset);
-+	void __iomem *addr;
-+	u8 reg = 0;
-+
-+	addr = bank_reg(gpio, bank, WRITE_DATA);
-+	reg = ioread8(addr);
-+
-+	if (val)
-+		reg |= BIT(GPIO_BIT(offset));
-+	else
-+		reg &= ~BIT(GPIO_BIT(offset));
-+
-+	iowrite8(reg, addr);
-+}
-+
-+static int npcm_sgpio_get(struct gpio_chip *gc, unsigned int offset)
-+{
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+	const struct  npcm_sgpio_bank *bank;
-+	void __iomem *addr;
-+	u8 reg;
-+
-+	if (offset < gpio->nout_sgpio) {
-+		bank = offset_to_bank(offset);
-+		addr = bank_reg(gpio, bank, WRITE_DATA);
-+	} else {
-+		offset -= gpio->nout_sgpio;
-+		bank = offset_to_bank(offset);
-+		addr = bank_reg(gpio, bank, READ_DATA);
-+	}
-+
-+	reg = ioread8(addr);
-+
-+	return !!(reg & BIT(GPIO_BIT(offset)));
-+}
-+
-+static void npcm_sgpio_setup_enable(struct npcm_sgpio *gpio, bool enable)
-+{
-+	u8 reg;
-+
-+	reg = ioread8(gpio->base + NPCM_IOXCTS);
-+	reg = (reg & ~NPCM_IOXCTS_RD_MODE) | NPCM_IOXCTS_RD_MODE_PERIODIC;
-+
-+	if (enable)
-+		reg |= NPCM_IOXCTS_IOXIF_EN;
-+	else
-+		reg &= ~NPCM_IOXCTS_IOXIF_EN;
-+
-+	iowrite8(reg, gpio->base + NPCM_IOXCTS);
-+}
-+
-+static int npcm_sgpio_setup_clk(struct npcm_sgpio *gpio,
-+				const struct npcm_clk_cfg *clk_cfg)
-+{
-+	unsigned long apb_freq;
++	struct npcm8xx_clk *mux = to_npcm8xx_clk(hw);
 +	u32 val;
-+	u8 tmp;
-+	int i;
 +
-+	apb_freq = clk_get_rate(gpio->pclk);
-+	tmp = ioread8(gpio->base + NPCM_IOXCFG1) & ~NPCM_IOXCFG1_SFT_CLK;
++	regmap_read(mux->clk_regmap, mux->offset, &val);
++	val = val >> mux->shift;
++	val &= mux->mask;
 +
-+	for (i = clk_cfg->cfg_opt-1; i > 0; i--) {
-+		val = apb_freq / clk_cfg->sft_clk[i];
-+		if (NPCM_CLK_MHZ > val) {
-+			iowrite8(clk_cfg->clk_sel[i] | tmp, gpio->base + NPCM_IOXCFG1);
-+			return 0;
-+		}
-+	}
-+
-+	return -EINVAL;
++	return clk_mux_val_to_index(hw, mux->table, mux->flags, val);
 +}
 +
-+static void npcm_sgpio_irq_init_valid_mask(struct gpio_chip *gc,
-+					   unsigned long *valid_mask, unsigned int ngpios)
-+{
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+
-+	/* input GPIOs in the high range */
-+	bitmap_set(valid_mask, gpio->nout_sgpio, gpio->nin_sgpio);
-+	bitmap_clear(valid_mask, 0, gpio->nout_sgpio);
-+}
-+
-+static void npcm_sgpio_irq_set_mask(struct irq_data *d, bool set)
-+{
-+	const struct npcm_sgpio_bank *bank;
-+	struct npcm_sgpio *gpio;
-+	unsigned long flags;
-+	void __iomem *addr;
-+	unsigned int offset;
-+	u16 reg, type;
-+	u8 bit;
-+
-+	npcm_sgpio_irqd_to_data(d, &gpio, &bank, &bit, &offset);
-+	addr = bank_reg(gpio, bank, EVENT_CFG);
-+
-+	reg = ioread16(addr);
-+	if (set) {
-+		reg &= ~(NPCM_IXOEVCFG_MASK << (bit * 2));
-+	} else {
-+		type = gpio->int_type[offset];
-+		reg |= (type << (bit * 2));
-+	}
-+
-+	raw_spin_lock_irqsave(&gpio->lock, flags);
-+
-+	npcm_sgpio_setup_enable(gpio, false);
-+
-+	iowrite16(reg, addr);
-+
-+	npcm_sgpio_setup_enable(gpio, true);
-+
-+	addr = bank_reg(gpio, bank, EVENT_STS);
-+	reg = ioread8(addr);
-+	reg |= BIT(bit);
-+	iowrite8(reg, addr);
-+
-+	raw_spin_unlock_irqrestore(&gpio->lock, flags);
-+}
-+
-+static void npcm_sgpio_irq_ack(struct irq_data *d)
-+{
-+	const struct npcm_sgpio_bank *bank;
-+	struct npcm_sgpio *gpio;
-+	unsigned long flags;
-+	void __iomem *status_addr;
-+	unsigned int offset;
-+	u8 bit;
-+
-+	npcm_sgpio_irqd_to_data(d, &gpio, &bank, &bit, &offset);
-+	status_addr = bank_reg(gpio, bank, EVENT_STS);
-+	raw_spin_lock_irqsave(&gpio->lock, flags);
-+	iowrite8(BIT(bit), status_addr);
-+	raw_spin_unlock_irqrestore(&gpio->lock, flags);
-+}
-+
-+static void npcm_sgpio_irq_mask(struct irq_data *d)
-+{
-+	npcm_sgpio_irq_set_mask(d, true);
-+}
-+
-+static void npcm_sgpio_irq_unmask(struct irq_data *d)
-+{
-+	npcm_sgpio_irq_set_mask(d, false);
-+}
-+
-+static int npcm_sgpio_set_type(struct irq_data *d, unsigned int type)
-+{
-+	const struct npcm_sgpio_bank *bank;
-+	irq_flow_handler_t handler;
-+	struct npcm_sgpio *gpio;
-+	unsigned long flags;
-+	void __iomem *addr;
-+	unsigned int offset;
-+	u16 reg, val;
-+	u8 bit;
-+
-+	npcm_sgpio_irqd_to_data(d, &gpio, &bank, &bit, &offset);
-+
-+	switch (type & IRQ_TYPE_SENSE_MASK) {
-+	case IRQ_TYPE_EDGE_BOTH:
-+		val = NPCM_IXOEVCFG_BOTH;
-+		break;
-+	case IRQ_TYPE_EDGE_RISING:
-+	case IRQ_TYPE_LEVEL_HIGH:
-+		val = NPCM_IXOEVCFG_RISING;
-+		break;
-+	case IRQ_TYPE_EDGE_FALLING:
-+	case IRQ_TYPE_LEVEL_LOW:
-+		val = NPCM_IXOEVCFG_FALLING;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	if (type & IRQ_TYPE_LEVEL_MASK)
-+		handler = handle_level_irq;
-+	else
-+		handler = handle_edge_irq;
-+
-+	gpio->int_type[offset] = val;
-+
-+	raw_spin_lock_irqsave(&gpio->lock, flags);
-+	npcm_sgpio_setup_enable(gpio, false);
-+	addr = bank_reg(gpio, bank, EVENT_CFG);
-+	reg = ioread16(addr);
-+
-+	reg |= (val << (bit * 2));
-+
-+	iowrite16(reg, addr);
-+	npcm_sgpio_setup_enable(gpio, true);
-+	raw_spin_unlock_irqrestore(&gpio->lock, flags);
-+
-+	irq_set_handler_locked(d, handler);
-+
-+	return 0;
-+}
-+
-+static void npcm_sgpio_irq_handler(struct irq_desc *desc)
-+{
-+	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
-+	struct irq_chip *ic = irq_desc_get_chip(desc);
-+	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-+	unsigned int i, j, girq;
-+	unsigned long reg;
-+
-+	chained_irq_enter(ic, desc);
-+
-+	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-+		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-+
-+		reg = ioread8(bank_reg(gpio, bank, EVENT_STS));
-+		for_each_set_bit(j, &reg, 8) {
-+			girq = irq_find_mapping(gc->irq.domain, i * 8 + gpio->nout_sgpio + j);
-+			generic_handle_domain_irq(gc->irq.domain, girq);
-+		}
-+	}
-+
-+	chained_irq_exit(ic, desc);
-+}
-+
-+static const struct irq_chip sgpio_irq_chip = {
-+	.name = "sgpio-irq",
-+	.irq_ack = npcm_sgpio_irq_ack,
-+	.irq_mask = npcm_sgpio_irq_mask,
-+	.irq_unmask = npcm_sgpio_irq_unmask,
-+	.irq_set_type = npcm_sgpio_set_type,
-+	.flags	= IRQCHIP_IMMUTABLE | IRQCHIP_MASK_ON_SUSPEND,
-+	GPIOCHIP_IRQ_RESOURCE_HELPERS,
++static const struct clk_ops npcm8xx_clk_mux_ops = {
++	.get_parent = npcm8xx_clk_mux_get_parent,
 +};
 +
-+static int npcm_sgpio_setup_irqs(struct npcm_sgpio *gpio,
-+				 struct platform_device *pdev)
++static unsigned long npcm8xx_clk_div_get_parent(struct clk_hw *hw,
++						unsigned long parent_rate)
 +{
-+	int rc, i;
-+	struct gpio_irq_chip *irq;
++	struct npcm8xx_clk *div = to_npcm8xx_clk(hw);
++	unsigned int val;
 +
-+	rc = platform_get_irq(pdev, 0);
-+	if (rc < 0)
-+		return rc;
++	regmap_read(div->clk_regmap, div->offset, &val);
++	val = val >> div->shift;
++	val &= clk_div_mask(div->width);
 +
-+	gpio->irq = rc;
-+
-+	npcm_sgpio_setup_enable(gpio, false);
-+
-+	/* Disable IRQ and clear Interrupt status registers for all SGPIO Pins. */
-+	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-+		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-+
-+		iowrite16(0, bank_reg(gpio, bank, EVENT_CFG));
-+		iowrite8(0xff, bank_reg(gpio, bank, EVENT_STS));
-+	}
-+
-+	irq = &gpio->chip.irq;
-+	gpio_irq_chip_set_chip(irq, &sgpio_irq_chip);
-+	irq->init_valid_mask = npcm_sgpio_irq_init_valid_mask;
-+	irq->handler = handle_bad_irq;
-+	irq->default_type = IRQ_TYPE_NONE;
-+	irq->parent_handler = npcm_sgpio_irq_handler;
-+	irq->parent_handler_data = gpio;
-+	irq->parents = &gpio->irq;
-+	irq->num_parents = 1;
-+
-+	return 0;
++	return divider_recalc_rate(hw, parent_rate, val, NULL, div->flags,
++				   div->width);
 +}
 +
-+static int npcm_sgpio_probe(struct platform_device *pdev)
-+{
-+	struct npcm_sgpio *gpio;
-+	const struct npcm_clk_cfg *clk_cfg;
-+	int rc;
-+	u32 nin_gpios, nout_gpios;
++static const struct clk_ops npcm8xx_clk_div_ops = {
++	.recalc_rate = npcm8xx_clk_div_get_parent,
++};
 +
-+	gpio = devm_kzalloc(&pdev->dev, sizeof(*gpio), GFP_KERNEL);
-+	if (!gpio)
++static int npcm8xx_clk_probe(struct platform_device *pdev)
++{
++	struct clk_hw_onecell_data *npcm8xx_clk_data;
++	struct device_node *np = pdev->dev.of_node;
++	struct device *dev = &pdev->dev;
++	struct regmap *clk_regmap;
++	struct clk_hw *hw;
++	unsigned int i;
++
++	npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
++							 NPCM8XX_NUM_CLOCKS),
++					GFP_KERNEL);
++	if (!npcm8xx_clk_data)
 +		return -ENOMEM;
 +
-+	gpio->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(gpio->base))
-+		return PTR_ERR(gpio->base);
++	clk_regmap = syscon_regmap_lookup_by_phandle(np, "nuvoton,sysclk");
++	if (IS_ERR(clk_regmap)) {
++		dev_err(&pdev->dev, "Failed to find nuvoton,sysclk\n");
++		return PTR_ERR(clk_regmap);
++	}
 +
-+	clk_cfg = device_get_match_data(&pdev->dev);
-+	if (!clk_cfg)
-+		return -EINVAL;
++	npcm8xx_clk_data->num = NPCM8XX_NUM_CLOCKS;
 +
-+	rc = device_property_read_u32(&pdev->dev, "nuvoton,input-ngpios", &nin_gpios);
-+	if (rc < 0)
-+		return dev_err_probe(&pdev->dev, rc, "Could not read ngpios property\n");
++	for (i = 0; i < NPCM8XX_NUM_CLOCKS; i++)
++		npcm8xx_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
 +
-+	rc = device_property_read_u32(&pdev->dev, "nuvoton,output-ngpios", &nout_gpios);
-+	if (rc < 0)
-+		return dev_err_probe(&pdev->dev, rc, "Could not read ngpios property\n");
++	/* Register plls */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_pll_clks); i++) {
++		struct npcm8xx_clk_pll_data *pll_clk = &npcm8xx_pll_clks[i];
 +
-+	gpio->nin_sgpio = nin_gpios;
-+	gpio->nout_sgpio = nout_gpios;
-+	if (gpio->nin_sgpio > MAX_NR_HW_SGPIO || gpio->nout_sgpio > MAX_NR_HW_SGPIO)
-+		return dev_err_probe(&pdev->dev, -EINVAL, "Number of GPIOs exceeds the maximum of %d: input: %d output: %d\n", MAX_NR_HW_SGPIO, nin_gpios, nout_gpios);
++		hw = npcm8xx_clk_register(dev, pll_clk->name, clk_regmap,
++					  pll_clk->reg, pll_clk->flags,
++					  &npcm8xx_clk_pll_ops, &pll_clk->parent,
++					  NULL, 1, 0, 0, 0, NULL, 0);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register pll\n");
++		pll_clk->hw = *hw;
++	}
 +
-+	gpio->pclk = devm_clk_get(&pdev->dev, NULL);
-+	if (IS_ERR(gpio->pclk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(gpio->pclk), "Could not get pclk\n");
++	/* Register fixed dividers */
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL1_DIV2,
++					       NPCM8XX_CLK_S_PLL1, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register fixed div\n");
++	hw_pll1_div2 = *hw;
 +
-+	rc = npcm_sgpio_setup_clk(gpio, clk_cfg);
-+	if (rc < 0)
-+		return dev_err_probe(&pdev->dev, rc, "Failed to setup clock\n");
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL2_DIV2,
++					       NPCM8XX_CLK_S_PLL2, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register pll2 div2\n");
++	hw_pll2_div2 = *hw;
 +
-+	raw_spin_lock_init(&gpio->lock);
-+	gpio->chip.parent = &pdev->dev;
-+	gpio->chip.ngpio = gpio->nin_sgpio + gpio->nout_sgpio;
-+	gpio->chip.direction_input = npcm_sgpio_dir_in;
-+	gpio->chip.direction_output = npcm_sgpio_dir_out;
-+	gpio->chip.get_direction = npcm_sgpio_get_direction;
-+	gpio->chip.get = npcm_sgpio_get;
-+	gpio->chip.set = npcm_sgpio_set;
-+	gpio->chip.label = dev_name(&pdev->dev);
-+	gpio->chip.base = -1;
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL_GFX_DIV2,
++					       NPCM8XX_CLK_S_PLL_GFX, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register gfx div2\n");
++	hw_gfx_div2 = *hw;
 +
-+	rc = npcm_sgpio_init_port(gpio);
-+	if (rc < 0)
-+		return rc;
++	/* Register muxes */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_muxes); i++) {
++		struct npcm8xx_clk_mux_data *mux_data = &npcm8xx_muxes[i];
 +
-+	rc = npcm_sgpio_setup_irqs(gpio, pdev);
-+	if (rc < 0)
-+		return rc;
++		hw = npcm8xx_clk_register(dev, mux_data->name, clk_regmap,
++					  NPCM8XX_CLKSEL, mux_data->flags,
++					  &npcm8xx_clk_mux_ops,
++					  mux_data->parent_data, NULL,
++					  mux_data->num_parents,
++					  mux_data->shift, mux_data->mask, 0,
++					  mux_data->table, 0);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register mux\n");
++		mux_data->hw = *hw;
++	}
 +
-+	rc = devm_gpiochip_add_data(&pdev->dev, &gpio->chip, gpio);
-+	if (rc)
-+		return dev_err_probe(&pdev->dev, rc, "GPIO registering failed\n");
++	hw = devm_clk_hw_register_fixed_factor(dev, "pre_clk",
++					       NPCM8XX_CLK_S_CPU_MUX, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register pre clk div2\n");
++	hw_pre_clk = *hw;
 +
-+	npcm_sgpio_setup_enable(gpio, true);
++	hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_AXI,
++					       NPCM8XX_CLK_S_TH, 0, 1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register axi div2\n");
++	npcm8xx_clk_data->hws[NPCM8XX_CLK_AXI] = hw;
 +
-+	return 0;
++	hw = devm_clk_hw_register_fixed_factor(dev, "atb", NPCM8XX_CLK_S_AXI, 0,
++					       1, 2);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw), "Can't register atb div2\n");
++	npcm8xx_clk_data->hws[NPCM8XX_CLK_ATB] = hw;
++
++	/* Register clock pre dividers specified in npcm8xx_divs */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_pre_divs); i++) {
++		struct npcm8xx_clk_div_data *div_data = &npcm8xx_pre_divs[i];
++
++		hw = npcm8xx_clk_register(dev, div_data->name, clk_regmap,
++					  div_data->reg, div_data->flags,
++					  &npcm8xx_clk_div_ops, NULL,
++					  div_data->parent_hw, 1,
++					  div_data->shift, 0, div_data->width,
++					  NULL, div_data->clk_divider_flags);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register pre div table\n");
++		div_data->hw = *hw;
++
++		if (div_data->onecell_idx >= 0)
++			npcm8xx_clk_data->hws[div_data->onecell_idx] = hw;
++	}
++
++	/* Register clock dividers specified in npcm8xx_divs */
++	for (i = 0; i < ARRAY_SIZE(npcm8xx_divs); i++) {
++		struct npcm8xx_clk_div_data *div_data = &npcm8xx_divs[i];
++
++		hw = npcm8xx_clk_register(dev, div_data->name, clk_regmap,
++					  div_data->reg, div_data->flags,
++					  &npcm8xx_clk_div_ops, NULL,
++					  div_data->parent_hw, 1,
++					  div_data->shift, 0, div_data->width,
++					  NULL, div_data->clk_divider_flags);
++		if (IS_ERR(hw))
++			return dev_err_probe(dev, PTR_ERR(hw), "Can't register div table\n");
++
++		if (div_data->onecell_idx >= 0)
++			npcm8xx_clk_data->hws[div_data->onecell_idx] = hw;
++	}
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
++					   npcm8xx_clk_data);
 +}
 +
-+static unsigned int npcm750_SFT_CLK[NPCM_750_OPT] = {
-+	1024, 32, 8, 4, 3, 2,
++static const struct of_device_id npcm8xx_clk_dt_ids[] = {
++	{ .compatible = "nuvoton,npcm845-clk", },
++	{ }
 +};
++MODULE_DEVICE_TABLE(of, npcm8xx_clk_dt_ids);
 +
-+static unsigned int npcm750_CLK_SEL[NPCM_750_OPT] = {
-+	0x00, 0x05, 0x07, 0x0C, 0x0D, 0x0E,
-+};
-+
-+static unsigned int npcm845_SFT_CLK[NPCM_845_OPT] = {
-+	1024, 32, 16, 8, 4,
-+};
-+
-+static unsigned int npcm845_CLK_SEL[NPCM_845_OPT] = {
-+	0x00, 0x05, 0x06, 0x07, 0x0C,
-+};
-+
-+static struct npcm_clk_cfg npcm750_sgpio_pdata = {
-+	.sft_clk = npcm750_SFT_CLK,
-+	.clk_sel = npcm750_CLK_SEL,
-+	.cfg_opt = NPCM_750_OPT,
-+};
-+
-+static const struct npcm_clk_cfg npcm845_sgpio_pdata = {
-+	.sft_clk = npcm845_SFT_CLK,
-+	.clk_sel = npcm845_CLK_SEL,
-+	.cfg_opt = NPCM_845_OPT,
-+};
-+
-+static const struct of_device_id npcm_sgpio_of_table[] = {
-+	{ .compatible = "nuvoton,npcm750-sgpio", .data = &npcm750_sgpio_pdata, },
-+	{ .compatible = "nuvoton,npcm845-sgpio", .data = &npcm845_sgpio_pdata, },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(of, npcm_sgpio_of_table);
-+
-+static struct platform_driver npcm_sgpio_driver = {
++static struct platform_driver npcm8xx_clk_driver = {
++	.probe  = npcm8xx_clk_probe,
 +	.driver = {
-+		.name = KBUILD_MODNAME,
-+		.of_match_table = npcm_sgpio_of_table,
++		.name = "npcm8xx_clk",
++		.of_match_table = npcm8xx_clk_dt_ids,
 +	},
-+	.probe	= npcm_sgpio_probe,
 +};
-+module_platform_driver(npcm_sgpio_driver);
 +
-+MODULE_AUTHOR("Jim Liu <jjliu0@nuvoton.com>");
-+MODULE_AUTHOR("Joseph Liu <kwliu@nuvoton.com>");
-+MODULE_DESCRIPTION("Nuvoton NPCM Serial GPIO Driver");
++static int __init npcm8xx_clk_driver_init(void)
++{
++	return platform_driver_register(&npcm8xx_clk_driver);
++}
++arch_initcall(npcm8xx_clk_driver_init);
++
++static void __exit npcm8xx_clk_exit(void)
++{
++	platform_driver_unregister(&npcm8xx_clk_driver);
++}
++module_exit(npcm8xx_clk_exit);
++
++MODULE_DESCRIPTION("Clock driver for Nuvoton NPCM8XX BMC SoC");
++MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
 +MODULE_LICENSE("GPL v2");
++
 -- 
-2.25.1
+2.34.1
 
