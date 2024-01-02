@@ -2,86 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B53DE821B9A
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 13:28:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A2E78221EB
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 20:22:39 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=NjyjPOGK;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=D9bgBQRk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=mJqP/1d4;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T4BwK2cYFz3bp7
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jan 2024 23:28:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T4N6370Lnz3bsd
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 06:22:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=NjyjPOGK;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=D9bgBQRk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=mJqP/1d4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f31; helo=mail-qv1-xf31.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4T4Bvf5jfbz2xgp
-	for <openbmc@lists.ozlabs.org>; Tue,  2 Jan 2024 23:27:57 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 2B0CC3200AF4;
-	Tue,  2 Jan 2024 07:27:53 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Tue, 02 Jan 2024 07:27:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1704198472; x=1704284872; bh=oT7kbmT7eo
-	i5irLmYCrvCcG7zumu0Zzpu74cdnf99ec=; b=NjyjPOGKyAsno8Df24RUBQHXa/
-	60WnNGC8dS4t696JHBW0AMbc2BpiMXzJoEb7jq9b55xktdd6F5cX+p5gH9LoiXbl
-	RM6PaUUgfQAivg2Ru8yT20y5Vmcv5C6OA67W4Y0ApGiGMUw0RpI0hSP4NIywDFDo
-	oJANhM3nTbBg3ybJKVK/mj3tP5pEbHsc2pb6RZZWqq0vONbhr985vqI1VKaAvKpV
-	TOV8DT4bGiNVRiNKGL4Oq8L2pA2W9M2oBt9RUomZdxJVjPvrOPOtPyo4UBmLQ45f
-	7mVN3x4BRcFs7sS7sfLoHft5fPVG8+SxGoyhV75eh81p3Ta3M+rD3nWYDwTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704198472; x=1704284872; bh=oT7kbmT7eoi5irLmYCrvCcG7zumu
-	0Zzpu74cdnf99ec=; b=D9bgBQRkHwhYRZHTzLtBDms2S4goxnwW0pAJk8bYk6yp
-	vrZlXy6vGMAWa4clHjMjvaWn+JvpVG5zScjC4jfk6ysyAs/4FZ/okA8HsG2YB31Z
-	p0MpnYBO/Wp/qkP1HCAsF9Vt5PvdhyI/tJb9IHvuWcs3u4aGvJV8IDUhCO0xm+u2
-	mm3vosJZnBHbQte3A6ZZd28XBdrN3ztvdC9UiVEXJpdFUxBgABFZHWESe/1bt0vW
-	oc/xl2iWqPyqKtScAw/nAdcJUBCoiszn5ALl5qoHJDULY1frnmA2nx56Ik1e5JS6
-	4P49wM7DKt6FmSocKAR+D6mBvCMzaSqiB0pXYdQ5Ng==
-X-ME-Sender: <xms:SAGUZbMxpVlaUn_6kasOOoGUvNUNooRLz4fNosB1uG-4FgET6jK-eA>
-    <xme:SAGUZV8X9-jnH5Dcuw0DFpqTQRrjla3wWmPVzGbN771vBWo39dIpMAqfQ4A0Z_im7
-    sttJSBcYFYagGdqSRU>
-X-ME-Received: <xmr:SAGUZaSlKBWRJnGx62uR03t9BVf4KJFxcNvyBGGjcGCRdAuEeph2kSDuzlJCnjajhL1jPRw6xBcTmb_X72B33BTUNo2huA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdegvddgfeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeetteeigfefgeetffdtteeuledt
-    udevgeelgeekvdekgedukedufefhhfettddutdenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:SAGUZftKM7fJA5cdOxDUA5EY6cxvCpJLqorkObiOt7hwkULbscy-YQ>
-    <xmx:SAGUZTcz3BsrEEKnuVCaphy8kJongibsAWL25glNkqWkbUEiQ6QICA>
-    <xmx:SAGUZb3UXxxDAOxHe1lZKtLE6oY5hxku9U713TQJL9HleYAa015z8A>
-    <xmx:SAGUZTlTH-6CfLdMOrIfT8JwEs3ujkIzWRqiMj6JzXK8eNGqsvR49Q>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 2 Jan 2024 07:27:52 -0500 (EST)
-Date: Tue, 2 Jan 2024 06:27:50 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Jayashankar Padath <padathjayashankar@gmail.com>
-Subject: Re: Question on passing username and password credentials through
- PLDM
-Message-ID: <ZZQBRhzMCiI3SC-Q@heinlein.vulture-banana.ts.net>
-References: <CAFRDoiwOqE96Pxw9QVE7B2j_JnBbsvaEa38H5_=DVch8Xo8P9Q@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="BYDHSOJ3wMwH2HJ3"
-Content-Disposition: inline
-In-Reply-To: <CAFRDoiwOqE96Pxw9QVE7B2j_JnBbsvaEa38H5_=DVch8Xo8P9Q@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4T4N5S4Q1gz2xWR
+	for <openbmc@lists.ozlabs.org>; Wed,  3 Jan 2024 06:22:02 +1100 (AEDT)
+Received: by mail-qv1-xf31.google.com with SMTP id 6a1803df08f44-680a13af19bso24646116d6.0
+        for <openbmc@lists.ozlabs.org>; Tue, 02 Jan 2024 11:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704223319; x=1704828119; darn=lists.ozlabs.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dpiiwxjlmyIAxkELB5wbRFltlL1YkF8U7qXoRRIFROw=;
+        b=mJqP/1d4OzqPRCkNID7kUg0/Ej51qWcutGThudMz+6+LAUpRJ3zPj+qJGRPh2hSK5+
+         1aBFvbOu95rESWPqWGJ7HCK6XLuAHss37xdpSnpWuDdACPeU9CJwqaGIeDltTwKavuUU
+         gmUcatSNXLiFIGiXf+lOZmTg2lx42UEGoMU8rUVhugUxvgftVat062ZwPg5wW3HDEeqY
+         Uqc36SI8JronTfmkwt8cMvI7NjCHnDq5KtOUBz6kpAMxtUZRA8BM7p3MeYjWat21ULcc
+         A3GTOCFPsvgrzzumVuAZ2V7mvU9fEAeErPiY1w78fJmaFhF9sssIbwFhQSS46IEa7aI1
+         SsXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704223319; x=1704828119;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dpiiwxjlmyIAxkELB5wbRFltlL1YkF8U7qXoRRIFROw=;
+        b=u1Bq5ikt+n5+MtqFwZcoH43fl16zeUXW/6byEH9dJraKbG4WI4VuLUMqocqMZYeGr3
+         kqfdDikAxlBc9Wa19Edwbrj689KC/coY6tW0Ss3kBI8Kp2v1jnGmUaTc4KONFc6zEt65
+         q+yEEh+msgbICBV3F88odyHJJ2uEg+9p7SI5Mg+JUKBFR6roJpiIZ5Nf+hHe64p5TERe
+         CqwNj0JRyEqeyfe6D+OSY9Hjsua5zGV0/E31f7xsxBJMdw+7mkpQdtPbxlO1q5/hwI3d
+         bJVwqbOBovu50RWPOu6HkyuOLngep+D84q/xDNRH+gLOLZilAiLNSCsUEDhXHV/BWlUN
+         z+qA==
+X-Gm-Message-State: AOJu0Ywi4sHoZJUTu095URd+fb20gobc53BFtkALEPX7od1Z7uzk8b1a
+	bY+UmR4+DXSjVEfq82ErYxE=
+X-Google-Smtp-Source: AGHT+IF5RVDLBy1D4WAaaKadFYdWzVC/9eeT8+6rxH4vLLr5KrYplUzuxnmqZSPc0coK+Wzh0mo3LA==
+X-Received: by 2002:ad4:5aa8:0:b0:67f:42fd:e6cd with SMTP id u8-20020ad45aa8000000b0067f42fde6cdmr36556511qvg.15.1704223318868;
+        Tue, 02 Jan 2024 11:21:58 -0800 (PST)
+Received: from smtpclient.apple ([129.41.86.16])
+        by smtp.gmail.com with ESMTPSA id n4-20020a056214008400b00680c1b2f9dasm727197qvr.6.2024.01.02.11.21.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 Jan 2024 11:21:58 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
+Subject: Re: Signed OpenBMC CLA for Rebecca Cran
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <be8d4863-d014-4134-b76a-a9c84cf42c41@bsdio.com>
+Date: Tue, 2 Jan 2024 13:21:46 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <775C0BA6-20E4-4D7C-8EE5-F58737AE7FA8@gmail.com>
+References: <e8e119c1-4d17-461b-aac3-96e1c0c95a71@bsdio.com>
+ <be8d4863-d014-4134-b76a-a9c84cf42c41@bsdio.com>
+To: Rebecca Cran <rebecca@bsdio.com>
+X-Mailer: Apple Mail (2.3774.200.91.1.1)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,63 +81,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---BYDHSOJ3wMwH2HJ3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Jan 02, 2024 at 10:16:04AM +0530, Jayashankar Padath wrote:
-> We do have a requirement in which the Host needs to pass the username and
-> password credentials to the BMC PAM module for authentication OR during a
-> password change. These details are passed through the PLDM stack.
-
-This doesn't sound like a requirement, but an implementation decision.
-
-What is the requirement from the host side?
-
-> BMC specific requirements:
+> On Jan 2, 2024, at 12:58=E2=80=AFPM, Rebecca Cran <rebecca@bsdio.com> =
+wrote:
 >=20
-> =E2=97=A6 The ability to prompt for a username/password and provide authe=
-ntication
-> =E2=97=A6 The ability to change a password when the current password is e=
-xpired
+> As suggested on Discord, I'm forwarding the signed CLA (attached) to =
+be able to contribute to OpenBMC.
+
+Welcome Rebecca, your CLA has been uploaded and I added you to the =
+individual CLA approved gerrit group.
+
+Andrew
+
 >=20
-> Seeing two design options here.
+> --=20
+> Rebecca Cran
 >=20
-> 1. PLDM calls the PAM APIs directly
-> 2. Make use of BIOS Config manager (But this has only password change and
-> no direct authentication. Also this does not make use of PAM)
+>=20
+>=20
+> -------- Forwarded Message --------
+> Subject: Signed OpenBMC CLA for Rebecca Cran
+> Date: Sun, 24 Dec 2023 12:09:19 -0700
+> From: Rebecca Cran <rebecca@bsdio.com>
+> To: manager@lfprojects.org
+>=20
+>=20
+>=20
+> Hi,
+>=20
+>=20
+> I'd like to work on the OpenBMC project and submit changes.
+>=20
+> Please find attached a signed CLA for working on the project.
+>=20
+>=20
+> --=20
+> Rebecca Cran
+> <OpenBMC-CLA 1.jpeg><OpenBMC-CLA 2.jpeg><OpenBMC-CLA.jpeg>
 
-My suggestion: Do whatever bmcweb does.  PLDM is another external
-interface.  If you want to use BMC-side authentication, follow what
-other external interface programs are doing.
-
---=20
-Patrick Williams
-
---BYDHSOJ3wMwH2HJ3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmWUAUUACgkQqwNHzC0A
-wRldrA//VZumFgvjnd8pkaGQAH7l+qG1mXW7M55IdQ0Sax8jJjXqqUJ+tc6dMyMH
-nd+iY92VpmpWWnmHlZVDnVP8k3jRNDAGZbrVkQMLQxz+53Qj7Snq4eFAFa0aP1M3
-8R4PxbYcWd4HYeKywvKUzaOSQfqFx3WhXX6ulypw1jgLNDQb9MzZnZm8EcRP45nN
-x/SESRJMIsh4RUKgTGvtakwox9W7+uLpz/KQdwmHvwgRq5A007um2q/BKIIr1svG
-2PmRVbDiAdPFZbbujoXTXhBA+rSU2SNafth65SKfnul5kwvUJiIUKOgE3p28wYK3
-/NUvlY6tlJVwYVgQMoE6jB/O+W0EofEHfsFFFizvBOooFX4+s0fmdXqinW7mNdaE
-QO+RCJdfArtesvH7dbs4bMYmXLkcdRvpCqB0pSIMRKU20Zv5ACudKU+sFzr1L+7F
-33pxihuGNR+OP01T2WcCoOC13/NPwNEkotWHkQ1yGvYvfcLncKRqY8yJ2Z1ksJl0
-qeXkRADznJhoGX6+GsLWdE8jEKFOu/V0hnwk5Y9Iug8k6is8JQfL1usmW3YG6LQ9
-NjIEv8luHuWSoha7iGTNQP2bP3hI4JzY3okUQjTAn3V69drD0UCcqYhpBnCTv1b5
-8m9I1h7O5Z9KMKVdw4SGg9fYffDvcjkD/PBU56IRjjUYG2Yw8L0=
-=M/+J
------END PGP SIGNATURE-----
-
---BYDHSOJ3wMwH2HJ3--
