@@ -1,68 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BA89822A7F
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 10:49:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 565E5822B49
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 11:26:55 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ngLdVYA7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=fJYJcx0K;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T4lLL1k6Kz2xm3
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 20:49:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4T4m9T0fGHz3bpG
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jan 2024 21:26:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ngLdVYA7;
+	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=fJYJcx0K;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544; helo=mail-pg1-x544.google.com; envelope-from=padathjayashankar@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2607:f8b0:4864:20::931; helo=mail-ua1-x931.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4T4lKk6g0Sz2xm3
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Jan 2024 20:48:57 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id 41be03b00d2f7-5cda24a77e0so3446674a12.2
-        for <openbmc@lists.ozlabs.org>; Wed, 03 Jan 2024 01:48:57 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4T4m8v57x7z3039
+	for <openbmc@lists.ozlabs.org>; Wed,  3 Jan 2024 21:26:21 +1100 (AEDT)
+Received: by mail-ua1-x931.google.com with SMTP id a1e0cc1a2514c-7cc7bae27b5so2267428241.2
+        for <openbmc@lists.ozlabs.org>; Wed, 03 Jan 2024 02:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704275333; x=1704880133; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8rIkzBSq4Y2q5YA/gBvZga4a2Gp3NoLW2ENm/+e9vU8=;
-        b=ngLdVYA7LFbWCIW8JgTAvr7TrJ0JlOsiJ2akvfK7xXONmEs4j04YFlRrJ42SncOgGn
-         zrOhPS8Q2PJEmqRsFSUMmb1gYXfVoq4zb7l7w2dT4dZ/Hp9iQ5eEElp9pHfhnZ946Jnz
-         7lJUGlxI7MzuR5Tn3lp/Isr13YG1CPFCgp5CXmLhLIYs1DQubjjTol6ohLt2At2TitO3
-         7ZNAiKY0ohClxTJtmzxFbqtTrWKeCG8m1vAu0OYbRzIYKpQ93vN5RmIQakx5gdESb+GO
-         2iR47MIP0ngQ/EzkuXiNZDHTTPqLqlYJf1ylA3i0GOAj873Y4jvGWEKxGUBXH+Cb186O
-         UF0A==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1704277579; x=1704882379; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1d7qdkI7VcKd65R+llbhREgSlk8bC5HVMhsfJ3f5O8Q=;
+        b=fJYJcx0Kl+X5KJhoOTmeFhusvjLfkRMSQCe829MtIJ8W+Ne0/bS8p3xyR7cMTpcrcr
+         hvYRnHvrF/Am/7NJzEo6/RFcU5B56kZjbzvSkzuE0TgMMFXFthKBgLgRUQUFqo9aEcPw
+         S7qeDKYJFtWk2zQxhNIdoF1Dx3zyfi/gdrosIO1Cmp87g0a5R80I03Re1EcRWDEZf7VB
+         dmRjRRkGeqy2nuH/yz1MSotEgQF0wAJ11JeSfnK+BO5NFDYOgPgJ0v80tRmB3Rn7le2Q
+         JnyCDxIg4a8LgdKFrRJr2lG4oASbOYbV5Qw45jH2tyWVrPOuPF52z2AnK5LJeTHA2E68
+         pn1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704275333; x=1704880133;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8rIkzBSq4Y2q5YA/gBvZga4a2Gp3NoLW2ENm/+e9vU8=;
-        b=YAYei+sbrIGmHZeeK7vEUfVf0RPCP0oOwuvyuj9d5r6pSYM3q99IstRTBr10nzt9Nn
-         VZpLnuZwcWij8ZVFiQJp+8i3wOTcO7mm2QHEb2kI4M8eh2adoF1xHFkbnVUnrR1b/WzY
-         LV+HaUWvjbvdJngXDzm27XcEvtv/+du2LXniLzrq8ibChCEE8XRcfUytu70gdYbFggHD
-         OUTpVO01Wv4dzwHKB89F80ng0esvgAv1xgw+dW25GWgfAl+V2ugxgfyO50uonlzhQmsa
-         IQ+XnGqhsDUyFtfFhi7hrTwAdWNXkXQwg6hloqNHD/Xt2xHJFtGUfYvyB0o1x9E9mvDU
-         leBw==
-X-Gm-Message-State: AOJu0YxA5y+BWucu0bxh5/5Y/UIUo0F1T1U8fM27jXUYtNFlu5I+e673
-	aB6u1u2o8dxw5vSrsX7bwiArHtwakWz3Wee2FTbxpb35kfQrfw==
-X-Google-Smtp-Source: AGHT+IGKPy2YpYLR0kEEXJoixmiJ9FXto9g/eT6onBZb0vUq89KlAtE6QjtwL0q5ni8wXvBPp1gb61/IApCPxpxPN1c=
-X-Received: by 2002:a05:6a21:99a3:b0:196:1616:15fc with SMTP id
- ve35-20020a056a2199a300b00196161615fcmr5657704pzb.5.1704275332811; Wed, 03
- Jan 2024 01:48:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704277579; x=1704882379;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1d7qdkI7VcKd65R+llbhREgSlk8bC5HVMhsfJ3f5O8Q=;
+        b=kXhI62+zf/wCBsizbV2KWcKBCfnTqo27dFPyMVuXFniUy36/QMpKc8kbkexrSxu5SG
+         Ka4Q0gc8cOljjPkgebKJJP1rJ/16GeK3tibLDSZqD0h9UHbunroELJrC+WNGMNpBYS0E
+         DoGSYpWSpeFr28wBkKJyOMRKb1iQU2fZM+eZoKAh+A8iltBP0wAYC50gn/mPJn7D4YWL
+         ytyRDeAzdA9tWdgL6IcGbFDoF0WVO3t1Rd1vOWWwi2bzuJq3U9xMMlDgQlZwCTdnqNM7
+         AR+OjBPWH6bNss+H7VZcS3y8ZiEdMtff3o4LlBIkY4d6il2Bo0RNSNjmqeDu0Sq5Q59W
+         eZVA==
+X-Gm-Message-State: AOJu0YxBMQcxb40hCiylxfjcVp5oLRM52Ieu4luhKODUmmMEnWBP3xbE
+	ZvQFj68fOHFG0ixxwWE6k4zOPmo9tiE3sTBPV1Svz/JOsZmfVA==
+X-Google-Smtp-Source: AGHT+IE5jAGVmqMJmEEUn9XlR3Ju9xjVR+lwzAqo9Xfbl9h69dD5XR7wi3AVa2oOSBEa2fbNaqf2DaS3Lpcd+UAX4Yo=
+X-Received: by 2002:a05:6102:2d05:b0:466:fd31:def8 with SMTP id
+ ih5-20020a0561022d0500b00466fd31def8mr7847832vsb.55.1704277578749; Wed, 03
+ Jan 2024 02:26:18 -0800 (PST)
 MIME-Version: 1.0
-References: <CAFRDoiwOqE96Pxw9QVE7B2j_JnBbsvaEa38H5_=DVch8Xo8P9Q@mail.gmail.com>
- <ZZQBRhzMCiI3SC-Q@heinlein.vulture-banana.ts.net>
-In-Reply-To: <ZZQBRhzMCiI3SC-Q@heinlein.vulture-banana.ts.net>
-From: Jayashankar Padath <padathjayashankar@gmail.com>
-Date: Wed, 3 Jan 2024 15:18:41 +0530
-Message-ID: <CAFRDoixW1aUVACo84wtGcmo09cgN9NieifB4uv-kWuxmBC2qsg@mail.gmail.com>
-Subject: Re: Question on passing username and password credentials through PLDM
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000cfd074060e0785d8"
+References: <20231229074508.2709093-1-JJLIU0@nuvoton.com>
+In-Reply-To: <20231229074508.2709093-1-JJLIU0@nuvoton.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 3 Jan 2024 11:26:07 +0100
+Message-ID: <CAMRc=McNDMBXebq_KC50F4XaXrFTCw6+GQqNmhbzPQ=2oGpLzQ@mail.gmail.com>
+Subject: Re: [PATCH v10 0/3] Add Nuvoton NPCM SGPIO feature
+To: jim.t90615@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,109 +75,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: andy@kernel.org, KWLIU@nuvoton.com, conor+dt@kernel.org, devicetree@vger.kernel.org, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000cfd074060e0785d8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hello Patrick,
-
-Thanks for your suggestion. From the host side they wanted  to attach a
-graphics adapter so that some of the system management service operations
-could be carried out.
-
-As you suggested we would consider the way, other external interface
-programs like bmcweb which support similar functionalities.
-
-Thanks and Best Regards,
-Jayashankar
-
-On Tue, Jan 2, 2024 at 5:57=E2=80=AFPM Patrick Williams <patrick@stwcx.xyz>=
- wrote:
-
-> On Tue, Jan 02, 2024 at 10:16:04AM +0530, Jayashankar Padath wrote:
-> > We do have a requirement in which the Host needs to pass the username a=
-nd
-> > password credentials to the BMC PAM module for authentication OR during=
- a
-> > password change. These details are passed through the PLDM stack.
+On Fri, Dec 29, 2023 at 8:45=E2=80=AFAM <jim.t90615@gmail.com> wrote:
 >
-> This doesn't sound like a requirement, but an implementation decision.
+> From: Jim Liu <JJLIU0@nuvoton.com>
 >
-> What is the requirement from the host side?
+> This SGPIO controller is for NUVOTON NPCM7xx and NPCM8xx SoC.
+> Nuvoton NPCM SGPIO module is combine serial to parallel IC (HC595)
+> and parallel to serial IC (HC165), and use APB3 clock to control it.
+> This interface has 4 pins  (D_out , D_in, S_CLK, LDSH).
+> NPCM7xx/NPCM8xx have two sgpio module each module can support up
+> to 64 output pins,and up to 64 input pin, the pin is only for GPI or GPO.
 >
-> > BMC specific requirements:
-> >
-> > =E2=97=A6 The ability to prompt for a username/password and provide
-> authentication
-> > =E2=97=A6 The ability to change a password when the current password is=
- expired
-> >
-> > Seeing two design options here.
-> >
-> > 1. PLDM calls the PAM APIs directly
-> > 2. Make use of BIOS Config manager (But this has only password change a=
-nd
-> > no direct authentication. Also this does not make use of PAM)
+> Jim Liu (3):
+>   dt-bindings: gpio: add NPCM sgpio driver bindings
+>   arm: dts: nuvoton: npcm: Add sgpio feature
+>   gpio: nuvoton: Add Nuvoton NPCM sgpio driver
 >
-> My suggestion: Do whatever bmcweb does.  PLDM is another external
-> interface.  If you want to use BMC-side authentication, follow what
-> other external interface programs are doing.
+>  .../bindings/gpio/nuvoton,sgpio.yaml          |  87 +++
+>  .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   |  24 +
+>  drivers/gpio/Kconfig                          |   7 +
+>  drivers/gpio/Makefile                         |   1 +
+>  drivers/gpio/gpio-npcm-sgpio.c                | 612 ++++++++++++++++++
+>  5 files changed, 731 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/gpio/nuvoton,sgpio.=
+yaml
+>  create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
 >
 > --
-> Patrick Williams
+> 2.25.1
 >
 
---000000000000cfd074060e0785d8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Applied patches 1 and 3.
 
-<div dir=3D"ltr">Hello Patrick,<br><br>Thanks for your suggestion. From the=
- host side they wanted =C2=A0to attach a graphics adapter so that some of t=
-he system management service operations could be carried out.<br><br>As you=
- suggested we would consider the way, other external interface programs lik=
-e bmcweb which support similar functionalities.<br><br>Thanks and Best Rega=
-rds,<br>Jayashankar<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr=
-" class=3D"gmail_attr">On Tue, Jan 2, 2024 at 5:57=E2=80=AFPM Patrick Willi=
-ams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrot=
-e:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Jan 0=
-2, 2024 at 10:16:04AM +0530, Jayashankar Padath wrote:<br>
-&gt; We do have a requirement in which the Host needs to pass the username =
-and<br>
-&gt; password credentials to the BMC PAM module for authentication OR durin=
-g a<br>
-&gt; password change. These details are passed through the PLDM stack.<br>
-<br>
-This doesn&#39;t sound like a requirement, but an implementation decision.<=
-br>
-<br>
-What is the requirement from the host side?<br>
-<br>
-&gt; BMC specific requirements:<br>
-&gt; <br>
-&gt; =E2=97=A6 The ability to prompt for a username/password and provide au=
-thentication<br>
-&gt; =E2=97=A6 The ability to change a password when the current password i=
-s expired<br>
-&gt; <br>
-&gt; Seeing two design options here.<br>
-&gt; <br>
-&gt; 1. PLDM calls the PAM APIs directly<br>
-&gt; 2. Make use of BIOS Config manager (But this has only password change =
-and<br>
-&gt; no direct authentication. Also this does not make use of PAM)<br>
-<br>
-My suggestion: Do whatever bmcweb does.=C2=A0 PLDM is another external<br>
-interface.=C2=A0 If you want to use BMC-side authentication, follow what<br=
->
-other external interface programs are doing.<br>
-<br>
--- <br>
-Patrick Williams<br>
-</blockquote></div>
-
---000000000000cfd074060e0785d8--
+Bart
