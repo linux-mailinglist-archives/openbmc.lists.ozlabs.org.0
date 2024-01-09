@@ -1,70 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EE0282B82A
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 00:43:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 865E682B82F
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 00:44:12 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i4tzNVxC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=mPVY5OBE;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TB1Sg2Smvz3cRk
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 10:43:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TB1Tk0GJPz3cRk
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 10:44:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i4tzNVxC;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=mPVY5OBE;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12b; helo=mail-il1-x12b.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=rand.sec96@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4T8Pz31s7cz2xLR
-	for <openbmc@lists.ozlabs.org>; Tue,  9 Jan 2024 20:00:30 +1100 (AEDT)
-Received: by mail-il1-x12b.google.com with SMTP id e9e14a558f8ab-3608bd50cbeso7958765ab.3
-        for <openbmc@lists.ozlabs.org>; Tue, 09 Jan 2024 01:00:30 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4T8Ymn3hJQz2xdZ
+	for <openbmc@lists.ozlabs.org>; Wed, 10 Jan 2024 01:52:07 +1100 (AEDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50ea8fbf261so3278989e87.2
+        for <openbmc@lists.ozlabs.org>; Tue, 09 Jan 2024 06:52:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704790828; x=1705395628; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KgMEw0q4WwV2JumGUYsCtc6USbd39YZOyTk5WPojixQ=;
-        b=i4tzNVxCp0ePTKNWnvojisfAMQNVMgjDa/ClB5sUsYkvxbbig4Cr+ymr9vBGIbLFXK
-         qGpzU7F4xOXAmb3pRMm+vkO8iUQNqBMkwV4rBrDeMYiKALAItOlsKkVga9ULfjiku24O
-         sOEl3Y5ZNFk4Ins6cXv1zTNsEibKF0lgnjt8XqH5jbafb2fRA6s/WH5GMQm7beoeABTA
-         G1TINsK1fa6rhuNdsNZ6Iz7B1G9Os8dPS/ClQHhs2N8Bcn2bvqvcGwWXFxaRICErFEhq
-         aP0vyYEmzrZjCOYZuDBzqkiQybQZM9ZQYKwx9p8Bw4Idf4vHdYKrlfyRRMSMwN6sfxH+
-         7yFw==
+        d=gmail.com; s=20230601; t=1704811923; x=1705416723; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WIOUb/aBIlK1Nf+/sJcceLe8u9RDBXYQMUJNkLqF+jk=;
+        b=mPVY5OBEHP7STezkK3TiA2KgZkuPxpeCVxUFTPg/lbeuL85e4/VZcxCFGba9XtN+E4
+         uhXBZL+qhPYTEMmWnLtyF/Y0zET6nL4JR88Ei69/H37KMxC5HAchlESc1oeMFpYZR70l
+         SPY8nUSfaVH1zVAC4e74qHtPKadMEgDdiAKFewGdhC3xTmrnadMt3A8Y0SdO1usjoJXi
+         cE/yymx8o6QlK76yrRdZvImOWETMrxIH1WJjOqu9BAtoi/BW+obLovK74LX8KXTg7TtE
+         Zx+Arf5eSDGcYwiEFf2wvrpYL2KaDvmhmEO6h7Hn1ylBvrxb6xpxwWKKT2V89p/y6CZo
+         LA1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704790828; x=1705395628;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KgMEw0q4WwV2JumGUYsCtc6USbd39YZOyTk5WPojixQ=;
-        b=WCec5XnMRkYMLfkg9nSnsO+jZwL6IxXgNB2neUAcljzoao8guKDOt/fKkW4G3amrMo
-         q1lo4DBfX2+cCMY7sYuKDkJy814cw+5tcxMWR8CWJA0RzchmOeYzHtyKI2AptlJf3qIc
-         kues1+Yk5nWpYxmJ7sVpXefhaNkYoIwbx/LcHG5WCMfySbYPPACmpMv0s079Wc3vGb/s
-         MqxYB6b3WOSMoZDeFkURxox6IxBVRy7rxeaIJP3QtHvInUaGV0uf3RfR7yA+idS+wauM
-         6CCpPbKL/tLPGFssoy6NWBqL/CWaAbQc1cHXQRTftRSF2kMO7osCosUSmlbKUD0c7Nos
-         Dsqg==
-X-Gm-Message-State: AOJu0YyO9KEs0n/9RTD2Kk0E6WQmHk72yjci03fnNhzjPyz/6LFQiLtl
-	oKkArWvvsIBnSgV+5A/LvklKVdOLlX2bjcRr9ck=
-X-Google-Smtp-Source: AGHT+IG9rmegvlzOUYbFciwQULzLSP/qGqK+RLbjVXhQgCS8VFINLPoQ1fOr7bSQCaGxxHgwQbLcmpm6+YCoDXmC/5w=
-X-Received: by 2002:a05:6e02:2387:b0:360:7403:3cca with SMTP id
- bq7-20020a056e02238700b0036074033ccamr6766345ilb.51.1704790827874; Tue, 09
- Jan 2024 01:00:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704811923; x=1705416723;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WIOUb/aBIlK1Nf+/sJcceLe8u9RDBXYQMUJNkLqF+jk=;
+        b=jGGLUeALaZjYmEcpBjzWUHfmPVHwqsu1btFJQKsfKKM2UCDCKoVVcPO9cHQeKGPrz9
+         LDTk2aVEasOGeFDPHQnqvwm5Wz5LHK3ePo3LeAKSzyRRkqm8XU4ZulQqWYEeq9GP7bnv
+         /FUgF3Wo1TruCEiCxByu/31ajBa/3IGafFsYIOPNNM/pmnwGjRNocJg3nhBuBGm+VXLe
+         +88dZD4N4IvxGQj/wxXRpdrE88MqBi2i6IcF8VdmknzEycsPQ+kOcqzHEuNTnLzODdtq
+         Pjf9W3J7IkrPEfgE8jDfjXqtir06A4fAQRw5h7/vdTiI5t3QEdMxTdeIXO0KgBX4sAAy
+         Wg+A==
+X-Gm-Message-State: AOJu0Yx6a2mr9XvYdCt9lolLbydFzjM57scZFuORWn9FYeTtEmyqNY3B
+	6tNnEOC3m6A80WXdKDOdN3E=
+X-Google-Smtp-Source: AGHT+IHX4Hq5rPkeD5504AXZ6QnaSXBzBZrfEtWVv3iESmgI1RSzHQkbpF0lv43UZIzg/VylkcQF9w==
+X-Received: by 2002:a05:6512:20c8:b0:50e:6878:a70b with SMTP id u8-20020a05651220c800b0050e6878a70bmr2104873lfr.54.1704811922775;
+        Tue, 09 Jan 2024 06:52:02 -0800 (PST)
+Received: from rand-ubuntu-development.dl.local (mail.confident.ru. [85.114.29.218])
+        by smtp.gmail.com with ESMTPSA id b13-20020ac2562d000000b0050e7f5cffa6sm369150lff.273.2024.01.09.06.52.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 06:52:02 -0800 (PST)
+From: Rand Deeb <rand.sec96@gmail.com>
+To: Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	openbmc@lists.ozlabs.org,
+	linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] i2c: Fix NULL pointer dereference in npcm_i2c_reg_slave
+Date: Tue,  9 Jan 2024 17:51:21 +0300
+Message-Id: <20240109145121.8850-1-rand.sec96@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20231222013352.3873689-1-kcfeng0@nuvoton.com> <20231222013352.3873689-2-kcfeng0@nuvoton.com>
- <20240104001552.GA2096243-robh@kernel.org>
-In-Reply-To: <20240104001552.GA2096243-robh@kernel.org>
-From: Ban Feng <baneric926@gmail.com>
-Date: Tue, 9 Jan 2024 17:00:17 +0800
-Message-ID: <CALz278bzoQEUS+NMP=Xt9+4n4NovBR6bCucbvQp_FhHuMP0bnA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: hwmon: fan: Add fan binding to schema
-To: Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 12 Jan 2024 10:42:46 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -77,45 +84,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com, linux@roeck-us.net
+Cc: voskresenski.stanislav@confident.ru, deeb.rand@confident.ru, lvc-project@linuxtesting.org, Rand Deeb <rand.sec96@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jan 4, 2024 at 8:15=E2=80=AFAM Rob Herring <robh@kernel.org> wrote:
->
-> On Fri, Dec 22, 2023 at 09:33:50AM +0800, baneric926@gmail.com wrote:
-> > From: Naresh Solanki <naresh.solanki@9elements.com>
-> >
-> > Add common fan properties bindings to a schema.
-> >
-> > Bindings for fan controllers can reference the common schema for the
-> > fan
-> >
-> > child nodes:
-> >
-> >   patternProperties:
-> >     "^fan@[0-2]":
-> >       type: object
-> >       $ref: fan-common.yaml#
-> >       unevaluatedProperties: false
-> >
-> > Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
-> > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-> > Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
-> > ---
-> >  .../devicetree/bindings/hwmon/fan-common.yaml | 76 +++++++++++++++++++
-> >  1 file changed, 76 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/hwmon/fan-common.=
-yaml
->
-> Please implement my comments on v10.
->
+In the npcm_i2c_reg_slave function, a potential NULL pointer dereference
+issue occurs when 'client' is NULL. This patch adds a proper NULL check for
+'client' at the beginning of the function to prevent undefined behavior.
 
-Hi Rob,
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-I saw Aspeed Billy has already added enum to below patch:
-https://patchwork.kernel.org/project/linux-hwmon/patch/20240108074348.73501=
-4-2-billy_tsai@aspeedtech.com/
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+---
+ drivers/i2c/busses/i2c-npcm7xx.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Thanks,
-Ban
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index c1b679737240..cfabfb50211d 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -1243,13 +1243,14 @@ static irqreturn_t npcm_i2c_int_slave_handler(struct npcm_i2c *bus)
+ static int npcm_i2c_reg_slave(struct i2c_client *client)
+ {
+ 	unsigned long lock_flags;
+-	struct npcm_i2c *bus = i2c_get_adapdata(client->adapter);
+-
+-	bus->slave = client;
++	struct npcm_i2c *bus;
+ 
+-	if (!bus->slave)
++	if (!client)
+ 		return -EINVAL;
+ 
++	bus = i2c_get_adapdata(client->adapter);
++	bus->slave = client;
++
+ 	if (client->flags & I2C_CLIENT_TEN)
+ 		return -EAFNOSUPPORT;
+ 
+-- 
+2.34.1
+
