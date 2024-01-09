@@ -2,52 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B73282A388
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jan 2024 22:46:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EE0282B82A
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 00:43:27 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EhR0vvYK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i4tzNVxC;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4T9LwY1j95z3cTM
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jan 2024 08:46:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TB1Sg2Smvz3cRk
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 10:43:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EhR0vvYK;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i4tzNVxC;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12b; helo=mail-il1-x12b.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4T9Lvy25scz2xWR
-	for <openbmc@lists.ozlabs.org>; Thu, 11 Jan 2024 08:46:06 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by ams.source.kernel.org (Postfix) with ESMTP id A89E1B81EA3;
-	Wed, 10 Jan 2024 21:46:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11E0C433F1;
-	Wed, 10 Jan 2024 21:46:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704923162;
-	bh=hbT21zaEKH9BJDarRM6/a+kiLWB9ebn7plUYWqUhisQ=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=EhR0vvYKUylc/ffJRTLhiUMz4eN/s/9vb5ME9IPglzsrEhg/rZknl1Q4Io8EH846r
-	 FYxqjVYhg/AhaHO3xk6mFAmGKXpzSqLGEKLqaYfcbN50SRm2Q7urgg+VF2h+xZNny7
-	 7UJ4g7lTYiz2aoxnKzYeNvUtucnvRJbzB9PffTbm07MCWE8bS0648WBgTRcrHXK3A8
-	 0lNCdqCaiMkGVfg4+jNPSmL+8OLrj6V27ng9mPNQbyXNbjrRaXlLFP6Mb5ZG8DbAv4
-	 +bMqG4j48/inmnAcm3ammI/JcCIo3jmWiUv3h82R0KyG/mVXCDGB/6inWjJkb09UCC
-	 N8wblpu7kQkpg==
-Message-ID: <78875535469138a0fd0659d7e621a4f2.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4T8Pz31s7cz2xLR
+	for <openbmc@lists.ozlabs.org>; Tue,  9 Jan 2024 20:00:30 +1100 (AEDT)
+Received: by mail-il1-x12b.google.com with SMTP id e9e14a558f8ab-3608bd50cbeso7958765ab.3
+        for <openbmc@lists.ozlabs.org>; Tue, 09 Jan 2024 01:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704790828; x=1705395628; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KgMEw0q4WwV2JumGUYsCtc6USbd39YZOyTk5WPojixQ=;
+        b=i4tzNVxCp0ePTKNWnvojisfAMQNVMgjDa/ClB5sUsYkvxbbig4Cr+ymr9vBGIbLFXK
+         qGpzU7F4xOXAmb3pRMm+vkO8iUQNqBMkwV4rBrDeMYiKALAItOlsKkVga9ULfjiku24O
+         sOEl3Y5ZNFk4Ins6cXv1zTNsEibKF0lgnjt8XqH5jbafb2fRA6s/WH5GMQm7beoeABTA
+         G1TINsK1fa6rhuNdsNZ6Iz7B1G9Os8dPS/ClQHhs2N8Bcn2bvqvcGwWXFxaRICErFEhq
+         aP0vyYEmzrZjCOYZuDBzqkiQybQZM9ZQYKwx9p8Bw4Idf4vHdYKrlfyRRMSMwN6sfxH+
+         7yFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704790828; x=1705395628;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KgMEw0q4WwV2JumGUYsCtc6USbd39YZOyTk5WPojixQ=;
+        b=WCec5XnMRkYMLfkg9nSnsO+jZwL6IxXgNB2neUAcljzoao8guKDOt/fKkW4G3amrMo
+         q1lo4DBfX2+cCMY7sYuKDkJy814cw+5tcxMWR8CWJA0RzchmOeYzHtyKI2AptlJf3qIc
+         kues1+Yk5nWpYxmJ7sVpXefhaNkYoIwbx/LcHG5WCMfySbYPPACmpMv0s079Wc3vGb/s
+         MqxYB6b3WOSMoZDeFkURxox6IxBVRy7rxeaIJP3QtHvInUaGV0uf3RfR7yA+idS+wauM
+         6CCpPbKL/tLPGFssoy6NWBqL/CWaAbQc1cHXQRTftRSF2kMO7osCosUSmlbKUD0c7Nos
+         Dsqg==
+X-Gm-Message-State: AOJu0YyO9KEs0n/9RTD2Kk0E6WQmHk72yjci03fnNhzjPyz/6LFQiLtl
+	oKkArWvvsIBnSgV+5A/LvklKVdOLlX2bjcRr9ck=
+X-Google-Smtp-Source: AGHT+IG9rmegvlzOUYbFciwQULzLSP/qGqK+RLbjVXhQgCS8VFINLPoQ1fOr7bSQCaGxxHgwQbLcmpm6+YCoDXmC/5w=
+X-Received: by 2002:a05:6e02:2387:b0:360:7403:3cca with SMTP id
+ bq7-20020a056e02238700b0036074033ccamr6766345ilb.51.1704790827874; Tue, 09
+ Jan 2024 01:00:27 -0800 (PST)
 MIME-Version: 1.0
+References: <20231222013352.3873689-1-kcfeng0@nuvoton.com> <20231222013352.3873689-2-kcfeng0@nuvoton.com>
+ <20240104001552.GA2096243-robh@kernel.org>
+In-Reply-To: <20240104001552.GA2096243-robh@kernel.org>
+From: Ban Feng <baneric926@gmail.com>
+Date: Tue, 9 Jan 2024 17:00:17 +0800
+Message-ID: <CALz278bzoQEUS+NMP=Xt9+4n4NovBR6bCucbvQp_FhHuMP0bnA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: hwmon: fan: Add fan binding to schema
+To: Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <dc739435-d955-44f7-b5ee-9de4d5336725@linaro.org>
-References: <20240108135421.684263-1-tmaimon77@gmail.com> <20240108135421.684263-2-tmaimon77@gmail.com> <20240109170830.GA2772086-robh@kernel.org> <CAP6Zq1jCHVrFfRa6c3DZ4t2aaJTkWukeEkia0AqhzppC0mjbfg@mail.gmail.com> <dc739435-d955-44f7-b5ee-9de4d5336725@linaro.org>
-Subject: Re: [PATCH v22 1/8] dt-bindings: clock: npcm845: Add reference 25m clock property
-From: Stephen Boyd <sboyd@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 10 Jan 2024 13:45:59 -0800
-User-Agent: alot/0.10
+X-Mailman-Approved-At: Fri, 12 Jan 2024 10:42:46 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,39 +77,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, benjaminfair@google.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com, linux@roeck-us.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Quoting Krzysztof Kozlowski (2024-01-10 12:54:14)
-> On 10/01/2024 14:47, Tomer Maimon wrote:
-> >>> +
-> >>> +  clock-names:
-> >>> +    items:
-> >>> +      - const: refclk
-> >>> +
-> >>>    '#clock-cells':
-> >>>      const: 1
-> >>>      description:
-> >>> @@ -30,12 +38,20 @@ properties:
-> >>>  required:
-> >>>    - compatible
-> >>>    - reg
-> >>> +  - clocks
-> >>> +  - clock-names
-> >>
-> >> New required properties are an ABI break. That's fine if you explain w=
-hy
-> >> that's okay in the commit msg.
-> > What do you mean?
->=20
-> I think it was clear. Which part is not clear?
->=20
-> > Could I add the new required properties to the required list?
->=20
-> You just did, didn't you? And received feedback that you are breaking
-> the ABI.
->=20
+On Thu, Jan 4, 2024 at 8:15=E2=80=AFAM Rob Herring <robh@kernel.org> wrote:
+>
+> On Fri, Dec 22, 2023 at 09:33:50AM +0800, baneric926@gmail.com wrote:
+> > From: Naresh Solanki <naresh.solanki@9elements.com>
+> >
+> > Add common fan properties bindings to a schema.
+> >
+> > Bindings for fan controllers can reference the common schema for the
+> > fan
+> >
+> > child nodes:
+> >
+> >   patternProperties:
+> >     "^fan@[0-2]":
+> >       type: object
+> >       $ref: fan-common.yaml#
+> >       unevaluatedProperties: false
+> >
+> > Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+> > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> > Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+> > ---
+> >  .../devicetree/bindings/hwmon/fan-common.yaml | 76 +++++++++++++++++++
+> >  1 file changed, 76 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/hwmon/fan-common.=
+yaml
+>
+> Please implement my comments on v10.
+>
 
-It's fine to break the ABI as long as the commit message explains that
-the driver isn't merged yet.
+Hi Rob,
+
+I saw Aspeed Billy has already added enum to below patch:
+https://patchwork.kernel.org/project/linux-hwmon/patch/20240108074348.73501=
+4-2-billy_tsai@aspeedtech.com/
+
+Thanks,
+Ban
