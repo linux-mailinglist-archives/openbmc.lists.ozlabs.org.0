@@ -2,91 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0697E82C4DE
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jan 2024 18:42:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71E7B82C89F
+	for <lists+openbmc@lfdr.de>; Sat, 13 Jan 2024 02:19:18 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=TMz9U1wX;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BETqwby7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=asBG8KfZ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TBTQ26Ym3z3bl7
-	for <lists+openbmc@lfdr.de>; Sat, 13 Jan 2024 04:42:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TBgY02X3Gz3bqP
+	for <lists+openbmc@lfdr.de>; Sat, 13 Jan 2024 12:19:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=TMz9U1wX;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BETqwby7;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=asBG8KfZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 66 seconds by postgrey-1.37 at boromir; Sat, 13 Jan 2024 12:18:44 AEDT
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TBTPV0rlKz3bXv
-	for <openbmc@lists.ozlabs.org>; Sat, 13 Jan 2024 04:42:06 +1100 (AEDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id E88BD5C01AB;
-	Fri, 12 Jan 2024 12:42:03 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Fri, 12 Jan 2024 12:42:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1705081323; x=1705167723; bh=s11rx7yU1c
-	wWsVDclFsnGfU1dha05r3l4G2kyuqKUiM=; b=TMz9U1wX/twIacvV25BZV4T5wz
-	bnt2CSBsmXNRr5tWGpzPhB+CABy6F9aXdgFmsSC0zBBRo3plxUUAxvapP4CEiv1S
-	1fsceHjdoCuoDor+h8s8orLKmHKZFeIqbg1ufmvvKRordtyjn2hroQCeoi/6Pb1J
-	sLm9ygVmsH7JoQzIRb6mB7uqs3QAB/yAV1Z8GBYBTu+C7PqupJNGJnu6XoH0Y6EI
-	7BOScYGBMeraMn00dyXana/0WCIJFVDlgCNR4rCryTQ9FPNS7nHq4huZazdrRiK/
-	QezVpNOO+QtqdMZHDxJh+47gK4nS0GJR0Ptz1mvTjDpyR7xGKp8MyY6lxxdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1705081323; x=1705167723; bh=s11rx7yU1cwWsVDclFsnGfU1dha0
-	5r3l4G2kyuqKUiM=; b=BETqwby7pBGbv3c4yt5HkQmjbuMsxezpu6eYRhkSf9lO
-	ecHvQdfcK5qD9ELqhMuHXHnJjtq/oXkFoh6Gv1jPz3kve/R7Hs7A35tAGszfQ/5I
-	THZMzER1scyVmgeiZSqx7TIFceZS+tjWLrQHAxLZAS0Sew+aCzM83PIcdsC58weV
-	0A6XEE1oPiDCvCWJHjVZzEWCDtzvJf4Ocr/g7BGznH2eWuTmHSKPfFPaqre8BXw1
-	D6b5YVqDwsQ5/Ja78jjlcm5hM5LjxxxfJ/AGZpy088nWzcCX6CFthJgsVigsuXTC
-	Ro6tTkrD8kwKkenG8i5YQIYj4D/gWdQWay8KnslSBA==
-X-ME-Sender: <xms:63mhZccNZ43UJ6_cYLiDAlDApogVeJVIwbp6wpAIo9CQnfr-aH1sBw>
-    <xme:63mhZePDq1h45LlZ_z23hGVXGsr10wdIYlcTElzsIa28RNm2U0UE4aWxmUQEJbRXM
-    hjLNTW8d_j_PoglttY>
-X-ME-Received: <xmr:63mhZdixxHmxQ_GNX0i6r7zFDfB5Yb4Cddu1jDrRo7OLIAjX2V4qksplzBODstUTfvf9MB0LUFf870C6Kw6Xpg4FpOl-gg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeihedguddtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepjefgtdelledvfedtgeegffef
-    ueefveegjeekleegueejveevueefiefgiedvjeejnecuffhomhgrihhnpehkvghrnhgvlh
-    drohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:63mhZR81ixhnsGIUlgjpvayR8hk-oQfrSk7IU1qg-svzBBcDv6DVEw>
-    <xmx:63mhZYs815sFK8Fo3bwqKOdzZ2XmgKgsO3aouDKgR-lmPWhCOtG-tg>
-    <xmx:63mhZYFFFJb3_0YKoY3tpX_wrIVjzTXFin-ZoqjHlkA3uBejtPHERg>
-    <xmx:63mhZVNpUKrEsGl9k9RegQ0EiXC5Qp6_oU2EHBcVQ2w_aBuNm1CT4w>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jan 2024 12:42:03 -0500 (EST)
-Date: Fri, 12 Jan 2024 11:42:02 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: nuvoton: add Facebook Yosemite
- 4 board
-Message-ID: <ZaF56lwEi1MES89Q@heinlein.vulture-banana.ts.net>
-References: <20240112013654.1424451-1-Delphine_CC_Chiu@wiwynn.com>
- <20240112013654.1424451-2-Delphine_CC_Chiu@wiwynn.com>
- <8efef092-e70f-46c0-a60a-e62e676d6eb2@linaro.org>
- <ZaFydbPxbeczo97t@heinlein.vulture-banana.ts.net>
- <c0a83358-09a3-4c51-b8b6-6d6ea8b4f196@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TBgXN1mBhz2xTm
+	for <openbmc@lists.ozlabs.org>; Sat, 13 Jan 2024 12:18:43 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1705108724; x=1736644724;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=E438uW/rLScP3NrrSZ/+vU2ZbR/Hk3/BAayHZre5Mjg=;
+  b=asBG8KfZTGoAtrFwU5ppUejB7Op+3hbTzWn/OjmmYIwZr9SF0WwlwDV0
+   +c9SJX4EX6Y6rnOqZc1W+3I0nU596lyuacaiBIVi1gAlMMuwBhn5U3RCu
+   xtoAntoev502YwB41Y1gsziHxYfQ0hHJC2sIlGtT9hzhoMbocxCkloJoZ
+   87CYtxVg1x1idSG3OTp2sedI9Xd7D06a3zzeMFF9vupZYrtWri1SflTYs
+   WmaFwwYCWmG0hySWwXQfjc42g+wIB/2Zpsm1jd4BZBFjMSNWXD5U68/b6
+   WLNA4i3WMQzDR828jGZBxE+6aHqSHaS5yFWASrHY4n71TBaY3d6A90xZD
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10951"; a="389777275"
+X-IronPort-AV: E=Sophos;i="6.04,191,1695711600"; 
+   d="scan'208";a="389777275"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2024 17:17:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10951"; a="1030096755"
+X-IronPort-AV: E=Sophos;i="6.04,191,1695711600"; 
+   d="scan'208";a="1030096755"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga006.fm.intel.com with ESMTP; 12 Jan 2024 17:17:29 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rOSeM-0009xP-0b;
+	Sat, 13 Jan 2024 01:17:26 +0000
+Date: Sat, 13 Jan 2024 09:17:05 +0800
+From: kernel test robot <lkp@intel.com>
+To: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>, patrick@stwcx.xyz,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH v1 2/2] ARM64: dts: nuvoton: Add initial yosemitev4
+ device tree
+Message-ID: <202401130946.VGBtdkKu-lkp@intel.com>
+References: <20240112013654.1424451-3-Delphine_CC_Chiu@wiwynn.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="hWV98mDElNT6jKhP"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c0a83358-09a3-4c51-b8b6-6d6ea8b4f196@linaro.org>
+In-Reply-To: <20240112013654.1424451-3-Delphine_CC_Chiu@wiwynn.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,72 +80,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>, linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>, Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Delphine,
 
---hWV98mDElNT6jKhP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+kernel test robot noticed the following build errors:
 
-On Fri, Jan 12, 2024 at 06:14:26PM +0100, Krzysztof Kozlowski wrote:
-> On 12/01/2024 18:10, Patrick Williams wrote:
-> > On Fri, Jan 12, 2024 at 08:10:25AM +0100, Krzysztof Kozlowski wrote:
-> >> On 12/01/2024 02:36, Delphine CC Chiu wrote:
-> >>> Document the new compatibles used on Facebook Yosemite 4.
-> >>
-> >> There is Yosemite4 board already supported. What is this for?
-> >> https://lore.kernel.org/all/20240109072053.3980855-5-Delphine_CC_Chiu@=
-wiwynn.com/
-> >=20
-> > Yosemite4 is a server chassis which is managed by a BMC.  The BMC is on
-> > a pluggable module card.  Typically we've used Aspeed chips for this,
-> > but we are building an alternative BMC module using Nuvoton BMC chips.
->=20
-> There are few ways to solve this, like having different compatibles or
-> having some shared compatibles to note common part of hardware. However
-> usually the final compatible represents the final device, which here you
-> use for two entirely different products. This works only for the cases
-> of carrier boards, where that compatible indeed represents the same
-> hardware.
->=20
-> Not your case. This needs fixing.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.7 next-20240112]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-This patch:
-+	model =3D "Facebook Yosemite 4 BMC";
-+	compatible =3D "facebook,yosemite4-n-bmc", "nuvoton,npcm845";
+url:    https://github.com/intel-lab-lkp/linux/commits/Delphine-CC-Chiu/dt-bindings-arm-nuvoton-add-Facebook-Yosemite-4-board/20240112-094033
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20240112013654.1424451-3-Delphine_CC_Chiu%40wiwynn.com
+patch subject: [PATCH v1 2/2] ARM64: dts: nuvoton: Add initial yosemitev4 device tree
+config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240113/202401130946.VGBtdkKu-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240113/202401130946.VGBtdkKu-lkp@intel.com/reproduce)
 
-Aspeed patch:
-+       model =3D "Facebook Yosemite 4 BMC";
-+       compatible =3D "facebook,yosemite4-bmc", "aspeed,ast2600";
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202401130946.VGBtdkKu-lkp@intel.com/
 
-These have different compatibles already ('-n' for Nuvoton).  Do we just
-need the model to be clearly different also?  Maybe there is something
-else I'm not understanding.
+All errors (new ones prefixed by >>):
 
---=20
-Patrick Williams
+>> arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-yosemite4.dts:6:10: fatal error: nuvoton-npcm845-pincfg-evb.dtsi: No such file or directory
+       6 | #include "nuvoton-npcm845-pincfg-evb.dtsi"
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   compilation terminated.
 
---hWV98mDElNT6jKhP
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+vim +6 arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-yosemite4.dts
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmWheegACgkQqwNHzC0A
-wRmuSg/+IUyH4CzVAeyui/NfgsYtbgD5YYyLywW9Gdl3td9rcUn702bmrtZ5t3QD
-PmOf443x6sTrZqED46Sw0EiL2/6F9p09IQCfcP0xIDAilhystlZh/aIffi0N2r7Q
-meD5whSSe5ur+xNd4T6Y+CW3bBzN9b2NAjhTKaX7t6b+j2otf7quEXW9yenUO8He
-hEUqBwrexdtTV6PQSuPDoAbMWmUxdjrU+SFWnP7D98R2HWixaqwG/JcSDYCsrwQc
-7LMiO+ICcV2POevQC7zqWKel1T3VXqZa2ShCsWJxW/hyHhl/aWWM+4cwvm6z2XwI
-NmQRyfXpqMUcHDFTH3sLnG/pgc1IXbnGmmKXyLFbj97AtORkU9z0zwie6y1z6F9D
-/7PY0oBS+mX0NPMHSPVMxQ2UZkUuhyDggTu5T6gdgph/mGFd0hlEWruW7CrxiTfY
-z88y48PAJsUzf+fdkeVB7XRE45LPRL64b7pqQGlWbZQEwpHWIL4VDisL+W+Oj7bV
-IL2v3BiKKfzt5w0yA5sA7hMhE/k3jvTKkzKqLBsVRpwq4wa5peypz0rcb685dqzZ
-GOAHvvZmQaCelXfbZXne8X/cSPuzWJI/XT8MeDJuAzNa/bCVxJuMONNTECxvOMDT
-xItWvlKKXLPA+P56a3As6iZAc+ynu+mYghxeKgAF9U4OXFWq0kY=
-=3qaC
------END PGP SIGNATURE-----
+     3	
+     4	/dts-v1/;
+     5	#include "nuvoton-npcm845.dtsi"
+   > 6	#include "nuvoton-npcm845-pincfg-evb.dtsi"
+     7	#include <dt-bindings/i2c/i2c.h>
+     8	
 
---hWV98mDElNT6jKhP--
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
