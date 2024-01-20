@@ -1,151 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7C91832317
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jan 2024 02:45:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1913E83370E
+	for <lists+openbmc@lfdr.de>; Sun, 21 Jan 2024 00:29:07 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LzLJcnQX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V+ePDw0f;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TGMrl4sG7z3btZ
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jan 2024 12:45:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4THXk86hzWz3cS5
+	for <lists+openbmc@lfdr.de>; Sun, 21 Jan 2024 10:29:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LzLJcnQX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V+ePDw0f;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.13; helo=mgamail.intel.com; envelope-from=zhikui.ren@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Fri, 19 Jan 2024 12:45:12 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TGMr86l7Qz2xLR
-	for <openbmc@lists.ozlabs.org>; Fri, 19 Jan 2024 12:45:12 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1705628713; x=1737164713;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=kJaY6Za2QHzCZlNqAZymtbZ0BTb7NvclLlIDCdNdJ8s=;
-  b=LzLJcnQXNMchlGJZ9ZxDFqYWUd+335czOwIag3aO+Gp/1cnf9I1NqNBH
-   kfz/5ODynInurDdTFb1nvrdprX7vDkfs3B87Z1aI5n77MWfQfmPGcaDhC
-   Uj6cps4Hnowuu/o+zMoGbbssn4i0q+6U+uheFrKEKR/Fcf8Byuo9uChNh
-   Vxdx9RtGKCGtkB75ayLr4GL2c3q/AFVSQ+95fZKWzeYcBPCY8wDqtGBOa
-   Vgd3AZqLc0PwLCtDn4lVB4IRt0pqXcKLsk2v52ZnKo+MEzsApTDD3KxTM
-   G3XEmvai/nYmmyzOv/o1WQt4ieZcxJ/rlI7+wyWvFpHKQAESEz+Xy2tEo
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10956"; a="7722719"
-X-IronPort-AV: E=Sophos;i="6.05,203,1701158400"; 
-   d="scan'208";a="7722719"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jan 2024 17:43:56 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,203,1701158400"; 
-   d="scan'208";a="532679"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmviesa004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 18 Jan 2024 17:43:49 -0800
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 18 Jan 2024 17:43:48 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 18 Jan 2024 17:43:47 -0800
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Thu, 18 Jan 2024 17:43:47 -0800
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.40) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 18 Jan 2024 17:43:47 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Zu/rBnkujEU7XqoR8qky39eLJyz3KK9W7BEwWq7v8yWsFTEzURECYu+IFpSnQ6ytHBOn3PhLTawZoD8qAnKmldO4Ud4T5M4DOt6nM1KnvupFbsVHFichd2Fb/n9pNpaMoh4o/6Jv+pIHMRgV4osM41FLs3cRNDTseQp/BegAxmvGogPGIpDQpzBoJQzqhpxTBKexhzKWsOpgJR1Fr7OPJIQK+rVUpWxfhMprB9ntOJ3UDNThigSkTnOvjpKSELUNvFk5mjIEG39vU8Gswx9rCaO4u2haymWprsDDCZ2IXdcnovSy+ZBPEtzZQyhKKrc9PaO6GmMIuNITs9oj5Ndykw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SBgpbSzokGAICZymIqex/182JPHbEkJ9ri2CJjdE7/I=;
- b=O4P/0Oz7HljJXaPSRCM/ybERBh7L5w4t30p93RZZWI7deDZH/8Q/zbCh0mxrwp2+w/BE/oh5GIwi53cG6VB/eyb2GWrNlptKOAIt9Wb0w1nk+7nhUjfOllAnXTkTi7wmYa7FQnNArK77ywF4BPxrLPlRQNrowPdxsTSvvqGbgtuQr+sESKuy9ddvpSd85abNkgWZ6FGmj0h6sTxELiFlbIACLofMKqwaROGngqRVe+asEIcipGswUeTi/bNgyfUFh6C2vVrLn/qrdIpfeB152KXSJYo8H2GdfkR7r2/rhjLthleKwo2zLZWG5g8sulymc8i8SudIRjYPuXjGnjUZ3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from DM6PR11MB4410.namprd11.prod.outlook.com (2603:10b6:5:1d9::11)
- by DM4PR11MB5472.namprd11.prod.outlook.com (2603:10b6:5:39e::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7202.24; Fri, 19 Jan
- 2024 01:43:40 +0000
-Received: from DM6PR11MB4410.namprd11.prod.outlook.com
- ([fe80::b9aa:d3a9:d300:cd5a]) by DM6PR11MB4410.namprd11.prod.outlook.com
- ([fe80::b9aa:d3a9:d300:cd5a%6]) with mapi id 15.20.7202.020; Fri, 19 Jan 2024
- 01:43:40 +0000
-From: "Ren, Zhikui" <zhikui.ren@intel.com>
-To: Patrick Williams <patrick@stwcx.xyz>, OpenBMC List
-	<openbmc@lists.ozlabs.org>
-Subject: RE: TOF elections for 2024H1
-Thread-Topic: TOF elections for 2024H1
-Thread-Index: AQHaR/PworeQLdCmfkGcfEzU8l9tpLDgXlhg
-Date: Fri, 19 Jan 2024 01:43:40 +0000
-Message-ID: <DM6PR11MB4410B49AA8BF066DC7B1500E94702@DM6PR11MB4410.namprd11.prod.outlook.com>
-References: <ZaWZY3A4TZth-ons@heinlein.vulture-banana.ts.net>
-In-Reply-To: <ZaWZY3A4TZth-ons@heinlein.vulture-banana.ts.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR11MB4410:EE_|DM4PR11MB5472:EE_
-x-ms-office365-filtering-correlation-id: bc52048b-c9cc-4ddc-567e-08dc18901040
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: s9in7deuefAB5uGBRJAa/Ed3YTQwrftL93MZQNPA9GdjNWqDQbicnDdpq4ko/mmWRWNqu/Lra3Wpjgsy9sceLQdJ7rEmboo0D1ePmH4VMKf9/R9tvmGoHantAwwnL1ilyxjwB2ts1F2NQn09c3Zc7Vh8FjGPdQYzWVP2mlkV82aILUiyRykUN1N6hmLh+mvi4p9j7SIypseKKBArqD5GBxF6iBWXW2SJAGrvFPO2m7QBHn/iE/yMW65bjkbTbo9+P6ABfXzehRnXwk7ddTa5CrYxgBqu2EUzy8IiIqAk0Orp6mvLp3P7idlymj8ffXjZ9yUkGwPp/Ocm/hDYpXJqaq5j+5hsNNqNs2tCeZPm1jY6RbMzGxPEyQX3GfVt2gp/AinqQFjnmw1ONIE0pYsFMCUeretlLVc6UNzJMwWuvaWazRL+50lEtUE0AX4tToDKnX5VNN/12rB8POneUXGj/FNa/7QyWAV4gfuPyuSRhvvvUgvbGbglPTu9G4qfaIwXmgUiqi0GODLE+9QxJIGuQu1y7SZ/jK3A2G1vVMIe6okcr8Zu0RTPq3LVAL6ntaCK5LgtZxnJaPOcOxgNfURe2EVgDVvRtAhh0hxwsk+rAbSdqDiJOwORKOOhlXK5sjlal1VtulElZe9sHnqJCo83WQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR11MB4410.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(366004)(136003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(64100799003)(186009)(26005)(9686003)(66556008)(2906002)(38100700002)(122000001)(66446008)(52536014)(8676002)(478600001)(966005)(66946007)(8936002)(5660300002)(41300700001)(76116006)(316002)(110136005)(66476007)(7696005)(71200400001)(64756008)(33656002)(86362001)(82960400001)(6506007)(38070700009)(55016003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?U4M/1aKiWZSybbcze2/t/GIu5lfNbwHj9G8yj8IMwdhCs0e8HaZHtMeaw0UE?=
- =?us-ascii?Q?YQvAwVxHhnc7BS6QzJ6bGROjDbBqn3a+v74m2uOCCoZHiFMMpsprehj5X/XG?=
- =?us-ascii?Q?qAAiZDDvN4GqZZrO0Kv0LkN6/cpy3Eihh5rhNs9hbN+qlAvsg8lm8QBhZVzK?=
- =?us-ascii?Q?bZfxCHmwtovdB/zHLEZeB4PFPGz2Y6RaKFH+qlkU9++qvAxVR4ck2EE8Wb39?=
- =?us-ascii?Q?W0mvjh3n2a3SLd8E7Bks2mRptOcudtCg8+N5iWHZhZ8DkdhHAHkGtcY9A3MW?=
- =?us-ascii?Q?Vo0MO3Y1o0ZDj8At+f7lh6+Ak5AZBjL8zPdl0JhUwBAdILQTMGEvmplj2DiV?=
- =?us-ascii?Q?zbs10RGhXvmRF3S3XpkQ7rynrRU48j81I8Vsby/OXntoyb0csJFiiHwzP8H1?=
- =?us-ascii?Q?dlTftbrMXk7XzPlLpr9F+F07qhlt/270LC8zYWv/bB1gYGv0GCCWm4bypBMZ?=
- =?us-ascii?Q?4s+FA5nfpXUuv+BmYxcU18GjEuVZ5hHCynC7wO/WErVio5vD9ljaRwbZ7YCC?=
- =?us-ascii?Q?97VuGh8bOy+PSYpgO+Ml+ms95C4NzEQ11dwl2MIYUnwF0DfmT9MqwX/Uh2CL?=
- =?us-ascii?Q?cNCoSNSmS2yKmYkvsxgEx6aFeceP6l+36Jz0mcCDY6zQ/PfRYzKKjVBvx99b?=
- =?us-ascii?Q?OmGoWbdmQSHkNRcSqMElPxbpbimsjcNxtavF7JWn7ze0bssCS4/uhXgIHbBw?=
- =?us-ascii?Q?FgPbeNtP0jV49KVF10pwDvLgLd4fY0k/UNDR2t/M+RxmHYhImJE0cmj+f7Jy?=
- =?us-ascii?Q?+RY57yyBBU0bt5z3RhBg/lnljP8eUTKpDksRvTv9k8kzWblmW4cNLz7HnS/w?=
- =?us-ascii?Q?QPwjdBt9GsakC8JidMKcu/O8qGDZnSmw0X317R1cBeuQzV454Zjmy+SH+Nwx?=
- =?us-ascii?Q?SeUkm/ZEmwQOAaWUQLVGLX44hafUMfPpiWeE4oKiyCLKwygJwzW6FUf7SQ34?=
- =?us-ascii?Q?rNJCkCZxMTEXWa+YdILfFNVNVB9IF7mK1AJVjwlg/XIH+s7lm8gADE5cUMut?=
- =?us-ascii?Q?HVUKAc6eZCygwnFmh/wQH4IMWAbyzQ7ZnhYE+E07HtTkegvRyimFc9EFAW4v?=
- =?us-ascii?Q?UezmausvpEyu5jMHr675OQe+zPW9waTz0eL5hkOnP4bNdaMAovFikapvzMNe?=
- =?us-ascii?Q?Hfbt83nsCJ9W6PEBuPmmZ4GEHBE/HQlpD2LgditLGNjo+fWVOdCPSnNsC3+U?=
- =?us-ascii?Q?CeNzbI5hNhcJaX/bS2UsbQ8YSad/qoBL4bHfaKSShPrJ4WoKW1gGCiiFsGTj?=
- =?us-ascii?Q?aqFFlEnKCausnPC0PqlTVyxpEwLGVb5h7kIyeQrD4SMg57zl2XvDbAgiTVEh?=
- =?us-ascii?Q?2Ib4iSygOF2qYywHTiq2Joii2Fu3L/1zLDK7olCVumcKRf3L7sCyD5q9H2G7?=
- =?us-ascii?Q?exyqpBGMHgoZN1FpoTkNLOPwi+tfQm3rdCRG97GD0HzVIn6GqMSuamGF98w2?=
- =?us-ascii?Q?t5EolL9VPkXqdl/+cRpYPcvrRmGG4yh4iuoP4UY0Lo+DMjkjU7PteBp1k8rI?=
- =?us-ascii?Q?OHC64EPuFqRXSQdME0VXCxkB35cB5IOF0TdM+CygA6VR45fRR9XayP5Ty2XT?=
- =?us-ascii?Q?tptCkct9Mey10Zilp88BSHdfX5v9CaqEpcoFOmi+?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4THXjV2dnWz30fD
+	for <openbmc@lists.ozlabs.org>; Sun, 21 Jan 2024 10:28:28 +1100 (AEDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50eac018059so2630106e87.0
+        for <openbmc@lists.ozlabs.org>; Sat, 20 Jan 2024 15:28:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705793301; x=1706398101; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9edRhZV4RNwO8Pc3qdkyouN8izXXmhlK/VxhTNYo/PU=;
+        b=V+ePDw0fCmJXFbQDIuBZfAf4ZgxSqxdItil9/X87KHyGpOUBNGewHoApbBUOssgV1C
+         VbSA1Z8EHe9oSGVQNf+vZGuJlG+eW5jq1n9G6fewlC0Dunxzo5nfwtg5PZvX4vfb1arn
+         XjdXqPj+A+GfXr79UBBaeLXGkDIivnEHoyAKgiLL0GU4+kyriEdUQwpuZ02oI6RAv5bl
+         QucI7B60KUmiVOoLJnvnyHwrLP6Qp7Ug1yP7vE23A9wDsKH8sfycivynutCEG8K44aoz
+         XIDKqA6cDGUl4JDceGNgfZsPizhVnvJjScxeh/IOS2iP5yddYDzXiV+gwSHhWz2TUGsU
+         +6wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705793301; x=1706398101;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9edRhZV4RNwO8Pc3qdkyouN8izXXmhlK/VxhTNYo/PU=;
+        b=Bo/Zod5m+Wh0jAntHR2SDAbvAEp7afMU5i2BEyRQ00PaGW83ItflrXQifKjAvgyo9p
+         IkYq2AUN2gnXx7V3TJEsI5vJG0+9xSi9wXeOw6wfbi1b+3tgfys2DQhnytoJOLrPbTMq
+         e31rnEurFCqftAugkw+Jnxbf823UU2KjyDAX2YeDI2WhW9xC+34no/mjZ+X+AGA7+2mz
+         s38CXxAvEoitdoVrlNE3riVenGWpirQ3Cy5UX+ALeYmX+IMQ65kV6tCmnH4SvflbAiEU
+         BrHVcfaIpBfnZ01KfByo7rPaQkveusMCrCQjPiX7gAaCSFTbpiXnpUsXCqpFLLe839+g
+         sGOQ==
+X-Gm-Message-State: AOJu0YwVsuuHKgiFmUStOCxKsB3+rGh3MHWDuv026mm2CQfbeQGwHKvt
+	iV+tyKj9vbjNJSLElLwT+0/dWQtUVgq8KP+6b/TqJE0ZjT9mAKqw
+X-Google-Smtp-Source: AGHT+IGqec656dWjXblkH052MdUsIYmWTp/Q3eb+cv7rSNv1hkNN5duWuf/ufF1K1+lZAgZROGg/NQ==
+X-Received: by 2002:a05:6512:3b90:b0:50e:d5e2:92cc with SMTP id g16-20020a0565123b9000b0050ed5e292ccmr1187939lfv.81.1705793300877;
+        Sat, 20 Jan 2024 15:28:20 -0800 (PST)
+Received: from fr.lan ([81.200.17.74])
+        by smtp.googlemail.com with ESMTPSA id x25-20020a19e019000000b0050e77abd553sm1475416lfg.76.2024.01.20.15.28.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jan 2024 15:28:20 -0800 (PST)
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>,
+	Chia-Wei Wang <chiawei_wang@aspeedtech.com>,
+	Aspeed BMC SW team <BMC-SW@aspeedtech.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Tom Rini <trini@konsulko.com>
+Subject: [PATCH] pinctrl: aspeed: add pass-through pins and siopbi/siopbo
+Date: Sun, 21 Jan 2024 02:28:13 +0300
+Message-ID: <20240120232813.32474-1-fr0st61te@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB4410.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc52048b-c9cc-4ddc-567e-08dc18901040
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jan 2024 01:43:40.6222
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uJZs/SvSr+wMdTmmy9sxot3MHVr8hnWEKvfD7ODOOBeEMiY0MUY0Lf8DqeFIe4P3tOKlLiGS92IuHGC2z1JUyQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB5472
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -157,41 +79,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: u-boot@lists.denx.de, openbmc@lists.ozlabs.org, Ivan Mikhaylov <fr0st61te@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2024-01-15 at 14:45 -0600, Patrick Williams wrote:>=20
-> Hello everyone,
->=20
-> It is that time again for TOF elections[1].  The current election roll-ca=
-ll is
-> available at:
->     https://github.com/openbmc/tof-election/blob/main/2024H1/rollcall.jso=
-n
->=20
-> For this half, we have 4 seats up for election.  Currently those are held=
- by
-> Andrew J., Jason, Patrick, and William.
->=20
-> Nominations for those 4 seats may be sent to the mailing list by replying=
- to this
-> email.  Only those eligible to vote may be nominated.
->=20
-> Disagreements with the roll-call (ie. your body of contributions are not =
-reflected
-> in our current score system) may be petitions for inclusion at
-> https://github.com/openbmc/technical-oversight-forum/issues
->=20
-> 1. https://github.com/openbmc/docs/blob/master/tof/membership-and-
-> voting.md
->=20
+Add THRU0-3 and SIOPBI/SIOPBO pin groups/functions.
 
-I would like to nominate Jason Bills for the TOF.=20
-Since the inception of the LF community,  Jason has been actively involved =
-in the LF community as maintainer, reviewer, submitter and mentor etc.
-He is well known and respected in the community. He has done a great job in=
- OpenBMC TOF for the past term.=20
-It would be great to have Jason continue to be TOF member.
+Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+---
+ arch/arm/dts/ast2600.dtsi                | 20 ++++++++++++++++
+ drivers/pinctrl/aspeed/pinctrl_ast2600.c | 30 ++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
 
-Thanks,
-Zhikui
+diff --git a/arch/arm/dts/ast2600.dtsi b/arch/arm/dts/ast2600.dtsi
+index beabcf14f8..43db80edfe 100644
+--- a/arch/arm/dts/ast2600.dtsi
++++ b/arch/arm/dts/ast2600.dtsi
+@@ -2028,6 +2028,26 @@
+ 		groups = "SPI2MOSI";
+ 	};
+ 
++	pinctrl_thru0_default: thru0_default {
++		function = "THRU0";
++		groups = "THRU0";
++	};
++
++	pinctrl_thru1_default: thru1_default {
++		function = "THRU1";
++		groups = "THRU1";
++	};
++
++	pinctrl_thru2_default: thru2_default {
++		function = "THRU2";
++		groups = "THRU2";
++	};
++
++	pinctrl_thru3_default: thru3_default {
++		function = "THRU3";
++		groups = "THRU3";
++	};
++
+ 	pinctrl_timer3_default: timer3_default {
+ 		function = "TIMER3";
+ 		groups = "TIMER3";
+diff --git a/drivers/pinctrl/aspeed/pinctrl_ast2600.c b/drivers/pinctrl/aspeed/pinctrl_ast2600.c
+index 97e8b4ec9b..8a4f9705ca 100644
+--- a/drivers/pinctrl/aspeed/pinctrl_ast2600.c
++++ b/drivers/pinctrl/aspeed/pinctrl_ast2600.c
+@@ -267,6 +267,14 @@ static struct aspeed_sig_desc fmcquad_link[] = {
+ 	{ 0x438, GENMASK(5, 4), 0 },
+ };
+ 
++static struct aspeed_sig_desc siopbi_link[] = {
++	{ 0x418, BIT(6), 0 },
++};
++
++static struct aspeed_sig_desc siopbo_link[] = {
++	{ 0x418, BIT(5), 0 },
++};
++
+ static struct aspeed_sig_desc spi1_link[] = {
+ 	{ 0x438, GENMASK(13, 11), 0 },
+ };
+@@ -303,6 +311,22 @@ static struct aspeed_sig_desc spi2quad_link[] = {
+ 	{ 0x434, GENMASK(31, 30), 0 },
+ };
+ 
++static struct aspeed_sig_desc thru0_link[] = {
++	{ 0x4bc, GENMASK(25, 24), 0 },
++};
++
++static struct aspeed_sig_desc thru1_link[] = {
++	{ 0x4bc, GENMASK(27, 26), 0 },
++};
++
++static struct aspeed_sig_desc thru2_link[] = {
++	{ 0x4bc, GENMASK(29, 28), 0 },
++};
++
++static struct aspeed_sig_desc thru3_link[] = {
++	{ 0x4bc, GENMASK(31, 30), 0 },
++};
++
+ static struct aspeed_sig_desc fsi1[] = {
+ 	{ 0xd48, GENMASK(21, 20), 0 },
+ };
+@@ -458,6 +482,8 @@ static const struct aspeed_group_config ast2600_groups[] = {
+ 	{ "EMMC", ARRAY_SIZE(emmc_link), emmc_link },
+ 	{ "EMMCG8", ARRAY_SIZE(emmcg8_link), emmcg8_link },
+ 	{ "FMCQUAD", ARRAY_SIZE(fmcquad_link), fmcquad_link },
++	{ "SIOPBI", ARRAY_SIZE(siopbi_link), siopbi_link },
++	{ "SIOPBO", ARRAY_SIZE(siopbo_link), siopbo_link },
+ 	{ "SPI1", ARRAY_SIZE(spi1_link), spi1_link },
+ 	{ "SPI1ABR", ARRAY_SIZE(spi1abr_link), spi1abr_link },
+ 	{ "SPI1CS1", ARRAY_SIZE(spi1cs1_link), spi1cs1_link },
+@@ -467,6 +493,10 @@ static const struct aspeed_group_config ast2600_groups[] = {
+ 	{ "SPI2CS1", ARRAY_SIZE(spi2cs1_link), spi2cs1_link },
+ 	{ "SPI2CS2", ARRAY_SIZE(spi2cs2_link), spi2cs2_link },
+ 	{ "SPI2QUAD", ARRAY_SIZE(spi2quad_link), spi2quad_link },
++	{ "THRU0", ARRAY_SIZE(thru0_link), thru0_link },
++	{ "THRU1", ARRAY_SIZE(thru1_link), thru1_link },
++	{ "THRU2", ARRAY_SIZE(thru2_link), thru2_link },
++	{ "THRU3", ARRAY_SIZE(thru3_link), thru3_link },
+ 	{ "I2C1", ARRAY_SIZE(i2c1_link), i2c1_link },
+ 	{ "I2C2", ARRAY_SIZE(i2c2_link), i2c2_link },
+ 	{ "I2C3", ARRAY_SIZE(i2c3_link), i2c3_link },
+-- 
+2.43.0
+
