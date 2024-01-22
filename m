@@ -2,72 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1913E83370E
-	for <lists+openbmc@lfdr.de>; Sun, 21 Jan 2024 00:29:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C1478359A1
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jan 2024 04:09:15 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V+ePDw0f;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=njCmqqNp;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4THXk86hzWz3cS5
-	for <lists+openbmc@lfdr.de>; Sun, 21 Jan 2024 10:29:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TJFYj1G2Wz3bqW
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jan 2024 14:09:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V+ePDw0f;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=njCmqqNp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e88::72f; helo=nam10-dm6-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2072f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e88::72f])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4THXjV2dnWz30fD
-	for <openbmc@lists.ozlabs.org>; Sun, 21 Jan 2024 10:28:28 +1100 (AEDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-50eac018059so2630106e87.0
-        for <openbmc@lists.ozlabs.org>; Sat, 20 Jan 2024 15:28:28 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TJFY73gMTz2xcs
+	for <openbmc@lists.ozlabs.org>; Mon, 22 Jan 2024 14:08:40 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dweKZZvSCrExmJW7sQo34qiudiEKosIMFm2qN8FpYVyZU01rRPe+YM76dfeq+sqzuHLSHn/uc56aEIUhXNn+EgPxZ5fwuYkELknOY5uVc15h0aS/MQWBuAkqNYppD/qkD1o7/jknjdGLjxYT8wMjx8Jg1uzO0nFDYIDImXccOsWps1PsaJWEBd0gISDf1RHWRExFKtzRqAgKIgDuYWZhZGr2+mRz0FksqqT2xJ94m0p3mi5jbXSYXdJ30G0kaJYfvqV1wKyGrfnsEIYrNBjXpM+i6e+pXpIDZ2I9t6yl7HfuXT8VYn2QSPIUeANtzFkFIR/jchL0zrAN3fxg6J7ejQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FeoYIniOy2jummAv2xcdVyj7aeqXU2P15p5zQ1C0Bh0=;
+ b=YjjGWAcj1FqdJOe2BAS3H5HlhEbQ+ROE9d8WEO9HfTZapNpLXI+F0gf5PxJJnBRnkkBsxPFcEj/T4ZW3LlqexbJeiV+7SMdy6TVCNQ/Y2LJZ/xGRw9TvNcgVqBb+ONq6J5AxyguzlFch0zvyvC48x1wtrhVEwR2Mw6N3PnLzqY+/9WFkxFcr+FJSG5oY3/XuKu+iwnqqPP0Vtu5cqES6sze2eLPMeGOUx0s9sgOt/8ErPvc7axxaYXmy/iMgcvmYufh3YTDOUI9ALwkyw3/qcbShWnERF1aissa4EVMBraoh1pfY3+peJCTAo+9xPoypS8FcewVQvYWtWSj/zoqsng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705793301; x=1706398101; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9edRhZV4RNwO8Pc3qdkyouN8izXXmhlK/VxhTNYo/PU=;
-        b=V+ePDw0fCmJXFbQDIuBZfAf4ZgxSqxdItil9/X87KHyGpOUBNGewHoApbBUOssgV1C
-         VbSA1Z8EHe9oSGVQNf+vZGuJlG+eW5jq1n9G6fewlC0Dunxzo5nfwtg5PZvX4vfb1arn
-         XjdXqPj+A+GfXr79UBBaeLXGkDIivnEHoyAKgiLL0GU4+kyriEdUQwpuZ02oI6RAv5bl
-         QucI7B60KUmiVOoLJnvnyHwrLP6Qp7Ug1yP7vE23A9wDsKH8sfycivynutCEG8K44aoz
-         XIDKqA6cDGUl4JDceGNgfZsPizhVnvJjScxeh/IOS2iP5yddYDzXiV+gwSHhWz2TUGsU
-         +6wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705793301; x=1706398101;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9edRhZV4RNwO8Pc3qdkyouN8izXXmhlK/VxhTNYo/PU=;
-        b=Bo/Zod5m+Wh0jAntHR2SDAbvAEp7afMU5i2BEyRQ00PaGW83ItflrXQifKjAvgyo9p
-         IkYq2AUN2gnXx7V3TJEsI5vJG0+9xSi9wXeOw6wfbi1b+3tgfys2DQhnytoJOLrPbTMq
-         e31rnEurFCqftAugkw+Jnxbf823UU2KjyDAX2YeDI2WhW9xC+34no/mjZ+X+AGA7+2mz
-         s38CXxAvEoitdoVrlNE3riVenGWpirQ3Cy5UX+ALeYmX+IMQ65kV6tCmnH4SvflbAiEU
-         BrHVcfaIpBfnZ01KfByo7rPaQkveusMCrCQjPiX7gAaCSFTbpiXnpUsXCqpFLLe839+g
-         sGOQ==
-X-Gm-Message-State: AOJu0YwVsuuHKgiFmUStOCxKsB3+rGh3MHWDuv026mm2CQfbeQGwHKvt
-	iV+tyKj9vbjNJSLElLwT+0/dWQtUVgq8KP+6b/TqJE0ZjT9mAKqw
-X-Google-Smtp-Source: AGHT+IGqec656dWjXblkH052MdUsIYmWTp/Q3eb+cv7rSNv1hkNN5duWuf/ufF1K1+lZAgZROGg/NQ==
-X-Received: by 2002:a05:6512:3b90:b0:50e:d5e2:92cc with SMTP id g16-20020a0565123b9000b0050ed5e292ccmr1187939lfv.81.1705793300877;
-        Sat, 20 Jan 2024 15:28:20 -0800 (PST)
-Received: from fr.lan ([81.200.17.74])
-        by smtp.googlemail.com with ESMTPSA id x25-20020a19e019000000b0050e77abd553sm1475416lfg.76.2024.01.20.15.28.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jan 2024 15:28:20 -0800 (PST)
-From: Ivan Mikhaylov <fr0st61te@gmail.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>,
-	Chia-Wei Wang <chiawei_wang@aspeedtech.com>,
-	Aspeed BMC SW team <BMC-SW@aspeedtech.com>,
-	Joel Stanley <joel@jms.id.au>,
-	Tom Rini <trini@konsulko.com>
-Subject: [PATCH] pinctrl: aspeed: add pass-through pins and siopbi/siopbo
-Date: Sun, 21 Jan 2024 02:28:13 +0300
-Message-ID: <20240120232813.32474-1-fr0st61te@gmail.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FeoYIniOy2jummAv2xcdVyj7aeqXU2P15p5zQ1C0Bh0=;
+ b=njCmqqNpCA4inl/9rWCGEklu/uxQ7j6cFnzSzyitjYa4P/+K0WwtWqLUh94W9wk5nHZ1rqOmpBs96q/pHvAHkk1BnO494wN7dBTYQvMhDKByQA/SRpJiabAmZso8ks/Qztk63Jp6vI0E2eaXId9cteNB0PvtMB4AtkgUegZ/fEs=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from CO1PR01MB7355.prod.exchangelabs.com (2603:10b6:303:15a::21) by
+ BL3PR01MB6820.prod.exchangelabs.com (2603:10b6:208:33f::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7202.34; Mon, 22 Jan 2024 03:08:13 +0000
+Received: from CO1PR01MB7355.prod.exchangelabs.com
+ ([fe80::2613:1ce:18f1:2a85]) by CO1PR01MB7355.prod.exchangelabs.com
+ ([fe80::2613:1ce:18f1:2a85%6]) with mapi id 15.20.7202.031; Mon, 22 Jan 2024
+ 03:08:13 +0000
+Message-ID: <604bf528-e23a-4ea2-8280-9a6da7e8964a@amperemail.onmicrosoft.com>
+Date: Mon, 22 Jan 2024 10:08:04 +0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: aspeed: Add
+ Ampere's BMC platform (AST2600)
+From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
+To: Chanh Nguyen <chanh@os.amperecomputing.com>, u-boot@lists.denx.de,
+ Albert Aribaud <albert.u.boot@aribaud.net>, Joel Stanley <joel@jms.id.au>,
+ Zev Weiss <zev@bewilderbeest.net>, Andrew Jeffery <andrew@aj.id.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Jae Hyun Yoo <quic_jaehyoo@quicinc.com>,
+ Patrick Rudolph <patrick.rudolph@9elements.com>,
+ Dylan Hung <dylan_hung@aspeedtech.com>,
+ Graeme Gregory <quic_ggregory@quicinc.com>,
+ Eddie James <eajames@linux.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20231210042508.16187-1-chanh@os.amperecomputing.com>
+ <24160a1f-bb5c-440a-82a0-75bc2199b3a8@amperemail.onmicrosoft.com>
+Content-Language: en-US
+In-Reply-To: <24160a1f-bb5c-440a-82a0-75bc2199b3a8@amperemail.onmicrosoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2PR01CA0012.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::8) To CO1PR01MB7355.prod.exchangelabs.com
+ (2603:10b6:303:15a::21)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR01MB7355:EE_|BL3PR01MB6820:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4ee3bfcb-3ce0-4c3d-670e-08dc1af75ea9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	foBPPH93M81dcfb6dZhE9T0pXG/euQ4Nr24UnJzIB52q5R58Z+YG6CgFwTKLmMheaQCk1e7Os5oTHH2ww/vvjzINOweqTvXGZJ9IVnwKO1Teq3SBItGCVkLxD+H0swdqCW4eGeFdckAM3V3Oux75dyOMWPyAW2zfuI7aamJitqOpHaYJn+2+BUP0LhkLoPCAg007IiNMnXbdAaOQucUCgB3IbX27xya2Zu7YI+jgMimDLv+dLTGJowJNW4B4ogm28saGkWeyLCwOqyaJX+DW2pi+1DvLjjdGxfuZnjLdlEA/konoCU8ReVJSsPon4GP2qY2HZETgD1B8AHu2aY8K0xgtQyE5YmqbtVhGf+EmciRXgTZsYCbWAhZC9QGOJBz8mA3wRSTIDp7+PCpYzVFsRVZ/ak+q2/LUMoNmYthU1I0niumgeeDVmSrvTplQI12+E5FaW5Q52Ogb34oAQaqJaBubSw90q00c1PqZ/K581Nu9POrJniUNk7b3OkDrL5s3E4E/JvjBB5ALcc/9Vh79Pe6wzk6Ggli8jGyCLFRcPPR+LTgriMDa0h/q4fAtBuRdcFmgcQcQk35zalmUXBuHXzRqxq6PxAGN3XjoVH97EtowKidTU4c7h5tBR+095FtN2C7c2pA4cd0WuKflPXWElQ==
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR01MB7355.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(366004)(136003)(39840400004)(396003)(376002)(230922051799003)(64100799003)(186009)(451199024)(1800799012)(31686004)(6512007)(6506007)(6666004)(107886003)(26005)(53546011)(2616005)(42882007)(38100700002)(31696002)(83170400001)(8936002)(41300700001)(8676002)(4326008)(6486002)(2906002)(83380400001)(5660300002)(7416002)(921011)(316002)(478600001)(66476007)(66556008)(110136005)(54906003)(66946007)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?UkhyNXU5cGVac1lpK0ZQaGtoRTI1M29RWXdqN0s1YzB3NmRLZGc4V1VmNmJ0?=
+ =?utf-8?B?ZHlpUVJ5Q3JUS3I2TG9yaEE1TG1jMElyNUVybm1yWkFxdDlIWUNuN0FWY1Q3?=
+ =?utf-8?B?aHRvZTJRT0Eyblo4NjlnSVFHNnlETk1mUEFOUElzVHlWaUpkaDRXekJyOW1Y?=
+ =?utf-8?B?OFVwSHBBTlZnVTVMQk9LelBKN3Z3dWdNeklNMVY0OWNmRXVCakhvdUNaeTBu?=
+ =?utf-8?B?Z1Y3NHcrS0NoUmw1Z2NjVTdZL0xkZ1cyY2ZZN1RYU0E2d2V4MkFIRXJUbXhY?=
+ =?utf-8?B?eEVFZUEweDFtZEsvWEx3enhyZTMzS0dwNDJDeUc4dlFVUEl1bVhmOHoyTWVu?=
+ =?utf-8?B?SnZyMHpPd1N3Sm9QYlFWSWU4djRMYStmMExzeDJGdWFWekorWUIyZGxjWFd0?=
+ =?utf-8?B?OUg4UWkreHBGQmpEdVg3bExxMmRvRmNUSWRlYkFUU2F1OWxxOElDdDh0K1Ir?=
+ =?utf-8?B?MWNKcTlZVnhiYk9yc3U4eEVyTVhSS3RrdkxHdVIzM2hING9zeVovc2p4RjZr?=
+ =?utf-8?B?NTVMRjZxbXZVMFVxdnp6L2k4VVBrVWh3ekxLYmRNc2MwWGRRZWdqWTU0ZUZz?=
+ =?utf-8?B?ZUZBRmdVMXJSK0NoWVJFckFuYnVBeUl2cFJVTERNdnp0TWQrekZYQUNTbEVM?=
+ =?utf-8?B?OEVDTnhpeGVlV1MwNTlCcUhweUU4LzRCZFF1ZGFSQnQ3WE4xdDVMTGlONEty?=
+ =?utf-8?B?ZDR1ZDhWbzlySW9yNzZwdGdYR2JFYy9FYlhQN3B0Sy9qS3JwSzlHZnlqZE1Y?=
+ =?utf-8?B?dnNsSklDVklFNmxnTkk5eThmRHJvNGlERDdkZW82bHJEL0NzTzlwMzc5QkJX?=
+ =?utf-8?B?SHJLR3MxMDVIeUFzL0hnNDRjU1F0NHdRZFRoWUdIaVJsWmlxbTRQVnZ6SHRs?=
+ =?utf-8?B?Q25uTnlZSFZYRmZNNy9WbVNMTnBCR0dZK1pWRlBvKzZzZW9oNUtXZ0xFcTM5?=
+ =?utf-8?B?WlA3M2Rtc3gvYnBhQjFHbDlMZ2xZRFNFaW9WNm85eGNpS1VEakZVenIxTDE0?=
+ =?utf-8?B?WG5IVlRmb2gyNGY5dWNxL2RGQytOR0E5YVZhUFBIc3ZHUEo4YjFDQUM4MDlE?=
+ =?utf-8?B?dDM5aUtVVWI1TmdCUk44TG5CdXJpaGttb1hzcnRTYVBEUHFVK3NoNkpUM2pk?=
+ =?utf-8?B?ajNFdkhhOFFWMXJuUFVwUFY5U2V0dFVObFhnQlJISFhBN01VcWFhbWFWZXdp?=
+ =?utf-8?B?ZmhTVFlkZGtDVytqZEdFUjZzZ3RHM3E5SkxoWXRJaG9GSkF0ZEt2K1Nja2lX?=
+ =?utf-8?B?eGlGL0lRd0FVVkdlSWRTTm9zQ1ZLQjc5a2V2UjZvNEhaNlVzNEo1UTZFdk9o?=
+ =?utf-8?B?UFpQYmlDTFhURHpjTkllRFVMdEpDaXNPUFlpNFBZemJ3eTRPb2JzMkpnNDY5?=
+ =?utf-8?B?K0thanhaOTNmUlFtb21XRlNoOG5ZTU9COWhyMlVJbmw1VG15YXIwY0I4Y0Rv?=
+ =?utf-8?B?dHRvUkg1Myt2WnpJRENhSGFjYUxXc01pNWhIK0NNQnErVmdYQy9qZW5NZVZG?=
+ =?utf-8?B?dWNzaGdWQ1RhWkVBbmI4QXR0MW9HbEVBNFRESFcyQkIzTW1FNVlPbjZjYnNN?=
+ =?utf-8?B?K2IwQ2xaTUJHOVJ0SWg4MnFGeXBvWU15Mkk0VGYwc081UXVqbXZkdnpOMzEw?=
+ =?utf-8?B?VkxzMlQ5VDhHZGFKOWJIZ2d5b0RmSFRRQ0dxTStzM0d3ZjkzTFltMmhHSWJi?=
+ =?utf-8?B?QmMrYlVSeHVackFsT2R1dHRJVnpTekdxUXd3M3hZZkdMUjc3MDhDWnZSYWtT?=
+ =?utf-8?B?bnVObEVmeDlxYnQ2U2QvSTZzR2FqdVF0alZsYUk0M3dpRy9LZVBaSnRJMFht?=
+ =?utf-8?B?SEk1NTJpYm82SVRrZDJUY2QwaXNLbTY3SkpvZWR5TGdkN3U3TFluTE5Oa1Jq?=
+ =?utf-8?B?cmVBaUxEUnhubmp3UEZaTDBJWnVPQ1hGbTZhcDUwRVBaaldQS3N1QklYSTB0?=
+ =?utf-8?B?cng5c2xtTUtQb3d4U0JSdW85UGJPT0NVemM5eU1pekhHTGlVd09vempWU2No?=
+ =?utf-8?B?a3R4TE5qWEdHZXFiaWk0U1lDZCttODYxbVN2cTk0YWpSRFUwT1RKNTNONkZq?=
+ =?utf-8?B?TGJJNjRJZzRoeWJVRWcyNkRRYXNoWDlvbTMxZ1JDRmF0TlZqYWVRTVBWOWx5?=
+ =?utf-8?B?a0hpdDJybUZYNW55aGZEMjgrRGxUNGJMSHZoUHBURGpONThSam56R1ptQ2h3?=
+ =?utf-8?Q?uE4S6eCADNNp6viD2onAOaw=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4ee3bfcb-3ce0-4c3d-670e-08dc1af75ea9
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR01MB7355.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2024 03:08:13.0237
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LECGZXqVrUAhOiQQQpoKK973XQzgYKxWnpA3TNUdyoBQxdBB3PiuVl46ZWxiVA46wrIs+XnNpMe8SddaZTgsQItB7MDJwEe6qVFhR2s1HDKg/TvZe5gla5aLEWtBuy2C
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR01MB6820
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,111 +141,168 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: u-boot@lists.denx.de, openbmc@lists.ozlabs.org, Ivan Mikhaylov <fr0st61te@gmail.com>
+Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add THRU0-3 and SIOPBI/SIOPBO pin groups/functions.
+Dear all,
 
-Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
----
- arch/arm/dts/ast2600.dtsi                | 20 ++++++++++++++++
- drivers/pinctrl/aspeed/pinctrl_ast2600.c | 30 ++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
+I'm looking forward to seeing your feedback on my patch. Please share 
+your comments with me!
 
-diff --git a/arch/arm/dts/ast2600.dtsi b/arch/arm/dts/ast2600.dtsi
-index beabcf14f8..43db80edfe 100644
---- a/arch/arm/dts/ast2600.dtsi
-+++ b/arch/arm/dts/ast2600.dtsi
-@@ -2028,6 +2028,26 @@
- 		groups = "SPI2MOSI";
- 	};
- 
-+	pinctrl_thru0_default: thru0_default {
-+		function = "THRU0";
-+		groups = "THRU0";
-+	};
-+
-+	pinctrl_thru1_default: thru1_default {
-+		function = "THRU1";
-+		groups = "THRU1";
-+	};
-+
-+	pinctrl_thru2_default: thru2_default {
-+		function = "THRU2";
-+		groups = "THRU2";
-+	};
-+
-+	pinctrl_thru3_default: thru3_default {
-+		function = "THRU3";
-+		groups = "THRU3";
-+	};
-+
- 	pinctrl_timer3_default: timer3_default {
- 		function = "TIMER3";
- 		groups = "TIMER3";
-diff --git a/drivers/pinctrl/aspeed/pinctrl_ast2600.c b/drivers/pinctrl/aspeed/pinctrl_ast2600.c
-index 97e8b4ec9b..8a4f9705ca 100644
---- a/drivers/pinctrl/aspeed/pinctrl_ast2600.c
-+++ b/drivers/pinctrl/aspeed/pinctrl_ast2600.c
-@@ -267,6 +267,14 @@ static struct aspeed_sig_desc fmcquad_link[] = {
- 	{ 0x438, GENMASK(5, 4), 0 },
- };
- 
-+static struct aspeed_sig_desc siopbi_link[] = {
-+	{ 0x418, BIT(6), 0 },
-+};
-+
-+static struct aspeed_sig_desc siopbo_link[] = {
-+	{ 0x418, BIT(5), 0 },
-+};
-+
- static struct aspeed_sig_desc spi1_link[] = {
- 	{ 0x438, GENMASK(13, 11), 0 },
- };
-@@ -303,6 +311,22 @@ static struct aspeed_sig_desc spi2quad_link[] = {
- 	{ 0x434, GENMASK(31, 30), 0 },
- };
- 
-+static struct aspeed_sig_desc thru0_link[] = {
-+	{ 0x4bc, GENMASK(25, 24), 0 },
-+};
-+
-+static struct aspeed_sig_desc thru1_link[] = {
-+	{ 0x4bc, GENMASK(27, 26), 0 },
-+};
-+
-+static struct aspeed_sig_desc thru2_link[] = {
-+	{ 0x4bc, GENMASK(29, 28), 0 },
-+};
-+
-+static struct aspeed_sig_desc thru3_link[] = {
-+	{ 0x4bc, GENMASK(31, 30), 0 },
-+};
-+
- static struct aspeed_sig_desc fsi1[] = {
- 	{ 0xd48, GENMASK(21, 20), 0 },
- };
-@@ -458,6 +482,8 @@ static const struct aspeed_group_config ast2600_groups[] = {
- 	{ "EMMC", ARRAY_SIZE(emmc_link), emmc_link },
- 	{ "EMMCG8", ARRAY_SIZE(emmcg8_link), emmcg8_link },
- 	{ "FMCQUAD", ARRAY_SIZE(fmcquad_link), fmcquad_link },
-+	{ "SIOPBI", ARRAY_SIZE(siopbi_link), siopbi_link },
-+	{ "SIOPBO", ARRAY_SIZE(siopbo_link), siopbo_link },
- 	{ "SPI1", ARRAY_SIZE(spi1_link), spi1_link },
- 	{ "SPI1ABR", ARRAY_SIZE(spi1abr_link), spi1abr_link },
- 	{ "SPI1CS1", ARRAY_SIZE(spi1cs1_link), spi1cs1_link },
-@@ -467,6 +493,10 @@ static const struct aspeed_group_config ast2600_groups[] = {
- 	{ "SPI2CS1", ARRAY_SIZE(spi2cs1_link), spi2cs1_link },
- 	{ "SPI2CS2", ARRAY_SIZE(spi2cs2_link), spi2cs2_link },
- 	{ "SPI2QUAD", ARRAY_SIZE(spi2quad_link), spi2quad_link },
-+	{ "THRU0", ARRAY_SIZE(thru0_link), thru0_link },
-+	{ "THRU1", ARRAY_SIZE(thru1_link), thru1_link },
-+	{ "THRU2", ARRAY_SIZE(thru2_link), thru2_link },
-+	{ "THRU3", ARRAY_SIZE(thru3_link), thru3_link },
- 	{ "I2C1", ARRAY_SIZE(i2c1_link), i2c1_link },
- 	{ "I2C2", ARRAY_SIZE(i2c2_link), i2c2_link },
- 	{ "I2C3", ARRAY_SIZE(i2c3_link), i2c3_link },
--- 
-2.43.0
+Thank you very much,
+Chanh Ng
 
+On 04/01/2024 11:19, Chanh Nguyen wrote:
+> Dear maintainers,
+> 
+> Just a gentle ping on the patch.
+> I’m eagerly awaiting your response. Please share with me your comments 
+> if you need to update anything.
+> 
+> Best Regards,
+> Chanh Nguyen
+> 
+> On 10/12/2023 11:25, Chanh Nguyen wrote:
+>> Add the initial version of the device tree for the Ampere BMC
+>> platform, which is equipped with the Aspeed AST2600 BMC SoC.
+>>
+>> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+>> ---
+>>   arch/arm/dts/Makefile           |   1 +
+>>   arch/arm/dts/ast2600-ampere.dts | 113 ++++++++++++++++++++++++++++++++
+>>   2 files changed, 114 insertions(+)
+>>   create mode 100644 arch/arm/dts/ast2600-ampere.dts
+>>
+>> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+>> index 37675a3277..3642d59c89 100755
+>> --- a/arch/arm/dts/Makefile
+>> +++ b/arch/arm/dts/Makefile
+>> @@ -691,6 +691,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>>       ast2600-greatlakes.dtb \
+>>       ast2600-intel.dtb \
+>>       ast2600-ncsi.dtb \
+>> +    ast2600-ampere.dtb \
+>>       ast2600-p10bmc.dtb \
+>>       ast2600-pfr.dtb \
+>>       ast2600-qcom-dc-scm-v1.dtb \
+>> diff --git a/arch/arm/dts/ast2600-ampere.dts 
+>> b/arch/arm/dts/ast2600-ampere.dts
+>> new file mode 100644
+>> index 0000000000..63088703a7
+>> --- /dev/null
+>> +++ b/arch/arm/dts/ast2600-ampere.dts
+>> @@ -0,0 +1,113 @@
+>> +// SPDX-License-Identifier: GPL-2.0+
+>> +// Copyright (c) 2022, Ampere Computing LLC
+>> +/dts-v1/;
+>> +
+>> +#include "ast2600-u-boot.dtsi"
+>> +
+>> +/ {
+>> +    model = "AST2600 Ampere BMC";
+>> +    compatible = "aspeed,ast2600-ampere", "aspeed,ast2600";
+>> +
+>> +    memory {
+>> +        device_type = "memory";
+>> +        reg = <0x80000000 0x40000000>;
+>> +    };
+>> +
+>> +    chosen {
+>> +        stdout-path = &uart5;
+>> +    };
+>> +
+>> +    aliases {
+>> +        spi0 = &fmc;
+>> +        ethernet0 = &mac0;
+>> +    };
+>> +
+>> +    cpus {
+>> +        cpu@0 {
+>> +            clock-frequency = <800000000>;
+>> +        };
+>> +        cpu@1 {
+>> +            clock-frequency = <800000000>;
+>> +        };
+>> +    };
+>> +};
+>> +
+>> +&uart5 {
+>> +    u-boot,dm-pre-reloc;
+>> +    status = "okay";
+>> +};
+>> +
+>> +&sdrammc {
+>> +    clock-frequency = <400000000>;
+>> +};
+>> +
+>> +&wdt1 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&wdt2 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&wdt3 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&mdio {
+>> +    status = "okay";
+>> +    pinctrl-names = "default";
+>> +    pinctrl-0 = <&pinctrl_mdio1_default>;
+>> +
+>> +};
+>> +
+>> +&mac0 {
+>> +    status = "okay";
+>> +    phy-mode = "rgmii-rxid";
+>> +    pinctrl-names = "default";
+>> +    pinctrl-0 = <&pinctrl_rgmii1_default>;
+>> +};
+>> +
+>> +&fmc {
+>> +    status = "okay";
+>> +
+>> +    pinctrl-names = "default";
+>> +    pinctrl-0 = <&pinctrl_fmcquad_default>;
+>> +
+>> +    flash@0 {
+>> +        status = "okay";
+>> +        spi-max-frequency = <50000000>;
+>> +        spi-tx-bus-width = <4>;
+>> +        spi-rx-bus-width = <4>;
+>> +    };
+>> +
+>> +    flash@1 {
+>> +        status = "okay";
+>> +        spi-max-frequency = <50000000>;
+>> +        spi-tx-bus-width = <4>;
+>> +        spi-rx-bus-width = <4>;
+>> +    };
+>> +};
+>> +
+>> +&scu {
+>> +    mac0-clk-delay = <0x10 0x0a
+>> +              0x10 0x10
+>> +              0x10 0x10>;
+>> +};
+>> +
+>> +&hace {
+>> +    u-boot,dm-pre-reloc;
+>> +    status = "okay";
+>> +};
+>> +
+>> +&acry {
+>> +    u-boot,dm-pre-reloc;
+>> +    status = "okay";
+>> +};
+>> +
+>> +&i2c4 {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&i2c14 {
+>> +    status = "okay";
+>> +};
