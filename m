@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3841844EBB
-	for <lists+openbmc@lfdr.de>; Thu,  1 Feb 2024 02:38:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E7D35844EBC
+	for <lists+openbmc@lfdr.de>; Thu,  1 Feb 2024 02:39:44 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eVFH2gLU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ChRQ8rwM;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TQM4q5RBvz3cTQ
-	for <lists+openbmc@lfdr.de>; Thu,  1 Feb 2024 12:38:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TQM5p62Dwz3cPc
+	for <lists+openbmc@lfdr.de>; Thu,  1 Feb 2024 12:39:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eVFH2gLU;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ChRQ8rwM;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=ppighouse@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=ppighouse@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TPM4w2Z38z3c5W
-	for <openbmc@lists.ozlabs.org>; Tue, 30 Jan 2024 21:35:28 +1100 (AEDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6da202aa138so2286777b3a.2
-        for <openbmc@lists.ozlabs.org>; Tue, 30 Jan 2024 02:35:28 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TPMC92h2Hz3bnk
+	for <openbmc@lists.ozlabs.org>; Tue, 30 Jan 2024 21:40:52 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1d8aadc624dso16763815ad.0
+        for <openbmc@lists.ozlabs.org>; Tue, 30 Jan 2024 02:40:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706610925; x=1707215725; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1706611250; x=1707216050; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
         bh=79Ldr126af2p6IhRGQAFww97a5z+iXTLxFVEAw1gyOU=;
-        b=eVFH2gLUjhP83Q9bnRdU20ws7WIE+yT3iaaNnh0xyVBdt870GVGE7mvkk8ZJhshxXh
-         j63hN0HFrPK9fr47jNmN2Dao7J48095sj43k5sh+WF1vVsVkUQchkwL9I0SI0VmL/ufJ
-         c633gE1bSBarVWZaRHiRSrfiMYErdUUJ4yn/Erke35O+I3/dp75+PsaBeYPohX8ouFwc
-         2H7IyX/bXlhFz1fPw/WNkiDgXuvQbaGzIT+fZxNX/M7YFfudq/KRorkqb5gVTp1AI/FL
-         wlyUouxXVz0AER610BGnWVpFYInizRhtL5Gs1Yeu/MUzFSN6zcbrlhiejkdlf1rJVayw
-         rX7Q==
+        b=ChRQ8rwMtyV6xlkNy/QOFGzZ61CTly707UXptoZO5I8kyPN8Y8I8skcTNhL016JkOP
+         wxUAokGDFlWskiQhQJYpVmtxchldZeHGe4AxlYmYi2/ZoEP5Wn1JWG7Egth49NVuHxip
+         epu9viUw1lCQ2JQt0S/8e2hoK3jryQaIyGeKg35YC5L4SGI9vAQf5x5neneh8G6Wd4Md
+         4xo17juW2g6wDTZcu/qTkdFhYCOkZ1K902wZYidDyZXzCkvTJ1/FCOFBITSS4185zyTp
+         P/7oUp4kumH2RZVmEI5MYYMkv5MqSw9n3AOWmI2Kr9nzz9M/8YGRhVhMYbLKFj09YAbJ
+         D75Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706610925; x=1707215725;
+        d=1e100.net; s=20230601; t=1706611250; x=1707216050;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=79Ldr126af2p6IhRGQAFww97a5z+iXTLxFVEAw1gyOU=;
-        b=JlPdo7Qgr4cqLcpQ3ebVTZnAQA9ASCvpmRvhV1Pf344sDMpte1YIRnLnTXxsouyKdh
-         uHgxbYu8qxyTjCG+HKQjwIsXoi2cnrGQoj0Iz2GX5cmEDztptv81x29gQkZskHzJbvK3
-         JQ483XvVFaSHBFaGFehrc/6XKP+4rIgf78ZaBmO/OQ1CqDPDrXBrHFSgDBD4/9T+WAdD
-         Fl8bqXh2FnVCvWx50ne1a9UrPaP0Ml5ZLVAr2zCGa21JhdPCZ/z5ULDW6yyjLJN1po9t
-         6U4JG8u21rxuVgPx1vs3fkHgekyAvOUfmClYvShkgn2wa5AoXYcTmVMzj0gDY3IdTK55
-         ETcg==
-X-Gm-Message-State: AOJu0YyrtF39xgPFhZYW3J1Aub/u18hzKTEmj6K7FRQ/qG71dn4oGVl3
-	l93PFUfsFtyb0MjlFQ7dRXXwGLD1edaeoNYwIUjB9Snx5Bqwf29M
-X-Google-Smtp-Source: AGHT+IG3gZAMbjyIKVXuc3cLRY+bylc1VYEr/lcolGEUmNMs0ehXhS5XFT4lV4g5FHE0G24Ncjdd/g==
-X-Received: by 2002:a05:6a00:2b4f:b0:6db:d1b4:1b27 with SMTP id du15-20020a056a002b4f00b006dbd1b41b27mr6095329pfb.4.1706610925179;
-        Tue, 30 Jan 2024 02:35:25 -0800 (PST)
+        b=X8xdahfiTEN3azwnWgewNiB/zYoKn+MZlnIxgL3hlnKyo04kQ5aQAsig/qGbTr+6uf
+         TkT0R0cZ4QdSr+F9trCwQQ9Kfi3S1IsVUAUFmVnCKo0phPjbYUyR5+Wi+ujrS8LSkuyd
+         OjVvG0d6XPPU71/o4sNSDMJGVUYaaFdeGxzVcPmoH+grclzAUWQ0+9n2+iFNSRptPcx8
+         qirKWlwadPjWwUsWxu9PLrhd3Tpwpjw5Yt5preZt38hfRSfS/QUphQSOaX3oGLF7zdFb
+         bwZz8kzdlj7WmSqycVFRyVD+TSZ7QEovwnZelY59WIzfN1+Y2+HL/Hg625ZwtKbc30XL
+         h/iA==
+X-Gm-Message-State: AOJu0Yw/9XIVarEGxe/NRGfVGWjnFYBVEq4DRRM/m/882Dvw07F9bEOb
+	n/iYlPCYHWuNwWmUbMKfKUcL7v/tB9CwcsWBEknaxaLEHQSyf/gojPHjtnFn5pk=
+X-Google-Smtp-Source: AGHT+IE7uu8+wo+5kHWQILEBLhyyXFL5yhJpFeBR9YxETUCzWm2S7aBrjkRQG4eEmrGzqIDw8AElbQ==
+X-Received: by 2002:a17:903:2581:b0:1d9:f6e:a1a8 with SMTP id jb1-20020a170903258100b001d90f6ea1a8mr662844plb.53.1706611249986;
+        Tue, 30 Jan 2024 02:40:49 -0800 (PST)
 Received: from localhost.localdomain ([124.218.12.74])
-        by smtp.gmail.com with ESMTPSA id 36-20020a630c64000000b005cf5cbac29asm7864287pgm.53.2024.01.30.02.35.23
+        by smtp.gmail.com with ESMTPSA id jk5-20020a170903330500b001d740687d1csm3994672plb.193.2024.01.30.02.40.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 02:35:24 -0800 (PST)
+        Tue, 30 Jan 2024 02:40:49 -0800 (PST)
 From: Kelly Hung <ppighouse@gmail.com>
 X-Google-Original-From: Kelly Hung <Kelly_Hung@asus.com>
 To: u-boot@lists.denx.de
-Subject: [PATCH] ARM: dts: ast2600: add dts for asus product
-Date: Tue, 30 Jan 2024 18:35:19 +0800
-Message-Id: <20240130103519.199646-1-Kelly_Hung@asus.com>
+Subject: [PATCH] dts: ast2600: add x4tf dts for asus product
+Date: Tue, 30 Jan 2024 18:40:45 +0800
+Message-Id: <20240130104045.199879-1-Kelly_Hung@asus.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
