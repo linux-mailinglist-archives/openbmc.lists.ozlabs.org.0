@@ -2,91 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDD24850C28
-	for <lists+openbmc@lfdr.de>; Mon, 12 Feb 2024 00:16:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 132B685178A
+	for <lists+openbmc@lfdr.de>; Mon, 12 Feb 2024 16:04:47 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=marliere.net header.i=@marliere.net header.a=rsa-sha256 header.s=2024 header.b=p6cV09os;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TNAg7tBG;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TY3PD1nTGz3bq0
-	for <lists+openbmc@lfdr.de>; Mon, 12 Feb 2024 10:16:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TYSRd0619z3d2S
+	for <lists+openbmc@lfdr.de>; Tue, 13 Feb 2024 02:04:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=marliere.net header.i=@marliere.net header.a=rsa-sha256 header.s=2024 header.b=p6cV09os;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TNAg7tBG;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::433; helo=mail-pf1-x433.google.com; envelope-from=rbmarliere@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=sunithaharish04@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TXDfM6RxYz3bc2
-	for <openbmc@lists.ozlabs.org>; Sun, 11 Feb 2024 02:09:46 +1100 (AEDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-6e0a9e9df2dso84934b3a.0
-        for <openbmc@lists.ozlabs.org>; Sat, 10 Feb 2024 07:09:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707577782; x=1708182582;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:dkim-signature:from:x-gm-message-state:from:to:cc:subject:date
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TYSR32MZhz30N8
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Feb 2024 02:04:14 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-296d667e9b3so1760997a91.3
+        for <openbmc@lists.ozlabs.org>; Mon, 12 Feb 2024 07:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707750249; x=1708355049; darn=lists.ozlabs.org;
+        h=in-reply-to:from:references:cc:to:content-language:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p1QaPWOuXyEob5IK2dCavHwEdoH6YtSk2GJpGvgSELY=;
-        b=KlvfFxLEekR/4kXLc9WQ3D6siT6+uKHktT3fzVg4fXAbfTQZSG1qsJGLDFWF5WX/xN
-         uwJBfZMaL9ddkw+UxeEl9fc8QT2+T65R0NxyoFllxz+A+gY2XlZLnUy8V4CFO5ukLDgn
-         pXrS5g4y/LlA7KMVvGnt2cCVPgecGPJdIuzhT2/uWfRR54GHJOoptlBt/j6uaCL8DWC2
-         mW2iGZk+I4OYXVr6HSPN/eHfzTsH7cr8lt6RRBU2ik3MAp0dfvrZ+btzDkTUFiieX2wy
-         yV0nOLSO8AVrlDVobKKeVe/0gJLTe9la28OyDNQi1Qp1tER3tlwIQq+38D2lPobriGyl
-         nAow==
-X-Gm-Message-State: AOJu0Yz1JxzpfalIdPCsLFru8oSPS5Ssc7MHiZU1WXlZmNgINkqN6R7d
-	L7VSNqwiEvwDvDCy+mvBKOZF02GOdbQUaDV/Py9PmMCwnCAoHmO8
-X-Google-Smtp-Source: AGHT+IEsyTUHG3qU4Yn7ugUfww2m9F1UsL44fJKKGPdKg/28BPHL4fmIvrgXt7VzyeovZ3AL03D9ww==
-X-Received: by 2002:a05:6a21:3189:b0:19e:40d8:7112 with SMTP id za9-20020a056a21318900b0019e40d87112mr1863911pzb.6.1707577781732;
-        Sat, 10 Feb 2024 07:09:41 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVz+eVDf2QrkjRH9PbkRVoZt6Cz33Uy2qYjHWJVl6h3YGdNBHweldCE+2ibA7ZlBw5e2B/4vVw8nbwQS72m8shvtxzjqnX1F8WfOWx7ul/jayv4qXTuMVIHtSaPtFIEUE5DqKjHm//5Wg==
-Received: from mail.marliere.net ([24.199.118.162])
-        by smtp.gmail.com with ESMTPSA id bj18-20020a17090b089200b0029709558393sm3415554pjb.57.2024.02.10.07.09.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Feb 2024 07:09:41 -0800 (PST)
-From: "Ricardo B. Marliere" <ricardo@marliere.net>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
-	s=2024; t=1707577779;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=p1QaPWOuXyEob5IK2dCavHwEdoH6YtSk2GJpGvgSELY=;
-	b=p6cV09os2arbl8jiR6woLygay+CZTtYMmja+YCLQgNTSDhk47QnFAlWTV+1EC1tioVWtk7
-	g6bu+TnaKJ4wdBpiFSeMt5aLh1rSS2nfo/8DeF3SBsUSMjXwpaRi4xcjYL3FB1TK3MFxoS
-	wxooKCB7oIzD+1KS4lOHfvKrnsi6mr53owZtTc01PeL1KwqWIKI+Lpnej97mRXL7JEpxFt
-	XPJG6f+boxVuayPq79BvFKNYn/7lSTKwKnw5WeE4vXZCkKMvyVtC1trHRTVSPgre/OA3Y9
-	nna465EzfP5pKq1HI5Mi9zHkqHPJ/wpWh57JhIELOaKH4y3lcov1M+64uhDTVw==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
-Date: Sat, 10 Feb 2024 12:10:14 -0300
-Subject: [PATCH] peci: Make peci_bus_type const
+        bh=TXpKMq+aU4lcAck4H2mKzA4hw8WYcQYBST7mK2IUTUg=;
+        b=TNAg7tBGfqKnE7neUp4Z76K+ihuzZMGNKCz1JWfosCM4LYSh9LPJUVw/XUhzcPA1x9
+         ro5CrcoRKvtLVvxObTrxr1CWGF6tuFxgmCytiQ8dgBvDeaDAfGczgV9eBk33ci5TxX21
+         WsAb0b97E8Vr1SW5/Qmv5H0WM7WL6YbNRzN2ZBqpZUMzmsWFN7BGBsNHuBxqQTGFwACj
+         zcnaleZ7EFs6ZzaGNPLAYtt4Qc9ozdeB1+b8Iyed/07lHuTh9yLR3cYh3qHUMc4axxFe
+         6sPiMsqxx8aDHJC8FF3HeFRHEHspDtiYyFApkF9lpVVIwtUBiQlk25OCjM56ErZuEbMg
+         Yndw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707750249; x=1708355049;
+        h=in-reply-to:from:references:cc:to:content-language:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TXpKMq+aU4lcAck4H2mKzA4hw8WYcQYBST7mK2IUTUg=;
+        b=m/19rhjYabeDYXJ8sQvlcQ7qLOCnI4hDo+mWbkLpdq7klxHlFPr2SwMg4It1bk7PW2
+         6511N+d/Jw1nK/ORvoLpv4sb6KJkhdpPN9LcPkK7ve0Ymrq/qBZnOUaqDFYcDbBKmvb3
+         WK3RmDrwirOalOWO0u542FPzKHCka8MWmam/qQpy22Hw4xJZgEAGFeqhLbQLtgoiDeo6
+         2+96ZHjCVteM7aMF7gRzd8VpZrouDdcVYXTDZQ37DV0JeCzHk8VfEQUmR4tZOUuyfhQG
+         P4OkbrXJQduf+jx79lYLPXeM7uW2BW1+WAJ/YLy0xqAdfWs/KkCfm0mkdxdkCHnmjHOo
+         7XQg==
+X-Forwarded-Encrypted: i=1; AJvYcCUVZmt7/z6gvlvdz+I36e+4DOO4dpm3wmiYAslrY1x7Jy1Y5eDaf9FDakqZmOfm7OFxUy1eWm7ddp0sVh18z92QTHaRYwCsUEs=
+X-Gm-Message-State: AOJu0YzdzgGXJE0hFS0SQqMgKb1qphMwKYa3kHW1Fgig3TYek8q1rF33
+	a5o0upAEuY0Lv056zTh9GAR/ThYBZrpU0z3htybvqsBNr468rPY9
+X-Google-Smtp-Source: AGHT+IGFDDvhGvufvcF8e6l3xhUpc1wIduN+JJ/NbOcOUifpZNqEhlIoDgP3ZHEE5DUsq5iVpLCTtA==
+X-Received: by 2002:a17:90a:f193:b0:297:22a3:43f5 with SMTP id bv19-20020a17090af19300b0029722a343f5mr2449628pjb.5.1707750249153;
+        Mon, 12 Feb 2024 07:04:09 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWfdaJ4Oxpfr4jZ6hNs7nGYVj3sS+F0hGgbCuAvv/Ki+CjL/R9DPOpUv5ikkgXCd483m0d+ICXI/m3/UzpcHipgDHNWxW9aNTMqWzi5YW6bD6doTZEIDawqMqe2qc1+SOl1MlUGUvE7pabwJMZrsw==
+Received: from ?IPV6:2401:4900:4e5a:301b:50f5:b7f7:6e26:e7ca? ([2401:4900:4e5a:301b:50f5:b7f7:6e26:e7ca])
+        by smtp.gmail.com with ESMTPSA id md7-20020a17090b23c700b0029082d10fc4sm625713pjb.39.2024.02.12.07.04.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Feb 2024 07:04:07 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------2qpkRB3hT2Z0MOxP7tXa8r80"
+Message-ID: <4cb036ca-aedb-4fae-a09e-9a783a9adb1f@gmail.com>
+Date: Mon, 12 Feb 2024 20:34:03 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240210-bus_cleanup-peci-v1-1-1e64bef6efc0@marliere.net>
-X-B4-Tracking: v=1; b=H4sIANWRx2UC/x3MQQqAIBBA0avIrBNMK6qrRITaVANhohhBePek5
- Vv8/0LEQBhhZC8EvCnS5QrqioE9tNuR01oMUshGyFpwk+JiT9Quee7REheDUraTw9r2BkrmA27
- 0/MtpzvkDNxWhc2IAAAA=
-To: Iwona Winiarska <iwona.winiarska@intel.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1653; i=ricardo@marliere.net;
- h=from:subject:message-id; bh=O3woKGLAIjryni1Jeart9hOwJG1ZEmeJEcbj6CVWNTo=;
- b=owEBbQKS/ZANAwAKAckLinxjhlimAcsmYgBlx5HWXzeWYjUWC3gyPmxiPeBYUjpkdgMwR4KjY
- kwmqhCagn2JAjMEAAEKAB0WIQQDCo6eQk7jwGVXh+HJC4p8Y4ZYpgUCZceR1gAKCRDJC4p8Y4ZY
- ptqkEACYh760FzcDVXtJDOPHGR2/2HxArqNC24eB5cpwNwQBObCSz45PVXmsUMAP7n7HUYOGkwp
- cOtsjL6cfUywVIw5x/FhShGiToozgdzBCDXmnS5GeNskcD8O4C69RXRzJPF6k21SkHVk+X1n5KA
- rdammB6VVxv9vb25p++4QxR9QuZIlo+wwAE/GOZKRDtcbNba7Sy/Q4gNOzyqDoXmKPGWAsBMvtk
- ATAHvWBFfLUDqNxEpbUNItC5ypgLCl8izX+vjE5fxuIA+3cTq2h9Aa8dSnL1umJW6XjeIrVeHEx
- 3SZsKHfwqRmgZEiyUwdeHDepFChtKYDlGCOEXflP8ppK/ecFXniwNXikSZRD6TdfRtTjqlNzKVL
- ATEFUUAtTFLpKZYk7MOUrK35N9P7fwip3tluVNghHyyUTJvTJ6tShXe4BOZHZKnQn3nbhRhM2te
- YwlViQY1Ne9ITmY0toOXQpIvHTQh+f/7H5ZCoxzseHbuL2nm4WKOj7iR/hf6I4I93mz7+gsljLI
- xRZ1Z5MJrgbf3MgkqxZ+wBiDk/1KKDWPZ04U9IhxUY7lVd/RmEu0hGUb8ezQQQ3hfJpYeveX3JK
- jpgMuaQ3TCF48WRR1xbLxTGyiIvJlBwgeW1G+O1gFm3ta113Fu2x37NHtl6r9Ewel5EY7EhyFCG
- KlLs/0oG+XOF55A==
-X-Developer-Key: i=ricardo@marliere.net; a=openpgp;
- fpr=030A8E9E424EE3C0655787E1C90B8A7C638658A6
-X-Mailman-Approved-At: Mon, 12 Feb 2024 10:14:56 +1100
+User-Agent: Mozilla Thunderbird
+Subject: Re: File Manager Service in OpenBMC
+Content-Language: en-US
+To: Andrew Jeffery <andrew@codeconstruct.com.au>, openbmc@lists.ozlabs.org
+References: <88ba0256-2c86-4727-97b6-dce02ba61554@gmail.com>
+ <34f3ba2f2279f5c63b20b7dc0da80f3de53a0768.camel@codeconstruct.com.au>
+ <f7de9480-d92e-462b-ac8f-8e1d3c90b886@gmail.com>
+ <eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au>
+From: Sunitha Harish <sunithaharish04@gmail.com>
+In-Reply-To: <eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,54 +85,153 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, "Ricardo B. Marliere" <ricardo@marliere.net>
+Cc: gmills@us.ibm.com, ed@tanous.net, geissonator@yahoo.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Now that the driver core can properly handle constant struct bus_type,
-move the peci_bus_type variable to be a constant structure as well,
-placing it into read-only memory which can not be modified at runtime.
+This is a multi-part message in MIME format.
+--------------2qpkRB3hT2Z0MOxP7tXa8r80
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
----
- drivers/peci/core.c     | 2 +-
- drivers/peci/internal.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/peci/core.c b/drivers/peci/core.c
-index 0f83a9c6093b..b2f8db967e9b 100644
---- a/drivers/peci/core.c
-+++ b/drivers/peci/core.c
-@@ -201,7 +201,7 @@ static void peci_bus_device_remove(struct device *dev)
- 		driver->remove(device);
- }
- 
--struct bus_type peci_bus_type = {
-+const struct bus_type peci_bus_type = {
- 	.name		= "peci",
- 	.match		= peci_bus_device_match,
- 	.probe		= peci_bus_device_probe,
-diff --git a/drivers/peci/internal.h b/drivers/peci/internal.h
-index 9d75ea54504c..8a896c256c5f 100644
---- a/drivers/peci/internal.h
-+++ b/drivers/peci/internal.h
-@@ -81,7 +81,7 @@ extern const struct attribute_group *peci_device_groups[];
- int peci_device_create(struct peci_controller *controller, u8 addr);
- void peci_device_destroy(struct peci_device *device);
- 
--extern struct bus_type peci_bus_type;
-+extern const struct bus_type peci_bus_type;
- extern const struct attribute_group *peci_bus_groups[];
- 
- /**
+On 12/02/24 3:45 am, Andrew Jeffery wrote:
+> Hi Sunitha,
+>
+> On Fri, 2024-02-09 at 11:23 +0530, Sunitha Harish wrote:
+>> Thank you Andrew for the reply.
+>>
+>> When IBM manages a single server with multiple management
+>> clients(redfish clients), they need to save some server related data
+>> (host data) in the form of files at BMC's persistent file system.
+>>
+> What are the specific use-cases though? It seems that we've jumped
+> straight to an implementation detail (persisted files) when it's not
+> clear to me *what* it is that's needing to be communicated to begin
+> with.
 
----
-base-commit: 047371968ffc470769f541d6933e262dc7085456
-change-id: 20240210-bus_cleanup-peci-0933c629d58b
+IBM has usecases implemented under /ibm/v1 path at bmcweb, which uploads and manages files on the BMC.
+These are APIs to Create, Update, Get and Delete a file.
+The data which needs to be persisted in the BMC are considerably big enough - that can not be modeled via DBus properties.
+Moreover, the data which is stored are meant to be interpreted by the host & the client who is managing the host via this BMC.
+So the preferred way of storing this is files.
 
-Best regards,
--- 
-Ricardo B. Marliere <ricardo@marliere.net>
+>>   Here
+>> BMC is used as a common persistent storage, which is accessible to all
+>> connected redfish clients.
+> Okay, but why is that necessary? Can you please enumerate the use-
+> cases?
+>
+> The use-cases are what allows us to find an intersection of interests
+> with others in the community.
+>
+> Discussions in the abstract in the context of a specific implementation
+> approach feel to me like they might struggle to gain traction.
 
+This is the primary usecase of IBM. But, if there are any other way of getting this done in a any other way, please suggest and we can work together on that.
+With this email, i am actually looking for someone who may have similar usecase of providing the user a facility to manage files at BMC.
+
+>> Additionally, for IBM usecase, BMC need not consume these files, as they
+>> are targeted to be used by the host/hypervisor.
+>>
+> If they're not used by the BMC can you unpack why they need to be
+> stored on the BMC?
+
+Customers setup the systems such that, multiple management clients (primary & backup) can manage a single BMC. There will be some host data, which are needed in common to
+both the primary and backup management consoles consumption. The best place to persist them is at BMC. Customer need not buy another trusted storage area to save the data.
+
+>
+> Andrew
+--------------2qpkRB3hT2Z0MOxP7tXa8r80
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 12/02/24 3:45 am, Andrew Jeffery
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au">
+      <pre class="moz-quote-pre" wrap="">Hi Sunitha,
+
+On Fri, 2024-02-09 at 11:23 +0530, Sunitha Harish wrote:
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">Thank you Andrew for the reply.
+
+When IBM manages a single server with multiple management 
+clients(redfish clients), they need to save some server related data 
+(host data) in the form of files at BMC's persistent file system.
+
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+What are the specific use-cases though? It seems that we've jumped
+straight to an implementation detail (persisted files) when it's not
+clear to me *what* it is that's needing to be communicated to begin
+with.
+</pre>
+    </blockquote>
+    <pre class="moz-quote-pre" wrap="">IBM has usecases implemented under /ibm/v1 path at bmcweb, which uploads and manages files on the BMC. 
+These are APIs to Create, Update, Get and Delete a file. 
+The data which needs to be persisted in the BMC are considerably big enough - that can not be modeled via DBus properties. 
+Moreover, the data which is stored are meant to be interpreted by the host &amp; the client who is managing the host via this BMC. 
+So the preferred way of storing this is files. </pre>
+    <blockquote type="cite"
+cite="mid:eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au">
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap=""> Here 
+BMC is used as a common persistent storage, which is accessible to all 
+connected redfish clients.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Okay, but why is that necessary? Can you please enumerate the use-
+cases?
+
+The use-cases are what allows us to find an intersection of interests
+with others in the community.
+
+Discussions in the abstract in the context of a specific implementation
+approach feel to me like they might struggle to gain traction.
+</pre>
+    </blockquote>
+    <pre>This is the primary usecase of IBM. But, if there are any other way of getting this done in a any other way, please suggest and we can work together on that. 
+With this email, i am actually looking for someone who may have similar usecase of providing the user a facility to manage files at BMC.</pre>
+    <blockquote type="cite"
+cite="mid:eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au">
+      <pre class="moz-quote-pre" wrap=""></pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">
+Additionally, for IBM usecase, BMC need not consume these files, as they 
+are targeted to be used by the host/hypervisor. 
+
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+If they're not used by the BMC can you unpack why they need to be
+stored on the BMC?</pre>
+    </blockquote>
+    <pre>Customers setup the systems such that, multiple management clients (primary &amp; backup) can manage a single BMC. There will be some host data, which are needed in common to 
+both the primary and backup management consoles consumption. The best place to persist them is at BMC. Customer need not buy another trusted storage area to save the data. 
+</pre>
+    <blockquote type="cite"
+cite="mid:eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au">
+      <pre class="moz-quote-pre" wrap="">
+
+Andrew
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------2qpkRB3hT2Z0MOxP7tXa8r80--
