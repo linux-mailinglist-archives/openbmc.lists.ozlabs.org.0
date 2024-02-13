@@ -2,48 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF0385572A
-	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 00:20:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFF1385572B
+	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 00:21:18 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sU1N4Ggy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DKizwqxc;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TZvLZ0Yztz3dWY
-	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 10:20:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TZvMc58Qzz3dXH
+	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 10:21:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sU1N4Ggy;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DKizwqxc;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZBPP234Nz3bsw;
-	Wed, 14 Feb 2024 06:35:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZBPR5yjrz3cGM;
+	Wed, 14 Feb 2024 06:35:23 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id E51B4CE1E4C;
-	Tue, 13 Feb 2024 19:35:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E623CC433C7;
-	Tue, 13 Feb 2024 19:35:18 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id D2D7B616A6;
+	Tue, 13 Feb 2024 19:35:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50698C43390;
+	Tue, 13 Feb 2024 19:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707852919;
-	bh=wSVuDaYSgh8MRixfbgvvFkBg3ejCEwObxIZSwlWgJa4=;
+	s=k20201202; t=1707852921;
+	bh=sv88IujBpfHMPhVsbD/uX3vDJVDPR81+Zt14idlIRkk=;
 	h=From:Date:Subject:References:In-Reply-To:List-Id:To:Cc:From;
-	b=sU1N4Ggyxhx9lERFgDp3HswZEeDvw732OLECne+I4Atpgqblh4cjja3l1sOtHoYl9
-	 l4dwZ+ziMxlfjtve6lVljsTFIcvmXjKYBQ67e/js6lCJzMDx3omgBVxFxh+cpbdJ3K
-	 ueRtx+gAJt1uQoXbtpoQhKfp/FrApaqLNGG8OsjkSURY5NvOmoE/UZMuIglTGuJlN/
-	 igWEIOhI1bq6q1be+4Q4sWE31EpquEUWwrCaPxrrf3CxjTIr8R4S3/iF0K6nLZMv1n
-	 mhE2OnbR162tkiAXlw/c2oDCTV64L+hKXBoPRMs21+2xmFBfgTWGJgpMvp15ZtC2JP
-	 0GPOgUMijJiWg==
+	b=DKizwqxcC7J4JqkJOz4xypNY2XQ16Bx9so9xQEHWNUmuyim/ksbKFT7GeurlKn61U
+	 ZhGBSZdZAmSA/oBYfhps5ZFr4FS3kJ8OcftkByrKfpB88DPxA1AKzh2leBwnhnOEbO
+	 FOEmlLg/SfKOaHw2WFs1vzRvUFS8y9YsPKjIpQaBZzGzbvPSPCyWpO9FjrD9Xnjae1
+	 xi3TkDKf+5JQfXIUkgIKtNwyTkWAoxNoax0phwZ0JXxlCqVV7s5V7CZrQJYasNI8Ji
+	 yRF+e1AKmXKJGQIKhoLY81kKst4bNdgbB7MmCC3TK1YxnOUsgpZGsm/+Ro5Yrj0EiJ
+	 0GeTkg36Zfucg==
 From: Rob Herring <robh@kernel.org>
-Date: Tue, 13 Feb 2024 13:34:28 -0600
-Subject: [PATCH 4/6] arm: dts: Fix dtc interrupt_map warnings
+Date: Tue, 13 Feb 2024 13:34:29 -0600
+Subject: [PATCH 5/6] arm64: dts: qcom: Fix interrupt-map cell sizes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240213-arm-dt-cleanups-v1-4-f2dee1292525@kernel.org>
+Message-Id: <20240213-arm-dt-cleanups-v1-5-f2dee1292525@kernel.org>
 References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
 In-Reply-To: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
 To: soc@kernel.org, Shawn Guo <shawnguo@kernel.org>, 
@@ -92,62 +92,77 @@ Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, linux-kbuild@vger
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The dtc interrupt_map warning is off because its dependency,
-interrupt_provider, is off by default. Fix all the warnings so it can be
-enabled.
+The PCI node interrupt-map properties have the wrong size as #address-cells
+in the interrupt parent are not accounted for.
+
+The dtc interrupt_map check catches this, but the warning is off because
+its dependency, interrupt_provider, is off by default.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- arch/arm/boot/dts/intel/ixp/intel-ixp42x-gateway-7001.dts     | 2 ++
- arch/arm/boot/dts/intel/ixp/intel-ixp42x-goramo-multilink.dts | 2 ++
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi                        | 8 ++++----
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi |  8 ++++----
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 16 ++++++++--------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-gateway-7001.dts b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-gateway-7001.dts
-index 4d70f6afd13a..6d5e69035f94 100644
---- a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-gateway-7001.dts
-+++ b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-gateway-7001.dts
-@@ -60,6 +60,8 @@ pci@c0000000 {
- 			 * We have slots (IDSEL) 1 and 2 with one assigned IRQ
- 			 * each handling all IRQs.
- 			 */
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0xf800 0 0 7>;
- 			interrupt-map =
- 			/* IDSEL 1 */
- 			<0x0800 0 0 1 &gpio0 11 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 1 is irq 11 */
-diff --git a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-goramo-multilink.dts b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-goramo-multilink.dts
-index 9ec0169bacf8..5f4c849915db 100644
---- a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-goramo-multilink.dts
-+++ b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-goramo-multilink.dts
-@@ -89,6 +89,8 @@ pci@c0000000 {
- 			 * The slots have Ethernet, Ethernet, NEC and MPCI.
- 			 * The IDSELs are 11, 12, 13, 14.
- 			 */
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0xf800 0 0 7>;
- 			interrupt-map =
- 			/* IDSEL 11 - Ethernet A */
- 			<0x5800 0 0 1 &gpio0 4 IRQ_TYPE_LEVEL_LOW>, /* INT A on slot 11 is irq 4 */
-diff --git a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-index 2045fc779f88..27429d0fedfb 100644
---- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-@@ -340,10 +340,10 @@ pcie_rc: pcie@1c00000 {
- 					  "msi8";
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 5e1277fea725..61c8fd49c966 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -830,10 +830,10 @@ pcie0: pcie@20000000 {
+ 
  			#interrupt-cells = <1>;
  			interrupt-map-mask = <0 0 0 0x7>;
--			interrupt-map = <0 0 0 1 &intc 0 0 0 141 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
--					<0 0 0 2 &intc 0 0 0 142 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
--					<0 0 0 3 &intc 0 0 0 143 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
--					<0 0 0 4 &intc 0 0 0 144 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+			interrupt-map = <0 0 0 1 &intc 0 141 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 142 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 143 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 144 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+-			interrupt-map = <0 0 0 1 &intc 0 75 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+-					<0 0 0 2 &intc 0 78 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+-					<0 0 0 3 &intc 0 79 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+-					<0 0 0 4 &intc 0 83 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
++			interrupt-map = <0 0 0 1 &intc 0 0 0 75 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
++					<0 0 0 2 &intc 0 0 0 78 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
++					<0 0 0 3 &intc 0 0 0 79 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
++					<0 0 0 4 &intc 0 0 0 83 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
  
- 			clocks = <&gcc GCC_PCIE_PIPE_CLK>,
- 				 <&gcc GCC_PCIE_AUX_CLK>,
+ 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
+ 				 <&gcc GCC_PCIE0_AXI_M_CLK>,
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index cf295bed3299..26441447c866 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -814,13 +814,13 @@ pcie1: pcie@10000000 {
+ 			interrupt-names = "msi";
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map = <0 0 0 1 &intc 0 142
++			interrupt-map = <0 0 0 1 &intc 0 0 142
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+-					<0 0 0 2 &intc 0 143
++					<0 0 0 2 &intc 0 0 143
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+-					<0 0 0 3 &intc 0 144
++					<0 0 0 3 &intc 0 0 144
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+-					<0 0 0 4 &intc 0 145
++					<0 0 0 4 &intc 0 0 145
+ 					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+ 			clocks = <&gcc GCC_SYS_NOC_PCIE1_AXI_CLK>,
+@@ -876,13 +876,13 @@ pcie0: pcie@20000000 {
+ 			interrupt-names = "msi";
+ 			#interrupt-cells = <1>;
+ 			interrupt-map-mask = <0 0 0 0x7>;
+-			interrupt-map = <0 0 0 1 &intc 0 75
++			interrupt-map = <0 0 0 1 &intc 0 0 75
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+-					<0 0 0 2 &intc 0 78
++					<0 0 0 2 &intc 0 0 78
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+-					<0 0 0 3 &intc 0 79
++					<0 0 0 3 &intc 0 0 79
+ 					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+-					<0 0 0 4 &intc 0 83
++					<0 0 0 4 &intc 0 0 83
+ 					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+ 
+ 			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
 
 -- 
 2.43.0
