@@ -1,81 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0585485572C
-	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 00:22:12 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57DD5855730
+	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 00:23:05 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nC5yv0wT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lPFkxYPR;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TZvNd5fqjz3dXK
-	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 10:22:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TZvPg0FcVz3dlT
+	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 10:23:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nC5yv0wT;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lPFkxYPR;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZBPT6S5vz3bgs;
-	Wed, 14 Feb 2024 06:35:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZCY55YNKz3cFX;
+	Wed, 14 Feb 2024 07:27:05 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 9F7B0CE1E4F;
-	Tue, 13 Feb 2024 19:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3659C43390;
-	Tue, 13 Feb 2024 19:35:23 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 5C857616C3;
+	Tue, 13 Feb 2024 20:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEE0C433F1;
+	Tue, 13 Feb 2024 20:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707852923;
-	bh=io3IHUz4w8uho1fRTkKUDdRHdXN+FkOTbGUXes+HSwM=;
-	h=From:Date:Subject:References:In-Reply-To:List-Id:To:Cc:From;
-	b=nC5yv0wT3DgPAYxk67YpeyMCOPQkCYoByAe0P20ibCZ2ZwpRXd+xIv5AqQOnkRr62
-	 cxdPJbNSI9jT3FXpYwVYIOXR0ouq46nNz4TLHhI8H+vMT3ps6nVXceSfGHHKwtREYx
-	 Sbg3UPfGR/V5C3yWrSox+lIgE9ejNmJT1TANOBTxvAUGXTTudhW4ND1OOaXvjablDm
-	 Pq1vKqjSz6KCFP5XAlEcDdsbF21T3QakjhMnzYri2o5fnkDrsWQ6GuLtLe9bTHjiVY
-	 BZU+xASTGTnd1z8TXb/DlPot58ZDRaKwIT9h2dNK+T45l/LYEdnroleltXx5US+sPV
-	 GKvPP5SxiGlCg==
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 13 Feb 2024 13:34:30 -0600
-Subject: [PATCH 6/6] dtc: Enable dtc interrupt_provider check
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240213-arm-dt-cleanups-v1-6-f2dee1292525@kernel.org>
+	s=k20201202; t=1707856023;
+	bh=wr2SPv5Ld/DSkoS5vcAzZJ9Df9CxqcjpNgsKUEXsmMg=;
+	h=Date:From:To:List-Id:Cc:Subject:References:In-Reply-To:From;
+	b=lPFkxYPR0J3NXG1zdBfo423wECnKhWMgXPxCg52F3jS4QKKMEyqjBhXaUGKE3tgG6
+	 37ZF1eFh/KlF2KXEvZh8+5akK0hqsrS1FZnabOENmkW6SqKVRepSFJf7g6xxh7ojEV
+	 jnkdi6FQUiy1uKshzEZhLb5yve1bg3+EMiWyulcWid6e7LMamsxlhTvq2275lGDRVd
+	 PYq1svZG2Lc2X9dtgFRoH1KjCqQDhIoYjVbGHKXP+VJjE7rPkT9HdKzpsCs5RzEGYP
+	 ef1gd/J3wmRP/+qW2yBa+bsr9UVpRx1oatwybDxzT9Hk3Wx4NArI6+dQLf7ihqU6h7
+	 NgaQAYTbgz0rQ==
+Date: Tue, 13 Feb 2024 20:26:51 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH 0/6] dts: Fix dtc interrupt warnings
+Message-ID: <20240213-wafer-garnish-88287bc5d4a5@spud>
 References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="4XczAmSSxV0XIpGO"
+Content-Disposition: inline
 In-Reply-To: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
-To: soc@kernel.org, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Tsahee Zidenberg <tsahee@annapurnalabs.com>, 
- Antoine Tenart <atenart@kernel.org>, Joel Stanley <joel@jms.id.au>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Ray Jui <rjui@broadcom.com>, 
- Scott Branden <sbranden@broadcom.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, 
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, 
- =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, Stefan Agner <stefan@agner.ch>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- =?utf-8?q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>, 
- Tony Lindgren <tony@atomide.com>, Chanho Min <chanho.min@lge.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>, Linus Walleij <linusw@kernel.org>, 
- Imre Kaloz <kaloz@openwrt.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Masahiro Yamada <masahiroy@kernel.org>, 
- Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>
-X-Mailer: b4 0.13-dev
 X-Mailman-Approved-At: Thu, 15 Feb 2024 10:16:12 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -88,41 +60,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, linux-kbuild@vger.kernel.org, linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
+Cc: Andrew Lunn <andrew@lunn.ch>, Geert Uytterhoeven <geert+renesas@glider.be>, Tony Lindgren <tony@atomide.com>, linux-arm-msm@vger.kernel.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Stefan Agner <stefan@agner.ch>, Chanho Min <chanho.min@lge.com>, Thierry Reding <thierry.reding@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Fabio Estevam <festevam@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, Nicolas Schier <nicolas@fjasle.eu>, Bjorn Andersson <andersson@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, linux-aspeed@lists.ozlabs.org, Gregory Clement <gregory.clement@bootlin.com>, Magnus Damm <magnus.damm@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Joel Stanley <joel@jms.id.au>, linux-renesas-soc@vger.kernel.org, Linus Walleij <linusw@kernel.org>, NXP Linux Team <linux-imx@nxp.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-tegra
+ @vger.kernel.org, Maxime Coquelin <mcoquelin.stm32@gmail.com>, linux-kbuild@vger.kernel.org, Ray Jui <rjui@broadcom.com>, Sascha Hauer <s.hauer@pengutronix.de>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>, Nathan Chancellor <nathan@kernel.org>, soc@kernel.org, Rob Herring <robh+dt@kernel.org>, linux-mediatek@lists.infradead.org, Matthias Brugger <matthias.bgg@gmail.com>, =?iso-8859-1?Q?Beno=EEt?= Cousson <bcousson@baylibre.com>, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Imre Kaloz <kaloz@openwrt.org>, Scott Branden <sbranden@broadcom.com>, openbmc@lists.ozlabs.org, Antoine Tenart <atenart@kernel.org>, linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, Pengutronix Kernel Team <kernel@pengutronix.de>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Shawn Guo <shawnguo@kernel.org>, Tsahee Zidenberg <tsahee@annapurnalabs.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Now that all the interrupt warnings have been fixed, enable
-'interrupt_provider' check by default. This will also enable
-'interrupt_map' check.
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- scripts/Makefile.lib | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+--4XczAmSSxV0XIpGO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index cd5b181060f1..fce35e4657f5 100644
---- a/scripts/Makefile.lib
-+++ b/scripts/Makefile.lib
-@@ -340,7 +340,7 @@ quiet_cmd_gzip = GZIP    $@
- # DTC
- # ---------------------------------------------------------------------------
- DTC ?= $(objtree)/scripts/dtc/dtc
--DTC_FLAGS += -Wno-interrupt_provider \
-+DTC_FLAGS += \
- 	-Wno-unique_unit_address
- 
- # Disable noisy checks by default
-@@ -358,7 +358,6 @@ endif
- ifneq ($(findstring 2,$(KBUILD_EXTRA_WARN)),)
- DTC_FLAGS += -Wnode_name_chars_strict \
- 	-Wproperty_name_chars_strict \
--	-Winterrupt_provider \
- 	-Wunique_unit_address
- endif
- 
+On Tue, Feb 13, 2024 at 01:34:24PM -0600, Rob Herring wrote:
+> I had a branch with most of these changes sitting in my tree for some=20
+> time. Geert's asking about some errors not getting found prompted me to=
+=20
+> clean it up and send it out. This series fixes all* interrupt related=20
+> warnings and enables the check by default.=20
+>=20
+> SoC maintainers, Can you please take this series directly.=20
+>=20
+> Rob
+>=20
+> *There's a few Renesas warnings still Geert said he would fix.
+>=20
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+> Rob Herring (6):
+>       arm64: dts: freescale: Disable interrupt_map check
+>       arm: dts: Fix dtc interrupt_provider warnings
+>       arm64: dts: Fix dtc interrupt_provider warnings
+>       arm: dts: Fix dtc interrupt_map warnings
+>       arm64: dts: qcom: Fix interrupt-map cell sizes
+>       dtc: Enable dtc interrupt_provider check
 
--- 
-2.43.0
+Only fixing it for arm, Sadge.
 
+Co-incidentally I noticed there was one for riscv while looking at
+Krzysztof's underscore in node name patch earlier, so I'd already
+written a patch to fix it :)
+
+--4XczAmSSxV0XIpGO
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZcvQiwAKCRB4tDGHoIJi
+0iKoAP9EkRpfMdcQD2Rxy6EyQrFHOf9aK1XBqWvwsM+uYWZVZAD9El92XfSbd1tC
+IcCJORhtpqwWl2bRDhMSRtSpWpqRygA=
+=9Yjc
+-----END PGP SIGNATURE-----
+
+--4XczAmSSxV0XIpGO--
