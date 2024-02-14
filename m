@@ -1,52 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFFA9853E98
-	for <lists+openbmc@lfdr.de>; Tue, 13 Feb 2024 23:28:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C412854261
+	for <lists+openbmc@lfdr.de>; Wed, 14 Feb 2024 06:31:33 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=JGYwGyrX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FADcv1+W;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TZGFc4Ry9z3dWC
-	for <lists+openbmc@lfdr.de>; Wed, 14 Feb 2024 09:28:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TZRdG6qpNz3cDy
+	for <lists+openbmc@lfdr.de>; Wed, 14 Feb 2024 16:31:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=JGYwGyrX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FADcv1+W;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::531; helo=mail-pg1-x531.google.com; envelope-from=sunithaharish04@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZGDw0CqYz3brZ;
-	Wed, 14 Feb 2024 09:28:15 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 53BE8614CD;
-	Tue, 13 Feb 2024 22:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98C7C433C7;
-	Tue, 13 Feb 2024 22:28:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707863291;
-	bh=oFFuZOUNHSicGqYZMLonLDDYLy/GpUY8EBDB1WTG0es=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JGYwGyrXK0nZVTCamXE68PrmsELblm6cb8mI3mbXPZc25oIOSYbHIWJoHI51r7Vn3
-	 TsCNlOmBf2Hr9SQCZzeHfyBJlackDsH7UzciNBg0CANB3tAk7ds4Ue0VTyOQHCUbKK
-	 jhNqA0EcAEftZD4goOrxFg6NJU/4a79BHiGCcTvWTdY4YBjVst8sfWyS3RibS3sCIO
-	 gmfkzc/KkApqmTn1NKZF6W8R2y9dds7mKR+skzNlXlIOfAjwrVrg25PApvx5eLsEdo
-	 Dtufo9gsq9TAGe/CpwxVRE3DV0DhYTTwFC4SphIJPic5hhMp4gJRLyqaS7TxOL3ZOt
-	 VlqZKTej1QzQg==
-Date: Tue, 13 Feb 2024 16:28:08 -0600
-From: Rob Herring <robh@kernel.org>
-To: Manojkiran Eda <manojkiran.eda@gmail.com>
-Subject: Re: [PATCH] Add eSPI device driver (flash channel)
-Message-ID: <20240213222808.GA2490812-robh@kernel.org>
-References: <20240213-espi_driver-v1-1-92741c812843@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TZRcg5ss9z2yQL
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Feb 2024 16:30:57 +1100 (AEDT)
+Received: by mail-pg1-x531.google.com with SMTP id 41be03b00d2f7-517ab9a4a13so3953302a12.1
+        for <openbmc@lists.ozlabs.org>; Tue, 13 Feb 2024 21:30:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707888653; x=1708493453; darn=lists.ozlabs.org;
+        h=in-reply-to:from:references:cc:to:content-language:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZA+rr+n2Ukf8GRHG+FIeq6S2yZ640Dif9YTv0YQQ0J4=;
+        b=FADcv1+W9c2DxMB3eyrjSTSIpbnYx7P8VLJVqZ+5MDECQdb0OZXrufrrxWXzks0VX+
+         l3klHJCJo9TMIp0nGRf3WXdnHmYlrmiQh9OyMtAUhLsNRYXz4V4rNTOIA5Hl0mIFF4Ze
+         0wu3o21i8b2h41IV2+Dg2wZHcJWDvyQcrCPc39PA4GhvqOJepKbxmseOqKaLliFl3LPg
+         QvpJtdCfjt3pJzuTet1xrN7EsEi9t21hA6qikey6swH10kRbtWHYu520mK8o4UDZUMdL
+         sl89IYtgHt8A82i9Qi/eWmLWcCr+nSSHS7WugfyrwQrU/NB9zKJ8wrYjrzR4w9IvMRPB
+         Zh4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707888653; x=1708493453;
+        h=in-reply-to:from:references:cc:to:content-language:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZA+rr+n2Ukf8GRHG+FIeq6S2yZ640Dif9YTv0YQQ0J4=;
+        b=ZS1qX8kEwnvJVrTFmiUwPBd106vQDud4/feLrHhNywGzCyBeXkT8YwGULWNx+3Y0nA
+         6Y5RJMe6y1300Ko8bxqDvenzYWSj3TxZ1I7MIFd56HPBPxX64fhhef/ubpI6o9X8P2ng
+         D2K8IP39NmpQbZ4mK37xCRcGpxdvg5QJD3UTWBw/S5MYNMDIwlSMF1m7TgrW/PO0Nktm
+         6wUhdtqM/rFkwDZMwjiDzPH2Fzz3AVZvXxNCgM73QiC1qwFI5xBh12fuG/SCnrw7ksZi
+         UxmWXSa38YZUAZ31kNxG/QF6u74S3cPIKsqLQpEgQkyo0kyzljMeG0wwOJfVzo9qmcKr
+         +mSA==
+X-Forwarded-Encrypted: i=1; AJvYcCUrCf8DRQUCs9am7fxKhr9pFeiv5wzZkHqXYJ4pgH762aOA1+yYcSBheaddXVihKkXfy3PhjQbSKG0PzlFPLBE0I+ZxSLuQEBg=
+X-Gm-Message-State: AOJu0YzCUj7Z2AP6Qlf9Zk3mzLvGQQYo2o1a+TmfvCCK4h8zNbAv/NAY
+	V/f0lkli8e1vaTukaeAwefeexIttNNgfHAsl18Ov+gxc4wLPfCve
+X-Google-Smtp-Source: AGHT+IGd90KXJ4bfAJ222mstA4YcSPO8b9fhTPkBKAkKcCJHaU1uI1nakjNOQEAq0kZEsSPLR5S9Og==
+X-Received: by 2002:a05:6a21:6315:b0:19e:4793:6263 with SMTP id wu21-20020a056a21631500b0019e47936263mr1804435pzb.52.1707888653364;
+        Tue, 13 Feb 2024 21:30:53 -0800 (PST)
+Received: from [192.168.0.102] ([106.51.171.185])
+        by smtp.gmail.com with ESMTPSA id ee5-20020a17090afc4500b0029703476e9bsm452546pjb.44.2024.02.13.21.30.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 21:30:53 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------57Vr3ALgAYmMTLBFkK7QdDll"
+Message-ID: <4d9dd481-4f60-4140-8c91-739b46be5c0e@gmail.com>
+Date: Wed, 14 Feb 2024 11:00:49 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213-espi_driver-v1-1-92741c812843@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: File Manager Service in OpenBMC
+Content-Language: en-US
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <88ba0256-2c86-4727-97b6-dce02ba61554@gmail.com>
+ <34f3ba2f2279f5c63b20b7dc0da80f3de53a0768.camel@codeconstruct.com.au>
+ <f7de9480-d92e-462b-ac8f-8e1d3c90b886@gmail.com>
+ <eb3d9ef1f305cc11f95ac41df3bbaa95e094d073.camel@codeconstruct.com.au>
+ <4cb036ca-aedb-4fae-a09e-9a783a9adb1f@gmail.com>
+ <874a7f5aff1452173c2b145f7ccd25302e1569c8.camel@codeconstruct.com.au>
+ <3862c106-d0c8-4168-bf22-ec9b8fba301a@gmail.com>
+ <Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net>
+From: Sunitha Harish <sunithaharish04@gmail.com>
+In-Reply-To: <Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,252 +88,153 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, zev@bewilderbeest.net, Ryan Chen <ryan_chen@aspeedtech.com>, Vignesh Raghavendra <vigneshr@ti.com>, linux-aspeed@lists.ozlabs.org, Richard Weinberger <richard@nod.at>, Chia-Wei Wang <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Miquel Raynal <miquel.raynal@bootlin.com>, jk@codeconstruct.com.au, openbmc@lists.ozlabs.org, Patrick Rudolph <patrick.rudolph@9elements.com>
+Cc: gmills@us.ibm.com, geissonator@yahoo.com, openbmc@lists.ozlabs.org, ed@tanous.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Feb 13, 2024 at 08:06:08PM +0530, Manojkiran Eda wrote:
-> This patch adds the driver support for the eSPI controller of
-> Aspeed 5/6th generation SoCs. This controller is a slave device
-> communicating with a master over Enhanced Serial Peripheral
-> Interface (eSPI).
-> 
-> eSPI supports 4 channels, namely peripheral, virtual wire,
-> out-of-band, and flash, and operates at max frequency of 66MHz.
-> 
-> But at the moment, this patch set only supports the flash channel.
+This is a multi-part message in MIME format.
+--------------57Vr3ALgAYmMTLBFkK7QdDll
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-You're not going to need binding changes to add support for those, 
-right?
+Hi Patrick,
 
-> 
-> Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
-> ---
-> Hello everyone,
-> 
-> I'm presenting a revised version of the eSPI device driver patch series found at the following link:
-> 
-> https://lore.kernel.org/openbmc/20220516005412.4844-1-chiawei_wang@aspeedtech.com/ 
-> 
-> This update addresses the issues identified during the review process.
-> 
-> While the previous patch series attempted to incorporate support for all four different channels of eSPI,
-> this new series focuses on upstreaming the flash channel initially, ensuring that all review comments are
-> duly addressed, before progressing further.
-> 
-> Results:
-> 
-> Successfully conducted a flash update via eSPI.
-> 
-> Note:
-> 
-> This marks my inaugural endeavor in contributing code to the kernel subsystem. I kindly request reviewers
-> to incorporate as many details as possible in the review comments.
+Thanks for the reply.
 
-Please start with submitting-patches.rst and the DT specific version of 
-that.
+On 13/02/24 8:02 pm, Patrick Williams wrote:
+> On Tue, Feb 13, 2024 at 12:14:49PM +0530, Sunitha Harish wrote:
+>
+>> I have mentioned the purpose of this usecase already. There is no more details that i can share.
+> I think we're missing the high-level premise of what you're
+> proposing.  Is this an arbitrary "expose the file system over dbus" or
+> does it have some very specific purpose?  You've said something along
+> the lines of "there are some files for the manage host", which is mostly
+> fine if you don't want to talk about the details of them (even though
+> they are supposedly already in bmcweb?) but I think there are still some
+> more specifics you can talk to.
 
-> ---
->  .../devicetree/bindings/soc/aspeed/espi.yaml       | 125 ++++++
+This is not exposing the whole file system over dbus. Specific persistent directory path only needs to be exposed.
 
-This should be a separate patch. checkpatch.pl will tell you this and 
-other things.
+Files content are not interpreted by BMC. They contain the system configuration details & resource data which gets loaded on top of the hypervisor.
+These data are needed by the backup management console (redfish client) when it takes over the system management, when there is any failures on the
+primary management console. IBM's management console implements the logic to read/write to these files, and only this client and the hypervisor understands the
+format and data in this file.
 
-Filename should match compatible.
+>> Its not about implementing the file system on the BMC. Its implementing a systemd service, which will host the file descriptors as dbus
+>> interfaces/properties. This will give file handler APIs to the redfish clients who are willing to do file operations on the BMC.
+> My first read on this is that all it is doing is moving the problem from
+> one place to another.  Fundamentally, the reason to not have bmcweb do
+> file access is because of the potential security concerns.  Having a
+> generic dbus service that reads and modifies the file system has the
+> exact same security concerns, except now you've potentially lost all
+> information as to _who_ is doing the file operation (unless you add who
+> is doing the operation to the dbus interface).
 
->  arch/arm/boot/dts/aspeed/aspeed-g6.dtsi            |  16 +-
+Yes. Current implementation creates files with 700 permission. Only admin can upload the files.
+In this app, there should be the validations for ensuring the security aspects. I will list them in design, and can be enhanced during review.
+Adding the session id to the dbus would be a good audit data.
 
-This is another patch.
+> If the proposal is "make a generic daemon that can expose the whole file
+> system as a dbus-service", the answer is likely "no" due to all the
+> security implications.  If there are specific files, folders, and/or
+> configurable sets (which by default is a locked down set of nearly
+> nothing) then "maybe"?  This is where it seems like people would need to
+> see more details of what you're accomplishing.
 
->  drivers/mtd/mtdcore.c                              |   2 +-
+I got it. Whole file system as a dbus-service is not expected here. This a specific persistent path at the BMC.
+This can be thought as a small, limited sized storage place which can be shared between the redfish clients who are managing the BMC.
 
-Yet another patch. But really, this one will be rejected most likely 
-unless you can justify why it is needed.
+Regards,
+Sunitha
 
->  drivers/soc/aspeed/Kconfig                         |  10 +
->  drivers/soc/aspeed/Makefile                        |   3 +
->  drivers/soc/aspeed/aspeed-espi-ctrl.c              | 197 +++++++++
->  drivers/soc/aspeed/aspeed-espi-ctrl.h              | 169 ++++++++
->  drivers/soc/aspeed/aspeed-espi-flash.c             | 466 +++++++++++++++++++++
->  drivers/soc/aspeed/aspeed-espi-flash.h             |  45 ++
->  include/uapi/linux/espi/aspeed-espi-ioc.h          | 103 +++++
+--------------57Vr3ALgAYmMTLBFkK7QdDll
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Your own interface to userspace is probably not going to be accepted 
-either.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <pre>Hi Patrick,</pre>
+    <pre>Thanks for the reply.
+</pre>
+    <div class="moz-cite-prefix">On 13/02/24 8:02 pm, Patrick Williams
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net">
+      <pre class="moz-quote-pre" wrap="">On Tue, Feb 13, 2024 at 12:14:49PM +0530, Sunitha Harish wrote:
 
->  10 files changed, 1134 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/aspeed/espi.yaml b/Documentation/devicetree/bindings/soc/aspeed/espi.yaml
-> new file mode 100644
-> index 000000000000..6521a351d18d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/aspeed/espi.yaml
-> @@ -0,0 +1,125 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# # Copyright (c) 2021 Aspeed Technology Inc.
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">I have mentioned the purpose of this usecase already. There is no more details that i can share.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+I think we're missing the high-level premise of what you're
+proposing.  Is this an arbitrary "expose the file system over dbus" or
+does it have some very specific purpose?  You've said something along
+the lines of "there are some files for the manage host", which is mostly
+fine if you don't want to talk about the details of them (even though
+they are supposedly already in bmcweb?) but I think there are still some
+more specifics you can talk to.
+</pre>
+    </blockquote>
+    <pre>This is not exposing the whole file system over dbus. Specific persistent directory path only needs to be exposed.
 
-It's 2024 now.
+Files content are not interpreted by BMC. They contain the system configuration details &amp; resource data which gets loaded on top of the hypervisor.
+These data are needed by the backup management console (redfish client) when it takes over the system management, when there is any failures on the 
+primary management console. IBM's management console implements the logic to read/write to these files, and only this client and the hypervisor understands the 
+format and data in this file.
+</pre>
+    <blockquote type="cite"
+      cite="mid:Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net">
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">Its not about implementing the file system on the BMC. Its implementing a systemd service, which will host the file descriptors as dbus
+interfaces/properties. This will give file handler APIs to the redfish clients who are willing to do file operations on the BMC.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+My first read on this is that all it is doing is moving the problem from
+one place to another.  Fundamentally, the reason to not have bmcweb do
+file access is because of the potential security concerns.  Having a
+generic dbus service that reads and modifies the file system has the
+exact same security concerns, except now you've potentially lost all
+information as to _who_ is doing the file operation (unless you add who
+is doing the operation to the dbus interface).
+</pre>
+    </blockquote>
+    <pre>Yes. Current implementation creates files with 700 permission. Only admin can upload the files.
+In this app, there should be the validations for ensuring the security aspects. I will list them in design, and can be enhanced during review.
+Adding the session id to the dbus would be a good audit data.
+</pre>
+    <blockquote type="cite"
+      cite="mid:Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net">
+      <pre class="moz-quote-pre" wrap="">
+If the proposal is "make a generic daemon that can expose the whole file
+system as a dbus-service", the answer is likely "no" due to all the
+security implications.  If there are specific files, folders, and/or
+configurable sets (which by default is a locked down set of nearly
+nothing) then "maybe"?  This is where it seems like people would need to
+see more details of what you're accomplishing.
+</pre>
+    </blockquote>
+    <pre>I got it. Whole file system as a dbus-service is not expected here. This a specific persistent path at the BMC.
+This can be thought as a small, limited sized storage place which can be shared between the redfish clients who are managing the BMC.
+</pre>
+    <blockquote type="cite"
+      cite="mid:Zct9feAKEIiDonzu@heinlein.vulture-banana.ts.net">
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+    </blockquote>
+    <pre>Regards,
+Sunitha
+</pre>
+  </body>
+</html>
 
-> +%YAML 1.2
-> +---
-> +$id: "http://devicetree.org/schemas/soc/aspeed/espi.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> +
-> +title: Aspeed eSPI Controller
-> +
-> +maintainers:
-> +  - Manojkiran Eda <manojkiran.eda@gmail.com>
-> +  - Patrick Rudolph <patrick.rudolph@9elements.com>
-> +  - Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-> +  - Ryan Chen <ryan_chen@aspeedtech.com>
-> +
-> +description:
-> +  Aspeed eSPI controller implements a slave side eSPI endpoint device
-
-s/slave/device/
-
-> +  supporting the four eSPI channels, namely peripheral, virtual wire,
-> +  out-of-band, and flash.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - enum:
-> +          - aspeed,ast2500-espi
-> +          - aspeed,ast2600-espi
-> +      - const: simple-mfd
-> +      - const: syscon
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 1
-> +
-> +  ranges: true
-> +
-> +patternProperties:
-> +  "^espi-ctrl@[0-9a-f]+$":
-> +    type: object
-
-Is this really a separate sub-block? As in could it be reused somewhere 
-else or in a different combination of blocks?
-
-> +
-> +    description: Control of the four basic eSPI channels
-> +
-> +    properties:
-> +      compatible:
-> +        items:
-> +          - enum:
-> +              - aspeed,ast2500-espi-ctrl
-> +              - aspeed,ast2600-espi-ctrl
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +      clocks:
-> +        maxItems: 1
-> +
-> +      flash,dma-mode:
-> +        type: boolean
-> +        description: Enable DMA support for eSPI flash channel
-> +
-> +      flash,safs-mode:
-> +        $ref: /schemas/types.yaml#/definitions/uint32
-> +        enum: [ 0, 1, 2 ]
-> +        default: 0
-> +        description: Slave-Attached-Sharing-Flash mode, 0->Mix, 1->SW, 2->HW
-> +
-> +    required:
-> +      - compatible
-> +      - interrupts
-> +      - clocks
-> +
-> +  "^espi-mmbi@[0-9a-f]+$":
-> +    type: object
-
-Is this really a separate sub-block?
-
-> +
-> +    description: Control of the PCH-BMC data exchange over eSPI peripheral memory cycle
-> +
-> +    properties:
-> +      compatible:
-> +        const: aspeed,ast2600-espi-mmbi
-> +
-> +      interrupts:
-> +        maxItems: 1
-> +
-> +    required:
-> +      - compatible
-> +      - interrupts
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#address-cells"
-> +  - "#size-cells"
-> +  - ranges
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/ast2600-clock.h>
-> +
-> +    espi: espi@1e6ee000 {
-> +        compatible = "aspeed,ast2600-espi", "simple-mfd", "syscon";
-> +        reg = <0x1e6ee000 0x1000>;
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-> +        ranges = <0x0 0x1e6ee000 0x1000>;
-> +
-> +        espi_ctrl: espi-ctrl@0 {
-> +            compatible = "aspeed,ast2600-espi-ctrl";
-> +            reg = <0x0 0x800>;
-> +            interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
-> +            clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
-> +        };
-> +
-> +        espi_mmbi: espi-mmbi@800 {
-> +            compatible = "aspeed,ast2600-espi-mmbi";
-> +            reg = <0x800 0x50>;
-> +            interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
-> +        };
-> +    };
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-> index c4d1faade8be..08d7a2689086 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-> @@ -453,7 +453,21 @@ video: video@1e700000 {
->  				interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
->  				status = "disabled";
->  			};
-> -
-> +			espi: espi@1e6ee000 {
-> +				compatible = "aspeed,ast2600-espi", "simple-mfd", "syscon";
-> +				reg = <0x1e6ee000 0x1000>;
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				ranges = <0x0 0x1e6ee000 0x1000>;
-> +				espi_ctrl: espi-ctrl@0 {
-> +						compatible = "aspeed,ast2600-espi-ctrl";
-> +						reg = <0x0 0x800>,<0x0 0x4000000>;
-> +						reg-names = "espi_ctrl","espi_flash";
-> +						interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
-> +						clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
-> +						status = "disabled";
-> +						};
-
-Wrong indentation.
-
-> +			};
->  			gpio0: gpio@1e780000 {
->  				#gpio-cells = <2>;
->  				gpio-controller;
+--------------57Vr3ALgAYmMTLBFkK7QdDll--
