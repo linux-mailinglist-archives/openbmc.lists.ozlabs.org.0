@@ -1,69 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B4F98569EB
-	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 17:48:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA3DA856AA8
+	for <lists+openbmc@lfdr.de>; Thu, 15 Feb 2024 18:13:36 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zacnJTwM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=TRi71hB4;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TbLc20hbZz3fFT
-	for <lists+openbmc@lfdr.de>; Fri, 16 Feb 2024 03:48:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TbM8t3rpCz3h05
+	for <lists+openbmc@lfdr.de>; Fri, 16 Feb 2024 04:13:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zacnJTwM;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=TRi71hB4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::112e; helo=mail-yw1-x112e.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TbLbT1sBBz3cQr
-	for <openbmc@lists.ozlabs.org>; Fri, 16 Feb 2024 03:48:03 +1100 (AEDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-607cd210962so8482307b3.2
-        for <openbmc@lists.ozlabs.org>; Thu, 15 Feb 2024 08:48:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708015677; x=1708620477; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MJXT4bkQbGQzTXV7k3G659qQ960IV+AKnK8ee7bJMnQ=;
-        b=zacnJTwMb6RgQSazkV6OZ/ZJHcbSX/qXbuDtE/UFF+cjNBwE1pSUoMJfCRoxPBfr/e
-         VUY6GG3K0HzyrPqRlrA/eja+2HLmZPeJc7krheYqAeRpyc57c5876d6RMNT2ulK/s9D+
-         k91m9VyTlLwWUTd0f+sDXSkOB2YI9e2SS8EIgXb3a9VHSnz98r8PJOqZaMVOyN+DxvsT
-         Au33sFgXAvFFraS8yqZDK4AmsPSeLKHi809i2KdwMyACIij17rXGyZWxrSQh1wP9DEjo
-         fCTutbb9B7BMGLt6t/kMmzxw5PvPMV7pqCxf+Ihua15ViSyOwSCUjG8iJ3QCChJwWmSk
-         Li1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708015677; x=1708620477;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MJXT4bkQbGQzTXV7k3G659qQ960IV+AKnK8ee7bJMnQ=;
-        b=luO3nJnWKEJ5js79lMIDwFRXE3Anu0Fpn0peGSY0Zj9+RzkUjduSng2RGMOyERJbZC
-         s7X/+nEwlAV+6wCua4GrKjz/wh4M6op8VTlZqKvwDiM9Mt5QMC/dbBtSgFGP6T2MnwKD
-         t43jXgKyTwvbpbnEW/sHgNBxxYR4pViYs6eijTd+QrrneiSmclMnjsorGX/bmK7ZYjYP
-         HXbdPJFP8hR1EQpS28GU1fJs+ns8DQevmmR735G5+1d/x1/6ab7A1FRfozaSrQoKL7yb
-         sDYrq+6wDZqm4dTZ2IxEzK/kjbfzKa4GXM6ToTM1nolBJXI1XmaDy3kCDAUYyItFvGdk
-         mSGA==
-X-Forwarded-Encrypted: i=1; AJvYcCWRrIIbGHnjvJa8AhRKh6B8RXAo3sG3HMmMGUJY46YRX3LZdEdnRzNL5gr61iB6ES2wfqG2QwLqAWCD+UDK71CQ/5Msp+NxBcM=
-X-Gm-Message-State: AOJu0YyIv6dJ/gpyDXQJkeoFKHASIrDgjna2rvQlJVollr2KQtyHxN49
-	s4KYdwC4e6KtdmQqkx/SrMz0bT/cLbWnAxNM8UFCOUKGMP27rWomPA6eKcPCjr1xZtwi57MHF+e
-	mhPrgrTv8I5g+rcGoJKwRPPCotowIhkn5lgsIFQ==
-X-Google-Smtp-Source: AGHT+IFcEdDxkaV5gl2B0D9rLVsJb+rIMq80f4RxVLr6/cWjMSKXRFW8Ted8UPodyM0dXz2HXXSU8/DgM010QxOPGuc=
-X-Received: by 2002:a81:b3c4:0:b0:602:c1e2:c6ee with SMTP id
- r187-20020a81b3c4000000b00602c1e2c6eemr2101425ywh.44.1708015677601; Thu, 15
- Feb 2024 08:47:57 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TbM8F5TXKz3cT2;
+	Fri, 16 Feb 2024 04:13:01 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id 3694BCE27B2;
+	Thu, 15 Feb 2024 17:12:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9E1C433F1;
+	Thu, 15 Feb 2024 17:12:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708017176;
+	bh=pk5Mt+RImQXUgBvMKAZepH41L3RMj9FKexYkzEU54nI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TRi71hB4J37HDQh3t1ZfohcSCokTMBTIWFlXk8unUCZGAcnbgcFAYuiLZDhQSHFXj
+	 hxT+sMSSa2T7IKUkyx7sMVbr5h3zjN/ggkblR69V4kg7xZzVEX0XWnHoIpww+EM64f
+	 A/IKw8J0A4lekCriXehJQD7MMFAJLD5unYXKPBQw7v1i5jMUSFLktChLwDH/olDmr6
+	 CSUZZqPuqBvJ7A4Wk6rpL/Vmhtlp2D1ikj2A+r1ja3TPU7uhZn0ER6svRLkWUeWRSX
+	 tp1lzO4k5PRCYHeyCQPLN1SV82Rn1Ywh92tYhNObqXrzSMmHq0Ei9DTSfRNleeWcss
+	 5jDYkHp02pV+Q==
+Date: Thu, 15 Feb 2024 17:12:50 +0000
+From: Conor Dooley <conor@kernel.org>
+To: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+Subject: Re: =?utf-8?B?5Zue6KaG?= =?utf-8?Q?=3A?= [PATCH] Add eSPI device
+ driver (flash channel)
+Message-ID: <20240215-probable-gimmick-83d5dcbc4729@spud>
+References: <20240213-espi_driver-v1-1-92741c812843@gmail.com>
+ <KL1PR06MB665234A65DB334B3BDF6AFA6914E2@KL1PR06MB6652.apcprd06.prod.outlook.com>
+ <20240214-yoyo-platinum-dcd0e7e16a22@spud>
+ <TYZPR06MB6640F82C539F0B17BCDCC55E914D2@TYZPR06MB6640.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-References: <20240215-mmc_phase-v1-1-f27644ee13e4@outlook.com>
-In-Reply-To: <20240215-mmc_phase-v1-1-f27644ee13e4@outlook.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 15 Feb 2024 17:47:22 +0100
-Message-ID: <CAPDyKFo9NpKSuBnrcOseuD-jDA64CMyRxpH-OUoozOQDYHj1mQ@mail.gmail.com>
-Subject: Re: [PATCH] mmc: host: replace 1st argument to struct device * for mmc_of_parse_clk_phase()
-To: forbidden405@outlook.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="jYXpxHj7B0OPYCKZ"
+Content-Disposition: inline
+In-Reply-To: <TYZPR06MB6640F82C539F0B17BCDCC55E914D2@TYZPR06MB6640.apcprd06.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,84 +63,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, Adrian Hunter <adrian.hunter@intel.com>, Joel Stanley <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org
+Cc: "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Conor Dooley <conor+dt@kernel.org>, "zev@bewilderbeest.net" <zev@bewilderbeest.net>, Ryan Chen <ryan_chen@aspeedtech.com>, Vignesh Raghavendra <vigneshr@ti.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Richard Weinberger <richard@nod.at>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, "linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Miquel Raynal <miquel.raynal@bootlin.com>, "jk@codeconstruct.com.au" <jk@codeconstruct.com.au>, Patrick Rudolph <patrick.rudolph@9elements.com>, Manojkiran Eda <manojkiran.eda@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 15 Feb 2024 at 12:03, Yang Xiwen via B4 Relay
-<devnull+forbidden405.outlook.com@kernel.org> wrote:
->
-> From: Yang Xiwen <forbidden405@outlook.com>
->
-> Parsing dt usaully happens very early, sometimes even bofore struct
-> mmc_host is allocated (e.g. dw_mci_probe() and dw_mci_parse_dt() in
-> dw_mmc.c). Looking at the source of mmc_of_parse_clk_phase(), it's
-> actually not mandatory to have a initialized mmc_host first, instead we
-> can pass struct device * to it directly.
->
-> Also fix the only current user (sdhci-of-aspeed.c).
 
-Is there a problem? I don't see it, can please elaborate.
+--jYXpxHj7B0OPYCKZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Kind regards
-Uffe
+On Thu, Feb 15, 2024 at 01:56:00AM +0000, ChiaWei Wang wrote:
+> >=20
+> > On Wed, Feb 14, 2024 at 11:34:31AM +0000, ChiaWei Wang wrote:
+> > > We appreciate that you are willing to help on the open source contrib=
+ution.
+> > > However, please co-work with Aspeed before submitting drivers of Aspe=
+ed
+> > HW.
+> > > Otherwise, a misleading driver on the community are going to bring to=
+ns of
+> > customer issues to Aspeed.
+> >=20
+> > It may not apply in this particular case as Aspeed did write the origin=
+al driver
+> > and it is polite to work with previous authors when respinning a patchs=
+et, but in
+> > general there is no need to work with a hardware vendor before writing =
+drivers
+> > for their hardware.
+> >=20
+> > Blocking a driver because that company might receive more support reque=
+sts
+> > is not the kernel's problem.
+>=20
+> I agree with that and Aspeed will not refuse to support.
+>=20
+> However, in this case, the authors, IBM, and Aspeed already have discussi=
+on (at least 4 times) before and foresee "issues" on practical eSPI SAFS us=
+e.
+> If there is already a known issue of the driver, why ignoring the previou=
+s discussion and push it?
+> A compromise is to ask for driver renaming to espi-mafs to avoid confusio=
+n.
+> Otherwise we need to explain, again, why the driver does not fulfill the =
+SAFS expectation.
 
->
-> Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
-> ---
->  drivers/mmc/core/host.c            | 4 +---
->  drivers/mmc/host/sdhci-of-aspeed.c | 2 +-
->  include/linux/mmc/host.h           | 2 +-
->  3 files changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
-> index cf396e8f34e9..8b2844ac5dc5 100644
-> --- a/drivers/mmc/core/host.c
-> +++ b/drivers/mmc/core/host.c
-> @@ -234,10 +234,8 @@ static void mmc_of_parse_timing_phase(struct device *dev, const char *prop,
->  }
->
->  void
-> -mmc_of_parse_clk_phase(struct mmc_host *host, struct mmc_clk_phase_map *map)
-> +mmc_of_parse_clk_phase(struct device *dev, struct mmc_clk_phase_map *map)
->  {
-> -       struct device *dev = host->parent;
-> -
->         mmc_of_parse_timing_phase(dev, "clk-phase-legacy",
->                                   &map->phase[MMC_TIMING_LEGACY]);
->         mmc_of_parse_timing_phase(dev, "clk-phase-mmc-hs",
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-> index 42d54532cabe..430c1f90037b 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -435,7 +435,7 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
->                 goto err_sdhci_add;
->
->         if (dev->phase_desc)
-> -               mmc_of_parse_clk_phase(host->mmc, &dev->phase_map);
-> +               mmc_of_parse_clk_phase(&pdev->dev, &dev->phase_map);
->
->         ret = sdhci_add_host(host);
->         if (ret)
-> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-> index 2f445c651742..5894bf912f7b 100644
-> --- a/include/linux/mmc/host.h
-> +++ b/include/linux/mmc/host.h
-> @@ -539,7 +539,7 @@ struct mmc_host *devm_mmc_alloc_host(struct device *dev, int extra);
->  int mmc_add_host(struct mmc_host *);
->  void mmc_remove_host(struct mmc_host *);
->  void mmc_free_host(struct mmc_host *);
-> -void mmc_of_parse_clk_phase(struct mmc_host *host,
-> +void mmc_of_parse_clk_phase(struct device *dev,
->                             struct mmc_clk_phase_map *map);
->  int mmc_of_parse(struct mmc_host *host);
->  int mmc_of_parse_voltage(struct mmc_host *host, u32 *mask);
->
-> ---
-> base-commit: 9d64bf433c53cab2f48a3fff7a1f2a696bc5229a
-> change-id: 20240215-mmc_phase-26e85511285d
->
-> Best regards,
-> --
-> Yang Xiwen <forbidden405@outlook.com>
->
+To be clear, in case you misunderstood, I was making a general point and
+not about this particular patchset.
+
+--jYXpxHj7B0OPYCKZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZc5GEgAKCRB4tDGHoIJi
+0q6qAQCwK7ClX6/ipMYZ/2VmkvC0xZdaAiUrt57wlJ0DcnoxoAD+OADevy96or/y
+yayrHHRwjY2W37V1/RxOp8h0jhl17QU=
+=71+s
+-----END PGP SIGNATURE-----
+
+--jYXpxHj7B0OPYCKZ--
