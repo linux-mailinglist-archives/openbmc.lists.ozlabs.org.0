@@ -1,116 +1,100 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14AD185AE6E
-	for <lists+openbmc@lfdr.de>; Mon, 19 Feb 2024 23:29:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE06185AE6F
+	for <lists+openbmc@lfdr.de>; Mon, 19 Feb 2024 23:30:16 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OxJQGra2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bGr3Hh1A;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TdxzM0LgGz3dSM
-	for <lists+openbmc@lfdr.de>; Tue, 20 Feb 2024 09:29:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tdy0Q4qJ4z3dV6
+	for <lists+openbmc@lfdr.de>; Tue, 20 Feb 2024 09:30:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OxJQGra2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bGr3Hh1A;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=outlook.com (client-ip=2a01:111:f403:280c::801; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=forbidden405@outlook.com; receiver=lists.ozlabs.org)
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn20801.outbound.protection.outlook.com [IPv6:2a01:111:f403:280c::801])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a; helo=mail-ej1-x62a.google.com; envelope-from=thierry.reding@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TbMCh4hMrz3cSQ;
-	Fri, 16 Feb 2024 04:15:59 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UWNl8aTQqeY5dVCfADxq6KlCx12jtVw9HRx2UkDqRFhkuuFxwsq3lvHYPKMb8Yftavd0grPGVRfsiooNR5ijWOIyKyCpZpO8uss9u0ZloSqJi0AsV+r4TzcGSwLmzMJ8nR8ll42hODWrjMdXV4+1cYU1cLIOXN75Cw/5RGOwvrnELGNGpVP6hgOA1dTnyLHIcMxomczS/SplSkHwoh0iS5NVcHMMeH3JtMY/HRsX3+vfPx7FgZAdg6kVB3Yn7NSW9aJWVHfFlAtbuWKoN9GZsVzKm5N36Y2PrBZxLBwD5xp1jdqmAavEHeNjGIw3/zgLkNQVuUrGTLrfIckEOdrPRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lFkqC8JTUCBLlUa56w00iClCpmSyB4drjsXuChK63hs=;
- b=ca9P8vTq9mlnGUN9oRh4PBSLNsKF7fEeHQ4cFcuNv6x0/romH0Cmbs9fd+exVdWsGv/O3IdOscMmmq+ZTD66K7VdXrTZBmZCOBC5WGVhlMfIuzuHKji2ABni/ps8P8c8c9usvBnObVw8KhdSWEguTzoQ1H07VYMD0iQN0M5vuX5H159mzNbv5fgxyzjdpv8A1JLXVAK8lKx77i6xaUGbSxhAf53CaCn6/LxMk7JqZbsbhF9ZuqRHBhz4Uk27c+9XaTy7DG/OvItT0UpZrgRZ/0JY4hWDTqd+mTF3keUt64yJOlFP7pTVh5mTcvAtf8qZzKoaIRrRY03gJisSNEHWzg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lFkqC8JTUCBLlUa56w00iClCpmSyB4drjsXuChK63hs=;
- b=OxJQGra2gaLf8KegioUkfSCBOfNHH0GNqt39WOSKXRS2mmNQTrh12AlnMEtKm2f6mooXIPUaqo8Gy1G7qJgTyQL01OOpqXki4PdFxAow1Ln9A7O3R2LPTA2FAud09/HW51+627o8HPi53FLNPq/e4Bs8LDyL5eDxI9WeW8pUKYqwaGtEG6zgsWMCwl+9hQBN+PYA/q/3D+WNA7us0sgqVw7jIxTGJ+bqLw8EmlupX0CYnqKoAypGKXOuNXUee6w0/uev7+121SWQ9ch2Jz2uzLawAauB4ToWFHt3I9EMPGjIgufKDy/9MvGiowDnTEwW9FVi7PEdxbXNkg03jIlSTg==
-Received: from SEZPR06MB6959.apcprd06.prod.outlook.com (2603:1096:101:1ed::14)
- by KL1PR06MB6274.apcprd06.prod.outlook.com (2603:1096:820:e5::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.39; Thu, 15 Feb
- 2024 17:15:37 +0000
-Received: from SEZPR06MB6959.apcprd06.prod.outlook.com
- ([fe80::9a6b:d813:8f4b:cba1]) by SEZPR06MB6959.apcprd06.prod.outlook.com
- ([fe80::9a6b:d813:8f4b:cba1%4]) with mapi id 15.20.7292.026; Thu, 15 Feb 2024
- 17:15:37 +0000
-Message-ID:  <SEZPR06MB6959FF28D99A99BA2524C9D4964D2@SEZPR06MB6959.apcprd06.prod.outlook.com>
-Date: Fri, 16 Feb 2024 01:15:32 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mmc: host: replace 1st argument to struct device * for
- mmc_of_parse_clk_phase()
-Content-Language: en-US
-To: Ulf Hansson <ulf.hansson@linaro.org>
-References: <20240215-mmc_phase-v1-1-f27644ee13e4@outlook.com>
- <CAPDyKFo9NpKSuBnrcOseuD-jDA64CMyRxpH-OUoozOQDYHj1mQ@mail.gmail.com>
-From: Yang Xiwen <forbidden405@outlook.com>
-In-Reply-To: <CAPDyKFo9NpKSuBnrcOseuD-jDA64CMyRxpH-OUoozOQDYHj1mQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TMN:  [2e+cQSV6Dinn6DBhf4JK/b9w04lGvgZueBsJtAagXI7B9EWrwyOt/5Q+TZ14fplwJt9L4NZMHNU=]
-X-ClientProxiedBy: TYWPR01CA0033.jpnprd01.prod.outlook.com
- (2603:1096:400:aa::20) To SEZPR06MB6959.apcprd06.prod.outlook.com
- (2603:1096:101:1ed::14)
-X-Microsoft-Original-Message-ID:  <61c35aa2-d89f-428e-a865-73ed1fb07649@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB6959:EE_|KL1PR06MB6274:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89ab83b2-1f10-40ee-7710-08dc2e49b9f1
-X-MS-Exchange-SLBlob-MailProps: 	Cq7lScuPrnrdnmJi087DV7oLZnpyxoFxawPDNQFnd2L1IlM6YZZXbtD7GGnaQ8hykVoPF/f9Yu6ATm3vezIHvVPCUvVJEf2Dr+9Fnwn7Yfo+4d/WFF92yj9zbo2cgVysn912KwgCHFPcQOZfy+9wSNfr1axaeDFn3OeUeoDbDK8b9IrnZTR012vM2KIezcbIN1UUTmXdJv/Q2suONSZESVaItkvfxCb+4pOZGs2KXTKuxT+3qTQ9BXF/nBwsJAdPXOSTic9xahYgWhIModZ2fmrpV2fLHiKYxOChpiUG657t4S8zzIIczKBwMYs0NSIsppVDNiVbhrZ6ts2/lsnXZ6mmTREuaar7OXW33pA/+yvu1lRvrjpJ+AysnSi5c2HdsED3vg5F3TXi7LfFiHTtjEQm6+dPk20BN7Ga4IedAkbWCdLkU7RBdhjktBQpqufMYxSa+xqds7WuFVMC3YFIv0gGBjqY7mPyGVqZJND0g0cyw2Mm5FvG2cgc5Fj9YLo/Gh0//HPIPYvdUUt+AmhraXizbF/oZMwKNfJdzfj6h9qeH/37Aabfj6yIdXkOluUv2HJTfTZCDWtTBrK3JyqKk4UvSskVK+YrSLeZ/JGjNf8V4+kTeCV9Ex8m1kMNA127gtlsOVDoNyIVY1FXnenZbV2zOmupSqmJrqahUvXTvVt3TFy7xwgdTMceZDqs/ZrU1j6zWFEZKUyFKUpujoWgTOZ2Ak9S+sKWKqPTjlgVcVyuH07/j0G0U0Ffmwt9Gs5kRLtihvUDaYg=
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	oVpUh8prVsWGqI+s5e5BcanErItCRSIfZfW+fJ52dynw/UAOEsldmqECN9SePSjbe+qg5Z+p/AEICm3ZCKo5Y1GctQ+RLolbJOJa8tORVJiquX9vCwJAZzhAocycrAWQbjXTV8F6mB0hVX+S/Qajr0rU7iH2woTheUL7GDJJjgUmjweu+moboMFYILsoxRn2VFkxAFsB8xwnzxZBkiuTVflIBw3KV0aSUn/hBC3gkiUq/p/7LfcNp1lqsey9dnMU6e0WKi/ctNdPdM8sTqqj7fO2rMp4JdI/yrHEa/nXZZqU/PaPrWHVrdlCNnq/cuzHWPLfh0i+r7bmheFRju8pXoJ9ghGARdjqH5Eb73l0Z5iA8wqVncZB1o8BWBP2Y50V+AV5/b5OB3MLbxPdWdPd9oggHevuXxDorNZA5xX8gZTiY9mQ2q7P0r8Z61daucGkZjBRNizNSFbURSrK4OxyTev5K/M4IGqrFPcp7SFvKeBx+oLJA86/UyfAAiUAuVrwS5tJQeOMlfscepuPyr3+vylIMUuKejjcbsTIOGB+RSdt8maJuc9SVADmfb+WLDRb
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?bERRdHluL0pIalVqd1F4NWZZTS9LbTc3T21uRWUzbmdlWG1EdUhDNk5JMUNw?=
- =?utf-8?B?OTdYbHZMcXFhK1RkeFRiMWtTLzU2a2UzMmxKSW9vaHVyWUpJRTVYZWhLM1g4?=
- =?utf-8?B?L0phMGV0TGZiRWxNZzR6aHE5QUhJQXNJVi9lS1lxNDE4am5keGJXbkVWUElL?=
- =?utf-8?B?ZHE0aXR4Q3JDME9MUWIxYm95ZXJ3Y1h0MTJvaHZDRjdaUUtsN1RaQlNnZVVq?=
- =?utf-8?B?NVVzSVV6Q0ZBWjlUQ001SGRoUkZBVHplRmdoVzd1Q2dwdEdHbUJXR0xzRThi?=
- =?utf-8?B?WGpFVkNwNTVXWk85clh1SklrTXZpWmw2R3dUMk5makViL0M3eGxSQmEwella?=
- =?utf-8?B?N2FWMEk0dE81RDhyN00zYWh4SERzeUxITHRCUG9mQkNGcUplRTZTckl3T0dh?=
- =?utf-8?B?MDRwNnd3Smx1YklQMTRKRVRYMHA3RE5jTkNsUXE2VkxCaUpFRCsxdTRiNnFX?=
- =?utf-8?B?S0dzSUl2UTBUNzhyeHROR1dncnpMam1wRDJDODVaa0w1R0w0OFcyRStFeXZF?=
- =?utf-8?B?dC8vU0JCK3Zna3UwOUdGMDIvaWY4cEY1WkFhY2lTMUw4RHhQYUtrMWdRMUdD?=
- =?utf-8?B?a0VMSWQxRlk3SExBZSt6dTJHbkZmV3BnNzVrRGJxblk0bTNNcHE1bElneEdL?=
- =?utf-8?B?NkxRbE5zN3FtU2lsajhrK094aURwcWc5WDRFN2Q4T3F4UUZkU0pmUG51T3Vh?=
- =?utf-8?B?aDVzOXlWNzk5c2dUNW9XdFhZMlF3NFFCNjVqM2xZVFlYWlB5dXhpQVZ5UVph?=
- =?utf-8?B?a0tUaGxhUG1POGhlTU1OS3BEbU1EMjc2c0ZXMDFyeFpJL0ZjNjJxMHYvRjlj?=
- =?utf-8?B?YzJSbVRhOXhkVzROczdhT0lBRTM1N29Kc0FHTmJkS3BVTDZwZnVvQjNLRGh1?=
- =?utf-8?B?S3RxQ1BjVlAxOTM1SmFSQzg4ZDYxakIyVm9VWiswR2ExRE1lSnZpb1ErNXkx?=
- =?utf-8?B?UjVMeXA4cDMzT0lZU2NwSDhxa3kzRll0TlI2UFlhUlpXRjNJSTN4SVBPMUh3?=
- =?utf-8?B?eVFjeE9nZjFkYm05R3FtTVlOSGpKSlVLUkhTZTdKUHhLVFJTb21SOEs3TWJH?=
- =?utf-8?B?ZTErakkxbjVBNVBMNU05NzBGUDZFaVRRRGcwRlYxQ1VRTWZLK2wvYmNvT0dz?=
- =?utf-8?B?Q0xlU3dyZ283ajl3V2dZU2ZSN3g3QStQZmhLamRhR0ZrQm4yY29VMDd2TEE0?=
- =?utf-8?B?ZXp6N3dvM1hoMng5RVJYUldTeWt1MHYzNWd6RHF2eWhqdmVLUE9pSjdaUnUx?=
- =?utf-8?B?RUhVTElwUEp0d1EwQzFqZ1VtRkp4YVZ3WjNQeGE4U2hwMUVBc0tzWHFJb2Zv?=
- =?utf-8?B?alEwSHIrYmgyQityUzVacVpkT0ZwTmFrd2EycllONG52Mk5pL2kxU0pzSENx?=
- =?utf-8?B?SjQ5N3EwQnU0SExmTHpPS0wwWi8waldWRjhqaG9ZNkNhZFpMa1J4VUxqRGN2?=
- =?utf-8?B?Z05SbWY4SWdSZ1NMNkxPMGl6djZCOG1ERkhuYm04N2Q3azNWd1c3bUIvUlJN?=
- =?utf-8?B?MmFWMHkyTTJGeWs4TXZlNlRtMDNqZitvUy9IQWtIQ0JiZ1pBZEhRTmJ2Lzd1?=
- =?utf-8?B?NkFpQVl4UUtkcVB4bGswRXVYV0tDWHJveEFwUzdXZ0cwall6VkpGck15MjVt?=
- =?utf-8?B?NXU5YXJoNWpjd3J0VzZ4UWtTR2VVQXZlL3h3SXRoQXRHYnBQaVd5QmxkUmxG?=
- =?utf-8?B?ejJoaDMrdStZOU1QRUJNNDVXZzBjeFpNK1FHSjl2ZEk3b1dVRG5kMmhEb3Bv?=
- =?utf-8?Q?6E42llNz6bn+MqlFVSskV++tcpW4+FfcI8BfTnI?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89ab83b2-1f10-40ee-7710-08dc2e49b9f1
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB6959.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Feb 2024 17:15:36.8940
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6274
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tbpqx338Mz3dWX;
+	Fri, 16 Feb 2024 22:00:27 +1100 (AEDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a3dbc8426f3so69500566b.1;
+        Fri, 16 Feb 2024 03:00:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708081220; x=1708686020; darn=lists.ozlabs.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PLhCxXeXfTy0oKV1PZq76pGTpwbsrb7RXVp5Ag35IfA=;
+        b=bGr3Hh1AmSU5iVf5IeIAmOLNssLn64RTsRlndNprmjjJRsiGhgQyZLhTVM4nitB2hY
+         zrq1DhGfQ7duXm7jFvqp3dODlXmym6ZQ7gpck5vqpp72UjncJccR49bjJg29EEv/hYW6
+         m43kFwrMviElYcRRlZpj1WijORAFxVO49dkolpAuFLkle/yyg9CEIj8bv4u5L/zSvMz8
+         XonMETOhEpLfgimzDOcBrnYOPmIEqiEfje+F1HKM3sVJmJnMeijM6XwO82VftrFfl44c
+         OGAyteXOAOzjU3Qj2/KW9kS4nuKGtx86r+g9DfsAxUrCZE0CvZBVt0wpaqafPcfk85c4
+         4d9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708081220; x=1708686020;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PLhCxXeXfTy0oKV1PZq76pGTpwbsrb7RXVp5Ag35IfA=;
+        b=ETew7elIe8jhArKJLdYEYiLzHo8bQ/6yrtAxL5hA6XcDE333Jt213+kcdGXGPivwGe
+         L2/iPdmBZsuITmqr55q+ROB9B+pNSW3WsMromyDl21ju6mYw41wE0cRntyO24HPkl+TM
+         E7UpRwYXwUY1uNKyianMGAjjwT2n8aGgLm8keFH5cwUbIzxPvRC4aocjV9XP4dM1O+c9
+         qyb0GPTl9QOQT7bJhTsVh1/ZnuiRQZxbcBFxBgnFWSHAW3IlKKMCzKxg9IutgDCfYkuT
+         0jvQh0HglbSfXP0YEwNktxsWdXlR0xnbQvov/opWGbYMMEjvDcZ3Zh1YLCjeqJiBOzBq
+         sauw==
+X-Forwarded-Encrypted: i=1; AJvYcCWBVt4YUwb2dOvtI9JNsIjRzgH6VccNXxBywZehS7RmCJm85PrNJ3BJjsntLHsf5aeySzDvDG+qijxrXhBQEueJxLyznAk3kUa+8XtAl6SGNrY6qTUVpXpayB6+Zh5h0Euk4+9abAil
+X-Gm-Message-State: AOJu0Ywz/qhjrp5m+nngNRbRN6MAp8V3gQN5g9nJEwpByjK7RCo68oGN
+	8KuQRtVImGO9MLInSfD7kjVFrxI7QUxt1Mnfp+kcu3Nmj1GdwcUe
+X-Google-Smtp-Source: AGHT+IGJg1U3l1s0cZ7SNrJJLULfB++IrJsj8RGS0gGWbyw09mvwxmMXattq7dTy3fEu4mQVbz3vaQ==
+X-Received: by 2002:a17:906:46da:b0:a3c:f6dc:ea46 with SMTP id k26-20020a17090646da00b00a3cf6dcea46mr3038631ejs.49.1708081220098;
+        Fri, 16 Feb 2024 03:00:20 -0800 (PST)
+Received: from localhost (p200300e41f147f00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f14:7f00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id ts4-20020a170907c5c400b00a3df003b6a9sm219235ejc.119.2024.02.16.03.00.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Feb 2024 03:00:19 -0800 (PST)
+Content-Type: multipart/signed;
+ boundary=3f4d0b1f359aea3b19397b20b790a1177690846d9dafd4c758ed6e868b5b;
+ micalg=pgp-sha256; protocol="application/pgp-signature"
+Mime-Version: 1.0
+Date: Fri, 16 Feb 2024 12:00:18 +0100
+Message-Id: <CZ6G9AYXMMHZ.3ABQKCJUHPSLU@gmail.com>
+Subject: Re: [PATCH 2/6] arm: dts: Fix dtc interrupt_provider warnings
+From: "Thierry Reding" <thierry.reding@gmail.com>
+To: "Rob Herring" <robh@kernel.org>, <soc@kernel.org>, "Shawn Guo"
+ <shawnguo@kernel.org>, "Sascha Hauer" <s.hauer@pengutronix.de>,
+ "Pengutronix Kernel Team" <kernel@pengutronix.de>, "Fabio Estevam"
+ <festevam@gmail.com>, "NXP Linux Team" <linux-imx@nxp.com>, "Rob Herring"
+ <robh+dt@kernel.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Tsahee Zidenberg" <tsahee@annapurnalabs.com>, "Antoine Tenart"
+ <atenart@kernel.org>, "Joel Stanley" <joel@jms.id.au>, "Andrew Jeffery"
+ <andrew@codeconstruct.com.au>, "Ray Jui" <rjui@broadcom.com>, "Scott
+ Branden" <sbranden@broadcom.com>, "Broadcom internal kernel review list"
+ <bcm-kernel-feedback-list@broadcom.com>, "Andrew Lunn" <andrew@lunn.ch>,
+ "Gregory Clement" <gregory.clement@bootlin.com>, "Sebastian Hesselbarth"
+ <sebastian.hesselbarth@gmail.com>, =?utf-8?q?Jonathan_Neusch=C3=A4fer?=
+ <j.neuschaefer@gmx.net>, "Jonathan Hunter" <jonathanh@nvidia.com>, "Stefan
+ Agner" <stefan@agner.ch>, "Maxime Coquelin" <mcoquelin.stm32@gmail.com>,
+ "Alexandre Torgue" <alexandre.torgue@foss.st.com>,
+ =?utf-8?q?Beno=C3=AEt_Cousson?= <bcousson@baylibre.com>, "Tony Lindgren"
+ <tony@atomide.com>, "Chanho Min" <chanho.min@lge.com>, "Matthias Brugger"
+ <matthias.bgg@gmail.com>, "AngeloGioacchino Del Regno"
+ <angelogioacchino.delregno@collabora.com>, "Geert Uytterhoeven"
+ <geert+renesas@glider.be>, "Magnus Damm" <magnus.damm@gmail.com>, "Linus
+ Walleij" <linusw@kernel.org>, "Imre Kaloz" <kaloz@openwrt.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Masahiro Yamada" <masahiroy@kernel.org>,
+ "Nathan Chancellor" <nathan@kernel.org>, "Nicolas Schier"
+ <nicolas@fjasle.eu>
+X-Mailer: aerc 0.16.0-1-0-g560d6168f0ed-dirty
+References: <20240213-arm-dt-cleanups-v1-0-f2dee1292525@kernel.org>
+ <20240213-arm-dt-cleanups-v1-2-f2dee1292525@kernel.org>
+In-Reply-To: <20240213-arm-dt-cleanups-v1-2-f2dee1292525@kernel.org>
 X-Mailman-Approved-At: Tue, 20 Feb 2024 09:27:24 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -123,106 +107,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, Adrian Hunter <adrian.hunter@intel.com>, Joel Stanley <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, linux-kbuild@vger.kernel.org, linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/16/2024 12:47 AM, Ulf Hansson wrote:
-> On Thu, 15 Feb 2024 at 12:03, Yang Xiwen via B4 Relay
-> <devnull+forbidden405.outlook.com@kernel.org> wrote:
->> From: Yang Xiwen <forbidden405@outlook.com>
->>
->> Parsing dt usaully happens very early, sometimes even bofore struct
->> mmc_host is allocated (e.g. dw_mci_probe() and dw_mci_parse_dt() in
->> dw_mmc.c). Looking at the source of mmc_of_parse_clk_phase(), it's
->> actually not mandatory to have a initialized mmc_host first, instead we
->> can pass struct device * to it directly.
->>
->> Also fix the only current user (sdhci-of-aspeed.c).
-> Is there a problem? I don't see it, can please elaborate.
+--3f4d0b1f359aea3b19397b20b790a1177690846d9dafd4c758ed6e868b5b
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-My pleasure.
+On Tue Feb 13, 2024 at 8:34 PM CET, Rob Herring wrote:
+[...]
+>  arch/arm/boot/dts/nvidia/tegra30-apalis-v1.1.dtsi      |  1 -
+>  arch/arm/boot/dts/nvidia/tegra30-apalis.dtsi           |  1 -
+>  arch/arm/boot/dts/nvidia/tegra30-colibri.dtsi          |  1 -
+[...]
 
-Just look into dw_mci_parse_dt() in dw_mmc.c, this function calls 
-specific extension's .parse_dt() function. And this function is called 
-very early even before struct mmc_host is allocated. Thus it'll be 
-impossible to retrieve host->slot->dev right now since host->slot is 
-still NULL. As a result, We are unable to call mmc_of_parse_clk_phase() 
-in our own .parse_dt() because it needs an initialized struct mmc_host. 
-But mmc_of_parse_clk_phase is intended to be invoked there since this is 
-where the driver is supposed to parse dt. dw_mci_probe() allocates 
-struct mmc_host and calls mmc_of_parse() very late(in 
-dw_mci_init_slot()) and provides us no chance to insert our own dt 
-parsing extensions after that.
+Acked-by: Thierry Reding <treding@nvidia.com>
 
-The key is that mmc_of_parse_clk_phase() is a very simple function which 
-only extracts a few dt props. It is supposed to be called early in the 
-driver before struct mmc_host is allocated. Unlike mmc_of_parse() which 
-fills in a lot of fields in struct mmc_host, it does not need this struct.
+--3f4d0b1f359aea3b19397b20b790a1177690846d9dafd4c758ed6e868b5b
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Kind regards
-> Uffe
->
->> Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
->> ---
->>   drivers/mmc/core/host.c            | 4 +---
->>   drivers/mmc/host/sdhci-of-aspeed.c | 2 +-
->>   include/linux/mmc/host.h           | 2 +-
->>   3 files changed, 3 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
->> index cf396e8f34e9..8b2844ac5dc5 100644
->> --- a/drivers/mmc/core/host.c
->> +++ b/drivers/mmc/core/host.c
->> @@ -234,10 +234,8 @@ static void mmc_of_parse_timing_phase(struct device *dev, const char *prop,
->>   }
->>
->>   void
->> -mmc_of_parse_clk_phase(struct mmc_host *host, struct mmc_clk_phase_map *map)
->> +mmc_of_parse_clk_phase(struct device *dev, struct mmc_clk_phase_map *map)
->>   {
->> -       struct device *dev = host->parent;
->> -
->>          mmc_of_parse_timing_phase(dev, "clk-phase-legacy",
->>                                    &map->phase[MMC_TIMING_LEGACY]);
->>          mmc_of_parse_timing_phase(dev, "clk-phase-mmc-hs",
->> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
->> index 42d54532cabe..430c1f90037b 100644
->> --- a/drivers/mmc/host/sdhci-of-aspeed.c
->> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
->> @@ -435,7 +435,7 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
->>                  goto err_sdhci_add;
->>
->>          if (dev->phase_desc)
->> -               mmc_of_parse_clk_phase(host->mmc, &dev->phase_map);
->> +               mmc_of_parse_clk_phase(&pdev->dev, &dev->phase_map);
->>
->>          ret = sdhci_add_host(host);
->>          if (ret)
->> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
->> index 2f445c651742..5894bf912f7b 100644
->> --- a/include/linux/mmc/host.h
->> +++ b/include/linux/mmc/host.h
->> @@ -539,7 +539,7 @@ struct mmc_host *devm_mmc_alloc_host(struct device *dev, int extra);
->>   int mmc_add_host(struct mmc_host *);
->>   void mmc_remove_host(struct mmc_host *);
->>   void mmc_free_host(struct mmc_host *);
->> -void mmc_of_parse_clk_phase(struct mmc_host *host,
->> +void mmc_of_parse_clk_phase(struct device *dev,
->>                              struct mmc_clk_phase_map *map);
->>   int mmc_of_parse(struct mmc_host *host);
->>   int mmc_of_parse_voltage(struct mmc_host *host, u32 *mask);
->>
->> ---
->> base-commit: 9d64bf433c53cab2f48a3fff7a1f2a696bc5229a
->> change-id: 20240215-mmc_phase-26e85511285d
->>
->> Best regards,
->> --
->> Yang Xiwen <forbidden405@outlook.com>
->>
+-----BEGIN PGP SIGNATURE-----
 
--- 
-Regards,
-Yang Xiwen
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmXPQEMACgkQ3SOs138+
+s6F44g/+KPT4RF0vNadKSFIV9/iihK84gvvjHc/8S/+Ks+sJw7//4Zws8JtsGdab
+UvvmQ8R5uIrvLpONlnmdl8cjWpnA3OV1VMJRgXeYIR/kKZxuoiZF03R8COiGQvfJ
+Cf4mq2od1sc4OOIFxTV0KJfp6XbmI09stW6zm5wk1F5CjbnMD0TTgxQhEAsOLfum
+aDJefFKp6T8QOlCQhCeYYnXwUIBdoYs7z+SRXBuJWJvgwdPMnyc4M7/5PtW57UXZ
+Vn2Hri2+u9imbcIzSUkrPLev1Kg5sWTF7CSICzmA+jTvHQUAZFQQMyjrGFkFTeI/
+g/J4ljpwRqBlhXRx5ioNbGqYmptZvuljjH6bT8hDzTRNPdfvZfKJSX2+wWb5+kM7
+/CdKfwORAUgMMqqABa4mSxHys/mmyeLJ2idQj/buql4pC7EpgD7SZRadqnaAkD/S
+3zxA6VBVq4Jt+6X3kjgGySa0tUyBMSWydLjH/TTkcZtwu8iEEggp7MxiYA2wJhne
+Pf5VjnhX5nLnPJuJn/Av5GHF1jvsrt9lENJTmpLFZIzxhxWrPntynrvfbpAV50e3
+eWqEDRu7eWFatZNZTrnRhmOHcGO197HIErp20X4PVISOY0uolzuiHFpjQBCUGQdV
+1xaTRZPbjaTB4pcqWNxi+mI4M6jIyDJc6COrC2G9t5GYMcbE6W4=
+=HY7z
+-----END PGP SIGNATURE-----
 
+--3f4d0b1f359aea3b19397b20b790a1177690846d9dafd4c758ed6e868b5b--
