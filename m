@@ -2,115 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB4928608F4
-	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 03:43:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 677988608F5
+	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 03:44:30 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OP952Y0K;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZhE7YvZT;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TgvTR3r7Tz3dXC
-	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 13:43:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TgvVN1wHqz3dX2
+	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 13:44:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OP952Y0K;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZhE7YvZT;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=outlook.com (client-ip=2a01:111:f403:280c::801; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=forbidden405@outlook.com; receiver=lists.ozlabs.org)
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01olkn20801.outbound.protection.outlook.com [IPv6:2a01:111:f403:280c::801])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::535; helo=mail-pg1-x535.google.com; envelope-from=ppighouse@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tfx0y3wtsz30Qk;
-	Wed, 21 Feb 2024 23:49:05 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HU6TW+LAmd9UZ9f9U9MAztiKDeWVn3ClYbcyibEDXUzH4eszkTdbj27T3N1BseCIx60gFxe2vmOUFQ6nbDAuPC9N37v+W+4yxRTzwzqnytyTX7Ivuq5sdEoxPLskts5RYoWYbwDOfPtkLPimZKKKwGqKOm3lzTJsofGBfjRYUvgnRCGyoYLvkQ4HXAjEMyXXrUG02eauSB08EW6UoMuh9GDhvh66hyL2SPy9J43XwRlUYZg7oK7mWboWDj7T4aI9TBzfl94KNSwiS4GMq8ga2ZQXhyPPclHexPyd2GFEj/F60cT38VtanjqiNBaquMbDe/y3ODTzebqwe6KlYSlrLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rBpQjQJ7mbmLeoVKRu3vitTuzjyyAuqnmfOXzu7vkYQ=;
- b=fupmacuqnlKQsANY6FtmLdVNjbGab7jKiiW+9SZABUsohGvIxhgrMc14oSuhZxZunmCMXGrJT1gYY4j75vL3wB85AlfDWHn0ew7D8zYDKiw/jTHPfAC/629OdEAkGXm7jhxU9c269tHpdAfmKvpIVaOg2ezKnufPaB052caWi8ibrKqJH7LsCwcXYo5PLmKvDYQRCVTdUbe6RTMbolr7kj5hvhDYsXumbvLsKcsdRdBEccZumEN6rZHT2MgaMqb35SfN9aWjpAAAQTN+SJcW98s/trRsaWcMfgfcXQe+rPkKeMWr7jp0LU9dDcXS0Dna/b/zkxReDUxlWfrnI74g2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rBpQjQJ7mbmLeoVKRu3vitTuzjyyAuqnmfOXzu7vkYQ=;
- b=OP952Y0KdtK7omOwLW0fIy4vJ3ZLqpO8KxMhlCLpFW90pMxfXCqux9g1fMB8BsJzQp61zCd9AsSLSPUAY+fzjN1K0GgqkD2V1hrKF+K2c9QIPCDEhzaG+QfCji82+fLK5pAH6qPNgngHjf3mQ72lEzMsrm6gG5Lk/6XRKwC6D4+NBZoghJdfxg8lfWeVrCGd9nQ/zuM7i7xwdVMxa71YT59MezTTupOZ6jlXlRN7LDbw6FjyENWtQH6ewbtV8JiGuOHhCL8H1AvzlPQjz7kBOW6NWDJCDGPUhlv+7hTUVL9/o1VVEvB67sceZRKY6kNWSxV9Ubdkf3aANRDbsEUMLw==
-Received: from SEZPR06MB6959.apcprd06.prod.outlook.com (2603:1096:101:1ed::14)
- by KL1PR06MB7317.apcprd06.prod.outlook.com (2603:1096:820:145::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.34; Wed, 21 Feb
- 2024 12:48:39 +0000
-Received: from SEZPR06MB6959.apcprd06.prod.outlook.com
- ([fe80::53da:a8a:83cb:b9ad]) by SEZPR06MB6959.apcprd06.prod.outlook.com
- ([fe80::53da:a8a:83cb:b9ad%4]) with mapi id 15.20.7292.036; Wed, 21 Feb 2024
- 12:48:39 +0000
-Message-ID:  <SEZPR06MB695941B73156497A7E73CE8596572@SEZPR06MB6959.apcprd06.prod.outlook.com>
-Date: Wed, 21 Feb 2024 20:48:25 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mmc: host: replace 1st argument to struct device * for
- mmc_of_parse_clk_phase()
-Content-Language: en-US
-To: Ulf Hansson <ulf.hansson@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Adrian Hunter <adrian.hunter@intel.com>, Joel Stanley <joel@jms.id.au>
-References: <20240215-mmc_phase-v1-1-f27644ee13e4@outlook.com>
-From: Yang Xiwen <forbidden405@outlook.com>
-In-Reply-To: <20240215-mmc_phase-v1-1-f27644ee13e4@outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TMN: [R8K6OdDz7NE1mlww1KdSEuL60F5ECXVLELv/8TOcc7YXvKLHYv9i7D5ffRLJLBMJ]
-X-ClientProxiedBy: TY2PR02CA0031.apcprd02.prod.outlook.com
- (2603:1096:404:a6::19) To SEZPR06MB6959.apcprd06.prod.outlook.com
- (2603:1096:101:1ed::14)
-X-Microsoft-Original-Message-ID:  <e3aee910-974e-4fb9-8fc3-152b85130c6b@outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TgJRw5glfz3cDy;
+	Thu, 22 Feb 2024 14:25:15 +1100 (AEDT)
+Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-5cedfc32250so1148475a12.0;
+        Wed, 21 Feb 2024 19:25:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708572310; x=1709177110; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxUhb7HWSHEEtWcNxUj9aB2mtRaRV8aQ3dMZ3L1m4bY=;
+        b=ZhE7YvZTZtdjeVXtGDVcT7KlPJz4GVGNotd1HR7oYZ9Nf2TDP2tP2rxJKp9GEZ5pP4
+         koUS+84saiqozmH9Jy0RqWAwQLfwWGxrSHqYEywgPCv9ZIQFpJTgk7t32PSCqNIrtprq
+         aMGN8b5RsmxwI5Tchixvy44WnUkX/Ni+Hf/dw7FhIOe0asV5DI4RvagXH720vPgblvBq
+         VqqAQKKUs33Mu9++2uFvJ2x9g0FdI7WY0sitoIOV76qzspm76tWYJPmmOzSLxEvTosf8
+         zKxNEqz4eY2IauGzEgPXtfvstBg6d8CJeq0vrbTclzUgbxYaN4w6eUkGzsNcchXmiq9t
+         N+rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708572310; x=1709177110;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZxUhb7HWSHEEtWcNxUj9aB2mtRaRV8aQ3dMZ3L1m4bY=;
+        b=ks3gEEVD84zam9Ch8PFKlsG2b7hND0Pu1CuVYhvIHZiwB/H7JqHqdBMDfOsnaUUpCS
+         rLmeXIt7SJWK+QlQWwPnL/BijIiOahu+HRNuLBqsdKej1aE4rrpxb+V3LxouF5CWezFQ
+         LW73I5ny6yv1lH0ZtcDMrlZcoGst1hc/YdESsY+9Zmjeu/KBQatLtQCjDckvaW9kZwIk
+         0BMIG8uQD+6LSIt8EV85qIz/9gBVpL20M26WIFTqsKYcaiBK3RZugP/7ybxeiTedpG57
+         Q/EgSIfmZJmouAVcsL6tLcF+pPCOEZG5p4YCJoqnI5psx98GEFXlEh/RPOnsNa8jbltd
+         SXcA==
+X-Forwarded-Encrypted: i=1; AJvYcCVnM+/zyU7Je880h2WtpvSciP4Wy8uM+b9lOIJ+JmE5Nlc6hhPAezIyCR17mLRSPwYpNBm36rwcpVVU6YK7CJw/rZyqnmkU3mptrTQ1Uzf2sWPQqOzhRngfRGaZSMcnUPA0vpCeLhmM
+X-Gm-Message-State: AOJu0Yy/kVkL8RlOFRBI0wj197QccZmowkAhTcvKVm/EYDYWGKFEJLVE
+	SiFEGHS0ZzRxlKBXEIT7QnxG1met4+wU+HMks1pTwh2ga+E4/ViULRmG9NS2Aco=
+X-Google-Smtp-Source: AGHT+IG9pZtA9nrexNOfi+5bAGUeKhpSlyCyU0pekQ4aBEtvqYCr1ubyMU5O2uUXCfd2HUD639U8QQ==
+X-Received: by 2002:a05:6a21:3a87:b0:1a0:70db:43e5 with SMTP id zv7-20020a056a213a8700b001a070db43e5mr22455587pzb.5.1708572309816;
+        Wed, 21 Feb 2024 19:25:09 -0800 (PST)
+Received: from localhost.localdomain (125-229-150-10.hinet-ip.hinet.net. [125.229.150.10])
+        by smtp.gmail.com with ESMTPSA id h15-20020a170902f7cf00b001db4433ef95sm8781580plw.152.2024.02.21.19.25.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Feb 2024 19:25:09 -0800 (PST)
+From: Kelly Hung <ppighouse@gmail.com>
+X-Google-Original-From: Kelly Hung <Kelly_Hung@asus.com>
+To: robh+dt@kernel.org
+Subject: [PATCH] ARM: dts: aspeed: x4tf: Add dts for asus x4tf project
+Date: Thu, 22 Feb 2024 11:25:03 +0800
+Message-Id: <20240222032504.1147489-1-Kelly_Hung@asus.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB6959:EE_|KL1PR06MB7317:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44957021-cbe1-4f94-32eb-08dc32db6d12
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	0dx19bR8VpTslOiJ+zoneSWR/chrWb2Xg4EmdTqg8K8agDG5YxmEoIyYHst9PniAeIZev6mxUaxsJpmeCVrObSaT90ivA1wmx9dWfaeCgBHI9kyjiyD3gNiaujbM8Ol4Uq+wToNCooIdf0KSxysMU8VcSeJlG30eMHKSQZqo9aK1xOYxkf6UP3Gut8cH1TvmT4sA0EpIJqx6nk67pKxflc4E2G0W7gkSAjMiRZatnUr7IH2GrPzpU2kgAkM4LzFD2eaTQnvaNyQebKLesFr5XSAzg32HDbZtQuZ/2QALbu0FY9+7Uk2ldp+ALS4yBzWZfF/EZRWhR1fI0h8AkXyOdMTlvRu1o8KIQrDFqJWHGKlNqDsltS5U2HSEnU7EnjXVPbMxCLIm30TZJX68SuPOwHLTpZRqjIeKgNRY6VeAYFnuqP7X3x/wLn6sq5GXqquo8OR56VjPB/b0UISK4CAYmrn3UHHe3FTDTU9IP67bHFWpn4xVi3BNgg7R1VpO8C+EP+XuFnh7Nq4Di760dtTcylOJbM805wbpSHyDrnZCkQsXHf5htr7d+NZUoru9l75UtiA9Upi9RFgcEcPPn6izQ1Uq4/gvyLg8F/osEQ8Msho=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?clV0WWI3RUJFbnlPTVQySG81R1UzbFM3OVhqOGg5d2dXVVN3QTUwSVFaR2hD?=
- =?utf-8?B?c29sZXkzQ2RNeEpjNnFUMXBNYVkrQzFvbmV6ZWRlbmZzdkNzV2F0UHZJUUY1?=
- =?utf-8?B?dFZ6M0tzQzVxNzVpbWhOcytUcU9tR016ZTZJS05xaW9NTkhtcU9KUFdsY1p1?=
- =?utf-8?B?a2NlWFEyZGl1aEEvdXlYMW51YnNUeGZ4NlQwT3FXZ2ZDY2lsYk1wR1RoMVBa?=
- =?utf-8?B?K2tXVEJ3MHdpc21VOWJ6OEhBR3FpVzhvWTJPRC9LSEF1LzJnQmJIUlVUOHpE?=
- =?utf-8?B?bEhGcUsraXptZXh6eHZXRmpubWdFK2trSjU0OEZla3psQnlLeTdnSUpGUldN?=
- =?utf-8?B?elJSaitQWnQ1NkR4d3BXSFNweTVPNHJrUWFuTEJNSWQ2dm0vajFOYjJqQ2NX?=
- =?utf-8?B?eGYzY3dtSlZiOHhhc3JIYnpYSlNOMnlnanpyc0ppS29jdHo1NVdsNllUR3pq?=
- =?utf-8?B?SjNIWUlQeE1WbjlUanZ1SEhMczVvbFJLdDBhb1ZKcVJ2cWJmQ2JKRjdLQlRw?=
- =?utf-8?B?b2YrOFkrOWtBaWsvOE12SUFqL0ZGaTMvUy9PbjZ6NmJCd3hlYlhHTHVUL2RQ?=
- =?utf-8?B?OG9HY1dOL1hkN0RLVVQ5QUVjdW5aQjd4SVJHdDRxNWIwdVYvYVFKNVFNeGRq?=
- =?utf-8?B?bERRZi9wS0s4N3VBc2k5T21tdzIxeVRBM29VWDA3b0VNdTlBdzE5QSswU3Fr?=
- =?utf-8?B?L0tYNXY3TFpKcGFUSVZSY0htT1RXVnF2c1U4Zi92SVcvTlFqaE0xTHFCZkJU?=
- =?utf-8?B?a1Z1emxneThLUEVmL3pZWk8zQVJrQjd4bWRVUTBpdlFMV3dTQUQyNlZTT1cy?=
- =?utf-8?B?RW01TGVYL3NDV1JCM0ZBUkhvRkFrS2YxVVFEa1EyZzVyVXQyc1pBVys4VXJ0?=
- =?utf-8?B?YnQ5dGJRWkQzRTZDR2hGcnRFQ3BGTUVIbFNMQytNMjZIaWNSbUl0ZGpiWXFJ?=
- =?utf-8?B?NFZxM3JMQTVOZTJvbHp4My95eWlxM1N1VFZCc2I4dE9tcUp0MFVyTnZ3YWdV?=
- =?utf-8?B?dUhRYVRWUXRpOXowcW4wbVJEY1Z6U2gzTnR0T3RmSTBWUTQ4c09NMUdTU21P?=
- =?utf-8?B?Z0NGM0J2WVNUL0RhS3JoeFFrT2llcWgxSENGaFlCN243RlhZZjFkYXpTOGd0?=
- =?utf-8?B?T0o5dUJvaWFKVmcya0xpUWNjUjJLRlF3NUpLcE9BRzhML1dhNjhpd0lJWm9M?=
- =?utf-8?B?WjNDVm8yWHo1YTBLK0JOaDN3SmYxYWhXdzR2OFo4b2NnUU92emJmT0UraTZZ?=
- =?utf-8?B?MmZYMmdYQTZDellNeklqYllGeEtEZFRSUUlvUlg2WWxNMVdRR1Jpd2RHbita?=
- =?utf-8?B?eEJ4RjBUVE1Bd0w4d3l3ZmdOTUF4ZEtWcmR0b0kySUZadi82M0NiSUFTOWxw?=
- =?utf-8?B?dnNQcG9XTzhNTGNqSnkyY2FyWStYSVN3eFhFMTYydlRmUERFSXRlM3JnMGlW?=
- =?utf-8?B?RGZIT0FqRVBuK25sNHZ5TFMwWFp6S0NTQTAzMWtqSGtCMHhSL3JsTzZDMWdE?=
- =?utf-8?B?WTVYRVBzb2tkMmw1SnZEMnlkWFBybmJMSFNSaWx3eVJiSU5qR0IvdlBvd2p4?=
- =?utf-8?B?dTQvWitUUTBTUWQ3ejFXLzNkaGxyc1dLSFlGNWsxMUxOL243VGNiQXRqbkd1?=
- =?utf-8?B?MU4wK2w2aEc5a0MxeG5jbVA3Y0MxS1pRRzJmcWxjVG9qV3RFVERFVDhWSjVS?=
- =?utf-8?B?czJjTm9wYktaQ2hwNzFuRE9BdWR1QS9lTzRuM0tBbmQrMDRHbUIzZS84ZFZv?=
- =?utf-8?Q?XAa2EHIdDMy+96rbUjqIk7KkKxTfpk9GYS+kjgf?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44957021-cbe1-4f94-32eb-08dc32db6d12
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB6959.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2024 12:48:39.0243
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB7317
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 23 Feb 2024 13:36:41 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -123,86 +78,687 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Kelly Hung <Kelly_Hung@asus.com>, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, Allenyy_Hsu@asus.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/15/2024 7:03 PM, Yang Xiwen via B4 Relay wrote:
-> From: Yang Xiwen <forbidden405@outlook.com>
->
-> Parsing dt usaully happens very early, sometimes even bofore struct
-> mmc_host is allocated (e.g. dw_mci_probe() and dw_mci_parse_dt() in
-> dw_mmc.c). Looking at the source of mmc_of_parse_clk_phase(), it's
-> actually not mandatory to have a initialized mmc_host first, instead we
-> can pass struct device * to it directly.
->
-> Also fix the only current user (sdhci-of-aspeed.c).
->
-> Signed-off-by: Yang Xiwen <forbidden405@outlook.com>
-> ---
->   drivers/mmc/core/host.c            | 4 +---
->   drivers/mmc/host/sdhci-of-aspeed.c | 2 +-
->   include/linux/mmc/host.h           | 2 +-
->   3 files changed, 3 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/mmc/core/host.c b/drivers/mmc/core/host.c
-> index cf396e8f34e9..8b2844ac5dc5 100644
-> --- a/drivers/mmc/core/host.c
-> +++ b/drivers/mmc/core/host.c
-> @@ -234,10 +234,8 @@ static void mmc_of_parse_timing_phase(struct device *dev, const char *prop,
->   }
->   
->   void
-> -mmc_of_parse_clk_phase(struct mmc_host *host, struct mmc_clk_phase_map *map)
-> +mmc_of_parse_clk_phase(struct device *dev, struct mmc_clk_phase_map *map)
->   {
-> -	struct device *dev = host->parent;
-> -
->   	mmc_of_parse_timing_phase(dev, "clk-phase-legacy",
->   				  &map->phase[MMC_TIMING_LEGACY]);
->   	mmc_of_parse_timing_phase(dev, "clk-phase-mmc-hs",
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-> index 42d54532cabe..430c1f90037b 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -435,7 +435,7 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
->   		goto err_sdhci_add;
->   
->   	if (dev->phase_desc)
-> -		mmc_of_parse_clk_phase(host->mmc, &dev->phase_map);
-> +		mmc_of_parse_clk_phase(&pdev->dev, &dev->phase_map);
->   
->   	ret = sdhci_add_host(host);
->   	if (ret)
-> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-> index 2f445c651742..5894bf912f7b 100644
-> --- a/include/linux/mmc/host.h
-> +++ b/include/linux/mmc/host.h
-> @@ -539,7 +539,7 @@ struct mmc_host *devm_mmc_alloc_host(struct device *dev, int extra);
->   int mmc_add_host(struct mmc_host *);
->   void mmc_remove_host(struct mmc_host *);
->   void mmc_free_host(struct mmc_host *);
-> -void mmc_of_parse_clk_phase(struct mmc_host *host,
-> +void mmc_of_parse_clk_phase(struct device *dev,
->   			    struct mmc_clk_phase_map *map);
->   int mmc_of_parse(struct mmc_host *host);
->   int mmc_of_parse_voltage(struct mmc_host *host, u32 *mask);
->
-> ---
-> base-commit: 9d64bf433c53cab2f48a3fff7a1f2a696bc5229a
-> change-id: 20240215-mmc_phase-26e85511285d
->
-> Best regards,
+Base on aspeed-g6.dtsi and can boot into BMC console.
 
+Signed-off-by: Kelly Hung <Kelly_Hung@asus.com>
+---
+ arch/arm/boot/dts/aspeed/Makefile             |   3 +-
+ .../boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts  | 651 ++++++++++++++++++
+ 2 files changed, 653 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
 
-Dear maintainers, this patch has been absorbed by the patchset here:
-
-https://lore.kernel.org/all/20240221-b4-mmc-hi3798mv200-v6-1-bc41bf6a9769@outlook.com/
-
-
-So do not apply this patch directly anymore.
-
+diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
+index d3ac20e316d0..f7cc69b636fc 100644
+--- a/arch/arm/boot/dts/aspeed/Makefile
++++ b/arch/arm/boot/dts/aspeed/Makefile
+@@ -62,4 +62,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-ufispace-ncplite.dtb \
+ 	aspeed-bmc-vegman-n110.dtb \
+ 	aspeed-bmc-vegman-rx20.dtb \
+-	aspeed-bmc-vegman-sx20.dtb
++	aspeed-bmc-vegman-sx20.dtb \
++	aspeed-bmc-asus-x4tf.dtb
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
+new file mode 100644
+index 000000000000..fbe39eaec154
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
+@@ -0,0 +1,651 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright 2024 ASUS Corp.
++
++/dts-v1/;
++
++#include "aspeed-g6.dtsi"
++#include "aspeed-g6-pinctrl.dtsi"
++#include <dt-bindings/i2c/i2c.h>
++#include <dt-bindings/gpio/aspeed-gpio.h>
++
++/ {
++	model = "ASUS-X4TF";
++	compatible = "asus,x4tf", "aspeed,ast2600";
++
++	aliases {
++		serial4 = &uart5;
++	};
++
++	chosen {
++		stdout-path = "serial4:115200n8";
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x40000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		video_engine_memory: video {
++			size = <0x04000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
++				<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
++				<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
++				<&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		led-heartbeat {
++			gpios = <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "heartbeat";
++		};
++
++		led-uid {
++			gpios = <&gpio0 ASPEED_GPIO(P, 1) (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
++			default-state = "off";
++		};
++
++		led-status_Y {
++			gpios = <&gpio1 ASPEED_GPIO(B, 1) GPIO_ACTIVE_LOW>;
++			default-state = "off";
++		};
++
++		led-sys_boot_status {
++			gpios = <&gpio1 ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
++			default-state = "off";
++		};
++	};
++};
++
++&adc0 {
++	vref = <2500>;
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++		&pinctrl_adc2_default &pinctrl_adc3_default
++		&pinctrl_adc4_default &pinctrl_adc5_default
++		&pinctrl_adc6_default &pinctrl_adc7_default>;
++};
++
++&adc1 {
++	vref = <2500>;
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
++		&pinctrl_adc10_default &pinctrl_adc11_default
++		&pinctrl_adc12_default &pinctrl_adc13_default
++		&pinctrl_adc14_default &pinctrl_adc15_default>;
++};
++
++&peci0 {
++	status = "okay";
++};
++
++&lpc_snoop {
++	snoop-ports = <0x80>;
++	status = "okay";
++};
++
++&mdio2 {
++	status = "okay";
++
++	ethphy2: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mdio3 {
++	status = "okay";
++
++	ethphy3: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac2 {
++	status = "okay";
++	phy-mode = "rmii";
++	use-ncsi;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii3_default>;
++};
++
++&mac3 {
++	status = "okay";
++	phy-mode = "rmii";
++	use-ncsi;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++};
++
++&fmc {
++	status = "okay";
++
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bmc-spi";
++		spi-max-frequency = <50000000>;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			bmc@0 {
++				label = "bmc";
++				reg = <0x0 0x4000000>;
++			};
++
++			u-boot@0 {
++				label = "u-boot";
++				reg = <0x0 0x200000>;
++			};
++
++			u-boot-env@1f0000 {
++				label = "u-boot-env";
++				reg = <0x1f0000 0x10000>;
++			};
++
++			kernel@200000 {
++				label = "kernel";
++				reg = <0x200000 0xc00000>;
++			};
++
++			rofs@a00000 {
++				label = "rofs";
++				reg = <0xa00000 0x2a00000>;
++			};
++
++			rwfs@2a00000 {
++				label = "rwfs";
++				reg = <0x2a00000 0x43f0000>;
++			};
++		};
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++
++	flash@0 {
++		status = "okay";
++		label = "bios-spi";
++		spi-max-frequency = <50000000>;
++
++		partitions {
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			biosfullimg@0 {
++				reg = <0x0 0x2000000>; //32768 *1024 = 32 MB
++				label = "biosfullimg";
++			};
++		};
++	};
++};
++
++&i2c0 {
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++};
++
++&i2c2 {
++	status = "okay";
++};
++
++&i2c3 {
++	status = "okay";
++};
++
++&i2c4 {
++	status = "okay";
++
++	temperature-sensor@48 {
++		compatible = "ti,tmp75";
++		reg = <0x48>;
++	};
++
++	temperature-sensor@49 {
++		compatible = "ti,tmp75";
++		reg = <0x49>;
++	};
++
++	pca9555_4_20: gpio@20 {
++		compatible = "nxp,pca9555";
++		reg = <0x20>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	pca9555_4_22: gpio@22 {
++		compatible = "nxp,pca9555";
++		reg = <0x22>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	pca9555_4_24: gpio@24 {
++		compatible = "nxp,pca9555";
++		reg = <0x24>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names =
++		/*A0 - A3 0*/	"", "STRAP_BMC_BATTERY_GPIO1", "", "",
++		/*A4 - A7 4*/	"", "", "", "",
++		/*B0 - B7 8*/	"", "", "", "", "", "", "", "";
++	};
++
++	pca9555_4_26: gpio@26 {
++		compatible = "nxp,pca9555";
++		reg = <0x26>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	i2c-mux@70 {
++		compatible = "nxp,pca9546";
++		status = "okay";
++		reg = <0x70>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		channel_1: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		channel_2: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		channel_3: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		channel_4: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c5 {
++	status = "okay";
++
++	pca9555_5_24: gpio@24 {
++		compatible = "nxp,pca9555";
++		reg = <0x24>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	i2c-mux@70  {
++		compatible = "nxp,pca9546";
++		status = "okay";
++		reg = <0x70 >;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		channel_5: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++
++			pca9555_5_5_20: gpio@20 {
++				compatible = "nxp,pca9555";
++				reg = <0x20>;
++				gpio-controller;
++				#gpio-cells = <2>;
++				gpio-line-names =
++					"", "", "", "", "", "", "", "",
++					"", "", "SYS_FAN6", "SYS_FAN5",
++					"SYS_FAN4", "SYS_FAN3",
++					"SYS_FAN2", "SYS_FAN1";
++			};
++
++			pca9555_5_5_21: gpio@21 {
++				compatible = "nxp,pca9555";
++				reg = <0x21>;
++				gpio-controller;
++				#gpio-cells = <2>;
++			};
++
++			power-monitor@44 {
++				compatible = "ti,ina219";
++				reg = <0x44>;
++				shunt-resistor = <2>;
++			};
++		};
++
++		channel_6: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		channel_7: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		channel_8: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c6 {
++	status = "okay";
++
++	pca9555_6_27: gpio@27 {
++		compatible = "nxp,pca9555";
++		reg = <0x27>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	pca9555_6_20: gpio@20 {
++		compatible = "nxp,pca9555";
++		reg = <0x20>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names =
++		/*A0 0*/	"", "", "", "", "", "", "", "",
++		/*B0 8*/	"Drive_NVMe1", "Drive_NVMe2", "", "",
++		/*B4 12*/	"", "", "", "";
++	};
++
++	pca9555_6_21: gpio@21 {
++		compatible = "nxp,pca9555";
++		reg = <0x21>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++};
++
++&i2c7 {
++	status = "okay";
++
++	i2c-mux@70 {
++		compatible = "nxp,pca9546";
++		status = "okay";
++		reg = <0x70>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		idle-state = <1>;
++
++		channel_9: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++
++			temperature-sensor@48 {
++				compatible = "ti,tmp75";
++				reg = <0x48>;
++			};
++
++			temperature-sensor@49 {
++				compatible = "ti,tmp75";
++				reg = <0x49>;
++			};
++
++			power-monitor@40 {
++				compatible = "ti,ina219";
++				reg = <0x40>;
++				shunt-resistor = <2>;
++			};
++
++			power-monitor@41 {
++				compatible = "ti,ina219";
++				reg = <0x41>;
++				shunt-resistor = <5>;
++			};
++		};
++
++		channel_10: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		channel_11: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		channel_12: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++
++	i2c-mux@71 {
++		compatible = "nxp,pca9546";
++		status = "okay";
++		reg = <0x71>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		i2c-mux-idle-disconnect;
++
++		channel_13: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		channel_14: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		channel_15: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		channel_16: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c8 {
++	status = "okay";
++
++	i2c-mux@70 {
++		compatible = "nxp,pca9546";
++		status = "okay";
++		reg = <0x70>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		i2c-mux-idle-disconnect;
++
++		channel_17: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		channel_18: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++
++			temperature-sensor@48 {
++				compatible = "ti,tmp75";
++				reg = <0x48>;
++			};
++
++			power-monitor@41 {
++				compatible = "ti,ina219";
++				reg = <0x41>;
++				shunt-resistor = <5>;
++			};
++		};
++
++		channel_19: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		channel_20: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
++};
++
++&i2c9 {
++	status = "okay";
++};
++
++&i2c10 {
++	status = "okay";
++};
++
++&i2c11 {
++	status = "okay";
++};
++
++&i2c14 {
++	status = "okay";
++	multi-master;
++
++	eeprom@50 {
++		compatible = "atmel,24c08";
++		reg = <0x50>;
++	};
++
++	eeprom@51 {
++		compatible = "atmel,24c08";
++		reg = <0x51>;
++	};
++};
++
++&sgpiom0 {
++	status = "okay";
++	ngpios = <128>;
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++&sdc {
++	status = "okay";
++};
++
++&lpc_snoop {
++	status = "okay";
++	snoop-ports = <0x80>;
++};
++
++&kcs1 {
++	aspeed,lpc-io-reg = <0xca0>;
++	status = "okay";
++};
++
++&kcs2 {
++	aspeed,lpc-io-reg = <0xca8>;
++	status = "okay";
++};
++
++&kcs3 {
++	aspeed,lpc-io-reg = <0xca2>;
++	status = "okay";
++};
++
++&uart3 {
++	status = "okay";
++};
++
++&uart4 {
++	status = "okay";
++	/* GPIOB6 will be used in ASD function, do not set to be TXD4 */
++	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&uart_routing {
++	status = "okay";
++};
++
++&vhub {
++	status = "okay";
++};
++
++&gpio0 {
++	gpio-line-names =
++	/*A0 0*/	"", "", "", "", "", "", "", "",
++	/*B0 8*/	"", "", "", "", "", "", "PS_PWROK", "",
++	/*C0 16*/	"", "", "", "", "", "", "", "",
++	/*D0 24*/	"", "", "", "", "", "", "", "",
++	/*E0 32*/	"", "", "", "", "", "", "", "",
++	/*F0 40*/	"", "", "", "", "", "", "", "",
++	/*G0 48*/	"", "", "", "", "", "", "", "",
++	/*H0 56*/	"", "", "", "", "", "", "", "",
++	/*I0 64*/	"", "", "", "", "", "", "", "",
++	/*J0 72*/	"", "", "", "", "", "", "", "",
++	/*K0 80*/	"", "", "", "", "", "", "", "",
++	/*L0 88*/	"", "", "", "", "", "", "", "",
++	/*M0 96*/	"", "", "", "", "", "", "", "",
++	/*N0 104*/	"", "", "", "",
++	/*N4 108*/	"POST_COMPLETE", "ESR1_GPIO_AST_SPISEL", "", "",
++	/*O0 112*/	"", "", "", "", "", "", "", "",
++	/*P0 120*/	"ID_BUTTON", "ID_OUT", "POWER_BUTTON", "POWER_OUT",
++	/*P4 124*/	"RESET_BUTTON", "RESET_OUT", "", "HEARTBEAT",
++	/*Q0 128*/	"", "", "", "", "", "", "", "",
++	/*R0 136*/	"", "", "", "", "", "", "", "",
++	/*S0 144*/	"", "", "", "", "", "", "", "",
++	/*T0 152*/	"", "", "", "", "", "", "", "",
++	/*U0 160*/	"", "", "", "", "", "", "", "",
++	/*V0 168*/	"", "", "", "", "", "", "", "",
++	/*W0 176*/	"", "", "", "", "", "", "", "",
++	/*X0 184*/	"", "", "", "", "", "", "", "",
++	/*Y0 192*/	"", "", "", "", "", "", "", "",
++	/*Z0 200*/	"", "", "", "", "", "", "", "";
++};
 -- 
-Regards,
-Yang Xiwen
+2.25.1
 
