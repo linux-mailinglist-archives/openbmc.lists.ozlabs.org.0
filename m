@@ -2,52 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8843585FD79
-	for <lists+openbmc@lfdr.de>; Thu, 22 Feb 2024 17:02:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 942D7860038
+	for <lists+openbmc@lfdr.de>; Thu, 22 Feb 2024 18:59:35 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O7mjcf7i;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DbjFc6bu;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TgdG43BJ8z3dWw
-	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 03:02:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tggrj3b9Wz3dVp
+	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 04:59:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O7mjcf7i;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DbjFc6bu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135; helo=mail-lf1-x135.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TgdFP3NrFz2xHK;
-	Fri, 23 Feb 2024 03:02:17 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 831896188A;
-	Thu, 22 Feb 2024 16:02:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A48C433F1;
-	Thu, 22 Feb 2024 16:02:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708617732;
-	bh=Qr0MkPs/G1e5Xn714YNrc9XRwhwgTkOSsxVVNWdF2LE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O7mjcf7iuOCCBUXl/GQVlFFrxMwTHUcTkCCmfkoomiM+Dv+2Ji337lHaRBi7KaRVf
-	 zsK4AmYrzBVIe+S43UmP/PCC7cBK5RDG/s4gFrZnNeNwWBdGB6jMB6HFKwQHPT7D3B
-	 Nxji6MxxWHxhhtdIR0KcOxmZve7jfDNMrj8o4id73SFjKHTJSX/mz908fPjxvt9RTb
-	 If4iL7FxlwrKaYFp9JZNW8x5dsZtvnDlpm8blbWXdO4JJysKg3apcq9dwrJm1TvgZk
-	 QTJiczzpJfupb6RZyOhh5Labj0zj0eYBitvztx5Q+9JKzPmBXxiDpFUkfGJo1YvVbv
-	 Fp4WixOUQC98A==
-Date: Thu, 22 Feb 2024 16:02:07 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Kelly Hung <ppighouse@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: arm: aspeed: add ASUS X4TF board
-Message-ID: <20240222-getting-nebulizer-8f75ba8063b1@spud>
-References: <20240222085914.1218037-1-Kelly_Hung@asus.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tggr86QSfz3cWw
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Feb 2024 04:59:03 +1100 (AEDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-512d19e2cb8so79760e87.0
+        for <openbmc@lists.ozlabs.org>; Thu, 22 Feb 2024 09:59:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708624736; x=1709229536; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cz55Zzpfo/zk1u1UrDBK1WZgp/imaYiWSbF3hiJkto8=;
+        b=DbjFc6buZZXvRnMJWkjwvouTRYAXT27cmJNIN5bUuWxn2e0pipRmvz9VqsgMmEO5EG
+         iDN43gh18QATsQITYGyj72iRBPlz56vr9uMtBZKEPu9ydHhgt9OQByjqdZjNvT6c4/37
+         8fKnlZUTVosCVQjFaajRyGZODFv8s9vKF+BntAJNCskNJ6gcpGg7FDCNdpzgonPy5T1i
+         1tNnjXLo1u06HOqefk2NIUyKvD/S2qqQGBn942Ujcnn7bKlJdyH8Km4ZAQMU0jFoeANt
+         ozevzhk5Kzm9qwvWRsZhx+z7I1NZLZNMqqgdDqnFt0IULnEXeQuxf4nmQELqpOPgfLjb
+         C58Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708624736; x=1709229536;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cz55Zzpfo/zk1u1UrDBK1WZgp/imaYiWSbF3hiJkto8=;
+        b=JRYB693qdd61/zkG3/kkw7NyzNH+D36SwvRK0DOMgP1FDsyNUxlv1GNO1/LT7rtWIi
+         6BWoFXTpvwkQ8uCc+yfhdp/6j4T61YZsAV7YkihHxJnzUHsjXH0gf/i97FjsxnP/4P12
+         /jmNss7HH73pRxw5kLO2xRMCPgtQwrqzGFAIvnMCV2UStXI58MQ/r87wCXlPlSkNIbQF
+         ec+XO3ooEF54G/Hwqqzo0O+3ZjViekvUP3BrlBu5VyIaDh7gXwTjTuSQnnjoWcXr7lqk
+         uUWAhiy5llM9PoBYUxkBzepDjX9jmIkUEiNM3eopexFdskquJ81b0pl+3rvLQf7rV0Fj
+         kb9w==
+X-Forwarded-Encrypted: i=1; AJvYcCXJs8tzQMzM15nrXnd15VenxcLIqMyEHTsCc6Oa6BNMWoZWW8AWpLio0aPEgtB+z4NTfTldCxHBV3NAB6n+2eKTt+g/AEhklC4=
+X-Gm-Message-State: AOJu0YyHUHUWpuIkTj8aRPWRRRauKBo9v2EETrMoB8rSCpOuTmlvPAS0
+	aPg07Ne91p/utEA9Dpj1ajoZC779SX8iP1juxE9IActcagOGbC0v
+X-Google-Smtp-Source: AGHT+IE/1Dk0fjNMEbmuMP18Tm/K1SfZnMv41lhns0HjNNdVpdbheULkXP3yVIXQIWLc1QyRxeNXzg==
+X-Received: by 2002:a05:6512:2349:b0:511:6c63:f76a with SMTP id p9-20020a056512234900b005116c63f76amr17664673lfu.41.1708624736307;
+        Thu, 22 Feb 2024 09:58:56 -0800 (PST)
+Received: from localhost ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id q25-20020a05651232b900b00512a949a4d6sm1957987lfe.7.2024.02.22.09.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Feb 2024 09:58:55 -0800 (PST)
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Jose Abreu <joabreu@synopsys.com>,
+	Jose Abreu <Jose.Abreu@synopsys.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v2 0/4] net: pcs: xpcs: Cleanups before adding MMIO dev support
+Date: Thu, 22 Feb 2024 20:58:19 +0300
+Message-ID: <20240222175843.26919-1-fancer.lancer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Au0+rESux1qqjOB8"
-Content-Disposition: inline
-In-Reply-To: <20240222085914.1218037-1-Kelly_Hung@asus.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,60 +83,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kelly_hung@asus.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, Allenyy_Hsu@asus.com, linux-arm-kernel@lists.infradead.org
+Cc: Paolo Abeni <pabeni@redhat.com>, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Serge Semin <fancer.lancer@gmail.com>, linux-kernel@vger.kernel.org, Eric Dumazet <edumazet@google.com>, Jiawen Wu <jiawenwu@trustnetic.com>, Mengyuan Lou <mengyuanlou@net-swift.com>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+As stated in the subject this series is a short prequel before submitting
+the main patches adding the memory-mapped DW XPCS support to the DW XPCS
+and DW *MAC (STMMAC) drivers. Originally it was a part of the bigger
+patchset (see the changelog v2 link below) but was detached to a
+preparation set to shrink down the main series thus simplifying it'
+review.
 
---Au0+rESux1qqjOB8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The patchset' content is straightforward: drop the redundant sentinel
+entry and the header files; return EINVAL errno from the soft-reset method
+and make sure that the interface validation method return EINVAL straight
+away if the requested interface isn't supported by the XPCS device
+instance. All of these changes are required to simplify the changes being
+introduced a bit later in the framework of the memory-mapped DW XPCS
+support patches.
 
-On Thu, Feb 22, 2024 at 04:59:13PM +0800, Kelly Hung wrote:
-> Document the new compatibles used on ASUS X4TF.
+Link: https://lore.kernel.org/netdev/20231205103559.9605-1-fancer.lancer@gmail.com
+Changelog v2:
+- Move the preparation patches to a separate series.
+- Simplify the commit messages (@Russell, @Vladimir).
 
-It would be good to mention here what the x4tf is - is it a bmc or
-an sbc etc.
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Mengyuan Lou <mengyuanlou@net-swift.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>
+Cc: Jiawen Wu <jiawenwu@trustnetic.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: openbmc@lists.ozlabs.org
+Cc: netdev@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
 
-Otherwise,
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Serge Semin (4):
+  net: pcs: xpcs: Drop sentinel entry from 2500basex ifaces list
+  net: pcs: xpcs: Drop redundant workqueue.h include directive
+  net: pcs: xpcs: Return EINVAL in the internal methods
+  net: pcs: xpcs: Explicitly return error on caps validation
 
-Cheers,
-Conor.
+ drivers/net/pcs/pcs-xpcs.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
->=20
-> Signed-off-by: Kelly Hung <Kelly_Hung@asus.com>
-> ---
->  Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml b/D=
-ocumentation/devicetree/bindings/arm/aspeed/aspeed.yaml
-> index 749ee54a3..80009948e 100644
-> --- a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
-> +++ b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
-> @@ -74,6 +74,7 @@ properties:
->                - ampere,mtmitchell-bmc
->                - aspeed,ast2600-evb
->                - aspeed,ast2600-evb-a1
-> +              - asus,x4tf
->                - facebook,bletchley-bmc
->                - facebook,cloudripper-bmc
->                - facebook,elbert-bmc
-> --=20
-> 2.25.1
->=20
+-- 
+2.43.0
 
---Au0+rESux1qqjOB8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZddv/wAKCRB4tDGHoIJi
-0o1NAQDiH3SRJuW0MwTpJkcBg5fhpGT7l0kNzZE50LRD8OTzpQEAvil0P51VktVE
-eKT9OoXtIoNfTpFjZaZWh785rWy/lQw=
-=qCiR
------END PGP SIGNATURE-----
-
---Au0+rESux1qqjOB8--
