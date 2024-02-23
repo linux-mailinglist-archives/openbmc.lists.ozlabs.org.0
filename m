@@ -1,75 +1,119 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FBBF860901
-	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 03:47:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71A31860995
+	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 04:50:38 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Il02tQYg;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=q69aQJku;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TgvZ809LRz3dWC
-	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 13:47:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tgwyh2xf1z3dX6
+	for <lists+openbmc@lfdr.de>; Fri, 23 Feb 2024 14:50:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Il02tQYg;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=q69aQJku;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::434; helo=mail-pf1-x434.google.com; envelope-from=ppighouse@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::703; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=tommy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20703.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::703])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TgRsW2pKJz30Q3;
-	Thu, 22 Feb 2024 19:59:27 +1100 (AEDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6e48eef8be5so1189409b3a.1;
-        Thu, 22 Feb 2024 00:59:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708592364; x=1709197164; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=trYxxZ+/Lm0Rn0ryVdX34mx7IUSuqT5Jn/BfPqT0uC4=;
-        b=Il02tQYg11u1zwQX9XT2bzYg6FkQZ8+/sV8ip5wFs1+8691jvDS/f7aG5ZTFI6j2wG
-         t2i9aJ8y6QAjK/BEcKQ8X7fzE2GZ6IoHD7X0cqG/qFhJH5+N7yzoJk+RrM3W4jAzhkwo
-         BpdZyT40CCkSjZmbtOy0OLDC2BNHLtmYMz+q20P87MZJCGnFQD7JvIMyOYOVShidhMaE
-         8AQJ2RDkCXhgcin0PvRDk/T55PY63MfIjKy5fSSWpSYNVUfDH+9q9B3L8aQssCX1qRH2
-         KIQvwpPMggzuYJRm1bWJVkUeGS7gb5Sqd3Jc3aBOfPEJnO4iYO+DvSmVY9U5ZoMc/0vI
-         o5JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708592364; x=1709197164;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=trYxxZ+/Lm0Rn0ryVdX34mx7IUSuqT5Jn/BfPqT0uC4=;
-        b=EKPQ06vIm27tf0vCNeUCQK2FauEvbkcoNeSciZpm+uVkmHnRfv3cdqbgmguHdr7YhK
-         /75xRbuMWCUVsfY0vDtAUzNb1oUU+BcbAjcZcGfKVxX2kFl+f6A10xAt8Wto1TY4E75q
-         ZolwVKWzHmW+/nrw/mKWaftmVLj+S3R6KpBRgL+VCeqyhpID+EtEOrRaKMkeKnXkWmDj
-         a40sCraCwa/vVcCYM9F1JipAGA9OjlJ5c7V+HiWkSAS+aj/Q/2pebZiQB0bYMuCQlf8+
-         qYwAYVJ7TxdFdeLfgSBCv47qvATOSG7XSmbwjw0bLmchr0d3Ivmwh7NUFYvJZ/1o5hWZ
-         jA1g==
-X-Forwarded-Encrypted: i=1; AJvYcCWHkHbRTZSQa1UFXJ2QPNio/hw5g6UQ8x6YqmMIvBbxixmhJEoOLJBEsjbOWP9Af0Bfv4DYMYAAE1vAPH0j3l8mTAz3rVyhlIuiLjSosHXH2ZEAIsJaXOZ/4Tes1RC29XivVjV2uAj1
-X-Gm-Message-State: AOJu0Ywk1bxiLhTKg8Wursu+Jxk9LoIQlke43WZVque6Q4C9cRNy4hc8
-	DS0JuuC4YVs0oUts3sgYvny/jbb0XDiDxhiXqN0+uUKSvPg8AFem
-X-Google-Smtp-Source: AGHT+IG58MH/TqyW1MoOHanFjR6V/dfbREu4W8jCCD3ntjW04hXqN5T6b/5XGh2CFlvsmHnMXlVykg==
-X-Received: by 2002:aa7:8583:0:b0:6e4:6a74:ee5b with SMTP id w3-20020aa78583000000b006e46a74ee5bmr9463310pfn.14.1708592364260;
-        Thu, 22 Feb 2024 00:59:24 -0800 (PST)
-Received: from localhost.localdomain (125-229-150-10.hinet-ip.hinet.net. [125.229.150.10])
-        by smtp.gmail.com with ESMTPSA id k18-20020aa788d2000000b006e4cb7f4393sm922356pff.165.2024.02.22.00.59.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Feb 2024 00:59:23 -0800 (PST)
-From: Kelly Hung <ppighouse@gmail.com>
-X-Google-Original-From: Kelly Hung <Kelly_Hung@asus.com>
-To: robh+dt@kernel.org
-Subject: [PATCH 2/2] ARM: dts: aspeed: x4tf: Add dts for asus x4tf project
-Date: Thu, 22 Feb 2024 16:59:14 +0800
-Message-Id: <20240222085914.1218037-2-Kelly_Hung@asus.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240222085914.1218037-1-Kelly_Hung@asus.com>
-References: <20240222085914.1218037-1-Kelly_Hung@asus.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tgwy23lqrz3cM4;
+	Fri, 23 Feb 2024 14:49:41 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Yg950ouvx1WjNpCP1clyKtNInAyLcDkgW+Nteoi9HHrbIhePcDI7Ioc5aJrL9s5zmhIB8bh8pmp3/nj3lTiEyQeteZzFWrXKK71zxS4sekdNVSurRKK8P9469OBkxGAFQVcfX/0GYlL+8TCSYjAO5XdNZSESscksbvYgu7k7d3ib9htimI7awGG7HQW5ZyNaCo+JYKwDtEZ2S7QuWQcnAtawxCidAjN2WOAnGTPP4j7P+57PqhewOypkq99kZXcdR7x7Miy+E+B/5yNkWMwTSTcHmhsclf8OqDbAb5Be3qYa9GhXSRu4c461Z6sQNsY2SuVFmaUdbiPDmyRbHgj6Vg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UhT5Jglo9eajC1MtBF2LOaR4J/dQPutJITGmsH95r18=;
+ b=euONYUYATW14N5VC8ymbp10E5JR2cR7jXp56Qyd+502ps3s1rGjQumkmMZIoig8/lejipHgYVJMIElkteicCGB2FRIxE4MGMiiOrIQJOJwbSj6WqoTvDLAxUPAZFFHvNvG5NVhu+acgjBrjlP1L2ma5HAzvycUdVP0MSzvvwL0nGUOafL8Tr50miXk6mzSq46ZU8HFsBXSMMTNKZkxq1qJX9pg4LEmssfLP2GgFtsIMWTGPjtE1w5nuVXUxePQvEZA/dDPZYikex2zSAxe8apfjndGAbCV8FK3hPyeXhBw6RuJDAThyWWjSodm3FokTeiJtQEdq9aNX8W9MjQtDNAg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UhT5Jglo9eajC1MtBF2LOaR4J/dQPutJITGmsH95r18=;
+ b=q69aQJkuvPhpllidfujK4e5Gm4OQym0rSZGFa/E7/R/np+CgIGxECqOyTVw9gc2E6kJBqsA+uKaagTnOf5ifbLvxU/LDOtY01JYtyzktZYWDgWX4VpkpB2Wyp039Oao3efV8fhOBNsAPIASj0VLKdvk4BMAGRzh/WGT3m+wxeDV3GjCocoSMwoxSYSRQUtcNcFOlBkNCQLGOm4YOuK5bXv6aXGFj4nyMsf53O3fF+FO8qt48u9+c+Aiepk3+2H8PdhGMM/gtL/qaj8RMZ2PCp/p0nnwoU/OchdTyET/aX3Vwuyh7D2ddfhd6MYwFFAHmHWOmWB4SvrE0TaHA0WYHJg==
+Received: from TYZPR06MB6191.apcprd06.prod.outlook.com (2603:1096:400:33d::12)
+ by PUZPR06MB5585.apcprd06.prod.outlook.com (2603:1096:301:e9::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.24; Fri, 23 Feb
+ 2024 03:49:17 +0000
+Received: from TYZPR06MB6191.apcprd06.prod.outlook.com
+ ([fe80::e10a:d9a2:5070:6903]) by TYZPR06MB6191.apcprd06.prod.outlook.com
+ ([fe80::e10a:d9a2:5070:6903%5]) with mapi id 15.20.7292.036; Fri, 23 Feb 2024
+ 03:49:17 +0000
+From: Tommy Huang <tommy_huang@aspeedtech.com>
+To: Andi Shyti <andi.shyti@kernel.org>
+Subject: RE: [PATCH] i2c: aspeed: Fix the dummy irq expected print
+Thread-Topic: [PATCH] i2c: aspeed: Fix the dummy irq expected print
+Thread-Index: AQHaYNBg0EEa3X7oHECRXZPcHJI3VbEVVFwAgAA4R6CAAIwtAIABM1cg
+Date: Fri, 23 Feb 2024 03:49:17 +0000
+Message-ID:  <TYZPR06MB61912715EE2869DDB7C3763DE1552@TYZPR06MB6191.apcprd06.prod.outlook.com>
+References: <20240216120455.4138642-1-tommy_huang@aspeedtech.com>
+ <nbkkaktcozbhly44hii3zwie7ivsra3qxzdibyzhyhooxrudvb@zik6skmkki2c>
+ <TYZPR06MB61911F076C8719C6A7D57B97E1562@TYZPR06MB6191.apcprd06.prod.outlook.com>
+ <v4nawwb4rwjiy2g7xv2sfyhc545mhk4izb3g22f7jupcevjuzb@nxmqgf2zjyqs>
+In-Reply-To: <v4nawwb4rwjiy2g7xv2sfyhc545mhk4izb3g22f7jupcevjuzb@nxmqgf2zjyqs>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB6191:EE_|PUZPR06MB5585:EE_
+x-ms-office365-filtering-correlation-id: 24e1dc8c-477e-4a4c-8f3f-08dc342268f9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  2cEFO/Ns/jyTKVK6b3AShK7EQ4FudoSO+1qoQfMr8atutRZqvSBohSHG2geisIdhGDgcF4eYdYBBuINDrlyYvBIE4eIoYro6Ii/FCN9cL+TMXvHOlcm41ULEVtGBCVU6upuxUqPgusO5uYSRWoPElClPSfh4TJJb8qZ+C0TgFVph4YGh87zjqVpNYke9iqw9v9NsOCUmbhcvKZPwyhp70x2/bGm6k/57dDLLIIzA/01A5Vq/swqK7sH2RNbbWSFQTAKLnIFglLzYlnYymqkXOxSYZy2VM43Wydo5yalnufup245SLzCKdwA8h2gQwTGVD0gBUEchHUTFSZO1x7neI2sGrKeBKtevJpuCLKzQXNXITcZf+lQeHSI44EBFDDJyjWgU1985xmtWFYonUKaszmPQuUIFie+bYFRhdN/0zn56GszY5cHx46HTqM39nN7zjvUfsh5Mp4ZV3Wotwl/Jukv4b306fJBTnIiYxr47iqcTLqhMJ435f7nEl13JK4sw5aDnRVcFoI48zlvQLumQ23wMOzf1FsTOYPLRRfAXELppxy33MK/Sm8O71Cd5TCbMrRHbcxtMFQDT/MUtWoV/WK9d1fcE6Sh/Oww/fzF8nl9Jkry1M4UTVr0KM97tdEHk
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB6191.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(38070700009);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?RQ/iP1ovrQvLx9MtJZ+PU0pTCBfdhYSuh+l/cKaNGRZWpS+i25YaSPq61bwb?=
+ =?us-ascii?Q?/XDhmfkWMQx3OhBU2OnrXlgOQWWIW+ytcPGw9H6RLjzqVTrV2lJCj79MYJE1?=
+ =?us-ascii?Q?l+dnJh7evAO0D+2jPjmNeTWduVTLf2T8/NcgHuRUFtr42v6ghOMit45/ZvZ6?=
+ =?us-ascii?Q?LuGiGYBBjrdWl/iKG3SsyCdLLagS9NiYCtKe1t0Sesb/USNGrb/Uo2HpwpXE?=
+ =?us-ascii?Q?dg6+K9cXnh1irpt5gba97gHAAHiQKWaZYaYII3+pubBRgnzli4Z5grnh2USW?=
+ =?us-ascii?Q?hNe7cXDg8++z6FjJouO5HvUlsCUAZ1qMxFFNVvoWe7o1agnq2/jqLM3uEBK5?=
+ =?us-ascii?Q?qMi4YlNERCtzTunVoywBRE8ssPahrTs4ezo2WNOJ7vCPEhs5OYdTNEQsdtaW?=
+ =?us-ascii?Q?Xjr2JXYUXBc79nIJZOOgUx5UqMh1kMiuSs/rFXjje7T2hSzZpNMiv6b7SiIG?=
+ =?us-ascii?Q?4NSuXrLUnCuYsidmbsVfBZhOLqQEmfTzTf+HwOeve182ZE1w/1OLIVZDPvzm?=
+ =?us-ascii?Q?LMi1C4KsqwpoJi8QXj050eI2ywHH3UxjKK+gNQcO8ei5kJIgg0BY1ibU98LR?=
+ =?us-ascii?Q?X2rxVdZSG99k4mdfqWxY4wNvRTO2ZsarV/ktZMgLoG8zDwP0vI7jxeTD5pG5?=
+ =?us-ascii?Q?LvyprxIfi3dYelo0cqmP9F/nUJyx98pxL3WZYwqo3vv8RpKaXw34MnG/OI7h?=
+ =?us-ascii?Q?Zn6Yf/OJJOqhxsGrIXMw+AozL+51Bw3fNj8DUASbYfYyBsH9lFiUU8EOzVSU?=
+ =?us-ascii?Q?HWRZZh2nbJ+fduiFAtf9zS3B8MMNjzFBj45svnXoy31ykq4N3GNYgOYYPHc+?=
+ =?us-ascii?Q?kzGCtiI9U13LxK30VUXiuEe8ZevvvOl0C1w89mz9EZhxK0S8XcEl1e+ctl7K?=
+ =?us-ascii?Q?FEkI8JPa5Yf8Smsvf2ZpvOTRvcMNXekoV+w6KxV0WIOIRkUJdTXHX1kZ4OFw?=
+ =?us-ascii?Q?Ipdzb8y+dWoiUsJmuRHtt3eLL3fCM18Ct5Wl968Hi+R5p3HAGQEBH3UJe4WJ?=
+ =?us-ascii?Q?foR6UsZx9YRlFLiqWzVibPCBe9QQbL4oUkTdui4zfHbRLl1l2mqtOFdWNSvr?=
+ =?us-ascii?Q?JG8tGtXUTiWot29SQ93X7Xz6S0NNDICwf+2jB9BQgsM0qknp6oOjwDdmdUYr?=
+ =?us-ascii?Q?D6713RI9XF6CH/m5ke241LsYtX7fZ7U6nBpeHbWjdX1hsakd9G9CNHJ3Rnlw?=
+ =?us-ascii?Q?G58JB3lD77A1BY8Fjpy4omUn2q0SGHziF0XTWkauTCrDcvbhe+8PjGJc+U2I?=
+ =?us-ascii?Q?MzquyFrNcjgqQmy9MQuE1c6wrm714fl5RHysmfRpZcoNsX8jyZ8ZaAT23KC0?=
+ =?us-ascii?Q?mqaJhKVeo+XmNkS8eEjsNFJCcHcTr+lL3BsCC66kfjAz8gOTAb4uHD3nZWip?=
+ =?us-ascii?Q?4E/KQIIpUaVS5/kPu1mn4OMtNYN/Dv6B64ui0eQVYjl9sRgx3SpgJKP9wePV?=
+ =?us-ascii?Q?+9yA5s3qtUjG3LziCEHGjRkMDTwGiCUerz9aYCmj/aoylpsRWtenRY0Xcw60?=
+ =?us-ascii?Q?08eRkgOPD/plcjmx3W6xEfhQk7FJKlPWkAPKsFmB6O0tUJeD6cu4Sk3XxbFz?=
+ =?us-ascii?Q?mFFInGt3ikOcKY7zFCAoAvbE+fPRTaUTPGV8mf4pmicTCWgvYaeDV8hUWEtI?=
+ =?us-ascii?Q?Kg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Fri, 23 Feb 2024 13:36:41 +1100
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6191.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 24e1dc8c-477e-4a4c-8f3f-08dc342268f9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2024 03:49:17.3927
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: GYHVUIN+3itbPP/SihXlxAi3PvAGjKEJWzxXGcGY/DMRBn9s4MYJM8KXgPY1gdajXvH6+BtjM7L6s9Gy0p4mi0Tnnt27Pn5zL6RK/+gWKWg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5585
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,629 +125,128 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Kelly Hung <Kelly_Hung@asus.com>, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, Allenyy_Hsu@asus.com, linux-arm-kernel@lists.infradead.org
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "andrew@aj.id.au" <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Base on aspeed-g6.dtsi and can boot into BMC console.
+Hi Andi,
 
-Signed-off-by: Kelly Hung <Kelly_Hung@asus.com>
----
- arch/arm/boot/dts/aspeed/Makefile             |   1 +
- .../boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts  | 592 ++++++++++++++++++
- 2 files changed, 593 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
+	Sure~
+	Below is my re-word commit and fixes tag.
 
-diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
-index d3ac20e31..32c41f3d9 100644
---- a/arch/arm/boot/dts/aspeed/Makefile
-+++ b/arch/arm/boot/dts/aspeed/Makefile
-@@ -10,6 +10,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-asrock-e3c246d4i.dtb \
- 	aspeed-bmc-asrock-romed8hm3.dtb \
-+	aspeed-bmc-asus-x4tf.dtb \
- 	aspeed-bmc-bytedance-g220a.dtb \
- 	aspeed-bmc-delta-ahe50dc.dtb \
- 	aspeed-bmc-facebook-bletchley.dtb \
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
-new file mode 100644
-index 000000000..1bda14a66
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
-@@ -0,0 +1,592 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2024 ASUS Corp.
-+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include "aspeed-g6-pinctrl.dtsi"
-+#include <dt-bindings/i2c/i2c.h>
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "ASUS-X4TF";
-+	compatible = "asus,x4tf", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial4:115200n8";
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		video_engine_memory: video {
-+			size = <0x04000000>;
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
-+				<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
-+				<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
-+				<&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led-heartbeat {
-+			gpios = <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_LOW>;
-+			linux,default-trigger = "heartbeat";
-+		};
-+
-+		led-uid {
-+			gpios = <&gpio0 ASPEED_GPIO(P, 1) (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
-+			default-state = "off";
-+		};
-+
-+		led-status_Y {
-+			gpios = <&gpio1 ASPEED_GPIO(B, 1) GPIO_ACTIVE_LOW>;
-+			default-state = "off";
-+		};
-+
-+		led-sys_boot_status {
-+			gpios = <&gpio1 ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
-+			default-state = "off";
-+		};
-+	};
-+};
-+
-+&adc0 {
-+	vref = <2500>;
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-+		&pinctrl_adc2_default &pinctrl_adc3_default
-+		&pinctrl_adc4_default &pinctrl_adc5_default
-+		&pinctrl_adc6_default &pinctrl_adc7_default>;
-+};
-+
-+&adc1 {
-+	vref = <2500>;
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-+		&pinctrl_adc10_default &pinctrl_adc11_default
-+		&pinctrl_adc12_default &pinctrl_adc13_default
-+		&pinctrl_adc14_default &pinctrl_adc15_default>;
-+};
-+
-+&peci0 {
-+	status = "okay";
-+};
-+
-+&lpc_snoop {
-+	snoop-ports = <0x80>;
-+	status = "okay";
-+};
-+
-+&mac2 {
-+	status = "okay";
-+	phy-mode = "rmii";
-+	use-ncsi;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii3_default>;
-+};
-+
-+&mac3 {
-+	status = "okay";
-+	phy-mode = "rmii";
-+	use-ncsi;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii4_default>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc-spi";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout-128.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		label = "bios-spi";
-+		spi-max-frequency = <50000000>;
-+
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			biosfullimg@0 {
-+				reg = <0x0 0x2000000>; //32768 *1024 = 32 MB
-+				label = "biosfullimg";
-+			};
-+		};
-+	};
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	temperature-sensor@48 {
-+		compatible = "ti,tmp75";
-+		reg = <0x48>;
-+	};
-+
-+	temperature-sensor@49 {
-+		compatible = "ti,tmp75";
-+		reg = <0x49>;
-+	};
-+
-+	pca9555_4_20: gpio@20 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	pca9555_4_22: gpio@22 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x22>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	pca9555_4_24: gpio@24 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x24>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+		/*A0 - A3 0*/	"", "STRAP_BMC_BATTERY_GPIO1", "", "",
-+		/*A4 - A7 4*/	"", "", "", "",
-+		/*B0 - B7 8*/	"", "", "", "", "", "", "", "";
-+	};
-+
-+	pca9555_4_26: gpio@26 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x26>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9546";
-+		status = "okay";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		channel_1: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_2: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_3: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_4: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+
-+	pca9555_5_24: gpio@24 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x24>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	i2c-mux@70  {
-+		compatible = "nxp,pca9546";
-+		status = "okay";
-+		reg = <0x70 >;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		channel_5: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			pca9555_5_5_20: gpio@20 {
-+				compatible = "nxp,pca9555";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+				gpio-line-names =
-+					"", "", "", "", "", "", "", "",
-+					"", "", "SYS_FAN6", "SYS_FAN5",
-+					"SYS_FAN4", "SYS_FAN3",
-+					"SYS_FAN2", "SYS_FAN1";
-+			};
-+
-+			pca9555_5_5_21: gpio@21 {
-+				compatible = "nxp,pca9555";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			power-monitor@44 {
-+				compatible = "ti,ina219";
-+				reg = <0x44>;
-+				shunt-resistor = <2>;
-+			};
-+		};
-+
-+		channel_6: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_7: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_8: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+
-+	pca9555_6_27: gpio@27 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x27>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	pca9555_6_20: gpio@20 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+		/*A0 0*/	"", "", "", "", "", "", "", "",
-+		/*B0 8*/	"Drive_NVMe1", "Drive_NVMe2", "", "",
-+		/*B4 12*/	"", "", "", "";
-+	};
-+
-+	pca9555_6_21: gpio@21 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9546";
-+		status = "okay";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		idle-state = <1>;
-+
-+		channel_9: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			temperature-sensor@48 {
-+				compatible = "ti,tmp75";
-+				reg = <0x48>;
-+			};
-+
-+			temperature-sensor@49 {
-+				compatible = "ti,tmp75";
-+				reg = <0x49>;
-+			};
-+
-+			power-monitor@40 {
-+				compatible = "ti,ina219";
-+				reg = <0x40>;
-+				shunt-resistor = <2>;
-+			};
-+
-+			power-monitor@41 {
-+				compatible = "ti,ina219";
-+				reg = <0x41>;
-+				shunt-resistor = <5>;
-+			};
-+		};
-+
-+		channel_10: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_11: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_12: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+
-+	i2c-mux@71 {
-+		compatible = "nxp,pca9546";
-+		status = "okay";
-+		reg = <0x71>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		i2c-mux-idle-disconnect;
-+
-+		channel_13: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_14: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_15: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_16: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9546";
-+		status = "okay";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		i2c-mux-idle-disconnect;
-+
-+		channel_17: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_18: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			temperature-sensor@48 {
-+				compatible = "ti,tmp75";
-+				reg = <0x48>;
-+			};
-+
-+			power-monitor@41 {
-+				compatible = "ti,ina219";
-+				reg = <0x41>;
-+				shunt-resistor = <5>;
-+			};
-+		};
-+
-+		channel_19: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_20: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+};
-+
-+&i2c14 {
-+	status = "okay";
-+	multi-master;
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c08";
-+		reg = <0x50>;
-+	};
-+
-+	eeprom@51 {
-+		compatible = "atmel,24c08";
-+		reg = <0x51>;
-+	};
-+};
-+
-+&sgpiom0 {
-+	status = "okay";
-+	ngpios = <128>;
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
-+
-+&sdc {
-+	status = "okay";
-+};
-+
-+&lpc_snoop {
-+	status = "okay";
-+	snoop-ports = <0x80>;
-+};
-+
-+&kcs1 {
-+	aspeed,lpc-io-reg = <0xca0>;
-+	status = "okay";
-+};
-+
-+&kcs2 {
-+	aspeed,lpc-io-reg = <0xca8>;
-+	status = "okay";
-+};
-+
-+&kcs3 {
-+	aspeed,lpc-io-reg = <0xca2>;
-+	status = "okay";
-+};
-+
-+&uart3 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&uart_routing {
-+	status = "okay";
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
-+
-+&gpio0 {
-+	gpio-line-names =
-+	/*A0 0*/	"", "", "", "", "", "", "", "",
-+	/*B0 8*/	"", "", "", "", "", "", "PS_PWROK", "",
-+	/*C0 16*/	"", "", "", "", "", "", "", "",
-+	/*D0 24*/	"", "", "", "", "", "", "", "",
-+	/*E0 32*/	"", "", "", "", "", "", "", "",
-+	/*F0 40*/	"", "", "", "", "", "", "", "",
-+	/*G0 48*/	"", "", "", "", "", "", "", "",
-+	/*H0 56*/	"", "", "", "", "", "", "", "",
-+	/*I0 64*/	"", "", "", "", "", "", "", "",
-+	/*J0 72*/	"", "", "", "", "", "", "", "",
-+	/*K0 80*/	"", "", "", "", "", "", "", "",
-+	/*L0 88*/	"", "", "", "", "", "", "", "",
-+	/*M0 96*/	"", "", "", "", "", "", "", "",
-+	/*N0 104*/	"", "", "", "",
-+	/*N4 108*/	"POST_COMPLETE", "ESR1_GPIO_AST_SPISEL", "", "",
-+	/*O0 112*/	"", "", "", "", "", "", "", "",
-+	/*P0 120*/	"ID_BUTTON", "ID_OUT", "POWER_BUTTON", "POWER_OUT",
-+	/*P4 124*/	"RESET_BUTTON", "RESET_OUT", "", "HEARTBEAT",
-+	/*Q0 128*/	"", "", "", "", "", "", "", "",
-+	/*R0 136*/	"", "", "", "", "", "", "", "",
-+	/*S0 144*/	"", "", "", "", "", "", "", "",
-+	/*T0 152*/	"", "", "", "", "", "", "", "",
-+	/*U0 160*/	"", "", "", "", "", "", "", "",
-+	/*V0 168*/	"", "", "", "", "", "", "", "",
-+	/*W0 176*/	"", "", "", "", "", "", "", "",
-+	/*X0 184*/	"", "", "", "", "", "", "", "",
-+	/*Y0 192*/	"", "", "", "", "", "", "", "",
-+	/*Z0 200*/	"", "", "", "", "", "", "", "";
-+};
--- 
-2.25.1
+	When the i2c error condition occurred and master state was not
+	idle, the master irq function will goto complete state without any
+    other interrupt handling. It would cause dummy irq expected print.
+    Under this condition, assign the irq_status into irq_handle.
 
+	For example, when the abnormal start / stop occurred (bit 5) with normal s=
+top
+	status (bit 4) at same time. Then the normal stop status would not be hand=
+led=20
+	and it would cause irq expected print in the aspeed_i2c_bus_irq.
+
+	...
+	aspeed-i2c-bus xxxxxxxx. i2c-bus: irq handled !=3D irq. Expected 0x0000003=
+0, but was 0x00000020
+	...
+=20
+	Fixes: 3e9efc3299dd ("i2c: aspeed: Handle master/slave combined irq events=
+ properly")
+	Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+
+	Tommy
+
+> -----Original Message-----
+> From: Andi Shyti <andi.shyti@kernel.org>
+> Sent: Thursday, February 22, 2024 4:58 PM
+> To: Tommy Huang <tommy_huang@aspeedtech.com>
+> Cc: brendan.higgins@linux.dev; p.zabel@pengutronix.de;
+> linux-i2c@vger.kernel.org; openbmc@lists.ozlabs.org;
+> benh@kernel.crashing.org; joel@jms.id.au; andrew@aj.id.au;
+> linux-arm-kernel@lists.infradead.org; linux-aspeed@lists.ozlabs.org;
+> linux-kernel@vger.kernel.org; BMC-SW <BMC-SW@aspeedtech.com>
+> Subject: Re: [PATCH] i2c: aspeed: Fix the dummy irq expected print
+>=20
+> Hi Tommy,
+>=20
+> On Thu, Feb 22, 2024 at 01:10:39AM +0000, Tommy Huang wrote:
+> > > On Fri, Feb 16, 2024 at 08:04:55PM +0800, Tommy Huang wrote:
+> > > > When the i2c error condition occurred and master state was not
+> > > > idle, the master irq function will goto complete state without any
+> > > > other interrupt handling. It would cause dummy irq expected print.
+> > > > Under this condition, assign the irq_status into irq_handle.
+> > >
+> > > I'm sorry, but I don't understand much from your log here.
+> > >
+> > > Do you mean that irq_handled in aspeed_i2c_master_irq() is left with
+> > > some states that is not supposed to have and then you end up printing
+> here:
+> > >
+> > > 	dev_err(bus->dev,
+> > > 		"irq handled !=3D irq. expected 0x%08x, but was 0x%08x\n",
+> > > 		irq_received, irq_handled);
+> > >
+> > > Can you please explain better?
+> > >
+> >
+> > Yes. If the platform met any irq error condition and the i2c wasn't sta=
+ted
+> under ASPEED_I2C_MASTER_INACTIVE.
+> > Then the code flow would goto the end of aspeed_i2c_master_irq.
+> >
+> > 	ret =3D aspeed_i2c_is_irq_error(irq_status);
+> > 	if (ret) {
+> > 		...
+> > 		irq_handled |=3D (irq_status & ASPEED_I2CD_INTR_MASTER_ERRORS);
+> > 		if (bus->master_state !=3D ASPEED_I2C_MASTER_INACTIVE) {
+> > 			bus->cmd_err =3D ret;
+> > 			bus->master_state =3D ASPEED_I2C_MASTER_INACTIVE;
+> > 			goto out_complete;
+> > 		}
+> > 	}
+> >
+> > Some master interrupt states were not handled under this situation.
+> > The fake irq not equaled message would be filled into whole of demsg.
+> > It's most like below example.
+> >
+> > ...
+> > aspeed-i2c-bus 1e78a780. i2c-bus: irq handled !=3D irq. expected
+> > 0x00000030, but was 0x00000020 aspeed-i2c-bus 1e78a780. i2c-bus: irq
+> > handled !=3D irq. expected 0x00000030, but was 0x00000020 aspeed-i2c-bu=
+s
+> > 1e78a780. i2c-bus: irq handled !=3D irq. expected 0x00000030, but was
+> 0x00000020 ...
+> >
+> > I thought the bus->cmd_err has been filled error reason and it would be
+> returned to upper layer.
+> > So, I didn't think the print should be existed.
+>=20
+> thanks! Can you please write a commit that explains better the fix you ar=
+e
+> doing?
+>=20
+> > > If that's the case, wouldn't it make more sense to check for
+> > > bus->master_state !=3D ASPEED_I2C_MASTER_INACTIVE) earlier?
+> >
+> > Did you suggest to add "bus->master_state !=3D
+> ASPEED_I2C_MASTER_INACTIVE" judgement before print the irq not equal
+> print?
+>=20
+> no, not really, but nevermind, on a second look, what I'm suggesting does=
+n't
+> make much sense.
+>=20
+> If you want, please reword the commit message as reply to this e-mail and=
+ I
+> will take care of it.
+>=20
+> > > And, still, If that's the case, I believe you might need the Fixes
+> > > tag. It's true that you are not really failing, but you are not repor=
+ting a
+> failure by mistake.
+>=20
+> Please, also consider adding the Fixes tag if you see it necessary; I thi=
+nk you
+> should, but it's borderline.
+>=20
+> Andi
