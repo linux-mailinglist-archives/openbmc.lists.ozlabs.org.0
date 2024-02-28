@@ -1,46 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A32086B4CD
-	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 17:26:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8D1F86BAEF
+	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 23:48:43 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rQCD9vb1;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TlKVZ5Bs8z3f0P
-	for <lists+openbmc@lfdr.de>; Thu, 29 Feb 2024 03:26:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TlTzY1wlLz3cbl
+	for <lists+openbmc@lfdr.de>; Thu, 29 Feb 2024 09:48:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rQCD9vb1;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TlKVF1mjwz3byT
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Feb 2024 03:26:12 +1100 (AEDT)
-Received: from [192.168.0.53] (ip5f5aedb1.dynamic.kabel-deutschland.de [95.90.237.177])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id F2C2D61E5FE04;
-	Wed, 28 Feb 2024 17:25:44 +0100 (CET)
-Message-ID: <35dcecdd-ee19-40d6-80ab-5eed9718e639@molgen.mpg.de>
-Date: Wed, 28 Feb 2024 17:25:44 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TlTyw10zdz3bnx
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Feb 2024 09:48:08 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id B4FB1CE2253;
+	Wed, 28 Feb 2024 22:48:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA43CC433F1;
+	Wed, 28 Feb 2024 22:48:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1709160481;
+	bh=imNeDCybnQTqCSixbtIV0f49WNytkR9qirQh/BflgTg=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=rQCD9vb1vr8YHCT/cgkG3W7cl4iANHxlC78YiqJYGmoVBGqQiEb+hTHozvMqU6wZU
+	 ASxO/ZoEKOmJqEd9cagY1syCwVISUecVoZBAimrvdm76l2hPsYHp89/lFlmiyBp/Sc
+	 eHAEd7hznx95l2X+bOVA8UybOZfH3P057IOz1nPtsHctrCp3QUC6ITFbPcq4o0v7Gb
+	 /IOGef/PdArRlTZRdlCRt/GfXzIXqwGTDL5RZ0slMm1aNqJzJtwk4VifL4MjgprKDd
+	 pbRTcOEl4IbYDzkkDAjCZpAhZmuMCdDnOCFgZ/PN3+xVbPZ8j+dEvVxTjInyMGPST9
+	 i7+aa6QfDAI+w==
+Message-ID: <8acf846e767884978f3bb98646433551.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Commit messages (was: [PATCH v4 3/3] hwmon: Driver for Nuvoton
- NCT7363Y)
-Content-Language: en-US
-To: Guenter Roeck <linux@roeck-us.net>
-References: <20240227005606.1107203-1-kcfeng0@nuvoton.com>
- <20240227005606.1107203-4-kcfeng0@nuvoton.com>
- <62f38808-7d5f-4466-a65e-b6a64b2e7c01@molgen.mpg.de>
- <4b06d535-6739-47b5-ad1e-0ff94322620e@roeck-us.net>
- <e2b0b8e3-9b39-4621-9e43-d7de02286a27@molgen.mpg.de>
- <24ee4bf3-aa91-483d-a9be-5c47e5c37ed7@roeck-us.net>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <24ee4bf3-aa91-483d-a9be-5c47e5c37ed7@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAP6Zq1g5gwXvYzO5fnHxG-6__gSCpNBY7VeEPyr4Qtijya6EfQ@mail.gmail.com>
+References: <20240131182653.2673554-1-tmaimon77@gmail.com> <20240131182653.2673554-4-tmaimon77@gmail.com> <74e003c6d80611ddd826ac21f48b4b3a.sboyd@kernel.org> <CAP6Zq1g5gwXvYzO5fnHxG-6__gSCpNBY7VeEPyr4Qtijya6EfQ@mail.gmail.com>
+Subject: Re: [PATCH v23 3/3] clk: npcm8xx: add clock controller
+From: Stephen Boyd <sboyd@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 28 Feb 2024 14:47:58 -0800
+User-Agent: alot/0.10
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,112 +59,176 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, Ban Feng <baneric926@gmail.com>, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com
+Cc: devicetree@vger.kernel.org, benjaminfair@google.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Guenter,
+Quoting Tomer Maimon (2024-02-25 10:00:35)
+> Hi Stephen,
+>=20
+> On Thu, 22 Feb 2024 at 07:58, Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Quoting Tomer Maimon (2024-01-31 10:26:53)
+> > > diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
+> > > new file mode 100644
+> > > index 000000000000..eacb579d30af
+> > > --- /dev/null
+> > > +++ b/drivers/clk/clk-npcm8xx.c
+> > > @@ -0,0 +1,509 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +/*
+> > > + * Nuvoton NPCM8xx Clock Generator
+> > > + * All the clocks are initialized by the bootloader, so this driver =
+allows only
+> > [...]
+> > > +
+> > > +/* external clock definition */
+> > > +#define NPCM8XX_CLK_S_REFCLK   "refclk"
+> > > +
+> > > +/* pll definition */
+> > > +#define NPCM8XX_CLK_S_PLL0     "pll0"
+> > > +#define NPCM8XX_CLK_S_PLL1     "pll1"
+> > > +#define NPCM8XX_CLK_S_PLL2     "pll2"
+> > > +#define NPCM8XX_CLK_S_PLL_GFX  "pll_gfx"
+> > > +
+> > > +/* early divider definition */
+> > > +#define NPCM8XX_CLK_S_PLL2_DIV2                "pll2_div2"
+> > > +#define NPCM8XX_CLK_S_PLL_GFX_DIV2     "pll_gfx_div2"
+> > > +#define NPCM8XX_CLK_S_PLL1_DIV2                "pll1_div2"
+> > > +
+> > > +/* mux definition */
+> > > +#define NPCM8XX_CLK_S_CPU_MUX     "cpu_mux"
+> > > +
+> > > +/* div definition */
+> > > +#define NPCM8XX_CLK_S_TH          "th"
+> > > +#define NPCM8XX_CLK_S_AXI         "axi"
+> >
+> > Please inline all these string #defines to the place they're used.
+> The version V21 you mention using define only when the definition is
+> used more than once
+> https://www.spinics.net/lists/kernel/msg5045826.html
+> Should I remove all the string definitions and add the string to the arra=
+y?
 
+If it's a clk name for a clk registered in this file it should be
+inlined. Is that the case for everything besides refclk? And even refclk
+could be inlined so that we don't have to jump to the definition of a
+string.
 
-Thank you for your reply.
+> > > +
+> > > +static unsigned long npcm8xx_clk_div_get_parent(struct clk_hw *hw,
+> > > +                                               unsigned long parent_=
+rate)
+> > > +{
+> > > +       struct npcm8xx_clk *div =3D to_npcm8xx_clk(hw);
+> > > +       unsigned int val;
+> > > +
+> > > +       regmap_read(div->clk_regmap, div->offset, &val);
+> > > +       val =3D val >> div->shift;
+> > > +       val &=3D clk_div_mask(div->width);
+> > > +
+> > > +       return divider_recalc_rate(hw, parent_rate, val, NULL, div->f=
+lags,
+> > > +                                  div->width);
+> > > +}
+> > > +
+> > > +static const struct clk_ops npcm8xx_clk_div_ops =3D {
+> > > +       .recalc_rate =3D npcm8xx_clk_div_get_parent,
+> > > +};
+> > > +
+> > > +static int npcm8xx_clk_probe(struct platform_device *pdev)
+> > > +{
+> > > +       struct device_node *parent_np =3D of_get_parent(pdev->dev.of_=
+node);
+> >
+> > The parent of this device is not a syscon.
+> Once I have registered the map that handles both reset and the clock
+> in general is syscon, this is why we will modify the DTS so the clock
+> and the reset will be under syscon father node
+>                 sysctrl: system-controller@f0801000 {
+>                         compatible =3D "syscon", "simple-mfd";
+>                         reg =3D <0x0 0xf0801000 0x0 0x1000>;
+>=20
+>                         rstc: reset-controller {
+>                                 compatible =3D "nuvoton,npcm845-reset";
+>                                 reg =3D <0x0 0xf0801000 0x0 0xC4>;
+>                                 #reset-cells =3D <2>;
+>                                 nuvoton,sysgcr =3D <&gcr>;
+>                         };
+>=20
+>                         clk: clock-controller {
+>                                 compatible =3D "nuvoton,npcm845-clk";
+>                                 #clock-cells =3D <1>;
+>                                 clocks =3D <&refclk>;
+>                                 clock-names =3D "refclk";
+>                         };
+>                 };
+> You can see other drivers that using the same method like
+> https://elixir.bootlin.com/linux/v6.8-rc5/source/Documentation/devicetree=
+/bindings/clock/socionext,uniphier-clock.yaml
 
-Am 28.02.24 um 17:03 schrieb Guenter Roeck:
-> On 2/28/24 03:03, Paul Menzel wrote:
+You will need a similar file like
+Documentation/devicetree/bindings/soc/socionext/socionext,uniphier-perictrl=
+.yaml
+then to describe the child nodes.
 
->> Am 28.02.24 um 10:03 schrieb Guenter Roeck:
->>> On 2/27/24 23:57, Paul Menzel wrote:
->>
->>>> Am 27.02.24 um 01:56 schrieb baneric926@gmail.com:
->>>>> From: Ban Feng <kcfeng0@nuvoton.com>
->>>>>
->>>>> NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
->>>>
->>>> Please reference the datasheet.
->>>
->>> Note that something like
->>>
->>> Datasheet: Available from Nuvoton upon request
->>>
->>> is quite common for hardware monitoring chips and acceptable.
->>
->> Yes, it would be nice to document it though. (And finally for vendors 
->> to just make them available for download.)
-> 
-> Nuvoton is nice enough and commonly makes datasheets available on request.
-> The only exception I have seen so far is where they were forced into an NDA
-> by a large chip and board vendor, which prevented them from publishing a
-> specific datasheet.
+Socionext may not be the best example to follow. I generally try to
+avoid syscon and simply put #reset-cells and #clock-cells in the node
+for the device. You can use the auxiliary bus to register drivers for
+clk and reset and put them into the resepective driver directories.
+Avoid syscon means random drivers can't reach into the device with a
+regmap handle and read/write registers that they're not supposed to.
 
-Nice, that they are better in this regard than others.
+> >
+> > > +       struct clk_hw_onecell_data *npcm8xx_clk_data;
+> > > +       struct device *dev =3D &pdev->dev;
+> > > +       struct regmap *clk_regmap;
+> > > +       struct clk_hw *hw;
+> > > +       unsigned int i;
+> > > +
+> > > +       npcm8xx_clk_data =3D devm_kzalloc(dev, struct_size(npcm8xx_cl=
+k_data, hws,
+> > > +                                                        NPCM8XX_NUM_=
+CLOCKS),
+> > > +                                       GFP_KERNEL);
+> > > +       if (!npcm8xx_clk_data)
+> > > +               return -ENOMEM;
+> > > +
+> > > +       clk_regmap =3D syscon_node_to_regmap(parent_np);
+> > > +       of_node_put(parent_np);
+> >
+> > Is there another binding update that is going to move this node to be a
+> > child of the syscon?
+> >
+> >                 gcr: system-controller@f0800000 {
+> >                         compatible =3D "nuvoton,npcm845-gcr", "syscon";
+> >                         reg =3D <0x0 0xf0800000 0x0 0x1000>;
+> >                 };
+> No, sorry but I'm not going to use the GCR node the handle the clock
+> and reset modules, the GCR has different memory space.
+> the clock driver will have the following device tree
 
-> Others are much worse. Many PMIC vendors don't publish their datasheets at
-> all, and sometimes chips don't even officially exist (notorious for chips
-> intended for the automotive market). Just look at the whole discussion
-> around MAX31335.
-> 
-> Anyway, there are lots of examples in Documentation/hwmon/. I don't see
-> the need to add further documentation, and I specifically don't want to
-> make it official that "Datasheet not public" is acceptable as well.
-> We really don't have a choice unless we want to exclude a whole class
-> of chips from the kernel, but that doesn't make it better.
+What does the reset driver use the CGR node for? The driver looks like
+it's using it to control USB phy resets.
 
-I know folks figure it out eventually, but I found it helpful to have 
-the datesheet name in the commit message to know what to search for, ask 
-for, or in case of difference between datasheet revision what to compare 
-against.
+>                sysctrl: system-controller@f0801000 {
+>                         compatible =3D "syscon", "simple-mfd";
+>                         reg =3D <0x0 0xf0801000 0x0 0x1000>;
+>=20
+>                         rstc: reset-controller {
+>                                 compatible =3D "nuvoton,npcm845-reset";
+>                                 reg =3D <0x0 0xf0801000 0x0 0xC4>;
 
->>>> Could you please give a high level description of the driver design?
->>>
->>> Can you be more specific ? I didn't have time yet to look into details,
->>> but at first glance this looks like a standard hardware monitoring 
->>> driver.
->>> One could argue that the high level design of such drivers is described
->>> in Documentation/hwmon/hwmon-kernel-api.rst.
->>>
->>> I don't usually ask for a additional design information for hwmon drivers
->>> unless some chip interaction is unusual and needs to be explained,
->>> and then I prefer to have it explained in the code. Given that, I am
->>> quite curious and would like to understand what you are looking for.
->> For a 10+ lines commit, in my opinion the commit message should say 
->> something about the implementation. Even it is just, as you wrote, a 
->> note, that it follows the standard design.
-> 
-> Again, I have not looked into the submission, but usually we ask for that
-> to be documented in Documentation/hwmon/. I find that much better than
-> a soon-to-be-forgotten commit message. I don't mind something like
-> "The NCT7363Y is a fan controller with up to 16 independent fan input
->   monitors and up to 16 independent PWM outputs. It also supports up
->   to 16 GPIO pins"
-> or in other words a description of the chip, not the implementation.
-> That a driver hwmon driver uses the hardware monitoring API seems to be
-> obvious to me, so I don't see the value of adding it to the commit
-> description. I would not mind having something there, but I don't
-> see it as mandatory.
-> 
-> On the  other side, granted, that is just _my_ personal opinion.
-> Do we have a common guideline for what exactly should be in commit
-> descriptions for driver submissions ? I guess I should look that up.
+This isn't a valid reg property for a child node like this.
 
-`Documentation/hwmon/submitting-patches.rst` refers to 
-`Documentation/process/submitting-patches.rst`, and there *Describe your 
-changes* seems to have been written for documenting bug fixes or 
-enhancements and not new additions. It for example contains:
-
-> Once the problem is established, describe what you are actually doing
-> about it in technical detail.  It's important to describe the change
-> in plain English for the reviewer to verify that the code is behaving
-> as you intend it to.
-
-I agree with your description, but I am also convinced if you write 500 
-lines of code, that you can write ten lines of commit messages giving a 
-broad overview. In this case, saying that it follows the standard driver 
-model would be good enough for me.
-
-Also, at least for me, often having to bisect stuff and using `git 
-blame` to look at old commits, commit messages are very valuable to me, 
-and not “forgotten”. ;-)
-
-
-Kind regards,
-
-Paul
+>                                 #reset-cells =3D <2>;
+>                                 nuvoton,sysgcr =3D <&gcr>;
+>                         };
+>=20
+>                         clk: clock-controller {
+>                                 compatible =3D "nuvoton,npcm845-clk";
+>                                 #clock-cells =3D <1>;
+>                                 clocks =3D <&refclk>;
+>                                 clock-names =3D "refclk";
+>                         };
+>                 };
