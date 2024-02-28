@@ -1,119 +1,41 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8BC286AACA
-	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 10:04:36 +0100 (CET)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YKuC0eiD;
-	dkim-atps=neutral
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F71A86AC7E
+	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 12:04:53 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Tl7hf3630z30f8
-	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 20:04:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TlBMN2xsLz3vb5
+	for <lists+openbmc@lfdr.de>; Wed, 28 Feb 2024 22:04:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YKuC0eiD;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2c; helo=mail-oo1-xc2c.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tl7h61tn1z2yVL
-	for <openbmc@lists.ozlabs.org>; Wed, 28 Feb 2024 20:04:05 +1100 (AEDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id 006d021491bc7-5a04fb5e689so2680484eaf.1
-        for <openbmc@lists.ozlabs.org>; Wed, 28 Feb 2024 01:04:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709111042; x=1709715842; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=FenSeDhx37Fn4h4rPIP/X4cfvW1ZC8JOsi6cnZG14Mo=;
-        b=YKuC0eiDVnjjzqiCuBg3/ut8D4NRmZW31uJOI0j2ggdEPgNO8ZlsPC4rJaTdxq5oSU
-         Qd4QGnibwWm21/M1VfevOBGYvAr8ZoyxAEMQOUePIIrUCwPyvTftrQDQw7k/II3KUT9j
-         r7MEYA2dtTiV8jCpC4dX3FBIN2a6l36QQaNJajru8dBKByJPUqnKyt67H7i/0ovas4N+
-         voSTkut1VPAh5Urpf8h+UHv0cMyk6JzC7KtYotmxANjInzP9Pr2l+JhLZsrIKU7h0T2a
-         YaRSfotXygZAKesXTPFa134+BhHXp3YZRpXqpPsgNQ9NSvJQCk1pfV/W+gkB5LtFJQSh
-         Vs2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709111042; x=1709715842;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FenSeDhx37Fn4h4rPIP/X4cfvW1ZC8JOsi6cnZG14Mo=;
-        b=mIpOvJL5dvGhaSiE9oPR3JrQzlT/EUrmDtnbnyhBRRZROr5r9W5H+UG3W45+C0l8Na
-         uFFpRjA0vRcrj5ZG9kx4dcStdjS9uf3k2/sfkEnYPD8FGVw2xTZRPG1Sa90eYA2OntOL
-         9+4O81zWbDze5hDCwRxMm0sDXKzW7MlQeJM/SG+lFgJtDNPZTeyi6m0xryaHJ1wn2+Wf
-         hXv1hn4IvJdkft9h5E7HnAFvqqf/qspigpx/JB3YujuCT3UKI0WDAGSev4gyvbXu4opF
-         FAaf/gPU3PZHZ9LwHfvqZj0SSCVyPNKjGWfMTOtLJWpj+1uPbVpdjfw8qPzgc20QUhRt
-         PP/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUeHvvxY2v+3Dm3g5culF2cNaCz/sauCO11eK4TEalCTrQwjHZCzmOPzGUYisAlMy0qMI7GQj3y3FYstuW0fqi9Yb8P7EY3Zms=
-X-Gm-Message-State: AOJu0YywgmaDBC5lhryj8fHFO5VIRbVs5IrtOv+hYdnHuAYhI4oAVjfW
-	V/ay7M0CioXzKu2TW4AqqBIGYCH83WCOjljyzpydFMIrLY9aQ8Ur
-X-Google-Smtp-Source: AGHT+IHnRve3OtpyuvD83WrEZqqI1Lk+ep0Bewe4MemDLs++I/if9YlOf41NMMKqP5ugfkes2LfgHw==
-X-Received: by 2002:a05:6870:9625:b0:220:15bb:ba43 with SMTP id d37-20020a056870962500b0022015bbba43mr9037258oaq.48.1709111042263;
-        Wed, 28 Feb 2024 01:04:02 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u4-20020a056a00098400b006e5619b2f83sm874654pfg.7.2024.02.28.01.03.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Feb 2024 01:04:01 -0800 (PST)
-Message-ID: <4b06d535-6739-47b5-ad1e-0ff94322620e@roeck-us.net>
-Date: Wed, 28 Feb 2024 01:03:58 -0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TlBM25qYcz3dXF
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Feb 2024 22:04:26 +1100 (AEDT)
+Received: from [192.168.0.53] (ip5f5aedb1.dynamic.kabel-deutschland.de [95.90.237.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 8347861E5FE05;
+	Wed, 28 Feb 2024 12:03:57 +0100 (CET)
+Message-ID: <e2b0b8e3-9b39-4621-9e43-d7de02286a27@molgen.mpg.de>
+Date: Wed, 28 Feb 2024 12:03:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 3/3] hwmon: Driver for Nuvoton NCT7363Y
 Content-Language: en-US
-To: Paul Menzel <pmenzel@molgen.mpg.de>, Ban Feng <baneric926@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>
 References: <20240227005606.1107203-1-kcfeng0@nuvoton.com>
  <20240227005606.1107203-4-kcfeng0@nuvoton.com>
  <62f38808-7d5f-4466-a65e-b6a64b2e7c01@molgen.mpg.de>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <62f38808-7d5f-4466-a65e-b6a64b2e7c01@molgen.mpg.de>
+ <4b06d535-6739-47b5-ad1e-0ff94322620e@roeck-us.net>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <4b06d535-6739-47b5-ad1e-0ff94322620e@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -127,43 +49,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, Ban Feng <baneric926@gmail.com>, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/27/24 23:57, Paul Menzel wrote:
-> Dear Ban,
-> 
-> 
-> Thank you for your patch. Some minor things from my side.
-> 
-> 
-> Am 27.02.24 um 01:56 schrieb baneric926@gmail.com:
->> From: Ban Feng <kcfeng0@nuvoton.com>
+Dear Guenter,
+
+
+Am 28.02.24 um 10:03 schrieb Guenter Roeck:
+> On 2/27/24 23:57, Paul Menzel wrote:
+
+>> Am 27.02.24 um 01:56 schrieb baneric926@gmail.com:
+>>> From: Ban Feng <kcfeng0@nuvoton.com>
+>>>
+>>> NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
 >>
->> NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
+>> Please reference the datasheet.
 > 
-> Please reference the datasheet.
+> Note that something like
 > 
-
-Note that something like
-
-Datasheet: Available from Nuvoton upon request
-
-is quite common for hardware monitoring chips and acceptable.
-
-> Could you please give a high level description of the driver design?
+> Datasheet: Available from Nuvoton upon request
 > 
+> is quite common for hardware monitoring chips and acceptable.
 
-Can you be more specific ? I didn't have time yet to look into details,
-but at first glance this looks like a standard hardware monitoring driver.
-One could argue that the high level design of such drivers is described
-in Documentation/hwmon/hwmon-kernel-api.rst.
-I don't usually ask for a additional design information for hwmon drivers
-unless some chip interaction is unusual and needs to be explained,
-and then I prefer to have it explained in the code. Given that, I am
-quite curious and would like to understand what you are looking for.
+Yes, it would be nice to document it though. (And finally for vendors to 
+just make them available for download.)
 
-Thanks,
-Guenter
+>> Could you please give a high level description of the driver design?
+> 
+> Can you be more specific ? I didn't have time yet to look into details,
+> but at first glance this looks like a standard hardware monitoring driver.
+> One could argue that the high level design of such drivers is described
+> in Documentation/hwmon/hwmon-kernel-api.rst.
+> 
+> I don't usually ask for a additional design information for hwmon drivers
+> unless some chip interaction is unusual and needs to be explained,
+> and then I prefer to have it explained in the code. Given that, I am
+> quite curious and would like to understand what you are looking for.
+For a 10+ lines commit, in my opinion the commit message should say 
+something about the implementation. Even it is just, as you wrote, a 
+note, that it follows the standard design.
 
+
+Kind regards,
+
+Paul
