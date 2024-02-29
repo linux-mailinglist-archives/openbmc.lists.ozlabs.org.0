@@ -1,55 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1F0486D697
-	for <lists+openbmc@lfdr.de>; Thu, 29 Feb 2024 23:10:37 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DEE486D69D
+	for <lists+openbmc@lfdr.de>; Thu, 29 Feb 2024 23:11:30 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IkpYIpzO;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Yky3sXu1;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Tm5573rK0z3vbs
-	for <lists+openbmc@lfdr.de>; Fri,  1 Mar 2024 09:10:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tm5681s33z3vZY
+	for <lists+openbmc@lfdr.de>; Fri,  1 Mar 2024 09:11:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IkpYIpzO;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Yky3sXu1;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
 Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tm32j02TZz3vXc;
-	Fri,  1 Mar 2024 07:38:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tm35452wyz3vXc;
+	Fri,  1 Mar 2024 07:40:24 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 441F3CE1A80;
-	Thu, 29 Feb 2024 20:38:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43AEC433C7;
-	Thu, 29 Feb 2024 20:38:12 +0000 (UTC)
+	by sin.source.kernel.org (Postfix) with ESMTP id F39A3CE0613;
+	Thu, 29 Feb 2024 20:40:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F51C433C7;
+	Thu, 29 Feb 2024 20:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709239097;
+	s=k20201202; t=1709239221;
 	bh=NKk9DfgAyxGXNWdgqcpfsG6GEb2KHxtt6O3UhenhoNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IkpYIpzOwpS0ID4c5SPhFPtSKp/SUyTn7YgGvmeUUd+H7h7oA6AC5woXSf/gGfBLi
-	 vJJK0pku7ALSzkKGUbyUFKZH3OxxiBQo+B+0W5NevoZbX3fL9OooAxO00XrVXZ6QNu
-	 n92u6IJTHymmElDQScHeAAzI8gHEu2gNRwu+m1EkMFqg9Oi9K6vO+M/LX+HXugq+Sz
-	 Y0S6w7K14b5SiltgPzQ+CehpoEnLYUgaQb3sIxqZ+1WPTDK6/qLertWdV9Rc/hhhIm
-	 nNjqi9X3x7oozlBF5RgJK1NkdDU/pHqFM8E+5gUUwKubixsG6lQCE1Xmwi+rjYC1Cr
-	 /Y4Gnzi8cu7iA==
+	b=Yky3sXu1EZTXwXggl70GMctUhj1CEVlVFjd7q7i6BicH3/YcZ+pjKqyI3GlsKPpMO
+	 /wdEHUJ8mZJp7m5Dy3X+EWR1sTo9xfp4YsSNp9EZqR0tR4XHD3gtIwGnTxImcQJLhw
+	 enFY38VvBfJ0QC8Idnz1W3tIJcFduWfXQvkgCa9eZ60A3UNl7M1yzfSQ08/8S1F40N
+	 U39StBu6SL/uR8o9X+/V4ThdAAslguxDN/MLFV+vdPc+13FzgGqT2643eeWASF9EFU
+	 gK9Rm3TGoFPMo5puoj8MsbKmaxNyz+ro1DQ93PqVD5NXdV3+n4jqtoqMUhhmjhvWJH
+	 6tW/e4z6QLCWg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.7 19/24] arm: dts: Fix dtc interrupt_provider warnings
-Date: Thu, 29 Feb 2024 15:36:59 -0500
-Message-ID: <20240229203729.2860356-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 18/22] arm: dts: Fix dtc interrupt_provider warnings
+Date: Thu, 29 Feb 2024 15:39:11 -0500
+Message-ID: <20240229203933.2861006-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240229203729.2860356-1-sashal@kernel.org>
-References: <20240229203729.2860356-1-sashal@kernel.org>
+In-Reply-To: <20240229203933.2861006-1-sashal@kernel.org>
+References: <20240229203933.2861006-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.7.6
+X-stable-base: Linux 6.6.18
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 01 Mar 2024 09:01:43 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -63,7 +63,7 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@lunn.ch, linux-aspeed@lists.ozlabs.org, tony@atomide.com, Alexandre Torgue <alexandre.torgue@foss.st.com>, thierry.reding@gmail.com, krzysztof.kozlowski+dt@linaro.org, linux-stm32@st-md-mailman.stormreply.com, Sasha Levin <sashal@kernel.org>, Rob Herring <robh@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, gregory.clement@bootlin.com, jonathanh@nvidia.com, joel@jms.id.au, andre.przywara@arm.com, sebastian.hesselbarth@gmail.com, devicetree@vger.kernel.org, conor+dt@kernel.org, bcousson@baylibre.com, Arnd Bergmann <arnd@arndb.de>, rjui@broadcom.com, j.neuschaefer@gmx.net, robh+dt@kernel.org, linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Thierry Reding <treding@nvidia.com>, sbranden@broadcom.com, atenart@kernel.org, mcoquelin.stm32@gmail.com, sudeep.holla@arm.com, tsahee@annapurnalabs.com, shawnguo@kernel.org, openbmc@lists.ozlabs.org
+Cc: andrew@lunn.ch, hayashi.kunihiko@socionext.com, tony@atomide.com, Alexandre Torgue <alexandre.torgue@foss.st.com>, thierry.reding@gmail.com, krzysztof.kozlowski+dt@linaro.org, linux-stm32@st-md-mailman.stormreply.com, Sasha Levin <sashal@kernel.org>, Rob Herring <robh@kernel.org>, linux-aspeed@lists.ozlabs.org, Florian Fainelli <florian.fainelli@broadcom.com>, gregory.clement@bootlin.com, jonathanh@nvidia.com, joel@jms.id.au, andre.przywara@arm.com, sebastian.hesselbarth@gmail.com, devicetree@vger.kernel.org, conor+dt@kernel.org, bcousson@baylibre.com, Arnd Bergmann <arnd@arndb.de>, rjui@broadcom.com, j.neuschaefer@gmx.net, robh+dt@kernel.org, linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Thierry Reding <treding@nvidia.com>, sbranden@broadcom.com, atenart@kernel.org, mcoquelin.stm32@gmail.com, tsahee@annapurnalabs.com, shawnguo@kernel.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
