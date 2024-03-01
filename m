@@ -1,129 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 674DD86EADE
-	for <lists+openbmc@lfdr.de>; Fri,  1 Mar 2024 22:03:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28F9486EBD1
+	for <lists+openbmc@lfdr.de>; Fri,  1 Mar 2024 23:24:29 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=r6vOrQSt;
+	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=2DZIEMSj;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TmgXf027gz3vc8
-	for <lists+openbmc@lfdr.de>; Sat,  2 Mar 2024 08:02:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TmjLf5HkPz3vcc
+	for <lists+openbmc@lfdr.de>; Sat,  2 Mar 2024 09:24:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=r6vOrQSt;
+	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=2DZIEMSj;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=amd.com (client-ip=2a01:111:f403:2415::601; helo=nam11-dm6-obe.outbound.protection.outlook.com; envelope-from=supreeth.venkatesh@amd.com; receiver=lists.ozlabs.org)
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on20601.outbound.protection.outlook.com [IPv6:2a01:111:f403:2415::601])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=amd.com (client-ip=2a01:111:f400:7e88::618; helo=nam10-dm6-obe.outbound.protection.outlook.com; envelope-from=supreeth.venkatesh@amd.com; receiver=lists.ozlabs.org)
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on20618.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e88::618])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TmgX474vHz2xQ8;
-	Sat,  2 Mar 2024 08:02:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TmjKw4DyXz3brL;
+	Sat,  2 Mar 2024 09:23:44 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ge1Qpm96ThAFQKeQZ6u7vM8l3KCqrhEHjvYD/WO8mj31p0LEZ++Ds36pD6tS4spnVW2l8dzyZOkFMsBKwdlY2WZ3RlSeUuXtwrpNGFKepky6/CETuroZV6s1HdETPA6qSIYDasGYmAd9bFu//xwbU5sa4/EmRk3egm9W+Ivs2dJxYKHo3RnKE/ds9opMod+f3ReAfAzwtRKWC8ctTMlJ/yqYZXSrYiLRuw56OzMCoiZLap6Nf2FIu45+nEcvq1NhJAkuZ4XN+MXhH5k0lEm5c29VTp77tntI0g14lqOh/6iBAPn7qwnIBewlbzxLrYdOEhFFd2MLj0d+x+7l9g8daQ==
+ b=bqetMl6oCr26vfhs0lz+YhNQ1VJfN5E2AWSv+L4FLnUHhvG+98D1Y4zYfZWD0QD/jnyZe34hVAQntQwE5XjfAO9DZVZPQiacPCTC2lv+SvmUbVRJhsWbXq6Wq1OiVzq45hQbphhP323pcwbksUIi93q2xuK1eHn/o7vBBvkvTLy3kkQB6Be7XPZXfiphIcZv1BlnzLZRlLWrz3wbHugmuCe0zh5B5C6nUok/1gsj3Wcb7ZwhAAB7IDbSkYLXUWDZCyvW2kf0o59+GWwpA63dCJU4VtN0HExAuCqNUt0awyOJSKr9qriXY1ITsulNlHumzoP/q5l7fcz735AFsljLSA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w22bDhtkyKXcx2ZlUJ8+JTUwhs96yvBqYmrx0LPU14A=;
- b=koiof9DR828Vz5FzM3qHw6q6/BktSmLZM/8DsR4evN9lcZURr5VQYYEUPkv5kF937Rr5VYZc+5UFwI8WYyql7Kjmm29GTQvdSnU1j1G+4ppqqJmPOHQ5iACWrxhlRXeOGJiG2Cl9voWm1lbheTHiuTgGW8xmAOlQQtKs91La0Ul8N7GwT76E4sASwJRz+djxsP16EgcB/a5m+Bp2WVUTWDfg40VwIJrMIdD+jhuG9WAu4YJQUDzqxWzFzaOCXMgEzVkNWFw/X+NilEUYoFuinkkRGBMo2GMJCZzId4yEfGSmJNZCDJ+kpesXl23CRR3/hETw0r2xptv+xI9tsBRv+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
+ bh=RL4dEJAlIwDlPYlI9vmoWjrrkKiS5cF0OL/agpmraM8=;
+ b=d/ugIZRhMmw432ymwIj4QA7y+6a+NU4r+dqdBTd2caYA+3sK+CcEvUSBtq3xUbmU7qe34IP23N057UfDAXYtH6B3BNuqcCQuO5lp7I6ttpfHP4WNRwiHUxgr8kg8dvvP0n9dOmBcZvse7+N5biTV6QAUR22rA5tTY0oOr7r3CR8N7lQTbN3GHY46YLjEXepaieECHjqc1RsikRmAOECEgpPfm1Y43hpVtZdaZDd0kMvOZjQt6jWSOHhml0qTkCbzfBHbEi9UOjVEnH25irkezWJnQKDDdXZ+5U82vg0nCl3+PphxifQmT50CxeQw66sZfsJsjoTRwgfP51yt3aGd0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=jms.id.au smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w22bDhtkyKXcx2ZlUJ8+JTUwhs96yvBqYmrx0LPU14A=;
- b=r6vOrQSt6thWraNGQoQ4yHxj5DX8iZ2K1/gHX4WcHvKoLkUqhvi8yvukktErwUKLe3XnaDra50DPia5FqhVFoOFirncTzLvjaiATVHHwZ/UB/fMGURZfYma5YyPhcC92/wG2+XPk4TYOmCIUt1vgWt/Ju+W5DZ6x/05+N20YZ1Q=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SN6PR12MB4752.namprd12.prod.outlook.com (2603:10b6:805:e9::10)
- by MW6PR12MB8758.namprd12.prod.outlook.com (2603:10b6:303:23d::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.34; Fri, 1 Mar
- 2024 21:02:07 +0000
-Received: from SN6PR12MB4752.namprd12.prod.outlook.com
- ([fe80::80ac:576:f125:1d72]) by SN6PR12MB4752.namprd12.prod.outlook.com
- ([fe80::80ac:576:f125:1d72%5]) with mapi id 15.20.7316.039; Fri, 1 Mar 2024
- 21:02:07 +0000
-Message-ID: <023f6f6c-dadd-4933-ac2c-15dfe77bd90e@amd.com>
-Date: Fri, 1 Mar 2024 15:02:05 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] ARM:dts:aspeed: Initial device tree for AMD Onyx
- Platform
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Supreeth Venkatesh <supreeth.venkatesh@amd.com>, joel@jms.id.au,
- andrew@aj.id.au, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, robh+dt@kernel.org
-References: <20240110033543.799919-1-supreeth.venkatesh@amd.com>
- <d4fe8b55-a1ea-4ce7-89ac-ce17e8ff4e45@amd.com>
- <dda6c22e-8f35-4c18-9fea-6a6295dee3a1@linaro.org>
-From: Supreeth Venkatesh <supvenka@amd.com>
-In-Reply-To: <dda6c22e-8f35-4c18-9fea-6a6295dee3a1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SA9PR13CA0109.namprd13.prod.outlook.com
- (2603:10b6:806:24::24) To SN6PR12MB4752.namprd12.prod.outlook.com
- (2603:10b6:805:e9::10)
+ bh=RL4dEJAlIwDlPYlI9vmoWjrrkKiS5cF0OL/agpmraM8=;
+ b=2DZIEMSjh9zG2NhtAABOsW3XsmEpMWHSZ7hVpsyawwO7WzNZEM3AZHYZAG1lp5BJU2P5TWD28JSOHAfQ+Ynt6M8HaAdRkulzwqn8jgW3UnseMvPXuWTPS96szBZ158cnjc0zmTzrxSr/8uMXf+xb5MmZ8My6q9U0B1AbV1AIIe8=
+Received: from CY5P221CA0030.NAMP221.PROD.OUTLOOK.COM (2603:10b6:930:b::36) by
+ SJ2PR12MB9139.namprd12.prod.outlook.com (2603:10b6:a03:564::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7316.36; Fri, 1 Mar 2024 22:23:23 +0000
+Received: from CY4PEPF0000EDD6.namprd03.prod.outlook.com
+ (2603:10b6:930:b:cafe::e) by CY5P221CA0030.outlook.office365.com
+ (2603:10b6:930:b::36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.34 via Frontend
+ Transport; Fri, 1 Mar 2024 22:23:22 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CY4PEPF0000EDD6.mail.protection.outlook.com (10.167.241.210) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7362.11 via Frontend Transport; Fri, 1 Mar 2024 22:23:22 +0000
+Received: from BMCDEV-TH3.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 1 Mar
+ 2024 16:23:21 -0600
+From: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+To: <joel@jms.id.au>, <andrew@aj.id.au>, <devicetree@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<robh+dt@kernel.org>
+Subject: [PATCH v2 1/1] ARM:dts:aspeed: Initial device tree for AMD Onyx Platform
+Date: Fri, 1 Mar 2024 16:22:57 -0600
+Message-ID: <20240301222257.3309541-1-supreeth.venkatesh@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN6PR12MB4752:EE_|MW6PR12MB8758:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71459798-a8f5-4df3-dffc-08dc3a32daee
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD6:EE_|SJ2PR12MB9139:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f1db55a-2123-4c51-2687-08dc3a3e34c8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	qQSwXg8hD2OPvTEfj5Rc86PWBAtkTj3S1rkoKdc8v14Y+TuNasRBrYs2pzJk+ilgdHJ2ntvgX/jbUsRw+e4c5lV4anmEA8AVOA9OPThm3xsW5dkfz5qrW1p0e1JjFN8q9c3pHMvDE0SDBn20Z3r+1RVQ7my26fa6xXnrDynstO2l+2Xy04I2vYGV+fUm78JocDzwOS7y/oUYUXWFO1qq1SemLDxHiXbZ4iit7OaYo97K8sLgDvgNbZh5DJ4P5mpBeUGDJUkUOMSkKYAD+SaJdf95aRnD9Seg0niLlH1lFaAod7CBbMucaQuTYmLlUa66j9iMtwCvUIcLIGzEiFs8hkrgpjV67qPFMfAIlo1kpg8YD+ZPWJCjB1Gsz4Lhm2e+4Py6tebkEB2lVfK9CtkuZL6GrRfrEv+IMo4Gs+3/Pt/qqbu/A8w4uwMzj7++JrA7gkP2ma6e0kMoT5HOmTtX5bmzJ16NJC+3F5EGK4bquMfXSauysfZ5Ne4WYpmfy9IkmBM35WkpTuh1+lrR0Lartw2gH8Gqa6jpLvLb5MpPXE7u3kS5A8XCxD2GisEBPtIEyeg9hatPaLI94Iq5cMcWuEVJ+nC3BHFBZne+mIQtHMbQXbHlG/qXtl8Y4+c6dj8YcCsW58BMEMRzI7kMtoafIC1TPVq7c+4gH8k2qgrp80pkZxCd8gjMadDap3d211d4y+fdfaN3bSX4mYYfViyr5A==
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR12MB4752.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(921011);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?dzd6OHRyL1JsNGgxMllsbXVUQUFTQy9NTEdjcVVpWVVxVzFBckNFLzFTK0tk?=
- =?utf-8?B?RDVUMnJQam83M2U5dlh5b1djWjFQWkN6aStyQkVrTXlIWmUzTjNZTHJLeEZs?=
- =?utf-8?B?S2d6NGQ3dDZEN0dadC9Uc25yMUNHa1FmQ3d2QWUvR3U2YkhRVGtiT29wa0lB?=
- =?utf-8?B?Y0Q5L0VnT3pjZ3loK1MrRWRhamVSaFkxY0VVN3YwaGhJMEdodUl6MXBVZGQ4?=
- =?utf-8?B?dDdqWnAyYU5kYk9PWnhCOW05YlNXMDVSdnhyTkJKdUJJSU9QNGprbWlLK3ZY?=
- =?utf-8?B?Q3VsVjZPekFGUmx2ZDVSUnlCOCtteWFwR1czeWZwV05wTEJ3U1BGa01WTlBm?=
- =?utf-8?B?MzRHN1AzaFYyQzF3aE1PN3pQU0ltWGZTaGpOTnBndWpZY25vR2U3cEV0Rksr?=
- =?utf-8?B?VWFlcHNDYUI1eG45V2dYUk80UWs5cnRJRGR1OG1BTWtoWmFFZE4vWjNtY3Rh?=
- =?utf-8?B?ZGRMSVNMam5ScXdBaUROWGVRVlBGMFRkVGNTKytBUmZBVVZXd0kwamNocFk1?=
- =?utf-8?B?K0F6NFltUW1sM0YrT0RMdkIwS0NNWW94MENmWTVHZGN1U0tFVTYrWjdIUEEv?=
- =?utf-8?B?bEZ3eUlmNnB5RC9VelpNMkdGNmhaczFWSUk4c282R0RNUUFIejFISWRyOE5l?=
- =?utf-8?B?WUM1cDJoQWZmQy9mSGUwV0NuR1pOQWwycHlzdXFjL2RoTVM2TUNvZUM3NVZE?=
- =?utf-8?B?b3VKN2RYanpHNWdVMU9KOXh3YjI0Q1BiWHhlRXRFL2Y2Yi8wOXN1QVk1N3Zr?=
- =?utf-8?B?d3JKdkhYOFFsQ0dJWnRNemZYaWdGV0hVVjBvV0RJK0VyWENEVCt0eEVJUEcv?=
- =?utf-8?B?WHBGc3o5WEYvbEQxU2E2TXZTemVHM2gwNS9uM0crb0lxSVNWMW5wWnRiUzFP?=
- =?utf-8?B?TWVCaWE3NXlLeVphQ1VxamszTURKeWFpaFRNK0dGRW9mU3QxQXJuWGlTNnFO?=
- =?utf-8?B?TzBJUlR3ek41L05MWDI5L0xUMTh3QTExZUh1Kzd0VnIzS0JjRk1XL0J1R2tr?=
- =?utf-8?B?RzdLTkRvQWRORlFmUG9QamJ2ZDdUZ3Rkd3hKdXpZQ1FCNEljSXR2RWw5R1V0?=
- =?utf-8?B?ZlcvN1FQcUhGSE9ib0VybFA1QlUyc0Z6eTBkVG43UUdqdkhWZkNheGFHMGwz?=
- =?utf-8?B?em5YMUtXWEcvMSt2eUM2Nnh1eTVQbkJQcmlYQ09va1l2bTV5NTgyZVdqYjhU?=
- =?utf-8?B?czVnL0dQSThTTnovQjlhcG9jbW5aUTFuYzVsZTVSZURrQ2tMcGl6V0RySUZt?=
- =?utf-8?B?WWF6bDhscDYzaXU3WmZxSjlNdThaOUkvb1VLQjExb2t1bTNaakxQOXdDblBy?=
- =?utf-8?B?dVErRzFsa2JKbExPM2FTRWNTYnVyRHNEQ0tYUHFpRm90b0ovOUNQa0ZQcVBM?=
- =?utf-8?B?b1hYKzczVjVxK0NoYlp0d1FvNEt2VmFERUYzTk9ia2FmbGNEMktONGJSb2hQ?=
- =?utf-8?B?dlgvVmJab0lkMVFGcGMwQTFrUVpHS1FYKzRjYmgxazFUVlBWZnYrQjBrb3Nr?=
- =?utf-8?B?QXRJU1dONkVoaUpFdXlXWmtBcjFsSUQrZDJQUDFhaTdzWlNLMitJVDlHM3Rj?=
- =?utf-8?B?eHp3RnZNMXJ6a2loblFod2VobWtTd3V4S3g4bEhVVjN2OU9xN2pMTWJnZkZo?=
- =?utf-8?B?R3NiOWtJT2RlY0w0ZlNKM3owSjlmYUwwSWt4aXMyU0dCV0psTFFrUzFPZjVF?=
- =?utf-8?B?M0xQTk5wUHJCdGVQNkE0U2xoWlVEWm9WSDd1R01LN0x0b0VUZDVsZndFeXMy?=
- =?utf-8?B?QWVmWUhCUUk0dGtSNFdldEczbUNtUjVNL3RMYWhrUHkwZVhESDZ6VjF4ZjI5?=
- =?utf-8?B?RVMyWTJuU1lMblhIcDBWZTA2cXFIeW4xM3VjZkd2d093TFFVdlV6RGhUcGFQ?=
- =?utf-8?B?Q2o2L1JWVHVzTFBXdFBRS0xhTkQ3aHh3WFhWaXhRODV5ZFRlNlhuVy91SVhF?=
- =?utf-8?B?ZkFpVUdWU2hkbURXb282M3ZjM0hoaGlIYmpNaFpibEdscitXUFlKUXFvdS8w?=
- =?utf-8?B?a011N01sTENzd1J0NnZOclo0c3FkNEpNS21kUjhLVnZyV1gwQjQ1dGZtZ2ly?=
- =?utf-8?B?U0dLSkV4YmUxS1hJRDhyNGJrUzJuRVFWa0ZpcndYMWlRclJkM2diS3NLaG9U?=
- =?utf-8?Q?1H/CqqgNuWLIC+KZ9fXHnU9Q/?=
+X-Microsoft-Antispam-Message-Info: 	J1B2IjjjbE2bpoQwbYV1+ZmVsVjjunF8+Zr9TIXTBVQtMtO/LPOiyOh82n3BJgagzZ1IlCK9pdsUlXD5tVf87Zz1FdVmGuh8WfFaP7VVE/SLSR6bvUDEsKgSWyiI20JVMT60gDrl+tmEW8HmfAn2o/zTEMo2BiNU2jS9gvcsPB2NKvCTsz3qYbRnM5Z640NTN8gVh/yLZKmc0xq5oi956aeUc/f5qaAf8FH9Iosa3Wk9S01aaDBaW6p9QWa3Z073fV2hmqyv7xkhZLafuyJ3Jy0FqIPt87Aj1E/DescSQ1PT8h1PaEQsJi8IxJrn3+OJ8cf/YqGL4uPX9Y3U0uy1k6J2LXJQx02OX4MizvKYLz0ECMzI5pKbDZbXEfe8td3t3UwD5DfJvCzy5COWXeZZyP/dlBtamkuGnpBA4Y4kT1lrI/ETxOvzWAqlB1uqqEQ3J6HhOAe5DXA5wZGCA+NEkvXsUNMIt3h1FqIml5eQ68/8jQis829qpZsK/oc6A3fe8Yd72amP3XBg+v0nd88C6wWCsI3ZE+EYrcThLaAixCtZH5Cosg7xkxo85l4rvSNde15iGJS6wXuurV227/L2t2NGi11fj9LL4bZgbU+MfPchOZX0Fh8hhwdunFOkZcMWFtJGSzIj4cnNCSN4kbRbQ7ymxNuJEtstc1FhwoYQOV9PJr6PGn+6mWpPu+Hf2TVySFD20P1w0TzBzu56/c8M38i5Qr9HGvzEY69+OIvxcocvG6lK6Owunq+NBNj0pg3f
+X-Forefront-Antispam-Report: 	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230031)(36860700004)(82310400014);DIR:OUT;SFP:1101;
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71459798-a8f5-4df3-dffc-08dc3a32daee
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR12MB4752.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2024 21:02:07.6759
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2024 22:23:22.6589
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f1db55a-2123-4c51-2687-08dc3a3e34c8
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7/RgR4jmW4z7CzqPIgjWvfaQ+ikqipJKLlxrW+bV08ca2uUOwsFezZ+3OOInHkHwnTmIjeCHHrq0I6k4F0VePg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8758
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: 	CY4PEPF0000EDD6.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB9139
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,132 +104,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: supreeth.venkatesh@amd.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Add initial device tree and makefile updates for
+AMD Onyx platform.
 
-On 2/9/24 06:38, Krzysztof Kozlowski wrote:
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
->
->
-> On 08/02/2024 15:57, Supreeth Venkatesh wrote:
->> This patch is pending for a month now.
->>
->> Can DT maintainers please help review this and provide feedback?
-> I don't have the original patch in my inbox anymore, so probably you
-> should resend. Anyway quick look points to obvious issues (comments below).
->
->> On 1/9/24 21:35, Supreeth Venkatesh wrote:
->>> This patch adds initial device tree and makefile updates for
->>> AMD Onyx platform.
->>>
->>> AMD Onyx platform is an AMD customer reference board with an Aspeed
->>> ast2600 BMC manufactured by AMD.
->>> It describes I2c devices, Fans, Kcs devices, Uarts, Mac, LEDs, etc.
->>> present on AMD Onyx platform.
->>>
->>> Signed-off-by: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
->>> ---
->>>    arch/arm/boot/dts/aspeed/Makefile             |  1 +
->>>    .../boot/dts/aspeed/aspeed-bmc-amd-onyx.dts   | 98 +++++++++++++++++++
->>>    2 files changed, 99 insertions(+)
->>>    create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
->>>
->>> diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
->>> index fb9cc95f1b60..2b27d377aae2 100644
->>> --- a/arch/arm/boot/dts/aspeed/Makefile
->>> +++ b/arch/arm/boot/dts/aspeed/Makefile
->>> @@ -5,6 +5,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->>>       aspeed-ast2600-evb.dtb \
->>>       aspeed-bmc-amd-daytonax.dtb \
->>>       aspeed-bmc-amd-ethanolx.dtb \
->>> +    aspeed-bmc-amd-onyx.dtb \
->>>       aspeed-bmc-ampere-mtjade.dtb \
->>>       aspeed-bmc-ampere-mtmitchell.dtb \
->>>       aspeed-bmc-arm-stardragon4800-rep2.dtb \
->>> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
->>> new file mode 100644
->>> index 000000000000..a7056cd29553
->>> --- /dev/null
->>> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
->>> @@ -0,0 +1,98 @@
->>> +// SPDX-License-Identifier: GPL-2.0+
->>> +// Copyright (c) 2021 - 2024 AMD Inc.
->>> +// Author: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include "aspeed-g6.dtsi"
->>> +#include <dt-bindings/gpio/aspeed-gpio.h>
->>> +
->>> +/ {
->>> +       model = "AMD Onyx BMC";
->>> +       compatible = "amd,onyx-bmc", "aspeed,ast2600";
-> Undocumented compatibles.
-This is a new device tree file.
->
-> Please run scripts/checkpatch.pl and fix reported warnings. Some
-> warnings can be ignored, but the code here looks like it needs a fix.
-> Feel free to get in touch if the warning is not clear.
->
-Will do.
->>> +
->>> +       aliases {
->>> +               serial0 = &uart1;
->>> +               serial4 = &uart5;
->>> +      };
->>> +
->>> +       chosen {
->>> +               stdout-path = &uart5;
->>> +               bootargs = "console=ttyS4,115200 earlyprintk vmalloc=512MB";
-> earlyprintk is debugging, not for mainline, so drop.
->
-> Console should be encoded in stdout-path.
->
-> vmalloc looks like OS tuning, so also not suitable for mainline DTS.
->
-Thanks. Will remove vmalloc. However, I will check whether existing 
-device trees for BMCs to check
+AMD Onyx platform is an AMD customer reference board with an Aspeed
+ast2600 BMC manufactured by AMD.
+It describes I2C devices, UARTs, MAC, FMC, etc.
+present on AMD Onyx platform.
 
-whether existing DTs have earlyprintk.
+Signed-off-by: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+---
+Changes since v1:
+* Incorporate review comments
+* Update commit message
+* Remove vmalloc and earlyprintk
+---
+ arch/arm/boot/dts/aspeed/Makefile             |  1 +
+ .../boot/dts/aspeed/aspeed-bmc-amd-onyx.dts   | 94 +++++++++++++++++++
+ 2 files changed, 95 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
 
->>> +       };
->>> +
->>> +       memory@80000000 {
->>> +               device_type = "memory";
->>> +               reg = <0x80000000 0x80000000>;
->>> +       };
->>> +
-> Drop redundant blank lines.
-ACK.
->
->>> +};
->>> +
->>> +&mdio0 {
->>> +       status = "okay";
->>> +
->>> +       ethphy0: ethernet-phy@0 {
->>> +               compatible = "ethernet-phy-ieee802.3-c22";
->>> +               reg = <0>;
->>> +       };
->>> +};
->>> +
->>> +&mac3 {
->>> +       status = "okay";
->>> +       phy-mode = "rgmii";
->>> +       phy-handle = <&ethphy0>;
->>> +
->>> +       pinctrl-names = "default";
->>> +       pinctrl-0 = <&pinctrl_rgmii4_default>;
->>> +};
->>> +
->>> +>> +
-> Drop redundant blank lines. You can open existing, recent DTS from
-> maintained platforms like Qcom or TI and look there at coding style.
-ACK.
->
->
->
-> Best regards,
-> Krzysztof
->
+diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
+index fb9cc95f1b60..2b27d377aae2 100644
+--- a/arch/arm/boot/dts/aspeed/Makefile
++++ b/arch/arm/boot/dts/aspeed/Makefile
+@@ -5,6 +5,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-ast2600-evb.dtb \
+ 	aspeed-bmc-amd-daytonax.dtb \
+ 	aspeed-bmc-amd-ethanolx.dtb \
++	aspeed-bmc-amd-onyx.dtb \
+ 	aspeed-bmc-ampere-mtjade.dtb \
+ 	aspeed-bmc-ampere-mtmitchell.dtb \
+ 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
+new file mode 100644
+index 000000000000..1831b8d18db2
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-amd-onyx.dts
+@@ -0,0 +1,94 @@
++// SPDX-License-Identifier: GPL-2.0+
++// Copyright (c) 2021 - 2024 AMD Inc.
++// Author: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
++
++/dts-v1/;
++
++#include "aspeed-g6.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++
++/ {
++	model = "AMD Onyx BMC";
++	compatible = "amd,onyx-bmc", "aspeed,ast2600";
++
++	aliases {
++		serial0 = &uart1;
++		serial4 = &uart5;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200n8";
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x80000000>;
++	};
++
++};
++
++&mdio0 {
++	status = "okay";
++	ethphy0: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac3 {
++	status = "okay";
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy0>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii4_default>;
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		compatible = "jedec,spi-nor";
++		status = "okay";
++		#include "openbmc-flash-layout-128.dtsi"
++	};
++};
++
++//Host Console
++&uart1 {
++	status = "okay";
++};
++
++//BMC Console
++&uart5 {
++	status = "okay";
++};
++
++&gpio0 {
++gpio-line-names =
++	/*A0-A7*/	"","","","","","","","",
++	/*B0-B7*/	"","","","","MON_POST_COMPLETE","P0_PRESENT_L","","",
++	/*C0-C7*/	"","","","","","","","",
++	/*D0-D7*/	"","","","","","","","",
++	/*E0-E7*/	"","","","","","","","",
++	/*F0-F7*/	"","","","","","","","",
++	/*G0-G7*/	"","","","","","","","",
++	/*H0-H7*/	"","ASSERT_WARM_RST_BTN_L","ASSERT_SOC_RST_BTN_L","","","","","",
++	/*I0-I7*/	"","","","","","","","P0_I3C_APML_ALERT_L",
++	/*J0-J7*/	"","","","","","","","",
++	/*K0-K7*/	"","","","","","","","",
++	/*L0-L7*/	"","","","","","","","",
++	/*M0-M7*/	"","","","","","","","",
++	/*N0-N7*/	"","","","","","","PSP_SOFT_FUSE_NOTIFY","ASSERT_BMC_READY",
++	/*O0-O7*/	"","","HDT_SEL","HDT_XTRIG5","HDT_XTRIG6","JTAG_TRST_N","","",
++	/*P0-P7*/	"MON_RST_BTN_L","ASSERT_RST_BTN_L","MON_PWR_BTN_L","ASSERT_PWR_BTN_L","HPM_FPGA_LOCKOUT","ASSERT_NMI_BTN_L","MON_PWR_GOOD","",
++	/*Q0-Q7*/	"","","HDT_DBREQ_L","","BIOS_SPD_MUX_CTRL_RELEASED_L","","","",
++	/*R0-R7*/	"","","","","","","","",
++	/*S0-S7*/	"","","","","","","P0_DIMM_AF_ERROR","P0_DIMM_GL_ERROR",
++	/*T0-T7*/	"","","","","","","","",
++	/*U0-U7*/	"","","","","","","","",
++	/*V0-V7*/	"","","","","","","","",
++	/*W0-W7*/	"","","","","","","","",
++	/*X0-X7*/	"","","","","","","","",
++	/*Y0-Y7*/	"","","","","","","","",
++	/*Z0-Z7*/	"","","","","","","","";
++};
+--
+2.34.1
+
