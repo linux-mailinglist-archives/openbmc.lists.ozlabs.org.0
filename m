@@ -1,75 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99A758711DB
-	for <lists+openbmc@lfdr.de>; Tue,  5 Mar 2024 01:42:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 359BC8711FE
+	for <lists+openbmc@lfdr.de>; Tue,  5 Mar 2024 01:50:06 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hQsRnR88;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TJ5iWm9h;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TpcFy2wLnz3d2j
-	for <lists+openbmc@lfdr.de>; Tue,  5 Mar 2024 11:41:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TpcRH6xdZz3cQm
+	for <lists+openbmc@lfdr.de>; Tue,  5 Mar 2024 11:50:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hQsRnR88;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TJ5iWm9h;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::529; helo=mail-pg1-x529.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TpcFN4TWhz2xKQ
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Mar 2024 11:41:26 +1100 (AEDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6e622b46f45so1273468b3a.1
-        for <openbmc@lists.ozlabs.org>; Mon, 04 Mar 2024 16:41:26 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TpcQk6wQmz30fh
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Mar 2024 11:49:33 +1100 (AEDT)
+Received: by mail-pg1-x529.google.com with SMTP id 41be03b00d2f7-5dbd519bde6so4468320a12.1
+        for <openbmc@lists.ozlabs.org>; Mon, 04 Mar 2024 16:49:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709599280; x=1710204080; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=zz2xv6mhSKvLucKQu9RSMSCv3DxQAkBwArgViXGMUcw=;
-        b=hQsRnR88R9YL4KjYn2htDkpvjfJnQRO4sZDWEiDTVd1Q4HJB2eazvcYCbfx5TkFFGI
-         mIt5dpaPNbR6j3lR7FNSKNB9zsGWhYwUs+1fP7+ZnAbLXAcPSs/z5Ct++jp6P3m9PyQe
-         K9n1yrDSEZ74QWdjeMEhW/opUtBtk/b/XO90UCSfx+9tFA058NicA/r0hTNcTUk2qK7j
-         Iz3yhVMxCNQWXryYoFhk2x+++Nm6kU1WFJj6NlUi//bDyxOCyY4epiXMeNLLcFOmfMAv
-         FbtUqI6Qi8EeN41S1h2/2Kl6toYUBxK56hjnOAOM2psRnqV8ypZN+poDgTe1ILA6Qop6
-         sLSw==
+        d=gmail.com; s=20230601; t=1709599770; x=1710204570; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=++8tOr68/fSpJcWWzBhYIXaEDMYMfDDTltrPw8fd4cE=;
+        b=TJ5iWm9hs5vwlFsKxjgGS/4YxUMrZ8bGlCZaW9L4KWWIX9NAppJcLNiU/VGeUjuJky
+         tK/bTFTJchvQJQL0hipRsxMVwZaTELrEqs1eLvZOltUZnBAAnYOSSlI4iVknQNZVjaHM
+         3VXZDEZ0E6vamfOgaGdmUhVFel5+y7bo5UXV398t6TkiSrP6DZlVyd3aQ6ruWs44QjmG
+         e8/OExMzFTU2iKwt5weUoTfDk20yU0OlstKP8u7fUep0m9XwYSnCEiVULjkXGnRYS7qm
+         Pyd5B226Ww4QTrrYX5FiBFHuVofgh6klqJWjBjSTjvksAwW7eMzPA4tSV95kjgeDVlv2
+         F2yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709599280; x=1710204080;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zz2xv6mhSKvLucKQu9RSMSCv3DxQAkBwArgViXGMUcw=;
-        b=hXLHBqzOvj2c16dsMjKl60xLgjelZRqsByfsnuW9yi5Et1ws9HtRGIPtcik2l4TR7C
-         vZWbJSfvst+MCS6PQpmsNygF+UdnVPlD1NdvhIKM22TDiN+CB6wre3sSviYL28u3sbO/
-         pCl6hcQc9Ds9ktgoWuJKJ40Qe5zAOzQmTwN0N4WpoOH1/sbZpVAi2DJUUvUDHFfTZgoL
-         ihCna3EA+uGccp2qM4o5agPyMsT3nh9MV+qyqG3sgvLMBy+EOPV+1Y2KD2lrYW2OSJFj
-         skXb01qFW8Y75SrLWw4tX1IfsZ4wfr3bkJ48P3Qn3jZ/GEvmKAvN6zQqv4JV63BD+kr8
-         PhGw==
-X-Forwarded-Encrypted: i=1; AJvYcCUnQrKtS5Gsa6GXqCOXeWpGSZdZCJkVVRvfqzjzNaSziLonD1fBVzIaFEIfBKy0MUJS0hgJlROPKFzTuu6K5Xqj+LU2LUJ9pdg=
-X-Gm-Message-State: AOJu0YxMQDHv+fwLQA2Y3YEhV/l4fEFiZqu+7DGdgsGCMJG3wxw5i68U
-	UzuD501Z5MWmI9taPFKS80q7/jqEQtluOWhT+2G5F2Gqr72aIBiY
-X-Google-Smtp-Source: AGHT+IG4AdbCCCco/zN8tNbaJ8l2nbv2xT0FoPaYC9RpV4qR8zcTHmfybDccbl+2SCcjL3Y414ONhQ==
-X-Received: by 2002:a05:6a20:1447:b0:1a1:4f7c:2f6a with SMTP id a7-20020a056a20144700b001a14f7c2f6amr338400pzi.19.1709599280443;
-        Mon, 04 Mar 2024 16:41:20 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709599770; x=1710204570;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=++8tOr68/fSpJcWWzBhYIXaEDMYMfDDTltrPw8fd4cE=;
+        b=DhnTbGtGhr+4gwBlaCYKz0+EPvEbdpnoyOLHwNZNdWUhFRfHt0ACVB8dJ67jWyKBqr
+         kJeqT/bJfy7MGQxLknXr0kOZoKFlZyDtDnqNwdlgUBq809clYx+Hg3tk9fPdk8xiGGcX
+         lfS10e/UPbKrt5zL9DQdcazr23ETgcEefcwj38KxUOTWslpEj+KYv6Ht2BwWFa2vvqbu
+         exsaPO+ygoojy0zgZ3AcjffnAHKiM0lCeI6HYJj8Z5MTujLCLZ3uvvPhM31oqR5EzCz+
+         PP3sVDWPyMKeoj9bsha93tV0dLoA1VRAIJxMUbkTomYd1BZVJjWBZrYYaWiGN6cbcN6q
+         DCOw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqpbWgp1RC6UMKznVVhmhDFX5kJDSw1fSV7sntHD+eQM3yKIW2xfDh3YMfO0j1TBnV1PuDI+NS6dnjcOpv1OBcg82d4xB5f3k=
+X-Gm-Message-State: AOJu0YzpClrspsdSr6gGMK2usl3mgKvBHaVsdn4EfgoP7YFgoedVM1Eo
+	yxTzGed1BgB41+JpXw040BZa3vyyeR7nTCqV11guYWvDwUrQLHb4
+X-Google-Smtp-Source: AGHT+IH5f7z8Q19BNOLE8e016EtE1ruOEMmi8zcLQWUpBERw4Pj2U1o93Uic/p8AsbOd/1jk2BeayQ==
+X-Received: by 2002:a05:6a21:3988:b0:1a1:31a0:f07a with SMTP id ad8-20020a056a21398800b001a131a0f07amr373567pzc.60.1709599769932;
+        Mon, 04 Mar 2024 16:49:29 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id gk4-20020a17090b118400b0029b5f69830dsm587825pjb.22.2024.03.04.16.41.18
+        by smtp.gmail.com with ESMTPSA id t9-20020a17090aae0900b0029b12d6b4a3sm7947605pjq.39.2024.03.04.16.49.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Mar 2024 16:41:19 -0800 (PST)
-Message-ID: <e590e3ba-f446-4f20-9618-d4ff388586ad@roeck-us.net>
-Date: Mon, 4 Mar 2024 16:41:17 -0800
+        Mon, 04 Mar 2024 16:49:29 -0800 (PST)
+Message-ID: <03b6a094-b76d-4b4f-90d8-8b00219ec236@roeck-us.net>
+Date: Mon, 4 Mar 2024 16:49:27 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 1/3] dt-bindings: hwmon: fan: Add fan binding to schema
 Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
 To: Zev Weiss <zev@bewilderbeest.net>, baneric926@gmail.com
 References: <20240227005606.1107203-1-kcfeng0@nuvoton.com>
  <20240227005606.1107203-2-kcfeng0@nuvoton.com>
  <1cf69d3e-a8b4-49f6-ac4d-550b525e45e2@hatter.bewilderbeest.net>
-From: Guenter Roeck <linux@roeck-us.net>
+ <e590e3ba-f446-4f20-9618-d4ff388586ad@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
  RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
@@ -113,7 +114,7 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <1cf69d3e-a8b4-49f6-ac4d-550b525e45e2@hatter.bewilderbeest.net>
+In-Reply-To: <e590e3ba-f446-4f20-9618-d4ff388586ad@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -131,77 +132,38 @@ Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/4/24 16:22, Zev Weiss wrote:
-> On Mon, Feb 26, 2024 at 04:56:04PM PST, baneric926@gmail.com wrote:
->> From: Naresh Solanki <naresh.solanki@9elements.com>
+On 3/4/24 16:41, Guenter Roeck wrote:
+
+>>> +
+>>> +  min-rpm:
+>>> +    description:
+>>> +      Min RPM supported by fan.
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    maximum: 1000
 >>
->> Add common fan properties bindings to a schema.
+>> I can't say with certainty that it's not, but are we sure 1000 is low enough?  Looking at just what I've got on hand, an 80mm fan I have will run steadily at about 1500RPM, and I'd assume larger ones (e.g. 120mm) could potentially go significantly lower...
 >>
->> Bindings for fan controllers can reference the common schema for the
->> fan
->>
->> child nodes:
->>
->>  patternProperties:
->>    "^fan@[0-2]":
->>      type: object
->>      $ref: fan-common.yaml#
->>      unevaluatedProperties: false
->>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
->> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
->> Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
->> ---
->> .../devicetree/bindings/hwmon/fan-common.yaml | 78 +++++++++++++++++++
->> 1 file changed, 78 insertions(+)
->> create mode 100644 Documentation/devicetree/bindings/hwmon/fan-common.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/hwmon/fan-common.yaml b/Documentation/devicetree/bindings/hwmon/fan-common.yaml
->> new file mode 100644
->> index 000000000000..15c591c74545
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/hwmon/fan-common.yaml
->> @@ -0,0 +1,78 @@
->> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/hwmon/fan-common.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Common Fan Properties
->> +
->> +maintainers:
->> +  - Naresh Solanki <naresh.solanki@9elements.com>
->> +  - Billy Tsai <billy_tsai@aspeedtech.com>
->> +
->> +properties:
->> +  max-rpm:
->> +    description:
->> +      Max RPM supported by fan.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    maximum: 100000
->> +
->> +  min-rpm:
->> +    description:
->> +      Min RPM supported by fan.
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    maximum: 1000
 > 
-> I can't say with certainty that it's not, but are we sure 1000 is low enough?  Looking at just what I've got on hand, an 80mm fan I have will run steadily at about 1500RPM, and I'd assume larger ones (e.g. 120mm) could potentially go significantly lower...
+> I have seen fans which run stable at < 400rpm.
+> One of my systems right now has:
+> 
+> fan1:              732 RPM  (min =    0 RPM)
+> fan2:                0 RPM  (min =    0 RPM)
+> fan3:              586 RPM  (min =    0 RPM)
+> fan4:              472 RPM  (min =    0 RPM)
+> fan5:              480 RPM  (min =    0 RPM)
+> 
+> Those are 80mm fans. A quick check shows that various Noctua fans have a
+> minimum speed of 300 rpm. So 1000 is indeed a bit high for the minimum speed.
 > 
 
-I have seen fans which run stable at < 400rpm.
-One of my systems right now has:
+No, wait, that is the _maximum_ minimum speed. Got me there.
 
-fan1:              732 RPM  (min =    0 RPM)
-fan2:                0 RPM  (min =    0 RPM)
-fan3:              586 RPM  (min =    0 RPM)
-fan4:              472 RPM  (min =    0 RPM)
-fan5:              480 RPM  (min =    0 RPM)
+So, there is Noctua's NF-A4x20 PWM with a minimum rotational speed of 1,200 RPM.
 
-Those are 80mm fans. A quick check shows that various Noctua fans have a
-minimum speed of 300 rpm. So 1000 is indeed a bit high for the minimum speed.
+If I interpret
+https://www.mouser.com/datasheet/2/471/SanyoDenki_San_Ace_40LG28_E-3198440.pdf
+correctly, it lists some fans with a minimum speed of 7,500 RPM.
 
 Guenter
 
