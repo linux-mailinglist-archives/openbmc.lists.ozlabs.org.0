@@ -2,54 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 097F7872443
-	for <lists+openbmc@lfdr.de>; Tue,  5 Mar 2024 17:28:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2944A875B02
+	for <lists+openbmc@lfdr.de>; Fri,  8 Mar 2024 00:18:52 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FfXyc619;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Tq1Fb6KZMz3vjb
-	for <lists+openbmc@lfdr.de>; Wed,  6 Mar 2024 03:28:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TrQGd6KZ8z3dXW
+	for <lists+openbmc@lfdr.de>; Fri,  8 Mar 2024 10:18:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FfXyc619;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12f; helo=mail-il1-x12f.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tq1FJ39lXz3dWW
-	for <openbmc@lists.ozlabs.org>; Wed,  6 Mar 2024 03:27:46 +1100 (AEDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhXdc-0003Tu-PZ; Tue, 05 Mar 2024 17:27:32 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhXdc-004aQQ-AU; Tue, 05 Mar 2024 17:27:32 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1rhXdc-000BLr-0j;
-	Tue, 05 Mar 2024 17:27:32 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Corey Minyard <minyard@acm.org>
-Subject: [PATCH 6/6] ipmi: kcs_bmc_npcm7xx: Convert to platform remove callback returning void
-Date: Tue,  5 Mar 2024 17:27:03 +0100
-Message-ID: <16144ffaa6f40a1a126d5cf19ef4337218a04fbb.1709655755.git.u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1709655755.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1709655755.git.u.kleine-koenig@pengutronix.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TqPs75VtQz3vY4
+	for <openbmc@lists.ozlabs.org>; Wed,  6 Mar 2024 18:56:43 +1100 (AEDT)
+Received: by mail-il1-x12f.google.com with SMTP id e9e14a558f8ab-36540b9885cso1454465ab.1
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Mar 2024 23:56:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709711799; x=1710316599; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jPhPQT45kHdyzdhpdUe+DVL+6CjOwhe9gLeuSsNNlCQ=;
+        b=FfXyc619OYzFBUr/MNItogz0JzacD7ZUIhikxqJZtKWMDJSK2cLdI5vg8PVoHwIVGI
+         AZroc8Ak0xROoPUP5nR80QZVEIhRZmYIZAKh/AUv3r2oC6BqyFAMq0ugcKmjSGgD/uCr
+         lBfmSsrZagReg8y2rXvaQuqkOiaxJzVRJ69ZinlAGtSaGrGUMXa7AlMLJC8zKsH4hYmY
+         K/1YgN61xcR2+hT5FUvIScTcXw08fplMXmWOTn9whucD6OOvjQ8Xaz9yBT5libGxwriJ
+         q7Rj5Ps4ZF9W+Ui0zzo+Ob+4TAzCxRN+6+ipPPFWDAjxZ/CpJSY1484wAz3cYzWs/4gs
+         J40Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709711799; x=1710316599;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jPhPQT45kHdyzdhpdUe+DVL+6CjOwhe9gLeuSsNNlCQ=;
+        b=sJsULr4eZH/dW/sRGzF7Pb8B9Wn7UV/I4cjZJkulaw2FQRstqLlh8w9D7PIe5fLO3O
+         ffYpXJ6W6vVcQAiC1ssB1oyF2xQJlT+TSeYv5IvLA6pKqM+9Na5GzHO7E6lYUZ7gYsNr
+         u3ZsNlgsGTw8V1cL1JdAwCRFD3lrDJbsf5KeF6YXo3L2HhGTvYTDMg+sFW3psJD9VcCG
+         rHFTqFU7xLhb+QfSI6U0nrKsYHDXMFJX7Xi17nGWD0jSdytXvyAgJ0OA/URCNqDfI8RQ
+         TpIe8jh/HJ7xUxddM4IXTwoAxryoQ25z1nG8184KSKUOuZd7hwj01OJuxv+HecL2nqBg
+         OMew==
+X-Forwarded-Encrypted: i=1; AJvYcCUyCkaXKfgTVK6tEqDDxXkdPxl+X4kiyUQi/bd7K3FwHypx6jLUW52h98gDaMglhpzSYTBqsJxxUEPQoB+Y+VxuF3rEGAYNQnA=
+X-Gm-Message-State: AOJu0YzHXlo+1V67DWN/qulpkLTPhmeNqHKwPkSd50qlQK+D3iW8m1R/
+	x9AL1UNYVCn4a68Gbpomp0LKIYgWDqGPYz0/aek6VCZp/tjllwXWrtxxCq808Dsn8OKmMqE52wt
+	HvT6ph1PDTEc0Y7pBpzBUCmeoAQw=
+X-Google-Smtp-Source: AGHT+IE58vRHwDBTTuXKHgQFQ/UJSqdO7pnSZOi6XVe91c0PQI282+bUYNvb4IHteGaUW+HdSI/Vt7sBb1zhbo8GFCs=
+X-Received: by 2002:a05:6e02:12ce:b0:365:102a:ee10 with SMTP id
+ i14-20020a056e0212ce00b00365102aee10mr4294177ilm.6.1709711799054; Tue, 05 Mar
+ 2024 23:56:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2011; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=6BojaJx0o86nvxymZyJUgXFT9pCZmy7I6WYLjizDsSQ=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl50fYrb33YIR2AYYD4oMtv8b+EFdySFh7vvuX8 zSMz9fCVyeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZedH2AAKCRCPgPtYfRL+ TiQSB/9tmMSHdmWxhpT3OAJ3xiZ8KvmE5bdZ7E2LJWyTOayQ0g7WWgO3e9eOJYJTWuvzlcx0sDs bUz/JybC7YlfSFM5L7C2f2vWKkXFEwmxivKwybbSHv7gP1tP8TKKTNeRinVSFFbcojXrw83a9zo ju8zCM3cyYJjijDiM7fLtADyFxFV25jFakiBC9uSRxGDjXwTdhNwMgTK8vKq9dFO7d7GtjprZ75 WQ5Pz6ALIHRQ8DaR8aFZ01ZWDo+3w84R+ONj8n7zXC1kkN+aYlkl04TnU1lcvU5IMKq/XUU22fe IbAGYqFKoLGTNPKW0PVZlLRJEacyDlAAsmriOgIwvjzpRZpJ
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+References: <20240227005606.1107203-1-kcfeng0@nuvoton.com> <20240227005606.1107203-3-kcfeng0@nuvoton.com>
+ <93d67381-34fc-423c-868a-565378c63e09@molgen.mpg.de>
+In-Reply-To: <93d67381-34fc-423c-868a-565378c63e09@molgen.mpg.de>
+From: Ban Feng <baneric926@gmail.com>
+Date: Wed, 6 Mar 2024 15:56:28 +0800
+Message-ID: <CALz278YF8FGz=JM83Q=6PeoQmGOJ4dfB8QTu1qbu9p4eSBHi8Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] dt-bindings: hwmon: Add NCT7363Y documentation
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Fri, 08 Mar 2024 10:18:22 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,59 +79,154 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, kernel@pengutronix.de, openipmi-developer@lists.sourceforge.net
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com, Rob Herring <robh@kernel.org>, linux@roeck-us.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Hi Paul,
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+On Wed, Feb 28, 2024 at 3:30=E2=80=AFPM Paul Menzel <pmenzel@molgen.mpg.de>=
+ wrote:
+>
+> Dear Ban,
+>
+>
+> Thank you for your patch.
+>
+>
+> Am 27.02.24 um 01:56 schrieb baneric926@gmail.com:
+> > From: Ban Feng <kcfeng0@nuvoton.com>
+> >
+> > Adding bindings for the Nuvoton NCT7363Y Fan Controller
+>
+> s/Adding/Add/ or even Document bindings =E2=80=A6
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+ok, fix in v5
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/char/ipmi/kcs_bmc_npcm7xx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> Do you have an URL to the datasheet?
 
-diff --git a/drivers/char/ipmi/kcs_bmc_npcm7xx.c b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-index 7961fec56476..07710198233a 100644
---- a/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-+++ b/drivers/char/ipmi/kcs_bmc_npcm7xx.c
-@@ -218,7 +218,7 @@ static int npcm7xx_kcs_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int npcm7xx_kcs_remove(struct platform_device *pdev)
-+static void npcm7xx_kcs_remove(struct platform_device *pdev)
- {
- 	struct npcm7xx_kcs_bmc *priv = platform_get_drvdata(pdev);
- 	struct kcs_bmc_device *kcs_bmc = &priv->kcs_bmc;
-@@ -227,8 +227,6 @@ static int npcm7xx_kcs_remove(struct platform_device *pdev)
- 
- 	npcm7xx_kcs_enable_channel(kcs_bmc, false);
- 	npcm7xx_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF | KCS_BMC_EVENT_TYPE_OBE), 0);
--
--	return 0;
- }
- 
- static const struct of_device_id npcm_kcs_bmc_match[] = {
-@@ -243,7 +241,7 @@ static struct platform_driver npcm_kcs_bmc_driver = {
- 		.of_match_table	= npcm_kcs_bmc_match,
- 	},
- 	.probe	= npcm7xx_kcs_probe,
--	.remove	= npcm7xx_kcs_remove,
-+	.remove_new = npcm7xx_kcs_remove,
- };
- module_platform_driver(npcm_kcs_bmc_driver);
- 
--- 
-2.43.0
+I'll add "Datasheet: Available from Nuvoton upon request" per Guenter
+suggested in v5.
 
+>
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+> > Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+> > ---
+> >   .../bindings/hwmon/nuvoton,nct7363.yaml       | 63 ++++++++++++++++++=
++
+> >   MAINTAINERS                                   |  6 ++
+> >   2 files changed, 69 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nc=
+t7363.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.ya=
+ml b/Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+> > new file mode 100644
+> > index 000000000000..1a9d9a5d614e
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+> > @@ -0,0 +1,63 @@
+> > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +
+> > +$id: http://devicetree.org/schemas/hwmon/nuvoton,nct7363.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Nuvoton NCT7363Y Hardware Monitoring IC
+> > +
+> > +maintainers:
+> > +  - Ban Feng <kcfeng0@nuvoton.com>
+> > +
+> > +description: |
+> > +  The NCT7363Y is a Fan controller which provides up to 16 independent
+>
+> lowecase: fan controller?
+
+ok, fix in v5
+
+>
+> > +  FAN input monitors, and up to 16 independent PWM output with SMBus i=
+nterface.
+>
+> output*s*?
+
+ok, fix in v5
+
+Thanks,
+Ban
+
+>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - nuvoton,nct7363
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  "#pwm-cells":
+> > +    const: 2
+> > +
+> > +patternProperties:
+> > +  "^fan-[0-9]+$":
+> > +    $ref: fan-common.yaml#
+> > +    unevaluatedProperties: false
+> > +    required:
+> > +      - pwms
+> > +      - tach-ch
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - "#pwm-cells"
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    i2c {
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +
+> > +        hwmon: hwmon@22 {
+> > +            compatible =3D "nuvoton,nct7363";
+> > +            reg =3D <0x22>;
+> > +            #pwm-cells =3D <2>;
+> > +
+> > +            fan-0 {
+> > +                pwms =3D <&hwmon 0 50000>;
+> > +                tach-ch =3D /bits/ 8 <0x00>;
+> > +            };
+> > +            fan-1 {
+> > +                pwms =3D <&hwmon 1 50000>;
+> > +                tach-ch =3D /bits/ 8 <0x01>;
+> > +            };
+> > +        };
+> > +    };
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 2ecaaec6a6bf..7b1efefed7c4 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -15084,6 +15084,12 @@ S:   Maintained
+> >   F:  Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+> >   F:  drivers/hwmon/nct6775-i2c.c
+> >
+> > +NCT7363 HARDWARE MONITOR DRIVER
+> > +M:   Ban Feng <kcfeng0@nuvoton.com>
+> > +L:   linux-hwmon@vger.kernel.org
+> > +S:   Maintained
+> > +F:   Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+> > +
+> >   NETDEVSIM
+> >   M:  Jakub Kicinski <kuba@kernel.org>
+> >   S:  Maintained
+>
+> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+>
+>
+> Kind regards,
+>
+> Paul
