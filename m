@@ -1,54 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D037D876036
-	for <lists+openbmc@lfdr.de>; Fri,  8 Mar 2024 09:52:26 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67E6E87784A
+	for <lists+openbmc@lfdr.de>; Sun, 10 Mar 2024 20:24:30 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=V8TY9Ze+;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Trg0S42Fsz3vb6
-	for <lists+openbmc@lfdr.de>; Fri,  8 Mar 2024 19:52:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tt8wr1P1Pz3d40
+	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 06:24:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=V8TY9Ze+;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.22; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Trg0664Hzz3bwX
-	for <openbmc@lists.ozlabs.org>; Fri,  8 Mar 2024 19:52:04 +1100 (AEDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxH-0006zY-QM; Fri, 08 Mar 2024 09:51:51 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxG-0056Nl-Mn; Fri, 08 Mar 2024 09:51:50 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1riVxG-00246D-20;
-	Fri, 08 Mar 2024 09:51:50 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Peter Chen <peter.chen@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH] usb: chipidea: npcm: Convert to platform remove callback returning void
-Date: Fri,  8 Mar 2024 09:51:18 +0100
-Message-ID: <91311e53e9432ae84d5720485c3b436fb7f06227.1709886922.git.u.kleine-koenig@pengutronix.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tt8tN1W18z3bvW
+	for <openbmc@lists.ozlabs.org>; Mon, 11 Mar 2024 06:22:17 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=s31663417; t=1710098497; x=1710703297; i=j.neuschaefer@gmx.net;
+	bh=OXX/LbaU7GJrUUhq8phRnsYSS16aaUbuS71uc4P5kmk=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+	b=V8TY9Ze+YTe382UrgndqBxwz5hqS5fJLAI7fB8uRGo6fH4kZJ46feIMj4voZLID5
+	 RvGb1TLgm6bu7u1zpXpn2mclOvCiV+JeQ0W4iiMXLx2yFakyyWL3QPdxbA6RAK2bd
+	 XSHxqrHfTnN67JzdE/6F2ASRY4UUvAMnS0ynUvQirt56VVh3aSPIZ62JghDQ73ZVV
+	 wP0ICXm9S1ESLUz+ZVq9CGFS8ED5EqGGikhvWMuho0XeVv2c+XOqa4W8WDy3sxQLn
+	 VxAVA8c1l+oRywe61KOlc7+VgufHVB129Jyva1QA2o3m6DEImxWjDlN/N00K/sgP3
+	 RIN+BWvp5Npsc13HXQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([78.35.216.168]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma24y-1rMQLt175g-00VzLi; Sun, 10
+ Mar 2024 20:21:37 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-clk@vger.kernel.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH v10 0/4] Nuvoton WPCM450 clock and reset driver
+Date: Sun, 10 Mar 2024 20:20:58 +0100
+Message-ID: <20240310192108.2747084-1-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1902; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=UND3LN2cxUflw7dQF4s+C69E5KDxmztIpomMK2CtFqg=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBl6tGLzeOg4w6Z5Ct9P5xdIpqSFWK5xjUq8lifW Tin4bDyCfeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZerRiwAKCRCPgPtYfRL+ TnELCACpUSdK/UC2Id2ldrUSo5k8ta2kYi8yCD76nX2Wy3e4aUb3QumJQpMSX7pyOD0qrECpV1m YLWa65U7wDCsCv0QyiQbTkuEKl0TySQIyHRY1wzY9hexDKMmVy1ZreCMZOqzsSu0yloG0V3c3vQ PpFAVyL2bbr5WJnowgocAlIsZMpkJUmEjPj/J0h848GOXiVym93IGBglbppEiFl4qfpBkQLnfbv J95BQYekOVrmKkJxBgQjRFQmHHU/zgBWt2aFU1fCp4pMO890W08cDoP19rJn03ZHDIWtJZkCAyR uzC00sFPq9ptUia6dl2GIWeexvm2PV3vqmduVEZ5w4Itp0PF
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:h8nNCU1eVa9eOlYmr5/DlSxu2gYJ2DGv4jpVv4LW9vCiALtYAFJ
+ ePH5GCBPDGmbpfjl/xbZ3kp8GxEbKydLT7w0Kq/oyB3Rx/wzYm71htKr4T5xcGPla7HQK/+
+ tYq8ZkPy2vB5zYTJUmCi0pV50mtVOHOx4kTa1e+0+cojYzWR16eQ4B88NkxGUA3rSKXrC5t
+ AnkhS6HcZ9Bk9aehLRDcg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:4MR0BT5pui4=;WqG0QuHADYmx2iw2xGIjrJ4Annf
+ 073tj58pKE3mU7r2NStD9h6Z+DY/VoZYCYkkYrvQws6NB9vqNSvYITJQ3bvwYSWGa7Fj73iBU
+ d1wAxYJxpciLESc9KUwDIAnEQ9eP1HL20dbgdOSiBWGZQyKSqXAIgQZv4bllX3prOmWjDt8C3
+ EAM9Tv4HtOBTT2l4A1kNYWznIEX8t6bN17+J7XF+ZjQhDdmhChYJRNXXBTdIF9Ggu2VjrSHeh
+ EhPyG0w9ZKAgqMFoacd6H90hyZlwAbES64/ktzMay7cUqn6WYO5xp9e9l/h57ZDCttaw/C6IW
+ KMS75K5C4fLELU8aHkfB/hE+keyN+uQN3daJqQ9XhuIV28h3bkFdYC00aunvxWfSnh6WWfaS7
+ jZb25f9o4hkOPb6LmEbO8lOESS/a1BPesBWzUtSKZRuBgxFifMfhXxCKvRHqjIC5sstr4Vi3f
+ OumVoOQSXpcf+Wk+QZ0A9xyhue8vDaFV+A06omhawZ2MPDpIHzODPSNfEGGweC0IdxXorfMbp
+ urNvhx+sDUbrEjTrmLH3e6Z6Z+gnR+cJyr9sqv+oitXQecR8DhNoK2UYGAF2hfXvqgUq0/fiC
+ 66o6VOrWOv4EI4vTHcticMvsOfaH3IzNdAZ0kyPfE19XHB045idVNDcWAopLYgB/yvnGsv6XW
+ XiKDWlLfa5ew3FB3fxxKqjCeaQnB7TAW/Dt5eJCsc3t9x/PuT+01bL8XWox4xeJem5dNEhnID
+ qMJpLLNeYy6NoMLfIehSGgIt8UHEpwEAkMSaRgntN2j39DpwsunCiWjo0UvOCldd1nsE+8Zdh
+ 9If5m6mHPJbsT2tyLz2Icl2+VuzfzCxaEjKCQabqIPUjQ=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,60 +75,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, kernel@pengutronix.de
+Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>, Michael Turquette <mturquette@baylibre.com>, Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Avi Fishman <avifishman70@gmail.com>, Rob Herring <robh+dt@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Benjamin Fair <benjaminfair@google.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, Thomas Gleixner <tglx@linutronix.de>, Tali Perry <tali.perry1@gmail.com>, Guenter Roeck <linux@roeck-us.net>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+This series adds support for the clock and reset controller in the Nuvoton
+WPCM450 SoC. This means that the clock rates for peripherals will be calcu=
+lated
+automatically based on the clock tree as it was preconfigured by the bootl=
+oader.
+The 24 MHz dummy clock, that is currently in the devicetree, is no longer =
+needed.
+Somewhat unfortunately, this also means that there is a breaking change on=
+ce
+the devicetree starts relying on the clock driver, but I find it acceptabl=
+e in
+this case, because WPCM450 is still at a somewhat early stage.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+v10:
+- A small tweak (using selected instead of extending an already-long
+  default line) in Kconfig, for better robustness
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+v9:
+- Various improvements to the driver
+- No longer use global clock names (and the clock-output-names property)
+  to refer to the reference clock, but instead rely on a phandle reference
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/usb/chipidea/ci_hdrc_npcm.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+v8:
+- https://lore.kernel.org/lkml/20230428190226.1304326-1-j.neuschaefer@gmx.=
+net/
+- Use %pe throughout the driver
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-index e4a191e02ceb..b14127873c55 100644
---- a/drivers/usb/chipidea/ci_hdrc_npcm.c
-+++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-@@ -80,15 +80,13 @@ static int npcm_udc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int npcm_udc_remove(struct platform_device *pdev)
-+static void npcm_udc_remove(struct platform_device *pdev)
- {
- 	struct npcm_udc_data *ci = platform_get_drvdata(pdev);
- 
- 	pm_runtime_disable(&pdev->dev);
- 	ci_hdrc_remove_device(ci->ci);
- 	clk_disable_unprepare(ci->core_clk);
--
--	return 0;
- }
- 
- static const struct of_device_id npcm_udc_dt_match[] = {
-@@ -100,7 +98,7 @@ MODULE_DEVICE_TABLE(of, npcm_udc_dt_match);
- 
- static struct platform_driver npcm_udc_driver = {
- 	.probe = npcm_udc_probe,
--	.remove = npcm_udc_remove,
-+	.remove_new = npcm_udc_remove,
- 	.driver = {
- 		.name = "npcm_udc",
- 		.of_match_table = npcm_udc_dt_match,
+v7:
+- Simplified the error handling, by largely removing resource
+  deallocation, which:
+  - was already incomplete
+  - would only happen in a case when the system is in pretty bad state
+    because the clock driver didn't initialize correctly (in other
+    words, the clock driver isn't optional enough that complex error
+    handling really pays off)
 
-base-commit: 8ffc8b1bbd505e27e2c8439d326b6059c906c9dd
--- 
+v6:
+- Dropped all patches except the clock binding and the clock driver, becau=
+se
+  they have mostly been merged
+- Minor correction to how RESET_SIMPLE is selected
+
+v5:
+- Dropped patch 2 (watchdog: npcm: Enable clock if provided), which
+  was since merged upstream
+- Added patch 2 (clocksource: timer-npcm7xx: Enable timer 1 clock before u=
+se) again,
+  because I wasn't able to find it in linux-next
+- Switched the driver to using struct clk_parent_data
+- Rebased on 6.1-rc3
+
+v4:
+- Leave WDT clock running during after restart handler
+- Fix reset controller initialization
+- Dropped patch 2/7 (clocksource: timer-npcm7xx: Enable timer 1 clock befo=
+re use),
+  as it was applied by Daniel Lezcano
+
+v3:
+- https://lore.kernel.org/lkml/20220508194333.2170161-1-j.neuschaefer@gmx.=
+net/
+- Changed "refclk" string to "ref"
+- Fixed some dead code in the driver
+- Added clk_prepare_enable call to the watchdog restart handler
+- Added a few review tags
+
+v2:
+- https://lore.kernel.org/lkml/20220429172030.398011-1-j.neuschaefer@gmx.n=
+et/
+- various small improvements
+
+v1:
+- https://lore.kernel.org/lkml/20220422183012.444674-1-j.neuschaefer@gmx.n=
+et/
+
+
+Jonathan Neusch=C3=A4fer (4):
+  dt-bindings: clock: Add Nuvoton WPCM450 clock/reset controller
+  ARM: dts: wpcm450: Remove clock-output-names from reference clock node
+  clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
+  ARM: dts: wpcm450: Switch clocks to clock controller
+
+ .../bindings/clock/nuvoton,wpcm450-clk.yaml   |  65 +++
+ .../arm/boot/dts/nuvoton/nuvoton-wpcm450.dtsi |  23 +-
+ drivers/clk/Makefile                          |   2 +-
+ drivers/clk/nuvoton/Kconfig                   |  10 +-
+ drivers/clk/nuvoton/Makefile                  |   1 +
+ drivers/clk/nuvoton/clk-wpcm450.c             | 372 ++++++++++++++++++
+ .../dt-bindings/clock/nuvoton,wpcm450-clk.h   |  67 ++++
+ 7 files changed, 525 insertions(+), 15 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/nuvoton,wpcm45=
+0-clk.yaml
+ create mode 100644 drivers/clk/nuvoton/clk-wpcm450.c
+ create mode 100644 include/dt-bindings/clock/nuvoton,wpcm450-clk.h
+
+=2D-
 2.43.0
 
