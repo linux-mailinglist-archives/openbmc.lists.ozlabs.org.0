@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7506E877EC4
-	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 12:16:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E7AE877EE8
+	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 12:21:44 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=k3aJhzFV;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=s1G90KTj;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TtZ3f1C6Gz3dfM
-	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 22:16:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TtZ9L0C9Pz3vf3
+	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 22:21:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=k3aJhzFV;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=s1G90KTj;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:2417::701; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
 Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20701.outbound.protection.outlook.com [IPv6:2a01:111:f403:2417::701])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TtZ1B5DX2z2xX4
-	for <openbmc@lists.ozlabs.org>; Mon, 11 Mar 2024 22:14:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TtZ1N0X2Qz3ckj
+	for <openbmc@lists.ozlabs.org>; Mon, 11 Mar 2024 22:14:47 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=j+RALAhWGdWmtwbPJSUjeoGOKJ8p7qFSVb+SCREveH+Lk3pCkRT5eUEGvVR7rcRZ28gdTxgjdnE6lgFOfeSDZVxhtc2grojYG1ViW405nsYEqoxpPiud9Ji01PqSTPZtzrveII2yh0iLZo0kiFANkhqUedHCvDeYKy1huulJBUrFBxcT22R74YDY2wcwOJX2irtV+3hXhD9B0Zn/isBWP50CNgTBZbTlERuKCRZ97s9ZUWHMmA55HnlSYbzOEX98PF+Fax1cRjKL8tWM2dh45sGXZrhxCknU3VV67vnaMCRtMVLm/rF6dXOShrgk7RRraQOaF4ocYNdX4xQGFJpNNg==
+ b=bNiiAd7EdFw+fCc8kUUVPejPtSbG1H0h8raJSwp7s+3l53qHM1PVj3HKzPxjONhHcWtmsl0xNNNyFJXrunwKMOYDbufS8jXbp+TxSMYi1UAEO0sO4qeMpbgCPRtj6rGUtIbHZhJl7IeAPKWHGYyGcSrL6djzfG8n6K7JyF0TvGNffKsasxP3KmIDn0RRRqRYf3YdAjpsANUDlecAb/80UqcozPoBf1TBfbUoj6oQ4bExOOZ9gJASOV7XcMfi4fU44H6Zhl5iqcQlykbgkrv5PAcg7KqIYEU4k7fjuvu+lGb+JlvvX3jtI0B4ZCTPaFdN/YLzoBp3hMlRDeqotYZk9A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X0u40wOJfOwoU4DKcUXVHsuNz8t8DGXO0rERZzjej3E=;
- b=PJvDroDVvrF3Mr4d2kiU9owGQkCqJG3Pk9PVEPWUyQ2disdY1cD78okH/cvdxoMAPbl8coD6QZCEKCdPPJAMWujSZ4StMYbXVhedY5kuJGo2zSwXw3Set4vUtmcOoV3Zp4b4x8EGrHqk/Wg2KZZjjVPUxSQwbKEk9XnheJMS5c6+Q3CC15VMl5viHeM7VxUPh0i120B2zItkDro+QWr1wb1lDO1uNbNaZlGWmOrh5dAzxfmrQADkNjRbO79Isb5K5STGTd9nIBIZE5AqY3zY92gs+aPogZFKZZ3BZuybssud9hGyCKMkjeu+06fpEfxN3fRI0CrkXyFl7fXRw339zA==
+ bh=cGrsfpr8kddf+r3NIPH7kWJRZ4GtaZcqmvZ4cJ4kxBQ=;
+ b=fFSEA3e7rur2dlvi4lGU7qHB4XWiOVl3rOMMhiXuf5LpMFFaLdEsqNzcJ0gPYoGa0tyortTmM/VlxIXSkDB0EmMYnQBDOUZWWFCff3J0eWfbyoYKbT6c66n4Gtz/nXbkeogrEI9zWROyoT68Lyz0shNlfOSOBmu8yYFGNw/PoOCEWinimhgRXiCuQVTodHKgLYLcjLxC2bCD596NgSQjkFNynPyKFwXLS5+ABWyf2XTw7YXQ9ViEnDBNn1v6fNoZleqoh3ySd5CqmkVo+cARFxYsGxWHdO29xyJpcapaAZqjdvhEcGW2hWpgjez4KWSIGmWzr9aRIB/+16wIXeFIUQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X0u40wOJfOwoU4DKcUXVHsuNz8t8DGXO0rERZzjej3E=;
- b=k3aJhzFVv4h3FT0dkNfOuG9xUJPfp1JCscWRpsoh4uvJjmwvjb69BmS9iPB0Qs3CVLiaCEkJ2v4Ea8bW7KN/4Ad9DOtha7Rd9jm0RX+wu70xz7FHpZlRGtrU0Yx3RTNMOZnrngeGOERC813IHwCCHbv5Yqzrb5ldDoQuuDR6BT0=
+ bh=cGrsfpr8kddf+r3NIPH7kWJRZ4GtaZcqmvZ4cJ4kxBQ=;
+ b=s1G90KTjM5km68hxQ1eg6bj8Tu9a7HvRaL8A5XiK3EDz+C7DjR47tGgzIqXEeH7q/vgPkNHjamzRv/+nVRUwHBWumMkYB93po+LN2FSRdLnXPG2jkMyP2eoo6peRu9jERmgqqAJyww0KMvRz1tg6NP6YDHUsKhLu3T9AwO2uo8I=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from DM6PR01MB5947.prod.exchangelabs.com (2603:10b6:5:1dd::12) by
  CO1PR01MB6741.prod.exchangelabs.com (2603:10b6:303:f2::16) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7362.35; Mon, 11 Mar 2024 11:14:36 +0000
+ 15.20.7362.35; Mon, 11 Mar 2024 11:14:45 +0000
 Received: from DM6PR01MB5947.prod.exchangelabs.com
  ([fe80::b557:13cd:8a29:ae08]) by DM6PR01MB5947.prod.exchangelabs.com
  ([fe80::b557:13cd:8a29:ae08%4]) with mapi id 15.20.7362.031; Mon, 11 Mar 2024
- 11:14:36 +0000
+ 11:14:45 +0000
 From: Chanh Nguyen <chanh@os.amperecomputing.com>
 To: Jean Delvare <jdelvare@suse.com>,
 	Guenter Roeck <linux@roeck-us.net>,
@@ -59,9 +59,9 @@ To: Jean Delvare <jdelvare@suse.com>,
 	linux-kernel@vger.kernel.org,
 	OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH 2/3] hwmon: (max31790): Support config PWM output becomes TACH
-Date: Mon, 11 Mar 2024 18:13:46 +0700
-Message-Id: <20240311111347.23067-3-chanh@os.amperecomputing.com>
+Subject: [PATCH 3/3] dt-bindings: hwmon: max31790: Add pwmout-pin-as-tach-input property
+Date: Mon, 11 Mar 2024 18:13:47 +0700
+Message-Id: <20240311111347.23067-4-chanh@os.amperecomputing.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240311111347.23067-1-chanh@os.amperecomputing.com>
 References: <20240311111347.23067-1-chanh@os.amperecomputing.com>
@@ -72,51 +72,51 @@ X-ClientProxiedBy: SG2PR02CA0088.apcprd02.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DM6PR01MB5947:EE_|CO1PR01MB6741:EE_
-X-MS-Office365-Filtering-Correlation-Id: da385cf0-3817-4bc1-6637-08dc41bc6fac
+X-MS-Office365-Filtering-Correlation-Id: 4eff549e-bd93-40c7-b8dd-08dc41bc749b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	WfsU27adHcRdXAKZcrfNjjsPccytwwdugpig6Qhy/8em//icqzmxU4Hg0z3iHK3pix1ARI+tVNpHvb+Qj8uE2QZfb77kBVOpTGcq4Dkboykgj2i8ZO98XAEagTEckAChryq7vmb56vyAP4dAua8/fyQTIr/2yQvNgjnxeZPLrcyPSF13JUAFcjKHtXLKpMZfV0WmCZAp6QNALxPvHF5prwEhRCkeJEGh9Ez9CNwcGCEf4wR9Kli8e9grTgnATdWpOAuidYTjnwFA+k3zOaefxWyzkrccSNrRJsA+Ayt5rgkBV4rpp6jVyjO/HyrHD3qohF/D6m1JldTAancuBR89IdoZ68G51xLW3qnlByaxjitYwH7w6lO8hrYmHX7t5DlfjixeKY00wn1BYrOsTb4dXu0NcMkYJiesxF1zU0jk6ymqLEnh3H/JDK9tOER9l4Dc7xcQU8ek2tivVKuDpAu8Rk4RGr0hiiaUeKjghM2JQXAc9dHLneQ09numaLFmMYuWPVj3c8tnJeM9Fjg2L8wFOGFMhjIIYIhUpYgSqCSY4Sxat78wpDutCGTDExEKEohJsWfdf3FeMlAJGDcxu5yBu/M35mhfcodh+pFy8/46s4HmUVd88vTRfDE5jJ10Lv7QH95CZvbNloW5GfvTg2u+TkU4/BASrHTB/T6HAJBdP8xRQPyxPCYt7e47lCaCnCIgHGF55zTf9qQWEv0VGu0fX77TcmZaxONJUcTahvsl8kU=
+X-Microsoft-Antispam-Message-Info: 	1VtqW6QcZ8pZgP/P4KwAYCoWZuuStw4BpanccSgkxGSKabyq3a1pKm/BynngWkjk+Hi93fFcA0b/JE/Kn0zdMZuBaNgHtl2lr1OPf5Xo87cTejY0Yc9yKdCyt8uIrmhQnNm/xOHtAxHknyd2abMLjQtaCfrMs1cbXsxUOfW9S6xbANowGxbuYmaCvSU50BomwE5/6MyyCmuPkg3qvyHIdq+YU5FZfwEN4KDP53kL9MjZlGJSjF4WZ4U7Sq1iZOqyQuCUnYVkuKGd1jD5KIo6b+o7gOFUvED9b6aLCcWirnVWoIGWQKldeEQNhS6zbLmTI+eFjy/+ufmLpUkDro/ffQ8oxyIN2Ocv4BhHozpOUWI9NArlzA/9jvw4sQKSbGQO+0c4K+h2n3J0LYWvMpZjZFr4hK1rRFBKImti1ZOC0NO8ExrZknAlp7pv5dtf0t8u14sAy/b6wKuii+szqhCZhN0dDuhbrHFN5JSPFjGZwPVIa4sJgCiK4mA7ND4u2g9VBvE8Wiw7UynP1Vv3yihK+qVCu9HI1g6V3x1A64xz8zEaxoApLAp2yyMF/TaC+KNBhITYNSCqEojKOVhElExETPcEf1H6+KKJlHvYJ/7vMa42A7qp1LCurWflkcLUNT7JYfIv2fpZpVdBUlKwzfQzs48aFBQmY0FXA+fgBiHwgvQPL7Hh+g7NM9OeKBPIqXQ0PZJllzBE1QknU5VsOHh3tpahpSSsgITEl8Tt334X7FI=
 X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5947.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(7416005)(376005)(1800799015)(52116005)(38350700005)(921011);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?Tj8yy3k1htddNRIYszg9O5MvkKU5CFeYBNPlneH+ScfQAEihxgLsgsuDCuk4?=
- =?us-ascii?Q?7soO20w7PD88KXObcwEntOX1ZWiKOxM6U9TOiEt1NUAhUMR/nWI/IpwlZarf?=
- =?us-ascii?Q?Y/KPHuoHXbfNkc8+gLcJyJ1DY1Y9vZt8C/Rc8yAK//NTdVPo7unPOJXsI3vS?=
- =?us-ascii?Q?inCukDh6VltWG3cc8wu+3kVYBpcNQ3eRq/QQxWV6kp4Gzor9wFj/aNe7oRqY?=
- =?us-ascii?Q?B/WRNHGYUvDJWzhljy+ptrR8Xky/tPxjvNRXeiPFJh+9UEYWbvPBAmPC2sdp?=
- =?us-ascii?Q?N2NhDhq3CPyvCrvc9GGjyx2SH3+WPJfMzZxYhkgY7J0IiwA9P676nMhf1UQ0?=
- =?us-ascii?Q?Ai+J8x1bUAlijAxvDo+n1TySy7fTW6gUgvJrzyObLrfFUtOlNZFF41INAz0b?=
- =?us-ascii?Q?WqxvvI5Np8jh46pjLDx/NxTEbXo4wW2bI6sjpKAD6yjWXCmuisjeeD6NciCY?=
- =?us-ascii?Q?aqNSyYfJfWDG53Tcax6bHOMc0sU+uFfxRT3OL1tN9miJHb8eNWEW1sBQOVT3?=
- =?us-ascii?Q?BhhGwL06adPuNN+XcSbJGWj8BD8WLgrT3cTUkXIvF2lActj1sonlJzb6NGBE?=
- =?us-ascii?Q?ZJ5kw4WqT1vgWEXxusG3FmWtRJKli+CVhj1VUkP6vIE+sz6TrSyEzBtgf7IQ?=
- =?us-ascii?Q?hvcDUlWgtz5P9drQWXAL3ENQjkyaBjKq9sGaRz6tM6akj1j+q7msPpXHSi6/?=
- =?us-ascii?Q?YT3uS/nsSAjZewvLvub8ADlNZBuJhA+c2yZb3tbaMmZ8PqaKw/lx3iETZUr1?=
- =?us-ascii?Q?3B8x8oJehGYZ8cFK09weL4inGkuVOwrRRWhlzqv5xn7qm9H2G9YL/UCeSQrX?=
- =?us-ascii?Q?2tSSgT0V3QgyDnnX2PfLuIBdgrLtgM6RFneHPz5Qp5HgYxqbpcnN8hXy1R0m?=
- =?us-ascii?Q?OAlLrIw0Y+x3jlPF5wcFDM5hVKptme955tu7zoKqOlSf7OVV5ZTHEJfR6d8O?=
- =?us-ascii?Q?DHhEnxS9xLp3rYMUXTHBMZEG1ZiE+RDutrwqY3Ft/KbxycbfkVeCHICReFHq?=
- =?us-ascii?Q?uNrvZD+1w7A54bD0rR+4GFaSoqsTetUFWh5MM4OSZOvdgtfrwoo1UrrHXaCd?=
- =?us-ascii?Q?odToK9xQaoxkou+SnNWSBIE+pFRyud+r7Bq69oq0yS+YQgXsIuvaKqcmq8JL?=
- =?us-ascii?Q?RewilZ8PwJ22U+eWalZC+juDY26UtHVUU1pTZfPqNuTRZkoQyjppLhfZfR+Z?=
- =?us-ascii?Q?POLYEwA24xY0Fkgn7/xl/VvAGFC2h+3T/RoOY3GDiDCl/xOIfPYzdYOdd7p3?=
- =?us-ascii?Q?GV6deHB/qYy0AL+6ljqEjzeI/syF8TKNRAT8/FUgj/Hzrt/ybb0pOrLCkeyU?=
- =?us-ascii?Q?OIuyyL3ZGKq3bp2WnC8cySYH7yUuer7pA0LmtsP3K5C2Lxhjet2BnmrcY++A?=
- =?us-ascii?Q?BvFoYskBpKEtUwx8Z/NIA576KGeeSoK05+rVn6oaDEl97GlLXihRFWgFx0V3?=
- =?us-ascii?Q?Bn/RAfdwOI0y53y93oMtWLa4dYcC1cNeO65rMlmFKS6tqYuio/Fsn4X/Ton3?=
- =?us-ascii?Q?7kqCc0pHf4BS3sWR0ZbBI9hQTa5BmkgeZtakY0Tm8uTjLlj42p8mvHvpCct4?=
- =?us-ascii?Q?FKVRwAmOUt8LG5/xj6Gv0cAhJHhXRqF8Go1txw0UKYvBPSjQcIpli34EX9wg?=
- =?us-ascii?Q?XW0Nke2Scrc7K8P9UYC3cXo=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?szkRY/PzyCVt/sxKllyr9IdXc48kd25xDf+DfBF02XDb/wew5yjXpzanU/Oj?=
+ =?us-ascii?Q?BsVtJELamI79dUhPKFBQX4dfVJghwe4PFVfA11GZRvFB6X/IH/zH6C0GERZ0?=
+ =?us-ascii?Q?EE+uCTLS4H0uILFm2LZF6prmtUkoIQdDTwFRVmdc5L+8/YcZWcdGPX+NEPFh?=
+ =?us-ascii?Q?B3lXxuf1FXb5Y/d5qPwCXruWdn3YwTYHN94vbuAyMhI3ABz6sI2s0JYsUMI1?=
+ =?us-ascii?Q?zMUG8ISQBwYxSShKyGXhHpInuuQGFY402g98Ijsj4DpDJmyXco3Ff3iqWVDk?=
+ =?us-ascii?Q?a1aKfBXFkKFHot2f1YLDvCS+6GrI9L3sEKmxTDzqGQdPxakvBcvfo4xy9j1N?=
+ =?us-ascii?Q?H4afahhWrVY0+LRZPzzVGmhWwUia40RFTf7Ud1use9ndkqbkAyseLm/b5t7j?=
+ =?us-ascii?Q?bsRlFtJszq/kjF6MiaVgPnk2RdqSGGJNv/aXqprnPHJJe7+PKFI1rntvnim4?=
+ =?us-ascii?Q?JrV2hF3Pa58kSRIrH955A+NSHVeeHBRgUhM6lYxBo6FS0wJFCNyOM5k+t8ZZ?=
+ =?us-ascii?Q?RCE0RsINhMwvXfdmM04gTCtgEuDd533MZtl6My4aCTZJD3eVI+G1bTYGxqqS?=
+ =?us-ascii?Q?n/VYbih2K2MptwMVaGLFk07vN1jZDESG3+JEjq4BSUuuxvfDybVktcF4ZPpF?=
+ =?us-ascii?Q?mg/nr+LE4s2RjeOO2d0Sbx3Uh0bjvTwwWGHr7jpjTImpr4hpzYP+k4H2d/lS?=
+ =?us-ascii?Q?9ZhXtqB3CNSzNoTNSRwHib0sEs4YrFEZ0HgdVKnlF5KnFWAXQrFv/U5dWFKJ?=
+ =?us-ascii?Q?iRPU/iDd89d+lduUYdXgB6s+r6Tl07gvHyIOBtsJhKkHV5ulV2G7ByEq5U25?=
+ =?us-ascii?Q?390A7vT3+esFdPth0pQC+/4dz1BdTu0Ng2f/l794zQkx4x+KMD/xwA8491AB?=
+ =?us-ascii?Q?Xjlz2qY5U/p5rPsC+qMejKGcxOa/07F8v9+AmPeBSxNCkMpZuByoZnglxseQ?=
+ =?us-ascii?Q?cc5T3XNRE1OTKITAtFwctnA+EwgKf8NI1ygtgP1/wPMu05gpfsyINUwXcv1L?=
+ =?us-ascii?Q?8t6iNM6wdy3QeMoE32azHZkjooTIWTcI37YvZueXgT/vrYIQUR5Kk3e62/+u?=
+ =?us-ascii?Q?9bxZ3msSMe4le/PWlQDzaXdPCr3G3aAc924KUy4XR8N+I+9DMhAwCMb45Zui?=
+ =?us-ascii?Q?eBuMqN7HtHDELMg/FEaFkJIfSMQk++NmsE979YB/r6GEcQgiWCiUW/AhJ2/Y?=
+ =?us-ascii?Q?cjbxz10SfkYiA892aGhdlTxUJThIYtv9wvWEiGr4Ja/ihNghrqJV0Pvx3/VW?=
+ =?us-ascii?Q?P/7mk4alwnmR4CKZn7oWQ/e6PsLIEROrSmGK23XhVIsQb0aVt5iw1m5Pdbpu?=
+ =?us-ascii?Q?7iSWvrN1fRMdZGgPlpAmIkctTattNCeIZQW62s8loQ8UJ9hB52A9q+Dsn9bs?=
+ =?us-ascii?Q?DfxyS/4WrcmmkIApM0ms2hXumIXnoKiJT/B/7dc1+xGxC+AlAS+45HY6R824?=
+ =?us-ascii?Q?0VcRA6JQR9OcliPZhMxZn/VrwIzJZ1ZrTEcMkRa7oGMqHZ6lIwf36IqwwiyX?=
+ =?us-ascii?Q?rVlZOBAZ79urhhuLCyRCkpVyoFZK9/UDNsExWxm7M2D8xdIhg30n/ibZy2Qm?=
+ =?us-ascii?Q?lU9ok1ZsUC6CAny1rwq8U/Mx/CXeriPsQMbn4NYFtYM4sIq+k93AskH/syQ/?=
+ =?us-ascii?Q?26BPEqQuhhznlp6dQ6LVrd0=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: da385cf0-3817-4bc1-6637-08dc41bc6fac
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4eff549e-bd93-40c7-b8dd-08dc41bc749b
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5947.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 11:14:36.6883
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 11:14:45.0610
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wH7hqo8vO/dENqX/ZBAiniDmvvDKl1jEYt9mXE5e6mTJTAEIfw+b9MruQMrD7Pdro36iLM4apm3p0jY2R1COiZL3No9pKzTGmXKwn+gl543GZ44QI1qahFeuZl+7I8qa
+X-MS-Exchange-CrossTenant-UserPrincipalName: sYtUISoU6MW80aIoC/mUyXqcW6rfV+YVxr14jzRUfJYenkzPMi8wp27Ns1QtJmWcrncF7FW8k0BMrIhAH5D+hD2D79XpkU65d8l941cNCJ8bF7jStXkBcaWoHV/AKIuA
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR01MB6741
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -133,77 +133,41 @@ Cc: Chanh Nguyen <chanh@os.amperecomputing.com>, Thang Nguyen <thang@os.ampereco
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PWMOUT pins on MAX31790 can be configured as a tachometer input pin by
-setting bit[0] in the Configuration Register. When the bit[0] of a channel
-is set, the PWMOUT pin becomes the tach input pin for the channel plus six.
-
-This commit allows the kernel to set those pins when necessary if the
-pwmout-pin-as-tach-input DT property exists.
+Add pwmout-pin-as-tach-input property.
 
 Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
 ---
- drivers/hwmon/max31790.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ Documentation/devicetree/bindings/hwmon/max31790.yaml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hwmon/max31790.c b/drivers/hwmon/max31790.c
-index 3dc95196b229..33ca8d1721c0 100644
---- a/drivers/hwmon/max31790.c
-+++ b/drivers/hwmon/max31790.c
-@@ -12,6 +12,7 @@
- #include <linux/init.h>
- #include <linux/jiffies.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
+diff --git a/Documentation/devicetree/bindings/hwmon/max31790.yaml b/Documentation/devicetree/bindings/hwmon/max31790.yaml
+index 5a93e6bdebda..447cac17053a 100644
+--- a/Documentation/devicetree/bindings/hwmon/max31790.yaml
++++ b/Documentation/devicetree/bindings/hwmon/max31790.yaml
+@@ -25,6 +25,16 @@ properties:
+   reg:
+     maxItems: 1
  
- /* MAX31790 registers */
-@@ -506,9 +507,12 @@ static int max31790_probe(struct i2c_client *client)
- {
- 	struct i2c_adapter *adapter = client->adapter;
- 	struct device *dev = &client->dev;
-+	u8 pwmout_to_tach[NR_CHANNEL];
- 	struct max31790_data *data;
- 	struct device *hwmon_dev;
- 	int err;
-+	u8 tmp;
-+	int i;
- 
- 	if (!i2c_check_functionality(adapter,
- 			I2C_FUNC_SMBUS_BYTE_DATA | I2C_FUNC_SMBUS_WORD_DATA))
-@@ -528,6 +532,33 @@ static int max31790_probe(struct i2c_client *client)
- 	if (err)
- 		return err;
- 
-+	if (device_property_present(dev, "pwmout-pin-as-tach-input")) {
-+		err = device_property_read_u8_array(dev, "pwmout-pin-as-tach-input",
-+						    pwmout_to_tach, NR_CHANNEL);
-+		if (err) {
-+			/* The pwmout-pin-as-tach-input is an array of six values */
-+			dev_warn(dev, "The pwmout-pin-as-tach-input property exist but malform");
-+		} else {
-+			for (i = 0; i < NR_CHANNEL; i++) {
-+				tmp = data->fan_config[i];
-+				if (pwmout_to_tach[i])
-+					data->fan_config[i] |= MAX31790_FAN_CFG_TACH_INPUT;
-+				else
-+					data->fan_config[i] &= ~(MAX31790_FAN_CFG_TACH_INPUT);
++  pwmout-pin-as-tach-input:
++    description: |
++      An array of six integers responds to six PWM channels for
++      configuring the pwm to tach mode.
++      When set to 0, the associated PWMOUT produces a PWM waveform for
++      control of fan speed. When set to 1, PWMOUT becomes a TACH input
++    $ref: /schemas/types.yaml#/definitions/uint8-array
++    maxItems: 6
++    minItems: 6
 +
-+				if (tmp != data->fan_config[i]) {
-+					err = i2c_smbus_write_byte_data(client,
-+									MAX31790_REG_FAN_CONFIG(i),
-+									data->fan_config[i]);
-+					if (err < 0)
-+						dev_warn(dev,
-+							 "Fail to apply fan configuration at channel %d",
-+							 i);
-+				}
-+			}
-+		}
-+	}
-+
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
- 							 data,
- 							 &max31790_chip_info,
+ required:
+   - compatible
+   - reg
+@@ -40,5 +50,6 @@ examples:
+       max31790@20 {
+         compatible = "maxim,max31790";
+         reg = <0x20>;
++        pwmout-pin-as-tach-input = /bits/ 8 <0 0 0 0 1 1>;
+       };
+     };
 -- 
 2.17.1
 
