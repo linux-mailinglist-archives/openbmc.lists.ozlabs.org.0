@@ -1,74 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E72E2878975
-	for <lists+openbmc@lfdr.de>; Mon, 11 Mar 2024 21:26:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9902879F9E
+	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 00:19:03 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=SlvZYcvC;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=ES8+2yK7;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TtpGN5GXwz3dVy
-	for <lists+openbmc@lfdr.de>; Tue, 12 Mar 2024 07:26:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TvV2X0C2Kz3cGw
+	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 10:19:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=SlvZYcvC;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=ES8+2yK7;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TtpFk0zDdz3fQH
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Mar 2024 07:26:17 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-	s=s31663417; t=1710188732; x=1710793532; i=j.neuschaefer@gmx.net;
-	bh=QPiPfOFecIX8WW823ElbpwpIzdwIS3P4yFEaWv7mkWQ=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=SlvZYcvCkWrZ+mCkQDpi2VBxJ/6L1ZAGXws1NOatgnsxdgSresSqQDnRea1mpSfH
-	 /B3VMAFjBIDD/dxDBRRA7fuOSaMBhgehXQlv87TSVOuhSpmqjahRWi74YKEfk/To6
-	 8Jc84Rygo3PdNz46PHxTeEW5XQf9m6tW0ZjCaKCI47yAZ/i4h2OnTsdnthrH89ZMU
-	 /MMqYRJEMsivVUFea0jt7x94CWGNwI7G3/hbO4kqw/rwtbgkeUe80dp0z2WeSXkwI
-	 N2BkrCfw77XHpHW1jtnITJ14M//ohYQ6cVympecDUxaM6pVefGABkdSNgujkaeLoJ
-	 3zSFQwNF1kyRVcrqLA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([78.35.216.168]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MTiTt-1rFhIH1KH7-00U0Ec; Mon, 11
- Mar 2024 21:25:32 +0100
-Date: Mon, 11 Mar 2024 21:25:30 +0100
-From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v10 2/4] ARM: dts: wpcm450: Remove clock-output-names
- from reference clock node
-Message-ID: <Ze9ouqs8iS-zAuhs@probook>
-References: <20240310192108.2747084-1-j.neuschaefer@gmx.net>
- <20240310192108.2747084-3-j.neuschaefer@gmx.net>
- <c7693ae1-b7e4-4960-b447-8373855d86b5@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TvV1v567Cz2ykn
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Mar 2024 10:18:27 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:712b:6300::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1EBA16C5;
+	Tue, 12 Mar 2024 16:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1710285504;
+	bh=EYwBh95DHhz9r9QVHywR28E43x2Y+m0ywwZ1m0v/Ne0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ES8+2yK7wjiIjMBDw8RuZ3IxWwX8x2LPTh/Meu+zvnyCL6IYGxZdM9aT3q79RhEi6
+	 5Ky10wTfYLgc2llCsDKgXtoEiF2wNm0KL+qU//WdHHqw/CQbnyyBucXq13DMfgwMFY
+	 rJFLg1Ruo/C2nb9DLfhytK/QIcETYK369yehGzEA=
+Date: Tue, 12 Mar 2024 16:18:22 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Ban Feng <baneric926@gmail.com>
+Subject: Re: [PATCH v4 3/3] hwmon: Driver for Nuvoton NCT7363Y
+Message-ID: <cd63bec7-01c6-466e-b772-3a3d3d90a7d5@hatter.bewilderbeest.net>
+References: <20240227005606.1107203-1-kcfeng0@nuvoton.com>
+ <20240227005606.1107203-4-kcfeng0@nuvoton.com>
+ <a90ed00c-f836-4fb6-8191-9974937e3eb7@hatter.bewilderbeest.net>
+ <CALz278Zgfgob573vgWz4PgC7vb=i8xt3kC1hSjo_cQi00B0XAg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VmXkit7k7mmW0jx/"
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <c7693ae1-b7e4-4960-b447-8373855d86b5@linaro.org>
-X-Provags-ID: V03:K1:DSV6Jxp9uHCDsY5cseqTnBTBiB0eztWVfRktYcb2oYcokvKRra4
- 36xFfyFtmLnvtHLi/sbqt6v+EL0+kGVcr8gIMT4LDzL1YzQmcwibae2KSp14mMDRXhBPNRi
- KR2OmTO5waIBc8yh627MVue5HiV2SBfwq7lspqqfqiw60IhHHYlp/b+V5CTf6X9dVxvPd5R
- geY1m9M0ezesO6j/VJbeA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oHssPTIrJ5Y=;KMxezZM62M1iUl8WK1u15cMTYGh
- rLJyAi6oqjFl38zgWdeud0amqwS4UmrjUiUj+xW+L2aiszNson6b516TzVrE7ky4IZIy0+91E
- Hbt7EjpGZpwVFR3G0AL7xh2imxXYRXcf52eVVK1WkXdBkRwRJralUustf6To2+vNmWxuSjIkA
- A4D/JuY5Ddg+NUmNvRYMQFvguVSSGshydMtrEYmohIZIaXacuzEGNlb1d0AxVypavtVNtJwKb
- V+xdwNEbo1KennbrXLmNBUhKwM845kEIZK73viAEdSDjtu0FGNHwO9khFKrJakUi/3OWltiCS
- 5/J6s91Ycl6/0Wp6aWp+IJ5xeMybwAhYGI8LEqskFnGObFzqhKzpJE0hhlkNHNkufpCgtognP
- ziQR/Nd949Vnb5gzwnHN6BxUnHFJSIlX1dZS613dgsECEiNJF+n2UactGeF6LCOYW/mHpazEl
- CUbOwJ1d0ydDIkN9hXIjMKEmXHhEAvuYlOz3voUOV1MQQ6dBvKf3GiBDtVu3N52hlH4pVXUKd
- hvCEA23pD/ax/xV8vkiYsmR4TCkxkGPpQKZGcTU2SK9+13dbm9sqnK6TeQBjQU+PeItq7LSsE
- BNzpBdsXu4DuRppS/q5DBv+pDi220T40B06QuDmLQTLkwQ4ONTPeNwOwZL999ShsV/IHyPBti
- +NVLu74DBgoXuWGIciAse2Kn/qQOcncRwSGIhHRhRSN2t1wuXSHHzF7QEyesqL+XqnAdWxfV9
- +QbEFep3Tf8IX91ZEUWK15dOOyNdEG8rBjPsXdWm4NrMk4d7y20oVCQFSqRKxMcG1S/8ywXyg
- X2h3pyvwEN6BhXfESFUll55803BOKZT4LlmmCJGDKioG0=
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALz278Zgfgob573vgWz4PgC7vb=i8xt3kC1hSjo_cQi00B0XAg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,44 +61,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-clk@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Daniel Lezcano <daniel.lezcano@linaro.org>, Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-watchdog@vger.kernel.org, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Rob Herring <robh+dt@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Thomas Gleixner <tglx@linutronix.de>, Wim Van Sebroeck <wim@linux-watchdog.org>, Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>, linux-kernel@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, naresh.solanki@9elements.com, billy_tsai@aspeedtech.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com, linux@roeck-us.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Mar 06, 2024 at 11:35:31PM PST, Ban Feng wrote:
+>Hi Zev,
+>
+>On Sat, Mar 2, 2024 at 4:19 PM Zev Weiss <zev@bewilderbeest.net> wrote:
+>>
+>> On Mon, Feb 26, 2024 at 04:56:06PM PST, baneric926@gmail.com wrote:
+>> >From: Ban Feng <kcfeng0@nuvoton.com>
+>> >
+>> >NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
+>> >
+>> >Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+>> >---
 
---VmXkit7k7mmW0jx/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+<snip>
 
-On Mon, Mar 11, 2024 at 07:50:22AM +0100, Krzysztof Kozlowski wrote:
-> On 10/03/2024 20:21, Jonathan Neusch=C3=A4fer wrote:
-> > This is not necessary anymore, because the clk-wpcm450 driver doesn't
-> > rely on global clock names anymore.
-> >=20
->=20
-> Your commit msg should say: since which commit.
+>> >+
+>> >+static const struct of_device_id nct7363_of_match[] = {
+>> >+      { .compatible = "nuvoton,nct7363" },
+>>
+>> As far as I can see from the code in this driver, it looks like this
+>> driver should also be compatible with the nct7362; shall we add the ID
+>> table entry for it now?  (Though I only have a datasheet for the
+>> nct7362, not the nct7363, so I don't know exactly how they differ.)
+>
+>As far as I know, the difference between these two ICs is 0x2A~0x2C
+>Fading LED for 7362, and 0x2A Watchdog Timer for 7363.
+>In my v1 patch, I indeed add the nct7362 to the ID table, however,
+>this makes it more complicated and our datasheet isn't public yet.
+>I think maybe supporting more chips will be done in the future, but not now.
+>
 
-Good point, I'll do that in the next iteration
+If the only differences are in features the driver doesn't utilize, I'm 
+not clear on how it adds any complexity.  As far as I'm aware, neither 
+datasheet is public (NCT7363 nor NCT7362), so if we're going to have a 
+public driver for one, why not also do so for the other?  It's a single 
+additional line -- and furthermore, having made that change and tested 
+it out, I can report that the driver seems to work just fine on NCT7362 
+hardware as well.
 
---VmXkit7k7mmW0jx/
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+Zev
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmXvaE0ACgkQCDBEmo7z
-X9uzbg/9E4zYqzQDzzKwxco6TXOke7njucuOXl8f2KDunoXsBn/3CLtkyc4/JhtR
-RMwRHsCkAHMm9VSLdVtVR+ZDXZZ/y3dbKpGIauB7bIii0rHY3iv3Ut1DNKQtd71q
-ZpwTki+a+gJavU+eQiAzspIgtv2IHfsdZa/6jy3t4IqryAlbFK7J9rfC+iyxD7HV
-MVCyKQqGD5qDJQ4UWJOzcX4/72zqjDTRXw65xTf94mr12+Htx55hV/1SVnSgEELj
-++zkxvMQAbbrO3QTm0gk0WUJfUL4tD72jfTeLxFuzsqDYklRcrOOHaM+KjJnU1E0
-4xWNj44KaIUNM6olaYwdSdAk/byR7FByBV8ShE7bWAJHLBCO++L1UiyBqzm8UPNB
-ZVbP+RNdYBdm1Dd6qPZ2uAMV3Qc1RjGBXeDQ+Ecqx/zn1FFrDe9JnCcxnTfM3P9w
-EzclIhK0NtORnqY7B+SxW4SREOXt0tiGPNBZWQSVH5w6b9jlsXakRRdbRSs1d2ij
-bjhkX0sexsT1VxSJI/uAj2nZ4jMkn4OpRMkz50AxV1fYNJcTkjbIwcIrF5uzK69O
-IxsiMzl6YIXaVEVz0dY82ZycKOqtVHkiX7uVfk/HbfKlR0svz6sxHIfGRQkW4Kna
-Go5/WdMeKJwngPm0en45IFyQTVV7OjnsYJkycNqucp0Qoo4hReM=
-=Fu2N
------END PGP SIGNATURE-----
-
---VmXkit7k7mmW0jx/--
