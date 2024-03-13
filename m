@@ -2,92 +2,41 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B29787A1B9
-	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 03:43:23 +0100 (CET)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=ooXevoVx;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 510FC87A2A6
+	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 06:26:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TvZZK0KDvz3dRp
-	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 13:43:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TvfBp4bCMz3dSv
+	for <lists+openbmc@lfdr.de>; Wed, 13 Mar 2024 16:26:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=ooXevoVx;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feae::620; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on20620.outbound.protection.outlook.com [IPv6:2a01:111:f400:feae::620])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 318 seconds by postgrey-1.37 at boromir; Wed, 13 Mar 2024 16:26:26 AEDT
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TvZYb3xDdz3bZN;
-	Wed, 13 Mar 2024 13:42:41 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XU2Ru2pTFlACRp50PAOQ1nACEv5CXPims4UexZSSNPZhEbAAbvRo/PCKde70j+A54s+W3lcAJQK9+nyX+gLbKzY63jB69KAGs9IToJoxpsOrxN6ao/joPcQT0shVySTDwODMePX5gNorygXjMjsec48Ng+EKqza7JofgNG4sJhOv4hQQFEqv92nUph+Qv5k9c4EX550FApjYl22ICEl2uEXq1bKwF7KsCnDlBtbekhaacMAQ1Q5sIFPJ0FaDI/d/heqZ4a+G/i4m0dD6QW05inpPFlTnaIA2RtleGsLw9OwRg8RA8m9JBs/XjaAL/YQHTP8VD2ylNBJMWh2mtqO06Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TW3Lfg28Nu7zLIyIVqNz+ndBJZNbcytAHk0U0JB2VSc=;
- b=kEVhYn1yjVpexqtGVefFKo5jbdnoPZFQ59XPDefa6BhpujZITFa8kFWjbGA2hP4TUHeEUG6qsix1jO//1MNDz/pbjjCsdgcXpauNU1DG4zs/gb2+nenkewSk3Wffb4xr9d9Yv+W92YhWakhZ/H+9/Xrmy95spotgCACGEf7cnLmxqxt/vZydTNyKuWUPB64n9BC+4UDBxoeGR8mNNhqjyBJECJHjNlQudYZi6TWY8UGbm+J22YLF5u0z3od2G0eO8YwHA0GarTgJ+XH81YYB+YUtKFCElVs+KfkJJyOOYq1Yb+rQfsvGUWoJYZISZxPWhUKrjbLQZATPP3h74Cfo0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 211.20.1.79) smtp.rcpttodomain=stwcx.xyz smtp.mailfrom=wiwynn.com; dmarc=fail
- (p=quarantine sp=quarantine pct=100) action=quarantine
- header.from=wiwynn.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wiwynn.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TW3Lfg28Nu7zLIyIVqNz+ndBJZNbcytAHk0U0JB2VSc=;
- b=ooXevoVxQrcILK+eaSQJI6vc0w9cIo7tGmnq3x3BvbNtYwA8mc4u3uEjH+g6bULpHev01HNwD5hxJarLQmdDmawkG35WzCVbKA+JG9bA1TsvOElK/6LKnKWzB/1dvsiMG/bobMAUz5mM8HXTmZZa7nuB8jBgE5aX3FhhpI/OmCUhG+NY99Plu56ZPX5Nvec39vWToaa8QWkrSvpFOcgfG0DrcSJH4NBxwWcHZN2Jxt7ETYHPEr/fy1AlWUpBe9TYjTm9Q+IBk6/Udk+VBofGpOSISK4gq0yYuIU9j0hBdQUd3UmTMZ9KNykzRDQ/zQE+izGr3TiGh38z6H7D/f9Scg==
-Received: from SI2PR02CA0022.apcprd02.prod.outlook.com (2603:1096:4:195::23)
- by TYSPR04MB7714.apcprd04.prod.outlook.com (2603:1096:405:57::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.27; Wed, 13 Mar
- 2024 02:42:14 +0000
-Received: from HK2PEPF00006FB0.apcprd02.prod.outlook.com
- (2603:1096:4:195:cafe::94) by SI2PR02CA0022.outlook.office365.com
- (2603:1096:4:195::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.19 via Frontend
- Transport; Wed, 13 Mar 2024 02:42:13 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 211.20.1.79)
- smtp.mailfrom=wiwynn.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=quarantine header.from=wiwynn.com;
-Received-SPF: Fail (protection.outlook.com: domain of wiwynn.com does not
- designate 211.20.1.79 as permitted sender) receiver=protection.outlook.com;
- client-ip=211.20.1.79; helo=localhost.localdomain;
-Received: from localhost.localdomain (211.20.1.79) by
- HK2PEPF00006FB0.mail.protection.outlook.com (10.167.8.6) with Microsoft SMTP
- Server id 15.20.7386.12 via Frontend Transport; Wed, 13 Mar 2024 02:42:12
- +0000
-From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
-To: patrick@stwcx.xyz,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v1] pinctrl: pinctrl-aspeed-g6: correct the offset of SCU630
-Date: Wed, 13 Mar 2024 10:42:10 +0800
-Message-Id: <20240313024210.31452-1-Delphine_CC_Chiu@wiwynn.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TvfBV1Nm9z30h8
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Mar 2024 16:26:25 +1100 (AEDT)
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 13 Mar
+ 2024 13:21:35 +0800
+Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
+ Transport; Wed, 13 Mar 2024 13:20:27 +0800
+From: Billy Tsai <billy_tsai@aspeedtech.com>
+To: <andrew@codeconstruct.com.au>, <linus.walleij@linaro.org>,
+	<joel@jms.id.au>, <johnny_huang@aspeedtech.com>,
+	<linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
+	<linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>, <BMC-SW@aspeedtech.com>,
+	<Ricky_CX_Wu@wiwynn.com>
+Subject: [PATCH] pinctrl: pinctrl-aspeed-g6: Fix register offset.
+Date: Wed, 13 Mar 2024 13:20:27 +0800
+Message-ID: <20240313052027.1320489-1-billy_tsai@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: HK2PEPF00006FB0:EE_|TYSPR04MB7714:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 2fbff89c-6ee3-4525-5767-08dc4307300f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	oaSuPh/Z17boEIZKsqtTRtXIQ1cQr3gU/6fIG5ckwfV+qwoKJxPxf1AsDrYPjNiVPmYD8vHJ+Q2aTlKji3jg5l4Hlg9P7tbFDf6uVNnp0pi7xylsNM2n4m6n4TFFmMNqL54bBYig6ED4rki0AjZpEFS4SZZp2meWty5Kj3nRLpV4bJxABCAOzdjIz1BP7V7zsME98sjgiTm5Rlz1UvSOljD67ByAG9nKFwJqDzZgzBdkBiTcA0yQcrWQSeM77EnRG9gYpufMI4PjX81t6bB4exgFBJ4La5C9Rvgd+cFo5rURT9RsNRltfbg9h4cppzE/cB7HWR1b9sIOgBrCR65TArQuxk+m0uIDjkV9U+J84FODw3dXEGtg+93VN4RH3lu+eQH5ZQ5r51vyrtvuoY60Tr8QYOL/RR6gYykEmbq0P6FVm3TRieH9EbG8qv2l6wBYZLP9ZnjaFwGlqhSFoR+QMMgfAY4OozGhBcYIr8blxAVKP6MPa/S0yG5MSyRUjXgjeQPmu5s9lSRWQS2swys/yC3GjPMHb+EAjcuhdRZPXtZ9AruptUW4yRSDniwmPaq8BqLjVw0ABuxQLBz4X89mFQfOFkSbgnBGSYRT6bDKNSbXUbw58RcAa4f+aF2r0JyAA3AKWFShm7xUUyWrWHjty1sCbuqHzzFemWQH9JqmocI5vDLylN20rELRJsvlFwfIHoEndgKdhBPXq/MjlZwDZ9LJY1knaQOqIqMaZjp+X32MCWrqrNFkcD/C453XeJcI
-X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(82310400014)(376005)(1800799015)(36860700004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: wiwynn.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2024 02:42:12.8035
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2fbff89c-6ee3-4525-5767-08dc4307300f
-X-MS-Exchange-CrossTenant-Id: da6e0628-fc83-4caf-9dd2-73061cbab167
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=da6e0628-fc83-4caf-9dd2-73061cbab167;Ip=[211.20.1.79];Helo=[localhost.localdomain]
-X-MS-Exchange-CrossTenant-AuthSource: 	HK2PEPF00006FB0.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR04MB7714
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,15 +48,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Description:
-Correct the offset of "Disable GPIO Internal Pull-Down #4" register that
-should be 630h according to the AST2620 datasheet.
+The register offset to disable the internal pull-down of GPIOR~T is 0x630
+instead of 0x620.
 
-Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Fixes: 15711ba6ff19 ("pinctrl: aspeed-g6: Add AST2600 pinconf support")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
 ---
  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 34 +++++++++++-----------
  1 file changed, 17 insertions(+), 17 deletions(-)
