@@ -2,72 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3963E87F13C
-	for <lists+openbmc@lfdr.de>; Mon, 18 Mar 2024 21:36:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E484A87F13D
+	for <lists+openbmc@lfdr.de>; Mon, 18 Mar 2024 21:37:18 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GVy/GA6e;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Z81rcp8E;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Tz68C6qb5z3dJ0
-	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 07:36:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Tz6984xspz3fFT
+	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 07:37:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GVy/GA6e;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Z81rcp8E;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tz66k3JRjz3c12
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Tz66k3Gctz3bsT
 	for <openbmc@lists.ozlabs.org>; Tue, 19 Mar 2024 07:35:09 +1100 (AEDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2d46c44dcc0so59791451fa.2
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-513d717269fso4950155e87.0
         for <openbmc@lists.ozlabs.org>; Mon, 18 Mar 2024 13:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710794104; x=1711398904; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1710794105; x=1711398905; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cNzhHn0g5rCUe9a3yKkuCxAk27qdnhBHsL8OeNZ3I0A=;
-        b=GVy/GA6e7gFh0DzxV+BIp9ZKhY2CDzYklglhTY0CpQyMrbgOd3xXnDvcuM5IeG1fyW
-         z1QLZHZ+2l1mGmoHbAuhkVXbe4FTqYaDmYvTzOU7IU/fSHLYo1QV7UFWyErsFtZzq1dC
-         sBue3fFErePK3lBVBOTtHwpCU2GG/8DZaL4L4+Z8LlCFrfiuAnsj8bD8fuJD+pgm4Aj7
-         +qlozYH6Vs+qnFr/NCMeFWQ8g98xnItHsXQ2+H1pttOt+c/gy9UIYexjmcMNluTPycH+
-         vc0uNZT5/1fP41wZ98NbPwsfdlC2zUDGlefqhhuQDHu8YnvuMN0zJkj+7egzczZXm/Qi
-         +XiA==
+        bh=IvcDtkndjm/UBeE+GDj+OLBiaQohVsgFa07MB6FFitY=;
+        b=Z81rcp8E7+nhzY7C1HPhVPgOA+gTpJKVviJkGpGMvAlysBGeBiZGVhDvYd48ddR7tJ
+         L2irAJzKjn/ScP0e5b6t1bjN3dwgv6At/TxmTtDnve8wCkyl+vqDe/YCttY1Z0ULhFCz
+         MF5RsJliSWLu/QYpuVh/HFNpwOxeVSNhInqP5jgOWRhDw4itdKHkTEH01ltLWyNX7kVg
+         ibg81XBeAmKu1+cB5D+lCoJpZj2SNF8wg1AVo8fSlUpcn1O1ywjAkgZ0I5N8fBZkIVID
+         JA0ehp/+ZquRWPhZ0Ui10pXhxkiizqNtnBtUg7UWKH38PjvXpI9nE+rmytgGbddWaTXm
+         ynXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710794104; x=1711398904;
+        d=1e100.net; s=20230601; t=1710794105; x=1711398905;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cNzhHn0g5rCUe9a3yKkuCxAk27qdnhBHsL8OeNZ3I0A=;
-        b=Q/2/2oObTpaTFkaH/YzBMnt6UcnpSpFsFg1x8HCS1eY2LsoInC5zm5JhLjra3n/HNq
-         YwXiAZ9eyZ3EOSflo8S/SNZPJ8za6vQcM+/rz2SI/q3FIPcAqjwxYcNCVYvAHJ2U+qwo
-         j3tBeharbKPXHvyj+HVUW/OMNsDNbUCwsSHdZPeAD8ERSj8gDfdDs3qQ6UZFPdGGhmkz
-         eh7EoOxfwzRBXnGZ4G3/Yzd0X3vLsF2YLRM2YkSbzWW9WO/lLUGqiAsy/SNx0HOQz+mu
-         +pVcpvmw6joutwHQ/9a9yH8maTT66NzeJNz0vzU9xwPC4CfEIIcvs2Ae5bjKfRD5hiUU
-         q9xg==
-X-Gm-Message-State: AOJu0YzI8o9JJzBPDXfv5Cszga4W+XkmWOgQuHKuCTtoaHVI79ZziaQ1
-	II1tqEb4sl28X3G7Yavc9X4k5jj4UjVXDlmVV5oxt9WHRc3nmKhdY/tXz1nlZqU=
-X-Google-Smtp-Source: AGHT+IEZI93rGApwOPY7zVocjvjnT7BWn1cQkktUQzWTQEfHigTqmhNin2+hta1Siez/R/WXt6SsGw==
-X-Received: by 2002:a2e:850d:0:b0:2d4:c9c4:cd54 with SMTP id j13-20020a2e850d000000b002d4c9c4cd54mr325560lji.46.1710794104215;
-        Mon, 18 Mar 2024 13:35:04 -0700 (PDT)
+        bh=IvcDtkndjm/UBeE+GDj+OLBiaQohVsgFa07MB6FFitY=;
+        b=g+oaATlxLEN23NoBCf24LjrVDBxH6u2QTOcXK/aZvMfbypfS22hKeyry0uiv6P4hCw
+         95xpw1g38MTMsTrzRvSMsZ6jk4c7CmYISs/gaCU0Qh4CpLilZfA7gjl0qJTAT30nLa/6
+         XAhMcuZ2iTGCjgZALSqxq4IoP40hqQqrGxHIWuN/ZZsHHH/+hqiAFaBjl2a0lL+hSxkO
+         4wgVvZT0BOoeZLO9wfBgSNg2fScM37osJqbPyktMP/B8R6enER02U6vaaZokfV6oh/PD
+         +laziE5X1ulZEWJ/QZPRB652On4YJ5/TBy9AL7ufGD7ABmh63a80J9mxx+pP4+sp2B3A
+         PIng==
+X-Gm-Message-State: AOJu0YwtQnW8Ucbp4DVjMLUBT0oxe39VAoR27n08BpTuaNlZCZZnVCKG
+	SNJBc2xU7ttnszwvKjidYfFvVfxviJZQFkTRyOWaGda7WoKS8ogxPFZx8ffk2LQ=
+X-Google-Smtp-Source: AGHT+IGViWZKxe+a6ZGSxRkfnKAwcAWUurVx2EJxRC6wsP+izTakg5XHY0FiWhgOZ3h6QXCwICNmAg==
+X-Received: by 2002:ac2:4d81:0:b0:513:5bdb:10f7 with SMTP id g1-20020ac24d81000000b005135bdb10f7mr1924751lfe.14.1710794105059;
+        Mon, 18 Mar 2024 13:35:05 -0700 (PDT)
 Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id r21-20020a2e9955000000b002d46e2610f2sm1521917ljj.105.2024.03.18.13.35.03
+        by smtp.gmail.com with ESMTPSA id be36-20020a056512252400b00513eaf392d8sm455979lfb.284.2024.03.18.13.35.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Mar 2024 13:35:03 -0700 (PDT)
+        Mon, 18 Mar 2024 13:35:04 -0700 (PDT)
 Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 42IKYxUt029085;
-	Mon, 18 Mar 2024 23:35:00 +0300
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 42IKZ1tT029089;
+	Mon, 18 Mar 2024 23:35:02 +0300
 Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 42IKYxk3029084;
-	Mon, 18 Mar 2024 23:34:59 +0300
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 42IKZ1Ul029088;
+	Mon, 18 Mar 2024 23:35:01 +0300
 From: Paul Fertser <fercerpav@gmail.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH downstream-hack dev-6.6 1/6] usb:gadget:mass-storage: Improve the signature of SCSI handler function
-Date: Mon, 18 Mar 2024 23:34:40 +0300
-Message-Id: <20240318203445.29036-2-fercerpav@gmail.com>
+Subject: [PATCH downstream-hack dev-6.6 2/6] usb:gadget:mass-storage: refactoring the SCSI command handling
+Date: Mon, 18 Mar 2024 23:34:41 +0300
+Message-Id: <20240318203445.29036-3-fercerpav@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20240318203445.29036-1-fercerpav@gmail.com>
 References: <20240318203445.29036-1-fercerpav@gmail.com>
@@ -90,14 +90,8 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Igor Kononenko <i.kononenko@yadro.com>
 
-SCSI command handlers currently have an ambiguous return value. This
-return value may indicate the length of the data written to the response
-buffer and the command's processing status. Thus, the understanding of
-command handling may be implicit.
-
-After this patch, the output buffer's size will be set in the
-'data_size_to_handle' field of 'struct fsg_common', and the command
-handler's return value indicates only the processing status.
+Implements a universal way to define SCSI commands and configure
+precheck handlers.
 
 Tested: By probing the USBGadget Mass-Storage on the YADRO VEGMAN
 BMC(AST2500) sample, each SCSI command was sent through HOST->BMC; the
@@ -107,498 +101,647 @@ properly.
 Signed-off-by: Igor Kononenko <i.kononenko@yadro.com>
 Signed-off-by: Paul Fertser <fercerpav@gmail.com>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 200 ++++++++++---------
- 1 file changed, 108 insertions(+), 92 deletions(-)
+ drivers/usb/gadget/function/f_mass_storage.c | 567 ++++++++++---------
+ drivers/usb/gadget/function/storage_common.h |   5 +
+ 2 files changed, 319 insertions(+), 253 deletions(-)
 
 diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index c265a1f62fc1..01525f02293d 100644
+index 01525f02293d..b86c2e0576bc 100644
 --- a/drivers/usb/gadget/function/f_mass_storage.c
 +++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -268,6 +268,7 @@ struct fsg_common {
- 	enum data_direction	data_dir;
- 	u32			data_size;
- 	u32			data_size_from_cmnd;
-+	u32			data_size_to_handle;
- 	u32			tag;
- 	u32			residue;
- 	u32			usb_amount_left;
-@@ -1060,7 +1061,8 @@ static int do_inquiry(struct fsg_common *common, struct fsg_buffhd *bh)
- 		memset(buf, 0, 36);
- 		buf[0] = TYPE_NO_LUN;	/* Unsupported, no device-type */
- 		buf[4] = 31;		/* Additional length */
--		return 36;
-+		common->data_size_to_handle = 36;
-+		return 0;
- 	}
+@@ -209,6 +209,138 @@ static const char fsg_string_interface[] = "Mass Storage";
+ #include "storage_common.h"
+ #include "f_mass_storage.h"
  
- 	buf[0] = curlun->cdrom ? TYPE_ROM : TYPE_DISK;
-@@ -1077,7 +1079,8 @@ static int do_inquiry(struct fsg_common *common, struct fsg_buffhd *bh)
- 	else
- 		memcpy(buf + 8, common->inquiry_string,
- 		       sizeof(common->inquiry_string));
--	return 36;
-+	common->data_size_to_handle = 36;
-+	return 0;
++
++/*------------------------------------------------------------------------*/
++
++/**
++ * @brief The handler of incoming CDB command
++ * @param cmd		- SCSI command number
++ * @param callback	- The callback of handle the incoming command
++ */
++#define CDB_REG_HANDLER(cmd, callback)                                         \
++	.command = (cmd), .do_command = (callback),                            \
++	.type = CDB_HANDLER_COMMON, .name = (#cmd)
++
++/**
++ * @brief The handler of incoming CDB command
++ * @param cmd		- SCSI command nubmer with fsg buffhd
++ * @param callback	- The callback of handle the incoming command
++ */
++#define CDB_REG_HANDLER_BUFFHD(cmd, callback)                                  \
++	.command = (cmd), .do_command_with_buffhd = (callback),                \
++	.type = CDB_HANDLER_FSG_BUFFHD, .name = (#cmd)
++
++/**
++ * @see CDB_REG_CHECKER_DS
++ * @details Register CDB command without additional check handler.
++ */
++#define CDB_REG_NO_CHECKER(cmd, si, dir, req)                                  \
++	.command = (cmd), .direction = (dir), .size_index = (si),              \
++	.medium_required = (req), .do_check_command = NULL,
++
++/**
++ * @brief Register the CDB command checker, which checks an incoming command
++ * by specified criteria.
++ * This validator will take care of the specified data size (DS)
++ *
++ * @param cmd	- SCSI command nubmer
++ * @param s		- CDB command size in bytes
++ * @param si	- The CDB command might have the recommended response size.
++ * This field indicates the size field index in the input CDB command
++ * buffer
++ * @param dir	- Direction of data transfer of requested CDB command
++ * @param mask  - Mask of relevant bytes in the input command buffer.
++ * The ordinal number of a bit in the mask indicates that a byte in the
++ * CDB command buffer might be present.
++ * If that ordinal number bit equals zero, only a zero value must be
++ * present in this original byte.
++ * @param req	- Indicates that medium MUST be present or might be optional
++ * @param ds	- If @param SI member is equal to @enum CDB_SIZE_MANUAL, than this
++ * field indicates the custom response buffer size
++ */
++#define CDB_REG_CHECKER_DS(cmd, s, si, dir, mask, req, ds)                     \
++	.command = (cmd), .size = (s), .size_index = (si), .direction = (dir), \
++	.valid_bytes_bitmask = (mask), .medium_required = (req),               \
++	.data_size_manual = (ds), .do_check_command = &check_command
++
++/**
++ * @see CDB_REG_CHECKER_DS
++ * @details The data size is zero.
++ * This macro can't be used with the @enum CDB_SIZE_MANUAL
++ */
++#define CDB_REG_CHECKER(cmd, s, si, dir, mask, req)                            \
++	CDB_REG_CHECKER_DS(cmd, s, si, dir, mask, req, 0)
++
++/**
++ * @see CDB_REG_CHECKER_DS
++ * @details The checker which registried by this macros will validate the input
++ * data size in blocks.
++ * Block size specified by MSF interface type, in the curlun->blksize.
++ */
++#define CDB_REG_CHECKER_BLK(cmd, s, si, dir, mask, req)                        \
++	CDB_REG_CHECKER_DS(cmd, s, si, dir, mask, req, 0),                     \
++		.do_check_command = &check_command_size_in_blocks
++
++/**
++ * @brief Field index of possible data length of output buffer size, which
++ * contains in the input CDB command buffer
++ */
++enum cdb_data_size_field {
++	CDB_SIZE_MANUAL = -2,
++	CDB_NO_SIZE_FIELD = -1,
++	CDB_SIZE_FIELD_4 = 4,
++	CDB_SIZE_FIELD_6 = 6,
++	CDB_SIZE_FIELD_7 = 7,
++	CDB_SIZE_FIELD_10 = 10,
++};
++
++/* Type of CDB command checker with associated data to check */
++struct cdb_command_check {
++	/* SCSI command number */
++	u8 command;
++	/* CDB command size */
++	size_t size;
++	/* Size field index in the input CDB command buffer */
++	enum cdb_data_size_field size_index;
++	/* CDB command data direction, @enum data_direction */
++	u8 direction;
++	/* Mask of expected meaningfull bytes in input CDB command buffer */
++	u32 valid_bytes_bitmask;
++	/* Is medium must be present or not */
++	u8 medium_required;
++	/* If data size is custom (the size_index is equal to CDB_SIZE_MANUAL),
++	 * then this field indicates the output data size
++	 */
++	u8 data_size_manual;
++	/* the CDB command checker */
++	int (*do_check_command)(struct fsg_common *common, int size,
++				enum data_direction direction,
++				unsigned int mask, int needs_medium,
++				const char *name);
++};
++
++/* CDB command hundler metadata */
++struct cdb_handler {
++	/* SCSI command number */
++	u8 command;
++	/**
++	 * @brief the CDB command hundler
++	 * @param fsg_common	- FSG instance
++	 */
++	int (*do_command)(struct fsg_common *common);
++	/**
++	 * @brief The CDB command hundler with a fsg_buffhd specified
++	 */
++	int (*do_command_with_buffhd)(struct fsg_common *common,
++				      struct fsg_buffhd *bufhd);
++	/* CDB handler type to pick a relevant callback */
++	enum { CDB_HANDLER_COMMON, CDB_HANDLER_FSG_BUFFHD } type;
++	/* SCSI command ASCII name */
++	char *name;
++};
++
++/*------------------------------------------------------------------------*/
++
+ /* Static strings, in UTF-8 (for simplicity we use only ASCII characters) */
+ static struct usb_string		fsg_strings[] = {
+ 	{FSG_STRING_INTERFACE,		fsg_string_interface},
+@@ -1870,6 +2002,103 @@ static int check_command_size_in_blocks(struct fsg_common *common,
+ 			mask, needs_medium, name);
  }
  
- static int do_request_sense(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1130,7 +1133,8 @@ static int do_request_sense(struct fsg_common *common, struct fsg_buffhd *bh)
- 	buf[7] = 18 - 8;			/* Additional sense length */
- 	buf[12] = ASC(sd);
- 	buf[13] = ASCQ(sd);
--	return 18;
-+	common->data_size_to_handle = 18;
-+	return 0;
- }
- 
- static int do_read_capacity(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1153,7 +1157,8 @@ static int do_read_capacity(struct fsg_common *common, struct fsg_buffhd *bh)
- 		max_lba = 0xffffffff;
- 	put_unaligned_be32(max_lba, &buf[0]);		/* Max logical block */
- 	put_unaligned_be32(curlun->blksize, &buf[4]);	/* Block length */
--	return 8;
-+	common->data_size_to_handle = 8;
-+	return 0;
- }
- 
- static int do_read_capacity_16(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1175,7 +1180,8 @@ static int do_read_capacity_16(struct fsg_common *common, struct fsg_buffhd *bh)
- 
- 	/* It is safe to keep other fields zeroed */
- 	memset(&buf[12], 0, 32 - 12);
--	return 32;
-+	common->data_size_to_handle = 32;
-+	return 0;
- }
- 
- static int do_read_header(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1197,7 +1203,8 @@ static int do_read_header(struct fsg_common *common, struct fsg_buffhd *bh)
- 	memset(buf, 0, 8);
- 	buf[0] = 0x01;		/* 2048 bytes of user data, rest is EC */
- 	store_cdrom_address(&buf[4], msf, lba);
--	return 8;
-+	common->data_size_to_handle = 8;
-+	return 0;
- }
- 
- static int do_read_toc(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1240,7 +1247,8 @@ static int do_read_toc(struct fsg_common *common, struct fsg_buffhd *bh)
- 		buf[13] = 0x16;		/* Lead-out track is data */
- 		buf[14] = 0xAA;		/* Lead-out track number */
- 		store_cdrom_address(&buf[16], msf, curlun->num_sectors);
--		return len;
-+		common->data_size_to_handle = len;
-+		return 0;
- 
- 	case 2:
- 		/* Raw TOC */
-@@ -1265,7 +1273,8 @@ static int do_read_toc(struct fsg_common *common, struct fsg_buffhd *bh)
- 
- 		/* For A2, 7, 8, 9, 10 - zero, Pmin, Psec, Pframe of Lead out */
- 		store_cdrom_address(&buf[7], msf, curlun->num_sectors);
--		return len;
-+		common->data_size_to_handle = len;
-+		return 0;
- 
- 	default:
- 		/* PMA, ATIP, CD-TEXT not supported/required */
-@@ -1357,7 +1366,8 @@ static int do_mode_sense(struct fsg_common *common, struct fsg_buffhd *bh)
- 		buf0[0] = len - 1;
- 	else
- 		put_unaligned_be16(len - 2, buf0);
--	return len;
-+	common->data_size_to_handle = len;
-+	return 0;
- }
- 
- static int do_start_stop(struct fsg_common *common)
-@@ -1448,7 +1458,8 @@ static int do_read_format_capacities(struct fsg_common *common,
- 						/* Number of blocks */
- 	put_unaligned_be32(curlun->blksize, &buf[4]);/* Block length */
- 	buf[4] = 0x02;				/* Current capacity */
--	return 12;
-+	common->data_size_to_handle = 12;
-+	return 0;
- }
- 
- static int do_mode_select(struct fsg_common *common, struct fsg_buffhd *bh)
-@@ -1863,7 +1874,7 @@ static int do_scsi_command(struct fsg_common *common)
++static struct cdb_command_check cdb_checker_table[] = {
++	{ CDB_REG_CHECKER(INQUIRY, 6, CDB_SIZE_FIELD_4, DATA_DIR_TO_HOST,
++			  0x0010, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(MODE_SELECT, 6, CDB_SIZE_FIELD_4, DATA_DIR_FROM_HOST,
++			  0x0012, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(MODE_SELECT_10, 10, CDB_SIZE_FIELD_7,
++			  DATA_DIR_FROM_HOST, 0x0182, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(MODE_SENSE, 6, CDB_SIZE_FIELD_4, DATA_DIR_TO_HOST,
++			  0x0016, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(MODE_SENSE_10, 10, CDB_SIZE_FIELD_7, DATA_DIR_TO_HOST,
++			  0x186, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(ALLOW_MEDIUM_REMOVAL, 6, CDB_NO_SIZE_FIELD,
++			  DATA_DIR_NONE, 0x0010, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER_BLK(READ_6, 6, CDB_SIZE_FIELD_4, DATA_DIR_TO_HOST,
++			      0x001E, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(READ_10, 10, CDB_SIZE_FIELD_7, DATA_DIR_TO_HOST,
++			      0x01BE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(READ_12, 12, CDB_SIZE_FIELD_6, DATA_DIR_TO_HOST,
++			      0x03FE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(READ_16, 16, CDB_SIZE_FIELD_10, DATA_DIR_TO_HOST,
++			      0x3FFE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_DS(READ_CAPACITY, 10, CDB_SIZE_MANUAL,
++			     DATA_DIR_TO_HOST, 0x011E, MEDIUM_REQUIRED, 8) },
++	{ CDB_REG_CHECKER(READ_HEADER, 10, CDB_SIZE_FIELD_7, DATA_DIR_TO_HOST,
++			  0x01BE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER(READ_TOC, 10, CDB_SIZE_FIELD_7, DATA_DIR_TO_HOST,
++			  0x03C7, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER(READ_FORMAT_CAPACITIES, 10, CDB_SIZE_FIELD_7,
++			  DATA_DIR_TO_HOST, 0x0180, MEDIUM_REQUIRED) },
++
++	{ CDB_REG_CHECKER(REQUEST_SENSE, 6, CDB_SIZE_FIELD_4, DATA_DIR_TO_HOST,
++			  0x0010, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(START_STOP, 6, CDB_NO_SIZE_FIELD, DATA_DIR_NONE,
++			  0x0012, MEDIUM_OPTIONAL) },
++	{ CDB_REG_CHECKER(SYNCHRONIZE_CACHE, 10, CDB_NO_SIZE_FIELD,
++			  DATA_DIR_NONE, 0x01BC, MEDIUM_REQUIRED) },
++
++	{ CDB_REG_CHECKER(TEST_UNIT_READY, 6, CDB_NO_SIZE_FIELD, DATA_DIR_NONE,
++			  0x0000, MEDIUM_REQUIRED) },
++
++	{ CDB_REG_CHECKER_BLK(VERIFY, 10, CDB_NO_SIZE_FIELD, DATA_DIR_NONE,
++			      0x0000, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(WRITE_6, 6, CDB_SIZE_FIELD_4, DATA_DIR_FROM_HOST,
++			      0x001E, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(WRITE_10, 10, CDB_SIZE_FIELD_7,
++			      DATA_DIR_FROM_HOST, 0x01BE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(WRITE_12, 12, CDB_SIZE_FIELD_6,
++			      DATA_DIR_FROM_HOST, 0x03FE, MEDIUM_REQUIRED) },
++	{ CDB_REG_CHECKER_BLK(WRITE_16, 16, CDB_SIZE_FIELD_10,
++			      DATA_DIR_FROM_HOST, 0x3FFE, MEDIUM_REQUIRED) },
++};
++
++static struct cdb_handler cdb_handlers_table[] = {
++	{ CDB_REG_HANDLER_BUFFHD(INQUIRY, &do_inquiry) },
++	{ CDB_REG_HANDLER_BUFFHD(MODE_SELECT, &do_mode_select) },
++	{ CDB_REG_HANDLER_BUFFHD(MODE_SELECT_10, &do_mode_select) },
++	{ CDB_REG_HANDLER_BUFFHD(MODE_SENSE, &do_mode_sense) },
++	{ CDB_REG_HANDLER_BUFFHD(MODE_SENSE_10, &do_mode_sense) },
++	{ CDB_REG_HANDLER(ALLOW_MEDIUM_REMOVAL, &do_prevent_allow) },
++	{ CDB_REG_HANDLER(READ_6, &do_read) },
++	{ CDB_REG_HANDLER(READ_10, &do_read) },
++	{ CDB_REG_HANDLER(READ_12, &do_read) },
++	{ CDB_REG_HANDLER(READ_16, &do_read) },
++	{ CDB_REG_HANDLER_BUFFHD(READ_CAPACITY, &do_read_capacity) },
++	{ CDB_REG_HANDLER_BUFFHD(READ_HEADER, &do_read_header) },
++	{ CDB_REG_HANDLER_BUFFHD(READ_TOC, &do_read_toc) },
++	{ CDB_REG_HANDLER_BUFFHD(READ_FORMAT_CAPACITIES, &do_read_format_capacities) },
++
++	{ CDB_REG_HANDLER_BUFFHD(REQUEST_SENSE, &do_request_sense) },
++	{ CDB_REG_HANDLER(START_STOP, &do_start_stop) },
++	{ CDB_REG_HANDLER(SYNCHRONIZE_CACHE, &do_synchronize_cache) },
++	{ CDB_REG_HANDLER(TEST_UNIT_READY, NULL) },
++
++	/*
++	 * Although optional, this command is used by MS-Windows.  We
++	 * support a minimal version: BytChk must be 0.
++	 */
++
++	{ CDB_REG_HANDLER(VERIFY, do_verify) },
++	{ CDB_REG_HANDLER(WRITE_6, do_write) },
++	{ CDB_REG_HANDLER(WRITE_10, do_write) },
++	{ CDB_REG_HANDLER(WRITE_12, do_write) },
++	{ CDB_REG_HANDLER(WRITE_16, do_write) },
++	/*
++	 * Some mandatory commands that we recognize but don't implement.
++	 * They don't mean much in this setting.  It's left as an exercise
++	 * for anyone interested to implement RESERVE and RELEASE in terms
++	 * of Posix locks.
++	 *
++	 * Commands:
++	 *	FORMAT_UNIT
++	 *	RELEASE
++	 *	RESERVE
++	 *	SEND_DIAGNOSTIC
++	 */
++};
++
+ static int do_scsi_command(struct fsg_common *common)
  {
  	struct fsg_buffhd	*bh;
- 	int			rc;
--	int			reply = -EINVAL;
-+	int			status = -EINVAL;
- 	int			i;
- 	static char		unknown[16];
+@@ -1880,6 +2109,14 @@ static int do_scsi_command(struct fsg_common *common)
  
-@@ -1880,115 +1891,118 @@ static int do_scsi_command(struct fsg_common *common)
- 	common->short_packet_received = 0;
+ 	dump_cdb(common);
  
- 	down_read(&common->filesem);	/* We're using the backing file */
-+	/* flash all unhandled data */
-+	common->data_size_to_handle = 0;
++	/* The size of both handlers and SCSI-checkers tables must be equal */
++	if (WARN(ARRAY_SIZE(cdb_checker_table) !=
++			 ARRAY_SIZE(cdb_handlers_table),
++		 "The checkers and handlers tables length are not matched!\n")) {
++		pr_err("Invalid cdb handlers initialization.\n");
++		return status;
++	}
 +
- 	switch (common->cmnd[0]) {
+ 	/* Wait for the next buffer to become available for data or status */
+ 	bh = common->next_buffhd_to_fill;
+ 	common->next_buffhd_to_drain = bh;
+@@ -1894,160 +2131,11 @@ static int do_scsi_command(struct fsg_common *common)
+ 	/* flash all unhandled data */
+ 	common->data_size_to_handle = 0;
  
- 	case INQUIRY:
- 		common->data_size_from_cmnd = common->cmnd[4];
--		reply = check_command(common, 6, DATA_DIR_TO_HOST,
-+		status = check_command(common, 6, DATA_DIR_TO_HOST,
- 				      (1<<4), 0,
- 				      "INQUIRY");
--		if (reply == 0)
--			reply = do_inquiry(common, bh);
-+		if (status == 0)
-+			status = do_inquiry(common, bh);
- 		break;
- 
- 	case MODE_SELECT:
- 		common->data_size_from_cmnd = common->cmnd[4];
--		reply = check_command(common, 6, DATA_DIR_FROM_HOST,
-+		status = check_command(common, 6, DATA_DIR_FROM_HOST,
- 				      (1<<1) | (1<<4), 0,
- 				      "MODE SELECT(6)");
--		if (reply == 0)
--			reply = do_mode_select(common, bh);
-+		if (status == 0)
-+			status = do_mode_select(common, bh);
- 		break;
- 
- 	case MODE_SELECT_10:
- 		common->data_size_from_cmnd =
- 			get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command(common, 10, DATA_DIR_FROM_HOST,
-+		status = check_command(common, 10, DATA_DIR_FROM_HOST,
- 				      (1<<1) | (3<<7), 0,
- 				      "MODE SELECT(10)");
--		if (reply == 0)
--			reply = do_mode_select(common, bh);
-+		if (status == 0)
-+			status = do_mode_select(common, bh);
- 		break;
- 
- 	case MODE_SENSE:
- 		common->data_size_from_cmnd = common->cmnd[4];
--		reply = check_command(common, 6, DATA_DIR_TO_HOST,
-+		status = check_command(common, 6, DATA_DIR_TO_HOST,
- 				      (1<<1) | (1<<2) | (1<<4), 0,
- 				      "MODE SENSE(6)");
--		if (reply == 0)
--			reply = do_mode_sense(common, bh);
-+		if (status == 0)
-+			status = do_mode_sense(common, bh);
- 		break;
- 
- 	case MODE_SENSE_10:
- 		common->data_size_from_cmnd =
- 			get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command(common, 10, DATA_DIR_TO_HOST,
-+		status = check_command(common, 10, DATA_DIR_TO_HOST,
- 				      (1<<1) | (1<<2) | (3<<7), 0,
- 				      "MODE SENSE(10)");
--		if (reply == 0)
--			reply = do_mode_sense(common, bh);
-+		if (status == 0)
-+			status = do_mode_sense(common, bh);
- 		break;
- 
- 	case ALLOW_MEDIUM_REMOVAL:
- 		common->data_size_from_cmnd = 0;
--		reply = check_command(common, 6, DATA_DIR_NONE,
-+		status = check_command(common, 6, DATA_DIR_NONE,
- 				      (1<<4), 0,
- 				      "PREVENT-ALLOW MEDIUM REMOVAL");
--		if (reply == 0)
--			reply = do_prevent_allow(common);
-+		if (status == 0)
-+			status = do_prevent_allow(common);
- 		break;
- 
- 	case READ_6:
- 		i = common->cmnd[4];
- 		common->data_size_from_cmnd = (i == 0) ? 256 : i;
--		reply = check_command_size_in_blocks(common, 6,
-+		status = check_command_size_in_blocks(common, 6,
- 				      DATA_DIR_TO_HOST,
- 				      (7<<1) | (1<<4), 1,
- 				      "READ(6)");
--		if (reply == 0)
--			reply = do_read(common);
-+		if (status == 0)
-+			status = do_read(common);
- 		break;
- 
- 	case READ_10:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command_size_in_blocks(common, 10,
-+		status = check_command_size_in_blocks(common, 10,
- 				      DATA_DIR_TO_HOST,
- 				      (1<<1) | (0xf<<2) | (3<<7), 1,
- 				      "READ(10)");
--		if (reply == 0)
--			reply = do_read(common);
-+		if (status == 0)
-+			status = do_read(common);
- 		break;
- 
- 	case READ_12:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be32(&common->cmnd[6]);
--		reply = check_command_size_in_blocks(common, 12,
-+		status = check_command_size_in_blocks(common, 12,
- 				      DATA_DIR_TO_HOST,
- 				      (1<<1) | (0xf<<2) | (0xf<<6), 1,
- 				      "READ(12)");
--		if (reply == 0)
--			reply = do_read(common);
-+		if (status == 0)
-+			status = do_read(common);
- 		break;
- 
- 	case READ_16:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be32(&common->cmnd[10]);
--		reply = check_command_size_in_blocks(common, 16,
-+		status = check_command_size_in_blocks(common, 16,
- 				      DATA_DIR_TO_HOST,
- 				      (1<<1) | (0xff<<2) | (0xf<<10), 1,
- 				      "READ(16)");
--		if (reply == 0)
--			reply = do_read(common);
-+		if (status == 0)
-+			status = do_read(common);
- 		break;
- 
- 	case READ_CAPACITY:
- 		common->data_size_from_cmnd = 8;
--		reply = check_command(common, 10, DATA_DIR_TO_HOST,
-+		status = check_command(common, 10, DATA_DIR_TO_HOST,
- 				      (0xf<<2) | (1<<8), 1,
- 				      "READ CAPACITY");
--		if (reply == 0)
--			reply = do_read_capacity(common, bh);
-+		if (status == 0)
-+			status = do_read_capacity(common, bh);
- 		break;
- 
- 	case READ_HEADER:
-@@ -1996,11 +2010,11 @@ static int do_scsi_command(struct fsg_common *common)
- 			goto unknown_cmnd;
- 		common->data_size_from_cmnd =
- 			get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command(common, 10, DATA_DIR_TO_HOST,
-+		status = check_command(common, 10, DATA_DIR_TO_HOST,
- 				      (3<<7) | (0x1f<<1), 1,
- 				      "READ HEADER");
--		if (reply == 0)
--			reply = do_read_header(common, bh);
-+		if (status == 0)
-+			status = do_read_header(common, bh);
- 		break;
- 
- 	case READ_TOC:
-@@ -2008,30 +2022,30 @@ static int do_scsi_command(struct fsg_common *common)
- 			goto unknown_cmnd;
- 		common->data_size_from_cmnd =
- 			get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command(common, 10, DATA_DIR_TO_HOST,
-+		status = check_command(common, 10, DATA_DIR_TO_HOST,
- 				      (0xf<<6) | (3<<1), 1,
- 				      "READ TOC");
--		if (reply == 0)
--			reply = do_read_toc(common, bh);
-+		if (status == 0)
-+			status = do_read_toc(common, bh);
- 		break;
- 
- 	case READ_FORMAT_CAPACITIES:
- 		common->data_size_from_cmnd =
- 			get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command(common, 10, DATA_DIR_TO_HOST,
-+		status = check_command(common, 10, DATA_DIR_TO_HOST,
- 				      (3<<7), 1,
- 				      "READ FORMAT CAPACITIES");
--		if (reply == 0)
--			reply = do_read_format_capacities(common, bh);
-+		if (status == 0)
-+			status = do_read_format_capacities(common, bh);
- 		break;
- 
- 	case REQUEST_SENSE:
- 		common->data_size_from_cmnd = common->cmnd[4];
--		reply = check_command(common, 6, DATA_DIR_TO_HOST,
-+		status = check_command(common, 6, DATA_DIR_TO_HOST,
- 				      (1<<4), 0,
- 				      "REQUEST SENSE");
--		if (reply == 0)
--			reply = do_request_sense(common, bh);
-+		if (status == 0)
-+			status = do_request_sense(common, bh);
- 		break;
- 
+-	switch (common->cmnd[0]) {
+-
+-	case INQUIRY:
+-		common->data_size_from_cmnd = common->cmnd[4];
+-		status = check_command(common, 6, DATA_DIR_TO_HOST,
+-				      (1<<4), 0,
+-				      "INQUIRY");
+-		if (status == 0)
+-			status = do_inquiry(common, bh);
+-		break;
+-
+-	case MODE_SELECT:
+-		common->data_size_from_cmnd = common->cmnd[4];
+-		status = check_command(common, 6, DATA_DIR_FROM_HOST,
+-				      (1<<1) | (1<<4), 0,
+-				      "MODE SELECT(6)");
+-		if (status == 0)
+-			status = do_mode_select(common, bh);
+-		break;
+-
+-	case MODE_SELECT_10:
+-		common->data_size_from_cmnd =
+-			get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command(common, 10, DATA_DIR_FROM_HOST,
+-				      (1<<1) | (3<<7), 0,
+-				      "MODE SELECT(10)");
+-		if (status == 0)
+-			status = do_mode_select(common, bh);
+-		break;
+-
+-	case MODE_SENSE:
+-		common->data_size_from_cmnd = common->cmnd[4];
+-		status = check_command(common, 6, DATA_DIR_TO_HOST,
+-				      (1<<1) | (1<<2) | (1<<4), 0,
+-				      "MODE SENSE(6)");
+-		if (status == 0)
+-			status = do_mode_sense(common, bh);
+-		break;
+-
+-	case MODE_SENSE_10:
+-		common->data_size_from_cmnd =
+-			get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command(common, 10, DATA_DIR_TO_HOST,
+-				      (1<<1) | (1<<2) | (3<<7), 0,
+-				      "MODE SENSE(10)");
+-		if (status == 0)
+-			status = do_mode_sense(common, bh);
+-		break;
+-
+-	case ALLOW_MEDIUM_REMOVAL:
+-		common->data_size_from_cmnd = 0;
+-		status = check_command(common, 6, DATA_DIR_NONE,
+-				      (1<<4), 0,
+-				      "PREVENT-ALLOW MEDIUM REMOVAL");
+-		if (status == 0)
+-			status = do_prevent_allow(common);
+-		break;
+-
+-	case READ_6:
+-		i = common->cmnd[4];
+-		common->data_size_from_cmnd = (i == 0) ? 256 : i;
+-		status = check_command_size_in_blocks(common, 6,
+-				      DATA_DIR_TO_HOST,
+-				      (7<<1) | (1<<4), 1,
+-				      "READ(6)");
+-		if (status == 0)
+-			status = do_read(common);
+-		break;
+-
+-	case READ_10:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command_size_in_blocks(common, 10,
+-				      DATA_DIR_TO_HOST,
+-				      (1<<1) | (0xf<<2) | (3<<7), 1,
+-				      "READ(10)");
+-		if (status == 0)
+-			status = do_read(common);
+-		break;
+-
+-	case READ_12:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be32(&common->cmnd[6]);
+-		status = check_command_size_in_blocks(common, 12,
+-				      DATA_DIR_TO_HOST,
+-				      (1<<1) | (0xf<<2) | (0xf<<6), 1,
+-				      "READ(12)");
+-		if (status == 0)
+-			status = do_read(common);
+-		break;
+-
+-	case READ_16:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be32(&common->cmnd[10]);
+-		status = check_command_size_in_blocks(common, 16,
+-				      DATA_DIR_TO_HOST,
+-				      (1<<1) | (0xff<<2) | (0xf<<10), 1,
+-				      "READ(16)");
+-		if (status == 0)
+-			status = do_read(common);
+-		break;
+-
+-	case READ_CAPACITY:
+-		common->data_size_from_cmnd = 8;
+-		status = check_command(common, 10, DATA_DIR_TO_HOST,
+-				      (0xf<<2) | (1<<8), 1,
+-				      "READ CAPACITY");
+-		if (status == 0)
+-			status = do_read_capacity(common, bh);
+-		break;
+-
+-	case READ_HEADER:
+-		if (!common->curlun || !common->curlun->cdrom)
+-			goto unknown_cmnd;
+-		common->data_size_from_cmnd =
+-			get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command(common, 10, DATA_DIR_TO_HOST,
+-				      (3<<7) | (0x1f<<1), 1,
+-				      "READ HEADER");
+-		if (status == 0)
+-			status = do_read_header(common, bh);
+-		break;
+-
+-	case READ_TOC:
+-		if (!common->curlun || !common->curlun->cdrom)
+-			goto unknown_cmnd;
+-		common->data_size_from_cmnd =
+-			get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command(common, 10, DATA_DIR_TO_HOST,
+-				      (0xf<<6) | (3<<1), 1,
+-				      "READ TOC");
+-		if (status == 0)
+-			status = do_read_toc(common, bh);
+-		break;
+-
+-	case READ_FORMAT_CAPACITIES:
+-		common->data_size_from_cmnd =
+-			get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command(common, 10, DATA_DIR_TO_HOST,
+-				      (3<<7), 1,
+-				      "READ FORMAT CAPACITIES");
+-		if (status == 0)
+-			status = do_read_format_capacities(common, bh);
+-		break;
+-
+-	case REQUEST_SENSE:
+-		common->data_size_from_cmnd = common->cmnd[4];
+-		status = check_command(common, 6, DATA_DIR_TO_HOST,
+-				      (1<<4), 0,
+-				      "REQUEST SENSE");
+-		if (status == 0)
+-			status = do_request_sense(common, bh);
+-		break;
+-
++	for (i = 0; i < ARRAY_SIZE(cdb_checker_table); ++i) {
++		const struct cdb_command_check *curr_check =
++			&cdb_checker_table[i];
++		const struct cdb_handler *curr_handler = &cdb_handlers_table[i];
++/*
  	case SERVICE_ACTION_IN_16:
-@@ -2040,12 +2054,12 @@ static int do_scsi_command(struct fsg_common *common)
- 		case SAI_READ_CAPACITY_16:
- 			common->data_size_from_cmnd =
- 				get_unaligned_be32(&common->cmnd[10]);
--			reply = check_command(common, 16, DATA_DIR_TO_HOST,
-+			status = check_command(common, 16, DATA_DIR_TO_HOST,
- 					      (1<<1) | (0xff<<2) | (0xf<<10) |
- 					      (1<<14), 1,
- 					      "READ CAPACITY(16)");
--			if (reply == 0)
--				reply = do_read_capacity_16(common, bh);
-+			if (status == 0)
-+				status = do_read_capacity_16(common, bh);
- 			break;
+ 		switch (common->cmnd[1] & 0x1f) {
  
- 		default:
-@@ -2055,25 +2069,25 @@ static int do_scsi_command(struct fsg_common *common)
- 
- 	case START_STOP:
- 		common->data_size_from_cmnd = 0;
--		reply = check_command(common, 6, DATA_DIR_NONE,
-+		status = check_command(common, 6, DATA_DIR_NONE,
- 				      (1<<1) | (1<<4), 0,
- 				      "START-STOP UNIT");
--		if (reply == 0)
--			reply = do_start_stop(common);
-+		if (status == 0)
-+			status = do_start_stop(common);
- 		break;
- 
- 	case SYNCHRONIZE_CACHE:
- 		common->data_size_from_cmnd = 0;
--		reply = check_command(common, 10, DATA_DIR_NONE,
-+		status = check_command(common, 10, DATA_DIR_NONE,
- 				      (0xf<<2) | (3<<7), 1,
- 				      "SYNCHRONIZE CACHE");
--		if (reply == 0)
--			reply = do_synchronize_cache(common);
-+		if (status == 0)
-+			status = do_synchronize_cache(common);
- 		break;
- 
- 	case TEST_UNIT_READY:
- 		common->data_size_from_cmnd = 0;
--		reply = check_command(common, 6, DATA_DIR_NONE,
-+		status = check_command(common, 6, DATA_DIR_NONE,
- 				0, 1,
- 				"TEST UNIT READY");
- 		break;
-@@ -2084,55 +2098,55 @@ static int do_scsi_command(struct fsg_common *common)
- 	 */
- 	case VERIFY:
- 		common->data_size_from_cmnd = 0;
--		reply = check_command(common, 10, DATA_DIR_NONE,
-+		status = check_command(common, 10, DATA_DIR_NONE,
- 				      (1<<1) | (0xf<<2) | (3<<7), 1,
- 				      "VERIFY");
--		if (reply == 0)
--			reply = do_verify(common);
-+		if (status == 0)
-+			status = do_verify(common);
- 		break;
- 
- 	case WRITE_6:
- 		i = common->cmnd[4];
- 		common->data_size_from_cmnd = (i == 0) ? 256 : i;
--		reply = check_command_size_in_blocks(common, 6,
-+		status = check_command_size_in_blocks(common, 6,
- 				      DATA_DIR_FROM_HOST,
- 				      (7<<1) | (1<<4), 1,
- 				      "WRITE(6)");
--		if (reply == 0)
--			reply = do_write(common);
-+		if (status == 0)
-+			status = do_write(common);
- 		break;
- 
- 	case WRITE_10:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be16(&common->cmnd[7]);
--		reply = check_command_size_in_blocks(common, 10,
-+		status = check_command_size_in_blocks(common, 10,
- 				      DATA_DIR_FROM_HOST,
- 				      (1<<1) | (0xf<<2) | (3<<7), 1,
- 				      "WRITE(10)");
--		if (reply == 0)
--			reply = do_write(common);
-+		if (status == 0)
-+			status = do_write(common);
- 		break;
- 
- 	case WRITE_12:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be32(&common->cmnd[6]);
--		reply = check_command_size_in_blocks(common, 12,
-+		status = check_command_size_in_blocks(common, 12,
- 				      DATA_DIR_FROM_HOST,
- 				      (1<<1) | (0xf<<2) | (0xf<<6), 1,
- 				      "WRITE(12)");
--		if (reply == 0)
--			reply = do_write(common);
-+		if (status == 0)
-+			status = do_write(common);
- 		break;
- 
- 	case WRITE_16:
- 		common->data_size_from_cmnd =
- 				get_unaligned_be32(&common->cmnd[10]);
--		reply = check_command_size_in_blocks(common, 16,
-+		status = check_command_size_in_blocks(common, 16,
- 				      DATA_DIR_FROM_HOST,
- 				      (1<<1) | (0xff<<2) | (0xf<<10), 1,
- 				      "WRITE(16)");
--		if (reply == 0)
--			reply = do_write(common);
-+		if (status == 0)
-+			status = do_write(common);
- 		break;
- 
- 	/*
-@@ -2150,27 +2164,29 @@ static int do_scsi_command(struct fsg_common *common)
- unknown_cmnd:
- 		common->data_size_from_cmnd = 0;
- 		sprintf(unknown, "Unknown x%02x", common->cmnd[0]);
--		reply = check_command(common, common->cmnd_size,
-+		status = check_command(common, common->cmnd_size,
- 				      DATA_DIR_UNKNOWN, ~0, 0, unknown);
--		if (reply == 0) {
-+		if (status == 0) {
- 			common->curlun->sense_data = SS_INVALID_COMMAND;
--			reply = -EINVAL;
-+			status = -EINVAL;
+@@ -2066,112 +2154,86 @@ static int do_scsi_command(struct fsg_common *common)
+ 			goto unknown_cmnd;
  		}
  		break;
++*/
+ 
+-	case START_STOP:
+-		common->data_size_from_cmnd = 0;
+-		status = check_command(common, 6, DATA_DIR_NONE,
+-				      (1<<1) | (1<<4), 0,
+-				      "START-STOP UNIT");
+-		if (status == 0)
+-			status = do_start_stop(common);
+-		break;
+-
+-	case SYNCHRONIZE_CACHE:
+-		common->data_size_from_cmnd = 0;
+-		status = check_command(common, 10, DATA_DIR_NONE,
+-				      (0xf<<2) | (3<<7), 1,
+-				      "SYNCHRONIZE CACHE");
+-		if (status == 0)
+-			status = do_synchronize_cache(common);
+-		break;
+ 
+-	case TEST_UNIT_READY:
+-		common->data_size_from_cmnd = 0;
+-		status = check_command(common, 6, DATA_DIR_NONE,
+-				0, 1,
+-				"TEST UNIT READY");
+-		break;
+-
+-	/*
+-	 * Although optional, this command is used by MS-Windows.  We
+-	 * support a minimal version: BytChk must be 0.
+-	 */
+-	case VERIFY:
+-		common->data_size_from_cmnd = 0;
+-		status = check_command(common, 10, DATA_DIR_NONE,
+-				      (1<<1) | (0xf<<2) | (3<<7), 1,
+-				      "VERIFY");
+-		if (status == 0)
+-			status = do_verify(common);
+-		break;
+-
+-	case WRITE_6:
+-		i = common->cmnd[4];
+-		common->data_size_from_cmnd = (i == 0) ? 256 : i;
+-		status = check_command_size_in_blocks(common, 6,
+-				      DATA_DIR_FROM_HOST,
+-				      (7<<1) | (1<<4), 1,
+-				      "WRITE(6)");
+-		if (status == 0)
+-			status = do_write(common);
+-		break;
+-
+-	case WRITE_10:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be16(&common->cmnd[7]);
+-		status = check_command_size_in_blocks(common, 10,
+-				      DATA_DIR_FROM_HOST,
+-				      (1<<1) | (0xf<<2) | (3<<7), 1,
+-				      "WRITE(10)");
+-		if (status == 0)
+-			status = do_write(common);
+-		break;
+-
+-	case WRITE_12:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be32(&common->cmnd[6]);
+-		status = check_command_size_in_blocks(common, 12,
+-				      DATA_DIR_FROM_HOST,
+-				      (1<<1) | (0xf<<2) | (0xf<<6), 1,
+-				      "WRITE(12)");
+-		if (status == 0)
+-			status = do_write(common);
+-		break;
++		if (common->cmnd[0] != curr_check->command)
++			continue;
++		if (WARN(curr_check->command != curr_handler->command,
++			 "Invalid CDB handlers initialization. Command not matches\n")) {
++			goto end;
++		}
+ 
+-	case WRITE_16:
+-		common->data_size_from_cmnd =
+-				get_unaligned_be32(&common->cmnd[10]);
+-		status = check_command_size_in_blocks(common, 16,
+-				      DATA_DIR_FROM_HOST,
+-				      (1<<1) | (0xff<<2) | (0xf<<10), 1,
+-				      "WRITE(16)");
+-		if (status == 0)
+-			status = do_write(common);
+-		break;
++		// The command was matched. Go to processing
++		switch (curr_check->size_index) {
++		case CDB_NO_SIZE_FIELD:
++			common->data_size_from_cmnd = 0;
++			break;
++		case CDB_SIZE_FIELD_4:
++			common->data_size_from_cmnd =
++				(common->cmnd[CDB_SIZE_FIELD_4] == 0) ?
++					0xFF :
++					common->cmnd[CDB_SIZE_FIELD_4];
++			break;
++		case CDB_SIZE_FIELD_6:
++			common->data_size_from_cmnd =
++				get_unaligned_be32(&common->cmnd[CDB_SIZE_FIELD_6]);
++			break;
++		case CDB_SIZE_FIELD_7:
++			common->data_size_from_cmnd =
++				get_unaligned_be16(&common->cmnd[CDB_SIZE_FIELD_7]);
++			break;
++		case CDB_SIZE_FIELD_10:
++			common->data_size_from_cmnd =
++				get_unaligned_be16(&common->cmnd[CDB_SIZE_FIELD_10]);
++			break;
++		case CDB_SIZE_MANUAL:
++			common->data_size_from_cmnd =
++				curr_check->data_size_manual;
++			break;
++		default:
++			// should never happen
++			pr_err("error of get kind size field\n");
++			goto end;
++		}
+ 
+-	/*
+-	 * Some mandatory commands that we recognize but don't implement.
+-	 * They don't mean much in this setting.  It's left as an exercise
+-	 * for anyone interested to implement RESERVE and RELEASE in terms
+-	 * of Posix locks.
+-	 */
+-	case FORMAT_UNIT:
+-	case RELEASE:
+-	case RESERVE:
+-	case SEND_DIAGNOSTIC:
++		if (curr_check->do_check_command) {
++			status = curr_check->do_check_command(common,
++				curr_check->size, curr_check->direction,
++				curr_check->valid_bytes_bitmask,
++				curr_check->medium_required,
++				curr_handler->name);
++		} else {
++			DBG(common, "SCSI command: %s\n", curr_handler->name);
++			status = 0;
++		}
+ 
+-	default:
+-unknown_cmnd:
+-		common->data_size_from_cmnd = 0;
+-		sprintf(unknown, "Unknown x%02x", common->cmnd[0]);
+-		status = check_command(common, common->cmnd_size,
+-				      DATA_DIR_UNKNOWN, ~0, 0, unknown);
+ 		if (status == 0) {
+-			common->curlun->sense_data = SS_INVALID_COMMAND;
+-			status = -EINVAL;
++			if (curr_handler->type == CDB_HANDLER_COMMON &&
++			    curr_handler->do_command) {
++				status = curr_handler->do_command(common);
++			} else if (curr_handler->type ==
++					   CDB_HANDLER_FSG_BUFFHD &&
++				   curr_handler->do_command_with_buffhd !=
++					   NULL) {
++				status =
++					curr_handler->do_command_with_buffhd(common, bh);
++			}
+ 		}
+-		break;
++
++		goto end;
++	}
++
++	common->data_size_from_cmnd = 0;
++	sprintf(unknown, "Unknown %02Xh", common->cmnd[0]);
++	status = check_command(common, common->cmnd_size, DATA_DIR_UNKNOWN, ~0,
++			       MEDIUM_OPTIONAL, unknown);
++	if (status == 0) {
++		common->curlun->sense_data = SS_INVALID_COMMAND;
++		status = -EINVAL;
  	}
++
++end:
  	up_read(&common->filesem);
  
--	if (reply == -EINTR || signal_pending(current))
-+	if (status == -EINTR || signal_pending(current))
- 		return -EINTR;
- 
--	/* Set up the single reply buffer for finish_reply() */
--	if (reply == -EINVAL)
--		reply = 0;		/* Error reply length */
--	if (reply >= 0 && common->data_dir == DATA_DIR_TO_HOST) {
--		reply = min((u32)reply, common->data_size_from_cmnd);
--		bh->inreq->length = reply;
-+	/* Set up the single status buffer for finish_reply() */
-+	if (status == -EINVAL)
-+		status = 0;		/* Error reply length */
-+	if (status == 0 && common->data_dir == DATA_DIR_TO_HOST) {
-+		common->data_size_to_handle =
-+			min_t(u32, common->data_size_to_handle,
-+			      common->data_size_from_cmnd);
-+		bh->inreq->length = common->data_size_to_handle;
- 		bh->state = BUF_STATE_FULL;
--		common->residue -= reply;
-+		common->residue -= common->data_size_to_handle;
- 	}				/* Otherwise it's already set */
- 
+ 	if (status == -EINTR || signal_pending(current))
+@@ -2192,7 +2254,6 @@ static int do_scsi_command(struct fsg_common *common)
  	return 0;
+ }
+ 
+-
+ /*-------------------------------------------------------------------------*/
+ 
+ static int received_cbw(struct fsg_dev *fsg, struct fsg_buffhd *bh)
+diff --git a/drivers/usb/gadget/function/storage_common.h b/drivers/usb/gadget/function/storage_common.h
+index 0a544a82cbf8..1930482a8ddc 100644
+--- a/drivers/usb/gadget/function/storage_common.h
++++ b/drivers/usb/gadget/function/storage_common.h
+@@ -172,6 +172,11 @@ enum data_direction {
+ 	DATA_DIR_NONE
+ };
+ 
++enum medium_required_values {
++	MEDIUM_OPTIONAL = 0,
++	MEDIUM_REQUIRED
++};
++
+ static inline struct fsg_lun *fsg_lun_from_dev(struct device *dev)
+ {
+ 	return container_of(dev, struct fsg_lun, dev);
 -- 
 2.34.1
 
