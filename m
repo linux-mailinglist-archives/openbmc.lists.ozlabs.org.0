@@ -1,63 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D27487FAE8
-	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 10:38:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFCA187FAF6
+	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 10:39:34 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cB4DJP8s;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nRCBCiGv;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4TzRVr123Vz3dWK
-	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 20:38:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4TzRWm4Kbvz3vYr
+	for <lists+openbmc@lfdr.de>; Tue, 19 Mar 2024 20:39:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cB4DJP8s;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nRCBCiGv;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=manojkiran.eda@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=manojkiran.eda@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4TzRRJ1pLrz3dX5;
-	Tue, 19 Mar 2024 20:35:40 +1100 (AEDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1e0025ef1efso16747805ad.1;
-        Tue, 19 Mar 2024 02:35:39 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4TzRRP47QFz3dXG;
+	Tue, 19 Mar 2024 20:35:45 +1100 (AEDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1e0189323b4so15336535ad.1;
+        Tue, 19 Mar 2024 02:35:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710840937; x=1711445737; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1710840943; x=1711445743; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O8lLJjV9sz++A3S70yTL0kgzPdOoYGF0BKRxiCCU5iY=;
-        b=cB4DJP8s/qO7x+Uyy7e8OzQfkeUHR5IqEUX8N0UX8fZNFZfOGT1HMV2XE2vMkmmL1Q
-         ZaktUdjSlOnwfNlNl2Xbj2YrxvLUClQ3pi5lcjwG2RQ5fUKsweRX9mB4c+e2LIpBFBXh
-         MhWnx82DDkPCAbGlelToxhIAjiYGycPc1jGMqu4WlAcEy2HZIPBuNSfzFmglHaDaOZm8
-         83ukQtxwP3ZaN49TKsLVrUYdUdtxwbNxfy9Xm9QNW6RrG0mjK2dUNctsADuXWBX45E0i
-         05QFmZGFerGsZrgKEwNJZVkoLR2zieFo4MLP7YQOKL3nzltNLWGo7naMGCwwxhuns5Qs
-         u+BQ==
+        bh=HpO3XyTMYrNp26rIW9VgOyOw5H/JJ52pteRLCcl6qlU=;
+        b=nRCBCiGvD5bCcqjUbNX80a3gzp1iuhKpNsBeB3qsVizaALerNJLyQroTi1NkotomBr
+         VIp/WcRb3LQNGV07NYk3RZN4ub8hgRrhrhwfEDPc3nQYq32PIuglXZu856dYct2K9XWi
+         CYhv1dhJKpswxbSQd2bh48U7pIxSjrSLDeEcH1BHzCN2Gz8AMXtopJzeaGTxs4Kipfgp
+         V49UJViBykMxXVVdO5y6Ld2XPSbaD4U9bj9II9uNg2qEEGA4ewW2bt4HaJV9wcfdyIMs
+         oQpafg/wJEgSfmTHYI6632jgNYA8lNbi6TmqA+8OHXUyGNKWUPllaZmItzGLYMsf341L
+         2lkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710840937; x=1711445737;
+        d=1e100.net; s=20230601; t=1710840943; x=1711445743;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O8lLJjV9sz++A3S70yTL0kgzPdOoYGF0BKRxiCCU5iY=;
-        b=IJWIDj+6ppNapVQtyyglEdhSiikBMN5PVQXktpN45808smBnFa1VHkWIJSPyFcBBPS
-         53T/dnahOYzxVIgwCFI2OcWS9Zv4OYPZjXkFeNwxYqIH+GxmVNpms5qvPAw8s/zmoFYZ
-         YJMjXZ/2gTbUxaEZOnlPnkkeBJ8ybVDnsbn6kgGmF4lcoJwOvkArwdVxWK7iBXE6+olQ
-         YaDuOU4cb0W+gdmseclpn8+y3vfSK59y+LGQKMKZySH1MYwi36NgSBTR8CtVxt6IGeIQ
-         6P6/I4v0txwNVlTk1B988+JsrTvFU2n3AxvjnzlZ7emyU0zL7WZnsrhex/Hx2gODHjhd
-         am5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWv1Kj8wi0b+rZoGps89G203UZswlAgV/aFNoY0pykFUrtjqPWiIkYIdO0VQ+/7swCbPCcHfJmxnm37C3lC0X6EEn/3l7lzGQnJRxQTVdqVaYWsR53S+UMUKpUo/e+Wwb4nyKN0dLhT
-X-Gm-Message-State: AOJu0Yzxqw9lcYMFmLxVwyr4gDU+AJXTSWPMS7p3GJp1p90nD3p5brro
-	d7uZYhY3jQQceBtK0YtCTOUO9SH2lGtlxb3h1MWoNrgP53IbfnSp
-X-Google-Smtp-Source: AGHT+IGMXcgzPbiRbAaZnXiJWR2s96AphzV/ePKBVZUQDbytucyVA3PArFmkTCYWRUbf042LO6gbGA==
-X-Received: by 2002:a17:902:cecc:b0:1dd:8bc5:afe3 with SMTP id d12-20020a170902cecc00b001dd8bc5afe3mr18719900plg.1.1710840937439;
-        Tue, 19 Mar 2024 02:35:37 -0700 (PDT)
+        bh=HpO3XyTMYrNp26rIW9VgOyOw5H/JJ52pteRLCcl6qlU=;
+        b=bGqhRKIm4u3HSnwiUw7AoS48tn/6sKk2Nh1pSGghp2vRswhSyl21T0aDbli2bJ/kTS
+         H6QDVQ8R3/s9aejTsKanWTTsXKFxJ0FdCdESpN39RiUsofEkHuwAm46e9rzNJufSUWcn
+         PkfGk/b89dLAdXyT3bq1BOhU5JMcf8GbswiFnw2e5Z620DCaGUUC0PM3oC5etzLSaMAM
+         gz7HETqRAQFpUg3l/1LVfJusMisyfI/6hebVxA+a+wAIBbkPCdI3ZNoIXBS+eJjpbzgP
+         QmZMuUEcOsNKkNv2gs1QsQbxhfzP5ygpvObxCQvnI6Y9LqVakzJ3arVw0bNCXbGtgM4u
+         24og==
+X-Forwarded-Encrypted: i=1; AJvYcCVmjmjDHND11JAT2FLJ6YromQ4PIkyFdbbKR6mDS7AmDGQPEbsSvgKvTd/hhMIv0HaaAA+rUJ19BIITMmbh8xj9PIqMm5Ty06NcH8tjn423g0lBSYbMNWDUHwo7Pc3g7iI+mMkU4dOf
+X-Gm-Message-State: AOJu0YxTdx5+j73KWiRtugW83kp9G3nbI0UQ8JKP748VTyA/itvLOhuq
+	335lsEEY+fWQaera/dJrIQhTwBv8JlWzs65x5wnSwbIZ+DOXDfBh
+X-Google-Smtp-Source: AGHT+IHryBKHJ+MSwjp/1byfMt0hDod5YQF/OmkAgxcU2UHV4h3fLG6PWHn1lTiV9EhL0mWJM96Kow==
+X-Received: by 2002:a17:902:e88a:b0:1e0:2c80:2aaf with SMTP id w10-20020a170902e88a00b001e02c802aafmr5518425plg.44.1710840942841;
+        Tue, 19 Mar 2024 02:35:42 -0700 (PDT)
 Received: from localhost.localdomain ([129.41.58.3])
-        by smtp.gmail.com with ESMTPSA id n5-20020a170903110500b001ddc0bc5934sm10942432plh.249.2024.03.19.02.35.32
+        by smtp.gmail.com with ESMTPSA id n5-20020a170903110500b001ddc0bc5934sm10942432plh.249.2024.03.19.02.35.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Mar 2024 02:35:37 -0700 (PDT)
+        Tue, 19 Mar 2024 02:35:42 -0700 (PDT)
 From: Manojkiran Eda <manojkiran.eda@gmail.com>
 To: patrick.rudolph@9elements.com,
 	chiawei_wang@aspeedtech.com,
@@ -67,9 +67,9 @@ To: patrick.rudolph@9elements.com,
 	linux-aspeed@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org,
 	linux-mtd@lists.infradead.org
-Subject: [PATCH v2 3/4] ARM: dts: aspeed: Add eSPI node
-Date: Tue, 19 Mar 2024 15:04:04 +0530
-Message-Id: <20240319093405.39833-4-manojkiran.eda@gmail.com>
+Subject: [PATCH v2 4/4] dt-bindings: aspeed: Add eSPI controller
+Date: Tue, 19 Mar 2024 15:04:05 +0530
+Message-Id: <20240319093405.39833-5-manojkiran.eda@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240319093405.39833-1-manojkiran.eda@gmail.com>
 References: <20240319093405.39833-1-manojkiran.eda@gmail.com>
@@ -90,76 +90,120 @@ Cc: conor+dt@kernel.org, vigneshr@ti.com, richard@nod.at, openbmc@lists.ozlabs.o
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds eSPI to the device tree for aspeed 5/6th
-generation SoCs.
+This commit adds the device tree bindings for aspeed eSPI
+controller.
+
+Although aspeed eSPI hardware supports 4 different channels,
+this commit only adds the support for flash channel, the
+bindings for other channels could be upstreamed when the driver
+support for those are added.
 
 Signed-off-by: Manojkiran Eda <manojkiran.eda@gmail.com>
 ---
- arch/arm/boot/dts/aspeed/aspeed-g5.dtsi | 19 +++++++++++++++++++
- arch/arm/boot/dts/aspeed/aspeed-g6.dtsi | 20 ++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ .../bindings/soc/aspeed/aspeed,espi.yaml      | 94 +++++++++++++++++++
+ 1 file changed, 94 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/aspeed,espi.yaml
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
-index 04f98d1dbb97..eaf7d82b6f46 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
-+++ b/arch/arm/boot/dts/aspeed/aspeed-g5.dtsi
-@@ -343,6 +343,25 @@ sdhci1: sdhci@200 {
- 					status = "disabled";
- 				};
- 			};
-+			espi: espi@1e6ee000 {
-+				compatible = "aspeed,ast2500-espi", "simple-mfd", "syscon";
-+				reg = <0x1e6ee000 0x1000>;
+diff --git a/Documentation/devicetree/bindings/soc/aspeed/aspeed,espi.yaml b/Documentation/devicetree/bindings/soc/aspeed/aspeed,espi.yaml
+new file mode 100644
+index 000000000000..3d3ad528e3b3
+--- /dev/null
++++ b/Documentation/devicetree/bindings/soc/aspeed/aspeed,espi.yaml
+@@ -0,0 +1,94 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++# # Copyright (c) 2024 IBM Corporation.
++# # Copyright (c) 2021 Aspeed Technology Inc.
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/soc/aspeed/aspeed,espi.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				ranges = <0x0 0x1e6ee000 0x1000>;
++title: Aspeed eSPI Controller
 +
-+				espi_ctrl: espi-ctrl@0 {
-+					compatible = "aspeed,ast2500-espi-ctrl";
-+					reg = <0x0 0x800>,<0x0 0x4000000>;
-+					reg-names = "espi_ctrl","espi_flash";
-+					interrupts = <23>;
-+					clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
-+					status = "disabled";
-+					pinctrl-names = "default";
-+					pinctrl-0 = <&pinctrl_espi_default>;
-+				};
-+			};
- 
- 			gpio: gpio@1e780000 {
- 				#gpio-cells = <2>;
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-index c4d1faade8be..094e14442101 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-@@ -454,6 +454,26 @@ video: video@1e700000 {
- 				status = "disabled";
- 			};
- 
-+			espi: espi@1e6ee000 {
-+				compatible = "aspeed,ast2500-espi", "simple-mfd", "syscon";
-+				reg = <0x1e6ee000 0x1000>;
++maintainers:
++  - Manojkiran Eda <manojkiran.eda@gmail.com>
++  - Patrick Rudolph <patrick.rudolph@9elements.com>
++  - Chia-Wei Wang <chiawei_wang@aspeedtech.com>
++  - Ryan Chen <ryan_chen@aspeedtech.com>
 +
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				ranges = <0x0 0x1e6ee000 0x1000>;
++description:
++  Aspeed eSPI controller implements a device side eSPI endpoint device
++  supporting the flash channel.
 +
-+				espi_ctrl: espi-ctrl@0 {
-+					compatible = "aspeed,ast2500-espi-ctrl";
-+					reg = <0x0 0x800>,<0x0 0x4000000>;
-+					reg-names = "espi_ctrl","espi_flash";
-+					interrupts = <23>;
-+					clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
-+					status = "disabled";
-+					pinctrl-names = "default";
-+					pinctrl-0 = <&pinctrl_espi_default>;
-+				};
-+			};
++properties:
++  compatible:
++    items:
++      - enum:
++          - aspeed,ast2500-espi
++          - aspeed,ast2600-espi
++      - const: simple-mfd
++      - const: syscon
 +
- 			gpio0: gpio@1e780000 {
- 				#gpio-cells = <2>;
- 				gpio-controller;
++  reg:
++    maxItems: 1
++
++  "#address-cells":
++    const: 1
++
++  "#size-cells":
++    const: 1
++
++  ranges: true
++
++patternProperties:
++  "^espi-ctrl@[0-9a-f]+$":
++    type: object
++
++    description: Controls the flash channel of eSPI hardware
++
++    properties:
++      compatible:
++        items:
++          - enum:
++              - aspeed,ast2500-espi-ctrl
++              - aspeed,ast2600-espi-ctrl
++
++      interrupts:
++        maxItems: 1
++
++      clocks:
++        maxItems: 1
++
++    required:
++      - compatible
++      - interrupts
++      - clocks
++
++required:
++  - compatible
++  - reg
++  - "#address-cells"
++  - "#size-cells"
++  - ranges
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/ast2600-clock.h>
++
++    espi: espi@1e6ee000 {
++        compatible = "aspeed,ast2600-espi", "simple-mfd", "syscon";
++        reg = <0x1e6ee000 0x1000>;
++
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges = <0x0 0x1e6ee000 0x1000>;
++
++        espi_ctrl: espi-ctrl@0 {
++            compatible = "aspeed,ast2600-espi-ctrl";
++            reg = <0x0 0x800>,<0x0 0x4000000>;
++            reg-names = "espi_ctrl","espi_flash";
++            interrupts = <GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
++            clocks = <&syscon ASPEED_CLK_GATE_ESPICLK>;
++        };
++    };
 -- 
 2.40.1
 
