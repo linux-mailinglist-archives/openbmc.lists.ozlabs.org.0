@@ -2,79 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DCEC885B49
-	for <lists+openbmc@lfdr.de>; Thu, 21 Mar 2024 16:00:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2DE7887617
+	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 01:29:09 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JXNOOuPZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jqjMA11Z;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4V0pYH1gTRz3dfM
-	for <lists+openbmc@lfdr.de>; Fri, 22 Mar 2024 02:00:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4V1g6q4hdkz3vjQ
+	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 11:29:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JXNOOuPZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jqjMA11Z;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12f; helo=mail-il1-x12f.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4V0pXk4H6Mz3bX3
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Mar 2024 02:00:05 +1100 (AEDT)
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 42LE10cl022660;
-	Thu, 21 Mar 2024 15:00:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=XCucPZQ8Q8+Hj5nEsbs5BqZJl7nPP8/p2jTEv2LdBwA=;
- b=JXNOOuPZKGG1otn1gL06AxBwC9H5M0ghtf71jP/rHKoNnWktETi2QjxucK55bqrJc7p9
- fyOIXVWocTf4fUZto3oIVMZQb8lQjwnieI6Gix2joSUJDnt1kY0ICKfttHVxo0p9qUmG
- UVTViDznrvQMdwg7IGNoyxN9ZhXiLjRZQxSQnqXw3Dw30y/LhhqIQtETKkyUdhn0Kon0
- dCEivY62EqOss4S8sSJyUKpwkvP805cDfe+UuWXxYvB1b9SyMsB4NMKpC3aT4u4Hklzg
- xWePBjy6RnlhSmKv0yUfd5pYupR+RrN1CVyPkvFFCKjL+kNAosxlb5UM0M9VB1Zl4CF3 2w== 
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0nmyr9gt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 14:59:59 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 42LENOrt017203;
-	Thu, 21 Mar 2024 14:59:58 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwnrtp42f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Mar 2024 14:59:58 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
-	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 42LExtff28181074
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 21 Mar 2024 14:59:57 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 74F9A58065;
-	Thu, 21 Mar 2024 14:59:55 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2A0D458043;
-	Thu, 21 Mar 2024 14:59:55 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.14.39])
-	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 21 Mar 2024 14:59:55 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.6] ARM: dts: Aspeed: Bonnell: Fix NVMe LED labels
-Date: Thu, 21 Mar 2024 09:59:52 -0500
-Message-Id: <20240321145952.190544-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4V1FYt4g2kz3dX1
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Mar 2024 19:17:37 +1100 (AEDT)
+Received: by mail-il1-x12f.google.com with SMTP id e9e14a558f8ab-3686717e82aso5629855ab.2
+        for <openbmc@lists.ozlabs.org>; Fri, 22 Mar 2024 01:17:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1711095454; x=1711700254; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yy+KHNUW+coF6cF93OFhp/xRFqCnGtKs15mHnvutaYM=;
+        b=jqjMA11ZAUVtwpRZSYFYPdlEAlSi66C/PjURlQ0vHBWSmH65O55oLoKCAzfhIGtn/G
+         rmYc29UkgfvE3u2ugQcKXjLQUOj1rtEdfzQq6pXyShxy+oE77IRAliZ4W01cV7WPjssA
+         lFzFr6bzTitAFoRNqtDfm9AA+ZQ2WBi3ydRn4Jpnsz5P82P1w0kUBkRgvqQajKnozn8C
+         PjEiV0LgL83SmCCovI5Cw3+mI8eG2s7Jnr+pdXj6OVCjJMH1FPi8DKlX9fUclrAj6tct
+         FSxaR9nGxEOnKv2QmpbSpxmrNXnrQfB40qBIQQzGxiR/g1LyKCguEMkW90I+n/xcEb8N
+         zpew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711095454; x=1711700254;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yy+KHNUW+coF6cF93OFhp/xRFqCnGtKs15mHnvutaYM=;
+        b=We2gFRaMtl0f6XdByz/KjsE3CW0fWmPShMEehm7tguoF21KgyhKmllrnU2QLEpr+TX
+         RdGYuv5LbTdd90G1Bll9I5S1qD2heUJYSn4Mynnu6FJ0VMKdUYVT+bIjTaEX7U59Gvu1
+         vCFpc/2pWKUEvZBTGHgx2d91B5aDiEsIZx1axVDtBBHvnhrACJYJnqlmNkxSkSwMr35M
+         /AFfG7JJgO5To4abUuh5VVlgHfZYkcgalrQTTBMCZpum4mytYxtfceVaWTpcHEoXnddr
+         7ClmQZuzO9mpKCHpxXqy4g4p58kXrFFi/i4QxPOlnd4HXn5yJkNAryXedTquEh+vjTE7
+         SeKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVezIviL8NGaCOOE/vC8KfsndGrAjz6T2WG17VMAQ2ei9KHds4MkrkAuh3CKlzABD66a2V9oss2yBttnrXyvvq9GogsDKggFYo=
+X-Gm-Message-State: AOJu0YycylqXrCKrnSwKzJoDulI1W/7UEVHlqS25BuWR/17d+JSVByDl
+	ghrvau864wQMk99Gzjpno8ywjXI4YQGgQ1Pb4jh18ZTrpxQDp8it1EsIZYyjXbY=
+X-Google-Smtp-Source: AGHT+IGtZSQd4OGDi6oKa3A/VMJZUn6iI84Lg9soIxe7ueMP2K9ls9aPaWHsCdIhDoSHLxi++tYQ8Q==
+X-Received: by 2002:a05:6a21:3997:b0:1a3:55d2:1489 with SMTP id ad23-20020a056a21399700b001a355d21489mr2312813pzc.7.1711095147442;
+        Fri, 22 Mar 2024 01:12:27 -0700 (PDT)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id s128-20020a625e86000000b006e749161d40sm1132564pfb.113.2024.03.22.01.12.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Mar 2024 01:12:26 -0700 (PDT)
+From: baneric926@gmail.com
+X-Google-Original-From: kcfeng0@nuvoton.com
+To: jdelvare@suse.com,
+	linux@roeck-us.net,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	corbet@lwn.net
+Subject: [PATCH v5 0/2] hwmon: Driver for Nuvoton NCT7363Y
+Date: Fri, 22 Mar 2024 16:11:56 +0800
+Message-Id: <20240322081158.4106326-1-kcfeng0@nuvoton.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Q6KhO0JagNVhxMejoBG1RIIXnChs2Mjg
-X-Proofpoint-ORIG-GUID: Q6KhO0JagNVhxMejoBG1RIIXnChs2Mjg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-21_10,2024-03-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 suspectscore=0 mlxlogscore=672 priorityscore=1501
- bulkscore=0 impostorscore=0 clxscore=1011 phishscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403210107
+X-Mailman-Approved-At: Sat, 23 Mar 2024 11:26:13 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,58 +83,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, kwliu@nuvoton.com, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The PCA chip for the NVMe LEDs is wired up backwards, so correct
-the device tree labels.
+From: Ban Feng <kcfeng0@nuvoton.com>
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-bonnell.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+NCT7363Y is an I2C based hardware monitoring chip from Nuvoton.
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-bonnell.dts
-index 29d68d7e876f..edcdf138da90 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-bonnell.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-bonnell.dts
-@@ -502,7 +502,7 @@ pca9551@60 {
- 		#gpio-cells = <2>;
- 
- 		led@0 {
--			label = "nvme0";
-+			label = "nvme3";
- 			reg = <0>;
- 			retain-state-shutdown;
- 			default-state = "keep";
-@@ -510,7 +510,7 @@ led@0 {
- 		};
- 
- 		led@1 {
--			label = "nvme1";
-+			label = "nvme2";
- 			reg = <1>;
- 			retain-state-shutdown;
- 			default-state = "keep";
-@@ -518,7 +518,7 @@ led@1 {
- 		};
- 
- 		led@2 {
--			label = "nvme2";
-+			label = "nvme1";
- 			reg = <2>;
- 			retain-state-shutdown;
- 			default-state = "keep";
-@@ -526,7 +526,7 @@ led@2 {
- 		};
- 
- 		led@3 {
--			label = "nvme3";
-+			label = "nvme0";
- 			reg = <3>;
- 			retain-state-shutdown;
- 			default-state = "keep";
+Changes since version 4:
+- add Datasheet information and refine words in yaml and rst files
+- remove fan-common.yaml since it is already in hwmon-next
+- refine the commit messages
+- modify the type of returned value in some functions
+- refine lock/unlock in nct7363_write_pwm and accessing
+  HVAL/LVAL registers
+- refine nct7363_init_chip
+- add range check in nct7363_present_pwm_fanin
+- add i2c_device_id table
+- add nct7362 to of_device_id and i2c_device_id table
+
+Changes since version 3:
+- Cherry-pick the fan-common.yaml in [1]
+- Fix "checkpatch --strict" report
+- Replace BIT_CHECK() with BIT()
+- Fix CamelCase defines or variables
+- Drop enum chips
+- Drop all local caching and just read values through regmap
+- Drop chip auto-detection since it increases boot time
+
+[1]: https://patchwork.kernel.org/project/linux-hwmon/patch/
+     20240221104025.1306227-2-billy_tsai@aspeedtech.com/
+
+Changes since version 2:
+- Cherry-pick the fan-common.yaml in [1]
+- Fix nct736x typo and add unevaluatedProperties
+
+[1]: https://patchwork.kernel.org/project/linux-hwmon/patch/
+     20231107105025.1480561-2-billy_tsai@aspeedtech.com/
+
+Changes since version 1:
+- Modify NCT736X(nct736x) to NCT7363Y(nct7363)
+- Convert to devm_hwmon_device_register_with_info API
+- All ID tables are next to each other and should be consistent
+  between i2c_device_id and of_device_id
+- Ref. fan-common.yaml and modify properties (nuvoton,pwm-mask/
+  nuvoton,fanin-mask) to (pwms/tach-ch)
+- Convert to devm_regmap_init_i2c API
+- Remove unused function (watchdog timer)
+- Fix uninitialized symbol which is reported by kernel test robot
+
+Ban Feng (2):
+  dt-bindings: hwmon: Add NCT7363Y documentation
+  hwmon: Add driver for I2C chip Nuvoton NCT7363Y
+
+ .../bindings/hwmon/nuvoton,nct7363.yaml       |  66 +++
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/nct7363.rst               |  33 ++
+ MAINTAINERS                                   |   8 +
+ drivers/hwmon/Kconfig                         |  11 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/nct7363.c                       | 396 ++++++++++++++++++
+ 7 files changed, 516 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct7363.yaml
+ create mode 100644 Documentation/hwmon/nct7363.rst
+ create mode 100644 drivers/hwmon/nct7363.c
+
 -- 
-2.39.3
+2.34.1
 
