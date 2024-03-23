@@ -1,68 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF79E887697
-	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 03:10:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52A9B8877C8
+	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 10:21:58 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmills.xyz header.i=@gmills.xyz header.a=rsa-sha256 header.s=default header.b=b5w5HgH5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AmGkF125;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4V1jMp0CN9z3vZT
-	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 13:10:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4V1txc0Tmhz3dSv
+	for <lists+openbmc@lfdr.de>; Sat, 23 Mar 2024 20:21:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmills.xyz header.i=@gmills.xyz header.a=rsa-sha256 header.s=default header.b=b5w5HgH5;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AmGkF125;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmills.xyz (client-ip=198.54.127.78; helo=mailout-pe-a.jellyfish.systems; envelope-from=gunnar@gmills.xyz; receiver=lists.ozlabs.org)
-X-Greylist: delayed 433 seconds by postgrey-1.37 at boromir; Sat, 23 Mar 2024 13:10:03 AEDT
-Received: from mailout-pe-a.jellyfish.systems (mailout-pe-a.jellyfish.systems [198.54.127.78])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4V1jMH0PsCz3cN6
-	for <openbmc@lists.ozlabs.org>; Sat, 23 Mar 2024 13:10:02 +1100 (AEDT)
-Received: from output-router-9dd487c44-h5lp7 (unknown [10.35.5.64])
-	by mailout-pe-a.jellyfish.systems (Postfix) with ESMTPA id 4V1jBs5WbBz9t1N;
-	Sat, 23 Mar 2024 02:02:45 +0000 (UTC)
-Received: from MTA-15.privateemail.com (unknown [10.50.14.40])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by NEW-01-3.privateemail.com (Postfix) with ESMTPS id AF31C1005888;
-	Fri, 22 Mar 2024 22:02:45 -0400 (EDT)
-Received: from mta-15.privateemail.com (localhost [127.0.0.1])
-	by mta-15.privateemail.com (Postfix) with ESMTP id 7E31818000A4;
-	Fri, 22 Mar 2024 22:02:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=gmills.xyz; s=default;
-	t=1711159365; bh=H27JneEdQdTqfsda55KeKmgzOqs89+D3iMsnIQXHv8w=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=b5w5HgH5n/nNr4hYnBgdPaH+40SYiJfOEZ7chOaExAC11y8D6yVOrgJX9jsK0uF9x
-	 DOxoQHr1WFxO3SsPg/6ccA1reELlMEkwfxt721HRG/k2ekxLkbEb2UDgwB86GQYInt
-	 Ns0GAAIZUHSgR584dh16e6omALjlOzGwIGnJK7rGjNr+X9kEvtcFzHSF7D6V/CXxX8
-	 CMdWB/xCHTMoXgxrDyR2tZ0Jk2ZXOGdOL6BXRw1ltbLhCScdPdFgWL4nKMSrrxI0b7
-	 RcCsft1b6GBlKwOf0k7dR1OM1CKr5TRLbmaVvIrh9DPM8kQ0rW33vfeITHm5CSbYH7
-	 LkLO4y8aRK7kg==
-Received: from APP-15 (unknown [10.50.14.215])
-	by mta-15.privateemail.com (Postfix) with ESMTPA;
-	Fri, 22 Mar 2024 22:02:43 -0400 (EDT)
-Date: Fri, 22 Mar 2024 20:02:43 -0600 (MDT)
-From: Gunnar M <gunnar@gmills.xyz>
-To: BASTIEN DESALLE <bastien.desalle@eviden.com>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <232402708.523006.1711159363340@privateemail.com>
-In-Reply-To: <VI1PR0701MB7055D4C94C68082610E90E209E312@VI1PR0701MB7055.eurprd07.prod.outlook.com>
-References: <VI1PR0701MB7055D4C94C68082610E90E209E312@VI1PR0701MB7055.eurprd07.prod.outlook.com>
-Subject: Re: OpenBMC Compliance level for accessibility
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4V1tw90gByz3bsw;
+	Sat, 23 Mar 2024 20:20:41 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id 352B7CE0959;
+	Sat, 23 Mar 2024 09:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51C0C433F1;
+	Sat, 23 Mar 2024 09:20:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711185636;
+	bh=aGTQuZy7vZpxuhlc2uWM1FWO2cNVLUpXYHPr+30NYM4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AmGkF125xegySFWAiHvPntmZ+07s8hZQPC/0IVIftdkxYeMJTqDHDoBaq087Sl4Ry
+	 qKx2QcAVw6S410SG7j4biAqt4/h5dTjc1vKUs5R8LJBjxtJSQyMNE1PxZTAhzLwpa+
+	 ZvDOHlqhfPGo+3K1JP9tq5K11rxRL31gNRIYe4fcfJjyAcpNQmozM0AzDwGqt7aAAm
+	 vL1bo7yWAyyXHWJXICav98Il7syCI5t9aEO0HLvfyTQ7cJVQX5WfpHiaD8JmvRG1Zm
+	 VmI4taBLphr2uo/nVmCk1uj3x3TE6/IYqaCXMkAcTk/3yvQe9KoaZIneVeSaGY4Thk
+	 hCCXd6I1k2Bcg==
+Date: Sat, 23 Mar 2024 10:20:32 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: Re: [PATCH 00/64] i2c: reword i2c_algorithm according to newest
+ specification
+Message-ID: <ug266trshvhhbsln3eoh53fmsuj3l63ziz6gavcl7rv2jhjr5t@3av5givh5n7m>
+References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_523005_990507159.1711159363339"
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev59
-X-Originating-Client: open-xchange-appsuite
-X-Virus-Scanned: ClamAV using ClamSMTP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,69 +59,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "L. XAVIER SEBLIN" <ludovic-xavier.seblin@eviden.com>
+Cc: imx@lists.linux.dev, linux-aspeed@lists.ozlabs.org, linux-mips@vger.kernel.org, linux-i2c@vger.kernel.org, linux-riscv@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, virtualization@lists.linux.dev, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, asahi@lists.linux.dev, linuxppc-dev@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_523005_990507159.1711159363339
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Hi Wolfram,
 
- 
-
-> On 03/22/2024 11:13 AM MDT BASTIEN DESALLE <bastien.desalle@eviden.com> wrote:
->  
+On Fri, Mar 22, 2024 at 02:24:53PM +0100, Wolfram Sang wrote:
+> Okay, we need to begin somewhere...
 > 
-> I am looking for a report of compliance to the WCAG.
-> I have found on the OpenBmc Github Accessibility Conventions and Standards | OpenBMC Web UI Style Guide https://openbmc.github.io/webui-vue/guide/coding-standards/accessibility.html#accessibility-principles mention of WCAG as guideline But could not find any report of compliance.
+> Start changing the wording of the I2C main header wrt. the newest I2C
+> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
+> appropriate terms. This first step renames the members of struct
+> i2c_algorithm. Once all in-tree users are converted, the anonymous union
+> will go away again. All this work will also pave the way for finally
+> seperating the monolithic header into more fine-grained headers like
+> "i2c/clients.h" etc. So, this is not a simple renaming-excercise but
+> also a chance to update the I2C core to recent Linux standards.
+
+yes, very good! It's clearly stated in all three documentations
+that Target replaces Slave and Controller replaces Master (i3c is
+at the 1.1.1 version).
+
+> My motivation is to improve the I2C core API, in general. My motivation
+> is not to clean each and every driver. I think this is impossible
+> because register names based on official documentation will need to stay
+> as they are. But the Linux-internal names should be updated IMO.
+
+Also because some drivers have been written based on previous
+specifications where master/slave was used.
+
+> That being said, I worked on 62 drivers in this series beyond plain
+> renames inside 'struct i2c_algorithm' because the fruits were so
+> low-hanging. Before this series, 112 files in the 'busses/' directory
+> contained 'master' and/or 'slave'. After the series, only 57. Why not?
 > 
-> Does it exist ? and if yes where can I find it.
+> Next step is updating the drivers outside the 'i2c'-folder regarding
+> 'struct i2c_algorithm' so we can remove the anonymous union ASAP. To be
+> able to work on this with minimal dependencies, I'd like to apply this
+> series between -rc1 and -rc2.
 > 
-No report that I know of.
-From the start, there was an effort for webui-vue to meet the Web Content Accessibility Guidelines (WCAG). Below are some commits in this area, and if we are not following any WCAG recommendations, we will always take patches.
+> I hope this will work for you guys. The changes are really minimal. If
+> you are not comfortable with changes to your driver or need more time to
+> review, please NACK the patch and I will drop the patch and/or address
+> the issues separeately.
+> 
+> @Andi: are you okay with this approach? It means you'd need to merge
+> -rc2 into your for-next branch. Or rebase if all fails.
 
-https://github.com/search?q=repo%3Aopenbmc%2Fwebui-vue++Accessibility&type=commits&p=2
+I think it's a good plan, I'll try to support you with it.
 
-Thanks,
-Gunnar
+> Speaking of Andi, thanks a lot to him taking care of the controller
+> drivers these days. His work really gives me the freedom to work on I2C
+> core issues again.
 
-------=_Part_523005_990507159.1711159363339
-MIME-Version: 1.0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Thank you, Wolfram!
 
-<!doctype html>
-<html>
- <head> 
-  <meta charset="UTF-8"> 
- </head>
- <body>
-  <div>
-   &nbsp;
-  </div> 
-  <blockquote type="cite"> 
-   <div>
-    On 03/22/2024 11:13 AM MDT BASTIEN DESALLE &lt;bastien.desalle@eviden.com&gt; wrote:
-   </div> 
-   <div>
-    &nbsp;
-   </div> 
-   <div class="WordSection1"> 
-    <p class="MsoNormal">I am looking for a report of compliance to the WCAG. <br>I have found on the OpenBmc Github <a href="https://openbmc.github.io/webui-vue/guide/coding-standards/accessibility.html#accessibility-principles">Accessibility Conventions and Standards | OpenBMC Web UI Style Guide</a> mention of WCAG as guideline But could not find any report of compliance. <br><br>Does it exist ? and if yes where can I find it.</p> 
-   </div> 
-  </blockquote> 
-  <div>
-   No report that I know of. 
-  </div> 
-  <div class="default-style">
-   From the start, there was an effort for webui-vue to meet the Web Content Accessibility Guidelines (WCAG). Below are some commits in this area, and if we are not following any WCAG recommendations, we will always take patches. 
-   <br>
-   <br><a href="https://github.com/search?q=repo%3Aopenbmc%2Fwebui-vue++Accessibility&amp;type=commits&amp;p=2">https://github.com/search?q=repo%3Aopenbmc%2Fwebui-vue++Accessibility&amp;type=commits&amp;p=2</a>
-   <br>
-   <br>Thanks, 
-   <br>Gunnar
-  </div>
- </body>
-</html>
-------=_Part_523005_990507159.1711159363339--
+Andi
