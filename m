@@ -1,56 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82E2188F69A
-	for <lists+openbmc@lfdr.de>; Thu, 28 Mar 2024 05:48:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E7AF88FAE7
+	for <lists+openbmc@lfdr.de>; Thu, 28 Mar 2024 10:15:54 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=VoJX3Ifx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lQWtoEzo;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4V4rdj1lFBz3vYc
-	for <lists+openbmc@lfdr.de>; Thu, 28 Mar 2024 15:48:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4V4yZJ2vXsz3vY6
+	for <lists+openbmc@lfdr.de>; Thu, 28 Mar 2024 20:15:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=VoJX3Ifx;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=lQWtoEzo;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=infradead.org (client-ip=2607:7c80:54:3::133; helo=bombadil.infradead.org; envelope-from=rdunlap@infradead.org; receiver=lists.ozlabs.org)
-Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:3::133])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4V4rd41KR0z3dW4
-	for <openbmc@lists.ozlabs.org>; Thu, 28 Mar 2024 15:47:51 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=ZeyI246RdPv08pafnqQ6MRH7GAOmb2wa7EV6ApCd9zc=; b=VoJX3Ifx6dpNP2vF7afTf36fav
-	OgDWRnogJsWpcVZoXmhAtotOqQds9MaIcnPYG9nDRG4jNZRciFvw2Dxy+CJm3tZ6L4QGVKiZDXrhL
-	2n9J4s955Fi+NnRBhCYmiGtgTQbNIfhByhNb4os8T4twId1MDPeBrj9wpmPwa6Q19BDh8HdhkKNVy
-	A60/sOHE8EaI6PYlAOQs6kSOj6YeTkA0bJqit5hP0KH1gWmc0lHUlvEpr8C3uhsGL2rqV3IBnBkck
-	CmuWpR/59SewYTiJ5FCUjYWoy8eLLxiu0cCX0sTvxAuqaarZwcuj+6w8C27Yz4gdSYFSYRvdjuu2x
-	fFRuWunA==;
-Received: from [50.53.2.121] (helo=[192.168.254.15])
-	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rphg5-0000000CQcN-4Ak9;
-	Thu, 28 Mar 2024 04:47:50 +0000
-Message-ID: <d9bf12c1-4d21-40d4-9abe-95a4d8b59d8f@infradead.org>
-Date: Wed, 27 Mar 2024 21:47:49 -0700
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4V4yYh2ysWz3cZB
+	for <openbmc@lists.ozlabs.org>; Thu, 28 Mar 2024 20:15:19 +1100 (AEDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-dd02fb9a31cso619343276.3
+        for <openbmc@lists.ozlabs.org>; Thu, 28 Mar 2024 02:15:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1711617316; x=1712222116; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DK3WWLpghCazhNxnzpVoeZ6lBHInJGjDV4FWurbpgm0=;
+        b=lQWtoEzoGMnYwaSg8arTvt5x8utpanevB5ab5WdKapltwE9HI+air0DXF/Lb+oGE5f
+         +7HfDmXAK51gMn5kb9bSqPlpkI+7ZhqZKhFE1/vHaN5W3ilZl3OGJ9GXTbbw3MbRnyGv
+         ejOIDL0suYfOetvTOQgRBHy0hCe13zWjDpPf6aWi8E9txPgnkt4M9vHgW9Q8xoFbg0C4
+         Yxs2e3cDYhm6mS15u+r61RNQxBfi0lfRhZY8qfenqv10b3RgQBvK57MGhknwHhiTHReK
+         OxSM31YeeKikJN8+Kxki+rH7ivtPNBtPYEcWh/mV1rUrvHzA4SG+SkdKoNkLBBzg1jNf
+         sdpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711617316; x=1712222116;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DK3WWLpghCazhNxnzpVoeZ6lBHInJGjDV4FWurbpgm0=;
+        b=atp023rXum0SSbPgCLPcg6/bymbDRcIEAYNJMk7Hl+BEwDc50F0eMUMxKdFoEmzJ88
+         iTqCDgG7dCzWEY0JHwLv/h7JId+wG8tPDr/7b3aJcXgCJYAJnlzSBkVfQwZMFxLGJXz3
+         N3q50GfXwAEDbKHTLhuilWOtJtKVQkggShFUm0kFWb1kpynOm8FDYuhJyKovPiXEFnXm
+         yaI3M1dnLsiL+ocAI5lRJCrNX8nkL8NjiJ5GlUyKyQNcw1dJQu6xXvmhXQ7bGa8uhOGg
+         1SK796HPp/ZLoMl8lkHlW5VittTVa2ROmzZXeiR35lfryfYZa2ooIRNpxyw3ajyTXo/p
+         mymA==
+X-Forwarded-Encrypted: i=1; AJvYcCV119Nr+FMzvEWNcRUnkb6P5o0JeRaWdS6nRA61ffWtmggua45tzZsOkhSTyvQ4AB90qZ3Pxi/j+uor5Dzc+Dp35Dii5EyvVxs=
+X-Gm-Message-State: AOJu0YwsLPxAKPbX6POp8iUJLLtAJLsQ6K5c5ymC7vN3n/0CtOpd14fh
+	vUcuwz9kux66klsVhRajNknrl6urZKjx3fIx88v2QznULh10VjPUNsAuVB0iLBN6EUTFmYwX46z
+	h68a1h6vBscCgBTc5LnSkOrH5jjKnxlIOx6MxUg==
+X-Google-Smtp-Source: AGHT+IG4UAVC7NGDGidRJtRNWZfYlG/8nA0Xwk+zw0p4efi6wDiAGEzLWglCyWj8gtQ9WRg5ukXUl7W+4wfTKJP4AgI=
+X-Received: by 2002:a25:9b85:0:b0:dd0:39a0:a998 with SMTP id
+ v5-20020a259b85000000b00dd039a0a998mr2199704ybo.6.1711617316176; Thu, 28 Mar
+ 2024 02:15:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] peci: linux/peci.h: fix Excess kernel-doc description
- warning
-Content-Language: en-US
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20231223050605.13961-1-rdunlap@infradead.org>
- <a3ea93b54911f553a6ca37d33181be0cf9f89b07.camel@intel.com>
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <a3ea93b54911f553a6ca37d33181be0cf9f89b07.camel@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240313092809.2596644-1-billy_tsai@aspeedtech.com>
+In-Reply-To: <20240313092809.2596644-1-billy_tsai@aspeedtech.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 28 Mar 2024 10:15:05 +0100
+Message-ID: <CACRpkdaxekb_E4ttW5XfRUa+srkjOzUaVXRAtHMYjkVir7R7xQ@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: pinctrl-aspeed-g6: Fix register offset for
+ pinconf of GPIOR-T
+To: Billy Tsai <billy_tsai@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,51 +78,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: BMC-SW@aspeedtech.com, johnny_huang@aspeedtech.com, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, Ricky_CX_Wu@wiwynn.com, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, joel@jms.id.au, Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Mar 13, 2024 at 10:28=E2=80=AFAM Billy Tsai <billy_tsai@aspeedtech.=
+com> wrote:
 
+> The register offset to disable the internal pull-down of GPIOR~T is 0x630
+> instead of 0x620, as specified in the Ast2600 datasheet v15
+> The datasheet can download from the official Aspeed website.
+>
+> Fixes: 15711ba6ff19 ("pinctrl: aspeed-g6: Add AST2600 pinconf support")
+> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
 
-On 1/10/24 06:19, Winiarska, Iwona wrote:
-> On Fri, 2023-12-22 at 21:06 -0800, Randy Dunlap wrote:
->> Remove the @controller: line to prevent the kernel-doc warning:
->>
->> include/linux/peci.h:84: warning: Excess struct member 'controller'
->> description in 'peci_device'
->>
->> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
->> Cc: Iwona Winiarska <iwona.winiarska@intel.com>
->> Cc: openbmc@lists.ozlabs.org
-> 
-> Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
-> 
-> Thanks
-> -Iwona
+Patch applied.
+I recorded Delphine's similar patch as "reported-by".
 
-Hi Iwona,
-
-Who should be merging this patch?
-
-Thanks.
-
-> 
->> ---
->>  include/linux/peci.h |    1 -
->>  1 file changed, 1 deletion(-)
->>
->> diff -- a/include/linux/peci.h b/include/linux/peci.h
->> --- a/include/linux/peci.h
->> +++ b/include/linux/peci.h
->> @@ -58,7 +58,6 @@ static inline struct peci_controller *to
->>  /**
->>   * struct peci_device - PECI device
->>   * @dev: device object to register PECI device to the device model
->> - * @controller: manages the bus segment hosting this PECI device
->>   * @info: PECI device characteristics
->>   * @info.family: device family
->>   * @info.model: device model
-> 
-
--- 
-#Randy
+Yours,
+Linus Walleij
