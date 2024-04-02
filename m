@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66431895CF5
-	for <lists+openbmc@lfdr.de>; Tue,  2 Apr 2024 21:43:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D23B895FA2
+	for <lists+openbmc@lfdr.de>; Wed,  3 Apr 2024 00:34:37 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=g5Hs740K;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mhvzoqMi;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4V8JGR1CyKz3dhY
-	for <lists+openbmc@lfdr.de>; Wed,  3 Apr 2024 06:43:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4V8N3b1w5Tz3vdc
+	for <lists+openbmc@lfdr.de>; Wed,  3 Apr 2024 09:34:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=g5Hs740K;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mhvzoqMi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112b; helo=mail-yw1-x112b.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4V8JFq07PPz3d2n
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Apr 2024 06:43:09 +1100 (AEDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-6152088aa81so12538807b3.0
-        for <openbmc@lists.ozlabs.org>; Tue, 02 Apr 2024 12:43:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4V86mQ0Zlwz3d2j
+	for <openbmc@lists.ozlabs.org>; Tue,  2 Apr 2024 23:35:32 +1100 (AEDT)
+Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-dd10ebcd702so4749689276.2
+        for <openbmc@lists.ozlabs.org>; Tue, 02 Apr 2024 05:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712086987; x=1712691787; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HTJVONLBOWfYIXXYyOhTTPw9XCjwbvXp4rskUKdwRDo=;
-        b=g5Hs740KHXUf0uaS3+c0ROrU8hvnNRgKu/QH9bDVl6Z0M6vxmnDMWD8wc2eLQyYQb9
-         uLn+hm68deg7C5tdGTJKAK7Kc66toTxyN+mcwn+aNRrOQfbXtZwHsrz51zFGCUoyjl+n
-         ++grYl0JaaH36UKkUmqt7oed7dRaN7Zrlhv1nOlFDc8sVhF/Emun+O2Nkt3InhcFgBPW
-         hRN2fIU72V5LeT0dYOlqpp7l7xsXIzAT3xm7x4fImT/ruK0RRTJcUmDQSvrpSyue4hmG
-         7wIAQz1IpG3UuGSVHpowZe2Trvof4WB6ViPKgeExMHlVUKdojlI6FRZHadqJoIZXpSp4
-         b3hw==
+        d=linaro.org; s=google; t=1712061329; x=1712666129; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
+        b=mhvzoqMiiZ9JHFTwocYixF4nYxnGGOtK6SEnWjouxE8+THvz6H3OBdbUjRsuhZDQbP
+         Pb8NQZGLkZf7bXWvu8j4Jhjaw30Kkko5UK+qe8iIOlT6bQv3qEDyZlUOakxZtS0M6AF2
+         gWNrnsPDv+HrXE3PefCbq5kh5WcfUd8QfzPbhN1Z++prjwpWqDgjl3fiK8gctp/3gqta
+         XhLIt9nuTGBo9lsHPGf/DbtQSg0CKKKWwjDcJWQI7gs4ZRS8NWA4J3cX9AJXciXwsW7l
+         Z6vcXobYmBwvuCqm4fgFvFz4VMWoFWxcXIIJhijLwUgyYcHGmwZmnPyazmjM+q4t6lvH
+         2+Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712086987; x=1712691787;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HTJVONLBOWfYIXXYyOhTTPw9XCjwbvXp4rskUKdwRDo=;
-        b=pP0gTl7ZRPQBpFT/zxgwWFrXD5gGSQwOmhDir0g6d0WcAdzNLeYB2XMQGVJWSrg9cS
-         3sfXJ4gTErd5OSMoqwNaPIIuA0Jjc5Ht+SpVdArPMSTgkzdOygBLzXqsAvxfr2C2jMsT
-         SgslVH7QR2XmbWdYnFPRuhnLRM2m0pkchJbNtbfAb3ZNhCaHdw5UDnYkCiHNKPiQPJ3L
-         EMh0AAJAmPJmCNq0d/2bzpR+wxcgbywumYjB1GxHoGd5Wso9zIoFjFbnyWhOiWT3+Dno
-         l0FjwF41Pw5Kxio0RMwMNhdFwQqjhCLnVt9YhK2BSCBERmba4BaFGWNaL0ru+r6dBOpI
-         6ZzA==
-X-Forwarded-Encrypted: i=1; AJvYcCWkT3eDFpQXZHQo2EQhEarQxdePXr1aQM7UNnC/Sl05a2KfUOmOkO2/njP/kFULMFjCbi+uS6oqghKT6bLjA7RqO4mLty1nFJM=
-X-Gm-Message-State: AOJu0YyxZMAH6ZJJM/M4vEAuZtntdRN1GNsurWuO/7OWWAc7N0wGpFHH
-	g8ZcLQL+z80ImhqKisWbodp2RIcFtDQsHo+oDpKx+/XjE5ezeesRw7z1tFF06oUauYFEWX9Z7bj
-	u2uzKYrVIZkPwg8gtgkuARCuVTsU=
-X-Google-Smtp-Source: AGHT+IHYFFXpr3KeU33zxXhX2ZVeehOyLXhFmaJ6JQIOHWpfhAN0d/7P9DC2ivCdw+kd0pPLfV2tNokbt93OKVRLbgY=
-X-Received: by 2002:a25:4604:0:b0:dd0:aa2c:4da5 with SMTP id
- t4-20020a254604000000b00dd0aa2c4da5mr10797136yba.6.1712086986537; Tue, 02 Apr
- 2024 12:43:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1712061329; x=1712666129;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZhodAsfbqQph/6Oss9KdocUA4jNT8v1VGBe4Vmslbbg=;
+        b=BVvZNzJI5GKTAAr78Td4pHXDo3fwmLl8pj/AdAiqn86gb1eiXJ3tskHUdUtaqzaDB7
+         4t0UZcxVvmdlsw3U48Z15k8kAdyI4yEo/ydSmyK0rEFkggCPZYTxp8t2OqKjf09uHJZn
+         jj/i6yeTH87EYb7iXa2BuIRqQ4ZOr4JlIGNvZiwKvr/Ho50M7lgYV+uAUMAkBxiqbl+e
+         zFRulFaW1MUkDo3soY/2kiORUEejxY3ncnvOs21dpOeariDDNHBYbaiVdcd0TxyDKmph
+         2nR++aEJScJw8pLUIidlIM3vIEz6sUQL4XsmLcm9C81K3TMAPwaz1wQ5AUwsGalJxJ+1
+         9UHw==
+X-Forwarded-Encrypted: i=1; AJvYcCX6qoCDoBNyu7J98SKZy3NYdn+KZViKJRweQFGQu6jEu6y8kc1KXmdwpINgl5fQ/JeEXv4g5kK/wls8VSAL6naaQ1GEHXZYp+E=
+X-Gm-Message-State: AOJu0YzAFw1e/kCPRyDekV8fVYoiwEnMxEXprgdyCFb3ybjTJvs5+WZD
+	seSrr2jtQaqWBW09eJ5EqkYh/JeNp9hStg+3KgfyQS2r0f6IAod0DKRC+d3c8pDwd7bUV6G7qd3
+	B7rAwgwM1wI/nN+784f2hXNiaiAvgJMyBA/iY+A==
+X-Google-Smtp-Source: AGHT+IG5hxT/EMYnHoU6u7S6MkbvLw5l9U/Ss0P2rks8Fb0m+zQTGqjqkjSlSz0lY1KsLwpjx1moujtIXAN3uBffPV8=
+X-Received: by 2002:a25:6d86:0:b0:dc2:2d75:5fde with SMTP id
+ i128-20020a256d86000000b00dc22d755fdemr10687728ybc.29.1712061328813; Tue, 02
+ Apr 2024 05:35:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240131182653.2673554-1-tmaimon77@gmail.com> <20240131182653.2673554-4-tmaimon77@gmail.com>
- <74e003c6d80611ddd826ac21f48b4b3a.sboyd@kernel.org> <CAP6Zq1g5gwXvYzO5fnHxG-6__gSCpNBY7VeEPyr4Qtijya6EfQ@mail.gmail.com>
- <8acf846e767884978f3bb98646433551.sboyd@kernel.org> <CAP6Zq1htKQ5v0tH9HGRejnKwJ5ZauUWG_CzYUKegkVL4Ek8UxA@mail.gmail.com>
- <CAP6Zq1g4ksdLSVTm+PLqa5dSEidvHdpGZb=J9wKEftaH-Mg+bw@mail.gmail.com>
-In-Reply-To: <CAP6Zq1g4ksdLSVTm+PLqa5dSEidvHdpGZb=J9wKEftaH-Mg+bw@mail.gmail.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 2 Apr 2024 22:42:55 +0300
-Message-ID: <CAP6Zq1hk46xpQsVFz3RAF3CHU-PNCBxN+6SRKrdWzffRjRep4g@mail.gmail.com>
-Subject: Re: [PATCH v23 3/3] clk: npcm8xx: add clock controller
-To: Stephen Boyd <sboyd@kernel.org>
+References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com> <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20240322132619.6389-65-wsa+renesas@sang-engineering.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 2 Apr 2024 14:35:17 +0200
+Message-ID: <CACRpkdbtRoDtWN4mnyZY_yEfWQFPCQaVudjBki8N1sOXxXWupQ@mail.gmail.com>
+Subject: Re: [PATCH 64/64] i2c: reword i2c_algorithm in drivers according to
+ newest specification
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Wed, 03 Apr 2024 09:33:38 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,217 +79,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, benjaminfair@google.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org
+Cc: Andrew Lunn <andrew@lunn.ch>, Shyam Sundar S K <shyam-sundar.s-k@amd.com>, Tomer Maimon <tmaimon77@gmail.com>, Ajay Gupta <ajayg@nvidia.com>, Viresh Kumar <viresh.kumar@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, Dmitry Osipenko <digetx@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, Jerome Brunet <jbrunet@baylibre.com>, linux-samsung-soc@vger.kernel.org, Robert Foss <rfoss@kernel.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, Michael Ellerman <mpe@ellerman.id.au>, Khalil Blaiech <kblaiech@nvidia.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, Oleksij Rempel <o.rempel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, Nicholas Piggin <npiggin@gmail.com>, linux-omap@vger.kernel.org, linux-kernel@vger.kernel.org, Pengutronix Kernel Team <kernel@pengutronix.de>, Alexandre Belloni <alexandre.belloni@bootlin.com>, Yicong Yang <yangyicong@hisilicon.com>, Laxman Dewangan <ldewangan@nvidia.com>, linux-i2c@vger.kernel.org, Guenter Roeck <groeck@chromium.org>, chrome-
+ platform@lists.linux.dev, Fabio Estevam <festevam@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Alain Volmat <alain.volmat@foss.st.com>, Andi Shyti <andi.shyti@kernel.org>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, linux-arm-msm@vger.kernel.org, Nicolas Ferre <nicolas.ferre@microchip.com>, Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Nick Hawkins <nick.hawkins@hpe.com>, linux-amlogic@lists.infradead.org, Mika Westerberg <mika.westerberg@linux.intel.com>, linux-arm-kernel@lists.infradead.org, Neil Armstrong <neil.armstrong@linaro.org>, Hector Martin <marcan@marcan.st>, linux-renesas-soc@vger.kernel.org, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Kevin Hilman <khilman@baylibre.com>, linux-mediatek@lists.infradead.org, imx@lists.linux.dev, Jean-Marie Verdun <verdun@hpe.com>, linux-tegra@vger.kernel.org, Elie Morisse <syniurge@gmail.com>, Krzysztof Adamski <krzysztof.adamski@nokia.com>, Alyssa Rosenzweig <alyssa@
+ rosenzweig.io>, Peter Korsgaard <peter@korsgaard.com>, Benjamin Fair <benjaminfair@google.com>, Michal Simek <michal.simek@amd.com>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, Codrin Ciubotariu <codrin.ciubotariu@microchip.com>, Robert Richter <rric@kernel.org>, Asmaa Mnebhi <asmaa@nvidia.com>, Vladimir Zapolskiy <vz@mleia.com>, Conghui Chen <conghui.chen@intel.com>, Benson Leung <bleung@chromium.org>, Qii Wang <qii.wang@mediatek.com>, Avi Fishman <avifishman70@gmail.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, Konrad Dybcio <konrad.dybcio@linaro.org>, Thierry Reding <thierry.reding@gmail.com>, Jarkko Nikula <jarkko.nikula@linux.intel.com>, asahi@lists.linux.dev, Shawn Guo <shawnguo@kernel.org>, Vignesh R <vigneshr@ti.com>, Tony Lindgren <tony@atomide.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Tali Perry <tali.perry1@gmail.com>, Paul Cercueil <paul@crapouillou.net>, Jan Dabros <jsd@semihalf.com>, openbmc@lists.ozlabs.org, Janusz Krzysztofik <jmkrzyszt@gmail.com>, 
+ Sven Peter <sven@svenpeter.dev>, virtualization@lists.linux.dev, Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>, Matthias Brugger <matthias.bgg@gmail.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Loic Poulain <loic.poulain@linaro.org>, Patrick Venture <venture@google.com>, Bjorn Andersson <andersson@kernel.org>, linux-mips@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linuxppc-dev@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Stephen,
+On Fri, Mar 22, 2024 at 2:27=E2=80=AFPM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
 
-Kind remainder, appreciate if you can reply about the comment that
-been sent few weeks ago.
+> Match the wording in i2c_algorithm in I2C drivers wrt. the newest I2C
+> v7, SMBus 3.2, I3C specifications and replace "master/slave" with more
+> appropriate terms. For some drivers, this means no more conversions are
+> needed. For the others more work needs to be done but this will be
+> performed incrementally along with API changes/improvements. All these
+> changes here are simple search/replace results.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-Thanks,
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 
-Tomer
-
-On Tue, 5 Mar 2024 at 17:59, Tomer Maimon <tmaimon77@gmail.com> wrote:
->
-> Hi Stephen,
->
-> Appreciate it if you could reply to my email afew days ago, It is
-> really important to us to move this driver to upstream.
->
-> Thanks,
->
-> Tomer
->
-> On Thu, 29 Feb 2024 at 23:29, Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >
-> > Hi Stephen,
-> >
-> > Thanks for your reply.
-> >
-> > On Thu, 29 Feb 2024 at 00:48, Stephen Boyd <sboyd@kernel.org> wrote:
-> > >
-> > > Quoting Tomer Maimon (2024-02-25 10:00:35)
-> > > > Hi Stephen,
-> > > >
-> > > > On Thu, 22 Feb 2024 at 07:58, Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > >
-> > > > > Quoting Tomer Maimon (2024-01-31 10:26:53)
-> > > > > > diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
-> > > > > > new file mode 100644
-> > > > > > index 000000000000..eacb579d30af
-> > > > > > --- /dev/null
-> > > > > > +++ b/drivers/clk/clk-npcm8xx.c
-> > > > > > @@ -0,0 +1,509 @@
-> > > > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > > > +/*
-> > > > > > + * Nuvoton NPCM8xx Clock Generator
-> > > > > > + * All the clocks are initialized by the bootloader, so this driver allows only
-> > > > > [...]
-> > > > > > +
-> > > > > > +/* external clock definition */
-> > > > > > +#define NPCM8XX_CLK_S_REFCLK   "refclk"
-> > > > > > +
-> > > > > > +/* pll definition */
-> > > > > > +#define NPCM8XX_CLK_S_PLL0     "pll0"
-> > > > > > +#define NPCM8XX_CLK_S_PLL1     "pll1"
-> > > > > > +#define NPCM8XX_CLK_S_PLL2     "pll2"
-> > > > > > +#define NPCM8XX_CLK_S_PLL_GFX  "pll_gfx"
-> > > > > > +
-> > > > > > +/* early divider definition */
-> > > > > > +#define NPCM8XX_CLK_S_PLL2_DIV2                "pll2_div2"
-> > > > > > +#define NPCM8XX_CLK_S_PLL_GFX_DIV2     "pll_gfx_div2"
-> > > > > > +#define NPCM8XX_CLK_S_PLL1_DIV2                "pll1_div2"
-> > > > > > +
-> > > > > > +/* mux definition */
-> > > > > > +#define NPCM8XX_CLK_S_CPU_MUX     "cpu_mux"
-> > > > > > +
-> > > > > > +/* div definition */
-> > > > > > +#define NPCM8XX_CLK_S_TH          "th"
-> > > > > > +#define NPCM8XX_CLK_S_AXI         "axi"
-> > > > >
-> > > > > Please inline all these string #defines to the place they're used.
-> > > > The version V21 you mention using define only when the definition is
-> > > > used more than once
-> > > > https://www.spinics.net/lists/kernel/msg5045826.html
-> > > > Should I remove all the string definitions and add the string to the array?
-> > >
-> > > If it's a clk name for a clk registered in this file it should be
-> > > inlined. Is that the case for everything besides refclk? And even refclk
-> > > could be inlined so that we don't have to jump to the definition of a
-> > > string.
-> > I will add the string in the clock arrays and remove all the string definitions.
-> > >
-> > > > > > +
-> > > > > > +static unsigned long npcm8xx_clk_div_get_parent(struct clk_hw *hw,
-> > > > > > +                                               unsigned long parent_rate)
-> > > > > > +{
-> > > > > > +       struct npcm8xx_clk *div = to_npcm8xx_clk(hw);
-> > > > > > +       unsigned int val;
-> > > > > > +
-> > > > > > +       regmap_read(div->clk_regmap, div->offset, &val);
-> > > > > > +       val = val >> div->shift;
-> > > > > > +       val &= clk_div_mask(div->width);
-> > > > > > +
-> > > > > > +       return divider_recalc_rate(hw, parent_rate, val, NULL, div->flags,
-> > > > > > +                                  div->width);
-> > > > > > +}
-> > > > > > +
-> > > > > > +static const struct clk_ops npcm8xx_clk_div_ops = {
-> > > > > > +       .recalc_rate = npcm8xx_clk_div_get_parent,
-> > > > > > +};
-> > > > > > +
-> > > > > > +static int npcm8xx_clk_probe(struct platform_device *pdev)
-> > > > > > +{
-> > > > > > +       struct device_node *parent_np = of_get_parent(pdev->dev.of_node);
-> > > > >
-> > > > > The parent of this device is not a syscon.
-> > > > Once I have registered the map that handles both reset and the clock
-> > > > in general is syscon, this is why we will modify the DTS so the clock
-> > > > and the reset will be under syscon father node
-> > > >                 sysctrl: system-controller@f0801000 {
-> > > >                         compatible = "syscon", "simple-mfd";
-> > > >                         reg = <0x0 0xf0801000 0x0 0x1000>;
-> > > >
-> > > >                         rstc: reset-controller {
-> > > >                                 compatible = "nuvoton,npcm845-reset";
-> > > >                                 reg = <0x0 0xf0801000 0x0 0xC4>;
-> > > >                                 #reset-cells = <2>;
-> > > >                                 nuvoton,sysgcr = <&gcr>;
-> > > >                         };
-> > > >
-> > > >                         clk: clock-controller {
-> > > >                                 compatible = "nuvoton,npcm845-clk";
-> > > >                                 #clock-cells = <1>;
-> > > >                                 clocks = <&refclk>;
-> > > >                                 clock-names = "refclk";
-> > > >                         };
-> > > >                 };
-> > > > You can see other drivers that using the same method like
-> > > > https://elixir.bootlin.com/linux/v6.8-rc5/source/Documentation/devicetree/bindings/clock/socionext,uniphier-clock.yaml
-> > >
-> > > You will need a similar file like
-> > > Documentation/devicetree/bindings/soc/socionext/socionext,uniphier-perictrl.yaml
-> > > then to describe the child nodes.
-> > I can do it.
-> > >
-> > > Socionext may not be the best example to follow. I generally try to
-> > > avoid syscon and simply put #reset-cells and #clock-cells in the node
-> > If I remove syscon I can't use syscon_node_to_regmap function, What
-> > should I use If I remove syscon? auxiliary bus? something else?
-> > > for the device. You can use the auxiliary bus to register drivers for
-> > > clk and reset and put them into the resepective driver directories.
-> > I little bit confused, what is an auxiliary bus to register drivers,
-> > can you provide me an example?
-> > > Avoid syscon means random drivers can't reach into the device with a
-> > > regmap handle and read/write registers that they're not supposed to.
-> > Indeed, but the drivers could use the reset and clock memory map only
-> > if the module is also a child node.
-> >
-> > Please let me know what is your preferred way to handle it:
-> > 1. stick with syscon and upstream-defined documentation for the rst clk syscon.
-> > 2. avoid syscon and use an auxiliary bus, appreciate if you could give
-> > me an example of how it should be done.
-> > 3. Avoid sycon and handle it differently.
-> > >
-> > > > >
-> > > > > > +       struct clk_hw_onecell_data *npcm8xx_clk_data;
-> > > > > > +       struct device *dev = &pdev->dev;
-> > > > > > +       struct regmap *clk_regmap;
-> > > > > > +       struct clk_hw *hw;
-> > > > > > +       unsigned int i;
-> > > > > > +
-> > > > > > +       npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
-> > > > > > +                                                        NPCM8XX_NUM_CLOCKS),
-> > > > > > +                                       GFP_KERNEL);
-> > > > > > +       if (!npcm8xx_clk_data)
-> > > > > > +               return -ENOMEM;
-> > > > > > +
-> > > > > > +       clk_regmap = syscon_node_to_regmap(parent_np);
-> > > > > > +       of_node_put(parent_np);
-> > > > >
-> > > > > Is there another binding update that is going to move this node to be a
-> > > > > child of the syscon?
-> > > > >
-> > > > >                 gcr: system-controller@f0800000 {
-> > > > >                         compatible = "nuvoton,npcm845-gcr", "syscon";
-> > > > >                         reg = <0x0 0xf0800000 0x0 0x1000>;
-> > > > >                 };
-> > > > No, sorry but I'm not going to use the GCR node the handle the clock
-> > > > and reset modules, the GCR has different memory space.
-> > > > the clock driver will have the following device tree
-> > >
-> > > What does the reset driver use the CGR node for? The driver looks like
-> > > it's using it to control USB phy resets.
-> > Yes, the USB PHY reset is handled through the GCR registers.
-> > >
-> > > >                sysctrl: system-controller@f0801000 {
-> > > >                         compatible = "syscon", "simple-mfd";
-> > > >                         reg = <0x0 0xf0801000 0x0 0x1000>;
-> > > >
-> > > >                         rstc: reset-controller {
-> > > >                                 compatible = "nuvoton,npcm845-reset";
-> > > >                                 reg = <0x0 0xf0801000 0x0 0xC4>;
-> > >
-> > > This isn't a valid reg property for a child node like this.
-> > O.K.
-> > >
-> > > >                                 #reset-cells = <2>;
-> > > >                                 nuvoton,sysgcr = <&gcr>;
-> > > >                         };
-> > > >
-> > > >                         clk: clock-controller {
-> > > >                                 compatible = "nuvoton,npcm845-clk";
-> > > >                                 #clock-cells = <1>;
-> > > >                                 clocks = <&refclk>;
-> > > >                                 clock-names = "refclk";
-> > > >                         };
-> > > >                 };
-> >
-> > Appreciate your guidance!
-> >
-> > Thanks,
-> >
-> > Tomer
+Yours,
+Linus Walleij
