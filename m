@@ -1,65 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0AF089CF01
-	for <lists+openbmc@lfdr.de>; Tue,  9 Apr 2024 01:41:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4202689CF07
+	for <lists+openbmc@lfdr.de>; Tue,  9 Apr 2024 01:41:57 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=R8T/4zsl;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=glnUb59w;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VD5FX3JCfz3dX3
-	for <lists+openbmc@lfdr.de>; Tue,  9 Apr 2024 09:41:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VD5GW0PZ3z3dXG
+	for <lists+openbmc@lfdr.de>; Tue,  9 Apr 2024 09:41:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=R8T/4zsl;
+	dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=glnUb59w;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sang-engineering.com (client-ip=194.117.254.33; helo=mail.zeus03.de; envelope-from=wsa+renesas@sang-engineering.com; receiver=lists.ozlabs.org)
 Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4V9sbL0RLvz3wH4
-	for <openbmc@lists.ozlabs.org>; Fri,  5 Apr 2024 19:48:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VCj9H0r8Wz3bfS
+	for <openbmc@lists.ozlabs.org>; Mon,  8 Apr 2024 18:36:00 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=D3bA
-	ysj0N+3ktsukYn/zGLisNXUDp098hBJ07HyHzKc=; b=R8T/4zsl0Zd0dNbaommC
-	kCLTauMRf6yuGZlEbnNrPo+sDuLbN4s8BfD2QtEyqFV73GtOSagiQmnkLEuHWGCQ
-	vRejlIPlKU/mYMv+6t8UkEAMEtwYdgwHTAQorcdRr9Ope6KAX7AmqTkxF537SxfY
-	hbp2DrU8wtJm0oExDm1ozx0tnjR+RM/n3EJ7Hxedj1A/sxIF9bIEt0Q6uqjDDZO6
-	DhN5dSoCZRnlewvb/Wq/ACyPQ8GtSN3yttgw0BjHvy2Oz86yt92QQcC0xPBJXssA
-	1OMpCVAZHpK9gwh4XkivjtbsyOTJWxSQAZ6QWGsn2F7XdFdDJmCqNTrRYM5kOmvv
-	nA==
-Received: (qmail 4044863 invoked from network); 5 Apr 2024 10:48:34 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 5 Apr 2024 10:48:34 +0200
-X-UD-Smtp-Session: l3s3148p1@j8VihVUV/oogAwDPXwEGAANOsN0UmmrN
-Date: Fri, 5 Apr 2024 10:48:34 +0200
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=kaac
+	/HoSNF6kBNyIZvAXuiqRv4XHgDdylJjIFzS6jJw=; b=glnUb59wzYNl2lqMUYNX
+	ZjUTjMWP3AF1osTTIZsoviN3OVy5BVJPkeMTiTK24l1kSjh67hVzj2X7pl933Z+T
+	yFI4MjENYVeM0iZuomTYQMIpOfRHkW5XXs1Ke56fnzEtFh4XZ04yv5kXwAyknkFH
+	RSv3fOKzz0XxOSYFNznus+MuvaBkHRwXMPA7wOEDzK/ktzSAQ/LnQRNh94tyfyt9
+	SQU0i1k9pTWQN7r904M+8imA3//k81pjO1fr6cvj9vkSo8QcaBuPlInI2Cfg66WF
+	vX1o+E++730gPmmHdiIZgXCxt+TA+529ZltqwmOtliGNB6G/Z7YJ3Yj5JyNEoBMn
+	fQ==
+Received: (qmail 704034 invoked from network); 8 Apr 2024 10:35:53 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 8 Apr 2024 10:35:53 +0200
+X-UD-Smtp-Session: l3s3148p1@ivmCsZEVfqEgAwDPXwE9APSWg5D5lDs4
+Date: Mon, 8 Apr 2024 10:35:52 +0200
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 To: Andi Shyti <andi.shyti@kernel.org>
-Subject: Re: [PATCH 00/64] i2c: reword i2c_algorithm according to newest
+Subject: Re: [PATCH 05/64] i2c: aspeed: reword according to newest
  specification
-Message-ID: <kd2gnsosi5xar3mwc3zz7wqtqkfgicq3wical5ch34sbmlgegk@mb2c2hxzzoi4>
+Message-ID: <wcnu6qxxztplzpqtqc4t3bf53v6buto6ch6b5l5xoytrxxdgjz@gwzlifzzfrvx>
 Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>, 
-	Andi Shyti <andi.shyti@kernel.org>, linux-i2c@vger.kernel.org, asahi@lists.linux.dev, 
-	chrome-platform@lists.linux.dev, imx@lists.linux.dev, linux-actions@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-mips@vger.kernel.org, linux-omap@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	openbmc@lists.ozlabs.org, virtualization@lists.linux.dev
+	Andi Shyti <andi.shyti@kernel.org>, linux-i2c@vger.kernel.org, 
+	Brendan Higgins <brendan.higgins@linux.dev>, Benjamin Herrenschmidt <benh@kernel.crashing.org>, 
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+	openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
 References: <20240322132619.6389-1-wsa+renesas@sang-engineering.com>
- <ug266trshvhhbsln3eoh53fmsuj3l63ziz6gavcl7rv2jhjr5t@3av5givh5n7m>
- <j2l7tu24itjelylrgwe6gdsy3mfrw3dnve4rdofmri3z7xdroc@se56t5ylmdak>
+ <20240322132619.6389-6-wsa+renesas@sang-engineering.com>
+ <vb4hempklviz6w4gd3eimprplybm4ckefwz2gyy7cp2uww2anv@b4egbq4u4rrg>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c5kq2kdwqrnl4eet"
+	protocol="application/pgp-signature"; boundary="fm2sehicf2gvt3hb"
 Content-Disposition: inline
-In-Reply-To: <j2l7tu24itjelylrgwe6gdsy3mfrw3dnve4rdofmri3z7xdroc@se56t5ylmdak>
+In-Reply-To: <vb4hempklviz6w4gd3eimprplybm4ckefwz2gyy7cp2uww2anv@b4egbq4u4rrg>
 X-Mailman-Approved-At: Tue, 09 Apr 2024 09:40:33 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,48 +67,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: imx@lists.linux.dev, linux-aspeed@lists.ozlabs.org, linux-mips@vger.kernel.org, linux-i2c@vger.kernel.org, linux-riscv@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, virtualization@lists.linux.dev, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, asahi@lists.linux.dev, linuxppc-dev@lists.ozlabs.org
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Joel Stanley <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---c5kq2kdwqrnl4eet
+--fm2sehicf2gvt3hb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-
-Hi Andi, hi everyone,
-
-thank you for reviewing and waiting. I had a small personal hiatus over
-Easter but now I am back. This series needs another cycle, so no need to
-hurry. I will address some of the review comments but not all. The
-conversion (and API improvements) are some bigger tasks, so
-inconsistencies inbetween can't be avoided AFAICS.
-
-I'll keep you updated.
-
-Happy hacking,
-
-   Wolfram
+Content-Transfer-Encoding: quoted-printable
 
 
---c5kq2kdwqrnl4eet
+> > -static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
+> > +static int aspeed_i2c_xfer(struct i2c_adapter *adap,
+> >  				  struct i2c_msg *msgs, int num)
+>=20
+> here the alignment goes a bi off.
+
+Thanks, I missed this.
+
+> >  #if IS_ENABLED(CONFIG_I2C_SLAVE)
+> >  /* precondition: bus.lock has been acquired. */
+> > -static void __aspeed_i2c_reg_slave(struct aspeed_i2c_bus *bus, u16 sla=
+ve_addr)
+> > +static void __aspeed_i2c_reg_target(struct aspeed_i2c_bus *bus, u16 sl=
+ave_addr)
+>=20
+> We  have the word master/slave forgotten here and there, but as
+> we are here, /slave_addr/target_addr/
+
+I can do this now. My plan was to convert it when I convert the whole
+CONFIG_I2C_SLAVE interface. But "since we are here" can be argued.
+
+> >  static const struct i2c_algorithm aspeed_i2c_algo =3D {
+> > -	.master_xfer	=3D aspeed_i2c_master_xfer,
+> > +	.xfer	=3D aspeed_i2c_xfer,
+>=20
+> here the alignment goes a bit off.
+
+I also wanted to fix this afterwards together with all the tab-indented
+struct declarations in busses/. But maybe I better do the tab-removal
+series beforehand? Would you accept such a thing?
+
+
+--fm2sehicf2gvt3hb
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmYPut4ACgkQFA3kzBSg
-KbbwnxAAtFWKOWnU/VyFFeZnqQCgQ76FzO93xERcjysHlgnZv3BnA6UpxFnrHrs4
-Cn7RTWa0i9Ct1ns2AkkjOQ5rUIqczF7M2dVS0tqODwyazGPaDHYtsa3urfkCsLT7
-Gz0y5V+oHHUNj1hypkKtQ37/7iFSYbo5oryt9MFK6eFfs878jel/4BCGJk3SEa48
-ewNnEuM8aYfzlrn7/VbkWqHkCS5J6x8/VFk3PjlxgEW45UtEI3r30K6/jT9HOdx4
-6lCofEZKn4Bl0VbfJJ7MXd1Be2/Dk6ZaY09e97iAKt2+fM1OLrBwig2V8PAdV7ei
-LlHolA153CWJAAkzXE2bJsr252IuCLpVpZobTSQRfr+u5vVV354dfo2ek11R8iff
-DSr94kqdKVvOvegpxt4vyHUxQrfy70R9vlkgVhkdvdGbi3JfLeiCK+C+IcBZlbXr
-uTaPlNvOt6p+VJNAlucnKQF3mK0FvVMK7bTwqjbKR8ZzB8J20qj5pqxqtBZDjfOl
-fpTR9f9+kHWdmBuCLBq35aes6Lxq4JtNRH+czt8F8wIAfx/xcgTf2uPThVoFPO9s
-jyO4fy773Wsfo8PGo9SqSKr7K6gQW3dIDoFTk489lp3e9Y/DYJ+ZV2ixvCQKATjO
-3K0umrWHYd25+mhripLMPzaz3h1GPtmAiQq/dq2GUviAFUPoZas=
-=RWT2
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmYTrGgACgkQFA3kzBSg
+KbaYiw/+IdfDf8ES2q59HpvmAbphgCrIhyycf7z24hxpdlMNa8KCH+NGusDVZ8x6
+DpMDISrjfNpwL+rpE0shnhzmKDo04CYGRceF5E71B2Gk/1s1ujxNOGP+VP0nW/19
+jb8zMDFeuEnkKqF2T2e3lCpTLsP41V4Fl+wWNPL+AkS7hCBCjYyvDemtknRJjqzZ
+OkawH3O73gJ1m07M10Q0IOLfDBMh6qFw2URTIMEgvfErroscCYruNq7BXisWfCHo
+85iiYyiWeWgTpdp6SPFL+apD519ZnS4i6F4XrsVV/Kk02U7izS7QxYi74y7NDA97
+JAQVUSy0JkVmAvwcncQhc5xYc+XJcO3lXd4Gw3UJieVVfwUWm/oKJ+qXeoFUPVUT
+2zOltFsyZX1y0tVS6+A81It3lVzAsihUy4Z0vmPa5IyB1yFxHZ6ljsOV+slH0otE
++RfzSHL+tA/GdojNayLC70qTKri+goIxImhP4XZn3dc/5RaX9rSfooeNGkK89SJx
+s7aK447F0zoeH5GiK3V3aXGY7XLFHE6WSBGy/MQorHu01PF16jlh7Hagyk1BsIM8
+c13TUVcc9pgSHW5gPBqay2f+SfTJCtapK2KO497kfPmP4S5o2JXRYRwFezZa8ODE
+YI8mFy0scsJxEv5P0WlByOFGFRbFkcaD+gMejTz5bBCUUAUVa+s=
+=iumt
 -----END PGP SIGNATURE-----
 
---c5kq2kdwqrnl4eet--
+--fm2sehicf2gvt3hb--
