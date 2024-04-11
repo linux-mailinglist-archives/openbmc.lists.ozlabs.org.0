@@ -1,49 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 403DE8A04E5
-	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 02:47:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB17C8A075D
+	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 06:51:59 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=eA1sORgi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=b8VqGLgX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VFLct5zlVz3vX5
-	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 10:47:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VFS3K3PvXz3vZN
+	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 14:51:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=eA1sORgi;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=b8VqGLgX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VFLcK6QMGz3btk
-	for <openbmc@lists.ozlabs.org>; Thu, 11 Apr 2024 10:46:41 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:712b:6300::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 0DC6B77D;
-	Wed, 10 Apr 2024 17:46:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1712796399;
-	bh=raV87bOTGJVJGNc05b5JkhJwNPN6gu519j9/NWndzkA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=eA1sORgiGg8Px9yCsS7eqKLtdcDkt4iGhkHKCmiOIezd2fpO9nYinNcbV1dYaOy5M
-	 kL3jZwsk2EMaWjtjR54900aKWAEm+nN4exCMzfrkihm+uCmuyiy03E7ik/SeZaLvfb
-	 74PCpFEFZ9Kg2udYkuCYRctwLeVwqbB86h+2rsTw=
-From: Zev Weiss <zev@bewilderbeest.net>
-To: openembedded-core@lists.openembedded.org
-Subject: [OE-core][PATCH v2] bash: Fix file-substitution error-handling bug
-Date: Wed, 10 Apr 2024 17:46:24 -0700
-Message-ID: <20240411004626.17264-1-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.44.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VFS2p550Lz3d42
+	for <openbmc@lists.ozlabs.org>; Thu, 11 Apr 2024 14:51:30 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id BD7F3CE2B4F;
+	Thu, 11 Apr 2024 04:51:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D200CC433F1;
+	Thu, 11 Apr 2024 04:51:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712811087;
+	bh=GUxfCzNobyGC5VcWk513iZKVan8O3e+IeiUp4CdtYLk=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=b8VqGLgXa2uRDbIsxmNSEsx4zA5+/iDwI6SOLu+w8zQTw9+WewG6kT3Q75D7WGJL/
+	 TH/ZWHffaBZf4TtPtv063/KFMtcvgZG+zRgt4S9EHP/z8mF6xOevdRvqaB0Dvzb5Sx
+	 2TeQAGrZmAsDBwBe1ADEe2PfHgCnzfEN4WtUPnuXuq7ofvL8OUsF1KI6v6P07OnxdH
+	 1XeIa0f/M/DewCvnAEw9IRTlhadSmiTamZ/CAYaWmSDeOODc3WnZLJDNqkERYTUG3q
+	 dU2v27sDWR+WL0pbWeNlq35Mtmvn69p+WMi74N16r86r0FP+NsHHLJpM5RJZVg2PwT
+	 /VjcZIxQSymYA==
+Message-ID: <6709fe217cfbd78543e7dfe7c3acec6e.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAP6Zq1htKQ5v0tH9HGRejnKwJ5ZauUWG_CzYUKegkVL4Ek8UxA@mail.gmail.com>
+References: <20240131182653.2673554-1-tmaimon77@gmail.com> <20240131182653.2673554-4-tmaimon77@gmail.com> <74e003c6d80611ddd826ac21f48b4b3a.sboyd@kernel.org> <CAP6Zq1g5gwXvYzO5fnHxG-6__gSCpNBY7VeEPyr4Qtijya6EfQ@mail.gmail.com> <8acf846e767884978f3bb98646433551.sboyd@kernel.org> <CAP6Zq1htKQ5v0tH9HGRejnKwJ5ZauUWG_CzYUKegkVL4Ek8UxA@mail.gmail.com>
+Subject: Re: [PATCH v23 3/3] clk: npcm8xx: add clock controller
+From: Stephen Boyd <sboyd@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 10 Apr 2024 21:51:24 -0700
+User-Agent: alot/0.10
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,77 +59,115 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>
+Cc: devicetree@vger.kernel.org, benjaminfair@google.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is part of a patch that's been upstream for a while but hasn't yet
-been released.  The bug is causing some downstream difficulties, so a
-local patch to tide us over until the next release makes things a bit
-easier.
+Quoting Tomer Maimon (2024-02-29 13:29:46)
+> Hi Stephen,
+>=20
+> Thanks for your reply.
+>=20
+> On Thu, 29 Feb 2024 at 00:48, Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Quoting Tomer Maimon (2024-02-25 10:00:35)
+> > > Hi Stephen,
+> > >
+> > > On Thu, 22 Feb 2024 at 07:58, Stephen Boyd <sboyd@kernel.org> wrote:
+> > > >
+> > > > Quoting Tomer Maimon (2024-01-31 10:26:53)
+> > > > > +
+> > > > > +static unsigned long npcm8xx_clk_div_get_parent(struct clk_hw *h=
+w,
+> > > > > +                                               unsigned long par=
+ent_rate)
+> > > > > +{
+> > > > > +       struct npcm8xx_clk *div =3D to_npcm8xx_clk(hw);
+> > > > > +       unsigned int val;
+> > > > > +
+> > > > > +       regmap_read(div->clk_regmap, div->offset, &val);
+> > > > > +       val =3D val >> div->shift;
+> > > > > +       val &=3D clk_div_mask(div->width);
+> > > > > +
+> > > > > +       return divider_recalc_rate(hw, parent_rate, val, NULL, di=
+v->flags,
+> > > > > +                                  div->width);
+> > > > > +}
+> > > > > +
+> > > > > +static const struct clk_ops npcm8xx_clk_div_ops =3D {
+> > > > > +       .recalc_rate =3D npcm8xx_clk_div_get_parent,
+> > > > > +};
+> > > > > +
+> > > > > +static int npcm8xx_clk_probe(struct platform_device *pdev)
+> > > > > +{
+> > > > > +       struct device_node *parent_np =3D of_get_parent(pdev->dev=
+.of_node);
+> > > >
+> > > > The parent of this device is not a syscon.
+> > > Once I have registered the map that handles both reset and the clock
+> > > in general is syscon, this is why we will modify the DTS so the clock
+> > > and the reset will be under syscon father node
+> > >                 sysctrl: system-controller@f0801000 {
+> > >                         compatible =3D "syscon", "simple-mfd";
+> > >                         reg =3D <0x0 0xf0801000 0x0 0x1000>;
+> > >
+> > >                         rstc: reset-controller {
+> > >                                 compatible =3D "nuvoton,npcm845-reset=
+";
+> > >                                 reg =3D <0x0 0xf0801000 0x0 0xC4>;
+> > >                                 #reset-cells =3D <2>;
+> > >                                 nuvoton,sysgcr =3D <&gcr>;
+> > >                         };
+> > >
+> > >                         clk: clock-controller {
+> > >                                 compatible =3D "nuvoton,npcm845-clk";
+> > >                                 #clock-cells =3D <1>;
+> > >                                 clocks =3D <&refclk>;
+> > >                                 clock-names =3D "refclk";
+> > >                         };
+> > >                 };
+> > > You can see other drivers that using the same method like
+> > > https://elixir.bootlin.com/linux/v6.8-rc5/source/Documentation/device=
+tree/bindings/clock/socionext,uniphier-clock.yaml
+> >
+> > You will need a similar file like
+> > Documentation/devicetree/bindings/soc/socionext/socionext,uniphier-peri=
+ctrl.yaml
+> > then to describe the child nodes.
+> I can do it.
+> >
+> > Socionext may not be the best example to follow. I generally try to
+> > avoid syscon and simply put #reset-cells and #clock-cells in the node
+> If I remove syscon I can't use syscon_node_to_regmap function, What
+> should I use If I remove syscon? auxiliary bus? something else?
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
----
-Changes in v2:
- - Added s-o-b line to patch file [patchtest]
+You should use auxiliary bus. You can make a regmap in the parent
+driver and pass that to the child auxiliary devices still.
 
- .../bash/bash/fix-filesubst-errexit.patch     | 34 +++++++++++++++++++
- meta/recipes-extended/bash/bash_5.2.21.bb     |  1 +
- 2 files changed, 35 insertions(+)
- create mode 100644 meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
+> > for the device. You can use the auxiliary bus to register drivers for
+> > clk and reset and put them into the resepective driver directories.
+> I little bit confused, what is an auxiliary bus to register drivers,
+> can you provide me an example?
 
-diff --git a/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch b/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
-new file mode 100644
-index 000000000000..60f1852316e8
---- /dev/null
-+++ b/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
-@@ -0,0 +1,34 @@
-+From 59ddfda14e3c9aa6286bb4c4c0748f7c1324a65a Mon Sep 17 00:00:00 2001
-+From: Chet Ramey <chet.ramey@case.edu>
-+Date: Fri, 7 Apr 2023 00:28:46 -0700
-+Subject: [PATCH] $(<nosuchfile) is no longer a fatal error with errexit
-+ enabled
-+
-+This is a trimmed-down version of a commit in the bash 'devel' branch
-+[1] that contains this fix as well as other unrelated ones.
-+
-+[1] https://git.savannah.gnu.org/cgit/bash.git/commit/?h=devel&id=ec9447ce9392a0f93d96789c3741285fede8a150
-+
-+Upstream-Status: Backport
-+
-+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-+---
-+ builtins/evalstring.c | 2 +-
-+ 1 file changed, 1 insertion(+), 1 deletion(-)
-+
-+diff --git a/builtins/evalstring.c b/builtins/evalstring.c
-+index df3dd68e2a7e..6612081cd646 100644
-+--- a/builtins/evalstring.c
-++++ b/builtins/evalstring.c
-+@@ -753,7 +753,7 @@ open_redir_file (r, fnp)
-+   fd = open(fn, O_RDONLY);
-+   if (fd < 0)
-+     {
-+-      file_error (fn);
-++      internal_error ("%s: %s", fn, strerror (errno));
-+       free (fn);
-+       if (fnp)
-+ 	*fnp = 0;
-+-- 
-+2.40.0
-+
-diff --git a/meta/recipes-extended/bash/bash_5.2.21.bb b/meta/recipes-extended/bash/bash_5.2.21.bb
-index 46d921bbe6c6..532adf4c1a0d 100644
---- a/meta/recipes-extended/bash/bash_5.2.21.bb
-+++ b/meta/recipes-extended/bash/bash_5.2.21.bb
-@@ -13,6 +13,7 @@ SRC_URI = "${GNU_MIRROR}/bash/${BP}.tar.gz;name=tarball \
-            file://fix-run-builtins.patch \
-            file://use_aclocal.patch \
-            file://0001-changes-to-SIGINT-handler-while-waiting-for-a-child-.patch \
-+           file://fix-filesubst-errexit.patch \
-            "
- 
- SRC_URI[tarball.sha256sum] = "c8e31bdc59b69aaffc5b36509905ba3e5cbb12747091d27b4b977f078560d5b8"
--- 
-2.34.1
+$ git grep -l auxiliary_ -- drivers/clk/
+drivers/clk/microchip/clk-mpfs.c
+drivers/clk/starfive/clk-starfive-jh7110-sys.c
 
+You can decide to make either the clk or the reset driver the "main"
+driver that registers the other auxiliary devices. Either way the DT
+binding has a single node instead of one per logical driver in the
+kernel.
+
+> > Avoid syscon means random drivers can't reach into the device with a
+> > regmap handle and read/write registers that they're not supposed to.
+> Indeed, but the drivers could use the reset and clock memory map only
+> if the module is also a child node.
+>=20
+> Please let me know what is your preferred way to handle it:
+> 1. stick with syscon and upstream-defined documentation for the rst clk s=
+yscon.
+> 2. avoid syscon and use an auxiliary bus, appreciate if you could give
+> me an example of how it should be done.
+> 3. Avoid sycon and handle it differently.
+
+I prefer 2
