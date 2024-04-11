@@ -2,45 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BFE88A04C8
-	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 02:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 403DE8A04E5
+	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 02:47:13 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=fC8QKHBE;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=eA1sORgi;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VFLCJ2prkz3dX4
-	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 10:28:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VFLct5zlVz3vX5
+	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 10:47:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=fC8QKHBE;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=eA1sORgi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VFLBk5Kr9z3bq0
-	for <openbmc@lists.ozlabs.org>; Thu, 11 Apr 2024 10:27:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VFLcK6QMGz3btk
+	for <openbmc@lists.ozlabs.org>; Thu, 11 Apr 2024 10:46:41 +1000 (AEST)
 Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:712b:6300::2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 9BCE777D;
-	Wed, 10 Apr 2024 17:27:53 -0700 (PDT)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 0DC6B77D;
+	Wed, 10 Apr 2024 17:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1712795273;
-	bh=65GGx1QpnvI3lHrxY4FZBOPcE11YXigukyX++z/Fa0k=;
+	s=thorn; t=1712796399;
+	bh=raV87bOTGJVJGNc05b5JkhJwNPN6gu519j9/NWndzkA=;
 	h=From:To:Cc:Subject:Date:From;
-	b=fC8QKHBEA1yIJIIKZ57SjN3vZQTAbzpCVLaUwwdxai72yDtoEOxKjwScndQlPwz0k
-	 mBs80a+GBThjDe33Gh8bhP/pmaRd8Fq4kxDnFMWdC5DJzllKVbQkRX+nD12rzMGKTQ
-	 VSgbI2ZRUvf6YY5ThOnPfRZH+bCj6XC2KmhtTxbU=
+	b=eA1sORgiGg8Px9yCsS7eqKLtdcDkt4iGhkHKCmiOIezd2fpO9nYinNcbV1dYaOy5M
+	 kL3jZwsk2EMaWjtjR54900aKWAEm+nN4exCMzfrkihm+uCmuyiy03E7ik/SeZaLvfb
+	 74PCpFEFZ9Kg2udYkuCYRctwLeVwqbB86h+2rsTw=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: openembedded-core@lists.openembedded.org
-Subject: [OE-core][PATCH] bash: Fix file-substitution error-handling bug
-Date: Wed, 10 Apr 2024 17:27:26 -0700
-Message-ID: <20240411002728.15983-1-zev@bewilderbeest.net>
+Subject: [OE-core][PATCH v2] bash: Fix file-substitution error-handling bug
+Date: Wed, 10 Apr 2024 17:46:24 -0700
+Message-ID: <20240411004626.17264-1-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -66,17 +66,20 @@ easier.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 ---
- .../bash/bash/fix-filesubst-errexit.patch     | 33 +++++++++++++++++++
+Changes in v2:
+ - Added s-o-b line to patch file [patchtest]
+
+ .../bash/bash/fix-filesubst-errexit.patch     | 34 +++++++++++++++++++
  meta/recipes-extended/bash/bash_5.2.21.bb     |  1 +
- 2 files changed, 34 insertions(+)
+ 2 files changed, 35 insertions(+)
  create mode 100644 meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
 
 diff --git a/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch b/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
 new file mode 100644
-index 000000000000..9ef1394e74c4
+index 000000000000..60f1852316e8
 --- /dev/null
 +++ b/meta/recipes-extended/bash/bash/fix-filesubst-errexit.patch
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,34 @@
 +From 59ddfda14e3c9aa6286bb4c4c0748f7c1324a65a Mon Sep 17 00:00:00 2001
 +From: Chet Ramey <chet.ramey@case.edu>
 +Date: Fri, 7 Apr 2023 00:28:46 -0700
@@ -90,6 +93,7 @@ index 000000000000..9ef1394e74c4
 +
 +Upstream-Status: Backport
 +
++Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 +---
 + builtins/evalstring.c | 2 +-
 + 1 file changed, 1 insertion(+), 1 deletion(-)
