@@ -2,79 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1BF88A184B
-	for <lists+openbmc@lfdr.de>; Thu, 11 Apr 2024 17:12:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB6B78A27EF
+	for <lists+openbmc@lfdr.de>; Fri, 12 Apr 2024 09:25:45 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lHVb/POe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=PH3Q5Lnc;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VFjqk47hVz3vYs
-	for <lists+openbmc@lfdr.de>; Fri, 12 Apr 2024 01:12:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VG7QD5CqWz3vlp
+	for <lists+openbmc@lfdr.de>; Fri, 12 Apr 2024 17:25:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lHVb/POe;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=PH3Q5Lnc;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2d; helo=mail-oo1-xc2d.google.com; envelope-from=tcminyard@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VFjp91ZKcz3dS8;
-	Fri, 12 Apr 2024 01:11:27 +1000 (AEST)
-Received: by mail-oo1-xc2d.google.com with SMTP id 006d021491bc7-5aa2bd6f651so3528933eaf.0;
-        Thu, 11 Apr 2024 08:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712848284; x=1713453084; darn=lists.ozlabs.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:reply-to:message-id:subject:cc:to:from:date
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=5+zFEYcFGgbVYjM4vgY3BN6Q53qllrvkhMJ4PRExZuo=;
-        b=lHVb/POekJVyhuNq0qLqCjCKeYGbbf1kXK0nMxBa+I+6OQ+0ONyJf76uGtL+qFYqdL
-         yvjDqMDF7Hr+caU9g9AZ9BinvLkajWehQs4bULu82h2TqYqDuWSaDrI4jIMo5wXPqoWN
-         y5v+DjmbrgLcVl/U54BY0w3IXeDzSfSXMNZl2iaLVnzs7QTzmJn8/jhRpK4kaaoO49Ub
-         p1TI8eb+E+zZRL7aQQ7hlNtnaIZBB8Ee1axWuDLPn+JJBhcW2wM4/E/E+LXvWN2Hwnzd
-         Cj9XjNY+iCME43UGWPHrdP5NL9y0lW7kel8ENa5Hrc+b1Y+iWDkdgnWh4KApvqba176z
-         bDyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712848284; x=1713453084;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:reply-to:message-id:subject:cc:to:from:date
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5+zFEYcFGgbVYjM4vgY3BN6Q53qllrvkhMJ4PRExZuo=;
-        b=o6XNoWdhsPzqDoaiU2FbqRvg0O34y3stWITu93Rh1RbaH1Mx79iIFQYOK/lknwoXei
-         9PV4p7hLJfHfIVmAEteCci7o4SsINur8Kd0rCbeL4Rk9n3xPhVpn/qpdVSOeDMRPXh/g
-         mGSIIrsAxIAILX4IdNP29y4f93R+hSQNPyEJcMRQP6ZcWgR1Hexf7FRlcVqlKESI/KO4
-         Pi0BdyPgtCPuNUz+b6iuP3j3HaoYoQj/0jNJhf/QAgQSWjdngziLyPtXwZwlMiqb/evu
-         v8zTluCtZXQZxP+kZLgWbie2QYHym/fkyYkiSgfEo2gCpLrmEwV/l3A8Z92bp0nLn8Xs
-         bHtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVVb73gG24K9XG/d5Du+mLUpgK9DlXcsjM16q5SbBNDqNTUOaR6yuNUm8DL7c7hbnJlXBminDSb9xif8iB+/Ft3WhDw6shsFbKXB5d+jRcaPLdBrr7CVZNEK7rhVmMLmIahuxfce4aTz0DdMECFRVyGKDZB04KLnPvWcPSMdfJK0N8Kr43H4g==
-X-Gm-Message-State: AOJu0YzgCDKxJZxGYB69yopfGNVyCC9nxLZBe5zzdpY4afR6wAFGrCWX
-	zjMN5MFsVEPA9ZWC+EF22gw1auGaikKPDltQbQuIXyp+fSHqq3M=
-X-Google-Smtp-Source: AGHT+IFB6Cokk57WMCZhgqg113k9hoFMhs9i+078DRUKacemNlRQbXO4GTcI3zUnKw7d8YHw3vLDpA==
-X-Received: by 2002:a05:6820:1391:b0:5aa:3b8a:b491 with SMTP id i17-20020a056820139100b005aa3b8ab491mr6964498oow.4.1712848283554;
-        Thu, 11 Apr 2024 08:11:23 -0700 (PDT)
-Received: from serve.minyard.net ([47.184.173.124])
-        by smtp.gmail.com with ESMTPSA id ev8-20020a056820310800b005a9c8091580sm353207oob.22.2024.04.11.08.11.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Apr 2024 08:11:22 -0700 (PDT)
-Received: from mail.minyard.net (unknown [IPv6:2001:470:b8f6:1b:e322:3bf8:f626:ba3a])
-	by serve.minyard.net (Postfix) with ESMTPSA id 22476180011;
-	Thu, 11 Apr 2024 15:11:22 +0000 (UTC)
-Date: Thu, 11 Apr 2024 10:11:21 -0500
-From: Corey Minyard <minyard@acm.org>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH 0/6] ipmi: Convert to platform remove callback returning
- void
-Message-ID: <Zhf9mQx/KgXOzPTs@mail.minyard.net>
-References: <cover.1709655755.git.u.kleine-koenig@pengutronix.de>
- <3uhfeeahn2u23mxyumyxcyx4kmcxzczipkan7eqh4aslsmhxyz@zgsmwj2jvb2v>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VG7Pg5d6Gz3dWr
+	for <openbmc@lists.ozlabs.org>; Fri, 12 Apr 2024 17:25:11 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id C746CCE3796;
+	Fri, 12 Apr 2024 07:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED614C113CC;
+	Fri, 12 Apr 2024 07:25:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712906708;
+	bh=1kX9kfzHzhrxx38AopTffWG2kYPAhrnomHNnphARmp8=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=PH3Q5Lnc1/dyrDs7XafAWFsC4e9SKfVWIecn+kI7jaBT27bEfiFtdA0uHmPVH5J8c
+	 9zHCfa84p3D1trAOIsnNiRi2IrN9qyCN+jtVbqwdjkKfMWppvw0lEVhdLmTapBNjFE
+	 rvDW8Bh6PFK/legh5nAd4uYCYoU/zH0xqH3HT8hdEdXDgTxJIp+nOl1ztSTmQUfUCn
+	 gjTKu+ceV1jgF5L3ssNdSDwGG5izOj/yNTE8nZFJXsucVcMxw8IX87zJS9LHlOEd6+
+	 CcuDo4gtH0wPsrQvNqfxxjCc90PoSfLzkdcB+jPGcf8kxMFQ2VAlTuIr8MBIofSurI
+	 k13csdn57iP2g==
+Message-ID: <9be144291cda6d9714252c9cd83649c2.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3uhfeeahn2u23mxyumyxcyx4kmcxzczipkan7eqh4aslsmhxyz@zgsmwj2jvb2v>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240401-wpcm-clk-v11-3-379472961244@gmx.net>
+References: <20240401-wpcm-clk-v11-0-379472961244@gmx.net> <20240401-wpcm-clk-v11-3-379472961244@gmx.net>
+Subject: Re: [PATCH v11 3/4] clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
+From: Stephen Boyd <sboyd@kernel.org>
+To: Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, devicetree@vger.kernel.org, linux-clk@vger.kernel.org, openbmc@lists.ozlabs.org
+Date: Fri, 12 Apr 2024 00:25:05 -0700
+User-Agent: alot/0.10
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,43 +59,242 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: minyard@acm.org
-Cc: Benjamin Fair <benjaminfair@google.com>, linux-aspeed@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, openbmc@lists.ozlabs.org, Nicholas Piggin <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, Tali Perry <tali.perry1@gmail.com>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Joel Stanley <joel@jms.id.au>, kernel@pengutronix.de, Patrick Venture <venture@google.com>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, openipmi-developer@lists.sourceforge.net, linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Joel Stanley <joel@jms.id.au>, Philipp Zabel <p.zabel@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 11, 2024 at 09:15:03AM +0200, Uwe Kleine-König wrote:
-> Hello,
-> 
-> On Tue, Mar 05, 2024 at 05:26:57PM +0100, Uwe Kleine-König wrote:
-> > this series converts all drivers below drivers/char/ipmi to struct
-> > platform_driver::remove_new(). See commit 5c5a7680e67b ("platform: Provide a
-> > remove callback that returns no value") for an extended explanation and the
-> > eventual goal.
-> > 
-> > All conversations are trivial, because their .remove() callbacks
-> > returned zero unconditionally.
-> > 
-> > There are no interdependencies between these patches, so they could be
-> > picked up individually. But I'd hope that they get picked up all
-> > together by Corey.
+Quoting Jonathan Neusch=C3=A4fer (2024-04-01 07:06:32)
+> This driver implements the following features w.r.t. the clock and reset
+> controller in the WPCM450 SoC:
+>=20
+> - It calculates the rates for all clocks managed by the clock controller
+> - It leaves the clock tree mostly unchanged, except that it enables/
+>   disables clock gates based on usage.
+> - It exposes the reset lines managed by the controller using the
+>   Generic Reset Controller subsystem
+>=20
+> NOTE: If the driver and the corresponding devicetree node are present,
+>       the driver will disable "unused" clocks. This is problem until
+>       the clock relations are properly declared in the devicetree (in a
+>       later patch). Until then, the clk_ignore_unused kernel parameter
+>       can be used as a workaround.
+>=20
+> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
+>=20
+> I have considered converting this driver to a platform driver instead of
+> using CLK_OF_DECLARE, because platform drivers are generally the way
+> forward. However, the timer-npcm7xx driver used on the same platform
+> requires is initialized with TIMER_OF_DECLARE and thus requires the
+> clocks to be available earlier than a platform driver can provide them.
 
-Yeah, I was kind of waiting for more reviews, but this is pretty
-straightforward.  I've pulled this into my tree.
+In that case you can use CLK_OF_DECLARE_DRIVER(), register the clks
+needed for the timer driver to probe, and then put the rest of the clk
+registration in a normal platform driver.
 
--corey
+> diff --git a/drivers/clk/nuvoton/clk-wpcm450.c b/drivers/clk/nuvoton/clk-=
+wpcm450.c
+> new file mode 100644
+> index 00000000000000..9100c4b8a56483
+> --- /dev/null
+> +++ b/drivers/clk/nuvoton/clk-wpcm450.c
+> @@ -0,0 +1,372 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Nuvoton WPCM450 clock and reset controller driver.
+> + *
+> + * Copyright (C) 2022 Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> + */
+> +
+> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
-> 
-> Apart from a (positive) review reply I didn't get any feedback to this
-> series. My quest to change the prototype of struct
-> platform_driver::remove depends on these patches, so it would be great
-> if they made it in during the next merge window.
-> 
-> Best regards
-> Uwe
-> 
-> -- 
-> Pengutronix e.K.                           | Uwe Kleine-König            |
-> Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Isn't KBUILD_MODNAME an option already for dynamic debug?
 
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/of_address.h>
+> +#include <linux/reset-controller.h>
+> +#include <linux/reset/reset-simple.h>
+> +#include <linux/slab.h>
+> +
+[...]
+> +
+> +static const struct clk_parent_data default_parents[] =3D {
+> +       { .name =3D "pll0" },
+> +       { .name =3D "pll1" },
+> +       { .name =3D "ref" },
+> +};
+> +
+> +static const struct clk_parent_data huart_parents[] =3D {
+> +       { .fw_name =3D "ref" },
+> +       { .name =3D "refdiv2" },
 
+Please remove all .name elements and use indexes or direct pointers.
+
+> +};
+> +
+> +static const struct wpcm450_clksel_data clksel_data[] =3D {
+> +       { "cpusel", default_parents, ARRAY_SIZE(default_parents),
+> +               parent_table, 0, 2, -1, CLK_IS_CRITICAL },
+> +       { "clkout", default_parents, ARRAY_SIZE(default_parents),
+> +               parent_table, 2, 2, -1, 0 },
+> +       { "usbphy", default_parents, ARRAY_SIZE(default_parents),
+> +               parent_table, 6, 2, -1, 0 },
+> +       { "uartsel", default_parents, ARRAY_SIZE(default_parents),
+> +               parent_table, 8, 2, WPCM450_CLK_USBPHY, 0 },
+> +       { "huartsel", huart_parents, ARRAY_SIZE(huart_parents),
+> +               parent_table, 10, 1, -1, 0 },
+> +};
+> +
+> +static const struct clk_div_table div_fixed2[] =3D {
+> +       { .val =3D 0, .div =3D 2 },
+> +       { }
+> +};
+> +
+> +struct wpcm450_clkdiv_data {
+> +       const char *name;
+> +       struct clk_parent_data parent;
+> +       int div_flags;
+> +       const struct clk_div_table *table;
+> +       int shift;
+> +       int width;
+> +       unsigned long flags;
+> +};
+> +
+> +static struct wpcm450_clkdiv_data clkdiv_data_early[] =3D {
+> +       { "refdiv2", { .name =3D "ref" }, 0, div_fixed2, 0, 0 },
+> +};
+> +
+> +static const struct wpcm450_clkdiv_data clkdiv_data[] =3D {
+> +       { "cpu", { .name =3D "cpusel" }, 0, div_fixed2, 0, 0, CLK_IS_CRIT=
+ICAL },
+> +       { "adcdiv", { .name =3D "ref" }, CLK_DIVIDER_POWER_OF_TWO, NULL, =
+28, 2, 0 },
+> +       { "apb", { .name =3D "ahb" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 26,=
+ 2, 0 },
+> +       { "ahb", { .name =3D "cpu" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 24,=
+ 2, 0 },
+> +       { "uart", { .name =3D "uartsel" }, 0, NULL, 16, 4, 0 },
+> +       { "ahb3", { .name =3D "ahb" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 8,=
+ 2, 0 },
+> +};
+> +
+> +struct wpcm450_clken_data {
+> +       const char *name;
+> +       struct clk_parent_data parent;
+> +       int bitnum;
+> +       unsigned long flags;
+> +};
+> +
+> +static const struct wpcm450_clken_data clken_data[] =3D {
+> +       { "fiu", { .name =3D "ahb3" }, WPCM450_CLK_FIU, 0 },
+
+This actually is  { .index =3D 0, .name =3D "ahb3" } and that is a bad
+combination. struct clk_parent_data should only have .name as a fallback
+when there's an old binding out there that doesn't have the 'clocks'
+property for the clk provider node. There shouldn't be any .name
+property because this is new code and a new binding.
+
+> +       { "xbus", { .name =3D "ahb3" }, WPCM450_CLK_XBUS, 0 },
+> +       { "kcs", { .name =3D "apb" }, WPCM450_CLK_KCS, 0 },
+> +       { "shm", { .name =3D "ahb3" }, WPCM450_CLK_SHM, 0 },
+> +       { "usb1", { .name =3D "ahb" }, WPCM450_CLK_USB1, 0 },
+> +       { "emc0", { .name =3D "ahb" }, WPCM450_CLK_EMC0, 0 },
+> +       { "emc1", { .name =3D "ahb" }, WPCM450_CLK_EMC1, 0 },
+> +       { "usb0", { .name =3D "ahb" }, WPCM450_CLK_USB0, 0 },
+> +       { "peci", { .name =3D "apb" }, WPCM450_CLK_PECI, 0 },
+> +       { "aes", { .name =3D "apb" }, WPCM450_CLK_AES, 0 },
+> +       { "uart0", { .name =3D "uart" }, WPCM450_CLK_UART0, 0 },
+> +       { "uart1", { .name =3D "uart" }, WPCM450_CLK_UART1, 0 },
+> +       { "smb2", { .name =3D "apb" }, WPCM450_CLK_SMB2, 0 },
+> +       { "smb3", { .name =3D "apb" }, WPCM450_CLK_SMB3, 0 },
+> +       { "smb4", { .name =3D "apb" }, WPCM450_CLK_SMB4, 0 },
+> +       { "smb5", { .name =3D "apb" }, WPCM450_CLK_SMB5, 0 },
+> +       { "huart", { .name =3D "huartsel" }, WPCM450_CLK_HUART, 0 },
+> +       { "pwm", { .name =3D "apb" }, WPCM450_CLK_PWM, 0 },
+> +       { "timer0", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER0, 0 },
+> +       { "timer1", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER1, 0 },
+> +       { "timer2", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER2, 0 },
+> +       { "timer3", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER3, 0 },
+> +       { "timer4", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER4, 0 },
+> +       { "mft0", { .name =3D "apb" }, WPCM450_CLK_MFT0, 0 },
+> +       { "mft1", { .name =3D "apb" }, WPCM450_CLK_MFT1, 0 },
+> +       { "wdt", { .name =3D "refdiv2" }, WPCM450_CLK_WDT, 0 },
+> +       { "adc", { .name =3D "adcdiv" }, WPCM450_CLK_ADC, 0 },
+> +       { "sdio", { .name =3D "ahb" }, WPCM450_CLK_SDIO, 0 },
+> +       { "sspi", { .name =3D "apb" }, WPCM450_CLK_SSPI, 0 },
+> +       { "smb0", { .name =3D "apb" }, WPCM450_CLK_SMB0, 0 },
+> +       { "smb1", { .name =3D "apb" }, WPCM450_CLK_SMB1, 0 },
+> +};
+> +
+> +static DEFINE_SPINLOCK(wpcm450_clk_lock);
+> +
+> +/*
+> + * NOTE: Error handling is very rudimentary here. If the clock driver in=
+itial-
+> + * ization fails, the system is probably in bigger trouble than what is =
+caused
+
+Don't break words across lines with hyphens.
+
+> + * by a few leaked resources.
+> + */
+> +
+> +static void __init wpcm450_clk_init(struct device_node *np)
+> +{
+> +       struct clk_hw_onecell_data *clk_data;
+> +       static struct clk_hw **hws;
+> +       static struct clk_hw *hw;
+> +       void __iomem *clk_base;
+> +       int i, ret;
+> +       struct reset_simple_data *reset;
+> +
+> +       clk_base =3D of_iomap(np, 0);
+> +       if (!clk_base) {
+> +               pr_err("%pOFP: failed to map registers\n", np);
+> +               of_node_put(np);
+> +               return;
+> +       }
+> +       of_node_put(np);
+
+The 'np' is used later when registering PLLs. You can only put the node
+after it's no longer used. Also, you never got the node with
+of_node_get(), so putting it here actually causes an underflow on the
+refcount. Just remove all the get/puts instead.
+
+> +
+> +       clk_data =3D kzalloc(struct_size(clk_data, hws, WPCM450_NUM_CLKS)=
+, GFP_KERNEL);
+> +       if (!clk_data)
+> +               return;
+> +
+> +       clk_data->num =3D WPCM450_NUM_CLKS;
+[...]
+> +       /* Reset controller */
+> +       reset =3D kzalloc(sizeof(*reset), GFP_KERNEL);
+> +       if (!reset)
+> +               return;
+> +       reset->rcdev.owner =3D THIS_MODULE;
+> +       reset->rcdev.nr_resets =3D WPCM450_NUM_RESETS;
+> +       reset->rcdev.ops =3D &reset_simple_ops;
+> +       reset->rcdev.of_node =3D np;
+> +       reset->membase =3D clk_base + REG_IPSRST;
+> +       ret =3D reset_controller_register(&reset->rcdev);
+> +       if (ret)
+> +               pr_err("Failed to register reset controller: %pe\n", ERR_=
+PTR(ret));
+
+It would be nicer to register this device as an auxiliary device with a
+single API call and then have all the resets exist in that file
+instead of this file. The driver would be put in drivers/reset/ as well.
+
+> +
+> +       of_node_put(np);
+
+Drop this of_node_put()
