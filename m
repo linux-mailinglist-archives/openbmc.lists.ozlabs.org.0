@@ -2,66 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2271F8A7284
-	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 19:40:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 009DC8A7655
+	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 23:24:04 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wanadoo.fr header.i=@wanadoo.fr header.a=rsa-sha256 header.s=t20230301 header.b=pf4YBwr/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cPlGXVsH;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VJrtB6CFJz3vX2
-	for <lists+openbmc@lfdr.de>; Wed, 17 Apr 2024 03:40:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VJxqj5WPHz3vX7
+	for <lists+openbmc@lfdr.de>; Wed, 17 Apr 2024 07:24:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wanadoo.fr header.i=@wanadoo.fr header.a=rsa-sha256 header.s=t20230301 header.b=pf4YBwr/;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cPlGXVsH;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wanadoo.fr (client-ip=80.12.242.84; helo=msa.smtpout.orange.fr; envelope-from=christophe.jaillet@wanadoo.fr; receiver=lists.ozlabs.org)
-Received: from msa.smtpout.orange.fr (smtp-84.smtpout.orange.fr [80.12.242.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.10; helo=mgamail.intel.com; envelope-from=tony.luck@intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Wed, 17 Apr 2024 07:23:32 AEST
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJrsd10tDz3cS3
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Apr 2024 03:40:18 +1000 (AEST)
-Received: from [192.168.1.18] ([86.243.17.157])
-	by smtp.orange.fr with ESMTPA
-	id wmlzrLAy9o2EHwmlzrvVAj; Tue, 16 Apr 2024 19:39:14 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1713289154;
-	bh=U43Gs7s+4BWLSZzPuZsEnIb/F72Ohs3d3kKx1m0cYEs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=pf4YBwr/L9plZdChLf677KHCrfO7QM70lqCmEiD962iWnKgS3W0lFH8guE0o2z1G2
-	 2dBP8xxezYIK4FlsqJOjjmxSieD9h1jlb7PvWJ4sFBoEgKVry0KWZP53XSVVISS5/Z
-	 5XPJrsMXittrnTpWMrDSEdBK1fZBm6ksire+/fQLDloTcWyLDTe++Aup9vIJ5PMcmC
-	 4cGolyuFnjy9inujS47dRUzbIehOLqXWsY1vK35dX1eWU/wXGL/717QBwMgx75Rba3
-	 nX8g8Wdr+ZTMKdZoFEmFrgB/1dznRxdnuR4pzHNsa0zJ8oMjroK33EWJLcQbG+pH/S
-	 O4RQ+3NVg+BGg==
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Tue, 16 Apr 2024 19:39:14 +0200
-X-ME-IP: 86.243.17.157
-Message-ID: <3a4e0543-fc40-41dc-8aaa-19811b96f1cb@wanadoo.fr>
-Date: Tue, 16 Apr 2024 19:39:09 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJxq82bmLz3cG3
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Apr 2024 07:23:31 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1713302613; x=1744838613;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=2gPGaDcRT5gcL/MB7CRiRDvqupdeUr0UkHk3k5ZMu6g=;
+  b=cPlGXVsHb8AypX286QGZO9ftzkjlBT4a+8y81e9RlWyxjArhek2X7Osb
+   dzW4FsaSOW3oREvKznkW3ffwdUwVoZf8vClQrMzNoI7FowpD2ahsMg9tb
+   Mmsf6u6sU+SkGNxVUfpNc97byvFtvMkYcYPk9pqR3AJ3OnCQ37MwTMkyA
+   6/wyCffS/OFEyC29XaQc4fU42uRKAKK1UjigJz84n7J9+WsF0qkuOFBw1
+   NvB1q8a/PjhzmkdMPzdpfsmgeSLv6ws7yvo72mCD3ajDNM0jb/KBz9afA
+   hI2XOL7vLPb8EuiEdIyoON3GAQO9xWSWXNF6YZd7RVBNAkPGd95Lq7smu
+   w==;
+X-CSE-ConnectionGUID: +9gebRWCRd+YX+gfRtHPCA==
+X-CSE-MsgGUID: UjGsY+7oQxuJ7mQK7PLyew==
+X-IronPort-AV: E=McAfee;i="6600,9927,11046"; a="26234926"
+X-IronPort-AV: E=Sophos;i="6.07,207,1708416000"; 
+   d="scan'208";a="26234926"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2024 14:22:23 -0700
+X-CSE-ConnectionGUID: Pi2uSVG5SZCFXfiEfYLbUQ==
+X-CSE-MsgGUID: HaRXpSXaQd+o5xzaVUPZtw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,207,1708416000"; 
+   d="scan'208";a="22267095"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.105])
+  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Apr 2024 14:22:22 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: linux-kernel@vger.kernel.org
+Subject: [PATCH v3 53/74] x86/cpu/vfm: Update drivers/peci/cpu.c
+Date: Tue, 16 Apr 2024 14:22:21 -0700
+Message-ID: <20240416212221.9662-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240416211941.9369-1-tony.luck@intel.com>
+References: <20240416211941.9369-1-tony.luck@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hwmon: (max31790): Support config PWM output
- becomes TACH
-To: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>,
- Chanh Nguyen <chanh@os.amperecomputing.com>, Jean Delvare
- <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Justin Ledford
- <justinledford@google.com>, devicetree@vger.kernel.org,
- linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Open Source Submission <patches@amperecomputing.com>
-References: <20240414042246.8681-1-chanh@os.amperecomputing.com>
- <20240414042246.8681-3-chanh@os.amperecomputing.com>
- <79bef664-b191-4905-896c-afab341b982b@wanadoo.fr>
- <9bc38f67-01e0-4a38-8db8-4086a215b474@amperemail.onmicrosoft.com>
-Content-Language: en-MW
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <9bc38f67-01e0-4a38-8db8-4086a215b474@amperemail.onmicrosoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,64 +70,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
+Cc: openbmc@lists.ozlabs.org, Tony Luck <tony.luck@intel.com>, patches@lists.linux.dev, Iwona Winiarska <iwona.winiarska@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Le 16/04/2024 à 07:27, Chanh Nguyen a écrit :
-> 
-> 
-> On 14/04/2024 15:03, Christophe JAILLET wrote:
->> Le 14/04/2024 à 06:22, Chanh Nguyen a écrit :
->>> PWMOUT pins on MAX31790 can be configured as a tachometer input pin by
->>> setting bit[0] in the Configuration Register. When the bit[0] of a 
->>> channel
->>> is set, the PWMOUT pin becomes the tach input pin for the channel 
->>> plus six.
->>>
->>> This commit allows the kernel to set those pins when necessary if the
->>> maxim,pwmout-pin-as-tach-input DT property exists.
->>>
->>> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
->>> ---
->>> Changes in v2:
->>>   - Update the vendor property name to 
->>> "maxim,pwmout-pin-as-tach-input"   [Rob]
->>
->> ...
-> 
-> Hi CJ, what does it mean?
+New CPU #defines encode vendor and family as well as model.
 
-Hi,
-just a shortcut of my name : Christophe Jaillet.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/peci-cpu.h |  1 +
+ drivers/peci/cpu.c       | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
-CJ
-
->>
->>> @@ -528,6 +532,33 @@ static int max31790_probe(struct i2c_client 
->>> *client)
->>>       if (err)
->>>           return err;
->>> +    if (device_property_present(dev, 
->>> "maxim,pwmout-pin-as-tach-input")) {
->>> +        err = device_property_read_u8_array(dev, 
->>> "maxim,pwmout-pin-as-tach-input",
->>> +                            pwmout_to_tach, NR_CHANNEL);
->>> +        if (err) {
->>> +            /* The maxim,pwmout-pin-as-tach-input is an array of six 
->>> values */
->>> +            dev_warn(dev, "The maxim,pwmout-pin-as-tach-input 
->>> property exist but malform");
->>
->> Nit: exists
->> Nit: malformed or "is malformed"
->>
-> 
-> Thank CJ,
-> 
-> I'll update that in the patch v3
-> 
->> CJ
-> 
-> 
+diff --git a/include/linux/peci-cpu.h b/include/linux/peci-cpu.h
+index ff8ae9c26c80..2c972b728524 100644
+--- a/include/linux/peci-cpu.h
++++ b/include/linux/peci-cpu.h
+@@ -6,6 +6,7 @@
+ 
+ #include <linux/types.h>
+ 
++#include "../../arch/x86/include/asm/cpu_device_id.h"
+ #include "../../arch/x86/include/asm/intel-family.h"
+ 
+ #define PECI_PCS_PKG_ID			0  /* Package Identifier Read */
+diff --git a/drivers/peci/cpu.c b/drivers/peci/cpu.c
+index bd990acd92b8..8e8292c05551 100644
+--- a/drivers/peci/cpu.c
++++ b/drivers/peci/cpu.c
+@@ -294,38 +294,38 @@ peci_cpu_probe(struct peci_device *device, const struct peci_device_id *id)
+ 
+ static const struct peci_device_id peci_cpu_device_ids[] = {
+ 	{ /* Haswell Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_HASWELL_X,
++		.family	= VFM_FAMILY(INTEL_HASWELL_X),
++		.model	= VFM_MODEL(INTEL_HASWELL_X),
+ 		.data	= "hsx",
+ 	},
+ 	{ /* Broadwell Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_BROADWELL_X,
++		.family	= VFM_FAMILY(INTEL_BROADWELL_X),
++		.model	= VFM_MODEL(INTEL_BROADWELL_X),
+ 		.data	= "bdx",
+ 	},
+ 	{ /* Broadwell Xeon D */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_BROADWELL_D,
++		.family	= VFM_FAMILY(INTEL_BROADWELL_D),
++		.model	= VFM_MODEL(INTEL_BROADWELL_D),
+ 		.data	= "bdxd",
+ 	},
+ 	{ /* Skylake Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_SKYLAKE_X,
++		.family	= VFM_FAMILY(INTEL_SKYLAKE_X),
++		.model	= VFM_MODEL(INTEL_SKYLAKE_X),
+ 		.data	= "skx",
+ 	},
+ 	{ /* Icelake Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_ICELAKE_X,
++		.family	= VFM_FAMILY(INTEL_ICELAKE_X),
++		.model	= VFM_MODEL(INTEL_ICELAKE_X),
+ 		.data	= "icx",
+ 	},
+ 	{ /* Icelake Xeon D */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_ICELAKE_D,
++		.family	= VFM_FAMILY(INTEL_ICELAKE_D),
++		.model	= VFM_MODEL(INTEL_ICELAKE_D),
+ 		.data	= "icxd",
+ 	},
+ 	{ /* Sapphire Rapids Xeon */
+-		.family	= 6,
+-		.model	= INTEL_FAM6_SAPPHIRERAPIDS_X,
++		.family	= VFM_FAMILY(INTEL_SAPPHIRERAPIDS_X),
++		.model	= VFM_MODEL(INTEL_SAPPHIRERAPIDS_X),
+ 		.data	= "spr",
+ 	},
+ 	{ }
+-- 
+2.44.0
 
