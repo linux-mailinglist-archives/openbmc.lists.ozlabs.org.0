@@ -1,105 +1,163 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 866308A4BB7
-	for <lists+openbmc@lfdr.de>; Mon, 15 Apr 2024 11:40:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C1D58A6280
+	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 06:40:03 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=EQFmdKDL;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=t3Lrh75t;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VJ2GQ2fq6z3dVC
-	for <lists+openbmc@lfdr.de>; Mon, 15 Apr 2024 19:40:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VJWYF0DL0z3f0P
+	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 14:40:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=EQFmdKDL;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=t3Lrh75t;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hotmail.com (client-ip=2a01:111:f400:7e1a::81e; helo=eur05-db8-obe.outbound.protection.outlook.com; envelope-from=paul_d_smith@hotmail.com; receiver=lists.ozlabs.org)
-Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05olkn2081e.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e1a::81e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:2414::700; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20700.outbound.protection.outlook.com [IPv6:2a01:111:f403:2414::700])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJ2Fs342xz3cM2
-	for <openbmc@lists.ozlabs.org>; Mon, 15 Apr 2024 19:40:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJWXg5mtKz2yhZ
+	for <openbmc@lists.ozlabs.org>; Tue, 16 Apr 2024 14:39:29 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SufhN62kOq0aspEtCSEf+hv1IxHp6T5DHBIgxdJr5musfZCOj8cIM5Jiu/WP4SBp6pjQxxIsH3irTbwT57L8Cf6dAAXyWp2Mc6SvMkY9H+GWxJseFv+7an6dDWFYC5JX4IFDzW+qsASTGbyWdVCyoB5KpwDYsbGksT7Ch86olL+dNA59eWabxcL9tbeOLSOc9iY6//FSQHmP3OBODYsCkDzT2nKbptbJsrR5xZwHWcACYCFHW8/xTpSA8p5fh3v6nAjMazORoXI66nuN5vnUMZVs/shvzq9TGjK9i/IsyWVX5NJvvlBEqO6bq31j4JQuO7atGqJjZrec1r8J7KAEAg==
+ b=hDMfBNcwMbXHaehsm9XS3hcCxIUOoEoHkvhLTQkh42OyWtypLrPdn8P+fig5wFuuZmy6/IzWEBSCdFO2d7mLL5Saixev+ElrpaIdHdqhWW1a4yX2NxGyTaWC2EWwbiEyRw/0wedzwabBj8gTNQw6RpDPGzN5snFNenbRzZpHYicXBPeA8k6hfs/UhNMfvq3u8Ytb9bJdJvwIw/eRuXHa9wq9g7YtcfjFmn64YNRadP0O0M0sVMZMl45KPJWNKMvhfB8+X8eORrqDKrXHDTwC5ZLArPqROZ3Ow09CisJ5bT1eZ6elEVC9cjxi4ZH9s/bSjx2GT6/NcOjxaugs1VCkLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X2tGrMSIVNzafEnDB2Lv/pAEA1QZFzb2bvJHhBxBGBM=;
- b=hhjyIUFUZdjQFY8zsVe/8dvirhsYYPn+C8e/hW3D7dz0b7wjM31/U5cJz6BbsZ6f/mJ7/TsGdKnb56exVKjFc0NY2J59PyM1U9AIofS1An1teaGH7oaoshQjC5Lq0a+K5xTmvZgXCsbEez5C35qIhZ0cy0z66FExltnWvCH817OTdeaFgL1FBww1qRqWKAnrPLrAv4n7LlSvIcihoUp2hF/WWcYX06g0Zb6e6zAqHRfhkNF3IgQUZjGfA5cR9wyy1jkYqPOxEeQ4PKu/+oHDWsjj2KPqe+FinRQKZ1XzHBOQR8B1Yx22wYs/10uzWxGwUUttAhnDcdEByIaupaC7Gw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
+ bh=ax5DanL14r/GomlVtrD4nbwtVqEQc0x+zpwIHeLB6k8=;
+ b=hSxM0j0wot7RRClgaLTdoMKhDH6pmJY85HrLykaYS3QIw6nP46bqiHHWlGS4fY2igLp1j+UupvsCaq3ms3yv8E+56k/aAO6dzno2FAuPWj5keixRCDeV6uEHM7A62hgYEpVBwjbRrqXZeRB7J3/UFdOujC8zL2aeZoRAt3uOll10Uma3muRqchPzpzbh8BeOaY61ZAfqSO9zwnDhX8k4XX25V6UQohLwmfbVpTjxnCYxew+xEuuuREkodAUYT+THGDmIiiDA8gsGjkjOhAHufTVhed/u5xFFDBZPbHUKlXqAn80cF5B+k4ub2KMOnRRLYyE9VI5xt0kEE1bQ4Da83g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X2tGrMSIVNzafEnDB2Lv/pAEA1QZFzb2bvJHhBxBGBM=;
- b=EQFmdKDLb5U/3Zypc/rUIasHxL3u+tLid8eeQBeQEWlABc8TDe3ov/ozysyRQFDgJuc4lEbcrLTBWFNGZvpH3gqUGp4fJzYbcSmm5vujSmA/NmxgxmA1AM7lIMhzZ7UcOjAmgNOKfU3UwJfbiehXrcZnoHRFMLJVtjq/PeG00tOooD+Umu5pAXA3OtmdifOqX/nqU+f18dJuMDxJzM5hZMt30TPlgxPAu39qZKEW9sUAzJtgraATr5VmJLcT4Zzwdl4S3ewqtcUqM2o7b73d4jz9kk2ItkOElP0ks6Jo7P9kB0dUVIOmrtsNAB2hqcYQI8SdjHtnXqHB/VBHCbLNfg==
-Received: from AS8P192MB1287.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:3c3::16)
- by PR3P192MB0537.EURP192.PROD.OUTLOOK.COM (2603:10a6:102:43::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7452.50; Mon, 15 Apr
- 2024 09:39:37 +0000
-Received: from AS8P192MB1287.EURP192.PROD.OUTLOOK.COM
- ([fe80::3504:3224:e199:97de]) by AS8P192MB1287.EURP192.PROD.OUTLOOK.COM
- ([fe80::3504:3224:e199:97de%4]) with mapi id 15.20.7452.049; Mon, 15 Apr 2024
- 09:39:37 +0000
-From: Paul Smith <paul_d_smith@hotmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Virtual media image URL with parameters
-Thread-Topic: Virtual media image URL with parameters
-Thread-Index: AdqPGJgMydMPoNVWTM+JKti3qYoktw==
-Date: Mon, 15 Apr 2024 09:39:37 +0000
-Message-ID:  <AS8P192MB12875E88258C43FAD20D7FEDC8092@AS8P192MB1287.EURP192.PROD.OUTLOOK.COM>
-Accept-Language: en-GB, en-US
+ bh=ax5DanL14r/GomlVtrD4nbwtVqEQc0x+zpwIHeLB6k8=;
+ b=t3Lrh75t3DpDryTK85PK1136ubJcd3WwaiOHrSI8b+5q3/iQU1RB6ejctvdigv2XRlOx9C913j9IOTZtV+kAmlaxRg4FB2uJeLFv4FXDdwq3s8BrkH0D5tT7Njr4GzcGVwGoLYPKDzNoDsntgB/O4GntPSLtkmWuk0y7+LwnQPM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5947.prod.exchangelabs.com (2603:10b6:5:1dd::12) by
+ MW4PR01MB6435.prod.exchangelabs.com (2603:10b6:303:76::19) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7452.50; Tue, 16 Apr 2024 04:39:05 +0000
+Received: from DM6PR01MB5947.prod.exchangelabs.com
+ ([fe80::b557:13cd:8a29:ae08]) by DM6PR01MB5947.prod.exchangelabs.com
+ ([fe80::b557:13cd:8a29:ae08%4]) with mapi id 15.20.7452.049; Tue, 16 Apr 2024
+ 04:39:04 +0000
+Message-ID: <15faebc0-9b20-4d0f-a946-c047bc6ae564@amperemail.onmicrosoft.com>
+Date: Tue, 16 Apr 2024 11:38:53 +0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: hwmon: Add maxim max31790 bindings
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Chanh Nguyen <chanh@os.amperecomputing.com>, Jean Delvare
+ <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Justin Ledford
+ <justinledford@google.com>, devicetree@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Open Source Submission <patches@amperecomputing.com>
+References: <20240414042246.8681-1-chanh@os.amperecomputing.com>
+ <20240414042246.8681-2-chanh@os.amperecomputing.com>
+ <80effcab-74b8-4e15-a4db-9982b000b6b1@linaro.org>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels:  MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=df53c735-aceb-4b29-ae0b-da4ae9cabec6;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2024-04-15T09:37:34Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-x-tmn: [X6ILEqQwd0itFHkz+XlwWgrJfzyyM7Skgn0ZZhD8ouhFIcT8RvaEaBz3UitPyNDI]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS8P192MB1287:EE_|PR3P192MB0537:EE_
-x-ms-office365-filtering-correlation-id: 2030b41b-b500-4979-958b-08dc5d2ff7a0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  Vg33PK9lKvqlSZSh7+j8DLcSR0kueclkR9Mj2Eo82KbxYsZrhwZ0VOVdcBdgiXUjHkHYwl09ID+p3YGE57B6QHakU0LfTpb4YwTIHiZeV7O/Wb4JBCmAMZUHw84zoVuewZIpy8WM3uMP0N4WXZvIea/78bcs4spToDcwlEOS7HBUhJYVSRbs1M6NIU6dYvtPp60pa1fSogdl7JSvOxwPgL0ysQ8yB4Hbz/TOqadVzquDtOFa9ZNsGRrx3hri7ws9HpsrrMr0JiF2R6152CHdgLHixMd56q5/tYTgemZsYfcWOOUwjvvWGlzQjkWjCr+KorG1dVheTQInHbFunyrNx0ow1XNTsreAP03/0SjmNZLsuCxb5xwrT4sQGCqBUhnTJc5mzWL4YXqwpgY1CXuhCzGlqM7xNzTTTcnSNJWPM+7Hf54b6+CQwyLe+49ZUJT/XJ3vG3RhpetWaN48GKYof9OZYM5hk09PRALDUIFgEQWJ/kr7dmU9ntGqcbh3qf2K/t+auXYTE4Xp2TVaJvKx/FNURw13y1HrdjI/8fpHFn1iQcDTrlxibt5Ou/8hvk1y
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?aqBa1T5BiKA2/R4VPUPhSBTB2BOIviiKEq4Gstc9qlwNkhm8qFgIp1yeuofC?=
- =?us-ascii?Q?1EjZphRcD2Ih5QNgbs0Ch4MRHHI1WD517/SjHx1qnmZU78Hdtyjhe8l1BPqp?=
- =?us-ascii?Q?lkCMUVgLIqmiLFIKYVsnaX52f1DkXZ88dR9e0eEBu4Q7E8O3BaWLfiTDj0Mr?=
- =?us-ascii?Q?r++BHF/Podkw3v6q5Vz+Kd1EOAhC5T/lYKuN8yykCcgR+Vvvcc4VQjW4p604?=
- =?us-ascii?Q?aPc6YTybMZWZ1WE2G6sQDdlUrcv47tFBCoL4WoghEXi8Ly9s68AsRfmxl15b?=
- =?us-ascii?Q?HKFhl8+sGnIzr+fC1TG+KnQsggztoVOCkKhXJq3fPv4kjDm/nAl/nVCjlrS6?=
- =?us-ascii?Q?5DsyClOHak/txbCZYvvmfye4U6URIbGkHMO/8EjR6H6Bd6IIH9NuVvJJG9Kf?=
- =?us-ascii?Q?5udjDWtRtnUEo51smXF+CcBRTMMI39G0oag7RozsIIvXWYhR79BJ1GtqFnAd?=
- =?us-ascii?Q?MztdWFIGXWP0rUVJZJ0UVMkq/4wgqx4t8Ze5A7NqsoAiTjX0BacQdKmsjbPq?=
- =?us-ascii?Q?MXHflD8x4T6MVrK/vFepTrWMUs6zwFiodTEa96I62ODwEhY8URv3Xb9D2AZ7?=
- =?us-ascii?Q?xf0gD+9jK4NhmQjFgV3aTsh9nRYMyxeBin22jTARod50nusmjpbuUc8uYNjE?=
- =?us-ascii?Q?DgVE8nvjXTl2tQJIL7FHrH8WPXNNAX8rMIFBhKFOeJ2xQugaqANTuDjZhxI8?=
- =?us-ascii?Q?aeBGLyNCrQ5oUEjN0s6cDwcKILBNLrEwSbfYAcbIfnIUrbmu6s0y8/EO+muZ?=
- =?us-ascii?Q?ctkUDL7IwyVPaKOW2dfF4chJLW6is9DF5AHUJ7LzeXgNFHKbouaggvjaDeEU?=
- =?us-ascii?Q?dIt9VvmqISI0UaKXBO3QRLhG6QImILvQov/P14KhO0XICKwQ6VhosKP9rTpR?=
- =?us-ascii?Q?gqD9FDHUKrIkTHLX/qxyGm/YHTOGZ+sniNrTVsLMAFHwEu1rGF+i93zB/DFS?=
- =?us-ascii?Q?CpGUDcDdcHo95OHz/8uj6iGPphSSd+mELc7/yGMV8nup48zfZcBvtb3+rA8+?=
- =?us-ascii?Q?5ofu8/Ef9WaBAet0LrlqFr/N9aHAvZ7eFBzHJvCHvhV8znUif4lMOS3UrMNN?=
- =?us-ascii?Q?4DwYTcmKTiceNXOcXuoqKWR75yfHkaX58ERXYaczHePYucilX6c+N6GAPk8f?=
- =?us-ascii?Q?RfZLW7BX3RFAF3GAiKgSyVnBHxd07BuBPIY1vD1HwkYx2WtnV7GCMN1InXlN?=
- =?us-ascii?Q?uGCJ+nwHw2KJJ1/yv96Hf0lsSB+jDSBzBnxTZ5n6lrpSA0WlTS1mh79K6xCz?=
- =?us-ascii?Q?4Prd/bxWZXbbqx4fd3P7odKLZj4oUWqgSFCabSDsdRBSOqZcUscKRTWZ2Cx0?=
- =?us-ascii?Q?Wc0=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_AS8P192MB12875E88258C43FAD20D7FEDC8092AS8P192MB1287EURP_"
+From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
+In-Reply-To: <80effcab-74b8-4e15-a4db-9982b000b6b1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CY5PR16CA0006.namprd16.prod.outlook.com
+ (2603:10b6:930:10::35) To DM6PR01MB5947.prod.exchangelabs.com
+ (2603:10b6:5:1dd::12)
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-fb43a.templateTenant
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5947:EE_|MW4PR01MB6435:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5503807a-474d-49cb-1d23-08dc5dcf251d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	=?utf-8?B?bnA1dnh6cFMrY2QyKzIwc1NkOTNwV1VHR2xyamtyY1ZHdW5HRi9Za0dDalo4?=
+ =?utf-8?B?VXZQOUx3L1VCVnRiVGhBSG5KWlQxZ1RQREZRcFBtekJtWEdLVStwOEk1YlJ6?=
+ =?utf-8?B?YXAwSmsxTzNucVZXZGlzbzlOMlFoT1lwWHVkTmJ2S1pQczcrclBwT0RvZ256?=
+ =?utf-8?B?K3I0WGpqeFBJS3U3S0lUS3FmYXQzK1NTYjhHTWdnK3p5S3liT2hkM3BJeDB4?=
+ =?utf-8?B?VHdRalBIck4xc05maFJsbnJFZzZuY3VXVXBDV1VXUHVwcm5tSS9lNEp3alVZ?=
+ =?utf-8?B?UVNpWGg0VU5MNkhJWnV3ZmRYMjNTNUN5WjFwUzV3aDcvRW8wYnFBSzdlcTVP?=
+ =?utf-8?B?WWxQZW1INmxQaFpZVzVSYVl4V3hlOFgxbnRGcUN6OFprSGVKVHF5aXpFUm1S?=
+ =?utf-8?B?UXMyZnRuVTYyZnp3OTc4TmlRM25peXpyTlJBWlpBUzVLSnBKZTcyN2FpVysv?=
+ =?utf-8?B?MmVrY2pGZ0JHTUt5T21vWEwxZWJPL3FzZStBcjFYT0NUeXVET1FZUGtCc2RO?=
+ =?utf-8?B?K0N2cDNSZkR1VnZTaHQzNWRWTy8yZVZnclI1U1Rhd0NwaFZpeTg4RWpBZXMw?=
+ =?utf-8?B?YWZTdGhkSGlLMjFtUFlJZjMzNU9BNmdWbnpvMkliSGdJSjdJVjhmZHh3MENW?=
+ =?utf-8?B?d0YxWkNqUWllRWlBbTFCOVR1WVArMWF0cFlFQ3pDR3E4RDFKd3ZMMGZqU09S?=
+ =?utf-8?B?SnR6NlBTZTdWMm9RUDkyeXpoTUFBSk9PMWlHWTl4Rjh6REpmNkpISlFHeWN2?=
+ =?utf-8?B?ZGJYcTRoRnFselFxcGwrdnQvZnNQMUtRczhaSkNyUWVFNEU5bFdWMFEwcVZ4?=
+ =?utf-8?B?MHdydnJ1dXdmWnlNb0gwVzJpcldKYmFlckFjUkcxeTdBSlpnQ3FZb2VqMDJU?=
+ =?utf-8?B?NGVJYUFnNVQ0SDBxaUI3aXYxcEVNRlBKU2k5eDNtR0RwNE1VRzd6LzRZK0ln?=
+ =?utf-8?B?SHFlM0ZhY2ZZZk5CNkUxNHYvQkZ5U2V6THFqclFFZjh0VytPV2k0aW54aGRO?=
+ =?utf-8?B?b1ZJOG5kSjVveGltSVA3Y3BpWmloeHpPUnVpMVJtRlZCWEtBSExsMUN4a3Jt?=
+ =?utf-8?B?em9vck5ZdW5SOVJ4UGdPdXN0TVZ5TjhhVmVzR0VCd0xHN05JRUFOSFFxb2ZH?=
+ =?utf-8?B?WnNSZS85clhlUGUvelZhZmxHejUzSjBwcHFpWXIxdjFnUjMwRllKSzdWQWFl?=
+ =?utf-8?B?aGRyL3hyRVlDQ2FnMnpHYzVvTERsdDhTQkdXMW0vMHE5Umh1RXo3dWNLRTds?=
+ =?utf-8?B?VUQ3d2hKbERFVncxQWdnSjNQUmgzUEkwN3h6VW5RVlFVdWpUZmRheWhicmtH?=
+ =?utf-8?B?em5kZ1hrMllpbGNzQkFQbU13Rjl4ZzBxdWYvTkQyS2F5dGJ6dEo2ekNuclds?=
+ =?utf-8?B?QjV4amdoN08weVBtQlNMNkF3bDJoSzdzREhHUk8wa3B3V1UwZG9wLy9qSWRl?=
+ =?utf-8?B?RFdJUnVJSUthZW5JNUZEQk1sSGRZZzRmQ1dHSk1KQXB2bUVjNFh3dmdyRHE4?=
+ =?utf-8?B?UHFKUGN1TVFneXAyVVhWdUlHcUdmanhmUGRuQmRwL2JPblRucWE5OW1MeDNR?=
+ =?utf-8?B?ZXh3dHE5VktrdW96K0FYNnpqbUtIWlVqbGN2alB5QnpRbjZvckZvSFU0dzRB?=
+ =?utf-8?B?NHIydE03VGhSMFJLcnRXbGdOeUh1dU1HQ2hhQktxanhWVVVJVVZKVjNWYWJQ?=
+ =?utf-8?B?WGprTHRFTVlLWVdlK0VKS1JLTDZrUk5SdjhQR0lsZ2FDc0IvRUdXQjdRPT0=?=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5947.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(7416005)(1800799015)(366007)(376005)(921011);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?a2NraGJSaTBlY2VRYm5ydzB4aENFVUplUG0rbW5qa296K2VtYkozSWpwNkZa?=
+ =?utf-8?B?Y1VrNmlSaW5LeEpWWG5yVnJkdVF3dU9iZXlEZGlGK2ZHSXZJNjZ2K1pnaHJw?=
+ =?utf-8?B?UWlMVW45UHNoV25hb29oRGlveEJYMGhCK0M1WXNlczkxTFNwQUsrUnRNWS8z?=
+ =?utf-8?B?VGVpVTM5UlVTczU1aUo5ZzRDanYxV1VlYS9yUXpGa08xaUZDdCtrRmRCSW5I?=
+ =?utf-8?B?TUcvNjN5MGVCUFM4YkM4bG1MdTJCVklCdTlGby9idksxVDhITU9Ob1FzSUY5?=
+ =?utf-8?B?ZkxFZkl5UEl3TkxNbFVVQ3QwVXVjSVFHTFdxdUpXQU1jZnFkbEpPTTNSWVlN?=
+ =?utf-8?B?Y3hvcURES3RnVnpCY2FlM0p4bldPWHByU1hwMnd1RnNqL1RER0RmQ3J1dFp6?=
+ =?utf-8?B?Q3ZhbWk0aEpWUXh2U0lPSWM2TER2U1VLM2RuYUx2Um03NEEzVUtlN3FIcld6?=
+ =?utf-8?B?aUxvRkJuS1ZKZWZnOERlUk5PZCtjdStnaGVyNjU5Qkl6ekRhRXZOK0w2dkhz?=
+ =?utf-8?B?VDRHTkY2bmhrRVprL1p6RGhNamhuQzNTV0Z2VGVVSWozeXdOYzdqemNKQVRx?=
+ =?utf-8?B?QlpwZzM0M3NtZmhOYnlkSmtCd0IxWSthL05BRnd2LzJLQklFNml3eHdYajR6?=
+ =?utf-8?B?M2M3SE5iS0Q0L3JNaEczSENUUnhGNnFRN3NXS2puajVMSkt6NHlLY0ZxeHda?=
+ =?utf-8?B?V3dxd1F4YzNmS21QV0ZBMG8zMUZLSFIveW5iZnZUajRkVVNaeE5pUWdNdGFn?=
+ =?utf-8?B?WVZlMzVZV2Irbm5RaDhaN2lyblRlRlgwOEhEcFo0L1A0N3FtQksvaEpEU0dB?=
+ =?utf-8?B?eGJtaVlsUFIrSHUrVlh2b2hheEkxZ25vam4xWlN3ait0VWVUYVE1Qkt1ZE9L?=
+ =?utf-8?B?emlldjQ3a3FGeDUvZmNOMGNyNkd3Zk5LR01ib0ExS0d5V3prMThhSE5RK05G?=
+ =?utf-8?B?NGdrMXoyNEltLyt6TnVOaEZwS1NFUWcyY1MvL1NETHIrRHRHQy8xRW5ya3lF?=
+ =?utf-8?B?cEZoU21tUUxYVUl3clFNTnEvaUZ5NHJUZ05wRXhPNUZDSDZFTmg4R1g2Qmtv?=
+ =?utf-8?B?V0JEbU5URkI5REV4Rlc1TGZCaTlkL2ExdVBka3FNN3diMWYvSDRLZTNpNTBH?=
+ =?utf-8?B?RkYveVpnUFhkZjNSdGg0MmpOZlpGUVZDS2RXNC8zTkU3V01UUWVGU1RuMDd5?=
+ =?utf-8?B?dnFWR3QxbHk0T2dKMVp5OS9BcE5kZkR4bnFhTGcwb21GUlo2MzVLcVEvZnpG?=
+ =?utf-8?B?VU5rQzUwa3pZZEFZOTA5ekVCdzQ2N2h4WHJmREZBTlNjQlBzR2Vid25WOWcr?=
+ =?utf-8?B?S0dmcTFSR1FHbnV4UmVmdDVtV3F5TVJVcU90S0VxZ2Zmd2xITjQ5R2Y4Rlhz?=
+ =?utf-8?B?SVFoTGJpOXZZenc5Mi9zaWZTM3JmdVJ5eGVXVUQ2bnB2NzNhUEZWMWRVKzhC?=
+ =?utf-8?B?ZVlZWlljT0tkcFhWSjgwUWt5SG1McllaMk83cTZ6ZXVUMDhXRG9WbXhqMlpn?=
+ =?utf-8?B?bU5qM2hrOWg2R1FYbm9DYU1BT3JhcEl3dkFnMko4R2EwTDRhTk14QjArdy9V?=
+ =?utf-8?B?TVplREpXcU1PODcrdmpuTTNBU2hTY0pTcEtnR2RiS2tqS0VKZXRybGY3ZWpi?=
+ =?utf-8?B?QmdHdWFvU2tDV3ovbTBqMWJFTllPK25MRUFZTjI1Y0s1V2Jpam9wWXR1QndL?=
+ =?utf-8?B?d3plQ2t4MjlwL2xKajZiYkIwNVZjLzdyV2F4R042cEV6V0d6REJLSnZjK01x?=
+ =?utf-8?B?a3BuVmRjengxaUtwVTFUc3VYSkJHemdyR0lYMzVXWG9xSFo3bzIwdFpqSHkv?=
+ =?utf-8?B?MFBWR1BEUG1Ja0Y5NUc2YnhNL2Q5ZmxxSjdKTjVlWVVESGw2YVMvN09VZHEr?=
+ =?utf-8?B?Rmo3TWNqRGdJbUJGK2g4Y291aXpRNWdXZVltSHRHU0RMRS9XUVlDemgxNHRa?=
+ =?utf-8?B?WTFtd3cyc0IwV1BYZmM0Z2xBS1dockdXd1RMQzdNQXZGNDhVR2FJc096RWY3?=
+ =?utf-8?B?YnZoNFFFUWxWTDIvM2pnN3dhazdhRFlka2lIRmVrbGE2OXVRQ0poZDZvcVpp?=
+ =?utf-8?B?d295Z1NUMHBDM1AwTzhPenJBVS8yd29DSE4vWFlGc2NSV2VjOWpJZ0IxN0J6?=
+ =?utf-8?B?YnlaUXMvaFRXa1dPM1NGVTdnMHFSZ2IvOXhOWTJuZnBMUkUxNElNNVl0a3k5?=
+ =?utf-8?Q?4TUvcXpB0f8oIptI1vakWuw=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5503807a-474d-49cb-1d23-08dc5dcf251d
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5947.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8P192MB1287.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2030b41b-b500-4979-958b-08dc5d2ff7a0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Apr 2024 09:39:37.8877
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 04:39:04.6123
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3P192MB0537
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Nyr2HFYBFo1t5hFZjAEoPF/QVj57c1u/LsW+SNry+kXa3tgKMWmfniz/LePE/c860sD15Wu8UFWn/t0a0lEAGMU8l/C+P6nopyrsRs8lB/b3coBigzta0rhQ/2XiWSYj
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR01MB6435
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,84 +169,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_AS8P192MB12875E88258C43FAD20D7FEDC8092AS8P192MB1287EURP_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
 
-I want to mount some virtual media but the security for the image-host uses=
- an access token normally provided as a parameter on the URL.  I've tried t=
-his via Redfish but get a "general error".
 
-Does OpenBMC/Redfish support this form of authentication and if so, any ide=
-a as to why it is not working for me?
+On 14/04/2024 13:03, Krzysztof Kozlowski wrote:
+> On 14/04/2024 06:22, Chanh Nguyen wrote:
+>> Add a device tree bindings for max31790 device.
+>>
+> 
+> Nothing improved in commit msg, where is the rationale of split of bindings?
+> 
 
-Thanks,
-Paul DS.
+Yes Krzysztof, I will use "tach-ch" property from the fan-common.yaml to 
+solve my case. So I will not need a split of bindings.
 
---_000_AS8P192MB12875E88258C43FAD20D7FEDC8092AS8P192MB1287EURP_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Finally, my patch series will only be two patches. They are 
+"dt-bindings: hwmon: Add maxim max31790" and "hwmon: (max31790): Support 
+config PWM output becomes TACH".
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Aptos;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	font-size:11.0pt;
-	font-family:"Aptos",sans-serif;
-	mso-ligatures:standardcontextual;
-	mso-fareast-language:EN-US;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Aptos",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:11.0pt;
-	mso-fareast-language:EN-US;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-GB" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">I want to mount some virtual media but the security =
-for the image-host uses an access token normally provided as a parameter on=
- the URL.&nbsp; I&#8217;ve tried this via Redfish but get a &#8220;general =
-error&#8221;.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Does OpenBMC/Redfish support this form of authentica=
-tion and if so, any idea as to why it is not working for me?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Paul DS.<o:p></o:p></p>
-</div>
-</body>
-</html>
+I'm going to update that in the patch v3 series.
 
---_000_AS8P192MB12875E88258C43FAD20D7FEDC8092AS8P192MB1287EURP_--
+> A nit, subject: drop second/last, redundant "bindings". The
+> "dt-bindings" prefix is already stating that these are bindings.
+> See also:
+> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+> 
+
+Thank Krzysztof, I'll drop "bindings" in commit msg.
+
+>> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+>> ---
+>> Changes in v2:
+>>   - Update filename of the maxim,max31790.yaml                            [Krzysztof]
+>>   - Add the common fan schema to $ref                                     [Krzysztof]
+>>   - Update the node name to "fan-controller" in maxim,max31790.yaml       [Krzysztof]
+>>   - Drop "driver" in commit title                                         [Krzysztof]
+>> ---
+>>   .../bindings/hwmon/maxim,max31790.yaml        | 52 +++++++++++++++++++
+>>   1 file changed, 52 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+>> new file mode 100644
+>> index 000000000000..a561e5a3e9e4
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+>> @@ -0,0 +1,52 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/hwmon/maxim,max31790.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: The Maxim MAX31790 Fan Controller
+>> +
+>> +maintainers:
+>> +  - Guenter Roeck <linux@roeck-us.net>
+>> +
+>> +description: >
+>> +  The MAX31790 controls the speeds of up to six fans using six
+>> +  independent PWM outputs. The desired fan speeds (or PWM duty cycles)
+>> +  are written through the I2C interface.
+>> +
+>> +  Datasheets:
+>> +    https://datasheets.maximintegrated.com/en/ds/MAX31790.pdf
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: maxim,max31790
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  resets:
+>> +    maxItems: 1
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +allOf:
+>> +  - $ref: fan-common.yaml#
+>> +
+>> +unevaluatedProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    i2c {
+>> +      #address-cells = <1>;
+>> +      #size-cells = <0>;
+>> +
+>> +      fan-controller@20 {
+>> +        compatible = "maxim,max31790";
+>> +        reg = <0x20>;
+> 
+> Make the example complete - add all properties, like clocks, resets and
+> any others which are applicable.
+> 
+
+Ok Krzysztof, I'll update that in the patch v3
+
+> Best regards,
+> Krzysztof
+> 
