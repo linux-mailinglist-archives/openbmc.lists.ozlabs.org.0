@@ -1,136 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 587C78A6300
-	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 07:28:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EC188A678C
+	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 11:56:00 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=vGaUhvh3;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=EF2vSz/h;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VJXck1QKQz3dWD
-	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 15:28:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VJfYn6xkyz3vX2
+	for <lists+openbmc@lfdr.de>; Tue, 16 Apr 2024 19:55:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=vGaUhvh3;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=EF2vSz/h;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:2009::701; helo=nam10-bn7-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on20701.outbound.protection.outlook.com [IPv6:2a01:111:f403:2009::701])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJXcB10b1z30hQ
-	for <openbmc@lists.ozlabs.org>; Tue, 16 Apr 2024 15:27:36 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WpRrw/GxdoWqJ10FBxecEcPIcnRd9OV9FKkx2/drSGkTYJu5Tpl2aLHZO3nl4/QYWzDdgueMHAxrMHluB/vffbZcYvVxEYc6fTBhnLtuYD8gDuJ81Un01/BBDCkqVQFsTs6IuhqzPs8AK7mnVVx+jT+YB6WfLiPwHuLpLn9FZZrs1tILMYkCKEjLKVcWo+wLz7DANc86a8DKifsTZKX53wUiZTwD8tMgZgRjm9AyUGEYl0Fz8rBk2CAbTZoiR0rtCXQxHJyD+IYfd1j8z+FcwYSEeNhvMhvHG5YPzrJ5GMyQKbCBuRTgKEVWcVeIWPyN4Hqk/6ZjXUS61vTli8S1YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7qVIdD2bQvBDcCJfiAvDy9yVXrGvZ2DHZIGsXp53+3M=;
- b=fc5qbrd3rk8vtOQrQm4Av0ItM6h4cBZylqAaXdFui9exmM5a1UWhYTiTVHbvUzWo46Wwn8qdEpjPvGJdhWbIXQ864OK61pSvK3BU1qU5Zejj/KKwCDjQE93JRlwD8q9GxdZtNh+twGpslWUHdLK8o4hF7JYYuQp7e9qLgzfxx8fabbILieSvHUo9rtxTOZq3uXzsMxH9MYPdO+Y0Z3fqcWpNXSBiG6paIcqThM00qWNbfae01vfnIA7Oc7DBugO+Ls3bt1kEyK4sJi5xJ9LD6fkL40Lubcvmp5DK3TQH0Usvv6xCvRDAU4atf+pAgXvhvZP7mBemqQ7cUhqjN5nJSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=amperemail.onmicrosoft.com; dkim=pass
- header.d=amperemail.onmicrosoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7qVIdD2bQvBDcCJfiAvDy9yVXrGvZ2DHZIGsXp53+3M=;
- b=vGaUhvh39JzM6WthBonWtwmfTGZCTI38gHegB2QX886xV5D2XRs+rFQ+qiZJKl3IRBR0zuge0Pn53YcfcfABFe5GF0fTbdh471UY3I+yjZTU4zDmGH8tGLPDE1xpFT9PdLG0xG/msKW10yhKHwmZL+9O0vUSnYBkYDP1/vCeFzY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
-Received: from DM6PR01MB5947.prod.exchangelabs.com (2603:10b6:5:1dd::12) by
- DM8PR01MB7096.prod.exchangelabs.com (2603:10b6:5:315::15) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7452.50; Tue, 16 Apr 2024 05:27:12 +0000
-Received: from DM6PR01MB5947.prod.exchangelabs.com
- ([fe80::b557:13cd:8a29:ae08]) by DM6PR01MB5947.prod.exchangelabs.com
- ([fe80::b557:13cd:8a29:ae08%4]) with mapi id 15.20.7452.049; Tue, 16 Apr 2024
- 05:27:11 +0000
-Message-ID: <9bc38f67-01e0-4a38-8db8-4086a215b474@amperemail.onmicrosoft.com>
-Date: Tue, 16 Apr 2024 12:27:01 +0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hwmon: (max31790): Support config PWM output
- becomes TACH
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
- Chanh Nguyen <chanh@os.amperecomputing.com>, Jean Delvare
- <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Justin Ledford
- <justinledford@google.com>, devicetree@vger.kernel.org,
- linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Open Source Submission <patches@amperecomputing.com>
-References: <20240414042246.8681-1-chanh@os.amperecomputing.com>
- <20240414042246.8681-3-chanh@os.amperecomputing.com>
- <79bef664-b191-4905-896c-afab341b982b@wanadoo.fr>
-Content-Language: en-US
-From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
-In-Reply-To: <79bef664-b191-4905-896c-afab341b982b@wanadoo.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH5P220CA0008.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:610:1ef::12) To DM6PR01MB5947.prod.exchangelabs.com
- (2603:10b6:5:1dd::12)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VJfYB3XmNz3dLl
+	for <openbmc@lists.ozlabs.org>; Tue, 16 Apr 2024 19:55:25 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1713261301; x=1713866101; i=j.neuschaefer@gmx.net;
+	bh=8VCPRF0Vi4vNnqUQWVncBOVnCYeatzGZKVzuabhLX+s=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=EF2vSz/hH2dfmb22obzz/aifo+GrF6I9VZadrZtCJqQDB4p8FWRV36dq2aTp4Dsb
+	 eVBDPQ8Jb8VguliZdqtgeC9I4v9sfefz6kuOfgQ5MKsszJxVqXW2L6EHr/7/7Zgrt
+	 PCo7RySPIMzg4lZNpsPndMCtCOyC3BgjA1t2l/k7a/RokiUsHj6q4UeFUOeYKBRG3
+	 8M26XuL0UqfAi4iFvRhZFVYZiLgcgP+iILkoBQOdDnbhQMyG2Uyn1/9YQmZ4gYIQ2
+	 PHSVWe+Rg92dH28OUCRAD9iF2JhseI2Ww/KeRm8bOLgzRoh5+QJSjKsq+Z9PMwT7U
+	 MM0uOi2lwAXlz3vWKw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([5.226.147.226]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MrhUK-1sZMJd1W56-00ne89; Tue, 16
+ Apr 2024 11:55:01 +0200
+Date: Tue, 16 Apr 2024 11:54:59 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Stephen Boyd <sboyd@kernel.org>
+Subject: Re: [PATCH v11 3/4] clk: wpcm450: Add Nuvoton WPCM450 clock/reset
+ controller driver
+Message-ID: <Zh5K8_FuUtPq7Pqj@probook>
+References: <20240401-wpcm-clk-v11-0-379472961244@gmx.net>
+ <20240401-wpcm-clk-v11-3-379472961244@gmx.net>
+ <9be144291cda6d9714252c9cd83649c2.sboyd@kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR01MB5947:EE_|DM8PR01MB7096:EE_
-X-MS-Office365-Filtering-Correlation-Id: 921bc17d-6f4c-4aec-02d4-08dc5dd5dde0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	dVxz5kTFlPF/gx35IxN5AR1C6sY4bZTGWh4zOoQ3tL1AALWi7Gn0KCe9cWPl2FEpBLcw5jA0vXqNpb4PjxPSz5dwRDrA2vv8YjnzBAolEZ0m+OrS4kEJxWaaDB2X8HinzLSVuwdg27IqLKDLWZWfbslD9iA3AbimkXD74NrTBzjIZC9KnsS0vgyS/7puK4FDg72y/jrF2qyft+DZEyPfBJyXK/80ADTjGE00yIRFX2RHJMpOg2YzYUnEI+XyhC25Io6RtP6/J1oohiBpkeogm8kZt4chMkyW9MeI1hqjUNS6bB8LXxhOegXQDnzphtJUqsQf06gvR6eHU+4kgl4HWhotgUNxclTeU1cuX/sPJtRvuHsFCXE1gSUUxhSvR74Gu4vqt+2CEp0TcX/y3ph43ZMLSReI4kuufaqRdhKQX4mAPlLW1i9iccLSyzOntPoHpvWVm+7deZdjaPVZ/O15+96eWGtW2ZQDkaMlWA2Bdto6PkH5kKaM6dnjI7+MgJRcMAFyoJNVnwJ43ufXyouO5gYt74ZA3Ab2zQO1RG7UmPRjPQ2fKNfCo0WqAUjTuGTPKw24nfZgTBv31AG0ITrbPFkXeQsdHQTEk3syFCtA2OYzdF/EseIz282adTEeh2rOcOG3Wvh6Jo51qXVObhUQQzB3UjfAs9XfU9/PDrOrgPDvPcCK81U44KvXs7bWiuuDDbFqMXpQ4hQ7PT+kiPV8qg==
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5947.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(1800799015)(376005)(7416005)(921011);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?YlA0Q2prYjhwVE1udlk0Mkg0aUtVd3J4OXJjQlArRzJJTnJjY0c0WnZaa1Fa?=
- =?utf-8?B?VUVHUm53Nkx3aVc4NDFTZGgyOHAxRDJ2Rmw2OGVoOEl5Q3FkVWliUnN0UHdp?=
- =?utf-8?B?QU5EVVYvUnJHZjBPU1dCM0tWckpmQ3Y1aHJpNGZzU1N2N0N2RTFwa2haUHZT?=
- =?utf-8?B?K3NtWURSYW5tTlpQTCsxQ1VaYnpPVlpITWVRNTV3YXh4Z0NxZ2VQa0szZStC?=
- =?utf-8?B?SlpackpWak1MaGtRcm4yb29hSnJaNmFwdThQbkxpR2lCL3JlRGpTVDUvSnFE?=
- =?utf-8?B?QmhFWjlOdVNWb1gyYmVJL2wvRzVnak5EcHdjM1Jzc1c2VXA0dy92WGZJR2Nt?=
- =?utf-8?B?U3FncDFnRUlHb2RyazFKc21nNXQ1clcyUHdPUUlqS3gvNjVYRFFDMFAvcFpt?=
- =?utf-8?B?YkhDY0t4ZVJlaGVYdEkvMkluVVd6aUczY2dCZUxOaVc0R0tXOSs4WkdudjNv?=
- =?utf-8?B?SmRNT2l5VVZqQStBYXA5WHJCdXlnaG5Ia2tyWCsyM3MzbThKVUwxYXJqbVZY?=
- =?utf-8?B?UGZHbkM4MWFGb1pXUG5zanU5U0djVU5KTk9nb0F0alA1SEErM2RFb2kzSmFq?=
- =?utf-8?B?WExObXgrUHBGcnFEWGI1RFZFSk5zZlVHZGpnemRNNngyVDlINUkvQWZQbDJI?=
- =?utf-8?B?UHJQa0dqeVJ6M252ZDZVdUNLNnV2dFp4bStWUFp4ejk4WkxabXhNQm9RSXZw?=
- =?utf-8?B?SUJVYmJJTTJTQVFoR3dLNGtkdDJ6VGtxNlRKRWpGR1VrRUUrZkprOWh4ck0w?=
- =?utf-8?B?eS8wb3dsd09yaFpyZXgxR3BDcnliUmJBMXR3MzBjc2E2bkFOL2gzS004MS9j?=
- =?utf-8?B?Y2Y5eW10NXJPTkNSaU42YWw4bWVUb21GdHZ2RHhDdFU2UWVNSTVTS3RkdG01?=
- =?utf-8?B?SUdjSlhUVTJIK3BaeGo3MDNra1lrcXR2OWpqZDJCY1FvVnVlb0NGZy9IWEpy?=
- =?utf-8?B?Y25IRTZKdGdxU1V4elZuT0FKNEpXWTFVOEIxQk5WU3poUTI4eDZBYW9WK25s?=
- =?utf-8?B?OUFmcWpyNjk0NVhndnhaOVdrNDJ4SmwwZUxmMjlxMjl1RVh2SFlnd0s1eFRY?=
- =?utf-8?B?VGZNaE9wNFBJd0owM0xSMmltNnk4OUxuUVNNSXdOY2piWDdtbDc3bGZHellO?=
- =?utf-8?B?bjVNeHBoTHhwb0c4aXpkcUl3WExLRmtXTEFqckxONUUyZTk5ckVka3hUUDdq?=
- =?utf-8?B?R0liaGtWTnY3OVE5QVFzOHZrTG5rdjRjM1ZrMFQyQmk0WnZOKzIrZnNXdUha?=
- =?utf-8?B?SWQ1bGV5NFNxc3B1TUhlM1IwK2FEMU1OM25Gci84ZGZ1Z3loMEdPS1JqeTJI?=
- =?utf-8?B?Z0tGVTExYXFFMVVVWHpQYzBHSUdFNDJJdHMyUDEzM2hiVDNBWXRrK2p5RVp3?=
- =?utf-8?B?Zk1RZGRadlduRFJBaHpzZmQxck8zbExrOFVaQVZBMEFPVHljU0ZoN3JnRW1u?=
- =?utf-8?B?Q25IK1JTRFJhUWMzTHRxa3hyazNGK3cyNlNUcFA2d0NQbnc3OXp5Q1lTZXNx?=
- =?utf-8?B?ZFd1NkRxMGlvVEEyTGUwK2ZIVWFvNHdKSVhGazhRWS9HSVpjeFRhS1VkakFa?=
- =?utf-8?B?VXFVYVhPTkxaU0tMNjZjZ3BmVkxHZzI3YXQvbUdMTmp1eTVHTGorak10dCta?=
- =?utf-8?B?MEUwN3VmTHZtczBvem50UUtYR25TRHpqMzkySEFjTXh0VjFhRDE3cjhuZGlt?=
- =?utf-8?B?cXN0YjdyREJDZERQS3BaYzdiL2JYRllHKzJ2UG14U1hqZkd2YlJhSDZwRG5j?=
- =?utf-8?B?ZklpYlBiZzR0M3ArTE4ybHNQN0Z4UHhsQXZ5aEV2UUt5bWdiV1pNTzhaUHh3?=
- =?utf-8?B?QVcxSHlMM0VDSWYzaDJKdHVpeDdFamNHazhiUU1sNnRyejBERHNRSXBJdHFZ?=
- =?utf-8?B?VEZ4T0dhWTdKdGhraEE4cHhqZy9STHdjTHg4aUh4ZXNUY0RKc212NzRkTGtm?=
- =?utf-8?B?MzR2VUxHTkwwbGR6ekVrZVJLTmpzd0FhUDMvVDdKVllmQy9RSzcyZnhhUFVN?=
- =?utf-8?B?dEw0UnRaUC9jY2NtSWdtUG9sM3pSMXdiYjRCcnRTQTlSSFM5RzRMcUVZSTZS?=
- =?utf-8?B?Zlo4aWUwUllVK04xUzllZUhlMm82Q3NxLzIzR0RldTdwb3VqdHpXL25Gekg4?=
- =?utf-8?B?TTdaQU9iekd6aHhGT2tiVlo1RWR2aDB2bE5hbFFKclN4ay9qRGRDaitxZDVh?=
- =?utf-8?Q?+jpatPtMwwxt8sVNA1ecFtU=3D?=
-X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 921bc17d-6f4c-4aec-02d4-08dc5dd5dde0
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5947.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2024 05:27:11.4095
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BkXFXt6Y0afNPwDnsVpdmHcUrbPwmLV1pvgOS1i7ndL0T7Szc9ss5yj0WqbdFuoczev1auyZ7TmpMy3nL6VQ+4sAaZbZ77FMvqWGhUBdAtMCP0izGQE+mDvSug2lPsgn
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR01MB7096
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WXvGHi2mgeFMSsi1"
+Content-Disposition: inline
+In-Reply-To: <9be144291cda6d9714252c9cd83649c2.sboyd@kernel.org>
+X-Provags-ID: V03:K1:8gvjSYTbOrJ8fToEjyuFJf3piXDlv7j1XoNQPn/z0zjfW3S9ii/
+ AbXWqO5laHqjLXgSi2ovXuHD8lcJpKZacUrHKJ0EwXhbyPIVxSLD0CkTxBGVCs5SQGEl4Dv
+ pAlNH3+UU55RVFOouCg10LcqK9o2lgET3zDa4E3XXPSeyKR8dXZNRoycy8hmgl87N5bKZW4
+ Sa9+Bp6LoLq6Mj4t9vPGQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:UhqP2+Ik+Xo=;kbab+yCYAiyFtXldN06Ow8ypsUN
+ 4o0jeI2HJYKOcan0gge7tswtUJbeQYWuosKkrI0P253EuSTIHjVXW1/6SRu47SmPIvV3FiVth
+ tpXCQdJC+y7Jakv36eQwkN5wnQQLIEstQGzWqRWtV+IGkvxOmD+YrBV0sjh7ipiRUg+e164NM
+ PSs+NT1H2VBSUyam4v9V2oN4GII3kGkZ2z9+sXEth8FmuZ1F8CDB4Z/mc3A0xad+LrmIfI6Fc
+ cIqrDtUDA8FhFOMBtnjGY+DBoZrTaOLR4uGQEW+ST5g3nMdQAZS71L2chW5P1TsA5acDUA5GF
+ PzcwLa2X/pIC+3XsstMiE2iDPlMSZz5Z/y/aN74/Xjpsr0yfq1j8gL+1xYR2XqcI/1mkY2icG
+ bK5LI0uGTPo9MfL+DioQYXTpuEwuxxKAqQSrsHn4QlBmfqVoAWs5D1YCoAtDSgs//dANB/jl/
+ RdxyFvoKDoan0nxI3/kddECMBjRC59YfJO5aGqBuqcoM+j1llIRbo4nZEYbXDGJoooz1JYX0h
+ Nr5aEI+DNd99DYvIk4fFa3pqVmv4NDOrE0suRaCKkKgyQlFROyeKOCMSjC6whB9LqT0LZR+Ey
+ gswGo0sMu/d5bi2YI8aOfYxRY5qf0GWn5BMusWowdZnh6uxoqovz+zAKfMh3tihyLLi2CSNJP
+ MeaLjeitfv2Uwt+6cTsw+sPLL8sLbhm3ROaafwUW0P11I16ZJ5tHFEXWYVNVI0Prbck4Cmz8w
+ d+m+JvdO0lHoTaYqlGPOzi0tCtHvzt5iptnrWRj+ZCzqULykOFMqmaDlg6FeTVy5j3ujChHhQ
+ 9NRx5t4iorFDXB3PJU34wxwOnTqCjSfrADywnsTClUr8Q=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,53 +82,257 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-clk@vger.kernel.org, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Turquette <mturquette@baylibre.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--WXvGHi2mgeFMSsi1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 14/04/2024 15:03, Christophe JAILLET wrote:
-> Le 14/04/2024 à 06:22, Chanh Nguyen a écrit :
->> PWMOUT pins on MAX31790 can be configured as a tachometer input pin by
->> setting bit[0] in the Configuration Register. When the bit[0] of a 
->> channel
->> is set, the PWMOUT pin becomes the tach input pin for the channel plus 
->> six.
->>
->> This commit allows the kernel to set those pins when necessary if the
->> maxim,pwmout-pin-as-tach-input DT property exists.
->>
->> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
->> ---
->> Changes in v2:
->>   - Update the vendor property name to 
->> "maxim,pwmout-pin-as-tach-input"   [Rob]
-> 
-> ...
+Hi,
 
-Hi CJ, what does it mean?
-> 
->> @@ -528,6 +532,33 @@ static int max31790_probe(struct i2c_client *client)
->>       if (err)
->>           return err;
->> +    if (device_property_present(dev, 
->> "maxim,pwmout-pin-as-tach-input")) {
->> +        err = device_property_read_u8_array(dev, 
->> "maxim,pwmout-pin-as-tach-input",
->> +                            pwmout_to_tach, NR_CHANNEL);
->> +        if (err) {
->> +            /* The maxim,pwmout-pin-as-tach-input is an array of six 
->> values */
->> +            dev_warn(dev, "The maxim,pwmout-pin-as-tach-input 
->> property exist but malform");
-> 
-> Nit: exists
-> Nit: malformed or "is malformed"
-> 
+On Fri, Apr 12, 2024 at 12:25:05AM -0700, Stephen Boyd wrote:
+> Quoting Jonathan Neusch=C3=A4fer (2024-04-01 07:06:32)
+> > This driver implements the following features w.r.t. the clock and reset
+> > controller in the WPCM450 SoC:
+> >=20
+> > - It calculates the rates for all clocks managed by the clock controller
+> > - It leaves the clock tree mostly unchanged, except that it enables/
+> >   disables clock gates based on usage.
+> > - It exposes the reset lines managed by the controller using the
+> >   Generic Reset Controller subsystem
+> >=20
+> > NOTE: If the driver and the corresponding devicetree node are present,
+> >       the driver will disable "unused" clocks. This is problem until
+> >       the clock relations are properly declared in the devicetree (in a
+> >       later patch). Until then, the clk_ignore_unused kernel parameter
+> >       can be used as a workaround.
+> >=20
+> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > Reviewed-by: Joel Stanley <joel@jms.id.au>
+> > ---
+> >=20
+> > I have considered converting this driver to a platform driver instead of
+> > using CLK_OF_DECLARE, because platform drivers are generally the way
+> > forward. However, the timer-npcm7xx driver used on the same platform
+> > requires is initialized with TIMER_OF_DECLARE and thus requires the
+> > clocks to be available earlier than a platform driver can provide them.
+>=20
+> In that case you can use CLK_OF_DECLARE_DRIVER(), register the clks
+> needed for the timer driver to probe, and then put the rest of the clk
+> registration in a normal platform driver.
 
-Thank CJ,
+I'll give it a try. I'm not sure how to make it work correctly without
+calling (devm_)of_clk_add_hw_provider twice, though (once for the early
+clock, timer0; once for the rest).
 
-I'll update that in the patch v3
+Another (probably simpler) approach seems be to declare a fixed-clock or
+fixed-factor-clock in the DT, and use that in the timer:
 
-> CJ
+	refclk_div2: clock-div2 {
+		compatible =3D "fixed-factor-clock";
+		clocks =3D <&refclk>;
+		#clock-cells =3D <0>;
+		clock-mult =3D <1>;
+		clock-div =3D <2>;
+	};
+
+	timer0: timer@b8001000 {
+		compatible =3D "nuvoton,wpcm450-timer";
+		interrupts =3D <12 IRQ_TYPE_LEVEL_HIGH>;
+		reg =3D <0xb8001000 0x1c>;
+		clocks =3D <&refclk_div2>;
+	};
+
+=2E.. and additionally to mark the timer clocks as critical in
+clk-wpcm450.c, so they don't get disabled for being "unused".
+
+
+> > diff --git a/drivers/clk/nuvoton/clk-wpcm450.c b/drivers/clk/nuvoton/cl=
+k-wpcm450.c
+> > new file mode 100644
+> > index 00000000000000..9100c4b8a56483
+> > --- /dev/null
+> > +++ b/drivers/clk/nuvoton/clk-wpcm450.c
+> > @@ -0,0 +1,372 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Nuvoton WPCM450 clock and reset controller driver.
+> > + *
+> > + * Copyright (C) 2022 Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > + */
+> > +
+> > +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+>=20
+> Isn't KBUILD_MODNAME an option already for dynamic debug?
+
+Indeed, it's the +m option.
+
+My motivation for setting pr_fmt in the first place should become
+obsolete with the move towards a platform driver anyway, because then I
+can use dev_err() etc. I'll remove the #define.
+
+>=20
+> > +
+> > +#include <linux/bitfield.h>
+> > +#include <linux/clk-provider.h>
+> > +#include <linux/io.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of.h>
+> > +#include <linux/of_address.h>
+> > +#include <linux/reset-controller.h>
+> > +#include <linux/reset/reset-simple.h>
+> > +#include <linux/slab.h>
+> > +
+> [...]
+> > +
+> > +static const struct clk_parent_data default_parents[] =3D {
+> > +       { .name =3D "pll0" },
+> > +       { .name =3D "pll1" },
+> > +       { .name =3D "ref" },
+> > +};
+> > +
+> > +static const struct clk_parent_data huart_parents[] =3D {
+> > +       { .fw_name =3D "ref" },
+> > +       { .name =3D "refdiv2" },
+>=20
+> Please remove all .name elements and use indexes or direct pointers.
+
+Will do.
+
+What I'm not yet sure about, is which of these is better:
+
+ 1. Having two kinds of indexes, 1. for internal use in the driver,
+    identifying all clocks, 2. public as part of the devicetree binding
+    ABI (defined in include/dt-bindings/clock/nuvoton,wpcm450-clk.h)
+ 2. Unifying the two and giving every clock a public index
+ 3. Using the same number space, but only providing public definitions
+    (in the binding) for clocks that can be used outside the clock
+    controller.
+
+Option 3 sounds fairly reasonable.
+
+> > +static const struct wpcm450_clken_data clken_data[] =3D {
+> > +       { "fiu", { .name =3D "ahb3" }, WPCM450_CLK_FIU, 0 },
+>=20
+> This actually is  { .index =3D 0, .name =3D "ahb3" } and that is a bad
+> combination. struct clk_parent_data should only have .name as a fallback
+> when there's an old binding out there that doesn't have the 'clocks'
+> property for the clk provider node. There shouldn't be any .name
+> property because this is new code and a new binding.
+
+I'll try switching to .index or .hw instead for the references to
+internal clocks.
+
+
+[...]
+> > +/*
+> > + * NOTE: Error handling is very rudimentary here. If the clock driver =
+initial-
+> > + * ization fails, the system is probably in bigger trouble than what i=
+s caused
+>=20
+> Don't break words across lines with hyphens.
+
+Good point.
+
+(Due to the switch to a platform driver, this comment will probably
+become obsolete anyway.)
+
+> > + * by a few leaked resources.
+> > + */
+> > +
+> > +static void __init wpcm450_clk_init(struct device_node *np)
+> > +{
+> > +       struct clk_hw_onecell_data *clk_data;
+> > +       static struct clk_hw **hws;
+> > +       static struct clk_hw *hw;
+> > +       void __iomem *clk_base;
+> > +       int i, ret;
+> > +       struct reset_simple_data *reset;
+> > +
+> > +       clk_base =3D of_iomap(np, 0);
+> > +       if (!clk_base) {
+> > +               pr_err("%pOFP: failed to map registers\n", np);
+> > +               of_node_put(np);
+> > +               return;
+> > +       }
+> > +       of_node_put(np);
+>=20
+> The 'np' is used later when registering PLLs. You can only put the node
+> after it's no longer used. Also, you never got the node with
+> of_node_get(), so putting it here actually causes an underflow on the
+> refcount. Just remove all the get/puts instead.
+
+That simplifies it, thanks for the hint!
+
+> > +
+> > +       clk_data =3D kzalloc(struct_size(clk_data, hws, WPCM450_NUM_CLK=
+S), GFP_KERNEL);
+> > +       if (!clk_data)
+> > +               return;
+> > +
+> > +       clk_data->num =3D WPCM450_NUM_CLKS;
+> [...]
+> > +       /* Reset controller */
+> > +       reset =3D kzalloc(sizeof(*reset), GFP_KERNEL);
+> > +       if (!reset)
+> > +               return;
+> > +       reset->rcdev.owner =3D THIS_MODULE;
+> > +       reset->rcdev.nr_resets =3D WPCM450_NUM_RESETS;
+> > +       reset->rcdev.ops =3D &reset_simple_ops;
+> > +       reset->rcdev.of_node =3D np;
+> > +       reset->membase =3D clk_base + REG_IPSRST;
+> > +       ret =3D reset_controller_register(&reset->rcdev);
+> > +       if (ret)
+> > +               pr_err("Failed to register reset controller: %pe\n", ER=
+R_PTR(ret));
+>=20
+> It would be nicer to register this device as an auxiliary device with a
+> single API call and then have all the resets exist in that file
+> instead of this file. The driver would be put in drivers/reset/ as well.
+
+Not sure I'd move ten lines to a whole new file, but moving them to a
+separate function definitely makes sense, I'll do that.
+
+>=20
+> > +
+> > +       of_node_put(np);
+>=20
+> Drop this of_node_put()
+
+Ok.
+
+
+Thanks for your detailed review!
+
+I'll send the next revision after testing my changes on the relevant
+hardware (which I currently don't have with me).
+
+-jn
+
+--WXvGHi2mgeFMSsi1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmYeSscACgkQCDBEmo7z
+X9v2Tw/+OlPtGnFxff1/A/65NMHgzu86TjFdCRf3hxLcDRlAcW/QKbbFIzrLimmf
+1Fqx7I1qjUNBbQ67QDDgRPm1lebJRE9zVjWJIjXFC6LC1juGXPTts/GSHNJYcUpR
+ueDuLC4+qql/oQbLr5L3yye1uljuFc/LTA80iUl6figpSkRLxVdyfMBqdVuDMQSH
+7B0hWc/fwsU5/OLQR01vYtPzFrWCBQ9/gM8dHITdemGD8bJEvEzDxi6LJb4+yijd
+kdnIDhQmVhLU9OCWaUO6SoXiyN3pAFbydCSi3z2sY21/8Ic+HiPttsMeqycThlKV
+fHPFr4Ra4pFDbRuQwgSbVejseZukrnfVAAew6VgLCJLSUr+sw2Ub3iA2v87vnID6
+Ur3FG0W+QB2W8O8NJ82NXJO3UTRLVejuTrcmaemyBPXK3qkWIWYLkDBhcd5++QAw
+e/d0KkKHhxKgqe7f1oEcZv3el2f8daslpew+9SARp6OMXf61YqI7FihXjpsWXTNv
+u7TyPBrfFlBw9mOMxr3WbNGzPJJc2wBokiAvGJWmbaQvdT2SNFadQM2fczS8oIdG
+S0LTPzd5Vg0Gy288r1jUQiN8sedUeY2Ya+hipCYxzA1ftF0+VjoaQUv+BzH3P1F5
+UtBnZEcs7UiRxStFPJdyHqmIZVQ5NTfoDvwDAXgH5riSqKlLRRk=
+=6Ug7
+-----END PGP SIGNATURE-----
+
+--WXvGHi2mgeFMSsi1--
