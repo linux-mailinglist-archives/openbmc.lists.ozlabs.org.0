@@ -1,74 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 681768B5172
-	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2024 08:30:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5ECD18B51F5
+	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2024 09:06:14 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zDSTBSjI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WlS0v7wZ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VSYP10nQTz3cR1
-	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2024 16:30:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VSZ9t2MbTz3cSp
+	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2024 17:06:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=zDSTBSjI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WlS0v7wZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=dan.carpenter@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52d; helo=mail-pg1-x52d.google.com; envelope-from=jim.t90615@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VSYNQ4R3Nz2xPd
-	for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2024 16:30:12 +1000 (AEST)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-a524ecaf215so506506166b.2
-        for <openbmc@lists.ozlabs.org>; Sun, 28 Apr 2024 23:30:12 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VSZ9J66rLz30N8
+	for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2024 17:05:39 +1000 (AEST)
+Received: by mail-pg1-x52d.google.com with SMTP id 41be03b00d2f7-53fbf2c42bfso2940557a12.3
+        for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2024 00:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1714372206; x=1714977006; darn=lists.ozlabs.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KERnA4T0jCEQs34o3IlPybs8QOMiz93MooHjuPlhTb4=;
-        b=zDSTBSjIMHyFTlweCxaDw7fzAb9Chx6XuYpOjIuc0HK9CuZbWuMBaF/5g1nEJNjvK+
-         287jkQ0u2CbNq8JO89NnuiNjogoFjmdOzWAog8tf02bWnamWdgQJaMPvDBeAk1eiQfzS
-         tH4fVlaOBjXq8crGBnemyc1v0/gN+7CMgR1kyJT4bTNmw/3XWEH9ho0oRiUToouZZgDu
-         1u8VZxSQnDi3K20321mMjYXOGQ0P04KPI7plAwyRKK/wVUOAkC2SLU/C8lZR+qc9UM+4
-         rr+doG9xQ//I2TsfmkCURDsLyKldw/tj6Xlj9MrE7wyhWEBBlK43r8zuQei5trkBF/v9
-         ucFg==
+        d=gmail.com; s=20230601; t=1714374336; x=1714979136; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vEglK9K8c5i8QBLiYdAQTdb0ab9SQtK5PmVbKoN4XV8=;
+        b=WlS0v7wZv/iohAE5wTYsl8+QzGeLIOSPZWxaSOoeheCUcnVB8oHP0VexasQKX289bS
+         kt3MpMW4Dr7gFdA7kcatyDp4gr63p2ZHP4A7DO/N5vFlTHeo2DBOWtBoqZz0evfMkcun
+         NtQiAXhFvHPjKtUtSzq//Qsw9E2Egj9JWbeK693q/GCjz09/sL9OTPsNuQ9nDwarfl+U
+         Tp/UQMqEG+j2aKTLXwTgdIwe1YW922YEz/oV3auZqIugST9mjEhx349b1bS0xRdaWvZv
+         wuyZ0MuSNLABQzKMndbNZBlATQUNd/U0dGrMp5N8TPEbD8CyURhF6b0OKMgPwaCxfJW7
+         Jv5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714372206; x=1714977006;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KERnA4T0jCEQs34o3IlPybs8QOMiz93MooHjuPlhTb4=;
-        b=USgt5aC0VHj80CrqgFDY0ljMbHO8IY+YT4f4T/YT8gc3udSvwNj+pPhuQDBbf3RHIH
-         sP0vQj4hqWo4M1XoEyPTvmnvR0xuKdNHFWEyqm5vIiNP1+CHxphEd2Q04OGksFd+bUxF
-         KoNTcuzaJQ6emGCeW9q8no4V3rWyU+VcID7FoOz26BrailyvFi6HbZs8+MVVIGOCleSK
-         g+T4+g3mo9B31tQqyVOfWE9JdLJOj+HupohP5576jvBDyr1nKmOgVZ6KyzGWFRO5zUMV
-         HHgcQBPypc2jIouxJuwvQano8krl+buSOZ/DEgqKDGn2qApTOU+EIo+dV0dQFGhApneS
-         BFDg==
-X-Forwarded-Encrypted: i=1; AJvYcCX1Ph88Vv1P4m+oSUctaoaEJm1D/3YquUwmI0DkmHg7SDWJhG/fbcDZRnUomNHSEWhNKCPd+LjEtkJyaq4PXBga4e6CuY/sSYY=
-X-Gm-Message-State: AOJu0YwyP3pW3FOUEFmk6UMIJBz2YPT6mxH3U9w/Vj1C8apZT/3L7LDU
-	fBUVGbs4NP5jaYItZg9/bVL5+QCBcGlXYpOckDMUkahzEW35m5YyYMgdpX91f3I=
-X-Google-Smtp-Source: AGHT+IEuwGziIm6KgpZpUtsLTsqKVmTl4T2GUPgk2+IbpwCDyVrzevDmt0o2BYgkfnHK8qfanoQquQ==
-X-Received: by 2002:a17:906:3602:b0:a58:e569:1242 with SMTP id q2-20020a170906360200b00a58e5691242mr3198451ejb.4.1714372206208;
-        Sun, 28 Apr 2024 23:30:06 -0700 (PDT)
-Received: from localhost ([102.222.70.76])
-        by smtp.gmail.com with ESMTPSA id h26-20020a170906399a00b00a51f2b5b1fcsm13544638eje.75.2024.04.28.23.30.05
+        d=1e100.net; s=20230601; t=1714374336; x=1714979136;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vEglK9K8c5i8QBLiYdAQTdb0ab9SQtK5PmVbKoN4XV8=;
+        b=SNpVaTBVUXLOcg0kERB8WrxcwBPPnYb3zevFGa6M1NNMwPx7XT7Qb+imZSrm12f8GO
+         A6X/yJirvkNPVdf7gDuh50vVzZBmeQVYlTpCO4f6kY6zriZixkP5vEtmY0FENtdGFA1Z
+         +vDCVMNIRZOg0RcLxcwhkbd4A0z6lfu81BS1BO2WSuYx/WAxjErjHtaJhHQ9jO2ZLhsB
+         9UcbIfpHCMUaa//ybcn/oepcwxhR6nV0RKvaNdXT3WqEQgNH0+uwA5uTK65HDh/Sl9Sz
+         AW6B4jAKtK5RXBwGHJIwE41To76yjlo3BDNPySl//4JQpXU43fkBHAy85wBXXIvuPhkm
+         QBMg==
+X-Forwarded-Encrypted: i=1; AJvYcCVOagUSilbz12NiUr/7fPlVFogTcn/bCy6ngj5PaSQnRj9YNisG2Hcblk4jzTDtWSihYftXeSRJtFR6Pw/lxhFydeUxzQwFzqY=
+X-Gm-Message-State: AOJu0YyEQko09iL1InW1QgbTmrzFzRKl8aSct7opQVLyot4Tgi08NBnf
+	oUFzZ6DoYJV7iuJiU4A46AG9vBOtfC/+ZSPd3gWp4ljpmIupTmBU
+X-Google-Smtp-Source: AGHT+IGMAMI8jVYAcx5uDRIfdvsKW0eMKlGR3gETBwuInjA3i51gQQBZTkLDilCVqH0FdDm+X1BZAQ==
+X-Received: by 2002:a17:90b:1d01:b0:2a2:bd4b:764f with SMTP id on1-20020a17090b1d0100b002a2bd4b764fmr8222549pjb.3.1714374336553;
+        Mon, 29 Apr 2024 00:05:36 -0700 (PDT)
+Received: from localhost.localdomain ([1.200.153.166])
+        by smtp.gmail.com with ESMTPSA id gt5-20020a17090af2c500b002b16f39c917sm1947355pjb.50.2024.04.29.00.05.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Apr 2024 23:30:05 -0700 (PDT)
-Date: Mon, 29 Apr 2024 09:30:01 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Jim Liu <jim.t90615@gmail.com>
-Subject: Re: [PATCH v2] gpio: nuvoton: Fix sgpio irq handle error
-Message-ID: <0ef4941c-ffa3-4f34-b3bb-4b97d923294f@moroto.mountain>
-References: <20240429060642.2920266-1-JJLIU0@nuvoton.com>
+        Mon, 29 Apr 2024 00:05:36 -0700 (PDT)
+From: Jim Liu <jim.t90615@gmail.com>
+X-Google-Original-From: Jim Liu <JJLIU0@nuvoton.com>
+To: JJLIU0@nuvoton.com,
+	KWLIU@nuvoton.com,
+	jim.t90615@gmail.com,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	dan.carpenter@linaro.org
+Subject: [PATCH v3] gpio: nuvoton: Fix sgpio irq handle error
+Date: Mon, 29 Apr 2024 15:05:23 +0800
+Message-Id: <20240429070523.3160248-1-JJLIU0@nuvoton.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240429060642.2920266-1-JJLIU0@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,48 +82,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, brgl@bgdev.pl
+Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
-
-On Mon, Apr 29, 2024 at 02:06:42PM +0800, Jim Liu wrote:
-> User use gpiomon to monitor input pin ,if triger the system will call trace and rcu stall.
-> 
-> The irq_handler uses generic_handle_domain_irq, so there is need to remove irq_find_mapping.
-> 
-> Fixes: c4f8457d17ce ("gpio: nuvoton: Add Nuvoton NPCM sgpio driver")
-> Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
-> ---
-> Changes for v2:
->    - add more description
-
-Part of the commit is missing so it will break the build.
-
-drivers/gpio/gpio-npcm-sgpio.c: In function ‘npcm_sgpio_irq_handler’:
-drivers/gpio/gpio-npcm-sgpio.c:437:28: warning: unused variable ‘girq’ [-Wunused-variable]
-  437 |         unsigned int i, j, girq;
-      |                            ^~~~
-
-Thanks for improving the commit message and adding a Fixes tag.  That's
-very helpful, but it still can be improved a bit.
-
-======================================
-
-Subject: [PATCH v3] gpio: nuvoton: Fix stall in npcm_sgpio_irq_handler()
 
 The generic_handle_domain_irq() function calls irq_resolve_mapping()
 so calling irq_find_mapping() is duplicative and will lead to a stack
 trace and an RCU stall.
 
-[ cut and paste the call trace here]
 
 Fixes: c4f8457d17ce ("gpio: nuvoton: Add Nuvoton NPCM sgpio driver")
-Signed-off-by:
+Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
+---
+Changes for v3:
+   - remove unused variable
+Changes for v2:
+   - add more description
+---
+ drivers/gpio/gpio-npcm-sgpio.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-======================================
-
-Otherwise it looks good.  Please fix and resend.
-
-regards,
-dan carpenter
+diff --git a/drivers/gpio/gpio-npcm-sgpio.c b/drivers/gpio/gpio-npcm-sgpio.c
+index d31788b43abc..260570614543 100644
+--- a/drivers/gpio/gpio-npcm-sgpio.c
++++ b/drivers/gpio/gpio-npcm-sgpio.c
+@@ -434,7 +434,7 @@ static void npcm_sgpio_irq_handler(struct irq_desc *desc)
+ 	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
+ 	struct irq_chip *ic = irq_desc_get_chip(desc);
+ 	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+-	unsigned int i, j, girq;
++	unsigned int i, j;
+ 	unsigned long reg;
+ 
+ 	chained_irq_enter(ic, desc);
+@@ -443,11 +443,9 @@ static void npcm_sgpio_irq_handler(struct irq_desc *desc)
+ 		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
+ 
+ 		reg = ioread8(bank_reg(gpio, bank, EVENT_STS));
+-		for_each_set_bit(j, &reg, 8) {
+-			girq = irq_find_mapping(gc->irq.domain,
+-						i * 8 + gpio->nout_sgpio + j);
+-			generic_handle_domain_irq(gc->irq.domain, girq);
+-		}
++		for_each_set_bit(j, &reg, 8)
++			generic_handle_domain_irq(gc->irq.domain,
++						  i * 8 + gpio->nout_sgpio + j);
+ 	}
+ 
+ 	chained_irq_exit(ic, desc);
+-- 
+2.34.1
 
