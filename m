@@ -2,100 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 465288B94AC
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 08:30:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D17C78B9675
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 10:30:44 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rhoOd2u2;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=fygQNv1S;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VVPFP6BDJz3cWG
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 16:30:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VVRw23k3Yz3cXg
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 18:30:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rhoOd2u2;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=fygQNv1S;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVPDp04Xtz3cFN;
-	Thu,  2 May 2024 16:30:01 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id E0A756145A;
-	Thu,  2 May 2024 06:29:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6A9C116B1;
-	Thu,  2 May 2024 06:29:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714631398;
-	bh=kRJcCqVAC2kt3w2BiItbrRDn2sLeURUSyGmpuC2oZ0c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rhoOd2u2Q3LrM4nCJWpsFR/RbxtoNkJjTlnlPT7l6cLj6pvbMgjFft2zcbkj3C5mu
-	 WbgrJt6WqnXSwZhdhyIoth9k1n2U9Berx+puuIJyLEojwAMKbr3Q7TO5nN5M1gfBjs
-	 mgWC2JBUpw7HSKKSJPLKpCoAONlf6ueBW+IpSquODsWznt/80BVsWk2Job+LOkpR4R
-	 pndHopogGB+jkx1KmSyFTC7lF7D6HLkAyX9MpojptG+T3FJTXIHb9M5Tq4ZxutU/TV
-	 r+tPiyItE9+esKzL0gwaCptaHPYdePI3A/mqgOTeLIeQdT14tkrtZ6RFqfQ9+GuI6u
-	 V2fzxHIni3omw==
-Message-ID: <4abf3853-c29e-4397-9746-45dbdaea9ae7@kernel.org>
-Date: Thu, 2 May 2024 08:29:52 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVRvS099Vz3c71;
+	Thu,  2 May 2024 18:30:10 +1000 (AEST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-572baf393ddso1147279a12.1;
+        Thu, 02 May 2024 01:30:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google; t=1714638604; x=1715243404; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EcS37ofGtSGOaqbMmyUYN9nLzJNBzaZA8qq8/HQQjPU=;
+        b=fygQNv1SyfDFSwokgqbGXJThKAAVpd51NYQ/SzMmE1vNJxgXcE1ieUHma6kDDg+ifM
+         v6bbX2YmapDbdPd9yzzstkLstPuMFaENcRLGXcU/wcYYk/W77xXki4fJPH1y/N4RiuYx
+         yz/ezigWGVW5Zn9GxrStBLR8JkosCCo7C21hQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714638604; x=1715243404;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EcS37ofGtSGOaqbMmyUYN9nLzJNBzaZA8qq8/HQQjPU=;
+        b=YDjjTqg8wvwqRVNQ8+aUz7NNRDcWf7v3DRGzeFR8Lehw5YxcP/83NaUjRGZo/dMczY
+         dhpb8w3meM4Jb10B0sfs2vVXm3rqq5iGC9Zn3W3DxeYYxxFnuh21AIqwYQnTicTBaKzv
+         QM4SXv4Hb9Mucj4XMLs49iZqtktI3USWaCOwIcDgT6a4oz/DDKrnrO88yDq3tPZDX49F
+         a5w8KxMB7xYKL7h84yzo5vfaNIBaHOsK3VfOACA9Jxcs8vCGJtNx+HVnZJxkO7Z4uPa5
+         MG4WQYbX5o5YVY70v4nDie9mfkJY833KB9gv2BzS51s50DzInpOdriPsFcYJ1FsnZ9Nl
+         /Xag==
+X-Forwarded-Encrypted: i=1; AJvYcCX2ybm/EGHzgYrqlvlXh8Ll7n62lNk0p+em+sG4wIApDppOoY8HEJza+Xr5C1XvJl37JymnYQ8hvYjUIA3YNDM9BCxNH9rWMCKpbF0AD8j1jM9YJDU9kr+ykoL4lvNzFV6tmbgpAE0c
+X-Gm-Message-State: AOJu0YxU0zYUsVvYr2fXf7QCpHVKguo3eBrjrF1woAvUKhUvoHFAd/Lg
+	Zj2uBzxbcVxnE9rKvLxwlmXNyubkrKRYCo/UhAtQmTc9MJAA1OzG4eNUz+8OQengruscIreWB8V
+	MkdbtWMeT/bh7+YT7Hvk40vATpos=
+X-Google-Smtp-Source: AGHT+IE7PXs7Cu+sBWPGxvQ8zk0DGcZNvv6VeR1g/mLA+ZLjmhg+6Kp84MHM3XAzW8rbbeT+KWPAZfh1Yj4u2YTFJBU=
+X-Received: by 2002:a17:906:3b4b:b0:a58:f186:229 with SMTP id
+ h11-20020a1709063b4b00b00a58f1860229mr1782860ejf.0.1714638604139; Thu, 02 May
+ 2024 01:30:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: trivial-devices: add isil,isl69269
-To: Zev Weiss <zev@bewilderbeest.net>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
 References: <20240502002836.17862-5-zev@bewilderbeest.net>
- <20240502002836.17862-6-zev@bewilderbeest.net>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240502002836.17862-6-zev@bewilderbeest.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20240502002836.17862-5-zev@bewilderbeest.net>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 2 May 2024 17:59:50 +0930
+Message-ID: <CACPK8Xe9BcFziQTKA2FrQq6GT1aWeSirDrWTNBh8b+HwcZzctg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] ARM: dts: aspeed: Add ASRock E3C256D4I BMC
+To: Zev Weiss <zev@bewilderbeest.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,18 +72,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>, linux-arm-kernel@lists.infradead.org
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 02/05/2024 02:28, Zev Weiss wrote:
-> The ISL69269 is a PMBus voltage regulator with no configurable
-> parameters.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+On Thu, 2 May 2024 at 09:59, Zev Weiss <zev@bewilderbeest.net> wrote:
+>
+> Hello,
+>
+> These patches add a device-tree (and a couple tiny bindings updates)
+> for the Aspeed BMC on the ASRock E3C256D4I, so that it can be added as
+> a supported OpenBMC platform.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks! Applied and pushed out.
 
-Best regards,
-Krzysztof
-
+>
+> Changes since v2 [1]:
+>  - Added patch 1 adding isl69269 to trivial-devices.yml
+>  - Adjusted isl69269 compat string to use isil vendor prefix instead
+>    of renesas, dropped unprefixed entry
+>
+> Changes since v1 [0]:
+>  - Removed bootargs [Krzysztof]
+>  - Renamed LED nodes [Krzysztof]
+>  - Added function & color properties to LED nodes
+>  - Added #address-cells and #size-cells to FRU eeprom node
+>
+> [0] https://lore.kernel.org/lkml/20231114112722.28506-4-zev@bewilderbeest.net/
+> [1] https://lore.kernel.org/lkml/20231120121954.19926-4-zev@bewilderbeest.net/
+>
+> Thanks,
+> Zev
+>
+>
+> Zev Weiss (3):
+>   dt-bindings: trivial-devices: add isil,isl69269
+>   dt-bindings: arm: aspeed: document ASRock E3C256D4I
+>   ARM: dts: aspeed: Add ASRock E3C256D4I BMC
+>
+>  .../bindings/arm/aspeed/aspeed.yaml           |   1 +
+>  .../devicetree/bindings/trivial-devices.yaml  |   2 +
+>  arch/arm/boot/dts/aspeed/Makefile             |   1 +
+>  .../aspeed/aspeed-bmc-asrock-e3c256d4i.dts    | 322 ++++++++++++++++++
+>  4 files changed, 326 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-asrock-e3c256d4i.dts
+>
+> --
+> 2.44.0
+>
