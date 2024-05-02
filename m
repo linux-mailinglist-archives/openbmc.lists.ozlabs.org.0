@@ -1,82 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33C058B9938
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 12:44:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98DDD8BA08F
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:32:46 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=hxRrl8zu;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=bBjF0sVm;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VVVtH4Zhmz3bvJ
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:44:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VVjGh21qZz3cZ6
+	for <lists+openbmc@lfdr.de>; Fri,  3 May 2024 04:32:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=hxRrl8zu;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=bBjF0sVm;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=osk@google.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVVnw3mRKz3cTx
-	for <openbmc@lists.ozlabs.org>; Thu,  2 May 2024 20:40:34 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1714646412; x=1715251212; i=j.neuschaefer@gmx.net;
-	bh=6OXJA6Op8AyXGG0UDDxLGH3tvgeicFvPJqUw6T5kUbc=;
-	h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=hxRrl8zuChzw55RMQflwp7LKbYiPFy0ZZt8yx8NZ/Dq4g/FCU31fUP3+FmwR3exN
-	 TF8U2y79hG2fWEX7VhYBgzLn5dowiT1R5GAU51LrqgANiVsWk0/5DgQJtiX89Ptya
-	 LP509nGTPoKexTIIo7QT0TUebmRmoFsFRagEOYj/ZXffpmyd+k75r8FCk91CR7kSW
-	 8Xt7WK3kHD71rZZdkGW1zvRuO0DYOLcjBivEXh9Gy+xS5sjG4Qq9BaiJqZelQFQyd
-	 uPDYTuO5eChJKxLwT062m8ysSW/OxLb9SUTW6zM9YmdchYC/XD0mkTuQtK+hU40bq
-	 w3c8BBruMWTXhVMJpQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.1.59.78]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVNAr-1sBRu72x6N-00QZRI; Thu, 02
- May 2024 12:40:12 +0200
-From: =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Date: Thu, 02 May 2024 12:40:05 +0200
-Subject: [PATCH v12 6/6] ARM: dts: wpcm450: Switch clocks to clock
- controller
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVjG61gl5z3cR3
+	for <openbmc@lists.ozlabs.org>; Fri,  3 May 2024 04:32:13 +1000 (AEST)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1ec76185cb3so31575ad.0
+        for <openbmc@lists.ozlabs.org>; Thu, 02 May 2024 11:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1714674728; x=1715279528; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vvx9nMnU2EZUZ5y+s47kZcyYB1/w05TGpsoAfd1Ovwo=;
+        b=bBjF0sVmPHqzvjQ1evb6GOMoLIft0UflOS9kg48Tc0jaknLrAeijg3OClyvZGSbJI5
+         Nsb7JvMkhu083BIJePGzm83bPtgS3a4LJySkyI3r3QiQ5B89NtwWb7odKJGftlp0GfqI
+         3BX/C9x8BICTAzNxufyuUIdua8qWGH706v3L0v9Z7S/LFu2dj+9GOHu2sZFw+VAclE1V
+         QuaKOjMuqliC6v/pf6oOBw135nWjntz3Q9Xz9MWo9TrqlUU4XLwRRuXKFJ9tPUtGoFZN
+         ggziR3+dhQFeC/uzpcH5ppM0DpCkp5X1yjKVL5BGdRa8O5jy3hgh05vs70ID9Ulm36Kf
+         y0Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714674728; x=1715279528;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vvx9nMnU2EZUZ5y+s47kZcyYB1/w05TGpsoAfd1Ovwo=;
+        b=rPOjbDRO1KfPgmBnDcryiQGqMuBqduuBDHWKFXQQrz8xFN7WE1S4FT66vvjJ83g/gq
+         DhaPI4rjiKLwPS2B92tnHps/1TWAHjTtLoWvannSXFq84GXcpoHB657iHoYl/6I/7sbM
+         5Qmnu927k60X889Mtkj3tVGkSVbsB2qKWABJExaGvgULRoQ4nqV+iggjwtVcoyoSdzV/
+         +S7Vtp/McqhZHvdpIyOqw389U5RbXQ/z3oHBtDjA/20Zdxc0YrWQj3jIWXzvHe05Xri4
+         PzNFjo3bLx1lfPxaAx9N6HyL4ymOgxA9oZfz1yYkKbm5On7KZPuKHVvQJXCFr3glwvDv
+         4Hig==
+X-Gm-Message-State: AOJu0Yz9bfcRYNNdQX+Qp+yFA94V58zB6PYjIIvaq960Gk0+sWE/e1I1
+	j6m1xhiGZvNGaFZZxk4z3oegQVaOY//bQj/b5eo6z0Cne3CclCJe2OfgE3nek3TR0m9+lh1K3rs
+	WAZxSp+lkl0OOpVPws2mE3wYuQk9CaER/9slakFbAgVRsWrHJTPPdfMw=
+X-Google-Smtp-Source: AGHT+IHz5pnLZEAp7h2N2AZsJ+PS35Tdtz+c+oMZSPv0IivDzTqDvtXt5O3knLVOLUsLmZjlJzzfLhxxSrSnbMDawY0=
+X-Received: by 2002:a17:903:184:b0:1e3:d11b:532b with SMTP id
+ d9443c01a7336-1ed2dbe6fa6mr150615ad.5.1714674727611; Thu, 02 May 2024
+ 11:32:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20240502-wpcm-clk-v12-6-1d065d58df07@gmx.net>
-References: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
-In-Reply-To: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
-To: openbmc@lists.ozlabs.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1714646407; l=3443;
- i=j.neuschaefer@gmx.net; s=20240329; h=from:subject:message-id;
- bh=kTIwYF9CzV7EiefFtPbjPQBui0vN/ls9WsnRdurtK5Q=;
- b=i5Nq00oyRbu3AdZD8yy38vGM7GdRnEMZs+mGG+3ay/O/Wyfg8NaGHyiZFF5+okDYgRRB5h3DN
- Q5d4gVOoKhUB7XDLKtjAK4YSHebPDyraHUvCX+G5sAcIoTajJGKy06S
-X-Developer-Key: i=j.neuschaefer@gmx.net; a=ed25519;
- pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
-X-Provags-ID: V03:K1:hIS1j75iLlGFzDqsq+dZOPH9oD8RRwRngZCC2XzrPED0kjl9VzG
- tctJWpzU85h5nTaGYuPEsGU2Ky/yE9g/qqf1HuxSBl3vHOK0DM4Aa48KUwfcYciYcMbCZL1
- JdT/xpRZRmdNe7nDiUp4nYSPbm7NKM2foniMSld5PbS15DUIClvJq9fZNvvKxsNE2wtYhtW
- yF23+xG8cKN2iKxoG4Z0g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:utNei+oMAA8=;d1JrV2fj7oGow4bds/UHwSLcGsk
- NF95oW2ztrNogQOM35PCLwCEQcGiQXhqQpgYD9hDo0x5RxsvxnAKrx8Y2tF318a8FTSOPIRB2
- UQt2DRubFbpXhYu07L65+mjg2u512e6XjbffsrnMSlzhcozhuN/Iwz0kBt9K8VLfFJjwh8Hc/
- vlV8XGLc/+nhD21Ts04HnFowEZ7cE49/BNBdC3AwM1jZLZ2cL74jcUjFiZTtfcHPSC6I075gi
- 06kuJazbup6OcY+w9Qjsf9Hqkvp/4XBPBSopB90ydCdFSAFueeEwaNg5zPyr8Wmr3iVfG1qR1
- Btc5IbQrdFeFp5axBdVGJ1lm/9BgcGghiGZzihlHgXkq6ILkA+kAtjopoMCZ9CyAoRZ48FuWK
- pFvRPRlPO5HbVPg0fWsMCoNsyE8CCL1gTf9UTRR0kG3cSF2yw58Xi+f0ZZ4+rqNCe1oUJ2jNp
- TbZEMOQYNPFklJU7G/HITEBaCP9+c8ny9ibM/8Hd0m80pr7NCmXYwP0tCWeqlsQX7Wogq7Zpz
- LSqQChOTl2fopbHLj/aGi8IdiaStThcN0T/AXa2OAR01zPV0IDiu9YMC14vOv+tknIDRVmRvK
- ge8Lxb7NcGjSLXVpWFP+0Cb9m4vjTM3oO3PYUrW95Vb9/kHRgldm3DjtjK66mBrjsOo++HlXw
- l1QFtAHIbe7XZVLIKBgn7l6tVgq1VCEc9go2lW392HBwERZrdPdeVm14KE5+bFxylnQ6eDs+i
- jOoD35HXeK89INu8Y0QXSGqslX4n1phWKTF6GHvCkl9nhM9XrJqkpQTtvHEG+zRI/p+cbcCNC
- o6sIB36qBvzXd0FdcapQCnmhJhNm5j5umVdX1J80AbQRQ=
+From: Oskar Senft <osk@google.com>
+Date: Thu, 2 May 2024 14:31:51 -0400
+Message-ID: <CABoTLcQvFfJPhM=W12Z-QnqRzkRt5TE+g0vunw4MB=aYuo-GPA@mail.gmail.com>
+Subject: ipmitool fru write 0 - does not update "baseboard" FRU
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,128 +71,178 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Joel Stanley <joel@jms.id.au>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Ed Tanous <edtanous@google.com>, Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This change is incompatible with older kernels because it requires the
-clock controller driver, but I think that's acceptable because WPCM450
-support is generally still in an early phase.
+Hi everyone
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
+tl;dr - Attempting "ipmitool fru write" with an input file that
+contains additional bytes beyond the actual FRU data does not actually
+update the FRU on OpenBMC at head w/ entity-manager.
 
-It's probably best to delay merging of this patch until after the driver
-is merged; I'm including it here for review, and in case someone wants
-to set up a shared branch between the clock and devicetree parts.
+Details:
 
-v12:
-- work around timer-npcm7xx driver issue by providing timer clock separate=
-ly
+I ran into an issue with updating the "baseboard" FRU (0), which is
+stored as /etc/fru/baseboard.fru.bin. However, I don't think this is
+specific to FRU 0 and could apply to other updateable FRUs in the same
+way.
 
-v11:
-- no changes
 
-v10:
-- Reintroducing this patch as part of the clock/reset controller series
-=2D--
- arch/arm/boot/dts/nuvoton/nuvoton-wpcm450.dtsi | 32 ++++++++++++++++-----=
------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+1. Start off with a "minimal" /etc/fru/baseboard.fru.bin which just
+contains chassis type (that's required for entity-manager's fru-device
+to recognize the file.
 
-diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450.dtsi b/arch/arm/boo=
-t/dts/nuvoton/nuvoton-wpcm450.dtsi
-index ff153858801ccf..daf4d399ecab4c 100644
-=2D-- a/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450.dtsi
-+++ b/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450.dtsi
-@@ -2,6 +2,7 @@
- // Copyright 2021 Jonathan Neusch=C3=A4fer
+root@akita:~# ls -al /etc/fru/baseboard.fru.bin
+-rw-r--r--    1 root     root           512 Sep 21 05:21
+/etc/fru/baseboard.fru.bin
 
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
+root@akita:~# hexdump -C /etc/fru/baseboard.fru.bin
+00000000  01 00 01 00 00 00 00 fe  01 01 17 c0 c0 c1 00 a6  |................|
+00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000200
 
- / {
- 	compatible =3D "nuvoton,wpcm450";
-@@ -30,13 +31,6 @@ cpu@0 {
- 		};
- 	};
+root@akita:~# ipmitool fru print 0
+ Chassis Type          : Rack Mount Chassis
+ Chassis Area Checksum : OK
 
--	clk24m: clock-24mhz {
--		/* 24 MHz dummy clock */
--		compatible =3D "fixed-clock";
--		clock-frequency =3D <24000000>;
--		#clock-cells =3D <0>;
--	};
--
- 	refclk: clock-ref {
- 		/* 48 MHz reference oscillator */
- 		compatible =3D "fixed-clock";
-@@ -44,6 +38,19 @@ refclk: clock-ref {
- 		#clock-cells =3D <0>;
- 	};
 
-+	refclk_div2: clock-refdiv2 {
-+		/*
-+		 * reference oscillator divided by 2, as a workaround because
-+		 * the npcm7xx-timer driver needs its clock earlier than the
-+		 * clk-wpcm450 driver (as a platform driver) can provide it.
-+		 */
-+		compatible =3D "fixed-factor-clock";
-+		clocks =3D <&refclk>;
-+		#clock-cells =3D <0>;
-+		clock-mult =3D <1>;
-+		clock-div =3D <2>;
-+	};
-+
- 	soc {
- 		compatible =3D "simple-bus";
- 		#address-cells =3D <1>;
-@@ -70,7 +77,7 @@ serial0: serial@b8000000 {
- 			reg =3D <0xb8000000 0x20>;
- 			reg-shift =3D <2>;
- 			interrupts =3D <7 IRQ_TYPE_LEVEL_HIGH>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_UART0>;
- 			pinctrl-names =3D "default";
- 			pinctrl-0 =3D <&bsp_pins>;
- 			status =3D "disabled";
-@@ -81,7 +88,7 @@ serial1: serial@b8000100 {
- 			reg =3D <0xb8000100 0x20>;
- 			reg-shift =3D <2>;
- 			interrupts =3D <8 IRQ_TYPE_LEVEL_HIGH>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_UART1>;
- 			status =3D "disabled";
- 		};
+2. Prepare a FRU file with additional data, e.g. with frugy:
 
-@@ -89,14 +96,15 @@ timer0: timer@b8001000 {
- 			compatible =3D "nuvoton,wpcm450-timer";
- 			interrupts =3D <12 IRQ_TYPE_LEVEL_HIGH>;
- 			reg =3D <0xb8001000 0x1c>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&refclk_div2>,
-+				 <&refclk_div2>;
- 		};
+(frugy) osk@osk:~$ cat demo.yml
+ChassisInfo:
+  type: 23
+  part_number: '4711'
+  serial_number: '12345'
 
- 		watchdog0: watchdog@b800101c {
- 			compatible =3D "nuvoton,wpcm450-wdt";
- 			interrupts =3D <1 IRQ_TYPE_LEVEL_HIGH>;
- 			reg =3D <0xb800101c 0x4>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_WDT>;
- 		};
+(frugy) osk@osk:~$ frugy demo.yml -o demo.bin
 
- 		aic: interrupt-controller@b8002000 {
-@@ -480,7 +488,7 @@ fiu: spi-controller@c8000000 {
- 			#size-cells =3D <0>;
- 			reg =3D <0xc8000000 0x1000>, <0xc0000000 0x4000000>;
- 			reg-names =3D "control", "memory";
--			clocks =3D <&clk 0>;
-+			clocks =3D <&clk WPCM450_CLK_FIU>;
- 			nuvoton,shm =3D <&shm>;
- 			status =3D "disabled";
- 		};
+(frugy) osk@osk:~$ ls -al demo.bin
+-rw-r----- 1 osk primarygroup 24 May  2 13:51 demo.bin
 
-=2D-
-2.43.0
+(frugy) osk@osk:~$ hexdump -C demo.bin
+00000000  01 00 01 00 00 00 00 fe  01 02 17 c4 34 37 31 31  |............4711|
+00000010  c5 31 32 33 34 35 c1 d0                           |.12345..|
+00000018
 
+Note that frugy generates a minimal binary by default. However, other
+processes may not and instead produce a fixed size binary blob. This
+happens, e.g. when performing "ipmitool fru read" which returns the
+whole contents of the underlying storage. A subsequent "ipmitool fru
+write" with that blob will fail as explained here.
+
+To simulate this here, increase the file to 256 bytes:
+
+(frugy) osk@osk:~$ cp demo.bin demo-256.bin
+(frugy) osk@osk:~$ dd if=/dev/zero bs=1 seek=256 count=0 of=demo-256.bin
+0+0 records in
+0+0 records out
+0 bytes copied, 5.1138e-05 s, 0.0 kB/s
+
+(frugy) osk@osk:~$ ls -al demo-256.bin
+-rw-r----- 1 osk primarygroup 256 May  2 13:57 demo-256.bin
+
+(frugy) osk@osk:~$ hexdump -C demo-256.bin
+00000000  01 00 01 00 00 00 00 fe  01 02 17 c4 34 37 31 31  |............4711|
+00000010  c5 31 32 33 34 35 c1 d0  00 00 00 00 00 00 00 00  |.12345..........|
+00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00000100
+
+
+3. Write the newly generated FRU:
+
+root@akita:~# ipmitool fru write 0 demo-256.bin
+Fru Size         : 512 bytes
+Size to Write    : 256 bytes
+
+Wait ~10 seconds for the fru-device process to reload the contents.
+
+
+4. Re-read the FRU contents:
+
+root@akita:~# ipmitool fru print 0
+ Chassis Type          : Rack Mount Chassis
+ Chassis Area Checksum : OK
+
+
+5. For comparison, write only the minimal FRU:
+
+root@akita:~# ipmitool fru write 0 demo.bin
+Fru Size         : 512 bytes
+Size to Write    : 24 bytes
+
+Wait ~10 seconds.
+
+root@akita:~# ipmitool fru print 0
+ Chassis Type          : Rack Mount Chassis
+ Chassis Part Number   : 4711
+ Chassis Serial        : 12345
+ Chassis Area Checksum : OK
+
+
+I dug into this and found that this is caused by an interaction
+between https://github.com/openbmc/phosphor-host-ipmid/blob/master/dbus-sdr/storagecommands.cpp
+and https://github.com/openbmc/entity-manager/blob/master/src/fru_device.cpp.
+
+Here's what happens:
+- The "ipmitool fru write" request is handled by storagecommands.cpp
+ipmiStorageWriteFruData.
+
+- ipmiStorageWriteFruData receives the whole FRU blob from IPMI across
+several calls. On the initial call, it requests the current FRU blob
+via D-bus from fru-device and caches it in the process. It then
+overwrites sections of that cache with the received data from IPMI.
+
+- ipmiStorageWriteFruData uses information from the FRU header to
+check whether it received all the bytes that make up the new FRU. Note
+that this could be fewer bytes than the size of the cached blob. Once
+it receives all the bytes for the new FRU, it calls
+/xyz/openbmc_project/FruDevice WriteFru via D-Bus with the full FRU
+blob (i.e. the full cache with modifications on top). After that the
+cache is cleared.
+
+- The D-Bus call to WriteFru is handled by fru_device.cpp writeFRU. It
+first performs a sanity check and then writes the blob to the
+underlying device (or the /etc/fru/baseboard.fru.bin for FRU 0). It
+subsequently calls rescanBusses() which actually executes after about
+1 second.
+
+- Meanwhile, "ipmitool fru write" continues to happily send additional
+bytes to ipmiStorageWriteFruData (as in step #3 above). Since its
+cache has just been cleared, it retrieves the current FRU from
+fru-device again. However, since that has not yet completed
+"rescanBusses", it actually received the original FRU again, not the
+modified version. The above cycle repeats, but this time the original
+FRU with additional modifications from the additional bytes.
+
+In the best case (if the new FRU data is larger than the original FRU
+data), the result is that the FRU did not get updated at all, since we
+effectively just wrote back the original FRU. However, if the new FRU
+data is smaller than the original FRU data, this may result in
+corrupted FRU data to be persisted.
+
+
+I was trying to figure out how to best fix that, but couldn't come up
+with a design that would still work. Some ideas:
+
+A)  I think what we're missing is feedback from fru-device to ipmid
+that the FRU write operation has actually completed and the FRU data
+was re-read. The ipmid should probably not accept any additional write
+requests until the previous write request has completed and the new
+FRU data is available.
+
+B) If ipmiStorageWriteFruData cannot detect the expected size of the
+FRU data, it relies on a timeout to eventually write the blob if no
+more data was received from IPMI. I wonder if this mechanism is "too
+clever" and we should simply always just wait for the timeout?
+
+C) ipmiStorageWriteFruData clears the cache immediately after WriteFru
+was called. Maybe we should keep that cache around until the timeout
+expires?
+
+Thoughts?
+
+Thanks
+Oskar.
