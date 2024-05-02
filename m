@@ -2,81 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 196778B9918
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 12:41:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E9D28B9942
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 12:45:16 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XBLWkNmf;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=cDDWlnqe;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VVVpY1JXVz3cYJ
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:41:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VVVvG013xz3cfn
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:45:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XBLWkNmf;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=cDDWlnqe;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVVnw3x1zz3cW1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVVnw3zKJz3cW2
 	for <openbmc@lists.ozlabs.org>; Thu,  2 May 2024 20:40:34 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1714646410; x=1715251210; i=j.neuschaefer@gmx.net;
-	bh=n2e88QE5epBSVSFicZ+xqo5ic/O/WtKAyeT8qBcSr5U=;
+	s=s31663417; t=1714646411; x=1715251211; i=j.neuschaefer@gmx.net;
+	bh=mi0PezsKxlt4YHnZxxM0jZD6ggEqlUX2jNwgc7Ancas=;
 	h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=XBLWkNmfCJ1LedKg3QzKOShdZwoK6kFYjyQw/5JCleg+m/Gjyccbsf6m5QDis+k3
-	 O+4SPBRi7Iug7uD6urGq49hnCnmmdCs31cgjhoWPS25aA7/v4GEaF3BRN7k0DWtn+
-	 uqyR3c5esbjjICJewjr7m+RH8akfkXXKRUeTk0ZxJv42irC2RsoDzTCjVtnTWvchF
-	 Kizs2Dd1Z0zUs+MgcHu52zY3WfHFmhcp0C7AJWsBPGNybVObj+Ca/cL6VZU1R55qZ
-	 p/1RemQ6Jd+U4Z/1H0+OysAXQCC0IS+XW6g9I2KvGDFRD03IZek87QaqmAxVGguZ8
-	 YaICM0tgtth2wcK7vg==
+	b=cDDWlnqeeZFFzxvFuSEHECtppp8V3bO4d0UkuCq3A5b73duZ4OZldbbzH0h+ta5k
+	 SbW2Kj7CgMwu+w4azimZSIEq+Vi06vhkqPKgIG8Pxw4nkEg2hHqrBa0bmIVAqrT8l
+	 8S58133jSf5PKlaJR5E8BhZsdbiePGT29Yt1ZGs3pOrjegow9LXg3yiRqYGoQBxDd
+	 V54n9fQAnvdgFuEySX5S++5GMwWQsYwmCbpcs91ZOFCGgAxyrrvWtT8Th23H8htXf
+	 RWed7gP1ZhOCUJPbWZfE4olMjlj+HbHzpbZ4pA+QXcfWpGMtz9iw1/gkm3GmPgGhH
+	 YiBS7YbZr2PrVjfOcQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.1.59.78]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1sLedM12Lq-00LJxi; Thu, 02
+Received: from probook ([89.1.59.78]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvsEn-1stcLN3h0p-00sxJe; Thu, 02
  May 2024 12:40:10 +0200
 From: =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Date: Thu, 02 May 2024 12:40:01 +0200
-Subject: [PATCH v12 2/6] clk: Introduce
- devm_clk_hw_register_divider_table_parent_data()
+Date: Thu, 02 May 2024 12:40:02 +0200
+Subject: [PATCH v12 3/6] clk: provider: Address documentation pitfall in
+ struct clk_parent_data
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20240502-wpcm-clk-v12-2-1d065d58df07@gmx.net>
+Message-Id: <20240502-wpcm-clk-v12-3-1d065d58df07@gmx.net>
 References: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
 In-Reply-To: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
 To: openbmc@lists.ozlabs.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1714646407; l=1760;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1714646407; l=1209;
  i=j.neuschaefer@gmx.net; s=20240329; h=from:subject:message-id;
- bh=VjLniaHS+bKcYFjCZNozqsTADYqMusOVNK5lpprhRBg=;
- b=sX4JaPRF9uqkZaXe/H1tOsITjWEPOfX/cwh/WwBgOmdfDzoHO0R2RxVm1FhomjMVU8eItiw57
- TLL9wD7ORzjBP1MKzRgE1q4qCvMKspuYEz8Rmmb1TruJORjL9UNGrzD
+ bh=1uiYw4A/lLLh/mTtdxttn1wy5i6b5KyOE0h65+zswio=;
+ b=q8eunMEY8w2HoF/7ikaMihIPI7LizlxmNI2AG/eDzXjlhl2U+uKHSEJT5Ym5KVbp87uTYyrJE
+ AsUnl9akjWMChwF/fhXANkLvLIj7hWB8pZfRegYAJxtuh1LWZmKKMIZ
 X-Developer-Key: i=j.neuschaefer@gmx.net; a=ed25519;
  pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
-X-Provags-ID: V03:K1:+DtwGYQjt2x8GVjHjT0VdQrQ5fiyA2Cpx2yeh9o2vTCRIYKNWoU
- OJ62sDPJ3xaCTsmcqVyLNjeHcft6kh70vSEzkYGZMED6eI9Mz4FHzqDLzhWVJAk0JTbDv6w
- jp5yVlw/MiWWmdhY7Af9U5GnOegLYn4JEBN5X71PXHNytZs7tHQ8COnZvnpUOptn5EP4ty8
- rxFlstpwa0tybgy5hjOzw==
+X-Provags-ID: V03:K1:3o8FPKXfGjyk93wzOJ3/PA3/k/PDZ5csIAPUA7P5cEj1cE6h3Ft
+ O8DBykUoXJLl5+vki/ykwSOk338sas9GAaDAp4a/4AVcQUSRxU2aGDTxXoc6Ui84Zc3kiNt
+ NJfqgol6F557lCLuXn9wGKWqMZbYiuAPIsvZtz+vMfWByLLri5v9NKzn1qEpZjvA0ICVrna
+ BlJyDfttl367Tv7+wr7Wg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:czppJQZDsyY=;SpRHVuFG/OdBmW0gPVgXKhqSBVm
- YV0f5C289zEt29eERNBiaRHOsFpIj9KKOACl5VF2fZ/rYfd+JdS/xbZdkED2eGeIElq9xIi4J
- /sLh5tNaYBPvdSVYxzoOxVjQKu8gPeLpxxwS6fJS5HtIsXkTTibRrwRlWi2ObhoQNPZkX4kcZ
- 8/VznYrGJixio/PJTyLxHB3ziFnhEFpQPUSQwPf1hyh+DJptEGzcn9kq2yGhD+0lvJ9MFwLNA
- TrKORAVJb22FzCR0ySckD01/63k5WW9zYCbzqNMOQHmssGuAWvRiBI/vdN+C5FR6c66v9YzGq
- Ll3Vj0yT/f9v9JioU3zGRZZ/oCetZbi2hiXVPaY2bZVTgWYK0horYBwpH2ekbVb1w17cT6Z5r
- Jf+tGIHqphyhvnmr4nA/2/4U10PqkfLZQPzCPV+IgXmib3D4maloXooUTd1Lflsdsy8h07qlr
- 56fYoI8PKWea1Z38iucmfzaRCPhU7wv2Qk+Mb9Wk4c8N0SfA+zoZhes++qNAdrNmEa2iXDu1f
- Th5QMhX5XwDzxkW9g6s6FwEqvjy7VoGEtXf+WmnuyZQ9UW50aZ/B64WpQACoT5BBRQfKNdoOm
- AB7d040y4Cwn8+mu4Ron1IuU59qhQNltazJwJAIJWxP/dQkgX+mUzvQueQiIXmX9zthktzy4I
- wsF4XUVJPGmU+SXsQxsMRYJlfiT0sxP2G4Jc4XuLzszN28pejtWYjcC/gfi8Q5QWrw4qo21oS
- VIhpKFQomIbcjuECA/afO5g0SE6PX/i4I02TNJ4CsisT6+7F9/m9X46mxrAHABgQwUIeI/faD
- SXpzTkZnmBpAR4yUtTI4YvOSSIpuT7se3CDE4LL0JuJro=
+UI-OutboundReport: notjunk:1;M01:P0:rtAsOuEidkw=;ZNWcbyZHMyEKVXpZBIBuhL/i8/B
+ e95tM5/mT/kG6qejGhOA9k8j4QINJtxDZf9bFnWv12BUJjIkcI3D+HdZGDbmAXLGFUqOByZuK
+ trU+p1lm1TyWfZ6WSzUyM43lnvOJE4BTEuHqGqq7dMwotwRpE6EItROCIykUvm6/8Qpyvkbck
+ 6XLsFjPlEYtadw1g44uWWI0MXsROdRY7mEzzu2byQ8V1zq2YuPDWWMRj2p6khcMHtttkmsLp3
+ G5jvBGtzpGuEsPIeam4CevcY1cHnzqpBhBoggZZlFnXCuUI8b1CCnnHHgOvYTbkVUT9ex+j1T
+ jVdiGH5iKEr1GKQ7C2gimWr/Vnny84wkgLxOlE7cJKu/innA3po25mf1uRQi1BLEo26D3BfvB
+ elPPat1dqFTf3BcSlZdXdV3qWMdaARZU3Q+7y8KUHc9d3iiyKNqAl6W+KAe697sbOxmFVxP5p
+ YP8GAy5f3+CVMvDyxiLOGwl46mnXNmG3sF/k9qFrBNxVYNWVJzkYvvIz4hBMG+FaCpVkTJgJO
+ PVGoN16Qu84/FrBPtpJF03gClgU4oJ+6wGAJtnYnhIkSxmE8SO1NGM2zBikST3G9OpHjQ0JHA
+ taEQN2XluwoYFiF+aDZGSUJRgiL8zWjJ+HM+aGlviWgKYVfiUD7nKLTM71MpZuTU5YJHwqpVR
+ TYfiv9cd4Q43U2FlA+ENxUD3GYLQMzKafcLStVAx/Mf7XRwswxew69TpX/wyek7Huu8PXJ7yU
+ LZ6d7pHahHwMLc8+lbnofYDw3CHu+m9zOTKccJJHwRG+vedJHF6r54a+hKpJJM0xqjUcjdw9l
+ Oa/tjKX7wcS/SujMgT9JfzT+WEPMTIPVHuRZLK6ffOWsA=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,50 +92,36 @@ Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Stephen B
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Introduce the devm pendant to clk_hw_register_divider_table_parent_data.
+For some reason, I understood the description of .index to mean an index
+into the list of clocks defined by the provider itself. This is not the
+case, and it caused me much confusion.
+
+Let's be a bit more explicit for those who read the documentation after me=
+.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
- include/linux/clk-provider.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ include/linux/clk-provider.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 4a537260f6557d..5d537d0776a11f 100644
+index 5d537d0776a11f..88bdada390c772 100644
 =2D-- a/include/linux/clk-provider.h
 +++ b/include/linux/clk-provider.h
-@@ -932,6 +932,28 @@ struct clk *clk_register_divider_table(struct device =
-*dev, const char *name,
- 				       (width), (clk_divider_flags), (table), \
- 				       (lock))
-
-+/**
-+ * devm_clk_hw_register_divider_table_parent_data - register a table base=
-d divider clock
-+ * with the clock framework (devres variant)
-+ * @dev: device registering this clock
-+ * @name: name of this clock
-+ * @parent_data: parent clk data
-+ * @flags: framework-specific flags
-+ * @reg: register address to adjust divider
-+ * @shift: number of bits to shift the bitfield
-+ * @width: width of the bitfield
-+ * @clk_divider_flags: divider-specific flags for this clock
-+ * @table: array of divider/value pairs ending with a div set to 0
-+ * @lock: shared register lock for this clock
-+ */
-+#define devm_clk_hw_register_divider_table_parent_data(dev, name, parent_=
-data, flags,   \
-+						       reg, shift, width,               \
-+						       clk_divider_flags, table, lock)  \
-+	__devm_clk_hw_register_divider((dev), NULL, (name), NULL,               =
-        \
-+				       NULL, (parent_data), (flags), (reg), (shift),    \
-+				       (width), (clk_divider_flags), (table),           \
-+				       (lock))
-+
- void clk_unregister_divider(struct clk *clk);
- void clk_hw_unregister_divider(struct clk_hw *hw);
-
+@@ -273,7 +273,9 @@ struct clk_ops {
+  * @hw: parent clk_hw pointer (used for clk providers with internal clks)
+  * @fw_name: parent name local to provider registering clk
+  * @name: globally unique parent name (used as a fallback)
+- * @index: parent index local to provider registering clk (if @fw_name ab=
+sent)
++ * @index: parent index local to provider registering clk (if @fw_name ab=
+sent).
++ *         Note that this is not an index into the provider's own clocks =
+but
++ *         into its list of parents!
+  */
+ struct clk_parent_data {
+ 	const struct clk_hw	*hw;
 
 =2D-
 2.43.0
