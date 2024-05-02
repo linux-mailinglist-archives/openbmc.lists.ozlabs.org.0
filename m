@@ -1,82 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C01E8B991B
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 12:42:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 196778B9918
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 12:41:12 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=QgNZ/ikm;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XBLWkNmf;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VVVqT6Lcfz3cWP
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:41:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VVVpY1JXVz3cYJ
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2024 20:41:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=QgNZ/ikm;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XBLWkNmf;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVVnw3tppz3cVw
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VVVnw3x1zz3cW1
 	for <openbmc@lists.ozlabs.org>; Thu,  2 May 2024 20:40:34 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1714646409; x=1715251209; i=j.neuschaefer@gmx.net;
-	bh=L/WjbQC0Uxb9SVhmo+C44+NRCf/fM7QYCwbjyktZyvc=;
+	s=s31663417; t=1714646410; x=1715251210; i=j.neuschaefer@gmx.net;
+	bh=n2e88QE5epBSVSFicZ+xqo5ic/O/WtKAyeT8qBcSr5U=;
 	h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
 	 Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=QgNZ/ikmcNhUGzkceWnmNKR1XAtmX/MqYLTS5gMGSJlziMyl6mCqekrLqU0YMoqn
-	 a5APTpQ8X/Srp2rIFKGP8gOf2F/l/yZVthgkvE/YmnaEVBQx4zx1Y9UoGWCQmMzFW
-	 CMOpWAMyPsGhEdVi8T9jO652dnFr4TKE2hwltpe30IjzQK01WQwjha6VWZF6GA8vP
-	 pioa/EaMamj0YpPxInbPXE3kGXRpKhLFKa1gSWXy9qd/2O+xl1hvsS4DlyhlxsX/6
-	 nTnBj/S4+JbyQUPZtReD0k7+xXFVa0zaQtu65HVibscPysGq+uuiKLiOm03dmQ+iB
-	 RSB69sErV8Vcr1dtlw==
+	b=XBLWkNmfCJ1LedKg3QzKOShdZwoK6kFYjyQw/5JCleg+m/Gjyccbsf6m5QDis+k3
+	 O+4SPBRi7Iug7uD6urGq49hnCnmmdCs31cgjhoWPS25aA7/v4GEaF3BRN7k0DWtn+
+	 uqyR3c5esbjjICJewjr7m+RH8akfkXXKRUeTk0ZxJv42irC2RsoDzTCjVtnTWvchF
+	 Kizs2Dd1Z0zUs+MgcHu52zY3WfHFmhcp0C7AJWsBPGNybVObj+Ca/cL6VZU1R55qZ
+	 p/1RemQ6Jd+U4Z/1H0+OysAXQCC0IS+XW6g9I2KvGDFRD03IZek87QaqmAxVGguZ8
+	 YaICM0tgtth2wcK7vg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from probook ([89.1.59.78]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6Ue3-1s00sy1x97-008Ty4; Thu, 02
- May 2024 12:40:09 +0200
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1sLedM12Lq-00LJxi; Thu, 02
+ May 2024 12:40:10 +0200
 From: =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Date: Thu, 02 May 2024 12:40:00 +0200
-Subject: [PATCH v12 1/6] dt-bindings: clock: Add Nuvoton WPCM450
- clock/reset controller
+Date: Thu, 02 May 2024 12:40:01 +0200
+Subject: [PATCH v12 2/6] clk: Introduce
+ devm_clk_hw_register_divider_table_parent_data()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20240502-wpcm-clk-v12-1-1d065d58df07@gmx.net>
+Message-Id: <20240502-wpcm-clk-v12-2-1d065d58df07@gmx.net>
 References: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
 In-Reply-To: <20240502-wpcm-clk-v12-0-1d065d58df07@gmx.net>
 To: openbmc@lists.ozlabs.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1714646407; l=5540;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1714646407; l=1760;
  i=j.neuschaefer@gmx.net; s=20240329; h=from:subject:message-id;
- bh=QPzdQUVDkB9QA3Xv6+gOkAHNqMRKKV6HeNLuZ6QtTHg=;
- b=jScqKHaCCM4wpdas5Q8IEiC4+jogSt+C1vQr+GGxaIt6XfDYmvN+772+LvhvyDRnzJBRzMxHO
- zAksyNaZt2MBGDJhh+vgxSzsnl+BbabtBP/njIrJDrVRcUgpzPz/TbB
+ bh=VjLniaHS+bKcYFjCZNozqsTADYqMusOVNK5lpprhRBg=;
+ b=sX4JaPRF9uqkZaXe/H1tOsITjWEPOfX/cwh/WwBgOmdfDzoHO0R2RxVm1FhomjMVU8eItiw57
+ TLL9wD7ORzjBP1MKzRgE1q4qCvMKspuYEz8Rmmb1TruJORjL9UNGrzD
 X-Developer-Key: i=j.neuschaefer@gmx.net; a=ed25519;
  pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
-X-Provags-ID: V03:K1:5VER75uzSdDA4mmQwpBXPbQfADXqztMpC36lRk/cg57psmjNCBa
- yCGWxgpVP9EE//NF79nzToYwLyFiRyUyb3QbyNfILj+8mDSCVP6S4lX5W/wPiJUc1tjg9c1
- hR+wk99j1Z8JPY43DXXLYHVwqzPiWCt0IVdJEomraXDyJpujPi0B6RIMo7gtJt+o8oyjGCQ
- EyczDx7WrKWPKprax3RUQ==
+X-Provags-ID: V03:K1:+DtwGYQjt2x8GVjHjT0VdQrQ5fiyA2Cpx2yeh9o2vTCRIYKNWoU
+ OJ62sDPJ3xaCTsmcqVyLNjeHcft6kh70vSEzkYGZMED6eI9Mz4FHzqDLzhWVJAk0JTbDv6w
+ jp5yVlw/MiWWmdhY7Af9U5GnOegLYn4JEBN5X71PXHNytZs7tHQ8COnZvnpUOptn5EP4ty8
+ rxFlstpwa0tybgy5hjOzw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EtsfR5Rcu8o=;zumcOV0z+TRMIQaNPiRveTY8YfO
- e1nQ+aq3bItzoUKp+4vtKDa5GWn1C9kh4fC8hr27vtInhefUDVz3pAgnzFwEa88sYPkYbQcbs
- 99Jho5WPf/rPalxfndgidW6NGYEUIMzBp06gLmKJpYaC/sir1LF+gGjoX1MwEObJk7OK9lRUa
- Zx3DtPtUnVV9mOMi9O8WLrQar483eXl9XgD/h3vPMwFFg+EpifiIEkL7cF4qSQNmx96QLD0sq
- DKeft5gMruVR7TG1TAHSnTIV42Umk/bwkJ6cr3O154vGqBwyfkgSTVGB0j+i/htD591jZ/FEh
- /UAvPFk7iByrhdsYG6+BhORRjpGuT+owOnavhVmTMMMYZYVKriOgdGeghl5oTM3MyGqL9CKg0
- KtYArW9fc42UXiy+9/fExpsbz7mTToXIW5JasI8HgDw80zBMVV6m8WSFreHgmKvsAaeoA0MkR
- fF4Nv823auZAeFSF8C4rk/6d/E7iXon9rLL6BSHoI4CAnLpAXvg6K3mh4DCbkr2k0DG7slD1Y
- eN3qDtmbl6RKVILw0oLECAhZXZSw6osdZojVTXXuOhGzBGtN5ZqIPhlVkTNKZGHuYASzzNlXr
- u3AOi/jKB3nTRqGL+2o1+whtbo9I46ESZCzinQlsSTv2W6r+LPeeKZfqy/aosUAsGlQl2uyiw
- tEgxM8B4VlBW3LJt7rjsYWE+BYWXS0JEqf1e5+zUJJ5xetyIXsmGaTh+Bn99fNs15Gl0okPGN
- v0Gv6c/USYPKPoFM0hjRM9JusV0uEmUW7ZOYh0XVXGasgWFnHEm5OdBAVnCZXO+LwGHgNauPR
- mmigDerSHeHMIBjNUrPGfyYTk7jwyRg8EhGUCtry4KpsQ=
+UI-OutboundReport: notjunk:1;M01:P0:czppJQZDsyY=;SpRHVuFG/OdBmW0gPVgXKhqSBVm
+ YV0f5C289zEt29eERNBiaRHOsFpIj9KKOACl5VF2fZ/rYfd+JdS/xbZdkED2eGeIElq9xIi4J
+ /sLh5tNaYBPvdSVYxzoOxVjQKu8gPeLpxxwS6fJS5HtIsXkTTibRrwRlWi2ObhoQNPZkX4kcZ
+ 8/VznYrGJixio/PJTyLxHB3ziFnhEFpQPUSQwPf1hyh+DJptEGzcn9kq2yGhD+0lvJ9MFwLNA
+ TrKORAVJb22FzCR0ySckD01/63k5WW9zYCbzqNMOQHmssGuAWvRiBI/vdN+C5FR6c66v9YzGq
+ Ll3Vj0yT/f9v9JioU3zGRZZ/oCetZbi2hiXVPaY2bZVTgWYK0horYBwpH2ekbVb1w17cT6Z5r
+ Jf+tGIHqphyhvnmr4nA/2/4U10PqkfLZQPzCPV+IgXmib3D4maloXooUTd1Lflsdsy8h07qlr
+ 56fYoI8PKWea1Z38iucmfzaRCPhU7wv2Qk+Mb9Wk4c8N0SfA+zoZhes++qNAdrNmEa2iXDu1f
+ Th5QMhX5XwDzxkW9g6s6FwEqvjy7VoGEtXf+WmnuyZQ9UW50aZ/B64WpQACoT5BBRQfKNdoOm
+ AB7d040y4Cwn8+mu4Ron1IuU59qhQNltazJwJAIJWxP/dQkgX+mUzvQueQiIXmX9zthktzy4I
+ wsF4XUVJPGmU+SXsQxsMRYJlfiT0sxP2G4Jc4XuLzszN28pejtWYjcC/gfi8Q5QWrw4qo21oS
+ VIhpKFQomIbcjuECA/afO5g0SE6PX/i4I02TNJ4CsisT6+7F9/m9X46mxrAHABgQwUIeI/faD
+ SXpzTkZnmBpAR4yUtTI4YvOSSIpuT7se3CDE4LL0JuJro=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,195 +92,50 @@ Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Stephen B
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Nuvoton WPCM450 SoC has a combined clock and reset controller.
-Add a devicetree binding for it, as well as definitions for the bit
-numbers used by it.
+Introduce the devm pendant to clk_hw_register_divider_table_parent_data.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 =2D--
-v10-v11:
-- no changes
+ include/linux/clk-provider.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-v9:
-- Remove clock-output-names in example, because it's now unnecessary due
-  to driver improvements
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 4a537260f6557d..5d537d0776a11f 100644
+=2D-- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -932,6 +932,28 @@ struct clk *clk_register_divider_table(struct device =
+*dev, const char *name,
+ 				       (width), (clk_divider_flags), (table), \
+ 				       (lock))
 
-v5-v8:
-- no changes
++/**
++ * devm_clk_hw_register_divider_table_parent_data - register a table base=
+d divider clock
++ * with the clock framework (devres variant)
++ * @dev: device registering this clock
++ * @name: name of this clock
++ * @parent_data: parent clk data
++ * @flags: framework-specific flags
++ * @reg: register address to adjust divider
++ * @shift: number of bits to shift the bitfield
++ * @width: width of the bitfield
++ * @clk_divider_flags: divider-specific flags for this clock
++ * @table: array of divider/value pairs ending with a div set to 0
++ * @lock: shared register lock for this clock
++ */
++#define devm_clk_hw_register_divider_table_parent_data(dev, name, parent_=
+data, flags,   \
++						       reg, shift, width,               \
++						       clk_divider_flags, table, lock)  \
++	__devm_clk_hw_register_divider((dev), NULL, (name), NULL,               =
+        \
++				       NULL, (parent_data), (flags), (reg), (shift),    \
++				       (width), (clk_divider_flags), (table),           \
++				       (lock))
++
+ void clk_unregister_divider(struct clk *clk);
+ void clk_hw_unregister_divider(struct clk_hw *hw);
 
-v4:
-- https://lore.kernel.org/lkml/20220610072141.347795-4-j.neuschaefer@gmx.n=
-et/
-- Add R-b tag
-
-v3:
-- Change clock-output-names and clock-names from "refclk" to "ref", sugges=
-ted
-  by Krzysztof Kozlowski
-
-v2:
-- https://lore.kernel.org/lkml/20220429172030.398011-5-j.neuschaefer@gmx.n=
-et/
-- Various improvements, suggested by Krzysztof Kozlowski
-
-v1:
-- https://lore.kernel.org/lkml/20220422183012.444674-5-j.neuschaefer@gmx.n=
-et/
-=2D--
- .../bindings/clock/nuvoton,wpcm450-clk.yaml        | 65 +++++++++++++++++=
-++++
- include/dt-bindings/clock/nuvoton,wpcm450-clk.h    | 67 +++++++++++++++++=
-+++++
- 2 files changed, 132 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/clock/nuvoton,wpcm450-clk.y=
-aml b/Documentation/devicetree/bindings/clock/nuvoton,wpcm450-clk.yaml
-new file mode 100644
-index 00000000000000..93521cf68a040f
-=2D-- /dev/null
-+++ b/Documentation/devicetree/bindings/clock/nuvoton,wpcm450-clk.yaml
-@@ -0,0 +1,65 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/clock/nuvoton,wpcm450-clk.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Nuvoton WPCM450 clock controller
-+
-+maintainers:
-+  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+
-+description:
-+  The clock controller of the Nuvoton WPCM450 SoC supplies clocks and res=
-ets to
-+  the rest of the chip.
-+
-+properties:
-+  compatible:
-+    const: nuvoton,wpcm450-clk
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    items:
-+      - description: Reference clock oscillator (should be 48 MHz)
-+
-+  clock-names:
-+    items:
-+      - const: ref
-+
-+  '#clock-cells':
-+    const: 1
-+
-+  '#reset-cells':
-+    const: 1
-+
-+additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - '#clock-cells'
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    refclk: clock-48mhz {
-+      /* 48 MHz reference oscillator */
-+      compatible =3D "fixed-clock";
-+      clock-frequency =3D <48000000>;
-+      #clock-cells =3D <0>;
-+    };
-+
-+    clk: clock-controller@b0000200 {
-+      reg =3D <0xb0000200 0x100>;
-+      compatible =3D "nuvoton,wpcm450-clk";
-+      clocks =3D <&refclk>;
-+      clock-names =3D "ref";
-+      #clock-cells =3D <1>;
-+      #reset-cells =3D <1>;
-+    };
-diff --git a/include/dt-bindings/clock/nuvoton,wpcm450-clk.h b/include/dt-=
-bindings/clock/nuvoton,wpcm450-clk.h
-new file mode 100644
-index 00000000000000..86e1c895921b71
-=2D-- /dev/null
-+++ b/include/dt-bindings/clock/nuvoton,wpcm450-clk.h
-@@ -0,0 +1,67 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+
-+#ifndef _DT_BINDINGS_CLOCK_NUVOTON_WPCM450_CLK_H
-+#define _DT_BINDINGS_CLOCK_NUVOTON_WPCM450_CLK_H
-+
-+/* Clocks based on CLKEN bits */
-+#define WPCM450_CLK_FIU            0
-+#define WPCM450_CLK_XBUS           1
-+#define WPCM450_CLK_KCS            2
-+#define WPCM450_CLK_SHM            4
-+#define WPCM450_CLK_USB1           5
-+#define WPCM450_CLK_EMC0           6
-+#define WPCM450_CLK_EMC1           7
-+#define WPCM450_CLK_USB0           8
-+#define WPCM450_CLK_PECI           9
-+#define WPCM450_CLK_AES           10
-+#define WPCM450_CLK_UART0         11
-+#define WPCM450_CLK_UART1         12
-+#define WPCM450_CLK_SMB2          13
-+#define WPCM450_CLK_SMB3          14
-+#define WPCM450_CLK_SMB4          15
-+#define WPCM450_CLK_SMB5          16
-+#define WPCM450_CLK_HUART         17
-+#define WPCM450_CLK_PWM           18
-+#define WPCM450_CLK_TIMER0        19
-+#define WPCM450_CLK_TIMER1        20
-+#define WPCM450_CLK_TIMER2        21
-+#define WPCM450_CLK_TIMER3        22
-+#define WPCM450_CLK_TIMER4        23
-+#define WPCM450_CLK_MFT0          24
-+#define WPCM450_CLK_MFT1          25
-+#define WPCM450_CLK_WDT           26
-+#define WPCM450_CLK_ADC           27
-+#define WPCM450_CLK_SDIO          28
-+#define WPCM450_CLK_SSPI          29
-+#define WPCM450_CLK_SMB0          30
-+#define WPCM450_CLK_SMB1          31
-+
-+/* Other clocks */
-+#define WPCM450_CLK_USBPHY        32
-+
-+#define WPCM450_NUM_CLKS          33
-+
-+/* Resets based on IPSRST bits */
-+#define WPCM450_RESET_FIU          0
-+#define WPCM450_RESET_EMC0         6
-+#define WPCM450_RESET_EMC1         7
-+#define WPCM450_RESET_USB0         8
-+#define WPCM450_RESET_USB1         9
-+#define WPCM450_RESET_AES_PECI    10
-+#define WPCM450_RESET_UART        11
-+#define WPCM450_RESET_MC          12
-+#define WPCM450_RESET_SMB2        13
-+#define WPCM450_RESET_SMB3        14
-+#define WPCM450_RESET_SMB4        15
-+#define WPCM450_RESET_SMB5        16
-+#define WPCM450_RESET_PWM         18
-+#define WPCM450_RESET_TIMER       19
-+#define WPCM450_RESET_ADC         27
-+#define WPCM450_RESET_SDIO        28
-+#define WPCM450_RESET_SSPI        29
-+#define WPCM450_RESET_SMB0        30
-+#define WPCM450_RESET_SMB1        31
-+
-+#define WPCM450_NUM_RESETS        32
-+
-+#endif /* _DT_BINDINGS_CLOCK_NUVOTON_WPCM450_CLK_H */
 
 =2D-
 2.43.0
