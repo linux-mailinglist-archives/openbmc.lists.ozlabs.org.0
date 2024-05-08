@@ -1,112 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 462EC8BF3C3
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2024 02:36:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8CF48BF316
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2024 02:05:37 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=asus.com header.i=@asus.com header.a=rsa-sha256 header.s=asuscom header.b=0aH2yxRc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=gZdVyXXZ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VYx5f66b4z3cQm
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2024 10:36:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VYwQR274Nz3cFN
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2024 10:05:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=asus.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=asus.com header.i=@asus.com header.a=rsa-sha256 header.s=asuscom header.b=0aH2yxRc;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=gZdVyXXZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=asus.com (client-ip=103.10.4.13; helo=ms.asus.com; envelope-from=prvs=850fd42a3=kellyhung@asus.com; receiver=lists.ozlabs.org)
-Received: from ms.asus.com (ms.asus.com [103.10.4.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=osk@google.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VYXqx4080z30VV;
-	Tue,  7 May 2024 19:22:53 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=asus.com; i=@asus.com; q=dns/txt; s=asuscom;
-  t=1715073773; x=1746609773;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=IqK7uwxw4v80ki+2QS5Uwd46zm6z/Ba2rQ+qoiCe76I=;
-  b=0aH2yxRc7DsQFKfbpvRZZxNji5nGMuZuLiouOwpgyQIhgpwbP/L7OFDG
-   hO1Ap17HZZhSI87Xx5fIZ5QAzzBUR0+9aUInRJ0gnGUje9g+Da3YwG5aS
-   LgVTw03vmmU9ZbDCPuorK1GVW1kUBRiv6rkKb1S36NpwDsHiJOECJkXpd
-   8=;
-X-IPAS-Result: =?us-ascii?q?A2HcAwBP8jlm/xEvFqxagRKGZx2WIpIni3qBag8BAQEBA?=
- =?us-ascii?q?QEBAQEIAUQEAQGFBgKIMSc4EwECBAEBAQEDAgMBAQEBAQEIAQEBBQEBAQEBA?=
- =?us-ascii?q?QYEAQEBAoEZhS9SgmcBg3gGJ1IQGCAZVgYOBYMAgmW1CDMaZ94xgWsJAYE+g?=
- =?us-ascii?q?WmGRQGEWIRpe4ILRCZvgTuBPm+DfAoIARIBA0oThgUEjjE7glxogl+HUoIEW?=
- =?us-ascii?q?Q+DFIU2SoEHCBQDWTIBVRMNCgs+CRYCFgMbFAQwDwkLJgMqBjYCEgwGBgZZI?=
- =?us-ascii?q?BYJBCMDCAQDRAMgcREDBBoECwd1gzEEE0QDgTiJeoM9KYF3hCBLhHaBeA5ih?=
- =?us-ascii?q?yMDBwUsHUADCxgNSBEsNRQbBiIfbgejLAoJaAEBBToQEC4BE14SK2URBBcnj?=
- =?us-ascii?q?0GDNIM/jlSgboQdgWEMiCOXHBozhAWMfoZBHgMYkjePCYlZoz2FIAIEAgQFA?=
- =?us-ascii?q?heBfIEPcDMaI4EKDlaBSVIXAo48FqIDazsCBwsBAQMJiG4FLywBO2ABAQ?=
-IronPort-PHdr: A9a23:PleG/REryhXFaD1wbVvyi51Gf/FLhN3EVzX9CrIZgr5DOp6u447ld
- BSGo6k33RmTB9WQsqkMotGVmp6jcFRD26rJiGoFfp1IWk1NouQttCtkPvS4D1bmJuXhdS0wE
- ZcKflZk+3amLRodQ56mNBXdrXKo8DEdBAj0OxZrKeTpAI7SiNm82/yv95HJbAhEmj6wbalsI
- BmorgjdudQajIV/Iast1xXFpWdFdOtRyW50P1yfmAry6Nmt95B56SRQvPwh989EUarkeqkzU
- KJVAjc7PW0r/cPnrRbMQxeB6XsaSWUWjwFHAxPZ4xHgX5f+qTX1u+xg0ySHJ8L2TLQ0WTO/7
- 6d3TRLjlSkKOyIl/GzRl8d9l7xQrg6/qBNjwo7UeICVO+R4fqPBZtMRWG5NUt9MWyBdHo+wa
- o0CBPcDM+lFtYnwv1sAowWgCAexCu3hyThGiX343aI13OouDQDG0Rc8H9IXqnnYsM/4OLsOX
- e2z0aLGzS/Db/RT2Trl7YbHbBQhofWMXLltc8TR1E8vFwzYhViXrILqITeV1uANsmaZ8upgU
- +2vhnU9pAFqvziv3d0ghZXOhoIQ013J8zhyz4kpK9OiUkF7fcKkH4VKtyGcL4Z7Qt8uTmFot
- ig01LAKp4K3cSYExpg5yRDSb/KJfpaH7xzjVuucLzV1iWxkdb++hhu/8lWtxvHgWsWozVtHs
- ihIn9/RvX4Ozxze8tWLR/lj8ku7xzqDyRrf5+5GLEwuiKbWKYYtz78tmpYJr0jPAy77lF/3g
- aKWbEko5+ul5ubhb777uJKcM5J0ihriMqswgMyxHOU4MwkQUGWD5eix0qDo81fjT7VQlPI2l
- 7HUsJXdJcsGuKG0GxRV0oM/6xanCDemzcgYkWEHLF1bfBKHiJDkNU/ULvzhCvmxjU2gnzh3y
- /zbJLHuHpLNLmLbkLfnY7l991RQxxAozdBC/JJYErABIPTtVU/trNHUEx00PxKuz+r5Ftlxz
- IwTVGCVDqOEMq7eqVqI6fguI+mIao8VojH9K/096vDrk3A5nVsdfKmr05sKbnC4Ee9rLF+CY
- XrxmdcNC3sFvg07TODyjl2NSiZcZ2yuUKIk+jE7FIWmAJ/eSoywmLCBxju0HoVKZmBaDVCBC
- W3od4KfVPcMby6dP9NhnycHVbe/UY8h0w+htAvgx7pgNOrU9TUUtYj/29ht++3TiRYy+CR3D
- 8SH0mCMT3p0n2IURz8x0qBzu099ylCC0Kh8hPxZG8dT5/BIUgs9KJHc0/d3C9TzWgLHZNiJU
- lGmTs+hATErQdI928UObFplG9W+khDD2DKnDKMSl7yNA5w06KXQ0GXtJ8tmyHbJyrMhj184T
- ctLL2GmgbR/9wfLC47Tj0qZj7qqdbgb3CPV9meDynSBvEVDXQ5yVKXFRmoTZkrLotjj/EzCU
- qeiCa47PQtZ1c6CNqxKZ8XzglVAWfjjIsrRYmyqlmisAhaH262DY5bte2UbxyXdFFIEkx0P8
- naaLwQxGiCho2fEADN0CFK8K3/rpL1kr3m7DUMo5wKHdUts0/yy4BFD1tKGTPZG/b8AvDZpi
- yhyEx7p/N/SD8ugugxuVKxHfMh761BCgzGK/zdhN4CtevgxzmUVdB566ga3j00fNw==
-IronPort-Data: A9a23:g8CkHK8YwmMOhOOlzWhlDrUDNX+TJUtcMsCJ2f8bNWPcYEJGY0x3y
- WcdCm3XPa2CMWCjKoggbY3k80pTvMWAx9FnSwY5/C8xFiIbosfsO4+Ufxz6V8+wBpSYFRo4t
- a3ySTViwOQcFCK0SsKFb+CJQUFUjP3OHPynYAL9EngZbRd+Tys8gg5Ulec8g4p56fC0GArlV
- ena+qUzBXf8s9JKGjNMg068gE431BjCkGtwlkAzY/lNoGjfmxE9ZH7IDfrpR5dQatA88t+SH
- 44v/pnglo/q105F5ueer1rOWhZirog+neS5oiE+t6CK2nCur8Gpu0oxHKJ0hUx/011lkz3to
- TnkWFPZpQoBZ8XxdOohvxZwAQthGpRZ85L9IWW1lOCZ41OFeVTS6qA7ZK02FdVwFudfPVkL0
- NBdFmhUKBuEnfqwza79Q/JxnazPLuGyY9lZ4CsmkW6fVKlOrZPrGs0m4fd70TM0l+BTG/n2b
- tEEcnxkaxGojxhnYAtNV8xvxrjx7pX5WydG8nW5mJZt32uQ4gkv6qbwd8f1R9PfEK25mW7d/
- Aoq5V/RGBYQNJ+T1RKG/2iqi+uJmjn0MKoRDq+p7ex2h1PVxWsBDBoJTli64vWlokq/XdtFL
- AoT4CVGhaM18kuxDdXhdx61uniJulgbQdU4O+895QWlyK/PpQeVQGEZJhZIbtA8udAeTjsm2
- 1SOmcj1HyFkrPueTnfb/6r8hT+/JykeIHMYaCIsUwQI+Z/grZs1gxaJScxseIaxj9voCXT52
- TXPryUkgbgXpcoKzLmgu1HBjSilqpXAQkgy/Aq/dmak6B5pIYe+f4Gl5XDf7O1cN8CeXF2It
- mNCnNKRhMgKDJeQhGmOTf8LEbWB+fmIKnvfjERpEp1n8C6ik1akZY1W6jR1DENoKdofPzj7Z
- EbZokVW/pA7FHCta6htJY62DMAn3IDlFN//UfvUb8IIaZ90HDJr5wk3OhTWhTqrzBdqyP5X1
- YqnTPtAxE0yUcxPpAdajc9EiOZDKvwWrY8Lea3G8g==
-IronPort-HdrOrdr: A9a23:or6/TKlch1Ben9XDCR3DZmg4fe/pDfIE3DAbv31ZSRFFG/Fxl6
- iV8MjzsiWE7Ar5OUtQ/uxoV5PvfZqxz/RICMwqTNSftWrdyQ6VxeNZjLcKqgeIc0bDH6xmpM
- VdmsBFebvN5DNB4voSjjPULz52q+P3iJxA/d2/8547d3ASV0klhD0JcTqmLg==
-X-Talos-CUID: 9a23:r/c9KWzaE5cKxGkVVFa6BgUGMN8CS2LW4U3QPkWdJWxFVv6fZmG5rfY=
-X-Talos-MUID: 9a23:xX9XrAsWzN1d/gMVa82nni84E+tV3/6SCwMjlMs8pdTDKAxNNGLI
-X-IronPort-Anti-Spam-Filtered: true
-Received: from unknown (HELO TP-MD-V01.corpnet.asus) ([172.22.47.17])
-  by ms.asus.com with ESMTP; 07 May 2024 17:21:23 +0800
-Received: from localhost.localdomain (61.216.65.187) by TP-MD-V01.corpnet.asus
- (172.22.47.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.37; Tue, 7 May
- 2024 17:21:22 +0800
-From: Kelly Hung <KellyHung@asus.com>
-To: <robh+dt@kernel.org>
-Subject: [PATCH v8 2/2] ARM: dts: aspeed: x4tf: Add dts for asus x4tf project
-Date: Tue, 7 May 2024 17:21:09 +0800
-Message-ID: <20240507092109.6018-3-KellyHung@asus.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240507092109.6018-1-KellyHung@asus.com>
-References: <20240507092109.6018-1-KellyHung@asus.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VYwPt08kTz30Tx
+	for <openbmc@lists.ozlabs.org>; Wed,  8 May 2024 10:05:05 +1000 (AEST)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1ee5f3123d8so37475ad.1
+        for <openbmc@lists.ozlabs.org>; Tue, 07 May 2024 17:05:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1715126702; x=1715731502; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5tvD6lLilJwaNjbKXFRGqO2sjORoofKD7l2pjDVe4+g=;
+        b=gZdVyXXZnvPkAO4N//bC/0nnjPusHs7eRDpV6RorZ8Oqz4CccxxRKCpBsmy1hTD1DS
+         MEN/6oJMEJc7PbBVYrcaLxG2kTSg+L2U/X+1r5lM8ASjbgNJFKk8ZUw0TdgtWhIglImn
+         1SWtcb7wrwSpzSJ/e0tbJ0lzF3kszexCidk9OCxm1vkZl1gQDNfJTfyTUtyNmW/b1j20
+         1WkDd5cDo4lAaOgihUG4IKPCySbLFkAq1KvOE2yAMWgIcrwnqYUwDpygQami6KWy5wOL
+         82cFWm4j091w18ylNvxuwYTbs0OHfMEKavYzRC5CucPlgODDF0sgtUeakGnqgyyqKmDo
+         M2Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715126702; x=1715731502;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5tvD6lLilJwaNjbKXFRGqO2sjORoofKD7l2pjDVe4+g=;
+        b=gqY5dIHUUkLSuUPOK71Bhfz/JcEQlpEEJytczw7PgFAMz3zwpcmIWqcQThdFRoZeh7
+         yvw9rrbB4I3cOnqQHojalPuaqxhUtxxQEPNGX5h2VPV6SYGvJk+biYEqFVYEG6kUp551
+         XLe+ydyRFvYqTVZ7/grUhxXPE6zCbQWQhAVWjuMRWty0gERyiJ+6tito+62F9K2fyaJl
+         m5ey4hX5usTu9qf/i18wnnj17tqYi+IXTUN96ygf6baXH8aMtD4zmu4JpUQs3k1Aw1xd
+         zl1EnXASKxgLX8dDFa0yMS7blANtxRXLVlhTm5CHDGKy7mg6WjlJQYLGWI+OSFy8bcJN
+         LtoA==
+X-Gm-Message-State: AOJu0Yx1qPCaxBpn5icM7p8PK0il7f1rgsxHirWIyXHhkOVteJcdLxHs
+	l2bHLv/yqXYEsK5svXTLjAZrPykSWKBgIchnv9q3IlABL8gtPyt4fbs1RAr9B8BTmol3FjVlxdK
+	12HeWPo/dGax6d6VgOLau6TWOFiu1TVb8Tv4E
+X-Google-Smtp-Source: AGHT+IEGRRNCPeo8AoLjTwts5Mi4wPqPdCFd/XnskybI7BLcBnRUTMAvaQ69ypHd2Laq6E+Gdx2b8zvCeNNvH6+7K5g=
+X-Received: by 2002:a17:902:ec92:b0:1ea:cc:b5d9 with SMTP id
+ d9443c01a7336-1eeb5d16002mr1155135ad.24.1715126701997; Tue, 07 May 2024
+ 17:05:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-Originating-IP: [61.216.65.187]
-X-ClientProxiedBy: APZA002EXB.corpnet.asus (172.22.6.14) To
- TP-MD-V01.corpnet.asus (172.22.47.17)
-X-TM-SNTS-SMTP: 	18C1675AAF97219EE6E7D6FA2CDAC8D1DC0A65C15AD99EE009624A9B2B27B0DC2000:8
-X-Mailman-Approved-At: Wed, 08 May 2024 10:34:05 +1000
+References: <CABoTLcQvFfJPhM=W12Z-QnqRzkRt5TE+g0vunw4MB=aYuo-GPA@mail.gmail.com>
+ <CAHwn2Xnwba9qfVFzTW-Hhj7CBd2z2w33+xpx5C3vOO1Pr7W-pQ@mail.gmail.com>
+ <CABoTLcRsk=kZ2-4sOjC8p2C8KzXxnPs62oaJ_6NteeddJPq_tw@mail.gmail.com> <CAHwn2Xmv-y-4y7+8CbOAN0YmSJrn7g84F+xt85vTdNGdKycaJw@mail.gmail.com>
+In-Reply-To: <CAHwn2Xmv-y-4y7+8CbOAN0YmSJrn7g84F+xt85vTdNGdKycaJw@mail.gmail.com>
+From: Oskar Senft <osk@google.com>
+Date: Tue, 7 May 2024 20:04:45 -0400
+Message-ID: <CABoTLcRGzSPdu4On1wfCFqSfqZNozpH+3J=ST6==toqQ5NVXeA@mail.gmail.com>
+Subject: Re: ipmitool fru write 0 - does not update "baseboard" FRU
+To: Willy Tu <wltu@google.com>
+Content-Type: multipart/alternative; boundary="000000000000d1e8ea0617e60dc5"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,673 +77,580 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>, Kelly Hung <KellyHung@asus.com>, kelly_hung@asus.com, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, Allenyy_Hsu@asus.com, linux-arm-kernel@lists.infradead.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ali El-Haj-Mahmoud <aaelhaj@google.com>, Ed Tanous <edtanous@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Base on aspeed-g6.dtsi and can boot into BMC console.
+--000000000000d1e8ea0617e60dc5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Kelly Hung <KellyHung@asus.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
----
-v7 -> v8:
-- Modify Signed-off-by field with new ASUS smtp account.
-- Add back Acked-by tag.
-v6 -> v7:
-- Remove incorrect tags.
-- Modify Signed-off-by field.
-v5 -> v6:
-- add Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-- add Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-- add Reviewed-by: Rob Herring <robh@kernel.org>
-- add Acked-by: Conor Dooley <conor.dooley@microchip.com>
-- remove the v3's Reviewed-by: Zev Weiss <zweiss@equinix.com>.
-V4 -> V5: None
-V3 -> V4: None
-V2 -> V3:
-- fmc lable change to bmc.
-- use 64M partition layout.
-- rename spi1 label to bios.
-- remove bios partition section.
-- add Reviewed-by: Zev Weiss <zweiss@equinix.com>
-V1 -> V2:
-- do schema check and remove all warings.
-- remove all unnecessary sections.
----
- arch/arm/boot/dts/aspeed/Makefile             |   1 +
- .../boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts  | 581 ++++++++++++++++++
- 2 files changed, 582 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
+I got some code changes that look right, but haven't done much testing yet.
+I realized that a read cache is useful, so I kept it. I split read and
+write cache by defining a new class that keeps all the related data
+together.
 
-diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/M=
-akefile
-index d3ac20e31..32c41f3d9 100644
---- a/arch/arm/boot/dts/aspeed/Makefile
-+++ b/arch/arm/boot/dts/aspeed/Makefile
-@@ -10,6 +10,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
-        aspeed-bmc-arm-stardragon4800-rep2.dtb \
-        aspeed-bmc-asrock-e3c246d4i.dtb \
-        aspeed-bmc-asrock-romed8hm3.dtb \
-+       aspeed-bmc-asus-x4tf.dtb \
-        aspeed-bmc-bytedance-g220a.dtb \
-        aspeed-bmc-delta-ahe50dc.dtb \
-        aspeed-bmc-facebook-bletchley.dtb \
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts b/arch/arm/b=
-oot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
-new file mode 100644
-index 000000000..64f4ed07c
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-asus-x4tf.dts
-@@ -0,0 +1,581 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2024 ASUS Corp.
-+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include "aspeed-g6-pinctrl.dtsi"
-+#include <dt-bindings/i2c/i2c.h>
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+       model =3D "ASUS-X4TF";
-+       compatible =3D "asus,x4tf-bmc", "aspeed,ast2600";
-+
-+       aliases {
-+               serial4 =3D &uart5;
-+       };
-+
-+       chosen {
-+               stdout-path =3D "serial4:115200n8";
-+       };
-+
-+       memory@80000000 {
-+               device_type =3D "memory";
-+               reg =3D <0x80000000 0x40000000>;
-+       };
-+
-+       reserved-memory {
-+               #address-cells =3D <1>;
-+               #size-cells =3D <1>;
-+               ranges;
-+
-+               video_engine_memory: video {
-+                       size =3D <0x04000000>;
-+                       alignment =3D <0x01000000>;
-+                       compatible =3D "shared-dma-pool";
-+                       reusable;
-+               };
-+       };
-+
-+       iio-hwmon {
-+               compatible =3D "iio-hwmon";
-+               io-channels =3D <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
-+                               <&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
-+                               <&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
-+                               <&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
-+       };
-+
-+       leds {
-+               compatible =3D "gpio-leds";
-+
-+               led-heartbeat {
-+                       gpios =3D <&gpio0 ASPEED_GPIO(P, 7) GPIO_ACTIVE_LOW=
->;
-+                       linux,default-trigger =3D "heartbeat";
-+               };
-+
-+               led-uid {
-+                       gpios =3D <&gpio0 ASPEED_GPIO(P, 1) (GPIO_ACTIVE_LO=
-W | GPIO_OPEN_DRAIN)>;
-+                       default-state =3D "off";
-+               };
-+
-+               led-status_Y {
-+                       gpios =3D <&gpio1 ASPEED_GPIO(B, 1) GPIO_ACTIVE_LOW=
->;
-+                       default-state =3D "off";
-+               };
-+
-+               led-sys_boot_status {
-+                       gpios =3D <&gpio1 ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW=
->;
-+                       default-state =3D "off";
-+               };
-+       };
-+};
-+
-+&adc0 {
-+       vref =3D <2500>;
-+       status =3D "okay";
-+       pinctrl-names =3D "default";
-+       pinctrl-0 =3D <&pinctrl_adc0_default &pinctrl_adc1_default
-+               &pinctrl_adc2_default &pinctrl_adc3_default
-+               &pinctrl_adc4_default &pinctrl_adc5_default
-+               &pinctrl_adc6_default &pinctrl_adc7_default>;
-+};
-+
-+&adc1 {
-+       vref =3D <2500>;
-+       status =3D "okay";
-+       pinctrl-names =3D "default";
-+       pinctrl-0 =3D <&pinctrl_adc8_default &pinctrl_adc9_default
-+               &pinctrl_adc10_default &pinctrl_adc11_default
-+               &pinctrl_adc12_default &pinctrl_adc13_default
-+               &pinctrl_adc14_default &pinctrl_adc15_default>;
-+};
-+
-+&peci0 {
-+       status =3D "okay";
-+};
-+
-+&lpc_snoop {
-+       snoop-ports =3D <0x80>;
-+       status =3D "okay";
-+};
-+
-+&mac2 {
-+       status =3D "okay";
-+       phy-mode =3D "rmii";
-+       use-ncsi;
-+       pinctrl-names =3D "default";
-+       pinctrl-0 =3D <&pinctrl_rmii3_default>;
-+};
-+
-+&mac3 {
-+       status =3D "okay";
-+       phy-mode =3D "rmii";
-+       use-ncsi;
-+       pinctrl-names =3D "default";
-+       pinctrl-0 =3D <&pinctrl_rmii4_default>;
-+};
-+
-+&fmc {
-+       status =3D "okay";
-+
-+       flash@0 {
-+               status =3D "okay";
-+               m25p,fast-read;
-+               label =3D "bmc";
-+               spi-max-frequency =3D <50000000>;
-+#include "openbmc-flash-layout-64.dtsi"
-+       };
-+};
-+
-+&spi1 {
-+       status =3D "okay";
-+       pinctrl-names =3D "default";
-+       pinctrl-0 =3D <&pinctrl_spi1_default>;
-+
-+       flash@0 {
-+               status =3D "okay";
-+               label =3D "bios";
-+               spi-max-frequency =3D <50000000>;
-+       };
-+};
-+
-+&i2c0 {
-+       status =3D "okay";
-+};
-+
-+&i2c1 {
-+       status =3D "okay";
-+};
-+
-+&i2c2 {
-+       status =3D "okay";
-+};
-+
-+&i2c3 {
-+       status =3D "okay";
-+};
-+
-+&i2c4 {
-+       status =3D "okay";
-+
-+       temperature-sensor@48 {
-+               compatible =3D "ti,tmp75";
-+               reg =3D <0x48>;
-+       };
-+
-+       temperature-sensor@49 {
-+               compatible =3D "ti,tmp75";
-+               reg =3D <0x49>;
-+       };
-+
-+       pca9555_4_20: gpio@20 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x20>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+
-+       pca9555_4_22: gpio@22 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x22>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+
-+       pca9555_4_24: gpio@24 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x24>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+               gpio-line-names =3D
-+               /*A0 - A3 0*/   "", "STRAP_BMC_BATTERY_GPIO1", "", "",
-+               /*A4 - A7 4*/   "", "", "", "",
-+               /*B0 - B7 8*/   "", "", "", "", "", "", "", "";
-+       };
-+
-+       pca9555_4_26: gpio@26 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x26>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+
-+       i2c-mux@70 {
-+               compatible =3D "nxp,pca9546";
-+               status =3D "okay";
-+               reg =3D <0x70>;
-+               #address-cells =3D <1>;
-+               #size-cells =3D <0>;
-+
-+               channel_1: i2c@0 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <0>;
-+               };
-+
-+               channel_2: i2c@1 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <1>;
-+               };
-+
-+               channel_3: i2c@2 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <2>;
-+               };
-+
-+               channel_4: i2c@3 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <3>;
-+               };
-+       };
-+};
-+
-+&i2c5 {
-+       status =3D "okay";
-+
-+       pca9555_5_24: gpio@24 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x24>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+
-+       i2c-mux@70  {
-+               compatible =3D "nxp,pca9546";
-+               status =3D "okay";
-+               reg =3D <0x70 >;
-+               #address-cells =3D <1>;
-+               #size-cells =3D <0>;
-+
-+               channel_5: i2c@0 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <0>;
-+
-+                       pca9555_5_5_20: gpio@20 {
-+                               compatible =3D "nxp,pca9555";
-+                               reg =3D <0x20>;
-+                               gpio-controller;
-+                               #gpio-cells =3D <2>;
-+                               gpio-line-names =3D
-+                                       "", "", "", "", "", "", "", "",
-+                                       "", "", "SYS_FAN6", "SYS_FAN5",
-+                                       "SYS_FAN4", "SYS_FAN3",
-+                                       "SYS_FAN2", "SYS_FAN1";
-+                       };
-+
-+                       pca9555_5_5_21: gpio@21 {
-+                               compatible =3D "nxp,pca9555";
-+                               reg =3D <0x21>;
-+                               gpio-controller;
-+                               #gpio-cells =3D <2>;
-+                       };
-+
-+                       power-monitor@44 {
-+                               compatible =3D "ti,ina219";
-+                               reg =3D <0x44>;
-+                               shunt-resistor =3D <2>;
-+                       };
-+               };
-+
-+               channel_6: i2c@1 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <1>;
-+               };
-+
-+               channel_7: i2c@2 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <2>;
-+               };
-+
-+               channel_8: i2c@3 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <3>;
-+               };
-+       };
-+};
-+
-+&i2c6 {
-+       status =3D "okay";
-+
-+       pca9555_6_27: gpio@27 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x27>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+
-+       pca9555_6_20: gpio@20 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x20>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+               gpio-line-names =3D
-+               /*A0 0*/        "", "", "", "", "", "", "", "",
-+               /*B0 8*/        "Drive_NVMe1", "Drive_NVMe2", "", "",
-+               /*B4 12*/       "", "", "", "";
-+       };
-+
-+       pca9555_6_21: gpio@21 {
-+               compatible =3D "nxp,pca9555";
-+               reg =3D <0x21>;
-+               gpio-controller;
-+               #gpio-cells =3D <2>;
-+       };
-+};
-+
-+&i2c7 {
-+       status =3D "okay";
-+
-+       i2c-mux@70 {
-+               compatible =3D "nxp,pca9546";
-+               status =3D "okay";
-+               reg =3D <0x70>;
-+               #address-cells =3D <1>;
-+               #size-cells =3D <0>;
-+               idle-state =3D <1>;
-+
-+               channel_9: i2c@0 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <0>;
-+
-+                       temperature-sensor@48 {
-+                               compatible =3D "ti,tmp75";
-+                               reg =3D <0x48>;
-+                       };
-+
-+                       temperature-sensor@49 {
-+                               compatible =3D "ti,tmp75";
-+                               reg =3D <0x49>;
-+                       };
-+
-+                       power-monitor@40 {
-+                               compatible =3D "ti,ina219";
-+                               reg =3D <0x40>;
-+                               shunt-resistor =3D <2>;
-+                       };
-+
-+                       power-monitor@41 {
-+                               compatible =3D "ti,ina219";
-+                               reg =3D <0x41>;
-+                               shunt-resistor =3D <5>;
-+                       };
-+               };
-+
-+               channel_10: i2c@1 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <1>;
-+               };
-+
-+               channel_11: i2c@2 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <2>;
-+               };
-+
-+               channel_12: i2c@3 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <3>;
-+               };
-+       };
-+
-+       i2c-mux@71 {
-+               compatible =3D "nxp,pca9546";
-+               status =3D "okay";
-+               reg =3D <0x71>;
-+               #address-cells =3D <1>;
-+               #size-cells =3D <0>;
-+               i2c-mux-idle-disconnect;
-+
-+               channel_13: i2c@0 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <0>;
-+               };
-+
-+               channel_14: i2c@1 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <1>;
-+               };
-+
-+               channel_15: i2c@2 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <2>;
-+               };
-+
-+               channel_16: i2c@3 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <3>;
-+               };
-+       };
-+};
-+
-+&i2c8 {
-+       status =3D "okay";
-+
-+       i2c-mux@70 {
-+               compatible =3D "nxp,pca9546";
-+               status =3D "okay";
-+               reg =3D <0x70>;
-+               #address-cells =3D <1>;
-+               #size-cells =3D <0>;
-+               i2c-mux-idle-disconnect;
-+
-+               channel_17: i2c@0 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <0>;
-+               };
-+
-+               channel_18: i2c@1 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <1>;
-+
-+                       temperature-sensor@48 {
-+                               compatible =3D "ti,tmp75";
-+                               reg =3D <0x48>;
-+                       };
-+
-+                       power-monitor@41 {
-+                               compatible =3D "ti,ina219";
-+                               reg =3D <0x41>;
-+                               shunt-resistor =3D <5>;
-+                       };
-+               };
-+
-+               channel_19: i2c@2 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <2>;
-+               };
-+
-+               channel_20: i2c@3 {
-+                       #address-cells =3D <1>;
-+                       #size-cells =3D <0>;
-+                       reg =3D <3>;
-+               };
-+       };
-+};
-+
-+&i2c9 {
-+       status =3D "okay";
-+};
-+
-+&i2c10 {
-+       status =3D "okay";
-+};
-+
-+&i2c11 {
-+       status =3D "okay";
-+};
-+
-+&i2c14 {
-+       status =3D "okay";
-+       multi-master;
-+
-+       eeprom@50 {
-+               compatible =3D "atmel,24c08";
-+               reg =3D <0x50>;
-+       };
-+
-+       eeprom@51 {
-+               compatible =3D "atmel,24c08";
-+               reg =3D <0x51>;
-+       };
-+};
-+
-+&sgpiom0 {
-+       status =3D "okay";
-+       ngpios =3D <128>;
-+};
-+
-+&video {
-+       status =3D "okay";
-+       memory-region =3D <&video_engine_memory>;
-+};
-+
-+&sdc {
-+       status =3D "okay";
-+};
-+
-+&lpc_snoop {
-+       status =3D "okay";
-+       snoop-ports =3D <0x80>;
-+};
-+
-+&kcs1 {
-+       aspeed,lpc-io-reg =3D <0xca0>;
-+       status =3D "okay";
-+};
-+
-+&kcs2 {
-+       aspeed,lpc-io-reg =3D <0xca8>;
-+       status =3D "okay";
-+};
-+
-+&kcs3 {
-+       aspeed,lpc-io-reg =3D <0xca2>;
-+       status =3D "okay";
-+};
-+
-+&uart3 {
-+       status =3D "okay";
-+};
-+
-+&uart5 {
-+       status =3D "okay";
-+};
-+
-+&uart_routing {
-+       status =3D "okay";
-+};
-+
-+&vhub {
-+       status =3D "okay";
-+};
-+
-+&gpio0 {
-+       gpio-line-names =3D
-+       /*A0 0*/        "", "", "", "", "", "", "", "",
-+       /*B0 8*/        "", "", "", "", "", "", "PS_PWROK", "",
-+       /*C0 16*/       "", "", "", "", "", "", "", "",
-+       /*D0 24*/       "", "", "", "", "", "", "", "",
-+       /*E0 32*/       "", "", "", "", "", "", "", "",
-+       /*F0 40*/       "", "", "", "", "", "", "", "",
-+       /*G0 48*/       "", "", "", "", "", "", "", "",
-+       /*H0 56*/       "", "", "", "", "", "", "", "",
-+       /*I0 64*/       "", "", "", "", "", "", "", "",
-+       /*J0 72*/       "", "", "", "", "", "", "", "",
-+       /*K0 80*/       "", "", "", "", "", "", "", "",
-+       /*L0 88*/       "", "", "", "", "", "", "", "",
-+       /*M0 96*/       "", "", "", "", "", "", "", "",
-+       /*N0 104*/      "", "", "", "",
-+       /*N4 108*/      "POST_COMPLETE", "ESR1_GPIO_AST_SPISEL", "", "",
-+       /*O0 112*/      "", "", "", "", "", "", "", "",
-+       /*P0 120*/      "ID_BUTTON", "ID_OUT", "POWER_BUTTON", "POWER_OUT",
-+       /*P4 124*/      "RESET_BUTTON", "RESET_OUT", "", "HEARTBEAT",
-+       /*Q0 128*/      "", "", "", "", "", "", "", "",
-+       /*R0 136*/      "", "", "", "", "", "", "", "",
-+       /*S0 144*/      "", "", "", "", "", "", "", "",
-+       /*T0 152*/      "", "", "", "", "", "", "", "",
-+       /*U0 160*/      "", "", "", "", "", "", "", "",
-+       /*V0 168*/      "", "", "", "", "", "", "", "",
-+       /*W0 176*/      "", "", "", "", "", "", "", "",
-+       /*X0 184*/      "", "", "", "", "", "", "", "",
-+       /*Y0 192*/      "", "", "", "", "", "", "", "",
-+       /*Z0 200*/      "", "", "", "", "", "", "", "";
-+};
---
-2.25.1
+Any suggestions on how to distinguish different clients? Or maybe we just
+error out when we receive a request for a different FRU while we're still
+not done with the first one?
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-This email and any attachments to it contain confidential information and a=
-re intended solely for the use of the individual to whom it is addressed. I=
-f you are not the intended recipient or receive it accidentally, please imm=
-ediately notify the sender by e-mail and delete the message and any attachm=
-ents from your computer system, and destroy all hard copies. Please be advi=
-sed that any unauthorized disclosure, copying, distribution or any action t=
-aken or omitted in reliance on this, is illegal and prohibited. Any views o=
-r opinions expressed are solely those of the author and do not represent th=
-ose of ASUSTeK.
+Oskar.
 
-For pricing information, ASUS is only entitled to set a recommendation resa=
-le price. All customers are free to set their own price as they wish.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
+On Tue, May 7, 2024 at 7:49=E2=80=AFPM Willy Tu <wltu@google.com> wrote:
+
+> I think we should make it so that if a different IPMI client tries to
+> write the Fru we prevent it and only allow one write at a time. I think t=
+he
+> fruCache for Read is mostly from some commands that is dealing with one
+> device ID multiple times. When reading subsequent ids... then it doesn't =
+do
+> anything.
+>
+> I think we will need more discussion on that topic since it will be a
+> larger refactor to make that work.
+>
+> Sounds good. Please let me know how it goes.
+>
+> Willy Tu
+>
+> On Tue, May 7, 2024 at 10:32=E2=80=AFAM Oskar Senft <osk@google.com> wrot=
+e:
+>
+>> Hi Willy
+>>
+>> Thanks for your input!
+>>
+>> From what I can tell, the current implementation will fail in wondrous
+>> ways if there's more than one IPMI client trying to write FRU at the sam=
+e
+>> time. The existing getFru guards against changing target devId between
+>> calls to not hand-out the same cache for different requests. However, th=
+is
+>> will clearly break when different IPMI clients attempt to write the same=
+ or
+>> different FRUs at the same time.
+>>
+>> We could argue whether that's a supported use case or if we just assume
+>> that'll never happen ... it does seem like quite a bit of an edge case,
+>> though.
+>>
+>> I do see it as an issue if there were multiple clients with only one
+>> writing, but others reading - that'll fail in similarly weird ways.
+>>
+>> I'm wondering: Do we want to have the fruCache for _reads_ at all? It
+>> seems actually quite wrong, since subsequent reads for the same FRU woul=
+d
+>> always return the same result, even if the FRU changed through some othe=
+r
+>> mechanism.
+>>
+>> Let me work on a fix that would use the cache only for writing and would
+>> keep it around until the timeout expired.
+>>
+>> Oskar.
+>>
+>> On Fri, May 3, 2024 at 11:38=E2=80=AFAM Willy Tu <wltu@google.com> wrote=
+:
+>>
+>>> Hi Oskar,
+>>>
+>>> > C) ipmiStorageWriteFruData clears the cache immediately after WriteFr=
+u
+>>> was called. Maybe we should keep that cache around until the timeout
+>>> expires?
+>>>
+>>> It seems like this is an issue of multiple clients taking to ipmid. In
+>>> the middle of writing... There is another client that is reading or
+>>> something
+>>> else and will reset the fruCache as you mentioned. In that case, I thin=
+k
+>>> it may be best to refactor it out to use another getFru method... maybe
+>>> like getFruToWrite
+>>>
+>>> Maybe just something like this
+>>>
+>>> ```
+>>> std::vector<uint8_t> getFruToWrite(...){
+>>>   if (writeTimer->isRunning()) {
+>>>     return fruCacheForWrite;
+>>>   }
+>>>   auto [_, fruCacheForWrite] =3D getFru(...);
+>>>   return fruCacheForWrite;
+>>> }
+>>> ```
+>>>
+>>> Also need to change `writeFruCache` and such to use `fruCacheForWrite`
+>>> and such.
+>>>
+>>> Please let me know if that works for you. Feel free to reach out
+>>> internally for faster feedback.
+>>>
+>>> Willy Tu
+>>>
+>>> On Thu, May 2, 2024 at 11:32=E2=80=AFAM Oskar Senft <osk@google.com> wr=
+ote:
+>>>
+>>>> Hi everyone
+>>>>
+>>>> tl;dr - Attempting "ipmitool fru write" with an input file that
+>>>> contains additional bytes beyond the actual FRU data does not actually
+>>>> update the FRU on OpenBMC at head w/ entity-manager.
+>>>>
+>>>> Details:
+>>>>
+>>>> I ran into an issue with updating the "baseboard" FRU (0), which is
+>>>> stored as /etc/fru/baseboard.fru.bin. However, I don't think this is
+>>>> specific to FRU 0 and could apply to other updateable FRUs in the same
+>>>> way.
+>>>>
+>>>>
+>>>> 1. Start off with a "minimal" /etc/fru/baseboard.fru.bin which just
+>>>> contains chassis type (that's required for entity-manager's fru-device
+>>>> to recognize the file.
+>>>>
+>>>> root@akita:~# ls -al /etc/fru/baseboard.fru.bin
+>>>> -rw-r--r--    1 root     root           512 Sep 21 05:21
+>>>> /etc/fru/baseboard.fru.bin
+>>>>
+>>>> root@akita:~# hexdump -C /etc/fru/baseboard.fru.bin
+>>>> 00000000  01 00 01 00 00 00 00 fe  01 01 17 c0 c0 c1 00 a6
+>>>> |................|
+>>>> 00000010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+>>>> |................|
+>>>> *
+>>>> 00000200
+>>>>
+>>>> root@akita:~# ipmitool fru print 0
+>>>>  Chassis Type          : Rack Mount Chassis
+>>>>  Chassis Area Checksum : OK
+>>>>
+>>>>
+>>>> 2. Prepare a FRU file with additional data, e.g. with frugy:
+>>>>
+>>>> (frugy) osk@osk:~$ cat demo.yml
+>>>> ChassisInfo:
+>>>>   type: 23
+>>>>   part_number: '4711'
+>>>>   serial_number: '12345'
+>>>>
+>>>> (frugy) osk@osk:~$ frugy demo.yml -o demo.bin
+>>>>
+>>>> (frugy) osk@osk:~$ ls -al demo.bin
+>>>> -rw-r----- 1 osk primarygroup 24 May  2 13:51 demo.bin
+>>>>
+>>>> (frugy) osk@osk:~$ hexdump -C demo.bin
+>>>> 00000000  01 00 01 00 00 00 00 fe  01 02 17 c4 34 37 31 31
+>>>> |............4711|
+>>>> 00000010  c5 31 32 33 34 35 c1 d0                           |.12345..|
+>>>> 00000018
+>>>>
+>>>> Note that frugy generates a minimal binary by default. However, other
+>>>> processes may not and instead produce a fixed size binary blob. This
+>>>> happens, e.g. when performing "ipmitool fru read" which returns the
+>>>> whole contents of the underlying storage. A subsequent "ipmitool fru
+>>>> write" with that blob will fail as explained here.
+>>>>
+>>>> To simulate this here, increase the file to 256 bytes:
+>>>>
+>>>> (frugy) osk@osk:~$ cp demo.bin demo-256.bin
+>>>> (frugy) osk@osk:~$ dd if=3D/dev/zero bs=3D1 seek=3D256 count=3D0
+>>>> of=3Ddemo-256.bin
+>>>> 0+0 records in
+>>>> 0+0 records out
+>>>> 0 bytes copied, 5.1138e-05 s, 0.0 kB/s
+>>>>
+>>>> (frugy) osk@osk:~$ ls -al demo-256.bin
+>>>> -rw-r----- 1 osk primarygroup 256 May  2 13:57 demo-256.bin
+>>>>
+>>>> (frugy) osk@osk:~$ hexdump -C demo-256.bin
+>>>> 00000000  01 00 01 00 00 00 00 fe  01 02 17 c4 34 37 31 31
+>>>> |............4711|
+>>>> 00000010  c5 31 32 33 34 35 c1 d0  00 00 00 00 00 00 00 00
+>>>> |.12345..........|
+>>>> 00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+>>>> |................|
+>>>> *
+>>>> 00000100
+>>>>
+>>>>
+>>>> 3. Write the newly generated FRU:
+>>>>
+>>>> root@akita:~# ipmitool fru write 0 demo-256.bin
+>>>> Fru Size         : 512 bytes
+>>>> Size to Write    : 256 bytes
+>>>>
+>>>> Wait ~10 seconds for the fru-device process to reload the contents.
+>>>>
+>>>>
+>>>> 4. Re-read the FRU contents:
+>>>>
+>>>> root@akita:~# ipmitool fru print 0
+>>>>  Chassis Type          : Rack Mount Chassis
+>>>>  Chassis Area Checksum : OK
+>>>>
+>>>>
+>>>> 5. For comparison, write only the minimal FRU:
+>>>>
+>>>> root@akita:~# ipmitool fru write 0 demo.bin
+>>>> Fru Size         : 512 bytes
+>>>> Size to Write    : 24 bytes
+>>>>
+>>>> Wait ~10 seconds.
+>>>>
+>>>> root@akita:~# ipmitool fru print 0
+>>>>  Chassis Type          : Rack Mount Chassis
+>>>>  Chassis Part Number   : 4711
+>>>>  Chassis Serial        : 12345
+>>>>  Chassis Area Checksum : OK
+>>>>
+>>>>
+>>>> I dug into this and found that this is caused by an interaction
+>>>> between
+>>>> https://github.com/openbmc/phosphor-host-ipmid/blob/master/dbus-sdr/st=
+oragecommands.cpp
+>>>> and
+>>>> https://github.com/openbmc/entity-manager/blob/master/src/fru_device.c=
+pp
+>>>> .
+>>>>
+>>>> Here's what happens:
+>>>> - The "ipmitool fru write" request is handled by storagecommands.cpp
+>>>> ipmiStorageWriteFruData.
+>>>>
+>>>> - ipmiStorageWriteFruData receives the whole FRU blob from IPMI across
+>>>> several calls. On the initial call, it requests the current FRU blob
+>>>> via D-bus from fru-device and caches it in the process. It then
+>>>> overwrites sections of that cache with the received data from IPMI.
+>>>>
+>>>> - ipmiStorageWriteFruData uses information from the FRU header to
+>>>> check whether it received all the bytes that make up the new FRU. Note
+>>>> that this could be fewer bytes than the size of the cached blob. Once
+>>>> it receives all the bytes for the new FRU, it calls
+>>>> /xyz/openbmc_project/FruDevice WriteFru via D-Bus with the full FRU
+>>>> blob (i.e. the full cache with modifications on top). After that the
+>>>> cache is cleared.
+>>>>
+>>>> - The D-Bus call to WriteFru is handled by fru_device.cpp writeFRU. It
+>>>> first performs a sanity check and then writes the blob to the
+>>>> underlying device (or the /etc/fru/baseboard.fru.bin for FRU 0). It
+>>>> subsequently calls rescanBusses() which actually executes after about
+>>>> 1 second.
+>>>>
+>>>> - Meanwhile, "ipmitool fru write" continues to happily send additional
+>>>> bytes to ipmiStorageWriteFruData (as in step #3 above). Since its
+>>>> cache has just been cleared, it retrieves the current FRU from
+>>>> fru-device again. However, since that has not yet completed
+>>>> "rescanBusses", it actually received the original FRU again, not the
+>>>> modified version. The above cycle repeats, but this time the original
+>>>> FRU with additional modifications from the additional bytes.
+>>>>
+>>>> In the best case (if the new FRU data is larger than the original FRU
+>>>> data), the result is that the FRU did not get updated at all, since we
+>>>> effectively just wrote back the original FRU. However, if the new FRU
+>>>> data is smaller than the original FRU data, this may result in
+>>>> corrupted FRU data to be persisted.
+>>>>
+>>>>
+>>>> I was trying to figure out how to best fix that, but couldn't come up
+>>>> with a design that would still work. Some ideas:
+>>>>
+>>>> A)  I think what we're missing is feedback from fru-device to ipmid
+>>>> that the FRU write operation has actually completed and the FRU data
+>>>> was re-read. The ipmid should probably not accept any additional write
+>>>> requests until the previous write request has completed and the new
+>>>> FRU data is available.
+>>>>
+>>>> B) If ipmiStorageWriteFruData cannot detect the expected size of the
+>>>> FRU data, it relies on a timeout to eventually write the blob if no
+>>>> more data was received from IPMI. I wonder if this mechanism is "too
+>>>> clever" and we should simply always just wait for the timeout?
+>>>>
+>>>> C) ipmiStorageWriteFruData clears the cache immediately after WriteFru
+>>>> was called. Maybe we should keep that cache around until the timeout
+>>>> expires?
+>>>>
+>>>> Thoughts?
+>>>>
+>>>> Thanks
+>>>> Oskar.
+>>>>
+>>>
+
+--000000000000d1e8ea0617e60dc5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I got some code changes that look right, but haven&#39;t d=
+one much testing yet. I realized that a read cache is useful, so I kept it.=
+ I split read and write cache by defining a new class that keeps all the re=
+lated data together.<div><br></div><div>Any suggestions on how to distingui=
+sh different clients? Or maybe we just error out when we receive a request =
+for a different FRU while we&#39;re still not done with the first one?</div=
+><div><br></div><div>Oskar.</div></div><br><div class=3D"gmail_quote"><div =
+dir=3D"ltr" class=3D"gmail_attr">On Tue, May 7, 2024 at 7:49=E2=80=AFPM Wil=
+ly Tu &lt;<a href=3D"mailto:wltu@google.com">wltu@google.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr=
+">I think we should make it so that if a different IPMI client tries to wri=
+te the Fru we prevent it and only allow one write at a time. I think the fr=
+uCache for Read is mostly from some commands that is dealing with one devic=
+e ID multiple times. When reading subsequent ids... then it doesn&#39;t do =
+anything.<div><br></div><div>I think we will need more discussion on that t=
+opic since it will be a larger refactor to make that work.</div><div><br></=
+div><div>Sounds good. Please let me know how it goes.</div><div><br></div><=
+div>Willy Tu</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">On Tue, May 7, 2024 at 10:32=E2=80=AFAM Oskar Senft &lt;<=
+a href=3D"mailto:osk@google.com" target=3D"_blank">osk@google.com</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr">Hi Willy<div><br></div><div>Thanks for your input!=C2=A0</div><div=
+><br></div><div>From=C2=A0what I can tell, the current implementation will =
+fail in wondrous ways if there&#39;s more than one IPMI client trying to wr=
+ite FRU at the same time. The existing getFru guards against changing targe=
+t devId between calls to not hand-out the same cache for different requests=
+. However, this will clearly break when different=C2=A0IPMI clients attempt=
+ to write the same or different FRUs at the same time.</div><div><br></div>=
+<div>We could argue whether that&#39;s a supported use case or if we just a=
+ssume that&#39;ll never happen ... it does seem like quite a bit of an edge=
+ case, though.</div><div><br></div><div>I do see it as an issue if there we=
+re multiple clients with only one writing, but others reading - that&#39;ll=
+ fail in similarly weird ways.</div><div><br></div><div>I&#39;m wondering: =
+Do we want to have the=C2=A0fruCache for _reads_ at all? It seems actually =
+quite wrong, since subsequent reads for the same FRU would always return th=
+e same result, even if the FRU changed through some other mechanism.</div><=
+div><br></div><div>Let me work on a fix that would use the cache only for w=
+riting and would keep it around until the timeout expired.</div><div><br></=
+div><div>Oskar.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, May 3, 2024 at 11:38=E2=80=AFAM Willy Tu &lt;<=
+a href=3D"mailto:wltu@google.com" target=3D"_blank">wltu@google.com</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr">Hi=C2=A0Oskar,<div><br></div><div>&gt; C) ipmiStorageWriteFruData =
+clears the cache immediately after WriteFru was called. Maybe we should kee=
+p that cache around until the timeout expires?</div><div><br></div><div><di=
+v>It seems like this is an issue of multiple clients taking to ipmid. In th=
+e middle of writing... There is another client that is reading or something=
+</div><div>else and will reset the fruCache as you mentioned. In that case,=
+ I think it may be best to refactor it out to use another getFru method... =
+maybe like getFruToWrite</div><div><br></div><div>Maybe just something like=
+ this</div><div><br></div><div>```</div><div>std::vector&lt;uint8_t&gt; get=
+FruToWrite(...){</div><div>=C2=A0 if (writeTimer-&gt;isRunning()) {</div><d=
+iv>=C2=A0 =C2=A0 return fruCacheForWrite;</div><div>=C2=A0 }</div><div>=C2=
+=A0=C2=A0auto [_, fruCacheForWrite] =3D getFru(...);</div><div>=C2=A0 retur=
+n fruCacheForWrite;</div><div>}</div><div>```</div><div><br></div><div>Also=
+ need to change `writeFruCache` and such to use `fruCacheForWrite` and such=
+.</div></div><div><br></div><div>Please let=C2=A0me know if that works for =
+you. Feel free to reach out internally for faster feedback.</div><div><br><=
+/div><div>Willy Tu</div></div><br><div class=3D"gmail_quote"><div dir=3D"lt=
+r" class=3D"gmail_attr">On Thu, May 2, 2024 at 11:32=E2=80=AFAM Oskar Senft=
+ &lt;<a href=3D"mailto:osk@google.com" target=3D"_blank">osk@google.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi e=
+veryone<br>
+<br>
+tl;dr - Attempting &quot;ipmitool fru write&quot; with an input file that<b=
+r>
+contains additional bytes beyond the actual FRU data does not actually<br>
+update the FRU on OpenBMC at head w/ entity-manager.<br>
+<br>
+Details:<br>
+<br>
+I ran into an issue with updating the &quot;baseboard&quot; FRU (0), which =
+is<br>
+stored as /etc/fru/baseboard.fru.bin. However, I don&#39;t think this is<br=
+>
+specific to FRU 0 and could apply to other updateable FRUs in the same<br>
+way.<br>
+<br>
+<br>
+1. Start off with a &quot;minimal&quot; /etc/fru/baseboard.fru.bin which ju=
+st<br>
+contains chassis type (that&#39;s required for entity-manager&#39;s fru-dev=
+ice<br>
+to recognize the file.<br>
+<br>
+root@akita:~# ls -al /etc/fru/baseboard.fru.bin<br>
+-rw-r--r--=C2=A0 =C2=A0 1 root=C2=A0 =C2=A0 =C2=A0root=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0512 Sep 21 05:21<br>
+/etc/fru/baseboard.fru.bin<br>
+<br>
+root@akita:~# hexdump -C /etc/fru/baseboard.fru.bin<br>
+00000000=C2=A0 01 00 01 00 00 00 00 fe=C2=A0 01 01 17 c0 c0 c1 00 a6=C2=A0 =
+|................|<br>
+00000010=C2=A0 00 00 00 00 00 00 00 00=C2=A0 00 00 00 00 00 00 00 00=C2=A0 =
+|................|<br>
+*<br>
+00000200<br>
+<br>
+root@akita:~# ipmitool fru print 0<br>
+=C2=A0Chassis Type=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : Rack Mount Chassis<b=
+r>
+=C2=A0Chassis Area Checksum : OK<br>
+<br>
+<br>
+2. Prepare a FRU file with additional data, e.g. with frugy:<br>
+<br>
+(frugy) osk@osk:~$ cat demo.yml<br>
+ChassisInfo:<br>
+=C2=A0 type: 23<br>
+=C2=A0 part_number: &#39;4711&#39;<br>
+=C2=A0 serial_number: &#39;12345&#39;<br>
+<br>
+(frugy) osk@osk:~$ frugy demo.yml -o demo.bin<br>
+<br>
+(frugy) osk@osk:~$ ls -al demo.bin<br>
+-rw-r----- 1 osk primarygroup 24 May=C2=A0 2 13:51 demo.bin<br>
+<br>
+(frugy) osk@osk:~$ hexdump -C demo.bin<br>
+00000000=C2=A0 01 00 01 00 00 00 00 fe=C2=A0 01 02 17 c4 34 37 31 31=C2=A0 =
+|............4711|<br>
+00000010=C2=A0 c5 31 32 33 34 35 c1 d0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|.12345..|<br=
+>
+00000018<br>
+<br>
+Note that frugy generates a minimal binary by default. However, other<br>
+processes may not and instead produce a fixed size binary blob. This<br>
+happens, e.g. when performing &quot;ipmitool fru read&quot; which returns t=
+he<br>
+whole contents of the underlying storage. A subsequent &quot;ipmitool fru<b=
+r>
+write&quot; with that blob will fail as explained here.<br>
+<br>
+To simulate this here, increase the file to 256 bytes:<br>
+<br>
+(frugy) osk@osk:~$ cp demo.bin demo-256.bin<br>
+(frugy) osk@osk:~$ dd if=3D/dev/zero bs=3D1 seek=3D256 count=3D0 of=3Ddemo-=
+256.bin<br>
+0+0 records in<br>
+0+0 records out<br>
+0 bytes copied, 5.1138e-05 s, 0.0 kB/s<br>
+<br>
+(frugy) osk@osk:~$ ls -al demo-256.bin<br>
+-rw-r----- 1 osk primarygroup 256 May=C2=A0 2 13:57 demo-256.bin<br>
+<br>
+(frugy) osk@osk:~$ hexdump -C demo-256.bin<br>
+00000000=C2=A0 01 00 01 00 00 00 00 fe=C2=A0 01 02 17 c4 34 37 31 31=C2=A0 =
+|............4711|<br>
+00000010=C2=A0 c5 31 32 33 34 35 c1 d0=C2=A0 00 00 00 00 00 00 00 00=C2=A0 =
+|.12345..........|<br>
+00000020=C2=A0 00 00 00 00 00 00 00 00=C2=A0 00 00 00 00 00 00 00 00=C2=A0 =
+|................|<br>
+*<br>
+00000100<br>
+<br>
+<br>
+3. Write the newly generated FRU:<br>
+<br>
+root@akita:~# ipmitool fru write 0 demo-256.bin<br>
+Fru Size=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: 512 bytes<br>
+Size to Write=C2=A0 =C2=A0 : 256 bytes<br>
+<br>
+Wait ~10 seconds for the fru-device process to reload the contents.<br>
+<br>
+<br>
+4. Re-read the FRU contents:<br>
+<br>
+root@akita:~# ipmitool fru print 0<br>
+=C2=A0Chassis Type=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : Rack Mount Chassis<b=
+r>
+=C2=A0Chassis Area Checksum : OK<br>
+<br>
+<br>
+5. For comparison, write only the minimal FRU:<br>
+<br>
+root@akita:~# ipmitool fru write 0 demo.bin<br>
+Fru Size=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: 512 bytes<br>
+Size to Write=C2=A0 =C2=A0 : 24 bytes<br>
+<br>
+Wait ~10 seconds.<br>
+<br>
+root@akita:~# ipmitool fru print 0<br>
+=C2=A0Chassis Type=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : Rack Mount Chassis<b=
+r>
+=C2=A0Chassis Part Number=C2=A0 =C2=A0: 4711<br>
+=C2=A0Chassis Serial=C2=A0 =C2=A0 =C2=A0 =C2=A0 : 12345<br>
+=C2=A0Chassis Area Checksum : OK<br>
+<br>
+<br>
+I dug into this and found that this is caused by an interaction<br>
+between <a href=3D"https://github.com/openbmc/phosphor-host-ipmid/blob/mast=
+er/dbus-sdr/storagecommands.cpp" rel=3D"noreferrer" target=3D"_blank">https=
+://github.com/openbmc/phosphor-host-ipmid/blob/master/dbus-sdr/storagecomma=
+nds.cpp</a><br>
+and <a href=3D"https://github.com/openbmc/entity-manager/blob/master/src/fr=
+u_device.cpp" rel=3D"noreferrer" target=3D"_blank">https://github.com/openb=
+mc/entity-manager/blob/master/src/fru_device.cpp</a>.<br>
+<br>
+Here&#39;s what happens:<br>
+- The &quot;ipmitool fru write&quot; request is handled by storagecommands.=
+cpp<br>
+ipmiStorageWriteFruData.<br>
+<br>
+- ipmiStorageWriteFruData receives the whole FRU blob from IPMI across<br>
+several calls. On the initial call, it requests the current FRU blob<br>
+via D-bus from fru-device and caches it in the process. It then<br>
+overwrites sections of that cache with the received data from IPMI.<br>
+<br>
+- ipmiStorageWriteFruData uses information from the FRU header to<br>
+check whether it received all the bytes that make up the new FRU. Note<br>
+that this could be fewer bytes than the size of the cached blob. Once<br>
+it receives all the bytes for the new FRU, it calls<br>
+/xyz/openbmc_project/FruDevice WriteFru via D-Bus with the full FRU<br>
+blob (i.e. the full cache with modifications on top). After that the<br>
+cache is cleared.<br>
+<br>
+- The D-Bus call to WriteFru is handled by fru_device.cpp writeFRU. It<br>
+first performs a sanity check and then writes the blob to the<br>
+underlying device (or the /etc/fru/baseboard.fru.bin for FRU 0). It<br>
+subsequently calls rescanBusses() which actually executes after about<br>
+1 second.<br>
+<br>
+- Meanwhile, &quot;ipmitool fru write&quot; continues to happily send addit=
+ional<br>
+bytes to ipmiStorageWriteFruData (as in step #3 above). Since its<br>
+cache has just been cleared, it retrieves the current FRU from<br>
+fru-device again. However, since that has not yet completed<br>
+&quot;rescanBusses&quot;, it actually received the original FRU again, not =
+the<br>
+modified version. The above cycle repeats, but this time the original<br>
+FRU with additional modifications from the additional bytes.<br>
+<br>
+In the best case (if the new FRU data is larger than the original FRU<br>
+data), the result is that the FRU did not get updated at all, since we<br>
+effectively just wrote back the original FRU. However, if the new FRU<br>
+data is smaller than the original FRU data, this may result in<br>
+corrupted FRU data to be persisted.<br>
+<br>
+<br>
+I was trying to figure out how to best fix that, but couldn&#39;t come up<b=
+r>
+with a design that would still work. Some ideas:<br>
+<br>
+A)=C2=A0 I think what we&#39;re missing is feedback from fru-device to ipmi=
+d<br>
+that the FRU write operation has actually completed and the FRU data<br>
+was re-read. The ipmid should probably not accept any additional write<br>
+requests until the previous write request has completed and the new<br>
+FRU data is available.<br>
+<br>
+B) If ipmiStorageWriteFruData cannot detect the expected size of the<br>
+FRU data, it relies on a timeout to eventually write the blob if no<br>
+more data was received from IPMI. I wonder if this mechanism is &quot;too<b=
+r>
+clever&quot; and we should simply always just wait for the timeout?<br>
+<br>
+C) ipmiStorageWriteFruData clears the cache immediately after WriteFru<br>
+was called. Maybe we should keep that cache around until the timeout<br>
+expires?<br>
+<br>
+Thoughts?<br>
+<br>
+Thanks<br>
+Oskar.<br>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000d1e8ea0617e60dc5--
