@@ -2,63 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1363B8C0242
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2024 18:48:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED4848C0C0C
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2024 09:39:54 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cehDNeeg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WYMp5jY+;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VZLgS4vcSz3cTh
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2024 02:48:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VZkS842ddz3cVM
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2024 17:39:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cehDNeeg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WYMp5jY+;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c; helo=mail-pj1-x102c.google.com; envelope-from=peteryin.openbmc@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VZLfs50XSz3cF4
-	for <openbmc@lists.ozlabs.org>; Thu,  9 May 2024 02:47:49 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id A18AFCE19C4;
-	Wed,  8 May 2024 16:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD03C113CC;
-	Wed,  8 May 2024 16:47:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715186860;
-	bh=G/+RUT2k7UJ/l1fi7XiRqiYTHntagvnq92yu5KTJVrY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cehDNeeg9X/ZTdTbSBR2lwvZ51WhdQzmbG5tw2STpkKdvSRc0cJrhgHjXhP6Xu060
-	 /E2t9dKjv2tBkWBjNtDsIUT+WjC7ykSUYl54ZQc3+AGVxBbIl5vzxqv9Dk9Z8Au1DI
-	 oJY6j8P988d0B6O3L2gP12PLJL3CnJchiJAwI/fmNQS31azgiG4duHjizX/UJcB1Hk
-	 w8IKewoDNEzDtJTDrjFekF6Q56SSetQ0MDubEkVXLGg0NugYL0T5b269EzZdWkHcHs
-	 hb0X6bDn+F0SGTPHT2vPn1siHxsKToJruw+/9aX1vUdS2E0J44doEbIvRFUBDr/tKr
-	 6i7UqI8IHNWGg==
-Date: Wed, 8 May 2024 17:47:35 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
-Subject: Re: [PATCH v2 3/3] dt-bindings: hwmon: max31790: Add
- maxim,pwmout-pin-as-tach-input property
-Message-ID: <20240508-onward-sedation-621cc48fa83f@spud>
-References: <20240414042246.8681-4-chanh@os.amperecomputing.com>
- <13b195e6-cbbd-4f74-a6fa-d874cb4aaa45@linaro.org>
- <065243cc-09cf-4087-8842-bd4394fb324f@amperemail.onmicrosoft.com>
- <d549cf2b-a7fa-4644-8fcb-3c420503ee01@amperemail.onmicrosoft.com>
- <20240423-gallantly-slurp-24adbfbd6f09@spud>
- <ab5cfd8c-0e88-4194-a77e-5ffbb6890319@amperemail.onmicrosoft.com>
- <396b47f5-9604-44ab-881f-94d0664bcab8@roeck-us.net>
- <0dcc8788-604a-49c1-8c6b-fdbfa9192039@amperemail.onmicrosoft.com>
- <da94fde6-3286-44eb-a543-c2ac4d11cd32@roeck-us.net>
- <8fb38eb3-bb94-49cc-b5bc-80989d7876b9@amperemail.onmicrosoft.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VZkQc0k1cz30Sw
+	for <openbmc@lists.ozlabs.org>; Thu,  9 May 2024 17:38:30 +1000 (AEST)
+Received: by mail-pj1-x102c.google.com with SMTP id 98e67ed59e1d1-2b36232fa48so487923a91.1
+        for <openbmc@lists.ozlabs.org>; Thu, 09 May 2024 00:38:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715240306; x=1715845106; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9zIvZfE0IojsIX4DiFOZkDIGswk5o/ORHJCDO5xebDQ=;
+        b=WYMp5jY+pHK9u1MpmBd4GwNGI5pIb2UJ7f2/85ZVOOJmFfxvu+N8UGELKfL5v4vkbz
+         28zasd75c63xlGCwEpchV4FQltpCNKhWq1+RK26pKpnKvg1v91fnp21JhE3byfK/BKS2
+         jkj9fzHMl/9joqYfGlGwMuw4/1RSmtRNH8djyOfvJO8FYOzxD8Qw+swMbzoE4pUBYqzm
+         y3N3XWRog9nbpNcaTuYDMW0LUkfp3fGE9E2NI0dfX/clnNkgFSbbPjY+ulfUlrJc5kVp
+         WS6wKuKuEqSJHkd5T6a+yN0lyHcCWmvuDbuQHyc5zPaBEa8+KMcN5+f3gj7FKk/j/C0Y
+         VvJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715240306; x=1715845106;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9zIvZfE0IojsIX4DiFOZkDIGswk5o/ORHJCDO5xebDQ=;
+        b=HF+ZFYd7BoW4Hd29m2pIRaR+vfICSGjVnHHo9bmQ05DKsF0IUQqtybjQ4NwFbLyPIZ
+         CfQBBdL/Y0brJ7jnfUpwNMKrjwH7k0GI6eMO8d6u7CO+5VfUo8ESE5uc8M/nYfy5F9Ra
+         d1XnpUUAJ+raXE1kUwFSymJz8B967EsEg0ciH1AOwqZqulGT8p7jN0TqZ91bn/XPZmL1
+         r6DH2ddc8aHgIxtEQIwuvYDA3ndlqRAWatHE9henQUUvitj7f9fNbkdyZ8ixmpO61VrO
+         TdREpxRGH+mQmDMFJMs27KY2/dHVVS2O+TXJzxVhpv1LGXVtegMJfpLeRVwPc2Vnf0U+
+         NVew==
+X-Gm-Message-State: AOJu0YxqBeW/Iio9B2NX+Lh60PvbykdfO/FaM0j+JqEfPFCL2uR//hqP
+	IYN6WUt5bDL4q2Pc74Q5hbnve7fxifLEIaS7Ma0eGHOrLxVx4VTrwEsP3w==
+X-Google-Smtp-Source: AGHT+IEWEPStUFcFWwVoRpVv3Uyo0bkKQkprJp6tRzRVWK20o08fxAiQ+OmmALbGdH/roxSeEKAALQ==
+X-Received: by 2002:a17:90a:108f:b0:2b2:b1a7:9530 with SMTP id 98e67ed59e1d1-2b616be9a86mr4412134a91.41.1715240306288;
+        Thu, 09 May 2024 00:38:26 -0700 (PDT)
+Received: from peter-bmc.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2b628861e3bsm2647121a91.23.2024.05.09.00.38.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 May 2024 00:38:25 -0700 (PDT)
+From: Peter Yin <peteryin.openbmc@gmail.com>
+To: openbmc@lists.ozlabs.org,
+	andrew@codeconstruct.com.au
+Subject: [PATCH linux dev-6.6 1/2] dt-bindings: Add MP2856/MP2857 voltage regulator device
+Date: Thu,  9 May 2024 15:36:21 +0800
+Message-Id: <20240509073622.4006734-1-peteryin.openbmc@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="UUlXLBmKvVSmrjpp"
-Content-Disposition: inline
-In-Reply-To: <8fb38eb3-bb94-49cc-b5bc-80989d7876b9@amperemail.onmicrosoft.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,171 +77,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>, Justin Ledford <justinledford@google.com>, Guenter Roeck <linux@roeck-us.net>, Chanh Nguyen <chanh@os.amperecomputing.com>
+Cc: peteryin.openbmc@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Link:https://lore.kernel.org/all/f204b419-3e05-4848-882e-70a17671435e@roeck-us.net/
+Monolithic Power Systems, Inc. (MPS) MP2856/MP2857
+dual-loop, digital, multi-phase controller.
 
---UUlXLBmKvVSmrjpp
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+---
+ Documentation/devicetree/bindings/trivial-devices.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-On Wed, May 08, 2024 at 10:44:34AM +0700, Chanh Nguyen wrote:
-> On 05/05/2024 22:40, Guenter Roeck wrote:
-> > On 5/5/24 03:08, Chanh Nguyen wrote:
-> > > On 25/04/2024 21:05, Guenter Roeck wrote:
-> > > > On 4/25/24 03:33, Chanh Nguyen wrote:
-> > > >=20
-> > > > pwm outputs on MAX31790 are always tied to the matching
-> > > > tachometer inputs
-> > > > (pwm1 <--> tach1 etc) and can not be reconfigured, meaning tach-ch =
-for
-> > > > channel X would always be X.
-> > > >=20
-> > > > > I would like to open a discussion about whether we should
-> > > > > use the tach-ch property on the fan-common.yaml
-> > > > >=20
-> > > > > I'm looking forward to hearing comments from everyone. For
-> > > > > me, both tach-ch and vendor property are good.
-> > > > >=20
-> > > >=20
-> > > > I am not even sure how to define tach-ch to mean "use the pwm outpu=
-t pin
-> > > > associated with this tachometer input channel not as pwm output
-> > > > but as tachometer input". That would be a boolean, not a number.
-> > > >=20
-> > >=20
-> > > Thank Guenter,
-> > >=20
-> > > I reviewed again the "tach-ch" property, which is used in the https:/=
-/elixir.bootlin.com/linux/v6.9-rc6/source/Documentation/devicetree/bindings=
-/hwmon/aspeed,g6-pwm-tach.yaml#L68
-> > > and https://elixir.bootlin.com/linux/v6.9-rc6/source/drivers/hwmon/as=
-peed-g6-pwm-tach.c#L434
-> > >=20
-> > > That is something completely different from my purpose.
-> > >=20
-> >=20
-> > Based on its definition, tach-ch is associated with fans, and it looks
-> > like the .yaml file groups multiple sets of fans into a single
-> > fan node.
-> >=20
-> > In the simple case that would be
-> >  =A0=A0=A0=A0tach-ch =3D <1>
-> > ...
-> >  =A0=A0=A0=A0tach-ch =3D <12>
-> >=20
-> > or, if all fans are controlled by a single pwm
-> >  =A0=A0=A0=A0tach-ch =3D <1 2 3 4 5 6 8 9 10 11 12>
-> >=20
-> > The existence of tachometer channel 7..12 implies that pwm channel
-> > (tachometer
-> > channel - 6) is used as tachometer channel. That should be sufficient to
-> > program
-> > the chip for that channel. All you'd have to do is to ensure that pwm
-> > channel
-> > "X" is not listed as tachometer channel "X + 6", and program pwm channel
-> > "X - 6"
-> > for tachometer channels 7..12 as tachometer channels.
-> >=20
->=20
-> Hi Guenter,
->=20
-> I applied the patch [2/3] in my patch series (https://lore.kernel.org/lkm=
-l/20240414042246.8681-3-chanh@os.amperecomputing.com/)
->=20
-> My device tree is configured as below, I would like to configure PWMOUT p=
-ins
-> 5 and 6 to become the tachometer input pins.
->=20
->        fan-controller@20 {
->          compatible =3D "maxim,max31790";
->          reg =3D <0x20>;
->          maxim,pwmout-pin-as-tach-input =3D /bits/ 8 <0 0 0 0 1 1>;
->        };
+diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+index eac5ab4b02cf..336498301c52 100644
+--- a/Documentation/devicetree/bindings/trivial-devices.yaml
++++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+@@ -119,6 +119,10 @@ properties:
+           - fsl,mpl3115
+             # MPR121: Proximity Capacitive Touch Sensor Controller
+           - fsl,mpr121
++            # Monolithic Power Systems Inc. multi-phase controller mp2856
++          - mps,mp2856
++            # Monolithic Power Systems Inc. multi-phase controller mp2857
++          - mps,mp2857
+             # Monolithic Power Systems Inc. multi-phase controller mp2888
+           - mps,mp2888
+             # Monolithic Power Systems Inc. multi-phase controller mp2971
+-- 
+2.25.1
 
-Why are you still operating off a binding that looks like this? I
-thought that both I and Krzysztof told you to go and take a look at how
-the aspeed,g6-pwm-tach.yaml binding looped and do something similar
-here. You'd end up with something like:
-
-        fan-controller@20 {
-          compatible =3D "maxim,max31790";
-          reg =3D <0x20>;
-
-          fan-0 {
-            pwms =3D <&pwm-provider ...>;
-            tach-ch =3D 6;
-        };
-
-          fan-1 {
-            pwms =3D <&pwm-provider ...>;
-            tach-ch =3D 7;
-        };
-};
-
-You can, as tach-ch or pwms do not need to be unique, set multiple
-channels up as using the same tachs and/or pwms.
-In the case of this particular fan controller, I think that the max31790
-is actually the pwm provider so you'd modify it something like:
-
-        pwm-provider: fan-controller@20 {
-          compatible =3D "maxim,max31790";
-          reg =3D <0x20>;
-	  #pwm-cells =3D <N>;
-
-          fan-0 {
-            pwms =3D <&pwm-provider ...>;
-            tach-ch =3D <6>;
-        };
-
-          fan-1 {
-            pwms =3D <&pwm-provider ...>;
-            tach-ch =3D <7>;
-        };
-};
-
-I just wrote this in my mail client's editor, so it may not be not
-valid, but it is how the fan bindings expect you to represent this kind
-of scenario.
-
-Cheers,
-Conor.
-
->=20
-> The sysfs is generated by the max31790 driver are shown below. We can see
-> the PWM5 and PWM6 are not visible, and the fan11 and fan12 are visible. A=
-nd
-> all FAN devices are on my system, which worked as expected.
->=20
-> root@my-platform:/sys/class/hwmon/hwmon14# ls
-> device       fan12_input  fan1_target  fan2_target  fan3_target fan4_targ=
-et
-> fan6_enable  of_node      pwm2         pwm4
-> fan11_fault  fan1_enable  fan2_enable  fan3_enable  fan4_enable fan5_enab=
-le
-> fan6_fault   power        pwm2_enable  pwm4_enable
-> fan11_input  fan1_fault   fan2_fault   fan3_fault   fan4_fault fan5_fault
-> fan6_input   pwm1         pwm3         subsystem
-> fan12_fault  fan1_input   fan2_input   fan3_input   fan4_input fan5_input
-> name         pwm1_enable  pwm3_enable  uevent
->=20
-> Please share your comments!
->=20
-> > Hope this helps,
-> > Guenter
-> >=20
-
---UUlXLBmKvVSmrjpp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZjuspwAKCRB4tDGHoIJi
-0tPqAP98wTeQweynaGBZg9YPawUPkDkuuI83sV+oyQj48YYoIwEA5FJvt12KWF00
-iVizwm+RfmufPUV1B5XMz/CFaVou7wU=
-=wzZY
------END PGP SIGNATURE-----
-
---UUlXLBmKvVSmrjpp--
