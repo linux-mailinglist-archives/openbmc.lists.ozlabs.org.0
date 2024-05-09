@@ -2,135 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CDA88C18C9
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2024 23:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4320A8C1A28
+	for <lists+openbmc@lfdr.de>; Fri, 10 May 2024 02:02:07 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=Sp2cCel2;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=26XDpRvn;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=W5ve9Vjg;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vb5Ty613Jz3dSv
-	for <lists+openbmc@lfdr.de>; Fri, 10 May 2024 07:57:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vb8FS5Wsbz3c5Y
+	for <lists+openbmc@lfdr.de>; Fri, 10 May 2024 10:02:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=smartm.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=Sp2cCel2;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=26XDpRvn;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=W5ve9Vjg;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=permerror (SPF Permanent Error: Void lookup limit of 2 exceeded) smtp.mailfrom=smartm.com (client-ip=2a01:111:f403:2415::701; helo=nam11-dm6-obe.outbound.protection.outlook.com; envelope-from=rajesh.ananth@smartm.com; receiver=lists.ozlabs.org)
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on20701.outbound.protection.outlook.com [IPv6:2a01:111:f403:2415::701])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.149; helo=fout6-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+X-Greylist: delayed 392 seconds by postgrey-1.37 at boromir; Fri, 10 May 2024 10:01:28 AEST
+Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vb5TN6rglz3cll
-	for <openbmc@lists.ozlabs.org>; Fri, 10 May 2024 07:57:10 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PbGXqpux3Vp9Q2g0Ul1Wfu4zlF/HBIufkpGD3u/PklAoUxWlJ8X37I436SGStgBNmodgRiyXBqFpc5TV3pipScw/WAQYAreiqBgJXLeiqSjKW2g7v1CyV1S0m8C3T4waboLl+4HLds3rmYLJonuMHawoB1C39i9LfI2MVwvtqDqBgMib5NyuOZUBN46TrZofjHgXQe1ToiQhGP/djaRPPh86oQoZ9iNIPz/Cn8J9ifrR0u3Le7FgQz+SQcBJHTCFiE+2TARH9Z4SjS4DYgK7KpuhQOoG1wr2VEhJnFAiEiTkunkKnUgpVyjitl7+ouOy6KY/u1Vu6e3wUHW1zJC0EA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5tfbx/xMPJNmyoH5VnKTsDnAXcnB62B0mk3/qJkg2io=;
- b=YBdhfkAL4Wyzr8ViY2ujPYsTPrbgjTkg0idpJk9vTx6q91cmhQEeXzHFZ5VGoxMMrl90/iUX6357dF/l+OVZ7sK0ROwCMmo3CVqAVetBO1jy2e5/n+qGox0Hsr4fBC65hd6TTpqnxyPxhVsgWs03p1Jzwd5UweVHBjNFXYcbGPfhQ4XEQLks2R6jbVk1dP27qIos2CRc2b2dVKQNC2bmej9i/NlORj3TGFmgNVZu+ql5dnMs+b66tOBK5f6cXZoBAsEDpIYhz7M1E7EycgZjg7s9gO48df9so5kLMI7yOHi6ShkrS1qA6bHuV+z8FnGtLJJQNJNKUsbYTF3HK+p4Lw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=smartm.com; dmarc=pass action=none header.from=smartm.com;
- dkim=pass header.d=smartm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smartm.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5tfbx/xMPJNmyoH5VnKTsDnAXcnB62B0mk3/qJkg2io=;
- b=Sp2cCel21/dFRJdjpLCZJLJpmGc15KazTIQmxz7AbEUvFzHBWZJ9VIW6s9NIyzAOiaoJG7ADjnbcypub2ZTKzo2Xze9i6KqBgZXfvf7WeZ12egiHgQCPRuelUtWkxIMEfm+wDuFDoOhg07Pudrp85JvwrcscnHGw0c+sjOsQyd4C3IsyOmLge0FwOYEBSUPS0AsF0CQoadWazkQp5niOQPX1VoKj7JHFhFXQDBsnzNwvx4199IqaX9yV924t5dkBT33coJbTcJQLsPp6YA3zKo0nSfTZUnT0+Wj3Ubkz6SOWnCU58zeVjEfP+mRClrV3vW1GL7hSbvVlON25WYsExA==
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com (2603:10b6:408:a7::27)
- by SJ0PR04MB7374.namprd04.prod.outlook.com (2603:10b6:a03:290::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.47; Thu, 9 May
- 2024 21:56:51 +0000
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3]) by BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3%7]) with mapi id 15.20.7544.046; Thu, 9 May 2024
- 21:56:50 +0000
-From: "Ananth, Rajesh" <rajesh.ananth@smartm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Information about CXL
-Thread-Topic: Information about CXL
-Thread-Index: AdqiWnejFO5u456nQym13RaU1NRCOA==
-Date: Thu, 9 May 2024 21:56:50 +0000
-Message-ID:  <BN8PR04MB5906892BD5B7DD9A26AEB15594E62@BN8PR04MB5906.namprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=smartm.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN8PR04MB5906:EE_|SJ0PR04MB7374:EE_
-x-ms-office365-filtering-correlation-id: d6a242da-38e3-45fd-e8d7-08dc7072ee80
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230031|376005|1800799015|366007|38070700009;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?GTRF65QvD1b3zOx8tKvaKW238V1TzE5bSDUA/pbwDQGRS3i6i2TX0Nx41xfL?=
- =?us-ascii?Q?7i8bgDH3GArtRAP5VLpmK8LzDxzX5LDSGg+KH3BjDMIMkaOpES+MQWYTaYbZ?=
- =?us-ascii?Q?4gHyiyoCa3XQN3dcs1rA5Wd/YJRXEE80HvAdHbRX0Pj8M1Jr8ZZjjPyjjCJt?=
- =?us-ascii?Q?LYHNHMjt/ZA/4gTEMXNWAbJZJyprQwuYKVjRLYS15eZSSC0xhh72B3nTFhE1?=
- =?us-ascii?Q?ipu9+tzAOJdHe2hssZbe8+syfO7vI/T6WYG/2TW1ohU01GQ9sf09LHF5HO6j?=
- =?us-ascii?Q?alui213n+aZ55giQgPXA0YAwCg/Q5vEZns1iz41bKHLoAedwzzF9xL2EdRZR?=
- =?us-ascii?Q?2YUSZuMc8hyjtSYWTX/S7Vb3h2MThD28goICD2xCnRi6+TA/Z8uTNs8vFwJK?=
- =?us-ascii?Q?DqJM5gATHLrXLY0rikkrzYTYuZnmU+dUjIzZjpV3FhSEDJb3IQXP+HG5zNMj?=
- =?us-ascii?Q?IyQE6r2Rdp8qCEALBzcwZu47VRsK3JTEemmu2Rx4cLi243hNNBVGSgWT6k2/?=
- =?us-ascii?Q?Br7e4iT9Cx4ivt0UISt/77UvShMwhi78EC9XC7GiPn+7StbK0m8UCs5SYcv0?=
- =?us-ascii?Q?EnxLdAjR8J82eV57dwe5G0gyJs6/z2yaisrA4DjMj/mwdSr5HAMZBve43CsD?=
- =?us-ascii?Q?Nk4mi/jISjUCB5yha7mvBymoL/Du4UJcbClZhVrumro7Yv/yvkbBrMgiqwje?=
- =?us-ascii?Q?nc2yjadsC84jWcgJ+1Yd+2vclbKJX7KV1+BeAZoIhuYMQ1/c/oo0e5zWCYLm?=
- =?us-ascii?Q?5Wao68m42jHfw0GC+IiRFH/s6UULOyzt/4gs8kNReNQgkbG9xrRcExWp4XzM?=
- =?us-ascii?Q?iKdUXCsFWDTcsfVq6SwPLDnkSqm/ymfDWpQpMfNVEDz3d3FkhR3s2ueN6eJ3?=
- =?us-ascii?Q?nBDVp3EjGLojJkZnnBpS4rwZdAEJdw9PctxQUZIRs2o/PvcD/du/KaDHXTpX?=
- =?us-ascii?Q?JgibhBAE1cr1Qrit07s/xbsFbLzhUy6hx5xxyiB9WF9V5glLlNwgeGDuWlSg?=
- =?us-ascii?Q?bIC82i8+DYDpO/oLr0rano7FEHG8nGdqqn3Obmo+e3CyWxqoDlr8SncbCw86?=
- =?us-ascii?Q?1Db+XL00ltUvVUB3aDhdKpvWWfarPL6ZaIwX6BtbOYkQekmTKXM0TPJ0FW2g?=
- =?us-ascii?Q?QmD+wSN0+iq0GTmaersRz1442ZK0JPbv/Z36uUuQNJ0uR+yk8WC02PNe8cDp?=
- =?us-ascii?Q?hL79zHdCbQCvlu1haIbNBHQEvNz5SjCN5p40l1sT5U+Aa4nU3q9ZOCRqTugk?=
- =?us-ascii?Q?mKnvO/fc0FAwEK0HFk+4N2A2hypQn1wRJqu9FmO4jUrba0l63xupQS7+x7uh?=
- =?us-ascii?Q?CHmh41inzrxFdSdUPJ+MYeNQCtS3nYXi/GDMQqxApJaNBg=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR04MB5906.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(1800799015)(366007)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?vh/FDqU3vL7XC1wRQz+meNgm+RfMV3tffz353RVDLdd44Qtbdd7l3ahc7tGR?=
- =?us-ascii?Q?FDb73LyJfXp13WwnPn2urnBiUXJA11otMUpFUeitcm4odqB8NpRTFcI7VgOg?=
- =?us-ascii?Q?SKNUNOhUjSKNX25bSHqX7L8Ns4o0V7bC4594vFzmArbOeHgCEunvV9ChrzZQ?=
- =?us-ascii?Q?hPu8QRVYFhfCfX9DTG3JN0WANxOYUlVWaqnLE+ev/O/IVKzstqbaKmNVIO4J?=
- =?us-ascii?Q?L8awbZlBKDQC9N36DzH4bk5CEXVrnNjuysc9mVK4xwTviHnOz9PAvwqRmnwL?=
- =?us-ascii?Q?RPZd2xewy6h74jVePlAdtExCjdsqazJWwiCFQlaCQXVxUy3CpJ74qLaqGXrQ?=
- =?us-ascii?Q?Z4GXU09hvrKN1/wl4kNgpai9eJOULqZzXc9uEujkxg5Q6SZKsDtNXp2S6ya7?=
- =?us-ascii?Q?yGfbLpYoCDb2QK49XLhaMH0Qdhr+FLOQv1v7bep0QDGmGedl1uQqpT1zL4IM?=
- =?us-ascii?Q?toghMcvfPnGKhBnPRzp+j0Eu4VyJGFyckMtlpDQgx6Uy3wvDsDm0zp2kwvpX?=
- =?us-ascii?Q?0LpIanPW+BVlrH60jOg00lqkSwNQTZk+JCQEgo10L7HjJ0rj+18uPFu7QCYG?=
- =?us-ascii?Q?H/CtmOCxuKUwcdnenstPm1zAoVo32FMBrZczhDuX3caCLbJeKr1GQdN1a5rc?=
- =?us-ascii?Q?h7yxeldz73AM/ZpJjxZn2eqjhPKo7tol9uH/5S2qfQ1OVgue1dpftJjoEvsA?=
- =?us-ascii?Q?c2FBuXJa6AUd2zSZWnw6uD9n17FYrJWFuDtshbPeKZaZQi4SUmnkyDmoFl3z?=
- =?us-ascii?Q?puobPhKMU40PV7pk757C//j4//Mt7kqIfZTcF7+P2x2h187MtIeoRxTffHfB?=
- =?us-ascii?Q?FXRhLj6qZ/9R6rQ5RSrfpMX13WrX/roefpeTf+Iv2jo473EAgGvu2yoei3Ve?=
- =?us-ascii?Q?a7QV9/6YOD+9zNOzl5hejrXSJD8H6xS5DPbnuW/mMfTwOFHecoaoO3HzOePC?=
- =?us-ascii?Q?3Eo61uBrCI/jRo67QuE2adxiII+7B7dZCqAZxyal8honZvEtYIe6xHoeYEka?=
- =?us-ascii?Q?0P4HplCfSI53VljqBFLP2IS3dDPmlif1EZ/ln8tFwRuAFAHuplldZY/JjAhT?=
- =?us-ascii?Q?la+x6dFIs0SG4PBp2AOBN4bOA/dbUQvp+rPj31shrSd1/kDYbS9lJGh2fkYF?=
- =?us-ascii?Q?PHpexjG8C55txDmqRLOnF1jSj07kZ/if0OEmjwsgOpZAmgIKOs6QIl2Jugz6?=
- =?us-ascii?Q?itWqbB+TwtZaLc/UUjPPPvtWvQ/wTf/C1K487AVVBlst09XnJRZFK3NPQU0A?=
- =?us-ascii?Q?N4wtcQ/EhQqrmTYy/kU1h6qZM5Qm9Lb60rQfZkNnDTnSiuNKw2LTCaNFECJE?=
- =?us-ascii?Q?9EXBXBdAMG4p0/CBWTbPB4Lxrje7MA8rs0CVTKKVxidEgsoLjRblb4dcI2Ls?=
- =?us-ascii?Q?iJnLlFSMjvIn+ovXRnrrG8VWNa876XSHE+5awh7NMCuWatMOc5eZANX/NkCY?=
- =?us-ascii?Q?Y8xvFfAKNF1feLG+T7zQ9RgvKpngcGm3gW5S0mrOJJQYuWbDZLQUpArUsWDa?=
- =?us-ascii?Q?T6QVLpefbz/Mt2o9yBmX4WD50YwRQGw3V8IsToAzOWoNEW8jAihJzeIKrEvu?=
- =?us-ascii?Q?wpzLAQbbCAR8cicXabFB8K4oFJc9nS6MaiF9DHBJ?=
-Content-Type: multipart/alternative;
-	boundary="_000_BN8PR04MB5906892BD5B7DD9A26AEB15594E62BN8PR04MB5906namp_"
-MIME-Version: 1.0
-X-OriginatorOrg: smartm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR04MB5906.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6a242da-38e3-45fd-e8d7-08dc7072ee80
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 May 2024 21:56:50.9703
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f0fd7909-cd13-4779-b0f9-5ced6b7a2c68
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ScloVS8c4ZWUrufeUzyH7aSn4YiyWYbxRRAht95onLPuSOD5k3qIbtv5gqbnkiWgZYXewtivJ4m6yA0F9URAQk7dI0sZJOieUMTf5/G5jVQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR04MB7374
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vb8Dm696gz3c4v
+	for <openbmc@lists.ozlabs.org>; Fri, 10 May 2024 10:01:27 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 4162213800F3;
+	Thu,  9 May 2024 19:54:50 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Thu, 09 May 2024 19:54:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1715298890;
+	 x=1715385290; bh=FYUOpP0lpTEeBFtYcrVerAoh9WPy9keJ3dM0h32v6mA=; b=
+	26XDpRvnO8496cJpi3I9625DanyTqMEyTeyszHr1QuAkGExADeosPh7FhuSGGlnY
+	6kLfdlBl1yQ/uzZGHh6xFKEeMmP4mWqDDzyYkTBQM4o9SkcIc7yM+ChdsO8JbjtA
+	zaii7GOoI7naDmPJ0wZazjgXCY62UauMQm2bJt5eWg9NZv7GkF/vBpS1FLK1ggte
+	hNZzbwi2mQkxQZFCHBXzrtsgSISeFLX//TUIRcaqwhTluNDzAakSv+QhDHWqCi0q
+	82UEeQztDW7N/biR0i4latHJtvtVilh+Qbvw4bAtg1WTwDP29X3H+XE7Aw9R62IR
+	yALBrOBmiFDSLkskTOqnUQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1715298890; x=
+	1715385290; bh=FYUOpP0lpTEeBFtYcrVerAoh9WPy9keJ3dM0h32v6mA=; b=W
+	5ve9VjgBZ0PPynRIOBa7FnwsSF3kdJ59IsrL6JTIbyXLfdR2Hr5hRZfGQshnFxH1
+	89xHncf7tPwybYj6lyQyezI2I00UWzD3CloMYzLCN7l+62o9b+0hx0g/JaPS8E+p
+	u5MaIlRuycBETbzR//NHjMmnr6G7zssmCZBypF7xcvyYqiScEy8nerF+JT+hVcah
+	5vZFC/c6nGnxpqLPt3ZQxd5o7aP9NcH1l+EAP/MZ1PoV2uNVmk3WwmaipM/ksyv3
+	kErpoHU5+AJ1Znlup/MjPX0KaNoEt79CY0dxrhZDWvQLHmby6zr3VrCv5RjlgvFD
+	Pr3rDDRmQxDDVKaH9ZnnA==
+X-ME-Sender: <xms:SWI9ZiqQwEYEanLxe7qi5wn8viBV2V6G8SRUJJvvuqQtQ3QgnY9EWw>
+    <xme:SWI9Zgo6MbxSGtLIP1AaIwmZLSvQNatsU3uE8d3toq1K4B0PEeP7Upk9wuxw_bq-V
+    CHHwhZGOoNXsasmPzw>
+X-ME-Received: <xmr:SWI9ZnMKs3-wAQxvNvc9vt2rtO0_rGJRgwgYqD-eBV72Ogvv4h1BuuqAAlQim1C4YRIJFEE0Fml1daELRp8KRRixPpmuz0Lg8UoCk1NJdEd7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeffedgvdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdlvdefmdenucfjughrpegtgffhggfufffkfhevjgfvofesrgejmher
+    hhdtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
+    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepheduheetgeeiudelvdfhtdeg
+    ueefuefgjeeggedvhedvgedvtdefveelhfeutddvnecuffhomhgrihhnpegumhhtfhdroh
+    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
+    rghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:SWI9Zh4xhtt5OA4l8q9Gh23VxATAifusWveIiDUqwwW2LuiF2WWS2w>
+    <xmx:SWI9Zh6iL5DB6IDQkYRwJHvCbbeWWCIf_qBcFz9gLdRuYwY1fayMWQ>
+    <xmx:SWI9ZhiXfSgjIGRK9H4S_7t3Zj-eCle6mBm4n_f7hn6PjB3BqPkhzg>
+    <xmx:SWI9Zr529p9A7mfM5SVS-bKAjhIneErFs-06pM3VfXv7SNSkkrMoqQ>
+    <xmx:SmI9ZhGV9fgj_mS-7i5a9Tt3TiXOKrNbqzSBPYhOJm2X6Y4YcISmYKGh>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 May 2024 19:54:49 -0400 (EDT)
+Content-Type: multipart/alternative; boundary=Apple-Mail-CDB08349-268C-47FC-A0E4-2CEAE4B7616C
+Content-Transfer-Encoding: 7bit
+From: Patrick Williams <patrick@stwcx.xyz>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Information about CXL
+Date: Thu, 9 May 2024 18:54:38 -0500
+Message-Id: <B03AB93A-A912-4997-AA6C-4E3C49B05CDC@stwcx.xyz>
+References: <BN8PR04MB5906892BD5B7DD9A26AEB15594E62@BN8PR04MB5906.namprd04.prod.outlook.com>
+In-Reply-To: <BN8PR04MB5906892BD5B7DD9A26AEB15594E62@BN8PR04MB5906.namprd04.prod.outlook.com>
+To: "Ananth, Rajesh" <rajesh.ananth@smartm.com>
+X-Mailer: iPhone Mail (21E236)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,191 +98,131 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BN8PR04MB5906892BD5B7DD9A26AEB15594E62BN8PR04MB5906namp_
-Content-Type: text/plain; charset="us-ascii"
+
+--Apple-Mail-CDB08349-268C-47FC-A0E4-2CEAE4B7616C
+Content-Type: text/plain;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+=46rom what I've seen, the BMC would interact with a CXL using MCTP and not P=
+CIe. See https://www.dmtf.org/sites/default/files/standards/documents/DSP028=
+1_1.0.0_0.pdf
+---
+Patrick Williams
 
-We are in the process of developing OpenBMC based firmware update mechanism=
- for the PCI-e based CXL controllers. The CXL controllers typically expose =
-their interfaces as a memory mapped mailbox in the PCI-e space.
+> On May 9, 2024, at 4:58=E2=80=AFPM, Ananth, Rajesh <rajesh.ananth@smartm.c=
+om> wrote:
+>=20
+> =EF=BB=BF
+> Hi,
+> =20
+> We are in the process of developing OpenBMC based firmware update mechanis=
+m for the PCI-e based CXL controllers. The CXL controllers typically expose t=
+heir interfaces as a memory mapped mailbox in the PCI-e space.
+> =20
+> Basic things we are looking forward to implement are (depends on the feasi=
+bility here):
+> 1.       Probe the PCI-e config space to locate our controller  (using PCI=
+ VID/DID)
+> 2.       Probe the PCI-e config space to access the memory mapped register=
+s
+> 3.       Use the mapped registers to send commands and update the firmware=
 
-Basic things we are looking forward to implement are (depends on the feasib=
-ility here):
+> =20
+> We would like to have some pointers on how to proceed (sample code/develop=
+ment docs etc.,). We are initially targeting s2600wf board as our target.
+> =20
+> Thanks,
+> Rajesh
+> =20
+> =20
 
-1.       Probe the PCI-e config space to locate our controller  (using PCI =
-VID/DID)
-
-2.       Probe the PCI-e config space to access the memory mapped registers
-
-3.       Use the mapped registers to send commands and update the firmware
-
-We would like to have some pointers on how to proceed (sample code/developm=
-ent docs etc.,). We are initially targeting s2600wf board as our target.
-
-Thanks,
-Rajesh
-
-
-
---_000_BN8PR04MB5906892BD5B7DD9A26AEB15594E62BN8PR04MB5906namp_
-Content-Type: text/html; charset="us-ascii"
+--Apple-Mail-CDB08349-268C-47FC-A0E4-2CEAE4B7616C
+Content-Type: text/html;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto">=46rom what I've seen, the BMC would intera=
+ct with a CXL using MCTP and not PCIe. See&nbsp;<a href=3D"https://www.dmtf.=
+org/sites/default/files/standards/documents/DSP0281_1.0.0_0.pdf">https://www=
+.dmtf.org/sites/default/files/standards/documents/DSP0281_1.0.0_0.pdf</a><br=
+ id=3D"lineBreakAtBeginningOfSignature"><div dir=3D"ltr">---<div>Patrick Wil=
+liams</div></div><div dir=3D"ltr"><br><blockquote type=3D"cite">On May 9, 20=
+24, at 4:58=E2=80=AFPM, Ananth, Rajesh &lt;rajesh.ananth@smartm.com&gt; wrot=
+e:<br><br></blockquote></div><blockquote type=3D"cite"><div dir=3D"ltr">=EF=BB=
+=BF
+
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">=
+
 <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:1570190475;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-961640274 67698703 67698713 67698715 67698703 67698=
-713 67698715 67698703 67698713 67698715;}
-@list l0:level1
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level2
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level3
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l0:level4
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level5
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level6
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l0:level7
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level8
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level9
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style><!--[if gte mso 9]><xml>
+<style>@font-face { font-family: "Cambria Math"; }
+@font-face { font-family: Calibri; }
+p.MsoNormal, li.MsoNormal, div.MsoNormal { margin: 0in 0in 0.0001pt; font-si=
+ze: 11pt; font-family: Calibri, sans-serif; }
+a:link, span.MsoHyperlink { color: rgb(5, 99, 193); text-decoration: underli=
+ne; }
+a:visited, span.MsoHyperlinkFollowed { color: rgb(149, 79, 114); text-decora=
+tion: underline; }
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph { margin: 0in 0=
+in 0.0001pt 0.5in; font-size: 11pt; font-family: Calibri, sans-serif; }
+span.EmailStyle17 { font-family: Calibri, sans-serif; color: windowtext; }
+.MsoChpDefault { font-family: Calibri, sans-serif; }
+@page WordSection1 { size: 8.5in 11in; margin: 1in; }
+div.WordSection1 { page: WordSection1; }
+ol { margin-bottom: 0in; }
+ul { margin-bottom: 0in; }</style><!--[if gte mso 9]><xml>
 <o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
 <o:shapelayout v:ext=3D"edit">
 <o:idmap v:ext=3D"edit" data=3D"1" />
 </o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+
+
 <div class=3D"WordSection1">
 <p class=3D"MsoNormal">Hi,<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We are in the process of developing OpenBMC based fi=
-rmware update mechanism for the PCI-e based CXL controllers. The CXL contro=
-llers typically expose their interfaces as a memory mapped mailbox in the P=
-CI-e space.<o:p></o:p></p>
+<p class=3D"MsoNormal">We are in the process of developing OpenBMC based fir=
+mware update mechanism for the PCI-e based CXL controllers. The CXL controll=
+ers typically expose their interfaces as a memory mapped mailbox in the PCI-=
+e space.<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Basic things we are looking forward to implement are=
- (depends on the feasibility here):<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">1.<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+<p class=3D"MsoNormal">Basic things we are looking forward to implement are (=
+depends on the feasibility here):<o:p></o:p></p>
+<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level1=
+ lfo1"><!--[if !supportLists]--><span style=3D"mso-list:Ignore">1.<span styl=
+e=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
 nbsp;
-</span></span><![endif]>Probe the PCI-e config space to locate our controll=
-er&nbsp; (using PCI VID/DID)<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">2.<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+</span></span><!--[endif]-->Probe the PCI-e config space to locate our contr=
+oller&nbsp; (using PCI VID/DID)<o:p></o:p></p>
+<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level1=
+ lfo1"><!--[if !supportLists]--><span style=3D"mso-list:Ignore">2.<span styl=
+e=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
 nbsp;
-</span></span><![endif]>Probe the PCI-e config space to access the memory m=
-apped registers<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">3.<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+</span></span><!--[endif]-->Probe the PCI-e config space to access the memor=
+y mapped registers<o:p></o:p></p>
+<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level1=
+ lfo1"><!--[if !supportLists]--><span style=3D"mso-list:Ignore">3.<span styl=
+e=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
 nbsp;
-</span></span><![endif]>Use the mapped registers to send commands and updat=
-e the firmware<o:p></o:p></p>
+</span></span><!--[endif]-->Use the mapped registers to send commands and up=
+date the firmware<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We would like to have some pointers on how to procee=
-d (sample code/development docs etc.,). We are initially targeting s2600wf =
-board as our target.<o:p></o:p></p>
+<p class=3D"MsoNormal">We would like to have some pointers on how to proceed=
+ (sample code/development docs etc.,). We are initially targeting s2600wf bo=
+ard as our target.<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <p class=3D"MsoNormal">Thanks,<br>
 Rajesh<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 </div>
-</body>
-</html>
 
---_000_BN8PR04MB5906892BD5B7DD9A26AEB15594E62BN8PR04MB5906namp_--
+
+</div></blockquote></body></html>=
+
+--Apple-Mail-CDB08349-268C-47FC-A0E4-2CEAE4B7616C--
