@@ -2,68 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BFD88C7409
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2024 11:45:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 178228C7419
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2024 11:48:11 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HcDk/PZD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OTdLa3hI;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vg4vl0616z3dW1
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2024 19:45:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vg4yw41K1z3dTr
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2024 19:48:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HcDk/PZD;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OTdLa3hI;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1129; helo=mail-yw1-x1129.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vg4v96z2Sz3ccX
-	for <openbmc@lists.ozlabs.org>; Thu, 16 May 2024 19:44:52 +1000 (AEST)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-61bb219737dso89706367b3.2
-        for <openbmc@lists.ozlabs.org>; Thu, 16 May 2024 02:44:52 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vg4yL1P8jz3clB
+	for <openbmc@lists.ozlabs.org>; Thu, 16 May 2024 19:47:38 +1000 (AEST)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-de46b113a5dso7638397276.3
+        for <openbmc@lists.ozlabs.org>; Thu, 16 May 2024 02:47:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715852688; x=1716457488; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1715852853; x=1716457653; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mv4lNrglqS4nAOAX/673bvBVveCRgVuJ/fLlNsqmFkY=;
-        b=HcDk/PZDLIPpEwV2glWRwd8/sfgUi0lZ1NiLWbYBK+MbkkSMlEVVghSqTBNnvxY+1m
-         YkVNjouniBg+C0zocDMSa+i7ZiO2DhX86POE4N1TRtbk2mUSjqFYtC/Dw178xL/l72DJ
-         37Nittn5s2x3tw2fxClrflOrr9n5PThs0arxBh0nG52IG4py8vvBWQ/kzSQZvAjosAVJ
-         TgNRPxNYSJYK6mbngFrQ1jSBW0zRhz5HF8N0vvv+FiNMKvVRNYkhXzWxKTpHfU+YDLw7
-         KmeJyZMJo32tL9+m7+pSaqM7+YSGG46vluH0YyHD20AKRAzv5TeoPWYPDvRCcqglFors
-         idUg==
+        bh=gUyknDd5G3O/kbXEyZ7lZAY8kzOAKHNxYeobg/F/UyY=;
+        b=OTdLa3hIftwISNwZ9Zw24N5ZVd8fIFehSTvYRUItcm3l7hF1Qxhc1nN2+uIg2rxu9f
+         89evR/n80Fy6VOJivvuFypZ8/Fw5ACmtQq5falBto0lYrem8kRVmb74IsyrkzT/8uAj3
+         AGpZPPm8Vzcd4CIMbvSsag4b9JcxiO2QlBVgX7tteNopa8MMRLoIgR1X+tUzF//ZGlul
+         X0gH/7GyEBtqP8/aOwp4rBVH2FAnXQCAOKr6axEGj0BMCBWFRHuVdxxLTuvKF8oKFz2R
+         lpQ601nBOKnb75prE4P0hWXOW3m/xaNYuYJIm4uurfb7kcw5hWoajAAmkNHoSv6ad1Wv
+         Aahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715852688; x=1716457488;
+        d=1e100.net; s=20230601; t=1715852853; x=1716457653;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Mv4lNrglqS4nAOAX/673bvBVveCRgVuJ/fLlNsqmFkY=;
-        b=YKMBMuUChSptTmkPFcG/hcVZqh4j89Xfpq2MwR2JUd8HNcL3H0GkTiqPyN8XL9wxHZ
-         aqbFUnMiSveSngZ4k+4vHMuq6iJ7wLFxd1uPeTIfmfv240YL/J0PQoBg3vKfwYEbmy1l
-         tm2wdXeg7Hzo3LAeGI633ubnmi2B2suEMPpRWId2UtBM+/C+niDBsAvMF/yK87fdmkjf
-         aBYiY9UL1c9ic1R2gYvExusJGFPbXd8wa+BItgM5ZYlWzJHp9EPAKlER/7fWJ+Ezjvih
-         Y0rU9vgdqnMPRneN/4QoVF6ryVOHC1XekIXWI1qKrqSGCuKW3CloQp04O5i5YUEanvxS
-         QM0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWKIZHVSVXrNOk+ioHIzVv8+UMUdiAXB3ZQdHVnhq1wQOdv5GFZMhb5Y3Myg/D0qtDWLqBcodMULWwGHW31xOx6++TN1EOiFtU=
-X-Gm-Message-State: AOJu0YwiwFlnMPqIOF/HkLtpKPnCD1keBh+HVCQSO16fXwfkyk9Orbvw
-	yValvMFLXf/eCyPUsE1LauXYEG5P3ZJBzh8qsQF73zLiDf1pL+WCX8B2FnA9K/3bNJK8KllzLGT
-	m8rHzz6xXvts7/m2gwrJuVTnFNzY=
-X-Google-Smtp-Source: AGHT+IGt4GOJGeaaemGwA4Ckt+18xxZfU1hLBTK3dGN/PrXCsjugWmUU80kcg1X7vu7MfI7i+fk+lUadWbYn6YM/PMQ=
-X-Received: by 2002:a25:c70d:0:b0:de6:4ff:3155 with SMTP id
- 3f1490d57ef6-dee4f2dae9fmr19813993276.16.1715852688597; Thu, 16 May 2024
- 02:44:48 -0700 (PDT)
+        bh=gUyknDd5G3O/kbXEyZ7lZAY8kzOAKHNxYeobg/F/UyY=;
+        b=EGGO9wwpne9DgeyDvx0Zi6HUEec1HlyzC3GTMZWme2RAOz0Y3ce9fMlJ8F6pME3YOR
+         iKPaObIVWfx4zjnNEQO6Tgu0Z0H8EWeB4Pk4+TaJ9QZU+wgy8KvnykVUafK3n8fDydqE
+         SANRL22jfJeJuv2cTJzk++UofQJcieWdXkDs7LKvAAkN+G3y7UcVLuk/xXTsk4j0cz4K
+         gHo0r8HWHrz9MNC6epI35C95BVUG4tiuTrf3AIt93f5qImXi8jv4yG1CJuzGvM0/J1WT
+         QDDtgY/KJ8bb5Ir90rjSwOf9rHXvxxnxBUoGzqrf/UDPYCMiRNpQFlkAGhN0EB+QSR23
+         D7MA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkGkNZCU9RSrn6HxiKdSEpmBNMkR47+/OSSItvQn9YA2OxZUdXXaZBvB+UqQhWbY/6A1OJj+UkrHNwjdSubRxxOUE+Q0fc+fg=
+X-Gm-Message-State: AOJu0Yxa7sFvHqKF65rJTK7Hg4HAwD+6hfog7KQIfeUWlZNqGIBgPt1T
+	S3JJUqT+H9Bw+dY1E3X9fytDsDQfdohWLA0lOevTI7FF7NNq+5vxJj5XIaHETI1gsa42qi5B/SX
+	qUN94uvb1UdFOcYUhQKE5x8nciNs=
+X-Google-Smtp-Source: AGHT+IEzJt0Z027kWGnPBHHjYcG3IHb+RCewZlXNuCwSPNs6kP35vwq1z5FEuoImbDDdfYqXu+c8znUsBxe1Ou0UEvU=
+X-Received: by 2002:a25:b853:0:b0:df3:6f11:923a with SMTP id
+ 3f1490d57ef6-df36f11964emr3073402276.53.1715852853288; Thu, 16 May 2024
+ 02:47:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240509192411.2432066-1-tmaimon77@gmail.com> <20240509192411.2432066-5-tmaimon77@gmail.com>
- <20240513155330.GA2676859-robh@kernel.org>
-In-Reply-To: <20240513155330.GA2676859-robh@kernel.org>
+References: <20240509192411.2432066-1-tmaimon77@gmail.com> <20240509192411.2432066-2-tmaimon77@gmail.com>
+ <20240513155154.GA2595523-robh@kernel.org>
+In-Reply-To: <20240513155154.GA2595523-robh@kernel.org>
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Thu, 16 May 2024 12:44:36 +0300
-Message-ID: <CAP6Zq1hRw6xfNKKfBFGuKbZk0su3ys6+hnMzqRWrZeKzDoKLEw@mail.gmail.com>
-Subject: Re: [PATCH v24 4/4] dt-binding: clock: remove nuvoton npcm845-clk bindings
+Date: Thu, 16 May 2024 12:47:22 +0300
+Message-ID: <CAP6Zq1h4gMRcEsVL96OeggF9c2Eh-ZsXSQ5cTswEe_0ExeNTMQ@mail.gmail.com>
+Subject: Re: [PATCH v24 1/4] dt-bindings: reset: npcm: add clock properties
 To: Rob Herring <robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -83,26 +83,67 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Rob,
 
-Thanks for your comment.
+Thanks for your comments
 
-On Mon, 13 May 2024 at 18:53, Rob Herring <robh@kernel.org> wrote:
+On Mon, 13 May 2024 at 18:51, Rob Herring <robh@kernel.org> wrote:
 >
-> On Thu, May 09, 2024 at 10:24:11PM +0300, Tomer Maimon wrote:
-> > Remove nuvoton,npcm845-clk binding since the NPCM8xx clock driver
-> > using the auxiliary device framework and not the device tree framework.
+> On Thu, May 09, 2024 at 10:24:08PM +0300, Tomer Maimon wrote:
+> > Adding 25MHz reference clock and clock-cell properties to NPCM reset
+> > document due to the registration of the npcm8xx clock auxiliary bus device
+> > in the NPCM reset driver
+> >
+> > The NPCM8xx clock auxiliary bus device has been registered in the NPCM
+> > reset driver because the reset and the clock share the same register
+> > region.
 >
-> Again, this is an ABI break. Changing driver architecture for 1 OS is
-> not a reason to change DT.
-Is it an ABI break even if the NPCM8xx clock driver hasn't upstream
-the kernel vanilla yet?
-
-I thought that since the NPCM8xx clock driver hasn't upstream the
-kernel vanilla yet and and in the latest NPCM8xx clock driver patch
-the NPCM8xx clock driver.
-using auxiliary device framework instead of DT we should remove the
-nuvoton,npcm845-clk.yaml file.
-https://patchwork.kernel.org/project/linux-clk/patch/20240509192411.2432066-4-tmaimon77@gmail.com/
-
+> auxiliary bus is a Linux concept. The reasoning for this should be the
+> reset block also provides clocks.
+>
+>
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  .../bindings/reset/nuvoton,npcm750-reset.yaml  | 18 ++++++++++++++++++
+> >  1 file changed, 18 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml b/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
+> > index d82e65e37cc0..18db4de13098 100644
+> > --- a/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
+> > +++ b/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
+> > @@ -21,6 +21,13 @@ properties:
+> >    '#reset-cells':
+> >      const: 2
+> >
+> > +  '#clock-cells':
+> > +    const: 1
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: specify external 25MHz referance clock.
+>
+> s/referance/reference/
+>
+> > +
+> >    nuvoton,sysgcr:
+> >      $ref: /schemas/types.yaml#/definitions/phandle
+> >      description: a phandle to access GCR registers.
+> > @@ -39,6 +46,17 @@ required:
+> >    - '#reset-cells'
+> >    - nuvoton,sysgcr
+> >
+> > +if:
+> > +  properties:
+> > +    compatible:
+> > +      contains:
+> > +        enum:
+> > +          - nuvoton,npcm845-reset
+> > +then:
+> > +  required:
+> > +    - '#clock-cells'
+> > +    - clocks
+>
+> New required properties are an ABI break. Please justify why that's okay
+> for this platform in the commit message (assuming that it is).
+will be done in next version
 >
 > Rob
 
