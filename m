@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTP id 781378CEE76
-	for <lists+openbmc@lfdr.de>; Sat, 25 May 2024 12:21:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTP id 7440F8CF3EE
+	for <lists+openbmc@lfdr.de>; Sun, 26 May 2024 12:31:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vmd460Fqfz79YT
-	for <lists+openbmc@lfdr.de>; Sat, 25 May 2024 20:11:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VnFLG6TX8z79Nh
+	for <lists+openbmc@lfdr.de>; Sun, 26 May 2024 20:26:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
@@ -15,37 +15,38 @@ Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de 
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vmd3k1vLNz79Gn
-	for <openbmc@lists.ozlabs.org>; Sat, 25 May 2024 20:11:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VnFKv5mS4z3gHp
+	for <openbmc@lists.ozlabs.org>; Sun, 26 May 2024 20:25:54 +1000 (AEST)
 Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1sAoMN-0005QQ-16; Sat, 25 May 2024 12:10:43 +0200
+	id 1sBB3o-0002ub-4H; Sun, 26 May 2024 12:25:04 +0200
 Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1sAoMI-002uS7-MQ; Sat, 25 May 2024 12:10:38 +0200
+	id 1sBB3i-0032ch-Nm; Sun, 26 May 2024 12:24:58 +0200
 Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.96)
 	(envelope-from <ukl@pengutronix.de>)
-	id 1sAoMI-00Bs4j-1u;
-	Sat, 25 May 2024 12:10:38 +0200
-Date: Sat, 25 May 2024 12:10:38 +0200
+	id 1sBB3i-00CPaP-22;
+	Sun, 26 May 2024 12:24:58 +0200
+Date: Sun, 26 May 2024 12:24:58 +0200
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Corey Minyard <minyard@acm.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Corey Minyard <corey@minyard.net>
 Subject: Re: [PATCH 0/6] ipmi: Convert to platform remove callback returning
  void
-Message-ID: <sjgseqireuaswtbuwl3rvcszpsjzph4opq52x2kbudczxutz7o@2tua2oueufdd>
+Message-ID: <nkhpr2ddrc4i7ai6gwamxrednx327atigoaxmamwq763bgpi46@fghhdinrqda7>
 References: <cover.1709655755.git.u.kleine-koenig@pengutronix.de>
  <3uhfeeahn2u23mxyumyxcyx4kmcxzczipkan7eqh4aslsmhxyz@zgsmwj2jvb2v>
  <Zhf9mQx/KgXOzPTs@mail.minyard.net>
+ <sjgseqireuaswtbuwl3rvcszpsjzph4opq52x2kbudczxutz7o@2tua2oueufdd>
+ <ZlH4KFZ3MYzelzZK@mail.minyard.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ajph324orx2jafee"
+	protocol="application/pgp-signature"; boundary="iom6itn46xokgfg6"
 Content-Disposition: inline
-In-Reply-To: <Zhf9mQx/KgXOzPTs@mail.minyard.net>
+In-Reply-To: <ZlH4KFZ3MYzelzZK@mail.minyard.net>
 X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
 X-SA-Exim-Mail-From: ukl@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
@@ -61,45 +62,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, linux-aspeed@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, Tali Perry <tali.perry1@gmail.com>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Christophe Leroy <christophe.leroy@csgroup.eu>, kernel@pengutronix.de, Patrick Venture <venture@google.com>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, openipmi-developer@lists.sourceforge.net, linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, Joel Stanley <joel@jms.id.au>
+Cc: Corey Minyard <minyard@acm.org>, Benjamin Fair <benjaminfair@google.com>, linux-aspeed@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>, Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, Tali Perry <tali.perry1@gmail.com>, "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Christophe Leroy <christophe.leroy@csgroup.eu>, kernel@pengutronix.de, Patrick Venture <venture@google.com>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, openipmi-developer@lists.sourceforge.net, linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---ajph324orx2jafee
+--iom6itn46xokgfg6
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hello Corey,
 
-On Thu, Apr 11, 2024 at 10:11:21AM -0500, Corey Minyard wrote:
-> On Thu, Apr 11, 2024 at 09:15:03AM +0200, Uwe Kleine-K=F6nig wrote:
-> > Hello,
-> >=20
-> > On Tue, Mar 05, 2024 at 05:26:57PM +0100, Uwe Kleine-K=F6nig wrote:
-> > > this series converts all drivers below drivers/char/ipmi to struct
-> > > platform_driver::remove_new(). See commit 5c5a7680e67b ("platform: Pr=
-ovide a
-> > > remove callback that returns no value") for an extended explanation a=
-nd the
-> > > eventual goal.
-> > >=20
-> > > All conversations are trivial, because their .remove() callbacks
-> > > returned zero unconditionally.
-> > >=20
-> > > There are no interdependencies between these patches, so they could be
-> > > picked up individually. But I'd hope that they get picked up all
-> > > together by Corey.
+On Sat, May 25, 2024 at 09:39:36AM -0500, Corey Minyard wrote:
+> On Sat, May 25, 2024 at 12:10:38PM +0200, Uwe Kleine-K=F6nig wrote:
+> > These changes are in next since a while but didn't land in Linus tree
+> > for v6.10-rc1. I intend to send a PR to Greg early next week changing
+> > platform_driver::remove to match remove_new. If these commits don't make
+> > it in in time, I'll be so bold and just include the commits from your
+> > for-next branch in my PR.
 >=20
-> Yeah, I was kind of waiting for more reviews, but this is pretty
-> straightforward.  I've pulled this into my tree.
+> I sent them to Linus right after 6.9 dropped, let me resend...
 
-These changes are in next since a while but didn't land in Linus tree
-for v6.10-rc1. I intend to send a PR to Greg early next week changing
-platform_driver::remove to match remove_new. If these commits don't make
-it in in time, I'll be so bold and just include the commits from your
-for-next branch in my PR.
+That worked, they landed now in Linus' tree. Thanks, that makes it a bit
+less ugly for me.
 
 Best regards
 Uwe
@@ -108,19 +94,19 @@ Uwe
 Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
 Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
---ajph324orx2jafee
+--iom6itn46xokgfg6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmZRuR0ACgkQj4D7WH0S
-/k7iXQf+JY2QTPcPdx/jTOE0dUvCeBEjZ4bRh4mIpawNO0kdNbwYcQUVpo5OrDQ8
-qnEQRMBPPam51IgxAWEEO1+xa86RbYUrSqNsVQn+chiBr+EQHeAXYpGKuHK8STRO
-8Mg38AeS0M4k35+W9RE5WdQQRPbVv/SvIZIWHvqnK7unCaCJmWxbL6LHj6Vy5cR/
-BMMd87EEIR+dBbK1EvHqJgKqrtlF58qBMWWiIA9N67SdRSE96WXwRffe+o63evky
-YHUl2bvlEn3uwDDwLyFUV6Inqu0RR8YLCS1M2nYpGZE91xQFN9DG7AyXEKMPbXyD
-nAHcivIcWONurbCNqax3/T91fn8ftA==
-=mxtd
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmZTDfkACgkQj4D7WH0S
+/k7BPwgAr6xD+4ieftmbUYTU20hpTMCFNQIGMGywkgy6RQbW9ETmo4DTqDfVVtQw
+rOTCz1AIpQXqREfEmaf6Z+mUHHXwl3+9M1H0VdEnDQXJNbGTEpoL7hW5fBNXeBEw
+t5OnxEpvcN3nggHf8XRynW9SSgnw7RMepD0veOWeUxe76AmJZrYOTNwgYwp61ade
+7vOgwlSmPQ6s5ygQ0YJCckbVxfthPXBwMHFmdu1NcBDIzXz+b0jYwe2ixKfZEXZz
+N8Ti522H4WgTjtr9TMXXNkQd3cjLmBMdbFLr6xtKpxrsvJKkjOlJhm+irzw+Mhgj
+b04pbiT3qFEfsmSj+LMFKeWPl29liw==
+=Qytg
 -----END PGP SIGNATURE-----
 
---ajph324orx2jafee--
+--iom6itn46xokgfg6--
