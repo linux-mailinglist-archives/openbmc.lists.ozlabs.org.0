@@ -2,62 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC3528D7E37
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2024 11:14:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C449C8D8374
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2024 15:06:40 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=B/GXgkrR;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gEjI/Gri;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vt7Mk6n1xz3cSd
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2024 19:14:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VtDWd6Gptz3cb7
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2024 23:06:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=B/GXgkrR;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gEjI/Gri;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
-X-Greylist: delayed 546 seconds by postgrey-1.37 at boromir; Mon, 03 Jun 2024 19:13:53 AEST
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::232; helo=mail-lj1-x232.google.com; envelope-from=aayushi.chauhan01@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vt7M51Q9jz30VP
-	for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2024 19:13:52 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=PL2tpWgubRP0I1wFdl1ZHWzMi0qsZ0DU3zEaEHooRQY=; b=B/GXgkrRVf4Kx2g9TuilFMzYS2
-	U9NTJ5sySISyPgH9X1HT28urmVye+m8mf3bX59ZQDteLTM3jnFc1Kzc+tmlAFyVnmxXtbYs0av3NO
-	OmLqHpnPC3byTnIq33a+gZJnip3nRKGZul8W89TBkvBRFJ3JHiAwenoET9L5h8IZwUzENpMQUAMOp
-	uZWQu6OKtFlZCvBAv4hF9G3Y3hTj/hTIKsrrPn661EXWRJZ/hIJmtTR9est5xH+53rgZ7RoQL2Dnr
-	KDSvpFP9+i3sAVYcUhzW8UeuDOaW9ZGHARWbtggPnAP4+E0DPiweET4f+R95aIdfxnRFa9XdvgzvH
-	ZnB0owOQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:45002)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1sE3bi-0002Tb-2G;
-	Mon, 03 Jun 2024 10:03:58 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1sE3be-0000IR-OA; Mon, 03 Jun 2024 10:03:54 +0100
-Date: Mon, 3 Jun 2024 10:03:54 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next v2 10/10] net: stmmac: Add DW XPCS specified via
- "pcs-handle" support
-Message-ID: <Zl2G+gK8qpBjGpb3@shell.armlinux.org.uk>
-References: <20240602143636.5839-1-fancer.lancer@gmail.com>
- <20240602143636.5839-11-fancer.lancer@gmail.com>
- <2lpomvxhmh7bxqhkuexukztwzjfblulobepmnc4g4us7leldgp@o3a3zgnpua2a>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VtDW36WGVz3cVR
+	for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2024 23:06:06 +1000 (AEST)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2e724bc46c4so49148161fa.2
+        for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2024 06:06:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717419955; x=1718024755; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Rb/K3WJFB3ZgXzeMcRAI9aP6+ZhRrGG8tFHjazr7McQ=;
+        b=gEjI/Gri+N33IPDX+fm51h+CfSswupOaSAdOG1cblIrZEzpv+mPo9SE2Y7ejAAMSmD
+         IkVAVMhiJR6l3+k5pd382Z+YGQ5r/olYVKlEnCvn1oVPXFAQvYElZewkV6eDBTHpNxOP
+         z3AzTBqsMSQTQ6UhtDDX5BVXlOHt/6WZGVFFxfjw6Rc5/hIi+8JrMG+hFfFg1qvxlhoN
+         5Um1pOD4R0oCPZJUxBq/dRh4SOeDEjX1bazkYpS1FjbjROR0XJ56VYri7QMQAPg6KE6z
+         TRYzQPPoI/vLQatJaC+61PP47QjSZmP7w/JSrQ418SgXV6g5AxvmIYLqtRcJJSMefpt8
+         JkAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717419955; x=1718024755;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Rb/K3WJFB3ZgXzeMcRAI9aP6+ZhRrGG8tFHjazr7McQ=;
+        b=sh8DxfmJs/k2H2FWVSzWQSC5KRSuVHL0wg8vyomcz5EX4SeDctm6mGxLC93tpmfu7b
+         KWGCzTRDFqUJ4OnHCNbNp5Y/hBAzxM9w8ykN7YvvrOukJF66W2iHMwGnjYoG9y1HABQ2
+         SWnvmxUp+W6Mwbq/l3r6zMUFCeDJ+xVOlADwy/SCIF1+DoLNXfq43B3DHVEGvoGDPYCs
+         h06r8h5EscVlJhZCYJOCJMPC3FpZeScZgWd6pwEM8l13HxkuKGrdRvw2lkJ2VqoOunTB
+         ueip2oZjIGK/MYvkG587ZBPVuII2IQ803Kba31VXVDzd9EE7mgM7DEpYaSk7gysZSAbp
+         EwAA==
+X-Gm-Message-State: AOJu0YwYmVa/KqsFCA171lbFEDW/5aYJwAJg1cVU6TBU/+lMAN/iaQ9Z
+	e/iiS2HymqKMdB1jhrr3KQ4DuBwxzJGAcbS6hJ7EnOyJYvH61DqkH+cigxz8WVtVljpN46KcYRz
+	TASqi1kWTzLXVnX1S57/sbze8X7N2tUFm
+X-Google-Smtp-Source: AGHT+IH0wM91Jxjm7RegLwYyuOdFv4pyQV+oJqG4GSdenIJOoARRg0mrdzip4MKeMn3EnFjtP+AbtWbiMVg+haktnBc=
+X-Received: by 2002:a05:651c:2c5:b0:2e0:c81c:25da with SMTP id
+ 38308e7fff4ca-2ea951605f5mr52185961fa.30.1717419954545; Mon, 03 Jun 2024
+ 06:05:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2lpomvxhmh7bxqhkuexukztwzjfblulobepmnc4g4us7leldgp@o3a3zgnpua2a>
+From: aayushi chauhan <aayushi.chauhan01@gmail.com>
+Date: Mon, 3 Jun 2024 18:35:42 +0530
+Message-ID: <CAGUjZ4EuoJFL4N3F4+Knnb+hudHtrMKpCo3UJ=LqrwgOXZxRKQ@mail.gmail.com>
+Subject: Server unable to start after OpenBMC flash
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000522e4d0619fbfef3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,40 +72,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Eric Dumazet <edumazet@google.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Sagar Cheluvegowda <quic_scheluve@quicinc.com>, linux-stm32@st-md-mailman.stormreply.com, Florian Fainelli <f.fainelli@gmail.com>, openbmc@lists.ozlabs.org, Maxime Chevallier <maxime.chevallier@bootlin.com>, Jose Abreu <joabreu@synopsys.com>, Abhishek Chauhan <quic_abchauha@quicinc.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Andrew Halaney <ahalaney@redhat.com>, Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jiawen Wu <jiawenwu@trustnetic.com>, linux-arm-kernel@lists.infradead.org, Mengyuan Lou <mengyuanlou@net-swift.com>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Vladimir Oltean <olteanv@gmail.com>, "Da
- vid S. Miller" <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jun 03, 2024 at 11:54:22AM +0300, Serge Semin wrote:
-> >  	if (priv->plat->pcs_init) {
-> >  		ret = priv->plat->pcs_init(priv);
-> 
-> > +	} else if (fwnode_property_present(devnode, "pcs-handle")) {
-> > +		pcsnode = fwnode_find_reference(devnode, "pcs-handle", 0);
-> > +		xpcs = xpcs_create_fwnode(pcsnode, mode);
-> > +		fwnode_handle_put(pcsnode);
-> > +		ret = PTR_ERR_OR_ZERO(xpcs);
-> 
-> Just figured, we might wish to be a bit more portable in the
-> "pcs-handle" property semantics implementation seeing there can be at
-> least three different PCS attached:
-> DW XPCS
-> Lynx PCS
-> Renesas RZ/N1 MII
-> 
-> Any suggestion of how to distinguish the passed handle? Perhaps
-> named-property, phandle argument, by the compatible string or the
-> node-name?
+--000000000000522e4d0619fbfef3
+Content-Type: text/plain; charset="UTF-8"
 
-I can't think of a reasonable solution to this at the moment. One
-solution could be pushing this down into the platform code to deal
-with as an interim solution, via the new .pcs_init() method.
+*Unexpected behavior you saw*
+After flashing the Intel GNR-based motherboard with the OpenBMC image built
+with version 2.14.0, the BMC successfully starts but the server doesn't
+start and is stuck at LED post code 0x02.
 
-We could also do that with the current XPCS code, since we know that
-only Intel mGBE uses xpcs. This would probably allow us to get rid
-of the has_xpcs flag.
+I tried using an image built with the older commit but it didn't work.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+*Expected behavior*
+The server is supposed to start.
+
+*To Reproduce*
+Steps to reproduce the behavior:
+
+   1. '. setup evb-ast2600'
+   2. 'bitbake obmc-phosphor-image'
+   3.  Flash the image to the BMC
+   4. Power on the system
+
+
+-> BMC boot up, server stuck at LEPPostcode 0x02.
+
+--000000000000522e4d0619fbfef3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p dir=3D"auto" style=3D"box-sizing:border-box;margin-bott=
+om:16px;color:rgb(31,35,40);font-family:-apple-system,BlinkMacSystemFont,&q=
+uot;Segoe UI&quot;,&quot;Noto Sans&quot;,Helvetica,Arial,sans-serif,&quot;A=
+pple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px;margin-top=
+:0px"><strong style=3D"box-sizing:border-box">Unexpected behavior you saw</=
+strong><br style=3D"box-sizing:border-box">After flashing the Intel GNR-bas=
+ed motherboard with the OpenBMC image built with version 2.14.0,=C2=A0the B=
+MC successfully starts but the server doesn&#39;t start and is stuck at LED=
+ post code 0x02.=C2=A0</p><p dir=3D"auto" style=3D"box-sizing:border-box;ma=
+rgin-top:0px;margin-bottom:16px;color:rgb(31,35,40);font-family:-apple-syst=
+em,BlinkMacSystemFont,&quot;Segoe UI&quot;,&quot;Noto Sans&quot;,Helvetica,=
+Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;f=
+ont-size:14px">I tried using an image built with the older commit but it di=
+dn&#39;t work.</p><p dir=3D"auto" style=3D"box-sizing:border-box;margin-top=
+:0px;margin-bottom:16px;color:rgb(31,35,40);font-family:-apple-system,Blink=
+MacSystemFont,&quot;Segoe UI&quot;,&quot;Noto Sans&quot;,Helvetica,Arial,sa=
+ns-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size=
+:14px"><strong style=3D"box-sizing:border-box">Expected behavior</strong><b=
+r style=3D"box-sizing:border-box">The server is supposed to start.</p><p di=
+r=3D"auto" style=3D"box-sizing:border-box;margin-top:0px;margin-bottom:16px=
+;color:rgb(31,35,40);font-family:-apple-system,BlinkMacSystemFont,&quot;Seg=
+oe UI&quot;,&quot;Noto Sans&quot;,Helvetica,Arial,sans-serif,&quot;Apple Co=
+lor Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px"><strong style=3D=
+"box-sizing:border-box">To Reproduce</strong><br style=3D"box-sizing:border=
+-box">Steps to reproduce the behavior:</p><ol dir=3D"auto" style=3D"box-siz=
+ing:border-box;padding-left:2em;margin-top:0px;margin-bottom:16px;color:rgb=
+(31,35,40);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot=
+;,&quot;Noto Sans&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&=
+quot;,&quot;Segoe UI Emoji&quot;;font-size:14px"><li style=3D"box-sizing:bo=
+rder-box">&#39;. setup evb-ast2600&#39;</li><li style=3D"box-sizing:border-=
+box;margin-top:0.25em">&#39;bitbake obmc-phosphor-image&#39;</li><li style=
+=3D"box-sizing:border-box;margin-top:0.25em">=C2=A0Flash the image to the B=
+MC</li><li style=3D"box-sizing:border-box;margin-top:0.25em">Power on the s=
+ystem</li></ol><div><font color=3D"#1f2328" face=3D"-apple-system, BlinkMac=
+SystemFont, Segoe UI, Noto Sans, Helvetica, Arial, sans-serif, Apple Color =
+Emoji, Segoe UI Emoji"><span style=3D"font-size:14px"><br></span></font></d=
+iv><div><font color=3D"#1f2328" face=3D"-apple-system, BlinkMacSystemFont, =
+Segoe UI, Noto Sans, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe=
+ UI Emoji"><span style=3D"font-size:14px">-&gt; BMC boot up, server stuck a=
+t LEPPostcode 0x02.</span></font></div><div><br></div><div><br></div><div><=
+font color=3D"#1f2328" face=3D"-apple-system, BlinkMacSystemFont, Segoe UI,=
+ Noto Sans, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji=
+"><span style=3D"font-size:14px"><br></span></font></div><div><br></div></d=
+iv>
+
+--000000000000522e4d0619fbfef3--
