@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D9D78FAED7
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 11:31:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A42C78FAF3A
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 11:48:21 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=dxHUTOg0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MMAL+3dB;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vtlj22fFPz3cWk
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:31:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vtm4G0QQhz3cWY
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:48:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=dxHUTOg0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MMAL+3dB;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=peteryin.openbmc@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vtlh254cxz3cVv
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:30:37 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=cJHyOTgW8f0pN+pCyR+4SzbNPLvRm+LG1KsjKfxQdzA=; b=dxHUTOg0VSgGtqy42SOW3p4CjT
-	xELElaKATDvZn+4zAtgTGWkoldejd08xOyaxJnIVgQrlu8tIkMwvMKusSfH5yaJYR4ZwGpBBf0FAH
-	Xx/+52i5aucCmHzD3vNYfLHSBr2DBCkYJIuir2Iwup7LzHLfVGH81x0O+yMQM31E70ybtpqcPgQON
-	KD8qUlExo9NOnB0TWy+Gtj+/o4Pz3Vr1bM4mLE8d7amME2uyD9EiHLAXZ53LXPwxzJXRx79T3XBh6
-	VSNb3uuDcU9x+wM7+4GuK80w2hl5VMkilDZjm7QoOCZ4b05S10EOXS1E6XXblqfHNMGb24x/u1VUh
-	KiaYStGQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49244)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1sEQUD-0003hA-0U;
-	Tue, 04 Jun 2024 10:29:45 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1sEQU9-0001IS-3H; Tue, 04 Jun 2024 10:29:41 +0100
-Date: Tue, 4 Jun 2024 10:29:40 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next v2 10/10] net: stmmac: Add DW XPCS specified via
- "pcs-handle" support
-Message-ID: <Zl7ehKqLlzTUQIJG@shell.armlinux.org.uk>
-References: <20240602143636.5839-1-fancer.lancer@gmail.com>
- <20240602143636.5839-11-fancer.lancer@gmail.com>
- <2lpomvxhmh7bxqhkuexukztwzjfblulobepmnc4g4us7leldgp@o3a3zgnpua2a>
- <Zl2G+gK8qpBjGpb3@shell.armlinux.org.uk>
- <equlcrx6dgdtrmrlnxxhdunpghw46sjcyn5z6m6lszyiddbag4@eo6oeotzsxef>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vtm3l156Sz3bnL
+	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:47:46 +1000 (AEST)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1f6559668e1so20565675ad.3
+        for <openbmc@lists.ozlabs.org>; Tue, 04 Jun 2024 02:47:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717494458; x=1718099258; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1X86UrlNnNHd4MbsG+HMHfkWOAkCb3vE3HB3cFKW300=;
+        b=MMAL+3dBYUBM1v878Ng+8mqYraUhb4WcGfZpiApFcIIdwpsHvUBMCtFJkualc2vy8f
+         Ha//ChsccX7NaXu4peCjUEwh0uI1VvZMLYW3IdOxU/dn/GRXbCg+WKPooQ5RM3HWafFR
+         ahxGvtn0bd5VeALywbkJMNz/jGX5GEiDev3MkHRDJfTVbblvhzQPzVqlRDA8+t89DM9x
+         iC5gvnAa+B8SGLusxfnLlcgGkwSMl99TgOmxA1IjFsqw0znYUuRNMEQ0x9F9d4456t+v
+         apjPaKsM9s9u8MYROgewBZxtukGvQK3U8XgzPPSCU0Is78vCmJrMUW/tZQuMPNtEdzZx
+         ORag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717494458; x=1718099258;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1X86UrlNnNHd4MbsG+HMHfkWOAkCb3vE3HB3cFKW300=;
+        b=Vad4WIVDbMThoibtgSECDr45l1k6m6k3omeZ7neRPy2MqaXuMdDY/LKci3RpivbhQ5
+         lKMnGGWvAIbA1gx36vgN6GXZqgRBjrGFbPfu6E3UFZ9J7QYWyFYEy3pp2TTiSuXZduI2
+         dR7I32ytiFPwubck6+q0E4HyAL0XKaFTI46QKvYSPJefUIGJvqxGHzpyrTDzdDcYDqDt
+         a1pivDhie3u28Dx3DZRqZKfhoJX8odNgmmQPnLTAyg/BzcY/WEsKqTri+cqBy0Jun9y6
+         SvQQALGvncfQaMncGJC7PXEpHvryUDKx0nDa6L0xcMGyXgpz9uUV3ERu8khrl1nIPCRy
+         kZ4A==
+X-Gm-Message-State: AOJu0YzYbaEO0nW1wKErvPAjU3dhrLD4zrlc9vUd7jvW3BkKpToeLva9
+	1YJC3JBRKOGhmgGeXR+R6v2n2RB4F3L3yNjPxqE1qI6QoRMeiIv0gQ3wxw==
+X-Google-Smtp-Source: AGHT+IFwopVvMOmoh9w4Xqw90/zx/ZRs58G/QlOyNZBuS76mO4XAbbfq27Q39ChH6wnb+lJEc7WOjA==
+X-Received: by 2002:a17:903:41c2:b0:1f6:77fc:881c with SMTP id d9443c01a7336-1f677fca02bmr64191975ad.28.1717494458473;
+        Tue, 04 Jun 2024 02:47:38 -0700 (PDT)
+Received: from peter-bmc.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6323dfe2fsm81193575ad.131.2024.06.04.02.47.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Jun 2024 02:47:38 -0700 (PDT)
+From: Peter Yin <peteryin.openbmc@gmail.com>
+To: openbmc@lists.ozlabs.org,
+	joel@jms.id.au,
+	andrew@codeconstruct.com.au,
+	patrick@stwcx.xyz
+Subject: [PATCH v2] ARM: dts: Aspeed: Add Facebook Harma DTS
+Date: Tue,  4 Jun 2024 17:45:33 +0800
+Message-Id: <20240604094533.2900564-1-peteryin.openbmc@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <equlcrx6dgdtrmrlnxxhdunpghw46sjcyn5z6m6lszyiddbag4@eo6oeotzsxef>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,38 +79,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Eric Dumazet <edumazet@google.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Sagar Cheluvegowda <quic_scheluve@quicinc.com>, linux-stm32@st-md-mailman.stormreply.com, Florian Fainelli <f.fainelli@gmail.com>, openbmc@lists.ozlabs.org, Maxime Chevallier <maxime.chevallier@bootlin.com>, Jose Abreu <joabreu@synopsys.com>, Abhishek Chauhan <quic_abchauha@quicinc.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Andrew Halaney <ahalaney@redhat.com>, Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jiawen Wu <jiawenwu@trustnetic.com>, linux-arm-kernel@lists.infradead.org, Mengyuan Lou <mengyuanlou@net-swift.com>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Vladimir Oltean <olteanv@gmail.com>, "Da
- vid S. Miller" <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: peter.yin@quantatw.com, Peter Yin <peteryin.openbmc@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jun 04, 2024 at 12:04:57PM +0300, Serge Semin wrote:
-> On Mon, Jun 03, 2024 at 10:03:54AM +0100, Russell King (Oracle) wrote:
-> > I can't think of a reasonable solution to this at the moment. One
-> > solution could be pushing this down into the platform code to deal
-> > with as an interim solution, via the new .pcs_init() method.
-> > 
-> > We could also do that with the current XPCS code, since we know that
-> > only Intel mGBE uses xpcs. This would probably allow us to get rid
-> > of the has_xpcs flag.
-> 
-> Basically you suggest to move the entire stmmac_pcs_setup() to the
-> platforms, don't you? The patch 9 of this series indeed could have
-> been converted to just moving the entire PCS-detection loop from
-> stmmac_pcs_setup() to the Intel-specific pcs_init.
+Initial introduction of Facebook Harma
+equipped with Aspeed 2600 BMC SoC.
 
-Yes, it's not like XPCS is used by more than one platform, it's only
-Intel mGBE. So I don't see why it should have a privileged position
-over any other PCS implementation that stmmac supports (there's now
-three different PCS.)
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+---
+Change log:
 
-If you don't want the code in the Intel driver, then what could be
-done is provide a core implementation that gets hooked into the
-.pcs_init() method.
+v1 -> v2
+ - Revise common to harma
 
-The same is probably true of other PCSes if they end up being shared
-across several different platforms.
+v1
+ - Create facebook common dts
+---
+ arch/arm/dts/Makefile          |  1 +
+ arch/arm/dts/ast2600-harma.dts | 66 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+)
+ create mode 100644 arch/arm/dts/ast2600-harma.dts
 
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 6f4b4d8a17..cb96c0a673 100755
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -688,6 +688,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	ast2600-evb.dtb \
+ 	ast2600-fpga.dtb \
+ 	ast2600-greatlakes.dtb \
++	ast2600-harma.dtb \
+ 	ast2600-intel.dtb \
+ 	ast2600-intel.dtb \
+ 	ast2600-ncsi.dtb \
+diff --git a/arch/arm/dts/ast2600-harma.dts b/arch/arm/dts/ast2600-harma.dts
+new file mode 100644
+index 0000000000..11d6d5d60c
+--- /dev/null
++++ b/arch/arm/dts/ast2600-harma.dts
+@@ -0,0 +1,66 @@
++// SPDX-License-Identifier: GPL-2.0+
++// Copyright (c) 2024 Meta Platforms Inc.
++/dts-v1/;
++
++#include "ast2600-u-boot.dtsi"
++
++/ {
++	model = "Facebook Harma BMC";
++	compatible = "facebook,harma-bmc", "aspeed,ast2600";
++
++	memory {
++		device_type = "memory";
++		reg = <0x80000000 0x40000000>;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++	};
++
++	aliases {
++		spi0 = &fmc;
++	};
++
++	cpus {
++		cpu@0 {
++			clock-frequency = <800000000>;
++		};
++		cpu@1 {
++			clock-frequency = <800000000>;
++		};
++	};
++};
++
++&uart5 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&sdrammc {
++	clock-frequency = <400000000>;
++};
++
++&fmc {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_fmcquad_default>;
++
++	flash@0 {
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <2>;
++		spi-rx-bus-width = <2>;
++	};
++
++	flash@1 {
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <2>;
++		spi-rx-bus-width = <2>;
++	};
++};
++
++&hace {
++	status = "okay";
++};
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+2.25.1
+
