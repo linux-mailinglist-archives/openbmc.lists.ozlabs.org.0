@@ -1,77 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C37698FAE48
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 11:05:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D9D78FAED7
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 11:31:37 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=euhW3Vgz;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=dxHUTOg0;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vtl7B6fg5z3cWV
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:05:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vtlj22fFPz3cWk
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:31:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=euhW3Vgz;
+	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=dxHUTOg0;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::236; helo=mail-lj1-x236.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vtl6c2rF5z2xQH
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:05:10 +1000 (AEST)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2ea903cd11bso56017591fa.1
-        for <openbmc@lists.ozlabs.org>; Tue, 04 Jun 2024 02:05:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717491902; x=1718096702; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ra/05RG+I2wv8KgtJlT+4wpFEIAZV3HX8GrU0T/bo6E=;
-        b=euhW3Vgz5eCSrIsKnsvGW8KXZwiWp9ikF969LKQDswkwTn6hFUwDK0W4jjoQjneHht
-         jVVch8sgjSCIg+mNjEQ3NAo8xC6A4Ouj4VR/B6CWJnaXbHM4/hL5ZQahCK6caQX+TmfB
-         u1GuiDtehOH1TbSpDF73LZQ0zXMbP+aTIB7YKWDkeyXdoM/wy7DRy/xg+3t0kMrO/bIW
-         CgXSlSej9vuhGbhtoB6qVD99ZDlNha3fFWU5KjXU//GueDHUbQodmqdwVtG7X5pXzpFs
-         fCWXb5pSFnIORZzJYqD3k4m1mrQuGk9c12mo3kdVfQgLz9Q9lSTXe3ZLQpry2joUThW6
-         KYZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717491902; x=1718096702;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ra/05RG+I2wv8KgtJlT+4wpFEIAZV3HX8GrU0T/bo6E=;
-        b=IgPz6l3zXj1IDTbHfSC6yjaFshbgJdtobXsL7jPC5y7huAlxOWd9clk5FEbfY1F3Pu
-         zmqFZqhR7uDLUacSaYpH3A27x1FSETcq71TvMyiYVBTF+QkQD/vIR2StHtHjH5diGOCb
-         Dytyy1DH8ibYJ6AzidwMd8cJUsV4d26d7q581Y8jFvDEgTRpsjWGw1NvkGD2EHQ21ceI
-         HzNTOVD8K2liuu9encbvBS5gmm9W0miD4d9u+FlgjNHWwNewT55034pLtZ+M1gleb4M3
-         n3buNmOUu7wqXK+o5BslIljrgPNOm3MKlnvSjxS4ZPDkhlcS4fyaf6Xn+bJbHuhmgtlp
-         Ckuw==
-X-Forwarded-Encrypted: i=1; AJvYcCX/GaxJiKLIkwXTCbu63DiUAwAJ52aTkgzl+rh8DHbEl9emWfExM0VBYeL8V1EMbCYMI8MJh+prahTEN2MN8P7MpqUuZXCVrT8=
-X-Gm-Message-State: AOJu0YxfpGRpwRLR5r1wuXHmX0/nIGJFZlCMIVxwLNsJ7hlnlASxPGpl
-	jYYHtXVl33yEDbGYQyFkDDOsX/0OpXO0oL85s3sdtR69NbLgGDWP
-X-Google-Smtp-Source: AGHT+IGxu8ZeKox/ETHOIGY9tQlCyxdSpOaMcwX3b4V+1NwYwnwZiIpRFm6IZBuIp5wxpDQGIUfJ0A==
-X-Received: by 2002:a2e:3c0b:0:b0:2e5:3f56:2a0e with SMTP id 38308e7fff4ca-2ea9516108emr89381841fa.24.1717491901400;
-        Tue, 04 Jun 2024 02:05:01 -0700 (PDT)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ea91bb4e24sm14583141fa.55.2024.06.04.02.04.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 02:05:00 -0700 (PDT)
-Date: Tue, 4 Jun 2024 12:04:57 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vtlh254cxz3cVv
+	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:30:37 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=cJHyOTgW8f0pN+pCyR+4SzbNPLvRm+LG1KsjKfxQdzA=; b=dxHUTOg0VSgGtqy42SOW3p4CjT
+	xELElaKATDvZn+4zAtgTGWkoldejd08xOyaxJnIVgQrlu8tIkMwvMKusSfH5yaJYR4ZwGpBBf0FAH
+	Xx/+52i5aucCmHzD3vNYfLHSBr2DBCkYJIuir2Iwup7LzHLfVGH81x0O+yMQM31E70ybtpqcPgQON
+	KD8qUlExo9NOnB0TWy+Gtj+/o4Pz3Vr1bM4mLE8d7amME2uyD9EiHLAXZ53LXPwxzJXRx79T3XBh6
+	VSNb3uuDcU9x+wM7+4GuK80w2hl5VMkilDZjm7QoOCZ4b05S10EOXS1E6XXblqfHNMGb24x/u1VUh
+	KiaYStGQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49244)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sEQUD-0003hA-0U;
+	Tue, 04 Jun 2024 10:29:45 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sEQU9-0001IS-3H; Tue, 04 Jun 2024 10:29:41 +0100
+Date: Tue, 4 Jun 2024 10:29:40 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Serge Semin <fancer.lancer@gmail.com>
 Subject: Re: [PATCH net-next v2 10/10] net: stmmac: Add DW XPCS specified via
  "pcs-handle" support
-Message-ID: <equlcrx6dgdtrmrlnxxhdunpghw46sjcyn5z6m6lszyiddbag4@eo6oeotzsxef>
+Message-ID: <Zl7ehKqLlzTUQIJG@shell.armlinux.org.uk>
 References: <20240602143636.5839-1-fancer.lancer@gmail.com>
  <20240602143636.5839-11-fancer.lancer@gmail.com>
  <2lpomvxhmh7bxqhkuexukztwzjfblulobepmnc4g4us7leldgp@o3a3zgnpua2a>
  <Zl2G+gK8qpBjGpb3@shell.armlinux.org.uk>
+ <equlcrx6dgdtrmrlnxxhdunpghw46sjcyn5z6m6lszyiddbag4@eo6oeotzsxef>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zl2G+gK8qpBjGpb3@shell.armlinux.org.uk>
+In-Reply-To: <equlcrx6dgdtrmrlnxxhdunpghw46sjcyn5z6m6lszyiddbag4@eo6oeotzsxef>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,56 +75,33 @@ Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre 
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jun 03, 2024 at 10:03:54AM +0100, Russell King (Oracle) wrote:
-> On Mon, Jun 03, 2024 at 11:54:22AM +0300, Serge Semin wrote:
-> > >  	if (priv->plat->pcs_init) {
-> > >  		ret = priv->plat->pcs_init(priv);
+On Tue, Jun 04, 2024 at 12:04:57PM +0300, Serge Semin wrote:
+> On Mon, Jun 03, 2024 at 10:03:54AM +0100, Russell King (Oracle) wrote:
+> > I can't think of a reasonable solution to this at the moment. One
+> > solution could be pushing this down into the platform code to deal
+> > with as an interim solution, via the new .pcs_init() method.
 > > 
-> > > +	} else if (fwnode_property_present(devnode, "pcs-handle")) {
-> > > +		pcsnode = fwnode_find_reference(devnode, "pcs-handle", 0);
-> > > +		xpcs = xpcs_create_fwnode(pcsnode, mode);
-> > > +		fwnode_handle_put(pcsnode);
-> > > +		ret = PTR_ERR_OR_ZERO(xpcs);
-> > 
-> > Just figured, we might wish to be a bit more portable in the
-> > "pcs-handle" property semantics implementation seeing there can be at
-> > least three different PCS attached:
-> > DW XPCS
-> > Lynx PCS
-> > Renesas RZ/N1 MII
-> > 
-> > Any suggestion of how to distinguish the passed handle? Perhaps
-> > named-property, phandle argument, by the compatible string or the
-> > node-name?
+> > We could also do that with the current XPCS code, since we know that
+> > only Intel mGBE uses xpcs. This would probably allow us to get rid
+> > of the has_xpcs flag.
 > 
+> Basically you suggest to move the entire stmmac_pcs_setup() to the
+> platforms, don't you? The patch 9 of this series indeed could have
+> been converted to just moving the entire PCS-detection loop from
+> stmmac_pcs_setup() to the Intel-specific pcs_init.
 
-> I can't think of a reasonable solution to this at the moment. One
-> solution could be pushing this down into the platform code to deal
-> with as an interim solution, via the new .pcs_init() method.
-> 
-> We could also do that with the current XPCS code, since we know that
-> only Intel mGBE uses xpcs. This would probably allow us to get rid
-> of the has_xpcs flag.
+Yes, it's not like XPCS is used by more than one platform, it's only
+Intel mGBE. So I don't see why it should have a privileged position
+over any other PCS implementation that stmmac supports (there's now
+three different PCS.)
 
-Basically you suggest to move the entire stmmac_pcs_setup() to the
-platforms, don't you? The patch 9 of this series indeed could have
-been converted to just moving the entire PCS-detection loop from
-stmmac_pcs_setup() to the Intel-specific pcs_init.
+If you don't want the code in the Intel driver, then what could be
+done is provide a core implementation that gets hooked into the
+.pcs_init() method.
 
-But IMO some default/generic code would be still useful to preserve in
-the stmmac_pcs_setup() method. When it comes to the fwnode-based
-platform we at least could be falling back to the default DW XPCS
-device registration if no plat_stmmacenet_data::pcs_init() callback
-was specified and there was the "pcs-handle" property found,
-especially seeing DW *MAC and DW XPCS are of the same vendor.
+The same is probably true of other PCSes if they end up being shared
+across several different platforms.
 
-Based on that I can convert patch 9 of this series to introducing the
-pcs_init() callback in the Intel mGBE driver, but preserve the
-semantics of the rest of the series changes.
-
--Serge(y)
-
-> 
-> -- 
-> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
