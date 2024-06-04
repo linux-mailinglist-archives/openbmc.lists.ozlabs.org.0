@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A42C78FAF3A
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 11:48:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58E248FAF72
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 12:00:02 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MMAL+3dB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=H26Mcn9U;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vtm4G0QQhz3cWY
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:48:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VtmKq2S9Qz3cWg
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2024 19:59:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MMAL+3dB;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=H26Mcn9U;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=peteryin.openbmc@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::12b; helo=mail-il1-x12b.google.com; envelope-from=peteryin.openbmc@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vtm3l156Sz3bnL
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:47:46 +1000 (AEST)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1f6559668e1so20565675ad.3
-        for <openbmc@lists.ozlabs.org>; Tue, 04 Jun 2024 02:47:46 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VtmKF2LpZz3cRB
+	for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2024 19:59:28 +1000 (AEST)
+Received: by mail-il1-x12b.google.com with SMTP id e9e14a558f8ab-3737b412ad6so23361485ab.2
+        for <openbmc@lists.ozlabs.org>; Tue, 04 Jun 2024 02:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717494458; x=1718099258; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1717495165; x=1718099965; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1X86UrlNnNHd4MbsG+HMHfkWOAkCb3vE3HB3cFKW300=;
-        b=MMAL+3dBYUBM1v878Ng+8mqYraUhb4WcGfZpiApFcIIdwpsHvUBMCtFJkualc2vy8f
-         Ha//ChsccX7NaXu4peCjUEwh0uI1VvZMLYW3IdOxU/dn/GRXbCg+WKPooQ5RM3HWafFR
-         ahxGvtn0bd5VeALywbkJMNz/jGX5GEiDev3MkHRDJfTVbblvhzQPzVqlRDA8+t89DM9x
-         iC5gvnAa+B8SGLusxfnLlcgGkwSMl99TgOmxA1IjFsqw0znYUuRNMEQ0x9F9d4456t+v
-         apjPaKsM9s9u8MYROgewBZxtukGvQK3U8XgzPPSCU0Is78vCmJrMUW/tZQuMPNtEdzZx
-         ORag==
+        bh=gHE9Ir1VdEjc7u9bKfIirM3j4gCwZ3zBpx2ksCTvaIM=;
+        b=H26Mcn9UVB1EadXU8CnPcTGYHS7e6l6R7uhR9fQQR/o6mJQcwr61+J34D03VlXFn4R
+         26BceyUjRfMqegW55USy6o0Jz7PJ9OQmNHJ1FUe26Mh2cADtf00CZuiED4kyaWZ/BO2N
+         E9WXT/kSaokMTLlvv5sm7HEihmK/gUdDXHmQm0V47xIdDZCv5KM8dqtDY9dEtEUeUfYx
+         SakLMBMzHHo3hWHuVoJNaQiZBesaag1h6fg/+QQ5GTIoxQYkOR+WAOCtokI00BFfODEo
+         MfcvL41/payabjw27NvlydA1jpUNTH3SzUyujdB6fChcjsg4NMETTExCuq0lq38jYMb0
+         633Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717494458; x=1718099258;
+        d=1e100.net; s=20230601; t=1717495165; x=1718099965;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1X86UrlNnNHd4MbsG+HMHfkWOAkCb3vE3HB3cFKW300=;
-        b=Vad4WIVDbMThoibtgSECDr45l1k6m6k3omeZ7neRPy2MqaXuMdDY/LKci3RpivbhQ5
-         lKMnGGWvAIbA1gx36vgN6GXZqgRBjrGFbPfu6E3UFZ9J7QYWyFYEy3pp2TTiSuXZduI2
-         dR7I32ytiFPwubck6+q0E4HyAL0XKaFTI46QKvYSPJefUIGJvqxGHzpyrTDzdDcYDqDt
-         a1pivDhie3u28Dx3DZRqZKfhoJX8odNgmmQPnLTAyg/BzcY/WEsKqTri+cqBy0Jun9y6
-         SvQQALGvncfQaMncGJC7PXEpHvryUDKx0nDa6L0xcMGyXgpz9uUV3ERu8khrl1nIPCRy
-         kZ4A==
-X-Gm-Message-State: AOJu0YzYbaEO0nW1wKErvPAjU3dhrLD4zrlc9vUd7jvW3BkKpToeLva9
-	1YJC3JBRKOGhmgGeXR+R6v2n2RB4F3L3yNjPxqE1qI6QoRMeiIv0gQ3wxw==
-X-Google-Smtp-Source: AGHT+IFwopVvMOmoh9w4Xqw90/zx/ZRs58G/QlOyNZBuS76mO4XAbbfq27Q39ChH6wnb+lJEc7WOjA==
-X-Received: by 2002:a17:903:41c2:b0:1f6:77fc:881c with SMTP id d9443c01a7336-1f677fca02bmr64191975ad.28.1717494458473;
-        Tue, 04 Jun 2024 02:47:38 -0700 (PDT)
+        bh=gHE9Ir1VdEjc7u9bKfIirM3j4gCwZ3zBpx2ksCTvaIM=;
+        b=OiWcF5WdcvFYk7oi9cTe7z/zbpDbVHZ/KLTTWYGR8U28/ZOSQIDVOjwsGmlLkbb4rv
+         CwmSu3H/Msea2UcgPPsadqhODTCeYZaHAlCmmsseouds/5wguqWdLQ57UWfBFiEl6jHs
+         1shD0on7zfPSVxYb38tPUwPZLR8XkxWnFNtV9phF2ChLStlOzb3QExIaiByvQY4eLM1v
+         KiW08nCMeKqD2OYPKyOA9LNvGf/LEBwYs8VKW34M8mXFEieNtl+LHkeoC8VVOd9ILTOM
+         /ywjGT99mjmbpo+tGXU6rWDBaLsJE7vvEM6DT+fkdyjeyUekYUbIDcp7E9gDk1klyd5W
+         rqyQ==
+X-Gm-Message-State: AOJu0YwdP2KUH9/TcekOSRiPDc3HrpCLvrbKFHLzrDEFDFOKzHoJYP2g
+	O20bRZv4BbVx9xT1TxVeR/unL/zfIOv8CJeD0o6ZlPcikQ3lUMsalH0u9A==
+X-Google-Smtp-Source: AGHT+IFV3F7nedbx8Ht3fMSYHJqGOZuJJOo9s7bWEMwTzr5Up/IE716pthgEXVUr5Nmd+CPNPsRh7g==
+X-Received: by 2002:a05:6e02:1b03:b0:374:70ed:d765 with SMTP id e9e14a558f8ab-3748b96de39mr135238395ab.3.1717495164864;
+        Tue, 04 Jun 2024 02:59:24 -0700 (PDT)
 Received: from peter-bmc.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6323dfe2fsm81193575ad.131.2024.06.04.02.47.36
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-6c353f0b2c8sm6738558a12.2.2024.06.04.02.59.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Jun 2024 02:47:38 -0700 (PDT)
+        Tue, 04 Jun 2024 02:59:24 -0700 (PDT)
 From: Peter Yin <peteryin.openbmc@gmail.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au,
 	andrew@codeconstruct.com.au,
 	patrick@stwcx.xyz
-Subject: [PATCH v2] ARM: dts: Aspeed: Add Facebook Harma DTS
-Date: Tue,  4 Jun 2024 17:45:33 +0800
-Message-Id: <20240604094533.2900564-1-peteryin.openbmc@gmail.com>
+Subject: [PATCH v1] ARM: dts: Aspeed: Add Facebook Minerva DTS
+Date: Tue,  4 Jun 2024 17:57:20 +0800
+Message-Id: <20240604095720.2902647-1-peteryin.openbmc@gmail.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -79,45 +79,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: peter.yin@quantatw.com, Peter Yin <peteryin.openbmc@gmail.com>
+Cc: Peter Yin <peteryin.openbmc@gmail.com>, peter.yin@quantatw.com, yang.chen@quantatw.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Initial introduction of Facebook Harma
+Initial introduction of Facebook Minerva
 equipped with Aspeed 2600 BMC SoC.
 
 Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
 ---
-Change log:
-
-v1 -> v2
- - Revise common to harma
-
-v1
- - Create facebook common dts
----
- arch/arm/dts/Makefile          |  1 +
- arch/arm/dts/ast2600-harma.dts | 66 ++++++++++++++++++++++++++++++++++
+ arch/arm/dts/Makefile            |  1 +
+ arch/arm/dts/ast2600-minerva.dts | 66 ++++++++++++++++++++++++++++++++
  2 files changed, 67 insertions(+)
- create mode 100644 arch/arm/dts/ast2600-harma.dts
+ create mode 100644 arch/arm/dts/ast2600-minerva.dts
 
 diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 6f4b4d8a17..cb96c0a673 100755
+index 6f4b4d8a17..e1773eee97 100755
 --- a/arch/arm/dts/Makefile
 +++ b/arch/arm/dts/Makefile
-@@ -688,6 +688,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-evb.dtb \
- 	ast2600-fpga.dtb \
+@@ -690,6 +690,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
  	ast2600-greatlakes.dtb \
-+	ast2600-harma.dtb \
  	ast2600-intel.dtb \
  	ast2600-intel.dtb \
++	ast2600-minerva.dtb \
  	ast2600-ncsi.dtb \
-diff --git a/arch/arm/dts/ast2600-harma.dts b/arch/arm/dts/ast2600-harma.dts
+ 	ast2600-p10bmc.dtb \
+ 	ast2600-pfr.dtb \
+diff --git a/arch/arm/dts/ast2600-minerva.dts b/arch/arm/dts/ast2600-minerva.dts
 new file mode 100644
-index 0000000000..11d6d5d60c
+index 0000000000..4f54cf7b7c
 --- /dev/null
-+++ b/arch/arm/dts/ast2600-harma.dts
++++ b/arch/arm/dts/ast2600-minerva.dts
 @@ -0,0 +1,66 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +// Copyright (c) 2024 Meta Platforms Inc.
@@ -126,8 +118,8 @@ index 0000000000..11d6d5d60c
 +#include "ast2600-u-boot.dtsi"
 +
 +/ {
-+	model = "Facebook Harma BMC";
-+	compatible = "facebook,harma-bmc", "aspeed,ast2600";
++	model = "Facebook Minerva BMC";
++	compatible = "facebook,minerva-bmc", "aspeed,ast2600";
 +
 +	memory {
 +		device_type = "memory";
