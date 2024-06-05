@@ -2,72 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91E948FD059
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 16:03:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 34CB48FD451
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 19:49:08 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=E4zndmvU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=q6XGPEKJ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VvTgl6SJPz30Vl
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 00:02:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VvZhc0Gc3z3brC
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 03:49:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=E4zndmvU;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=q6XGPEKJ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b; helo=mail-pl1-x62b.google.com; envelope-from=peteryin.openbmc@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=horms@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VvTgB1dSHz30V1
-	for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2024 00:02:28 +1000 (AEST)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1f480624d10so19804435ad.1
-        for <openbmc@lists.ozlabs.org>; Wed, 05 Jun 2024 07:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717596145; x=1718200945; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gHE9Ir1VdEjc7u9bKfIirM3j4gCwZ3zBpx2ksCTvaIM=;
-        b=E4zndmvUCQq2+yuZ8C6j3SnftqZXgO3bCWyiZKaUZXSeti5Q21CdvH/7cwr0FjFi3u
-         4J7qkwVUwUrt5GLwf/atuv8XP4st8azA7lc1OxxQlRPWdx47amK0HXpV5/uIp51VEGuZ
-         GUfViBidkywy8fIS2WjyaUTkAHqaDOUVoPUNxrJsJcOn/2ZYthpMgUn94ewtDcK1f9nk
-         0f18UcWH086mEIX2xQFewQdVkReAl4T/CajR+ZLRphDmwRp/X65YN2+JF9FjMoDqVbvY
-         c+juLCGnjeyQjtqZfqijOxKKZnghINFDnYQ76sed2ZFBlsfBEnxlXtFC7Xg6wrJx0mH2
-         7FnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717596145; x=1718200945;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gHE9Ir1VdEjc7u9bKfIirM3j4gCwZ3zBpx2ksCTvaIM=;
-        b=LHII0RQsedfvff/h+cDkfNKaSfJLDmq9YNl+IQgg4WYszq5WystcLGvsYdZnGUrXl8
-         NgndnxGqOUeYOSRBGnr7Bj98dHl8JcbuEqP4llgTqJcq/HF9UT1ghvAcKvpEBIqcHanR
-         5jPubMxGR2jj0BR6VDgz53QPwF/ELiWlklheQykh80vB1BJejCgXD2OBDnqqqYpC6fWE
-         l9aWtFKxndphGnBjKCH+ctNdma4m251egZX2u51BYhZa9ZHbC5lO1YMmEa1r3DmjuImp
-         rCNDU6s7lvl5tSvtVLWDFMMxH7RrDMM0j6YBsOwJnu+CjTIUzMZXfnq14uR49lbTloAH
-         55hQ==
-X-Gm-Message-State: AOJu0YwY+tubzlkUUbN+LqKrdOY9lreIvwfsHW+2tadi8swgqREeRIz5
-	t5s88tY8Gz4MalGSsWnEGu9FYZ4175x0mWXhYYZZW0i9WhFW8ldMRls9iQ==
-X-Google-Smtp-Source: AGHT+IFwpluK+/T1M7XLh3G/S1cmM3yhMSISMgEgYZk93Mu6JNgizQ0XfIboupJCQPMwM9tDgPRkCw==
-X-Received: by 2002:a17:902:db0a:b0:1f6:7ee8:8942 with SMTP id d9443c01a7336-1f6a5a290ffmr34786455ad.40.1717596144583;
-        Wed, 05 Jun 2024 07:02:24 -0700 (PDT)
-Received: from peter-bmc.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f6677bebf5sm67567645ad.105.2024.06.05.07.02.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 07:02:24 -0700 (PDT)
-From: Peter Yin <peteryin.openbmc@gmail.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au,
-	andrew@codeconstruct.com.au,
-	patrick@stwcx.xyz
-Subject: [PATCH u-boot, v2019.04-aspeed-openbmc v1] ARM: dts: Aspeed: Add Facebook Minerva DTS
-Date: Wed,  5 Jun 2024 22:00:19 +0800
-Message-Id: <20240605140019.3120566-1-peteryin.openbmc@gmail.com>
-X-Mailer: git-send-email 2.25.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VvZh30gPnz30St
+	for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2024 03:48:35 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id 31FEACE1838;
+	Wed,  5 Jun 2024 17:48:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E54DC2BD11;
+	Wed,  5 Jun 2024 17:48:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717609705;
+	bh=enupfRHuA/sUxcPvYiVVg7oNNALRyFrXlotRKy7IvuM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q6XGPEKJV+EC0QMabsGEV9vd0/gyTkTUfF+TAEXj9Jy82MgO8X2lzIXWqIRAyBC86
+	 p4XFyPX0I/WfDCqM65cOTJJ9NtKpl/hvtdUdsUpBcVVWkFc3jG6Q8rAEkBNStkNJs5
+	 EeMBLlqRH+zZaZrNfQwk35LbS5N95a8bjDH9lzLQvjv7h1K8dVURxuxRCT3CuS5mlI
+	 wnRXZtwm4GPtEcZMOi8f5BwtzvNtu9FnvxuB9E0f0+/V3OOEXYLQmrnZIKL2mBm75A
+	 Cuee7zNrJx1tzlb/W2d4QWFOgOXgEjONB2UVOHmux2fi2SBrWeUwLfey2ouK6lGMGA
+	 PlcBGDPnUqH0w==
+Date: Wed, 5 Jun 2024 18:48:17 +0100
+From: Simon Horman <horms@kernel.org>
+To: Serge Semin <fancer.lancer@gmail.com>
+Subject: Re: [PATCH net-next v2 07/10] net: pcs: xpcs: Add Synopsys DW xPCS
+ platform device driver
+Message-ID: <20240605174817.GQ791188@kernel.org>
+References: <20240602143636.5839-1-fancer.lancer@gmail.com>
+ <20240602143636.5839-8-fancer.lancer@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240602143636.5839-8-fancer.lancer@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,104 +61,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Yin <peteryin.openbmc@gmail.com>, yang.chen@quantatw.com
+Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Eric Dumazet <edumazet@google.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Sagar Cheluvegowda <quic_scheluve@quicinc.com>, Florian Fainelli <f.fainelli@gmail.com>, openbmc@lists.ozlabs.org, Russell King <linux@armlinux.org.uk>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Jose Abreu <joabreu@synopsys.com>, Abhishek Chauhan <quic_abchauha@quicinc.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Andrew Halaney <ahalaney@redhat.com>, Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jiawen Wu <jiawenwu@trustnetic.com>, Mengyuan Lou <mengyuanlou@net-swift.com>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Vladimir Oltean <olteanv@gmail.com>, "David S. Miller" <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Initial introduction of Facebook Minerva
-equipped with Aspeed 2600 BMC SoC.
+On Sun, Jun 02, 2024 at 05:36:21PM +0300, Serge Semin wrote:
 
-Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
----
- arch/arm/dts/Makefile            |  1 +
- arch/arm/dts/ast2600-minerva.dts | 66 ++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+)
- create mode 100644 arch/arm/dts/ast2600-minerva.dts
+...
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 6f4b4d8a17..e1773eee97 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -690,6 +690,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-greatlakes.dtb \
- 	ast2600-intel.dtb \
- 	ast2600-intel.dtb \
-+	ast2600-minerva.dtb \
- 	ast2600-ncsi.dtb \
- 	ast2600-p10bmc.dtb \
- 	ast2600-pfr.dtb \
-diff --git a/arch/arm/dts/ast2600-minerva.dts b/arch/arm/dts/ast2600-minerva.dts
-new file mode 100644
-index 0000000000..4f54cf7b7c
---- /dev/null
-+++ b/arch/arm/dts/ast2600-minerva.dts
-@@ -0,0 +1,66 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright (c) 2024 Meta Platforms Inc.
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+	model = "Facebook Minerva BMC";
-+	compatible = "facebook,minerva-bmc", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		spi0 = &fmc;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <800000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <800000000>;
-+		};
-+	};
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@1 {
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+};
-+
-+&hace {
-+	status = "okay";
-+};
--- 
-2.25.1
+> diff --git a/drivers/net/pcs/pcs-xpcs-plat.c b/drivers/net/pcs/pcs-xpcs-plat.c
 
+...
+
+> +const struct dev_pm_ops xpcs_plat_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(xpcs_plat_pm_runtime_suspend,
+> +			   xpcs_plat_pm_runtime_resume,
+> +			   NULL)
+> +};
+
+nit: xpcs_plat_pm_ops only seems to be used in this file.
+     If so it should probably be static.
+
+     Flagged by Sparse.
+
+...
+
+> +static struct platform_driver xpcs_plat_driver = {
+> +	.probe = xpcs_plat_probe,
+> +	.driver = {
+> +		.name = "dwxpcs",
+> +		.pm = &xpcs_plat_pm_ops,
+> +		.of_match_table = xpcs_of_ids,
+> +	},
+> +};
+> +module_platform_driver(xpcs_plat_driver);
+
+...
