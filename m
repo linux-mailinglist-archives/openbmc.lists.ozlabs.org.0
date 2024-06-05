@@ -2,49 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E6308FC0E8
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 02:45:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 272128FC0EE
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 02:47:49 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=GidK7bLO;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=kP8qrqGF;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vv7zg3j7Dz3dDn
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 10:45:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vv82B23Blz3bqP
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2024 10:47:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=GidK7bLO;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=kP8qrqGF;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vv7z511lPz3bqB
-	for <openbmc@lists.ozlabs.org>; Wed,  5 Jun 2024 10:45:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vv81b4Fjbz2xb2;
+	Wed,  5 Jun 2024 10:47:15 +1000 (AEST)
 Received: from [192.168.68.112] (ppp118-210-171-248.adl-adc-lon-bras34.tpg.internode.on.net [118.210.171.248])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 0A2D62009F;
-	Wed,  5 Jun 2024 08:44:59 +0800 (AWST)
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id DBD032009F;
+	Wed,  5 Jun 2024 08:47:13 +0800 (AWST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1717548302;
-	bh=oZBc4p7G+vlNUP7gz3/uXLlfQ8pBY3a6rPhlcPdPikI=;
+	d=codeconstruct.com.au; s=2022a; t=1717548435;
+	bh=ANXb6zc3UuSOyX6FxuEvTkWNM9eC6npStLm/IruWE68=;
 	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=GidK7bLOM2RKqCOwHM2pnGspYQCEx8ExH3tOkMg9EbkmKlGOsz6iKC4o/8fFNfc22
-	 O1X/JSmO5N+NlwzWgg2PgVdOsCx0fOwXWFU0GgQliaGleOeCw/HgmbzXFREbzOFLdD
-	 /LRxM7JBvznWjCp7zduq/upO9H8EmTajVlGGPiEXt4n31ikceXEDFWh4YGrX/o1hFM
-	 Xv7gvEvqRVo0FLLLrKzsjY+NCdugg/VrE4EsExhtwwsTLx0OVOP2yj17ylPM9rVGm6
-	 pXr3dWmmCdQHy8S9Iqd0v9MpXtoaM8rr9tGEdkvZ2nlOLbgaRBvDf5SbHz53J+vEF9
-	 BYKabWtUgHl5Q==
-Message-ID: <3a486664a9985e749a4fb68a1801d6af2c92af5c.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v1] ARM: dts: Aspeed: Add Facebook Minerva DTS
+	b=kP8qrqGFDNRLThPf7QY2mccgHy7qaTo0F9H6onVvhw3Bll10+LvUt/xZHTaGwhRFd
+	 FkCyVVh2EZ4k/nTG0FgLSkZhXqMDmNP81hUXuZWMN9qgiEL1724OhCIioAvYGBf5tJ
+	 ol61Gx0duyW5kbktYsE/UQ2jdzS0KCKAJuFU9UyjqrBavlAV8K/CPUlkHCAo7zlG8L
+	 DheyAK0GqUPhpqqQ0cO0BgVW7khE0vzcO2AEMiy4n4vrQiOvTA4TBaneVkkUlMJ8nc
+	 nLriEZvSjEeUtCCUvFf/TWjsI4F3aXkYfNCOFlhve96arT+AcfBZJZkgS4PUKrAOGi
+	 tOtafZ0wA/TqQ==
+Message-ID: <0908995dfd2181e687181bd1b075c4cb27624e94.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: aspeed: Use block syntax for
+ function and groups
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Patrick Williams <patrick@stwcx.xyz>, Peter Yin
- <peteryin.openbmc@gmail.com>
-Date: Wed, 05 Jun 2024 10:14:57 +0930
-In-Reply-To: <Zl91dAo6NXDSQA3E@heinlein.vulture-banana.ts.net>
-References: <20240604095720.2902647-1-peteryin.openbmc@gmail.com>
-	 <Zl91dAo6NXDSQA3E@heinlein.vulture-banana.ts.net>
+To: Rob Herring <robh@kernel.org>
+Date: Wed, 05 Jun 2024 10:17:13 +0930
+In-Reply-To: <20240604192755.GA1065421-robh@kernel.org>
+References: 	<20240531-dt-warnings-gpio-ast2600-pinctrl-funcs-groups-v1-0-a6fe2281a1b8@codeconstruct.com.au>
+	 <20240531-dt-warnings-gpio-ast2600-pinctrl-funcs-groups-v1-1-a6fe2281a1b8@codeconstruct.com.au>
+	 <20240604192755.GA1065421-robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -60,26 +61,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, joel@jms.id.au, peter.yin@quantatw.com, yang.chen@quantatw.com
+Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Linus Walleij <linus.walleij@linaro.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2024-06-04 at 15:13 -0500, Patrick Williams wrote:
-> On Tue, Jun 04, 2024 at 05:57:20PM +0800, Peter Yin wrote:
-> > Initial introduction of Facebook Minerva
-> > equipped with Aspeed 2600 BMC SoC.
-> >=20
-> > Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
-> > ---
-> >  arch/arm/dts/Makefile            |  1 +
-> >  arch/arm/dts/ast2600-minerva.dts | 66 ++++++++++++++++++++++++++++++++
-> >  2 files changed, 67 insertions(+)
-> >  create mode 100644 arch/arm/dts/ast2600-minerva.dts
+On Tue, 2024-06-04 at 14:27 -0500, Rob Herring wrote:
+> On Fri, May 31, 2024 at 12:32:47PM +0930, Andrew Jeffery wrote:
+> > The expansion makes the documents a lot longer, but it's easier to
+> > review changes to functions and groups when we're not having to deal
+> > with line wrapping.
 >=20
-> Is this targeting u-boot?
->=20
+> Do you really expect to be updating this frequently? I would leave it=20
+> as-is, but whatever you decide.
 
-(if so, please add 'u-boot' via `--subject-prefix` for downstream
-openbmc patches, to help us route them to the expected repo)
+I don't expect to be updating it frequently. However it's happened
+occasionally in the past and the diff chaos irks me. So I prefer we
+explode it.
+
+>=20
+> > Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+> > ---
+>=20
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+
+Thanks.
 
 Andrew
