@@ -1,76 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90CFF8FE3FE
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 12:15:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02EC18FE434
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 12:24:54 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BxuDI76m;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aoFevruX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vw0Zk56x3z3dRZ
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 20:15:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Vw0nb0MpCz3dLd
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 20:24:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BxuDI76m;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aoFevruX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vw0ZC6THtz3d4D
-	for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2024 20:14:59 +1000 (AEST)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-52b9af7a01bso947983e87.0
-        for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2024 03:15:00 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vw0n32v1Nz3d89
+	for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2024 20:24:22 +1000 (AEST)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-52b82d57963so939108e87.2
+        for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2024 03:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1717668896; x=1718273696; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1717669459; x=1718274259; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=THykdbgFjTOi08AMjXYKGq55B3BCRHgQPMDRbnhqys4=;
-        b=BxuDI76mBDtXr7pFZpJiChqbY2YhBrqnY90gJVxqLUJnZHKCJjDagc4J3Ncqh8CQFe
-         LE2SYWNREp7S/Hx/xZNa4a0lkEkGgEGQHx8tbukzov9DiDmsc1AgB5XGnusoGsVlQZvr
-         clRDebqA5ilajHh8lQ5WToZ5m46EC7oEsi9VTOCfbnjQtkkUbFeHzwhCzYyIPDMOKMXK
-         Ht0zoEalUA6vl7AL5Jvb/fVNsx1L+mzhDsTC+lPCguBwCrVvvpAdcJHwp9R2QlgmSaho
-         zgiDU7xZ5YRfdtMruLdfVvIYhcQpFdMcxrXWWtsoVLlJ2EfAhzu3ZrWQwT++9dy1kvnH
-         k7xQ==
+        bh=f4WnoT1fe4t4g6laaxr/UqBSAP7voCUP3G6EsC2u08s=;
+        b=aoFevruXrXLFSr+auvvS8e38d0umO00GRGl6fXH9geFDvZIX6VXzZybLfJCZs+iALX
+         HlxbY440jlgn42HmKx3iUEVTqfTYFbEJrfwnuKPJ0QayEMxlMWQ92dFpjGivhFL/1esL
+         vRSiAx1tKNxG6pmcu13OSQPTHeuHEKHA2y/+hVWHSwMzOTcHm7U7/FWrUug+o3rDMqaC
+         AxrEe4iO3ejJ4P09rBZjTXtIjsV/YRggdoE557390SrPigaGvfB+j0r7uUeeJsPUSqJq
+         RpDmkMIst9QZe+OvJ221aOYWzL6U/qQcWCYvrvaSdOlfqEzMtjo0wRlgHVRExGlAFWuT
+         M9rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717668896; x=1718273696;
+        d=1e100.net; s=20230601; t=1717669459; x=1718274259;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=THykdbgFjTOi08AMjXYKGq55B3BCRHgQPMDRbnhqys4=;
-        b=qvUNmS+Qmq78LmpstUEf8GuenQ7Az2VwZTzJnPoyIiQX4sDaAOZ9NSFFdJ8pzS3+Ze
-         tcOd0fsQGIb2hLwp/4pvmL1lklZ2umTswQDyKetCYvRPJ1NGJae90RhjbCO1OX0DxS+6
-         dUBVYHmZvd3kjHvzsNUrpRd3ScAl/3hTKEk8fJb2r7cAteLKuPmzIr1R13gJ4v1xVD7/
-         61QJZHs12MLTxTiMai2QnqRL9MQ1sVZwWbWc/3kk24JRBKx0LN1PjshxG2w7f7fvET7t
-         eb+d7kq1svR4VwAGW02SSsGzHzWjn+3HimnFo5KJNPfdQFSB1BiHwm/3jxYeBCuuuJ2C
-         lPDg==
-X-Forwarded-Encrypted: i=1; AJvYcCXWK8OMAh9+5JVE8wycuj0Dx0Gjz8tDQogabQns96YHMrpBgQKzhvQ8VmXpN4dt441mfCdkLj6ZlZ8dFfQafw/AlD/1aNo3XVY=
-X-Gm-Message-State: AOJu0YwgsTnM9iR/4FVLOLWWSsbjPlisR4QhgZsCsltrYUsQAUQx/bzl
-	3IP2w6umSHh1otDn4WhcWA2KYgYNo9PLvEuX7W2yn2wIEInbM4Oa
-X-Google-Smtp-Source: AGHT+IHPfZiIymZUMudH+8iVFccu+amSG59W72z8/IwmTP98F15xmn+i0fwWfRZbTb88pA9/hEqgWg==
-X-Received: by 2002:ac2:4282:0:b0:523:8c7a:5f6 with SMTP id 2adb3069b0e04-52bab4f5d39mr2790961e87.51.1717668896147;
-        Thu, 06 Jun 2024 03:14:56 -0700 (PDT)
+        bh=f4WnoT1fe4t4g6laaxr/UqBSAP7voCUP3G6EsC2u08s=;
+        b=BfEWRORGvMqfIldi17Ny4IqttcJ70znpN0mgae0SHqTAH9MBEk0lmiKGmOe48gDPmU
+         F+a8sTB3OJ3WLJMBnSZCMzhoXe1SThGF+GOIUPRgI4BZfT8nr5lUXMotnGK2E+WcJ+1Q
+         aeyyi6fELLjFoscNt4rq6+bCWUBhUJlntY8orCK7KuqCUkhA7QnlwdNoQtiMSRa9cw0N
+         /SIypW6MiXV5vwf3x2aqAdhB5FPn7+D4o5XLXfV/s5vNrjV7j8F/pf1/+QM3IZpQjO48
+         JgzVh2kpicc7O36Lke4Fo9csXmmN5lwIOJrH9AUphzohz03IDLveIRi9wO58FaSW6/Zp
+         3jBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKlTlZQe9ylqhlmSZiCMmWwkjGtUg7NmCBj8mYeosyWdpzPJlhsFmeUjNiIot0yBMFWTfEPVwXHQhnGsyLvFYCHT5OaYMgYWA=
+X-Gm-Message-State: AOJu0Yy9V7fal+CdYGrClaapXrT0eG0Ph5H5nWsSyh7lNc/cq4Q2grAM
+	6K3xqbLmD25X9TEUTijur3MrQt7LN7m1lWXutYwRdFpGyQLCfvwh
+X-Google-Smtp-Source: AGHT+IGD1+RWYMQNl7g5DBJNyh/Rk7DFAJoyKbW8svrOWxknhhhPq+wBqdzF9X+G+AnjMD2oSbecGw==
+X-Received: by 2002:a05:6512:108a:b0:52b:c9a:148 with SMTP id 2adb3069b0e04-52bab4b7c95mr3439377e87.14.1717669458562;
+        Thu, 06 Jun 2024 03:24:18 -0700 (PDT)
 Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb43327f1sm150215e87.226.2024.06.06.03.14.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52bb41e2054sm152799e87.49.2024.06.06.03.24.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jun 2024 03:14:55 -0700 (PDT)
-Date: Thu, 6 Jun 2024 13:14:53 +0300
+        Thu, 06 Jun 2024 03:24:18 -0700 (PDT)
+Date: Thu, 6 Jun 2024 13:24:14 +0300
 From: Serge Semin <fancer.lancer@gmail.com>
 To: Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH net-next v2 07/10] net: pcs: xpcs: Add Synopsys DW xPCS
- platform device driver
-Message-ID: <uhswmnjhbu333kz5z4mbjtoao6grftfsn7aj4mcizmqgukn6be@6wc65fpsgkzu>
+Subject: Re: [PATCH net-next v2 08/10] net: pcs: xpcs: Add fwnode-based
+ descriptor creation method
+Message-ID: <7bcu77pbw3fsgcua2owbjqgjwuxagplexltgkilozmeihg6574@6m5iizhtj2de>
 References: <20240602143636.5839-1-fancer.lancer@gmail.com>
- <20240602143636.5839-8-fancer.lancer@gmail.com>
- <20240605174817.GQ791188@kernel.org>
+ <20240602143636.5839-9-fancer.lancer@gmail.com>
+ <20240605174920.GR791188@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240605174817.GQ791188@kernel.org>
+In-Reply-To: <20240605174920.GR791188@kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,42 +88,90 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Simon
 
-On Wed, Jun 05, 2024 at 06:48:17PM +0100, Simon Horman wrote:
-> On Sun, Jun 02, 2024 at 05:36:21PM +0300, Serge Semin wrote:
+On Wed, Jun 05, 2024 at 06:49:20PM +0100, Simon Horman wrote:
+> On Sun, Jun 02, 2024 at 05:36:22PM +0300, Serge Semin wrote:
+> > It's now possible to have the DW XPCS device defined as a standard
+> > platform device for instance in the platform DT-file. Although that
+> > functionality is useless unless there is a way to have the device found by
+> > the client drivers (STMMAC/DW *MAC, NXP SJA1105 Eth Switch, etc). Provide
+> > such ability by means of the xpcs_create_fwnode() method. It needs to be
+> > called with the device DW XPCS fwnode instance passed. That node will be
+> > then used to find the MDIO-device instance in order to create the DW XPCS
+> > descriptor.
+> > 
+> > Note the method semantics and name is similar to what has been recently
+> > introduced in the Lynx PCS driver.
+> > 
+> > Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> 
+> Hi Serge,
+> 
+> Some minor nits from my side flagged by kernel-doc -none -Wall
 > 
 > ...
 > 
-> > diff --git a/drivers/net/pcs/pcs-xpcs-plat.c b/drivers/net/pcs/pcs-xpcs-plat.c
+> > diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
 > 
 > ...
 > 
-> > +const struct dev_pm_ops xpcs_plat_pm_ops = {
-> > +	SET_RUNTIME_PM_OPS(xpcs_plat_pm_runtime_suspend,
-> > +			   xpcs_plat_pm_runtime_resume,
-> > +			   NULL)
-> > +};
+> > @@ -1505,6 +1507,16 @@ static struct dw_xpcs *xpcs_create(struct mdio_device *mdiodev,
+> >  	return ERR_PTR(ret);
+> >  }
+> >  
+> > +/**
+> > + * xpcs_create_mdiodev() - create a DW xPCS instance with the MDIO @addr
+> > + * @bus: pointer to the MDIO-bus descriptor for the device to be looked at
+> > + * @addr: device MDIO-bus ID
+> > + * @requested PHY interface
 > 
+> An entry for @interface should go here.
 
-> nit: xpcs_plat_pm_ops only seems to be used in this file.
->      If so it should probably be static.
+Right.
+
 > 
->      Flagged by Sparse.
+> > + *
+> > + * If successful, returns a pointer to the DW XPCS handle. Otherwise returns
+> > + * -ENODEV if device couldn't be found on the bus, other negative errno related
+> > + * to the data allocation and MDIO-bus communications.
+> 
+> Please consider including this information as a Return: section of the
+> Kernel doc. Likewise for xpcs_create_fwnode().
 
-Right. I'll convert it to being static. Thanks.
+Sure.
+
+> 
+> > + */
+> >  struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
+> >  				    phy_interface_t interface)
+> >  {
+> > @@ -1529,6 +1541,44 @@ struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
+> >  }
+> >  EXPORT_SYMBOL_GPL(xpcs_create_mdiodev);
+> >  
+> > +/**
+> > + * xpcs_create_fwnode() - Create a DW xPCS instance from @fwnode
+> > + * @node: fwnode handle poining to the DW XPCS device
+> 
+> s/@node/@fwnode/
+
+Holy mother, so many typos in the kdoc part. I should have been more
+attentive. I'll fix all of them in v2. Thanks.
+
+* Special thanks for mentioning the scripts/kernel-doc I'll be using
+it from now on.
 
 -Serge(y)
 
 > 
-> ...
-> 
-> > +static struct platform_driver xpcs_plat_driver = {
-> > +	.probe = xpcs_plat_probe,
-> > +	.driver = {
-> > +		.name = "dwxpcs",
-> > +		.pm = &xpcs_plat_pm_ops,
-> > +		.of_match_table = xpcs_of_ids,
-> > +	},
-> > +};
-> > +module_platform_driver(xpcs_plat_driver);
+> > + * @interface: requested PHY interface
+> > + *
+> > + * If successful, returns a pointer to the DW XPCS handle. Otherwise returns
+> > + * -ENODEV if the fwnode is marked unavailable or device couldn't be found on
+> > + * the bus, -EPROBE_DEFER if the respective MDIO-device instance couldn't be
+> > + * found, other negative errno related to the data allocations and MDIO-bus
+> > + * communications.
+> > + */
+> > +struct dw_xpcs *xpcs_create_fwnode(struct fwnode_handle *fwnode,
+> > +				   phy_interface_t interface)
 > 
 > ...
