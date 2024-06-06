@@ -1,137 +1,161 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E54B98FF58E
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2024 21:58:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 448598FF800
+	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2024 01:15:28 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=Zg0/zyGO;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=Ry7qtGDX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VwFWW0Pmmz3fs7
-	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2024 05:58:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VwKtf21dCz3fsj
+	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2024 09:15:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=smartm.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=equinix.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=Zg0/zyGO;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=Ry7qtGDX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=permerror (SPF Permanent Error: Void lookup limit of 2 exceeded) smtp.mailfrom=smartm.com (client-ip=2a01:111:f403:2418::720; helo=nam12-bn8-obe.outbound.protection.outlook.com; envelope-from=rajesh.ananth@smartm.com; receiver=lists.ozlabs.org)
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on20720.outbound.protection.outlook.com [IPv6:2a01:111:f403:2418::720])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.159.192; helo=mx0b-00268f01.pphosted.com; envelope-from=prvs=3887686b9c=zweiss@equinix.com; receiver=lists.ozlabs.org)
+Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com [148.163.159.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VwFVy0xSWz3dXW
-	for <openbmc@lists.ozlabs.org>; Fri,  7 Jun 2024 05:57:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VwKt05jvcz3dJn
+	for <openbmc@lists.ozlabs.org>; Fri,  7 Jun 2024 09:14:47 +1000 (AEST)
+Received: from pps.filterd (m0165121.ppops.net [127.0.0.1])
+	by mx0b-00268f01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 456NAuut002007;
+	Thu, 6 Jun 2024 23:14:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=cc : content-id :
+ content-transfer-encoding : content-type : date : from : in-reply-to :
+ message-id : mime-version : references : subject : to; s=pps202002;
+ bh=f8T5c+V4WXDR8QEEpq3hiojmBwwsMonMqzQ4cHiQUYY=;
+ b=Ry7qtGDXWWESFE+gSVWufsFPSceV9rcvc2DruHyLMJF3UlnZECqQYbUsTvrM/EvDZTwp
+ z8onpya7MCwkSMZqF5uUxG5ZzT7W/5srpFWNKi3A30QNua+MfrUMH3BjBOmcpIMFShpg
+ 02syTnIxxpL4N55FLEtSQ3LXHoKtFttANwxuDp/k/vHVh5olqy7zJ4wGwrOChFybG/tG
+ fasXNT95wc/nveV/OGvJaOKle69CnX3NbgNI4SnjL1V1y+duw8K7YQIGEuwfaMn5wi+3
+ wUu9T16uxYKEVPx406mU1bnaQIpkoFid4VGgUdbxFcCF/n66Y3ujtvdH3pTLE5Tx8e3z 3A== 
+Received: from nam04-bn8-obe.outbound.protection.outlook.com (mail-bn8nam04lp2043.outbound.protection.outlook.com [104.47.74.43])
+	by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3yk78n59am-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Jun 2024 23:14:43 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Xc4aT1VZJ5Vy4Lc+eeYmyP5Dz5YCo0fAoJ7/wI4KHxrkl6zwPkTmkWkBUprw9bir08M+RyQW4F44M61dwdYqvreCk7moNVKAdKY0ACBoqFZkbMYUvfRhEPeWtGstl6NYFxBYFihA209BgVhIlyKde+KbS6MxYkCEazVaoKjaf/u0nEteS6+0uEYBKbBMqcV+wbryWK71ffRbjaVOGOSIJewhYEccLq9FNCzFFjyyiXkipx17JKVPAP0Y7Zw5GY/o+oTRlLEA7Gw48yB5u2Mys2t0ro5KAQLL4bcQwCFejN8i8dzywaWF9Yqp6Z/GJcimnTj8bGg6B4opIvyCF8mZ1w==
+ b=OZNl2J4yPNlMtF53cJ9c5E9WURPxeqEziDlIcktA0bVl456p64k+HUYB4yEufYfiqCvTRxt2ytdeUGw30WriPKgZaDMDajTsWy82+emdA4aut8RnvZv4xYW0FfjsuiH5ZeFPNO/zblcw1Rg7SKQYOVCc9N7Ngc9vQGODl+gsHJpVdDqdSpdEhzM8r7KXhfooI/XjfgxnZlGdbIvjcsTDfarSblxww6aF76TH/aRuJoHkEOIMYqNDUDqErZt3fr3QuBG7CIQVBxOs/VaAHTKL7lT7d3+xd7yUgq6c5ahLk82kG13TfvAI1xtv8S3s5UQpEyOqumZZDGYj3M92s1T+Ww==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XacmbtaKNe0QT548gP6KATjwuMxfZDkZ25MYumYI+6k=;
- b=fuUeBXlhO+25Qr5GWtsrA+Qc8rqOf8ncYA1zoGY3qFQi2V7Q8f9H4YlzI5Z17dS3Lb+Y6WMjbAcudZaT4UrWh/cqwcYJIrHvOJcaPcUFTabmqICBfS5KagqEIY0l1fT7NjQrjrSYOdRiJo068BwrfXgmehBIXhjkOqtjIxSbIh+kRMbDmOaJI/7sjrxtsEB0WBThq3Xy4cuMuO6TOr/hK5WzZLJUOJKcfBMtdmxeG1I7RNUUfn58ZtedK5j6vRtrjRRKs5XINUhV9m5Vg1Vg1/bcfXgzkZWVABm+H0c7oDKu7+miR6pQ4F8O80SV94nfV+36K0YS6WAkvVCCVhpORQ==
+ bh=f8T5c+V4WXDR8QEEpq3hiojmBwwsMonMqzQ4cHiQUYY=;
+ b=MvpVgNtNzrgsaXtlEn1qFcIU1+gJE9HKyfOsGqP8a0BtzdPRBdJh67xrexFM/Gef0JEukwuvFv0+p98UAuKRPE382M37Ng3yVM7SEb51PpbpPVWVkjsIlcBHofiXHlKTBiYaLtxUgSuVNUCyO0TFBc3h7T896/gx9oa3j4A8J8OOaQnsZBF2E4T8gHhVBrLDoPwD5fETMhj/mlCEFlg6l5nTLk0F8qVXZsnxti7qaeqhYOkP0YQ1BhqqKS1sMkBl5FmBDcollQmuKc7j+/XpXJNJCXO17IUolgqcl4LQTGx4puXlu/cE3emGncRmL3eCLwMTs+53+L3Kq64yFdK2eQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=smartm.com; dmarc=pass action=none header.from=smartm.com;
- dkim=pass header.d=smartm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smartm.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XacmbtaKNe0QT548gP6KATjwuMxfZDkZ25MYumYI+6k=;
- b=Zg0/zyGO4x84r5XPwEqm0ycu9cKDACY+Ohm1TpldFK0jflqYP2xZP30e5hHnP6udmQ1/NebyJS/dUmyKicQcYYaaS8IvnGRFFqnPYeHAhgUHVrKUVZrMFhuh7O09uwv+MtyeEoMevC49muc1LeSv1mZWx/LEwcoLkMmZckzU0LV15ic9Br1QeQQABRLq/XZDHiawxHPZn7womyqe8jJQ5tD+XFVrQS7o8ssLQRMdQyDeFcVDILRn/jJ3N3oa/9Fl20WBXQopUPJUone/B3QaVoK5wkUoUia0ZdK/DXxDjaXZFqE9F9xeIf66yPIRXw69dAuiEXGVX7VnSjsQkBe/2w==
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com (2603:10b6:408:a7::27)
- by CH4PR04MB9105.namprd04.prod.outlook.com (2603:10b6:610:224::16) with
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+Received: from CO6PR04MB7843.namprd04.prod.outlook.com (2603:10b6:5:35f::22)
+ by MN2PR04MB6878.namprd04.prod.outlook.com (2603:10b6:208:1ed::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.33; Thu, 6 Jun
- 2024 19:57:31 +0000
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3]) by BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3%5]) with mapi id 15.20.7633.032; Thu, 6 Jun 2024
- 19:57:31 +0000
-From: "Ananth, Rajesh" <rajesh.ananth@smartm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: bitbake compilation errors
+ 2024 23:14:41 +0000
+Received: from CO6PR04MB7843.namprd04.prod.outlook.com
+ ([fe80::9337:6101:9e7:9c95]) by CO6PR04MB7843.namprd04.prod.outlook.com
+ ([fe80::9337:6101:9e7:9c95%4]) with mapi id 15.20.7633.033; Thu, 6 Jun 2024
+ 23:14:41 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: "Ananth, Rajesh" <rajesh.ananth@smartm.com>
+Subject: Re: bitbake compilation errors
 Thread-Topic: bitbake compilation errors
-Thread-Index: Adq4SyTOApJzinevTfm5EwGOq4vn2g==
-Date: Thu, 6 Jun 2024 19:57:31 +0000
-Message-ID:  <BN8PR04MB5906280BF43CA24D2EA9E1D094FA2@BN8PR04MB5906.namprd04.prod.outlook.com>
+Thread-Index: Adq4SyTOApJzinevTfm5EwGOq4vn2gAHCnAA
+Date: Thu, 6 Jun 2024 23:14:41 +0000
+Message-ID: <20240606231440.GC6918@packtop>
+References:  <BN8PR04MB5906280BF43CA24D2EA9E1D094FA2@BN8PR04MB5906.namprd04.prod.outlook.com>
+In-Reply-To:  <BN8PR04MB5906280BF43CA24D2EA9E1D094FA2@BN8PR04MB5906.namprd04.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=smartm.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN8PR04MB5906:EE_|CH4PR04MB9105:EE_
-x-ms-office365-filtering-correlation-id: 04a884fd-03f6-4aa1-7b4a-08dc8662e6b3
+x-ms-traffictypediagnostic: CO6PR04MB7843:EE_|MN2PR04MB6878:EE_
+x-ms-office365-filtering-correlation-id: aed7af3a-609b-4f4c-975e-08dc867e71a7
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230031|1800799015|366007|376005|38070700009;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?Ej/XG2JM25j/uhqi6Dbj1mQi8LxI7jcsi4k6UtD5gm94Szq6jarakE9pa3q8?=
- =?us-ascii?Q?ZXi4UnnnssFyrxqTObQEM0iWkym9gUDv2nHqFVhDa6nw1Qk7RsIbz6Uiyk2F?=
- =?us-ascii?Q?LcdyXEyUk8YWUDYc0s2eFyLjU/zWh32UfGNFgMG34ODcF0nN9wXGogTJC3MA?=
- =?us-ascii?Q?oMO3qYb5D27uvik1Fw8eSg4lf5MAgv0s6qzoRbygUm0y6aQw+h4F7EKJkFCf?=
- =?us-ascii?Q?fEyeg05cqAHfQYXJ9SjekoHMNcOYmJUjpnX5dpscN+2+A3LmfF3Qf9ONxOEu?=
- =?us-ascii?Q?vROgmF+7qVQmfNbU8E/J1p+88u4Zee7quATieQjBrOcpe5y53nym6p2IKae4?=
- =?us-ascii?Q?aUnJAWPNcVV/E0rMNFw2mFsB0nt5kpuN33rJmSqTNF9i7ckwOilFexQDwuAk?=
- =?us-ascii?Q?3K0wRD03Mnq0cNPR+CDNHUZoJNUVQMXHSlmXMixX590l9sUqcGrqw2QWk2rm?=
- =?us-ascii?Q?7HR2p5rMlDU7b8zJviujrdjM2VbYFsvijwzUD2rudusnZPd/VPuSXvKKDckL?=
- =?us-ascii?Q?T5P59y23ZE26V7kQZyvN9pEwpicfCCFB7L1pXbdXCpYyx3H6X2ImZj/bchzn?=
- =?us-ascii?Q?wCXb4Gy9S7xuSr7edbpHrs5YCnr/XJ6vs6ELenoUOgNN+AYhFALeKxO/aBwl?=
- =?us-ascii?Q?oP8pPTTvWBKRgOmTaK0WelvqyrgdgAtqCix/qLnF5uok0du2IChw3lvSfvsL?=
- =?us-ascii?Q?x7C/dGbnflfZKaRCJu7vC4b2T33eYHIjBSU7kwXfpZuXHrpe2eJtfOotEu/6?=
- =?us-ascii?Q?EovjxFo2xIV7usvxU5zSLrtFhy5LxfYNZdkxbYrLNqwkE0fU5zGIWDTwVtkc?=
- =?us-ascii?Q?F50hnuaOQhhlAh6FK3rsA6k7yZMAoXhGKK8Pfv29b7VyxjnqPA0xV7+Hds3i?=
- =?us-ascii?Q?uhCvxzPSWk5NbYOMbnRtyWH8AsYTtP7a3QmBLM5jGiWbPcM0zf5VaAaf529z?=
- =?us-ascii?Q?J4NbUrnE7UgWvolZ18QEV1vpEIZNRyC3/gGPqo9TL/cMnovsocoVY3tywoa+?=
- =?us-ascii?Q?FfKdQ/jQGF3MNEBJdh9+u7X1xaqirmdDXqr19921sV+5eO3vzXgLay03HmlL?=
- =?us-ascii?Q?5ZNn1ewYyuTl7dA1OH6xeEQN4Jn5sH27a7lKH3PcDMzN2TphHpeo1cXQSwK0?=
- =?us-ascii?Q?CjHfqS8cai5VvcUn2sapBvWCHNT/gdGVXPV2G5dsw3SEAFseo/8Vbxkd1R/1?=
- =?us-ascii?Q?lD8zkNhZK23lJxMxPty0x6KRLgpLr/uX/bIFlUMBavz3DhlaP6GF9Usaovfv?=
- =?us-ascii?Q?USGggpnHh2LW0X6MZ0cCRmf0+b81uaqXLjPqk7b712sNTT9kWw0ekM4g71iy?=
- =?us-ascii?Q?rWB+5hW+hbrSMJ2+QfIraAJIT7BDGSk0ovUATnzV6HtMcOz6UV0scv3y4nPH?=
- =?us-ascii?Q?+qgV6jo=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR04MB5906.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(366007)(376005)(38070700009);DIR:OUT;SFP:1102;
+x-microsoft-antispam: BCL:0;ARA:13230031|1800799015|376005|366007|38070700009;
+x-microsoft-antispam-message-info:  =?us-ascii?Q?Ugh2A9FrQAUSwMKLyd8Uk/+qdQXUqPvj5n0lsf0tQPp7Z8sEp8vWq6pwhjnU?=
+ =?us-ascii?Q?PBP/Ca8k/MHbkK0hPxY+QuvjyxoSh4JyOD38Ak8By8R2Uqg/JXpWq3ZY4bbn?=
+ =?us-ascii?Q?3FQcZFhrHktbnSz7gKmsCMmufA2SCphgxVqh2a4UyOywpB+Ty26aRiJAgg0o?=
+ =?us-ascii?Q?rNXvmxlKXV3741azR/S4myMeNdo5EcOR1FOMoE/euD3QXlrpt9xNxiGM3fli?=
+ =?us-ascii?Q?rFjIryLg8YjhezUvHAvYuAU8kQcOghwmkbhGOATjOhq3Dk+KdpIXFMYgCr64?=
+ =?us-ascii?Q?zf4ArLRG3pBTjGH703ueo0Z+Y8w9JmPbz/KEV1WQG9mJEGczMAybghLKoPBN?=
+ =?us-ascii?Q?/dcqn6pHHbDkfjgl8KXkhJ7doY6KD6jcimFuoXC/6OUADwzWWYFvwXM/zSet?=
+ =?us-ascii?Q?a7yqzrK+N4IyK6ClgoZbVwdNWpRFqycrUzBhEcdNKAyam1HoUFD7l/LoDiXg?=
+ =?us-ascii?Q?7pg0NaGJa4A8gY7jksekLYNp5Xl+OYhVdxWiWmVyL61Dg3ulyTGPaLyA1ZdG?=
+ =?us-ascii?Q?x1yN8sfi9CIjY3V2biNWho3XqB5UheTnvsekajkTcjdHJx9oSoGtnPaSn6D9?=
+ =?us-ascii?Q?WgucdfqEOc9G1MgEwPii82KjQ7m81fzD/1slf4t9T662Z1CxwTT8QRfNT3B1?=
+ =?us-ascii?Q?5ltIwIYMogpfJ6X3lp3DlcKJZO+nCOsv7mkkEfHbnHCFWjmXxwnlbF/Hy7ne?=
+ =?us-ascii?Q?HECfTPA4ChRlnKZFTe7zrVK4otGAGspXbNJyObE96Cl+gbMnUe69Wv/B/5CF?=
+ =?us-ascii?Q?c19tFhMUwEk/aatKQ6DAJGS4sR/1t8HZEkq/QisTNunvvsr3QkDReSfsyhzL?=
+ =?us-ascii?Q?hOSxt3y+g6B41yB3gQJtyjI5GtlecA3wTJCFfeELlMHaJ4mbHPFFpd8Hnwoz?=
+ =?us-ascii?Q?zZjBd9KDgGDuAbPQw8jSFEOwTRQUHEHDQpwcxlzeqU7xUOmtAIRgX+aaYp0i?=
+ =?us-ascii?Q?xv5B69FynPawwXJlPmErG/fHf86ByAuPYOLvWuidqxM2xvVicTCuK+5x5UZm?=
+ =?us-ascii?Q?fAoYdfFXq2DhZIYl72BOwx7P8xugancxdvADbh6c8KQrERiapp6VPe1ADXWu?=
+ =?us-ascii?Q?YvSXc6m5uKkIigg11n2pxf60E+Wsh2bazBj7VzhKJ3mILg1Dk3ycy28G5s2G?=
+ =?us-ascii?Q?FfiQuKlqoISRtiBSfjguO8OUAsZc4n+rtnSdHMWYzrkI0RvuEK3qINU75XJ1?=
+ =?us-ascii?Q?TYIgWuBfdg7xc79vVFl2eltduEizR5MAX90o5W3O84flpgLgr0evLulLc/8m?=
+ =?us-ascii?Q?EoNlrtb435T4O883gzJGtkJnR1rE0yOqX28yx3j3vGVcAFhSVgynbqi6GY0o?=
+ =?us-ascii?Q?gQPDMpfPRgK8WCrtAFmTtQCU77o3gm7SvTt1JbTYVZYccC/IcxHuurXIxcvj?=
+ =?us-ascii?Q?0x6fHoQ=3D?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR04MB7843.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(376005)(366007)(38070700009);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?6VMY0nF3C/6AfCuOEnSEr0eO0n2nSntbum6uSKBYC7Xkz+UdVJYqwGQml3Fa?=
- =?us-ascii?Q?zyGM/jkzFoV+3DCtxxXRDBdDflXwA4hzNyTZlnNt7H1p/PxyAMjn4rVWhCoP?=
- =?us-ascii?Q?aotz1yWCT2zUgLVMPpSWXp00QVeX2VbRe8RtjnXRwtc45a8lY5NcFeN2O8m0?=
- =?us-ascii?Q?u0RAmjgllH56HXb5BhHuW5xwzaqrxxFXkQaVmLSN8vdrF/aMTV3fS4RKL7LM?=
- =?us-ascii?Q?VxOBU6GECXI3PhavLaWfg8I3JtUAz9Nbi+IkoGDttdYXxhGQGRR+bY7rQDC+?=
- =?us-ascii?Q?RIdihOBHmhSyjveVhV/xzRt4h71J2lz25BFPwm9merKRTvpOGpfRXgDPsvpk?=
- =?us-ascii?Q?Tfq32EjaSXM2GI8Zzh4c7b7tyV40IrjhngptvdTjICWgxDPEXLKNvVS6qiA+?=
- =?us-ascii?Q?S2fExeQxlJaLqecun3+aCR2EKBfMTA+o3vFaLHOgS3RaiZ3DQDhbuR8RR0Uu?=
- =?us-ascii?Q?yOc0wlldKlWOkM47wI6iKNDXp5e3eBKQYiRnMtZchJnxF98x3vC/eJSkYOml?=
- =?us-ascii?Q?XGppWOrABThVpFtdPx1Er2VeC3OE0eip4cHapzvGGPXhffbiaqyVpIS4jj6a?=
- =?us-ascii?Q?1P/bazy3mi9YSL/toeWbRzAwiaLkEkbvVIRBv7PkFYhT6LvyF43QwlHuXJnw?=
- =?us-ascii?Q?R5bNNGiYy8S5nfreY6Djn9nGqpLqospOsVFwhDCt67mDqmUaK3j8VVD5xVfx?=
- =?us-ascii?Q?f0jbQoIYa7B3I9k0j+u8zA5rhrzCqGHxgHvKFdGtylqfIDkm25tC1S1CHlm0?=
- =?us-ascii?Q?7NIx2t2EsCfMIHO70E7gBr+WImtKIVwMVrWOHCKhThvwx/CyW2aqiHJGKAad?=
- =?us-ascii?Q?fgHrfoE2dqe8AM5anyJHeTiUT9b9uLJeS+1044taPKJAwB/xaRkf64fr80y7?=
- =?us-ascii?Q?alx5MzXsEZ3L+UMihsAz5X4s3XgfmTjfDvT5dGZHv24T4oFGxgdYNhWUCx13?=
- =?us-ascii?Q?qcpGkMVlUggKwt1nDrrgsryfu4UMbttf+khdk/LJhJzf8j9mrKHY7SyJ05tn?=
- =?us-ascii?Q?+XSqAWqxpkua9ODF8qz2BDpRTMMZAu/C37nKadwDlH3D5iuGmGSA11TbFvLy?=
- =?us-ascii?Q?MGZRSvXNw/m+u/0Q1JRBtcBBEmbmwKkDJL5lCr3SQXW4uVhpFwksXNXYInmF?=
- =?us-ascii?Q?jw1QNuEdwX2YDuVDM0cWJ32eNZ6/9/FqzmFkjeKnHEIJreCpVWpiWSxhaHwW?=
- =?us-ascii?Q?I56JGlsdv8PSX3RhKWdzijrg5Q+g6pcd4LjaAQZ63kylk2LOL/rvxtk95hid?=
- =?us-ascii?Q?iUSZ8ak5OARVGqIhAAihRs0kdTW9gkdmanI7OPSX49+vkl2Z58qID0EDGEaW?=
- =?us-ascii?Q?gjDWtUNeJ1bf8xZwTbPcWkssvu3ruuT56hejk/fceNXG7q9L2QiAm73uxsif?=
- =?us-ascii?Q?raYdsACfZzUfhUYrDCi3GcLrLvrG0stCiuBcnOjyx7y/VIEyFpKV49kr8Ypq?=
- =?us-ascii?Q?iKpsUNo+FraxtjfboK7BzNVieWjHw6+LhyWpCIe5D5SzWyiGlb/dYUyaS2ww?=
- =?us-ascii?Q?HMTY1Nzec8GNr3E5WNG7acWjuW+1KQLtFLaRn2AOvdYOpYEK+ve62owO9LZP?=
- =?us-ascii?Q?oSkoBoK5E9i1chLVgNKFVT4Y8LCk1H8UFLtcS8a0?=
-Content-Type: multipart/alternative;
-	boundary="_000_BN8PR04MB5906280BF43CA24D2EA9E1D094FA2BN8PR04MB5906namp_"
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?zUrsHJbrxnkklhbvIEb018HBJHbZqGo4ZKdCcg+7JVvnBKtjADqsgtNiPI7a?=
+ =?us-ascii?Q?nkPpKq0NshbXgV9nDOAsBxOr3js/t4BvKR+JTqCSuT1IkS0fftsHzjG6Gb2V?=
+ =?us-ascii?Q?Slqo6Kido105jEul99ajS55l/q8mjSDTHH3iIJAGMO+sgwpleAGjJqWR8Me2?=
+ =?us-ascii?Q?d1OtlBtdWbKsL/wEG5vBjwHyH2XApvs8x/FuGSlShlT/oDfxvxYkedwAmz2f?=
+ =?us-ascii?Q?dH7H6W+7JgbSe5/+jbbF7IblnTmOalqt4xqc1J+XSJIlZmAYAqKCTU+pFW6r?=
+ =?us-ascii?Q?SYB851Cv7n/UNao9FNEanp4CS4CrGX45CSWhTmcVkwFkI/EqutwhztMmqXeE?=
+ =?us-ascii?Q?qXcCFgSX5gjUbdbZDJZYRpc8SD+qB2Y5iMmT6fnH4icX2KiTOh3QIgNO8ZWD?=
+ =?us-ascii?Q?dI1hekLblbRsAmf3S1W1kTqsnasbBslMf1tqJoq4hRUA53+XhQmedMdFPeWh?=
+ =?us-ascii?Q?202VRbFdWXLWWcnuUEsNdEmfLdl3WlxJHXtBOz0VO3bnRQkBi2zOOGTqaS63?=
+ =?us-ascii?Q?qw2mVrXhLSDxh8hwAGcPAxtM7LtzzXujSosPdXk+WTRt8DsjW7EtyQNrPX/v?=
+ =?us-ascii?Q?YFn9AgwsRUAj3E9T6PeUdH/DYppY1gvQUrbuEnKrmMaJptkjyQfMThaaWXFF?=
+ =?us-ascii?Q?lA89YGuR/gyK2YCy+bMGt02xLjleOv4omLN4/jJX2P+nozBFlmlhLq6J9L6U?=
+ =?us-ascii?Q?UYUSotsgJfBIUn5pyrv7WA52+hh/kQ7j2dG3zHpmcNnU7m564rRqwPZhB8mH?=
+ =?us-ascii?Q?LLW8EVCm5djSkUBITlw/PHa/PZy3ek2Xx/cvApOHRFIwFZSItnBQoBpYszZ4?=
+ =?us-ascii?Q?YKyXFdL6ilC0cocIzcylA92bv3TwG3tWfCB6M8lUPvpvw4It8gB2vG3fMCgd?=
+ =?us-ascii?Q?qDXmPA0lLY383bKUbZcL8Mv6cC49IP92I0KcvykDW8q+n7t0CHtHYekrkJCD?=
+ =?us-ascii?Q?27bmgD7ydqceyXep2hs2QaINl4eGUZwJlggJqH2Mq9SqPU8Eajkjg3zRfe/d?=
+ =?us-ascii?Q?mDrHiRmU/l1SIof5DUiUhZrqScwghc1c8lOXLzTijhy3HO2Gpw1bxDdG5sJ9?=
+ =?us-ascii?Q?w092jK9Xo5UVpeHkGEWYhjKPgE8AXVfBi7IKv29NON12np8IzHANHS5tuiZZ?=
+ =?us-ascii?Q?uJnfXe5CqufO8urnBvLisW2rw8tTa/E32pX4VjoBxZTkI/MRBN8Jva5JuE1e?=
+ =?us-ascii?Q?klZ5ylaKJFYr9aKCA6s7UcrZ3ZhGyzF8fu9oycZ8i8ypHaoEsdLrOOrDVfXr?=
+ =?us-ascii?Q?l/vrlZdujTgAdID4PUa4XDJ4csEyLpx99TtCn0DibRoc7PbxqUWvXEGrHQUb?=
+ =?us-ascii?Q?CPiAj+6uTHfzfP8vEXI01A9llc45hXB31RMLWYsg9eSAKqLUpt0GRFIcLvJi?=
+ =?us-ascii?Q?kdz2wlZheWUe/SQz66tHrC0TaAs0wg43l+KDS/fe4u8sL6pBNn0Yth3oz442?=
+ =?us-ascii?Q?AUbZuLjEs18Y8R+nGPfO3EAmgtmC/ijwi/gJ1vvJn8vSsc24Cw2eEaJoeRn9?=
+ =?us-ascii?Q?zDM4leCP0r9UWWgVL0ID0HOeHHyEZSX8BtOpA6komWiRa2m9L5vT7C4d2+nm?=
+ =?us-ascii?Q?7WHd6mPLqGKkOHVJqVV2JgTMqJn8ieI/WAOaV+x6?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <EFADA93580F3CB4B8667D2F5582A21FB@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: smartm.com
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 	L4W47tJMnb1TrWo2TnqIUSgrWL0L0M5phcFnyLeThuVEAktFOuwG/ONMAzMU3S+naF3ru4QCqQ0HWpWxdmamIX1dBAfUG3R12lOjR/KDgTmTfyMxcnPqSVeiJdJChCSGeZzP0iKGcC61ldopwKMDf2NF9S9aF6vGqdKwgGI2sjR7xLXee7yF58tbdGRZCeuXBiWK4CcPXALEXylnrlI2XZKLtnEC3KJNO7c7rDQLCAfJsjBWfZFMLcHFcP3AwsMkUTiAl8i1hyKZb8sMCBb++K3UFkJ/nugV4y0vFXd2CPxBIFPMQGJm+IyS3vmFqNofNTPFOvjKwwVgSBUNxndZfD3YgOngsU7DmN9Jv+PBrRzE+1tkU5g4xaTZUiI5V2KuiXD9ZOij49A8yQTCcRLYttMZlWyrn954p9rxJNVwqbDUCe+K06ZmT2YF+jwXjw4ReU0GpzK5hL5IxVA3eyKpLFfNQHCJDNXTuBKaOrJUzFNAoy0eVXeEF5Ke43H00sufVH8u1YkA94VV++7qZmdAS/kQd+LEOoBox+u3VQf5yjEWvJXWkTdPe7p08hfBhx4HmrjA4PdaHQZ8sgmItzhraT3kUcwOzVhQGtPtKD8xePybBpkV0jmXSt9GKtRXFtPoaqKLDfSG1Kn2xbDj7gfQjOHRYS73+j9qCT56uF9IfBc=
+X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR04MB5906.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04a884fd-03f6-4aa1-7b4a-08dc8662e6b3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2024 19:57:31.4662
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR04MB7843.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aed7af3a-609b-4f4c-975e-08dc867e71a7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2024 23:14:41.0331
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f0fd7909-cd13-4779-b0f9-5ced6b7a2c68
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: THyXyjlNhZsvFNrKna4ZUfY1eg6jR0B9tdKwiCk18fnhk1Ahoe+cTLx5RGBUVBl0mWoBtesmYDFocTaRbeSuLm4bOgXGduCdK8no9EPUNd0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR04MB9105
+X-MS-Exchange-CrossTenant-userprincipalname: 6vnuHy1RBS9vw63wP9qBoTvoFoyMvH7dlq4YuCOQGEo+VbOtBfNtwPwN7WBwOf6PFCfTSk+yFqkwgGALmUmS6Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR04MB6878
+X-Proofpoint-ORIG-GUID: o5Qtud0oavpcsAykUGP7fCNjUxjSsw3R
+X-Proofpoint-GUID: o5Qtud0oavpcsAykUGP7fCNjUxjSsw3R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-06_18,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 clxscore=1011 bulkscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2406060161
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -143,228 +167,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BN8PR04MB5906280BF43CA24D2EA9E1D094FA2BN8PR04MB5906namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Bitbake, while compiling the nodejs-native keeps on failing. It happens irr=
-espective of what platform I am building for. Does it require any package f=
-ixes for nodejs?
-
-Build environment: Linux bld-ub20s-openbmc 5.4.0-182-generic #202-Ubuntu SM=
-P Fri Apr 26 12:29:36 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
-
-
-|   g++  -o Release/obj.target/v8_turboshaft/deps/v8/src/compiler/turboshaf=
-t/memory-optimization-reducer.o ../deps/v8/src/compiler/turboshaft/memory-o=
-ptimization-reducer.cc '-D_GLIBCXX_USE_CXX11_ABI=3D1' '-DNODE_OPENSSL_CONF_=
-NAME=3Dnodejs_conf' '-DICU_NO_USER_DATA_OVERRIDE' '-DV8_GYP_BUILD' '-DV8_TY=
-PED_ARRAY_MAX_SIZE_IN_HEAP=3D64' '-D__STDC_FORMAT_MACROS' '-DV8_TARGET_ARCH=
-_X64' '-DV8_HAVE_TARGET_OS' '-DV8_TARGET_OS_LINUX' '-DV8_EMBEDDER_STRING=3D=
-"-node.17"' '-DENABLE_DISASSEMBLER' '-DV8_PROMISE_INTERNAL_FIELD_COUNT=3D1'=
- '-DV8_ENABLE_PRIVATE_MAPPING_FORK_OPTIMIZATION' '-DV8_SHORT_BUILTIN_CALLS'=
- '-DOBJECT_PRINT' '-DV8_INTL_SUPPORT' '-DV8_ATOMIC_OBJECT_FIELD_WRITES' '-D=
-V8_ENABLE_LAZY_SOURCE_POSITIONS' '-DV8_USE_SIPHASH' '-DV8_SHARED_RO_HEAP' '=
--DV8_WIN64_UNWINDING_INFO' '-DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DISPATC=
-H' '-DV8_USE_ZLIB' '-DV8_ENABLE_TURBOFAN' '-DV8_ENABLE_WEBASSEMBLY' '-DV8_E=
-NABLE_JAVASCRIPT_PROMISE_HOOKS' '-DV8_ALLOCATION_FOLDING' '-DV8_ALLOCATION_=
-SITE_TRACKING' '-DV8_ADVANCED_BIGINT_ALGORITHMS' -I/home/rajesh/openbmc/bui=
-ld/s7106/tmp/work/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-native/=
-usr/include -I../deps/v8 -I../deps/v8/include -I.//Release/obj/gen/generate=
--bytecode-output-root -I.//Release/obj/gen  -pthread -Wno-unused-parameter =
--Wno-return-type -fno-strict-aliasing -m64 -m64 -O3 -fno-omit-frame-pointer=
- -fdata-sections -ffunction-sections -O3 -fno-rtti -fno-exceptions -std=3Dg=
-nu++17 -MMD -MF .//Release/.deps/Release/obj.target/v8_turboshaft/deps/v8/s=
-rc/compiler/turboshaft/memory-optimization-reducer.o.d.raw -isystem/home/ra=
-jesh/openbmc/build/s7106/tmp/work/x86_64-linux/nodejs-native/20.11.1/recipe=
--sysroot-native/usr/include -isystem/home/rajesh/openbmc/build/s7106/tmp/wo=
-rk/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-native/usr/include -O2=
- -pipe -c
-| g++: fatal error: Killed signal terminated program cc1plus
-| compilation terminated.
-| make[1]: *** [tools/v8_gypfiles/v8_turboshaft.target.mk:177: Release/obj.=
-target/v8_turboshaft/deps/v8/src/compiler/turboshaft/late-optimization-phas=
-e.o] Error 1
-| make[1]: *** Waiting for unfinished jobs....
-| rm d85b0cd18d0307252071c96a6ed9b0c9664aa71f.intermediate af4e842a57ff19a6=
-520eb7907ccb4a3969f292c1.intermediate f6356c0b28cf2ef78d26a21531153d32a6176=
-eb4.intermediate
-| make: *** [Makefile:134: node] Error 2
-| ERROR: oe_runmake failed
-| WARNING: exit code 1 from a shell command.
-ERROR: Task (virtual:native:/home/rajesh/openbmc/meta-openembedded/meta-oe/=
-recipes-devtools/nodejs/nodejs_20.11.1.bb:do_compile) failed with exit code=
- '1'
-NOTE: Tasks Summary: Attempted 3967 tasks of which 12 didn't need to be rer=
-un and 1 failed.
-
-Summary: 1 task failed:
-  virtual:native:/home/rajesh/openbmc/meta-openembedded/meta-oe/recipes-dev=
-tools/nodejs/nodejs_20.11.1.bb:do_compile
-Summary: There were 2 WARNING messages.
-Summary: There were 2 ERROR messages, returning a non-zero exit code.
-
-
---_000_BN8PR04MB5906280BF43CA24D2EA9E1D094FA2BN8PR04MB5906namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Thu, Jun 06, 2024 at 12:57:31PM PDT, Ananth, Rajesh wrote:
+>Bitbake, while compiling the nodejs-native keeps on failing. It happens ir=
+respective of what platform I am building for. Does it require any package =
+fixes for nodejs?
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Lucida Console";
-	panose-1:2 11 6 9 4 5 4 2 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Bitbake, while compiling the nodejs-native keeps on =
-failing. It happens irrespective of what platform I am building for. Does i=
-t require any package fixes for nodejs?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Build environment: <span style=3D"font-size:9.0pt;fo=
-nt-family:&quot;Lucida Console&quot;">
-Linux bld-ub20s-openbmc 5.4.0-182-generic #202-Ubuntu SMP Fri Apr 26 12:29:=
-36 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux</span><o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">|&nbsp;&nbsp; g++&nbsp; -o=
- Release/obj.target/v8_turboshaft/deps/v8/src/compiler/turboshaft/memory-op=
-timization-reducer.o ../deps/v8/src/compiler/turboshaft/memory-optimization=
--reducer.cc
- '-D_GLIBCXX_USE_CXX11_ABI=3D1' '-DNODE_OPENSSL_CONF_NAME=3Dnodejs_conf' '-=
-DICU_NO_USER_DATA_OVERRIDE' '-DV8_GYP_BUILD' '-DV8_TYPED_ARRAY_MAX_SIZE_IN_=
-HEAP=3D64' '-D__STDC_FORMAT_MACROS' '-DV8_TARGET_ARCH_X64' '-DV8_HAVE_TARGE=
-T_OS' '-DV8_TARGET_OS_LINUX' '-DV8_EMBEDDER_STRING=3D&quot;-node.17&quot;'
- '-DENABLE_DISASSEMBLER' '-DV8_PROMISE_INTERNAL_FIELD_COUNT=3D1' '-DV8_ENAB=
-LE_PRIVATE_MAPPING_FORK_OPTIMIZATION' '-DV8_SHORT_BUILTIN_CALLS' '-DOBJECT_=
-PRINT' '-DV8_INTL_SUPPORT' '-DV8_ATOMIC_OBJECT_FIELD_WRITES' '-DV8_ENABLE_L=
-AZY_SOURCE_POSITIONS' '-DV8_USE_SIPHASH'
- '-DV8_SHARED_RO_HEAP' '-DV8_WIN64_UNWINDING_INFO' '-DV8_ENABLE_REGEXP_INTE=
-RPRETER_THREADED_DISPATCH' '-DV8_USE_ZLIB' '-DV8_ENABLE_TURBOFAN' '-DV8_ENA=
-BLE_WEBASSEMBLY' '-DV8_ENABLE_JAVASCRIPT_PROMISE_HOOKS' '-DV8_ALLOCATION_FO=
-LDING' '-DV8_ALLOCATION_SITE_TRACKING'
- '-DV8_ADVANCED_BIGINT_ALGORITHMS' -I/home/rajesh/openbmc/build/s7106/tmp/w=
-ork/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-native/usr/include -I=
-../deps/v8 -I../deps/v8/include -I.//Release/obj/gen/generate-bytecode-outp=
-ut-root -I.//Release/obj/gen&nbsp; -pthread
- -Wno-unused-parameter -Wno-return-type -fno-strict-aliasing -m64 -m64 -O3 =
--fno-omit-frame-pointer -fdata-sections -ffunction-sections -O3 -fno-rtti -=
-fno-exceptions -std=3Dgnu++17 -MMD -MF .//Release/.deps/Release/obj.target/=
-v8_turboshaft/deps/v8/src/compiler/turboshaft/memory-optimization-reducer.o=
-.d.raw
- -isystem/home/rajesh/openbmc/build/s7106/tmp/work/<span style=3D"backgroun=
-d:yellow;mso-highlight:yellow">x86_64-linux/nodejs-native/20.11.1</span>/re=
-cipe-sysroot-native/usr/include -isystem/home/rajesh/openbmc/build/s7106/tm=
-p/work/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-native/usr/include
- -O2 -pipe -c<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| g++: fatal error: Killed=
- signal terminated program cc1plus<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| compilation terminated.<=
-o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| make[1]: *** [tools/v8_g=
-ypfiles/v8_turboshaft.target.mk:177: Release/obj.target/v8_turboshaft/deps/=
-v8/src/compiler/turboshaft/late-optimization-phase.o]
- Error 1<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| make[1]: *** Waiting for=
- unfinished jobs....<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| rm d85b0cd18d0307252071c=
-96a6ed9b0c9664aa71f.intermediate af4e842a57ff19a6520eb7907ccb4a3969f292c1.i=
-ntermediate f6356c0b28cf2ef78d26a21531153d32a6176eb4.intermediate<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| make: *** [Makefile:134:=
- node] Error 2<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| ERROR: oe_runmake failed=
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">| WARNING: exit code 1 fro=
-m a shell command.<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;;color:#FF7676">ERROR</span>=
-<span style=3D"font-size:9.0pt;font-family:&quot;Lucida Console&quot;">:
-<span style=3D"color:#D42C3A">Task (virtual:native:/home/rajesh/openbmc/met=
-a-openembedded/meta-oe/recipes-devtools/nodejs/nodejs_20.11.1.bb:do_compile=
-) failed with exit code '1'<o:p></o:p></span></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><b><span style=3D"font=
--size:9.0pt;font-family:&quot;Lucida Console&quot;">NOTE</span></b><span st=
-yle=3D"font-size:9.0pt;font-family:&quot;Lucida Console&quot;">: Tasks Summ=
-ary: Attempted 3967 tasks of which 12 didn't need to be rerun
- and 1 failed.<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;"><o:p>&nbsp;</o:p></span></=
-p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">Summary: 1 task failed:<o:=
-p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">&nbsp; virtual:native:/hom=
-e/rajesh/openbmc/meta-openembedded/meta-oe/recipes-devtools/nodejs/nodejs_2=
-0.11.1.bb:do_compile<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">Summary: There were 2 WARN=
-ING messages.<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-autospace:none"><span style=3D"font-si=
-ze:9.0pt;font-family:&quot;Lucida Console&quot;">Summary: There were 2 ERRO=
-R messages, returning a non-zero exit code.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+>Build environment: Linux bld-ub20s-openbmc 5.4.0-182-generic #202-Ubuntu S=
+MP Fri Apr 26 12:29:36 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+>
+>
+>|   g++  -o Release/obj.target/v8_turboshaft/deps/v8/src/compiler/turbosha=
+ft/memory-optimization-reducer.o ../deps/v8/src/compiler/turboshaft/memory-=
+optimization-reducer.cc '-D_GLIBCXX_USE_CXX11_ABI=3D1' '-DNODE_OPENSSL_CONF=
+_NAME=3Dnodejs_conf' '-DICU_NO_USER_DATA_OVERRIDE' '-DV8_GYP_BUILD' '-DV8_T=
+YPED_ARRAY_MAX_SIZE_IN_HEAP=3D64' '-D__STDC_FORMAT_MACROS' '-DV8_TARGET_ARC=
+H_X64' '-DV8_HAVE_TARGET_OS' '-DV8_TARGET_OS_LINUX' '-DV8_EMBEDDER_STRING=
+=3D"-node.17"' '-DENABLE_DISASSEMBLER' '-DV8_PROMISE_INTERNAL_FIELD_COUNT=
+=3D1' '-DV8_ENABLE_PRIVATE_MAPPING_FORK_OPTIMIZATION' '-DV8_SHORT_BUILTIN_C=
+ALLS' '-DOBJECT_PRINT' '-DV8_INTL_SUPPORT' '-DV8_ATOMIC_OBJECT_FIELD_WRITES=
+' '-DV8_ENABLE_LAZY_SOURCE_POSITIONS' '-DV8_USE_SIPHASH' '-DV8_SHARED_RO_HE=
+AP' '-DV8_WIN64_UNWINDING_INFO' '-DV8_ENABLE_REGEXP_INTERPRETER_THREADED_DI=
+SPATCH' '-DV8_USE_ZLIB' '-DV8_ENABLE_TURBOFAN' '-DV8_ENABLE_WEBASSEMBLY' '-=
+DV8_ENABLE_JAVASCRIPT_PROMISE_HOOKS' '-DV8_ALLOCATION_FOLDING' '-DV8_ALLOCA=
+TION_SITE_TRACKING' '-DV8_ADVANCED_BIGINT_ALGORITHMS' -I/home/rajesh/openbm=
+c/build/s7106/tmp/work/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-na=
+tive/usr/include -I../deps/v8 -I../deps/v8/include -I.//Release/obj/gen/gen=
+erate-bytecode-output-root -I.//Release/obj/gen  -pthread -Wno-unused-param=
+eter -Wno-return-type -fno-strict-aliasing -m64 -m64 -O3 -fno-omit-frame-po=
+inter -fdata-sections -ffunction-sections -O3 -fno-rtti -fno-exceptions -st=
+d=3Dgnu++17 -MMD -MF .//Release/.deps/Release/obj.target/v8_turboshaft/deps=
+/v8/src/compiler/turboshaft/memory-optimization-reducer.o.d.raw -isystem/ho=
+me/rajesh/openbmc/build/s7106/tmp/work/x86_64-linux/nodejs-native/20.11.1/r=
+ecipe-sysroot-native/usr/include -isystem/home/rajesh/openbmc/build/s7106/t=
+mp/work/x86_64-linux/nodejs-native/20.11.1/recipe-sysroot-native/usr/includ=
+e -O2 -pipe -c
+>| g++: fatal error: Killed signal terminated program cc1plus
 
---_000_BN8PR04MB5906280BF43CA24D2EA9E1D094FA2BN8PR04MB5906namp_--
+I'd bet the odds are good this was caused by an OOM (out-of-memory)
+condition on your build host -- if you have administrative access, check
+dmesg or /var/log/kern.log to confirm.  You might need a larger machine
+to use for building OpenBMC, or possibly to serialize things if there
+were other memory-hungry things running on it at the same time.
+
+
+Zev
