@@ -2,165 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 955F590103A
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 10:33:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 618AF9012B9
+	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 18:20:53 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=lkdzzC/b;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Xdqo04Pk;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4VxBCm5M15z3cXg
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 18:33:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VxNbQ3nMMz3c2K
+	for <lists+openbmc@lfdr.de>; Sun,  9 Jun 2024 02:20:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=lkdzzC/b;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Xdqo04Pk;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:240a::70e; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2070e.outbound.protection.outlook.com [IPv6:2a01:111:f403:240a::70e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.9; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4VxBCF0Yvsz2yvh
-	for <openbmc@lists.ozlabs.org>; Sat,  8 Jun 2024 18:32:38 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EJM2GbWNrlUJUB+RwsrY1G9EdEC552ezS6EmYFphpdv0EI2ln5AgeNAHmbxLhI1/lvKIuAuTqK7MKpTbYTWRN5rN1EyWcNe+KeX6JPLHO3o49OGbKkjHExQqM8o0lL+aJYyd7Krh1zxH+Jr4QZZMsub1lZ/hrB6JNaObOx3njioH60/U4K4pkSjGSUceu5ZnuhCZTV4hyU1nqSlv6iymYvtv3NVirJfFLwqTF1JNnahsEtSonDDINLQzyTj1u+4u5l91Wjti2ZphZBXnC4H5BslWU+r56PnnmzFgtSmsHWFJ13gZaqojmNMWxDeTuebUSp1/5BRWqSEau8MtPElWDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V3fMIkoWdChvMSBUch9sxSOXGlCwo+faegs5tqwMh1w=;
- b=lWhOd4Tezfwm9JQyCnFH9PrbiOfvLwDmhLdSizHz5C6cPRfzZIOu+3K6z6Uowiz4hHDSfBHbbhaXrD7JmKTo73Q3OZt5lCe4jE4CtIfbW9w/yjMI27eB4K3fbaexK1fiJiezk89TBX2qHCdkKW0DhNZ8wUEps2Rxp1lIBbsPxG2kDdQLmAuxW3KB+aR5qDM747ndyxNJwbhQvTRHfa2dMpW2WBgnjj1vVx0BnPKfO46a3dWZPrip1GqOzCpD8PyRBm7vB+j7ZAv9s+HY0I6OqxLAmL+W713Tvg7VKidlrdkwLNFM94xv1/LAS5H59uct1IR/7cnmEg+8dzZPqFSVGg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=amperemail.onmicrosoft.com; dkim=pass
- header.d=amperemail.onmicrosoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V3fMIkoWdChvMSBUch9sxSOXGlCwo+faegs5tqwMh1w=;
- b=lkdzzC/bqbUXq5y1iA9rp4DHs2FhRAcMXbdX3OVk4krVxcOO3zrBsWnXxrUAnLWFvebfhm8JMYkWg2ejsTNtPnEZfwE56cIZ/+JypEL6EvZbYs3YhxO9p67caoDvtkSlVJc0YKsirdVOh+nerSsEBORdZa6TmEkUaWRhGJlt/Ng=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
-Received: from DM6PR01MB5947.prod.exchangelabs.com (2603:10b6:5:1dd::12) by
- IA0PR01MB8330.prod.exchangelabs.com (2603:10b6:208:480::6) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7633.30; Sat, 8 Jun 2024 08:32:14 +0000
-Received: from DM6PR01MB5947.prod.exchangelabs.com
- ([fe80::919c:7d6a:2069:b0ca]) by DM6PR01MB5947.prod.exchangelabs.com
- ([fe80::919c:7d6a:2069:b0ca%3]) with mapi id 15.20.7633.033; Sat, 8 Jun 2024
- 08:32:13 +0000
-Message-ID: <94adcd6d-1e66-40d3-b9e7-ef35f79691b6@amperemail.onmicrosoft.com>
-Date: Sat, 8 Jun 2024 15:32:04 +0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] dt-bindings: hwmon: max31790: Add
- maxim,pwmout-pin-as-tach-input property
-To: Guenter Roeck <linux@roeck-us.net>, Conor Dooley <conor@kernel.org>
-References: <20240414042246.8681-4-chanh@os.amperecomputing.com>
- <13b195e6-cbbd-4f74-a6fa-d874cb4aaa45@linaro.org>
- <065243cc-09cf-4087-8842-bd4394fb324f@amperemail.onmicrosoft.com>
- <d549cf2b-a7fa-4644-8fcb-3c420503ee01@amperemail.onmicrosoft.com>
- <20240423-gallantly-slurp-24adbfbd6f09@spud>
- <ab5cfd8c-0e88-4194-a77e-5ffbb6890319@amperemail.onmicrosoft.com>
- <396b47f5-9604-44ab-881f-94d0664bcab8@roeck-us.net>
- <0dcc8788-604a-49c1-8c6b-fdbfa9192039@amperemail.onmicrosoft.com>
- <da94fde6-3286-44eb-a543-c2ac4d11cd32@roeck-us.net>
- <8fb38eb3-bb94-49cc-b5bc-80989d7876b9@amperemail.onmicrosoft.com>
- <20240508-onward-sedation-621cc48fa83f@spud>
- <e15695d6-b1b1-472a-8288-dcdfba5d619d@amperemail.onmicrosoft.com>
- <ee94c869-54ae-42ac-ac44-34535141293a@roeck-us.net>
-Content-Language: en-US
-From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
-In-Reply-To: <ee94c869-54ae-42ac-ac44-34535141293a@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH0PR03CA0324.namprd03.prod.outlook.com
- (2603:10b6:610:118::18) To DM6PR01MB5947.prod.exchangelabs.com
- (2603:10b6:5:1dd::12)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VxNZp5Wm3z30VX;
+	Sun,  9 Jun 2024 02:20:16 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1717863620; x=1749399620;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=tlIHue1eVX2KWMUDHuFeU9qzRhgwiAsuAEe22Nyg3Bs=;
+  b=Xdqo04Pk85K77WetGhd3ipW4Ir/ts9KrDWa36uGPUkfy9y4EWj5d8o2v
+   YtOTlJAzwdcqKirBMdiLhtCf0vKXc5FhocAfxllbBLTjMNewjkbPOefFa
+   pYyfccjgNKmZ4NuD2e4Z95D5FkI5DOxiAXYxuK2q8eVhsoyAlwH0dS6EX
+   U9LVaCbotJWm0f5w7pAyS16x3wjjGZeg2mi1YyIsrPpXRm9sn6h67B4iA
+   LxVLQ2doYJob65xCVGsWEjyI4qA1XdUxqJfC9r+ziwcPEqeKEUbxfvYil
+   JgcEgJHj+a91hdNqa/YyPGmcXe7BYxfx1K0ezdaHuYb8wZUvjy14AqFMm
+   A==;
+X-CSE-ConnectionGUID: Q05Q2/3hTNS6//kizySQdw==
+X-CSE-MsgGUID: 5HeFU0KFTSeaHSbZJH+8Ow==
+X-IronPort-AV: E=McAfee;i="6600,9927,11097"; a="25233102"
+X-IronPort-AV: E=Sophos;i="6.08,223,1712646000"; 
+   d="scan'208";a="25233102"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2024 09:20:10 -0700
+X-CSE-ConnectionGUID: 3qVkvh99RM+YI/m0X7VmoA==
+X-CSE-MsgGUID: Xr07b/w8Q1GSFyWX9rAizw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,223,1712646000"; 
+   d="scan'208";a="69409987"
+Received: from lkp-server01.sh.intel.com (HELO 8967fbab76b3) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 08 Jun 2024 09:20:06 -0700
+Received: from kbuild by 8967fbab76b3 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sFynT-0000CE-1v;
+	Sat, 08 Jun 2024 16:20:03 +0000
+Date: Sun, 9 Jun 2024 00:19:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Tommy Huang <tommy_huang@aspeedtech.com>, brendan.higgins@linux.dev,
+	benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
+	andrew@codeconstruct.com.au, wsa@kernel.org
+Subject: Re: [PATCH v2] i2c: aspeed: Update the stop sw state when the bus
+ recovery occurs
+Message-ID: <202406090041.5IMjYB8x-lkp@intel.com>
+References: <20240608043653.4086647-1-tommy_huang@aspeedtech.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR01MB5947:EE_|IA0PR01MB8330:EE_
-X-MS-Office365-Filtering-Correlation-Id: be17d4ff-0cfc-43db-e82f-08dc87957f18
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|376005|366007;
-X-Microsoft-Antispam-Message-Info: 	=?utf-8?B?dWtISSt3UFdFUUk3YVFBNHBFaWdmVlRPbmROY0VYT3JaclZBdjZNSFA1L0Vq?=
- =?utf-8?B?LzNseEYwRDFtTDJMZmFJemFlZ1JkYmJENzM3NEUrY0JJaGliZWM2UzNEVkNQ?=
- =?utf-8?B?Q2U1eG5TdzRMSGVSeXg2Z3ZvV2p3ZEd6QTRuNmRZcklOTllJTkRrelNMZjhD?=
- =?utf-8?B?Q3ZMTjNrejJ2SGxnWE9XTFAwdFNPcFp1c0hQdXc0cVNQaE9WWmh5Ty9DVHJl?=
- =?utf-8?B?N3hOeWttLzdkOS9keXhVYmRuUVhaVWJnYnFGNHFSMXQ2T05ub0RHWDI1YnNG?=
- =?utf-8?B?UXl1Z3FjZEY5WDVWK0FVSmZ2bGtqbnYzeGpsZEcxdWVzRTRjWCs4cHJIakdB?=
- =?utf-8?B?K1lsU0I4a1RiSTJWVVBLZ2NuREIySWZaeVNTTmdvT2FnMnltV1VRaURXbmI2?=
- =?utf-8?B?V2paVlFiaWFjU0lPRnJIS2lIV2hMUDRKVXp5cWRDUVpTa1NJS2VVWlpsbFZh?=
- =?utf-8?B?RWRTUjFCa01ZdFNuQ1dkZGN3Rk56Qm9WS29JT2dyTExSaldKU2hDa2ZJNmN1?=
- =?utf-8?B?WDVmN0gvMG55Wk5zSmlTVGh2dDdkVE5rbFN6dHg2VzZ5TFYrVUhPbEhTaUZv?=
- =?utf-8?B?TEZFQlFuVURwYTVOMFVQbFhnVjNsTVMyK0ozQUl0NUlEWnRJaWdMMldpVDJ3?=
- =?utf-8?B?Rm5RdjVhbGs5Wk55SE5zVWRZUG0xN1RCNCthS1pGV2dKZ3pNUFQyZlRISXc2?=
- =?utf-8?B?NThTc2pnVEloS1hVM0RNMG5OVHB5Ym01RVRTclgwRG9lbnA1RWd4NzlwQWlX?=
- =?utf-8?B?NUhkSldqeXJ1clBXeHAvaHpENTRXYmVQeUs1Yzl5dE9lTlJoT2p4OFJ0K2JU?=
- =?utf-8?B?SlUzSlNNWU04YTFXVkw0WHNuck9OV0NjQzhWRFU5ZmMyREZrMFhZTVRuVXo0?=
- =?utf-8?B?NGhjblpYbksyZCttbWZMc0JpZGQ0MlBoWEpSWWdPVUNnOTloRVFpK2plMDlt?=
- =?utf-8?B?RnBUZXdoaG5JSzBkOUgyM3pGRmVwNVdJdFU4ZEw4d1RZVzhCMW1odjBEUEJJ?=
- =?utf-8?B?aER5NmlDZFV4SjBIdUpZZ3BZbHNCUmVoWDFWbjEzamxDU2VCOGtRQkNBZUd6?=
- =?utf-8?B?VmZabnFhVjBNQkFGK0wwS09TcVB6d2poNFZiTElrc3F6ditpS1JocWxUMXc3?=
- =?utf-8?B?V0xaZHZRQUpyNTl0Nk1OVFdmZnhqMk43QlM1NXlNREUrOHlXdW1oSXlSUVhX?=
- =?utf-8?B?OEtKUmVJM2h1cUlpenZiN1RKSXdNQXIzR0RvYjRzQTlsdm5YTGkrYkd2b1R5?=
- =?utf-8?B?WlVkRUE1ZlgyaUVFb1YyVEFJMEJTNlpHelJNRGxrcC9tUzhBQm1CRHhNZVdL?=
- =?utf-8?B?S0JqUTFvaCs2cU5wTG5wcEtpcVczUkNJUkNmaURoOWk3aHJydVJZUGtkNm82?=
- =?utf-8?B?R3JOWkZzNlY4YU8zT0w4VEd2R0tHcHZuQmZEZklyc1djS0RRRWtYWVJ1UHdo?=
- =?utf-8?B?eTI1aTNyUlM5Z0RZczJyODNkOU1KWkQ2RERLT3RmbDFEZnFQSmdrQWJKMVpx?=
- =?utf-8?B?enRMRC9YbWw3QlNpTlNqb0JIb205TFdDdUVyTGpzK1d3c3pQaFA4YW1iM2Rk?=
- =?utf-8?B?TXBKNnd4R1lJd3FOVVRNK0xNSmJHb1ErclNqTWlkdDZEUjRsblQ3d2dweG5x?=
- =?utf-8?B?VXZudTVkZHhFZFlYUWZISTVack5sakQvNFA4L2VESXVPM1RTeUIyS2hBMkV1?=
- =?utf-8?B?TEkvNENBUnNnRzhLdzhuTVlVMTdvb0IxR2NmQ0ZmZUp5Y2doL09PcERRPT0=?=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5947.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(366007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?VmErQUl5RGVPcHdvakxuZTNQeUk5MWxJVG1PVTZlN0QzKzBaelcwUDE0Q0Q4?=
- =?utf-8?B?K0t1cnQvRHhHQWFmZHA0UGZwREo5b1VKbWRpSzZ2R1o0UnVhaFJIUjRyL2lT?=
- =?utf-8?B?L1lUdCtBSGhlWFhrT3pSOGFkZ0xrR1JWdVlaYVMzaDh3UDF1Z3dhMlpDSHBX?=
- =?utf-8?B?NVo1U3JhQ1VaR2k4Tk1IMml0OCt6OC9LZWhNamNVVllKYjlXWGJ2NHN5QkJv?=
- =?utf-8?B?U0Z4bGVYbHBiRUw5dlJzbkpNNFlhcFg0S3EzbTVnR05OYmhhdExBc3grRXNE?=
- =?utf-8?B?bEpqMHRVMklvUXh1TDQxSTQyZTBhc0g0a3pmcWNSRlJCUXVqNEpZdjFDMnc5?=
- =?utf-8?B?T1YxdWt6OEliRnpmZTRWWVRlVEpZc3NIZUJMSjdFSS9JRlpyckFOVkt5V2RX?=
- =?utf-8?B?M2hMWi9IODIzR1p6blBBckJtZmZWNENvNlBYMVZ5RENDbGZKeWRJc3kxSkxa?=
- =?utf-8?B?SUdPSVY0LzRveHJCZnZldkQvaTVtdFZVOWsxNGhaTWx4a0lCQXRaMUlXZm51?=
- =?utf-8?B?NjRyOXVhRkRwa3VvZTJHZVJjK2pjVE5pVlNPRkFIQkt2RzMwM1ZxcDA2M2hZ?=
- =?utf-8?B?UUI5Q052dGRoNnlyejl5cjNBZlFBc3l5L1AwbW9rUmw1UTh1UVErd0lRenZs?=
- =?utf-8?B?bWJ0RTBHVlNudXBUNzN6dzkzK1ZmcFp5bjVBQ3d5ZXd5bXB2MlRBajBHRkRx?=
- =?utf-8?B?aC8vazRscmhQNDBpdjNrbEpVclNaQWZqek9PVDl1cE0zZ2tMWFYwSWxNYkVs?=
- =?utf-8?B?UEE5MHVIRVNvSlRkNkJJSTJJUWw3QUNjbkVKUWNIZkdNaW85alEvQnZxZ0Rq?=
- =?utf-8?B?TjBlN29zd0l6R01XUUkzNGRuQkpUSlAyOEtjOWc3SHVYdWVJT3MxZGtsWlpy?=
- =?utf-8?B?dUo1WUN4aXZsMlZTazBxUlI1d2wrV3hCRWRoK04zdTA0RWc3eXJaZHdKT0Nz?=
- =?utf-8?B?eXh1MW8wYmNkNkhsMlg1dHYzOU5IMDBTZzM5dGQ5TkpSL1J0dmpHQ21IRndC?=
- =?utf-8?B?RE9UelpwL2ZtRWY0OFdOU003ZmtrVjhDN2F1dE56N3dkcXZlYlJOMlJHdFBJ?=
- =?utf-8?B?Mi9Kc3lhUEpHZ2w1ZWdCR2tRYWVPUVc0dE9TSTFUL3BzZVhvOVM0K2wrVUVY?=
- =?utf-8?B?dnpBNE5qMlBnREhNTndqNVkxVGVTbWlFN1ZyUDZBWGxYY044cjF2dzdIRGht?=
- =?utf-8?B?cm5COTZ1U2h4S3dwejY1Z3J4OEtmV1RNc2t3T3FmckNPbFBhOXVoL0ZlbVVK?=
- =?utf-8?B?MEw3UlpQMzFiRlcvalBnYjNDZlFrdHhzL2dmaERMSEZZNjlaZXhLZktBWGRN?=
- =?utf-8?B?SnlYczl2UkZ1N0NTZ013YmJDd2dicmFPUlhkakg0OXE3M3daWmlBdGVIalFG?=
- =?utf-8?B?QWk0c2hLOGsxU2craGZZeS9DY0R0WDBsUWJWSEZUZFR0bW5GSXk2VDNHb0c2?=
- =?utf-8?B?MnNTNm8rcnl3SkFsRDlRZW9GOU53VFpiSS9JWERmVktBK2thVjNlelZZWnE5?=
- =?utf-8?B?OG05OGZkMXN6WkVMK2NBZEEwQUtkNlJ3ck1BcWY0MjhqZkF4TEl3MEFjQVhO?=
- =?utf-8?B?WUh2aHo3R1RYSGV4OWFzZmpCWUdOZVRlRlBvV2lUU2FaZVh0STQwZnQ0Mm9E?=
- =?utf-8?B?RXlOelJIMWxiRS9MTHkwNG8vK3BmR2s4RFlLM3B0cjRXZWJteWJTRGxwdkF5?=
- =?utf-8?B?cWRnSkE1UjZGUXNuZ3hTQnlCeGlvN3JZV2cwTHpQUmI4T1h4N1ZMdjNEeHhJ?=
- =?utf-8?B?VzFZQU9MbkpwZmlEOGhvVDg1Y3pZVUdDOFN6WnBsWkt0Z2Q1TDY4N2NscmN6?=
- =?utf-8?B?anlFaUdOYmk0b0xBK1dpdHMyQUJUcHlNWFlxY1hlTllsdGxzaTljV21KRFVv?=
- =?utf-8?B?NE4zNWlkUGpHZzlmVXQ0Tko0M3R5MXhySE5FandBcHovM3lUSzZINVBCQkdV?=
- =?utf-8?B?dm9yTXF2Qjg5L3IrdnlmUElQb3JlVXI4M016UldrVEtEaWY2U2lFTHhEWEcw?=
- =?utf-8?B?b2hVN0UyM2lTQS9iYkQveFZ6czFGMkxrWWFlQ3Q5azlGSHF6bTBGNnFENTRo?=
- =?utf-8?B?S210Q0ZjS2dpR2drNDkxRUtocm9ZVkxSdkdGN1UyYXZnUkNlT3VnT2tiTEUv?=
- =?utf-8?B?N1RtcDlKRGZlTUMvUkpsek9BZ3hOa04rdzM5QkhKS1JoSElGYUczRm94NDF3?=
- =?utf-8?Q?lnxWDlMS5tiQIza7uuWxXD4=3D?=
-X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: be17d4ff-0cfc-43db-e82f-08dc87957f18
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5947.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2024 08:32:13.6741
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0nz739HbrFtqdluTLr6gzsNqZ8vaPJ4it932n2Gsw2SpyH7FyhJICEQs6X3qs2Lt5AeyvvdJA4G3ygWXg8BpibZJrrsl+jQ10sfXxw73ygTyRG4t9BlfTFfhO8pwLUvF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR01MB8330
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240608043653.4086647-1-tommy_huang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -172,225 +77,277 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>, Justin Ledford <justinledford@google.com>, Chanh Nguyen <chanh@os.amperecomputing.com>
+Cc: BMC-SW@aspeedtech.com, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, linux-i2c@vger.kernel.org, oe-kbuild-all@lists.linux.dev, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Tommy,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on andi-shyti/i2c/i2c-host]
+[also build test ERROR on linus/master v6.10-rc2 next-20240607]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Tommy-Huang/i2c-aspeed-Update-the-stop-sw-state-when-the-bus-recovery-occurs/20240608-124429
+base:   git://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
+patch link:    https://lore.kernel.org/r/20240608043653.4086647-1-tommy_huang%40aspeedtech.com
+patch subject: [PATCH v2] i2c: aspeed: Update the stop sw state when the bus recovery occurs
+config: arm-aspeed_g5_defconfig (https://download.01.org/0day-ci/archive/20240609/202406090041.5IMjYB8x-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240609/202406090041.5IMjYB8x-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406090041.5IMjYB8x-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+>> drivers/i2c/busses/i2c-aspeed.c:28:39: warning: 'struct aspeed_i2c_bus' declared inside parameter list will not be visible outside of this definition or declaration
+      28 | static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus);
+         |                                       ^~~~~~~~~~~~~~
+   drivers/i2c/busses/i2c-aspeed.c: In function 'aspeed_i2c_recover_bus':
+>> drivers/i2c/busses/i2c-aspeed.c:192:36: error: passing argument 1 of 'aspeed_i2c_do_stop' from incompatible pointer type [-Werror=incompatible-pointer-types]
+     192 |                 aspeed_i2c_do_stop(bus);
+         |                                    ^~~
+         |                                    |
+         |                                    struct aspeed_i2c_bus *
+   drivers/i2c/busses/i2c-aspeed.c:28:55: note: expected 'struct aspeed_i2c_bus *' but argument is of type 'struct aspeed_i2c_bus *'
+      28 | static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus);
+         |                                ~~~~~~~~~~~~~~~~~~~~~~~^~~
+   drivers/i2c/busses/i2c-aspeed.c: At top level:
+>> drivers/i2c/busses/i2c-aspeed.c:396:13: error: conflicting types for 'aspeed_i2c_do_stop'; have 'void(struct aspeed_i2c_bus *)'
+     396 | static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus)
+         |             ^~~~~~~~~~~~~~~~~~
+   drivers/i2c/busses/i2c-aspeed.c:28:13: note: previous declaration of 'aspeed_i2c_do_stop' with type 'void(struct aspeed_i2c_bus *)'
+      28 | static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus);
+         |             ^~~~~~~~~~~~~~~~~~
+>> drivers/i2c/busses/i2c-aspeed.c:28:13: warning: 'aspeed_i2c_do_stop' used but never defined
+   cc1: some warnings being treated as errors
 
 
-On 08/06/2024 06:14, Guenter Roeck wrote:
-> On 6/7/24 09:47, Chanh Nguyen wrote:
->>
->>
->> On 08/05/2024 23:47, Conor Dooley wrote:
->>> On Wed, May 08, 2024 at 10:44:34AM +0700, Chanh Nguyen wrote:
->>>> On 05/05/2024 22:40, Guenter Roeck wrote:
->>>>> On 5/5/24 03:08, Chanh Nguyen wrote:
->>>>>> On 25/04/2024 21:05, Guenter Roeck wrote:
->>>>>>> On 4/25/24 03:33, Chanh Nguyen wrote:
->>>>>>>
->>>>>>> pwm outputs on MAX31790 are always tied to the matching
->>>>>>> tachometer inputs
->>>>>>> (pwm1 <--> tach1 etc) and can not be reconfigured, meaning 
->>>>>>> tach-ch for
->>>>>>> channel X would always be X.
->>>>>>>
->>>>>>>> I would like to open a discussion about whether we should
->>>>>>>> use the tach-ch property on the fan-common.yaml
->>>>>>>>
->>>>>>>> I'm looking forward to hearing comments from everyone. For
->>>>>>>> me, both tach-ch and vendor property are good.
->>>>>>>>
->>>>>>>
->>>>>>> I am not even sure how to define tach-ch to mean "use the pwm 
->>>>>>> output pin
->>>>>>> associated with this tachometer input channel not as pwm output
->>>>>>> but as tachometer input". That would be a boolean, not a number.
->>>>>>>
->>>>>>
->>>>>> Thank Guenter,
->>>>>>
->>>>>> I reviewed again the "tach-ch" property, which is used in the 
->>>>>> https://elixir.bootlin.com/linux/v6.9-rc6/source/Documentation/devicetree/bindings/hwmon/aspeed,g6-pwm-tach.yaml#L68
->>>>>> and 
->>>>>> https://elixir.bootlin.com/linux/v6.9-rc6/source/drivers/hwmon/aspeed-g6-pwm-tach.c#L434
->>>>>>
->>>>>> That is something completely different from my purpose.
->>>>>>
->>>>>
->>>>> Based on its definition, tach-ch is associated with fans, and it looks
->>>>> like the .yaml file groups multiple sets of fans into a single
->>>>> fan node.
->>>>>
->>>>> In the simple case that would be
->>>>>       tach-ch = <1>
->>>>> ...
->>>>>       tach-ch = <12>
->>>>>
->>>>> or, if all fans are controlled by a single pwm
->>>>>       tach-ch = <1 2 3 4 5 6 8 9 10 11 12>
->>>>>
->>>>> The existence of tachometer channel 7..12 implies that pwm channel
->>>>> (tachometer
->>>>> channel - 6) is used as tachometer channel. That should be 
->>>>> sufficient to
->>>>> program
->>>>> the chip for that channel. All you'd have to do is to ensure that pwm
->>>>> channel
->>>>> "X" is not listed as tachometer channel "X + 6", and program pwm 
->>>>> channel
->>>>> "X - 6"
->>>>> for tachometer channels 7..12 as tachometer channels.
->>>>>
->>>>
->>>> Hi Guenter,
->>>>
->>>> I applied the patch [2/3] in my patch series 
->>>> (https://lore.kernel.org/lkml/20240414042246.8681-3-chanh@os.amperecomputing.com/)
->>>>
->>>> My device tree is configured as below, I would like to configure 
->>>> PWMOUT pins
->>>> 5 and 6 to become the tachometer input pins.
->>>>
->>>>         fan-controller@20 {
->>>>           compatible = "maxim,max31790";
->>>>           reg = <0x20>;
->>>>           maxim,pwmout-pin-as-tach-input = /bits/ 8 <0 0 0 0 1 1>;
->>>>         };
->>>
->>> Why are you still operating off a binding that looks like this? I
->>> thought that both I and Krzysztof told you to go and take a look at how
->>> the aspeed,g6-pwm-tach.yaml binding looped and do something similar
->>> here. You'd end up with something like:
->>>
->>>          fan-controller@20 {
->>>            compatible = "maxim,max31790";
->>>            reg = <0x20>;
->>>
->>>            fan-0 {
->>>              pwms = <&pwm-provider ...>;
->>>              tach-ch = 6;
->>>          };
->>>
->>>            fan-1 {
->>>              pwms = <&pwm-provider ...>;
->>>              tach-ch = 7;
->>>          };
->>> };
->>>
->>> You can, as tach-ch or pwms do not need to be unique, set multiple
->>> channels up as using the same tachs and/or pwms.
->>> In the case of this particular fan controller, I think that the max31790
->>> is actually the pwm provider so you'd modify it something like:
->>>
->>>          pwm-provider: fan-controller@20 {
->>>            compatible = "maxim,max31790";
->>>            reg = <0x20>;
->>>       #pwm-cells = <N>;
->>>
->>>            fan-0 {
->>>              pwms = <&pwm-provider ...>;
->>>              tach-ch = <6>;
->>>          };
->>>
->>>            fan-1 {
->>>              pwms = <&pwm-provider ...>;
->>>              tach-ch = <7>;
->>>          };
->>> };
->>>
->>> I just wrote this in my mail client's editor, so it may not be not
->>> valid, but it is how the fan bindings expect you to represent this kind
->>> of scenario.
->>>
->>
->> My apologies for the late reply.
->>
->> Thank you, Conor, for your recommendation!
->>
->> I spend more time checking the aspeed,g6-pwm-tach.yaml . Finally, I'll 
->> support the child nodes by having different tach-ch values. My system 
->> is designed similar to Figure 6 (8 Tach Monitors, 4PMWs).
->>
->> I'm going to push the patch series v3 soon.
->>
->> This is a brief binding.
->> ....
->> properties:
->>    compatible:
->>      const: maxim,max31790
->>
->>    reg:
->>      maxItems: 1
->>
->>    clocks:
->>      maxItems: 1
->>
->>    resets:
->>      maxItems: 1
->>
->> patternProperties:
->>    "^fan-[0-9]+$":
->>      $ref: fan-common.yaml#
->>      unevaluatedProperties: false
->>
->> required:
->>    - compatible
->>    - reg
->>
->> additionalProperties: false
->>
->> examples:
->>    - |
->>      i2c {
->>        #address-cells = <1>;
->>        #size-cells = <0>;
->>
->>        pwm_provider: fan-controller@20 {
->>          compatible = "maxim,max31790";
->>          reg = <0x20>;
->>          clocks = <&sys_clk>;
->>          resets = <&reset 0>;
->>
->>          fan-0 {
->>            pwms = <&pwm_provider 1>;
->>            tach-ch = <1 2>;
->>          };
->>
->>          fan-1 {
->>            pwms = <&pwm_provider 2>;
->>            tach-ch = <7 8>;
->>          };
->>        };
->>      };
->>
->>
->> As your example, I saw the #pwm-cells = <N> . Please let me know, 
->> what's the purpose of this property?
->>
-> 
-> It is the number of fields in "pwms" after the provider reference.
-> In your case it would be 1 (the index). If the pwm has additional
-> configuration parameters such as the frequency or polarity there
-> would be additional entries.
-> 
+vim +/aspeed_i2c_do_stop +192 drivers/i2c/busses/i2c-aspeed.c
 
-Thank Guenter very much!
+    27	
+  > 28	static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus);
+    29	
+    30	/* I2C Register */
+    31	#define ASPEED_I2C_FUN_CTRL_REG				0x00
+    32	#define ASPEED_I2C_AC_TIMING_REG1			0x04
+    33	#define ASPEED_I2C_AC_TIMING_REG2			0x08
+    34	#define ASPEED_I2C_INTR_CTRL_REG			0x0c
+    35	#define ASPEED_I2C_INTR_STS_REG				0x10
+    36	#define ASPEED_I2C_CMD_REG				0x14
+    37	#define ASPEED_I2C_DEV_ADDR_REG				0x18
+    38	#define ASPEED_I2C_BYTE_BUF_REG				0x20
+    39	
+    40	/* Global Register Definition */
+    41	/* 0x00 : I2C Interrupt Status Register  */
+    42	/* 0x08 : I2C Interrupt Target Assignment  */
+    43	
+    44	/* Device Register Definition */
+    45	/* 0x00 : I2CD Function Control Register  */
+    46	#define ASPEED_I2CD_MULTI_MASTER_DIS			BIT(15)
+    47	#define ASPEED_I2CD_SDA_DRIVE_1T_EN			BIT(8)
+    48	#define ASPEED_I2CD_M_SDA_DRIVE_1T_EN			BIT(7)
+    49	#define ASPEED_I2CD_M_HIGH_SPEED_EN			BIT(6)
+    50	#define ASPEED_I2CD_SLAVE_EN				BIT(1)
+    51	#define ASPEED_I2CD_MASTER_EN				BIT(0)
+    52	
+    53	/* 0x04 : I2CD Clock and AC Timing Control Register #1 */
+    54	#define ASPEED_I2CD_TIME_TBUF_MASK			GENMASK(31, 28)
+    55	#define ASPEED_I2CD_TIME_THDSTA_MASK			GENMASK(27, 24)
+    56	#define ASPEED_I2CD_TIME_TACST_MASK			GENMASK(23, 20)
+    57	#define ASPEED_I2CD_TIME_SCL_HIGH_SHIFT			16
+    58	#define ASPEED_I2CD_TIME_SCL_HIGH_MASK			GENMASK(19, 16)
+    59	#define ASPEED_I2CD_TIME_SCL_LOW_SHIFT			12
+    60	#define ASPEED_I2CD_TIME_SCL_LOW_MASK			GENMASK(15, 12)
+    61	#define ASPEED_I2CD_TIME_BASE_DIVISOR_MASK		GENMASK(3, 0)
+    62	#define ASPEED_I2CD_TIME_SCL_REG_MAX			GENMASK(3, 0)
+    63	/* 0x08 : I2CD Clock and AC Timing Control Register #2 */
+    64	#define ASPEED_NO_TIMEOUT_CTRL				0
+    65	
+    66	/* 0x0c : I2CD Interrupt Control Register &
+    67	 * 0x10 : I2CD Interrupt Status Register
+    68	 *
+    69	 * These share bit definitions, so use the same values for the enable &
+    70	 * status bits.
+    71	 */
+    72	#define ASPEED_I2CD_INTR_RECV_MASK			0xf000ffff
+    73	#define ASPEED_I2CD_INTR_SDA_DL_TIMEOUT			BIT(14)
+    74	#define ASPEED_I2CD_INTR_BUS_RECOVER_DONE		BIT(13)
+    75	#define ASPEED_I2CD_INTR_SLAVE_MATCH			BIT(7)
+    76	#define ASPEED_I2CD_INTR_SCL_TIMEOUT			BIT(6)
+    77	#define ASPEED_I2CD_INTR_ABNORMAL			BIT(5)
+    78	#define ASPEED_I2CD_INTR_NORMAL_STOP			BIT(4)
+    79	#define ASPEED_I2CD_INTR_ARBIT_LOSS			BIT(3)
+    80	#define ASPEED_I2CD_INTR_RX_DONE			BIT(2)
+    81	#define ASPEED_I2CD_INTR_TX_NAK				BIT(1)
+    82	#define ASPEED_I2CD_INTR_TX_ACK				BIT(0)
+    83	#define ASPEED_I2CD_INTR_MASTER_ERRORS					       \
+    84			(ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
+    85			 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
+    86			 ASPEED_I2CD_INTR_ABNORMAL |				       \
+    87			 ASPEED_I2CD_INTR_ARBIT_LOSS)
+    88	#define ASPEED_I2CD_INTR_ALL						       \
+    89			(ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
+    90			 ASPEED_I2CD_INTR_BUS_RECOVER_DONE |			       \
+    91			 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
+    92			 ASPEED_I2CD_INTR_ABNORMAL |				       \
+    93			 ASPEED_I2CD_INTR_NORMAL_STOP |				       \
+    94			 ASPEED_I2CD_INTR_ARBIT_LOSS |				       \
+    95			 ASPEED_I2CD_INTR_RX_DONE |				       \
+    96			 ASPEED_I2CD_INTR_TX_NAK |				       \
+    97			 ASPEED_I2CD_INTR_TX_ACK)
+    98	
+    99	/* 0x14 : I2CD Command/Status Register   */
+   100	#define ASPEED_I2CD_SCL_LINE_STS			BIT(18)
+   101	#define ASPEED_I2CD_SDA_LINE_STS			BIT(17)
+   102	#define ASPEED_I2CD_BUS_BUSY_STS			BIT(16)
+   103	#define ASPEED_I2CD_BUS_RECOVER_CMD			BIT(11)
+   104	
+   105	/* Command Bit */
+   106	#define ASPEED_I2CD_M_STOP_CMD				BIT(5)
+   107	#define ASPEED_I2CD_M_S_RX_CMD_LAST			BIT(4)
+   108	#define ASPEED_I2CD_M_RX_CMD				BIT(3)
+   109	#define ASPEED_I2CD_S_TX_CMD				BIT(2)
+   110	#define ASPEED_I2CD_M_TX_CMD				BIT(1)
+   111	#define ASPEED_I2CD_M_START_CMD				BIT(0)
+   112	#define ASPEED_I2CD_MASTER_CMDS_MASK					       \
+   113			(ASPEED_I2CD_M_STOP_CMD |				       \
+   114			 ASPEED_I2CD_M_S_RX_CMD_LAST |				       \
+   115			 ASPEED_I2CD_M_RX_CMD |					       \
+   116			 ASPEED_I2CD_M_TX_CMD |					       \
+   117			 ASPEED_I2CD_M_START_CMD)
+   118	
+   119	/* 0x18 : I2CD Slave Device Address Register   */
+   120	#define ASPEED_I2CD_DEV_ADDR_MASK			GENMASK(6, 0)
+   121	
+   122	enum aspeed_i2c_master_state {
+   123		ASPEED_I2C_MASTER_INACTIVE,
+   124		ASPEED_I2C_MASTER_PENDING,
+   125		ASPEED_I2C_MASTER_START,
+   126		ASPEED_I2C_MASTER_TX_FIRST,
+   127		ASPEED_I2C_MASTER_TX,
+   128		ASPEED_I2C_MASTER_RX_FIRST,
+   129		ASPEED_I2C_MASTER_RX,
+   130		ASPEED_I2C_MASTER_STOP,
+   131	};
+   132	
+   133	enum aspeed_i2c_slave_state {
+   134		ASPEED_I2C_SLAVE_INACTIVE,
+   135		ASPEED_I2C_SLAVE_START,
+   136		ASPEED_I2C_SLAVE_READ_REQUESTED,
+   137		ASPEED_I2C_SLAVE_READ_PROCESSED,
+   138		ASPEED_I2C_SLAVE_WRITE_REQUESTED,
+   139		ASPEED_I2C_SLAVE_WRITE_RECEIVED,
+   140		ASPEED_I2C_SLAVE_STOP,
+   141	};
+   142	
+   143	struct aspeed_i2c_bus {
+   144		struct i2c_adapter		adap;
+   145		struct device			*dev;
+   146		void __iomem			*base;
+   147		struct reset_control		*rst;
+   148		/* Synchronizes I/O mem access to base. */
+   149		spinlock_t			lock;
+   150		struct completion		cmd_complete;
+   151		u32				(*get_clk_reg_val)(struct device *dev,
+   152								   u32 divisor);
+   153		unsigned long			parent_clk_frequency;
+   154		u32				bus_frequency;
+   155		/* Transaction state. */
+   156		enum aspeed_i2c_master_state	master_state;
+   157		struct i2c_msg			*msgs;
+   158		size_t				buf_index;
+   159		size_t				msgs_index;
+   160		size_t				msgs_count;
+   161		bool				send_stop;
+   162		int				cmd_err;
+   163		/* Protected only by i2c_lock_bus */
+   164		int				master_xfer_result;
+   165		/* Multi-master */
+   166		bool				multi_master;
+   167	#if IS_ENABLED(CONFIG_I2C_SLAVE)
+   168		struct i2c_client		*slave;
+   169		enum aspeed_i2c_slave_state	slave_state;
+   170	#endif /* CONFIG_I2C_SLAVE */
+   171	};
+   172	
+   173	static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus);
+   174	
+   175	static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
+   176	{
+   177		unsigned long time_left, flags;
+   178		int ret = 0;
+   179		u32 command;
+   180	
+   181		spin_lock_irqsave(&bus->lock, flags);
+   182		command = readl(bus->base + ASPEED_I2C_CMD_REG);
+   183	
+   184		if (command & ASPEED_I2CD_SDA_LINE_STS) {
+   185			/* Bus is idle: no recovery needed. */
+   186			if (command & ASPEED_I2CD_SCL_LINE_STS)
+   187				goto out;
+   188			dev_dbg(bus->dev, "SCL hung (state %x), attempting recovery\n",
+   189				command);
+   190	
+   191			reinit_completion(&bus->cmd_complete);
+ > 192			aspeed_i2c_do_stop(bus);
+   193			spin_unlock_irqrestore(&bus->lock, flags);
+   194	
+   195			time_left = wait_for_completion_timeout(
+   196					&bus->cmd_complete, bus->adap.timeout);
+   197	
+   198			spin_lock_irqsave(&bus->lock, flags);
+   199			if (time_left == 0)
+   200				goto reset_out;
+   201			else if (bus->cmd_err)
+   202				goto reset_out;
+   203			/* Recovery failed. */
+   204			else if (!(readl(bus->base + ASPEED_I2C_CMD_REG) &
+   205				   ASPEED_I2CD_SCL_LINE_STS))
+   206				goto reset_out;
+   207		/* Bus error. */
+   208		} else {
+   209			dev_dbg(bus->dev, "SDA hung (state %x), attempting recovery\n",
+   210				command);
+   211	
+   212			reinit_completion(&bus->cmd_complete);
+   213			/* Writes 1 to 8 SCL clock cycles until SDA is released. */
+   214			writel(ASPEED_I2CD_BUS_RECOVER_CMD,
+   215			       bus->base + ASPEED_I2C_CMD_REG);
+   216			spin_unlock_irqrestore(&bus->lock, flags);
+   217	
+   218			time_left = wait_for_completion_timeout(
+   219					&bus->cmd_complete, bus->adap.timeout);
+   220	
+   221			spin_lock_irqsave(&bus->lock, flags);
+   222			if (time_left == 0)
+   223				goto reset_out;
+   224			else if (bus->cmd_err)
+   225				goto reset_out;
+   226			/* Recovery failed. */
+   227			else if (!(readl(bus->base + ASPEED_I2C_CMD_REG) &
+   228				   ASPEED_I2CD_SDA_LINE_STS))
+   229				goto reset_out;
+   230		}
+   231	
+   232	out:
+   233		spin_unlock_irqrestore(&bus->lock, flags);
+   234	
+   235		return ret;
+   236	
+   237	reset_out:
+   238		spin_unlock_irqrestore(&bus->lock, flags);
+   239	
+   240		return aspeed_i2c_reset(bus);
+   241	}
+   242	
 
-Please help review my binding. I'm looking forward to hearing any of 
-your comments.
-
-I'll update all comments on patch series v3 and push for review soon.
-
-The patch series includes two commits:
-
-[PATH 1/2] dt-bindings: hwmon: Add maxim max31790
-[PATH 2/2] hwmon: (max31790): Support config PWM becomes TACH by tach-ch
-
-
-Thanks,
-Chanh Ng
-
-
-> Guenter
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
