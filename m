@@ -1,140 +1,166 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CDA1900F89
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 06:39:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 955F590103A
+	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 10:33:11 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=MmRg2w3O;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=lkdzzC/b;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Vx52472tvz3cTL
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 14:39:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4VxBCm5M15z3cXg
+	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2024 18:33:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::715; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=tommy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20715.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::715])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=lkdzzC/b;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:240a::70e; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2070e.outbound.protection.outlook.com [IPv6:2a01:111:f403:240a::70e])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Vx51L4Yzwz30Tk;
-	Sat,  8 Jun 2024 14:38:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4VxBCF0Yvsz2yvh
+	for <openbmc@lists.ozlabs.org>; Sat,  8 Jun 2024 18:32:38 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BFF7rNozIU4Xu6kwvKo9FuHZP/f9IK6v6xVQCzCKQNvxZMdbov9RXmSAaR6qX52SbpLF8qAxjQ6Fm9IxF/TZLFbcHTI5uSPxmK1IoqpqCyQ30WjAgmvXQR8pA4QEQeSqUEc0TfN96NZPU0zWl/6EiMBZkeFWxbEvQkg2IpW30nBd8dUx5XPGmltY8jhmvlBpj0c6zDpZtqwXWZ9+0m90WwDxHPuHOaAEjduYFoqGyKweBk4J9VxwA0iyH16+2x8zSrfwdgj5VBRZSbHmUOGqIIT0RTRWHTyaMrpsk+dt/NyNMo0OGCbhSnXj+1ZOZ+g5/1EVCyl9g3GMLp7hcIq0Wg==
+ b=EJM2GbWNrlUJUB+RwsrY1G9EdEC552ezS6EmYFphpdv0EI2ln5AgeNAHmbxLhI1/lvKIuAuTqK7MKpTbYTWRN5rN1EyWcNe+KeX6JPLHO3o49OGbKkjHExQqM8o0lL+aJYyd7Krh1zxH+Jr4QZZMsub1lZ/hrB6JNaObOx3njioH60/U4K4pkSjGSUceu5ZnuhCZTV4hyU1nqSlv6iymYvtv3NVirJfFLwqTF1JNnahsEtSonDDINLQzyTj1u+4u5l91Wjti2ZphZBXnC4H5BslWU+r56PnnmzFgtSmsHWFJ13gZaqojmNMWxDeTuebUSp1/5BRWqSEau8MtPElWDA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U1spzAAEsRV3nfZFsrPD1JzmZbqoEygjJ5vpynECPNw=;
- b=HKx7hiOfcU2s6ZtO3YVNbQzLtroZpMilCs8qY7VMJBXOBdT/AscaZd+L/AemLlhovjlzvWTj/ZwwRkOZjn5s5Nu/R0rwadBBddXMg1pkf/PCpVlPfgOHoqmD0YQII7Vd9VASK7Gd/uRFTu6Xkk+yaSHoJDB5SjulSpP9tB+1gtI37vJccqJ/SdF6dTMOCqInQG+7bqugBqjcir6vrpz4QowRMxelbPXTdLA1rA2QcbX1uezi5U1D7CsXyPAoNybR8JW0Dh9VzdQ6U9guKiyuDj9MyFofJHMTnzzvjRZ5aw0ObJYzEy70v36lzApxsT6iYCFJTLx+3u8q4++tljzuOw==
+ bh=V3fMIkoWdChvMSBUch9sxSOXGlCwo+faegs5tqwMh1w=;
+ b=lWhOd4Tezfwm9JQyCnFH9PrbiOfvLwDmhLdSizHz5C6cPRfzZIOu+3K6z6Uowiz4hHDSfBHbbhaXrD7JmKTo73Q3OZt5lCe4jE4CtIfbW9w/yjMI27eB4K3fbaexK1fiJiezk89TBX2qHCdkKW0DhNZ8wUEps2Rxp1lIBbsPxG2kDdQLmAuxW3KB+aR5qDM747ndyxNJwbhQvTRHfa2dMpW2WBgnjj1vVx0BnPKfO46a3dWZPrip1GqOzCpD8PyRBm7vB+j7ZAv9s+HY0I6OqxLAmL+W713Tvg7VKidlrdkwLNFM94xv1/LAS5H59uct1IR/7cnmEg+8dzZPqFSVGg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U1spzAAEsRV3nfZFsrPD1JzmZbqoEygjJ5vpynECPNw=;
- b=MmRg2w3Oj1OdT0XLe3zOyn66Q9hh71waq2n/YMhB0E5YyqcMdxurys4m2lzeheBlCQFnY9kFufulbbS+VK3TTx1YzfsFsZNEYwZt/KrSBbKAEOTu7Mgkfcba7Hw4hDrgG7ECwCcIgjWoWrxWp50hima+MGzysfy576yMQMa2RPL3MU6bXeOQ8F/0tGWeEXXN2NZa8X0SH0hub+86jFnakVxZryEutt1KrEkrEfvqMUKScfEvwluLWazDYmNxGGVQeXwmCGuGEHKrIcDzOWPPLwNncOnBJzpJzcoowwpKdMqpe5AjNL5VkUKVmtoLX0vO75NJTHO80vkT/iRqAME00A==
-Received: from TYZPR06MB6191.apcprd06.prod.outlook.com (2603:1096:400:33d::12)
- by TYZPR06MB6934.apcprd06.prod.outlook.com (2603:1096:405:41::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.36; Sat, 8 Jun
- 2024 04:38:19 +0000
-Received: from TYZPR06MB6191.apcprd06.prod.outlook.com
- ([fe80::cc07:35e3:9143:c8e2]) by TYZPR06MB6191.apcprd06.prod.outlook.com
- ([fe80::cc07:35e3:9143:c8e2%5]) with mapi id 15.20.7633.036; Sat, 8 Jun 2024
- 04:38:19 +0000
-From: Tommy Huang <tommy_huang@aspeedtech.com>
-To: Andi Shyti <andi.shyti@kernel.org>
-Subject: RE: [PATCH] i2c: aspeed: Update the stop sw state when the bus
- recovry occurs
-Thread-Topic: [PATCH] i2c: aspeed: Update the stop sw state when the bus
- recovry occurs
-Thread-Index: AQHasl/7kNWQnBw5T0ayJZ/33ciwnbG5/HuAgANZ04A=
-Date: Sat, 8 Jun 2024 04:38:19 +0000
-Message-ID:  <TYZPR06MB6191C0769400FF03412E56F2E1C42@TYZPR06MB6191.apcprd06.prod.outlook.com>
-References: <20240530070656.3841066-1-tommy_huang@aspeedtech.com>
- <kts7ib2rxq4g26ayumcyaohs37zl43qo66gok3vae3reyabobe@nbbborkf2eow>
-In-Reply-To: <kts7ib2rxq4g26ayumcyaohs37zl43qo66gok3vae3reyabobe@nbbborkf2eow>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB6191:EE_|TYZPR06MB6934:EE_
-x-ms-office365-filtering-correlation-id: 4d95ac98-6c82-41af-4c75-08dc8774d23a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230031|366007|7416005|376005|1800799015|38070700009;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?bzLhvkIfJ5RE4Xg5EVCP4W9l2lRgRf1yECgKbZyvCcOhIc76xWRPvUAWG7OE?=
- =?us-ascii?Q?rpAZqzrGHF+fSfm+ZQXd1Vb0caxZae+J5PGfZe96SLyerIzMgFGG3+mGADgP?=
- =?us-ascii?Q?tlzZOoQM3w2oY+bVnSsOa/YaJfxWnA4vV1VQj3eIdt6ztvYPFxRhiZyltVMj?=
- =?us-ascii?Q?5UaWwyJTWF0aAF0zpe9UTxROp6paaV2S1+4xbdpQ1mfeC+E1FDYAn4IOBj34?=
- =?us-ascii?Q?XiqHACv7N9qhJt69iL1yfPIkw0iYhUDOIFBGr2E0YEsoh65ffgE3m67aM+Wu?=
- =?us-ascii?Q?julN4IgzDRTxOSc5hyZLJHZRdNQvhiQWbpjXry6xQLH90gkVPD+VyfKEEl45?=
- =?us-ascii?Q?oWhvASt0rY67y2aLc7hdsCZDXxRL6+MP8iPJTPFaw0SUm28kW1Gu7MZFuLzT?=
- =?us-ascii?Q?zvyFQtwf/ehxOnz2Za8XADWv+0Q3VOI3aK4XdhNxYv4H0f6t+dP74YKi+tTp?=
- =?us-ascii?Q?7U0ZdQQOatf+blNniDBEKZ4Lfme/TqEWVXiIx24q/HmoMALT7dE+VB2EE58w?=
- =?us-ascii?Q?ctoKkUZcz4oX3+Uhkh4n6Uq/z0+YYizkjOqQoTQSDe7Io3Vq3hvl5a9UHrgO?=
- =?us-ascii?Q?v86Pm6meDfx5LmGGW5A4NebeDFHJmIZ7ySv1/Xk8EgwEE8rStJMgw1Ycr0Fu?=
- =?us-ascii?Q?ECSjrSgQq7XhJcJoT1QgkV6zs9Hfvy7oGdNaaM1gqRDxBlmPyZMZL58ztWav?=
- =?us-ascii?Q?3k2VI6Y608jiCPhiFxplzlfPWXh8D/Cj8n/wdZGsKMPNM8Edv24ofKZaS4ao?=
- =?us-ascii?Q?3VcD7agsyhoU+Lgdkf0lcG7FMdrxJ58RsM432jQKjYYiVFj9CDf1cVkQOjk5?=
- =?us-ascii?Q?XDkGcCgBDTAyli3R8JHALxxhLGwJPKevvH9da07/+B+laV4KXezDZBkYGQ0v?=
- =?us-ascii?Q?yZoTlsm1GJb+kpaVpgezrvisnD8UyDIswlpc5lu6KpVUUrgw0v7RaJSrbNdI?=
- =?us-ascii?Q?gAXbMHiWFR5LmsV3H7J1mEMWwwARAjh9hkz8IQ4+WaUc1nGyJw8coPfqe4RH?=
- =?us-ascii?Q?7zpR5InXf6ArYR0cAI2SFmBxz1PndlMqy4V3fZkjPcncmGD7qmhYSgabQoAS?=
- =?us-ascii?Q?CErfVa7s7liBxO1o34O9DEuBECpBquEctI1WTqcUYCv79bJvvkS5bzIe9n1e?=
- =?us-ascii?Q?iy3foEl6MrwGooYoX+RaIRdKD+y3NVwmOiQ82aRDV6Y5h6wOAvn2H07RM+jY?=
- =?us-ascii?Q?ebztr+07eje17KtDEVWdpHoTtupT5TTjco9W733KfAnjdcSIiyX89nqM0OjV?=
- =?us-ascii?Q?c3MXrTGXQbgTOdxEqMvU8BLUZm0FofCk8CRJFbK1NPb1t69B5ZmofRs85/R6?=
- =?us-ascii?Q?XbZvRO4j4gY2IHmS+PEXdUlUzFgwyGmKyoFR1Cgj7Sya5Pik0HfP9O9qMoIy?=
- =?us-ascii?Q?RRF1/yQ=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB6191.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366007)(7416005)(376005)(1800799015)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?/tVS47iWDPxOg77osJS7HBL49oFgoxKCIFOKgVDCw0HEBuu2DsBP34Zu8RPN?=
- =?us-ascii?Q?ZgNy5S4NWhELpqcQh6hPdKqI34ncAg3zzhmzcVxM/lwHcxQMmAUSe4tJpZbz?=
- =?us-ascii?Q?wudwh/q6c06F+FfE552s5K44EKQilUdaaZorOVrRWw1sNCLCqO1wNUPbYoEK?=
- =?us-ascii?Q?ZkXaj/m/jWpUnS7qzlC8PHivzxXFSQ6fkiIdTSijHm06JpMiNejcTmIz9cMw?=
- =?us-ascii?Q?dSHljF4m4I7Xa6GB9TQt3gZsiroDGlZMRJYilh7t7uS4YueY6ZhwWY48NFa5?=
- =?us-ascii?Q?Tl/8SDemEt0iSHkkZ+39xIqBu/qmlGOwh+E7+1D2T5xK7Es/wH2o1c8u7vn/?=
- =?us-ascii?Q?ZrLSxYbbUDfHE0Rtj5YtLY1hJV5vgRkNPbsAB2m0yZCRNy/INaCurAPtLf/l?=
- =?us-ascii?Q?/Mx8OMduDNjwrg3ptYXDqPjVMsuoLcIV3kXi372XC+36U9iRkWC3BCSEf4Xz?=
- =?us-ascii?Q?GRcpiTxZs6qborvyn7HSXEMoutrDQEpfU5XYhs9vraKKTwCqz7ZzZ1tk/9yF?=
- =?us-ascii?Q?M829rarzVzBKEgC4T6xY4twYRCERRey7ajhoHs6mhfzMycltsIZ+la4DEG4D?=
- =?us-ascii?Q?z3IiTv6G2OP48misNLbCJnWsGrRqZcsdtFK0eITMAZhY++jlHXXzZbcIB2Jz?=
- =?us-ascii?Q?mN138qRv7KL7WwgRQyIbxtDwvrVI1gMwtDlqJOL96QEev9UZqSf7UlQLGsmY?=
- =?us-ascii?Q?qgVR1rQz9ItoA+t3Zr7ofiuuiV8piLIpafwXwKYtu92gfwvssIp01poCwwYv?=
- =?us-ascii?Q?Th9HHN3RVHBtguRdsVrMwCgdqpeDUu92BMbOkVktw+3Z4xAwfu/neoQZW8Ay?=
- =?us-ascii?Q?ftBE+iFQMa/kgxS4HvD8zkWSXw1FDvW9YbbkzY1LVcFyD0fRwsBUA4clwRyp?=
- =?us-ascii?Q?WBR0DJldbs7WoqgRTv0lWkN73QIRIGm0zvvkGaC7g61TpWSKe3tmIQkH+7Z8?=
- =?us-ascii?Q?9+zjcWZcy2b5+yJZVQo7N5E8R5YXi2E+jZqvR8T0vSEn2k8MLWaad+/XTq05?=
- =?us-ascii?Q?wN5x9/oqyajLMdpFHfFwfxh18lTrkYwnvyLa3vHeGsdnuz2Ix0WjRXIcHCTY?=
- =?us-ascii?Q?ZKCNZpIdXKTmkiUqvjkG9oYDtr7B5DpsxfLhyJCZ4YsH1T1FrGY5f8VaOLzp?=
- =?us-ascii?Q?xH1S1mWRQgSxTeerc9lE6J2d73uS/jL6Yc0cISn6vi5Ukcy/8Cgzc844seQc?=
- =?us-ascii?Q?IP+I7suQXBh9col5N65EebLQ9GDemyWGm21HekAUA06ZB7Q1loTsZkJ7KXfi?=
- =?us-ascii?Q?rz9DAUwfx8V0HWGFV6VNgU+NqlUM43wASDQb/OdFxb0xVu8PSRi0N+ihDGYg?=
- =?us-ascii?Q?nG2LAMr88DH4R7aSkOv5TH4KhVzBFo1gIDRpvjpZmZ4vJGMkOjhZ5Sh/qPIb?=
- =?us-ascii?Q?ffEid4WWJyLgzTo3XnKnpfHV412/uCNz8435YfQMxGyVf7pSlFhtwgyVLFY9?=
- =?us-ascii?Q?LAoIIH0xQ78tUQLNFW68Doa9RAIBk1eWdYNAx5svj8F7rA3QaB8ySH9daftE?=
- =?us-ascii?Q?8lK9LirmFPhYblaB25Rphgc8gFpt+TdUVDAPnkjdW504X8lZbIh+y24IhdyT?=
- =?us-ascii?Q?4BCCc6rOT3wSKvbU88jxnCyNdGaYX8qoxhC81rwia/b9GnpBfR1imA9zx0jk?=
- =?us-ascii?Q?Gg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ bh=V3fMIkoWdChvMSBUch9sxSOXGlCwo+faegs5tqwMh1w=;
+ b=lkdzzC/bqbUXq5y1iA9rp4DHs2FhRAcMXbdX3OVk4krVxcOO3zrBsWnXxrUAnLWFvebfhm8JMYkWg2ejsTNtPnEZfwE56cIZ/+JypEL6EvZbYs3YhxO9p67caoDvtkSlVJc0YKsirdVOh+nerSsEBORdZa6TmEkUaWRhGJlt/Ng=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5947.prod.exchangelabs.com (2603:10b6:5:1dd::12) by
+ IA0PR01MB8330.prod.exchangelabs.com (2603:10b6:208:480::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7633.30; Sat, 8 Jun 2024 08:32:14 +0000
+Received: from DM6PR01MB5947.prod.exchangelabs.com
+ ([fe80::919c:7d6a:2069:b0ca]) by DM6PR01MB5947.prod.exchangelabs.com
+ ([fe80::919c:7d6a:2069:b0ca%3]) with mapi id 15.20.7633.033; Sat, 8 Jun 2024
+ 08:32:13 +0000
+Message-ID: <94adcd6d-1e66-40d3-b9e7-ef35f79691b6@amperemail.onmicrosoft.com>
+Date: Sat, 8 Jun 2024 15:32:04 +0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] dt-bindings: hwmon: max31790: Add
+ maxim,pwmout-pin-as-tach-input property
+To: Guenter Roeck <linux@roeck-us.net>, Conor Dooley <conor@kernel.org>
+References: <20240414042246.8681-4-chanh@os.amperecomputing.com>
+ <13b195e6-cbbd-4f74-a6fa-d874cb4aaa45@linaro.org>
+ <065243cc-09cf-4087-8842-bd4394fb324f@amperemail.onmicrosoft.com>
+ <d549cf2b-a7fa-4644-8fcb-3c420503ee01@amperemail.onmicrosoft.com>
+ <20240423-gallantly-slurp-24adbfbd6f09@spud>
+ <ab5cfd8c-0e88-4194-a77e-5ffbb6890319@amperemail.onmicrosoft.com>
+ <396b47f5-9604-44ab-881f-94d0664bcab8@roeck-us.net>
+ <0dcc8788-604a-49c1-8c6b-fdbfa9192039@amperemail.onmicrosoft.com>
+ <da94fde6-3286-44eb-a543-c2ac4d11cd32@roeck-us.net>
+ <8fb38eb3-bb94-49cc-b5bc-80989d7876b9@amperemail.onmicrosoft.com>
+ <20240508-onward-sedation-621cc48fa83f@spud>
+ <e15695d6-b1b1-472a-8288-dcdfba5d619d@amperemail.onmicrosoft.com>
+ <ee94c869-54ae-42ac-ac44-34535141293a@roeck-us.net>
+Content-Language: en-US
+From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
+In-Reply-To: <ee94c869-54ae-42ac-ac44-34535141293a@roeck-us.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: CH0PR03CA0324.namprd03.prod.outlook.com
+ (2603:10b6:610:118::18) To DM6PR01MB5947.prod.exchangelabs.com
+ (2603:10b6:5:1dd::12)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5947:EE_|IA0PR01MB8330:EE_
+X-MS-Office365-Filtering-Correlation-Id: be17d4ff-0cfc-43db-e82f-08dc87957f18
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230031|1800799015|7416005|376005|366007;
+X-Microsoft-Antispam-Message-Info: 	=?utf-8?B?dWtISSt3UFdFUUk3YVFBNHBFaWdmVlRPbmROY0VYT3JaclZBdjZNSFA1L0Vq?=
+ =?utf-8?B?LzNseEYwRDFtTDJMZmFJemFlZ1JkYmJENzM3NEUrY0JJaGliZWM2UzNEVkNQ?=
+ =?utf-8?B?Q2U1eG5TdzRMSGVSeXg2Z3ZvV2p3ZEd6QTRuNmRZcklOTllJTkRrelNMZjhD?=
+ =?utf-8?B?Q3ZMTjNrejJ2SGxnWE9XTFAwdFNPcFp1c0hQdXc0cVNQaE9WWmh5Ty9DVHJl?=
+ =?utf-8?B?N3hOeWttLzdkOS9keXhVYmRuUVhaVWJnYnFGNHFSMXQ2T05ub0RHWDI1YnNG?=
+ =?utf-8?B?UXl1Z3FjZEY5WDVWK0FVSmZ2bGtqbnYzeGpsZEcxdWVzRTRjWCs4cHJIakdB?=
+ =?utf-8?B?K1lsU0I4a1RiSTJWVVBLZ2NuREIySWZaeVNTTmdvT2FnMnltV1VRaURXbmI2?=
+ =?utf-8?B?V2paVlFiaWFjU0lPRnJIS2lIV2hMUDRKVXp5cWRDUVpTa1NJS2VVWlpsbFZh?=
+ =?utf-8?B?RWRTUjFCa01ZdFNuQ1dkZGN3Rk56Qm9WS29JT2dyTExSaldKU2hDa2ZJNmN1?=
+ =?utf-8?B?WDVmN0gvMG55Wk5zSmlTVGh2dDdkVE5rbFN6dHg2VzZ5TFYrVUhPbEhTaUZv?=
+ =?utf-8?B?TEZFQlFuVURwYTVOMFVQbFhnVjNsTVMyK0ozQUl0NUlEWnRJaWdMMldpVDJ3?=
+ =?utf-8?B?Rm5RdjVhbGs5Wk55SE5zVWRZUG0xN1RCNCthS1pGV2dKZ3pNUFQyZlRISXc2?=
+ =?utf-8?B?NThTc2pnVEloS1hVM0RNMG5OVHB5Ym01RVRTclgwRG9lbnA1RWd4NzlwQWlX?=
+ =?utf-8?B?NUhkSldqeXJ1clBXeHAvaHpENTRXYmVQeUs1Yzl5dE9lTlJoT2p4OFJ0K2JU?=
+ =?utf-8?B?SlUzSlNNWU04YTFXVkw0WHNuck9OV0NjQzhWRFU5ZmMyREZrMFhZTVRuVXo0?=
+ =?utf-8?B?NGhjblpYbksyZCttbWZMc0JpZGQ0MlBoWEpSWWdPVUNnOTloRVFpK2plMDlt?=
+ =?utf-8?B?RnBUZXdoaG5JSzBkOUgyM3pGRmVwNVdJdFU4ZEw4d1RZVzhCMW1odjBEUEJJ?=
+ =?utf-8?B?aER5NmlDZFV4SjBIdUpZZ3BZbHNCUmVoWDFWbjEzamxDU2VCOGtRQkNBZUd6?=
+ =?utf-8?B?VmZabnFhVjBNQkFGK0wwS09TcVB6d2poNFZiTElrc3F6ditpS1JocWxUMXc3?=
+ =?utf-8?B?V0xaZHZRQUpyNTl0Nk1OVFdmZnhqMk43QlM1NXlNREUrOHlXdW1oSXlSUVhX?=
+ =?utf-8?B?OEtKUmVJM2h1cUlpenZiN1RKSXdNQXIzR0RvYjRzQTlsdm5YTGkrYkd2b1R5?=
+ =?utf-8?B?WlVkRUE1ZlgyaUVFb1YyVEFJMEJTNlpHelJNRGxrcC9tUzhBQm1CRHhNZVdL?=
+ =?utf-8?B?S0JqUTFvaCs2cU5wTG5wcEtpcVczUkNJUkNmaURoOWk3aHJydVJZUGtkNm82?=
+ =?utf-8?B?R3JOWkZzNlY4YU8zT0w4VEd2R0tHcHZuQmZEZklyc1djS0RRRWtYWVJ1UHdo?=
+ =?utf-8?B?eTI1aTNyUlM5Z0RZczJyODNkOU1KWkQ2RERLT3RmbDFEZnFQSmdrQWJKMVpx?=
+ =?utf-8?B?enRMRC9YbWw3QlNpTlNqb0JIb205TFdDdUVyTGpzK1d3c3pQaFA4YW1iM2Rk?=
+ =?utf-8?B?TXBKNnd4R1lJd3FOVVRNK0xNSmJHb1ErclNqTWlkdDZEUjRsblQ3d2dweG5x?=
+ =?utf-8?B?VXZudTVkZHhFZFlYUWZISTVack5sakQvNFA4L2VESXVPM1RTeUIyS2hBMkV1?=
+ =?utf-8?B?TEkvNENBUnNnRzhLdzhuTVlVMTdvb0IxR2NmQ0ZmZUp5Y2doL09PcERRPT0=?=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR01MB5947.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(1800799015)(7416005)(376005)(366007);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?VmErQUl5RGVPcHdvakxuZTNQeUk5MWxJVG1PVTZlN0QzKzBaelcwUDE0Q0Q4?=
+ =?utf-8?B?K0t1cnQvRHhHQWFmZHA0UGZwREo5b1VKbWRpSzZ2R1o0UnVhaFJIUjRyL2lT?=
+ =?utf-8?B?L1lUdCtBSGhlWFhrT3pSOGFkZ0xrR1JWdVlaYVMzaDh3UDF1Z3dhMlpDSHBX?=
+ =?utf-8?B?NVo1U3JhQ1VaR2k4Tk1IMml0OCt6OC9LZWhNamNVVllKYjlXWGJ2NHN5QkJv?=
+ =?utf-8?B?U0Z4bGVYbHBiRUw5dlJzbkpNNFlhcFg0S3EzbTVnR05OYmhhdExBc3grRXNE?=
+ =?utf-8?B?bEpqMHRVMklvUXh1TDQxSTQyZTBhc0g0a3pmcWNSRlJCUXVqNEpZdjFDMnc5?=
+ =?utf-8?B?T1YxdWt6OEliRnpmZTRWWVRlVEpZc3NIZUJMSjdFSS9JRlpyckFOVkt5V2RX?=
+ =?utf-8?B?M2hMWi9IODIzR1p6blBBckJtZmZWNENvNlBYMVZ5RENDbGZKeWRJc3kxSkxa?=
+ =?utf-8?B?SUdPSVY0LzRveHJCZnZldkQvaTVtdFZVOWsxNGhaTWx4a0lCQXRaMUlXZm51?=
+ =?utf-8?B?NjRyOXVhRkRwa3VvZTJHZVJjK2pjVE5pVlNPRkFIQkt2RzMwM1ZxcDA2M2hZ?=
+ =?utf-8?B?UUI5Q052dGRoNnlyejl5cjNBZlFBc3l5L1AwbW9rUmw1UTh1UVErd0lRenZs?=
+ =?utf-8?B?bWJ0RTBHVlNudXBUNzN6dzkzK1ZmcFp5bjVBQ3d5ZXd5bXB2MlRBajBHRkRx?=
+ =?utf-8?B?aC8vazRscmhQNDBpdjNrbEpVclNaQWZqek9PVDl1cE0zZ2tMWFYwSWxNYkVs?=
+ =?utf-8?B?UEE5MHVIRVNvSlRkNkJJSTJJUWw3QUNjbkVKUWNIZkdNaW85alEvQnZxZ0Rq?=
+ =?utf-8?B?TjBlN29zd0l6R01XUUkzNGRuQkpUSlAyOEtjOWc3SHVYdWVJT3MxZGtsWlpy?=
+ =?utf-8?B?dUo1WUN4aXZsMlZTazBxUlI1d2wrV3hCRWRoK04zdTA0RWc3eXJaZHdKT0Nz?=
+ =?utf-8?B?eXh1MW8wYmNkNkhsMlg1dHYzOU5IMDBTZzM5dGQ5TkpSL1J0dmpHQ21IRndC?=
+ =?utf-8?B?RE9UelpwL2ZtRWY0OFdOU003ZmtrVjhDN2F1dE56N3dkcXZlYlJOMlJHdFBJ?=
+ =?utf-8?B?Mi9Kc3lhUEpHZ2w1ZWdCR2tRYWVPUVc0dE9TSTFUL3BzZVhvOVM0K2wrVUVY?=
+ =?utf-8?B?dnpBNE5qMlBnREhNTndqNVkxVGVTbWlFN1ZyUDZBWGxYY044cjF2dzdIRGht?=
+ =?utf-8?B?cm5COTZ1U2h4S3dwejY1Z3J4OEtmV1RNc2t3T3FmckNPbFBhOXVoL0ZlbVVK?=
+ =?utf-8?B?MEw3UlpQMzFiRlcvalBnYjNDZlFrdHhzL2dmaERMSEZZNjlaZXhLZktBWGRN?=
+ =?utf-8?B?SnlYczl2UkZ1N0NTZ013YmJDd2dicmFPUlhkakg0OXE3M3daWmlBdGVIalFG?=
+ =?utf-8?B?QWk0c2hLOGsxU2craGZZeS9DY0R0WDBsUWJWSEZUZFR0bW5GSXk2VDNHb0c2?=
+ =?utf-8?B?MnNTNm8rcnl3SkFsRDlRZW9GOU53VFpiSS9JWERmVktBK2thVjNlelZZWnE5?=
+ =?utf-8?B?OG05OGZkMXN6WkVMK2NBZEEwQUtkNlJ3ck1BcWY0MjhqZkF4TEl3MEFjQVhO?=
+ =?utf-8?B?WUh2aHo3R1RYSGV4OWFzZmpCWUdOZVRlRlBvV2lUU2FaZVh0STQwZnQ0Mm9E?=
+ =?utf-8?B?RXlOelJIMWxiRS9MTHkwNG8vK3BmR2s4RFlLM3B0cjRXZWJteWJTRGxwdkF5?=
+ =?utf-8?B?cWRnSkE1UjZGUXNuZ3hTQnlCeGlvN3JZV2cwTHpQUmI4T1h4N1ZMdjNEeHhJ?=
+ =?utf-8?B?VzFZQU9MbkpwZmlEOGhvVDg1Y3pZVUdDOFN6WnBsWkt0Z2Q1TDY4N2NscmN6?=
+ =?utf-8?B?anlFaUdOYmk0b0xBK1dpdHMyQUJUcHlNWFlxY1hlTllsdGxzaTljV21KRFVv?=
+ =?utf-8?B?NE4zNWlkUGpHZzlmVXQ0Tko0M3R5MXhySE5FandBcHovM3lUSzZINVBCQkdV?=
+ =?utf-8?B?dm9yTXF2Qjg5L3IrdnlmUElQb3JlVXI4M016UldrVEtEaWY2U2lFTHhEWEcw?=
+ =?utf-8?B?b2hVN0UyM2lTQS9iYkQveFZ6czFGMkxrWWFlQ3Q5azlGSHF6bTBGNnFENTRo?=
+ =?utf-8?B?S210Q0ZjS2dpR2drNDkxRUtocm9ZVkxSdkdGN1UyYXZnUkNlT3VnT2tiTEUv?=
+ =?utf-8?B?N1RtcDlKRGZlTUMvUkpsek9BZ3hOa04rdzM5QkhKS1JoSElGYUczRm94NDF3?=
+ =?utf-8?Q?lnxWDlMS5tiQIza7uuWxXD4=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: be17d4ff-0cfc-43db-e82f-08dc87957f18
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5947.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6191.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d95ac98-6c82-41af-4c75-08dc8774d23a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2024 04:38:19.2720
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2024 08:32:13.6741
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AMLelnFT+purG6DZkxjRKt0zNDtU1EWy9hX87ka1O2MGYBGlP86VKB1uDc7VvlJETpXL/yottnNiVyc+g9zMqkevgi0pTn1rHUyVSl7uRDg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6934
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0nz739HbrFtqdluTLr6gzsNqZ8vaPJ4it932n2Gsw2SpyH7FyhJICEQs6X3qs2Lt5AeyvvdJA4G3ygWXg8BpibZJrrsl+jQ10sfXxw73ygTyRG4t9BlfTFfhO8pwLUvF
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR01MB8330
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -146,82 +172,225 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "wsa@kernel.org" <wsa@kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "joel@jms.id.au" <joel@jms.id.au>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>, Justin Ledford <justinledford@google.com>, Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andi,
 
-> -----Original Message-----
-> From: Andi Shyti <andi.shyti@kernel.org>
-> Sent: Thursday, June 6, 2024 9:27 AM
-> To: Tommy Huang <tommy_huang@aspeedtech.com>
-> Cc: brendan.higgins@linux.dev; benh@kernel.crashing.org; joel@jms.id.au;
-> andrew@codeconstruct.com.au; wsa@kernel.org; linux-i2c@vger.kernel.org;
-> openbmc@lists.ozlabs.org; linux-arm-kernel@lists.infradead.org;
-> linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org; BMC-SW
-> <BMC-SW@aspeedtech.com>
-> Subject: Re: [PATCH] i2c: aspeed: Update the stop sw state when the bus
-> recovry occurs
->=20
-> Hi Tommy,
->=20
-> On Thu, May 30, 2024 at 03:06:56PM +0800, Tommy Huang wrote:
-> > When the i2c bus recovey occurs, driver will send i2c stop command in
-> > the scl low condition. In this case the sw state will still keep
-> > original situation. Under multi-master usage, i2c bus recovery will be
-> > called when i2c transfer timeout occurs. Update the stop command
-> > calling with aspeed_i2c_do_stop function to update master_state.
-> >
-> > Fixes: f327c686d3ba ("i2c: aspeed: added driver for Aspeed I2C")
-> >
-> > Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
->=20
-> Can you please add:
->=20
-> Cc: <stable@vger.kernel.org> # v4.13+
 
-Got it. I will add it.
+On 08/06/2024 06:14, Guenter Roeck wrote:
+> On 6/7/24 09:47, Chanh Nguyen wrote:
+>>
+>>
+>> On 08/05/2024 23:47, Conor Dooley wrote:
+>>> On Wed, May 08, 2024 at 10:44:34AM +0700, Chanh Nguyen wrote:
+>>>> On 05/05/2024 22:40, Guenter Roeck wrote:
+>>>>> On 5/5/24 03:08, Chanh Nguyen wrote:
+>>>>>> On 25/04/2024 21:05, Guenter Roeck wrote:
+>>>>>>> On 4/25/24 03:33, Chanh Nguyen wrote:
+>>>>>>>
+>>>>>>> pwm outputs on MAX31790 are always tied to the matching
+>>>>>>> tachometer inputs
+>>>>>>> (pwm1 <--> tach1 etc) and can not be reconfigured, meaning 
+>>>>>>> tach-ch for
+>>>>>>> channel X would always be X.
+>>>>>>>
+>>>>>>>> I would like to open a discussion about whether we should
+>>>>>>>> use the tach-ch property on the fan-common.yaml
+>>>>>>>>
+>>>>>>>> I'm looking forward to hearing comments from everyone. For
+>>>>>>>> me, both tach-ch and vendor property are good.
+>>>>>>>>
+>>>>>>>
+>>>>>>> I am not even sure how to define tach-ch to mean "use the pwm 
+>>>>>>> output pin
+>>>>>>> associated with this tachometer input channel not as pwm output
+>>>>>>> but as tachometer input". That would be a boolean, not a number.
+>>>>>>>
+>>>>>>
+>>>>>> Thank Guenter,
+>>>>>>
+>>>>>> I reviewed again the "tach-ch" property, which is used in the 
+>>>>>> https://elixir.bootlin.com/linux/v6.9-rc6/source/Documentation/devicetree/bindings/hwmon/aspeed,g6-pwm-tach.yaml#L68
+>>>>>> and 
+>>>>>> https://elixir.bootlin.com/linux/v6.9-rc6/source/drivers/hwmon/aspeed-g6-pwm-tach.c#L434
+>>>>>>
+>>>>>> That is something completely different from my purpose.
+>>>>>>
+>>>>>
+>>>>> Based on its definition, tach-ch is associated with fans, and it looks
+>>>>> like the .yaml file groups multiple sets of fans into a single
+>>>>> fan node.
+>>>>>
+>>>>> In the simple case that would be
+>>>>>       tach-ch = <1>
+>>>>> ...
+>>>>>       tach-ch = <12>
+>>>>>
+>>>>> or, if all fans are controlled by a single pwm
+>>>>>       tach-ch = <1 2 3 4 5 6 8 9 10 11 12>
+>>>>>
+>>>>> The existence of tachometer channel 7..12 implies that pwm channel
+>>>>> (tachometer
+>>>>> channel - 6) is used as tachometer channel. That should be 
+>>>>> sufficient to
+>>>>> program
+>>>>> the chip for that channel. All you'd have to do is to ensure that pwm
+>>>>> channel
+>>>>> "X" is not listed as tachometer channel "X + 6", and program pwm 
+>>>>> channel
+>>>>> "X - 6"
+>>>>> for tachometer channels 7..12 as tachometer channels.
+>>>>>
+>>>>
+>>>> Hi Guenter,
+>>>>
+>>>> I applied the patch [2/3] in my patch series 
+>>>> (https://lore.kernel.org/lkml/20240414042246.8681-3-chanh@os.amperecomputing.com/)
+>>>>
+>>>> My device tree is configured as below, I would like to configure 
+>>>> PWMOUT pins
+>>>> 5 and 6 to become the tachometer input pins.
+>>>>
+>>>>         fan-controller@20 {
+>>>>           compatible = "maxim,max31790";
+>>>>           reg = <0x20>;
+>>>>           maxim,pwmout-pin-as-tach-input = /bits/ 8 <0 0 0 0 1 1>;
+>>>>         };
+>>>
+>>> Why are you still operating off a binding that looks like this? I
+>>> thought that both I and Krzysztof told you to go and take a look at how
+>>> the aspeed,g6-pwm-tach.yaml binding looped and do something similar
+>>> here. You'd end up with something like:
+>>>
+>>>          fan-controller@20 {
+>>>            compatible = "maxim,max31790";
+>>>            reg = <0x20>;
+>>>
+>>>            fan-0 {
+>>>              pwms = <&pwm-provider ...>;
+>>>              tach-ch = 6;
+>>>          };
+>>>
+>>>            fan-1 {
+>>>              pwms = <&pwm-provider ...>;
+>>>              tach-ch = 7;
+>>>          };
+>>> };
+>>>
+>>> You can, as tach-ch or pwms do not need to be unique, set multiple
+>>> channels up as using the same tachs and/or pwms.
+>>> In the case of this particular fan controller, I think that the max31790
+>>> is actually the pwm provider so you'd modify it something like:
+>>>
+>>>          pwm-provider: fan-controller@20 {
+>>>            compatible = "maxim,max31790";
+>>>            reg = <0x20>;
+>>>       #pwm-cells = <N>;
+>>>
+>>>            fan-0 {
+>>>              pwms = <&pwm-provider ...>;
+>>>              tach-ch = <6>;
+>>>          };
+>>>
+>>>            fan-1 {
+>>>              pwms = <&pwm-provider ...>;
+>>>              tach-ch = <7>;
+>>>          };
+>>> };
+>>>
+>>> I just wrote this in my mail client's editor, so it may not be not
+>>> valid, but it is how the fan bindings expect you to represent this kind
+>>> of scenario.
+>>>
+>>
+>> My apologies for the late reply.
+>>
+>> Thank you, Conor, for your recommendation!
+>>
+>> I spend more time checking the aspeed,g6-pwm-tach.yaml . Finally, I'll 
+>> support the child nodes by having different tach-ch values. My system 
+>> is designed similar to Figure 6 (8 Tach Monitors, 4PMWs).
+>>
+>> I'm going to push the patch series v3 soon.
+>>
+>> This is a brief binding.
+>> ....
+>> properties:
+>>    compatible:
+>>      const: maxim,max31790
+>>
+>>    reg:
+>>      maxItems: 1
+>>
+>>    clocks:
+>>      maxItems: 1
+>>
+>>    resets:
+>>      maxItems: 1
+>>
+>> patternProperties:
+>>    "^fan-[0-9]+$":
+>>      $ref: fan-common.yaml#
+>>      unevaluatedProperties: false
+>>
+>> required:
+>>    - compatible
+>>    - reg
+>>
+>> additionalProperties: false
+>>
+>> examples:
+>>    - |
+>>      i2c {
+>>        #address-cells = <1>;
+>>        #size-cells = <0>;
+>>
+>>        pwm_provider: fan-controller@20 {
+>>          compatible = "maxim,max31790";
+>>          reg = <0x20>;
+>>          clocks = <&sys_clk>;
+>>          resets = <&reset 0>;
+>>
+>>          fan-0 {
+>>            pwms = <&pwm_provider 1>;
+>>            tach-ch = <1 2>;
+>>          };
+>>
+>>          fan-1 {
+>>            pwms = <&pwm_provider 2>;
+>>            tach-ch = <7 8>;
+>>          };
+>>        };
+>>      };
+>>
+>>
+>> As your example, I saw the #pwm-cells = <N> . Please let me know, 
+>> what's the purpose of this property?
+>>
+> 
+> It is the number of fields in "pwms" after the provider reference.
+> In your case it would be 1 (the index). If the pwm has additional
+> configuration parameters such as the frequency or polarity there
+> would be additional entries.
+> 
 
->=20
-> > ---
-> >  drivers/i2c/busses/i2c-aspeed.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-aspeed.c
-> > b/drivers/i2c/busses/i2c-aspeed.c index ce8c4846b7fa..32f8b0c1c174
-> > 100644
-> > --- a/drivers/i2c/busses/i2c-aspeed.c
-> > +++ b/drivers/i2c/busses/i2c-aspeed.c
-> > @@ -169,6 +169,7 @@ struct aspeed_i2c_bus {  };
-> >
-> >  static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus);
-> > +static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus);
->=20
-> Can you please move aspeed_i2c_do_stop() on top? Doesn't make much sense
-> to add the prototype here as there is no dependencies.
+Thank Guenter very much!
 
-Sure. I will update it.
+Please help review my binding. I'm looking forward to hearing any of 
+your comments.
 
->=20
-> It's different the case of aspeed_i2c_reset() because it needs aspeed_i2c=
-_init().
->=20
-> >  static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)  { @@
-> > -187,7 +188,7 @@ static int aspeed_i2c_recover_bus(struct aspeed_i2c_bu=
-s
-> *bus)
-> >  			command);
-> >
-> >  		reinit_completion(&bus->cmd_complete);
-> > -		writel(ASPEED_I2CD_M_STOP_CMD, bus->base +
-> ASPEED_I2C_CMD_REG);
-> > +		aspeed_i2c_do_stop(bus);
->=20
-> The patch is good, though!
->=20
+I'll update all comments on patch series v3 and push for review soon.
 
-Thanks for your commects.
+The patch series includes two commits:
 
-> Thanks,
-> Andi
+[PATH 1/2] dt-bindings: hwmon: Add maxim max31790
+[PATH 2/2] hwmon: (max31790): Support config PWM becomes TACH by tach-ch
+
+
+Thanks,
+Chanh Ng
+
+
+> Guenter
+> 
