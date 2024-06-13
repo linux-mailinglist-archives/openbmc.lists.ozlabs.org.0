@@ -1,73 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD68190663B
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2024 10:11:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EA1990771A
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2024 17:42:00 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PAS1P5yX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tPbmQmFA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W0FV83zq1z3cWm
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2024 18:11:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W0RVF27rnz3cXJ
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2024 01:41:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PAS1P5yX;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tPbmQmFA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W0FTX4M28z3bpN;
-	Thu, 13 Jun 2024 18:10:38 +1000 (AEST)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1f65a3abd01so6582835ad.3;
-        Thu, 13 Jun 2024 01:10:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718266234; x=1718871034; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=u6rW4gRbF4g9rE66bFyc4+9ecA/29lBg9GnRQwb9/4M=;
-        b=PAS1P5yXa//wvoTx45g3n7EuH0IW/d+NBwOUJY/1BASVA6WHIRRmJikUOnV93Yt7Dk
-         elkNIryv+8YKnQjtVGg2UhJ2BckgVW8CF2WaMrp+kzoO/XMH4hu8kNCTJEkcYCIIFkrq
-         Ix5nT3qOTX9QXX10bLvlgddiQ0TQAdZGgnavAYPGx4uguEE/JgieMyVdiBZXZkZPDCNH
-         iSSn1NDN/ByX8IGoSinetqTqFhB1UuLZHgRne0F42KNZeLrLuYzfASgN/qbPZ/qmZob5
-         +XWbMbknec6/hRaRUQKAgzn6lzE3HSyOxfWVQgSyK2LS18ecFa561LCpsqyA+5/tClC4
-         YFfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718266234; x=1718871034;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u6rW4gRbF4g9rE66bFyc4+9ecA/29lBg9GnRQwb9/4M=;
-        b=bhVhK7gKK4d4vjP/EHzWi9cE9hu5vHCaHqT8bVTTAyVuJcqyJqjwm2zT5Yx1b/e1vg
-         BBAWXSyRd/1oDIK8toDjlKAvMd97QyrzkT/cLSQmLz1jyY+kiwxuG0FFHvzUDdl2xOYw
-         r5j2QhBbjJQ5SGhVIjLQK2rZrxcmlMWHFhoY06TJJpmxH5IkUd7rZ49gXq4YQ/zlzaTZ
-         dbv/2+Zape5yHFv+d2HyRWPkGFFXGjX7mPGHyblhGBkW87sj8wJT/w5kX/2J4a5562J1
-         93Nn6YXTn8kPOqDuYEnn8U2zqwf/7OVbvlY9fnZTA8HXjFlDuA2Pk4vUgPvqR6UbkdIw
-         moqw==
-X-Forwarded-Encrypted: i=1; AJvYcCWJj2UwidTyEUCwWvHwLNfGVvLnbHeaZYWflz7PgvA0U9TTrpmw3bS4CWii22l7bWz7g1k6RMhTt0fF7aa1jh3JSPmHkR4wdYM=
-X-Gm-Message-State: AOJu0YwvR4TR1++nu/LNQWSDpHMpC/T5VdhHAxmQjb2LI1rUB2byM6ZQ
-	pouQyDzLamV1ZyS4NMIdwTQpru71QMVeeWqooNy4zwlNV6ifTT9c
-X-Google-Smtp-Source: AGHT+IFLEywWphtgn3X1PQp/3zfnSwArZcK1HQZIowNQFjRIz2BcmZ5KhpvO9dq6/2QAxDHqyog4wA==
-X-Received: by 2002:a17:902:ccc2:b0:1f7:2135:ce71 with SMTP id d9443c01a7336-1f83b566d82mr47972065ad.11.1718266234189;
-        Thu, 13 Jun 2024 01:10:34 -0700 (PDT)
-Received: from localhost.localdomain (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1f855e74c49sm7572965ad.104.2024.06.13.01.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jun 2024 01:10:33 -0700 (PDT)
-From: Potin Lai <potin.lai.pt@gmail.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 1/1] pinctrl: aspeed-g6: Add NCSI pin group config
-Date: Thu, 13 Jun 2024 16:07:25 +0800
-Message-Id: <20240613080725.2531580-1-potin.lai.pt@gmail.com>
-X-Mailer: git-send-email 2.31.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W0RTj0DHmz3cTb
+	for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2024 01:41:28 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id CBEB161B97;
+	Thu, 13 Jun 2024 15:41:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A868C2BBFC;
+	Thu, 13 Jun 2024 15:41:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718293286;
+	bh=YcjcybhFmJnsqfSE8eTPWvKYNxPhZQkQFO3sAufAsCE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tPbmQmFAiDkaErzTfrPfQyv0v0h+Aju08yNx0TX2Oj0eDPOAbj3HOMM8eJzvKfy3N
+	 KWfmMToLD60jHg4tk1+NcbaO2T4zelJUWPevh9CQJEat8XGgfw90fEGOhYBWSTHNYm
+	 9pVXqO1x9bDE27jDHUzf54sW8CO8/dxBI2BngtdCxHdEC60K7154qZMJXobxL2rgAB
+	 eiIPHHphQtgniei+AIK+4ZtMyDte9luGROpnanL5dKiRd6ZU5TMZ1c2QgRs2pAXrc4
+	 vYkm0LBvs5s4AcSczdHJNWXlzlt1i83kG2bWIw2qVTON4H4goBlq5qm5Ceo8scQS1z
+	 aEmNwaEv9rwOA==
+Date: Thu, 13 Jun 2024 09:41:25 -0600
+From: Rob Herring <robh@kernel.org>
+To: Serge Semin <fancer.lancer@gmail.com>
+Subject: Re: [PATCH net-next v2 06/10] dt-bindings: net: Add Synopsys DW xPCS
+ bindings
+Message-ID: <20240613154125.GA1877114-robh@kernel.org>
+References: <20240602143636.5839-1-fancer.lancer@gmail.com>
+ <20240602143636.5839-7-fancer.lancer@gmail.com>
+ <20240605232916.GA3400992-robh@kernel.org>
+ <d57e77t4cz434qfdnuq7qek6zxcaehxmzlqtb3ezloh74ihclb@wn7gbfd6wbw7>
+ <20240610214916.GA3120860-robh@kernel.org>
+ <hx5pcbxao3ozymwh5pe4m3aje65lhxh5fzqynvphphfmpmnopk@2akvqrpxyg2v>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <hx5pcbxao3ozymwh5pe4m3aje65lhxh5fzqynvphphfmpmnopk@2akvqrpxyg2v>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,56 +65,218 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Potin Lai <potin.lai.pt@gmail.com>, linux-gpio@vger.kernel.org, Cosmo Chou <cosmo.chou@quantatw.com>, Potin Lai <potin.lai@quantatw.com>, linux-arm-kernel@lists.infradead.org
+Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Eric Dumazet <edumazet@google.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Sagar Cheluvegowda <quic_scheluve@quicinc.com>, Florian Fainelli <f.fainelli@gmail.com>, openbmc@lists.ozlabs.org, Russell King <linux@armlinux.org.uk>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Jose Abreu <joabreu@synopsys.com>, Abhishek Chauhan <quic_abchauha@quicinc.com>, Jakub Kicinski <kuba@kernel.org>, Mengyuan Lou <mengyuanlou@net-swift.com>, Andrew Halaney <ahalaney@redhat.com>, Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jiawen Wu <jiawenwu@trustnetic.com>, Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Vladimir Oltean <olteanv@gmail.com>, "David S. Miller" <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In the NCSI pin table, the reference clock output pin (RMIIXRCLKO) is not
-needed on the management controller side.
+On Tue, Jun 11, 2024 at 01:45:16PM +0300, Serge Semin wrote:
+> Hi Rob
+> 
+> On Mon, Jun 10, 2024 at 03:49:16PM -0600, Rob Herring wrote:
+> > On Thu, Jun 06, 2024 at 12:54:33PM +0300, Serge Semin wrote:
+> > > On Wed, Jun 05, 2024 at 05:29:16PM -0600, Rob Herring wrote:
+> > > > On Sun, Jun 02, 2024 at 05:36:20PM +0300, Serge Semin wrote:
+> > > > > Synopsys DesignWare XPCS IP-core is a Physical Coding Sublayer (PCS) layer
+> > > > > providing an interface between the Media Access Control (MAC) and Physical
+> > > > > Medium Attachment Sublayer (PMA) through a Media independent interface.
+> > > > > >From software point of view it exposes IEEE std. Clause 45 CSR space and
+> > > > > can be accessible either by MDIO or MCI/APB3 bus interfaces. In the former
+> > > > > case the PCS device is supposed to be defined under the respective MDIO
+> > > > > bus DT-node. In the later case the DW xPCS will be just a normal IO
+> > > > > memory-mapped device.
+> > > > > 
+> > > > > Besides of that DW XPCS DT-nodes can have an interrupt signal and clock
+> > > > > source properties specified. The former one indicates the Clause 73/37
+> > > > > auto-negotiation events like: negotiation page received, AN is completed
+> > > > > or incompatible link partner. The clock DT-properties can describe up to
+> > > > > three clock sources: peripheral bus clock source, internal reference clock
+> > > > > and the externally connected reference clock.
+> > > > > 
+> > > > > Finally the DW XPCS IP-core can be optionally synthesized with a
+> > > > > vendor-specific interface connected to the Synopsys PMA (also called
+> > > > > DesignWare Consumer/Enterprise PHY). Alas that isn't auto-detectable in a
+> > > > > portable way. So if the DW XPCS device has the respective PMA attached
+> > > > > then it should be reflected in the DT-node compatible string so the driver
+> > > > > would be aware of the PMA-specific device capabilities (mainly connected
+> > > > > with CSRs available for the fine-tunings).
+> > > > > 
+> > > > > Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> > > > > 
+> > > > > ---
+> > > > > 
+> > > > > Changelog v2:
+> > > > > - Drop the Management Interface DT-node bindings. DW xPCS with MCI/APB3
+> > > > >   interface is just a normal memory-mapped device.
+> > > > > ---
+> > > > >  .../bindings/net/pcs/snps,dw-xpcs.yaml        | 133 ++++++++++++++++++
+> > > > >  1 file changed, 133 insertions(+)
+> > > > >  create mode 100644 Documentation/devicetree/bindings/net/pcs/snps,dw-xpcs.yaml
+> > > > > 
+> > > > > diff --git a/Documentation/devicetree/bindings/net/pcs/snps,dw-xpcs.yaml b/Documentation/devicetree/bindings/net/pcs/snps,dw-xpcs.yaml
+> > > > > new file mode 100644
+> > > > > index 000000000000..7927bceefbf3
+> > > > > --- /dev/null
+> > > > > +++ b/Documentation/devicetree/bindings/net/pcs/snps,dw-xpcs.yaml
+> > > > > @@ -0,0 +1,133 @@
+> > > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > > > +%YAML 1.2
+> > > > > +---
+> > > > > +$id: http://devicetree.org/schemas/net/pcs/snps,dw-xpcs.yaml#
+> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > > > +
+> > > > > +title: Synopsys DesignWare Ethernet PCS
+> > > > > +
+> > > > > +maintainers:
+> > > > > +  - Serge Semin <fancer.lancer@gmail.com>
+> > > > > +
+> > > > > +description:
+> > > > > +  Synopsys DesignWare Ethernet Physical Coding Sublayer provides an interface
+> > > > > +  between Media Access Control and Physical Medium Attachment Sublayer through
+> > > > > +  the Media Independent Interface (XGMII, USXGMII, XLGMII, GMII, etc)
+> > > > > +  controlled by means of the IEEE std. Clause 45 registers set. The PCS can be
+> > > > > +  optionally synthesized with a vendor-specific interface connected to
+> > > > > +  Synopsys PMA (also called DesignWare Consumer/Enterprise PHY) although in
+> > > > > +  general it can be used to communicate with any compatible PHY.
+> > > > > +
+> > > > > +  The PCS CSRs can be accessible either over the Ethernet MDIO bus or directly
+> > > > > +  by means of the APB3/MCI interfaces. In the later case the XPCS can be mapped
+> > > > > +  right to the system IO memory space.
+> > > > > +
+> > > > > +properties:
+> > > > > +  compatible:
+> > > > > +    oneOf:
+> > > > > +      - description: Synopsys DesignWare XPCS with none or unknown PMA
+> > > > > +        const: snps,dw-xpcs
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen1 3G PMA
+> > > > > +        const: snps,dw-xpcs-gen1-3g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen2 3G PMA
+> > > > > +        const: snps,dw-xpcs-gen2-3g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen2 6G PMA
+> > > > > +        const: snps,dw-xpcs-gen2-6g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen4 3G PMA
+> > > > > +        const: snps,dw-xpcs-gen4-3g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen4 6G PMA
+> > > > > +        const: snps,dw-xpcs-gen4-6g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen5 10G PMA
+> > > > > +        const: snps,dw-xpcs-gen5-10g
+> > > > > +      - description: Synopsys DesignWare XPCS with Consumer Gen5 12G PMA
+> > > > > +        const: snps,dw-xpcs-gen5-12g
+> > > > > +
+> > > > > +  reg:
+> > > > > +    items:
+> > > > > +      - description:
+> > > > > +          In case of the MDIO management interface this just a 5-bits ID
+> > > > > +          of the MDIO bus device. If DW XPCS CSRs space is accessed over the
+> > > > > +          MCI or APB3 management interfaces, then the space mapping can be
+> > > > > +          either 'direct' or 'indirect'. In the former case all Clause 45
+> > > > > +          registers are contiguously mapped within the address space
+> > > > > +          MMD '[20:16]', Reg '[15:0]'. In the later case the space is divided
+> > > > > +          to the multiple 256 register sets. There is a special viewport CSR
+> > > > > +          which is responsible for the set selection. The upper part of
+> > > > > +          the CSR address MMD+REG[20:8] is supposed to be written in there
+> > > > > +          so the corresponding subset would be mapped to the lowest 255 CSRs.
+> > > > > +
+> > > > > +  reg-names:
+> > > > > +    items:
+> > > > > +      - enum: [ direct, indirect ]
+> > > > > +
+> > > > > +  reg-io-width:
+> > > > > +    description:
+> > > > > +      The way the CSRs are mapped to the memory is platform depended. Since
+> > > > > +      each Clause 45 CSR is of 16-bits wide the access instructions must be
+> > > > > +      two bytes aligned at least.
+> > > > > +    default: 2
+> > > > > +    enum: [ 2, 4 ]
+> > > > > +
+> > > > > +  interrupts:
+> > > > > +    description:
+> > > > > +      System interface interrupt output (sbd_intr_o) indicating Clause 73/37
+> > > > > +      auto-negotiation events':' Page received, AN is completed or incompatible
+> > > > > +      link partner.
+> > > > > +    maxItems: 1
+> > > > > +
+> > > > > +  clocks:
+> > > > > +    description:
+> > > > > +      Both MCI and APB3 interfaces are supposed to be equipped with a clock
+> > > > > +      source connected via the clk_csr_i line.
+> > > > > +
+> > > > > +      PCS/PMA layer can be clocked by an internal reference clock source
+> > > > > +      (phyN_core_refclk) or by an externally connected (phyN_pad_refclk) clock
+> > > > > +      generator. Both clocks can be supplied at a time.
+> > > > > +    minItems: 1
+> > > > > +    maxItems: 3
+> > > > > +
+> > > > > +  clock-names:
+> > > > > +    minItems: 1
+> > > > > +    maxItems: 3
+> > > > > +    anyOf:
+> > > > > +      - items:
+> > > > > +          enum: [ core, pad ]
+> > > > 
+> > > 
+> > > > This has no effect. If it is true, then the 2nd entry is too.
+> > > 
+> > > Yeah, from the anyOf logic it's redundant indeed. But the idea was to
+> > > signify that the DT-node may have one the next clock-names
+> > > combination:
+> > >    clock-names = "pad";
+> > > or clock-names = "core";
+> > > or clock-names = "core", "pad";
+> > > or clock-names = "pclk";
+> > > or clock-names = "pclk", "core";
+> > > or clock-names = "pclk", "pad";
+> > > or clock-names = "pclk", "core", "pad";
+> > 
+> > That would be:
+> > 
+> > oneOf:
+> >   - minItems: 1
+> >     items:
+> >       - enum: [core, pad]
+> >       - const: pad
+> >   - minItems: 1
+> >     items:
+> >       - const: pclk
+> >       - enum: [core, pad]
+> >       - const: pad
+> > 
+> > *-names is enforced to be 'uniqueItems: true', so we don't have to worry 
+> > about repeated entries.
+> > 
+> > This also nicely splits between MMIO and MDIO.
+> 
+> I had such approach in mind, but it seemed to me more complicated and
+> weakly scaleable (should we need to add some more clocks). Isn't the
+> next constraint look more readable:
 
-To optimize pin usage, add new NCSI pin groupis that excludes RMIIXRCLKO,
-reducing the number of required pins.
+Hardware is magically growing more clocks?
 
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
----
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ 
+> anyOf:
+>   - description: DW XPCS accessible over MDIO-bus
+>     minItems: 1
+>     maxItems: 2
+>     items:
+>       enum: [core, pad]
+>   - description: DW XPCS with the MCI/APB3 CSRs IO interface
+>     minItems: 1
+>     maxItems: 3
+>     items:
+>       enum: [pclk, core, pad]
+>     contains:
+>       const: pclk
+> ?
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index 7938741136a2c..31e4e0b342a00 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -249,7 +249,9 @@ PIN_DECL_2(E26, GPIOD3, RGMII3RXD3, RMII3RXER);
- 
- FUNC_GROUP_DECL(RGMII3, H24, J22, H22, H23, G22, F22, G23, G24, F23, F26, F25,
- 		E26);
--FUNC_GROUP_DECL(RMII3, H24, J22, H22, H23, G23, F23, F26, F25, E26);
-+GROUP_DECL(RMII3, H24, J22, H22, H23, G23, F23, F26, F25, E26);
-+GROUP_DECL(NCSI3, J22, H22, H23, G23, F23, F26, F25, E26);
-+FUNC_DECL_2(RMII3, RMII3, NCSI3);
- 
- #define F24 28
- SIG_EXPR_LIST_DECL_SESG(F24, NCTS3, NCTS3, SIG_DESC_SET(SCU410, 28));
-@@ -355,7 +357,9 @@ FUNC_GROUP_DECL(NRTS4, B24);
- 
- FUNC_GROUP_DECL(RGMII4, F24, E23, E24, E25, D26, D24, C25, C26, C24, B26, B25,
- 		B24);
--FUNC_GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
-+GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
-+GROUP_DECL(NCSI4, E23, E24, E25, C25, C24, B26, B25, B24);
-+FUNC_DECL_2(RMII4, RMII4, NCSI4);
- 
- #define D22 40
- SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8));
-@@ -1976,6 +1980,8 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
- 	ASPEED_PINCTRL_GROUP(MDIO2),
- 	ASPEED_PINCTRL_GROUP(MDIO3),
- 	ASPEED_PINCTRL_GROUP(MDIO4),
-+	ASPEED_PINCTRL_GROUP(NCSI3),
-+	ASPEED_PINCTRL_GROUP(NCSI4),
- 	ASPEED_PINCTRL_GROUP(NCTS1),
- 	ASPEED_PINCTRL_GROUP(NCTS2),
- 	ASPEED_PINCTRL_GROUP(NCTS3),
--- 
-2.31.1
+I don't see how that is much better in simplicity or scaleability. I 
+would just do this over the above:
 
+minItems: 1
+maxItems: 3
+items:
+  enum: [pclk, core, pad]
+
+Either you define the order or you don't. The former is strongly 
+preferred. The latter is done when it's too much a mess or we just don't 
+care to discuss it any more.
+
+Rob
