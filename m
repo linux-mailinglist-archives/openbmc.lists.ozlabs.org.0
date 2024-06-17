@@ -1,73 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEA2590A755
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2024 09:35:21 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAC2F90A769
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2024 09:36:47 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=t37YfRjb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=TikU2bPn;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W2hVt5CkMz3fnS
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2024 17:35:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W2hXX45fkz3fnV
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2024 17:36:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=t37YfRjb;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=TikU2bPn;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W2hVM3lfwz2ydQ
-	for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2024 17:34:50 +1000 (AEST)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-5295eb47b48so4926016e87.1
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2024 00:34:51 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W2hX1399yz3cV1;
+	Mon, 17 Jun 2024 17:36:17 +1000 (AEST)
+Received: from [192.168.68.112] (ppp118-210-79-194.adl-adc-lon-bras32.tpg.internode.on.net [118.210.79.194])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 242482014A;
+	Mon, 17 Jun 2024 15:36:17 +0800 (AWST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1718609682; x=1719214482; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xoq4EUAvhohkGeVSJqSuDIOlvwFj9GujMdx8Xhlpyd4=;
-        b=t37YfRjb0Q+J/znWjUcslCT4p26jCarAh0Zj/vAEoHptVeceq96Lew86nfOGweomB9
-         hLu406JoQhfvzZh9Iu/iZlBNRBRmEYKA+aIkuOj5MawdD5Fd5SKLPuZ5uCv7DefNn5lM
-         OA1IKzI3QzeBGc+RifXimNKNezxNWUlwCObvPMCutlcumIKdapIR6zkJNEBCeDPGlqmU
-         QuwDdLb/n26O8UebPb3Oaz/GqW5lGmNy4IOALu7vadWsQuO74/85bixM/LZginjAHRMJ
-         iAYxW03IXbfmw6NF/cpZ5OMZ6ujq4GrkI/FVOfc8BG5odYkMq/wbOmJiC3YsdJjUaXrX
-         ssmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718609682; x=1719214482;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xoq4EUAvhohkGeVSJqSuDIOlvwFj9GujMdx8Xhlpyd4=;
-        b=dVAMkispWAt/u6wC/HLV0QwXAYIxRanmgt9M5h3RmX+L4gRxOvbbbxofeXVF4cSsD5
-         ZDKOiYoaM2m5VfxeU4UlHOikIksgV/JiwojeACSDX8zY/5rwZv1fIQ1wrUMfiBqf+WrL
-         DW4sNi7LYfuppj0pjuYty45y/PJqGFosMgMLsAmr9zgUOx5HZFE/Im9e059Hupc87THZ
-         thxwclD1dPqWSpyZukVGii8Zn2upOaVZKb6s0U1zGgmmBKY2slbkxGmTYWyXylulUTwi
-         FrtB/58vaNAJFrUG3Kkgd1ja2FxNtXHVmRQO8cRVQzC3CYyT6LCg6OlxTIIKkTfeLyQX
-         vXVA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+ToY7+R36hWaZ8YXEMtP7OKKvYq1aMw0P+t3g5uGohr3i2UI/4xMRrD2dJTNKErLnnz4ztPQLDsucUytSPS3bVCEer/oKj2I=
-X-Gm-Message-State: AOJu0YwGzG5hjd5K/trVggLBFUUbJFyAekMbPy2My8BVFADNohGf4GGj
-	FXdEPQJtg7gU5+JtQhytndnDB/ibxqaOAwc4JDop8g9nJeox20NOh3l7E369zliTzjCcdd8gyHc
-	TxyY/HXfqHf9Wj5hjGkZSgdZzbxqr81zDe3E8PA==
-X-Google-Smtp-Source: AGHT+IGqIDqoMDiWUnJbMVSGr1EJQQ4GFqNlfiC0YOW4DAh8bCGdlwiNhRqn/j5asJGjevkFUoLeA+A2JuGUQ9QeAF8=
-X-Received: by 2002:a05:6512:3c97:b0:52c:adff:4bcb with SMTP id
- 2adb3069b0e04-52cadff4c84mr5977471e87.53.1718609682402; Mon, 17 Jun 2024
- 00:34:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240531-dt-warnings-gpio-ast2600-pinctrl-funcs-groups-v1-0-a6fe2281a1b8@codeconstruct.com.au>
-In-Reply-To: <20240531-dt-warnings-gpio-ast2600-pinctrl-funcs-groups-v1-0-a6fe2281a1b8@codeconstruct.com.au>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 17 Jun 2024 09:34:31 +0200
-Message-ID: <CACRpkdanSAkR-czs=OUKLh6dpiRk0QDLR-T0ECrG-Y4cY9=Vmg@mail.gmail.com>
+	d=codeconstruct.com.au; s=2022a; t=1718609777;
+	bh=iOiT9XbaETPh/FvCvqtFzcLzSYCSL59RFQR96l/c+sY=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=TikU2bPnSvNMKifTDiW9nN2PW7diSyrEPF2VcwSk0Gc75oNTixqOtJue9r6SQp9YT
+	 m/Ils3hmxFlKoIdOFroZMBwAFEL2B8hNR27a9Ma2I5lHcrnuKDfjLOWXok4Fn0OKhj
+	 3bvcfXScHtyjk7h8Uf+vOZua7UMu/tQBI6uVzyca7G78KgmRZp38EyO89tYS9w9f8i
+	 RCoAK/OVhGm1bga7v/ZjJCOSxpqjPw7JtaUOXCnmmLIiFEzTtdFi/bQ5ga+FfuQRA7
+	 gfUWDjoHmvuDSYOLiq52zuuaXFa2xAWYpV+eaqe2RF6pTWDp1pNB10FWF9rAA55t99
+	 GWufr9eYjWttg==
+Message-ID: <28297cafdf748dd3e2da3e6b54012bf3c88a1be1.camel@codeconstruct.com.au>
 Subject: Re: [PATCH 0/3] dt-bindings: pinctrl: aspeed: Define missing
  functions and groups
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 17 Jun 2024 17:06:16 +0930
+In-Reply-To: <CACRpkdanSAkR-czs=OUKLh6dpiRk0QDLR-T0ECrG-Y4cY9=Vmg@mail.gmail.com>
+References: 	<20240531-dt-warnings-gpio-ast2600-pinctrl-funcs-groups-v1-0-a6fe2281a1b8@codeconstruct.com.au>
+	 <CACRpkdanSAkR-czs=OUKLh6dpiRk0QDLR-T0ECrG-Y4cY9=Vmg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,17 +64,20 @@ Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-asp
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, May 31, 2024 at 5:03=E2=80=AFAM Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
+On Mon, 2024-06-17 at 09:34 +0200, Linus Walleij wrote:
+> On Fri, May 31, 2024 at 5:03=E2=80=AFAM Andrew Jeffery
+> <andrew@codeconstruct.com.au> wrote:
+>=20
+> > This short series cleans up a collection of binding warnings concerning
+> > use of undefined pinctrl functions and groups. Together they make a
+> > reasonable dent in the volume of output from `make dtbs_check` for the
+> > Aspeed devicetrees.
+>=20
+> All patches applied.
+>=20
+> Thanks Andrew!
 
-> This short series cleans up a collection of binding warnings concerning
-> use of undefined pinctrl functions and groups. Together they make a
-> reasonable dent in the volume of output from `make dtbs_check` for the
-> Aspeed devicetrees.
+That was quick! Thanks!
 
-All patches applied.
+Andrew
 
-Thanks Andrew!
-
-Yours,
-Linus Walleij
