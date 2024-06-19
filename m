@@ -1,72 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08AFD90E952
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2024 13:24:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 661B890F9D8
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2024 01:46:28 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JRDPPZO8;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=dohAyRhp;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W41Vr51K1z3dBZ
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2024 21:24:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W4KyT0sgkz3d2S
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2024 09:46:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JRDPPZO8;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=dohAyRhp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W41V96tq6z30Vg;
-	Wed, 19 Jun 2024 21:24:17 +1000 (AEST)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ec002caeb3so84243871fa.2;
-        Wed, 19 Jun 2024 04:24:18 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W4Kxw0FpGz30VT;
+	Thu, 20 Jun 2024 09:45:55 +1000 (AEST)
+Received: from [192.168.68.112] (ppp118-210-79-194.adl-adc-lon-bras32.tpg.internode.on.net [118.210.79.194])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id E2FFC20154;
+	Thu, 20 Jun 2024 07:45:49 +0800 (AWST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718796255; x=1719401055; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4AhLMVJiVMssdXrymxDZSsXEoYz8lpEaRocGgJePhUg=;
-        b=JRDPPZO8fKbA+iSj8NnXDBmBY8y7InIK+krQ6/jQQx72bo6+/GteRKK5vhJBCEBurF
-         SikD5QkdZH+JoJ6Sle4BWrPWjWzOUPwXX5OG4ThAWboNNZdgnWibVgRqS0EXrbyQQzwD
-         iB/Ov/23Kkcfm5BxgB5dn85viB65MHq0tsZVahaf0VWKLbS6dDT5BzgRfUY1PcMJbaDC
-         C4eO6rRntBHVDS1dAUn9aK+FlTI8Wo1aAAVPjTK/flyPz0YoZ/MS6cEk1qTVsgYpS5OA
-         lpBtQy9Uq4jcmKtlvpusT2M/x2wmvKLGs37aIWCOZwNlTbPctS31kQG0HRXFbPC9V3w/
-         WAZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718796255; x=1719401055;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4AhLMVJiVMssdXrymxDZSsXEoYz8lpEaRocGgJePhUg=;
-        b=oFn7dJ185cfDVDjlr7iEMMw5gGBFPOYIYjl9MqDoQKA0cb87mHHga1QUUSna1SyZny
-         H1aa4YtF58os1fYeyuH873dOWu8woVA2NRF10JxoxXCAuszHYqc9uX38k5XG9NYeoPKS
-         NCclcVQJE9tp/wTKLWEJhqn7/dzjLgz3Mqql277ov22tGStX+w4NkCUqs+sAKYe+CnCg
-         tLCqJ75Jce5/N7CbHY6A3/5P4qZECvLs0gj+UGB3Zn7xizPLFr3fRKcTCRXTNaCr/z6H
-         /gW6sx+II9fenXYUKrvH0sjarKgQNNMB6BnpDIyVitzykoLQevLTzmuSAnAvBYiSzu/G
-         MfZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUWarVrErS7WR7bGPo0gOe4s0aAnChjIHLHrJucm36dqeatCo2RNnMe4RhOBmqJGkDlHQl11LgNfZOYXAD6VJn9Gyw1odqbg+c5tqu3Xo7j7dpaq/IWFx9JI14XgL5Nz8PFfWaDV8Nd
-X-Gm-Message-State: AOJu0Ywg402Wn4v+u9YPAc3wHOw6XeemJk/DeLLiw5njboKk1uGlZ4iQ
-	4ptyNx+M8bbNRwMKwTeRZDIYleLHTs9HtVDundESnLvpub7vWw1fzP9GeRqX/zYsFtEqLUL0jUv
-	UPS7T9wdNtqp9VRRtkDiWMAD3J+M7iK1o
-X-Google-Smtp-Source: AGHT+IEQww8Sc0Jg4gCddWh2kVTEqz+WZu5WTjkaJSzaRVJjX7JNi6gjqMvrxWj14/018FjLROHZoPp/GakSEWmq+uw=
-X-Received: by 2002:a2e:9b08:0:b0:2ec:21f3:b67b with SMTP id
- 38308e7fff4ca-2ec3cfd6744mr15635501fa.37.1718796255250; Wed, 19 Jun 2024
- 04:24:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240613080725.2531580-1-potin.lai.pt@gmail.com> <946f44526e3016f595bfe463cf0a7f5b4eaa084a.camel@codeconstruct.com.au>
-In-Reply-To: <946f44526e3016f595bfe463cf0a7f5b4eaa084a.camel@codeconstruct.com.au>
-From: Potin Lai <potin.lai.pt@gmail.com>
-Date: Wed, 19 Jun 2024 19:24:03 +0800
-Message-ID: <CAGfYmwVJvyEJ6sbvr=_OqNkiRSDBXn2uqMr28gN949NZd=5dcA@mail.gmail.com>
+	d=codeconstruct.com.au; s=2022a; t=1718840753;
+	bh=0rrDHG6GQ3ZPTEMZclkJ055uBnnGraoUKkuWTroE0M4=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=dohAyRhpTxw/33WRPJ9Mdqdis4t5zfM7m2r0c1IETWbFfzW8o2bc/bsGafowhlV+P
+	 m/WrOnFyU3V75fhr0Qx8HqVZ6QE+fosWnPRsiumeCwa++ucEUuXhZsHtgRQm3I+25n
+	 ip8KqrtQD0qK1ZmJqi1OXHP2lLhvM0Z7z4Dkxr1JWYWrbO5XY721k5aLSkc7e8wwsM
+	 uNlh4h54Uq00W49U6koh5DWhhaidC7eT1saqTfxy8+lX1j1agu7jl55Arxt1QaC6GP
+	 SnujxMbHVrqYL6GepkQZvk2+7yhur9jCzW3W5AzVDLJxJwKHbNep5WmKl1apYVHMEF
+	 ImCCkpwzBusCA==
+Message-ID: <4eb1830db13cc3aa8d23d2c6075f744c0b75bda1.camel@codeconstruct.com.au>
 Subject: Re: [PATCH 1/1] pinctrl: aspeed-g6: Add NCSI pin group config
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Potin Lai <potin.lai.pt@gmail.com>
+Date: Thu, 20 Jun 2024 09:15:48 +0930
+In-Reply-To: <CAGfYmwVJvyEJ6sbvr=_OqNkiRSDBXn2uqMr28gN949NZd=5dcA@mail.gmail.com>
+References: <20240613080725.2531580-1-potin.lai.pt@gmail.com>
+	 <946f44526e3016f595bfe463cf0a7f5b4eaa084a.camel@codeconstruct.com.au>
+	 <CAGfYmwVJvyEJ6sbvr=_OqNkiRSDBXn2uqMr28gN949NZd=5dcA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,78 +64,32 @@ Cc: linux-aspeed@lists.ozlabs.org, Linus Walleij <linus.walleij@linaro.org>, lin
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jun 17, 2024 at 3:33=E2=80=AFPM Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
->
-> On Thu, 2024-06-13 at 16:07 +0800, Potin Lai wrote:
-> > In the NCSI pin table, the reference clock output pin (RMIIXRCLKO) is n=
-ot
-> > needed on the management controller side.
-> >
-> > To optimize pin usage, add new NCSI pin groupis that excludes RMIIXRCLK=
-O,
-> > reducing the number of required pins.
->
-> Hmm, I'm not convinced this is specific to NCSI (and it's an
-> unfortunate mistake on my part), but we do need to call the groups
-> something different than RMII[34]. Did you have any other suggestions?
->
-I don't have better name for now.
-In ast2600 data sheet, it also mentioned "RMII" & "NCSI" together most
-of the time, is it ok to use "NCSI" as a new group name?
+On Wed, 2024-06-19 at 19:24 +0800, Potin Lai wrote:
+> On Mon, Jun 17, 2024 at 3:33=E2=80=AFPM Andrew Jeffery
+> <andrew@codeconstruct.com.au> wrote:
+> >=20
+> > On Thu, 2024-06-13 at 16:07 +0800, Potin Lai wrote:
+> > > In the NCSI pin table, the reference clock output pin (RMIIXRCLKO) is=
+ not
+> > > needed on the management controller side.
+> > >=20
+> > > To optimize pin usage, add new NCSI pin groupis that excludes RMIIXRC=
+LKO,
+> > > reducing the number of required pins.
+> >=20
+> > Hmm, I'm not convinced this is specific to NCSI (and it's an
+> > unfortunate mistake on my part), but we do need to call the groups
+> > something different than RMII[34]. Did you have any other suggestions?
+> >=20
+> I don't have better name for now.
+> In ast2600 data sheet, it also mentioned "RMII" & "NCSI" together most
+> of the time, is it ok to use "NCSI" as a new group name?
 
-Best regards,
-Potin
-> >
-> > Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
-> > ---
-> >  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 10 ++++++++--
-> >  1 file changed, 8 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinct=
-rl/aspeed/pinctrl-aspeed-g6.c
-> > index 7938741136a2c..31e4e0b342a00 100644
-> > --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> > +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> > @@ -249,7 +249,9 @@ PIN_DECL_2(E26, GPIOD3, RGMII3RXD3, RMII3RXER);
-> >
-> >  FUNC_GROUP_DECL(RGMII3, H24, J22, H22, H23, G22, F22, G23, G24, F23, F=
-26, F25,
-> >               E26);
-> > -FUNC_GROUP_DECL(RMII3, H24, J22, H22, H23, G23, F23, F26, F25, E26);
-> > +GROUP_DECL(RMII3, H24, J22, H22, H23, G23, F23, F26, F25, E26);
-> > +GROUP_DECL(NCSI3, J22, H22, H23, G23, F23, F26, F25, E26);
-> > +FUNC_DECL_2(RMII3, RMII3, NCSI3);
-> >
-> >  #define F24 28
-> >  SIG_EXPR_LIST_DECL_SESG(F24, NCTS3, NCTS3, SIG_DESC_SET(SCU410, 28));
-> > @@ -355,7 +357,9 @@ FUNC_GROUP_DECL(NRTS4, B24);
-> >
-> >  FUNC_GROUP_DECL(RGMII4, F24, E23, E24, E25, D26, D24, C25, C26, C24, B=
-26, B25,
-> >               B24);
-> > -FUNC_GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
-> > +GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
-> > +GROUP_DECL(NCSI4, E23, E24, E25, C25, C24, B26, B25, B24);
-> > +FUNC_DECL_2(RMII4, RMII4, NCSI4);
-> >
-> >  #define D22 40
-> >  SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8));
-> > @@ -1976,6 +1980,8 @@ static const struct aspeed_pin_group aspeed_g6_gr=
-oups[] =3D {
-> >       ASPEED_PINCTRL_GROUP(MDIO2),
-> >       ASPEED_PINCTRL_GROUP(MDIO3),
-> >       ASPEED_PINCTRL_GROUP(MDIO4),
-> > +     ASPEED_PINCTRL_GROUP(NCSI3),
-> > +     ASPEED_PINCTRL_GROUP(NCSI4),
->
-> You will need to update the binding document as well. I've poked Linus
-> W about a series I sent that re-formats the binding function and group
-> lists - it would be nice if you rework the patch on top of that:
->
-> https://lore.kernel.org/lkml/5bf8e1dddd2b958a102e7b1b9f9c080a34f9deff.cam=
-el@codeconstruct.com.au/
->
-> Cheers,
->
-> Andrew
+Perhaps we go with "NCSI", because the other thoughts I had are all
+much less succinct.
+
+Can you please add a note to the description in the binding that
+discusses the difference between the RMII and NCSI groups?
+
+Andrew
+
