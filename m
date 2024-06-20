@@ -1,60 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F9459116F4
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2024 01:41:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7D209116FB
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2024 01:42:39 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=c4ZnlCJN;
+	dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=urh3LXDJ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W4xpY6MLFz3cZR
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2024 09:41:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W4xqc3l9dz3cc6
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2024 09:42:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=Ltts.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=c4ZnlCJN;
+	dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=urh3LXDJ;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ltts.com (client-ip=2a01:111:f403:2020::601; helo=ind01-max-obe.outbound.protection.outlook.com; envelope-from=bala.subramaniyan@ltts.com; receiver=lists.ozlabs.org)
 Received: from IND01-MAX-obe.outbound.protection.outlook.com (mail-maxind01on20601.outbound.protection.outlook.com [IPv6:2a01:111:f403:2020::601])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W4h8H2kBrz30WW
-	for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2024 23:26:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W4hDM0yC0z3cXd
+	for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2024 23:29:38 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G5Y6/zpYxwn2nMhi/3EfRM9n3qKhJhaSw42PmzEqt5ZiN+TwnkHsuDpqHtLLDJW61NT7Fi6Xt+MV3c1nTnhnZFmV2DvMTQwOqMaNY1SupZ23SUGp+cq5GbrSzSqYZKGw2o/PchbtQIXi0X2dPs7iOi25uR4RJLiJsfq63wSiZuuzxZMCbf73wf5iudnjGRzzqYcyGeMlmFT0IDGqBMttA303NasatrQsrWZERttisRY6e2t4yEoylGLKLLqwRaX6ZISBEaAixQYOl4xNxmjujRqL11QlC7EuAALmU9jM9AHniBziZj0ssmklBWefjXT3oe+UE54SMBcZnobML9qxmg==
+ b=dMpvenE6jvMux9PyPZ3wRq4pqfbgIA9Cby39bgw7WB+ZcyuBj6oIpM9fqdJ8FbcQT+mlUGKWV6sL6rvDXDWLfwOQAzQOpwz7hQ9+WKec69XquV/MblVpWifr/iTSYyUXyUs3CG1RGmxtJNjV1io0NSwOQwVyKFY+dWPS5FKxr/kCanEnxKpQcnKkhqs7wOJwzuOX18KPQzkvLqVMtPZu25Lav2GQtaW5X6tnZNQfzKKu5+DOyWNfQQUMfzkzkIf6wsNYo4ng4xn+wxAm2ctNK4MI39TBISyaEgXGO3rgWd9/SFfONLjKVO91xpDWYsnUJAQTsnwbBuvDKqMnOK6KYA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9p3acBF642kyLCxU5EFJh7Vt9nVyL1krbKsj6bNX9a0=;
- b=WmjLY+bAKBufSWvuyWTSGQrg5rl2/Q+idXd27OckLAJDtvEGJXVq2Iq86fBXrGxVk10llca7CG0g97+7Onv2ivmauxU42emIspx1RdNVDqN/fRLw2tquMuR8bLqnOESBJUe4CCtEYWmzX3YEl38WqBHkR/G+hWXLPyMma9io415k8QZeKlq0nwYdh3UuYxBhx2l3Yov8jpjOKhDYH7fMui9X2xOoRxHLwIgE2W3OiDsOtnEbXSbRx2bbM2KfluC5qW49Td8BBkTn4ymZHIBNpBfk4nNbYJdAtDqGbnGkwlwtjl+tMroe1sMkAQTPI3FRaATrGZk0ErNxTKhv9Sk+cw==
+ bh=uDQ8kNI/2hEQ5npUJE1qEyIWzbt7ahqM4c3uoHYVD5A=;
+ b=cim3tP4kVBYXdg/1i/FAcHyqBRy9fW9sBdtat6i4EsmVMEFQNFg8w8jNyAmpNQ5QXPIb21Rw2nFguOzSnsEgfQgA8DLBIVnacvmdyAaFTeqr9fooVMR565r4xL+fP9g04mcAASbte6oqDnyrktoQ1rsmD/F72pjjVPpqOn86NTH+HcOw8PXgq2J6Khb4qlg1HvV4S1G36f/H7G3uA7PakneQNGLivwhx3/sqo/GM39GdDugkKOX5S3xv/YtelFaLbZx3Pg15SNfIT5JHgBocWf0HdP+JFEKk/RwOcFpXfhKoPOOlreI0WyWilOXP+y5m5KQkC+ujL/Hio3oZ35EPzQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=ltts.com; dmarc=pass action=none header.from=ltts.com;
  dkim=pass header.d=ltts.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ltts.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9p3acBF642kyLCxU5EFJh7Vt9nVyL1krbKsj6bNX9a0=;
- b=c4ZnlCJNqxLzlgqHDhhg4aQuw6RE4s+ZnuDfurBE+VNHJznsVTOzrDIqrRE/eb0/DgUXLhHpXMHXPA3DtTkUeVrzL6uv9YuYCe2Ux2RZ9fI/aFC2sFrew7eb/JUPuYVKdlIpvC3J6MqtPdm5rEEC3IjYfGlLJb65Y0plQZk0XH1xdocBzm0il3mSkrZGXVorbV3vmnFZ0s1v7rmw2+1ACaBWMUYLAowL3KGuZx8LkJvf1MUmX1MS03YBZY9akcfgoXKLqPM2digbmzi6omKbgybYCBFsVgFVznYqkiZiwgGT41YSclL1X8ZAE39iXbU0gTJB1CmoODmzacAaj7f9rg==
+ bh=uDQ8kNI/2hEQ5npUJE1qEyIWzbt7ahqM4c3uoHYVD5A=;
+ b=urh3LXDJ+35AKmts3j5dCw7aSWjKk0jLupRFEsXuqAwXTOydTvqfTHgtlI9TsQqG8L02sd+jQiG7sZvic3azTwEcnozULrL5dCljZpTtGZFHHq4jyaPGlCXE5y9jNGLx6IlJ/9Jl2dVBHMm4fP9mlrO61t8YIPOHXWQMHYDuoz6RFPM11LTqJJ1sy4zN8edSFV7PrLegZztNP5khB1sXvlJEEs1rBVZ9kiPWJX0RL5GBEryUnE/Uk3iW1SIQ3ZSiRSvP0+9dN+Lid7c3MO2u3HySRNG605BlCT0RumwYTXgTcXkEPzhXuoPTw7Bv6IOQq+NwrC0M54YkU4e22z8Hew==
 Received: from MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:17::13)
- by PNXPR01MB7124.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:c7::6) with
+ by MAZPR01MB7732.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:23::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.21; Thu, 20 Jun
- 2024 13:25:38 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.19; Thu, 20 Jun
+ 2024 13:29:18 +0000
 Received: from MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::260a:a479:6e10:ae9a]) by MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::260a:a479:6e10:ae9a%4]) with mapi id 15.20.7698.020; Thu, 20 Jun 2024
- 13:25:38 +0000
+ 13:29:18 +0000
 From: Bala Subramaniyan <Bala.Subramaniyan@Ltts.com>
 To: "Alexander A. Filippov" <a.filippov@yadro.com>
 Subject: Re: Help with IPMB (IPMI over I2C).
 Thread-Topic: Help with IPMB (IPMI over I2C).
-Thread-Index: AQHawvq3HaRNbNKpv0ezQLXMYofq67HQluEAgAAFYqY=
-Date: Thu, 20 Jun 2024 13:25:38 +0000
-Message-ID:  <MA1PR01MB4308550B7CF6199FE4E5433A80C82@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
+Thread-Index: AQHawvq3HaRNbNKpv0ezQLXMYofq67HQluEAgAAFYqaAAAjmqQ==
+Date: Thu, 20 Jun 2024 13:29:18 +0000
+Message-ID:  <MA1PR01MB43082375F4F0563E9E6AB23080C82@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
 References:  <MA1PR01MB4308AF26A122B17FCC91768C80C82@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
  <ZnQiNlMOYE0ATrKK@nbwork.lan>
-In-Reply-To: <ZnQiNlMOYE0ATrKK@nbwork.lan>
+ <MA1PR01MB4308550B7CF6199FE4E5433A80C82@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To:  <MA1PR01MB4308550B7CF6199FE4E5433A80C82@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -63,79 +64,79 @@ msip_labels:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=Ltts.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MA1PR01MB4308:EE_|PNXPR01MB7124:EE_
-x-ms-office365-filtering-correlation-id: 19a44c6e-d119-49f1-860d-08dc912c799e
+x-ms-traffictypediagnostic: MA1PR01MB4308:EE_|MAZPR01MB7732:EE_
+x-ms-office365-filtering-correlation-id: 702ae196-80dc-4a82-0d9f-08dc912cfc93
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230037|376011|1800799021|366013|38070700015;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?Wc4t/v3GjJY+kpQn1cwH5vCm9yE7yXNZVzb7EZpACYo5kGwRV0X+VBiIDmXN?=
- =?us-ascii?Q?CWy9xCqiaQ6t168eLNRBw83Brm5e6i3Fh5fqLjBAdSoP/TBGYNuHXvdPgCpK?=
- =?us-ascii?Q?eiHhHHGznsoJuai7vyyvTHfv7SNi27CLPm/4/tIMr35r2BimAN6A7gOeZXbx?=
- =?us-ascii?Q?qheMeuzqUr9BElgxQnkzFY7KqC1swmMbxw29LID+M9QAKTO+27E7IR73pd47?=
- =?us-ascii?Q?bTvG69Qtnqr+4R/eVoEufyXeYdp6RUSDKe3Uc2xNKCRtawb9GDHGyHodIpKw?=
- =?us-ascii?Q?C+dPnztG6cJ3manyKvFTJ7TnwZo1dhKNFmqcwBLIQcU/MopYh/0CYOiG11LL?=
- =?us-ascii?Q?jRd/7v7JhKV47wZasDMT4+YaLHXjGaXtfuR9Yla62SJ211hjLiOHgeLuRD40?=
- =?us-ascii?Q?E85u4mIChIRBomHENDgOnCl2RbR9gIMSyBCmACnKTYFyTK/bpUliYcckF78J?=
- =?us-ascii?Q?rysBpamNb2T6i/RDZ5RORDbXqbsd9RZIPVOIkPRXV9eDzSSQragq+kFYLXdy?=
- =?us-ascii?Q?yctiMX60xC00qvgJOLedb2IAjKjMpCf4qP3sAfWCBcUOzQtM+X6RDq7X8MLz?=
- =?us-ascii?Q?YZ4Pvx5DE1ypCxHvD63VGB/H0E7763LHzRgaDULD10lc8Qz0ljvi9iyknDRg?=
- =?us-ascii?Q?qFxHFcusa3/CoF1J0ntoGFjx0fcerrILYwT32Bu9oWcH3VKBC8RN1oh7iZuj?=
- =?us-ascii?Q?mrTsnt4EJbU3SUZEd63mn0LZvTCAYHLjhXzHkNz28QipMPKiEx8YMbK1yIq6?=
- =?us-ascii?Q?cudeHXSp+PIkfP09eKkGj95AUhu4hRmjBqpklnC9X3E+az3vgfO5a6r6GCXT?=
- =?us-ascii?Q?Pv3tXuqjeelTiNXQx6reTAfSleseNZYBQjkxzVzXA5VvPJSQv0zQrUSNDVUn?=
- =?us-ascii?Q?PGEchTumjt47AnGypSthBWGJYa3PirBw4a5Q8gWDi9Ze1ROLIg9346WzG9pT?=
- =?us-ascii?Q?v5fzNN9pPUB3JH06UZCrPzbQp/FAFLZZw1K+NT9X15CDy4nUdkpdQ7AoFFMB?=
- =?us-ascii?Q?bFFFeiBALLCMdrtmyKSgYuaav95YjmLVwVQasbvZNhhnan8OP1MpITuK/iSn?=
- =?us-ascii?Q?kSYH4dcmNolOIH7QTRYAq9RpcY/LBkA8Qz779IEdEK79qlb9Wu2samz5eEf3?=
- =?us-ascii?Q?K7e6ugjIJdlFeyVSy9r0XU+YRtxFKBx2clkKeoS8j7Mti0KZb0X2kTBDA36l?=
- =?us-ascii?Q?tig2P9CgFSvA0mQm6asOJ2cdgCkQnnMameoGrgbCavssQbPXu3/uSEiUj7eU?=
- =?us-ascii?Q?nfAZf9uWU6euJt+bA76yb/FqVWLkDQIDwpwc/XlEpLyCZDk167V0ZULcygHV?=
- =?us-ascii?Q?yfnFxTjaOIq1456tPIXNrnVCPhP/vcMEOgsTdYPPlG1gzw=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230037)(376011)(1800799021)(366013)(38070700015);DIR:OUT;SFP:1101;
+x-microsoft-antispam: BCL:0;ARA:13230037|1800799021|366013|376011|38070700015;
+x-microsoft-antispam-message-info:  =?us-ascii?Q?+aAsucwjX9al7PfwHH0tBFvbcP1JrXypK13m8gZmq3//lUrPViNRCJRdM6/D?=
+ =?us-ascii?Q?773fdGUxkynwJISCu2SIb3mGxGbNfD48NxjAySAauD+QGTn1ZQHSTJzRlob0?=
+ =?us-ascii?Q?+2MBqHHJkA2z9xcYRziRqdCqDeBN9sfdJIVxIO63xWSFxxk7BAkUxd7OATKB?=
+ =?us-ascii?Q?NUtdkUfzccpLQmVoP+y7Ce552c3MjnPIoP1dLskAX5uu3FfdElGegLdLzwLz?=
+ =?us-ascii?Q?n02ZVeS7T+Ic3sZddJXic1ChOCsHW4vwSxbNPeYp6GNNEVsd2oaSK/heNt3U?=
+ =?us-ascii?Q?ehPu1vM2FHNyJRoOHY6CL85g51xNYy6aHzAlGcX3nsYs3ZoYEORHAcjYIsTD?=
+ =?us-ascii?Q?iPobtoRMY9JQCU0IYFU1KURYvD4LCopc3ySHy73V2v4pxOq9WGFxaxOhCggm?=
+ =?us-ascii?Q?eNCS0bQIiBLf0i0a1bZWl/Tm5Q4E9MWb3eNmHKMQAAvGq2W8hW55ftHolX8K?=
+ =?us-ascii?Q?lPQeFozKnpTbjErGsamKwdBhbYskPMncXNb6N5DvrpWKK4gc/6tZqg5CNsLx?=
+ =?us-ascii?Q?5+L9s2LVuAvh9Yls1kDOEHnEAedBGhPYkrc0J3J/J/QGbxPx1Yfb4Lwi1ljN?=
+ =?us-ascii?Q?Hu3LjeLaaNzt0GzT5LzDwmnJT33HJ1o3zTwfjbGvCQuUPGO/es2JX/5vN57i?=
+ =?us-ascii?Q?RHiZX3VRLtg6maepfwNKfrtgZX40/Cop+E3A6qvZa+IcEPzeZCnkp1IJk/Gs?=
+ =?us-ascii?Q?kb6IIT3lJ976jf73Q2/tWzAbzt9DJq69j/eS7zc6FJll081wZOK/SfLlagIT?=
+ =?us-ascii?Q?WUngx/KQaupmnrQbEuQj/tvWB+bW9VWM8AG1CatFr9afOqDKrN0uGtOf6yMx?=
+ =?us-ascii?Q?/9nTHDYtF1aGWLSiiBRCn/mtfZ/L6+ld5RX2XRj0nYXVlQH8xNkOv2EXKf0X?=
+ =?us-ascii?Q?lV+/VUKr5sjAxPmCcNGa5fU/10Et4V6va4lfWJlhS1e4XYe/zOomSuTc4iGQ?=
+ =?us-ascii?Q?RaBG6QyfvEQvIOC9d2W8S4pv1tTS4dDogxme5vFNzBDEBCe7NVy7lY3lttSV?=
+ =?us-ascii?Q?BUYmqbZWKIsZPPhZZ6sxm5G5sxZ9BxYgBk1JfcWMFDCjLqKTiAbuMhnteEv5?=
+ =?us-ascii?Q?v6Xe+W3VyP/7S3xNVQgyG5mfFMw2ykacqJu5IhYXdMTwh6ZAX5TUiceVCsEL?=
+ =?us-ascii?Q?FUPwEyAAVji1ht0wwIhtnpO9Gr88sb/ra+NUlaojBnaN9N1nw4ZqJv7eSxHz?=
+ =?us-ascii?Q?6QmYvHu/GpVdvwLELQOISnpcfLlgiWuY98rbrr4U0q4kYlLhb5qQeTrMdhqs?=
+ =?us-ascii?Q?4kcau9gyfpXCGTSGJ6Gm+FoiU176OfroMX5P6WyvfF12FccM1QgtteiffYCi?=
+ =?us-ascii?Q?acrrJ98L+WQC1k5OvXSJNmhN0DkRTkzX8TehpkWFrj2sdg=3D=3D?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230037)(1800799021)(366013)(376011)(38070700015);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?d9lojrBeCLdLObrtJoBGZV/H7IO4U5vvdkyynjN62I5zmEUxUzsGulhWUJU3?=
- =?us-ascii?Q?ZUuwcQLP4YGv9hsktz4ttM2rQO027mKL0qgEusMbUQSFPMeU2TRWFeXFZJON?=
- =?us-ascii?Q?Bh2PfqSNfCj8fg9DM+UatkAk3BH44BpAC6VA3XAM89TFWbTJTmFp4xB0rzu8?=
- =?us-ascii?Q?hpYNn2K40HxRL/8cNqhYKMFZRmeo9Zf3yALvE+KfBwHWs7UMI6jYYqCYWdFo?=
- =?us-ascii?Q?5eQc7KEl3S7lMR2CNfTjqYZ2vuVJFu5fbcehvegtN1HmKXiKDosJFUeIipga?=
- =?us-ascii?Q?Rx2cCvZeyVxOB97cDlu2QxnGQjnL7R2HRHWlbTHiuN+FMcPj0gs9HaQ+rB6T?=
- =?us-ascii?Q?sfsclB9xQkdDp6dO0yEl9LHLWokgdSa/ZTSUSfQe6HYJ5hDj/E/RRrtM/VhA?=
- =?us-ascii?Q?KY5UtsPQ0TNRfp3abWaFVfAXKjPMQpeHpTwlHtu6p0R4m8He/fRneAi4QTLl?=
- =?us-ascii?Q?8Tfn1UcyNOKppmF5/6HrrEuw5g8YYvoOZQpB4jXnvLmBPJd07/JHLLZQ+jGj?=
- =?us-ascii?Q?r7xgG724OhoWxEpwrdXqkApPosNS0Ebcn26LYCUMw3EFxaIH/z86UwHuEp52?=
- =?us-ascii?Q?7YH5Ak+j4C8NZUQUxqP2yJJ8lTSzVx5cjzzy4s8A++2uSTncmOPB3/73EpKK?=
- =?us-ascii?Q?wkpYYOllkBwSgAebGZedM7EbMe16lOprysnlnQ4mw849c/8jG7uUzBGbaSX/?=
- =?us-ascii?Q?M5dpZsASPzNhvhAmURoCofdhWm2GgxFHjaULehaF8sO2w3PgQAX+KXG4oEEH?=
- =?us-ascii?Q?x2KIceAUepyAqhR7RZ0W8C1myvgvTvFW8NZHUsl1BLs8wuqSYwP0QS7z2Nfj?=
- =?us-ascii?Q?paBi9vr9w0+yZhFv4MbJ2BGzOxOSc0cl6rd8pgmz6s8L+W3CjO+3CEZ280WR?=
- =?us-ascii?Q?Dk7A4k3speCZUgDl8Aal/kVzTfaohzN+wQ09+z8ZEnfV2mVcuyKSqv2mGX6h?=
- =?us-ascii?Q?r+6j+G94U+tzCpxkHzKORpgcKCyJ8FDTFk1R6h06dC3rZJ6drj3AameRtECH?=
- =?us-ascii?Q?+zhl6kxGn0qqsX0Fo+nzI2xsqPKoW/eSKB6OogFMRYyJ9C+5cyh3gXArH2EF?=
- =?us-ascii?Q?PZFuhJgF+gASsJ5HItFDW8O5NlV9eJwR5kC5zn4izVb5tljSQDfa3UGF7Ty+?=
- =?us-ascii?Q?XmCthLSM4jQcPYXPRO9ocx2982wRf2F9/I9MUE/cgzDVg6GN7R1Y24T02vOE?=
- =?us-ascii?Q?xqvP9bb5/4jnq1U2pLCVeMJCiX+I92alYHCX2l9cCBS43LZ//hgvl4Fx3QR8?=
- =?us-ascii?Q?ZUrGJOXtWXohvf1QDmVeWQgoYJzXTLuALvOR8skRd+1rzNpiZWx4RgShGSPT?=
- =?us-ascii?Q?81ueAfam8CVMz9+yNOUHv1dWmdR/rVfIVDgweqWueI06iFDrbVYSqPMsKhAG?=
- =?us-ascii?Q?JkKCzxDn0wldX2Aqb2LcmHf0pzT8/4DXjCN4PsE5gAgWXzo3Q5CRFIya57cY?=
- =?us-ascii?Q?6DAZ2a2vHHb6YButx8sgkJfDtJH5lQugaxXM2rzr2Wvqsx7zKNnCt8SbwuWk?=
- =?us-ascii?Q?e+5frJ1DH6joD5todaz+zif8PjJFG+81ZBGP1yqw7TFVQIVacHy1nPoQpCKv?=
- =?us-ascii?Q?e9FDFUU1HfI6llaWdBqtgxRSRDcYSBBPM1x+KSZWb9UrmxjIroO1BRLwv4V4?=
- =?us-ascii?Q?0w=3D=3D?=
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?ALwlrKhs+4rwXk5ywN7aKw2KWB2tO6piVvWy3j3yqnyhDpD5NPBQyR1LWhYd?=
+ =?us-ascii?Q?ByQ1kN7EZht5ctttYr8NVyjk88Gyrjgh80zVzketzXkat+OgeLciW+rdvDJy?=
+ =?us-ascii?Q?WfLZgmt3yfig8a7VJVI+c6OuIpUnIkwGubhUkUNQMyKLqff22bcuO3NVKopw?=
+ =?us-ascii?Q?FyShGUYqItJl/JlV1dLdQGobf2151U/t/T1aHSzJpaZcWPKC4gG0RAtSHP4R?=
+ =?us-ascii?Q?T7Sl9m7/K5RHltME0ZIxhyC/3PsWNR9iTfmdvuJfa3fhL6w3/4bmHLkYBons?=
+ =?us-ascii?Q?R/Xv0RfZDTblbZV64lp9ei9Oeh27qnjN+u1GNdKKJbqBjMM0NcKw2kzFz0Mj?=
+ =?us-ascii?Q?iU3Z2LgJDTKX74HKL1qudHvCrcGkjlPEdunuVO43xb/K7R6Nr267HLjGKYuK?=
+ =?us-ascii?Q?9HfK6+dvUzFl39DanWtdSS2+/zvBlhGRbLN7kMkDpMkCw3tBcVomC5fFwWxa?=
+ =?us-ascii?Q?Tyc2c6YwC/vk+6o4KVT8s9qCodrfjJt3cfWMlVV9/jgn2mbtWFNxkTKPcI/k?=
+ =?us-ascii?Q?kCxN2N2XI7qXyu16GzZoXMQ8mPvjAOizEfZFzmr8QwEYDJ1CcWsk1M7dDoPF?=
+ =?us-ascii?Q?P9J7V4c8Pjzpy5h/0ex6YwLzqBtk8c4/k4zIGtDcdrIvtK6osEYV8WkQ0n1m?=
+ =?us-ascii?Q?ziZ/zOsGLu4ryfck/+vznChn6WOe94iDJX0jo0vqytL1bTZIMMuFSD8OtEl1?=
+ =?us-ascii?Q?XHyqRUwS8Rksi7Ycl8BZMPDK93eyYxQwwD2H7pi9QTAQ6ePLgDST/HzFPpgL?=
+ =?us-ascii?Q?PyaKhFapEJ40HPKaLdikzrT3scjundTAvVsEQ8lHsT4uXavQKCCWfVe3f7Qh?=
+ =?us-ascii?Q?o2Vlx3Y3HqICFkKZDmVLmfhZUT/qzQO2IZg6ejGuJUtaVx2XjU7OemFx2emA?=
+ =?us-ascii?Q?tWr/Cuf3SeGUh/i9AtPxaQjxSpNU6n+0ZL3R9SnxWs/wwwgzAzt3lpkqbh+z?=
+ =?us-ascii?Q?Ynu+X8QAiKL6Nmams1MxMVnaDu2LZpkvUj/Zx5L0uq3bs4k5k4yYCF0xQfxv?=
+ =?us-ascii?Q?DXjk7/CU1vjyveLef16Py9XfN4AU1HDovUbj2lco5xrZtRNxIYCon8Gt1G6H?=
+ =?us-ascii?Q?raB7icWnkBAZQQ4astKJIBmTGvt0QusJhTRWdnN0wgcukxdAuG3KVn7H3wtO?=
+ =?us-ascii?Q?I9k4ZWIweyWnmSq1kn26/McII6qFtuC3IHEy4/5TIwIv21/y1fQbI0estuL7?=
+ =?us-ascii?Q?PvRzAdv1QQJTW01TptahQnBjrYD6qmPKxROtBHGTD/MGiFxhMXNTZuiCr5Ot?=
+ =?us-ascii?Q?6XLs+qr1HuffiqSZhfvqNPA4qkBX3BskDcUkvtmLJWb3vcuuGg1C66gmd/kf?=
+ =?us-ascii?Q?twEKaJoDzadj75Wgynvgewlcwhr675jmQi/TXAqxQRWV2Rq7hfsG4STd9XqQ?=
+ =?us-ascii?Q?OH2PbmsSRyeE04kV0orU/FM+gZxdMKNgibce4cqhke3dSTuHNZe8BsLvAUer?=
+ =?us-ascii?Q?cjVcvoTRtITY2yS7uW51XM5Wyt9uBaGR+8MHioQNmTJHPUBybElu/XSiTZYW?=
+ =?us-ascii?Q?s0lE3r9WtD25Kr1aC1h0gZI+QWtnrJBwfg5VhWMzHBYF3yVXzWvP/hqAalC5?=
+ =?us-ascii?Q?RD88nD1QIlt2L0KsoYbvWEtggAsHHPcB9W89D5Coyn2SIpg+EWgyrxGpeiBW?=
+ =?us-ascii?Q?5g=3D=3D?=
 Content-Type: multipart/related;
-	boundary="_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_";
+	boundary="_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_";
 	type="multipart/alternative"
 MIME-Version: 1.0
 X-OriginatorOrg: ltts.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19a44c6e-d119-49f1-860d-08dc912c799e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2024 13:25:38.4370
+X-MS-Exchange-CrossTenant-Network-Message-Id: 702ae196-80dc-4a82-0d9f-08dc912cfc93
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2024 13:29:18.1740
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 311b3378-8e8a-4b5e-a33f-e80a3d8ba60a
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: BIwsNVb+UmfLQT0F4TQXpBbLzDHFgsvLc4e/w36X8L6uvc1aIU/HSZ1rrV6ATyzUwEkchrxqfl4dse1vNQ3gwKX/SOqvSwOygC3nO6jBR2s=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB7124
+X-MS-Exchange-CrossTenant-userprincipalname: XhVPoX1Cf+Xl2GAIekDazs7qOTwt+Idj9tWSygY6iHVGrrM5sANWd/Fc0KG2827Hkm0MfEJXOt6HnGsY8Arzj5YuOd/ocTrNP4n1oaG+SsI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7732
 X-Mailman-Approved-At: Fri, 21 Jun 2024 09:41:12 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -152,13 +153,72 @@ Cc: Thangaraj S <Thangaraj.S@Ltts.com>, "openbmc@lists.ozlabs.org" <openbmc@list
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: multipart/alternative;
-	boundary="_000_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_"
+	boundary="_000_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_"
 
---_000_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_000_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+
+Hi Alexander,
+
+Thanks for your reply,
+
+ipmitool has raw and i2c commands.
+
+Commands:
+        raw           Send a RAW IPMI request and print response
+        i2c           Send an I2C Master Write-Read command and print respo=
+nse
+        spd           Print SPD info from remote I2C device
+        lan           Configure LAN Channels
+
+
+As, I can see ipmi_rawi2c_main() function under ipmitool/lib/ipmi_raw.c<htt=
+ps://github.com/openbmc/ipmitool/blob/master/lib/ipmi_raw.c> which is handl=
+ing I2C Master Read-Write functionality.
+
+Can you please guide us on this, Whether we can use this to perform BMC-to-=
+BMC communication.
+
+Below is the error i'm getting while performing BMC-to-BMC Master-Slave Rea=
+d-Write by connecting two i2c buses between the boards.
+root@ast2600-default:~# ipmitool i2c bus=3D14 0x12 0x00 0x00 0x00 0x31 0x32=
+ 0x33 0x34
+ipmi_master_write_read: rsp_value:6207408, LineNo:104
+I2C Master Write-Read command failed: Invalid command
+ipmi_rawi2c_main: rsp_value:0, LineNo:264
+Unable to perform I2C Master Write-Read
+
+Thanks, and regards,
+Bala Subramaniyan M,
+
+
+
+
+[cid:8c0f8170-e1d0-4031-a57d-20b6a72ccf58]<https://www.ltts.com/>
+
+
+S1 Building, L&T Tech Park, Bellary Road,
+
+Next to Raintree Boulevard, Park View Layout,
+
+Byatarayanapura, Bengaluru-560092
+
+Mobile: +91 9677035467
+
+ENGINEERING THE CHANGE | www.LTTS.com<https://www.ltts.com/>
+
+
+
+________________________________
+From: Bala Subramaniyan <Bala.Subramaniyan@Ltts.com>
+Sent: Thursday, June 20, 2024 6:55 PM
+To: Alexander A. Filippov <a.filippov@yadro.com>
+Cc: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>; Thangaraj S <Thang=
+araj.S@Ltts.com>; Lalit Kumar <Lalit.Kumar2@ltts.com>
+Subject: Re: Help with IPMB (IPMI over I2C).
 
 Hi Alexander,
 
@@ -356,7 +416,7 @@ Alexander Filippov
 
 
 
---_000_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_000_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -368,73 +428,95 @@ Content-Transfer-Encoding: quoted-printable
 ttom:0;} </style>
 </head>
 <body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div class=3D"elementToProof" style=3D"text-align: left; text-indent: 0px; =
+margin: 0px; font-family: Arial, Helvetica, sans-serif; font-size: 12pt; co=
+lor: rgb(0, 0, 0);">
 Hi Alexander,</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div style=3D"text-align: left; text-indent: 0px; margin: 0px; font-family:=
+ Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
 <br>
 </div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div style=3D"text-align: left; text-indent: 0px; margin: 0px; font-family:=
+ Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
 Thanks for your reply,</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div style=3D"text-align: left; text-indent: 0px; margin: 0px; font-family:=
+ Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
 <br>
 </div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-ipmitool has raw and i2c commands, Please refer below image.&nbsp;</div>
-<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<div class=3D"elementToProof" style=3D"text-align: left; text-indent: 0px; =
+margin: 0px; font-family: Arial, Helvetica, sans-serif; font-size: 12pt; co=
+lor: rgb(0, 0, 0);">
+ipmitool has raw and i2c commands.</div>
+<div style=3D"text-align: left; text-indent: 0px; margin: 0px; font-family:=
+ Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
 <br>
 </div>
-<div id=3D"Signature">
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<span><img size=3D"122453" contenttype=3D"image/png" style=3D"max-width: 60=
-7px;" data-outlook-trace=3D"F:1|T:1" src=3D"cid:87b5aef4-9628-47c7-b7d4-b71=
-4b7a92869"></span></div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div class=3D"elementToProof" style=3D"margin: 0px; font-family: Arial, Hel=
+vetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 255, 128);">Commands:</span></div=
+>
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 255, 128);">&nbsp; &nbsp; &nbsp; =
+&nbsp; raw &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Send a RAW IPMI request and p=
+rint response</span></div>
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 255, 128);">&nbsp; &nbsp; &nbsp; =
+&nbsp; i2c &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Send an I2C Master Write-Read=
+ command and print response</span></div>
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 255, 128);">&nbsp; &nbsp; &nbsp; =
+&nbsp; spd &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Print SPD info from remote I2=
+C device</span></div>
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 255, 128);">&nbsp; &nbsp; &nbsp; =
+&nbsp; lan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Configure LAN Channels</span>=
+</div>
+<div class=3D"elementToProof" style=3D"margin: 0px; font-family: Arial, Hel=
+vetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
 <br>
 </div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
 As,<i>&nbsp;</i>I can see ipmi_rawi2c_main() function under <a href=3D"http=
-s://github.com/openbmc/ipmitool/blob/master/lib/ipmi_raw.c" id=3D"LPlnk1543=
-30" class=3D"OWAAutoLink" title=3D"https://github.com/openbmc/ipmitool/blob=
-/master/lib/ipmi_raw.c">
+s://github.com/openbmc/ipmitool/blob/master/lib/ipmi_raw.c" target=3D"_blan=
+k" id=3D"OWAd697bb4f-66b7-308b-262b-73aa4eccee3b" class=3D"OWAAutoLink" tit=
+le=3D"https://github.com/openbmc/ipmitool/blob/master/lib/ipmi_raw.c" rel=
+=3D"noopener noreferrer" data-auth=3D"NotApplicable" data-linkindex=3D"0" s=
+tyle=3D"margin: 0px;">
 ipmitool/lib/ipmi_raw.c</a>&nbsp;which is handling I2C Master Read-Write fu=
 nctionality.<br>
 <br>
 Can you please guide us on this, Whether we can use this to perform BMC-to-=
 BMC communication.</div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
 <br>
 </div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"margin: 0px; font-family: Arial, Helvetica, sans-serif; font-=
+size: 12pt; color: rgb(0, 0, 0);">
 Below is the error i'm getting while performing BMC-to-BMC Master-Slave Rea=
 d-Write by connecting two i2c buses between the boards.</div>
-<div style=3D"margin-top: 1em; margin-bottom: 1em; font-family: Arial, Helv=
-etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"background-color: rgb(255, 128, 0);">root@ast2600-default:~#=
- ipmitool i2c bus=3D14 0x12 0x00 0x00 0x00 0x31 0x32 0x33 0x34&nbsp;</span>=
-</div>
-<div style=3D"margin-top: 1em; margin-bottom: 1em; font-family: Arial, Helv=
-etica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"background-color: rgb(255, 128, 0);">ipmi_master_write_read:=
- rsp_value:6207408, LineNo:104<br>
+<div style=3D"margin: 1em 0px; font-family: Arial, Helvetica, sans-serif; f=
+ont-size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 192, 128);">root@ast2600-default:=
+~# ipmitool i2c bus=3D14 0x12 0x00 0x00 0x00 0x31 0x32 0x33 0x34&nbsp;</spa=
+n></div>
+<div class=3D"elementToProof" style=3D"margin: 1em 0px; font-family: Arial,=
+ Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background-color: rgb(255, 192, 128);">ipmi_master_write_rea=
+d: rsp_value:6207408, LineNo:104<br>
 I2C Master Write-Read command failed: Invalid command<br>
 ipmi_rawi2c_main: rsp_value:0, LineNo:264<br>
-Unable to perform I2C Master Write-Read<br>
-</span></div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
+Unable to perform I2C Master Write-Read</span></div>
+<div id=3D"Signature">
 <div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
 olor: rgb(0, 0, 0);">
 <br>
@@ -445,22 +527,20 @@ olor: rgb(0, 0, 0);">
 <div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
 olor: rgb(0, 0, 0);">
 <b>Bala Subramaniyan M,</b></div>
-<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<span><img id=3D"Picture_x0020_12" width=3D"330" height=3D"2" style=3D"widt=
-h: 330px; height: 2px; max-width: 728px; margin-top: 0px; margin-bottom: 0p=
-x;" data-outlook-trace=3D"F:1|T:1" src=3D"cid:8e9aff04-3d96-4bb4-9c19-0645b=
-7e852a4"></span></div>
+<p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
+t; color: rgb(0, 0, 0);"><img id=3D"Picture_x0020_12" width=3D"330" height=
+=3D"2" style=3D"width: 330px; height: 2px; max-width: 728px; margin-top: 0p=
+x; margin-bottom: 0px;" data-outlook-trace=3D"F:1|T:1" src=3D"cid:f4c69f42-=
+6682-4abe-b4b8-9b79f73e6c62"></span></p>
 <p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
 t; color: rgb(0, 0, 0);"><br>
 </span></p>
 <p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
-t; color: rgb(0, 0, 0);"><a href=3D"https://www.ltts.com/" id=3D"OWA23ba949=
-0-8084-cb96-d8bc-1305e121866c" class=3D"OWAAutoLink" style=3D"color: rgb(0,=
- 0, 0); margin-top: 0px; margin-bottom: 0px;"><img id=3D"Graphic_x0020_2" w=
-idth=3D"249" height=3D"38" style=3D"width: 249px; height: 38px; max-width: =
-728px; margin-top: 0px; margin-bottom: 0px;" data-outlook-trace=3D"F:1|T:1"=
- src=3D"cid:08db76b7-f643-4b96-8acd-5325e19c1e99"></a></span></p>
+t; color: rgb(0, 0, 0);"><a href=3D"https://www.ltts.com/" style=3D"color: =
+rgb(0, 0, 0); margin-top: 0px; margin-bottom: 0px;"><img id=3D"Graphic_x002=
+0_2" width=3D"249" height=3D"38" style=3D"width: 249px; height: 38px; max-w=
+idth: 728px; margin-top: 0px; margin-bottom: 0px;" data-outlook-trace=3D"F:=
+1|T:1" src=3D"cid:8c0f8170-e1d0-4031-a57d-20b6a72ccf58"></a></span></p>
 <p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
 a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;"><b=
 r>
@@ -486,20 +566,164 @@ vetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 150%=
 ;">
  | </span><span style=3D"font-family: Arial, Helvetica, sans-serif; font-si=
 ze: 12pt; color: rgb(13, 13, 13); line-height: 150%;"><a href=3D"https://ww=
-w.ltts.com/" id=3D"OWA1ee078ba-3851-8e42-9376-8ec8bc4a00f7" class=3D"OWAAut=
-oLink" style=3D"color: rgb(13, 13, 13); margin-top: 0px; margin-bottom: 0px=
-;">www.LTTS.com</a></span></p>
+w.ltts.com/" style=3D"color: rgb(13, 13, 13); margin-top: 0px; margin-botto=
+m: 0px;">www.LTTS.com</a></span></p>
 <p style=3D"line-height: 150%;"><span style=3D"font-family: Arial, Helvetic=
 a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"><img id=3D"Picture_x0=
 020_12" width=3D"330" height=3D"2" style=3D"width: 330px; height: 2px; max-=
 width: 728px; margin-top: 0px; margin-bottom: 0px;" data-outlook-trace=3D"F=
-:1|T:1" src=3D"cid:15cbe041-9a4c-448d-9049-10acf4d98b93"></span></p>
+:1|T:1" src=3D"cid:5bcd4c95-2833-4085-8b6f-84700b7f9f56"></span></p>
 </div>
 <div id=3D"appendonsend"></div>
 <hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
 <div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Alexander A. Filippov=
- &lt;a.filippov@yadro.com&gt;<br>
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Bala Subramaniyan &lt=
+;Bala.Subramaniyan@Ltts.com&gt;<br>
+<b>Sent:</b> Thursday, June 20, 2024 6:55 PM<br>
+<b>To:</b> Alexander A. Filippov &lt;a.filippov@yadro.com&gt;<br>
+<b>Cc:</b> openbmc@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;; Thang=
+araj S &lt;Thangaraj.S@Ltts.com&gt;; Lalit Kumar &lt;Lalit.Kumar2@ltts.com&=
+gt;<br>
+<b>Subject:</b> Re: Help with IPMB (IPMI over I2C).</font>
+<div>&nbsp;</div>
+</div>
+<style type=3D"text/css" style=3D"display:none">
+<!--
+p
+	{margin-top:0;
+	margin-bottom:0}
+-->
+</style>
+<div dir=3D"ltr">
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+Hi Alexander,</div>
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+<br>
+</div>
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+Thanks for your reply,</div>
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+<br>
+</div>
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+ipmitool has raw and i2c commands, Please refer below image.&nbsp;</div>
+<div class=3D"x_elementToProof" style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0)">
+<br>
+</div>
+<div id=3D"x_Signature">
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<span><img size=3D"122453" style=3D"max-width:607px" data-outlook-trace=3D"=
+F:2|T:2" src=3D"cid:87b5aef4-9628-47c7-b7d4-b714b7a92869"></span></div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+As,<i>&nbsp;</i>I can see ipmi_rawi2c_main() function under <a href=3D"http=
+s://github.com/openbmc/ipmitool/blob/master/lib/ipmi_raw.c" id=3D"LPlnk1543=
+30" class=3D"x_OWAAutoLink" title=3D"https://github.com/openbmc/ipmitool/bl=
+ob/master/lib/ipmi_raw.c">
+ipmitool/lib/ipmi_raw.c</a>&nbsp;which is handling I2C Master Read-Write fu=
+nctionality.<br>
+<br>
+Can you please guide us on this, Whether we can use this to perform BMC-to-=
+BMC communication.</div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+Below is the error i'm getting while performing BMC-to-BMC Master-Slave Rea=
+d-Write by connecting two i2c buses between the boards.</div>
+<div style=3D"margin-top:1em; margin-bottom:1em; font-family:Arial,Helvetic=
+a,sans-serif; font-size:12pt; color:rgb(0,0,0)">
+<span style=3D"background-color:rgb(255,128,0)">root@ast2600-default:~# ipm=
+itool i2c bus=3D14 0x12 0x00 0x00 0x00 0x31 0x32 0x33 0x34&nbsp;</span></di=
+v>
+<div style=3D"margin-top:1em; margin-bottom:1em; font-family:Arial,Helvetic=
+a,sans-serif; font-size:12pt; color:rgb(0,0,0)">
+<span style=3D"background-color:rgb(255,128,0)">ipmi_master_write_read: rsp=
+_value:6207408, LineNo:104<br>
+I2C Master Write-Read command failed: Invalid command<br>
+ipmi_rawi2c_main: rsp_value:0, LineNo:264<br>
+Unable to perform I2C Master Write-Read<br>
+</span></div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<b>Thanks, and regards,</b></div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<b>Bala Subramaniyan M,</b></div>
+<div style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; color=
+:rgb(0,0,0)">
+<span><img id=3D"x_Picture_x0020_12" width=3D"330" height=3D"2" style=3D"wi=
+dth:330px; height:2px; max-width:728px; margin-top:0px; margin-bottom:0px" =
+data-outlook-trace=3D"F:2|T:2" src=3D"cid:8e9aff04-3d96-4bb4-9c19-0645b7e85=
+2a4"></span></div>
+<p><span style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; c=
+olor:rgb(0,0,0)"><br>
+</span></p>
+<p><span style=3D"font-family:Arial,Helvetica,sans-serif; font-size:12pt; c=
+olor:rgb(0,0,0)"><a href=3D"https://www.ltts.com/" id=3D"OWA23ba9490-8084-c=
+b96-d8bc-1305e121866c" class=3D"x_OWAAutoLink" style=3D"color:rgb(0,0,0); m=
+argin-top:0px; margin-bottom:0px"><img id=3D"x_Graphic_x0020_2" width=3D"24=
+9" height=3D"38" style=3D"width:249px; height:38px; max-width:728px; margin=
+-top:0px; margin-bottom:0px" data-outlook-trace=3D"F:2|T:2" src=3D"cid:08db=
+76b7-f643-4b96-8acd-5325e19c1e99"></a></span></p>
+<p style=3D"line-height:115%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0); line-height:115%"><br>
+</span></p>
+<p style=3D"line-height:115%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0); line-height:115%">S1 Building, =
+L&amp;T Tech Park, Bellary Road,
+</span></p>
+<p style=3D"line-height:115%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0); line-height:115%">Next to Raint=
+ree Boulevard, Park View Layout,
+</span></p>
+<p style=3D"line-height:115%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0); line-height:115%">Byatarayanapu=
+ra, Bengaluru-560092</span></p>
+<p style=3D"line-height:115%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0); line-height:115%">Mobile: +91 9=
+677035467</span></p>
+<p style=3D"line-height:150%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(13,13,13); line-height:150%">ENGINEERIN=
+G<b> THE CHANGE</b></span><span style=3D"font-family:Arial,Helvetica,sans-s=
+erif; font-size:12pt; color:rgb(0,0,0); line-height:150%">
+ | </span><span style=3D"font-family:Arial,Helvetica,sans-serif; font-size:=
+12pt; color:rgb(13,13,13); line-height:150%"><a href=3D"https://www.ltts.co=
+m/" id=3D"OWA1ee078ba-3851-8e42-9376-8ec8bc4a00f7" class=3D"x_OWAAutoLink" =
+style=3D"color:rgb(13,13,13); margin-top:0px; margin-bottom:0px">www.LTTS.c=
+om</a></span></p>
+<p style=3D"line-height:150%"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif; font-size:12pt; color:rgb(0,0,0)"><img id=3D"x_Picture_x0020_12" =
+width=3D"330" height=3D"2" style=3D"width:330px; height:2px; max-width:728p=
+x; margin-top:0px; margin-bottom:0px" data-outlook-trace=3D"F:2|T:2" src=3D=
+"cid:15cbe041-9a4c-448d-9049-10acf4d98b93"></span></p>
+</div>
+<div id=3D"x_appendonsend"></div>
+<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
+<div id=3D"x_divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" =
+color=3D"#000000" style=3D"font-size:11pt"><b>From:</b> Alexander A. Filipp=
+ov &lt;a.filippov@yadro.com&gt;<br>
 <b>Sent:</b> Thursday, June 20, 2024 6:06 PM<br>
 <b>To:</b> Bala Subramaniyan &lt;Bala.Subramaniyan@Ltts.com&gt;<br>
 <b>Cc:</b> openbmc@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;; Thang=
@@ -508,12 +732,12 @@ gt;<br>
 <b>Subject:</b> Re: Help with IPMB (IPMI over I2C).</font>
 <div>&nbsp;</div>
 </div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
-">
-<div class=3D"PlainText">CAUTION: This email is from an external source. Pl=
-ease do not open attachments or click links from an unknown or suspicious o=
-rigin. Phishing attempts can be reported by using the report message button=
- in Outlook or sending them as an
+<div class=3D"x_BodyFragment"><font size=3D"2"><span style=3D"font-size:11p=
+t">
+<div class=3D"x_PlainText">CAUTION: This email is from an external source. =
+Please do not open attachments or click links from an unknown or suspicious=
+ origin. Phishing attempts can be reported by using the report message butt=
+on in Outlook or sending them as an
  attachment to phishing@Ltts.com. Thank you<br>
 <br>
 On Thu, Jun 20, 2024 at 10:43:59AM +0000, Bala Subramaniyan wrote:<br>
@@ -664,17 +888,18 @@ Alexander Filippov<br>
 <br>
 </div>
 </span></font></div>
+</div>
 </body>
 </html>
 
---_000_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_--
+--_000_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_--
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: image/png; name="image.png"
 Content-Description: image.png
 Content-Disposition: inline; filename="image.png"; size=122453;
 	creation-date="Thu, 20 Jun 2024 13:07:32 GMT";
-	modification-date="Thu, 20 Jun 2024 13:07:33 GMT"
+	modification-date="Thu, 20 Jun 2024 13:27:13 GMT"
 Content-ID: <87b5aef4-9628-47c7-b7d4-b714b7a92869>
 Content-Transfer-Encoding: base64
 
@@ -2828,24 +3053,24 @@ Ubkns+P2MaWDM0rZHDN/TPmYkHBuPozvQkMJyzrFgSMTaKyyLKeldnJILvUJmr+SjQnRRGSdIvjs
 Bka/psap2zTWnY8m7HIwK9cs5sdzJwiO+hf966oe63wCgUAgEJQU8UpSgUAgEAgEAoGgnPP/Hyio
 5UFaWDkAAAAASUVORK5CYII=
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: image/png; name="Outlook-3vqibvmn.png"
 Content-Description: Outlook-3vqibvmn.png
 Content-Disposition: inline; filename="Outlook-3vqibvmn.png"; size=99;
 	creation-date="Thu, 20 Jun 2024 13:25:38 GMT";
-	modification-date="Thu, 20 Jun 2024 13:25:38 GMT"
+	modification-date="Thu, 20 Jun 2024 13:27:13 GMT"
 Content-ID: <8e9aff04-3d96-4bb4-9c19-0645b7e852a4>
 Content-Transfer-Encoding: base64
 
 iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
 WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: image/png; name="Outlook-pdp4i4se.png"
 Content-Description: Outlook-pdp4i4se.png
 Content-Disposition: inline; filename="Outlook-pdp4i4se.png"; size=5482;
 	creation-date="Thu, 20 Jun 2024 13:25:38 GMT";
-	modification-date="Thu, 20 Jun 2024 13:25:38 GMT"
+	modification-date="Thu, 20 Jun 2024 13:27:13 GMT"
 Content-ID: <08db76b7-f643-4b96-8acd-5325e19c1e99>
 Content-Transfer-Encoding: base64
 
@@ -2947,16 +3172,147 @@ i7Dxv/5HSut42DEF9goF6hNyD7XZeRyoEHyho0r0rwf4aiJDzEH6ZvX7teppJy4TUyCmQFMUaEzI
 g13MumEitQ3xBXZ8aoqzlvjge8m5jobkHTRs30erhpGEj9tXYogpEFNgr1Hg/wDM0RMiyxVlqAAA
 AABJRU5ErkJggg==
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
 Content-Type: image/png; name="Outlook-qfkgjwgm.png"
 Content-Description: Outlook-qfkgjwgm.png
 Content-Disposition: inline; filename="Outlook-qfkgjwgm.png"; size=99;
 	creation-date="Thu, 20 Jun 2024 13:25:38 GMT";
-	modification-date="Thu, 20 Jun 2024 13:25:38 GMT"
+	modification-date="Thu, 20 Jun 2024 13:27:13 GMT"
 Content-ID: <15cbe041-9a4c-448d-9049-10acf4d98b93>
 Content-Transfer-Encoding: base64
 
 iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
 WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
 
---_007_MA1PR01MB4308550B7CF6199FE4E5433A80C82MA1PR01MB4308INDP_--
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-dfbvx253.png"
+Content-Description: Outlook-dfbvx253.png
+Content-Disposition: inline; filename="Outlook-dfbvx253.png"; size=99;
+	creation-date="Thu, 20 Jun 2024 13:29:17 GMT";
+	modification-date="Thu, 20 Jun 2024 13:29:17 GMT"
+Content-ID: <f4c69f42-6682-4abe-b4b8-9b79f73e6c62>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
+WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
+
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-21jb3dlu.png"
+Content-Description: Outlook-21jb3dlu.png
+Content-Disposition: inline; filename="Outlook-21jb3dlu.png"; size=5482;
+	creation-date="Thu, 20 Jun 2024 13:29:17 GMT";
+	modification-date="Thu, 20 Jun 2024 13:29:17 GMT"
+Content-ID: <8c0f8170-e1d0-4031-a57d-20b6a72ccf58>
+Content-Transfer-Encoding: base64
+
+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
+AABJRU5ErkJggg==
+
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-callpznc.png"
+Content-Description: Outlook-callpznc.png
+Content-Disposition: inline; filename="Outlook-callpznc.png"; size=99;
+	creation-date="Thu, 20 Jun 2024 13:29:17 GMT";
+	modification-date="Thu, 20 Jun 2024 13:29:17 GMT"
+Content-ID: <5bcd4c95-2833-4085-8b6f-84700b7f9f56>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
+WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
+
+--_010_MA1PR01MB43082375F4F0563E9E6AB23080C82MA1PR01MB4308INDP_--
