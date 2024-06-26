@@ -1,87 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A26EC9199B1
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2024 23:19:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57AEF9199DC
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2024 23:40:06 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=zAP9iAhl;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=R5JEhvLF;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=UfNFiktM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=icjQbIdI;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W8ZMY11g8z30TX
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 07:19:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W8ZqQ6BC0z3cVq
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 07:40:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=zAP9iAhl;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=R5JEhvLF;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=UfNFiktM;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=icjQbIdI;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.152; helo=fhigh1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.153; helo=fhigh2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8ZLw5958z2ysg
-	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 07:18:47 +1000 (AEST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 92CC7114016A
-	for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 17:18:45 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8Zpt4rS0z30Sv
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 07:39:34 +1000 (AEST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3BB88114017A;
+	Wed, 26 Jun 2024 17:39:33 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 26 Jun 2024 17:18:45 -0400
+  by compute6.internal (MEProxy); Wed, 26 Jun 2024 17:39:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1719436725; x=1719523125; bh=O+FhKVgwYe4Uk6Oa43O1bCK87W9/+8Nh
-	mzgT1itxWPI=; b=zAP9iAhlqFQ0jICWkBV2ugirDQiHbigZQ1cEbJJIXYzg+12v
-	yQJ+w60JaOJzwDX6tkEs+Xviyrv4w9d4/Zs8s/JhSHjPuM2iyertKtutW5WmmPv0
-	TuUEwUr2XLIzWLcafNY+DZDJ41bsekW5b52pf8pg+NubZ8XrSlfo+iTLGvbwYWjJ
-	Iac4Sakcm5tvX8y/N4Rs5WVccWC7qQGIlabLg94BwAgfeYui2exIbrmurOsTx3G0
-	GqVe92V0BDDrTMdcRQl6uyjbhyEGJZf/xq/0F14TB/EqFZO4iPUtmWIScDg0Ks4b
-	gHL5F4xjMVRTbRG/AMBF1B5vbtm7ny6Jy8K2DA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1719437973; x=1719524373; bh=SAtd+t8/ZL
+	eDH63drhQy5dC8D1Y9twU4I89TWKKse2w=; b=UfNFiktMpepnOHFiosi8zBUpHn
+	C2msOBxp0EDBFKCHmDsriUk1UmF7i08/dHkwr9kw9ltR5F9PYzEeeyslhqcJQUvB
+	HfqOPF4UGOarLOOicANxwgABicSXPnFDoE6ObWzAVjONOrk9wB8XOEL6ksArswyC
+	xXkwmnYc9B1VTWeyWmnukp/ZKPeV5a0YktxriHr1jnSsskObQ5iW9lRYg6SivST2
+	x5bfuo0N9he+dufoVSjGz3IU13pRyHcsl3J/Wy8LtKvJLwK8c5aqpzAPLz0zEU/Q
+	+O2nn24qSBCL9+2laLELj/nlBaU1vDT1awok5u04XpzoTRG9S1ZP27FWXmmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1719436725; x=1719523125; bh=O+FhKVgwYe4Uk6Oa43O1bCK87W9/+8Nhmzg
-	T1itxWPI=; b=R5JEhvLFurm3WeMuf+dlqEdnd4r617m2Nm9fL88q8SEorg923Xi
-	RQn02rJHYGt36EJVSTHnX19jQJ/2+WYa+Rx18ItAtZn1Ojniv03ubDMRlbQ1sfnq
-	SuEdcuPL0J96sUo35Icbepl/GWyUSHw7sTbYSn1Ak8GNe7ROo/xSz+Ze1il8kvb6
-	6x+L2AqTFlzdMiqJMaI3ZLo3jRLLhlkdU7zwOv5DvtFDEqlXBw6MNB1Z8ejlRV/l
-	Rc624U5J1e/ubJXWi6pKe7/18gOwQOMlJJ2WOI//5V+7vNZRNGLchGGYaUa1Ufm0
-	n5GuA+4sHuP8LuKMy0phB7sxtwCBRax8+iQ==
-X-ME-Sender: <xms:tYV8Zj24yOpiXOaw6oySj1zNP49rou1cL-iZGPTsMapWsjDLkMPiig>
-    <xme:tYV8ZiFcL1OgpRXVcEdPWpEp5orPnWPl1X3tUBE1SbpsM34k_kz3hx1AUmRi3aieW
-    NdPShz_KWOE5cdztpY>
-X-ME-Received: <xmr:tYV8Zj44vHsDLSpfng3Xu8isjhuFbAuwtoUlAEV6On0Ywhfti544IvzOU3sgmfGU4Y2heR8DCmR8q3Ofxeryl6oQRAt22EBLABc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrtddvgdduieduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
-    gtgidrgiihiieqnecuggftrfgrthhtvghrnhepffehgfdtudektdetuddvkeetgeehlefh
-    vddtieffueejffeiteekvefhjefhueeknecuffhomhgrihhnpehophgvnhgsmhgtrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
-    thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:tYV8Zo0St6sdMoSjGmxGXkV8e4kkit69QM51JgwfBUqnpTpt9gn9tg>
-    <xmx:tYV8ZmFY3TOiPIBrWF5-U7R4nUIjBEg18n3QRNMdXmoiYbnqUc7Llw>
-    <xmx:tYV8Zp9j-ArsZn5Nlmh_ROlZ27HlM9uimyE-f-pv5tt-7_hkzMjnKQ>
-    <xmx:tYV8ZjnWdADYg3k3L63chffQhEXWYuoJ3Iin_Zolb1TKwUmRcSUjqw>
-    <xmx:tYV8ZoMC1zNvB6PFKlrfw1hgjiMcH4AgNM0L22E7B8DnKrE2eL0Ejj8I>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1719437973; x=1719524373; bh=SAtd+t8/ZLeDH63drhQy5dC8D1Y9
+	twU4I89TWKKse2w=; b=icjQbIdIbLixMXX8XZLyBgNythA/eCm35dlcNBPvpufO
+	/6v1JCk3MZi67MRwav5LNl/YeTp607dldow+ZYOSWNlVkMuRkfjLpVtOyGJni0zh
+	wvQ57h+HMT0c+7k0pjPJQOA2bNhXwCMPTJpY8SqzHmGkQMDtNXm1YJ2C2CY5meVI
+	phdUJyeL4C7h47Z0CrqXnIVdFbDccjeMC9sG4A19E9SgdL2mkpYa07rkO0fVmnn3
+	0kWrnDtP8JUvdCpUtJVJJhMS0702V7nNx5LZeAPu/TK1c2+5nOJYY6e4q2hJSGuE
+	/0wksvg4A0BEkaKdL4K+/vCaNvJHKQXK1w6MbVvt7g==
+X-ME-Sender: <xms:lIp8Zl3I03faIt9UTjrkdWmlE1JJKEjWPuIKFuHARKzDGGBVxLmKiQ>
+    <xme:lIp8ZsH54e4pHWqBip-qa_RnelLQjY0KZoDcIkKfs6YDB5SHh6OAKRJN4yqOJLQ4u
+    rSBmH3w2eE17pLFqs0>
+X-ME-Received: <xmr:lIp8Zl4V508qLtIn6GAEtitDmw4evwdb6xe7Aer3rpKHwWX0QTTqw9_iEPfWy_dd53bOx_DWmNbue8fAhJRFC8Jbp1YoBSGyI_8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrtdefucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrhhluc
+    fvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecu
+    hfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsthiftg
+    igrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffehledukedu
+    leelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:lIp8Zi35IR4Ora8pHMGE-igqGbpdJ1jL3G4fTecKJxF1ziBfZV0zGw>
+    <xmx:lIp8ZoFKFVI4XmIeIZLh84pAnX7UPKtrMliDfbizw8lBbxH-4L7F7A>
+    <xmx:lIp8Zj870yH76YtdL7jOXCjcGl7dk4IptdyC9nrypu566HYrmwq8rg>
+    <xmx:lIp8Zlll3OD0JETutEnvyEGiBkyV9owLxM-6JGi5qDNYP0m8KnefZg>
+    <xmx:lYp8Zt7-52kx7yFnFaT6a968XljanEDCu_fhc5Xl38nJnVF-N14k9l0u>
 Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 17:18:45 -0400 (EDT)
-Date: Wed, 26 Jun 2024 16:18:43 -0500
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Jun 2024 17:39:32 -0400 (EDT)
+Date: Wed, 26 Jun 2024 16:39:31 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Redfish multi-host hint in entity-manager
-Message-ID: <ZnyFs6UV7naWgp0O@heinlein.vulture-banana.ts.net>
+To: Gunnar M <gunnar@gmills.xyz>
+Subject: Re: Request for a new vue3 branch in webui-vue
+Message-ID: <ZnyKk8xOmIgqAbs0@heinlein.vulture-banana.ts.net>
+References: <1403524602.354586.1719434789488@privateemail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ojR6c4R1MU1sf0dB"
+	protocol="application/pgp-signature"; boundary="GliLQglju4Pmp3eJ"
 Content-Disposition: inline
+In-Reply-To: <1403524602.354586.1719434789488@privateemail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,112 +94,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "kirankumarb@ami.com" <kirankumarb@ami.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "a.nikhil@ibm.com" <a.nikhil@ibm.com>, "sivaprabug@ami.com" <sivaprabug@ami.com>, "Renuka.Sharanya.Pundla@ibm.com" <Renuka.Sharanya.Pundla@ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---ojR6c4R1MU1sf0dB
+--GliLQglju4Pmp3eJ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Wed, Jun 26, 2024 at 02:46:29PM -0600, Gunnar M wrote:
+> Kiran and his team have volunteered to sync patches merged to master to t=
+his new 'vue3' branch bi-weekly. Thank you, Kiran! When the migration to Vu=
+e 3 is complete, and all commits are synced over, this 'vue3' branch will b=
+ecome the 'master' branch.
 
-I wanted to raise awareness of a proposed dbus interface to be used as a
-hint in bmcweb to implement the multi-host Redfish support:
+We need to be careful about how we do this.  You don't want it to appear
+on github as a rewrite of the "master" branch and we absolutely need to
+at least keep the vue2 code in some branch so that it doesn't get pruned
+=66rom the github history.  If we don't do this, it will become impossible
+for people to build older OpenBMC releases.
 
-    https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/72414
+I would suggest either:
 
-Meta now has two systems upstream that are considered "multi-host":
-Bletchley and Yosemite4.  This means that a single BMC manages multiple
-host computer systems, which are usually populated as some kind of
-"blade-like" device into a larger chassis.  We've been enhancing most of
-the backend applications over the last 2 years to facilitate this, but
-we've been slow at getting Redfish support in bmcweb for it.
+    a. We do the opposite: create a 'vue2' branch and update the recipe
+       to point at it.
 
-The original design in most of the applications was/is that if you have
-a dbus path like ".../hostN", then "host0" refers to the single-host
-system and "host[1-N]" refer to individual locations in a multi-host
-system.  While this design point is relatively easy to implement it
-presents a challenge for bmcweb: how do you define an external endpoint
-URI name and map it to internal dbus objects?  The typical "single-host"
-approach has been to hardcode a Redfish URI (like "/system") to the
-corresponding single-host dbus object.  The preference from the bmcweb
-maintainers is that this is done in a less hardcoded way.
-
-The typical approach to this, for elements where we have multiple of
-them, is that bmcweb can do some sort of mapper query to find them all.
-Sensors, inventory, etc. typically operate this way.  However, for
-multi-host backend elements we usually don't have an obvious way to name
-the URI due to differences in path leaf names across various
-applications: hostN, postcodeN, etc.  Ideally, each of these backends
-would have some consistent name, path or association to something
-consistent that bmcweb can always use for creating the URI, but this
-will take work.
-
-My proposal in the short-term is to use entity-manager configs to create
-a "hint" interface for bmcweb: Inventory.Decorator.ManagedHost.  This
-interface will have an index property which can be used to find the
-appropriate backend.
-
-A quick summary of the design and changes would be:
-
-- Inventory.Decorator.ManagedHost is defined and implemented in
-  multi-host entity-manager configs.  This will add the interface to
-  entity-manager paths such as
-  "/xyz/openbmc_project/inventory/Sentinel_Dome_3" (with index =3D 3).
-
-    - https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/72414
-
-- bmcweb will maintain the existing "Systems/system" URI for single-host sy=
-stems
-  [for a time] (using the redfish-system-uri-name meson option).
-  Multi-host systems should set this to an empty string which will
-  disable that default URI.
-
-- Inventory.Decorator.ManagedHost will be used by bmcweb, via a mapper
-  look up, to determine all of the ComputerSystem paths.  This means
-  that an "/xyz/openbmc_project/inventory/Sentinel_Dome_3" with the
-  interface will cause "/redfish/v1/Systems/Sentinel_Dome_3" to become a
-  valid URI.  When bmcweb needs to interact with the
-  phosphor-state-manager objects, it will use the documented convention
-  and the "HostIndex" property to construct the dbus path.
-
-- As time permits, single-host systems with entity-manager configs should
-  create their own ManagedHost decorators and after sufficient time has
-  elapsed the `redfish-system-uri-name` option will be deleted.  [I'll
-  let the bmcweb maintainers determine the timelines here but probably
-  at least 6 months from initial support.]
-
-- Once we figure out the set of "strange mappings bmcweb has to do", we
-  will follow up with design proposals on those repositories to create
-  associations back to the ManagedHosts in the inventory model, which
-  bmcweb will be able to use directly [approximately 6-12 months in the
-  future].
-
-Are there any gaps or concerns with this proposal?
+    b. We use this as an opportunity to migrate from 'master' to 'main'
+       and use 'main' as the vue3 branch.
 
 --=20
 Patrick Williams
 
---ojR6c4R1MU1sf0dB
+--GliLQglju4Pmp3eJ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmZ8hbIACgkQqwNHzC0A
-wRmL2BAAn6VKwqZjONLk4hJ8orqNOVWFeCkcdY9aKPjUQZDGOVKC3wjD7HQhihcl
-6M502/2+/Xcar7rbCooXkebMnNK8CvkNUK46gz3r15jOE0HVpnItld5RVCdvBONb
-FJi4E7uk7BFnhiwF9z9set4umQ+fvwCRJhRTzVgcu2EReqymtgRI2DR50NunBS8b
-bxSr8LfKfMW8428epHpyhAf16SlyE9nn/u6Xqvt1cAYbHqNFAxehtVTAKicw/9IA
-q5R7P/TOLquV3n/KEeIiiyLg3O7bgZ3kuGqd1olWgi4i/Vh9KSlpHZ1YGs0Fkx4B
-udYGHhleKCosxEUw0mSPmukTw5GlCEEICtKpq1g6qmD/vm61kHxsy8jnQufrbI9L
-Cu0s3gep+s/FGF2g3SxKOxUm26g1pNO4Rmp/A9hRZOjSIqfYFwRJljh+W4lk2wMA
-915kS7+JnKpN59B8UaFz3zLPFCrrT+2lU1M/nJ9orNVTDFYvo6vY5jmlgl+I0cVu
-DGiWp78ozIb+vqfSd23c/sKA+Mon0ZJeuLpRy5A8hJatuo+m1HqW4noi7bZ4vWwG
-+APWkmC4N+2NK56pr2UcxYxVIPkSFJ9jG4ht3VRisV75Nd0S7DJbjBnJvLk3MiJ3
-e+/cdwa44/z8aVKwgRmIP9fExccNeMTSdoGJ8+dZGcmF2PtqSbo=
-=NihN
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmZ8ipEACgkQqwNHzC0A
+wRmHDQ/9H4g6Jilwnb7LYKwFkYkonlUZUj9lLmOPYcP+BDki/qFpCApRKzUiEBzT
+VzfJ+Lc7pET5k3VvjtwAViSn7aKfNkYNbm9JtllofN2N4gWyobR9SyF2mH27KLfA
+nkD3knttVHzTTvGMNub5S6yAsB43QIp5rzkzzkyciFu/XxRZC02JbrY3G4MISbLr
+fFZcA9qNRFXE61pI9VJz+gElsBhu5mlnM+b4WCUPQ0tsZnbEPpLPBoKdfU5FoKJV
++l34zy9xmH6CXqAMXnOfR+u3ORAKqnfSMVblmN9CEepAi2L5lxJa+TSVqvuSkdoO
+Vfz0S47CxmAjuZv27bHWm8WhZJbod9FvadkH7ZAT9830Uit0B5nBm11LNyVOmavu
+t+U6Jq2tUUmcwIKXlTAcQk6GjZFtMP8von3m6VPw0vPRQNuXk2yUSGwnpvw0E/i9
+7Shc+TFoeivma01v6GQ4ypu+Fe6hbKoOJx3UO0dIrE2nz3FrB4cPOv9F1FWs5Nqh
+BBPeSWkraPJ+1YRkYJtU8ntrAPQQmErHKrh6XqoEpT0La2BONDMsH8YToJAH2u+S
+D7IEhvsa2WZFohTaDWQ5b1icQs8Fqo4m79nLadqH4o7nWAKChRAQOrfaKFNwGVFL
+IiwGWriWZOIRcTbuj4UId4JNW+h/ITsUa+thUi90kLpzp8WXBrk=
+=Q65x
 -----END PGP SIGNATURE-----
 
---ojR6c4R1MU1sf0dB--
+--GliLQglju4Pmp3eJ--
