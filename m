@@ -2,63 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22B4A919C14
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 02:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2090B919C15
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 02:50:34 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=juu1cgLp;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=m750Sqkv;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W8g1m4Zj2z3cX3
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 10:49:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W8g3B4Yg1z3cVy
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 10:50:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=juu1cgLp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=m750Sqkv;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8fsh57WGz3cYZ
-	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 10:42:16 +1000 (AEST)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-52cd717ec07so6753690e87.0
-        for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 17:42:17 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8fsk32Qnz3cWF
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 10:42:18 +1000 (AEST)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-52ce6a9fd5cso4065692e87.3
+        for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 17:42:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719448934; x=1720053734; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1719448936; x=1720053736; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5D9njs7AziRs6SEzE0ZzbcUPEq97DfERqhDG3/kPyd4=;
-        b=juu1cgLp+qsMXipvaZVl1G7NtQpSgu3aYl7zR/BMjgQnknq6IEI6Z7C2L01lSFeFBj
-         0hbUF2xP0clqmy30Vy8cHaxcGafYpz38kmhsaJXti42X1T6et7N0mydJELYzv50Mb3O6
-         ogs/RrI5wVsRXXn+9F1ybXbZlsmj4HwdsJgszejM9uAhX54r11Nh7ozRLmzB5bVz24vp
-         PQ1KD7WruLGHmbPBfA/G9odj2rAZWInojXKHhNpuDYkW2fEuhZQqniilB4jqZEEiTQgV
-         2xQfCtk4nUSwuw4IPJWgupX2I6o9KinDKbjhUb8+tqdSSIsaAYu6tc2EdTpzZGbomhew
-         yD3w==
+        bh=meRcVrx/K8/sJerdBBTH157b52QfYejAtE/mSM/skqM=;
+        b=m750Sqkv22jQx/Dv8zcWWvXB35ArB4FIwqFwYooBBWMzp/hUntk/B7kecwDmNSXMDI
+         fTVtJETIsBXdM7Utd3kiQFHhEnhY9WUVBfL9KFRRlSjlxR55xMBEMLtvrnqvQu8vGuVa
+         v57wXRcKcPlIu+c1zIKzk5fZBnGXgE95YUjNgqEe/UKgDL3eqJ1zuBjqFDKZIzM1X7gS
+         zQ9VH7FOArDlJ4wWwvJpEaryGe5jYZzXQNvRroIfq62lezF/2TdiJV2VKNg0lyo+RuK8
+         y/UKNCWSqUmW4AFlp2en6+D/cReSz8ppR2izMoLxcMEoLhl/lFPs3PUkOSbqsLHCecEm
+         85nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719448934; x=1720053734;
+        d=1e100.net; s=20230601; t=1719448936; x=1720053736;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5D9njs7AziRs6SEzE0ZzbcUPEq97DfERqhDG3/kPyd4=;
-        b=AbpX4aXjLitz1RY9bznDhuYd3Ai31+0/ecjlkb4w4JBmJwBG04EZmRklgVq2a6lEtN
-         5RW2Em3SZKd0jqcnAAJCtTZDnhHU3kBJbAY2S8qsn7WvXcuyk5IYm451+eEH0D9YW3Mv
-         eV3h78jW9OngwQ8HzYk4zWRCve6qPEfkFT4QhngLXyWcl0RBRWB5AKtPVTBCRS/a713Y
-         TQduted8QeP6gwnT6OJifXrqnL35doIbNAaDWBi7/N0/DQU7s2aWcegBCtSkIE96FpyM
-         miaynOurq1tJEuBRsuMy5DrxtMgzFxYFhJwreYXvWTbqItkPV1u93iHjHyXzVkc6eX7q
-         PLzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXlw/5MCJrkfUuqeG12ySWftOdcCNf25BZbObkmZo5ev2SSPrpodG6NrKeAQEuWsV+QitzfYiEQYiOMtFOEvD5zI+T5x+5y0GQ=
-X-Gm-Message-State: AOJu0YwGtTVLOMf9FtofbD43ztVvRVSGPsUbGnOPl3pfvSHOR6D6GGfd
-	8yiqFC4z3g22RVs27wW/jUcFlOh/cdPb1oE1JH7ZUeJWsbtU7Ykv
-X-Google-Smtp-Source: AGHT+IHmo1O9YGjG+l0OUOjLVaiS0DYIMvt5j2QhxISuGr8rWHSzsmO/nQ/Pf2MJidk/jDeLER9rPQ==
-X-Received: by 2002:ac2:5e83:0:b0:52c:e41a:b666 with SMTP id 2adb3069b0e04-52ce41ab71fmr7137778e87.7.1719448933830;
-        Wed, 26 Jun 2024 17:42:13 -0700 (PDT)
+        bh=meRcVrx/K8/sJerdBBTH157b52QfYejAtE/mSM/skqM=;
+        b=pAn1heCKGuV7xjWL1cygwXflIf8AUSWSkRJ6f8U3aP8OTRGFFpXwnBaxrZnjHW+meA
+         LQ1y63d/On6PoTOP6P5sWS2pBmIXQxnOqDEVRYdgWAu9N64fmty7VXCxcaO8fPkibP4h
+         QWz9t7rUEK6IpSQSnp1kNmB1NkTcnm/Mli+SOyxe9faxqJDAYhg1jXjjURxwL7Mnp6xB
+         VNBJWZzjW4iUe6SCikukRORtaDUVwy0wr5eN23Xd9GpqR/yLSB3kEwI5zd01TVrF4Ld5
+         aVQrrPFN0ks68/mMX9IfbWfQizkx9AMqJH5I7+83sG/sG3kypkXEl72ZG8CvFojP5z2O
+         0FkA==
+X-Forwarded-Encrypted: i=1; AJvYcCVCj2Ep+Q+651Ys0Hd8qw25jWo2hilE5KMs845dDYeqk80Y5R7F1Pm3hdLbsLRccPJvh28yY51zshysR2CDNqQqXIDEiG4DhRE=
+X-Gm-Message-State: AOJu0YyfhiB3b/6AQcb3qid+ID0nCKLkHzKIhOCzYAyf8qavCWFp8Z7z
+	L/URID6qIhApYMjhGpnnY1vCuEVWrRfFuvshCWgt/wyXjdo2m7eU
+X-Google-Smtp-Source: AGHT+IGn7wSsgabnJX4LHqU2k9E0zw7bvYkA0kaErRgC3cSC1Sz3JRD4SdluOe4K7TmTCVGfdo85Yw==
+X-Received: by 2002:a05:651c:154e:b0:2ee:4ab4:f752 with SMTP id 38308e7fff4ca-2ee4ab4f7damr990181fa.49.1719448936422;
+        Wed, 26 Jun 2024 17:42:16 -0700 (PDT)
 Received: from localhost ([89.113.147.248])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e713211b3sm19354e87.269.2024.06.26.17.42.12
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee4a34f68csm491251fa.29.2024.06.26.17.42.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jun 2024 17:42:13 -0700 (PDT)
+        Wed, 26 Jun 2024 17:42:15 -0700 (PDT)
 From: Serge Semin <fancer.lancer@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
@@ -76,9 +76,9 @@ To: Andrew Lunn <andrew@lunn.ch>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next v3 07/10] net: pcs: xpcs: Add Synopsys DW xPCS platform device driver
-Date: Thu, 27 Jun 2024 03:41:27 +0300
-Message-ID: <20240627004142.8106-8-fancer.lancer@gmail.com>
+Subject: [PATCH net-next v3 08/10] net: pcs: xpcs: Add fwnode-based descriptor creation method
+Date: Thu, 27 Jun 2024 03:41:28 +0300
+Message-ID: <20240627004142.8106-9-fancer.lancer@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240627004142.8106-1-fancer.lancer@gmail.com>
 References: <20240627004142.8106-1-fancer.lancer@gmail.com>
@@ -99,759 +99,135 @@ Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Synopsys DesignWare XPCS IP-core can be synthesized with the device CSRs
-being accessible over the MCI or APB3 interface instead of the MDIO bus
-(see the CSR_INTERFACE HDL parameter). Thus all the PCS registers can be
-just memory mapped and be a subject of the standard MMIO operations of
-course taking into account the peculiarities of the Clause C45 CSRs
-mapping. From that perspective the DW XPCS devices would look as just
-normal platform devices for the kernel.
+It's now possible to have the DW XPCS device defined as a standard
+platform device for instance in the platform DT-file. Although that
+functionality is useless unless there is a way to have the device found by
+the client drivers (STMMAC/DW *MAC, NXP SJA1105 Eth Switch, etc). Provide
+such ability by means of the xpcs_create_fwnode() method. It needs to be
+called with the device DW XPCS fwnode instance passed. That node will be
+then used to find the MDIO-device instance in order to create the DW XPCS
+descriptor.
 
-On the other hand in order to have the DW XPCS devices handled by the
-pcs-xpcs.c driver they need to be registered in the framework of the
-MDIO-subsystem. So the suggested change is about providing a DW XPCS
-platform device driver registering a virtual MDIO-bus with a single
-MDIO-device representing the DW XPCS device.
-
-DW XPCS platform device is supposed to be described by the respective
-compatible string "snps,dw-xpcs" (or with the PMA-specific compatible
-string), CSRs memory space and optional peripheral bus and reference clock
-sources. Depending on the INDIRECT_ACCESS IP-core synthesize parameter the
-memory-mapped reg-space can be represented as either directly or
-indirectly mapped Clause 45 space. In the former case the particular
-address is determined based on the MMD device and the registers offset (5
-+ 16 bits all together) within the device reg-space. In the later case
-there is only 8 lower address bits are utilized for the registers mapping
-(255 CSRs). The upper bits are supposed to be written into the respective
-viewport CSR in order to select the respective MMD sub-page.
-
-Note, only the peripheral bus clock source is requested in the platform
-device probe procedure. The core and pad clocks handling has been
-implemented in the framework of the xpcs_create() method intentionally
-since the clocks-related setups are supposed to be performed later, during
-the DW XPCS main configuration procedures. (For instance they will be
-required for the DW Gen5 10G PMA configuration.)
+Note the method semantics and name is similar to what has been recently
+introduced in the Lynx PCS driver.
 
 Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
 
 ---
 
 Changelog v2:
-- This is a new patch created by merging in two former patches:
-  [PATCH net-next 09/16] net: mdio: Add Synopsys DW XPCS management interface support
-  [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS MDIO-device support
-- Drop inline'es from the statically defined in *.c methods. (@Maxime)
+- Use the function name and semantics similar to the Lynx PCS driver.
+- Add kdoc describing the DW XPCS create functions.
 
 Changelog v3:
-- Convert xpcs_plat_pm_ops to being defined as static. (@Simon)
+- Add the "@interface" argument kdoc to the xpcs_create_mdiodev()
+  function. (@Simon)
+- Fix the "@fwnode" argument name in the xpcs_create_fwnode() method kdoc.
+  (@Simon)
+- Move the return value descriptions to the "Return:" section of the
+  xpcs_create_mdiodev() and xpcs_create_fwnode() kdoc. (@Simon)
 ---
- drivers/net/pcs/Kconfig         |   6 +-
- drivers/net/pcs/Makefile        |   3 +-
- drivers/net/pcs/pcs-xpcs-plat.c | 460 ++++++++++++++++++++++++++++++++
- drivers/net/pcs/pcs-xpcs.c      |  63 ++++-
- drivers/net/pcs/pcs-xpcs.h      |   6 +
- include/linux/pcs/pcs-xpcs.h    |  18 ++
- 6 files changed, 547 insertions(+), 9 deletions(-)
- create mode 100644 drivers/net/pcs/pcs-xpcs-plat.c
+ drivers/net/pcs/pcs-xpcs.c   | 50 ++++++++++++++++++++++++++++++++++++
+ include/linux/pcs/pcs-xpcs.h |  3 +++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/drivers/net/pcs/Kconfig b/drivers/net/pcs/Kconfig
-index 87cf308fc6d8..f6aa437473de 100644
---- a/drivers/net/pcs/Kconfig
-+++ b/drivers/net/pcs/Kconfig
-@@ -6,11 +6,11 @@
- menu "PCS device drivers"
- 
- config PCS_XPCS
--	tristate
-+	tristate "Synopsys DesignWare Ethernet XPCS"
- 	select PHYLINK
- 	help
--	  This module provides helper functions for Synopsys DesignWare XPCS
--	  controllers.
-+	  This module provides a driver and helper functions for Synopsys
-+	  DesignWare XPCS controllers.
- 
- config PCS_LYNX
- 	tristate
-diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
-index fb1694192ae6..4f7920618b90 100644
---- a/drivers/net/pcs/Makefile
-+++ b/drivers/net/pcs/Makefile
-@@ -1,7 +1,8 @@
- # SPDX-License-Identifier: GPL-2.0
- # Makefile for Linux PCS drivers
- 
--pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-nxp.o pcs-xpcs-wx.o
-+pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-plat.o \
-+				   pcs-xpcs-nxp.o pcs-xpcs-wx.o
- 
- obj-$(CONFIG_PCS_XPCS)		+= pcs_xpcs.o
- obj-$(CONFIG_PCS_LYNX)		+= pcs-lynx.o
-diff --git a/drivers/net/pcs/pcs-xpcs-plat.c b/drivers/net/pcs/pcs-xpcs-plat.c
-new file mode 100644
-index 000000000000..173c9c6bd3df
---- /dev/null
-+++ b/drivers/net/pcs/pcs-xpcs-plat.c
-@@ -0,0 +1,460 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Synopsys DesignWare XPCS platform device driver
-+ *
-+ * Copyright (C) 2024 Serge Semin
-+ */
-+
-+#include <linux/atomic.h>
-+#include <linux/bitfield.h>
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/kernel.h>
-+#include <linux/mdio.h>
-+#include <linux/module.h>
-+#include <linux/pcs/pcs-xpcs.h>
-+#include <linux/phy.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/property.h>
-+#include <linux/sizes.h>
-+
-+#include "pcs-xpcs.h"
-+
-+/* Page select register for the indirect MMIO CSRs access */
-+#define DW_VR_CSR_VIEWPORT		0xff
-+
-+struct dw_xpcs_plat {
-+	struct platform_device *pdev;
-+	struct mii_bus *bus;
-+	bool reg_indir;
-+	int reg_width;
-+	void __iomem *reg_base;
-+	struct clk *pclk;
-+};
-+
-+static ptrdiff_t xpcs_mmio_addr_format(int dev, int reg)
-+{
-+	return FIELD_PREP(0x1f0000, dev) | FIELD_PREP(0xffff, reg);
-+}
-+
-+static u16 xpcs_mmio_addr_page(ptrdiff_t csr)
-+{
-+	return FIELD_GET(0x1fff00, csr);
-+}
-+
-+static ptrdiff_t xpcs_mmio_addr_offset(ptrdiff_t csr)
-+{
-+	return FIELD_GET(0xff, csr);
-+}
-+
-+static int xpcs_mmio_read_reg_indirect(struct dw_xpcs_plat *pxpcs,
-+				       int dev, int reg)
-+{
-+	ptrdiff_t csr, ofs;
-+	u16 page;
-+	int ret;
-+
-+	csr = xpcs_mmio_addr_format(dev, reg);
-+	page = xpcs_mmio_addr_page(csr);
-+	ofs = xpcs_mmio_addr_offset(csr);
-+
-+	ret = pm_runtime_resume_and_get(&pxpcs->pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	switch (pxpcs->reg_width) {
-+	case 4:
-+		writel(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 2));
-+		ret = readl(pxpcs->reg_base + (ofs << 2));
-+		break;
-+	default:
-+		writew(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 1));
-+		ret = readw(pxpcs->reg_base + (ofs << 1));
-+		break;
-+	}
-+
-+	pm_runtime_put(&pxpcs->pdev->dev);
-+
-+	return ret;
-+}
-+
-+static int xpcs_mmio_write_reg_indirect(struct dw_xpcs_plat *pxpcs,
-+					int dev, int reg, u16 val)
-+{
-+	ptrdiff_t csr, ofs;
-+	u16 page;
-+	int ret;
-+
-+	csr = xpcs_mmio_addr_format(dev, reg);
-+	page = xpcs_mmio_addr_page(csr);
-+	ofs = xpcs_mmio_addr_offset(csr);
-+
-+	ret = pm_runtime_resume_and_get(&pxpcs->pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	switch (pxpcs->reg_width) {
-+	case 4:
-+		writel(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 2));
-+		writel(val, pxpcs->reg_base + (ofs << 2));
-+		break;
-+	default:
-+		writew(page, pxpcs->reg_base + (DW_VR_CSR_VIEWPORT << 1));
-+		writew(val, pxpcs->reg_base + (ofs << 1));
-+		break;
-+	}
-+
-+	pm_runtime_put(&pxpcs->pdev->dev);
-+
-+	return 0;
-+}
-+
-+static int xpcs_mmio_read_reg_direct(struct dw_xpcs_plat *pxpcs,
-+				     int dev, int reg)
-+{
-+	ptrdiff_t csr;
-+	int ret;
-+
-+	csr = xpcs_mmio_addr_format(dev, reg);
-+
-+	ret = pm_runtime_resume_and_get(&pxpcs->pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	switch (pxpcs->reg_width) {
-+	case 4:
-+		ret = readl(pxpcs->reg_base + (csr << 2));
-+		break;
-+	default:
-+		ret = readw(pxpcs->reg_base + (csr << 1));
-+		break;
-+	}
-+
-+	pm_runtime_put(&pxpcs->pdev->dev);
-+
-+	return ret;
-+}
-+
-+static int xpcs_mmio_write_reg_direct(struct dw_xpcs_plat *pxpcs,
-+				      int dev, int reg, u16 val)
-+{
-+	ptrdiff_t csr;
-+	int ret;
-+
-+	csr = xpcs_mmio_addr_format(dev, reg);
-+
-+	ret = pm_runtime_resume_and_get(&pxpcs->pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	switch (pxpcs->reg_width) {
-+	case 4:
-+		writel(val, pxpcs->reg_base + (csr << 2));
-+		break;
-+	default:
-+		writew(val, pxpcs->reg_base + (csr << 1));
-+		break;
-+	}
-+
-+	pm_runtime_put(&pxpcs->pdev->dev);
-+
-+	return 0;
-+}
-+
-+static int xpcs_mmio_read_c22(struct mii_bus *bus, int addr, int reg)
-+{
-+	struct dw_xpcs_plat *pxpcs = bus->priv;
-+
-+	if (addr != 0)
-+		return -ENODEV;
-+
-+	if (pxpcs->reg_indir)
-+		return xpcs_mmio_read_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg);
-+	else
-+		return xpcs_mmio_read_reg_direct(pxpcs, MDIO_MMD_VEND2, reg);
-+}
-+
-+static int xpcs_mmio_write_c22(struct mii_bus *bus, int addr, int reg, u16 val)
-+{
-+	struct dw_xpcs_plat *pxpcs = bus->priv;
-+
-+	if (addr != 0)
-+		return -ENODEV;
-+
-+	if (pxpcs->reg_indir)
-+		return xpcs_mmio_write_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg, val);
-+	else
-+		return xpcs_mmio_write_reg_direct(pxpcs, MDIO_MMD_VEND2, reg, val);
-+}
-+
-+static int xpcs_mmio_read_c45(struct mii_bus *bus, int addr, int dev, int reg)
-+{
-+	struct dw_xpcs_plat *pxpcs = bus->priv;
-+
-+	if (addr != 0)
-+		return -ENODEV;
-+
-+	if (pxpcs->reg_indir)
-+		return xpcs_mmio_read_reg_indirect(pxpcs, dev, reg);
-+	else
-+		return xpcs_mmio_read_reg_direct(pxpcs, dev, reg);
-+}
-+
-+static int xpcs_mmio_write_c45(struct mii_bus *bus, int addr, int dev,
-+			       int reg, u16 val)
-+{
-+	struct dw_xpcs_plat *pxpcs = bus->priv;
-+
-+	if (addr != 0)
-+		return -ENODEV;
-+
-+	if (pxpcs->reg_indir)
-+		return xpcs_mmio_write_reg_indirect(pxpcs, dev, reg, val);
-+	else
-+		return xpcs_mmio_write_reg_direct(pxpcs, dev, reg, val);
-+}
-+
-+static struct dw_xpcs_plat *xpcs_plat_create_data(struct platform_device *pdev)
-+{
-+	struct dw_xpcs_plat *pxpcs;
-+
-+	pxpcs = devm_kzalloc(&pdev->dev, sizeof(*pxpcs), GFP_KERNEL);
-+	if (!pxpcs)
-+		return ERR_PTR(-ENOMEM);
-+
-+	pxpcs->pdev = pdev;
-+
-+	dev_set_drvdata(&pdev->dev, pxpcs);
-+
-+	return pxpcs;
-+}
-+
-+static int xpcs_plat_init_res(struct dw_xpcs_plat *pxpcs)
-+{
-+	struct platform_device *pdev = pxpcs->pdev;
-+	struct device *dev = &pdev->dev;
-+	resource_size_t spc_size;
-+	struct resource *res;
-+
-+	if (!device_property_read_u32(dev, "reg-io-width", &pxpcs->reg_width)) {
-+		if (pxpcs->reg_width != 2 && pxpcs->reg_width != 4) {
-+			dev_err(dev, "Invalid reg-space data width\n");
-+			return -EINVAL;
-+		}
-+	} else {
-+		pxpcs->reg_width = 2;
-+	}
-+
-+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "direct") ?:
-+	      platform_get_resource_byname(pdev, IORESOURCE_MEM, "indirect");
-+	if (!res) {
-+		dev_err(dev, "No reg-space found\n");
-+		return -EINVAL;
-+	}
-+
-+	if (!strcmp(res->name, "indirect"))
-+		pxpcs->reg_indir = true;
-+
-+	if (pxpcs->reg_indir)
-+		spc_size = pxpcs->reg_width * SZ_256;
-+	else
-+		spc_size = pxpcs->reg_width * SZ_2M;
-+
-+	if (resource_size(res) < spc_size) {
-+		dev_err(dev, "Invalid reg-space size\n");
-+		return -EINVAL;
-+	}
-+
-+	pxpcs->reg_base = devm_ioremap_resource(dev, res);
-+	if (IS_ERR(pxpcs->reg_base)) {
-+		dev_err(dev, "Failed to map reg-space\n");
-+		return PTR_ERR(pxpcs->reg_base);
-+	}
-+
-+	return 0;
-+}
-+
-+static int xpcs_plat_init_clk(struct dw_xpcs_plat *pxpcs)
-+{
-+	struct device *dev = &pxpcs->pdev->dev;
-+	int ret;
-+
-+	pxpcs->pclk = devm_clk_get(dev, "pclk");
-+	if (IS_ERR(pxpcs->pclk))
-+		return dev_err_probe(dev, PTR_ERR(pxpcs->pclk),
-+				     "Failed to get ref clock\n");
-+
-+	pm_runtime_set_active(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret) {
-+		dev_err(dev, "Failed to enable runtime-PM\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int xpcs_plat_init_bus(struct dw_xpcs_plat *pxpcs)
-+{
-+	struct device *dev = &pxpcs->pdev->dev;
-+	static atomic_t id = ATOMIC_INIT(-1);
-+	int ret;
-+
-+	pxpcs->bus = devm_mdiobus_alloc_size(dev, 0);
-+	if (!pxpcs->bus)
-+		return -ENOMEM;
-+
-+	pxpcs->bus->name = "DW XPCS MCI/APB3";
-+	pxpcs->bus->read = xpcs_mmio_read_c22;
-+	pxpcs->bus->write = xpcs_mmio_write_c22;
-+	pxpcs->bus->read_c45 = xpcs_mmio_read_c45;
-+	pxpcs->bus->write_c45 = xpcs_mmio_write_c45;
-+	pxpcs->bus->phy_mask = ~0;
-+	pxpcs->bus->parent = dev;
-+	pxpcs->bus->priv = pxpcs;
-+
-+	snprintf(pxpcs->bus->id, MII_BUS_ID_SIZE,
-+		 "dwxpcs-%x", atomic_inc_return(&id));
-+
-+	/* MDIO-bus here serves as just a back-end engine abstracting out
-+	 * the MDIO and MCI/APB3 IO interfaces utilized for the DW XPCS CSRs
-+	 * access.
-+	 */
-+	ret = devm_mdiobus_register(dev, pxpcs->bus);
-+	if (ret) {
-+		dev_err(dev, "Failed to create MDIO bus\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+/* Note there is no need in the next function antagonist because the MDIO-bus
-+ * de-registration will effectively remove and destroy all the MDIO-devices
-+ * registered on the bus.
-+ */
-+static int xpcs_plat_init_dev(struct dw_xpcs_plat *pxpcs)
-+{
-+	struct device *dev = &pxpcs->pdev->dev;
-+	struct mdio_device *mdiodev;
-+	int ret;
-+
-+	/* There is a single memory-mapped DW XPCS device */
-+	mdiodev = mdio_device_create(pxpcs->bus, 0);
-+	if (IS_ERR(mdiodev))
-+		return PTR_ERR(mdiodev);
-+
-+	/* Associate the FW-node with the device structure so it can be looked
-+	 * up later. Make sure DD-core is aware of the OF-node being re-used.
-+	 */
-+	device_set_node(&mdiodev->dev, fwnode_handle_get(dev_fwnode(dev)));
-+	mdiodev->dev.of_node_reused = true;
-+
-+	/* Pass the data further so the DW XPCS driver core could use it */
-+	mdiodev->dev.platform_data = (void *)device_get_match_data(dev);
-+
-+	ret = mdio_device_register(mdiodev);
-+	if (ret) {
-+		dev_err(dev, "Failed to register MDIO device\n");
-+		goto err_clean_data;
-+	}
-+
-+	return 0;
-+
-+err_clean_data:
-+	mdiodev->dev.platform_data = NULL;
-+
-+	fwnode_handle_put(dev_fwnode(&mdiodev->dev));
-+	device_set_node(&mdiodev->dev, NULL);
-+
-+	mdio_device_free(mdiodev);
-+
-+	return ret;
-+}
-+
-+static int xpcs_plat_probe(struct platform_device *pdev)
-+{
-+	struct dw_xpcs_plat *pxpcs;
-+	int ret;
-+
-+	pxpcs = xpcs_plat_create_data(pdev);
-+	if (IS_ERR(pxpcs))
-+		return PTR_ERR(pxpcs);
-+
-+	ret = xpcs_plat_init_res(pxpcs);
-+	if (ret)
-+		return ret;
-+
-+	ret = xpcs_plat_init_clk(pxpcs);
-+	if (ret)
-+		return ret;
-+
-+	ret = xpcs_plat_init_bus(pxpcs);
-+	if (ret)
-+		return ret;
-+
-+	ret = xpcs_plat_init_dev(pxpcs);
-+	if (ret)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused xpcs_plat_pm_runtime_suspend(struct device *dev)
-+{
-+	struct dw_xpcs_plat *pxpcs = dev_get_drvdata(dev);
-+
-+	clk_disable_unprepare(pxpcs->pclk);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused xpcs_plat_pm_runtime_resume(struct device *dev)
-+{
-+	struct dw_xpcs_plat *pxpcs = dev_get_drvdata(dev);
-+
-+	return clk_prepare_enable(pxpcs->pclk);
-+}
-+
-+static const struct dev_pm_ops xpcs_plat_pm_ops = {
-+	SET_RUNTIME_PM_OPS(xpcs_plat_pm_runtime_suspend,
-+			   xpcs_plat_pm_runtime_resume,
-+			   NULL)
-+};
-+
-+DW_XPCS_INFO_DECLARE(xpcs_generic, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_ID_NATIVE);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen1_3g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN1_3G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen2_3g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN2_3G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen2_6g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN2_6G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen4_3g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN4_3G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen4_6g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN4_6G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen5_10g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN5_10G_ID);
-+DW_XPCS_INFO_DECLARE(xpcs_pma_gen5_12g, DW_XPCS_ID_NATIVE, DW_XPCS_PMA_GEN5_12G_ID);
-+
-+static const struct of_device_id xpcs_of_ids[] = {
-+	{ .compatible = "snps,dw-xpcs", .data = &xpcs_generic },
-+	{ .compatible = "snps,dw-xpcs-gen1-3g", .data = &xpcs_pma_gen1_3g },
-+	{ .compatible = "snps,dw-xpcs-gen2-3g", .data = &xpcs_pma_gen2_3g },
-+	{ .compatible = "snps,dw-xpcs-gen2-6g", .data = &xpcs_pma_gen2_6g },
-+	{ .compatible = "snps,dw-xpcs-gen4-3g", .data = &xpcs_pma_gen4_3g },
-+	{ .compatible = "snps,dw-xpcs-gen4-6g", .data = &xpcs_pma_gen4_6g },
-+	{ .compatible = "snps,dw-xpcs-gen5-10g", .data = &xpcs_pma_gen5_10g },
-+	{ .compatible = "snps,dw-xpcs-gen5-12g", .data = &xpcs_pma_gen5_12g },
-+	{ /* sentinel */ },
-+};
-+MODULE_DEVICE_TABLE(of, xpcs_of_ids);
-+
-+static struct platform_driver xpcs_plat_driver = {
-+	.probe = xpcs_plat_probe,
-+	.driver = {
-+		.name = "dwxpcs",
-+		.pm = &xpcs_plat_pm_ops,
-+		.of_match_table = xpcs_of_ids,
-+	},
-+};
-+module_platform_driver(xpcs_plat_driver);
-+
-+MODULE_DESCRIPTION("Synopsys DesignWare XPCS platform device driver");
-+MODULE_AUTHOR("Signed-off-by: Serge Semin <fancer.lancer@gmail.com>");
-+MODULE_LICENSE("GPL");
 diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index e8d5fd43a357..8f7e3af64fcc 100644
+index 8f7e3af64fcc..94f2f95ef425 100644
 --- a/drivers/net/pcs/pcs-xpcs.c
 +++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -6,6 +6,7 @@
-  * Author: Jose Abreu <Jose.Abreu@synopsys.com>
-  */
- 
-+#include <linux/clk.h>
+@@ -10,7 +10,9 @@
  #include <linux/delay.h>
  #include <linux/pcs/pcs-xpcs.h>
  #include <linux/mdio.h>
-@@ -1244,7 +1245,9 @@ static int xpcs_get_id(struct dw_xpcs *xpcs)
- 		id |= ret;
- 	}
++#include <linux/phy.h>
+ #include <linux/phylink.h>
++#include <linux/property.h>
  
--	xpcs->info.pcs = id;
-+	/* Set the PCS ID if it hasn't been pre-initialized */
-+	if (xpcs->info.pcs == DW_XPCS_ID_NATIVE)
-+		xpcs->info.pcs = id;
+ #include "pcs-xpcs.h"
  
- 	/* Find out PMA/PMD ID from MMD 1 device ID registers */
- 	ret = xpcs_read(xpcs, MDIO_MMD_PMAPMD, MDIO_DEVID1);
-@@ -1263,7 +1266,9 @@ static int xpcs_get_id(struct dw_xpcs *xpcs)
- 	ret = (ret >> 10) & 0x3F;
- 	id |= ret << 16;
- 
--	xpcs->info.pma = id;
-+	/* Set the PMA ID if it hasn't been pre-initialized */
-+	if (xpcs->info.pma == DW_XPCS_PMA_ID_NATIVE)
-+		xpcs->info.pma = id;
- 
- 	return 0;
- }
-@@ -1387,10 +1392,49 @@ static void xpcs_free_data(struct dw_xpcs *xpcs)
- 	kfree(xpcs);
- }
- 
-+static int xpcs_init_clks(struct dw_xpcs *xpcs)
-+{
-+	static const char *ids[DW_XPCS_NUM_CLKS] = {
-+		[DW_XPCS_CORE_CLK] = "core",
-+		[DW_XPCS_PAD_CLK] = "pad",
-+	};
-+	struct device *dev = &xpcs->mdiodev->dev;
-+	int ret, i;
-+
-+	for (i = 0; i < DW_XPCS_NUM_CLKS; ++i)
-+		xpcs->clks[i].id = ids[i];
-+
-+	ret = clk_bulk_get_optional(dev, DW_XPCS_NUM_CLKS, xpcs->clks);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to get clocks\n");
-+
-+	ret = clk_bulk_prepare_enable(DW_XPCS_NUM_CLKS, xpcs->clks);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to enable clocks\n");
-+
-+	return 0;
-+}
-+
-+static void xpcs_clear_clks(struct dw_xpcs *xpcs)
-+{
-+	clk_bulk_disable_unprepare(DW_XPCS_NUM_CLKS, xpcs->clks);
-+
-+	clk_bulk_put(DW_XPCS_NUM_CLKS, xpcs->clks);
-+}
-+
- static int xpcs_init_id(struct dw_xpcs *xpcs)
- {
-+	const struct dw_xpcs_info *info;
- 	int i, ret;
- 
-+	info = dev_get_platdata(&xpcs->mdiodev->dev);
-+	if (!info) {
-+		xpcs->info.pcs = DW_XPCS_ID_NATIVE;
-+		xpcs->info.pma = DW_XPCS_PMA_ID_NATIVE;
-+	} else {
-+		xpcs->info = *info;
-+	}
-+
- 	ret = xpcs_get_id(xpcs);
- 	if (ret < 0)
- 		return ret;
-@@ -1438,17 +1482,24 @@ static struct dw_xpcs *xpcs_create(struct mdio_device *mdiodev,
- 	if (IS_ERR(xpcs))
- 		return xpcs;
- 
-+	ret = xpcs_init_clks(xpcs);
-+	if (ret)
-+		goto out_free_data;
-+
- 	ret = xpcs_init_id(xpcs);
- 	if (ret)
--		goto out;
-+		goto out_clear_clks;
- 
- 	ret = xpcs_init_iface(xpcs, interface);
- 	if (ret)
--		goto out;
-+		goto out_clear_clks;
- 
- 	return xpcs;
- 
--out:
-+out_clear_clks:
-+	xpcs_clear_clks(xpcs);
-+
-+out_free_data:
- 	xpcs_free_data(xpcs);
- 
+@@ -1505,6 +1507,16 @@ static struct dw_xpcs *xpcs_create(struct mdio_device *mdiodev,
  	return ERR_PTR(ret);
-@@ -1483,6 +1534,8 @@ void xpcs_destroy(struct dw_xpcs *xpcs)
- 	if (!xpcs)
- 		return;
- 
-+	xpcs_clear_clks(xpcs);
-+
- 	xpcs_free_data(xpcs);
  }
- EXPORT_SYMBOL_GPL(xpcs_destroy);
-diff --git a/drivers/net/pcs/pcs-xpcs.h b/drivers/net/pcs/pcs-xpcs.h
-index 369e9196f45a..fa05adfae220 100644
---- a/drivers/net/pcs/pcs-xpcs.h
-+++ b/drivers/net/pcs/pcs-xpcs.h
-@@ -6,6 +6,9 @@
-  * Author: Jose Abreu <Jose.Abreu@synopsys.com>
-  */
  
-+#include <linux/bits.h>
-+#include <linux/pcs/pcs-xpcs.h>
++/**
++ * xpcs_create_mdiodev() - create a DW xPCS instance with the MDIO @addr
++ * @bus: pointer to the MDIO-bus descriptor for the device to be looked at
++ * @addr: device MDIO-bus ID
++ * @interface: requested PHY interface
++ *
++ * Return: a pointer to the DW XPCS handle if successful, otherwise -ENODEV if
++ * the PCS device couldn't be found on the bus and other negative errno related
++ * to the data allocation and MDIO-bus communications.
++ */
+ struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
+ 				    phy_interface_t interface)
+ {
+@@ -1529,6 +1541,44 @@ struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
+ }
+ EXPORT_SYMBOL_GPL(xpcs_create_mdiodev);
+ 
++/**
++ * xpcs_create_fwnode() - Create a DW xPCS instance from @fwnode
++ * @fwnode: fwnode handle poining to the DW XPCS device
++ * @interface: requested PHY interface
++ *
++ * Return: a pointer to the DW XPCS handle if successful, otherwise -ENODEV if
++ * the fwnode device is unavailable or the PCS device couldn't be found on the
++ * bus, -EPROBE_DEFER if the respective MDIO-device instance couldn't be found,
++ * other negative errno related to the data allocations and MDIO-bus
++ * communications.
++ */
++struct dw_xpcs *xpcs_create_fwnode(struct fwnode_handle *fwnode,
++				   phy_interface_t interface)
++{
++	struct mdio_device *mdiodev;
++	struct dw_xpcs *xpcs;
 +
- /* Vendor regs access */
- #define DW_VENDOR			BIT(15)
- 
-@@ -117,6 +120,9 @@
- /* VR MII EEE Control 1 defines */
- #define DW_VR_MII_EEE_TRN_LPI		BIT(0)	/* Transparent Mode Enable */
- 
-+#define DW_XPCS_INFO_DECLARE(_name, _pcs, _pma)				\
-+	static const struct dw_xpcs_info _name = { .pcs = _pcs, .pma = _pma }
++	if (!fwnode_device_is_available(fwnode))
++		return ERR_PTR(-ENODEV);
 +
- int xpcs_read(struct dw_xpcs *xpcs, int dev, u32 reg);
- int xpcs_write(struct dw_xpcs *xpcs, int dev, u32 reg, u16 val);
- int xpcs_read_vpcs(struct dw_xpcs *xpcs, int reg);
++	mdiodev = fwnode_mdio_find_device(fwnode);
++	if (!mdiodev)
++		return ERR_PTR(-EPROBE_DEFER);
++
++	xpcs = xpcs_create(mdiodev, interface);
++
++	/* xpcs_create() has taken a refcount on the mdiodev if it was
++	 * successful. If xpcs_create() fails, this will free the mdio
++	 * device here. In any case, we don't need to hold our reference
++	 * anymore, and putting it here will allow mdio_device_put() in
++	 * xpcs_destroy() to automatically free the mdio device.
++	 */
++	mdio_device_put(mdiodev);
++
++	return xpcs;
++}
++EXPORT_SYMBOL_GPL(xpcs_create_fwnode);
++
+ void xpcs_destroy(struct dw_xpcs *xpcs)
+ {
+ 	if (!xpcs)
 diff --git a/include/linux/pcs/pcs-xpcs.h b/include/linux/pcs/pcs-xpcs.h
-index 1dc60f5e653f..813be644647f 100644
+index 813be644647f..b4a4eb6c8866 100644
 --- a/include/linux/pcs/pcs-xpcs.h
 +++ b/include/linux/pcs/pcs-xpcs.h
-@@ -7,6 +7,8 @@
- #ifndef __LINUX_PCS_XPCS_H
+@@ -8,6 +8,7 @@
  #define __LINUX_PCS_XPCS_H
  
-+#include <linux/clk.h>
-+#include <linux/mdio.h>
+ #include <linux/clk.h>
++#include <linux/fwnode.h>
+ #include <linux/mdio.h>
  #include <linux/phy.h>
  #include <linux/phylink.h>
- #include <linux/types.h>
-@@ -21,6 +23,7 @@
- struct dw_xpcs_desc;
+@@ -72,6 +73,8 @@ int xpcs_config_eee(struct dw_xpcs *xpcs, int mult_fact_100ns,
+ 		    int enable);
+ struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
+ 				    phy_interface_t interface);
++struct dw_xpcs *xpcs_create_fwnode(struct fwnode_handle *fwnode,
++				   phy_interface_t interface);
+ void xpcs_destroy(struct dw_xpcs *xpcs);
  
- enum dw_xpcs_pcs_id {
-+	DW_XPCS_ID_NATIVE = 0,
- 	NXP_SJA1105_XPCS_ID = 0x00000010,
- 	NXP_SJA1110_XPCS_ID = 0x00000020,
- 	DW_XPCS_ID = 0x7996ced0,
-@@ -28,6 +31,14 @@ enum dw_xpcs_pcs_id {
- };
- 
- enum dw_xpcs_pma_id {
-+	DW_XPCS_PMA_ID_NATIVE = 0,
-+	DW_XPCS_PMA_GEN1_3G_ID,
-+	DW_XPCS_PMA_GEN2_3G_ID,
-+	DW_XPCS_PMA_GEN2_6G_ID,
-+	DW_XPCS_PMA_GEN4_3G_ID,
-+	DW_XPCS_PMA_GEN4_6G_ID,
-+	DW_XPCS_PMA_GEN5_10G_ID,
-+	DW_XPCS_PMA_GEN5_12G_ID,
- 	WX_TXGBE_XPCS_PMA_10G_ID = 0x0018fc80,
- };
- 
-@@ -36,10 +47,17 @@ struct dw_xpcs_info {
- 	u32 pma;
- };
- 
-+enum dw_xpcs_clock {
-+	DW_XPCS_CORE_CLK,
-+	DW_XPCS_PAD_CLK,
-+	DW_XPCS_NUM_CLKS,
-+};
-+
- struct dw_xpcs {
- 	struct dw_xpcs_info info;
- 	const struct dw_xpcs_desc *desc;
- 	struct mdio_device *mdiodev;
-+	struct clk_bulk_data clks[DW_XPCS_NUM_CLKS];
- 	struct phylink_pcs pcs;
- 	phy_interface_t interface;
- };
+ #endif /* __LINUX_PCS_XPCS_H */
 -- 
 2.43.0
 
