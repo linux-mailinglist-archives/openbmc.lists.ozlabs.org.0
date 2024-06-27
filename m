@@ -2,73 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1E09919A96
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 00:25:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18C87919BED
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 02:43:22 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=qh23YtXZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dD6t9BTA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W8bqH24c5z3cTj
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 08:24:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W8ftt4L1xz3dB7
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 10:43:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=tanous.net
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=qh23YtXZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dD6t9BTA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8bpj6Z4Jz2ytN
-	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 08:24:28 +1000 (AEST)
-Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-2c7dbdc83bfso5508002a91.1
-        for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 15:24:29 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W8fsN55xwz3by2
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 10:41:59 +1000 (AEST)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-52ce6a9fd5cso4065326e87.3
+        for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2024 17:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tanous-net.20230601.gappssmtp.com; s=20230601; t=1719440664; x=1720045464; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1cLxxV95o96d3Iaa7AgX+PaNdVXk36PRAeGMVQ6abJ8=;
-        b=qh23YtXZyWA7/AJLpiEHBfSiMU6SJEi3baWdqiKvYgpm4PZwKXeruzx8sP5ktw2mQz
-         1VYMi2Hrpe2onnfjj4krl9AxqiKgeDP4XZEOyRo4nbTyzr7u/Ii8J0c4WZjZoVd8W63n
-         YnYKr69nMxaBxm5ZJjWLLOHuKqc0EFKvqYivOO4CJaR9abeUwi6qnpH1M4pSHx96G+79
-         roP/Kf48LyhhAuLsEXoVMQHIGEzs7vVjTrJBa98u/GXRgIRTu3hKe196dkj/myWtDbVZ
-         diK1A7YlL9h5YplM8G1VlAKYuszp9rPuefWS2aE4B10+RtqiqT2XjVbJDCw1r+hakPYi
-         zxqg==
+        d=gmail.com; s=20230601; t=1719448914; x=1720053714; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cydnFWaYJVUlpJ8yr8Y2k7ThI70ScRV7/WOcHm/pyg4=;
+        b=dD6t9BTAlctrbMDeI0CosQ/sQAxnvqc33PRQvcGYJx+94xRhB7c7QuphOY07rkQPH3
+         ye6V3Iwxh7q5kRvDjTHRZHYsr+SgtJosnPRvBgH/B7v9r+/tuji44LpsaUVa0/w7A0ih
+         qNBKV871ik6p3o6zN30JnwYnM/iqTmn/4tgYNvy1PzOVh2w/Rm9GvsW3VUnI0LVYI3Aa
+         yLE48JQ3EXXamPEC2RntDxClD1hLE3vGoFhFXDKRZjxlnp80iOg2W/tw5Na4wr4dXY28
+         Kz2+QihHHLB6QzsuvOddjMK9LcaN4o10ReMtDG0IN42UL3VNzZiewmP4kvC0Rhl1XGwV
+         OKSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719440664; x=1720045464;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1cLxxV95o96d3Iaa7AgX+PaNdVXk36PRAeGMVQ6abJ8=;
-        b=jTw69haNVF4Zm7V2INavWYR9uTZ91vi+uXZvNMKuxbOQwtBzeAqv1l4pPQuR+YPVIl
-         DK0UTMhiUgD9OL4IgD7KpPM8xk1jLdBQnBk9VyIJPkZqxj0S6xprLiAR0UU8pj/xLgFj
-         KRsPCu3zenOfWWpvdwaY1wdwVtG/JbwjLkFSsD5QDucE+SVovBU/JZCUK/4eockRhi/P
-         B93tcLbtpVECYgz/r2u17Z72bhEKm1f0yBQ47/hO2tMlDAXaLdjCULZLmDw1QJV/Y/Ce
-         7FRsQQ4UDVdoTWzIaFtNPybXwYlNKxDfyfPgu9e79C3IuAHWK8rFpqFItCoL17iOU844
-         UY4w==
-X-Forwarded-Encrypted: i=1; AJvYcCXYwZ5dpbETgPl6WesBABr2ZeVXAWI4QW+H4h+zefsTOdWec3TJ0rNTyRjrN77VJic+hdivcDBR9jLGMqlGXzaIq9aYk+zkyUY=
-X-Gm-Message-State: AOJu0Yxu4LBSE/A4ainvZ07EU1V+eArci5raBbujYQw1Zl8ufD68JYTD
-	RiuB3pa0CcxuckfDrRMW1VIR3WuzSiNQxla4WTrONg5uWHqZFC4pmTOqO3QNoEFnqJsKWOBCglx
-	h8m5tVqJRtd4FtnryZflct4jj2gi+hZBPg68z2g==
-X-Google-Smtp-Source: AGHT+IEU7Msw+0QOlCHPBXPXGId2mFZSaMkp/coStGbiTc9JsfofuT8wXbitIGPS4JdX9o/zvmiPmbo0fhfgtAJ+egk=
-X-Received: by 2002:a17:90a:d196:b0:2c8:ea7b:8892 with SMTP id
- 98e67ed59e1d1-2c8ea7b8a48mr1418631a91.44.1719440664533; Wed, 26 Jun 2024
- 15:24:24 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719448914; x=1720053714;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cydnFWaYJVUlpJ8yr8Y2k7ThI70ScRV7/WOcHm/pyg4=;
+        b=ZxTL81KH5NG6TunLg07Sb7R//J0WpZj/Hed37k1vWJi8m7OVewGRORyPvpwpR+czud
+         pI9LmccMp3YEdNTcEM+hKOIgYrBj3n7uDBXBzC0gsbyMsC2+bfv9JE6U5+sxcZligKFw
+         FjoQLjYd6fPhEXyp8xMrtX4r8WSFUE/gOp7Sjo8z30fGqJT7vT/M6QlF7wCPjiKQQvUr
+         9fr5ldhlZLuIfnGnErN9428w1zs2A3P/XSMjJ74ZBUxzgJl19ByrpE2sGvZCjKaKOYea
+         f8LSlmk+hRQDhqQJEnbMyffcobt/yxVcJ9To7sbi4JlEp9+yxuZCLbSVt1AOJWPpb18H
+         4pcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXce2QxivoAkJg1jTipDikXllFpo4iekyKGmrf+tL3zsS97JpUDsvcctecjN4kGOzhAD6NDf28QN0z3xZ0vs0oO82bjTZVkbw8=
+X-Gm-Message-State: AOJu0YxhmOTaZvzKDAF2Vcm0QGi3sSc/UwD6Btj5320JeWeVWF1+Rv7T
+	hrhCgREKhukihaB+8ygLHP+ovN7B9mSjUfxUz0SdmiwD+dgkqFYD
+X-Google-Smtp-Source: AGHT+IEFZ0bwY4iHo8MDnbVf3lRRljEk0x3nb0lemN/43jsWupl8gJ+Hu9176dWqSrktWngJzK/J2w==
+X-Received: by 2002:ac2:5e24:0:b0:52c:8aa6:4e9c with SMTP id 2adb3069b0e04-52ce1861509mr6701982e87.65.1719448911583;
+        Wed, 26 Jun 2024 17:41:51 -0700 (PDT)
+Received: from localhost ([89.113.147.248])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7131c1f4sm18946e87.224.2024.06.26.17.41.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jun 2024 17:41:51 -0700 (PDT)
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Jose Abreu <Jose.Abreu@synopsys.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: [PATCH net-next v3 00/10] net: pcs: xpcs: Add memory-mapped device support
+Date: Thu, 27 Jun 2024 03:41:20 +0300
+Message-ID: <20240627004142.8106-1-fancer.lancer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <1403524602.354586.1719434789488@privateemail.com>
- <ZnyKk8xOmIgqAbs0@heinlein.vulture-banana.ts.net> <CACWQX80A_TqXZ5QFyJcEqZZHhRf6ckAnLJJ74guz=SYV3+4gAA@mail.gmail.com>
- <ZnyR5Rw2Zx5I5elg@heinlein.vulture-banana.ts.net>
-In-Reply-To: <ZnyR5Rw2Zx5I5elg@heinlein.vulture-banana.ts.net>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 26 Jun 2024 15:24:13 -0700
-Message-ID: <CACWQX81ThWsrObQ1Ob5WV_BX0i3MwtrvAMe2ocrRuOiLmpHeqw@mail.gmail.com>
-Subject: Re: Request for a new vue3 branch in webui-vue
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,67 +88,148 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "kirankumarb@ami.com" <kirankumarb@ami.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "a.nikhil@ibm.com" <a.nikhil@ibm.com>, Gunnar M <gunnar@gmills.xyz>, "Renuka.Sharanya.Pundla@ibm.com" <Renuka.Sharanya.Pundla@ibm.com>, "sivaprabug@ami.com" <sivaprabug@ami.com>
+Cc: devicetree@vger.kernel.org, Mengyuan Lou <mengyuanlou@net-swift.com>, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>, Eric Dumazet <edumazet@google.com>, Jiawen Wu <jiawenwu@trustnetic.com>, Abhishek Chauhan <quic_abchauha@quicinc.com>, Jakub Kicinski <kuba@kernel.org>, Sagar Cheluvegowda <quic_scheluve@quicinc.com>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, Andrew Halaney <ahalaney@redhat.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 26, 2024 at 3:10=E2=80=AFPM Patrick Williams <patrick@stwcx.xyz=
-> wrote:
->
-> On Wed, Jun 26, 2024 at 02:57:25PM -0700, Ed Tanous wrote:
-> > On Wed, Jun 26, 2024 at 2:40=E2=80=AFPM Patrick Williams <patrick@stwcx=
-.xyz> wrote:
-> > >
-> > > On Wed, Jun 26, 2024 at 02:46:29PM -0600, Gunnar M wrote:
-> > > > Kiran and his team have volunteered to sync patches merged to maste=
-r to this new 'vue3' branch bi-weekly. Thank you, Kiran! When the migration=
- to Vue 3 is complete, and all commits are synced over, this 'vue3' branch =
-will become the 'master' branch.
-> > >
-> > > We need to be careful about how we do this.  You don't want it to app=
-ear
-> > > on github as a rewrite of the "master" branch and we absolutely need =
-to
-> > > at least keep the vue2 code in some branch so that it doesn't get pru=
-ned
-> > > from the github history.  If we don't do this, it will become impossi=
-ble
-> > > for people to build older OpenBMC releases.
-> > >
-> > > I would suggest either:
-> > >
-> > >     a. We do the opposite: create a 'vue2' branch and update the reci=
-pe
-> > >        to point at it.
-> > >
-> > >     b. We use this as an opportunity to migrate from 'master' to 'mai=
-n'
-> > >        and use 'main' as the vue3 branch.
-> >
-> >
-> > My expectation was that this branch continues to rebase in patches,
-> > and once ready to merge, we would just rebase the series on top of
-> > master before pushing it so there's no discontinuity, no merge commit,
-> > and autobump would just pick it up.
->
-> We would have to give "Kiran and his team" permissions in Gerrit to
-> force-push to the "vue3" branch in order to facilitate these rebases.
+The main goal of this series is to extend the DW XPCS device support in
+the kernel. Particularly the patchset adds a support of the DW XPCS
+device with the MCI/APB3 IO interface registered as a platform device. In
+order to have them utilized by the DW XPCS core the fwnode-based DW XPCS
+descriptor creation procedure has been introduced. Finally the STMMAC
+driver has been altered to support the DW XPCS passed via the 'pcs-handle'
+property.
 
-Sorry, I should've said "My expectation was that this branch continues
-to cherry-pick in patches"
+Note the series has been significantly re-developed since v1. So I even
+had to change the subject. Anyway I've done my best to take all the noted
+into account.
 
-There'd only be one rebase and push (not force I think?), right at the
-end, and I'm happy to do the final merge if that solves the
-permissions problem.  I suspect even if we had to reopen a
-sensibly-squashed gerrit series for re-review after we thought the
-bugs were solved, that might be reasonable, although it's hard to know
-based on what's in there.
+The series traditionally starts with a set of the preparation patches.
+First one just moves the generic DW XPCS IDs macros from the internal
+header file to the external one where some other IDs also reside. Second
+patch splits up the xpcs_create() method to a set of the coherent
+sub-functions for the sake of the further easier updates and to have it
+looking less complicated. The goal of the next three patches is to extend
+the DW XPCS ID management code by defining a new dw_xpcs_info structure
+with both PCS and PMA IDs.
 
-> It also means potentially unreviewed content ends up in the branch due
-> to this permission.
->
-> I'm okay with going this route but wanted to make sure everyone is aware
-> of the implications.
->
-> --
-> Patrick Williams
+The next two patches provide the DW XPCS device DT-bindings and the
+respective platform-device driver for the memory-mapped DW XPCS devices.
+Besides the later patch makes use of the introduced dw_xpcs_info structure
+to pre-define the DW XPCS IDs based on the platform-device compatible
+string. Thus if there is no way to auto-identify the XPCS device
+capabilities it can be done based on the custom device IDs passed via the
+MDIO-device platform data.
+
+Final DW XPCS driver change is about adding a new method of the DW XPCS
+descriptor creation. The xpcs_create_fwnode() function has been introduced
+with the same semantics as a similar method recently added to the Lynx PCS
+driver. It's supposed to be called with the fwnode pointing to the DW XPCS
+device node, for which the XPCS descriptor will be created.
+
+The series is terminated with two STMMAC driver patches. The former one
+simplifies the DW XPCS descriptor registration procedure by dropping the
+MDIO-bus scanning and creating the descriptor for the particular device
+address. The later patch alters the STMMAC PCS setup method so one would
+support the DW XPCS specified via the "pcs-handle" property.
+
+That's it for now. Thanks for review in advance. Any tests are very
+welcome. After this series is merged in, I'll submit another one which
+adds the generic 10GBase-R and 10GBase-X interfaces support to the STMMAC
+and DW XPCS driver with the proper CSRs re-initialization, PMA
+initialization and reference clock selection as it's described in the
+Synopsys DW XPCS HW manual.
+
+Link: https://lore.kernel.org/netdev/20231205103559.9605-1-fancer.lancer@gmail.com
+Changelog v2:
+- Drop the patches:
+  [PATCH net-next 01/16] net: pcs: xpcs: Drop sentinel entry from 2500basex ifaces list
+  [PATCH net-next 02/16] net: pcs: xpcs: Drop redundant workqueue.h include directive
+  [PATCH net-next 03/16] net: pcs: xpcs: Return EINVAL in the internal methods
+  [PATCH net-next 04/16] net: pcs: xpcs: Explicitly return error on caps validation
+  as ones have already been merged into the kernel repo:
+Link: https://lore.kernel.org/netdev/20240222175843.26919-1-fancer.lancer@gmail.com/
+- Drop the patches:
+  [PATCH net-next 14/16] net: stmmac: Pass netdev to XPCS setup function
+  [PATCH net-next 15/16] net: stmmac: Add dedicated XPCS cleanup method
+  as ones have already been merged into the kernel repo:
+Link: https://lore.kernel.org/netdev/20240513-rzn1-gmac1-v7-0-6acf58b5440d@bootlin.com/
+- Drop the patch:
+  [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS MDIO device
+  [PATCH net-next 09/16] net: mdio: Add Synopsys DW XPCS management interface support
+  [PATCH net-next 11/16] net: pcs: xpcs: Change xpcs_create_mdiodev() suffix to "byaddr"
+  [PATCH net-next 13/16] net: stmmac: intel: Register generic MDIO device
+  as no longer relevant.
+- Add new patches:
+  [PATCH net-next v2 03/10] net: pcs: xpcs: Convert xpcs_id to dw_xpcs_desc
+  [PATCH net-next v2 04/10] net: pcs: xpcs: Convert xpcs_compat to dw_xpcs_compat
+  [PATCH net-next v2 05/10] net: pcs: xpcs: Introduce DW XPCS info structure
+  [PATCH net-next v2 09/10] net: stmmac: Create DW XPCS device with particular address
+- Use the xpcs_create_fwnode() function name and semantics similar to the
+  Lynx PCS driver.
+- Add kdoc describing the DW XPCS registration functions.
+- Convert the memory-mapped DW XPCS device driver to being the
+  platform-device driver.
+- Convert the DW XPCS DT-bindings to defining both memory-mapped and MDIO
+  devices.
+- Drop inline'es from the methods statically defined in *.c. (@Maxime)
+- Preserve the strict refcount-ing pattern. (@Russell)
+
+Link: https://lore.kernel.org/netdev/20240602143636.5839-1-fancer.lancer@gmail.com/
+Changelov v3:
+- Implement the ordered clocks constraint. (@Rob)
+- Convert xpcs_plat_pm_ops to being defined as static. (@Simon)
+- Add the "@interface" argument kdoc to the xpcs_create_mdiodev()
+  function. (@Simon)
+- Fix the "@fwnode" argument name in the xpcs_create_fwnode() method kdoc.
+  (@Simon)
+- Move the return value descriptions to the "Return:" section of the
+  xpcs_create_mdiodev() and xpcs_create_fwnode() kdoc. (@Simon)
+- Drop stmmac_mdio_bus_data::has_xpcs flag and define the PCS-address
+  mask with particular XPCS address instead.
+
+Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>
+Cc: Andrew Halaney <ahalaney@redhat.com>
+Cc: Jiawen Wu <jiawenwu@trustnetic.com>
+Cc: Mengyuan Lou <mengyuanlou@net-swift.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>
+Cc: openbmc@lists.ozlabs.org
+Cc: netdev@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+Serge Semin (10):
+  net: pcs: xpcs: Move native device ID macro to linux/pcs/pcs-xpcs.h
+  net: pcs: xpcs: Split up xpcs_create() body to sub-functions
+  net: pcs: xpcs: Convert xpcs_id to dw_xpcs_desc
+  net: pcs: xpcs: Convert xpcs_compat to dw_xpcs_compat
+  net: pcs: xpcs: Introduce DW XPCS info structure
+  dt-bindings: net: Add Synopsys DW xPCS bindings
+  net: pcs: xpcs: Add Synopsys DW xPCS platform device driver
+  net: pcs: xpcs: Add fwnode-based descriptor creation method
+  net: stmmac: Create DW XPCS device with particular address
+  net: stmmac: Add DW XPCS specified via "pcs-handle" support
+
+ .../bindings/net/pcs/snps,dw-xpcs.yaml        | 136 ++++++
+ .../net/ethernet/stmicro/stmmac/dwmac-intel.c |   2 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_mdio.c |  32 +-
+ drivers/net/pcs/Kconfig                       |   6 +-
+ drivers/net/pcs/Makefile                      |   3 +-
+ drivers/net/pcs/pcs-xpcs-plat.c               | 460 ++++++++++++++++++
+ drivers/net/pcs/pcs-xpcs.c                    | 361 +++++++++-----
+ drivers/net/pcs/pcs-xpcs.h                    |   7 +-
+ include/linux/pcs/pcs-xpcs.h                  |  49 +-
+ include/linux/stmmac.h                        |   2 +-
+ 10 files changed, 910 insertions(+), 148 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/pcs/snps,dw-xpcs.yaml
+ create mode 100644 drivers/net/pcs/pcs-xpcs-plat.c
+
+-- 
+2.43.0
+
