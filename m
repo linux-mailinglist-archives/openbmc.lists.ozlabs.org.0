@@ -1,69 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B340C91AEB1
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 20:04:21 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WgCii6OY;
-	dkim-atps=neutral
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2594291AEF0
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2024 20:24:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4W96021Tn3z2xFn
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2024 04:04:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4W96Qk40p9z3cYL
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2024 04:23:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WgCii6OY;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112a; helo=mail-yw1-x112a.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=taln60.nuvoton.co.il (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4W95zV4NRrz3cXK
-	for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2024 04:03:49 +1000 (AEST)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-6480542003dso23023357b3.0
-        for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 11:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719511427; x=1720116227; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pSmVyLQ1CGhsZWFaj0ZfsSXwYFtjjuHcrDN6uBpOH3k=;
-        b=WgCii6OYw7j2DG6A3JK08pRubRcBQADZFXvWxlKo4iUB2e8WQH4e0cPfVPU8Qayk06
-         r1YVp1e1H9BjWK40ea1zBQB4qjbKyqwfeYMxLcRqyXMk3bcQk2Z3dOfDOckKUVpLuhpH
-         5kLo30nYoLBKRxTkLJTJvRLOaFhcQkWogpJQv5mAgpQi5TcdST43wrIPWAkdsv2DuEt/
-         ga97k0YYENpqEr14Sn3l1+T2OLwd6pC5EgqZUb249F32gKKzvPsDUbev4vYbGJOerZgF
-         69TI9C+SPPEm3jY4dVQRJb0t/aK0StfcRDw5Gch4XmSGkUwbzm/leZ27qw1giabfSTLI
-         //Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719511427; x=1720116227;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pSmVyLQ1CGhsZWFaj0ZfsSXwYFtjjuHcrDN6uBpOH3k=;
-        b=NzXdp1VcWyVJHD6wyF3u1APht3hJJYN6Y0i6Bhvkg8LO8PxuyJfQqMukyRRV1m3Isa
-         WDCXYDIEq58HaMwg9JNiaIKrhyuvhozXOHX6CDWZoJwbiDltTJ0Vekip6wPUZTobX0lc
-         C9uEAGRT9bgSakIcMubiKt8ISrFf0QcmBqVE570oMftMH12tZ20FIuBcmaPhJSF/z401
-         oYkBItPmwgXr6EKM7ftYE0VW/WGMcqgHtF/LsZCT6dJrOPQ/xJf1I9Ji5LGrFPt/eHkg
-         lMdgVqjNR5rLBv0hxP3VATWacwS4QAiHcDgnTJIpoyS0t0WkJqNqGaqsHM72WR45HAWc
-         j0rQ==
-X-Gm-Message-State: AOJu0YxuK7sgn+8nDF4HhWbM7PwlNZQNy1ZulcDm5sodaAiC5IvR8AfR
-	LjDTygqgVZe+FihaJm08oH5/+bxusp1EEorVIzb7QkLB4MQBXivqNMRKTcnyMe3UucWAuNrtEyb
-	6Jgp78g8cfdZwmPY1DgaQjY/5kp3NPw==
-X-Google-Smtp-Source: AGHT+IHLkm1jW+nJb1PQmwa0mnQ3rBY+K79kL5QQc9k4++U6hd8R1qxqrSI0xrpb7ZKnn+BNVuoR6ZhQWnv/kqTiEmE=
-X-Received: by 2002:a81:92ca:0:b0:60f:ad5f:f889 with SMTP id
- 00721157ae682-643ac91623fmr130984177b3.48.1719511426736; Thu, 27 Jun 2024
- 11:03:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240626134230.3999615-1-tmaimon77@gmail.com> <a62f815ac481e4eb9e37fa82a4560b6d235bc161.camel@codeconstruct.com.au>
-In-Reply-To: <a62f815ac481e4eb9e37fa82a4560b6d235bc161.camel@codeconstruct.com.au>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4W96QL3G7pz3cXN
+	for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2024 04:23:34 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 45RINNVC023745
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2024 21:23:23 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTILML01.nuvoton.com
+ (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 27 Jun
+ 2024 21:23:22 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 28 Jun
+ 2024 02:23:20 +0800
+Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Fri, 28 Jun 2024 02:23:19 +0800
+Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
+	by taln58.nuvoton.co.il (Postfix) with ESMTP id EA8AC5F64B;
+	Thu, 27 Jun 2024 21:23:18 +0300 (IDT)
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id DB5D4DC0726; Thu, 27 Jun 2024 21:23:18 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Thu, 27 Jun 2024 21:03:34 +0300
-Message-ID: <CAP6Zq1im3Ey2wkiWYUeLivud2wcd4PPA0iVUPxZ615B=2r=aEg@mail.gmail.com>
-Subject: Re: [RESEND PATCH linux dev-6.6 v1] clk: npcm8xx: add clock controller
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
+To: <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <tali.perry1@gmail.com>,
+        <joel@jms.id.au>, <venture@google.com>, <yuenn@google.com>,
+        <benjaminfair@google.com>
+Subject: [PATCH v1] dt-bindings: pinctrl: npcm8xx: add missing pin group and mux function
+Date: Thu, 27 Jun 2024 21:23:12 +0300
+Message-ID: <20240627182312.86382-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,44 +59,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+Add the following missing pin group and mux function:
+smb6b, smb6c, smb6d, smb7b, smb7c, smb7d, bu4, bu4b, bu5, bu5b, bu6,
+gpo187.
 
-Thanks for your reply.
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+---
+ .../pinctrl/nuvoton,npcm845-pinctrl.yaml      | 22 ++++++++++---------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-I will send the NPCM8XX clock driver according to V25.
+diff --git a/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+index b55d9c316659..f3c3f910a51f 100644
+--- a/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+@@ -85,11 +85,12 @@ patternProperties:
+                   smb2c, smb2b, smb1c, smb1b, smb8, smb9, smb10, smb11, sd1,
+                   sd1pwr, pwm4, pwm5, pwm6, pwm7, pwm8, pwm9, pwm10, pwm11,
+                   mmc8, mmc, mmcwp, mmccd, mmcrst, clkout, serirq, lpcclk,
+-                  scipme, smi, smb6, smb7, spi1, faninx, r1, spi3, spi3cs1,
+-                  spi3quad, spi3cs2, spi3cs3, nprd_smi, smb0b, smb0c, smb0den,
+-                  smb0d, ddc, rg2mdio, wdog1, wdog2, smb12, smb13, spix,
+-                  spixcs1, clkreq, hgpio0, hgpio1, hgpio2, hgpio3, hgpio4,
+-                  hgpio5, hgpio6, hgpio7 ]
++                  scipme, smi, smb6, smb6b, smb6c, smb6d, smb7, smb7b, smb7c,
++                  smb7d, spi1, faninx, r1, spi3, spi3cs1, spi3quad, spi3cs2,
++	  	  spi3cs3, nprd_smi, smb0b, smb0c, smb0den, smb0d, ddc, rg2mdio,
++		  wdog1, wdog2, smb12, smb13, spix, spixcs1, clkreq, hgpio0,
++		  hgpio1, hgpio2, hgpio3, hgpio4, hgpio5, hgpio6, hgpio7, bu4,
++		  bu4b, bu5, bu5b, bu6, gpo187 ]
+ 
+       function:
+         description:
+@@ -109,11 +110,12 @@ patternProperties:
+                 smb2c, smb2b, smb1c, smb1b, smb8, smb9, smb10, smb11, sd1,
+                 sd1pwr, pwm4, pwm5, pwm6, pwm7, pwm8, pwm9, pwm10, pwm11,
+                 mmc8, mmc, mmcwp, mmccd, mmcrst, clkout, serirq, lpcclk,
+-                scipme, smi, smb6, smb7, spi1, faninx, r1, spi3, spi3cs1,
+-                spi3quad, spi3cs2, spi3cs3, nprd_smi, smb0b, smb0c, smb0den,
+-                smb0d, ddc, rg2mdio, wdog1, wdog2, smb12, smb13, spix,
+-                spixcs1, clkreq, hgpio0, hgpio1, hgpio2, hgpio3, hgpio4,
+-                hgpio5, hgpio6, hgpio7 ]
++                scipme, smi, smb6, smb6b, smb6c, smb6d, smb7, smb7b, smb7c,
++                smb7d, spi1, faninx, r1, spi3, spi3cs1, spi3quad, spi3cs2,
++	  	spi3cs3, nprd_smi, smb0b, smb0c, smb0den, smb0d, ddc, rg2mdio,
++		wdog1, wdog2, smb12, smb13, spix, spixcs1, clkreq, hgpio0,
++		hgpio1, hgpio2, hgpio3, hgpio4, hgpio5, hgpio6, hgpio7, bu4,
++		bu4b, bu5, bu5b, bu6, gpo187 ]
+ 
+     dependencies:
+       groups: [ function ]
+-- 
+2.34.1
 
-Thanks,
-
-Tomer
-
-On Thu, 27 Jun 2024 at 05:11, Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
->
-> Hi Tomer,
->
-> On Wed, 2024-06-26 at 16:42 +0300, Tomer Maimon wrote:
-> > Nuvoton Arbel BMC NPCM8XX contains an integrated clock controller which
-> > generates and supplies clocks to all modules within the BMC.
-> >
-> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
->
-> How does this relate to the series that you've been iterating on
-> upstream? Is this v25 of the patches?
->
-> It help me if you clarified this in the commit message (ideally with a
-> link to the upstream series in question if it's a direct backport).
->
-> If it is v25 then there seem to be some concerns from the CI bots:
->
-> - https://lore.kernel.org/lkml/202406191439.3NcnExKM-lkp@intel.com/
-> - https://lore.kernel.org/lkml/202406201328.SGrN27to-lkp@intel.com/
->
-> It looks like you also need to fix the dts to address the new
-> constraints you've added to the binding (and also address the build
-> failure).
->
-> Andrew
