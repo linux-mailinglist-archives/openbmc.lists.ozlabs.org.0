@@ -2,71 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0915391DD1E
-	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2024 12:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DE1E91DD23
+	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2024 12:54:34 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Mzb5Q2Ck;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QVFtEgLo;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WCNFB5fg7z3fVV
-	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2024 20:53:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WCNGJ1TyWz3fSl
+	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2024 20:54:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Mzb5Q2Ck;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QVFtEgLo;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::243; helo=mail-oi1-x243.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::644; helo=mail-pl1-x644.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WCNDg5slxz3dXY;
-	Mon,  1 Jul 2024 20:53:06 +1000 (AEST)
-Received: by mail-oi1-x243.google.com with SMTP id 5614622812f47-3c9cc681ee4so1930044b6e.0;
-        Mon, 01 Jul 2024 03:53:06 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WCNDl0F5jz3fSH;
+	Mon,  1 Jul 2024 20:53:10 +1000 (AEST)
+Received: by mail-pl1-x644.google.com with SMTP id d9443c01a7336-1faad409ca7so24318035ad.1;
+        Mon, 01 Jul 2024 03:53:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719831183; x=1720435983; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=njCe6+CvWxlUBbdA/hjLIinZuACUMkq7YSRJUSzqvbg=;
-        b=Mzb5Q2CkR8FQ7dcnVyuBHd43O6rF2qZ5DlrlYElwXOe1h+25ZeTzZOSHkpTeSE1Q47
-         kuVAcuHpJLb6t7eLGttt25BUOgstS05xLy0xTOQbOMl2GZ3cQA3VSVtvGatFQ8s/uHy4
-         hpPbAwaOksX82vx8hea1TIrU8YjnQMorZvjpfSHGIH00p2BDWw210II1tOxIL2HSytR3
-         UFXKxbgNLq84y4YSLMXaPX0gdVk/5/z4xgKSsX4dR0n0BFEiXT1H6VAnecHR9tvQTT53
-         uLCQMShObuiYz89K/tgLGPO/8Ab5HgRjy4ylJwd5Rgunv0cjvGAQVTKni69WmOYG/FI/
-         ovFQ==
+        d=gmail.com; s=20230601; t=1719831187; x=1720435987; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=J0qY0eq/bCYTLQqVWP+SkvvD807zfIcKNdRibSQIaU4=;
+        b=QVFtEgLojWx0zl3TKGYPN2/rDAx6mAtZzUikyFCIle5j40yHlPvWFpvoiLOuHl4EJQ
+         LNZe3vKToX4MG/EyUgxcpCwolNYKD7oDzUrnRmO8kfLKwlAYwA2sp3wrsEYOFolSHu0u
+         Aa7aa655OR5CXfNkF7INpHeAnqsQVNyr5fwSd1tD5/uNKzlt5JErhOJ8hmeRVzb91jlo
+         0GeMy3hErvaMxK3/rIGwzfssbpVZ6wGnQZPrlA0MZI+//SmCKrNsfBniwYlPj1Ps3Qzk
+         7TopeEwLmmoBR4el96IoOWG2McbHTQCBJi+/WYCyifgval55gzRnoiJp8JNT6hGpdJbb
+         Wvcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719831183; x=1720435983;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=njCe6+CvWxlUBbdA/hjLIinZuACUMkq7YSRJUSzqvbg=;
-        b=LF63sLwxQpopBdz+yUtRbkSVBoRbcC8ja378DEIuam4BqiyF6sMorJ92ogVI/30NnM
-         s6BwNLWLAyjSHVqwrOFCk2tcTh+5lNP/i4nlw+EiuWqZoLZ1kJXmige7FrK2r4qHZH7l
-         tmAeQSB18BAsznOW1ea+WtNa4/DAS/PZR4MfNQlaJI8FPYlR3tdwcQSeAEOhrzbnntWV
-         z3pOeomXWyHEkeIAXn4nRcWRMW2Jt0ko51EXHohhMb6RYkOZE7LW2jprknUZjn9pAYhP
-         NRbBqRKwifKLsk/iSZzm1k0luzL9gdnaCzhxtdB4NAcDUa4nQ4nUjT/TCuqh4DzsYQxY
-         FmUA==
-X-Forwarded-Encrypted: i=1; AJvYcCU80pJg38qkWws8e0njAIfAnHSyXula0FDZRDiPGYnGF8/8sikcoyy31sBtr+FoJ9ID7x+pJdC6XLqEgSVdcfEnAHLVWn/Wf7Q=
-X-Gm-Message-State: AOJu0YyYnuwJFL58LgwhthBeaZPt50z7gTrllz620dncIv4AmmVQlGH8
-	jplSyFiuMz3+SAKB7nffRcADzOdvUTrNd7qMuXLKydQZhrUbVRmZhSmXX4tI6Gw=
-X-Google-Smtp-Source: AGHT+IG4c+IvrNyBN5N9rJ7s8WprtnzHujQLxXzxZpJmwSaQVdM0WGsZ2i1kl1zTbLXjd2sxrnmEDg==
-X-Received: by 2002:a05:6808:1393:b0:3d5:63c2:17c1 with SMTP id 5614622812f47-3d6b2c1ebb3mr7720558b6e.8.1719831182871;
-        Mon, 01 Jul 2024 03:53:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719831187; x=1720435987;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=J0qY0eq/bCYTLQqVWP+SkvvD807zfIcKNdRibSQIaU4=;
+        b=huawlJZf4tDXohWLAOMz6a346+8MmXxH7uaPBkUg/XDd8BLtXoOMa5Bwxi78yFOwtb
+         UNpEsOn56lH4AwE9CkGYFgzPzztSE/p4U+6WLg1wljCcQYIcrZXOdOleVlOy+TiVdD7I
+         Ko94zZDSL6t+mva3Td9K0QwDVMrT0cZK6XDOkHZ9pgKo/6oyrPkqJl2k4VwdWJVeNn8K
+         ennWpT+GbIfoq2nD7TWmJ9d+z58YISTzST5U4IC3QeXOS8T17KjR1COUcrBmPWZHprHQ
+         mlcge0DbTpKAxJrqXh5nu/5UK9QOuM07OywPWAnq11b3cDyEOWp0YS1l4roUTwf6dRZf
+         Efwg==
+X-Forwarded-Encrypted: i=1; AJvYcCUtOEVpFlqa6U/7NAJ7zFu4DB4lH4/VixPHJcSUEI+XDpc0SQTAD1pOIagYi+AeKQ+dV8d2+6iEc3p2ekjAySKONU8XH6YZzvY=
+X-Gm-Message-State: AOJu0Ywb3Yi/yMA702VI7aCXxIVFrIXTUPlNXYfXFK2Av+n1ZzrkHf5s
+	Pmbv3iXP20vqeAGMEnmVCHUvzKX3s9rfGnyT4/pX3f5mPHaL0GqXYAblfgD6PAk=
+X-Google-Smtp-Source: AGHT+IHfEd7Z2W+mZKOkU2QAibQKJj0zxjBUZwryWSVYj+KSgDIHYf+8cNFUtLVRKtbV/mtanbCujA==
+X-Received: by 2002:a17:902:f203:b0:1f9:e97d:9460 with SMTP id d9443c01a7336-1fac7e7fcf3mr84609585ad.16.1719831186806;
+        Mon, 01 Jul 2024 03:53:06 -0700 (PDT)
 Received: from localhost (66.112.216.249.16clouds.com. [66.112.216.249])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70802564236sm6185399b3a.48.2024.07.01.03.53.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac15389a8sm62024795ad.176.2024.07.01.03.53.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 03:53:02 -0700 (PDT)
+        Mon, 01 Jul 2024 03:53:06 -0700 (PDT)
 From: George Liu <liuxiwei1013@gmail.com>
 X-Google-Original-From: George Liu <liuxiwei@ieisystem.com>
 To: linux-aspeed@lists.ozlabs.org
-Subject: [PATCH v1 1/3] dt-bindings: vendor-prefixes: Add prefix for ieisystems
-Date: Mon,  1 Jul 2024 18:52:57 +0800
-Message-Id: <20240701105259.972135-1-liuxiwei@ieisystem.com>
+Subject: [PATCH v1 2/3] dt-bindings: arm: aspeed: add IEIT x86 platform BMC boards
+Date: Mon,  1 Jul 2024 18:52:58 +0800
+Message-Id: <20240701105259.972135-2-liuxiwei@ieisystem.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240701105259.972135-1-liuxiwei@ieisystem.com>
+References: <20240701105259.972135-1-liuxiwei@ieisystem.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -83,26 +85,25 @@ Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, openbmc@lists.ozlabs.org, l
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a vendor prefix entry for ieisystems
+Document the new compatibles used on the ieisystems
 
 Signed-off-by: George Liu <liuxiwei@ieisystem.com>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 573578db9509..0ffa8d06aea9 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -609,6 +609,8 @@ patternProperties:
-     description: IC Plus Corp.
-   "^idt,.*":
-     description: Integrated Device Technologies, Inc.
-+  "^ieit,.*":
-+    description: IEIT SYSTEMS Co.，Ltd.
-   "^ifi,.*":
-     description: Ingenieurburo Fur Ic-Technologie (I/F/I)
-   "^ilitek,.*":
+diff --git a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+index e386d0ebfb14..818fbe9c45fc 100644
+--- a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
++++ b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+@@ -92,6 +92,7 @@ properties:
+               - ibm,rainier-bmc
+               - ibm,system1-bmc
+               - ibm,tacoma-bmc
++              - ieit,nf5280m7-bmc
+               - inventec,starscream-bmc
+               - inventec,transformer-bmc
+               - jabil,rbp-bmc
 -- 
 2.34.1
 
