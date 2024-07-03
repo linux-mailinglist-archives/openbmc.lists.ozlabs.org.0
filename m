@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54BEE925627
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2024 11:09:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACDA49260E3
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2024 14:50:52 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dO2qLyeJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=bzHTofor;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WDYrT2qmzz3cyf
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2024 19:09:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WDflZ1Xlmz3fQX
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2024 22:50:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dO2qLyeJ;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=bzHTofor;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2d; helo=mail-yb1-xb2d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b2c; helo=mail-yb1-xb2c.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WDYqv6MtJz30W2
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Jul 2024 19:09:13 +1000 (AEST)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-e02748b2402so5674829276.0
-        for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2024 02:09:13 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WDfl15gQYz2xjw
+	for <openbmc@lists.ozlabs.org>; Wed,  3 Jul 2024 22:50:19 +1000 (AEST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-e036105251eso5213882276.0
+        for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2024 05:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719997751; x=1720602551; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3w22GpN3pE0R+URdrJvU+3T3PFPX3qv9+EkSGf+xCaE=;
-        b=dO2qLyeJB3CKGtogbrekMg+FW0agD4ZYYx/HNJnwEE6ENlQSlp3MjIi7CdFxAElt6Z
-         5kRLhuThXojERk6Zwaz4rW7ph9PBvm0TxfImKCBSD+XFUu2+ogZhNwvSYMmK2iO0dHi/
-         Mujc8Odt+bP60xjqcolBtp09L0AX6KuM14SX1WDc2GgJBCmsbgUG1VKlxm22OlYxv63w
-         d5UKiR4iNtd4yuSL5tAEza2BLuiNZfLpJK73Ls1cUpH3VH6lG5CC5HpYEFjsZ9wWwgVz
-         nFy4uiwPW4Syl4wCq5PfiRSeWfTUuE7qDKPgS+DmDAST1+BgInlWe68P1W3NnBjrJUcv
-         +Nvg==
+        d=linaro.org; s=google; t=1720011015; x=1720615815; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ay2o4WtDijauKlhrR6+yTpXR47/mNk6cJuyin80HfuI=;
+        b=bzHTofor+F6tmV6QT/gjn+SgNYuGoIPbx2jyr6Sct/oSLc8pvHBtol7xQlsV6akDpo
+         vKzq07J2mNh432KjIGaDIO+qt6ugBEdw2kSmKPih3UO2DUxQrjg4yE1kLNGvqY3GvFzn
+         B2TDp5ElfxvQGvkhpV3mAbXvHx66g7fCufhzCMRGcc/8rkGuM8oeTF7bqJJmQJmViCc/
+         woJc4507tqWKl5A/UIugOQXhxDDIJaZn7pVmrZjcSamtVVgpcXZxlfNhx3ytapB+3raO
+         MnNMPEoxg4sN3rkl+kG9V90mY2KjGUp9M7bSASGlXVczDmW99VxnLlWz8qZP1dWK3bZl
+         kZHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719997751; x=1720602551;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3w22GpN3pE0R+URdrJvU+3T3PFPX3qv9+EkSGf+xCaE=;
-        b=hug9NonZ/WUimEsHK9HGoYvtM8L+AXLCA/UivoccQHxeQUv0Rxw4aQsxtrA+crW+gd
-         6NivdeEGO2kvDcVd1rH3oQNvKeW9DZgW9Gn6HkGtBc+EGwLFS15u/ezWqg9J2u6D9dhM
-         KCAFPOO87FwwjBLDa45t/ox6lqX93lnay8a6Qu6Kb8QuWsb3gKovLlSFoC5oXDFmwuF5
-         tuEa540EJRNPCyVyLd0UEVmODDI2rPlkYCb/zh3zOOluDG2etzki83zjsXQcYZLsvKzT
-         NLAFYe1O7BGwYtLjM7OSdlipy453knGaB2yOmRLnPBTOU/b03SET2q6BfbDoxOem1W6O
-         FYpA==
-X-Gm-Message-State: AOJu0YylPpLE4RHKEAo5wObevCj6ghEvud2VsyzC6BAwHCcJ1d+gDF1Y
-	/jHo02hYIgeZGh+82AS082WBq8pRoRr571lZvr1k+Lr6v8kcaK8Dy2jaWwrE+6fzDkhe6s3rC5U
-	JDput7MC6YQpyPdTof7KApf8Bl1E=
-X-Google-Smtp-Source: AGHT+IGJuNzNpFKO4RcCfFlZKd//MUXXimSBvyqag6SffTSISiPSO4EDnjTrWU+uJjsfR95TNr8WTfq2zHG4QsE8ynE=
-X-Received: by 2002:a0d:e653:0:b0:630:fe1d:99cc with SMTP id
- 00721157ae682-64c73fc73e9mr104898217b3.52.1719997751641; Wed, 03 Jul 2024
- 02:09:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720011015; x=1720615815;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ay2o4WtDijauKlhrR6+yTpXR47/mNk6cJuyin80HfuI=;
+        b=Y++Rcf1WS9JrLYa9c9i75yCwPfZYoIdXmR14DQvhBvdcJtvXh2/EsiHqfeMFHZaTVX
+         Dap7fH7cOw/b0c0EHLMQVbq/Nt2Uqyfk+1DsMEnv1HMpGyksRkcVZjMEAJpg4Lg0Wppu
+         uPNPk3lum5eqhHoEmI3jhFg4ywbzonW+AoNwrhaq1CLGcqHab3ers2wLZ33ceDn0/Fit
+         cT7OMzM10ARM7DOR/7eE74kQGoG/EIY20WAOzPEz0z2c/AdiL6XUYs4EBUxQOGPDTKN+
+         2O6Jlfp6hQ+phLZo5idy9xeV9tyWFfw0N8v39irkJc5fIaP3PmlLz0AwgRTyWtFIQSgD
+         MK+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXOaPZkdFyVR7/VBMkZrgMU9Uy2ACixv1Br7WaMTeyA99Iovz7+rkOYzJDsP40bUqS7plKoNWHFgXYHjn4J5ch536s+cHOWfwU=
+X-Gm-Message-State: AOJu0YwbQWxbax+Hm65fpSIWQHrcKiPRRjeARPePzB/0697pVqI5Pyiz
+	5SdxF9eM8ewhbpWKRnUgTAWcm9JE4RLO0ZiTCcWkDQIoRDI+HpDX4cplGsFOPX+ZK9WwNuVZXhU
+	qLGx4tXk79HWscUYXcg9GyAHoKO8tJSy4eZveuQ==
+X-Google-Smtp-Source: AGHT+IFV7ffdIp7JTsaJwTFxWYFq9NuhbSHtLDocDtRDoyzt9ojWdD5kwz70sA2j6Gk3nNxPEzRj0IyN26XVuILWwJY=
+X-Received: by 2002:a5b:f09:0:b0:e02:c70d:d292 with SMTP id
+ 3f1490d57ef6-e036eb6e1b9mr12602914276.33.1720011015300; Wed, 03 Jul 2024
+ 05:50:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240701071048.751863-1-tmaimon77@gmail.com> <20240701071048.751863-5-tmaimon77@gmail.com>
- <102bf57ba6144ebed65e62d0818eb21dfdf1f24f.camel@codeconstruct.com.au>
- <13f82a26a526a33ce4a182a4da9e7a302a79d124.camel@codeconstruct.com.au> <CAP6Zq1gOHB=qmr9T4UjFvDsbKdYEHAeBhsXomM34C2=fONjf8g@mail.gmail.com>
-In-Reply-To: <CAP6Zq1gOHB=qmr9T4UjFvDsbKdYEHAeBhsXomM34C2=fONjf8g@mail.gmail.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 3 Jul 2024 12:09:00 +0300
-Message-ID: <CAP6Zq1hu1yBq+EzAQo=ghpAF1dnWDR-uxS4Lkq_KuDMNtPwJ_w@mail.gmail.com>
-Subject: Re: [linux dev-6.6 v1 4/6] arm64: dts: modify clock property in
- modules node
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
+References: <20240630090104.565779-1-tmaimon77@gmail.com>
+In-Reply-To: <20240630090104.565779-1-tmaimon77@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 3 Jul 2024 14:50:03 +0200
+Message-ID: <CACRpkdajqsFdqdJHx8EshL1Caew_7RZdun2poY2HceptozNg7g@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: pinctrl: npcm8xx: add missing pin group
+ and mux function
+To: Tomer Maimon <tmaimon77@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,64 +79,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
+Cc: devicetree@vger.kernel.org, benjaminfair@google.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, linux-clk@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+On Sun, Jun 30, 2024 at 11:01=E2=80=AFAM Tomer Maimon <tmaimon77@gmail.com>=
+ wrote:
 
-One more question, for this change the clock node should be removed.
+> Add the following missing pin group and mux function:
+> smb6b, smb6c, smb6d, smb7b, smb7c, smb7d, bu4, bu4b, bu5, bu5b, bu6,
+> gpo187.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+> V1 -> V2: clean tabs.
 
-I am afraid that removing the clock node could cause an ABI break, not?
+Patch applied!
 
-Thanks,
-
-Tomer
-
-On Wed, 3 Jul 2024 at 11:13, Tomer Maimon <tmaimon77@gmail.com> wrote:
->
-> Hi Andrew,
->
-> Great suggestion :-) i will try it!
->
-> Thanks,
->
-> Tomer
->
-> On Wed, 3 Jul 2024 at 09:30, Andrew Jeffery <andrew@codeconstruct.com.au> wrote:
-> >
-> > On Wed, 2024-07-03 at 15:55 +0930, Andrew Jeffery wrote:
-> > > On Mon, 2024-07-01 at 10:10 +0300, Tomer Maimon wrote:
-> > > > Modify clock property handler in UART, CPU, PECI modules to reset
-> > > > controller.
-> > >
-> > > Sooo... I'm not sure how much of a hack this is, as it's not clear to
-> > > me that the devicetree spec allows multiple labels on a node, but `dtc`
-> > > seems to accept it.
-> > >
-> > > You can reduce this patch to a short diff with:
-> > >
-> > > -               rstc: reset-controller@f0801000 {
-> > > +               clk: rstc: reset-controller@f0801000 {
-> > >
-> > > and leave the rest of the phandles in-tact.
-> > >
-> >
-> > Well, there is some precedent:
-> >
-> > ```
-> > $ git grep -E '.+: .+: .+ \{' -- arch/arm/boot/dts/
-> > arch/arm/boot/dts/arm/arm-realview-eb.dtsi:             charlcd: fpga_charlcd: charlcd@10008000 {
-> > arch/arm/boot/dts/arm/vexpress-v2p-ca9.dts:             smbclk: oscclk2: tcrefclk {
-> > arch/arm/boot/dts/rockchip/rk3188-bqedison2qc.dts:                      vcc_io: vcc_hdmi: REG4 {
-> > arch/arm/boot/dts/rockchip/rk3288-firefly-reload-core.dtsi:                     vccio_wl: vcc_18: REG11 {
-> > arch/arm/boot/dts/rockchip/rk3288-firefly-reload.dts:   vcc_5v: vcc_sys: vsys-regulator {
-> > arch/arm/boot/dts/rockchip/rk3288-firefly.dtsi: vbat_wl: vcc_sys: vsys-regulator {
-> > arch/arm/boot/dts/rockchip/rk3288-firefly.dtsi:                 vccio_wl: vcc_18: REG11 {
-> > arch/arm/boot/dts/rockchip/rk3288-rock2-som.dtsi:                       vcc_io: vccio_codec: REG2 {
-> > arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi:                  vcc18_wl: vcc18_flashio: vcc_18: DCDC_REG4 {
-> > arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts:                     vqmmc_sdcard: ldo4_reg: LDO4 {
-> > arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts:                      vqmmc_sdcard: ldo4_reg: LDO4 {
-> > ```
-> >
-> > Andrew
+Yours,
+Linus Walleij
