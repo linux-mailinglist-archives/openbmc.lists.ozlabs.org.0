@@ -1,57 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7BCB9283D8
-	for <lists+openbmc@lfdr.de>; Fri,  5 Jul 2024 10:41:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5C969297CD
+	for <lists+openbmc@lfdr.de>; Sun,  7 Jul 2024 14:23:58 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Is00ut/C;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XLg5iwAt;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WFn6R5PDyz3dSM
-	for <lists+openbmc@lfdr.de>; Fri,  5 Jul 2024 18:41:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WH5yh3qlKz3cXM
+	for <lists+openbmc@lfdr.de>; Sun,  7 Jul 2024 22:23:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Is00ut/C;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=XLg5iwAt;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=patchwork-bot+netdevbpf@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+X-Greylist: delayed 315 seconds by postgrey-1.37 at boromir; Sun, 07 Jul 2024 22:23:26 AEST
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WFn5w5x3Nz3bqP
-	for <openbmc@lists.ozlabs.org>; Fri,  5 Jul 2024 18:40:36 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 725EFCE3CF6;
-	Fri,  5 Jul 2024 08:40:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A0A2EC4AF07;
-	Fri,  5 Jul 2024 08:40:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720168833;
-	bh=OU3txpXlAr+kHFnOZsdCg4voKyQR5vbHID+NPrutMTE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Is00ut/C/U0cgysRENfLJWYQvyyj8uAvLaUOF5+A3Q2iDk8Fsdt88NmoV9BOjrlmE
-	 6llJBbjZDr5ZaSfXfu+gzUfChVH+bkO7/hRX526fYXOgDWFW+gn0w1KwLs7xvIA5/0
-	 Q1MnI6Y/7t6SJ6ZxkmCC35jUJvbbKde35c/2mF+QzYFZdeFsu/McR7AHtq22Apn9Bh
-	 /rPeVCed4Vw4bC9qHgD8iD7eMkUA8oWLze/KcUfKcr2usmnlPB2aZ5LzTOmp6zEvCE
-	 dniUviqrS9tku3YGddOvOJnL1Pa+rm6xqRswNhIle1kO0S2Z/4f93PlipLmQjFW6ep
-	 OZNot3Bnigj9g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 89DC0C43332;
-	Fri,  5 Jul 2024 08:40:33 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WH5y60MNTz2xLW
+	for <openbmc@lists.ozlabs.org>; Sun,  7 Jul 2024 22:23:25 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1720355002; x=1720959802; i=j.neuschaefer@gmx.net;
+	bh=wOY2LTVtor9c0uh4sZNyK/qPJ5Ak71J0G4tckDfFQzU=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=XLg5iwAtGB4DKNCvvRvzjXwnva3LmonGsylqne73kG1T49mRo5jXTS66JvAKcnw/
+	 LKqn/+a/BHi6RmiaTrdPZt1A8zTGu066FOJ6+4FsxOwFrH79mODJQ2TlGcfD/11mv
+	 t+o8MSj5uySCm/7gmTar9X8x++9qZuP1bB8FDwNfdzfUMcQL/CMwJpvNBAzIdWN6Q
+	 ZIJvoA5r1xaMBeeIfs7qw2FysoEM+cJwJmkGdOdOgsuZ8gfIaM8IkW8Lgzb/oUkVR
+	 vW3vGm+DWxRHHhfs2TtsDcCKFwZy7D4Ez/kIVWwiL1xegfde5/lp7d1h/7vZLQp61
+	 Ex4VI8bgpANX46V9gw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([89.0.46.161]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MysRu-1sCd4k23Bi-00xmgG; Sun, 07
+ Jul 2024 14:17:52 +0200
+Date: Sun, 7 Jul 2024 14:17:51 +0200
+From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ARM: dts: nuvoton: wpcm450: align LED and GPIO keys node
+ name with bindings
+Message-ID: <ZoqHb93S6j-_jaRo@probook>
+References: <20240701164915.577068-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v4 00/10] net: pcs: xpcs: Add memory-mapped device
- support
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id:  <172016883356.17061.13176667406325533525.git-patchwork-notify@kernel.org>
-Date: Fri, 05 Jul 2024 08:40:33 +0000
-References: <20240701182900.13402-1-fancer.lancer@gmail.com>
-In-Reply-To: <20240701182900.13402-1-fancer.lancer@gmail.com>
-To: Serge Semin <fancer.lancer@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240701164915.577068-1-krzysztof.kozlowski@linaro.org>
+X-Provags-ID: V03:K1:b4mry7pjbZIt6XKul32V8zWb7qm4V36BMOV1anIacoWRyYBuYrx
+ uWIeweF7djxvaYIjhUFzpl1+zKZP6ze2aWiiTmQFfBtn4Glw/E9TKhcPemzk7fHCzPLoqfJ
+ nrQ5eIfx/8rrvyMtkYcNlEWcvUb1EuL9vHm78AxGO3NfkFVCGf9JwvozGMnpD18K4V9XXxz
+ cKxBsT/L5k1ZA+f1OKzlg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:aN0MrFcoKs0=;OhSpnPJ9t2wlbVbMV0U+a7GDe3J
+ NV+YXgcsNL46eA8UuoGBC0vYr20zx3ZwjTg7MiDl4gIuVh3BilOvcawT3g3uqjMnDHvTvbXt6
+ XaMc6yGK8rZefl8dufJj9hnaxrPFpLjwDy2WnCJbS9NEmzRd9ya9ws8hCD1jQQaL6sT4l+B97
+ UxE7/la1DCqtSkiZfhjUZFpGZarWxxm3ivYFI14b2OE3+JobzRchoUOWth8OxjjkCWTmEBMWW
+ Ee2rKON3xQWH+yx63doB1+dzOGXTR372mEnJRQqea7akhFxP9MwHNfE4z7/jWeIAlpnX8Av43
+ NmkaPNTkhfor3kUX/Ozu7yHx/4tWHMrIHpFxx3c4r8sugB/oykaE6j2U5BtI4PiiNLDECuox8
+ w06pOZdU6cZX4VgMJpexyWBacVNOZImF0qpnyqMATFYr07zM9hTulmBSxwd8s9F8MjJuicwX7
+ KBxHHw16syjDYfgXd3zW2SDAL+wY3ipwpLNhC9wGO5+AH4MJzHHRG/fi203GX48IgpP3SUdmR
+ 4moAshplO7Jvusg6/wCjlY7K1Im2+lcJBR/nTW9K8zlQ5YfdI8Z7gTaul27Nae1VFDajAWgHL
+ MMI8njOIERWjOjURIYIhMAZTAF3WFNnK29sWnOlPuAcK6kHcaH7qes1rBDF2P7yQ4l4byB4D1
+ x7chtCEi8WlY3mkC+g9Cz1vI1qYjOjMZU2r5taZVrqWDLRG3ZPu2QwUO1ewwX8GeNrkW7L23H
+ uKq5eZeVCwkYdqZKBM+xq2blqfiAvjtYK9xJjm7F1jToWmPqHy7rBHg75HS4r91dnlwn4QAUv
+ Di5pPc1a0168mYigalinjpYVnvKlOkpU4FlnTnxQRTjr0=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,51 +82,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@lunn.ch, tmaimon77@gmail.com, alexandre.torgue@foss.st.com, edumazet@google.com, krzysztof.kozlowski+dt@linaro.org, quic_scheluve@quicinc.com, f.fainelli@gmail.com, openbmc@lists.ozlabs.org, linux@armlinux.org.uk, maxime.chevallier@bootlin.com, joabreu@synopsys.com, quic_abchauha@quicinc.com, kuba@kernel.org, pabeni@redhat.com, ahalaney@redhat.com, Jose.Abreu@synopsys.com, devicetree@vger.kernel.org, conor+dt@kernel.org, jiawenwu@trustnetic.com, mengyuanlou@net-swift.com, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, olteanv@gmail.com, davem@davemloft.net, hkallweit1@gmail.com
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello:
+On Mon, Jul 01, 2024 at 06:49:15PM +0200, Krzysztof Kozlowski wrote:
+> Bindings expect the LED and GPIO keys node names to follow certain
+> pattern, see dtbs_check warnings:
+>
+>   nuvoton-wpcm450-supermicro-x9sci-ln4f.dtb: gpio-keys: 'uid' does not m=
+atch any of the regexes: '^(button|event|key|switch|(button|event|key|swit=
+ch)...
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
 
-This series was applied to netdev/net-next.git (main)
-by David S. Miller <davem@davemloft.net>:
+Looks good, thanks!
 
-On Mon,  1 Jul 2024 21:28:31 +0300 you wrote:
-> The main goal of this series is to extend the DW XPCS device support in
-> the kernel. Particularly the patchset adds a support of the DW XPCS
-> device with the MCI/APB3 IO interface registered as a platform device. In
-> order to have them utilized by the DW XPCS core the fwnode-based DW XPCS
-> descriptor creation procedure has been introduced. Finally the STMMAC
-> driver has been altered to support the DW XPCS passed via the 'pcs-handle'
-> property.
-> 
-> [...]
+Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 
-Here is the summary with links:
-  - [net-next,v4,01/10] net: pcs: xpcs: Move native device ID macro to linux/pcs/pcs-xpcs.h
-    https://git.kernel.org/netdev/net-next/c/f37bee950888
-  - [net-next,v4,02/10] net: pcs: xpcs: Split up xpcs_create() body to sub-functions
-    https://git.kernel.org/netdev/net-next/c/03b3be07c69a
-  - [net-next,v4,03/10] net: pcs: xpcs: Convert xpcs_id to dw_xpcs_desc
-    https://git.kernel.org/netdev/net-next/c/71b200b388ef
-  - [net-next,v4,04/10] net: pcs: xpcs: Convert xpcs_compat to dw_xpcs_compat
-    https://git.kernel.org/netdev/net-next/c/410232ab3c07
-  - [net-next,v4,05/10] net: pcs: xpcs: Introduce DW XPCS info structure
-    https://git.kernel.org/netdev/net-next/c/bcac735cf653
-  - [net-next,v4,06/10] dt-bindings: net: Add Synopsys DW xPCS bindings
-    https://git.kernel.org/netdev/net-next/c/664690eb08f7
-  - [net-next,v4,07/10] net: pcs: xpcs: Add Synopsys DW xPCS platform device driver
-    https://git.kernel.org/netdev/net-next/c/f6bb3e9d98c2
-  - [net-next,v4,08/10] net: pcs: xpcs: Add fwnode-based descriptor creation method
-    https://git.kernel.org/netdev/net-next/c/9cad7275463a
-  - [net-next,v4,09/10] net: stmmac: Create DW XPCS device with particular address
-    https://git.kernel.org/netdev/net-next/c/351066bad6ad
-  - [net-next,v4,10/10] net: stmmac: Add DW XPCS specified via "pcs-handle" support
-    https://git.kernel.org/netdev/net-next/c/357768c7e792
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+>  .../dts/nuvoton/nuvoton-wpcm450-supermicro-x9sci-ln4f.dts   | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450-supermicro-x9sci-=
+ln4f.dts b/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450-supermicro-x9sci-ln4f=
+.dts
+> index b78c116cbc18..edb907f740bf 100644
+> --- a/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450-supermicro-x9sci-ln4f.dt=
+s
+> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-wpcm450-supermicro-x9sci-ln4f.dt=
+s
+> @@ -34,7 +34,7 @@ gpio-keys {
+>  		pinctrl-names =3D "default";
+>  		pinctrl-0 =3D <&key_pins>;
+>
+> -		uid {
+> +		button-uid {
+>  			label =3D "UID button";
+>  			linux,code =3D <KEY_HOME>;
+>  			gpios =3D <&gpio0 14 GPIO_ACTIVE_HIGH>;
+> @@ -46,12 +46,12 @@ gpio-leds {
+>  		pinctrl-names =3D "default";
+>  		pinctrl-0 =3D <&led_pins>;
+>
+> -		uid {
+> +		led-uid {
+>  			label =3D "UID";
+>  			gpios =3D <&gpio1 7 GPIO_ACTIVE_HIGH>;
+>  		};
+>
+> -		heartbeat {
+> +		led-heartbeat {
+>  			label =3D "heartbeat";
+>  			gpios =3D <&gpio1 4 GPIO_ACTIVE_LOW>;
+>  		};
+> --
+> 2.43.0
+>
