@@ -2,70 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65242931B01
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2024 21:28:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 225A5931F11
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 05:00:02 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Cr00aHGK;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=RxfCsLt6;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WNC0z2J83z3d9s
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 05:28:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WNP1r0YbRz3d9s
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 13:00:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Cr00aHGK;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=RxfCsLt6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.17; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNBzd4K7Sz3cZ1
-	for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 05:27:23 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721071646; x=1752607646;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=scvD8E1Th0WQEDOblbw8afBg6ubsAWbPK3/2sSh0+fU=;
-  b=Cr00aHGKlljy+NxXIxty1Ll7yEnIBLbrkE8yNYsWY9ZrGf42dn7knXwW
-   IMHSqS2D90gDq5eFgE/S2mQo/8cy9g/DdYR0QacYYOTuu3P1pjMpzpXq3
-   mKG5qJvmroVuy2JVbzpR6eEZrXsObvnrcEwXCjqMG9dSedx8Wxw6EsArE
-   /oMsQCpYtF/Qlf2aEYPUFdVXOxZ/3fV+JxTaJvwdjiPPIK8Dv5LFOXYap
-   3Rzn7WKtLHBCFvWEa7Y0/3iZB8U1eVpWRlR+8tqs+v5z0q0uIU5YUfs3p
-   UjlWt3a8jlLWkiPo0IWp3USBGEumtF/tsff9IIVWvmRO684fqVpwmkZnq
-   Q==;
-X-CSE-ConnectionGUID: 7V4wEwyBQjutdAcbWp7FOQ==
-X-CSE-MsgGUID: ZiavoUBeS+m0Zp6ydrjbSA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11134"; a="18342896"
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; 
-   d="scan'208";a="18342896"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2024 12:27:19 -0700
-X-CSE-ConnectionGUID: 2Tdnb+rbRk+Wk2mkoCoccg==
-X-CSE-MsgGUID: 1KBBHSXLTp670BMn/kdLJQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; 
-   d="scan'208";a="72960660"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa002.fm.intel.com with ESMTP; 15 Jul 2024 12:27:15 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sTRLt-000eWK-35;
-	Mon, 15 Jul 2024 19:27:13 +0000
-Date: Tue, 16 Jul 2024 03:26:47 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	openbmc@lists.ozlabs.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH RESEND v12 4/6] clk: wpcm450: Add Nuvoton WPCM450
- clock/reset controller driver
-Message-ID: <202407160235.JYThNv91-lkp@intel.com>
-References: <20240708-wpcm-clk-v12-4-1afac539c37d@gmx.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNP1J2mNBz30Wg
+	for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 12:59:31 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1721098768;
+	bh=e8cHyS0Svz6J2vfTVcsGje2tU3Hck/CzXg2bVEIH+Ik=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=RxfCsLt6Pde7gvJU31gceNlEAJlwb1+F7HyuO8XLPyFutyNkyCeKjKBLsJeygr5ep
+	 i5wEqC84JqNT7w4cXcX6qKzAQWukAbxjoBpgmGvt4pJ4nDjLkodbgvuya2pKSUd+hh
+	 Vg54ZN0VeW4+vCbKQDT+dFdPAxrW3mjGTRseSZGcqaz+Kn+YYKUUAEUiVfRTFS4WNs
+	 CRXPtKXppYw27KdJe7b2i/8dy6ilEGd2yEfuFkG/Q9K8OYoaZ75nWekFoBbypxkTJF
+	 vgX65nYQHHTZwS6b/BKFoJ0aFlcPEp7pNzSqgL5LYaiDJtVRC/3zO6KFPs87/JH4Pq
+	 ooumg+GMGN5oA==
+Received: from [192.168.2.243] (210-10-213-150.per.static-ipl.aapt.com.au [210.10.213.150])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 18140655AC;
+	Tue, 16 Jul 2024 10:59:28 +0800 (AWST)
+Message-ID: <7560fe7cb0945c54339826a2db1f50c8cf5ca500.camel@codeconstruct.com.au>
+Subject: Re: [linux dev-6.6 v1 1/3] arm64: dts: nuvoton: npcm8xx: add
+ reference 25m clock property
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Date: Tue, 16 Jul 2024 10:59:27 +0800
+In-Reply-To: <CAP6Zq1iGhQRUZx2j3nF0cYArAhXH_uqv7T8ztNEN3j1wePJGAw@mail.gmail.com>
+References: <20240714152617.3055768-1-tmaimon77@gmail.com>
+	 <1c0d0b77405bbc5a2ddb5893405cc816a30a18cb.camel@codeconstruct.com.au>
+	 <CAP6Zq1iGhQRUZx2j3nF0cYArAhXH_uqv7T8ztNEN3j1wePJGAw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240708-wpcm-clk-v12-4-1afac539c37d@gmx.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,58 +61,171 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>, Joel Stanley <joel@jms.id.au>, Philipp Zabel <p.zabel@pengutronix.de>, oe-kbuild-all@lists.linux.dev
+Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jonathan,
+On Mon, 2024-07-15 at 12:16 +0300, Tomer Maimon wrote:
+> Hi Andrew,
+>=20
+> Thanks for your comments.
+>=20
+> On Mon, 15 Jul 2024 at 09:05, Andrew Jeffery
+> <andrew@codeconstruct.com.au> wrote:
+> >=20
+> > Hi Tomer,
+> >=20
+> > In the future, can you please send your series with a cover letter with
+> > the patches threaded under it?
+> Sure!
+> >=20
+> > If you're not already using it, b4 is a helpful tool for sending
+> > patches:
+> I wasn't aware to B$, I will try it, thanks :-)
+> >=20
+> > https://b4.docs.kernel.org/en/latest/
+> >=20
+> > I ask because it's not clear to me what the relationship of this series
+> > is with respect to what's going on upstream. A cover letter is a great
+> > place to explain whether the patches are:
+> >=20
+> > 1. A backport of those under review upstream
+> > 2. A backport of patches already merged upstream
+> > 3. Specific to the openbmc/linux tree and have no upstream equivalent
+> >=20
+> > In the case of 1 and 2 (which are the ideal cases), I really prefer you
+> > include a link to the upstream equivalents. The link makes it easier
+> > for me to gauge how mature the patches are.
+> If I am sending one patch only do you like me to add under --- in the
+> patch explanation as well?
 
-kernel test robot noticed the following build warnings:
+Yeah, that would be great, if you're just sending the one patch rather
+than a series. Thanks.
 
-[auto build test WARNING on 4cece764965020c22cff7665b18a012006359095]
+> >=20
+> > Regarding the patch content (rather than process), while the patches
+> > all touch the NPCM8XX devicetree, they don't seem to have a coherent
+> > feel otherwise :(
+> >=20
+> > On Sun, 2024-07-14 at 18:26 +0300, Tomer Maimon wrote:
+> > > The NPCM8XX clock driver uses a 25Mhz external clock, therefore addin=
+g
+> > > clock property.
+> > >=20
+> > > The new required clock property does not break the NPCM8XX clock ABI
+> > > since the NPCM8XX clock driver hasn't merged yet to the Linux vanilla=
+.
+> >=20
+> > This is a statement with respect to upstream, but it seems we've
+> > already applied some of the patches here, and so there's possibly a
+> > concern?
+> Unfortunately, the NPCM8XX clock driver has been removed in dev-6.6,
+> so the OpenBMC Linux kernel is dev-6.6 is in the same state as the
+> Linux kernel vanilla.
+> BTW, I don't see any concern with the reference clock patch, but the
+> DT maintainers asked me to mention it not cause any ABI issue.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jonathan-Neusch-fer/dt-bindings-clock-Add-Nuvoton-WPCM450-clock-reset-controller/20240708-073926
-base:   4cece764965020c22cff7665b18a012006359095
-patch link:    https://lore.kernel.org/r/20240708-wpcm-clk-v12-4-1afac539c37d%40gmx.net
-patch subject: [PATCH RESEND v12 4/6] clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
-config: arm-randconfig-r064-20240715 (https://download.01.org/0day-ci/archive/20240716/202407160235.JYThNv91-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
+Okay. I guess I should have poked at the (absence) of the driver.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407160235.JYThNv91-lkp@intel.com/
+> >=20
+> > >=20
+> > > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > > ---
+> > >  arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi | 9 +++++---=
+-
+> > >  arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts     | 7 +++++++
+> > >  2 files changed, 12 insertions(+), 4 deletions(-)
+> > >=20
+> > > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi =
+b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > > index 91c1b5c4d635..9bd22f7d43f4 100644
+> > > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> > > @@ -58,6 +58,7 @@ clk: clock-controller@f0801000 {
+> > >                       compatible =3D "nuvoton,npcm845-clk";
+> > >                       #clock-cells =3D <1>;
+> > >                       reg =3D <0x0 0xf0801000 0x0 0x1000>;
+> > > +                     clocks =3D <&refclk>;
+> > >               };
+> > >=20
+> > >               apb {
+> > > @@ -81,7 +82,7 @@ timer0: timer@8000 {
+> > >                               compatible =3D "nuvoton,npcm845-timer";
+> > >                               interrupts =3D <GIC_SPI 32 IRQ_TYPE_LEV=
+EL_HIGH>;
+> > >                               reg =3D <0x8000 0x1C>;
+> > > -                             clocks =3D <&clk NPCM8XX_CLK_REFCLK>;
+> > > +                             clocks =3D <&refclk>;
+> > >                               clock-names =3D "refclk";
+> > >                       };
+> > >=20
+> > > @@ -153,7 +154,7 @@ watchdog0: watchdog@801c {
+> > >                               interrupts =3D <GIC_SPI 47 IRQ_TYPE_LEV=
+EL_HIGH>;
+> > >                               reg =3D <0x801c 0x4>;
+> > >                               status =3D "disabled";
+> > > -                             clocks =3D <&clk NPCM8XX_CLK_REFCLK>;
+> > > +                             clocks =3D <&refclk>;
+> > >                               syscon =3D <&gcr>;
+> > >                       };
+> > >=20
+> > > @@ -162,7 +163,7 @@ watchdog1: watchdog@901c {
+> > >                               interrupts =3D <GIC_SPI 48 IRQ_TYPE_LEV=
+EL_HIGH>;
+> > >                               reg =3D <0x901c 0x4>;
+> > >                               status =3D "disabled";
+> > > -                             clocks =3D <&clk NPCM8XX_CLK_REFCLK>;
+> > > +                             clocks =3D <&refclk>;
+> > >                               syscon =3D <&gcr>;
+> > >                       };
+> > >=20
+> > > @@ -171,7 +172,7 @@ watchdog2: watchdog@a01c {
+> > >                               interrupts =3D <GIC_SPI 49 IRQ_TYPE_LEV=
+EL_HIGH>;
+> > >                               reg =3D <0xa01c 0x4>;
+> > >                               status =3D "disabled";
+> > > -                             clocks =3D <&clk NPCM8XX_CLK_REFCLK>;
+> > > +                             clocks =3D <&refclk>;
+> > >                               syscon =3D <&gcr>;
+> > >                       };
+> > >               };
+> > > diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/ar=
+ch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > > index a5ab2bc0f835..83c2f4e138e5 100644
+> > > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+> > > @@ -19,6 +19,13 @@ chosen {
+> > >       memory {
+> > >               reg =3D <0x0 0x0 0x0 0x40000000>;
+> > >       };
+> > > +
+> > > +     refclk: refclk-25mhz {
+> >=20
+> > The node name should probably just be 'clock' according to the generic
+> > node names recommendation?
+> What do you mean? refclock? I am not sure, for example:
+> https://elixir.bootlin.com/linux/v6.10-rc7/source/arch/arm64/boot/dts/fre=
+escale/imx8mq-evk.dts#L24
 
-cocci warnings: (new ones prefixed by >>)
->> drivers/clk/nuvoton/clk-wpcm450.c:55:1-7: WARNING: do_div() does a 64-by-32 division, please consider using div64_ul instead.
+I meant the node name (refclk-25mhz), not the label (refclk), but
+plenty of other devicetrees call it random things, so don't worry about
+it.
 
-vim +55 drivers/clk/nuvoton/clk-wpcm450.c
+> >=20
+> > > +             compatible =3D "fixed-clock";
+> > > +             clock-output-names =3D "ref";
+> > > +             clock-frequency =3D <25000000>;
+> > > +             #clock-cells =3D <0>;
+> > > +     };
+> >=20
+> > Defining this in the .dts but referencing the label inside the .dtsi
+> > feels a bit off to me (as the .dtsi is no-longer self-contained). How
+> > about we define the node in the .dtsi but override it in the .dts?
+> I had a dissection about it with Krzysztof :-) I was told that since
+> it is a reference clock on the board and not inside the SoC it should
+> be defined in the DTS.
 
-    36	
-    37	static unsigned long wpcm450_clk_pll_recalc_rate(struct clk_hw *hw,
-    38							 unsigned long parent_rate)
-    39	{
-    40		struct wpcm450_clk_pll *pll = to_wpcm450_clk_pll(hw);
-    41		unsigned long fbdv, indv, otdv;
-    42		u64 rate;
-    43		u32 pllcon;
-    44	
-    45		if (parent_rate == 0)
-    46			return 0;
-    47	
-    48		pllcon = readl_relaxed(pll->pllcon);
-    49	
-    50		indv = FIELD_GET(PLLCON_INDV, pllcon) + 1;
-    51		fbdv = FIELD_GET(PLLCON_FBDV, pllcon) + 1;
-    52		otdv = FIELD_GET(PLLCON_OTDV, pllcon) + 1;
-    53	
-    54		rate = (u64)parent_rate * fbdv;
-  > 55		do_div(rate, indv * otdv);
-    56	
-    57		return rate;
-    58	}
-    59	
+Hah, okay, I guess do whatever Krysztof recommends. If that's what
+you've got, then it is what it is.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Andrew
