@@ -1,69 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA3D39327FD
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 16:06:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C120932831
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 16:22:26 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SNaeKksM;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W1KbQKUC;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WNgpr5QMsz3dGt
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2024 00:06:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WNh9D3sQzz3cbg
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2024 00:22:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SNaeKksM;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W1KbQKUC;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2f; helo=mail-oo1-xc2f.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNgns5kycz3fTX
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2024 00:05:37 +1000 (AEST)
-Received: by mail-oo1-xc2f.google.com with SMTP id 006d021491bc7-5c651c521f2so2878426eaf.1
-        for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 07:05:37 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNh8j4kWYz30Vk
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2024 00:21:56 +1000 (AEST)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-e04289a2536so4545361276.1
+        for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 07:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721138734; x=1721743534; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1721139714; x=1721744514; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=edq+RTW1fgtpOLjnEXvJGmBfFksu9I7eJG3ThDjhd6E=;
-        b=SNaeKksMzZ1tY78az8w27mOPbmRTl+xeqTY3BaBdji3JIoypCLIOrMOc9ziunKBzbi
-         kmJIIB6epqeotOu8hIehGuQkY4natc8wz6u8Tb4DwYi4btEjHlIKW1/IhjAWGzBN7WDt
-         zD5ByAum/1mM7V75UCFLTqh+Bxbyz9cpVjjyBxMFlgARCYw04CbiQXSWeorFjGXO6ylS
-         tYaftrRX5seiZh8sI12mtmBAoN7J3HQJQ7rKgbK7YgioIgDVarsf+yqoaSls3ZHncMIY
-         4OkSE5VBigWq/zIvl6oGl504WbEyeZTATDXw16ZJ6z3gf7FNPv8SkPlcQrH12l8cpHbA
-         sNkg==
+        bh=t/2J6dIhhnWs/OvYVCSh0AyUKRWiWXR9HD//G2Voii0=;
+        b=W1KbQKUCo1pK8gGPfwmcuhJQdaEdGAX2oQWKhT4lXkz7P+i11BK16V4+VOEl7MdjQR
+         jk8kWlGhM6IFNm4ZGqd2XOj5fsvftabwJPDbK3aflDxZVP4dvs2E6R9slXMa9mb2AGwr
+         qU3J0k/x48ufFQ044pVvmbe4BcLSVCcvKeWFuC04/5d5+ggWV2/PxoU5fEd8qJ3pjNM+
+         6TWrDqvbptHGM0lTkf8qVdV9UCuQUjwCDFYQBVdAbfGH2aK9JUfIfghyohFnimLZJm4A
+         pS6umZToMf/c9cK4GGumy6R8wZZojIuMhdsURjrRNZgzVrfM0SJZQVJvvokT+E47EuN0
+         TVBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721138734; x=1721743534;
+        d=1e100.net; s=20230601; t=1721139714; x=1721744514;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=edq+RTW1fgtpOLjnEXvJGmBfFksu9I7eJG3ThDjhd6E=;
-        b=cpJ9TrdquBpj+p7qIgnZw+8XArmTA1Ygpaqe2rXmqgW9KbTGi2v09aIskL/uz+gGTh
-         rD8PU2ACbQV9UtvGfak6viyZllI7iynJBET7beXkh+YepW0AKSlDAjB3Vcv/1o6548uo
-         6iIU9e3BVvu2xroQfMr5oxO7ZKFQdkv/qWcqe8YhhMAB3zbXEeFNgl2voa5lMF/d90hB
-         xe+B9cF2kuJAGd1tgInmDom3LyXNsUX9k7fFUaeU+vJgaEcHcqTiqpY+VwbXdqsBD1O+
-         Wofoq9eH4IEHTDUAV3jQeNHVqx9tNc7qHmFv/Bd/mjvRujfxH1RQauU1BrbMZdIKuVcc
-         1KeA==
-X-Gm-Message-State: AOJu0YzYUogIK1a1Db6fENeqM7er2IQZBfdmGACtwbezqhlReJzm2+Iq
-	sz735g2MIJ02utVaiO1586GzmB/o8Y1hqLp4aWcScLxRR/6SsxTJF7K0JG+uciI8/Btg1TsEuuF
-	KoV+C/GUTZsw1DJU7Zr+1sDamV9Y=
-X-Google-Smtp-Source: AGHT+IGGDtry7Y11IrK58VA/FQSrpk0RXeX7TYmyN9QspX1ojgQJK718eACM81dFh5TF3g5TcRDy3wboztEuzKp5bTA=
-X-Received: by 2002:a05:6358:60c7:b0:1a6:a69b:b171 with SMTP id
- e5c5f4694b2df-1ac904440b8mr217074755d.15.1721138734565; Tue, 16 Jul 2024
- 07:05:34 -0700 (PDT)
+        bh=t/2J6dIhhnWs/OvYVCSh0AyUKRWiWXR9HD//G2Voii0=;
+        b=uYizRLbz8HPByKbNQt5iDbtnsZI1u/X+OotB6VKS3gkSPVGDRfSgidznyXbKMRnl4B
+         SsZe46FrUhI/gLkc9jkblUFiZPPwVsT6iM6OhcPI+W7CEyBlHPIc4L5pcwDOjn4sq0FA
+         0Ie5YXVlljNTCqhcAKCTJaYoNlAMk25KIPru7L+RHZKS0M/Y0Z+Tu9C6HJw2c4Xf8Ewt
+         IbeDIAmmwqkhMsYRPdyitGFMLgfhrBIScUmrcHm3aVgkg0IiFmQDDwa2pIGVUdLzPY4l
+         q21wZtO4o7+V8Bcdn+RmBOGlrP37hPFdVbcWDS5OpfDkVcyRrmf726ByPMWa/DXbKviP
+         CvPg==
+X-Gm-Message-State: AOJu0Yx2gGkCkh3kWsqU8h3MVdnYMUZFLFlqhm/+KJlJAHO29A13pXRv
+	sM7Map8/RpzmIqgUtRJL3LRajR0eJjUhdedgxOK77nBHye+k2i3VVOwNWoZX2ZacGL+VItmJUAr
+	MlaewJvXJCJ7ImvxV22GxplmSlFc=
+X-Google-Smtp-Source: AGHT+IGS1oREOc6vtx/1MbHywusJ5ci7I8V+zBQysGemBGrMSFxYuKmozPpVD4oL2bhsUo1KXJcc6I5IGhr8LjmGHKc=
+X-Received: by 2002:a5b:606:0:b0:e03:abe0:95be with SMTP id
+ 3f1490d57ef6-e05d80275d4mr1495547276.2.1721139714089; Tue, 16 Jul 2024
+ 07:21:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240709160242.1921541-1-tmaimon77@gmail.com> <f17486d058ef660c65a9911d62605c250cdc0b09.camel@codeconstruct.com.au>
-In-Reply-To: <f17486d058ef660c65a9911d62605c250cdc0b09.camel@codeconstruct.com.au>
+References: <20240710124157.2106609-1-tmaimon77@gmail.com> <00f9c8d1-4572-40bc-925e-17161cbec0fb@molgen.mpg.de>
+In-Reply-To: <00f9c8d1-4572-40bc-925e-17161cbec0fb@molgen.mpg.de>
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 16 Jul 2024 17:05:23 +0300
-Message-ID: <CAP6Zq1hAMrN_tssFnrAeJDiRtDhSeeFPFN77KGGpAjFCe0aLqg@mail.gmail.com>
-Subject: Re: [linux dev-6.6 v1 0/2] spi: npcm-pspi: add full duplex and fix
- word issue
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
+Date: Tue, 16 Jul 2024 17:21:43 +0300
+Message-ID: <CAP6Zq1iSr22Qs=_0FrGmFm0AHSKZPMAB0oC3gLOZCxeaHKiLDg@mail.gmail.com>
+Subject: Re: [linux dev-6.6 v1] usb: chipidea: udc: enforce write to the memory.
+To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -80,38 +79,82 @@ Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+Hi Paul,
 
-On Tue, 16 Jul 2024 at 06:25, Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
->
-> On Tue, 2024-07-09 at 19:02 +0300, Tomer Maimon wrote:
-> > This patch set:
-> >       1. Add full duplex support - this patch have been upstream to dev-6.1
-> >                                                                and removed.
-> >       2. Fix transfer bits per word issue.
-> >
-> > Tomer Maimon (2):
-> >   spi: npcm-pspi: add full duplex support
-> >   spi: npcm-pspi: Fix transfer bits per word issue
-> >
-> >  drivers/spi/spi-npcm-pspi.c | 90 ++++++++++++++++---------------------
-> >  1 file changed, 38 insertions(+), 52 deletions(-)
-> >
->
-> What's the state of this series with respect to upstream? Is this
-> something specific to the openbmc/linux dev-6.6 tree, or is there an
-> upstream equivalent? If the latter, can you please link to the relevant
-> series?
-This patch set hasn't been upstream yet to OpenBMC vanilla and it is
-not specific to openbmc/linux dev-6.6 tree.
-We will do our best to upstream this patch in kernel 6.11 (We already
-have a lot of patches to handle in the next kernel version :-)).
-since we need to upgrade the NPCM from dev-6.1 to dev-6.6, we would
-appreciate it if you could add it now to dev-6.6
->
-> Andrew
-
-Thanks,
+Thanks a lot for your comments, it will be addressed in the next version.
 
 Tomer
+
+On Wed, 10 Jul 2024 at 16:52, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+>
+> Dear Tomer,
+>
+>
+> Thank you for your patch.
+>
+> Am 10.07.24 um 14:41 schrieb Tomer Maimon:
+> > In the prime endpoint function, we need to read from qh.ptr->td.token
+> > to ensure that the previous write to it has indeed been committed
+> > to memory.
+>
+> Please document the datasheet name, revision and section. If this
+> actually caused user visible problems, please also document the test case.
+>
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >   drivers/usb/chipidea/udc.c | 15 ++++++++++++---
+> >   1 file changed, 12 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+> > index 0b7bd3c643c3..0b14a1d54d59 100644
+> > --- a/drivers/usb/chipidea/udc.c
+> > +++ b/drivers/usb/chipidea/udc.c
+> > @@ -190,12 +190,21 @@ static int hw_ep_get_halt(struct ci_hdrc *ci, int num, int dir)
+> >    *
+> >    * This function returns an error code
+> >    */
+> > -static int hw_ep_prime(struct ci_hdrc *ci, int num, int dir, int is_ctrl)
+> > +static int hw_ep_prime(struct ci_hdrc *ci, struct ci_hw_ep *hwep, int num,
+> > +                    int dir, int is_ctrl)
+> >   {
+> >       int n = hw_ep_bit(num, dir);
+> >
+> >       /* Synchronize before ep prime */
+> >       wmb();
+> > +
+> > +     /*
+> > +      * We add the read from qh.ptr->td.token to make sure the previous
+> > +      * write to it indeed got into the mamory so when we prime the DMA
+>
+> m*e*mory
+>
+> > +      * will read the updated data
+> > +      */
+> > +     if (hwep->qh.ptr->td.token & 0x80000000)
+> > +             pr_info("%s(): hwep->qh.ptr->td.token=%08x\n", __func__, hwep->qh.ptr->td.token);
+> >
+> >       if (is_ctrl && dir == RX && hw_read(ci, OP_ENDPTSETUPSTAT, BIT(num)))
+> >               return -EAGAIN;
+> > @@ -632,7 +641,7 @@ static int _hardware_enqueue(struct ci_hw_ep *hwep, struct ci_hw_req *hwreq)
+> >               hwep->qh.ptr->cap |= cpu_to_le32(mul << __ffs(QH_MULT));
+> >       }
+> >
+> > -     ret = hw_ep_prime(ci, hwep->num, hwep->dir,
+> > +     ret = hw_ep_prime(ci, hwep, hwep->num, hwep->dir,
+> >                          hwep->type == USB_ENDPOINT_XFER_CONTROL);
+> >   done:
+> >       return ret;
+> > @@ -658,7 +667,7 @@ static int reprime_dtd(struct ci_hdrc *ci, struct ci_hw_ep *hwep,
+> >       hwep->qh.ptr->td.token &=
+> >               cpu_to_le32(~(TD_STATUS_HALTED | TD_STATUS_ACTIVE));
+> >
+> > -     return hw_ep_prime(ci, hwep->num, hwep->dir,
+> > +     return hw_ep_prime(ci, hwep, hwep->num, hwep->dir,
+> >                               hwep->type == USB_ENDPOINT_XFER_CONTROL);
+> >   }
+> >
+>
+>
+> Kind regards,
+>
+> Paul
