@@ -2,68 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C120932831
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 16:22:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54C1E932847
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2024 16:24:55 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W1KbQKUC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YlEnGY45;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WNh9D3sQzz3cbg
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2024 00:22:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WNhD51r5cz3fRN
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2024 00:24:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W1KbQKUC;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YlEnGY45;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1130; helo=mail-yw1-x1130.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNh8j4kWYz30Vk
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2024 00:21:56 +1000 (AEST)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-e04289a2536so4545361276.1
-        for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 07:21:56 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WNhCY3JF3z30Vk
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2024 00:24:24 +1000 (AEST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-65faa0614dbso31945487b3.2
+        for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2024 07:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721139714; x=1721744514; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=t/2J6dIhhnWs/OvYVCSh0AyUKRWiWXR9HD//G2Voii0=;
-        b=W1KbQKUCo1pK8gGPfwmcuhJQdaEdGAX2oQWKhT4lXkz7P+i11BK16V4+VOEl7MdjQR
-         jk8kWlGhM6IFNm4ZGqd2XOj5fsvftabwJPDbK3aflDxZVP4dvs2E6R9slXMa9mb2AGwr
-         qU3J0k/x48ufFQ044pVvmbe4BcLSVCcvKeWFuC04/5d5+ggWV2/PxoU5fEd8qJ3pjNM+
-         6TWrDqvbptHGM0lTkf8qVdV9UCuQUjwCDFYQBVdAbfGH2aK9JUfIfghyohFnimLZJm4A
-         pS6umZToMf/c9cK4GGumy6R8wZZojIuMhdsURjrRNZgzVrfM0SJZQVJvvokT+E47EuN0
-         TVBQ==
+        d=gmail.com; s=20230601; t=1721139862; x=1721744662; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IloAEevb9j/jeRb0W1UmR0i732zAODizdCFxqOWvxSA=;
+        b=YlEnGY45sptf/ryObffukCbExcWa35jBsBI+/FJYZ8kuLhp9ADdgENZpXQhz6Valh5
+         HU94PuNc1imSE5eDGkouIpsyVEBhwoyFa6J+o8ytzzdo3akKmYcHowNo5npU5FNiRou/
+         aB8Gu69sgC5kNUMoinQMs5NvPmZFGjNLU1bsN772WsmVuqmZpAzhqeNwrHhrhwjE217o
+         cKMh8beswlanICDV73Rj2QlDdsAIph6iv7lCT+c0CJ4urcHz73Oewe4RFpjj93YfTEr1
+         9pxPBxyKf7YTFpb5Qr/4DM3Z4KsZOQPSYKuQu6Au3ifn3qC8yielKnxk3Dl9tgEwdiry
+         DRCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721139714; x=1721744514;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t/2J6dIhhnWs/OvYVCSh0AyUKRWiWXR9HD//G2Voii0=;
-        b=uYizRLbz8HPByKbNQt5iDbtnsZI1u/X+OotB6VKS3gkSPVGDRfSgidznyXbKMRnl4B
-         SsZe46FrUhI/gLkc9jkblUFiZPPwVsT6iM6OhcPI+W7CEyBlHPIc4L5pcwDOjn4sq0FA
-         0Ie5YXVlljNTCqhcAKCTJaYoNlAMk25KIPru7L+RHZKS0M/Y0Z+Tu9C6HJw2c4Xf8Ewt
-         IbeDIAmmwqkhMsYRPdyitGFMLgfhrBIScUmrcHm3aVgkg0IiFmQDDwa2pIGVUdLzPY4l
-         q21wZtO4o7+V8Bcdn+RmBOGlrP37hPFdVbcWDS5OpfDkVcyRrmf726ByPMWa/DXbKviP
-         CvPg==
-X-Gm-Message-State: AOJu0Yx2gGkCkh3kWsqU8h3MVdnYMUZFLFlqhm/+KJlJAHO29A13pXRv
-	sM7Map8/RpzmIqgUtRJL3LRajR0eJjUhdedgxOK77nBHye+k2i3VVOwNWoZX2ZacGL+VItmJUAr
-	MlaewJvXJCJ7ImvxV22GxplmSlFc=
-X-Google-Smtp-Source: AGHT+IGS1oREOc6vtx/1MbHywusJ5ci7I8V+zBQysGemBGrMSFxYuKmozPpVD4oL2bhsUo1KXJcc6I5IGhr8LjmGHKc=
-X-Received: by 2002:a5b:606:0:b0:e03:abe0:95be with SMTP id
- 3f1490d57ef6-e05d80275d4mr1495547276.2.1721139714089; Tue, 16 Jul 2024
- 07:21:54 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721139862; x=1721744662;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IloAEevb9j/jeRb0W1UmR0i732zAODizdCFxqOWvxSA=;
+        b=Hp76yIgRiGaDGuNgd9Hzv/+H903knGWZBtth7GeMTNQTBd59ydmg19YcpvvlpIbWGP
+         MfG/ZfvjB1olLBsrRhHh2Zk5iBM8RIEnbkQ0Fa3amJGt6xAL6cBIVKqTY8ASP8vuEYWK
+         2hR6Cpz/j3/PniQ7M8ik9f6xw2aSznMoM31vGXkDMPnBg+6PD2ppZrnuCJkNesm266+n
+         kCowaxIR/4JEQ9VzaB59pQHI85q9L9V/MrYsmHMUQy8bTSug6jdiomw4mOVoHVDMr+j3
+         p55bzr7aoVYGlFUZCQUjXxfuKWWscn95cZzacLDdps5RBQWSl0HcFmpgHN9q/npRKEdi
+         TRNA==
+X-Forwarded-Encrypted: i=1; AJvYcCXud1MVUptjgyjfGbZmXI36yVj4grJ272cLSybBdYg6nMAeHis0qb/WrffM8tMW8LUj9u/lov+F5I6Mxr1Gqsn6tRZDeUk30lQ=
+X-Gm-Message-State: AOJu0YxKgfz6cOBGlTKRQZueZlfRv7DJmsDtOl8yhDdrkkx6QypjEAjE
+	tQqd4mx3smFMoNtvlYcU7i8cTlFAztngUACYADkhYZED+18GjEIzVRNnVH3NQJzwQOX6MlfBrp+
+	BLpHws9H2AUagG9Wc2ax4EBrxTW0=
+X-Google-Smtp-Source: AGHT+IF45F4/cjaTHhqZQI1M7kkXoOzONUc/n2JH/TE3b2V5uGdk0Ign5R7+DjG+ypwkKUTt2WfJP6BJa8GLui80V64=
+X-Received: by 2002:a05:690c:ecf:b0:650:4542:56e6 with SMTP id
+ 00721157ae682-66381abfa0dmr28480317b3.48.1721139862151; Tue, 16 Jul 2024
+ 07:24:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240710124157.2106609-1-tmaimon77@gmail.com> <00f9c8d1-4572-40bc-925e-17161cbec0fb@molgen.mpg.de>
-In-Reply-To: <00f9c8d1-4572-40bc-925e-17161cbec0fb@molgen.mpg.de>
+References: <20240711193749.2397471-1-tmaimon77@gmail.com> <20240711193749.2397471-5-tmaimon77@gmail.com>
+ <ZpFrslx57m62SEsg@probook>
+In-Reply-To: <ZpFrslx57m62SEsg@probook>
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 16 Jul 2024 17:21:43 +0300
-Message-ID: <CAP6Zq1iSr22Qs=_0FrGmFm0AHSKZPMAB0oC3gLOZCxeaHKiLDg@mail.gmail.com>
-Subject: Re: [linux dev-6.6 v1] usb: chipidea: udc: enforce write to the memory.
-To: Paul Menzel <pmenzel@molgen.mpg.de>
+Date: Tue, 16 Jul 2024 17:24:11 +0300
+Message-ID: <CAP6Zq1gYSiXFhtA0HAaoSLD7Lz-9nuoy-cUn+qvh0BLev_ifVg@mail.gmail.com>
+Subject: Re: [PATCH v1 4/7] pinctrl: nuvoton: npcm8xx: remove unused smb4den
+ pin, group, function
+To: =?UTF-8?B?Si4gTmV1c2Now6RmZXI=?= <j.neuschaefer@gmx.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,86 +80,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
+Cc: benjaminfair@google.com, linux-gpio@vger.kernel.org, avifishman70@gmail.com, venture@google.com, linus.walleij@linaro.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, joel@jms.id.au, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Paul,
+Hi,
 
-Thanks a lot for your comments, it will be addressed in the next version.
+It does not exist, do you suggest modifying the "unused" to "not exist"?
+
+Thanks,
 
 Tomer
 
-On Wed, 10 Jul 2024 at 16:52, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+On Fri, 12 Jul 2024 at 20:45, J. Neusch=C3=A4fer <j.neuschaefer@gmx.net> wr=
+ote:
 >
-> Dear Tomer,
+> On Thu, Jul 11, 2024 at 10:37:46PM +0300, Tomer Maimon wrote:
+> > Remove unused smb4den pin, group and function on the Nuvoton NPCM8XX BM=
+C
+> > SoC.
 >
+> Does "unused" mean that they are just unused in current board designs,
+> or does the hardware functionality actually not exist?
 >
-> Thank you for your patch.
+> Best regards, J
 >
-> Am 10.07.24 um 14:41 schrieb Tomer Maimon:
-> > In the prime endpoint function, we need to read from qh.ptr->td.token
-> > to ensure that the previous write to it has indeed been committed
-> > to memory.
->
-> Please document the datasheet name, revision and section. If this
-> actually caused user visible problems, please also document the test case.
->
+> >
 > > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 > > ---
-> >   drivers/usb/chipidea/udc.c | 15 ++++++++++++---
-> >   1 file changed, 12 insertions(+), 3 deletions(-)
+> >  drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 6 +-----
+> >  1 file changed, 1 insertion(+), 5 deletions(-)
 > >
-> > diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-> > index 0b7bd3c643c3..0b14a1d54d59 100644
-> > --- a/drivers/usb/chipidea/udc.c
-> > +++ b/drivers/usb/chipidea/udc.c
-> > @@ -190,12 +190,21 @@ static int hw_ep_get_halt(struct ci_hdrc *ci, int num, int dir)
-> >    *
-> >    * This function returns an error code
-> >    */
-> > -static int hw_ep_prime(struct ci_hdrc *ci, int num, int dir, int is_ctrl)
-> > +static int hw_ep_prime(struct ci_hdrc *ci, struct ci_hw_ep *hwep, int num,
-> > +                    int dir, int is_ctrl)
-> >   {
-> >       int n = hw_ep_bit(num, dir);
+> > diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctr=
+l/nuvoton/pinctrl-npcm8xx.c
+> > index f342aec3f6ca..396bd07e7c74 100644
+> > --- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+> > +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+> > @@ -438,7 +438,6 @@ static const int smb4_pins[]  =3D { 28, 29 };
+> >  static const int smb4b_pins[] =3D { 18, 19 };
+> >  static const int smb4c_pins[] =3D { 20, 21 };
+> >  static const int smb4d_pins[] =3D { 22, 23 };
+> > -static const int smb4den_pins[] =3D { 17 };
+> >  static const int smb5_pins[]  =3D { 26, 27 };
+> >  static const int smb5b_pins[] =3D { 13, 12 };
+> >  static const int smb5c_pins[] =3D { 15, 14 };
+> > @@ -700,7 +699,6 @@ struct npcm8xx_pingroup {
+> >       NPCM8XX_GRP(smb4b), \
+> >       NPCM8XX_GRP(smb4c), \
+> >       NPCM8XX_GRP(smb4d), \
+> > -     NPCM8XX_GRP(smb4den), \
+> >       NPCM8XX_GRP(smb5), \
+> >       NPCM8XX_GRP(smb5b), \
+> >       NPCM8XX_GRP(smb5c), \
+> > @@ -949,7 +947,6 @@ NPCM8XX_SFUNC(smb4);
+> >  NPCM8XX_SFUNC(smb4b);
+> >  NPCM8XX_SFUNC(smb4c);
+> >  NPCM8XX_SFUNC(smb4d);
+> > -NPCM8XX_SFUNC(smb4den);
+> >  NPCM8XX_SFUNC(smb5);
+> >  NPCM8XX_SFUNC(smb5b);
+> >  NPCM8XX_SFUNC(smb5c);
+> > @@ -1173,7 +1170,6 @@ static struct npcm8xx_func npcm8xx_funcs[] =3D {
+> >       NPCM8XX_MKFUNC(smb4b),
+> >       NPCM8XX_MKFUNC(smb4c),
+> >       NPCM8XX_MKFUNC(smb4d),
+> > -     NPCM8XX_MKFUNC(smb4den),
+> >       NPCM8XX_MKFUNC(smb5),
+> >       NPCM8XX_MKFUNC(smb5b),
+> >       NPCM8XX_MKFUNC(smb5c),
+> > @@ -1348,7 +1344,7 @@ static const struct npcm8xx_pincfg pincfg[] =3D {
+> >       NPCM8XX_PINCFG(14,      gspi, MFSEL1, 24,       smb5c, I2CSEGSEL,=
+ 20,   none, NONE, 0,          none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> >       NPCM8XX_PINCFG(15,      gspi, MFSEL1, 24,       smb5c, I2CSEGSEL,=
+ 20,   none, NONE, 0,          none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> >       NPCM8XX_PINCFG(16,      lkgpo0, FLOCKR1, 0,     smb7b, I2CSEGSEL,=
+ 27,   tp_gpio2b, MFSEL7, 10,  none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> > -     NPCM8XX_PINCFG(17,      pspi, MFSEL3, 13,       cp1gpio5, MFSEL6,=
+ 7,    smb4den, I2CSEGSEL, 23, none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> > +     NPCM8XX_PINCFG(17,      pspi, MFSEL3, 13,       cp1gpio5, MFSEL6,=
+ 7,    none, NONE, 0,          none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> >       NPCM8XX_PINCFG(18,      pspi, MFSEL3, 13,       smb4b, I2CSEGSEL,=
+ 14,   none, NONE, 0,          none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> >       NPCM8XX_PINCFG(19,      pspi, MFSEL3, 13,       smb4b, I2CSEGSEL,=
+ 14,   none, NONE, 0,          none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> >       NPCM8XX_PINCFG(20,      hgpio0, MFSEL2, 24,     smb15, MFSEL3, 8,=
+       smb4c, I2CSEGSEL, 15,   none, NONE, 0,          none, NONE, 0,      =
+    SLEW),
+> > --
+> > 2.34.1
 > >
-> >       /* Synchronize before ep prime */
-> >       wmb();
-> > +
-> > +     /*
-> > +      * We add the read from qh.ptr->td.token to make sure the previous
-> > +      * write to it indeed got into the mamory so when we prime the DMA
->
-> m*e*mory
->
-> > +      * will read the updated data
-> > +      */
-> > +     if (hwep->qh.ptr->td.token & 0x80000000)
-> > +             pr_info("%s(): hwep->qh.ptr->td.token=%08x\n", __func__, hwep->qh.ptr->td.token);
-> >
-> >       if (is_ctrl && dir == RX && hw_read(ci, OP_ENDPTSETUPSTAT, BIT(num)))
-> >               return -EAGAIN;
-> > @@ -632,7 +641,7 @@ static int _hardware_enqueue(struct ci_hw_ep *hwep, struct ci_hw_req *hwreq)
-> >               hwep->qh.ptr->cap |= cpu_to_le32(mul << __ffs(QH_MULT));
-> >       }
-> >
-> > -     ret = hw_ep_prime(ci, hwep->num, hwep->dir,
-> > +     ret = hw_ep_prime(ci, hwep, hwep->num, hwep->dir,
-> >                          hwep->type == USB_ENDPOINT_XFER_CONTROL);
-> >   done:
-> >       return ret;
-> > @@ -658,7 +667,7 @@ static int reprime_dtd(struct ci_hdrc *ci, struct ci_hw_ep *hwep,
-> >       hwep->qh.ptr->td.token &=
-> >               cpu_to_le32(~(TD_STATUS_HALTED | TD_STATUS_ACTIVE));
-> >
-> > -     return hw_ep_prime(ci, hwep->num, hwep->dir,
-> > +     return hw_ep_prime(ci, hwep, hwep->num, hwep->dir,
-> >                               hwep->type == USB_ENDPOINT_XFER_CONTROL);
-> >   }
-> >
->
->
-> Kind regards,
->
-> Paul
