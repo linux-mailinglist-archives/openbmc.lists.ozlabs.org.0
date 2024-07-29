@@ -2,66 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 316D793FD61
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2024 20:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F0C8D940103
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2024 00:24:36 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=getcruise.com header.i=@getcruise.com header.a=rsa-sha256 header.s=google header.b=NPl8pQ4o;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=pnrffvXO;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DTr8l5C3;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WXn6g1B8jz3cds
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2024 04:33:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WXtFZ6HMLz3ck4
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2024 08:24:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=getcruise.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=getcruise.com header.i=@getcruise.com header.a=rsa-sha256 header.s=google header.b=NPl8pQ4o;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=pnrffvXO;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DTr8l5C3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=getcruise.com (client-ip=2a00:1450:4864:20::22b; helo=mail-lj1-x22b.google.com; envelope-from=chuck.kamas@getcruise.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.155; helo=fhigh4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WXn6665fdz3cXL
-	for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2024 04:32:45 +1000 (AEST)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2eeb1ba0468so59224041fa.0
-        for <openbmc@lists.ozlabs.org>; Mon, 29 Jul 2024 11:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=getcruise.com; s=google; t=1722277960; x=1722882760; darn=lists.ozlabs.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ri4Kv2KSf7u6buFpfsRzg9vwzY81FGS1BRmNjvLQ9m8=;
-        b=NPl8pQ4oLE0yaRUfaAPEPWqJ98UrBLWB/2mXz6XQxi+yKlNU7KUGro7yaRdoPxMIGi
-         hFD1RLaC54yDMzkY4xcMmEqxYaBzKkXVxrfJTbxuK2wZ1hc279oJRjEOwUGb8X5D+fD2
-         0ktv9Kwd0e+aOQSmlIQlvab8gb7Qmf0n6MAf02o3ugyDiHLJlUlBXqW+wJ5Bs5tceh4W
-         GBTahW1hnz4JnjttmW7Aeptbch5n2AY5IfJRjJOVZTDw78glPQuPI05ew81z3spHVwVv
-         MjfmeS1Fk5SGSpoukaX2rkyH6D60aKjkTZOpnLuUYbC7JEtKuuvUwGPqsFekaFJP8932
-         nQyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722277960; x=1722882760;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ri4Kv2KSf7u6buFpfsRzg9vwzY81FGS1BRmNjvLQ9m8=;
-        b=SpgEtTL/EmcGghWAqCLox+Wn/+MR+kI0jOSBZ3GPpw7sMdKwFzLuH8rJML5r4N9JGA
-         GExIa8z2VOvs9xxIafXMED1cHyAgvgbvx8GIZtVH5lPYY87afH83xUIwdlG6uKbw4MAE
-         AuLuqzV4m5lsiiC3xjr2I+w9ZpmKIWYLo2L3iSLjaBLBuEfpMMMlp6VGJj3fmoSIR+As
-         ++oSVGw9TMOnHu8KDrJY2dybCDlfOM+9AHeHujd1+GPuYW4Vh3c781dY0HAxa3izG3BP
-         juj+rOonAka7xB4VPwM+k/zhxu+QyuGZhUoq6Op+4spzwBd313ZI/1tat6JD32pF2vuw
-         RYGA==
-X-Gm-Message-State: AOJu0YxlT0fFH/N86DhK1quqndFv9XJql7klqYnNbgQNKe6aumVjk4xt
-	R/8MkCPlPZ6IZUJ6zFVn6+p6WZmebWe/ndOsY/gzhcxYGuk3g9IgwnMfQkuLnIQZmhORtCmNdpt
-	/71NjbVADugAmkEXvNmcXHSHHPGAp9ccJvl3U5SMP9ETaN07diRCocKUCxc96izxxonCBMBwBFs
-	7aGX+k6DAcMP6mY31X1alhf7Rf6t3EjWXex8+01+lf
-X-Google-Smtp-Source: AGHT+IH6Yc6W9LjJye8ovSVOj5RqrYkZOlBCFUyf6Sv608Q0b5AoRUBrluPcpWWE9sKntuBeubi++P2EDM49e20hJXM=
-X-Received: by 2002:a2e:9ac5:0:b0:2ef:23ec:9356 with SMTP id
- 38308e7fff4ca-2f12edef762mr56996561fa.8.1722277960132; Mon, 29 Jul 2024
- 11:32:40 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WXtF40JCXz30Wg
+	for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2024 08:24:07 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 594C41140128;
+	Mon, 29 Jul 2024 18:24:05 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Mon, 29 Jul 2024 18:24:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1722291845; x=1722378245; bh=PuCthxiV/o
+	ot+hi4ffP4V4H1Yi+A8Keb7zroefVs0+4=; b=pnrffvXOGNJxxyBM+DjPqevvIo
+	NAWRHrFX//xkviqEXQNZWpISVhoTT0e9wsI2Kj9nvWJbrmc3klDhlVQL7ijwLot8
+	JA1i5fLcaBNOhMbsiDGHWpf5Gmsto0pSRgF+phrxU4sWQpl901JvHjXmCD92bVHC
+	d/rfwu8wW4OoxhaETMqwcrO9cFEdDn1UoBqFxVymLY87Kp/B1GFEVLLNrurtyWP4
+	XsBsRJHBtwF0PPh+rmCUxl+ILKBjDrR1BSOVRjb9zeZToAeUYmL495Nh8ZrSvTtz
+	6t39TBUN68BFM6p1FeV1EO4kCa8KcJzo8FqM+ghRHFrZFc1ob8jch5y5irdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1722291845; x=1722378245; bh=PuCthxiV/oot+hi4ffP4V4H1Yi+A
+	8Keb7zroefVs0+4=; b=DTr8l5C3w/o1VOfuetMvI5NBFqQOz792tl7qBnWHd3r7
+	HYzyyRFmnVqUNQl93zb5QKVLlLoqy3IcOdSIjJtSgemlmglGpmxJWJxDAKQIlODH
+	KHxxJEKOyDE5n1BM13kG8tHHHrK+vFsJDihbhTT6J/t82JqhFfgqsUiR0IKxe3pi
+	0H0px6C1hzent5C5R1RvpGcoJaGNAT3vMgthyqLjJReEKiwjTiLX4awzh4LfL0k8
+	AVvjICC7IfE04J51ovqByJnEQmMSdGe+PTRpm2LS4QZJ2SoPzC4c4zLgKa7jKt2g
+	7n8kYERSWxrafNaODuiaE5GSSssmT1y6PsXfC0J0xg==
+X-ME-Sender: <xms:hRaoZukRF637NgKxIRiE5x9FIG4re_9FooIDN4Xnf1kUsNafp7SesA>
+    <xme:hRaoZl0SrEWEpaAI8loOYqOm3cVQoZoKEeW4xS0h6PHmVr7VXpnjpcUdDdIpb_MNb
+    5tCJGX6VPwTkjKAY_Q>
+X-ME-Received: <xmr:hRaoZsq3381qHWxBfBZKu0HbRK4PwnzZ9CNtYtJvgUpyw3blLtuZ6LExV-7PlavkkP-ogG5UeHMhBD2pSMZRydTr106Rpc5kzlI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrjeefgddutdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+    hrlhcuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfelteevhffhffekieffheeiveet
+    ffethefffeeiudehfeegtddtlefhkeegueeinecuffhomhgrihhnpedtgedrsggsnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgt
+    khesshhtfigtgidrgiihiidpnhgspghrtghpthhtoheptd
+X-ME-Proxy: <xmx:hRaoZikpfIbmZvKw2SAENwixmTbZ1CGFnWadjU7hRo-d2Mz8TaT8hQ>
+    <xmx:hRaoZs0g6IvMbtrQaHvWVZN2UKWP5wNHi2Ji9L9_ldTpl3dhJ1KmFg>
+    <xmx:hRaoZpvBMKNntCtgNy31fbFutXhaYkYTjAdifP9T9CbU_gEF3hsHkA>
+    <xmx:hRaoZoVCNaE7KPtVastYyoNsR_-S-abfhOhSY-qIw9esD7jvQABIiA>
+    <xmx:hRaoZqCatwK6sioVvUhsEfTEPK-LQtS8YiAO5k7m8bsBlpZFAFWdGM6L>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 29 Jul 2024 18:24:04 -0400 (EDT)
+Date: Mon, 29 Jul 2024 17:24:03 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Chuck Kamas <chuck.kamas@getcruise.com>
+Subject: Re: including libubootenv in Ampere's openbmc
+Message-ID: <ZqgWg0UFtdk49apn@heinlein.vulture-banana.ts.net>
+References: <CABMF29msHomoDwHG_kDjnT-ytdY0mxS_bh_1kZmtLk6z=7H0nA@mail.gmail.com>
 MIME-Version: 1.0
-From: Chuck Kamas <chuck.kamas@getcruise.com>
-Date: Mon, 29 Jul 2024 11:32:29 -0700
-Message-ID: <CABMF29msHomoDwHG_kDjnT-ytdY0mxS_bh_1kZmtLk6z=7H0nA@mail.gmail.com>
-Subject: including libubootenv in Ampere's openbmc
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000051fc4061e67165c"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Jeg0xEvWxSq5yoZT"
+Content-Disposition: inline
+In-Reply-To: <CABMF29msHomoDwHG_kDjnT-ytdY0mxS_bh_1kZmtLk6z=7H0nA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,216 +95,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000051fc4061e67165c
-Content-Type: text/plain; charset="UTF-8"
+
+--Jeg0xEvWxSq5yoZT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+On Mon, Jul 29, 2024 at 11:32:29AM -0700, Chuck Kamas wrote:
+=20
+> openbmc/meta-aspeed/recipes-bsp/u-boot/u-boot-fw-utils-aspeed-sdk_2019.04=
+=2Ebb
+> has unique provides:
+> u-boot-fw-utils-aspeed-sdk
 
-I am in the process of adding swupdate to my Ampere openbmc build.
+Looks like back in Yocto 3.1, u-boot-fw-utils and libubootenv were
+split.  Yocto 3.1 was Dunfell, but was in April 2020.  Looks lieke the
+u-boot-fw-utils-aspeed-sdk is based on a uboot from 2019, so that was
+probably pre-split.
 
-I have cloned openbmc:
+poky/documentation/migration-guides/migration-3.1.rst
+114:-  ``u-boot-fw-utils``: functionally replaced by ``libubootenv``
 
-   - git clone https://github.com/openbmc/openbmc.git
-
-configured yocto:
-
-   - . setup mtjade
-
-and compiled with no problem.
-
-   -  bitbake obmc-phosphor-image
-
-I added libubootenv to the image, in local.conf:
-
-   - IMAGE_INSTALL:append =3D "libubootenv"
-
-However when I build I get the following error:
-
-ERROR: Multiple .bb files are due to be built which each provide
-u-boot-fw-utils:##### | ETA: 0:00:01
-openbmc/meta/recipes-bsp/u-boot/libubootenv_0.3.5.bb
-openbmc/meta-aspeed/recipes-bsp/u-boot/u-boot-fw-utils-aspeed-sdk_2019.04.b=
-b
-A list of tasks depending on these providers is shown and may help explain
-where the dependency comes from.
-openbmc/meta/recipes-bsp/u-boot/libubootenv_0.3.5.bb has unique dependees:
-openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-do_populate_lic_deploy
-openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-do_build
-openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-do_create_runtime_spdx
-openbmc/meta-aspeed/recipes-bsp/u-boot/u-boot-fw-utils-aspeed-sdk_2019.04.b=
-b
-has unique dependees:
-openbmc/meta-phosphor/recipes-phosphor/network/phosphor-network_git.bb:
-do_create_runtime_spdx
-openbmc/meta-phosphor/recipes-phosphor/trace-enable/trace-enable.bb:
-do_create_runtime_spdx
-openbmc/meta-phosphor/recipes-phosphor/network/phosphor-network_git.bb:
-do_package_qa
-openbmc/meta-phosphor/recipes-phosphor/trace-enable/trace-enable.bb:
-do_package_write_ipk
-openbmc/meta-phosphor/recipes-phosphor/clear-once/clear-once.bb:
-do_create_runtime_spdx
-openbmc/meta-phosphor/recipes-phosphor/network/phosphor-network_git.bb:
-do_package_write_ipk
-openbmc/meta-phosphor/recipes-phosphor/clear-once/clear-once.bb:
-do_package_qa
-openbmc/meta-phosphor/recipes-phosphor/clear-once/clear-once.bb:
-do_package_write_ipk
-openbmc/meta-phosphor/recipes-phosphor/trace-enable/trace-enable.bb:
-do_package_qa
-It could be that one recipe provides something the other doesn't and
-should. The following provider and runtime provider differences may be
-helpful.
-openbmc/meta/recipes-bsp/u-boot/libubootenv_0.3.5.bb has unique provides:
-libubootenv
-openbmc/meta/recipes-bsp/u-boot/libubootenv_0.3.5.bb has unique rprovides:
-libubootenv-dev
-libubootenv-bin
-libubootenv-doc
-libubootenv-dbg
-libubootenv
-libubootenv-staticdev
-^libubootenv-locale-.*
-libubootenv-locale
-libubootenv-src
-openbmc/meta-aspeed/recipes-bsp/u-boot/u-boot-fw-utils-aspeed-sdk_2019.04.b=
-b
-has unique provides:
-u-boot-fw-utils-aspeed-sdk
-openbmc/meta-aspeed/recipes-bsp/u-boot/u-boot-fw-utils-aspeed-sdk_2019.04.b=
-b
-has unique rprovides:
-^u-boot-fw-utils-aspeed-sdk-locale-.*
-u-boot-fw-utils-aspeed-sdk-src
-u-boot-fw-utils-aspeed-sdk
-u-boot-fw-utils-aspeed-sdk-doc
-u-boot-fw-utils-aspeed-sdk-locale
-u-boot-fw-utils-aspeed-sdk-dbg
-u-boot-fw-utils-aspeed-sdk-staticdev
-u-boot-fw-utils-aspeed-sdk-dev
-
-
-I have asked over on the swupdate reflector and Stefano suggested it was an
-conflict resulting from a change back in Dunfell?
-
-Any suggestions on how to resolve this error would be appreciated!
-
-Chuck
+I don't know an obvious solution here.  You might need to bbappend
+something to remove the library from u-boot-fw-utils-aspeed-sdk so that
+the version from libubootenv can be used instead.
 
 --=20
+Patrick Williams
 
+--Jeg0xEvWxSq5yoZT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-*Confidentiality=C2=A0Note:*=C2=A0We care about protecting our proprietary=
-=20
-information,=C2=A0confidential=C2=A0material, and trade secrets.=C2=A0This =
-message may=20
-contain some or all of those things. Cruise will suffer material harm if=20
-anyone other than the intended recipient disseminates or takes any action=
-=20
-based on this message. If you have received this message (including any=20
-attachments) in error, please delete it immediately and notify the sender=
-=20
-promptly.
+-----BEGIN PGP SIGNATURE-----
 
---000000000000051fc4061e67165c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmaoFoIACgkQqwNHzC0A
+wRlIJQ/+OH6euj+zAhQjIivZEc1osUs7vaEIfqgn0naNR9hHS6TVcC0k89O3qXvu
+c2kuZVYbVgIVP9euhVxXegI5fjkrowi+yB0a3JhZciWN8uizqz8uAglVm23H8vHy
+ZvlX04dc8lMrpc908dU4EHC1/ggGhzk2/YQuG1ZPPed3rBVAmMoGrzsOwICEX3D3
+U1Q3Vyk+H+jEubckz6UKk9XwxdhCCTPotubL+U2UQXbb6PjscqF7ailkiZMn5SpS
+NzYKEtPFoR9c7wL25/r3e5UpLbD8uQQ42CmlmHwQCjUnyDuruqjVAZZDT9gPvSDs
+rjk3dnmZITHCyvDAV7uGdpzRisdI3F9wXLtWwakNDzcod9bx3nNH+ZyB96SDxnl4
++M9ox5FAjZ/vK5u7uG1epaBMrZ6BVitfTy7voLMTqzqHHMYNrAu9qkFcFnJAUIFK
+L7E/Raw5gB0C2y5H1b4wcR1eisbL58Xk2LhPOIAZk5PbYfAFGi3YZ3gID2Q/Kg4J
+KzNTzEkQ/FHPhIlV9kydkfnKmypjGXfKt+EMcMMNr1Ruukf+ZkltAQGiZrFzuPxT
+soJEjESrJ2//bfoHuaYSQEUKIFZwBzjqclV6JeKWQ3eBy4N27j166gZ6cqpgvz1U
+fFho74n8LNmpgixJw3hEaQsH0FcHVUWLKxvrQrYyR8B81CPcCwA=
+=RGeo
+-----END PGP SIGNATURE-----
 
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-size:large">Hi =
-all,</div><div class=3D"gmail_default" style=3D"font-size:large"><br></div>=
-<div class=3D"gmail_default" style=3D"font-size:large">I am in the process =
-of adding swupdate to my Ampere openbmc build.=C2=A0</div><div class=3D"gma=
-il_default" style=3D"font-size:large"><br></div><div class=3D"gmail_default=
-" style=3D"font-size:large"><div class=3D"gmail-ptW7te" role=3D"region" ari=
-a-labelledby=3D"c620" style=3D"margin:12px 0px;overflow:auto;padding-right:=
-20px;color:rgba(0,0,0,0.87);font-family:Roboto,RobotoDraft,Helvetica,Arial,=
-sans-serif;font-size:14px">I have cloned openbmc:<br><ul><li>git clone=C2=
-=A0<a href=3D"https://github.com/openbmc/openbmc.git" target=3D"_blank" rel=
-=3D"nofollow" style=3D"text-decoration-line:none;color:rgb(26,115,232)">htt=
-ps://github.com/openbmc/openbmc.git</a><br></li></ul>configured yocto:<br><=
-ul><li>. setup mtjade</li></ul>and compiled with no problem.<div><ul><li>=
-=C2=A0bitbake obmc-phosphor-image<br></li></ul>I added libubootenv to the i=
-mage, in local.conf:</div><div><ul><li>IMAGE_INSTALL:append =3D &quot;libub=
-ootenv&quot;<br></li></ul>However when I build I get the following error:<b=
-r><br></div><div><div style=3D"color:rgb(204,204,204);background-color:rgb(=
-31,31,31);font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace;font-s=
-ize:12px;line-height:18px;white-space:pre"><div style=3D"line-height:18px">=
-<div>ERROR: Multiple .bb files are due to be built which each provide u-boo=
-t-fw-utils:#####                                                           =
-                     <span style=3D"color:rgb(212,212,212)">|</span> ETA:  =
-0:00:01</div><div>  openbmc/meta/recipes-bsp/u-boot/<a href=3D"http://libub=
-ootenv_0.3.5.bb">libubootenv_0.3.5.bb</a></div><div>  openbmc/meta-aspeed/r=
-ecipes-bsp/u-boot/<a href=3D"http://u-boot-fw-utils-aspeed-sdk_2019.04.bb">=
-u-boot-fw-utils-aspeed-sdk_2019.04.bb</a></div><div>A list of tasks dependi=
-ng on these providers is shown and may help explain <span style=3D"color:rg=
-b(86,156,214)">where</span> the dependency comes from.</div><div>openbmc/me=
-ta/recipes-bsp/u-boot/<a href=3D"http://libubootenv_0.3.5.bb">libubootenv_0=
-.3.5.bb</a> has unique dependees:</div><div>  openbmc/meta-phosphor/recipes=
--phosphor/images/obmc-phosphor-image.bb:do_populate_lic_deploy</div><div>  =
-openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_bui=
-ld</div><div>  openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-=
-image.bb:do_create_runtime_spdx</div><div>openbmc/meta-aspeed/recipes-bsp/u=
--boot/<a href=3D"http://u-boot-fw-utils-aspeed-sdk_2019.04.bb">u-boot-fw-ut=
-ils-aspeed-sdk_2019.04.bb</a> has unique dependees:</div><div>  openbmc/met=
-a-phosphor/recipes-phosphor/network/phosphor-network_git.bb:do_create_runti=
-me_spdx</div><div>  openbmc/meta-phosphor/recipes-phosphor/trace-enable/tra=
-ce-enable.bb:do_create_runtime_spdx</div><div>  openbmc/meta-phosphor/recip=
-es-phosphor/network/phosphor-network_git.bb:do_package_qa</div><div>  openb=
-mc/meta-phosphor/recipes-phosphor/trace-enable/trace-enable.bb:do_package_w=
-rite_ipk</div><div>  openbmc/meta-phosphor/recipes-phosphor/clear-once/clea=
-r-once.bb:do_create_runtime_spdx</div><div>  openbmc/meta-phosphor/recipes-=
-phosphor/network/phosphor-network_git.bb:do_package_write_ipk</div><div>  o=
-penbmc/meta-phosphor/recipes-phosphor/clear-once/clear-once.bb:do_package_q=
-a</div><div>  openbmc/meta-phosphor/recipes-phosphor/clear-once/clear-once.=
-bb:do_package_write_ipk</div><div>  openbmc/meta-phosphor/recipes-phosphor/=
-trace-enable/trace-enable.bb:do_package_qa</div><div>It could be that one r=
-ecipe provides something the other doesn&#39;t and should. The following pr=
-ovider and runtime provider differences may be helpful.</div><div>openbmc/m=
-eta/recipes-bsp/u-boot/<a href=3D"http://libubootenv_0.3.5.bb">libubootenv_=
-0.3.5.bb</a> has unique provides:</div><div>  libubootenv</div><div>openbmc=
-/meta/recipes-bsp/u-boot/<a href=3D"http://libubootenv_0.3.5.bb">libubooten=
-v_0.3.5.bb</a> has unique rprovides:</div><div>  libubootenv-dev</div><div>=
-  libubootenv-bin</div><div>  libubootenv-doc</div><div>  libubootenv-dbg</=
-div><div>  libubootenv</div><div>  libubootenv-staticdev</div><div>  <span =
-style=3D"color:rgb(215,186,125)">^</span>libubootenv-locale-.*</div><div>  =
-libubootenv-locale</div><div>  libubootenv-src</div><div>openbmc/meta-aspee=
-d/recipes-bsp/u-boot/<a href=3D"http://u-boot-fw-utils-aspeed-sdk_2019.04.b=
-b">u-boot-fw-utils-aspeed-sdk_2019.04.bb</a> has unique provides:</div><div=
->  u-boot-fw-utils-aspeed-sdk</div><div>openbmc/meta-aspeed/recipes-bsp/u-b=
-oot/<a href=3D"http://u-boot-fw-utils-aspeed-sdk_2019.04.bb">u-boot-fw-util=
-s-aspeed-sdk_2019.04.bb</a> has unique rprovides:</div><div>  <span style=
-=3D"color:rgb(215,186,125)">^</span>u-boot-fw-utils-aspeed-sdk-locale-.*</d=
-iv><div>  u-boot-fw-utils-aspeed-sdk-src</div><div>  u-boot-fw-utils-aspeed=
--sdk</div><div>  u-boot-fw-utils-aspeed-sdk-doc</div><div>  u-boot-fw-utils=
--aspeed-sdk-locale</div><div>  u-boot-fw-utils-aspeed-sdk-dbg</div><div>  u=
--boot-fw-utils-aspeed-sdk-staticdev</div><div>  u-boot-fw-utils-aspeed-sdk-=
-dev</div><br></div></div></div><div><br>I have asked over on the swupdate r=
-eflector and Stefano suggested it was an conflict resulting from a change b=
-ack in Dunfell?=C2=A0</div><div><br></div><div>Any suggestions on how to re=
-solve this error would be appreciated!</div><div><br></div><div>Chuck</div>=
-<div>=C2=A0</div></div></div></div>
-
-<br>
-<div><span style=3D"color:rgb(34,34,34);font-family:sans-serif;font-size:12=
-.8px;background-color:rgb(255,255,255)"><br></span></div><b style=3D"color:=
-rgb(34,34,34);background-color:rgb(255,255,255);font-family:Calibri,sans-se=
-rif;font-size:14.6667px"><span style=3D"font-size:10pt;line-height:14.2667p=
-x;font-family:Arial,sans-serif;color:rgb(136,136,136)"><span>Confidentialit=
-y</span>=C2=A0Note:</span></b><span style=3D"font-size:7.5pt;line-height:10=
-.7px;font-family:Arial,sans-serif;color:rgb(136,136,136);background-color:w=
-hite">=C2=A0We care about protecting our proprietary information,=C2=A0<spa=
-n>confidential</span>=C2=A0<wbr>material, and trade secrets.=C2=A0</span><s=
-pan style=3D"font-size:7.5pt;line-height:10.7px;font-family:Arial,sans-seri=
-f;color:rgb(136,136,136);background-color:white">This message may contain s=
-ome or all of those things. Cruise will suffer material harm if anyone othe=
-r than the intended recipient disseminates or takes any action based on thi=
-s message. If you have received this message (including any attachments) in=
- error, please delete it immediately and notify the sender promptly.</span>
---000000000000051fc4061e67165c--
+--Jeg0xEvWxSq5yoZT--
