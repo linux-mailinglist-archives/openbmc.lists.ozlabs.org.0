@@ -1,48 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23B059446FD
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 10:50:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 561DC944773
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 11:07:25 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=NR5WqHUj;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=iZp9GoyW;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WZN2H0cXFz3dRB
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 18:49:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WZNQM1tdkz3dLW
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 19:07:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=NR5WqHUj;
+	dkim=pass (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=iZp9GoyW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=web.de (client-ip=212.227.15.3; helo=mout.web.de; envelope-from=markus.elfring@web.de; receiver=lists.ozlabs.org)
-X-Greylist: delayed 326 seconds by postgrey-1.37 at boromir; Thu, 01 Aug 2024 18:49:29 AEST
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=web.de (client-ip=212.227.15.14; helo=mout.web.de; envelope-from=markus.elfring@web.de; receiver=lists.ozlabs.org)
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZN1j1yC1z2yvh
-	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 18:49:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZNPq275Dz30V2
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 19:06:53 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1722502165; x=1723106965; i=markus.elfring@web.de;
-	bh=CQp3GKwVPbSykTP1zO1E1wRNFejm6ihvP+iQi9limaM=;
+	s=s29768273; t=1722503182; x=1723107982; i=markus.elfring@web.de;
+	bh=H1qeNadCSH/lJd7w//ysMiO5jE1nOgWC2onDSyEJdJ8=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
 	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=NR5WqHUjLJLhReTTF/D+gByXFftR9HHAhtBtzteEV7dbTsjIpvMgH5On5rxtq2pm
-	 wnY2Y/x6OuUmw3zan8X/VUIfZ/V62ri+rk420C0Xcdq9cDv+vHPR8t1ouE7u3QrDs
-	 EACeHYNofO3Kjh8pyTp0Ox9sUIUomTTbBET1L5s7fNE7eM2cGhGu8de0eyG1SiLcV
-	 fLBditWVYipQU56Wr9WJp1rTIa/4hp4rfAFpqGgZLkp7nS8O55fygX7HTcRKxEhm2
-	 htgOSMeVJQEWSRIawmoC7MayBpp1v/NPnjkrDogsxzmO+vfiPuw9c1PWKHi68AeTN
-	 JjX5pvpkCvJyBLojSw==
+	b=iZp9GoyWT3jJtox6YIvkeZ1DRU6J9TbSmM73lTebtLTdpBoMJrQo6V2xAkdkC0lp
+	 jGjXkPqLBDN222/MnLyD2bxaZhs5ofwD5g70dUjGJ/dOOOIGp7pmZ/PGej/zF1sTF
+	 TYd903/VjN5GYBjfNqK5kY0GlkLabuEFuVDEh8O1rDhOgIYjqEjfb6MU3kyqUqlzq
+	 hXn1MuNx/4WUf2t6tsJzwULBgdT3Jv7kTT2OVKR5p6uJZ6/M3pOPm2xZTf9C/HwDv
+	 2jWeSiskEU0YZN9mdaLBzxhDvsdwpUNWLydBcvkCxU00QRLEk4Ccy95ko6ruupGlH
+	 a1Dan+w66fu+ehx1vA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.21] ([94.31.88.95]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLARS-1sqQ3c0u9q-00OTWR; Thu, 01
- Aug 2024 10:43:22 +0200
-Message-ID: <73180782-0f78-4e49-9528-172c5d8c43f6@web.de>
-Date: Thu, 1 Aug 2024 10:42:56 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MzCEB-1sLTif1wax-00tFVo; Thu, 01
+ Aug 2024 11:06:22 +0200
+Message-ID: <910f96b4-509d-445e-8749-ee4240849b0b@web.de>
+Date: Thu, 1 Aug 2024 11:06:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: James Chiang <cpchiang1@nuvoton.com>, Stanley Chu <yschu@nuvoton.com>,
@@ -57,24 +56,24 @@ From: Markus Elfring <Markus.Elfring@web.de>
 In-Reply-To: <20240801071946.43266-3-yschu@nuvoton.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YbpryX/+DRSBcSU8+6mi9njm2dNI/wHtDq3ZO/tUM/dvgTqvWv7
- PRIO2b/RloTIK74+SjBlfZz4U3GEwueyDeLwrICYZNSCc42UmxVmQd0xQPk3IYR8VNpe0Cr
- iHVEm36QTzZBriqrHSbT9p/1a1egGIgCzVJ+HQt3VdO3qt2C3MqyEcmgKi59AEfXZ+UJrGt
- ql6EWwXjyQ62IVoZwMjmA==
+X-Provags-ID: V03:K1:cv1GejkDpGglUQJHRpjeZ/Lyh4VjytkKH29sJnL6xwtkrklUbmg
+ rz34ZyrkbnO71Fl+Ryg6xj/j/CKo+YKc8nB9JsbQlBwP+xGN3Ni10jJHaORjHx9radPbJE3
+ 9yf1hqqs+QxzxvJV+I3HLqxY7RoFLDlYr8n4dF+JxhyiIIdxc5yYI2bAO3NeLFMMC3pjZYZ
+ RDu5WYRToRIFl4QDeyIhw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:RhssAMpvZB0=;3ycrl5rTXampSsgnV6l7hEAW9me
- arjxKB5w8300OUVGJmXRIAug1ulOYHvLNfLsUahwVkrsOyCi4QAmB3N9PQIb8B9cBXGLXMepw
- 2EBvzVbZfDT9hT03IrbH9WiqQBQl4Pwd4njjl+6kjo6oDjOzdU1b1EUTpdX/tnTienyuJXY3M
- iG1EkrSIiap5iVOeb7IHxvH0WEKoPW2TGAUfXXqhWdFl6xq39ysSZe+W2ucYKeEj5moz8+i8G
- BklLb3zRmziFUOKaz6fLCvUa8R6cLEvW86z8OiwkvAUTkCrBiqQjhr8vWzfDAFowAiee6l7ng
- vtG16SBp04hzVGi/FneflFFVN0zFv+JxUy4Z60REiKzHue5cI6WHcRmivKw8XyqOtPEL72mxe
- zT8VM7Ram01ZC5i81XDSeK8lw0EqxIysqTPFIDLDTF2uwa6xZFcwGCYK1Oz4x2k1az3upogI6
- Qm591y9PQv7ZtHO25jPwdcgBzMyGW5Su1YPOkeDd/r2obpTWcCUuAkNOLbnb3Z7rWpfQ7DULn
- +g67MmHVTks9qj1Zjy+4eUQTqxRSMZjoW7sqMAlEU5JQYFQS7cpqLEKV4/dQWOx+NBanK3Gbg
- IxfceVjevqHB+wgIwNQoEuVAeR7enut0b3cbmohtBievXhKYer07s2UPwWaPssTv65r6EQATW
- nMK9PZHeCMxE9Ow4nt1wkOSZMoLlinqiiFLsNKDEHaeznIRZ+kuQA8Fpe+KRShPJ05TNlVS92
- Yev1ijGb/ncMXc+JoLcX9zK2XBXCo+K5MAufKXlbLd0gRBFiDfJsA3rd9dKNuW5aaB1p1v8z2
- 1Fx0jM+0Jrtmv+2qAfqcBK+A==
+UI-OutboundReport: notjunk:1;M01:P0:XCX5bElp9yc=;llUWJOUHi/eBMuE2SjC8YPKvOAI
+ WakZfsGMV5d/3NetHrU7cmtG0BIrzsJ7aOKs66jQTvfpZQXBv7CUlunPMSNRhGASBh0QqqQFj
+ wr+wMubfeRkfhr8WwxGf63huYT70qJsY3q3Tm9elbu35fYBheSu8mE9FJUn103vBdJsD3zCLc
+ /TKh5YkYhUtKl0eHhhtDcweQNdf+qMCoQ466OX6WFDhm537HODpgEYX6jV8z7gbc2h1GJzgLz
+ UTlF5B4B+Y4BYMkifZ86y709STwUAmxl+ueoIZsaSTa4q7ePeZMbAGJBa4VoZLF1wXFJwhO7n
+ HgO8nLd8y6wQJ36b+6CGVxnag4MdN7VUhwAQD4JSHRlpzdkP78WQAFTazpIHa2JZxpJAy6mO1
+ qXlax29sjw639DPdPbU8DjhtA8ZNu359/DMML8Rif90+19+LSAtkkg0spxynahhPDAKsojSAb
+ KE0LDaGtCT3UuDxO/hG4dgm93m7bUfxPLtU1/wGMEGUMqqVFVuLt6hhjuYmHiscyu0JDLkq6S
+ DWipx7R1fkmrNXQ6MW878YuFNOrGcW4CwD5Gjz/Nag5Vm0gyB/vBnca+50emg8ghxlMUVoKw8
+ d6YzgP99C/2le87Upi2dfwll3itVTE/VL3Hcci007cz8aSu7KJWlnRaOgvxyCrClCv+EJy2Ff
+ Zw5Jn/IsNks4Yq5+NlOuRcQ8VGLJCkOeXEwS0oWyc9k0KBH2fp+kLx5zibDbwfQRHloKBl26Y
+ QvN4gX97lsNeDjI47iw61zcrfiU2hgshAJfqhON5m14GtYxboNQBURoCRzCWHPampdIz2qC/t
+ mfuD94XnjXMy2pGDoTeWnrdQ==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,29 +93,17 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 > +++ b/drivers/i3c/master/npcm845-i3c-master.c
 > @@ -0,0 +1,2364 @@
 =E2=80=A6
-> +static int npcm_i3c_master_do_daa(struct i3c_master_controller *m)
+> +static int npcm_i3c_master_probe(struct platform_device *pdev)
 > +{
 =E2=80=A6
-> +	int ret, i;
+> +	return 0;
 > +
-> +	mutex_lock(&master->lock);
-> +	spin_lock_irqsave(&master->req_lock, flags);
-=E2=80=A6
-> +	npcm_i3c_master_set_sda_skew(master, 0);
-> +	spin_unlock_irqrestore(&master->req_lock, flags);
-> +	mutex_unlock(&master->lock);
+> +	debugfs_remove_recursive(master->debugfs);
+> +
+> +err_disable_clks:
 =E2=80=A6
 
-Under which circumstances would you become interested to apply statements
-like the following?
-
-* guard(mutex)(&master->lock);
-  https://elixir.bootlin.com/linux/v6.11-rc1/source/include/linux/mutex.h#=
-L196
-
-* guard(spinlock_irqsave)(&master->req_lock);
-  https://elixir.bootlin.com/linux/v6.11-rc1/source/include/linux/spinlock=
-.h#L572
+Please avoid non-reachable code here.
 
 Regards,
 Markus
