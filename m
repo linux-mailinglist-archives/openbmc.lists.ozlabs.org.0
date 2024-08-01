@@ -2,52 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2943943F53
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 03:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D27B94455F
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 09:22:40 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=TYIq+6H2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h0yQJN+9;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WZBS64l2zz3c8x
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 11:38:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WZL5V0kkWz3dFB
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 17:22:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=TYIq+6H2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h0yQJN+9;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=stanley.chuys@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZBRb4Shbz2ydQ
-	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 11:37:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZL4x2shKz30Vy
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 17:22:09 +1000 (AEST)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1fc5bc8d23cso3213925ad.1
+        for <openbmc@lists.ozlabs.org>; Thu, 01 Aug 2024 00:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1722476267;
-	bh=h6YKSu0NazeWuDPaMYysZ6HJe0OvSm+3TFCSJEBZiu0=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=TYIq+6H2v0RBzwTXZhcO7qLvYUgVpghet3sppiN+sAq6si8rW1MhQMxwls4EDyVdh
-	 nX2klx5SRP6CMt5QYg4A+WEL4l7gTDSSAdewarkEw1EjXdZjDnTB9Au9vbPtao0/zk
-	 5tamWBU1N2mUoVkVtx7z0sq3Sp17rjhY4WiT+lxgkbdzIrzbkrdtEPqGf43T/GhYhi
-	 SMFMdjztepiNtY5y/iBP1D4Wtl4YPUsiAN/2m+ORhm0GUbMrh1/zfpENtjyub5xNNP
-	 evH8XUa5sUJz6LPWrSfQe1kP/O7sBB5NBKylZYr/MwmmB6M30YZJ4YCL0oGZOn7e4U
-	 Me8CVEP4iranA==
-Received: from [192.168.68.112] (ppp118-210-29-70.adl-adc-lon-bras31.tpg.internode.on.net [118.210.29.70])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id B5B9064B84;
-	Thu,  1 Aug 2024 09:37:46 +0800 (AWST)
-Message-ID: <fcdb4d899effa877e1acc0576194425484d5208a.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v1 1/1] ARM: dts: aspeed: system1: IBM System1 BMC update
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Ninad Palsule <ninad@linux.ibm.com>
-Date: Thu, 01 Aug 2024 11:07:46 +0930
-In-Reply-To: <20240731214737.986010-2-ninad@linux.ibm.com>
-References: <20240731214737.986010-1-ninad@linux.ibm.com>
-	 <20240731214737.986010-2-ninad@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+        d=gmail.com; s=20230601; t=1722496926; x=1723101726; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=J5saQIelnl5OO8WPHKquus0jHfZjg65IIuO1MIHrvlo=;
+        b=h0yQJN+9S1W7BY5vPNL5iJmL1A5/ErjxFSuPhAcIp6voMcfEWkKKU6oo+zkDeasOje
+         BbgWEApsiVLbTkZh2sQp9y7YNfud99SXQ05/HreeQ58MjFDkB8ze4xf0t1BYDA4n3wjp
+         b5OQakbk/5xo31ZLJYbqUuohqVLVScU3Bta0CgUjhnN9sdXGmvo0SJrnOcje8Odkp41c
+         Nh7x7WLlh5BdbuKthVRwgW16SHmR63THoaSv35MkrmU2mPP/J+Puxgsi4nbZYVdge4+k
+         DuNt8TmYFs20PL7MVHTogRjTatc5Xm6rpLq8m/ScKaJaHlm8PmDj2zCCgJFicglnO1lG
+         HoHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722496926; x=1723101726;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=J5saQIelnl5OO8WPHKquus0jHfZjg65IIuO1MIHrvlo=;
+        b=sHEalgPg7FRF1KwX1fx05g4X6EpsICW9OO0+uIRQh4+hPBQuw/35fWVks/nIqVnYtS
+         598omUYjIei6u+3XBzo0Ac7co/JJhigtm9KV7b8dh8go/8/MYz8Sf3nI4zublp1oFiKI
+         bbJxh4Ci5uQwUa1tYl5Rsrte2YyW2ENNOwTFu/TCeb+DoB5qVLrtxaqrHkSY3wz0dhQQ
+         hF7eyf+l4sGL8R+z6HUsdeKn8YnA28qWEE1F6Hf4Ln5YlO+wbDU0IXu+BXj8i2Vr3Uo9
+         Hy/wQosEqNIMCRVs6ICEla9RXryksxC83l9+k0nU+hMFS4AUBHfVCVJmulMdZhujQEdV
+         2o0A==
+X-Forwarded-Encrypted: i=1; AJvYcCXW7gBmbObQztWYiFDfeeGzB7m15XImLlUvuQjwriJgGmwn6I9QEmM5hQCYgt2ECglLAyUj40Ji56NWwpnwmZBYgWZelTJCkZc=
+X-Gm-Message-State: AOJu0Yw4djr+wEjPxlzJtcYj0uupQEr7djFYyV1QMFYSRyDGw7xtY2oR
+	3jG7402X6VsqEdK8w1NhT9n2lwbQUmqNQi9F4zjni/+IY2QoIftN
+X-Google-Smtp-Source: AGHT+IHUHvtIh/kWhOh8dQWKVm3MpKjD4RBmZA1KbW6roshsKEQC5OBsJe+hhqYENADb+J2mP+wZzg==
+X-Received: by 2002:a17:903:2292:b0:1fd:a428:a021 with SMTP id d9443c01a7336-1ff4d2ee5e9mr12437505ad.11.1722496925777;
+        Thu, 01 Aug 2024 00:22:05 -0700 (PDT)
+Received: from cs20-buildserver.. ([180.217.140.46])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff4619793bsm22117425ad.120.2024.08.01.00.22.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Aug 2024 00:22:05 -0700 (PDT)
+From: Stanley Chu <stanley.chuys@gmail.com>
+X-Google-Original-From: Stanley Chu <yschu@nuvoton.com>
+To: alexandre.belloni@bootlin.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	linux-i3c@lists.infradead.org
+Subject: [PATCH v1 0/2] Add Nuvoton NPCM845 i3c master driver
+Date: Thu,  1 Aug 2024 15:19:44 +0800
+Message-Id: <20240801071946.43266-1-yschu@nuvoton.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,61 +81,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, eajames@linux.ibm.com, joel@jms.id.au
+Cc: devicetree@vger.kernel.org, yschu@nuvoton.com, kwliu@nuvoton.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, cpchiang1@nuvoton.com, tomer.maimon@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2024-07-31 at 16:47 -0500, Ninad Palsule wrote:
-> Updated MAX31785a pmbus based fans in the device tree.
->=20
-> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-> ---
->  .../dts/aspeed/aspeed-bmc-ibm-system1.dts     | 96 +++++++++++++++++++
->  1 file changed, 96 insertions(+)
->=20
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts b/arch/a=
-rm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
-> index f3efecc7eb8d0..f96b299d743ba 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-system1.dts
-> @@ -764,17 +764,113 @@ regulator@43 {
->  	};
->  };
-> =20
-> +
+This patchset adds i3c master support for the Nuvoton
+Arbel NPCM8XX Board Management controller (BMC) SoC family.
 
-This whitespace change seems unnecessary.
+The Nuvoton npcm845 i3c controller implements I3C master functionality
+as defined in the MIPI Alliance Specification for I3C, Version 1.0.
 
->  &i2c6 {
->  	status =3D "okay";
-> =20
->  	fan-controller@52 {
->  		compatible =3D "maxim,max31785a";
->  		reg =3D <0x52>;
-> +		#address-cells =3D <1>;
-> +		#size-cells =3D <0>;
-> +
-> +		fan0: fan@0 {
-> +			compatible =3D "pmbus-fan";
-> +			reg =3D <0>;
-> +			tach-pulses =3D <2>;
-> +			maxim,fan-rotor-input =3D "tach";
-> +			maxim,fan-pwm-freq =3D <25000>;
-> +			maxim,fan-dual-tach;
-> +			maxim,fan-no-watchdog;
-> +			maxim,fan-no-fault-ramp;
-> +			maxim,fan-ramp =3D <2>;
-> +			maxim,fan-fault-pin-mon;
+This patchset was tested on the Arbel NPCM8XX evaluation board.
 
-Note that none of these maxim-specific properties are documented in the
-upstream bindings. You will need to get that addressed either before or
-in the same series as this DTS patch when you send it upstream.
+James Chiang (2):
+  dt-bindings: i3c: Add NPCM845 i3c controller
+  i3c: master: Add Nuvoton npcm845 i3c master driver
 
-Can you please fix up the whitespace and re-send this to the OpenBMC
-list, with the appropriate subject prefix, and _without_ including the
-upstream maintainers and lists (but still including Joel and myself)?
+ .../bindings/i3c/nuvoton,i3c-master.yaml      |  113 +
+ MAINTAINERS                                   |    7 +
+ drivers/i3c/master/Kconfig                    |   14 +
+ drivers/i3c/master/Makefile                   |    1 +
+ drivers/i3c/master/npcm845-i3c-master.c       | 2372 +++++++++++++++++
+ 5 files changed, 2507 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
+ create mode 100644 drivers/i3c/master/npcm845-i3c-master.c
 
-Please reach out if there's anything that needs clarification before
-you do so.
+-- 
+2.34.1
 
-Andrew
