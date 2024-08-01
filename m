@@ -1,55 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B990994550F
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 01:59:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34A359454EF
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 01:30:11 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=g1LJb/p0;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WZmCT5NGxz3dXQ
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 09:59:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WZlYs1JC7z3dSs
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 09:30:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=mic.com.tw
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=mic.com.tw (client-ip=220.130.36.7; helo=micmsefe01.mic.com.tw; envelope-from=hancock.chang@mic.com.tw; receiver=lists.ozlabs.org)
-X-Greylist: delayed 4005 seconds by postgrey-1.37 at boromir; Thu, 01 Aug 2024 14:33:44 AEST
-Received: from MICMSEFE01.mic.com.tw (mail22.mic.com.tw [220.130.36.7])
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=g1LJb/p0;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=217.70.178.240; helo=mslow1.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 1285 seconds by postgrey-1.37 at boromir; Fri, 02 Aug 2024 09:29:38 AEST
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZGLc6vqXz30Vk
-	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 14:33:44 +1000 (AEST)
-Received: from MICMSEFE01.mic.com.tw (localhost [127.0.0.2] (may be forged))
-	by MICMSEFE01.mic.com.tw with ESMTP id 4713Qxoi084125
-	for <openbmc@lists.ozlabs.org>; Thu, 1 Aug 2024 11:26:59 +0800 (GMT-8)
-	(envelope-from hancock.chang@mic.com.tw)
-Received: from MICEXCH02.mitacad.com (MICEXCH02.mitacad.com [10.88.25.250])
-	by MICMSEFE01.mic.com.tw with ESMTPS id 4713QjKP083876
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL)
-	for <openbmc@lists.ozlabs.org>; Thu, 1 Aug 2024 11:26:45 +0800 (GMT-8)
-	(envelope-from hancock.chang@mic.com.tw)
-Received: from MICEXCH01.mitacad.com (10.88.25.249) by MICEXCH02.mitacad.com
- (10.88.25.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.16; Thu, 1 Aug
- 2024 11:26:46 +0800
-Received: from MICEXCH01.mitacad.com ([fe80::7512:93eb:1586:1977]) by
- MICEXCH01.mitacad.com ([fe80::7512:93eb:1586:1977%2]) with mapi id
- 15.01.2507.016; Thu, 1 Aug 2024 11:26:46 +0800
-From: <hancock.chang@mic.com.tw>
-To: <openbmc@lists.ozlabs.org>
-Subject: CCLA for MiTAC_Tyan needs to be updated
-Thread-Topic: CCLA for MiTAC_Tyan needs to be updated
-Thread-Index: AdrjwXUBfqDR7HEyTE+LHeS/OByuhQ==
-Date: Thu, 1 Aug 2024 03:26:46 +0000
-Message-ID: <9b6b8fbff7924cb6a505f028f68e51b3@mic.com.tw>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.88.25.29]
-Content-Type: multipart/alternative;
-	boundary="_000_9b6b8fbff7924cb6a505f028f68e51b3miccomtw_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZlYG6JJvz3cKV
+	for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2024 09:29:37 +1000 (AEST)
+Received: from relay6-d.mail.gandi.net (unknown [217.70.183.198])
+	by mslow1.mail.gandi.net (Postfix) with ESMTP id B1485C6029
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2024 23:07:49 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 46BCCC0003;
+	Thu,  1 Aug 2024 23:07:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1722553651;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4awUVwG37LseNs27BJI5me6lqTMbdYGn9CDQNcfZPk8=;
+	b=g1LJb/p0yD6SgP3eDyE9mw2oVj7wCol0tEc3HqCjkEU5R/2QPtKYabNUgLEgC8E91cg4Ev
+	mPc2Obd0gKBUh7cgU7ooiysO+KFpyGCIdIekXOvTKrfFsPFjG9014nexl8rz80AXe/mkOF
+	3QgRb5Lrpfm67nXj4pR0Nx4mHApPU/MNUj8pCaxuGdOHxRSJ97vLdBbMPwyeDHEBnOeL5d
+	DlScwlT7k2caemmpGghwyMmPTO2i/RWypSR44V4299LptiPKX5mfTt0aBrmxe9s39XwXCE
+	tMplR5Eriatc+oUuTrsswrhQPhPj3nu+rRxIEfs17URyNtlwbZg5jD/YCp/BNw==
+Date: Fri, 2 Aug 2024 01:06:31 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v1 1/2] dt-bindings: i3c: Add NPCM845 i3c controller
+Message-ID: <202408012306316257ee23@mail.local>
+References: <20240801071946.43266-1-yschu@nuvoton.com>
+ <20240801071946.43266-2-yschu@nuvoton.com>
+ <c3ee7783-6891-4917-9935-21d46d8ac9a7@kernel.org>
 MIME-Version: 1.0
-X-MAIL: MICMSEFE01.mic.com.tw 4713QjKP083876
-X-Mailman-Approved-At: Fri, 02 Aug 2024 09:59:03 +1000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c3ee7783-6891-4917-9935-21d46d8ac9a7@kernel.org>
+X-GND-Sasl: alexandre.belloni@bootlin.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,96 +63,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: eric_kuo@mic.com.tw
+Cc: robh@kernel.org, yschu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kwliu@nuvoton.com, cpchiang1@nuvoton.com, tomer.maimon@nuvoton.com, Stanley Chu <stanley.chuys@gmail.com>, krzk+dt@kernel.org, linux-i3c@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_9b6b8fbff7924cb6a505f028f68e51b3miccomtw_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On 01/08/2024 16:53:52+0200, Krzysztof Kozlowski wrote:
+> On 01/08/2024 09:19, Stanley Chu wrote:
+> > The npcm845 i3c devicetree binding follows the basic i3c bindings
+> > and add the properties for allowing to adjust the SDA/SCL timing
+> > to meet different requirements.
+> > 
+> > Signed-off-by: Stanley Chu <yschu@nuvoton.com>
+> > Signed-off-by: James Chiang <cpchiang1@nuvoton.com>
+> > ---
+> >  .../bindings/i3c/nuvoton,i3c-master.yaml      | 123 ++++++++++++++++++
+> 
+> Use compatible as filename. Anyway word "master" was dropped.
+> 
+> >  1 file changed, 123 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
+> > new file mode 100644
+> > index 000000000000..a40b37b16872
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
+> > @@ -0,0 +1,123 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/i3c/nuvoton,i3c-master.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Nuvoton NPCM845 I3C master
+> 
+> Use new terminology. Since 2021 there was a change... three years ago.
+> 
+> > +
+> > +maintainers:
+> > +  - Stanley Chu <yschu@nuvoton.com>
+> > +  - James Chiang <cpchiang1@nuvoton.com>
+> > +
+> > +allOf:
+> > +  - $ref: i3c.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: nuvoton,npcm845-i3c
+> > +
+> > +  reg:
+> > +    items:
+> > +      - description: I3C registers
+> > +      - description: GDMA registers
+> > +      - description: GDMA request control register
+> > +
+> > +  reg-names:
+> > +    items:
+> > +      - const: i3c
+> > +      - const: dma
+> > +      - const: dma_ctl
+> > +
+> > +  interrupts:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: system clock
+> > +      - description: bus clock
+> > +
+> > +  clock-names:
+> > +    items:
+> > +      - const: pclk
+> > +      - const: fast_clk
+> > +
+> > +  resets:
+> > +    maxItems: 1
+> > +
+> > +  i3c-pp-scl-hi-period-ns:
+> > +    description: |
+> 
+> Do not need '|' unless you need to preserve formatting.
+> 
+> > +      If need to configure SCL with required duty cycle, specify the clock high/low period directly.
+> > +      i3c-pp-scl-hi-perios-ns specifies the high period ns of the SCL clock cycle in push pull mode
+> > +      When i3c-pp-scl-hi-period-ns and i3c-pp-scl-lo-period-ns are specified, the i3c pp frequency is
+> > +      decided by these two properties.
+> 
+> Wrap according to Linux Coding Style (and read coding style to figure
+> the proper wrapping...).
+> 
+> > +
+> > +  i3c-pp-scl-lo-period-ns:
+> > +    description: |
+> > +      The low period ns of the SCL clock cycle in push pull mode. i3c-pp-scl-lo-period-ns should not
+> > +      be less than i3c-pp-scl-hi-period-ns and the maximal value is i3c-pp-scl-hi-period-ns + 150.
+> 
+> Everywhere: defaults, constraints.
+> 
+> > +
+> > +  i3c-pp-sda-rd-skew:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description: |
+> > +      The number of MCLK clock periods to delay the SDA transition from the SCL clock edge at push
+> > +      pull operation when transfers i3c private read.
+> > +    maximum: 7
+> > +    default: 0
+> > +
+> > +  i3c-pp-sda-wr-skew:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32
+> > +    description: |
+> > +      The number of MCLK clock periods to delay the SDA transition from the SCL clock edge at push
+> > +      pull operation when transfers i3c private write.
+> > +    maximum: 7
+> > +    default: 0
+> > +
+> > +  i3c-od-scl-hi-period-ns:
+> > +    description: |
+> > +      The i3c open drain frequency is 1MHz by default.
+> > +      If need to use different frequency, specify the clock high/low period directly.
+> > +      i3c-od-scl-hi-perios-ns specifies the high period ns of the SCL clock cycle in open drain mode.
+> > +      When i3c-od-scl-hi-period-ns and i3c-od-scl-lo-period-ns are specified, the i3c od frequency is
+> > +      decided by these two properties.
+> > +      i3c-od-scl-hi-period-ns should be equal to i3c-pp-scl-hi-period-ns or i3c-od-scl-lo-period-ns.
+> > +
+> > +  i3c-od-scl-lo-period-ns:
+> > +    description: |
+> > +      The low period ns of the SCL clock cycle in open drain mode. i3c-od-scl-lo-period-ns should be
+> > +      multiple of i3c-pp-scl-hi-period-ns.
+> > +
+> > +  enable-hj:
+> > +    type: boolean
+> > +    description: |
+> > +      Enable SLVSTART interrupt for receiving hot-join request.
+> 
+> You described the desired Linux feature or behavior, not the actual
+> hardware. The bindings are about the latter, so instead you need to
+> rephrase the property and its description to match actual hardware
+> capabilities/features/configuration etc.
+> 
 
-RGVhciBPcGVuQk1DIG9yZywNCg0KDQpUeWFuLCB0aGUgYnJhbmRlZCBidXNpbmVzcyBncm91cCBv
-ZiBNaVRBQyBDb21wdXRpbmcgVGVjaG5vbG9neSwgaGFzIHNpZ25lZCBDQ0xBIG9mIE9wZW5CTUMg
-aW4gc2V2ZXJhbCB5ZWFycyBhZ28sIHNpbmNlIGxvdHMgb2YgbWVtYmVyIGNoYW5nZSBpbiB0aGVz
-ZSB5ZWFyLCBhbHNvIHRoZSBvcmdhbml6YXRpb24gY2hhbmdlIHdpdGggYnJhbmQgbmFtZSBjaGFu
-Z2UsIHdlIHdpbGwgdW5pZnkgb3VyIGJyYW5kIHRvIGNvbWJpbmUg4oCcVHlhbuKAnSBhbmQg4oCc
-TWlUQUPigJ0gdGhlbiBqdXN0IGtlZXAg4oCcTWlUQUPigJ0gYXMgb3VyIHNpbmdsZSBicmFuZCBm
-cm9tIDIwMjQgUTM7IGFzc3VtZSBpdCBtaWdodCBuZWVkIHRvIHJlLW5ldyB0aGUgb3JpZ2luYWwg
-Q0NMQSBiZXR3ZWVuIFR5YW4gYW5kIExpbnV4IEZvdW5kYXRpb24gZm9yIE9wZW5CTUMsIHNob3Vs
-ZCB3ZSByZS1zdWJtaXQgYSBuZXcgQ0NMQT8NCg0KQlRXLCBtYXkgd2UgaGF2ZSBoZWxwIGZyb20g
-T3BlbkJNQyBvcmcsIHRvIGNoZWNrIGFuZCBnZXQgdGhlIG9yaWdpbmFsIENDTEEgYmV0d2VlbiBU
-eWFuIGFuZCBMaW51eCBGb3VuZGF0aW9uPw0KDQpUaGFuayB5b3UNCg0KSGFuY29jayBDaGFuZw0K
-RGlyZWN0b3IsIFNvbHV0aW9uIEVuYWJsaW5nIERlcHQuLCBCRU9DDQpNaVRBQyBDb21wdXRpbmcg
-VGVjaG5vbG9neQ0KVGVsOiArODg2My0zMjctNTk4OCAjNzM1OQ0KQ2VsbDogKzg4NjkzNTU0NzY2
-NQ0KDQo=
+This has to be runtime configurable, see hotjoin in
+https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-bus-i3c
 
---_000_9b6b8fbff7924cb6a505f028f68e51b3miccomtw_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6eD0idXJuOnNjaGVtYXMtbWljcm9z
-b2Z0LWNvbTpvZmZpY2U6ZXhjZWwiIHhtbG5zOm09Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5j
-b20vb2ZmaWNlLzIwMDQvMTIvb21tbCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL1RSL1JFQy1o
-dG1sNDAiPg0KPGhlYWQ+DQo8bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9
-InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCI+DQo8bWV0YSBuYW1lPSJHZW5lcmF0b3IiIGNvbnRl
-bnQ9Ik1pY3Jvc29mdCBXb3JkIDE1IChmaWx0ZXJlZCBtZWRpdW0pIj4NCjxzdHlsZT48IS0tDQov
-KiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OuaWsOe0sOaY
-jumrlDsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAgMCAwO30NCkBmb250LWZhY2UNCgl7Zm9u
-dC1mYW1pbHk6IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9
-DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIg
-MiAyIDQgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiXEDmlrDntLDmmI7pq5Qi
-Ow0KCXBhbm9zZS0xOjIgMSA2IDEgMCAxIDEgMSAxIDE7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMg
-Ki8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWwsIGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBj
-bTsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZh
-bWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJ
-e21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlv
-bjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21z
-by1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojOTU0RjcyOw0KCXRleHQtZGVjb3JhdGlvbjp1
-bmRlcmxpbmU7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTcNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwt
-Y29tcG9zZTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5k
-b3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0K
-CWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCi8qIFBhZ2UgRGVmaW5pdGlvbnMg
-Ki8NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjYxMi4wcHQgNzkyLjBwdDsNCgltYXJnaW46
-NzIuMHB0IDkwLjBwdCA3Mi4wcHQgOTAuMHB0O30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpX
-b3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNo
-YXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRp
-Zl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0
-Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0Pjwv
-eG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iWkgtVFciIGxpbms9IiMwNTYz
-QzEiIHZsaW5rPSIjOTU0RjcyIiBzdHlsZT0idGV4dC1qdXN0aWZ5LXRyaW06cHVuY3R1YXRpb24i
-Pg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IGxhbmc9IkVOLVVTIj5EZWFyIE9wZW5CTUMgb3JnLDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPiZuYnNwOzwvbzpwPjwv
-c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4m
-bmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0i
-RU4tVVMiPlR5YW4sIHRoZSBicmFuZGVkIGJ1c2luZXNzIGdyb3VwIG9mIE1pVEFDIENvbXB1dGlu
-ZyBUZWNobm9sb2d5LCBoYXMgc2lnbmVkIENDTEEgb2YgT3BlbkJNQyBpbiBzZXZlcmFsIHllYXJz
-IGFnbywgc2luY2UgbG90cyBvZiBtZW1iZXIgY2hhbmdlIGluIHRoZXNlIHllYXIsIGFsc28gdGhl
-IG9yZ2FuaXphdGlvbiBjaGFuZ2Ugd2l0aCBicmFuZCBuYW1lIGNoYW5nZSwgd2Ugd2lsbA0KIHVu
-aWZ5IG91ciBicmFuZCB0byBjb21iaW5lIOKAnFR5YW7igJ0gYW5kIOKAnE1pVEFD4oCdIHRoZW4g
-anVzdCBrZWVwIOKAnE1pVEFD4oCdIGFzIG91ciBzaW5nbGUgYnJhbmQgZnJvbSAyMDI0IFEzOyBh
-c3N1bWUgaXQgbWlnaHQgbmVlZCB0byByZS1uZXcgdGhlIG9yaWdpbmFsIENDTEEgYmV0d2VlbiBU
-eWFuIGFuZCBMaW51eCBGb3VuZGF0aW9uIGZvciBPcGVuQk1DLCBzaG91bGQgd2UgcmUtc3VibWl0
-IGEgbmV3IENDTEE/PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5CVFcsIG1heSB3ZSBoYXZlIGhlbHAgZnJv
-bSBPcGVuQk1DIG9yZywgdG8gY2hlY2sgYW5kIGdldCB0aGUgb3JpZ2luYWwgQ0NMQSBiZXR3ZWVu
-IFR5YW4gYW5kIExpbnV4IEZvdW5kYXRpb24/PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFu
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5UaGFuayB5b3U8
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJF
-Ti1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gbGFuZz0iRU4tVVMiPkhhbmNvY2sgQ2hhbmc8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+RGlyZWN0b3IsIFNvbHV0aW9u
-IEVuYWJsaW5nIERlcHQuLCBCRU9DPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPk1pVEFDIENvbXB1dGluZyBUZWNobm9sb2d5PG86
-cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4t
-VVMiPlRlbDogJiM0Mzs4ODYzLTMyNy01OTg4ICM3MzU5PG86cD48L286cD48L3NwYW4+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPkNlbGw6ICYjNDM7ODg2OTM1
-NTQ3NjY1PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
-bGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9ib2R5
-Pg0KPC9odG1sPg0K
-
---_000_9b6b8fbff7924cb6a505f028f68e51b3miccomtw_--
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
