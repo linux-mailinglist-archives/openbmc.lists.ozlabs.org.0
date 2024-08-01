@@ -1,45 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24B34944E8A
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 16:54:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 913C4944E9E
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2024 16:58:26 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=eJi/cSmx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=l65UzgQS;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WZX6r0gKpz3dRf
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 00:54:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WZXCN3jjsz3dT1
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2024 00:58:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=eJi/cSmx;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=l65UzgQS;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZX6K2DZTz30TZ
-	for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2024 00:54:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WZXBs1QGrz30Vy
+	for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2024 00:57:57 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 7219B628A6;
-	Thu,  1 Aug 2024 14:53:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A88C32786;
-	Thu,  1 Aug 2024 14:53:54 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 73298628A6;
+	Thu,  1 Aug 2024 14:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32461C32786;
+	Thu,  1 Aug 2024 14:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722524038;
-	bh=TPgKn7GWBgu6nd6mkNKctAoxTw80xW2Kmt4GxkrZ80I=;
+	s=k20201202; t=1722524275;
+	bh=ggO7Zt73dnoIwfAFu+f6RKUYCGa8AzY90DOvjMLjl0s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eJi/cSmxhuZnazLMYWmDWjf3Fufhmk1yg1NZSK5IRF0WKvLZ9GsXjJSKfg7mC/2Mv
-	 M8Gum3EzF+ln9Y4tc8lqAmwgnQSpkGLsMCYgBvPJ9QBmKsVLSTzDRvt7HmZ0hMpEqH
-	 Pv5/OE+y4nzFgyMRHU8fLhqhjlgP9r3Red2YaVQeXst6uwUM7/vGgjgDN/VZHD9JeD
-	 DIbhhvFETcIouc4i0RC/xiVv/BS6BuVCPQi45hJP2LjJ/WifJJCvfwO6MrfCsNpmO7
-	 DmYRG3BEdPfuxMINM9zK3pVJuzuKxgBUCN3OVRa/Pv908xfzb32YCeBlloRK2asTLJ
-	 XH0jT27JII8wQ==
-Message-ID: <c3ee7783-6891-4917-9935-21d46d8ac9a7@kernel.org>
-Date: Thu, 1 Aug 2024 16:53:52 +0200
+	b=l65UzgQSX28OOM0FNiia0jPULDzx0Rc8RSABPM5MUgTYOFbu0MZ8zr7X2kodpREDQ
+	 7K0OwCshN27ufCPd8/2YJ1812i7n5w8a13tCY+pIWhRM6x70xDqip5pTibFrj3fMZ9
+	 wxomkE/RaQFHO/D6cyakneNPlIj49y0XzYrtIYlgnHaoZybwcGe6LKYbLVrRUoYvSp
+	 CtyinQwbTpVJHFzIwaDUk8jfyMLbZcZ9HRqVxO2d3wEwVuOnOdV2O2+B4mU5L6FgIR
+	 gMb3sKOBHA2taPizCs2vy/SZrGgoE1I/38SGpYag5pBI7QXPFSNzxsUEYIyZnqNDex
+	 IFD88MZQvOnlA==
+Message-ID: <1590bd20-0140-4960-8af4-f1c1d55cda27@kernel.org>
+Date: Thu, 1 Aug 2024 16:57:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 1/2] dt-bindings: i3c: Add NPCM845 i3c controller
@@ -117,109 +117,8 @@ On 01/08/2024 09:19, Stanley Chu wrote:
 > 
 > Signed-off-by: Stanley Chu <yschu@nuvoton.com>
 > Signed-off-by: James Chiang <cpchiang1@nuvoton.com>
-> ---
->  .../bindings/i3c/nuvoton,i3c-master.yaml      | 123 ++++++++++++++++++
 
-Use compatible as filename. Anyway word "master" was dropped.
-
->  1 file changed, 123 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml b/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
-> new file mode 100644
-> index 000000000000..a40b37b16872
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/i3c/nuvoton,i3c-master.yaml
-> @@ -0,0 +1,123 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/i3c/nuvoton,i3c-master.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Nuvoton NPCM845 I3C master
-
-Use new terminology. Since 2021 there was a change... three years ago.
-
-> +
-> +maintainers:
-> +  - Stanley Chu <yschu@nuvoton.com>
-> +  - James Chiang <cpchiang1@nuvoton.com>
-> +
-> +allOf:
-> +  - $ref: i3c.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: nuvoton,npcm845-i3c
-> +
-> +  reg:
-> +    items:
-> +      - description: I3C registers
-> +      - description: GDMA registers
-> +      - description: GDMA request control register
-> +
-> +  reg-names:
-> +    items:
-> +      - const: i3c
-> +      - const: dma
-> +      - const: dma_ctl
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: system clock
-> +      - description: bus clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: pclk
-> +      - const: fast_clk
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  i3c-pp-scl-hi-period-ns:
-> +    description: |
-
-Do not need '|' unless you need to preserve formatting.
-
-> +      If need to configure SCL with required duty cycle, specify the clock high/low period directly.
-> +      i3c-pp-scl-hi-perios-ns specifies the high period ns of the SCL clock cycle in push pull mode
-> +      When i3c-pp-scl-hi-period-ns and i3c-pp-scl-lo-period-ns are specified, the i3c pp frequency is
-> +      decided by these two properties.
-
-Wrap according to Linux Coding Style (and read coding style to figure
-the proper wrapping...).
-
-> +
-> +  i3c-pp-scl-lo-period-ns:
-> +    description: |
-> +      The low period ns of the SCL clock cycle in push pull mode. i3c-pp-scl-lo-period-ns should not
-> +      be less than i3c-pp-scl-hi-period-ns and the maximal value is i3c-pp-scl-hi-period-ns + 150.
-
-Everywhere: defaults, constraints.
-
-> +
-> +  i3c-pp-sda-rd-skew:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: |
-> +      The number of MCLK clock periods to delay the SDA transition from the SCL clock edge at push
-> +      pull operation when transfers i3c private read.
-> +    maximum: 7
-> +    default: 0
-> +
-> +  i3c-pp-sda-wr-skew:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description: |
-> +      The number of MCLK clock periods to delay the SDA transition from the SCL clock edge at push
-> +      pull operation when transfers i3c private write.
-> +    maximum: 7
-> +    default: 0
-> +
-> +  i3c-od-scl-hi-period-ns:
+:
 > +    description: |
 > +      The i3c open drain frequency is 1MHz by default.
 > +      If need to use different frequency, specify the clock high/low period directly.
@@ -234,59 +133,9 @@ Everywhere: defaults, constraints.
 > +      multiple of i3c-pp-scl-hi-period-ns.
 > +
 > +  enable-hj:
-> +    type: boolean
-> +    description: |
-> +      Enable SLVSTART interrupt for receiving hot-join request.
 
-You described the desired Linux feature or behavior, not the actual
-hardware. The bindings are about the latter, so instead you need to
-rephrase the property and its description to match actual hardware
-capabilities/features/configuration etc.
+Missing vendor prefix.
 
-> +
-> +  use-dma:
-> +    type: boolean
-> +    description: |
-> +      Enable the i3c private transfers using DMA.
-
-Why wouldn't you enable it always? Where are dma properties for this?
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - clock-names
-> +  - clocks
-> +
-> +additionalProperties: true
-
-Nope, it cannot be true. Look how other bindings are doing this. Why
-implementing something entirely different?
-
-> +
-> +examples:
-> +  - |
-> +    i3c@fff10000 {
-> +        compatible = "nuvoton,npcm845-i3c";
-> +        clocks = <&clk 4>, <&clk 26>;
-> +        clock-names = "pclk", "fast_clk";
-> +        interrupts = <0 224 4>;
-> +        reg = <0xfff10000 0x1000>,
-> +              <0xf0850000 0x1000>,
-> +              <0xf0800300 0x4>;
-
-Order properties as in DTS coding style.
-
-> +        reg-names = "i3c", "dma", "dma_ctl";
-> +        resets = <&rstc 0x74 8>;
-> +        #address-cells = <3>;
-> +        #size-cells = <0>;
-
-Make your bindings complete - you skipped many properties. Why defining
-them if you are not using them and they do not have defaults?
-
-> +    };
 
 Best regards,
 Krzysztof
