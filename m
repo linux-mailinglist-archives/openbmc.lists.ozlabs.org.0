@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A690F94A4ED
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2024 12:03:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59A8394A4F4
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2024 12:04:44 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=earNUqdf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hKaLrUTp;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wf5Np0zj0z3dDT
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2024 20:03:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wf5Pk25hXz3d8R
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2024 20:04:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=earNUqdf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hKaLrUTp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62a; helo=mail-pl1-x62a.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wf5NF5RPkz3cTl
-	for <openbmc@lists.ozlabs.org>; Wed,  7 Aug 2024 20:03:23 +1000 (AEST)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1fc4fccdd78so12766805ad.2
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Aug 2024 03:03:23 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wf5NP5NZ0z3cXy
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Aug 2024 20:03:33 +1000 (AEST)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-1fc587361b6so14439805ad.2
+        for <openbmc@lists.ozlabs.org>; Wed, 07 Aug 2024 03:03:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723024999; x=1723629799; darn=lists.ozlabs.org;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+QZYXRPEg528ElfNUTSQ20mrku4XweYkGoPgtSo1AS4=;
-        b=earNUqdfOKpD4SrsRDyk4afGJJ+yTw+oxOVAYCKz823eCGlyDzcUR1Vmq/srVV3ova
-         Gv82z4tbsUUBp0JUxlg5fsWKMeKSGlMRHzWf+2+CzGA0kyMDMvRIH8s4w8FEnji0txsH
-         4thVxBlzMYhCN+HPCmzNhS1YV72QzJjCWF6su2vqB4u+Lsr5R3lg5KKH/gq3FP/OOWcW
-         rn0D/94BZOTUX3Q3ci3Utw2mg5x1Eh3i0Iug45BpgBErVwm4Kx6wKZONhjPRFz5KzaPF
-         6EguAYFkPHgEH0xqZYTnzp3OXtQHHUQ1NnjGuqfLfrRMrnUPAzZcW4eHhDxiB+vXxzcp
-         zNnQ==
+        d=gmail.com; s=20230601; t=1723025011; x=1723629811; darn=lists.ozlabs.org;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=CC5pNBBwbHzuFRI5vRop3kEGSaPPEJAGbytrwhnEs/A=;
+        b=hKaLrUTpWT72eMPod8aZ8lQ7sIjoLTmLHMSQ+N56/m8dLW6ZJgbQJPA5Y5jNMHR/Ja
+         rFLP80ZvSoV8nVrK0EbLfy4X1he0Tx6GHwiZSxTnZ3EjQI6KU3kDuTgw9tftWR2MSOlK
+         CaxFA/WrhiSsrTwJ/ltmz/uZysKyzqontQjthx47JsfaNL3W+sar7MKOwPw06891HNjd
+         zshcMaoDkHY7ifyQmMJTSq2y4diIPT612OujD29f23Dg+zVPzjnhVsy1bSWtMYI/3NrN
+         rpNHkG7b67YpPp7RxqAiDfyCFyic0y98HeYl1eHdd3RFoIIgUq1DVt6+VpoDKgulo/dR
+         9iCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723024999; x=1723629799;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+QZYXRPEg528ElfNUTSQ20mrku4XweYkGoPgtSo1AS4=;
-        b=ZrZi7tBf1fmNNW/EEXJqfaUn3xh0+rlG49edl/kz7QLp5iDgfYmD97KGbryQopzXv6
-         bsfK5mYzihHDuJfWOBlk882of4Z7RFo7GpQJ9/x7JSiHlKvQHDWqRvtzY0yvBXqCVR3Z
-         KROrSsOaqmwaeN4/keJKNpyMhvP0Osjqiw352Fgw4p/uJ0KJkfczZomDUGlDq0Su41/T
-         O6pTFGexg3KkBroF6Ck2+45q8T2k8XjXV/K0dekPwB03lJwM0C4Ois89y32uEuoBL8Fz
-         XqAc3YcmjBFOL67OnFjzAFls4rb2tpjVHt3IRivop+fSqEjTZn1JaHQt8wTp8sUQYMr1
-         ujPA==
-X-Forwarded-Encrypted: i=1; AJvYcCV473vrDnat0GxY3sxfri6v4/G5cTKE4t36PO/qO532c6tiUwajrC/OE4Ady9owGXs5tGo43a4ryMp9y3KR3p/8+9SEmPDV2MA=
-X-Gm-Message-State: AOJu0YzHvGkmQPNMoIirybOXCeC60EjeWVNHUKXK+peQP5vdwog9sgMG
-	37+I+2Q5zkzJGFEKCagrlVRgQHg0/ifRkLvl1vcMMSqfVau5wZ8=
-X-Google-Smtp-Source: AGHT+IGtt7yBZ4CfHFL434fO0nZ9TPo2uWQBtrGHO/+MhwTtlMQLPNCENUE0OdSburFSvWg21GelPA==
-X-Received: by 2002:a17:902:e54e:b0:1fb:7f82:515 with SMTP id d9443c01a7336-1ff572a2c1emr198249685ad.15.1723024998874;
-        Wed, 07 Aug 2024 03:03:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1723025011; x=1723629811;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CC5pNBBwbHzuFRI5vRop3kEGSaPPEJAGbytrwhnEs/A=;
+        b=osKgutosNdP5eD7bNLF7slMXiEj+S1zmFzJuA1UYsqkV5vjO/PtbYUyfmfrhUzgY+S
+         nJVGuBD8VGBrJnHxWZa1ZGwzhGGlP5m/fLWTqc758s+viMdS+t41l63SX45a7+E38ZCU
+         EtDrIXmH6Fkd/jRriN1MFh+JcuJJnme8XbxCsY26lsaBj0mc9mLcYoi4Wb2+srhUarY5
+         q+SC3OAYsJ2E31P6KlFrPbIPuzpGXLScu5bza+dIQL8f7ZGvN28/ywjkFcDnR57ttt6c
+         fG4zuiDRun6mInsbHD8+A002h0QsA2/f922texMoqZGCO7VqAxJ8iNIYP2zUhTjy8apH
+         9CsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUbDnsVynQHGufzddBtUn1J7m0ILwucGNaL0dg8Mgmp5l1o4JAFplDjW+mSsJ5eiTwEuk9w+S2yf4jCAYd6Tc8nGImWYrsFkB8=
+X-Gm-Message-State: AOJu0YzXlPCkbKrhHop9N2TpsgG2InndHoTAygUYmW1hdMwTCa+ovocj
+	VZEXofKsoGWywX17bbXuqSp7bNTkGT2aSVmWZ0djWuLLjgd0Zes=
+X-Google-Smtp-Source: AGHT+IGaljIfOINvp35rTl5T4iijxPSBPWtVHz2ZOvAehR7Vkfor0vpEheNeOShza8gm7JoO5jsENQ==
+X-Received: by 2002:a17:902:ce10:b0:1fb:3b89:b11d with SMTP id d9443c01a7336-1ff57257f43mr185632175ad.4.1723025010560;
+        Wed, 07 Aug 2024 03:03:30 -0700 (PDT)
 Received: from localhost (2001-b400-e352-b705-880f-4661-e7a1-4abb.emome-ip6.hinet.net. [2001:b400:e352:b705:880f:4661:e7a1:4abb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff592976b3sm102874295ad.252.2024.08.07.03.03.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff59059f6dsm102022675ad.132.2024.08.07.03.03.29
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Aug 2024 03:03:18 -0700 (PDT)
+        Wed, 07 Aug 2024 03:03:29 -0700 (PDT)
 From: warp5tw@gmail.com
 X-Google-Original-From: kfting@nuvoton.com
 To: tali.perry@nuvoton.com,
@@ -75,10 +75,12 @@ To: tali.perry@nuvoton.com,
 	jjliu0@nuvoton.com,
 	kfting@nuvoton.com,
 	warp5tw@gmail.com
-Subject: [PATCH v1 0/7] i2c: npcm: Bug fixes read/write operation, checkpatch
-Date: Wed,  7 Aug 2024 18:02:37 +0800
-Message-Id: <20240807100244.16872-1-kfting@nuvoton.com>
+Subject: [PATCH v1 1/7] i2c: npcm: correct the read/write operation procedure
+Date: Wed,  7 Aug 2024 18:02:38 +0800
+Message-Id: <20240807100244.16872-2-kfting@nuvoton.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240807100244.16872-1-kfting@nuvoton.com>
+References: <20240807100244.16872-1-kfting@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,34 +98,40 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tyrone Ting <kfting@nuvoton.com>
 
-This patchset includes the following fixes:
+Originally the driver uses the XMIT bit in SMBnST register to decide
+the upcoming i2c transaction. If XMIT bit is 1, then it will be an i2c
+write operation. If it's 0, then a read operation will be executed.
 
-- Enable the target functionality in the interrupt handling routine when the
-  i2c transfer is about to finish.
-- Correct the read/write operation procedure.
-- Introduce a software flag to handle the bus error (BER) condition
-  which is not caused by the i2c transfer.
-- Modify timeout calculation.
-- Assign the client address earlier logically.
-- Use an i2c frequency table for the frequency parameters assignment.
-- Coding style fix.
+After checking the datasheet, the XMIT bit is valid when the i2c module
+is acting in a slave role. Use the software status to control the i2c
+transaction flow instead when the i2c module is acting in a master role.
 
-The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
+Fixes: 48acf8292280 ("i2c: Remove redundant comparison in npcm_i2c_reg_slave")
+Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+---
+ drivers/i2c/busses/i2c-npcm7xx.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Charles Boyer (1):
-  i2c-npcm7xx.c: Enable slave in eob interrupt
-
-Tyrone Ting (6):
-  i2c: npcm: correct the read/write operation procedure
-  i2c: npcm: use a software flag to indicate a BER condition
-  i2c: npcm: Modify timeout evaluation mechanism
-  i2c: npcm: Modify the client address assignment
-  drivers: i2c: use i2c frequency table
-  i2c: npcm: fix checkpatch
-
- drivers/i2c/busses/i2c-npcm7xx.c | 266 +++++++++++++++++++------------
- 1 file changed, 167 insertions(+), 99 deletions(-)
-
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 2fe68615942e..c8503acdaff8 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -1626,13 +1626,10 @@ static void npcm_i2c_irq_handle_sda(struct npcm_i2c *bus, u8 i2cst)
+ 			npcm_i2c_wr_byte(bus, bus->dest_addr | BIT(0));
+ 	/* SDA interrupt, after start\restart */
+ 	} else {
+-		if (NPCM_I2CST_XMIT & i2cst) {
+-			bus->operation = I2C_WRITE_OPER;
++		if (bus->operation == I2C_WRITE_OPER)
+ 			npcm_i2c_irq_master_handler_write(bus);
+-		} else {
+-			bus->operation = I2C_READ_OPER;
++		else if (bus->operation == I2C_READ_OPER)
+ 			npcm_i2c_irq_master_handler_read(bus);
+-		}
+ 	}
+ }
+ 
 -- 
 2.34.1
 
