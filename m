@@ -2,73 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B5B994B0C7
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2024 21:56:05 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Bmc9jlHA;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E42A94B721
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2024 09:08:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WfLX33Hrsz3dLh
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2024 05:56:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WfdRd3F5Qz3dRb
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2024 17:08:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Bmc9jlHA;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.14; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=srs0=os15=ph=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WfLWV3SGrz2xWY
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Aug 2024 05:55:28 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723060535; x=1754596535;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=az2X1EO5TQIgKmVStPC7eXwpf00XOreTyYeLTtf3ybg=;
-  b=Bmc9jlHAjeY/YK2ZlrpnRttRDKULv6PsrmcxXEMm+Ah0g11kahUDusR9
-   Vfvf6GHmWNE8T1OlTUm+fFR92d2qU0EhLUP4YrS5DB6mwom8NB7ITx9QC
-   7y5LB1HidZ0iSBk5BVKMHIdymXZ4ffZFJjjsK8Tirg5yYZ/Ls6NrWnuIE
-   0ZGlTZ8mnlp7WYXbseUHUAA6DxqwimxXkipjeDH20EAgxXwvQTuIVkQnQ
-   dl8uwjpkmoM2oLc0gQlzkrFng4SFV5Ts4QIzAG4UiC1NDGqRbAHkdu3+p
-   TgGDkWs1Gv5R80FiVAdGuKXRcSBOd8bbG2JhekXxd96BEdKutT43/O7OK
-   g==;
-X-CSE-ConnectionGUID: zG50353BSfqE0ntA71nEsQ==
-X-CSE-MsgGUID: C6rxJ4z6RvC8q6xCpbbxhg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="21326084"
-X-IronPort-AV: E=Sophos;i="6.09,270,1716274800"; 
-   d="scan'208";a="21326084"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2024 12:55:26 -0700
-X-CSE-ConnectionGUID: s2NvMB4OSiSRitFGoGF4BQ==
-X-CSE-MsgGUID: G0rxdLxtSrqJAy8xlCI5RA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,270,1716274800"; 
-   d="scan'208";a="56647725"
-Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
-  by fmviesa007.fm.intel.com with ESMTP; 07 Aug 2024 12:55:21 -0700
-Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sbmkh-0005g1-1F;
-	Wed, 07 Aug 2024 19:55:19 +0000
-Date: Thu, 8 Aug 2024 03:55:10 +0800
-From: kernel test robot <lkp@intel.com>
-To: warp5tw@gmail.com, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
-	tomer.maimon@nuvoton.com, avifishman70@gmail.com,
-	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
-	yuenn@google.com, benjaminfair@google.com, andi.shyti@kernel.org,
-	wsa+renesas@sang-engineering.com, rand.sec96@gmail.com,
-	kwliu@nuvoton.com, jjliu0@nuvoton.com, kfting@nuvoton.com
-Subject: Re: [PATCH v1 5/7] drivers: i2c: use i2c frequency table
-Message-ID: <202408080319.de2B6PgU-lkp@intel.com>
-References: <20240807100244.16872-6-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WfdRG30q0z3cmV;
+	Thu,  8 Aug 2024 17:07:54 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 082ED614DB;
+	Thu,  8 Aug 2024 07:07:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A10C32782;
+	Thu,  8 Aug 2024 07:07:48 +0000 (UTC)
+Message-ID: <2387b4c4-42a0-4435-afea-1574f42970eb@xs4all.nl>
+Date: Thu, 8 Aug 2024 09:07:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240807100244.16872-6-kfting@nuvoton.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: aspeed: Allow to capture from SoC display (GFX)
+To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
+ mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
+ linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+References: <20240708005952.481727-1-jammy_huang@aspeedtech.com>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ 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
+In-Reply-To: <20240708005952.481727-1-jammy_huang@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,125 +92,481 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+On 08/07/2024 02:59, Jammy Huang wrote:
+> ASPEED BMC IC has 2 different display engines. Please find AST2600's
+> datasheet to get detailed information.
+> 
+> 1. VGA on PCIe
+> 2. SoC Display (GFX)
+> 
+> By default, video engine (VE) will capture video from VGA. This patch
+> adds an option to capture video from GFX with standard ioctl,
+> vidioc_s_input.
+> 
+> An enum, aspeed_video_input, is added for this purpose.
+> enum aspeed_video_input {
+> 	VIDEO_INPUT_VGA = 0,
+> 	VIDEO_INPUT_GFX,
+> 	VIDEO_INPUT_MAX
+> };
+> 
+> To test this feature, you will need to enable GFX first. Please refer to
+> ASPEED's SDK_User_Guide, 6.3.x Soc Display driver, for more information.
+> In your application, you will need to use v4l2 ioctl, VIDIOC_S_INPUT, as
+> below to select before start streaming.
+> 
+> int rc;
+> struct v4l2_input input;
+> 
+> input.index = VIDEO_INPUT_GFX;
+> rc = ioctl(fd, VIDIOC_S_INPUT, &input);
+> if (rc < 0)
+> {
+> 	...
+> }
+> 
+> Link: https://github.com/AspeedTech-BMC/openbmc/releases
+> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> ---
+>  drivers/media/platform/aspeed/aspeed-video.c | 189 ++++++++++++++++---
+>  include/uapi/linux/aspeed-video.h            |   7 +
+>  2 files changed, 170 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+> index fc6050e3be0d..79dbec113f3f 100644
+> --- a/drivers/media/platform/aspeed/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed/aspeed-video.c
+> @@ -25,6 +25,8 @@
+>  #include <linux/workqueue.h>
+>  #include <linux/debugfs.h>
+>  #include <linux/ktime.h>
+> +#include <linux/regmap.h>
+> +#include <linux/mfd/syscon.h>
+>  #include <media/v4l2-ctrls.h>
+>  #include <media/v4l2-dev.h>
+>  #include <media/v4l2-device.h>
+> @@ -203,6 +205,25 @@
+>  #define VE_MEM_RESTRICT_START		0x310
+>  #define VE_MEM_RESTRICT_END		0x314
+>  
+> +/* SCU's registers */
+> +#define SCU_MISC_CTRL			0xC0
+> +#define  SCU_DPLL_SOURCE		BIT(20)
+> +
+> +/* GFX's registers */
+> +#define GFX_CTRL			0x60
+> +#define  GFX_CTRL_ENABLE		BIT(0)
+> +#define  GFX_CTRL_FMT			GENMASK(9, 7)
+> +
+> +#define GFX_H_DISPLAY			0x70
+> +#define  GFX_H_DISPLAY_DE		GENMASK(28, 16)
+> +#define  GFX_H_DISPLAY_TOTAL		GENMASK(12, 0)
+> +
+> +#define GFX_V_DISPLAY			0x78
+> +#define  GFX_V_DISPLAY_DE		GENMASK(27, 16)
+> +#define  GFX_V_DISPLAY_TOTAL		GENMASK(11, 0)
+> +
+> +#define GFX_DISPLAY_ADDR		0x80
+> +
+>  /*
+>   * VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
+>   * VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
+> @@ -262,6 +283,7 @@ struct aspeed_video_perf {
+>  /*
+>   * struct aspeed_video - driver data
+>   *
+> + * version:		holds the version of aspeed SoC
+>   * res_work:		holds the delayed_work for res-detection if unlock
+>   * buffers:		holds the list of buffer queued from user
+>   * flags:		holds the state of video
+> @@ -273,6 +295,7 @@ struct aspeed_video_perf {
+>   * yuv420:		a flag raised if JPEG subsampling is 420
+>   * format:		holds the video format
+>   * hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
+> + * input:		holds the video input
+>   * frame_rate:		holds the frame_rate
+>   * jpeg_quality:	holds jpeq's quality (0~11)
+>   * jpeg_hq_quality:	holds hq's quality (1~12) only if hq_mode enabled
+> @@ -298,6 +321,9 @@ struct aspeed_video {
+>  	struct video_device vdev;
+>  	struct mutex video_lock;	/* v4l2 and videobuf2 lock */
+>  
+> +	struct regmap *scu;
+> +	struct regmap *gfx;
+> +	u32 version;
+>  	u32 jpeg_mode;
+>  	u32 comp_size_read;
+>  
+> @@ -316,6 +342,7 @@ struct aspeed_video {
+>  	bool yuv420;
+>  	enum aspeed_video_format format;
+>  	bool hq_mode;
+> +	enum aspeed_video_input input;
+>  	unsigned int frame_rate;
+>  	unsigned int jpeg_quality;
+>  	unsigned int jpeg_hq_quality;
+> @@ -331,21 +358,25 @@ struct aspeed_video {
+>  #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
+>  
+>  struct aspeed_video_config {
+> +	u32 version;
+>  	u32 jpeg_mode;
+>  	u32 comp_size_read;
+>  };
+>  
+>  static const struct aspeed_video_config ast2400_config = {
+> +	.version = 4,
+>  	.jpeg_mode = AST2400_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>  };
+>  
+>  static const struct aspeed_video_config ast2500_config = {
+> +	.version = 5,
+>  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>  };
+>  
+>  static const struct aspeed_video_config ast2600_config = {
+> +	.version = 6,
+>  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2600_VE_COMP_SIZE_READ_BACK,
+>  };
+> @@ -485,6 +516,7 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
+>  
+>  static const char * const format_str[] = {"Standard JPEG",
+>  	"Aspeed JPEG"};
+> +static const char * const input_str[] = {"VGA", "BMC GFX"};
+>  
+>  static unsigned int debug;
+>  
+> @@ -609,6 +641,14 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>  		aspeed_video_free_buf(video, &video->bcd);
+>  	}
+>  
+> +	if (video->input == VIDEO_INPUT_GFX) {
+> +		u32 val;
+> +
+> +		// update input buffer address as gfx's
+> +		regmap_read(video->gfx, GFX_DISPLAY_ADDR, &val);
+> +		aspeed_video_write(video, VE_TGS_0, val);
+> +	}
+> +
+>  	spin_lock_irqsave(&video->lock, flags);
+>  	buf = list_first_entry_or_null(&video->buffers,
+>  				       struct aspeed_video_buffer, link);
+> @@ -1026,9 +1066,23 @@ static void aspeed_video_get_timings(struct aspeed_video *v,
+>  	}
+>  }
+>  
+> +static void aspeed_video_get_resolution_gfx(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+> +{
+> +	u32 h_val, v_val;
+> +
+> +	regmap_read(video->gfx, GFX_H_DISPLAY, &h_val);
+> +	regmap_read(video->gfx, GFX_V_DISPLAY, &v_val);
+> +
+> +	det->width = FIELD_GET(GFX_H_DISPLAY_DE, h_val) + 1;
+> +	det->height = FIELD_GET(GFX_V_DISPLAY_DE, v_val) + 1;
+> +	video->v4l2_input_status = 0;
+> +}
+> +
+>  #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
+>  
+> -static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +static void aspeed_video_get_resolution_vga(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+>  {
+>  	bool invalid_resolution = true;
+>  	int rc;
+> @@ -1036,7 +1090,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>  	u32 mds;
+>  	u32 src_lr_edge;
+>  	u32 src_tb_edge;
+> -	struct v4l2_bt_timings *det = &video->detected_timings;
+>  
+>  	det->width = MIN_WIDTH;
+>  	det->height = MIN_HEIGHT;
+> @@ -1113,14 +1166,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>  
+>  	aspeed_video_get_timings(video, det);
+>  
+> -	/*
+> -	 * Enable mode-detect watchdog, resolution-change watchdog and
+> -	 * automatic compression after frame capture.
+> -	 */
+> +	/* Enable mode-detect watchdog, resolution-change watchdog */
+>  	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
+>  			    VE_INTERRUPT_MODE_DETECT_WD);
+> -	aspeed_video_update(video, VE_SEQ_CTRL, 0,
+> -			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
+> +	aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_EN_WATCHDOG);
+> +}
+> +
+> +static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +{
+> +	struct v4l2_bt_timings *det = &video->detected_timings;
+> +
+> +	if (video->input == VIDEO_INPUT_GFX)
+> +		aspeed_video_get_resolution_gfx(video, det);
+> +	else
+> +		aspeed_video_get_resolution_vga(video, det);
+>  
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
+>  		 det->width, det->height);
+> @@ -1156,7 +1215,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
+>  
+>  	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
+> -	if (size < DIRECT_FETCH_THRESHOLD) {
+> +	if (video->input == VIDEO_INPUT_VGA && size < DIRECT_FETCH_THRESHOLD) {
+>  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
+>  		aspeed_video_write(video, VE_TGS_0,
+>  				   FIELD_PREP(VE_TGS_FIRST,
+> @@ -1171,10 +1230,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+>  				    VE_CTRL_INT_DE);
+>  	} else {
+> +		u32 ctrl, val, bpp;
+> +
+>  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
+> +		ctrl = VE_CTRL_DIRECT_FETCH;
+> +		if (video->input == VIDEO_INPUT_GFX) {
+> +			regmap_read(video->gfx, GFX_CTRL, &val);
+> +			bpp = FIELD_GET(GFX_CTRL_FMT, val) ? 32 : 16;
+> +			if (bpp == 16)
+> +				ctrl |= VE_CTRL_INT_DE;
+> +			aspeed_video_write(video, VE_TGS_1, act->width * (bpp >> 3));
+> +		}
+>  		aspeed_video_update(video, VE_CTRL,
+>  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+> -				    VE_CTRL_DIRECT_FETCH);
+> +				    ctrl);
+>  	}
+>  
+>  	size *= 4;
+> @@ -1207,6 +1276,22 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  		aspeed_video_free_buf(video, &video->srcs[0]);
+>  }
+>  
+> +/*
+> + * Update relative parameters when timing changed.
+> + *
+> + * @video: the struct of aspeed_video
+> + * @timings: the new timings
+> + */
+> +static void aspeed_video_update_timings(struct aspeed_video *video, struct v4l2_bt_timings *timings)
+> +{
+> +	video->active_timings = *timings;
+> +	aspeed_video_set_resolution(video);
+> +
+> +	video->pix_fmt.width = timings->width;
+> +	video->pix_fmt.height = timings->height;
+> +	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +}
+> +
+>  static void aspeed_video_update_regs(struct aspeed_video *video)
+>  {
+>  	u8 jpeg_hq_quality = clamp((int)video->jpeg_hq_quality - 1, 0,
+> @@ -1219,6 +1304,8 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	u32 ctrl = 0;
+>  	u32 seq_ctrl = 0;
+>  
+> +	v4l2_dbg(1, debug, &video->v4l2_dev, "input(%s)\n",
+> +		 input_str[video->input]);
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
+>  		 video->frame_rate);
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
+> @@ -1234,6 +1321,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	else
+>  		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
+>  
+> +	if (video->input == VIDEO_INPUT_VGA)
+> +		ctrl |= VE_CTRL_AUTO_OR_CURSOR;
+> +
+>  	if (video->frame_rate)
+>  		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
+>  
+> @@ -1252,7 +1342,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	aspeed_video_update(video, VE_SEQ_CTRL,
+>  			    video->jpeg_mode | VE_SEQ_CTRL_YUV420,
+>  			    seq_ctrl);
+> -	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
+> +	aspeed_video_update(video, VE_CTRL,
+> +			    VE_CTRL_FRC | VE_CTRL_AUTO_OR_CURSOR |
+> +			    VE_CTRL_SOURCE, ctrl);
+>  	aspeed_video_update(video, VE_COMP_CTRL,
+>  			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
+>  			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
+> @@ -1280,6 +1372,7 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
+>  	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
+>  
+>  	/* Set control registers */
+> +	aspeed_video_write(video, VE_SEQ_CTRL, VE_SEQ_CTRL_AUTO_COMP);
+>  	aspeed_video_write(video, VE_CTRL, ctrl);
+>  	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
+>  
+> @@ -1311,12 +1404,7 @@ static void aspeed_video_start(struct aspeed_video *video)
+>  	aspeed_video_get_resolution(video);
+>  
+>  	/* Set timings since the device is being opened for the first time */
+> -	video->active_timings = video->detected_timings;
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = video->active_timings.width;
+> -	video->pix_fmt.height = video->active_timings.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &video->detected_timings);
+>  }
+>  
+>  static void aspeed_video_stop(struct aspeed_video *video)
+> @@ -1414,16 +1502,47 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
+>  
+>  static int aspeed_video_get_input(struct file *file, void *fh, unsigned int *i)
+>  {
+> -	*i = 0;
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	*i = video->input;
+>  
+>  	return 0;
+>  }
+>  
+>  static int aspeed_video_set_input(struct file *file, void *fh, unsigned int i)
+>  {
+> -	if (i)
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	if (i >= VIDEO_INPUT_MAX)
+>  		return -EINVAL;
+>  
+> +	if (IS_ERR(video->scu)) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: scu isn't ready for input-control\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (IS_ERR(video->gfx) && i == VIDEO_INPUT_GFX) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: gfx isn't ready for GFX input\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	video->input = i;
+> +
+> +	if (video->version == 6) {
+> +		/* modify dpll source per current input */
+> +		if (video->input == VIDEO_INPUT_VGA)
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, 0);
+> +		else
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, SCU_DPLL_SOURCE);
+> +	}
+> +
+> +	aspeed_video_update_regs(video);
+> +
+> +	/* update signal status */
+> +	aspeed_video_get_resolution(video);
+> +	if (!video->v4l2_input_status)
+> +		aspeed_video_update_timings(video, &video->detected_timings);
+> +
+>  	return 0;
+>  }
 
-kernel test robot noticed the following build warnings:
+You forgot to update aspeed_video_enum_input()!
 
-[auto build test WARNING on andi-shyti/i2c/i2c-host]
-[also build test WARNING on linus/master v6.11-rc2 next-20240807]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+If possible, always run v4l2-compliance (directly build from the v4l-utils git repo) whenever
+you make changes to ioctls like this, it would have caught this.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/warp5tw-gmail-com/i2c-npcm-correct-the-read-write-operation-procedure/20240807-182210
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/andi.shyti/linux.git i2c/i2c-host
-patch link:    https://lore.kernel.org/r/20240807100244.16872-6-kfting%40nuvoton.com
-patch subject: [PATCH v1 5/7] drivers: i2c: use i2c frequency table
-config: arm-randconfig-001-20240808 (https://download.01.org/0day-ci/archive/20240808/202408080319.de2B6PgU-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240808/202408080319.de2B6PgU-lkp@intel.com/reproduce)
+Regards,
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408080319.de2B6PgU-lkp@intel.com/
+	Hans
 
-All warnings (new ones prefixed by >>):
+>  
+> @@ -1527,13 +1646,7 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
+>  	if (vb2_is_busy(&video->queue))
+>  		return -EBUSY;
+>  
+> -	video->active_timings = timings->bt;
+> -
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = timings->bt.width;
+> -	video->pix_fmt.height = timings->bt.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &timings->bt);
+>  
+>  	timings->type = V4L2_DV_BT_656_1120;
+>  
+> @@ -1911,6 +2024,7 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
+>  	val08 = aspeed_video_read(v, VE_CTRL);
+>  	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
+>  		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
+> +		seq_printf(s, "  %-20s:\t%s\n", "Input", input_str[v->input]);
+>  		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
+>  			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
+>  	} else {
+> @@ -2070,12 +2184,34 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Get regmap without checking res, such as clk/reset, that could lead to
+> + * conflict.
+> + */
+> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
+> +{
+> +	struct device_node *syscon_np;
+> +	struct regmap *regmap;
+> +
+> +	syscon_np = of_parse_phandle(np, property, 0);
+> +	if (!syscon_np)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	regmap = device_node_to_regmap(syscon_np);
+> +	of_node_put(syscon_np);
+> +
+> +	return regmap;
+> +}
+> +
+>  static int aspeed_video_init(struct aspeed_video *video)
+>  {
+>  	int irq;
+>  	int rc;
+>  	struct device *dev = video->dev;
+>  
+> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
+> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
+> +
+>  	irq = irq_of_parse_and_map(dev->of_node, 0);
+>  	if (!irq) {
+>  		dev_err(dev, "Unable to find IRQ\n");
+> @@ -2167,6 +2303,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
+>  	if (!config)
+>  		return -ENODEV;
+>  
+> +	video->version = config->version;
+>  	video->jpeg_mode = config->jpeg_mode;
+>  	video->comp_size_read = config->comp_size_read;
+>  
+> diff --git a/include/uapi/linux/aspeed-video.h b/include/uapi/linux/aspeed-video.h
+> index 6586a65548c4..15168e8c931e 100644
+> --- a/include/uapi/linux/aspeed-video.h
+> +++ b/include/uapi/linux/aspeed-video.h
+> @@ -8,6 +8,13 @@
+>  
+>  #include <linux/v4l2-controls.h>
+>  
+> +/* aspeed video's input types */
+> +enum aspeed_video_input {
+> +	VIDEO_INPUT_VGA = 0,
+> +	VIDEO_INPUT_GFX,
+> +	VIDEO_INPUT_MAX
+> +};
+> +
+>  #define V4L2_CID_ASPEED_HQ_MODE			(V4L2_CID_USER_ASPEED_BASE  + 1)
+>  #define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(V4L2_CID_USER_ASPEED_BASE  + 2)
+>  
+> 
+> base-commit: e9d22f7a6655941fc8b2b942ed354ec780936b3e
 
-   drivers/i2c/busses/i2c-npcm7xx.c: In function 'npcm_i2c_init_clk':
->> drivers/i2c/busses/i2c-npcm7xx.c:1926:14: warning: variable 'bus_freq_khz' set but not used [-Wunused-but-set-variable]
-    1926 |         u32  bus_freq_khz;
-         |              ^~~~~~~~~~~~
->> drivers/i2c/busses/i2c-npcm7xx.c:1925:14: warning: variable 'src_clk_khz' set but not used [-Wunused-but-set-variable]
-    1925 |         u32  src_clk_khz;
-         |              ^~~~~~~~~~~
-
-
-vim +/bus_freq_khz +1926 drivers/i2c/busses/i2c-npcm7xx.c
-
-56a1485b102ed1 Tali Perry          2020-05-27  1909  
-56a1485b102ed1 Tali Perry          2020-05-27  1910  /*
-56a1485b102ed1 Tali Perry          2020-05-27  1911   * npcm_i2c_init_clk: init HW timing parameters.
-0c47dd7d09bb5d Jonathan Neuschäfer 2022-01-29  1912   * NPCM7XX i2c module timing parameters are dependent on module core clk (APB)
-56a1485b102ed1 Tali Perry          2020-05-27  1913   * and bus frequency.
-0c47dd7d09bb5d Jonathan Neuschäfer 2022-01-29  1914   * 100kHz bus requires tSCL = 4 * SCLFRQ * tCLK. LT and HT are symmetric.
-0c47dd7d09bb5d Jonathan Neuschäfer 2022-01-29  1915   * 400kHz bus requires asymmetric HT and LT. A different equation is recommended
-56a1485b102ed1 Tali Perry          2020-05-27  1916   * by the HW designer, given core clock range (equations in comments below).
-56a1485b102ed1 Tali Perry          2020-05-27  1917   *
-56a1485b102ed1 Tali Perry          2020-05-27  1918   */
-56a1485b102ed1 Tali Perry          2020-05-27  1919  static int npcm_i2c_init_clk(struct npcm_i2c *bus, u32 bus_freq_hz)
-56a1485b102ed1 Tali Perry          2020-05-27  1920  {
-a946fe9698f261 Tyrone Ting         2024-08-07  1921  	struct  SMB_TIMING_T *smb_timing;
-a946fe9698f261 Tyrone Ting         2024-08-07  1922  	u8   scl_table_cnt = 0, table_size = 0;
-a946fe9698f261 Tyrone Ting         2024-08-07  1923  
-56a1485b102ed1 Tali Perry          2020-05-27  1924  	u8   fast_mode = 0;
-56a1485b102ed1 Tali Perry          2020-05-27 @1925  	u32  src_clk_khz;
-56a1485b102ed1 Tali Perry          2020-05-27 @1926  	u32  bus_freq_khz;
-56a1485b102ed1 Tali Perry          2020-05-27  1927  
-56a1485b102ed1 Tali Perry          2020-05-27  1928  	src_clk_khz = bus->apb_clk / 1000;
-56a1485b102ed1 Tali Perry          2020-05-27  1929  	bus_freq_khz = bus_freq_hz / 1000;
-56a1485b102ed1 Tali Perry          2020-05-27  1930  	bus->bus_freq = bus_freq_hz;
-56a1485b102ed1 Tali Perry          2020-05-27  1931  
-a946fe9698f261 Tyrone Ting         2024-08-07  1932  	switch (bus_freq_hz) {
-a946fe9698f261 Tyrone Ting         2024-08-07  1933  	case I2C_MAX_STANDARD_MODE_FREQ:
-a946fe9698f261 Tyrone Ting         2024-08-07  1934  		smb_timing = SMB_TIMING_100KHZ;
-a946fe9698f261 Tyrone Ting         2024-08-07  1935  		table_size = ARRAY_SIZE(SMB_TIMING_100KHZ);
-a946fe9698f261 Tyrone Ting         2024-08-07  1936  		break;
-a946fe9698f261 Tyrone Ting         2024-08-07  1937  	case I2C_MAX_FAST_MODE_FREQ:
-a946fe9698f261 Tyrone Ting         2024-08-07  1938  		smb_timing = SMB_TIMING_400KHZ;
-a946fe9698f261 Tyrone Ting         2024-08-07  1939  		table_size = ARRAY_SIZE(SMB_TIMING_400KHZ);
-56a1485b102ed1 Tali Perry          2020-05-27  1940  		fast_mode = I2CCTL3_400K_MODE;
-a946fe9698f261 Tyrone Ting         2024-08-07  1941  		break;
-a946fe9698f261 Tyrone Ting         2024-08-07  1942  	case I2C_MAX_FAST_MODE_PLUS_FREQ:
-a946fe9698f261 Tyrone Ting         2024-08-07  1943  		smb_timing = SMB_TIMING_1000KHZ;
-a946fe9698f261 Tyrone Ting         2024-08-07  1944  		table_size = ARRAY_SIZE(SMB_TIMING_1000KHZ);
-56a1485b102ed1 Tali Perry          2020-05-27  1945  		fast_mode = I2CCTL3_400K_MODE;
-a946fe9698f261 Tyrone Ting         2024-08-07  1946  		break;
-a946fe9698f261 Tyrone Ting         2024-08-07  1947  	default:
-56a1485b102ed1 Tali Perry          2020-05-27  1948  		return -EINVAL;
-56a1485b102ed1 Tali Perry          2020-05-27  1949  	}
-56a1485b102ed1 Tali Perry          2020-05-27  1950  
-a946fe9698f261 Tyrone Ting         2024-08-07  1951  	for (scl_table_cnt = 0 ; scl_table_cnt < table_size ; scl_table_cnt++)
-a946fe9698f261 Tyrone Ting         2024-08-07  1952  		if (bus->apb_clk >= smb_timing[scl_table_cnt].core_clk)
-a946fe9698f261 Tyrone Ting         2024-08-07  1953  			break;
-a946fe9698f261 Tyrone Ting         2024-08-07  1954  
-56a1485b102ed1 Tali Perry          2020-05-27  1955  	/* write sclfrq value. bits [6:0] are in I2CCTL2 reg */
-a946fe9698f261 Tyrone Ting         2024-08-07  1956  	iowrite8(FIELD_PREP(I2CCTL2_SCLFRQ6_0, smb_timing[scl_table_cnt].sclfrq & 0x7F),
-56a1485b102ed1 Tali Perry          2020-05-27  1957  		 bus->reg + NPCM_I2CCTL2);
-56a1485b102ed1 Tali Perry          2020-05-27  1958  
-56a1485b102ed1 Tali Perry          2020-05-27  1959  	/* bits [8:7] are in I2CCTL3 reg */
-a946fe9698f261 Tyrone Ting         2024-08-07  1960  	iowrite8(fast_mode | FIELD_PREP(I2CCTL3_SCLFRQ8_7, (smb_timing[scl_table_cnt].sclfrq >> 7)
-a946fe9698f261 Tyrone Ting         2024-08-07  1961  		 & 0x3),
-56a1485b102ed1 Tali Perry          2020-05-27  1962  		 bus->reg + NPCM_I2CCTL3);
-56a1485b102ed1 Tali Perry          2020-05-27  1963  
-56a1485b102ed1 Tali Perry          2020-05-27  1964  	/* Select Bank 0 to access NPCM_I2CCTL4/NPCM_I2CCTL5 */
-56a1485b102ed1 Tali Perry          2020-05-27  1965  	npcm_i2c_select_bank(bus, I2C_BANK_0);
-56a1485b102ed1 Tali Perry          2020-05-27  1966  
-56a1485b102ed1 Tali Perry          2020-05-27  1967  	if (bus_freq_hz >= I2C_MAX_FAST_MODE_FREQ) {
-56a1485b102ed1 Tali Perry          2020-05-27  1968  		/*
-56a1485b102ed1 Tali Perry          2020-05-27  1969  		 * Set SCL Low/High Time:
-56a1485b102ed1 Tali Perry          2020-05-27  1970  		 * k1 = 2 * SCLLT7-0 -> Low Time  = k1 / 2
-56a1485b102ed1 Tali Perry          2020-05-27  1971  		 * k2 = 2 * SCLLT7-0 -> High Time = k2 / 2
-56a1485b102ed1 Tali Perry          2020-05-27  1972  		 */
-a946fe9698f261 Tyrone Ting         2024-08-07  1973  		iowrite8(smb_timing[scl_table_cnt].scllt, bus->reg + NPCM_I2CSCLLT);
-a946fe9698f261 Tyrone Ting         2024-08-07  1974  		iowrite8(smb_timing[scl_table_cnt].sclht, bus->reg + NPCM_I2CSCLHT);
-56a1485b102ed1 Tali Perry          2020-05-27  1975  
-a946fe9698f261 Tyrone Ting         2024-08-07  1976  		iowrite8(smb_timing[scl_table_cnt].dbcnt, bus->reg + NPCM_I2CCTL5);
-56a1485b102ed1 Tali Perry          2020-05-27  1977  	}
-56a1485b102ed1 Tali Perry          2020-05-27  1978  
-a946fe9698f261 Tyrone Ting         2024-08-07  1979  	iowrite8(smb_timing[scl_table_cnt].hldt, bus->reg + NPCM_I2CCTL4);
-56a1485b102ed1 Tali Perry          2020-05-27  1980  
-56a1485b102ed1 Tali Perry          2020-05-27  1981  	/* Return to Bank 1, and stay there by default: */
-56a1485b102ed1 Tali Perry          2020-05-27  1982  	npcm_i2c_select_bank(bus, I2C_BANK_1);
-56a1485b102ed1 Tali Perry          2020-05-27  1983  
-56a1485b102ed1 Tali Perry          2020-05-27  1984  	return 0;
-56a1485b102ed1 Tali Perry          2020-05-27  1985  }
-56a1485b102ed1 Tali Perry          2020-05-27  1986  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
