@@ -2,85 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E42A94B721
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2024 09:08:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D20D94C7B6
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2024 02:43:23 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YQUmqMJy;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WfdRd3F5Qz3dRb
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2024 17:08:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wg4s543X9z2yY0
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2024 10:43:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=srs0=os15=ph=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YQUmqMJy;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WfdRG30q0z3cmV;
-	Thu,  8 Aug 2024 17:07:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WftLp4251z2xb9;
+	Fri,  9 Aug 2024 02:49:54 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 082ED614DB;
-	Thu,  8 Aug 2024 07:07:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A10C32782;
-	Thu,  8 Aug 2024 07:07:48 +0000 (UTC)
-Message-ID: <2387b4c4-42a0-4435-afea-1574f42970eb@xs4all.nl>
-Date: Thu, 8 Aug 2024 09:07:47 +0200
+	by sin.source.kernel.org (Postfix) with ESMTP id 4A3B4CE123B;
+	Thu,  8 Aug 2024 16:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D86C32782;
+	Thu,  8 Aug 2024 16:49:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723135789;
+	bh=XTwEvmp5OlD/iluIen7qkHkb3qmv9F4vq/Wk3TaBQLE=;
+	h=From:List-Id:To:Cc:Subject:Date:From;
+	b=YQUmqMJyqdU4oeEzrlYd2G6SWv53HZ2MNeqqm+529DVoYhZma7BOnqdeO+undARkA
+	 tLe18k5cKOl87nbLPQj7lWqVZbmdsohCCXrhwpSFzmjHCEgNMJL8z4ptE3+Qww00lJ
+	 I68OcY2eRcX+9jfgONKofteISCVinfkzpTjiaDu/oV2TmAt/HEbRHy62b2ku4ru1TE
+	 isN9kHOSM8E2fuWsXi0db+gAsb7P3bw74ueRbInjtXL6CGN8WZWI/Rpp77/jUamawL
+	 rbPVK65DaCoN4543jRvqInPDWVHQ6agGVGStBHPrfRDHtGFXc6cUr+gze/rTGg2j4m
+	 g01K8W2U3137w==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: soc@kernel.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Mark Jackson <mpfj@newflow.co.uk>,
+	Tony Lindgren <tony@atomide.com>,
+	Michal Simek <michal.simek@amd.com>
+Subject: [PATCH] ARM: dts: Fix undocumented LM75 compatible nodes
+Date: Thu,  8 Aug 2024 10:49:38 -0600
+Message-ID: <20240808164941.1407327-1-robh@kernel.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: aspeed: Allow to capture from SoC display (GFX)
-To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
- mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
- linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-References: <20240708005952.481727-1-jammy_huang@aspeedtech.com>
-Content-Language: en-US, nl
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <20240708005952.481727-1-jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Fri, 09 Aug 2024 10:42:55 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,481 +80,302 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, imx@lists.linux.dev, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 08/07/2024 02:59, Jammy Huang wrote:
-> ASPEED BMC IC has 2 different display engines. Please find AST2600's
-> datasheet to get detailed information.
-> 
-> 1. VGA on PCIe
-> 2. SoC Display (GFX)
-> 
-> By default, video engine (VE) will capture video from VGA. This patch
-> adds an option to capture video from GFX with standard ioctl,
-> vidioc_s_input.
-> 
-> An enum, aspeed_video_input, is added for this purpose.
-> enum aspeed_video_input {
-> 	VIDEO_INPUT_VGA = 0,
-> 	VIDEO_INPUT_GFX,
-> 	VIDEO_INPUT_MAX
-> };
-> 
-> To test this feature, you will need to enable GFX first. Please refer to
-> ASPEED's SDK_User_Guide, 6.3.x Soc Display driver, for more information.
-> In your application, you will need to use v4l2 ioctl, VIDIOC_S_INPUT, as
-> below to select before start streaming.
-> 
-> int rc;
-> struct v4l2_input input;
-> 
-> input.index = VIDEO_INPUT_GFX;
-> rc = ioctl(fd, VIDIOC_S_INPUT, &input);
-> if (rc < 0)
-> {
-> 	...
-> }
-> 
-> Link: https://github.com/AspeedTech-BMC/openbmc/releases
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
->  drivers/media/platform/aspeed/aspeed-video.c | 189 ++++++++++++++++---
->  include/uapi/linux/aspeed-video.h            |   7 +
->  2 files changed, 170 insertions(+), 26 deletions(-)
-> 
-> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-> index fc6050e3be0d..79dbec113f3f 100644
-> --- a/drivers/media/platform/aspeed/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed/aspeed-video.c
-> @@ -25,6 +25,8 @@
->  #include <linux/workqueue.h>
->  #include <linux/debugfs.h>
->  #include <linux/ktime.h>
-> +#include <linux/regmap.h>
-> +#include <linux/mfd/syscon.h>
->  #include <media/v4l2-ctrls.h>
->  #include <media/v4l2-dev.h>
->  #include <media/v4l2-device.h>
-> @@ -203,6 +205,25 @@
->  #define VE_MEM_RESTRICT_START		0x310
->  #define VE_MEM_RESTRICT_END		0x314
->  
-> +/* SCU's registers */
-> +#define SCU_MISC_CTRL			0xC0
-> +#define  SCU_DPLL_SOURCE		BIT(20)
-> +
-> +/* GFX's registers */
-> +#define GFX_CTRL			0x60
-> +#define  GFX_CTRL_ENABLE		BIT(0)
-> +#define  GFX_CTRL_FMT			GENMASK(9, 7)
-> +
-> +#define GFX_H_DISPLAY			0x70
-> +#define  GFX_H_DISPLAY_DE		GENMASK(28, 16)
-> +#define  GFX_H_DISPLAY_TOTAL		GENMASK(12, 0)
-> +
-> +#define GFX_V_DISPLAY			0x78
-> +#define  GFX_V_DISPLAY_DE		GENMASK(27, 16)
-> +#define  GFX_V_DISPLAY_TOTAL		GENMASK(11, 0)
-> +
-> +#define GFX_DISPLAY_ADDR		0x80
-> +
->  /*
->   * VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
->   * VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
-> @@ -262,6 +283,7 @@ struct aspeed_video_perf {
->  /*
->   * struct aspeed_video - driver data
->   *
-> + * version:		holds the version of aspeed SoC
->   * res_work:		holds the delayed_work for res-detection if unlock
->   * buffers:		holds the list of buffer queued from user
->   * flags:		holds the state of video
-> @@ -273,6 +295,7 @@ struct aspeed_video_perf {
->   * yuv420:		a flag raised if JPEG subsampling is 420
->   * format:		holds the video format
->   * hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
-> + * input:		holds the video input
->   * frame_rate:		holds the frame_rate
->   * jpeg_quality:	holds jpeq's quality (0~11)
->   * jpeg_hq_quality:	holds hq's quality (1~12) only if hq_mode enabled
-> @@ -298,6 +321,9 @@ struct aspeed_video {
->  	struct video_device vdev;
->  	struct mutex video_lock;	/* v4l2 and videobuf2 lock */
->  
-> +	struct regmap *scu;
-> +	struct regmap *gfx;
-> +	u32 version;
->  	u32 jpeg_mode;
->  	u32 comp_size_read;
->  
-> @@ -316,6 +342,7 @@ struct aspeed_video {
->  	bool yuv420;
->  	enum aspeed_video_format format;
->  	bool hq_mode;
-> +	enum aspeed_video_input input;
->  	unsigned int frame_rate;
->  	unsigned int jpeg_quality;
->  	unsigned int jpeg_hq_quality;
-> @@ -331,21 +358,25 @@ struct aspeed_video {
->  #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
->  
->  struct aspeed_video_config {
-> +	u32 version;
->  	u32 jpeg_mode;
->  	u32 comp_size_read;
->  };
->  
->  static const struct aspeed_video_config ast2400_config = {
-> +	.version = 4,
->  	.jpeg_mode = AST2400_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
->  };
->  
->  static const struct aspeed_video_config ast2500_config = {
-> +	.version = 5,
->  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
->  };
->  
->  static const struct aspeed_video_config ast2600_config = {
-> +	.version = 6,
->  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2600_VE_COMP_SIZE_READ_BACK,
->  };
-> @@ -485,6 +516,7 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
->  
->  static const char * const format_str[] = {"Standard JPEG",
->  	"Aspeed JPEG"};
-> +static const char * const input_str[] = {"VGA", "BMC GFX"};
->  
->  static unsigned int debug;
->  
-> @@ -609,6 +641,14 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->  		aspeed_video_free_buf(video, &video->bcd);
->  	}
->  
-> +	if (video->input == VIDEO_INPUT_GFX) {
-> +		u32 val;
-> +
-> +		// update input buffer address as gfx's
-> +		regmap_read(video->gfx, GFX_DISPLAY_ADDR, &val);
-> +		aspeed_video_write(video, VE_TGS_0, val);
-> +	}
-> +
->  	spin_lock_irqsave(&video->lock, flags);
->  	buf = list_first_entry_or_null(&video->buffers,
->  				       struct aspeed_video_buffer, link);
-> @@ -1026,9 +1066,23 @@ static void aspeed_video_get_timings(struct aspeed_video *v,
->  	}
->  }
->  
-> +static void aspeed_video_get_resolution_gfx(struct aspeed_video *video,
-> +					    struct v4l2_bt_timings *det)
-> +{
-> +	u32 h_val, v_val;
-> +
-> +	regmap_read(video->gfx, GFX_H_DISPLAY, &h_val);
-> +	regmap_read(video->gfx, GFX_V_DISPLAY, &v_val);
-> +
-> +	det->width = FIELD_GET(GFX_H_DISPLAY_DE, h_val) + 1;
-> +	det->height = FIELD_GET(GFX_V_DISPLAY_DE, v_val) + 1;
-> +	video->v4l2_input_status = 0;
-> +}
-> +
->  #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
->  
-> -static void aspeed_video_get_resolution(struct aspeed_video *video)
-> +static void aspeed_video_get_resolution_vga(struct aspeed_video *video,
-> +					    struct v4l2_bt_timings *det)
->  {
->  	bool invalid_resolution = true;
->  	int rc;
-> @@ -1036,7 +1090,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->  	u32 mds;
->  	u32 src_lr_edge;
->  	u32 src_tb_edge;
-> -	struct v4l2_bt_timings *det = &video->detected_timings;
->  
->  	det->width = MIN_WIDTH;
->  	det->height = MIN_HEIGHT;
-> @@ -1113,14 +1166,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->  
->  	aspeed_video_get_timings(video, det);
->  
-> -	/*
-> -	 * Enable mode-detect watchdog, resolution-change watchdog and
-> -	 * automatic compression after frame capture.
-> -	 */
-> +	/* Enable mode-detect watchdog, resolution-change watchdog */
->  	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
->  			    VE_INTERRUPT_MODE_DETECT_WD);
-> -	aspeed_video_update(video, VE_SEQ_CTRL, 0,
-> -			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
-> +	aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_EN_WATCHDOG);
-> +}
-> +
-> +static void aspeed_video_get_resolution(struct aspeed_video *video)
-> +{
-> +	struct v4l2_bt_timings *det = &video->detected_timings;
-> +
-> +	if (video->input == VIDEO_INPUT_GFX)
-> +		aspeed_video_get_resolution_gfx(video, det);
-> +	else
-> +		aspeed_video_get_resolution_vga(video, det);
->  
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
->  		 det->width, det->height);
-> @@ -1156,7 +1215,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
->  
->  	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
-> -	if (size < DIRECT_FETCH_THRESHOLD) {
-> +	if (video->input == VIDEO_INPUT_VGA && size < DIRECT_FETCH_THRESHOLD) {
->  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
->  		aspeed_video_write(video, VE_TGS_0,
->  				   FIELD_PREP(VE_TGS_FIRST,
-> @@ -1171,10 +1230,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
->  				    VE_CTRL_INT_DE);
->  	} else {
-> +		u32 ctrl, val, bpp;
-> +
->  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
-> +		ctrl = VE_CTRL_DIRECT_FETCH;
-> +		if (video->input == VIDEO_INPUT_GFX) {
-> +			regmap_read(video->gfx, GFX_CTRL, &val);
-> +			bpp = FIELD_GET(GFX_CTRL_FMT, val) ? 32 : 16;
-> +			if (bpp == 16)
-> +				ctrl |= VE_CTRL_INT_DE;
-> +			aspeed_video_write(video, VE_TGS_1, act->width * (bpp >> 3));
-> +		}
->  		aspeed_video_update(video, VE_CTRL,
->  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
-> -				    VE_CTRL_DIRECT_FETCH);
-> +				    ctrl);
->  	}
->  
->  	size *= 4;
-> @@ -1207,6 +1276,22 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  		aspeed_video_free_buf(video, &video->srcs[0]);
->  }
->  
-> +/*
-> + * Update relative parameters when timing changed.
-> + *
-> + * @video: the struct of aspeed_video
-> + * @timings: the new timings
-> + */
-> +static void aspeed_video_update_timings(struct aspeed_video *video, struct v4l2_bt_timings *timings)
-> +{
-> +	video->active_timings = *timings;
-> +	aspeed_video_set_resolution(video);
-> +
-> +	video->pix_fmt.width = timings->width;
-> +	video->pix_fmt.height = timings->height;
-> +	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +}
-> +
->  static void aspeed_video_update_regs(struct aspeed_video *video)
->  {
->  	u8 jpeg_hq_quality = clamp((int)video->jpeg_hq_quality - 1, 0,
-> @@ -1219,6 +1304,8 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	u32 ctrl = 0;
->  	u32 seq_ctrl = 0;
->  
-> +	v4l2_dbg(1, debug, &video->v4l2_dev, "input(%s)\n",
-> +		 input_str[video->input]);
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
->  		 video->frame_rate);
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
-> @@ -1234,6 +1321,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	else
->  		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
->  
-> +	if (video->input == VIDEO_INPUT_VGA)
-> +		ctrl |= VE_CTRL_AUTO_OR_CURSOR;
-> +
->  	if (video->frame_rate)
->  		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
->  
-> @@ -1252,7 +1342,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	aspeed_video_update(video, VE_SEQ_CTRL,
->  			    video->jpeg_mode | VE_SEQ_CTRL_YUV420,
->  			    seq_ctrl);
-> -	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
-> +	aspeed_video_update(video, VE_CTRL,
-> +			    VE_CTRL_FRC | VE_CTRL_AUTO_OR_CURSOR |
-> +			    VE_CTRL_SOURCE, ctrl);
->  	aspeed_video_update(video, VE_COMP_CTRL,
->  			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
->  			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
-> @@ -1280,6 +1372,7 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
->  	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
->  
->  	/* Set control registers */
-> +	aspeed_video_write(video, VE_SEQ_CTRL, VE_SEQ_CTRL_AUTO_COMP);
->  	aspeed_video_write(video, VE_CTRL, ctrl);
->  	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
->  
-> @@ -1311,12 +1404,7 @@ static void aspeed_video_start(struct aspeed_video *video)
->  	aspeed_video_get_resolution(video);
->  
->  	/* Set timings since the device is being opened for the first time */
-> -	video->active_timings = video->detected_timings;
-> -	aspeed_video_set_resolution(video);
-> -
-> -	video->pix_fmt.width = video->active_timings.width;
-> -	video->pix_fmt.height = video->active_timings.height;
-> -	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +	aspeed_video_update_timings(video, &video->detected_timings);
->  }
->  
->  static void aspeed_video_stop(struct aspeed_video *video)
-> @@ -1414,16 +1502,47 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
->  
->  static int aspeed_video_get_input(struct file *file, void *fh, unsigned int *i)
->  {
-> -	*i = 0;
-> +	struct aspeed_video *video = video_drvdata(file);
-> +
-> +	*i = video->input;
->  
->  	return 0;
->  }
->  
->  static int aspeed_video_set_input(struct file *file, void *fh, unsigned int i)
->  {
-> -	if (i)
-> +	struct aspeed_video *video = video_drvdata(file);
-> +
-> +	if (i >= VIDEO_INPUT_MAX)
->  		return -EINVAL;
->  
-> +	if (IS_ERR(video->scu)) {
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: scu isn't ready for input-control\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (IS_ERR(video->gfx) && i == VIDEO_INPUT_GFX) {
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: gfx isn't ready for GFX input\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	video->input = i;
-> +
-> +	if (video->version == 6) {
-> +		/* modify dpll source per current input */
-> +		if (video->input == VIDEO_INPUT_VGA)
-> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, 0);
-> +		else
-> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, SCU_DPLL_SOURCE);
-> +	}
-> +
-> +	aspeed_video_update_regs(video);
-> +
-> +	/* update signal status */
-> +	aspeed_video_get_resolution(video);
-> +	if (!video->v4l2_input_status)
-> +		aspeed_video_update_timings(video, &video->detected_timings);
-> +
->  	return 0;
->  }
+"lm75" without any vendor is undocumented. It works with the Linux
+kernel since the I2C subsystem will do matches of the compatible string
+without a vendor prefix to the i2c_device_id and/or driver name.
 
-You forgot to update aspeed_video_enum_input()!
+Mostly replace "lm75" with "national,lm75" as that's the original part
+vendor and the compatible which matches what "lm75" matched with. In a
+couple of cases the node name or compatible gives a clue to the actual
+part and vendor and a more specific compatible can be used. In these
+cases, it does change the variant the kernel picks.
 
-If possible, always run v4l2-compliance (directly build from the v4l-utils git repo) whenever
-you make changes to ioctls like this, it would have caught this.
+"nct75" is an OnSemi part which is compatible with TI TMP75C based on
+a comparison of the OnSemi NCT75 datasheet and configuration the Linux
+driver uses. Adding an OnSemi compatible would be an ABI change.
 
-Regards,
+"nxp,lm75" is most likely an NXP part. NXP makes a LM75A and LM75B.
+Both are 11-bit resolution and 100ms sample time, so "national,lm75b" is
+the closest match.
 
-	Hans
+While we're here, fix the node names to use the generic name
+"temperature-sensor".
 
->  
-> @@ -1527,13 +1646,7 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
->  	if (vb2_is_busy(&video->queue))
->  		return -EBUSY;
->  
-> -	video->active_timings = timings->bt;
-> -
-> -	aspeed_video_set_resolution(video);
-> -
-> -	video->pix_fmt.width = timings->bt.width;
-> -	video->pix_fmt.height = timings->bt.height;
-> -	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +	aspeed_video_update_timings(video, &timings->bt);
->  
->  	timings->type = V4L2_DV_BT_656_1120;
->  
-> @@ -1911,6 +2024,7 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
->  	val08 = aspeed_video_read(v, VE_CTRL);
->  	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
->  		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
-> +		seq_printf(s, "  %-20s:\t%s\n", "Input", input_str[v->input]);
->  		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
->  			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
->  	} else {
-> @@ -2070,12 +2184,34 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
->  	return 0;
->  }
->  
-> +/*
-> + * Get regmap without checking res, such as clk/reset, that could lead to
-> + * conflict.
-> + */
-> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
-> +{
-> +	struct device_node *syscon_np;
-> +	struct regmap *regmap;
-> +
-> +	syscon_np = of_parse_phandle(np, property, 0);
-> +	if (!syscon_np)
-> +		return ERR_PTR(-ENODEV);
-> +
-> +	regmap = device_node_to_regmap(syscon_np);
-> +	of_node_put(syscon_np);
-> +
-> +	return regmap;
-> +}
-> +
->  static int aspeed_video_init(struct aspeed_video *video)
->  {
->  	int irq;
->  	int rc;
->  	struct device *dev = video->dev;
->  
-> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
-> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
-> +
->  	irq = irq_of_parse_and_map(dev->of_node, 0);
->  	if (!irq) {
->  		dev_err(dev, "Unable to find IRQ\n");
-> @@ -2167,6 +2303,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
->  	if (!config)
->  		return -ENODEV;
->  
-> +	video->version = config->version;
->  	video->jpeg_mode = config->jpeg_mode;
->  	video->comp_size_read = config->comp_size_read;
->  
-> diff --git a/include/uapi/linux/aspeed-video.h b/include/uapi/linux/aspeed-video.h
-> index 6586a65548c4..15168e8c931e 100644
-> --- a/include/uapi/linux/aspeed-video.h
-> +++ b/include/uapi/linux/aspeed-video.h
-> @@ -8,6 +8,13 @@
->  
->  #include <linux/v4l2-controls.h>
->  
-> +/* aspeed video's input types */
-> +enum aspeed_video_input {
-> +	VIDEO_INPUT_VGA = 0,
-> +	VIDEO_INPUT_GFX,
-> +	VIDEO_INPUT_MAX
-> +};
-> +
->  #define V4L2_CID_ASPEED_HQ_MODE			(V4L2_CID_USER_ASPEED_BASE  + 1)
->  #define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(V4L2_CID_USER_ASPEED_BASE  + 2)
->  
-> 
-> base-commit: e9d22f7a6655941fc8b2b942ed354ec780936b3e
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+SoC maintainers, Please take this directly.
+---
+ .../aspeed/aspeed-bmc-facebook-greatlakes.dts |  2 +-
+ .../socfpga/socfpga_cyclone5_vining_fpga.dts  |  4 +--
+ .../dts/marvell/armada-385-clearfog-gtr.dtsi  |  8 ++---
+ .../boot/dts/nuvoton/nuvoton-npcm730-kudo.dts | 32 +++++++++----------
+ .../boot/dts/nuvoton/nuvoton-npcm750-evb.dts  |  6 ++--
+ arch/arm/boot/dts/nxp/imx/imx53-mba53.dts     |  4 +--
+ arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi   |  4 +--
+ .../dts/nxp/lpc/lpc4357-ea4357-devkit.dts     |  4 +--
+ .../boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts  |  2 +-
+ arch/arm/boot/dts/ti/omap/am335x-nano.dts     |  2 +-
+ .../boot/dts/xilinx/zynq-zturn-common.dtsi    |  4 +--
+ 11 files changed, 36 insertions(+), 36 deletions(-)
+
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
+index 998598c15fd0..49914a4a179f 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
++++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
+@@ -201,7 +201,7 @@ eeprom@54 {
+ &i2c12 {
+ 	status = "okay";
+ 	temperature-sensor@4f {
+-		compatible = "lm75";
++		compatible = "national,lm75";
+ 		reg = <0x4f>;
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts b/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
+index 65f390bf8975..84f39dec3c42 100644
+--- a/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
++++ b/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
+@@ -130,8 +130,8 @@ gpio: pca9557@1f {
+ 		#gpio-cells = <2>;
+ 	};
+ 
+-	temp: lm75@48 {
+-		compatible = "lm75";
++	temp: temperature-sensor@48 {
++		compatible = "national,lm75";
+ 		reg = <0x48>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi b/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
+index f3a3cb6ac311..8208c6a9627a 100644
+--- a/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
++++ b/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
+@@ -423,14 +423,14 @@ &i2c0 {
+ 	status = "okay";
+ 
+ 	/* U26 temperature sensor placed near SoC */
+-	temp1: nct75@4c {
+-		compatible = "lm75";
++	temp1: temperature-sensor@4c {
++		compatible = "ti,tmp75c";
+ 		reg = <0x4c>;
+ 	};
+ 
+ 	/* U27 temperature sensor placed near RTC battery */
+-	temp2: nct75@4d {
+-		compatible = "lm75";
++	temp2: temperature-sensor@4d {
++		compatible = "ti,tmp75c";
+ 		reg = <0x4d>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
+index 1f07ba382910..886a87dfcd0d 100644
+--- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
++++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
+@@ -531,8 +531,8 @@ i2c@4 {
+ 			reg = <4>;
+ 
+ 			// INLET1_T
+-			lm75@5c {
+-				compatible = "ti,lm75";
++			temperature-sensor@5c {
++				compatible = "national,lm75";
+ 				reg = <0x5c>;
+ 			};
+ 		};
+@@ -543,8 +543,8 @@ i2c@5 {
+ 			reg = <5>;
+ 
+ 			// OUTLET1_T
+-			lm75@5c {
+-				compatible = "ti,lm75";
++			temperature-sensor@5c {
++				compatible = "national,lm75";
+ 				reg = <0x5c>;
+ 			};
+ 		};
+@@ -555,8 +555,8 @@ i2c@6 {
+ 			reg = <6>;
+ 
+ 			// OUTLET2_T
+-			lm75@5c {
+-				compatible = "ti,lm75";
++			temperature-sensor@5c {
++				compatible = "national,lm75";
+ 				reg = <0x5c>;
+ 			};
+ 		};
+@@ -567,8 +567,8 @@ i2c@7 {
+ 			reg = <7>;
+ 
+ 			// OUTLET3_T
+-			lm75@5c {
+-				compatible = "ti,lm75";
++			temperature-sensor@5c {
++				compatible = "national,lm75";
+ 				reg = <0x5c>;
+ 			};
+ 		};
+@@ -697,8 +697,8 @@ i2c@3 {
+ 			reg = <3>;
+ 
+ 			// M2_ZONE_T
+-			lm75@28 {
+-				compatible = "ti,lm75";
++			temperature-sensor@28 {
++				compatible = "national,lm75";
+ 				reg = <0x28>;
+ 			};
+ 		};
+@@ -709,8 +709,8 @@ i2c@4 {
+ 			reg = <4>;
+ 
+ 			// BATT_ZONE_T
+-			lm75@29 {
+-				compatible = "ti,lm75";
++			temperature-sensor@29 {
++				compatible = "national,lm75";
+ 				reg = <0x29>;
+ 			};
+ 		};
+@@ -721,8 +721,8 @@ i2c@5 {
+ 			reg = <5>;
+ 
+ 			// NBM1_ZONE_T
+-			lm75@28 {
+-				compatible = "ti,lm75";
++			temperature-sensor@28 {
++				compatible = "national,lm75";
+ 				reg = <0x28>;
+ 			};
+ 		};
+@@ -732,8 +732,8 @@ i2c@6 {
+ 			reg = <6>;
+ 
+ 			// NBM2_ZONE_T
+-			lm75@29 {
+-				compatible = "ti,lm75";
++			temperature-sensor@29 {
++				compatible = "national,lm75";
+ 				reg = <0x29>;
+ 			};
+ 		};
+diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
+index f53d45fa1de8..bcdcb30c7bf6 100644
+--- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
+@@ -198,7 +198,7 @@ &i2c0 {
+ 	clock-frequency = <100000>;
+ 	status = "okay";
+ 	lm75@48 {
+-		compatible = "lm75";
++		compatible = "national,lm75";
+ 		reg = <0x48>;
+ 		status = "okay";
+ 	};
+@@ -208,8 +208,8 @@ lm75@48 {
+ &i2c1 {
+ 	clock-frequency = <100000>;
+ 	status = "okay";
+-	lm75@48 {
+-		compatible = "lm75";
++	temperature-sensor@48 {
++		compatible = "national,lm75";
+ 		reg = <0x48>;
+ 		status = "okay";
+ 	};
+diff --git a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts b/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
+index 2117de872703..d155b3ec22ef 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
+@@ -175,8 +175,8 @@ expander: pca9554@20 {
+ 		gpio-controller;
+ 	};
+ 
+-	sensor2: lm75@49 {
+-		compatible = "lm75";
++	sensor2: temperature-sensor@49 {
++		compatible = "national,lm75";
+ 		reg = <0x49>;
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi b/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
+index b2d7271d1d24..d01c3aee0272 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
+@@ -254,8 +254,8 @@ pmic: mc34708@8 {
+ 		interrupts = <6 4>; /* PATA_DATA6, active high */
+ 	};
+ 
+-	sensor1: lm75@48 {
+-		compatible = "lm75";
++	sensor1: temperature-sensor@48 {
++		compatible = "national,lm75";
+ 		reg = <0x48>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts b/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
+index 224f80a4a31d..4aefbc01dfc0 100644
+--- a/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
++++ b/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
+@@ -482,8 +482,8 @@ mma7455@1d {
+ 		reg = <0x1d>;
+ 	};
+ 
+-	lm75@48 {
+-		compatible = "nxp,lm75";
++	temperature-sensor@48 {
++		compatible = "national,lm75b";
+ 		reg = <0x48>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts b/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
+index 1f84654df50c..846afb8ccbf1 100644
+--- a/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
++++ b/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
+@@ -511,7 +511,7 @@ &i2c1 {
+ 	clock-frequency = <400000>;
+ 
+ 	sensor@49 {
+-		compatible = "lm75";
++		compatible = "national,lm75";
+ 		reg = <0x49>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/ti/omap/am335x-nano.dts b/arch/arm/boot/dts/ti/omap/am335x-nano.dts
+index 26b5510cb3d1..56929059f5af 100644
+--- a/arch/arm/boot/dts/ti/omap/am335x-nano.dts
++++ b/arch/arm/boot/dts/ti/omap/am335x-nano.dts
+@@ -231,7 +231,7 @@ tps: tps@24 {
+ 	};
+ 
+ 	temperature-sensor@48 {
+-		compatible = "lm75";
++		compatible = "national,lm75";
+ 		reg = <0x48>;
+ 	};
+ 
+diff --git a/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi b/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi
+index dfb1fbafe3aa..33b02e05ce82 100644
+--- a/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi
++++ b/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi
+@@ -97,9 +97,9 @@ &i2c0 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+ 
+-	stlm75@49 {
++	temperature-sensor@49 {
+ 		status = "okay";
+-		compatible = "lm75";
++		compatible = "st,stlm75";
+ 		reg = <0x49>;
+ 	};
+ 
+-- 
+2.43.0
 
