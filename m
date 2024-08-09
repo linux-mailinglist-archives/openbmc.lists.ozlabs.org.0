@@ -1,73 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0340094CB13
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2024 09:18:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9946094E3D9
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2024 01:30:49 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MRDRPYiF;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tq-group.com header.i=@tq-group.com header.a=rsa-sha256 header.s=key1 header.b=g28UZlwv;
+	dkim=fail reason="key not found in DNS" header.d=ew.tq-group.com header.i=@ew.tq-group.com header.a=rsa-sha256 header.s=dkim header.b=AA13aPQo;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WgFcb38FQz2yjR
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2024 17:18:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Whv5z266Gz2xbd
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2024 09:30:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ew.tq-group.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MRDRPYiF;
+	dkim=pass (2048-bit key; unprotected) header.d=tq-group.com header.i=@tq-group.com header.a=rsa-sha256 header.s=key1 header.b=g28UZlwv;
+	dkim=fail reason="key not found in DNS" header.d=ew.tq-group.com header.i=@ew.tq-group.com header.a=rsa-sha256 header.s=dkim header.b=AA13aPQo;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::530; helo=mail-ed1-x530.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ew.tq-group.com (client-ip=93.104.207.81; helo=mx1.tq-group.com; envelope-from=alexander.stein@ew.tq-group.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Fri, 09 Aug 2024 17:52:24 AEST
+Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WgFbn7167z2yYy
-	for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2024 17:17:24 +1000 (AEST)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5b8c2a6135dso2246063a12.1
-        for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2024 00:17:24 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WgGN83qn1z2yRC;
+	Fri,  9 Aug 2024 17:52:24 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723187839; x=1723792639; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jpODigRY1HFvjnaXk96bH9eqAyHzDGOWTbmy+vqO+EI=;
-        b=MRDRPYiFb94jat+oxYbkoRdFq0CDtd9LSEHLcWmDaF2Mg/ODM5viyoH5WBrg2Iaku8
-         J9Qq5J/dtsZrWb6MlJKZYyAk99RgMLXp0hJQvvv9VLy5VxU++WWuNXj5f1vp+LzCy/jA
-         5GX8NDzLfKZCZSNcd7nJTw1QTsJ7PIDfQmT+loWQ6Vztpcn3Aj0Aoecw2VxyyaAoeNKJ
-         4T+K9NmJ37stcD/OCLqTWd9yj496o68PMOpfh72ngVOLJZDd8KHl6HarJo58HhlKP3b9
-         /WKj/YQu/9G8QV1W/T8sU9k5XzePbw0wcpysS5CRzyXQziqdk61ZGkKvZr8ZHqsaGfac
-         or+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723187839; x=1723792639;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jpODigRY1HFvjnaXk96bH9eqAyHzDGOWTbmy+vqO+EI=;
-        b=kQVcYddpwgR0A2lFHOWqtz6/sLYCb2rgbbdFMjNfvq9Z4mzMF1RSPrIRZB0umMMDQj
-         M8RT/KK4k/aC81O8bjQzum8GKzr7rlq/Mql6X7C/IwEGtSD/ZF6EKJ/kdNP1IlHUslEk
-         zhQ1T+WNgJADjgwQzUFDpXJAqcePPjRpfrYyYqPOS63VV2t8XACe6bx3gdhWE4JMYN2p
-         eEQQwwmli37cp3eRgflJTfmY6qHMltudFrGSspPOHUrVnE0ifuifplOBoNxpfxz2X9N0
-         jfOlJyWYE/mGnMCAKty0U/dLgGhokXI3ihkujK4hvhoTT7Q+f1EU40VZS1VrlmlKn7Z4
-         jwrw==
-X-Forwarded-Encrypted: i=1; AJvYcCXgx0ezYx0xxMqiB4phe3TKr2AITCMuJvQaZBFNon4VYGDCx4oYArIgDadFa4nEn1rB7fSe7nFt/PXaUAMxA4znYXXtn0SUbDM=
-X-Gm-Message-State: AOJu0YxnD7LMhrYmuR6x344UDuqw5fLkpHGkoCcZU7DDP/RDpPSbkID+
-	UQO753a/4UURjF1lCv/oMo0KHCgDY+0xpHxXdKfd5TfFX7464WJFlJB9tbEKZW5YH9u9X+tDfWQ
-	5b5bOdqVYEFuBnpVorrI+l50KRA==
-X-Google-Smtp-Source: AGHT+IEzTI5d1jLwL4XO4ItIER/rGUNRj6ZhGxovMIQSRGAbuFN/TJjDR3qUkESHPc9yly+OhVRJdzcGDJzeQylhoN4=
-X-Received: by 2002:a17:907:6d15:b0:a7a:9ba8:f890 with SMTP id
- a640c23a62f3a-a80aa54aba5mr44627466b.13.1723187838777; Fri, 09 Aug 2024
- 00:17:18 -0700 (PDT)
+  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
+  t=1723189945; x=1754725945;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=qEKb2tBDFYtPQQYes4QRP4tJM5p3ULThCqzPcDFNfNc=;
+  b=g28UZlwvIuxa2nUv1mXHCWrZtV1ZX3QAf63CMZ3wRf2CAZnuNfnH1sQp
+   4Dw6QNkBrGpnINzAbEL69HQHO+s4gxdm0og5JInlC2ZI4ZQ1F5JBQb2fs
+   GqfI7/RK5u9jY00t484Y4zSeHFM8P8Rtpk8FaKaWy3Yn6OZE/rNq6aTkm
+   MPclTsaog3TDylh3RaNldUsItAL8y4u5KeAsOcBo/16e1TK+fFOynoed7
+   n2K98KQxaaUspiIw2wKiddnd+VbJjw4AE9nxzs/Vdpav9upp3PwkFvmSZ
+   6Ekhrl4WmsDGtznqKwK0hseaIFsU4dyl0EMEtnMbNqH5A82EsfaAAW0bm
+   g==;
+X-CSE-ConnectionGUID: JwcAz+0XR/aH896pBitJDw==
+X-CSE-MsgGUID: kVdMZKR1RUmNWIVSMJj3Ag==
+X-IronPort-AV: E=Sophos;i="6.09,275,1716242400"; 
+   d="scan'208";a="38329660"
+Received: from vmailcow01.tq-net.de ([10.150.86.48])
+  by mx1.tq-group.com with ESMTP; 09 Aug 2024 09:51:11 +0200
+X-CheckPoint: {66B5CA6F-0-F0206917-F54EFEED}
+X-MAIL-CPID: 27227B5B5898C08BF0A2BD19511608BD_4
+X-Control-Analysis: str=0001.0A782F1A.66B5CA6F.0103,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E6E8C163A4B;
+	Fri,  9 Aug 2024 09:51:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ew.tq-group.com;
+	s=dkim; t=1723189866;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=qEKb2tBDFYtPQQYes4QRP4tJM5p3ULThCqzPcDFNfNc=;
+	b=AA13aPQoadQSDdUv+s7cijsOmK61bm3M1gbgjqsMZ1SJ/kkwz2qelWR3Ov56morwxcIApY
+	F3Q3T8cakL6YGCgH2h3benXKQ95OuY7vyPe//NM/2IDJK+B/4BJDZdjaHC1j8V/o33C6Yx
+	e5LNf5Ol3x7oh+oGRPf0zO+jVnUSo8XooBtvWpaWHjz8qkWHq2s6UQJLrtFgF9Zo8bVY48
+	NPiXjXUklM5xqEhpQQ8xesdLf0RsYPK8wpNZPuG83hODi6SF6ayNMdSjoopRyCd93YJOU9
+	NFUoodsMHZbTFHBp5XMbTQJ7hHGOJqshzycYN8qA3+fPZYeXqYriYg2foLyPng==
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
+To: soc@kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, Dinh Nguyen <dinguyen@kernel.org>, Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Vladimir Zapolskiy <vz@mleia.com>, Mark Jackson <mpfj@newflow.co.uk>, Tony Lindgren <tony@atomide.com>, Michal Simek <michal.simek@amd.com>, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH] ARM: dts: Fix undocumented LM75 compatible nodes
+Date: Fri, 09 Aug 2024 09:51:03 +0200
+Message-ID: <22384730.EfDdHjke4D@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <20240808164941.1407327-1-robh@kernel.org>
+References: <20240808164941.1407327-1-robh@kernel.org>
 MIME-Version: 1.0
-References: <20240807100244.16872-1-kfting@nuvoton.com> <20240807100244.16872-8-kfting@nuvoton.com>
- <b54d11728eebb5307c1bf8ce290764bb001c725e.camel@codeconstruct.com.au>
-In-Reply-To: <b54d11728eebb5307c1bf8ce290764bb001c725e.camel@codeconstruct.com.au>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Fri, 9 Aug 2024 15:17:07 +0800
-Message-ID: <CACD3sJbnnH+j0tKYE4BfwTfY5dvMurg9jdZLY+x4W80t_oW9tw@mail.gmail.com>
-Subject: Re: [PATCH v1 7/7] i2c: npcm: fix checkpatch
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Last-TLS-Session-Version: TLSv1.3
+X-Mailman-Approved-At: Mon, 12 Aug 2024 09:30:17 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,58 +83,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, tmaimon77@gmail.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, jjliu0@nuvoton.com, linux-kernel@vger.kernel.org, andi.shyti@kernel.org, tali.perry1@gmail.com, linux-i2c@vger.kernel.org, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tomer.maimon@nuvoton.com, benjaminfair@google.com
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, imx@lists.linux.dev, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org, "Rob Herring \(Arm\)" <robh@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew:
+Am Donnerstag, 8. August 2024, 18:49:38 CEST schrieb Rob Herring (Arm):
+> "lm75" without any vendor is undocumented. It works with the Linux
+> kernel since the I2C subsystem will do matches of the compatible string
+> without a vendor prefix to the i2c_device_id and/or driver name.
+>=20
+> Mostly replace "lm75" with "national,lm75" as that's the original part
+> vendor and the compatible which matches what "lm75" matched with. In a
+> couple of cases the node name or compatible gives a clue to the actual
+> part and vendor and a more specific compatible can be used. In these
+> cases, it does change the variant the kernel picks.
+>=20
+> "nct75" is an OnSemi part which is compatible with TI TMP75C based on
+> a comparison of the OnSemi NCT75 datasheet and configuration the Linux
+> driver uses. Adding an OnSemi compatible would be an ABI change.
+>=20
+> "nxp,lm75" is most likely an NXP part. NXP makes a LM75A and LM75B.
+> Both are 11-bit resolution and 100ms sample time, so "national,lm75b" is
+> the closest match.
+>=20
+> While we're here, fix the node names to use the generic name
+> "temperature-sensor".
+>=20
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+> SoC maintainers, Please take this directly.
+> ---
+>  .../aspeed/aspeed-bmc-facebook-greatlakes.dts |  2 +-
+>  .../socfpga/socfpga_cyclone5_vining_fpga.dts  |  4 +--
+>  .../dts/marvell/armada-385-clearfog-gtr.dtsi  |  8 ++---
+>  .../boot/dts/nuvoton/nuvoton-npcm730-kudo.dts | 32 +++++++++----------
+>  .../boot/dts/nuvoton/nuvoton-npcm750-evb.dts  |  6 ++--
+>  arch/arm/boot/dts/nxp/imx/imx53-mba53.dts     |  4 +--
+>  arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi   |  4 +--
+>  .../dts/nxp/lpc/lpc4357-ea4357-devkit.dts     |  4 +--
+>  .../boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts  |  2 +-
+>  arch/arm/boot/dts/ti/omap/am335x-nano.dts     |  2 +-
+>  .../boot/dts/xilinx/zynq-zturn-common.dtsi    |  4 +--
+>  11 files changed, 36 insertions(+), 36 deletions(-)
+>=20
+< [snip]
+> diff --git a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts b/arch/arm/boot/dt=
+s/nxp/imx/imx53-mba53.dts
+> index 2117de872703..d155b3ec22ef 100644
+> --- a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
+> +++ b/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
+> @@ -175,8 +175,8 @@ expander: pca9554@20 {
+>  		gpio-controller;
+>  	};
+> =20
+> -	sensor2: lm75@49 {
+> -		compatible =3D "lm75";
+> +	sensor2: temperature-sensor@49 {
+> +		compatible =3D "national,lm75";
 
-Andrew Jeffery <andrew@codeconstruct.com.au> =E6=96=BC 2024=E5=B9=B48=E6=9C=
-=889=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=882:50=E5=AF=AB=E9=81=93=
-=EF=BC=9A
->
-> Hello,
->
-> On Wed, 2024-08-07 at 18:02 +0800, warp5tw@gmail.com wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > Fix checkpatch warning.
-> >
-> > Fixes: 48acf8292280 ("i2c: Remove redundant comparison in npcm_i2c_reg_=
-slave")
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > ---
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-=
-npcm7xx.c
-> > index 1af6a927b9c1..dbe652d628ee 100644
-> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -1783,7 +1783,7 @@ static int npcm_i2c_int_master_handler(struct npc=
-m_i2c *bus)
-> >               /* reenable slave if it was enabled */
-> >               if (bus->slave)
-> >                       iowrite8((bus->slave->addr & 0x7F) | NPCM_I2CADDR=
-_SAEN,
-> > -                             bus->reg + NPCM_I2CADDR1);
-> > +                              bus->reg + NPCM_I2CADDR1);
-> >  #endif
-> >               return 0;
-> >       }
->
-> Fixing checkpatch warnings means you need to modify the commit that
-> checkpatch identified as having problems, not just add a fix-up patch
-> on top.
->
-> It looks like this change should be squashed into the patch before it.
+I checked the old schematics. This is an NXP LM75A, so 'national,lm75a'
+would be the correct compatible.
 
-Got it, thank you for your comments.
+>  		reg =3D <0x49>;
+>  	};
+>  };
+> diff --git a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi b/arch/arm/boot/=
+dts/nxp/imx/imx53-tqma53.dtsi
+> index b2d7271d1d24..d01c3aee0272 100644
+> --- a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
+> +++ b/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
+> @@ -254,8 +254,8 @@ pmic: mc34708@8 {
+>  		interrupts =3D <6 4>; /* PATA_DATA6, active high */
+>  	};
+> =20
+> -	sensor1: lm75@48 {
+> -		compatible =3D "lm75";
+> +	sensor1: temperature-sensor@48 {
+> +		compatible =3D "national,lm75";
 
->
-> Andrew
->
+I checked the old schematics. This is an NXP LM75A, so 'national,lm75a'
+would be the correct compatible.
 
-Regards,
-Tyrone
+Best regards,
+Alexander
+
+>  		reg =3D <0x48>;
+>  	};
+> =20
+> [snip]
+
+
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+
+
