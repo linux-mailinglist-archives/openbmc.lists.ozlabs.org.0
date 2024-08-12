@@ -2,70 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD26994F519
-	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2024 18:41:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88C7E94F571
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2024 18:57:56 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FyUJajTy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NFmU9+ET;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WjKzb61pXz2yNj
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 02:41:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WjLLB346fz2yMX
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 02:57:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FyUJajTy;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NFmU9+ET;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32d; helo=mail-ot1-x32d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2001:4860:4864:20::29; helo=mail-oa1-x29.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WjKz43gcpz2xJJ
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 02:41:18 +1000 (AEST)
-Received: by mail-ot1-x32d.google.com with SMTP id 46e09a7af769-7093705c708so4430555a34.1
-        for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2024 09:41:18 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WjLKg1Kwhz2xHl
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 02:57:25 +1000 (AEST)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-26827ec5235so2296182fac.2
+        for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2024 09:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723480873; x=1724085673; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1723481838; x=1724086638; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=i0tu8faX1ziJf7MuUylD0+4RNm340SoQtnaWPO7vpgk=;
-        b=FyUJajTyBJLJwUJl4+xaK68EKgYmGplxlX10wAHY++xXk6WTet2x451OdCy5/v1JzL
-         7xAL5o0vGJHp367SNDd8PL8++8cQlUkJ91dykN2li9MTveMwDFP52zCq0WH6wPR0EGGX
-         PXE4sC+eAyf0N20jSQ9pIU43yF3Ko8jiqOLhhXMcEQq2dieTNv4zz9+nAOj4FADJoqnU
-         kVujItBF4UUewO01rmeOg3DHjFuP2P6pHADaMkSrjLrWfygNdMLBi96wxSea5Yo8UWV3
-         aF/aZmQZsTBnu+kkD/i19MeSp+trhrcaPnWH0c3cj/GKeC6TAuiYWoxTZWOG/GVRwgdx
-         nNZw==
+        bh=j3GIKqiUiYNHj4cznU0So+uOAWohTb1x8BsqVWJHA6M=;
+        b=NFmU9+ETyPGxiSwtKsLl0PbchKSpTtuC/2ccXlRMARg3yKYD1csYRRTJiWADT7IbBx
+         DgeW++X+TSXJBSg3WrHLknJuJzIBvnzgZttAGslC1nRCq8Gf7NJP6JjiKtz0Qk0WAnPC
+         BZkBEbLPfeovPY3AfJEvWXnDlhvUPCj4RdzO7pyovRzbp4kEzLWyC7HUhECB3HpxZgBJ
+         1Us8sHaJGcFQ9oXV6DVFEcM6+6tEHkhOCIf3dKSZY39iRZeatj41VIiazPRT45+hIYbi
+         m/H77RZvPiKbYksN75sU2fKePSByPqDy5Udg23Fy9fuFwSQPKzB+uxOmOoNHTTQe3P+Z
+         U9Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723480873; x=1724085673;
+        d=1e100.net; s=20230601; t=1723481838; x=1724086638;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i0tu8faX1ziJf7MuUylD0+4RNm340SoQtnaWPO7vpgk=;
-        b=MPQPs9/4SzCEuB50zbc5sGKGybO1C9Hlx8L+NkI4mtIlJzjkhyhEkzkKZhhq6HPWUz
-         OMulxLTIREWfT4EHk4QQqtri5/jReSl1V+hDzJVxiJGUq/8Vg9/GkYGP+NrVWwJb4VEo
-         WAFy7KJUNBaZwnHr2Bpgn04CcJuKssvnrdEHTkLVnCJp0wW3DFkjiARNDehTcJUE84R+
-         qoBauH7JRUc3Ob0W8sEeY4xVOOndLfgo37fLulc/SJkNt910FL8a4xwCDhtmUv4EzhJg
-         94SZqWLPNsfrl+k5gR09SDsaP4zOmtINIogKj13/Un9q6ygS32lhF9wmwoMYYqxce95R
-         XHPw==
-X-Gm-Message-State: AOJu0Yy88vOljtAPYdui3JYkB8mUZ3Xz2dMU/f1q1vF6IEVphPUpgAya
-	uH2UGWLRz3UPVrrQTzbZr+ZK/vhU+ubPBU6sA4/IZ3s0mWGVzaMRmyD+Hw==
-X-Google-Smtp-Source: AGHT+IGtS5Wn6AiNLdDTwDcO1zKowAdmY4l0lAk+ua80pVvtyi9WZR2U4/eRCs34xGcsFAs2MiGI5A==
-X-Received: by 2002:a05:6871:8a5:b0:260:e2ed:1abe with SMTP id 586e51a60fabf-26fcb81870emr906706fac.39.1723480873589;
-        Mon, 12 Aug 2024 09:41:13 -0700 (PDT)
+        bh=j3GIKqiUiYNHj4cznU0So+uOAWohTb1x8BsqVWJHA6M=;
+        b=qlJAndNK+Ddse5WE45hPUusCiICYlEPuzzDkcq1Ewe+b0rah9FZ7ShUkhxMJY/O/Ap
+         /HnzqSzIe4a+0TJqCUYpsgdgKoSb172aUW7AqXsLjJCFLE6puT/nUopeOrIqSDgbK57R
+         uw2IQ1VsxtdIE6tuyemTTkgVipkXt4X97CwfLpVR7CIr+8ddPgHq7P5g1nHJuKr5sEYS
+         8XcuzVP4S2pIr2m80jAUxOH+4S+P+Qcww1HuSXUHrH80UkaKCJnjjEqjbKfr5Rz+ETDC
+         7iu4pxsKgyEHqif0KgXfUf6HbBt4N32QiX1myDFpCBbSYd/gB5WRZCrX54E8/+gAQUE+
+         sAzw==
+X-Gm-Message-State: AOJu0YwhJifTJ49K70S8bZFnPsZBM9+0LjOnzDTU7cYvUSkaecAI1K2T
+	x7RJYBYCpcq9FwUmtlPNmCWs9MahL9IXplsFNROpWdwCBR/IRKFidGfG1w==
+X-Google-Smtp-Source: AGHT+IHuyQNlg36yIG7+HvzXk/mp5mWjQF39Cyu7sPiBf3fyjIv/ix7nTiEqh9GWb9kLITR9j2RPIA==
+X-Received: by 2002:a05:6870:c69a:b0:24f:e5f2:1cf0 with SMTP id 586e51a60fabf-26fcb67710emr757259fac.14.1723481837838;
+        Mon, 12 Aug 2024 09:57:17 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710e5874d01sm4371593b3a.16.2024.08.12.09.41.12
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710e58a143fsm4216693b3a.56.2024.08.12.09.57.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Aug 2024 09:41:12 -0700 (PDT)
-Message-ID: <935f564b-fa3e-4cdf-bf12-19b897369a07@roeck-us.net>
-Date: Mon, 12 Aug 2024 09:41:11 -0700
+        Mon, 12 Aug 2024 09:57:17 -0700 (PDT)
+Message-ID: <502e79ea-05cc-4773-b9d1-7d315371da77@roeck-us.net>
+Date: Mon, 12 Aug 2024 09:57:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH linux dev 6.11 1/2] hwmon driver sq52205
+Subject: Re: [PATCH linux dev 6.11 2/2] hwmon driver sq52205 documentation
 To: Wenliang <wenliang202407@163.com>, jdelvare@suse.com
-References: <20240812154240.3570-1-wenliang202407@163.com>
+References: <20240812154304.3623-1-wenliang202407@163.com>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -111,7 +111,7 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20240812154240.3570-1-wenliang202407@163.com>
+In-Reply-To: <20240812154304.3623-1-wenliang202407@163.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -129,26 +129,16 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/12/24 08:42, Wenliang wrote:
-> I add a hwmon driver code sq52205.c, and synchronously modify the makefile
-> and Kconfig files.
-> Looking forward to your reply
+On 8/12/24 08:43, Wenliang wrote:
+> Provide the binding documentation related to the sq52205 driver.
 > 
 > Signed-off-by: Wenliang <wenliang202407@163.com>
-> 
 
-I don't know what SQ52205 is (no such product is listed on the Silergy web site),
-but this very much looks like a copy of the ina2xx driver. There is no public
-documentation, so I can not even determine if the chip is real, much less if
-it should or could be merged into the existing driver.
-
-Please read and follow guidelines for submitting patches, including the guildelines
-for submitting patches into the hardware monitoring subsystem. I am not going to
-provide a detailed review since there is just too much wrong with this patch.
-
-Either case, you might want to look into the hwmon-staging branch of
-git://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git
-because it includes an almost complete rework of the ina2xx driver.
+Just like the other patch, this is pretty much a copy of the old
+Documentation/devicetree/bindings/hwmon/ina2xx.txt (prior to its conversion
+to .yaml). There is no public documentation of this chip. If it exists,
+it very much looks like a clone of the TI chips. Either case,
+new devicetree bindings are only acceptable in .yaml form.
 
 Guenter
 
