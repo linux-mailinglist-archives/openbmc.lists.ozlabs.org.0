@@ -1,76 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E9A29508DE
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 17:21:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E034950932
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 17:34:24 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DU4CF8c1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=BqBJQhB2;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wjw900rdPz2yQ9
-	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2024 01:21:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WjwRK4KbGz2yQG
+	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2024 01:34:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DU4CF8c1;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=BqBJQhB2;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::533; helo=mail-pg1-x533.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wjw8S2vYZz2xJX
-	for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2024 01:21:26 +1000 (AEST)
-Received: by mail-pg1-x533.google.com with SMTP id 41be03b00d2f7-7a1be7b5d70so4002677a12.0
-        for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 08:21:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723562484; x=1724167284; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MyG8WTl81rC7yOUM1xO7NMVMnItmW9uYuEDKQEDYors=;
-        b=DU4CF8c1VS6lUwaxtWxEg8mai3TFc0TTUY80BTZwz2EkOUuiEAVIakYuO2y9l+C2cz
-         qje99eW5LKaCKfeg/gKsA57fhZSe8RAd3DfrEXN3m3sugKneoK3MkXSV8VevUgnDj+Vc
-         c4bCUdtSjv4BZ+fzc8MoYwNWfqYEDuaEVZLWz9ag2C0dFiZv3osWGhacOfdNXqwjwwJM
-         U96d9KVs9fhZtzUoXmJbTxzAG9YSzOg8Kur1jQdTGZ/IeDz3kdDnVi/ieDJKQcXxY8Jb
-         ZDoi34uHHb59SHM9ser0g4j0c0BoLPyUbqHbHGoWVP7JScz/YFy4bxdBv5Euk/1f8gsw
-         srUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723562484; x=1724167284;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MyG8WTl81rC7yOUM1xO7NMVMnItmW9uYuEDKQEDYors=;
-        b=EDlst+NK/VoG4H85Vy3nuJgSU1D8kr1a1w7kBxKHS5CoOMriy2NCLqHPDySWXMWVz9
-         ZnA/DbhQg0ziluPyn2zchcQ/lIfRnaGZCh9IRjxdsgbFx3/1s8HYQsvtFCxX6QoeJB6l
-         N4K/sONNfqLg5OD0YV0uzIciuYmr8lIhJhxFJo6Np7ZBW8OVds8/2zxQfu8b/7SYCSL1
-         lvbEdASeVEHW1zeYsRwhIzaK4c5uxw5CxV888kz/8UybQIVEFmhjaVfB6yoGUPyqjxM6
-         fLRzYrW53nFmuA2Pe2AwK4ZN0r+P8v3fklyTD2ZqmQjQbTtBQq5vz49O0CSiHumBq5tT
-         PZcA==
-X-Forwarded-Encrypted: i=1; AJvYcCXkN6iOeXwTeusyabF7JcvjOk4ZVMAgRxbA2U5Gx2CVgkB/iNDz0nSwNrk8a1Z0HRTb/c0ibQFK79iOEXyZv++im6sBdNgYWjI=
-X-Gm-Message-State: AOJu0Yzrih9QCUqzsQbpuWYG7lGEdvFDml7yRVJha1oQHk/iWIZLL0GA
-	78KFWIFPqsUDU0rBIs852qOK3gDSmVdG2XyYXr+nUvC5pyz/ofhg
-X-Google-Smtp-Source: AGHT+IF6uH9uw4NB7F8BrsiCWazNGk/2Pgzy2V0W+zBqLr160PSFrIwk7sIp5jUWRKDdmjrls7OSxw==
-X-Received: by 2002:a17:902:f604:b0:1fd:a412:5df2 with SMTP id d9443c01a7336-201cbc919c2mr48390485ad.29.1723562483921;
-        Tue, 13 Aug 2024 08:21:23 -0700 (PDT)
-Received: from [192.168.1.50] (host97.186-124-166.telecom.net.ar. [186.124.166.97])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201cd1b9f7esm14759395ad.207.2024.08.13.08.21.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 08:21:23 -0700 (PDT)
-Message-ID: <3a962617-2447-447a-bedb-f9911757558f@gmail.com>
-Date: Tue, 13 Aug 2024 12:21:21 -0300
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WjwQn5RH8z2y8l
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2024 01:33:53 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id 14158CE167C;
+	Tue, 13 Aug 2024 15:33:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E2CC4AF09;
+	Tue, 13 Aug 2024 15:33:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723563231;
+	bh=aBoadrasI7W57NZaSVKLOZTY0EhuP2+mHH77sl5XLqg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BqBJQhB2BTi81gvNKtt+5KE+UVicUbzTqXIUYTCN25rM9EdjT7sFBgt2FxXZQY5b4
+	 omVRq/AGr0pgos0eOM1nIPIbWgND0BD8PF13j5PQ6qMy6+FCx+ID5SowOocMv/lfYl
+	 JLTfHwSRC6Srixo9FEBbTYwM5/LSKxBlZaAGTGqwoCOD6xBoRz+wr29Kj2XOhdO0rI
+	 p3CDQZUU/BU0/iqpFIzAEqcgZ1/e6JLM6hZHwtGr6l2+B+bzLtZEgQPauW69Z8Asnt
+	 z0S9UjfWJjXj9WXSDZJAYKR7pjxlmuE+ZPgSoGSCMWlnFBDRTA7aqizh1cqa4KlBpo
+	 zgsm2KbaGCjxw==
+Date: Tue, 13 Aug 2024 16:33:46 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Chanh Nguyen <chanh@os.amperecomputing.com>
+Subject: Re: [PATCH v3 1/1] dt-bindings: hwmon: Add maxim max31790
+Message-ID: <20240813-sister-hamburger-586eff8b45fc@spud>
+References: <20240813084152.25002-1-chanh@os.amperecomputing.com>
+ <20240813084152.25002-2-chanh@os.amperecomputing.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: CCLA for MiTAC_Tyan needs to be updated
-To: hancock.chang@mic.com.tw, openbmc@lists.ozlabs.org
-References: <9b6b8fbff7924cb6a505f028f68e51b3@mic.com.tw>
-Content-Language: en-US
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <9b6b8fbff7924cb6a505f028f68e51b3@mic.com.tw>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="KmLWo4HnUrmMuilX"
+Content-Disposition: inline
+In-Reply-To: <20240813084152.25002-2-chanh@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,51 +61,157 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: eric_kuo@mic.com.tw
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>, Justin Ledford <justinledford@google.com>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 8/1/2024 12:26 AM, hancock.chang@mic.com.tw wrote:
->
-> Dear OpenBMC org,
->
-> Tyan, the branded business group of MiTAC Computing Technology, has 
-> signed CCLA of OpenBMC in several years ago, since lots of member 
-> change in these year, also the organization change with brand name 
-> change, we will unify our brand to combine “Tyan” and “MiTAC” then 
-> just keep “MiTAC” as our single brand from 2024 Q3; assume it might 
-> need to re-new the original CCLA between Tyan and Linux Foundation for 
-> OpenBMC, should we re-submit a new CCLA?
->
-Hi, welcome back. I don't see a CLA for Tyan in our google drive. I do 
-see one for MiTAC
+--KmLWo4HnUrmMuilX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-up at 
-https://drive.google.com/drive/folders/1vKCSGGXlUbEZgAxnC54pSMklSh_xTzRc
+On Tue, Aug 13, 2024 at 08:41:52AM +0000, Chanh Nguyen wrote:
+> Add device tree bindings and an example for max31790 device.
+>=20
+> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+> ---
+> Changes in v2:
+>  - Update filename of the maxim,max31790.yaml                        [Krz=
+ysztof]
+>  - Add the common fan schema to $ref                                 [Krz=
+ysztof]
+>  - Update the node name to "fan-controller" in maxim,max31790.yaml   [Krz=
+ysztof]
+>  - Drop "driver" in commit title                                     [Krz=
+ysztof]
+> Changes in v3:
+>  - Drop redundant "bindings" in commit title                         [Krz=
+ysztof]
+>  - Add the clocks and resets property in example                     [Krz=
+ysztof]
+>  - Add child node refer to fan-common.yaml                           [Krz=
+ysztof, Conor]
+> ---
+>  .../bindings/hwmon/maxim,max31790.yaml        | 81 +++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwmon/maxim,max3179=
+0.yaml
+>=20
+> diff --git a/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml =
+b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+> new file mode 100644
+> index 000000000000..d28a6373edd3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwmon/maxim,max31790.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: The Maxim MAX31790 Fan Controller
+> +
+> +maintainers:
+> +  - Guenter Roeck <linux@roeck-us.net>
 
-If you can  just submit one CLA for both Tyan and MiTAC then that would 
-be simplest.
+Why Guenter and not you?
 
-You can send to the mailing list and I'll review and update it in our 
-google drive.
+> +
+> +description: >
+> +  The MAX31790 controls the speeds of up to six fans using six
+> +  independent PWM outputs. The desired fan speeds (or PWM duty cycles)
+> +  are written through the I2C interface.
+> +
+> +  Datasheets:
+> +    https://datasheets.maximintegrated.com/en/ds/MAX31790.pdf
+> +
+> +properties:
+> +  compatible:
+> +    const: maxim,max31790
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  "#pwm-cells":
+> +    const: 1
+> +
+> +patternProperties:
+> +  "^fan-[0-9]+$":
+> +    $ref: fan-common.yaml#
+> +    unevaluatedProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +      #address-cells =3D <1>;
+> +      #size-cells =3D <0>;
+> +
+> +      fan-controller@21 {
+> +        compatible =3D "maxim,max31790";
+> +        reg =3D <0x21>;
+> +        clocks =3D <&sys_clk>;
+> +        resets =3D <&reset 0>;
+> +      };
+> +    };
 
-Thanks,
+What does this example demonstrate? The one below seems useful, this one
+I don't quite understand - what's the point of a fan controller with no
+fans connected to it? What am I missing?
 
-Andrew
+Otherwise, this looks pretty good.
 
-> BTW, may we have help from OpenBMC org, to check and get the original 
-> CCLA between Tyan and Linux Foundation?
->
-> Thank you
->
-> Hancock Chang
->
-> Director, Solution Enabling Dept., BEOC
->
-> MiTAC Computing Technology
->
-> Tel: +8863-327-5988 #7359
->
-> Cell: +886935547665
->
+Cheers,
+Conor.
+
+> +  - |
+> +    i2c {
+> +      #address-cells =3D <1>;
+> +      #size-cells =3D <0>;
+> +
+> +      pwm_provider: fan-controller@20 {
+> +        compatible =3D "maxim,max31790";
+> +        reg =3D <0x20>;
+> +        clocks =3D <&sys_clk>;
+> +        resets =3D <&reset 0>;
+> +        #pwm-cells =3D <1>;
+> +
+> +        fan-0 {
+> +          pwms =3D <&pwm_provider 1>;
+> +        };
+> +
+> +        fan-1 {
+> +          pwms =3D <&pwm_provider 2>;
+> +        };
+> +      };
+> +    };
+> +
+> --=20
+> 2.43.0
+>=20
+
+--KmLWo4HnUrmMuilX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZrt82QAKCRB4tDGHoIJi
+0mfTAQCIh7cHlaxYyQpgjq8jaFAybQNe1wPKzSldTsOMfKR2tgEA9R5fCsaqh07Y
+tdouMeBz+xGCY7U3NBLB02Z6xDiydAc=
+=CZ86
+-----END PGP SIGNATURE-----
+
+--KmLWo4HnUrmMuilX--
