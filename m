@@ -1,49 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E196294FA53
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 01:34:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 907EB94FAF6
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 03:12:32 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=lhaw28ws;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=D4QLEcFk;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WjW8F60Nwz2yVB
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 09:34:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WjYJt3W5Yz2yVM
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 11:12:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=lhaw28ws;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=D4QLEcFk;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.197.31.4; helo=m16.mail.163.com; envelope-from=wenliang202407@163.com; receiver=lists.ozlabs.org)
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WjJhR696qz2xfR
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 01:43:35 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id; bh=NoUqN+rkRXS4dIJK7h
-	ro1lKr5yjGbMaQfAOxGGlXL3g=; b=lhaw28wscAKoJAsjBpIMVCf2Kv9CG/hoI+
-	aDArOtS7XeVSkT/IhCgowCqP4HPdogb/MZDRyKk5DOF1b/6LleVCDIrb7dtA2CSZ
-	D5tYHxprHJUj8s0Udd5Og9aqlj/0U6HbTULiXc00ckQux2dGLJWKt5kfmst6megH
-	TM1rNdz2M=
-Received: from 100ask.localdomain (unknown [112.10.185.129])
-	by gzga-smtp-mta-g2-2 (Coremail) with SMTP id _____wD3_62LLbpmhOmUBg--.11349S2;
-	Mon, 12 Aug 2024 23:43:07 +0800 (CST)
-From: Wenliang <wenliang202407@163.com>
-To: jdelvare@suse.com,
-	linux@roeck-us.net
-Subject: [PATCH linux dev 6.11 2/2] hwmon driver sq52205 documentation
-Date: Mon, 12 Aug 2024 11:43:04 -0400
-Message-Id: <20240812154304.3623-1-wenliang202407@163.com>
-X-Mailer: git-send-email 2.17.1
-X-CM-TRANSID: _____wD3_62LLbpmhOmUBg--.11349S2
-X-Coremail-Antispam: 1Uf129KBjvdXoWrZw15ZF47XFWkZrW7KF13CFg_yoWDXrb_u3
-	4xKFykXrZ8JF1Fga48AwsIyrW7Ar4Ikrn7Ca4Dtrs8AwnIv39xWFykJry7Zr17Zr43uFWr
-	uws7AFWkZrsFkjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xRNrWrJUUUUU==
-X-Originating-IP: [112.10.185.129]
-X-CM-SenderInfo: xzhqzxhdqjjiisuqlqqrwthudrp/1tbiNQ0502V4JH7mHQAAsu
-X-Mailman-Approved-At: Tue, 13 Aug 2024 09:34:28 +1000
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WjYJK0dX4z2xJF
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 11:12:00 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1723511516;
+	bh=VERQ6LmywI73ea4OUNrbSKzDTcXu2gl5OSEJPaEStjY=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=D4QLEcFkOydRZs3ruLY3F9g8eG0AuKMZlnJe8O5JbKKCA6w5eH0moyIpHnIpKotVo
+	 DRG1QWKeOIWLARNkhdFixvcVEueX3A03Ri+R8eiCN/hd6dC2u0TqRGmu4gIP86C/gV
+	 AlNyOYpTz0K2X3z7+BkEEsT19hSUuiXxd1nukg7XZHgqz8MIJVTTRQ0PsOCEC5WvrS
+	 WpRrMUwtulQ80MnqKXDkxNKfT48LTZkiOiY2WjURtSVTxOqdJWa0AoNbAtd8QnSbeL
+	 v/1YxuVcoed5auv3nkht0UpI0OwAdxfe6MYHQgX5Y248QgnJPZFThUsC2O8oL+wfMa
+	 sl46y+3TeagZQ==
+Received: from [192.168.68.112] (ppp118-210-65-51.adl-adc-lon-bras32.tpg.internode.on.net [118.210.65.51])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id D600866A81;
+	Tue, 13 Aug 2024 09:11:55 +0800 (AWST)
+Message-ID: <34e98c2202990d3dcaf3b6a201605a5493d2fe91.camel@codeconstruct.com.au>
+Subject: Re: [linux dev-6.6 v3 0/7] pinctrl: npcm8xx: pin configuration
+ changes
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Tomer Maimon <tmaimon77@gmail.com>, openbmc@lists.ozlabs.org, 
+	joel@jms.id.au
+Date: Tue, 13 Aug 2024 10:41:53 +0930
+In-Reply-To: <20240812145816.3301570-1-tmaimon77@gmail.com>
+References: <20240812145816.3301570-1-tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,46 +60,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Wenliang <wenliang202407@163.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Provide the binding documentation related to the sq52205 driver.
+On Mon, 2024-08-12 at 17:58 +0300, Tomer Maimon wrote:
+> This patch set addresses various pin configuration changes for the=20
+> Nuvoton NPCM8XX BMC SoC. The patches aim to enhance functionality,=20
+> remove unused pins, and improve overall pin management.
+>=20
+> This patchset are applied to the Linux vanilla.
+> https://www.spinics.net/lists/linux-gpio/msg101676.html
+>=20
+> Changes since version 2:
+>         - Allign upstream version
+>=20
+> Changes since version 1:
+>         - Squash the non-existent pins, groups and functions.
+>         - Remove non-existent groups and functions from dt-bindings.
+>         - Modify the commit message.
+>=20
+> Tomer Maimon (7):
+>   dt-bindings: pinctrl: npcm8xx: remove non-existent groups and
+>     functions
+>   pinctrl: nuvoton: npcm8xx: remove non-existent pins, groups, functions
+>   pinctrl: nuvoton: npcm8xx: clear polarity before set both edge
+>   pinctrl: nuvoton: npcm8xx: add gpi35 and gpi36
+>   pinctrl: nuvoton: npcm8xx: add pin 250 to DDR pins group
+>   pinctrl: nuvoton: npcm8xx: modify clkrun and serirq pin configuration
+>   pinctrl: nuvoton: npcm8xx: modify pins flags
+>=20
+>  .../pinctrl/nuvoton,npcm845-pinctrl.yaml      | 80 +++++++++----------
+>  drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c     | 64 +++++++--------
+>  2 files changed, 71 insertions(+), 73 deletions(-)
+>=20
 
-Signed-off-by: Wenliang <wenliang202407@163.com>
+Thanks, I've applied these to dev-6.6. The exception during the process
+was the binding patch. I've cherry-picked what was merged in linux-
+pintrl/for-next as there were some odd differences. I resolved the
+conflicts with `git checkout --theirs ...` to force the result to match
+what's upstream.
 
----
- .../bindings/hwmon/silergy,sq52205.txt        | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/hwmon/silergy,sq52205.txt
-
-diff --git a/Documentation/devicetree/bindings/hwmon/silergy,sq52205.txt b/Documentation/devicetree/bindings/hwmon/silergy,sq52205.txt
-new file mode 100644
-index 000000000000..d3f790fed32e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/hwmon/silergy,sq52205.txt
-@@ -0,0 +1,21 @@
-+sq52205 properties
-+
-+Required properties:
-+- compatible:
-+	Should be one of
-+		silergy,sq52205
-+- reg: I2C address
-+
-+Optional properties:
-+
-+- shunt-resistor:
-+    description:
-+      Shunt resistor value in micro-Ohm.
-+
-+Example:
-+
-+temp-sensor@40 {
-+	compatible = "silergy,sq52205";
-+	reg = <0x40>;
-+	shunt-resistor = <1000>;
-+};
--- 
-2.17.1
-
+Andrew
