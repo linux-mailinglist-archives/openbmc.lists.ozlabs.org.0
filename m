@@ -1,69 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22F64950685
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 15:31:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E9A29508DE
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 17:21:58 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W090LP8D;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DU4CF8c1;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wjsjk4cKrz2yNJ
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2024 23:31:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wjw900rdPz2yQ9
+	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2024 01:21:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W090LP8D;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DU4CF8c1;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2b; helo=mail-yb1-xb2b.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::533; helo=mail-pg1-x533.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wjsj75rw1z2xgX
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 23:31:05 +1000 (AEST)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-e0bfd14aff7so4826252276.3
-        for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 06:31:05 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wjw8S2vYZz2xJX
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2024 01:21:26 +1000 (AEST)
+Received: by mail-pg1-x533.google.com with SMTP id 41be03b00d2f7-7a1be7b5d70so4002677a12.0
+        for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2024 08:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723555861; x=1724160661; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rpyVq4MdThrdo0O3jbkV5nxNdjMqM9NDJxdt1v99E3g=;
-        b=W090LP8Do1gkQ0M9mPutiN3xB5XsqWlPY2bEkOmq8gSz0e/sIFDZls9YrMszziR/hE
-         nkPWygZ7hKIe3Hwzhfcf66TpJtqupRwZbkJj/pKfMJgRl3QkJW8Ubce4j95eKQffOwgO
-         lkON3NnfSL3qST651yRxZvsOkcqhA6kqXfXTp7vBaxIStPFlhhqMdWNpxGkaADHa0Z1O
-         AULNdaTEma15w2a1TxTm6IlfGjIurJlXujugpQ3Ex2o5SiceBjG/aEM5rZ+ZiqGpb/Hw
-         +5uIjZT5quyaJ1zhMVJHY7Ah6k6Gvv8Thi6Rgn2GtOdMwn/lzaqv73JHaPkozIhQOgoR
-         j1lw==
+        d=gmail.com; s=20230601; t=1723562484; x=1724167284; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MyG8WTl81rC7yOUM1xO7NMVMnItmW9uYuEDKQEDYors=;
+        b=DU4CF8c1VS6lUwaxtWxEg8mai3TFc0TTUY80BTZwz2EkOUuiEAVIakYuO2y9l+C2cz
+         qje99eW5LKaCKfeg/gKsA57fhZSe8RAd3DfrEXN3m3sugKneoK3MkXSV8VevUgnDj+Vc
+         c4bCUdtSjv4BZ+fzc8MoYwNWfqYEDuaEVZLWz9ag2C0dFiZv3osWGhacOfdNXqwjwwJM
+         U96d9KVs9fhZtzUoXmJbTxzAG9YSzOg8Kur1jQdTGZ/IeDz3kdDnVi/ieDJKQcXxY8Jb
+         ZDoi34uHHb59SHM9ser0g4j0c0BoLPyUbqHbHGoWVP7JScz/YFy4bxdBv5Euk/1f8gsw
+         srUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723555861; x=1724160661;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rpyVq4MdThrdo0O3jbkV5nxNdjMqM9NDJxdt1v99E3g=;
-        b=Y2pb1hWLo20yZU7htBGFIDEkebYD9v/1HhWEaFUymRpKiV+xFMs6BP09oIajaOQmrd
-         jh7l45ArAo7dSr58MGqxjDDxf1M2beuJgEunXgI2BuvFwLr6/UK9k6Ph0Ac2pRM0sazK
-         GTnTmwyUQmgboxy7rlNabNKPECODH+iMJkD8cyR/R0nssutoT2ypL+XPPCCpugh6KUvY
-         UOAcfbLdUqCjzB2yboFnPNq/Av4htDpEs2b3qLJKWZ4x6/opsm8NunPuZqd5GB+T0E6o
-         hzUY4/hvmND8LofqxrLrllBqVFxTh2eCgeC4amK7Wj71z91Ss7kxm2xktlJ0JdQEoA13
-         3dkA==
-X-Gm-Message-State: AOJu0Yxx2x2CxbwxvdZEZQIsa0RCuf9sapaPN5ll6oyyjyNIpdLs08oy
-	ZHQBxNeZs0HK0fYdo71rnPOlJLXPWG9zrxWuUXTVq01cZg9O6tJUStgoE3Upb6qzIutCyzcy3Ad
-	nJBFosoVEHv2KnN6DlBlTmxMawrIjcA==
-X-Google-Smtp-Source: AGHT+IGrj1KqkmtgUvsswMiKQL+22TJ+q3aNWrwKFuPdTcBbvnnO325roFB8Q2lFuM3EB5F0KzGI+sFU3nyH51/t5xg=
-X-Received: by 2002:a05:690c:18:b0:643:92a8:ba00 with SMTP id
- 00721157ae682-6a96be50401mr48000927b3.0.1723555860210; Tue, 13 Aug 2024
- 06:31:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1723562484; x=1724167284;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MyG8WTl81rC7yOUM1xO7NMVMnItmW9uYuEDKQEDYors=;
+        b=EDlst+NK/VoG4H85Vy3nuJgSU1D8kr1a1w7kBxKHS5CoOMriy2NCLqHPDySWXMWVz9
+         ZnA/DbhQg0ziluPyn2zchcQ/lIfRnaGZCh9IRjxdsgbFx3/1s8HYQsvtFCxX6QoeJB6l
+         N4K/sONNfqLg5OD0YV0uzIciuYmr8lIhJhxFJo6Np7ZBW8OVds8/2zxQfu8b/7SYCSL1
+         lvbEdASeVEHW1zeYsRwhIzaK4c5uxw5CxV888kz/8UybQIVEFmhjaVfB6yoGUPyqjxM6
+         fLRzYrW53nFmuA2Pe2AwK4ZN0r+P8v3fklyTD2ZqmQjQbTtBQq5vz49O0CSiHumBq5tT
+         PZcA==
+X-Forwarded-Encrypted: i=1; AJvYcCXkN6iOeXwTeusyabF7JcvjOk4ZVMAgRxbA2U5Gx2CVgkB/iNDz0nSwNrk8a1Z0HRTb/c0ibQFK79iOEXyZv++im6sBdNgYWjI=
+X-Gm-Message-State: AOJu0Yzrih9QCUqzsQbpuWYG7lGEdvFDml7yRVJha1oQHk/iWIZLL0GA
+	78KFWIFPqsUDU0rBIs852qOK3gDSmVdG2XyYXr+nUvC5pyz/ofhg
+X-Google-Smtp-Source: AGHT+IF6uH9uw4NB7F8BrsiCWazNGk/2Pgzy2V0W+zBqLr160PSFrIwk7sIp5jUWRKDdmjrls7OSxw==
+X-Received: by 2002:a17:902:f604:b0:1fd:a412:5df2 with SMTP id d9443c01a7336-201cbc919c2mr48390485ad.29.1723562483921;
+        Tue, 13 Aug 2024 08:21:23 -0700 (PDT)
+Received: from [192.168.1.50] (host97.186-124-166.telecom.net.ar. [186.124.166.97])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201cd1b9f7esm14759395ad.207.2024.08.13.08.21.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Aug 2024 08:21:23 -0700 (PDT)
+Message-ID: <3a962617-2447-447a-bedb-f9911757558f@gmail.com>
+Date: Tue, 13 Aug 2024 12:21:21 -0300
 MIME-Version: 1.0
-References: <20240812145816.3301570-1-tmaimon77@gmail.com> <34e98c2202990d3dcaf3b6a201605a5493d2fe91.camel@codeconstruct.com.au>
-In-Reply-To: <34e98c2202990d3dcaf3b6a201605a5493d2fe91.camel@codeconstruct.com.au>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 13 Aug 2024 16:30:49 +0300
-Message-ID: <CAP6Zq1jmqOctMM2qhWHavcGG2ugTYbk3YQZ0tgHo89rmJHw+TQ@mail.gmail.com>
-Subject: Re: [linux dev-6.6 v3 0/7] pinctrl: npcm8xx: pin configuration changes
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: CCLA for MiTAC_Tyan needs to be updated
+To: hancock.chang@mic.com.tw, openbmc@lists.ozlabs.org
+References: <9b6b8fbff7924cb6a505f028f68e51b3@mic.com.tw>
+Content-Language: en-US
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <9b6b8fbff7924cb6a505f028f68e51b3@mic.com.tw>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,54 +82,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, joel@jms.id.au
+Cc: eric_kuo@mic.com.tw
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
 
-Thanks a lot appreciate it!
+On 8/1/2024 12:26 AM, hancock.chang@mic.com.tw wrote:
+>
+> Dear OpenBMC org,
+>
+> Tyan, the branded business group of MiTAC Computing Technology, has 
+> signed CCLA of OpenBMC in several years ago, since lots of member 
+> change in these year, also the organization change with brand name 
+> change, we will unify our brand to combine “Tyan” and “MiTAC” then 
+> just keep “MiTAC” as our single brand from 2024 Q3; assume it might 
+> need to re-new the original CCLA between Tyan and Linux Foundation for 
+> OpenBMC, should we re-submit a new CCLA?
+>
+Hi, welcome back. I don't see a CLA for Tyan in our google drive. I do 
+see one for MiTAC
 
-Tomer
+up at 
+https://drive.google.com/drive/folders/1vKCSGGXlUbEZgAxnC54pSMklSh_xTzRc
 
-On Tue, 13 Aug 2024 at 04:12, Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
+If you can  just submit one CLA for both Tyan and MiTAC then that would 
+be simplest.
+
+You can send to the mailing list and I'll review and update it in our 
+google drive.
+
+Thanks,
+
+Andrew
+
+> BTW, may we have help from OpenBMC org, to check and get the original 
+> CCLA between Tyan and Linux Foundation?
 >
-> On Mon, 2024-08-12 at 17:58 +0300, Tomer Maimon wrote:
-> > This patch set addresses various pin configuration changes for the
-> > Nuvoton NPCM8XX BMC SoC. The patches aim to enhance functionality,
-> > remove unused pins, and improve overall pin management.
-> >
-> > This patchset are applied to the Linux vanilla.
-> > https://www.spinics.net/lists/linux-gpio/msg101676.html
-> >
-> > Changes since version 2:
-> >         - Allign upstream version
-> >
-> > Changes since version 1:
-> >         - Squash the non-existent pins, groups and functions.
-> >         - Remove non-existent groups and functions from dt-bindings.
-> >         - Modify the commit message.
-> >
-> > Tomer Maimon (7):
-> >   dt-bindings: pinctrl: npcm8xx: remove non-existent groups and
-> >     functions
-> >   pinctrl: nuvoton: npcm8xx: remove non-existent pins, groups, functions
-> >   pinctrl: nuvoton: npcm8xx: clear polarity before set both edge
-> >   pinctrl: nuvoton: npcm8xx: add gpi35 and gpi36
-> >   pinctrl: nuvoton: npcm8xx: add pin 250 to DDR pins group
-> >   pinctrl: nuvoton: npcm8xx: modify clkrun and serirq pin configuration
-> >   pinctrl: nuvoton: npcm8xx: modify pins flags
-> >
-> >  .../pinctrl/nuvoton,npcm845-pinctrl.yaml      | 80 +++++++++----------
-> >  drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c     | 64 +++++++--------
-> >  2 files changed, 71 insertions(+), 73 deletions(-)
-> >
+> Thank you
 >
-> Thanks, I've applied these to dev-6.6. The exception during the process
-> was the binding patch. I've cherry-picked what was merged in linux-
-> pintrl/for-next as there were some odd differences. I resolved the
-> conflicts with `git checkout --theirs ...` to force the result to match
-> what's upstream.
+> Hancock Chang
 >
-> Andrew
+> Director, Solution Enabling Dept., BEOC
+>
+> MiTAC Computing Technology
+>
+> Tel: +8863-327-5988 #7359
+>
+> Cell: +886935547665
+>
