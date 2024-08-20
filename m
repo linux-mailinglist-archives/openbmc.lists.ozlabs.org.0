@@ -1,73 +1,169 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 681E09578C3
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2024 01:42:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77456957AF7
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2024 03:30:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wnpz022DKz3bmF
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2024 09:41:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WnsNJ5HmKz2yxS
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2024 11:30:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ew.tq-group.com
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=93.104.207.81
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tq-group.com header.i=@tq-group.com header.a=rsa-sha256 header.s=key1 header.b=HrmXMVyz;
-	dkim=fail reason="key not found in DNS" header.d=ew.tq-group.com header.i=@ew.tq-group.com header.a=rsa-sha256 header.s=dkim header.b=JkyTqpWh;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ew.tq-group.com (client-ip=93.104.207.81; helo=mx1.tq-group.com; envelope-from=alexander.stein@ew.tq-group.com; receiver=lists.ozlabs.org)
-Received: from mx1.tq-group.com (mx1.tq-group.com [93.104.207.81])
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c400::" arc.chain=microsoft.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c400::; helo=hk2pr02cu002.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from HK2PR02CU002.outbound.protection.outlook.com (mail-eastasiaazlp170100000.outbound.protection.outlook.com [IPv6:2a01:111:f403:c400::])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WnSNV0TKHz2xt7;
-	Mon, 19 Aug 2024 19:44:07 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=tq-group.com; i=@tq-group.com; q=dns/txt; s=key1;
-  t=1724060650; x=1755596650;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=ngGTJT88bhTDzobjsAMP4AG2gDq4amUpHxaFrPSBc4k=;
-  b=HrmXMVyzWLkPmeF5yEqrFO7/h3PrKKWczHN/B6D2YPavvCDCHKTMzPK+
-   mfKl8f4bFpC0yEsI8rYPsEj8wv1DLHPQZqCCTpGgS8/RlBDR+3nQMk75i
-   DQoApunCkI4w1ekoRABNKFCLx9ApHlbqDlYU+wH/i3sD0HIjBdk47nYXb
-   g2ZWWZgRix2NOPA/KzS4GS16ufqWje3wWRjPHbiJOehCcJI0Iu7BtonpP
-   ujDtUUUFqqBLvl80qhOrwAgUFWaQ6ZYqsDUO0ztPWne7C2EsbyiLtVwr6
-   kAO5j7bYuq68T4oc5EwxaFRyD8yAqmkw6HGiIP9Q5G1tJMeejdT3+iTf8
-   w==;
-X-CSE-ConnectionGUID: yCgMkliYQv6PzqBi7yuoUA==
-X-CSE-MsgGUID: gxuYcJWEQbyRcMpE/DEJ4A==
-X-IronPort-AV: E=Sophos;i="6.10,158,1719871200"; 
-   d="scan'208";a="38463688"
-Received: from vmailcow01.tq-net.de ([10.150.86.48])
-  by mx1.tq-group.com with ESMTP; 19 Aug 2024 11:44:00 +0200
-X-CheckPoint: {66C313E0-17-78509F09-E532FC2E}
-X-MAIL-CPID: 528803B12FE86B34AF661D7848C520CB_1
-X-Control-Analysis: str=0001.0A782F16.66C313E0.0162,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1956C166864;
-	Mon, 19 Aug 2024 11:43:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ew.tq-group.com;
-	s=dkim; t=1724060635;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=ngGTJT88bhTDzobjsAMP4AG2gDq4amUpHxaFrPSBc4k=;
-	b=JkyTqpWhXT9Lb8O2XYwT6AQvDQde8ZTKDVNPhZlmm3ttRrRCKEOSK9EPy7VCHHBTD7YhTI
-	aNy5zmKjh3iimOvA84m0X9FKXFKJJaTUErjzBahlHQB8B5AT/bMjOaLxjF/bIYUwRoe8fZ
-	oRCbB3LUd4vMV5jHlyfLh3/uBqXw2XEf90sDqkAKhKICWghjKA8RKKmKchzIGl9rx6S6zx
-	9uMJgtNhtk4j08YtANi84BxFboafG4oqwMIIC+BIS2CUlrfOTHGnSP2bg8pyZWCjpWbDo8
-	a/EpyFNDE5Snhyo6NKMWlKdWI2NR85ugo5boIRQBYvQKo4n0EgEC1/G8MMomsA==
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
-To: soc@kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, Dinh Nguyen <dinguyen@kernel.org>, Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Vladimir Zapolskiy <vz@mleia.com>, Mark Jackson <mpfj@newflow.co.uk>, Tony Lindgren <tony@atomide.com>, Michal Simek <michal.simek@amd.com>, "Rob Herring (Arm)" <robh@kernel.org>
-Subject: Re: [PATCH v2] ARM: dts: Fix undocumented LM75 compatible nodes
-Date: Mon, 19 Aug 2024 11:43:51 +0200
-Message-ID: <4592015.LvFx2qVVIh@steina-w>
-Organization: TQ-Systems GmbH
-In-Reply-To: <20240816164717.1585629-1-robh@kernel.org>
-References: <20240816164717.1585629-1-robh@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WnsMh3Qzvz2xKx;
+	Tue, 20 Aug 2024 11:29:39 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YbtXpme1du9e2LFdTadiuldngsKzimsmxuOD+b1NGMe0gUwU2Sjf+CNbPSMLkNNKo68z/ZcsZZnEmvDZ+UQzWICWKmNV/hJT8W+XDlCQ2zjtUjvDkBNn8ArhV/ycVHuvrcEshiW5WRG4oTFn7Fp/5dlHyjrfHhUOY/hsRucHWSVqffTFTWxt6A4petcGy31j4MKPviYIA8yhCv9aasxkIqEQuPWcBJB30SW2AaYOmh+V0TqlxS9ivG1UItK8Zxnd9maIvxLtdaKGkc7moSR9D6K6IfmBtelyNViBjbGZpcmIILcb2HSiVR2CKS3Mda1Cx/DcOQwS3QUzNZDLqGSYfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WUVdLDqEzUQFzLIvyy1ZSGhaRnnVA2G/NYh1/YAU/Nw=;
+ b=OXd6pUsXQ4U0KxARO12YgyPDFKqOmjt5CVdhmpyxb1Zl67x8YePJE4MzEWYoCeLXSK1WGfCjcq6p9Fw3yv2Pd94Q2C4yAe4bFvWO7aVWqtprmtEf9gM67XtGKWq8Z5KaZMfcmlY3w+W9SdXwhYMWaOOPZko0WB19aAHbxF8B/1+7EtNMpUQPSv+CsFZ1pYz1MWYtcCRFKle2x29ze3llQe1au7zplQ0r5pfLA7jW0IPgwDxpehMPB2/PNs23z6GCRYW4lQVtOxs9oq7bV3yzLPDt9Wa/1lvc4E0+PVeCPJ4ot9FiF7qhV6tEbtCWA79TNKENJzjSRunv+CK1svFE4Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WUVdLDqEzUQFzLIvyy1ZSGhaRnnVA2G/NYh1/YAU/Nw=;
+ b=Id+vmBVgZRsSzFsir1lubneqqoh9JYqe2+qBF5dJjUTDvCK0IfbWvgLO0tOZS4tzyTifSVGuv77D4+uHg4kMfj2BXjymZIBK1yybPqFU8niDaaCzkOrAZihP8ZbSfJU4N0oWK0wV6twnym+v7XTNQmnUqt4nDfKXYN0OL5qTERV6+n19xTrAHKUcu7T+vCcjJltrecjXLtGJruk1Yc/Bnztl6qCnMuyZP78v9Pboz1XjmSUNEWcpgmxR25jYmxEeNwMDQM73RANsDlUpCnHraBtAHcNCLdeTA/lNUKZknntJGTTJygGFlE1SaBJ5kiuHcw98yxnuiHSlIktf1kZikw==
+Received: from OS8PR06MB7541.apcprd06.prod.outlook.com (2603:1096:604:2b1::11)
+ by SEZPR06MB6493.apcprd06.prod.outlook.com (2603:1096:101:187::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.21; Tue, 20 Aug
+ 2024 01:29:13 +0000
+Received: from OS8PR06MB7541.apcprd06.prod.outlook.com
+ ([fe80::9f51:f68d:b2db:da11]) by OS8PR06MB7541.apcprd06.prod.outlook.com
+ ([fe80::9f51:f68d:b2db:da11%5]) with mapi id 15.20.7875.019; Tue, 20 Aug 2024
+ 01:29:12 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, "brendan.higgins@linux.dev"
+	<brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
+	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
+	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
+	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
+	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
+	<andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
+	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
+	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
+	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Topic: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Index: AQHa8ho549HAiRHYiEK49yrqFuaLn7IuYooAgAD5pxA=
+Date: Tue, 20 Aug 2024 01:29:12 +0000
+Message-ID:  <OS8PR06MB75418A2ACA6693A8163F19E8F28D2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+References: <20240819092850.1590758-1-ryan_chen@aspeedtech.com>
+ <20240819092850.1590758-2-ryan_chen@aspeedtech.com>
+ <7237aa34-9821-4ba7-a45b-3b1d598bc282@kernel.org>
+In-Reply-To: <7237aa34-9821-4ba7-a45b-3b1d598bc282@kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OS8PR06MB7541:EE_|SEZPR06MB6493:EE_
+x-ms-office365-filtering-correlation-id: 933b1f20-548f-4a30-3048-08dcc0b77f43
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|7416014|376014|366016|38070700018|921020;
+x-microsoft-antispam-message-info:  =?utf-8?B?ZnppQldWSkF6dFEzblVUbk9hcU1kMlFtZFlaUGNuTkdRYWNCZHdWRWkwakJx?=
+ =?utf-8?B?RldUWkx1a1pYbjVMZkVJT0puSFRGb2FrdGI4djdOREZMc25XaVRVeVNSTW1T?=
+ =?utf-8?B?UVdDS0ZsRWV3OEZlQlVoWUl5Q3VBR1dZVkUvTlRTVzdsbGZmVVlGcmtzbit0?=
+ =?utf-8?B?cm83N1UwNlNTZ3BvM0RXbkZ4SnlJTksySU1JelEzbSsrQ1VCclJMSHBQOElX?=
+ =?utf-8?B?b3NRZHRTNVNuMVU1cFloZHd6VEhwdzN5dmJFY3AvWkY4RTI2SHpVWmFSTHBW?=
+ =?utf-8?B?TUY3MGJQNGlmN3doaDE3dmp4cVFGTXhRRkFuZDFkbHFVaUV6aTJBMWpyN21W?=
+ =?utf-8?B?NWhrQUpCYVIrbE1UQml0OHV4RHZIYTc5bWdHYWZOVEZMMjhxVVdYR3U1WWlk?=
+ =?utf-8?B?dG82RDNiY1gvVlUvMTRIeGpXeDVoR3pUVlN2YzdCTm4zcTZNbFNzaWVualJE?=
+ =?utf-8?B?NmMxRWVBKzNDdlcrN2M2Uys2SFFGOVR6L0VhWm5jMnVjWGtxSGx2djI1QmpL?=
+ =?utf-8?B?ejkrTnUxK3NJL0hCbGtCRjVCcVFCYXUxekgvSXpBeUt5eElIbHVzZTlqYUVx?=
+ =?utf-8?B?aG5kbGt4azVYWjBKRGo1R0ZrMmVKdUxRQkJYNitvN1pyNXlQdFU3MGpDdmJx?=
+ =?utf-8?B?SVhhQTc3VTRHVjF0K2ZvVnZTdDFTQjJnNUl5WUorK1llWEkxTTByZzZXT0pR?=
+ =?utf-8?B?dlBjN1ZtbmlWRzVZV2lJOU9XdDIzMnNnVzZ3bmwwbDZPUmJxNFh4bkxRQUt4?=
+ =?utf-8?B?K0RxbWdnczUrWjkvVlRuS0c4QUtXZDFqN3JiT2QxMkh5ZmxtbXRwdGRuRzZL?=
+ =?utf-8?B?a2FUTm53OUpsci8zeEtNZGc5WUlPWHJvQlR3YnZEMisvVDErQTByYjZJY2ZQ?=
+ =?utf-8?B?b0c0SE5HbXp0ZDZuYjdRdkdyN1E5YkxpeTJGdjV1Q0VIRFNuNXI1SWxwNHBU?=
+ =?utf-8?B?M2VTWDJQNDhldHBBNEVNVmd5TkhJeVRkZUwyVHRrUjhxOTQ1c2NnekRsQ1Zu?=
+ =?utf-8?B?OFk2b09VK0swTFV1MGlJZGNFMWVXWGRTMEtkSUFiQTVQaDZuY2t5Y05meEVn?=
+ =?utf-8?B?WUd2WGF5djZZdHhYMm1PL0VRVE53WnBhYUljVEVtYzR2b0RrVkpkTUxoMll1?=
+ =?utf-8?B?aTU4b0duZzJMUitzSU0rVForM1QyNlcvSzZpSUpieWVGMmZ1cVoya0VlOHJJ?=
+ =?utf-8?B?NXdGRXNQUEdtYXdxQVZHNnk1azh6VmVxT0ozc0V5MS9Wb25oVWU3cDFrcElu?=
+ =?utf-8?B?czFlK0FvemsvZkw3SVN3NTgxMVN3dXErbDVkdENEREFTbHBIZHBZa0JvYi83?=
+ =?utf-8?B?bDlIQmZJWHlta1RUR1JqTkhwVW1MNVpwZVAzeE94eHlGNXpzQ2d1cUxmaFhn?=
+ =?utf-8?B?MDNOQW1NWU96MlN2RWIwWE1nRitzcTNZZCtOWXlJK2R0R1Juc1hGMDBPZGQx?=
+ =?utf-8?B?eEpNQU8rckpwdDlxM3J5UnJzUGR5WWZCKytJMi9nbUlLSHU1YVdlcWRnYnNO?=
+ =?utf-8?B?dXNsMVdMdGswOVlXQlQzdVl1Qk1GWVhaTFBHaCt0dVFMc25IMlFoc1g1Zm5X?=
+ =?utf-8?B?ZE9Ob3lYYnJnUDNCTWEvOGdEYWt4Q1ZXajdZU1lCMUZJak9BQmFDWTlTZmJV?=
+ =?utf-8?B?QzNqTVVzVm9kbGRCNlA1OTBPclVlSW5sMnVYbTRBZ3VtY3I1ZW95QVYvRHJw?=
+ =?utf-8?B?TnZmcVg4OWtqdEo4bzhyczdZZzhSaDhJQWd6TWdaUzI1MEc2YWM4SjFrT1RG?=
+ =?utf-8?B?d1h1RkxGK2x1ZDFpS1dMeEdhdDhqaHhJVlgydzFnMkNSY25Sc3VLUlFaaE1R?=
+ =?utf-8?B?cjhNSEt1T3owaHBNZ085Tm1ydXM3SVRWQTVVckV3VGsxSHNzV0JXYm50S09D?=
+ =?utf-8?Q?j3pBeEQC31jL4?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS8PR06MB7541.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700018)(921020);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?anR2OFhBNlBBZFdaSVlGMmlvUFVtMjU1NlVZVGNPNGJrZzdlRXpIb0M5VGh6?=
+ =?utf-8?B?SEY2bXBoa2xoaGg5Q3RZaklYUTFCMFlnMldtMGxsYWE3dUd4VGRQM2JJUWNH?=
+ =?utf-8?B?eU90dC82QnltRlNlejVaUVBNclJrVTV6RGd3WEQxY2c4YUtBU0dQOWh6OHZM?=
+ =?utf-8?B?MmtxSWhvZWZlRmdZbGR1U0ord1BnUkowTmo3SGwxNVkydG50V1FzR1RlS2Vp?=
+ =?utf-8?B?eEhVS2NuNm4rb2trSU9zTEdHNHBpSno2c2dRSXNLelhaeks1aHhpVVNSM1ZG?=
+ =?utf-8?B?a3RpMUdLb1JRZUJMVExFT3ZLaGhndXdoSTVYZFlMUHdmZGNqd0Vqa1JtZVB0?=
+ =?utf-8?B?MTlJS3h2TkhGcnc1YXpTMmhPdDdHMW4rcFlZbWp0RythdE9mbHBaenFieTUv?=
+ =?utf-8?B?bWYzM2FHN0F4bGwvM1NTb3dOb0wrNkhVTi9OS3MxalRoR1h4ODdKWG5TSExw?=
+ =?utf-8?B?aktRVzIrd2JkT0RXMDRCRzlldEpBdFFqS1VWbk9QRlU3aUZ5Qy9SeE45UGlC?=
+ =?utf-8?B?OFVZK3BRZlRuZW9kR3JHZUp2T0hPbEs4bWpLSmhhTG9GQkVaWXFIVlpCbjJw?=
+ =?utf-8?B?RzRsbVhiSnVHajM1Wk15L1ljMXlpQklDUHF6UlVkcC9ZdjlvZlNWbHhXUVJZ?=
+ =?utf-8?B?U1pJY3JFKzN5R1FyeGZOOVE3RUg2ZUhGbEE3NThZdGEwRWQ0UCtFRWM2WVRh?=
+ =?utf-8?B?c254bEVoYWFMdzUrV055aHlKU1kxR0RDaGZOakdidmpoMG1tR1NkV1Y2Wisz?=
+ =?utf-8?B?L3pxZnAzRkF6dUMrVGhaNXVram5uQVd2UEk4ZDZTRUlLejdudksyeDREZkVZ?=
+ =?utf-8?B?T01kR09NTk9BYWJZa1ZINkN0cmdLakp5bnFxMzNGSElPaDNzV0hHN2hQWHpJ?=
+ =?utf-8?B?UUlRalRxRWpQWlBHNElHOFluRmN4eE1aeHYrdWNTd3UvVnhuKzlFcU40bmVJ?=
+ =?utf-8?B?WHZZdW4rNUQxR2M3L2tDdEhiMTVob2lWNjZ0RWhTcmJoSUZJa0V6ZGxPYThI?=
+ =?utf-8?B?WlhNcU5OUDBndWxXUGdyai9yblU2Z29IUFpPMTJ4OXZRWWNxdGdoaGEwZ3l3?=
+ =?utf-8?B?bEt6UTFzZVBCdjRpUmF4czF4dEtYL2RzZmxIY3BRelpZNFlPYXB0a0xpY1E5?=
+ =?utf-8?B?VEVIeEp2bGVaS29jTjRncFRNZ3FHb0JQUUdCdnp3S0F3Y2NmdTc1ejBKSHZN?=
+ =?utf-8?B?Mmp4K001Q2NGRVdWS3Z5ZFRvNm04ZklzWDVIeStQRi9MMEVsT3l0NytiVFhP?=
+ =?utf-8?B?Z1F1QnN1YUFBd3ZxUnBpRkFMQ3hLcmlMRXc5S3FPN1pmQjlQd1lDNGVVSENI?=
+ =?utf-8?B?WWdGRThKcGxOaWR1RUNYdDJYWGZuTmp6U1BjUzhucW14VWltWTdwblZNRTNT?=
+ =?utf-8?B?aC8rT3ZNVWtyTlh5ZlY0V2FZdHJMMy94V0JsdkVIbEFLbVNwcVd1NWx5S2pT?=
+ =?utf-8?B?eENpVi9ZNktSZDdUbjFjbWxYakFrUTgvU3M1MkhFVTlpWlZhaEVTdjF4RU44?=
+ =?utf-8?B?UGhzV1BvOEltaUUrckx0Y0V0MjUrOUR5Mk1yeFRVRHZDamRoaE5PdXhlWUJi?=
+ =?utf-8?B?NlBmQ2NLbzI4RER1bmhtK2R3MVZEeU9BRWk4eS9CTlZ4d2ZsY3p2VlM5M2t6?=
+ =?utf-8?B?ekxURHlTMU5RQm4xSWZPYVhTUE91VGU0REpyOUl3aHFwOHdrNTRlWWtYL3NB?=
+ =?utf-8?B?Nk8xaSt3eTlidHZXNVFCaFNxaEhJay9IT3BIOGV4ZzNKL2wzK2trYkVLZERs?=
+ =?utf-8?B?bTBKRWpXdHgrQWdjK2JwUTJKWjhqWkx3UUw1Uml2Ny84VXJFUmNxZlNDNEhm?=
+ =?utf-8?B?SUR4S2Q4TUZkNWRiU1pKZDFvWG1UKy82bDkrdXlLREt4bTNNOEljZXBYRWtN?=
+ =?utf-8?B?MVhOM3A3T2psWkV3NHZ2UFZ6cEdpc21IOGw1Yi9LUFc1WFdCVUdIajJ6Q2Jj?=
+ =?utf-8?B?RGp4ejlkeno0OGhsNGZsUjZ4TXEyOFRwcGpoSmlobkUyVGpwYWxYbDNpS2lm?=
+ =?utf-8?B?YUJpVExsL1BCQ05NUzA5NHdxZDM3ZlRGcld4dFQrMzN3cDJ5eXNkQU5nMEtZ?=
+ =?utf-8?B?MjhJZzd4ZXc0elYvdGgxUVM1YXloWmJNZGxyeFhhN2VqK2kvbXlWQjJMbGxw?=
+ =?utf-8?Q?SXqUMvmd8n/Mr9cm4QOSem22l?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Last-TLS-Session-Version: TLSv1.3
-X-Mailman-Approved-At: Tue, 20 Aug 2024 09:41:43 +1000
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OS8PR06MB7541.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 933b1f20-548f-4a30-3048-08dcc0b77f43
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2024 01:29:12.5918
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: S0vVTbJ7CoeyAj0QX3d9zJAZ8Wjlk5uKFEtwB0I/I6mZp3PqeV/UviXWoijXdvYbtIh6iQfOEeuzeGCryqCpOgIE6X2K/NlwO77mktZNYNQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6493
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,335 +175,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, imx@lists.linux.dev, Kevin Hilman <khilman@baylibre.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Rob,
-
-thanks for the update.
-
-Am Freitag, 16. August 2024, 18:47:14 CEST schrieb Rob Herring (Arm):
-> "lm75" without any vendor is undocumented. It works with the Linux
-> kernel since the I2C subsystem will do matches of the compatible string
-> without a vendor prefix to the i2c_device_id and/or driver name.
->=20
-> Mostly replace "lm75" with "national,lm75" as that's the original part
-> vendor and the compatible which matches what "lm75" matched with. In a
-> couple of cases the node name or compatible gives a clue to the actual
-> part and vendor and a more specific compatible can be used. In these
-> cases, it does change the variant the kernel picks.
->=20
-> "nct75" is an OnSemi part which is compatible with TI TMP75C based on
-> a comparison of the OnSemi NCT75 datasheet and configuration the Linux
-> driver uses. Adding an OnSemi compatible would be an ABI change.
->=20
-> "nxp,lm75" is most likely an NXP part. Alexander Stein says the i.MX53
-> boards are a NXP LM75A as well. NXP makes a LM75A and LM75B. Both are
-> 11-bit resolution and 100ms sample time. The "national,lm75a" is
-> 9-bit, so "national,lm75b" is the closest match for both NXP variants.
->=20
-> While we're here, fix the node names to use the generic name
-> "temperature-sensor".
->=20
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Reviewed-by: Kevin Hilman <khilman@baylibre.com> # am335x-nano.dts
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com> # imx53-mba5=
-3.dts, imx53-tqma53.dtsi
-
-> ---
-> SoC maintainers, Please take this directly for v6.12.
->=20
-> v2:
->  - Also use "national,lm75b" on i.MX53 boards.
-> ---
->  .../aspeed/aspeed-bmc-facebook-greatlakes.dts |  2 +-
->  .../socfpga/socfpga_cyclone5_vining_fpga.dts  |  4 +--
->  .../dts/marvell/armada-385-clearfog-gtr.dtsi  |  8 ++---
->  .../boot/dts/nuvoton/nuvoton-npcm730-kudo.dts | 32 +++++++++----------
->  .../boot/dts/nuvoton/nuvoton-npcm750-evb.dts  |  6 ++--
->  arch/arm/boot/dts/nxp/imx/imx53-mba53.dts     |  4 +--
->  arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi   |  4 +--
->  .../dts/nxp/lpc/lpc4357-ea4357-devkit.dts     |  4 +--
->  .../boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts  |  2 +-
->  arch/arm/boot/dts/ti/omap/am335x-nano.dts     |  2 +-
->  .../boot/dts/xilinx/zynq-zturn-common.dtsi    |  4 +--
->  11 files changed, 36 insertions(+), 36 deletions(-)
->=20
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts =
-b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
-> index 998598c15fd0..49914a4a179f 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-greatlakes.dts
-> @@ -201,7 +201,7 @@ eeprom@54 {
->  &i2c12 {
->  	status =3D "okay";
->  	temperature-sensor@4f {
-> -		compatible =3D "lm75";
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x4f>;
->  	};
->  };
-> diff --git a/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga=
-=2Edts b/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
-> index 65f390bf8975..84f39dec3c42 100644
-> --- a/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
-> +++ b/arch/arm/boot/dts/intel/socfpga/socfpga_cyclone5_vining_fpga.dts
-> @@ -130,8 +130,8 @@ gpio: pca9557@1f {
->  		#gpio-cells =3D <2>;
->  	};
-> =20
-> -	temp: lm75@48 {
-> -		compatible =3D "lm75";
-> +	temp: temperature-sensor@48 {
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x48>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi b/arc=
-h/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
-> index f3a3cb6ac311..8208c6a9627a 100644
-> --- a/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
-> +++ b/arch/arm/boot/dts/marvell/armada-385-clearfog-gtr.dtsi
-> @@ -423,14 +423,14 @@ &i2c0 {
->  	status =3D "okay";
-> =20
->  	/* U26 temperature sensor placed near SoC */
-> -	temp1: nct75@4c {
-> -		compatible =3D "lm75";
-> +	temp1: temperature-sensor@4c {
-> +		compatible =3D "ti,tmp75c";
->  		reg =3D <0x4c>;
->  	};
-> =20
->  	/* U27 temperature sensor placed near RTC battery */
-> -	temp2: nct75@4d {
-> -		compatible =3D "lm75";
-> +	temp2: temperature-sensor@4d {
-> +		compatible =3D "ti,tmp75c";
->  		reg =3D <0x4d>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts b/arch/ar=
-m/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
-> index 1f07ba382910..886a87dfcd0d 100644
-> --- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
-> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-kudo.dts
-> @@ -531,8 +531,8 @@ i2c@4 {
->  			reg =3D <4>;
-> =20
->  			// INLET1_T
-> -			lm75@5c {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@5c {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x5c>;
->  			};
->  		};
-> @@ -543,8 +543,8 @@ i2c@5 {
->  			reg =3D <5>;
-> =20
->  			// OUTLET1_T
-> -			lm75@5c {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@5c {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x5c>;
->  			};
->  		};
-> @@ -555,8 +555,8 @@ i2c@6 {
->  			reg =3D <6>;
-> =20
->  			// OUTLET2_T
-> -			lm75@5c {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@5c {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x5c>;
->  			};
->  		};
-> @@ -567,8 +567,8 @@ i2c@7 {
->  			reg =3D <7>;
-> =20
->  			// OUTLET3_T
-> -			lm75@5c {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@5c {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x5c>;
->  			};
->  		};
-> @@ -697,8 +697,8 @@ i2c@3 {
->  			reg =3D <3>;
-> =20
->  			// M2_ZONE_T
-> -			lm75@28 {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@28 {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x28>;
->  			};
->  		};
-> @@ -709,8 +709,8 @@ i2c@4 {
->  			reg =3D <4>;
-> =20
->  			// BATT_ZONE_T
-> -			lm75@29 {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@29 {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x29>;
->  			};
->  		};
-> @@ -721,8 +721,8 @@ i2c@5 {
->  			reg =3D <5>;
-> =20
->  			// NBM1_ZONE_T
-> -			lm75@28 {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@28 {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x28>;
->  			};
->  		};
-> @@ -732,8 +732,8 @@ i2c@6 {
->  			reg =3D <6>;
-> =20
->  			// NBM2_ZONE_T
-> -			lm75@29 {
-> -				compatible =3D "ti,lm75";
-> +			temperature-sensor@29 {
-> +				compatible =3D "national,lm75";
->  				reg =3D <0x29>;
->  			};
->  		};
-> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts b/arch/arm=
-/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
-> index f53d45fa1de8..bcdcb30c7bf6 100644
-> --- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-evb.dts
-> @@ -198,7 +198,7 @@ &i2c0 {
->  	clock-frequency =3D <100000>;
->  	status =3D "okay";
->  	lm75@48 {
-> -		compatible =3D "lm75";
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x48>;
->  		status =3D "okay";
->  	};
-> @@ -208,8 +208,8 @@ lm75@48 {
->  &i2c1 {
->  	clock-frequency =3D <100000>;
->  	status =3D "okay";
-> -	lm75@48 {
-> -		compatible =3D "lm75";
-> +	temperature-sensor@48 {
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x48>;
->  		status =3D "okay";
->  	};
-> diff --git a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts b/arch/arm/boot/dt=
-s/nxp/imx/imx53-mba53.dts
-> index 2117de872703..0d336cbdb451 100644
-> --- a/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
-> +++ b/arch/arm/boot/dts/nxp/imx/imx53-mba53.dts
-> @@ -175,8 +175,8 @@ expander: pca9554@20 {
->  		gpio-controller;
->  	};
-> =20
-> -	sensor2: lm75@49 {
-> -		compatible =3D "lm75";
-> +	sensor2: temperature-sensor@49 {
-> +		compatible =3D "national,lm75b";
->  		reg =3D <0x49>;
->  	};
->  };
-> diff --git a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi b/arch/arm/boot/=
-dts/nxp/imx/imx53-tqma53.dtsi
-> index b2d7271d1d24..c34ee84bd716 100644
-> --- a/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
-> +++ b/arch/arm/boot/dts/nxp/imx/imx53-tqma53.dtsi
-> @@ -254,8 +254,8 @@ pmic: mc34708@8 {
->  		interrupts =3D <6 4>; /* PATA_DATA6, active high */
->  	};
-> =20
-> -	sensor1: lm75@48 {
-> -		compatible =3D "lm75";
-> +	sensor1: temperature-sensor@48 {
-> +		compatible =3D "national,lm75b";
->  		reg =3D <0x48>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts b/arch/a=
-rm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
-> index 224f80a4a31d..4aefbc01dfc0 100644
-> --- a/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
-> +++ b/arch/arm/boot/dts/nxp/lpc/lpc4357-ea4357-devkit.dts
-> @@ -482,8 +482,8 @@ mma7455@1d {
->  		reg =3D <0x1d>;
->  	};
-> =20
-> -	lm75@48 {
-> -		compatible =3D "nxp,lm75";
-> +	temperature-sensor@48 {
-> +		compatible =3D "national,lm75b";
->  		reg =3D <0x48>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts b/arch/arm=
-/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
-> index 1f84654df50c..846afb8ccbf1 100644
-> --- a/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
-> +++ b/arch/arm/boot/dts/nxp/lpc/lpc4357-myd-lpc4357.dts
-> @@ -511,7 +511,7 @@ &i2c1 {
->  	clock-frequency =3D <400000>;
-> =20
->  	sensor@49 {
-> -		compatible =3D "lm75";
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x49>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/ti/omap/am335x-nano.dts b/arch/arm/boot/dt=
-s/ti/omap/am335x-nano.dts
-> index 26b5510cb3d1..56929059f5af 100644
-> --- a/arch/arm/boot/dts/ti/omap/am335x-nano.dts
-> +++ b/arch/arm/boot/dts/ti/omap/am335x-nano.dts
-> @@ -231,7 +231,7 @@ tps: tps@24 {
->  	};
-> =20
->  	temperature-sensor@48 {
-> -		compatible =3D "lm75";
-> +		compatible =3D "national,lm75";
->  		reg =3D <0x48>;
->  	};
-> =20
-> diff --git a/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi b/arch/arm/b=
-oot/dts/xilinx/zynq-zturn-common.dtsi
-> index dfb1fbafe3aa..33b02e05ce82 100644
-> --- a/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi
-> +++ b/arch/arm/boot/dts/xilinx/zynq-zturn-common.dtsi
-> @@ -97,9 +97,9 @@ &i2c0 {
->  	status =3D "okay";
->  	clock-frequency =3D <400000>;
-> =20
-> -	stlm75@49 {
-> +	temperature-sensor@49 {
->  		status =3D "okay";
-> -		compatible =3D "lm75";
-> +		compatible =3D "st,stlm75";
->  		reg =3D <0x49>;
->  	};
-> =20
->=20
-
-
-=2D-=20
-TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
-Amtsgericht M=FCnchen, HRB 105018
-Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
-http://www.tq-group.com/
-
-
+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxMyAxLzNdIGR0LWJpbmRpbmdzOiBpMmM6IGFzcGVlZDog
+c3VwcG9ydCBmb3INCj4gQVNUMjYwMC1pMmN2Mg0KPiANCj4gT24gMTkvMDgvMjAyNCAxMToyOCwg
+UnlhbiBDaGVuIHdyb3RlOg0KPiA+IEFkZCBhc3QyNjAwLWkyY3YyIGNvbXBhdGlibGUgYW5kIGFz
+cGVlZCxnbG9iYWwtcmVncywgYXNwZWVkLGVuYWJsZS1kbWENCj4gPiBhbmQgZGVzY3JpcHRpb24g
+Zm9yIGFzdDI2MDAtaTJjdjIuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBSeWFuIENoZW4gPHJ5
+YW5fY2hlbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiBSZXZpZXdlZC1ieTogS3J6eXN6dG9mIEtvemxv
+d3NraSA8a3J6aytkdEBrZXJuZWwub3JnPg0KPiANCj4gPyE/DQo+IA0KPiBXaGF0IGhhcHBlbmVk
+IGhlcmU/IFdoeSBhcmUgeW91IGFtZW5kaW5nIHRhZ3M/IT8gVGhhdCdzIG5vdCBhbGxvd2VkLiBZ
+b3UNCj4gY2Fubm90IGNoYW5nZSByZWNlaXZlZCB0YWdzLCBjaGFuZ2UgcGVvcGxlIG5hbWVzIG9y
+IHRoZWlyIGRhdGEhIEFuZCBob3cgaXMgaXQNCj4gZXZlbiBwb3NzaWJsZSwgc3JzbHksIGhvdyBk
+byB5b3UgZXZlbiB3b3JrIHdpdGggZ2l0PyBHaXQgd291bGQgbmV2ZXIgZG8gaXQsIHNvDQo+IHlv
+dSBoYWQgdG8gZG8gaXQgb24gcHVycG9zZSB2aWEgc29tZSB3ZWlyZCB3b3JrZmxvdy4NCj4gDQpT
+b3JyeSwgSSBkb24ndCBrbm93IEtyenlzenRvZiBLb3psb3dza2kgPGtyenlzenRvZi5rb3psb3dz
+a2lAbGluYXJvLm9yZz4gaXMgeW91IG9yIG5vdC4NCk9yIHNob3VsZCBJIHN0aWxsIGtlZXAgS3J6
+eXN6dG9mIEtvemxvd3NraSA8a3J6aytkdEBrZXJuZWwub3JnPj8NCg0KaHR0cHM6Ly9wYXRjaGVz
+LmxpbmFyby5vcmcvcHJvamVjdC9saW51eC1pMmMvcGF0Y2gvMjAyMzA0MTUwMTI4NDguMTc3Nzc2
+OC0yLXJ5YW5fY2hlbkBhc3BlZWR0ZWNoLmNvbS8NCg0KPiBCZXN0IHJlZ2FyZHMsDQo+IEtyenlz
+enRvZg0KDQo=
