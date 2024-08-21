@@ -1,80 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF6E69592EA
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 04:30:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E16099594EB
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 08:43:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WpVgX4wdZz302c
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 12:30:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WpcHB63rdz3024
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 16:43:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:2011::723" arc.chain=microsoft.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=qYegXcv0;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:2011::723; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on20723.outbound.protection.outlook.com [IPv6:2a01:111:f403:2011::723])
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f400:feab::715" arc.chain=microsoft.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::715; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20715.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::715])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WpVfw5Ffzz2xWV;
-	Wed, 21 Aug 2024 12:30:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WpcGy6JCxz2xZq;
+	Wed, 21 Aug 2024 16:43:21 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MnNXE4qZZ6LwKb2SHVcQR3ZqL5GKyCWE8AJFHJOmNO7e2qa4jTwc1FYGNm8nl02soGtM71WnYZREaq9Qnv3L0KAr3xFmIimWLzRgzW28vY/LFQykxYIsKX5lkpnyIBZnomCsRFMDNIynbvefH2xX3QFS7OnPd+dfjTcA4Ryw8pN6FVj9sn0bwOFrSH06nSVSpfLc5l9K04Gd+Rxe6geRCqGPcICObY7ZIhlVuIiPgnWbK890n5GxcpZ6/133UPf6tbYmQw9meq0WiU/e0D9nsifaXf0HCccuilLWSgXn8Ij8RsnTzl55o/zIRmJa4xvKYR8hIfS49Gd8+wwPSZ4/Kw==
+ b=foCj/OZwUYWwXROG9aNfrMCn6+U9s2yG1UhYynEatRd6t8ioG4TDayFa8mJAH0Dhb9TZKRI22oNvZdGiSKoquxjHcODWDhqp4cvkbYGvQdDJd0J8Nc3qYvT8URVvDBCcpV/17sYJbQVlz5RaMWBcDDsEF+GD/Oz6bOmgMIzrDZy/SHYJf5+V4qwaDydyAmNP91NMmPYTtFsfowAgQxhfxFXZYKLP/hwjcXEuD8q2YC1838yHGUx+rD3UPantauDtcZbkysJDYGdN9p8/Cx+SDFCpb7EZjBwcQS7jTDKKs46I/f5WmSMX4us/lAwEHSOPYOeRtf2QShR+PXmNwwb4Zg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OQLBGnZJpodGFC3hGyLoPVOJ1+j9/wKCe8sYuQ/2T7Q=;
- b=B+03hMNnQg8IhdkPJvpUnc2Doc0RtcyChQtuMjz4IfOvH0vViXCKJXqILr6UFL1efE1Frm+O4FMBzqB7TJKEO6OmXlNsS3v0kHrS6UUcqVzKNGibTSra59rjLbkG2zAFSjG82X5nRFmur6TwDnKY1knsY4/j07inVZQU+g6Xj2nI9AmBdVK3aUzXd/BNGQH4WS17vj5uukc6eprvtd4uaKzVPOjS3CIoJsHT4PrbzH6TmzdjDpN8X09PhVD7QXgYgJpHQC8G8NKKREWvVpq+ksCwoHfBOgU5ZG52rpWN4VOjgUeAl2h/huSs8kjMy2fT/zkERkrXzEQF15uRM2cKYQ==
+ bh=2SPQ+3n18x7So4leCZ6YRnLDfjAm4p/Z9L0+cp9tJCs=;
+ b=TiRWUuuIX0kmkrU/uEnAoeZ+3TL4bdIzKH0+J6sLBGgraWWAEou6HfUwoT6gbyiRCSEc9FdarGwjTFam7abgQkg500+PObzA73bro5ShEmwtuIGImpuVqVj7L372ff7HRRpNCQq2oxME/pQsLuolvN79PzPv50RZkKAyR62Woi212Kc0MsZJH/TfghKCjzRkl9V3lKMiy8CBXPOQLf7I+NvLL7PS/NYnSDVk+xWSChuL2OgM2/BsVqU9nL4cy27g4I8LcZwN4FlbqIfP3Zuu2aD8WLSBAYps8zam7pvbxtcyQ2ONVhzKA8lbixc2Xa++348cWgH8UJ7TEsnp3h55Xg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OQLBGnZJpodGFC3hGyLoPVOJ1+j9/wKCe8sYuQ/2T7Q=;
- b=qYegXcv0sdkqwobhVNuJ6Jv0JLgH5fL93O2zeK02I7yKeu/+aH+sSvyCfJ383zZ6y+6cJU16OTzXBSt+okqXrRz+YU57CRV4N7iGqs1NTznjcPcu46YgP7f09lnvVQoiIYWNVQvUYXecsyIAz2zsQIWMunRqwFUHmJpD5R0tnY8QVJTxEgneUHcx+oBqaQVgFGVW7MJt1txCPOnY8FhOq13zPBGHsZ8yPfb3vV/E6yJos7H/BkHfemM9mF6ufICyh1mP1aaE2tz9ld2/v/hOfUb86fwWtjIoFmqgZiBb7jpN2tFa/4Qamy6UdogkubF/PHQIn59Bwpaw0c03TJMRig==
+ bh=2SPQ+3n18x7So4leCZ6YRnLDfjAm4p/Z9L0+cp9tJCs=;
+ b=SjSD0rs3nOH7WpxwxCdKIWIvCcC91tbhL2QtOWnvAV5RDkXeNA2nloo7/f7m5hod55yYLdltuwq79dnSTWjXhC+z7SCSKLwb+Zei5m41Ml1mdWcegRIiFU1tTHzOTp1FnSUMrdmDEt1wxR4+RT+NtQd+/3GwS9HvP+AD85lNeGrboetIyx0tQHytEd0BB2w3Moxvz1W7Ut1Pypj5pl0UAXYbeEyTO+/dPVBg3u3cnoFkfXGyDpbn21xXLdk5pkt6AH29AE/rvUnknWWenWFRkoisKgdN24woTIyaYIu5+JKE0dJNHaqa1Gwg0mj6CUTdEaXydz0SOZ9Y6ONTRUZpXQ==
 Received: from OS8PR06MB7541.apcprd06.prod.outlook.com (2603:1096:604:2b1::11)
- by PUZPR06MB5849.apcprd06.prod.outlook.com (2603:1096:301:fb::13) with
+ by SI2PR06MB5387.apcprd06.prod.outlook.com (2603:1096:4:1ee::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.18; Wed, 21 Aug
- 2024 02:29:49 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.25; Wed, 21 Aug
+ 2024 06:43:02 +0000
 Received: from OS8PR06MB7541.apcprd06.prod.outlook.com
  ([fe80::9f51:f68d:b2db:da11]) by OS8PR06MB7541.apcprd06.prod.outlook.com
  ([fe80::9f51:f68d:b2db:da11%5]) with mapi id 15.20.7875.019; Wed, 21 Aug 2024
- 02:29:49 +0000
+ 06:43:01 +0000
 From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>, "brendan.higgins@linux.dev"
-	<brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
-	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
-	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
-	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
-	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
-	<andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
-	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
-	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-Thread-Topic: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-Thread-Index:  AQHa8ho549HAiRHYiEK49yrqFuaLn7IuYooAgAD5pxCAAFELAIAACBjQgAA2cICAARONwA==
-Date: Wed, 21 Aug 2024 02:29:49 +0000
-Message-ID:  <OS8PR06MB7541A425EF01573FCBE6735AF28E2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: RE: [PATCH v13 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+Thread-Topic: [PATCH v13 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+Thread-Index: AQHa8ho4oLFWUX2yC0qHT9Kfp3UIaLIuoMcAgAJo7hA=
+Date: Wed, 21 Aug 2024 06:43:01 +0000
+Message-ID:  <OS8PR06MB7541EE5BA5B400445FE0295EF28E2@OS8PR06MB7541.apcprd06.prod.outlook.com>
 References: <20240819092850.1590758-1-ryan_chen@aspeedtech.com>
- <20240819092850.1590758-2-ryan_chen@aspeedtech.com>
- <7237aa34-9821-4ba7-a45b-3b1d598bc282@kernel.org>
- <OS8PR06MB75418A2ACA6693A8163F19E8F28D2@OS8PR06MB7541.apcprd06.prod.outlook.com>
- <46a9280d-f4ef-4cfb-83a3-3744e04721f3@kernel.org>
- <OS8PR06MB7541A25AC3A11C51DD57E1B4F28D2@OS8PR06MB7541.apcprd06.prod.outlook.com>
- <266f4b55-bddb-4c44-9eb5-3eef35757714@kernel.org>
-In-Reply-To: <266f4b55-bddb-4c44-9eb5-3eef35757714@kernel.org>
+ <20240819092850.1590758-3-ryan_chen@aspeedtech.com>
+ <ZsNT7LPZ7-szrgBJ@smile.fi.intel.com>
+In-Reply-To: <ZsNT7LPZ7-szrgBJ@smile.fi.intel.com>
 Accept-Language: zh-TW, en-US
 Content-Language: zh-TW
 X-MS-Has-Attach: 
@@ -82,94 +61,78 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OS8PR06MB7541:EE_|PUZPR06MB5849:EE_
-x-ms-office365-filtering-correlation-id: 118e9831-0091-409d-6324-08dcc189212e
+x-ms-traffictypediagnostic: OS8PR06MB7541:EE_|SI2PR06MB5387:EE_
+x-ms-office365-filtering-correlation-id: f1c0e400-1cbe-4f25-814f-08dcc1ac8089
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700018|921020;
-x-microsoft-antispam-message-info:  =?utf-8?B?eFFuUCtpSWdvd1FGcXBqUkxJTmZrOWlVUm5HaVU3U2xyVHAyeXRqWWt3TkF5?=
- =?utf-8?B?V3FkYUZQdzRaL1JnSHZXQ0hGa1hVTktHRGFiNW9BQU94RzYrZE8vNXRWWGN4?=
- =?utf-8?B?SHBjM1A3eTU2WG5uN1FSRUY4WTY1ZnlTZS9hUGJNbUdMcHVQd0lwbGhwL3pa?=
- =?utf-8?B?K0R1ZW5ZeEd0T1JUMGJEK0RGcUx3UUtCdXd5L254ajlVbG5HYnpEZ3V0aVNG?=
- =?utf-8?B?eks4cjduTnVkeE92bkVtc0xVRnFYQjc0QWVtcS9ab3FST2tHU2xKYXZ3L2J1?=
- =?utf-8?B?dEsvTlo2ZmxXR2RlYXFSeFQrS1FEZUFuVm1VSWt5aFM4YUtpaGhadGcvVHpH?=
- =?utf-8?B?MXpvbVFQbEZ0alI5aVRoZE8zYWFWYmc4U0YrSXVhQnlZMU9DYURnMUJVVHU1?=
- =?utf-8?B?T2FqVU5LU3dta3Fzak80MkszbmJQQTZGYitMNUJGazNjTEV3YW8xc2hkYUUw?=
- =?utf-8?B?UnpYOEo0dTNibzRpbDl1cFBySXl4RXhXM1BFQzY2RzVNNmRLVDQwVjQxQTJn?=
- =?utf-8?B?RFJRVGpPK01IOUk1MEJidWFmeElHdGNNeGo5STAya1dTK0hUMUt3SWM0bjh1?=
- =?utf-8?B?a1QvUnNic3l4MHMyc1I2VFVCSWd5S2RnNDRmTW05czVUa2VBZ0doOG1XQUc4?=
- =?utf-8?B?eVdsMU9PSDZTS3RxUHBsK01CelZ3Qk9VQjZDTEZPZStXSUZ5Y1RvRFlWUFZ4?=
- =?utf-8?B?d09FOFdSdlBZSVFvOThkRVJVUmFMbFViWUs5eUZCSnRHOWFUQ2ltVGNXNHJX?=
- =?utf-8?B?ZG1QNEFBdk1yWFA0bW0weXRyUEFKRHI4YmRNSk9QQUpnVGNrMkFhdEdYYXZV?=
- =?utf-8?B?VStvcXA2Y2xuY2tVNWJsU3RvNm5TbFY0QThXRE96VjBGbHpkSCt2d1gxUXA0?=
- =?utf-8?B?bE90Ky9RcVpYOHBXYlhyWXZZRzRYWVAxUkljeWNtTWhjaE1zN05mZFlVMk5o?=
- =?utf-8?B?TjAvU3hmUnYrSm1WZFdZZldPUG93NWpvWkVta0pJc0lqS2FCRHpWR280aVd3?=
- =?utf-8?B?bXMyVzM2UU80WDdIUEtYVFY3Q3dDNGpQaHRoQWN3YnBvcHdHRnVvVkt5b1ZN?=
- =?utf-8?B?NGFYUWxKaHkrMkhGTVppUVQwNTV5U3JjRCtMZkgzRlhNQ2M0bjNEaHVvYTRP?=
- =?utf-8?B?cTB1SVdSZjhDR093citSa2FwV2ZrUmlXWjNSQVhPeGoxdWh0RW5Rc1M2bDNp?=
- =?utf-8?B?UjRKR1JxZ0JBbG02Zy9JZDhBckU0LzlzeEZkQnIyZ3NJZFVLVHRpbE13aFVv?=
- =?utf-8?B?WVM2WCtVZ0dNR0FBKzFBN0JpcGRtS2VjVnJrUC9odWgrWlhXb0w4YldWOUVQ?=
- =?utf-8?B?NTJQSkJHTitxMVUzMWoycHBVaGNkSFltMTc1ak5yYTViWldPQ2IvWDRvOXVh?=
- =?utf-8?B?OE9jczE4cHIxb0p4bVl5Q0hkb1VuV0UramxqYkpMTnhEcUkxdSsra3Q0WnA3?=
- =?utf-8?B?MVoyNkhrRkozSWJ1UUdqSjV5NjV0SjdNM1FlblRoMk1TcHdHcUJ4dEFBK2dv?=
- =?utf-8?B?cjZKS1VILzhBZFdva1pha1JQVUNVMjRYNVZNSlorVkc4dXlGQmNmUU1obnRD?=
- =?utf-8?B?ZytGYUY1ZmlUZVJ3d1V2NnZyaHY3N216OGQybEpUOWl5eFNFSVpOSDdESnhI?=
- =?utf-8?B?RDhUc3RXelY0TU9zNytNay9ZVC9MNFptQzRMUzVsM09yK3J0WC9LRmRKUFdj?=
- =?utf-8?B?cE5CQ2dXYUx1S1p6SjJXcWZzenVDdW5uL3Rrdjl2VzVGaWozb1loUjUwTEw3?=
- =?utf-8?B?b1Z6TjlwbWMzNm9IeUc1Z2dnVysyVE9xZWE3K29jTlB1VjYvY2F2YXVpNHlw?=
- =?utf-8?Q?pqiVAoBeX4sLqx/72YtdikMcynZqKtdudMeco=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS8PR06MB7541.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018)(921020);DIR:OUT;SFP:1102;
+x-microsoft-antispam:  BCL:0;ARA:13230040|366016|1800799024|7416014|376014|38070700018;
+x-microsoft-antispam-message-info:  =?us-ascii?Q?ZMgWviHoI/jRflilPBCj6cxeNv8e3gwZZembe9Vy3OzeEPkiiRwUT8Pbo+y6?=
+ =?us-ascii?Q?Z920XZT60p6SazaEHNZL4V2bTjeSfl6o49WaYDUDB/jQiH6CtuzaV4VvNSVg?=
+ =?us-ascii?Q?7JaTT2psjCDTOIeFCR9J7dyKAWLkmG9yhJYCuVd8tIobxcievcl6PaLI7cx6?=
+ =?us-ascii?Q?Q3KypDdsf8ZPmvkldQHqXfyiKa194cF5L9eB9p129pzR8BPgk2pK6mVoEOzu?=
+ =?us-ascii?Q?cOSHg77NjGuiRZEJNlncUcosCem+sr5Ze7Rw2F1zgZK5Ia6geVOnmBn1IbDe?=
+ =?us-ascii?Q?fpnFwZlI6fuEPPK8oxXdNZh1SkS/0WSOzVVjAg1wNzc+Yw3JZq9eaSH2zyAX?=
+ =?us-ascii?Q?s0ZmeoKOxoax2hEJ/DER1KhmCSXJBn3r6oWhBKuzjDAtgnGH1qwSNuPlo+gU?=
+ =?us-ascii?Q?GQCeZ/QZgc8LzDF4AHeqBKBCuwn1I4AGcdayp6F1aRHq2TMhACna4fXVRUbk?=
+ =?us-ascii?Q?aY5pZVskW04f7Gkces+WVxuhNGwDU46GA5crcBREn++dO39tzaXbBaRyawFX?=
+ =?us-ascii?Q?/UBi0bxN/YEkDoNMLR8+R70TGyvYj4ypcBwt6eBsST4yaNxenwiwJ9EvZ5nP?=
+ =?us-ascii?Q?msSBc/pOfVTGrBPUScNlR/0Ymk71EfEiL1BMQJunF/L6vmI/eynqoyvvYMwo?=
+ =?us-ascii?Q?Xd94TTWfunAGqVULyUNeHnViqrpyykEcglni+blJe4L7CB/0iLUCHv1sbqVf?=
+ =?us-ascii?Q?zU3RjCwbrpmMy/3ZkkeDrTTInHOuQYr2RpPWEdVtjeBkwbqJq9aJRT9v2HSK?=
+ =?us-ascii?Q?oJmG+egoe+3OEPqQBVtU/3u1R5Ru64ZoCljZM7rRsvG0TQvtDxFvZWOJJwPU?=
+ =?us-ascii?Q?DOKso+FZbQvfuMIzOdlbkgQFS5C4atDgZopFT9KqW9cg7d6uPBv4ERHJkUKJ?=
+ =?us-ascii?Q?spB5Rnb7u0kGVaIbUtxhjfI3b08GAopSIDHwWmAVBMqr1HUE0nR5xHidd8tJ?=
+ =?us-ascii?Q?KrpFbNFFdZ4sw4xOfwYEQHJAjeUE7VeAKhNyIpoPp3jN1ax2NhugHGoAM0yA?=
+ =?us-ascii?Q?FSU+FWB4aRQEzcKHiiWOPEWRV/Igo3NdUv7xHRZ56BRkG/PizUfMOvC8Ckry?=
+ =?us-ascii?Q?GkZz/dTq8TV9kPuzafLTkdieMSav+xdmqXwFNxI/3y/Co47knrB+8S7MurtU?=
+ =?us-ascii?Q?xo8EviJH7xxjDTK5XniZzgfu5TbsrKL1hLXo+FV3R/E89sD+Q9tRK3sl+JaH?=
+ =?us-ascii?Q?A3amMDHXjjL5AucoJZ7MFIgXfBTdC8RiYdqf52uepl3YETLifIHT41VoGKqp?=
+ =?us-ascii?Q?xADYbjjrQNatx8SaJWL0z8oGfALFMPG9lK3Ns0DZgQn52MZ7d64uHpKqTS1/?=
+ =?us-ascii?Q?VPEtHfae/oZyLAJzspxwxA4lnZkTOMb8A75KtVdjkZ8WXycu1hfH3H+oYmJ2?=
+ =?us-ascii?Q?N5whKxkivHalSRo9aqa7GzuFAeg+hNt3kUJ2tEJyhp6sFg9Kjw=3D=3D?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS8PR06MB7541.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700018);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?SUF2WFFsZ1BWUzdneEV6TktUOGFjQ25TV0UxYUNhYXowVTBCUUYyNEdzbEhx?=
- =?utf-8?B?VXVaaHRlR3lHVWhlR0hBc3VtbTQzNUFLRGYvdTArUWF6bXRIS2RzbGxPaVc4?=
- =?utf-8?B?RlZoaWNzUzBoNVA0ZmYvdFM3RjV0S1NsZTRiaGZ0eUZVTTJCcU4zaWs0ZGcy?=
- =?utf-8?B?WjRIZHBzYUhIM040VldaOVRkNVlsZTZnYUNvbWdNaDZWU2NJU1hGS2JzSmti?=
- =?utf-8?B?QjVzY2RRMnQ5ZmN2ZW9RbWplVUd2OC9UQnIvMEQ5YTdsajh4bUx5dTAzQStD?=
- =?utf-8?B?MHR5RnY2cHpQLzVDV2lxbUFrWjdpcjJjRS9aS25tb3pNMHpnM0hqbTZGNnlT?=
- =?utf-8?B?L05WTUlhZ0tzTU1uUERBVzUvMEYvcGpwalpPTlVheTkyV2E4eVMvMzNoOHh6?=
- =?utf-8?B?TVZlZ3Q0cWVTUVlFSU9kYXNMNzVRa1RtaG9SSEhnZ3dsOHgvZmozY2R6TnI3?=
- =?utf-8?B?RmkxaThNZUV3cDQzRE5VUGYxOW54ajNNUXgyVnhMdFhOeE5WT1d5Y2Z6UW54?=
- =?utf-8?B?WE1vSzI4bnk2Ky80WEEzTFViUEoxR0trRUZldVh5R2o1NmxTUEpOaTN1Q0VN?=
- =?utf-8?B?T1dHd2w3S1poUEJrMy82VGt0Z1dtYXI2NU93NlZldzdWdGhpdStSSncrcnRl?=
- =?utf-8?B?MXQyaG1wbjdDQnZqUTdhQzdCajg5aDVQVWR1QTdKU1pWYTI3bUNIaHFjNi9z?=
- =?utf-8?B?aXFKM0FVSHRhMjYydThQVWQ3UWJUODlKajA4ME5OWWJrU2tRbGFWelBEZFdz?=
- =?utf-8?B?R2ZPZU9UNlZ6cWswKzN5U1F4Z3FtZHRzZGtYcmRtNkExcG83dXVoeSs5UlVk?=
- =?utf-8?B?UDQ0em1kTnVnYTB3b2ZBZWk3MTNqQlpLc2NhdmNmb1VBcExpUVZqSGdoT3kv?=
- =?utf-8?B?N1ltSjV6QlRkaVlkUU84T2JjSUsxeEtCMnQzVHdENnB1QnpPLzdDRVB1UEJ0?=
- =?utf-8?B?cFlrOFhqUHUzc3B1M3pQUncwVEU4QXUrRWZTY1BES3kyS3oyS1R0TEtCY3U0?=
- =?utf-8?B?SjE1VE9uTldXdTlSOVJGOFkwSFBWMXYwVXRXUldZRXE1eTUweW1uSGlHTnFP?=
- =?utf-8?B?RzZqcUtKdFN2bFNPaGhQZnhVYk9iL2RXdk9PbFZxa1lJYlVTdURlMkh3SWdK?=
- =?utf-8?B?OVVhdHdTSGQ4Nkh1ckxSUlY0di9hRzRHdFUrcWMwTmNFSE9nbTIyc0pHbjh6?=
- =?utf-8?B?TjlBa1hjT3cwOThFdDdHbFlJemJlYnpQT2ErUXdqL3RxSTgzUUgwQVhuRk5u?=
- =?utf-8?B?ZEk4RG5UL2ZCSk5tUHB0eDZIZFNuOWJwaEo5blBCbGNNZE5YZWZrYkE4c05I?=
- =?utf-8?B?WUhoM2xCMW83NHlTTk1TVExlOHcwTVR5anJhZ1ZkZkMxeXE4SENaME1ZSHlZ?=
- =?utf-8?B?R3VkOXhvUlM3V2htZ3g5OW1TRTdwWVIxcWFhcTR1SWZFT1ZweGJWdlFBU2N6?=
- =?utf-8?B?R3FsZkNBaEp5TWxTT1FqNWZVM1F6dFBkQ1JpSTZhTUJlT2YvTVE0OG54cDNl?=
- =?utf-8?B?ZElOTW9wZFV0RjFuUmkyL2VpMFhxY2ZLV2NCYmZwZEJlQ09vQ1loWVAxY3Rh?=
- =?utf-8?B?aE00aVlmNnE0ZVByOFI1Z01KZDhZMnZiOUc3Y2lWaS9tRlM3YnF3bVFQN0d6?=
- =?utf-8?B?aUwzSlRIVHNMQ01TczlwKzAyRjIvdXEzVFdHN0dhOXQ4Wnd5cFg1cEthM1Vt?=
- =?utf-8?B?c2pvQzlwWExMWjdTZXZPY204R1lKNWxXWUhaaDVETXZJSkxtWnZXWVJiR0pn?=
- =?utf-8?B?R2FORkVtc3NpTUlGMHRWbGZGb0pUQzVZQzJ1R25sbkliRUIzeG5lR0ZnUC8z?=
- =?utf-8?B?MUhuOStjSy93UUN2NHdQN0tIQ05oTXhpOWEycG5pTjdiblNCK0xPYWpMOGpN?=
- =?utf-8?B?TDZKbjNsbEd0OFZseDhuNUtjYU91eFF3TFdhWWs4UGVRWXE0bW1PTWJXTjlh?=
- =?utf-8?B?a05EdURyOGdndWZvS3pkYmZJdHVMSjkxazl2NHUwQUJhR3Bkek9uL2VLSUJv?=
- =?utf-8?B?eGhJRDBsTUZrN1ptVHlnaDN1VStIZXQwY2YvVjIycUZQNVpacjR3c3c1Vktt?=
- =?utf-8?B?RnZlYUU1Q0ozL1pQOFhYVS95cVdIOGpzUUY0YTJxbzVPa2trbGgvNW9KemNn?=
- =?utf-8?Q?oprcCoPh0UjyPzVwqzPahySit?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?rMipE9pxcMTKN7E1KbjHi1eSMl14V7ZHy4RGZyk3Xdfz223ay/gOR3xB3IIF?=
+ =?us-ascii?Q?cmnYIOkQdU+5takVY+D75NMoHEjEjvrCQA6JJ+OJ3s+l/LQ+LOMpPRz8IpNQ?=
+ =?us-ascii?Q?7W9mlr4rEEEeXpLMqIZcFmQ1LYxW9C/3qIYWD3Tvvxhtxs0wvWbCqPYhefHO?=
+ =?us-ascii?Q?bYckr5owI//ayP3WToKOKGMsX7IsY9HaKAh0UjuUV+rtUl1VJPF+FGk2fzN2?=
+ =?us-ascii?Q?1pKsuUnYLHyL6EoLNzPCk9SDmvJvJpYoBxIvnafMlgzfgPuXqT5rBAUWdNd8?=
+ =?us-ascii?Q?FRT977Z9U8K74IiZH11xd1RtxlmiOEFxVtSqJ5R1LNZLXRQgOCAXD6JVEvPE?=
+ =?us-ascii?Q?Pe4xQe5tlpLwpXxdT4j3McXZ4Ubq4Q+oJoWE/5720DIN58RC5gyhFY+HWuQO?=
+ =?us-ascii?Q?0Hs2xBWVXAEjo/CTd1WW0AQECXnDvqwf57Rhj7ZE79lott8Y7+DEnpH5i1rl?=
+ =?us-ascii?Q?V9rXuOZXGQF9qxe14Gev1jBHO86vLBHERfoW4kQxeJ00MLleAIT4HDSpZQJk?=
+ =?us-ascii?Q?K3HLpFdyvctpF44LAihfGvmUjvdykWwEWE8I38EQzAni6nWFvhGXR2Uwkj5F?=
+ =?us-ascii?Q?FsBqmIfqDBR/BZUTNxpZUNJnmaRxUoPvzjWWqaZIv4hEyFTvQt9rXsuUaZ01?=
+ =?us-ascii?Q?rFyfQxlTkOEngX1mcu8b3WHxdaLOGGIdZekqx3BuKFi1R4g0FL7YJp/2Pdgb?=
+ =?us-ascii?Q?OfdzR5UPB4d+ZfhuVP6ENmJYFnSFY0LrULt85KAlVIA2zmmoSfewOkU5JFfO?=
+ =?us-ascii?Q?qt7WXV990susGDIeNw7+xO4zcmdJdVuPN5QDrSeJbxh+XjVu2QbMAjh6qelA?=
+ =?us-ascii?Q?4qEuBFqrZWWbBz9EqOVdObyn3px5ATGAouVJSG9c/AWuipOhUK/DKS/3S7Ot?=
+ =?us-ascii?Q?nVx/IIWmGT0I9atbBWYttnlIMyv4NJtZxoWnzGwyqJJ4nePkFb3yAoqbUM1u?=
+ =?us-ascii?Q?7niuNjJ/5oVMq7g4bNAKfTEyiAaVLvYyBZbSsHANFr7Q2OGNYFowSSJqgUoe?=
+ =?us-ascii?Q?LfOT3ALFGVYK6B46VrwFM2TVZ48adQiScFJFsX5sca/Gr5Z20nuB4vQoemll?=
+ =?us-ascii?Q?4hNo4F/o4jniwuWq2NIOegPLckN9g71sxwc+NkQ/ksMP9+VhIxzG0IXn+k9b?=
+ =?us-ascii?Q?TrLT3TPNZcFwjKcH2HhfW4aWkxk9tO3QYuUQiMItcS7Tqh1oVXxDeWJP/mdf?=
+ =?us-ascii?Q?y38YpCTovlGi5jI3PeDFMLgvBNj6QQnk6P/M/un9HwjJgxbIi3na7KWKV7qN?=
+ =?us-ascii?Q?aU8+DYYeyDg7N7HINFyDyj4Xk8rihgokBBVB8krXsaiIJxQ+qKNwy+xhHVZU?=
+ =?us-ascii?Q?idzmXseeB3brD/n5En8IVved0kO/hfcYWisloKEBaWEkMWLoANHrllzdUPFF?=
+ =?us-ascii?Q?+SgvYSi4XT4xJksCmeXoiUQ01KFH6wifmAGI0Xp1sJcU6Jo+rmfTknJRxize?=
+ =?us-ascii?Q?faD1Sj3Bue1W3zTuCxLjtGZvuKocoLuH9CtXcxS6p/poKM4v5mz5K7fhji4D?=
+ =?us-ascii?Q?6mxrUIHSPObyZ0Le4St78TMbJA7an8VdAveHj1gUYVoSfcP4X2XaO/kNDRsG?=
+ =?us-ascii?Q?aZGAOyXKe9WQoR4uu87YffYdKXzRaddlzGTDT3P5?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: OS8PR06MB7541.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 118e9831-0091-409d-6324-08dcc189212e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2024 02:29:49.0675
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1c0e400-1cbe-4f25-814f-08dcc1ac8089
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2024 06:43:01.4374
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: DTrcfhpDPxqKZYyJbi95T8474V9WGPb+Y4Y/J6cW1Isb6JAsm7AGzJgC4/fXt8DrUpj9c2lSpbcRu9I4uba8BaI4zy+cLOexDRl3v1v7WBQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5849
+X-MS-Exchange-CrossTenant-userprincipalname: MaSxIdcgdYqGgkdI5WtMycgZsg1a8tKr+cjAWNBjQIB0CFeaHmovJUPLljialCTSRLNzEKUBGeZDZ/AyQYXElW9TVhBDZ88C/3csp1IH8ew=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5387
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -181,48 +144,733 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "andi.shyti@kernel.org" <andi.shyti@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxMyAxLzNdIGR0LWJpbmRpbmdzOiBpMmM6IGFzcGVlZDog
-c3VwcG9ydCBmb3INCj4gQVNUMjYwMC1pMmN2Mg0KPiANCj4gT24gMjAvMDgvMjAyNCAwODo1MCwg
-UnlhbiBDaGVuIHdyb3RlOg0KPiA+Pj4+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjEzIDEvM10gZHQt
-YmluZGluZ3M6IGkyYzogYXNwZWVkOiBzdXBwb3J0IGZvcg0KPiA+Pj4+IEFTVDI2MDAtaTJjdjIN
-Cj4gPj4+Pg0KPiA+Pj4+IE9uIDE5LzA4LzIwMjQgMTE6MjgsIFJ5YW4gQ2hlbiB3cm90ZToNCj4g
-Pj4+Pj4gQWRkIGFzdDI2MDAtaTJjdjIgY29tcGF0aWJsZSBhbmQgYXNwZWVkLGdsb2JhbC1yZWdz
-LA0KPiA+Pj4+PiBhc3BlZWQsZW5hYmxlLWRtYSBhbmQgZGVzY3JpcHRpb24gZm9yIGFzdDI2MDAt
-aTJjdjIuDQo+ID4+Pj4+DQo+ID4+Pj4+IFNpZ25lZC1vZmYtYnk6IFJ5YW4gQ2hlbiA8cnlhbl9j
-aGVuQGFzcGVlZHRlY2guY29tPg0KPiA+Pj4+PiBSZXZpZXdlZC1ieTogS3J6eXN6dG9mIEtvemxv
-d3NraSA8a3J6aytkdEBrZXJuZWwub3JnPg0KPiA+Pj4+DQo+ID4+Pj4gPyE/DQo+ID4+Pj4NCj4g
-Pj4+PiBXaGF0IGhhcHBlbmVkIGhlcmU/IFdoeSBhcmUgeW91IGFtZW5kaW5nIHRhZ3M/IT8gVGhh
-dCdzIG5vdA0KPiBhbGxvd2VkLg0KPiA+Pj4+IFlvdSBjYW5ub3QgY2hhbmdlIHJlY2VpdmVkIHRh
-Z3MsIGNoYW5nZSBwZW9wbGUgbmFtZXMgb3IgdGhlaXIgZGF0YSENCj4gPj4+PiBBbmQgaG93IGlz
-IGl0IGV2ZW4gcG9zc2libGUsIHNyc2x5LCBob3cgZG8geW91IGV2ZW4gd29yayB3aXRoIGdpdD8N
-Cj4gPj4+PiBHaXQgd291bGQgbmV2ZXIgZG8gaXQsIHNvIHlvdSBoYWQgdG8gZG8gaXQgb24gcHVy
-cG9zZSB2aWEgc29tZQ0KPiA+Pj4+IHdlaXJkDQo+ID4+IHdvcmtmbG93Lg0KPiA+Pj4+DQo+ID4+
-PiBTb3JyeSwgSSBkb24ndCBrbm93IEtyenlzenRvZiBLb3psb3dza2kNCj4gPj4+IDxrcnp5c3p0
-b2Yua296bG93c2tpQGxpbmFyby5vcmc+IGlzDQo+ID4+IHlvdSBvciBub3QuDQo+ID4+PiBPciBz
-aG91bGQgSSBzdGlsbCBrZWVwIEtyenlzenRvZiBLb3psb3dza2kgPGtyemsrZHRAa2VybmVsLm9y
-Zz4/DQo+ID4+Pg0KPiA+Pj4gaHR0cHM6Ly9wYXRjaGVzLmxpbmFyby5vcmcvcHJvamVjdC9saW51
-eC1pMmMvcGF0Y2gvMjAyMzA0MTUwMTI4NDguMTcNCj4gPj4+IDc3DQo+ID4+PiA3NjgtMi1yeWFu
-X2NoZW5AYXNwZWVkdGVjaC5jb20vDQo+ID4+DQo+ID4+IEhlcmUgaXMgdGhlIHRhZyB5b3UgcmVj
-ZWl2ZWQuIFlvdSBhZGRlZCBpdCBpbiB2MTIuDQo+ID4+DQo+ID4+IFdoeSBkaWQgeW91IGNoYW5n
-ZSB0aGUgdGFnIHN1ZGRlbmx5IHRvIHNvbWV0aGluZyBlbHNlPw0KPiA+Pg0KPiA+PiBEbyB5b3Ug
-dW5kZXJzdGFuZCB0aGF0IHlvdSBhcmUgbm90IGFsbG93ZWQgdG8gY2hhbmdlIHBlb3BsZSB0YWdz
-PyBJDQo+ID4+IGhhdmUgZG91YnRzIGlmIHlvdSBhc2sgYWJvdXQgcGVvcGxlJ3MgaWRlbnRpdGll
-cywgd2hpY2ggaXMgZW50aXJlbHkgaXJyZWxldmFudC4NCj4gPj4NCj4gPiBTb3JyeSwgSSBhbSBu
-b3QgdW5kZXJzdG9vZC4NCj4gDQo+IEkgZG9uJ3Qga25vdyBob3cgdG8gc2F5IHRoaXMgc2ltcGxl
-ciB0aGF0IHlvdSBhcmUgbm90IGFsbG93ZWQgdG8gY2hhbmdlIHRhZ3MuDQo+IA0KPiBZb3UgcmVj
-ZWl2ZSB0YWcsIHVzZSBiNCB0byBhcHBseSBpdCBvciBhZGQgaXQgbWFudWFsbHkuIERvIG5vdCBh
-bHRlciBpdC4NCj4gRG8gbm90IGNoYW5nZSBpdC4gRG8gbm90IGFkZCB0aGluZ3MgdGhlcmUuIERv
-IG5vdCByZW1vdmUgcGFydHMgb2YgaXQuDQo+IA0KPiBUYWcgaXMgYXMgaXMuIFlvdSBvbmx5IGNv
-cHkgYW5kIHBhc3RlLg0KPiANCj4gSXMgdGhpcyB1bmRlcnN0b29kIG5vdz8NCj4gDQo+IA0KPiAN
-Cj4gPiBodHRwczovL3BhdGNoZXMubGluYXJvLm9yZy9wcm9qZWN0L2xpbnV4LWkyYy9wYXRjaC8y
-MDIzMDQxNTAxMjg0OC4xNzc3DQo+ID4gNzY4LTItcnlhbl9jaGVuQGFzcGVlZHRlY2guY29tLw0K
-PiA+IFJldmlld2VkLWJ5OiBLcnp5c3p0b2YgS296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tp
-QGxpbmFyby5vcmc+IGF0DQo+ID4gdjEwIFNvLCB3aGF0IHNob3VsZCBJIGRvIG5vdyBhdCB2MTM/
-Pw0KPiANCj4gRml4IHlvdXIgd29ya2Zsb3cgYW5kIGdvIGJhY2sgdG8gcHJldmlvdXMgdmVyc2lv
-biB3aGljaCBoYWQgY29ycmVjdCB0YWcuDQo+IEFuZCBhbnN3ZXIgLSB3aHkgZGlkIHlvdSBkZWNp
-ZGUgdG8gY2hhbmdlIGl0Pw0KPiANClNvcnJ5LCBJIHVuZGVyc3RhbmQgdGhlIHRhZyBtZWFucyBu
-b3cuDQpJdCBzaG91bGQga2VlcCBvcmlnaW5hbCByZXZpZXctYnkgdGFnLiBBbmQgc2VuZCB2MTQu
-DQoNCj4gQmVzdCByZWdhcmRzLA0KPiBLcnp5c3p0b2YNCg0K
+> Subject: Re: [PATCH v13 2/3] i2c: aspeed: support AST2600 i2c new registe=
+r
+> mode driver
+>=20
+> On Mon, Aug 19, 2024 at 05:28:49PM +0800, Ryan Chen wrote:
+> > Add i2c new register mode driver to support AST2600 i2c new register
+> > mode. AST2600 i2c controller have legacy and new register mode. The
+> > new register mode have global register support 4 base clock for scl
+> > clock selection, and new clock divider mode. The new register mode
+> > have separate register set to control i2c master and slave. This patch
+> > is for i2c master mode driver.
+>=20
+> ...
+>=20
+> > +struct ast2600_i2c_bus {
+>=20
+> Have you run `pahole` to be sure the layout is optimal?
+
+It will replace by following.
+struct ast2600_i2c_bus {
+	struct i2c_adapter	adap;
+	struct device		*dev;
+	void __iomem		*reg_base;
+	struct regmap		*global_regs;
+	struct reset_control	*rst;
+	struct clk		*clk;
+	struct i2c_timings	timing_info;
+	struct completion	cmd_complete;
+	struct i2c_client	*ara;
+	struct i2c_msg		*msgs;
+	u8			*master_safe_buf;
+	dma_addr_t		master_dma_addr;
+	u32			apb_clk;
+	u32			timeout;
+	int			irq;
+	int			cmd_err;
+	int			msgs_index;
+	int			msgs_count;
+	int			master_xfer_cnt;
+	size_t			buf_index;
+	size_t			buf_size;
+	enum xfer_mode		mode;
+	bool			alert_enable;
+	bool			multi_master;
+	/* Buffer mode */
+	void __iomem		*buf_base;
+	struct i2c_smbus_alert_setup	alert_data;
+};
+
+>=20
+> > +	struct i2c_adapter		adap;
+> > +	struct device			*dev;
+> > +	void __iomem			*reg_base;
+> > +	struct regmap			*global_regs;
+> > +	struct reset_control		*rst;
+> > +	int				irq;
+> > +	enum xfer_mode			mode;
+> > +	struct clk			*clk;
+> > +	u32				apb_clk;
+> > +	struct i2c_timings		timing_info;
+> > +	u32				timeout;
+> > +	/* smbus alert */
+> > +	bool			alert_enable;
+> > +	struct i2c_smbus_alert_setup	alert_data;
+> > +	struct i2c_client		*ara;
+> > +	/* Multi-master */
+> > +	bool				multi_master;
+> > +	/* master structure */
+> > +	int				cmd_err;
+> > +	struct completion		cmd_complete;
+> > +	struct i2c_msg			*msgs;
+> > +	size_t				buf_index;
+> > +	/* cur xfer msgs index*/
+> > +	int				msgs_index;
+> > +	int				msgs_count;
+> > +	u8				*master_safe_buf;
+> > +	dma_addr_t			master_dma_addr;
+> > +	/*total xfer count */
+> > +	int				master_xfer_cnt;
+> > +	/* Buffer mode */
+> > +	void __iomem			*buf_base;
+> > +	size_t				buf_size;
+> > +};
+>=20
+> ...
+>=20
+> > +static u32 ast2600_select_i2c_clock(struct ast2600_i2c_bus *i2c_bus)
+> > +{
+> > +	unsigned long base_clk[16];
+> > +	int baseclk_idx;
+> > +	u32 clk_div_reg;
+> > +	u32 scl_low;
+> > +	u32 scl_high;
+> > +	int divisor;
+> > +	u32 data;
+> > +
+> > +	regmap_read(i2c_bus->global_regs, AST2600_I2CG_CLK_DIV_CTRL,
+> > +&clk_div_reg);
+> > +
+> > +	for (int i =3D 0; i < 16; i++) {
+>=20
+> unsigned int
+> ARRAY_SIZE(base_clk) // Will need array_size.h
+
+Will update to for (int i =3D 0; i < ARRAY_SIZE(base_clk); i++)
+And add include array_size.h
+>=20
+>=20
+> > +		if (i =3D=3D 0)
+> > +			base_clk[i] =3D i2c_bus->apb_clk;
+> > +		else if ((i > 0) || (i < 5))
+> > +			base_clk[i] =3D (i2c_bus->apb_clk * 2) /
+> > +				(((clk_div_reg >> ((i - 1) * 8)) & GENMASK(7, 0)) + 2);
+> > +		else
+> > +			base_clk[i] =3D base_clk[4] / (1 << (i - 5));
+>=20
+> This is the same as
+>=20
+> 		if (i =3D=3D 0)
+> 			base_clk[i] =3D i2c_bus->apb_clk;
+> 		else if (i < 5)
+> 			base_clk[i] =3D (i2c_bus->apb_clk * 2) /
+> 				      (((clk_div_reg / BIT((i - 1) * 8)) & GENMASK(7, 0)) +
+> 2);
+> 		else
+> 			base_clk[i] =3D base_clk[4] / BIT(i - 5);
+>=20
+> Alternatively
+>=20
+> 		if (i =3D=3D 0)
+> 			base_clk[i] =3D i2c_bus->apb_clk;
+> 		else if (i < 5)
+> 			base_clk[i] =3D (i2c_bus->apb_clk * 2) /
+> 				      (((clk_div_reg >> ((i - 1) * 8)) & GENMASK(7, 0)) + 2);
+> 		else
+> 			base_clk[i] =3D base_clk[4] >> (i - 5);
+>=20
+
+Will take the for better understand.
+	if (i =3D=3D 0)
+			base_clk[i] =3D i2c_bus->apb_clk;
+		else if (i < 5)
+			base_clk[i] =3D (i2c_bus->apb_clk * 2) /
+				      (((clk_div_reg >> ((i - 1) * 8)) & GENMASK(7, 0)) + 2);
+		else
+			base_clk[i] =3D base_clk[4] >> (i - 5);
+
+> > +
+> > +		if ((base_clk[i] / i2c_bus->timing_info.bus_freq_hz) <=3D 32) {
+> > +			baseclk_idx =3D i;
+> > +			divisor =3D DIV_ROUND_UP(base_clk[i],
+> i2c_bus->timing_info.bus_freq_hz);
+> > +			break;
+> > +		}
+> > +	}
+>=20
+> > +	baseclk_idx =3D min(baseclk_idx, 15);
+>=20
+> If the last conditional inside the loop is never true, you are going to u=
+se\ a
+> garbage here.
+
+I will give initial int baseclk_idx =3D 0; in function begin.
+>=20
+> > +	divisor =3D min(divisor, 32);
+>=20
+> Ditto.
+
+I will give u32 divisor =3D 32; in function begin.
+>=20
+> > +	scl_low =3D min(divisor * 9 / 16 - 1, 15);
+>=20
+> Missing minmax.h in the inclusion block.
+Will add.
+>=20
+> > +	scl_high =3D (divisor - scl_low - 2) & GENMASK(3, 0);
+> > +	data =3D (scl_high - 1) << 20 | scl_high << 16 | scl_low << 12 | base=
+clk_idx;
+> > +	if (i2c_bus->timeout) {
+> > +		data |=3D AST2600_I2CC_TOUTBASECLK(AST_I2C_TIMEOUT_CLK);
+> > +		data |=3D AST2600_I2CC_TTIMEOUT(i2c_bus->timeout);
+> > +	}
+> > +
+> > +	return data;
+> > +}
+>=20
+> ...
+>=20
+> > +static u8 ast2600_i2c_recover_bus(struct ast2600_i2c_bus *i2c_bus) {
+> > +	u32 state =3D readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > +	int ret =3D 0;
+> > +	u32 ctrl;
+> > +	int r;
+> > +
+> > +	dev_dbg(i2c_bus->dev, "%d-bus recovery bus [%x]\n",
+> > +i2c_bus->adap.nr, state);
+> > +
+> > +	ctrl =3D readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > +
+> > +	/* Disable master/slave mode */
+> > +	writel(ctrl & ~(AST2600_I2CC_MASTER_EN | AST2600_I2CC_SLAVE_EN),
+> > +	       i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > +
+> > +	/* Enable master mode only */
+> > +	writel(readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL) |
+> AST2600_I2CC_MASTER_EN,
+> > +	       i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > +
+> > +	reinit_completion(&i2c_bus->cmd_complete);
+> > +	i2c_bus->cmd_err =3D 0;
+> > +
+> > +	/* Check 0x14's SDA and SCL status */
+> > +	state =3D readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > +	if (!(state & AST2600_I2CC_SDA_LINE_STS) && (state &
+> AST2600_I2CC_SCL_LINE_STS)) {
+> > +		writel(AST2600_I2CM_RECOVER_CMD_EN, i2c_bus->reg_base +
+> AST2600_I2CM_CMD_STS);
+> > +		r =3D wait_for_completion_timeout(&i2c_bus->cmd_complete,
+> i2c_bus->adap.timeout);
+> > +		if (r =3D=3D 0) {
+> > +			dev_dbg(i2c_bus->dev, "recovery timed out\n");
+> > +			ret =3D -ETIMEDOUT;
+> > +		} else {
+> > +			if (i2c_bus->cmd_err) {
+> > +				dev_dbg(i2c_bus->dev, "recovery error\n");
+> > +				ret =3D -EPROTO;
+> > +			}
+> > +		}
+> > +	}
+>=20
+> ret is set but maybe overridden.
+>=20
+
+If will modify by following.
+		if (r =3D=3D 0) {
+			dev_dbg(i2c_bus->dev, "recovery timed out\n");
+			ret =3D -ETIMEDOUT;
+		} else if (i2c_bus->cmd_err) {
+			dev_dbg(i2c_bus->dev, "recovery error\n");
+			ret =3D -EPROTO;
+		}
+If no error keep ret =3D 0;
+
+> > +	/* Recovery done */
+>=20
+> Even if it fails above?
+
+This will keep check the bus status, if bus busy, will give ret =3D -EPROTO=
+;
+
+>=20
+> > +	state =3D readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > +	if (state & AST2600_I2CC_BUS_BUSY_STS) {
+> > +		dev_dbg(i2c_bus->dev, "Can't recover bus [%x]\n", state);
+> > +		ret =3D -EPROTO;
+> > +	}
+> > +
+> > +	/* restore original master/slave setting */
+> > +	writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > +	return ret;
+> > +}
+>=20
+> ...
+>=20
+> > +static int ast2600_i2c_setup_dma_tx(u32 cmd, struct ast2600_i2c_bus
+> > +*i2c_bus) {
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +	int xfer_len;
+> > +
+> > +	cmd |=3D AST2600_I2CM_PKT_EN;
+> > +	xfer_len =3D msg->len - i2c_bus->master_xfer_cnt;
+> > +	if (xfer_len > AST2600_I2C_DMA_SIZE) {
+> > +		xfer_len =3D AST2600_I2C_DMA_SIZE;
+>=20
+> > +	} else {
+> > +		if (i2c_bus->msgs_index + 1 =3D=3D i2c_bus->msgs_count)
+>=20
+> 	else if (...)
+
+Will update to else if(...).
+>=20
+> > +			cmd |=3D AST2600_I2CM_STOP_CMD;
+> > +	}
+> > +
+> > +	if (cmd & AST2600_I2CM_START_CMD) {
+> > +		cmd |=3D AST2600_I2CM_PKT_ADDR(msg->addr);
+> > +		i2c_bus->master_safe_buf =3D i2c_get_dma_safe_msg_buf(msg, 1);
+> > +		if (!i2c_bus->master_safe_buf)
+> > +			return -ENOMEM;
+> > +		i2c_bus->master_dma_addr =3D
+> > +			dma_map_single(i2c_bus->dev, i2c_bus->master_safe_buf,
+> > +				       msg->len, DMA_TO_DEVICE);
+>=20
+> > +		if (dma_mapping_error(i2c_bus->dev, i2c_bus->master_dma_addr))
+> {
+> > +			i2c_put_dma_safe_msg_buf(i2c_bus->master_safe_buf, msg,
+> false);
+> > +			i2c_bus->master_safe_buf =3D NULL;
+>=20
+> > +			return -ENOMEM;
+>=20
+> Why is the dma_mapping_error() returned error code shadowed?
+
+Sorry, please point me why you are think it is shadowed?
+As I know dma_mapping_error() will return 0 or -ENOMEM. So I check if it is=
+ !=3D0.
+Than return -ENOMEM.=20
+>=20
+> > +		}
+> > +	}
+> > +
+> > +	if (xfer_len) {
+> > +		cmd |=3D AST2600_I2CM_TX_DMA_EN | AST2600_I2CM_TX_CMD;
+> > +		writel(AST2600_I2CM_SET_TX_DMA_LEN(xfer_len - 1),
+> > +		       i2c_bus->reg_base + AST2600_I2CM_DMA_LEN);
+> > +		writel(i2c_bus->master_dma_addr + i2c_bus->master_xfer_cnt,
+> > +		       i2c_bus->reg_base + AST2600_I2CM_TX_DMA);
+> > +	}
+> > +
+> > +	writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int ast2600_i2c_setup_buff_tx(u32 cmd, struct ast2600_i2c_bus
+> > +*i2c_bus) {
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +	u32 wbuf_dword;
+> > +	int xfer_len;
+> > +	u8 wbuf[4];
+>=20
+> > +	int i;
+>=20
+> Why signed?
+
+Because it is for xfer len plus, also align with xfer_len and master_xfer_c=
+nt in struct i2c_bus struct.
+
+>=20
+> > +	cmd |=3D AST2600_I2CM_PKT_EN;
+> > +	xfer_len =3D msg->len - i2c_bus->master_xfer_cnt;
+> > +	if (xfer_len > i2c_bus->buf_size) {
+> > +		xfer_len =3D i2c_bus->buf_size;
+>=20
+> > +	} else {
+> > +		if (i2c_bus->msgs_index + 1 =3D=3D i2c_bus->msgs_count)
+>=20
+> 	else if (...)
+
+Will update else if (...).
+>=20
+> > +			cmd |=3D AST2600_I2CM_STOP_CMD;
+> > +	}
+> > +
+> > +	if (cmd & AST2600_I2CM_START_CMD)
+> > +		cmd |=3D AST2600_I2CM_PKT_ADDR(msg->addr);
+> > +
+> > +	if (xfer_len) {
+> > +		cmd |=3D AST2600_I2CM_TX_BUFF_EN | AST2600_I2CM_TX_CMD;
+>=20
+> > +		/*
+> > +		 * The controller's buffer register supports dword writes only.
+> > +		 * Therefore, write dwords to the buffer register in a 4-byte aligne=
+d,
+> > +		 * and write the remaining unaligned data at the end.
+> > +		 */
+> > +		for (i =3D 0; i < xfer_len; i++) {
+> > +			wbuf[i % 4] =3D msg->buf[i2c_bus->master_xfer_cnt + i];
+> > +			if ((i % 4) =3D=3D 3 || i =3D=3D xfer_len - 1) {
+> > +				wbuf_dword =3D get_unaligned_le32(wbuf);
+> > +				writel(wbuf_dword, i2c_bus->buf_base + i - (i % 4));
+> > +			}
+> > +		}
+>=20
+> This is overcomplicated and can be simplified.
+> Why you can't perform
+>=20
+> 	get_unaligned_leXX(msg->buf[i2c_bus->master_xfer_cnt + i]);
+>=20
+> ?
+>=20
+> 		for (i =3D 0; i < xfer_len; i +=3D 4) {
+> 			switch (min(xfer_len - i, 4) % 4) {
+> 			case 1:
+> 				wbuf_dword =3D ...;
+> 				writel(wbuf_dword, i2c_bus->buf_base + i);
+> 				break;
+> 			case 2:
+> 				wbuf_dword =3D get_unaligned_le16(...);
+> 				writel(wbuf_dword, i2c_bus->buf_base + i);
+> 				break;
+> 			case 3:
+> 				wbuf_dword =3D get_unaligned_le24(...);
+> 				writel(wbuf_dword, i2c_bus->buf_base + i);
+> 				break;
+> 			default:
+> 				wbuf_dword =3D get_unaligned_le32(...);
+> 				writel(wbuf_dword, i2c_bus->buf_base + i);
+> 				break;
+> 			}
+> 		}
+>=20
+>=20
+> Now, with this it's can be a helper, with which
+>=20
+> 		for (i =3D 0; i < xfer_len; i +=3D 4) {
+> 			switch (min(xfer_len - i, 4) % 4) {
+> 			case 1:
+> 				ast2600_write_data(i2c_bus, i, ...);
+> 				break;
+> 			case 2:
+> 				ast2600_write_data(i2c_bus, i, get_unaligned_le16(...));
+> 				break;
+> 			case 3:
+> 				ast2600_write_data(i2c_bus, i, get_unaligned_le24(...));
+> 				break;
+> 			default:
+> 				ast2600_write_data(i2c_bus, i, get_unaligned_le32(...));
+> 				break;
+> 			}
+> 		}
+>=20
+OK, I will modify by this.
+		for (i =3D 0; i < xfer_len; i +=3D 4) {
+			switch (min(xfer_len - i, 4) % 4) {
+			case 1:
+				ast2600_write_data(i2c_bus, i, ...);
+				break;
+			case 2:
+				ast2600_write_data(i2c_bus, i, get_unaligned_le16(...));
+				break;
+			case 3:
+				ast2600_write_data(i2c_bus, i, get_unaligned_le24(...));
+				break;
+			default:
+				ast2600_write_data(i2c_bus, i, get_unaligned_le32(...));
+				break;
+			}
+		}
+
+> > +		writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> > +		       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> > +	}
+> > +
+> > +	writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +
+> > +	return 0;
+> > +}
+>=20
+> ...
+>=20
+> > +static int ast2600_i2c_setup_dma_rx(struct ast2600_i2c_bus *i2c_bus)
+> > +{
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +	int xfer_len;
+> > +	u32 cmd;
+> > +
+> > +	cmd =3D AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> |
+> > +	      AST2600_I2CM_START_CMD | AST2600_I2CM_RX_DMA_EN;
+> > +
+> > +	if (msg->flags & I2C_M_RECV_LEN) {
+> > +		xfer_len =3D 1;
+>=20
+> > +	} else {
+> > +		if (msg->len > AST2600_I2C_DMA_SIZE) {
+>=20
+> 	} else if (...) {
+>=20
+Will update to else if (...) {
+> > +			xfer_len =3D AST2600_I2C_DMA_SIZE;
+> > +		} else {
+> > +			xfer_len =3D msg->len;
+> > +			if (i2c_bus->msgs_index + 1 =3D=3D i2c_bus->msgs_count)
+> > +				cmd |=3D MASTER_TRIGGER_LAST_STOP;
+> > +		}
+> > +	}
+> > +	writel(AST2600_I2CM_SET_RX_DMA_LEN(xfer_len - 1),
+> i2c_bus->reg_base + AST2600_I2CM_DMA_LEN);
+> > +	i2c_bus->master_safe_buf =3D i2c_get_dma_safe_msg_buf(msg, 1);
+> > +	if (!i2c_bus->master_safe_buf)
+> > +		return -ENOMEM;
+> > +	i2c_bus->master_dma_addr =3D
+> > +		dma_map_single(i2c_bus->dev, i2c_bus->master_safe_buf, msg->len,
+> DMA_FROM_DEVICE);
+> > +	if (dma_mapping_error(i2c_bus->dev, i2c_bus->master_dma_addr)) {
+> > +		i2c_put_dma_safe_msg_buf(i2c_bus->master_safe_buf, msg, false);
+> > +		i2c_bus->master_safe_buf =3D NULL;
+> > +		return -ENOMEM;
+> > +	}
+> > +	writel(i2c_bus->master_dma_addr, i2c_bus->reg_base +
+> > +AST2600_I2CM_RX_DMA);
+> > +
+> > +	writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int ast2600_i2c_setup_buff_rx(struct ast2600_i2c_bus *i2c_bus)
+> > +{
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +	int xfer_len;
+> > +	u32 cmd;
+> > +
+> > +	cmd =3D AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> |
+> > +	      AST2600_I2CM_START_CMD | AST2600_I2CM_RX_BUFF_EN;
+> > +
+> > +	if (msg->flags & I2C_M_RECV_LEN) {
+> > +		dev_dbg(i2c_bus->dev, "smbus read\n");
+> > +		xfer_len =3D 1;
+>=20
+> > +	} else {
+> > +		if (msg->len > i2c_bus->buf_size) {
+>=20
+> 	} else if (...) {
+Will update to else if (...) {
+
+>=20
+> > +			xfer_len =3D i2c_bus->buf_size;
+> > +		} else {
+> > +			xfer_len =3D msg->len;
+> > +			if (i2c_bus->msgs_index + 1 =3D=3D i2c_bus->msgs_count)
+> > +				cmd |=3D MASTER_TRIGGER_LAST_STOP;
+> > +		}
+> > +	}
+> > +	writel(AST2600_I2CC_SET_RX_BUF_LEN(xfer_len), i2c_bus->reg_base +
+> > +AST2600_I2CC_BUFF_CTRL);
+> > +
+> > +	writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int ast2600_i2c_setup_byte_rx(struct ast2600_i2c_bus *i2c_bus)
+> > +{
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +	u32 cmd;
+> > +
+> > +	cmd =3D AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> |
+> > +	      AST2600_I2CM_START_CMD | AST2600_I2CM_RX_CMD;
+> > +
+> > +	if (msg->flags & I2C_M_RECV_LEN) {
+> > +		dev_dbg(i2c_bus->dev, "smbus read\n");
+>=20
+> > +	} else {
+> > +		if (i2c_bus->msgs_index + 1 =3D=3D i2c_bus->msgs_count) {
+>=20
+> 	} else if (...) {
+>=20
+Will update to else if (...) {
+
+> > +			if (msg->len =3D=3D 1)
+> > +				cmd |=3D MASTER_TRIGGER_LAST_STOP;
+> > +		}
+> > +	}
+> > +
+> > +	writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +
+> > +	return 0;
+> > +}
+>=20
+> ...
+>=20
+> > +static int ast2600_i2c_do_start(struct ast2600_i2c_bus *i2c_bus) {
+> > +	struct i2c_msg *msg =3D &i2c_bus->msgs[i2c_bus->msgs_index];
+> > +
+> > +	/* send start */
+> > +	dev_dbg(i2c_bus->dev, "[%d] %sing %d byte%s %s 0x%02x\n",
+>=20
+> Drop 'ing', no need to have this in the debug message.
+Will Drop 'ing'
+>=20
+> > +		i2c_bus->msgs_index, str_read_write(msg->flags & I2C_M_RD),
+> > +		msg->len, msg->len > 1 ? "s" : "",
+>=20
+> str_plural()
+
+Will replace by following.=20
+
+dev_dbg(i2c_bus->dev, "[%d] %s %d byte%s %s 0x%02x\n",
+        i2c_bus->msgs_index, str_read_write(msg->flags & I2C_M_RD),
+        msg->len, str_plural(msg->len),
+
+>=20
+> > +		msg->flags & I2C_M_RD ? "from" : "to", msg->addr);
+>=20
+> > +	i2c_bus->master_xfer_cnt =3D 0;
+> > +	i2c_bus->buf_index =3D 0;
+> > +
+> > +	if (msg->flags & I2C_M_RD) {
+> > +		if (i2c_bus->mode =3D=3D DMA_MODE)
+> > +			return ast2600_i2c_setup_dma_rx(i2c_bus);
+> > +		else if (i2c_bus->mode =3D=3D BUFF_MODE)
+> > +			return ast2600_i2c_setup_buff_rx(i2c_bus);
+> > +		else
+> > +			return ast2600_i2c_setup_byte_rx(i2c_bus);
+> > +	} else {
+> > +		if (i2c_bus->mode =3D=3D DMA_MODE)
+> > +			return
+> ast2600_i2c_setup_dma_tx(AST2600_I2CM_START_CMD, i2c_bus);
+> > +		else if (i2c_bus->mode =3D=3D BUFF_MODE)
+> > +			return ast2600_i2c_setup_buff_tx(AST2600_I2CM_START_CMD,
+> i2c_bus);
+> > +		else
+> > +			return
+> ast2600_i2c_setup_byte_tx(AST2600_I2CM_START_CMD, i2c_bus);
+> > +	}
+> > +}
+>=20
+> ...
+>=20
+> > +master_out:
+> > +	if (i2c_bus->mode =3D=3D DMA_MODE) {
+> > +		kfree(i2c_bus->master_safe_buf);
+> > +	    i2c_bus->master_safe_buf =3D NULL;
+> > +	}
+>=20
+> Indentation issues.
+
+Will update
+>=20
+> > +	return ret;
+>=20
+> ...
+>=20
+>=20
+> > +MODULE_DEVICE_TABLE(of, ast2600_i2c_bus_of_table);
+>=20
+> Why do you need this table before _probe()? Isn't the only user is below?
+
+It is for next generation table list. Do you suggest remove it?
+
+>=20
+> > +static int ast2600_i2c_probe(struct platform_device *pdev)
+>=20
+> ...
+>=20
+> > +	i2c_bus->global_regs =3D
+> syscon_regmap_lookup_by_phandle(dev->of_node,
+> > +"aspeed,global-regs");
+>=20
+> dev_of_node(dev)
+
+Will update i2c_bus->global_regs =3D syscon_regmap_lookup_by_phandle(dev_of=
+_node(dev), "aspeed,global-regs");
+>=20
+
+> > +	if (IS_ERR(i2c_bus->global_regs))
+> > +		return PTR_ERR(i2c_bus->global_regs);
+>=20
+> ...
+>=20
+> > +	if (device_property_read_bool(&pdev->dev, "aspeed,enable-dma"))
+>=20
+> You have 'dev' Why not use it?
+Will update
+	if (device_property_read_bool(dev, "aspeed,enable-dma"))
+>=20
+> > +		i2c_bus->mode =3D DMA_MODE;
+>=20
+> ...
+>=20
+> > +	if (i2c_bus->mode =3D=3D BUFF_MODE) {
+> > +		i2c_bus->buf_base =3D
+> devm_platform_get_and_ioremap_resource(pdev, 1, &res);
+> > +		if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
+> > +			i2c_bus->buf_size =3D resource_size(res) / 2;
+> > +		else
+> > +			i2c_bus->mode =3D BYTE_MODE;
+>=20
+> What's wrong with positive conditional? And is it even possible to have N=
+ULL
+> here?
+>=20
+Yes, if dtsi fill not following yaml example have reg 1, that will failure =
+at buffer mode.
+And I can swith to byte mode.=20
+
+reg =3D <0x80 0x80>, <0xc00 0x20>;
+> > +	}
+>=20
+> ...
+>=20
+> > +	strscpy(i2c_bus->adap.name, pdev->name, sizeof(i2c_bus->adap.name));
+>=20
+> Use 2-argument strscpy().
+Do you mean strscpy(i2c_bus->adap.name, pdev->name); is acceptable?
+>=20
+> ...
+>=20
+> > +	i2c_bus->alert_enable =3D device_property_read_bool(dev, "smbus-alert=
+");
+> > +	if (i2c_bus->alert_enable) {
+> > +		i2c_bus->ara =3D i2c_new_smbus_alert_device(&i2c_bus->adap,
+> &i2c_bus->alert_data);
+> > +		if (!i2c_bus->ara)
+> > +			dev_warn(dev, "Failed to register ARA client\n");
+> > +
+> > +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER
+> | AST2600_I2CM_SMBUS_ALT,
+> > +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> > +	} else {
+> > +		i2c_bus->alert_enable =3D false;
+> > +		/* Set interrupt generation of I2C master controller */
+> > +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER,
+> > +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> > +	}
+>=20
+> I2C core calls i2c_setup_smbus_alert() when registering the adapter. Why =
+do
+> you need to have something special here?
+The ast2600 i2c support smbus alert, and according my reference.
+If enable alert, that will need i2c_new_smbus_alert_device for alert handle=
+r.
+When interrupt coming driver can use this hander to up use i2c_handle_smbus=
+_alert
+And update layer will handle alert.
+Does I mis-understand. If yes, I will remove this in next.
+>=20
+> --
+> With Best Regards,
+> Andy Shevchenko
+>=20
+
