@@ -1,159 +1,175 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E1E29591C9
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 02:27:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF6E69592EA
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 04:30:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WpRxW495Jz301v
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 10:27:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WpVgX4wdZz302c
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2024 12:30:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=meta.com
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=67.231.153.30 arc.chain=microsoft.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:2011::723" arc.chain=microsoft.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=meta.com header.i=@meta.com header.a=rsa-sha256 header.s=s2048-2021-q4 header.b=asEzo0Dw;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=qYegXcv0;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=meta.com (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com; envelope-from=prvs=39624dd364=amithash@meta.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 598 seconds by postgrey-1.37 at boromir; Wed, 21 Aug 2024 03:18:22 AEST
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com [67.231.153.30])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:2011::723; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on20723.outbound.protection.outlook.com [IPv6:2a01:111:f403:2011::723])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WpGQ60bPYz2y8f
-	for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2024 03:18:20 +1000 (AEST)
-Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47KGFX77024145
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2024 10:08:18 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=from
-	:to:cc:subject:date:message-id:content-type
-	:content-transfer-encoding:mime-version; s=s2048-2021-q4; bh=Ohk
-	BSngkpb6xBBbJS2+7bOx7k0HY044whe0KRVfitNc=; b=asEzo0DwZbrm8aMYPr9
-	3LCePDqRmEj+V/WJkpHgAVQcw2VkxUfJt3Bvs3RjOWqB9tmYpoMzq0WCbyCouzRp
-	bKBoo95MIDibX9lWgnXZliVStvGJmxXfE2dW0GjzH6vVJs9uUX49Jyxxj5Z4oceT
-	dlHjcmvBtV/nqwGt0ueXk1t59eeaGbkCZXYK8RSVI9p/K6+MC4Xhj0JeafhExcqM
-	b4gC5H+Rvp+9019ZlGbpknEHKuGcsXWjItfPcL5E4wIogYUMpGxZROjxDhdew+te
-	VkAeY6SobLwAMnjLP7Li9xo2oK9MYB7eLNcofIPFDzjrjXWv+FBEZxdTUeHDAgbH
-	46A==
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2170.outbound.protection.outlook.com [104.47.59.170])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 414xgj8d6t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2024 10:08:17 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WpVfw5Ffzz2xWV;
+	Wed, 21 Aug 2024 12:30:15 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LJNb4A4LODur6VvJFV2YRAEMndiBNv5hUFoIIP57iY58SBxKBgb6Q9MGhMgkuy2EWNJWL85uUWoasu7g+H6NMperrEdRCwEDNkQrNEyEnVNn6F9MouYlnCyVr/HhaFprfHoPJvDJuiQuYDAMZ7Q1ymf/tiBY9OtiiopchtVMbua0Iyi7Z6vJI4IFhIFxSRO/iOGBtu0Z/b/K8kNTr0YDAGLn41ge6/QCbJo43mw0MzMNeE1kLjIKEAr8Mren/P6w62YI7ihNa5jm+FJ3vtBukog5hUKlhfYKaFKxdBSuDi4LY24LueTB7ctyp8Wxo9C94ZOHDqOi2vuSD4JYbMI59A==
+ b=MnNXE4qZZ6LwKb2SHVcQR3ZqL5GKyCWE8AJFHJOmNO7e2qa4jTwc1FYGNm8nl02soGtM71WnYZREaq9Qnv3L0KAr3xFmIimWLzRgzW28vY/LFQykxYIsKX5lkpnyIBZnomCsRFMDNIynbvefH2xX3QFS7OnPd+dfjTcA4Ryw8pN6FVj9sn0bwOFrSH06nSVSpfLc5l9K04Gd+Rxe6geRCqGPcICObY7ZIhlVuIiPgnWbK890n5GxcpZ6/133UPf6tbYmQw9meq0WiU/e0D9nsifaXf0HCccuilLWSgXn8Ij8RsnTzl55o/zIRmJa4xvKYR8hIfS49Gd8+wwPSZ4/Kw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OhkBSngkpb6xBBbJS2+7bOx7k0HY044whe0KRVfitNc=;
- b=pw2y8m9N7yaMefQouglA407wrfxOZf8y4wLPMaDjiRWBo5LvQnaEdQ+U0pz8cUky3OutNBEeqOh9gxufWS/HMEwxFgpIIIbrrIUd/WlbhUCbNEhsDjHEvEEjvNLuvTpt5RwMkpLR0xj5WGABYTx6RA40gVsJcEVuGb7l6irqv192WDhpqnzJMHASIOw42OqImjM855DD2r7l403oTGMtkbDH2GfSZgfS2x/Vxq6k9ujqp/9gZTwjAm8KPO/jSnQI9AXtYlFuN7jjQJopi0XV09aoQkq3SzEgEDPdILl5eY0SPTrTL3Zzj6XWNthFqBsaIVyIZv3/jnLJGz4quQD8fg==
+ bh=OQLBGnZJpodGFC3hGyLoPVOJ1+j9/wKCe8sYuQ/2T7Q=;
+ b=B+03hMNnQg8IhdkPJvpUnc2Doc0RtcyChQtuMjz4IfOvH0vViXCKJXqILr6UFL1efE1Frm+O4FMBzqB7TJKEO6OmXlNsS3v0kHrS6UUcqVzKNGibTSra59rjLbkG2zAFSjG82X5nRFmur6TwDnKY1knsY4/j07inVZQU+g6Xj2nI9AmBdVK3aUzXd/BNGQH4WS17vj5uukc6eprvtd4uaKzVPOjS3CIoJsHT4PrbzH6TmzdjDpN8X09PhVD7QXgYgJpHQC8G8NKKREWvVpq+ksCwoHfBOgU5ZG52rpWN4VOjgUeAl2h/huSs8kjMy2fT/zkERkrXzEQF15uRM2cKYQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=meta.com; dmarc=pass action=none header.from=meta.com;
- dkim=pass header.d=meta.com; arc=none
-Received: from SJ2PR15MB5801.namprd15.prod.outlook.com (2603:10b6:a03:4f7::19)
- by SA1PR15MB5187.namprd15.prod.outlook.com (2603:10b6:806:237::10) with
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OQLBGnZJpodGFC3hGyLoPVOJ1+j9/wKCe8sYuQ/2T7Q=;
+ b=qYegXcv0sdkqwobhVNuJ6Jv0JLgH5fL93O2zeK02I7yKeu/+aH+sSvyCfJ383zZ6y+6cJU16OTzXBSt+okqXrRz+YU57CRV4N7iGqs1NTznjcPcu46YgP7f09lnvVQoiIYWNVQvUYXecsyIAz2zsQIWMunRqwFUHmJpD5R0tnY8QVJTxEgneUHcx+oBqaQVgFGVW7MJt1txCPOnY8FhOq13zPBGHsZ8yPfb3vV/E6yJos7H/BkHfemM9mF6ufICyh1mP1aaE2tz9ld2/v/hOfUb86fwWtjIoFmqgZiBb7jpN2tFa/4Qamy6UdogkubF/PHQIn59Bwpaw0c03TJMRig==
+Received: from OS8PR06MB7541.apcprd06.prod.outlook.com (2603:1096:604:2b1::11)
+ by PUZPR06MB5849.apcprd06.prod.outlook.com (2603:1096:301:fb::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.21; Tue, 20 Aug
- 2024 17:08:14 +0000
-Received: from SJ2PR15MB5801.namprd15.prod.outlook.com
- ([fe80::349c:882f:cf5d:277]) by SJ2PR15MB5801.namprd15.prod.outlook.com
- ([fe80::349c:882f:cf5d:277%5]) with mapi id 15.20.7875.019; Tue, 20 Aug 2024
- 17:08:14 +0000
-From: Amithash Prasad <amithash@meta.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: [Proposal] Implementing SensorEvent message registry
-Thread-Topic: [Proposal] Implementing SensorEvent message registry
-Thread-Index: AQHa8yFJM+K2k7rX+EaloVW6ePzT9w==
-Date: Tue, 20 Aug 2024 17:08:14 +0000
-Message-ID:  <SJ2PR15MB5801EA7FA684D3B21EE32CE3AB8D2@SJ2PR15MB5801.namprd15.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.18; Wed, 21 Aug
+ 2024 02:29:49 +0000
+Received: from OS8PR06MB7541.apcprd06.prod.outlook.com
+ ([fe80::9f51:f68d:b2db:da11]) by OS8PR06MB7541.apcprd06.prod.outlook.com
+ ([fe80::9f51:f68d:b2db:da11%5]) with mapi id 15.20.7875.019; Wed, 21 Aug 2024
+ 02:29:49 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, "brendan.higgins@linux.dev"
+	<brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
+	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
+	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "robh@kernel.org"
+	<robh@kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
+	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
+	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
+	<andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
+	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
+	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
+	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Topic: [PATCH v13 1/3] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Index:  AQHa8ho549HAiRHYiEK49yrqFuaLn7IuYooAgAD5pxCAAFELAIAACBjQgAA2cICAARONwA==
+Date: Wed, 21 Aug 2024 02:29:49 +0000
+Message-ID:  <OS8PR06MB7541A425EF01573FCBE6735AF28E2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+References: <20240819092850.1590758-1-ryan_chen@aspeedtech.com>
+ <20240819092850.1590758-2-ryan_chen@aspeedtech.com>
+ <7237aa34-9821-4ba7-a45b-3b1d598bc282@kernel.org>
+ <OS8PR06MB75418A2ACA6693A8163F19E8F28D2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <46a9280d-f4ef-4cfb-83a3-3744e04721f3@kernel.org>
+ <OS8PR06MB7541A25AC3A11C51DD57E1B4F28D2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <266f4b55-bddb-4c44-9eb5-3eef35757714@kernel.org>
+In-Reply-To: <266f4b55-bddb-4c44-9eb5-3eef35757714@kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ2PR15MB5801:EE_|SA1PR15MB5187:EE_
-x-ms-office365-filtering-correlation-id: 6f16281d-5ec3-444a-1168-08dcc13aada0
-x-fb-source: Internal
+x-ms-traffictypediagnostic: OS8PR06MB7541:EE_|PUZPR06MB5849:EE_
+x-ms-office365-filtering-correlation-id: 118e9831-0091-409d-6324-08dcc189212e
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|366016|1800799024|376014|38070700018|3613699012;
-x-microsoft-antispam-message-info:  =?Windows-1252?Q?aE9HMoVH4+tWx/aLv2WjSC84Vz8P1HCXptyLjMOSFE9p0ihDFjFZSdu8?=
- =?Windows-1252?Q?L/gm2q/Jr6iyI34zJKV7sjaSACO+JAppccuhQqg77GjleKL72lw7PAd2?=
- =?Windows-1252?Q?eZ/BnrXJZCHXzD+ejOss7RaGTjjAhkKK55obPsU2I8wubywxJPXLz7tV?=
- =?Windows-1252?Q?0mrk3bCOj6YOkHO+ZfG2lg2eNt1V15IipGQJr/Jb0boXOqph8P/9XA1Z?=
- =?Windows-1252?Q?iQOiMvVFsrWEmQqVTBODM1cQ0pNaPlanb/xjqPaub0roW5WyTZiUqWRS?=
- =?Windows-1252?Q?m2ZyJBmHtLX4Z0GWbkW7U5oSHP6yTojsB/PzSR6YfDH7JhZM4XCY4+mG?=
- =?Windows-1252?Q?wQlWnhB6Y4WNBGzI8BqsIBfLGRi+1qHRm0lTy6xsehkNdsZHIRcE+40p?=
- =?Windows-1252?Q?k5k57u0jJVMIIVoBVgn+EW9ro9KXrsSYp+ockfCO0oXAXsBDH0A6oaMP?=
- =?Windows-1252?Q?sN/WwucVATtZgSrhT1dgA7mM5yuto9G9agax2xV4GhiAoW+Aw9p7J//K?=
- =?Windows-1252?Q?1dBnosHv2xkyLys82hMiiJ41vo9aRFW7tTZaREUvmCyxVaJcdQGpRrNb?=
- =?Windows-1252?Q?posQH+ry/ycPfUqPYPzH78EluRA7758nvtSzl+iWU0Z1hDxMPSlHKqe4?=
- =?Windows-1252?Q?BnhoHD+douPQWmeWmH30FYGSHOYX8bMwitSeIkE5rsXX2QOOmhJU/dGm?=
- =?Windows-1252?Q?yFapLKXrVyVv6vI2ZTOyjCG9/t0beUVHZPfhrZotGiWe+fCbxqk/IHUI?=
- =?Windows-1252?Q?HzxLriIUrUwvQBPuxfodNkEjs5UjCculxssh/N754INCQY8Am/Gca1If?=
- =?Windows-1252?Q?FYKb2WJ1d2Ttlv8vv90FTSi6/a/xaQqwjtoahI9uzSAPnJBWk6n/c/vO?=
- =?Windows-1252?Q?KTUzx+vN+grriY/Iec8HM8MfJ+qh8ttkg4Do4pzmeP0mKMKoYR4I9h3i?=
- =?Windows-1252?Q?tLdlRqTQlz12cAvwdfHf2ZFXGUt8JO3CDQat/MxjECi6pee6+ZvsTF/u?=
- =?Windows-1252?Q?iW6F+qhcEQUaBnjdkjCdIFNz0Znfmf1+/ttQceFw7VALRPCvwe4ZAhHJ?=
- =?Windows-1252?Q?UhXxv5t8UThz5HewoiIvl5xNREz/wyo41YoK6wd/q4NV1Al4qml98J29?=
- =?Windows-1252?Q?W6UY2r560nmPhOF70om6x7HzFBPVNBtuML5ZuxCbl9SewAUPYIWj3D4R?=
- =?Windows-1252?Q?HP85bud2+kxPbsURhUTUzOfkMlhtdUKr0Ri5Xf9/2TQLVju829JMqn/+?=
- =?Windows-1252?Q?fiv2kqZQyEb2JsICwAEEl6Zpt66FF5IkzlqnEWr6MWtcc5Byrg9a2DoU?=
- =?Windows-1252?Q?vrnm0H5VR62oiBDItGSDjj106AcxpfqH/XphwQXGMANKhnKrcMbfgxjq?=
- =?Windows-1252?Q?UoAs6TtgIa+NYyQLSJeSL84YC46k6M4h8Na6LlRq5stur3mFnza5nDts?=
- =?Windows-1252?Q?5alV52QVrRHFgEOpgwHh53Vvey6hBuX00unY3n5Z7AIJHHoyzQSJ8HVb?=
- =?Windows-1252?Q?cLNPBLw8h0+mGBLbI01e7C5SG3TO1g=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR15MB5801.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(38070700018)(3613699012);DIR:OUT;SFP:1101;
+x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700018|921020;
+x-microsoft-antispam-message-info:  =?utf-8?B?eFFuUCtpSWdvd1FGcXBqUkxJTmZrOWlVUm5HaVU3U2xyVHAyeXRqWWt3TkF5?=
+ =?utf-8?B?V3FkYUZQdzRaL1JnSHZXQ0hGa1hVTktHRGFiNW9BQU94RzYrZE8vNXRWWGN4?=
+ =?utf-8?B?SHBjM1A3eTU2WG5uN1FSRUY4WTY1ZnlTZS9hUGJNbUdMcHVQd0lwbGhwL3pa?=
+ =?utf-8?B?K0R1ZW5ZeEd0T1JUMGJEK0RGcUx3UUtCdXd5L254ajlVbG5HYnpEZ3V0aVNG?=
+ =?utf-8?B?eks4cjduTnVkeE92bkVtc0xVRnFYQjc0QWVtcS9ab3FST2tHU2xKYXZ3L2J1?=
+ =?utf-8?B?dEsvTlo2ZmxXR2RlYXFSeFQrS1FEZUFuVm1VSWt5aFM4YUtpaGhadGcvVHpH?=
+ =?utf-8?B?MXpvbVFQbEZ0alI5aVRoZE8zYWFWYmc4U0YrSXVhQnlZMU9DYURnMUJVVHU1?=
+ =?utf-8?B?T2FqVU5LU3dta3Fzak80MkszbmJQQTZGYitMNUJGazNjTEV3YW8xc2hkYUUw?=
+ =?utf-8?B?UnpYOEo0dTNibzRpbDl1cFBySXl4RXhXM1BFQzY2RzVNNmRLVDQwVjQxQTJn?=
+ =?utf-8?B?RFJRVGpPK01IOUk1MEJidWFmeElHdGNNeGo5STAya1dTK0hUMUt3SWM0bjh1?=
+ =?utf-8?B?a1QvUnNic3l4MHMyc1I2VFVCSWd5S2RnNDRmTW05czVUa2VBZ0doOG1XQUc4?=
+ =?utf-8?B?eVdsMU9PSDZTS3RxUHBsK01CelZ3Qk9VQjZDTEZPZStXSUZ5Y1RvRFlWUFZ4?=
+ =?utf-8?B?d09FOFdSdlBZSVFvOThkRVJVUmFMbFViWUs5eUZCSnRHOWFUQ2ltVGNXNHJX?=
+ =?utf-8?B?ZG1QNEFBdk1yWFA0bW0weXRyUEFKRHI4YmRNSk9QQUpnVGNrMkFhdEdYYXZV?=
+ =?utf-8?B?VStvcXA2Y2xuY2tVNWJsU3RvNm5TbFY0QThXRE96VjBGbHpkSCt2d1gxUXA0?=
+ =?utf-8?B?bE90Ky9RcVpYOHBXYlhyWXZZRzRYWVAxUkljeWNtTWhjaE1zN05mZFlVMk5o?=
+ =?utf-8?B?TjAvU3hmUnYrSm1WZFdZZldPUG93NWpvWkVta0pJc0lqS2FCRHpWR280aVd3?=
+ =?utf-8?B?bXMyVzM2UU80WDdIUEtYVFY3Q3dDNGpQaHRoQWN3YnBvcHdHRnVvVkt5b1ZN?=
+ =?utf-8?B?NGFYUWxKaHkrMkhGTVppUVQwNTV5U3JjRCtMZkgzRlhNQ2M0bjNEaHVvYTRP?=
+ =?utf-8?B?cTB1SVdSZjhDR093citSa2FwV2ZrUmlXWjNSQVhPeGoxdWh0RW5Rc1M2bDNp?=
+ =?utf-8?B?UjRKR1JxZ0JBbG02Zy9JZDhBckU0LzlzeEZkQnIyZ3NJZFVLVHRpbE13aFVv?=
+ =?utf-8?B?WVM2WCtVZ0dNR0FBKzFBN0JpcGRtS2VjVnJrUC9odWgrWlhXb0w4YldWOUVQ?=
+ =?utf-8?B?NTJQSkJHTitxMVUzMWoycHBVaGNkSFltMTc1ak5yYTViWldPQ2IvWDRvOXVh?=
+ =?utf-8?B?OE9jczE4cHIxb0p4bVl5Q0hkb1VuV0UramxqYkpMTnhEcUkxdSsra3Q0WnA3?=
+ =?utf-8?B?MVoyNkhrRkozSWJ1UUdqSjV5NjV0SjdNM1FlblRoMk1TcHdHcUJ4dEFBK2dv?=
+ =?utf-8?B?cjZKS1VILzhBZFdva1pha1JQVUNVMjRYNVZNSlorVkc4dXlGQmNmUU1obnRD?=
+ =?utf-8?B?ZytGYUY1ZmlUZVJ3d1V2NnZyaHY3N216OGQybEpUOWl5eFNFSVpOSDdESnhI?=
+ =?utf-8?B?RDhUc3RXelY0TU9zNytNay9ZVC9MNFptQzRMUzVsM09yK3J0WC9LRmRKUFdj?=
+ =?utf-8?B?cE5CQ2dXYUx1S1p6SjJXcWZzenVDdW5uL3Rrdjl2VzVGaWozb1loUjUwTEw3?=
+ =?utf-8?B?b1Z6TjlwbWMzNm9IeUc1Z2dnVysyVE9xZWE3K29jTlB1VjYvY2F2YXVpNHlw?=
+ =?utf-8?Q?pqiVAoBeX4sLqx/72YtdikMcynZqKtdudMeco=3D?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS8PR06MB7541.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018)(921020);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?Windows-1252?Q?mAaeqEXJCNYf+CK13uYbpHlpsJnZ2CmHLJLcp7YTTx7MUUmw+ZYAR2XR?=
- =?Windows-1252?Q?JsmeaKfRtFzqkOPPPhMso2qTKlfZKP8FMAuiOd5p8V2qg//VheMOORRT?=
- =?Windows-1252?Q?K2m7CHws2lF9CykNT9FPvOf2cPGw+zGiGiVnGZyb6prUQl3sUApV7gBi?=
- =?Windows-1252?Q?ohaTpPIcAy3TdjtCcE8SBG6r4zV3djKhovH2euB+rMlZXbAP9KpqA7MJ?=
- =?Windows-1252?Q?V4lYP6kegNeamSDGbqKpM/cueHy1eH69OkQLsousi/GQErtxsydy268o?=
- =?Windows-1252?Q?KpNGMq5w2UOwSdge51NyCBMFIuHxGo+6N0p6x807JvL+8InQza9fd/c4?=
- =?Windows-1252?Q?FW0BVoz4iqtolujBpBnG+FrA0vcOPdjNPN8KFrzNpobNzt9r/kWDGAO7?=
- =?Windows-1252?Q?omW5LMEBQ/kVqBW2W72GZ7esIBQiOQYpRbUUT/hPphGeexj7P547Kk9A?=
- =?Windows-1252?Q?H9NzPz8oKbBm8JNAOG/msQHhjjy20LDF1rMm32ZFIczJSyT8Fwz/2WuB?=
- =?Windows-1252?Q?1Hdz219moESCN/4ospf7+suKA74Qn0g3ANdAPbpjmAlLBP3cvAyCmE7H?=
- =?Windows-1252?Q?D+6dhy7xGAmhlKx6Yx9new14nu38Na76OL+/rp3Lb+wGaFZrh35JwXhN?=
- =?Windows-1252?Q?4y2L/Pn/F07S/OqCzFv/pO76c2UWOSwpUxzEqtlZAErlgbvJ8f6I4O+f?=
- =?Windows-1252?Q?bjuF50fyWnu9m5112CrXTgTpIMtewU/DOZGv3U7tJaSxFvfnnrI4WTGp?=
- =?Windows-1252?Q?0JSHOTpaAX3mTf7EPVTFM4Q26B6Lc2kht2pitv5iedbOl9qy7cbLXozM?=
- =?Windows-1252?Q?B8x2Sm3J3Atw9KlErh2aPzBbPZCG/kZK1RkMfuSf9GtVqvksfhhmfgLO?=
- =?Windows-1252?Q?5vkKXYWg0JIj1Vr2wIdcXVxHMbHc98FtFLuRmW0E1GXmkwRvxEmtld5c?=
- =?Windows-1252?Q?yUS1MmoMUCXdmsYv3PeHlYMCo6fdCP/fCOBAMMHtAa7aKvQDQ6ALL/FH?=
- =?Windows-1252?Q?ljBSL9p1UqtqNMMd0vmgMZHxpG+gkWqz2CigkcbJeQ5c+ok1PXCxmcgn?=
- =?Windows-1252?Q?Hg0YT1Ep+CxXb+ZFpQHtqsls9knX3mbjffbxmqyS89SemCRMGi4k+lI7?=
- =?Windows-1252?Q?oEjboXJ9Nt6LhEv81J95MTb0ITEtZMB/bVP8GWkilR6t8LRu1o7lgHsb?=
- =?Windows-1252?Q?PuEHw8a/HCdW3pttTWnsFOyDUpPmmR4pWrsrn/BAZ/JXv/pgDWt8Pw23?=
- =?Windows-1252?Q?dEg/1yFOOu0VF6M1biq6Pxq9KHnkPQMj1Fq/McZFwdLyB7Y5rpoicAh7?=
- =?Windows-1252?Q?ZnRyBRUxUqh+QqpAy8ELBkO4QL7EiJp5SU3zyqujqam4Bxk92/YnKywT?=
- =?Windows-1252?Q?b8uzu2ILTv7rrsC02hpNoy3OAbG2lILR5DL8JWwLc9TPcS2PiqRf9fgg?=
- =?Windows-1252?Q?eRtva58eOQbiETuxE0Ax3ud9cWj5uVDnNQQM8beWVUuUbT85eYBn0qFh?=
- =?Windows-1252?Q?boG6d7FgChljJZx03j6Surd1gozdVdFPWMjOuOMzR1nTRJuqUmRHLkaI?=
- =?Windows-1252?Q?F+2LSQI+IAbkcWACbnGeXiJ+ksYeqRw2VkiT9y45cd32wFhdWK7Y3nJs?=
- =?Windows-1252?Q?q3v29COgcITShDVF6CU+WFT/r7F6ddAVyOvb36k+oW2xM7F0CGdb2180?=
- =?Windows-1252?Q?fvtKvLh48R3AkMZwngH14l5Ab39vqTSfa4tWPcjKSerp+lw47Qxsig?=
- =?Windows-1252?Q?=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?SUF2WFFsZ1BWUzdneEV6TktUOGFjQ25TV0UxYUNhYXowVTBCUUYyNEdzbEhx?=
+ =?utf-8?B?VXVaaHRlR3lHVWhlR0hBc3VtbTQzNUFLRGYvdTArUWF6bXRIS2RzbGxPaVc4?=
+ =?utf-8?B?RlZoaWNzUzBoNVA0ZmYvdFM3RjV0S1NsZTRiaGZ0eUZVTTJCcU4zaWs0ZGcy?=
+ =?utf-8?B?WjRIZHBzYUhIM040VldaOVRkNVlsZTZnYUNvbWdNaDZWU2NJU1hGS2JzSmti?=
+ =?utf-8?B?QjVzY2RRMnQ5ZmN2ZW9RbWplVUd2OC9UQnIvMEQ5YTdsajh4bUx5dTAzQStD?=
+ =?utf-8?B?MHR5RnY2cHpQLzVDV2lxbUFrWjdpcjJjRS9aS25tb3pNMHpnM0hqbTZGNnlT?=
+ =?utf-8?B?L05WTUlhZ0tzTU1uUERBVzUvMEYvcGpwalpPTlVheTkyV2E4eVMvMzNoOHh6?=
+ =?utf-8?B?TVZlZ3Q0cWVTUVlFSU9kYXNMNzVRa1RtaG9SSEhnZ3dsOHgvZmozY2R6TnI3?=
+ =?utf-8?B?RmkxaThNZUV3cDQzRE5VUGYxOW54ajNNUXgyVnhMdFhOeE5WT1d5Y2Z6UW54?=
+ =?utf-8?B?WE1vSzI4bnk2Ky80WEEzTFViUEoxR0trRUZldVh5R2o1NmxTUEpOaTN1Q0VN?=
+ =?utf-8?B?T1dHd2w3S1poUEJrMy82VGt0Z1dtYXI2NU93NlZldzdWdGhpdStSSncrcnRl?=
+ =?utf-8?B?MXQyaG1wbjdDQnZqUTdhQzdCajg5aDVQVWR1QTdKU1pWYTI3bUNIaHFjNi9z?=
+ =?utf-8?B?aXFKM0FVSHRhMjYydThQVWQ3UWJUODlKajA4ME5OWWJrU2tRbGFWelBEZFdz?=
+ =?utf-8?B?R2ZPZU9UNlZ6cWswKzN5U1F4Z3FtZHRzZGtYcmRtNkExcG83dXVoeSs5UlVk?=
+ =?utf-8?B?UDQ0em1kTnVnYTB3b2ZBZWk3MTNqQlpLc2NhdmNmb1VBcExpUVZqSGdoT3kv?=
+ =?utf-8?B?N1ltSjV6QlRkaVlkUU84T2JjSUsxeEtCMnQzVHdENnB1QnpPLzdDRVB1UEJ0?=
+ =?utf-8?B?cFlrOFhqUHUzc3B1M3pQUncwVEU4QXUrRWZTY1BES3kyS3oyS1R0TEtCY3U0?=
+ =?utf-8?B?SjE1VE9uTldXdTlSOVJGOFkwSFBWMXYwVXRXUldZRXE1eTUweW1uSGlHTnFP?=
+ =?utf-8?B?RzZqcUtKdFN2bFNPaGhQZnhVYk9iL2RXdk9PbFZxa1lJYlVTdURlMkh3SWdK?=
+ =?utf-8?B?OVVhdHdTSGQ4Nkh1ckxSUlY0di9hRzRHdFUrcWMwTmNFSE9nbTIyc0pHbjh6?=
+ =?utf-8?B?TjlBa1hjT3cwOThFdDdHbFlJemJlYnpQT2ErUXdqL3RxSTgzUUgwQVhuRk5u?=
+ =?utf-8?B?ZEk4RG5UL2ZCSk5tUHB0eDZIZFNuOWJwaEo5blBCbGNNZE5YZWZrYkE4c05I?=
+ =?utf-8?B?WUhoM2xCMW83NHlTTk1TVExlOHcwTVR5anJhZ1ZkZkMxeXE4SENaME1ZSHlZ?=
+ =?utf-8?B?R3VkOXhvUlM3V2htZ3g5OW1TRTdwWVIxcWFhcTR1SWZFT1ZweGJWdlFBU2N6?=
+ =?utf-8?B?R3FsZkNBaEp5TWxTT1FqNWZVM1F6dFBkQ1JpSTZhTUJlT2YvTVE0OG54cDNl?=
+ =?utf-8?B?ZElOTW9wZFV0RjFuUmkyL2VpMFhxY2ZLV2NCYmZwZEJlQ09vQ1loWVAxY3Rh?=
+ =?utf-8?B?aE00aVlmNnE0ZVByOFI1Z01KZDhZMnZiOUc3Y2lWaS9tRlM3YnF3bVFQN0d6?=
+ =?utf-8?B?aUwzSlRIVHNMQ01TczlwKzAyRjIvdXEzVFdHN0dhOXQ4Wnd5cFg1cEthM1Vt?=
+ =?utf-8?B?c2pvQzlwWExMWjdTZXZPY204R1lKNWxXWUhaaDVETXZJSkxtWnZXWVJiR0pn?=
+ =?utf-8?B?R2FORkVtc3NpTUlGMHRWbGZGb0pUQzVZQzJ1R25sbkliRUIzeG5lR0ZnUC8z?=
+ =?utf-8?B?MUhuOStjSy93UUN2NHdQN0tIQ05oTXhpOWEycG5pTjdiblNCK0xPYWpMOGpN?=
+ =?utf-8?B?TDZKbjNsbEd0OFZseDhuNUtjYU91eFF3TFdhWWs4UGVRWXE0bW1PTWJXTjlh?=
+ =?utf-8?B?a05EdURyOGdndWZvS3pkYmZJdHVMSjkxazl2NHUwQUJhR3Bkek9uL2VLSUJv?=
+ =?utf-8?B?eGhJRDBsTUZrN1ptVHlnaDN1VStIZXQwY2YvVjIycUZQNVpacjR3c3c1Vktt?=
+ =?utf-8?B?RnZlYUU1Q0ozL1pQOFhYVS95cVdIOGpzUUY0YTJxbzVPa2trbGgvNW9KemNn?=
+ =?utf-8?Q?oprcCoPh0UjyPzVwqzPahySit?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-OriginatorOrg: meta.com
+X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR15MB5801.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f16281d-5ec3-444a-1168-08dcc13aada0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2024 17:08:14.4635
+X-MS-Exchange-CrossTenant-AuthSource: OS8PR06MB7541.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 118e9831-0091-409d-6324-08dcc189212e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2024 02:29:49.0675
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HwdYC9s27IAtK942c4BcwlzOfh4hPMZJtcQtltQtXRXX6KeNS8XfcqMbX3YXtrDhd8bPdZwXcCA2055SYv48rQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR15MB5187
-X-Proofpoint-GUID: q64bChUYMf8ifYqClVgRLfELoHCKtIiK
-X-Proofpoint-ORIG-GUID: q64bChUYMf8ifYqClVgRLfELoHCKtIiK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-20_12,2024-08-19_03,2024-05-17_01
-X-Mailman-Approved-At: Wed, 21 Aug 2024 10:27:41 +1000
+X-MS-Exchange-CrossTenant-userprincipalname: DTrcfhpDPxqKZYyJbi95T8474V9WGPb+Y4Y/J6cW1Isb6JAsm7AGzJgC4/fXt8DrUpj9c2lSpbcRu9I4uba8BaI4zy+cLOexDRl3v1v7WBQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5849
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,259 +181,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc_compute <openbmc_compute@meta.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Folks,=0A=
-=0A=
-I am requesting feedback from the community on a direction to get our senso=
-r services to log threshold events compatible to=0A=
-ones defined in redfish message registry -- SensorEvent [7, ch2.14].=0A=
-This will be based on and probably the first implementation of the recently=
- proposed enhancements to event logging[1].=0A=
-=0A=
-Problem Statement:=0A=
-=0A=
-We have two primary methods of creating threshold based events.=0A=
-(1) Legacy, used only by dbus-sensors, set the ThresholdAsserted signal[2] =
-and subscribed by phosphor-sel-logger[3] Which creates redfish events/messa=
-ges.=0A=
-(2) New, used by others as specified in phosphor-dbus-sensors for Critical[=
-4] and Warning[5]. Current sensor services which raise this signal:=0A=
-Phosphor-hwmon[6], phosphor-nvme, and phosphor-virtual-sensor raises a diff=
-erent set of signal[6], using the phosphor-dbus-interface=0A=
-=0A=
-Phosphor-sel-logger subscribes to both these signals (Legacy[2] and New[3])=
- in different implementations both translating them to Redfish Message IDs:=
-=0A=
-```=0A=
-OpenBMC.0.1.SensorThresholdCriticalLowGoingLow=0A=
-OpenBMC.0.1.SensorThresholdCriticalLowGoingHigh=0A=
-OpenBMC.0.1.SensorThresholdWarningLowGoingLow=0A=
-OpenBMC.0.1.SensorThresholdWarningLowGoingHigh=0A=
-OpenBMC.0.1.SensorThresholdWarningHighGoingHigh=0A=
-OpenBMC.0.1.SensorThresholdWarningHighGoingLow=0A=
-OpenBMC.0.1.SensorThresholdCriticalHighGoingHigh=0A=
-OpenBMC.0.1.SensorThresholdCriticalHighGoingLow=0A=
-```=0A=
-These messages export 3 args: Sensor name, Sensor Reading Value, Threshold =
-Value.=0A=
-=0A=
-While these provide value and have served us well, they have a main drawbac=
-k:=0A=
-=0A=
-They are not part of the redfish standard which specifies explicit messages=
- around sensor threshold events.=0A=
-Having events emitted which are specified in the redfish standard message r=
-egistry have very specific advantages=0A=
-for the client side who can use a consistent library.=0A=
-=0A=
-Proposed Messages:=0A=
-I plan on creating new events which are based and intended to provide Redfi=
-sh SensorEvent 1.0.0[7, ch2.14]. =0A=
-```=0A=
-SensorEvent.1.0.ReadingAboveLowerCriticalThreshold (Warning)=0A=
-SensorEvent.1.0.ReadingAboveLowerFatalThreshold (Critical)=0A=
-SensorEvent.1.0.ReadingAboveUpperCautionThreshold (Warning)=0A=
-SensorEvent.1.0.ReadingAboveUpperCriticalThreshold (Critical)=0A=
-SensorEvent.1.0.ReadingAboveUpperFatalThreshold (Critical)=0A=
-SensorEvent.1.0.ReadingBelowLowerCautionThreshold (Warning)=0A=
-SensorEvent.1.0.ReadingBelowLowerCriticalThreshold (Critical)=0A=
-SensorEvent.1.0.ReadingBelowLowerFatalThreshold (Critical)=0A=
-SensorEvent.1.0.ReadingBelowUpperCriticalThreshold (Warning)=0A=
-SensorEvent.1.0.ReadingBelowUpperFatalThreshold (Critical)=0A=
-SensorEvent.1.0.SensorReadingNormalRange (OK)=0A=
-```=0A=
-All except the last one of these provide 4 arguments:=0A=
-string: The name or identifier of the sensor. This argument shall contain a=
- string that identifies or describes the Sensor resource.=0A=
-number: The reading of the sensor. This argument shall contain a number tha=
-t equals the value of the Reading property of the=0A=
-Sensor resource.=0A=
-string: The reading units of measure. This argument shall contain a string =
-that equals the value of the ReadingUnits property=0A=
-of the Sensor resource. Unitless readings should use count .=0A=
-number: The threshold value. This argument shall contain a number that equa=
-ls the value of the Reading property within the=0A=
-<threshold> property of the Sensor resource.=0A=
-SensorEvent.1.0.0.SensorReadingNormalRange would have only the first 3 argu=
-ments.=0A=
-=0A=
-Example behavior (as proposed in the spec): as the sensor value rises above=
- nominal range, You will see =0A=
-ReadingAboveUpperCautionThreshold, then=0A=
-ReadingAboveUpperCriticalThreshold then=0A=
-ReadingAboveUpperFatalThreshold.=0A=
-=0A=
-As the sensor readings start to drop, we would see the reverse order:=0A=
-ReadingBelowUpperFatalThreshold (Marks ReadingAboveUpperFatalThreshold as r=
-esolved), then=0A=
-ReadingBelowUpperCriticalThreshold (Marks ReadingAboveUpperCriticalThreshol=
-d as resolved) then=0A=
-SensorReadingNormalRange (Marks ReadingAboveUpperCautionThreshold as resolv=
-ed)=0A=
-=0A=
-This is an imperfect match to our existing sensor events from phosphor-sel-=
-logger:=0A=
-(1) While Caution and Critical matches are 1:1 match to Warning and Critica=
-l respectively from phosphor-sel-logging,=0A=
-we have multiple equivalents for Fatal (SoftShutdown/HardShutdown).=0A=
-(2) Redfish adds an explicit message SensorEvent.1.0.0.SensorReadingNormalR=
-ange to indicate that the sensor is truly=0A=
-back in normal operating range, with the existing messages we need to infer=
- from pre-knowledge of thresholds.=0A=
-(3) The args are similar, but OpenBMC.0.1.* events do not contain the "Unit=
-s"[3] of the sensor.=0A=
-=0A=
-Having OpenBMC implement the standard redfish messages would really help in=
- allowing a more standard operation=0A=
-from the end user which allows for better code sharing on the client side.=
-=0A=
-=0A=
-Implementation Proposal:=0A=
-=0A=
-(1) Add a new phosphor-dbus-interfaces/yaml/xyz/openbmc_project/Sensor/Thre=
-shold.events.yaml=0A=
-(which will define the Redfish SensorEvents.1.0 events).=0A=
-This will be a downstream effort from the events enhancement design proposa=
-l[1].=0A=
-=0A=
-This will add definitions for all of SensorEvent.1.0.* (Not just the ones p=
-rovided as examples earlier),=0A=
-but the first wave of implementation will focus more on threshold events.=
-=0A=
-=0A=
-Example snipped of the Threshold.events.yaml=0A=
-```=0A=
-version: 1.0.0=0A=
-=0A=
-errors:=0A=
-  - name: ReadingAboveUpperCriticalThreshold=0A=
-    severity: critical=0A=
-    metadata:=0A=
-      - name: sensor_name=0A=
-        type: string=0A=
-        primary: true=0A=
-      - name: reading_value=0A=
-        type: double=0A=
-        primary: true=0A=
-      - name: units=0A=
-        type: enum[Value.interface.Unit]=0A=
-        primary: true=0A=
-      - name: threshold_value=0A=
-        type: double=0A=
-        primary: true=0A=
-    redfish-mapping: SensorEvent.1.0.0.ReadingAboveUpperCriticalThreshold=
-=0A=
-=0A=
-events:=0A=
-=0A=
-  - name: SensorReadingNormalRange=0A=
-    severity: notice=0A=
-    metadata:=0A=
-      - name: sensor_name=0A=
-        type: string=0A=
-        primary: true=0A=
-      - name: reading_value=0A=
-        type: float/double=0A=
-        primary: true=0A=
-      - name: units=0A=
-        type: string/might be better to be a enum=0A=
-        primary: true=0A=
-    redfish-mapping: SensorEvent.1.0.0.SensorReadingNormalRange=0A=
-```=0A=
-=0A=
-(2) Have each of the sensor monitoring services (dbus-sensors[9], pldm [10]=
- when it lands, virtual-sensors[11],=0A=
-phosphor-hwmon[12]) updated to use the appropriate new message/exceptions.=
-=0A=
-We can track thresholds as they exceed and log.=0A=
-Each service will log an appropriate event as the value exceeds a threshold=
-. (Example, reading exceeding Caution=0A=
-Threshold and then exceeding Critical Threshold) will log two events. Each =
-logged event will have an appropriate=0A=
-uniquely identifiable Hint. (More at [8]). The service should also keep loc=
-al state of what alerts were already raised=0A=
-(so it does not raise a duplicated alert).=0A=
-As the reading starts moving towards nominal value, the service can query t=
-he logging service and resolve the=0A=
-previously raised alerts. This is done using the Hint parameter used previo=
-usly. At each point the service will=0A=
-mark the local alert (Critical/Caution etc) as resolved for that sensor.=0A=
-Once there are no longer any alarms. (Sensor value below Caution threshold)=
- and a previous alert was raised.=0A=
-The service can clear its local assert and log the SensorReadingNormalRange=
- event. This would not need an=0A=
-associated hint.=0A=
-=0A=
-Keep Backward Compatibility=0A=
-=0A=
-Let the existing services continue to use the signals as is. If there are n=
-o listeners, it's probably a no-op. We can keep the=0A=
-Threshold signal and Threshold Alarms. These are also good mechanisms for o=
-ther services to take actions based on=0A=
-sensor thresholds since this only changes the logging behavior around these=
- events; we should not expect additional behavior changes.=0A=
-=0A=
-Users could use the capability planned for the changes to turn off these ne=
-w events for systems already using phosphor-sel-logger.=0A=
-=0A=
-Alternative Considered=0A=
-=0A=
-While SensorEvent.1.0.X is the most generic and comprehensive, Redfish Mess=
-age Registry[7] also specifies more sensor specific type events.=0A=
-Example:=0A=
-Power 1.0.0 specifies:=0A=
-```=0A=
-[Power|Current|Voltage][Above|Below][Upper|Lower][Caution|Critical|Fatal]Th=
-reshold and [Power|Current|Voltage]NoLongerCritical=0A=
-```=0A=
-Arguments are the same as SensorEvent args with the obvious omission of the=
- =93Units=94 argument.=0A=
-Environmental 1.0.0 specifies=0A=
-```=0A=
-[Humidity|Temperature][Above|Below][Upper|Lower][Caution|Critical|Fatal]Thr=
-eshold and TemperatureNoLongerCritical, HumidityNormal.=0A=
-```=0A=
-Arguments are the same as SensorEvent args with the omission of the =93Unit=
-s=94 argument.=0A=
-=0A=
-The reason I chose not to consider these are:=0A=
-(1) There are no entries for some sensor types like Airflow (CFM), Fan spee=
-d (RPM), Fan PWM. Hence for a majority of these we would=0A=
-need to default to the SensorEvent.=0A=
-(2) I found the Humidity events inconsistent with Temperature.=0A=
-(3) The code would be less elegant with a lot of units based case switch st=
-atements splattered all over.=0A=
-=0A=
-Thus my recommendation of sticking to the more generic SensorEvent.1.0.0.=
-=0A=
-=0A=
-References:=0A=
-[1] https://github.com/openbmc/docs/blob/master/designs/event-logging.md=0A=
-[2] https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp#=
-L468=0A=
-[3] https://github.com/openbmc/phosphor-sel-logger/blob/master/include/thre=
-shold_event_monitor.hpp#L329C27-L329C45=0A=
-[4] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xy=
-z/openbmc_project/Sensor/Threshold/Critical.interface.yaml=0A=
-[5] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xy=
-z/openbmc_project/Sensor/Threshold/Warning.interface.yaml=0A=
-[6] https://github.com/openbmc/phosphor-hwmon/blob/master/thresholds.hpp#L7=
-5=0A=
-[7] https://www.dmtf.org/sites/default/files/standards/documents/DSP2065_20=
-23.1.pdf=0A=
-[8] https://github.com/openbmc/docs/blob/master/designs/event-logging.md#ph=
-osphor-logging=0A=
-[9] https://github.com/openbmc/dbus-sensors/blob/master/src/Thresholds.cpp=
-=0A=
-[10] https://gerrit.openbmc.org/c/openbmc/pldm/+/51489/135/platform-mc/nume=
-ric_sensor.cpp#657=0A=
-[11] https://github.com/openbmc/phosphor-virtual-sensor/blob/master/thresho=
-lds.hpp#L173=0A=
-[12] https://github.com/openbmc/phosphor-hwmon/blob/master/thresholds.hpp=
-=0A=
-=0A=
-Thanks,=0A=
-Amithash=
+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxMyAxLzNdIGR0LWJpbmRpbmdzOiBpMmM6IGFzcGVlZDog
+c3VwcG9ydCBmb3INCj4gQVNUMjYwMC1pMmN2Mg0KPiANCj4gT24gMjAvMDgvMjAyNCAwODo1MCwg
+UnlhbiBDaGVuIHdyb3RlOg0KPiA+Pj4+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjEzIDEvM10gZHQt
+YmluZGluZ3M6IGkyYzogYXNwZWVkOiBzdXBwb3J0IGZvcg0KPiA+Pj4+IEFTVDI2MDAtaTJjdjIN
+Cj4gPj4+Pg0KPiA+Pj4+IE9uIDE5LzA4LzIwMjQgMTE6MjgsIFJ5YW4gQ2hlbiB3cm90ZToNCj4g
+Pj4+Pj4gQWRkIGFzdDI2MDAtaTJjdjIgY29tcGF0aWJsZSBhbmQgYXNwZWVkLGdsb2JhbC1yZWdz
+LA0KPiA+Pj4+PiBhc3BlZWQsZW5hYmxlLWRtYSBhbmQgZGVzY3JpcHRpb24gZm9yIGFzdDI2MDAt
+aTJjdjIuDQo+ID4+Pj4+DQo+ID4+Pj4+IFNpZ25lZC1vZmYtYnk6IFJ5YW4gQ2hlbiA8cnlhbl9j
+aGVuQGFzcGVlZHRlY2guY29tPg0KPiA+Pj4+PiBSZXZpZXdlZC1ieTogS3J6eXN6dG9mIEtvemxv
+d3NraSA8a3J6aytkdEBrZXJuZWwub3JnPg0KPiA+Pj4+DQo+ID4+Pj4gPyE/DQo+ID4+Pj4NCj4g
+Pj4+PiBXaGF0IGhhcHBlbmVkIGhlcmU/IFdoeSBhcmUgeW91IGFtZW5kaW5nIHRhZ3M/IT8gVGhh
+dCdzIG5vdA0KPiBhbGxvd2VkLg0KPiA+Pj4+IFlvdSBjYW5ub3QgY2hhbmdlIHJlY2VpdmVkIHRh
+Z3MsIGNoYW5nZSBwZW9wbGUgbmFtZXMgb3IgdGhlaXIgZGF0YSENCj4gPj4+PiBBbmQgaG93IGlz
+IGl0IGV2ZW4gcG9zc2libGUsIHNyc2x5LCBob3cgZG8geW91IGV2ZW4gd29yayB3aXRoIGdpdD8N
+Cj4gPj4+PiBHaXQgd291bGQgbmV2ZXIgZG8gaXQsIHNvIHlvdSBoYWQgdG8gZG8gaXQgb24gcHVy
+cG9zZSB2aWEgc29tZQ0KPiA+Pj4+IHdlaXJkDQo+ID4+IHdvcmtmbG93Lg0KPiA+Pj4+DQo+ID4+
+PiBTb3JyeSwgSSBkb24ndCBrbm93IEtyenlzenRvZiBLb3psb3dza2kNCj4gPj4+IDxrcnp5c3p0
+b2Yua296bG93c2tpQGxpbmFyby5vcmc+IGlzDQo+ID4+IHlvdSBvciBub3QuDQo+ID4+PiBPciBz
+aG91bGQgSSBzdGlsbCBrZWVwIEtyenlzenRvZiBLb3psb3dza2kgPGtyemsrZHRAa2VybmVsLm9y
+Zz4/DQo+ID4+Pg0KPiA+Pj4gaHR0cHM6Ly9wYXRjaGVzLmxpbmFyby5vcmcvcHJvamVjdC9saW51
+eC1pMmMvcGF0Y2gvMjAyMzA0MTUwMTI4NDguMTcNCj4gPj4+IDc3DQo+ID4+PiA3NjgtMi1yeWFu
+X2NoZW5AYXNwZWVkdGVjaC5jb20vDQo+ID4+DQo+ID4+IEhlcmUgaXMgdGhlIHRhZyB5b3UgcmVj
+ZWl2ZWQuIFlvdSBhZGRlZCBpdCBpbiB2MTIuDQo+ID4+DQo+ID4+IFdoeSBkaWQgeW91IGNoYW5n
+ZSB0aGUgdGFnIHN1ZGRlbmx5IHRvIHNvbWV0aGluZyBlbHNlPw0KPiA+Pg0KPiA+PiBEbyB5b3Ug
+dW5kZXJzdGFuZCB0aGF0IHlvdSBhcmUgbm90IGFsbG93ZWQgdG8gY2hhbmdlIHBlb3BsZSB0YWdz
+PyBJDQo+ID4+IGhhdmUgZG91YnRzIGlmIHlvdSBhc2sgYWJvdXQgcGVvcGxlJ3MgaWRlbnRpdGll
+cywgd2hpY2ggaXMgZW50aXJlbHkgaXJyZWxldmFudC4NCj4gPj4NCj4gPiBTb3JyeSwgSSBhbSBu
+b3QgdW5kZXJzdG9vZC4NCj4gDQo+IEkgZG9uJ3Qga25vdyBob3cgdG8gc2F5IHRoaXMgc2ltcGxl
+ciB0aGF0IHlvdSBhcmUgbm90IGFsbG93ZWQgdG8gY2hhbmdlIHRhZ3MuDQo+IA0KPiBZb3UgcmVj
+ZWl2ZSB0YWcsIHVzZSBiNCB0byBhcHBseSBpdCBvciBhZGQgaXQgbWFudWFsbHkuIERvIG5vdCBh
+bHRlciBpdC4NCj4gRG8gbm90IGNoYW5nZSBpdC4gRG8gbm90IGFkZCB0aGluZ3MgdGhlcmUuIERv
+IG5vdCByZW1vdmUgcGFydHMgb2YgaXQuDQo+IA0KPiBUYWcgaXMgYXMgaXMuIFlvdSBvbmx5IGNv
+cHkgYW5kIHBhc3RlLg0KPiANCj4gSXMgdGhpcyB1bmRlcnN0b29kIG5vdz8NCj4gDQo+IA0KPiAN
+Cj4gPiBodHRwczovL3BhdGNoZXMubGluYXJvLm9yZy9wcm9qZWN0L2xpbnV4LWkyYy9wYXRjaC8y
+MDIzMDQxNTAxMjg0OC4xNzc3DQo+ID4gNzY4LTItcnlhbl9jaGVuQGFzcGVlZHRlY2guY29tLw0K
+PiA+IFJldmlld2VkLWJ5OiBLcnp5c3p0b2YgS296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tp
+QGxpbmFyby5vcmc+IGF0DQo+ID4gdjEwIFNvLCB3aGF0IHNob3VsZCBJIGRvIG5vdyBhdCB2MTM/
+Pw0KPiANCj4gRml4IHlvdXIgd29ya2Zsb3cgYW5kIGdvIGJhY2sgdG8gcHJldmlvdXMgdmVyc2lv
+biB3aGljaCBoYWQgY29ycmVjdCB0YWcuDQo+IEFuZCBhbnN3ZXIgLSB3aHkgZGlkIHlvdSBkZWNp
+ZGUgdG8gY2hhbmdlIGl0Pw0KPiANClNvcnJ5LCBJIHVuZGVyc3RhbmQgdGhlIHRhZyBtZWFucyBu
+b3cuDQpJdCBzaG91bGQga2VlcCBvcmlnaW5hbCByZXZpZXctYnkgdGFnLiBBbmQgc2VuZCB2MTQu
+DQoNCj4gQmVzdCByZWdhcmRzLA0KPiBLcnp5c3p0b2YNCg0K
