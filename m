@@ -1,73 +1,161 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44C0195B240
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 11:50:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 156C995B2CB
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 12:21:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WqJNQ4hHMz3bjk
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 19:50:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WqK4074NXz30PJ
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 20:21:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::432"
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:2414::711" arc.chain=microsoft.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PVMcNv4+;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=imXIvYFK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:2414::711; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20711.outbound.protection.outlook.com [IPv6:2a01:111:f403:2414::711])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WqJNM2Fzlz2yQl
-	for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2024 19:50:27 +1000 (AEST)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-714226888dfso538285b3a.1
-        for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2024 02:50:27 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WqK3x1Cszz2xJ5
+	for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2024 20:21:16 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=M4W9rhnyYW+DgcYyGWTzfGF2FYAy4jSskBVVbeEMno70SMe8KUTeejDkZ+0Su8jbbe4jhIJ7TZiF4Fnt17bAOYCkn7XcIQ2BC3A/Sj7B4jYNlHzSJiJ88UtKWFa0F7aGdCfJNwCu6/T3ldbH+6Xqta3m15p7+dXeLj8a3L2rLK7IRSTopezTeg+qhaeebJmvYslQ+/DJKxU7RD8Ptk9F7XDD4q1WxF/ouMwGzx8UaR+nqs7A31jlwR40mXAAQXqOZcl1g7G8sjRgFuqe9AYBodB6l6ci/yB5bPKdfpFNi5fZ/6tEPrjA8dpk3czH9vcT5A+7/65WOi4tfQaqt7uu2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2T9/WH5WwyRjEYVJPXsKbu/RW1ChtcUf5IDdZiLw3+c=;
+ b=fIFiwyJ7kPHoI0fDxSuJEyLtJ4Fa11SM48VVxxcGeS+q82OGnXrjVtJSV54/VAppux15enOYlwRna4pLmOZj6UGayyPc9A0Iaf1FYdVmkU4/Vy66eb9wLtBiS0bxPnAshVB59LNRHr4nntv2+rhOgKAChekm4EKr7OpK0xUUm6TuoQdoZQNhC5jodtk5dCp/huHv1tZY3XdkzL5RIN3t4E4755biT+PhRT6Fad2mVVh3WAOoBwEGT1O+c538tz/J5klA1HwnQkt5My088qOnanltfpCSKNBwEHvuP/xgp5ZW5rfRuo9Y2ZxX/EgLn6puJh6zWc/bzQclq6DMwX36LQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724320225; x=1724925025; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VLgSrEFVTqCEpb1e3jOm09aztw9cxObRcNupA5RQjUs=;
-        b=PVMcNv4+iIzvdYEQwqVh8Lx02PU4reGcz7hPeXXPD+1CzRVe5Ck84WWO5Goz6xFbAz
-         3v41aob+PkzEHzp4s5xg1Qq6Va2mu6hwbj+NJSkAV0tM8KaQ6k/dnPHyBPyqp3buq1TD
-         dn/zG8syRwAtuRDiLK4J18sOZgG8O3jxHAbw2z/q+oAthgJABgyJdHV+w1P3FWXQ6xgp
-         0BZv2i9GBGkiXI0Z5rsiTtXZRD7nEVb3y2BjlB0N3rvp6qg7JmZoHfEo+7gxIL6TT9pW
-         ItWeQ4cQQzPwE67sFbj2n0iKB6Hcb2kF4pimK/96EsTMoqUQQrtAc7c17yD44x7awiru
-         YzoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724320225; x=1724925025;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VLgSrEFVTqCEpb1e3jOm09aztw9cxObRcNupA5RQjUs=;
-        b=VmjOFBOONFhYrMHJAH3Kwa8UnySZKxFx4hY4XP8o5BYVG7aH1AFlJf2DaGPxPLXI9i
-         VKk5rCUIvaAZYhBxoDH1YQeSWfFw9MCXQtjCeWUa3mzcXznKHXMnoyVEL09SXOLhmlBK
-         5J1Xye2zO7ey3fx7kJbhyq1ZXBhewkQQQQIVS/a+SEMB21K+p0X68eFYfAXoSE68k/Nz
-         07qNl70mkSkLpshpW1SkXcUVx1+SgEWwpmLNrsdE0Kd7/h0P5Hvd6Xxr1aUF1EHiPTEr
-         7RkqI1bv3kED/qu5KQNMg9GMWKj7wxeiECf4DW4PsHa307WngGztlcD5ALb2tSV77bls
-         OQMA==
-X-Forwarded-Encrypted: i=1; AJvYcCWXEGYZRDdCRc2+0N8dUV0Tnzxj2IIpaNK5SYua8XIv//Y2wKLLRK10+rfIwq4KbdhGZBFTv6d/@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzLsPeoE7odYmCrKtA0FpIbegpWFeYFKecX25GgAydM9KD7G0tM
-	Y5Ps5czn8Mx+K8H4DFgiGn7gUMlwI6wASlUy1h+lq9Pau1t5WA5p
-X-Google-Smtp-Source: AGHT+IHUr+sfURH6G6TB4AU2SlYCbivSqj9SipdYRWMLn6xzuCZneZ4ZT9hkdqhI447Wt9Fg+p4J2g==
-X-Received: by 2002:a05:6a20:4a0f:b0:1c6:fa64:e5bc with SMTP id adf61e73a8af0-1cad8145662mr5902795637.34.1724320225248;
-        Thu, 22 Aug 2024 02:50:25 -0700 (PDT)
-Received: from cosmo-ubuntu-2204.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-714378611d9sm818585b3a.43.2024.08.22.02.50.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Aug 2024 02:50:24 -0700 (PDT)
-From: Cosmo Chou <chou.cosmo@gmail.com>
-To: andrew@codeconstruct.com.au,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.6 1/1] hwmon: Add driver for Astera Labs PT5161L retimer
-Date: Thu, 22 Aug 2024 17:48:03 +0800
-Message-Id: <20240822094803.2849010-2-chou.cosmo@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240822094803.2849010-1-chou.cosmo@gmail.com>
-References: <20240822094803.2849010-1-chou.cosmo@gmail.com>
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2T9/WH5WwyRjEYVJPXsKbu/RW1ChtcUf5IDdZiLw3+c=;
+ b=imXIvYFKlAx93PgfALWawHUsxjvCEZebY+eR0NJUDzTTkyeqV+68wkIWzNzpBhD/dy0AUrHR9Hg5tHtmLuDxceBbcPq28v6R13E5PdJBmkbps0qajUGZFordmblm7KpPxVGDt9lmYRWxpiLndSMinIL8g0SPCEgDypQcSibfYo8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from BL3PR01MB7057.prod.exchangelabs.com (2603:10b6:208:35c::16) by
+ DS1PR01MB8872.prod.exchangelabs.com (2603:10b6:8:21f::21) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7897.17; Thu, 22 Aug 2024 10:20:54 +0000
+Received: from BL3PR01MB7057.prod.exchangelabs.com
+ ([fe80::b69e:5684:ed7c:4d09]) by BL3PR01MB7057.prod.exchangelabs.com
+ ([fe80::b69e:5684:ed7c:4d09%4]) with mapi id 15.20.7875.019; Thu, 22 Aug 2024
+ 10:20:53 +0000
+Message-ID: <d1ee66fa-e504-409f-97de-a923123f3d44@amperemail.onmicrosoft.com>
+Date: Thu, 22 Aug 2024 17:20:43 +0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] dt-bindings: hwmon: Add maxim max31790
+To: Chanh Nguyen <chanh@os.amperecomputing.com>,
+ Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Justin Ledford
+ <justinledford@google.com>, devicetree@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Open Source Submission <patches@amperecomputing.com>
+References: <20240822084808.299884-1-chanh@os.amperecomputing.com>
+Content-Language: en-US
+From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
+In-Reply-To: <20240822084808.299884-1-chanh@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CYZPR14CA0045.namprd14.prod.outlook.com
+ (2603:10b6:930:a0::13) To BL3PR01MB7057.prod.exchangelabs.com
+ (2603:10b6:208:35c::16)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL3PR01MB7057:EE_|DS1PR01MB8872:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa7f894b-3bc2-45cd-6705-08dcc2941a2f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: 	BCL:0;ARA:13230040|376014|7416014|1800799024|366016|921020;
+X-Microsoft-Antispam-Message-Info: 	=?utf-8?B?cExQMytjZVVZR0x4a1BmVHJQdTVzZTBTeGRZT2c5M3NGM3RoQTFjUlZDMWVJ?=
+ =?utf-8?B?OFZzTDZuaVVzaytpcnpmbWxCeGhEVnNUUzVILzBNanBubElrK0ZtcDhOUjYy?=
+ =?utf-8?B?NFBXSW1nNDV5bEtEcFFuUExhYmRRZG45NXJlOU44UVFnaXFlN04rNXFSTkpl?=
+ =?utf-8?B?NWhHRnVMdjBSNWxFN2xRcFN0SVl6YXlEaHJGdFFXbUZ3ZVNCNHJLOGVuS2dV?=
+ =?utf-8?B?TkR0MU5oVVQ3Z1B2bTR2OTBlOHJaMldFdHlnWDRGK2RoRm4rWUZaRi9hRHZX?=
+ =?utf-8?B?c1ZJMGpJNENFT01KUytNRGFCMGNRa1M2UnUrZVZyYWZYeXlSMWNVeGxRRVZz?=
+ =?utf-8?B?K0t4eU5IWVN3cDdKQXRYWEp0NThXNHNycWRMOXNrZ2YwcEFhek1nbGVDMmVO?=
+ =?utf-8?B?VS9scTNMdzErWEpvUUxkMk9CQUxFRjQzSlFUdHVCTXo4bkNYQTErRXpMMmFK?=
+ =?utf-8?B?Z2hlZCs5VUphaTlFeDZnWWJlRi9scTFpdG1LbDFKQ0sxVTRlbE41Vm5iREFq?=
+ =?utf-8?B?YXNUaWUxYmJ4U25wTXA2aGd3S3lMTzFSVUMyMWN4RzRLNnlqZGVCOE4xUkI5?=
+ =?utf-8?B?bkkwUVVzRjdWN2lEQUh4UE1wWit5aVB0RklONkc3UURZV3h1dVNHR1M1SW1s?=
+ =?utf-8?B?REdiOG81MGI1L09JZGtpRkZHTFVsYjUyaUlFME4xeTZrSmdhNzRlT0pSN1ov?=
+ =?utf-8?B?QjZOb29SS0UvV1JFd3lYWUNHT0xtakNqb1pyZGE4RWl0WXZ3M3FJWFlha0RS?=
+ =?utf-8?B?cEFwcGYzM3ZhMFZBUy95cjZRcWR1QUYyUGpJVXUwQWpBeHJlVENoRWIxTnZt?=
+ =?utf-8?B?MS9iWGNhU3FreENYNGlnMEY0V042a1lSdUpVU3d0aWo2citSSVp5ZURxazhJ?=
+ =?utf-8?B?RDZTMEdVTG1VWHlPRnRpVUVBM1pRMEpXckVubzNBRGhqellZelB4SXJ4VmYw?=
+ =?utf-8?B?dGJRVHVrWXFlSEcyQjliSkZtc3h6ZG5oNzlucFl0VUY0RmpNVjBncDBGSHEz?=
+ =?utf-8?B?YURpQVRDWVpvQUM4SWo2NGl5VHMzOTNpekpDMHBjd1d1OHREZlkraU1MczV1?=
+ =?utf-8?B?MWJIZ2t2T2ZiTmU2b0JsQXBCNzlNNlhVbGtsd3dJVUN5cXJucGF1OU5pNjZm?=
+ =?utf-8?B?L2ovU2xDa0JsWW9uU084V24weGRtSTlsR0NlU3RlUEk4dnBlS3lUeFRDN0Rt?=
+ =?utf-8?B?UnllbVBYMHJWZlF6MExkRHkyRVY5QXZLVU1yc1ZVZnR0UzZwazdxaEdqK1FG?=
+ =?utf-8?B?WnVFUFpMWkhxU0lzek90dDBjRXk3QlBKVHJZOXNDNDZ6ZVJGSzVjUkRkZVFG?=
+ =?utf-8?B?ZWVNWFZsNEF0Q0M1S2hjbWZ6NlJOai95NnpEOGh3dGRwcnh2amsvMDJFTWE5?=
+ =?utf-8?B?Wlh1NmxBRE9CbjduMzR5ZDhYYTBaR2Q3bHAxRmdQTmRydmtYYnRvTXg3Rk5U?=
+ =?utf-8?B?N3VvMy9FRmFJazhicW5INzhhZjNpTFpndUhteTk0WHUzQWdmV0VIa01EWUp4?=
+ =?utf-8?B?a0tETERzMElOb05uZnNBRWpXQzhXWGtEODFLS09NOVI2ZThjbkV0R2lDeE9t?=
+ =?utf-8?B?OGlVdlYrWVRURlRKdFFINnhVcmVBajJFbmlveUJYTTZMcGVxQ1RocmxsMFpk?=
+ =?utf-8?B?eVprQitYWjBPbzQxQXhvanlvVWxlUmNrOFNvUFF4SVY5RWk5MjJUT1FNQ1JR?=
+ =?utf-8?B?Qk1aWk0xbDFHa3B5THB5elFFTlJFWlJpaUhSVG9LQ1U5MTZRQnZ6OGpSNzE3?=
+ =?utf-8?B?TGtuQXN4UWEwVmsydjk2OFc2UDR2dFNlZTQ5SGo0Y3hsdVdZZG95M2lPY05B?=
+ =?utf-8?B?c0V2REZvam1ZYkFsengrdz09?=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR01MB7057.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(921020);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?b2UwWjMvT09HcVM2TW1vTkVocTJtOEFCWTU5ZHRGQ3F5N0RrS0NoWGwzdDNU?=
+ =?utf-8?B?eUpISjhFUVVyRG5KL09rUzZiU1B4OHRBbSs0UXJ4d1k5dHo4NkE0Sis1MHV5?=
+ =?utf-8?B?WHlNMTVsZFlYcFRmNGsrVGV0c3kvSm9SNWFiOWFtZ2QwNGZ4UGIxR2FDTWd6?=
+ =?utf-8?B?QitGamhtWVcrZUJ2NnpidG9sMnV2N25hQkprUmNESlhXNW1NS282WWhQb3lK?=
+ =?utf-8?B?aUhEZjdZeC9EY1Jib0VxNU9wMlJoZFJXMlk3d2VFd05aV1lDOGV2emxPZlpm?=
+ =?utf-8?B?RzZZOE1SeFM1SWExdmtvdWRlaDVuUUFVUkN3UllYZVF1VlZGYW84Q3lvWlRV?=
+ =?utf-8?B?L2t2WFZyVTZWT3d0MmRiSG9CTEpSWGtOM1kwOUFDYUxKU3dycU1oL0U3UDdx?=
+ =?utf-8?B?cDlFb2ErTWhKb3NVVkxZUG81TnNHMXdiVkxhSXcxM3VzRnJmVWttdHB5QWdG?=
+ =?utf-8?B?QnVXRnEvRmlBa2cxamIwUFkrUlZEYnllenJQZlA2Wkt5cTczZzFyZjVXVFUw?=
+ =?utf-8?B?SE90bzkrcW9hWFJyanROdHg2Rnc1ZDQxMlVRazdUQjR5NG9yN2NCM1pnL04z?=
+ =?utf-8?B?ZmovSlhDQ0hNVzdYS1RjSFpXQVlVSThiVVpRcUhtbG4wZTNzVVdNUmI0TnB4?=
+ =?utf-8?B?QlVWeXBRNklFZ21VSHNXNlBad0Z1VnRtMi9nLzBjYUFGcUxZMDIrQjI2azNh?=
+ =?utf-8?B?dWpGODJFRTY1YjBBMUFlMXlDWGFNVG9MQ1ZTNGhtbTBBTUFzZklNY1RVNXlu?=
+ =?utf-8?B?cGVlR01qc3JhNmNoSDk4NFNwa3lrdDVmbHNGMmRWa2dvVHQzSk0vem0yendN?=
+ =?utf-8?B?a3JEVkFXYjNzbmlHekNCcitUVG9HSUltM3VLRWZGa3RSa21WSloxVUtnaXpZ?=
+ =?utf-8?B?ZWJuRVMyZUZna1VoNDRNM0xiWU1rVnBIU3pTUEhLTEhyZnBYcmFOTlVZMnR2?=
+ =?utf-8?B?L0QzK0M0ZTl3T3p5cWIveDFlcERXcUdYQ0hWZUl6ZEJoQTlPT01FUjJ0MDVI?=
+ =?utf-8?B?cW5zdjByQkk4dE9nd2xRbU5nY2QzQ0p6V1JyMTRKc0RjdURHa3lyZGZQYmJW?=
+ =?utf-8?B?U3dTVCthYlg0eTFTYkJKNGZSRlJsVTA2bStZQ2RmQjQvM3pLZlM3cGJiajdP?=
+ =?utf-8?B?V1JGdlB4NXBOUjJrcEhCQVgycFl4RE4xTTh3UnNLbStjRTZsakNLSXFKUHlE?=
+ =?utf-8?B?SGhGeHo4Vlp4eUY2R2cxNHJJeXoyWEpMZFhHSXBOeGFsN3NEMS9TelNsNlBD?=
+ =?utf-8?B?Mk5BN0pzRVUySEw0VWVybHlQWkdzRTVjTkhNVXlPN1VJNG5NSllwdDY1Nk9a?=
+ =?utf-8?B?QWdMVmNOUkVidDhQUFJOc0dvcjRuVDdPRXdzZ3lHOUEvYWFwTmY4VzhrOTVz?=
+ =?utf-8?B?ZDJuKzhlajRuZ0M1cmhmc1d4MWliUEV3eWNSdnhRemtNd1VQV2pacVB3ekR3?=
+ =?utf-8?B?TTlBM0M3clhUWXJodld4azZOQmh3aXRpNFY2THpXOVdiSUI2NDVhSWtvWVhN?=
+ =?utf-8?B?ZXRudXJiNXUwdG1xZ3NJa0grZmxFSmZnTGFSK3U3blczOXhxNWdhaHhGbDNK?=
+ =?utf-8?B?QjZlMWhNQ3k4YkJSVmVZbXpnSVZ5WklOemJsZDFReitYTVZIQUsrd241YzJI?=
+ =?utf-8?B?akNQQ2c3NXYzL0ZyUGhEYUxIVDV5S1AwWGY0czFOb09xMUIwekFUcXB0bGU5?=
+ =?utf-8?B?NHlseEQyOFNzTzVyV1BvclhCYTNGaEltdnhRUGpSSXdFaGx1dEtWakRaYlFq?=
+ =?utf-8?B?TG1KK0ZUZHU0aVJWeHRaVzRrSE1aWXdEenN5dzBOUVBTS3ZRd2doNnVDSHYx?=
+ =?utf-8?B?cWhudHBUSCt0WGxTalUwQjIxUEg3bkQ5N2lmdzNsVks0QmlBNzRYOUpNVkJV?=
+ =?utf-8?B?NW5GTnFZUzNhTm5WNmRsbUltcUtJQUFyODNTa0ZPVVpBVUVuaHJYQmRTRm9i?=
+ =?utf-8?B?clFXeDRsUlliUWYrQk5QY1ZiOUtwRncvcXFuSnJ2US92QWtnWEpRYmU3VjRn?=
+ =?utf-8?B?SmNBYWVNcFBaV3YxNVdYR0VTVUV2V0xhS2RUbzIvcTRPK3FSdjZLTHdtZUp2?=
+ =?utf-8?B?aGJzVXB0T2h4aU5pV2F1eEFUWGNnTDhScHNvdG1HdjNTSXBLcnZ2YlRoM3RW?=
+ =?utf-8?B?TkEzS25tU2hQcWRTSmx0dHo1cXRoejZJd05LajVJRFFrUklLSG1MRjltN2l4?=
+ =?utf-8?Q?d/5bioS3/zLob8T7Y6pXrSg=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa7f894b-3bc2-45cd-6705-08dcc2941a2f
+X-MS-Exchange-CrossTenant-AuthSource: BL3PR01MB7057.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2024 10:20:53.3244
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /CQ5HgnRwPLCMongE2LAb8U0w2yPdg/MUinEB9csWwYmS0SJx8NzbA+hqwR22DREn4teHNXnOk3FoZ6iNBc32yyr++DbmYiYQqy3CO/InAxE8ChtDOQ8y26ZMejPueW8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR01MB8872
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,813 +167,116 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: chou.cosmo@gmail.com, cosmo.chou@quantatw.com
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This driver implements support for temperature monitoring of Astera Labs
-PT5161L series PCIe retimer chips.
+Hi all,
 
-This driver implementation originates from the CSDK available at
-Link: https://github.com/facebook/openbmc/tree/helium/common/recipes-lib/retimer-v2.14
-The communication protocol utilized is based on the I2C/SMBus standard.
+I only linked to patch v3: 
+https://lore.kernel.org/lkml/20240813084152.25002-1-chanh@os.amperecomputing.com/T/#mce666b8184682e4d463d418a294d95512d95c07a 
 
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
----
- Documentation/hwmon/index.rst   |   1 +
- Documentation/hwmon/pt5161l.rst |  42 ++
- MAINTAINERS                     |   7 +
- drivers/hwmon/Kconfig           |  10 +
- drivers/hwmon/Makefile          |   1 +
- drivers/hwmon/pt5161l.c         | 667 ++++++++++++++++++++++++++++++++
- 6 files changed, 728 insertions(+)
- create mode 100644 Documentation/hwmon/pt5161l.rst
- create mode 100644 drivers/hwmon/pt5161l.c
 
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index c7ed1f73ac06..9f5f215fcb2d 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -185,6 +185,7 @@ Hardware Monitoring Kernel Drivers
-    pmbus
-    powerz
-    powr1220
-+   pt5161l
-    pxe1610
-    pwm-fan
-    q54sj108a2
-diff --git a/Documentation/hwmon/pt5161l.rst b/Documentation/hwmon/pt5161l.rst
-new file mode 100644
-index 000000000000..1b97336991ea
---- /dev/null
-+++ b/Documentation/hwmon/pt5161l.rst
-@@ -0,0 +1,42 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Kernel driver pt5161l
-+=====================
-+
-+Supported chips:
-+
-+  * Astera Labs PT5161L
-+
-+    Prefix: 'pt5161l'
-+
-+    Addresses scanned: I2C 0x20 - 0x27
-+
-+    Datasheet: Not publicly available.
-+
-+Authors: Cosmo Chou <cosmo.chou@quantatw.com>
-+
-+Description
-+-----------
-+
-+This driver implements support for temperature monitoring of Astera Labs
-+PT5161L series PCIe retimer chips.
-+
-+This driver implementation originates from the CSDK available at
-+https://github.com/facebook/openbmc/tree/helium/common/recipes-lib/retimer-v2.14
-+The communication protocol utilized is based on the I2C/SMBus standard.
-+
-+Sysfs entries
-+----------------
-+
-+================ ==============================================
-+temp1_input      Measured temperature (in millidegrees Celsius)
-+================ ==============================================
-+
-+Debugfs entries
-+----------------
-+
-+================ ===============================
-+fw_load_status   Firmware load status
-+fw_ver           Firmware version of the retimer
-+heartbeat_status Heartbeat status
-+================ ===============================
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 960512bec428..a656b98971ca 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -17679,6 +17679,13 @@ F:	fs/pstore/
- F:	include/linux/pstore*
- K:	\b(pstore|ramoops)
- 
-+PT5161L HARDWARE MONITOR DRIVER
-+M:	Cosmo Chou <cosmo.chou@quantatw.com>
-+L:	linux-hwmon@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/hwmon/pt5161l.rst
-+F:	drivers/hwmon/pt5161l.c
-+
- PTP HARDWARE CLOCK SUPPORT
- M:	Richard Cochran <richardcochran@gmail.com>
- L:	netdev@vger.kernel.org
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index a608264da87d..c8d86a695f66 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -1714,6 +1714,16 @@ source "drivers/hwmon/peci/Kconfig"
- 
- source "drivers/hwmon/pmbus/Kconfig"
- 
-+config SENSORS_PT5161L
-+	tristate "Astera Labs PT5161L PCIe retimer hardware monitoring"
-+	depends on I2C
-+	help
-+	  If you say yes here you get support for temperature monitoring
-+	  on the Astera Labs PT5161L PCIe retimer.
-+
-+	  This driver can also be built as a module. If so, the module
-+	  will be called pt5161l.
-+
- config SENSORS_PWM_FAN
- 	tristate "PWM fan"
- 	depends on (PWM && OF) || COMPILE_TEST
-diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-index 47be39af5c03..0554d3ccb09a 100644
---- a/drivers/hwmon/Makefile
-+++ b/drivers/hwmon/Makefile
-@@ -180,6 +180,7 @@ obj-$(CONFIG_SENSORS_PC87427)	+= pc87427.o
- obj-$(CONFIG_SENSORS_PCF8591)	+= pcf8591.o
- obj-$(CONFIG_SENSORS_POWERZ)	+= powerz.o
- obj-$(CONFIG_SENSORS_POWR1220)  += powr1220.o
-+obj-$(CONFIG_SENSORS_PT5161L)	+= pt5161l.o
- obj-$(CONFIG_SENSORS_PWM_FAN)	+= pwm-fan.o
- obj-$(CONFIG_SENSORS_RASPBERRYPI_HWMON)	+= raspberrypi-hwmon.o
- obj-$(CONFIG_SENSORS_SBTSI)	+= sbtsi_temp.o
-diff --git a/drivers/hwmon/pt5161l.c b/drivers/hwmon/pt5161l.c
-new file mode 100644
-index 000000000000..60361e39c474
---- /dev/null
-+++ b/drivers/hwmon/pt5161l.c
-@@ -0,0 +1,667 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+#include <linux/debugfs.h>
-+#include <linux/delay.h>
-+#include <linux/err.h>
-+#include <linux/i2c.h>
-+#include <linux/init.h>
-+#include <linux/hwmon.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
-+
-+/* Aries current average temp ADC code CSR */
-+#define ARIES_CURRENT_AVG_TEMP_ADC_CSR	0x42c
-+
-+/* Device Load check register */
-+#define ARIES_CODE_LOAD_REG	0x605
-+/* Value indicating FW was loaded properly, [3:1] = 3'b111 */
-+#define ARIES_LOAD_CODE	0xe
-+
-+/* Main Micro Heartbeat register */
-+#define ARIES_MM_HEARTBEAT_ADDR	0x923
-+
-+/* Reg offset to specify Address for MM assisted accesses */
-+#define ARIES_MM_ASSIST_REG_ADDR_OFFSET	0xd99
-+/* Reg offset to specify Command for MM assisted accesses */
-+#define ARIES_MM_ASSIST_CMD_OFFSET	0xd9d
-+/* Reg offset to MM SPARE 0 used specify Address[7:0] */
-+#define ARIES_MM_ASSIST_SPARE_0_OFFSET	0xd9f
-+/* Reg offset to MM SPARE 3 used specify Data Byte 0 */
-+#define ARIES_MM_ASSIST_SPARE_3_OFFSET	0xda2
-+/* Wide register reads */
-+#define ARIES_MM_RD_WIDE_REG_2B	0x1d
-+#define ARIES_MM_RD_WIDE_REG_3B	0x1e
-+#define ARIES_MM_RD_WIDE_REG_4B	0x1f
-+#define ARIES_MM_RD_WIDE_REG_5B	0x20
-+
-+/* Time delay between checking MM status of EEPROM write (microseconds) */
-+#define ARIES_MM_STATUS_TIME	5000
-+
-+/* AL Main SRAM DMEM offset (A0) */
-+#define AL_MAIN_SRAM_DMEM_OFFSET	(64 * 1024)
-+/* SRAM read command */
-+#define AL_TG_RD_LOC_IND_SRAM	0x16
-+
-+/* Offset for main micro FW info */
-+#define ARIES_MAIN_MICRO_FW_INFO	(96 * 1024 - 128)
-+/* FW Info (Major) offset location in struct */
-+#define ARIES_MM_FW_VERSION_MAJOR	0
-+/* FW Info (Minor) offset location in struct */
-+#define ARIES_MM_FW_VERSION_MINOR	1
-+/* FW Info (Build no.) offset location in struct */
-+#define ARIES_MM_FW_VERSION_BUILD	2
-+
-+#define ARIES_TEMP_CAL_CODE_DEFAULT	84
-+
-+/* Struct defining FW version loaded on an Aries device */
-+struct pt5161l_fw_ver {
-+	u8 major;
-+	u8 minor;
-+	u16 build;
-+};
-+
-+/* Each client has this additional data */
-+struct pt5161l_data {
-+	struct i2c_client *client;
-+	struct dentry *debugfs;
-+	struct pt5161l_fw_ver fw_ver;
-+	struct mutex lock; /* for atomic I2C transactions */
-+	bool init_done;
-+	bool code_load_okay; /* indicate if code load reg value is expected */
-+	bool mm_heartbeat_okay; /* indicate if Main Micro heartbeat is good */
-+	bool mm_wide_reg_access; /* MM assisted wide register access */
-+};
-+
-+static struct dentry *pt5161l_debugfs_dir;
-+
-+/*
-+ * Write multiple data bytes to Aries over I2C
-+ */
-+static int pt5161l_write_block_data(struct pt5161l_data *data, u32 address,
-+				    u8 len, u8 *val)
-+{
-+	struct i2c_client *client = data->client;
-+	int ret;
-+	u8 remain_len = len;
-+	u8 xfer_len, curr_len;
-+	u8 buf[16];
-+	u8 cmd = 0x0F; /* [7]:pec_en, [4:2]:func, [1]:start, [0]:end */
-+	u8 config = 0x40; /* [6]:cfg_type, [4:1]:burst_len, [0]:address bit16 */
-+
-+	while (remain_len > 0) {
-+		if (remain_len > 4) {
-+			curr_len = 4;
-+			remain_len -= 4;
-+		} else {
-+			curr_len = remain_len;
-+			remain_len = 0;
-+		}
-+
-+		buf[0] = config | (curr_len - 1) << 1 | ((address >> 16) & 0x1);
-+		buf[1] = (address >> 8) & 0xff;
-+		buf[2] = address & 0xff;
-+		memcpy(&buf[3], val, curr_len);
-+
-+		xfer_len = 3 + curr_len;
-+		ret = i2c_smbus_write_block_data(client, cmd, xfer_len, buf);
-+		if (ret)
-+			return ret;
-+
-+		val += curr_len;
-+		address += curr_len;
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Read multiple data bytes from Aries over I2C
-+ */
-+static int pt5161l_read_block_data(struct pt5161l_data *data, u32 address,
-+				   u8 len, u8 *val)
-+{
-+	struct i2c_client *client = data->client;
-+	int ret, tries;
-+	u8 remain_len = len;
-+	u8 curr_len;
-+	u8 wbuf[16], rbuf[24];
-+	u8 cmd = 0x08; /* [7]:pec_en, [4:2]:func, [1]:start, [0]:end */
-+	u8 config = 0x00; /* [6]:cfg_type, [4:1]:burst_len, [0]:address bit16 */
-+
-+	while (remain_len > 0) {
-+		if (remain_len > 16) {
-+			curr_len = 16;
-+			remain_len -= 16;
-+		} else {
-+			curr_len = remain_len;
-+			remain_len = 0;
-+		}
-+
-+		wbuf[0] = config | (curr_len - 1) << 1 |
-+			  ((address >> 16) & 0x1);
-+		wbuf[1] = (address >> 8) & 0xff;
-+		wbuf[2] = address & 0xff;
-+
-+		for (tries = 0; tries < 3; tries++) {
-+			ret = i2c_smbus_write_block_data(client, (cmd | 0x2), 3,
-+							 wbuf);
-+			if (ret)
-+				return ret;
-+
-+			ret = i2c_smbus_read_block_data(client, (cmd | 0x1),
-+							rbuf);
-+			if (ret == curr_len)
-+				break;
-+		}
-+		if (tries >= 3)
-+			return ret;
-+
-+		memcpy(val, rbuf, curr_len);
-+		val += curr_len;
-+		address += curr_len;
-+	}
-+
-+	return 0;
-+}
-+
-+static int pt5161l_read_wide_reg(struct pt5161l_data *data, u32 address,
-+				 u8 width, u8 *val)
-+{
-+	int ret, tries;
-+	u8 buf[8];
-+	u8 status;
-+
-+	/*
-+	 * Safely access wide registers using mailbox method to prevent
-+	 * risking conflict with Aries firmware; otherwise fallback to
-+	 * legacy, less secure method.
-+	 */
-+	if (data->mm_wide_reg_access) {
-+		buf[0] = address & 0xff;
-+		buf[1] = (address >> 8) & 0xff;
-+		buf[2] = (address >> 16) & 0x1;
-+		ret = pt5161l_write_block_data(data,
-+					       ARIES_MM_ASSIST_SPARE_0_OFFSET,
-+					       3, buf);
-+		if (ret)
-+			return ret;
-+
-+		/* Set command based on width */
-+		switch (width) {
-+		case 2:
-+			buf[0] = ARIES_MM_RD_WIDE_REG_2B;
-+			break;
-+		case 3:
-+			buf[0] = ARIES_MM_RD_WIDE_REG_3B;
-+			break;
-+		case 4:
-+			buf[0] = ARIES_MM_RD_WIDE_REG_4B;
-+			break;
-+		case 5:
-+			buf[0] = ARIES_MM_RD_WIDE_REG_5B;
-+			break;
-+		default:
-+			return -EINVAL;
-+		}
-+		ret = pt5161l_write_block_data(data, ARIES_MM_ASSIST_CMD_OFFSET,
-+					       1, buf);
-+		if (ret)
-+			return ret;
-+
-+		status = 0xff;
-+		for (tries = 0; tries < 100; tries++) {
-+			ret = pt5161l_read_block_data(data,
-+						      ARIES_MM_ASSIST_CMD_OFFSET,
-+						      1, &status);
-+			if (ret)
-+				return ret;
-+
-+			if (status == 0)
-+				break;
-+
-+			usleep_range(ARIES_MM_STATUS_TIME,
-+				     ARIES_MM_STATUS_TIME + 1000);
-+		}
-+		if (status != 0)
-+			return -ETIMEDOUT;
-+
-+		ret = pt5161l_read_block_data(data,
-+					      ARIES_MM_ASSIST_SPARE_3_OFFSET,
-+					      width, val);
-+		if (ret)
-+			return ret;
-+	} else {
-+		return pt5161l_read_block_data(data, address, width, val);
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Read multiple (up to eight) data bytes from micro SRAM over I2C
-+ */
-+static int
-+pt5161l_read_block_data_main_micro_indirect(struct pt5161l_data *data,
-+					    u32 address, u8 len, u8 *val)
-+{
-+	int ret, tries;
-+	u8 buf[8];
-+	u8 i, status;
-+	u32 uind_offs = ARIES_MM_ASSIST_REG_ADDR_OFFSET;
-+	u32 eeprom_base, eeprom_addr;
-+
-+	/* No multi-byte indirect support here. Hence read a byte at a time */
-+	eeprom_base = address - AL_MAIN_SRAM_DMEM_OFFSET;
-+	for (i = 0; i < len; i++) {
-+		eeprom_addr = eeprom_base + i;
-+		buf[0] = eeprom_addr & 0xff;
-+		buf[1] = (eeprom_addr >> 8) & 0xff;
-+		buf[2] = (eeprom_addr >> 16) & 0xff;
-+		ret = pt5161l_write_block_data(data, uind_offs, 3, buf);
-+		if (ret)
-+			return ret;
-+
-+		buf[0] = AL_TG_RD_LOC_IND_SRAM;
-+		ret = pt5161l_write_block_data(data, uind_offs + 4, 1, buf);
-+		if (ret)
-+			return ret;
-+
-+		status = 0xff;
-+		for (tries = 0; tries < 255; tries++) {
-+			ret = pt5161l_read_block_data(data, uind_offs + 4, 1,
-+						      &status);
-+			if (ret)
-+				return ret;
-+
-+			if (status == 0)
-+				break;
-+		}
-+		if (status != 0)
-+			return -ETIMEDOUT;
-+
-+		ret = pt5161l_read_block_data(data, uind_offs + 3, 1, buf);
-+		if (ret)
-+			return ret;
-+
-+		val[i] = buf[0];
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Check firmware load status
-+ */
-+static int pt5161l_fw_load_check(struct pt5161l_data *data)
-+{
-+	int ret;
-+	u8 buf[8];
-+
-+	ret = pt5161l_read_block_data(data, ARIES_CODE_LOAD_REG, 1, buf);
-+	if (ret)
-+		return ret;
-+
-+	if (buf[0] < ARIES_LOAD_CODE) {
-+		dev_dbg(&data->client->dev,
-+			"Code Load reg unexpected. Not all modules are loaded %x\n",
-+			buf[0]);
-+		data->code_load_okay = false;
-+	} else {
-+		data->code_load_okay = true;
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * Check main micro heartbeat
-+ */
-+static int pt5161l_heartbeat_check(struct pt5161l_data *data)
-+{
-+	int ret, tries;
-+	u8 buf[8];
-+	u8 heartbeat;
-+	bool hb_changed = false;
-+
-+	ret = pt5161l_read_block_data(data, ARIES_MM_HEARTBEAT_ADDR, 1, buf);
-+	if (ret)
-+		return ret;
-+
-+	heartbeat = buf[0];
-+	for (tries = 0; tries < 100; tries++) {
-+		ret = pt5161l_read_block_data(data, ARIES_MM_HEARTBEAT_ADDR, 1,
-+					      buf);
-+		if (ret)
-+			return ret;
-+
-+		if (buf[0] != heartbeat) {
-+			hb_changed = true;
-+			break;
-+		}
-+	}
-+	data->mm_heartbeat_okay = hb_changed;
-+
-+	return 0;
-+}
-+
-+/*
-+ * Check the status of firmware
-+ */
-+static int pt5161l_fwsts_check(struct pt5161l_data *data)
-+{
-+	int ret;
-+	u8 buf[8];
-+	u8 major = 0, minor = 0;
-+	u16 build = 0;
-+
-+	ret = pt5161l_fw_load_check(data);
-+	if (ret)
-+		return ret;
-+
-+	ret = pt5161l_heartbeat_check(data);
-+	if (ret)
-+		return ret;
-+
-+	if (data->code_load_okay && data->mm_heartbeat_okay) {
-+		ret = pt5161l_read_block_data_main_micro_indirect(data, ARIES_MAIN_MICRO_FW_INFO +
-+								  ARIES_MM_FW_VERSION_MAJOR,
-+								  1, &major);
-+		if (ret)
-+			return ret;
-+
-+		ret = pt5161l_read_block_data_main_micro_indirect(data, ARIES_MAIN_MICRO_FW_INFO +
-+								  ARIES_MM_FW_VERSION_MINOR,
-+								  1, &minor);
-+		if (ret)
-+			return ret;
-+
-+		ret = pt5161l_read_block_data_main_micro_indirect(data, ARIES_MAIN_MICRO_FW_INFO +
-+								  ARIES_MM_FW_VERSION_BUILD,
-+								  2, buf);
-+		if (ret)
-+			return ret;
-+		build = buf[1] << 8 | buf[0];
-+	}
-+	data->fw_ver.major = major;
-+	data->fw_ver.minor = minor;
-+	data->fw_ver.build = build;
-+
-+	return 0;
-+}
-+
-+static int pt5161l_fw_is_at_least(struct pt5161l_data *data, u8 major, u8 minor,
-+				  u16 build)
-+{
-+	u32 ver = major << 24 | minor << 16 | build;
-+	u32 curr_ver = data->fw_ver.major << 24 | data->fw_ver.minor << 16 |
-+		       data->fw_ver.build;
-+
-+	if (curr_ver >= ver)
-+		return true;
-+
-+	return false;
-+}
-+
-+static int pt5161l_init_dev(struct pt5161l_data *data)
-+{
-+	int ret;
-+
-+	mutex_lock(&data->lock);
-+	ret = pt5161l_fwsts_check(data);
-+	mutex_unlock(&data->lock);
-+	if (ret)
-+		return ret;
-+
-+	/* Firmware 2.2.0 enables safe access to wide registers */
-+	if (pt5161l_fw_is_at_least(data, 2, 2, 0))
-+		data->mm_wide_reg_access = true;
-+
-+	data->init_done = true;
-+
-+	return 0;
-+}
-+
-+static int pt5161l_read(struct device *dev, enum hwmon_sensor_types type,
-+			u32 attr, int channel, long *val)
-+{
-+	struct pt5161l_data *data = dev_get_drvdata(dev);
-+	int ret;
-+	u8 buf[8];
-+	long adc_code;
-+
-+	switch (attr) {
-+	case hwmon_temp_input:
-+		if (!data->init_done) {
-+			ret = pt5161l_init_dev(data);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		mutex_lock(&data->lock);
-+		ret = pt5161l_read_wide_reg(data,
-+					    ARIES_CURRENT_AVG_TEMP_ADC_CSR, 4,
-+					    buf);
-+		mutex_unlock(&data->lock);
-+		if (ret) {
-+			dev_dbg(dev, "Read adc_code failed %d\n", ret);
-+			return ret;
-+		}
-+
-+		adc_code = buf[3] << 24 | buf[2] << 16 | buf[1] << 8 | buf[0];
-+		if (adc_code == 0 || adc_code >= 0x3ff) {
-+			dev_dbg(dev, "Invalid adc_code %lx\n", adc_code);
-+			return -EIO;
-+		}
-+
-+		*val = 110000 +
-+		       ((adc_code - (ARIES_TEMP_CAL_CODE_DEFAULT + 250)) *
-+			-320);
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
-+	return 0;
-+}
-+
-+static umode_t pt5161l_is_visible(const void *data,
-+				  enum hwmon_sensor_types type, u32 attr,
-+				  int channel)
-+{
-+	switch (attr) {
-+	case hwmon_temp_input:
-+		return 0444;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct hwmon_channel_info *pt5161l_info[] = {
-+	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
-+	NULL
-+};
-+
-+static const struct hwmon_ops pt5161l_hwmon_ops = {
-+	.is_visible = pt5161l_is_visible,
-+	.read = pt5161l_read,
-+};
-+
-+static const struct hwmon_chip_info pt5161l_chip_info = {
-+	.ops = &pt5161l_hwmon_ops,
-+	.info = pt5161l_info,
-+};
-+
-+static ssize_t pt5161l_debugfs_read_fw_ver(struct file *file, char __user *buf,
-+					   size_t count, loff_t *ppos)
-+{
-+	struct pt5161l_data *data = file->private_data;
-+	int ret;
-+	char ver[32];
-+
-+	mutex_lock(&data->lock);
-+	ret = pt5161l_fwsts_check(data);
-+	mutex_unlock(&data->lock);
-+	if (ret)
-+		return ret;
-+
-+	ret = snprintf(ver, sizeof(ver), "%u.%u.%u\n", data->fw_ver.major,
-+		       data->fw_ver.minor, data->fw_ver.build);
-+
-+	return simple_read_from_buffer(buf, count, ppos, ver, ret);
-+}
-+
-+static const struct file_operations pt5161l_debugfs_ops_fw_ver = {
-+	.read = pt5161l_debugfs_read_fw_ver,
-+	.open = simple_open,
-+};
-+
-+static ssize_t pt5161l_debugfs_read_fw_load_sts(struct file *file,
-+						char __user *buf, size_t count,
-+						loff_t *ppos)
-+{
-+	struct pt5161l_data *data = file->private_data;
-+	int ret;
-+	bool status = false;
-+	char health[16];
-+
-+	mutex_lock(&data->lock);
-+	ret = pt5161l_fw_load_check(data);
-+	mutex_unlock(&data->lock);
-+	if (ret == 0)
-+		status = data->code_load_okay;
-+
-+	ret = snprintf(health, sizeof(health), "%s\n",
-+		       status ? "normal" : "abnormal");
-+
-+	return simple_read_from_buffer(buf, count, ppos, health, ret);
-+}
-+
-+static const struct file_operations pt5161l_debugfs_ops_fw_load_sts = {
-+	.read = pt5161l_debugfs_read_fw_load_sts,
-+	.open = simple_open,
-+};
-+
-+static ssize_t pt5161l_debugfs_read_hb_sts(struct file *file, char __user *buf,
-+					   size_t count, loff_t *ppos)
-+{
-+	struct pt5161l_data *data = file->private_data;
-+	int ret;
-+	bool status = false;
-+	char health[16];
-+
-+	mutex_lock(&data->lock);
-+	ret = pt5161l_heartbeat_check(data);
-+	mutex_unlock(&data->lock);
-+	if (ret == 0)
-+		status = data->mm_heartbeat_okay;
-+
-+	ret = snprintf(health, sizeof(health), "%s\n",
-+		       status ? "normal" : "abnormal");
-+
-+	return simple_read_from_buffer(buf, count, ppos, health, ret);
-+}
-+
-+static const struct file_operations pt5161l_debugfs_ops_hb_sts = {
-+	.read = pt5161l_debugfs_read_hb_sts,
-+	.open = simple_open,
-+};
-+
-+static int pt5161l_init_debugfs(struct pt5161l_data *data)
-+{
-+	data->debugfs = debugfs_create_dir(dev_name(&data->client->dev),
-+					   pt5161l_debugfs_dir);
-+
-+	debugfs_create_file("fw_ver", 0444, data->debugfs, data,
-+			    &pt5161l_debugfs_ops_fw_ver);
-+
-+	debugfs_create_file("fw_load_status", 0444, data->debugfs, data,
-+			    &pt5161l_debugfs_ops_fw_load_sts);
-+
-+	debugfs_create_file("heartbeat_status", 0444, data->debugfs, data,
-+			    &pt5161l_debugfs_ops_hb_sts);
-+
-+	return 0;
-+}
-+
-+static int pt5161l_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct device *hwmon_dev;
-+	struct pt5161l_data *data;
-+
-+	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	data->client = client;
-+	mutex_init(&data->lock);
-+	pt5161l_init_dev(data);
-+	dev_set_drvdata(dev, data);
-+
-+	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
-+							 data,
-+							 &pt5161l_chip_info,
-+							 NULL);
-+
-+	pt5161l_init_debugfs(data);
-+
-+	return PTR_ERR_OR_ZERO(hwmon_dev);
-+}
-+
-+static void pt5161l_remove(struct i2c_client *client)
-+{
-+	struct pt5161l_data *data = i2c_get_clientdata(client);
-+
-+	debugfs_remove_recursive(data->debugfs);
-+}
-+
-+static const struct of_device_id __maybe_unused pt5161l_of_match[] = {
-+	{ .compatible = "asteralabs,pt5161l" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, pt5161l_of_match);
-+
-+static const struct acpi_device_id __maybe_unused pt5161l_acpi_match[] = {
-+	{ "PT5161L", 0 },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(acpi, pt5161l_acpi_match);
-+
-+static const struct i2c_device_id pt5161l_id[] = {
-+	{ "pt5161l", 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(i2c, pt5161l_id);
-+
-+static struct i2c_driver pt5161l_driver = {
-+	.class = I2C_CLASS_HWMON,
-+	.driver = {
-+		.name = "pt5161l",
-+		.of_match_table = of_match_ptr(pt5161l_of_match),
-+		.acpi_match_table = ACPI_PTR(pt5161l_acpi_match),
-+	},
-+	.probe = pt5161l_probe,
-+	.remove = pt5161l_remove,
-+	.id_table = pt5161l_id,
-+};
-+
-+static int __init pt5161l_init(void)
-+{
-+	pt5161l_debugfs_dir = debugfs_create_dir("pt5161l", NULL);
-+	return i2c_add_driver(&pt5161l_driver);
-+}
-+
-+static void __exit pt5161l_exit(void)
-+{
-+	i2c_del_driver(&pt5161l_driver);
-+	debugfs_remove_recursive(pt5161l_debugfs_dir);
-+}
-+
-+module_init(pt5161l_init);
-+module_exit(pt5161l_exit);
-+
-+MODULE_AUTHOR("Cosmo Chou <cosmo.chou@quantatw.com>");
-+MODULE_DESCRIPTION("Hwmon driver for Astera Labs Aries PCIe retimer");
-+MODULE_LICENSE("GPL");
--- 
-2.34.1
+Thanks,
+Chanh
 
+On 22/08/2024 15:48, Chanh Nguyen wrote:
+> Add device tree bindings and an example for max31790 device.
+> 
+> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+> Changes in v2:
+>   - Update filename of the maxim,max31790.yaml                        [Krzysztof]
+>   - Add the common fan schema to $ref                                 [Krzysztof]
+>   - Update the node name to "fan-controller" in maxim,max31790.yaml   [Krzysztof]
+>   - Drop "driver" in commit title                                     [Krzysztof]
+> Changes in v3:
+>   - Drop redundant "bindings" in commit title                         [Krzysztof]
+>   - Add the clocks and resets property in example                     [Krzysztof]
+>   - Add child node refer to fan-common.yaml                           [Krzysztof, Conor]
+> Changes in v4:
+>   - Add Chanh Nguyen to maintainers list                              [Chanh]
+>   - Drop incomplete example                                           [Krzysztof, Conor]
+>   - Drop the cover letter because only a patch existed                [Chanh]
+> ---
+>   .../bindings/hwmon/maxim,max31790.yaml        | 70 +++++++++++++++++++
+>   1 file changed, 70 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+> new file mode 100644
+> index 000000000000..b1ff496f87f9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+> @@ -0,0 +1,70 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/hwmon/maxim,max31790.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: The Maxim MAX31790 Fan Controller
+> +
+> +maintainers:
+> +  - Guenter Roeck <linux@roeck-us.net>
+> +  - Chanh Nguyen <chanh@os.amperecomputing.com>
+> +
+> +description: >
+> +  The MAX31790 controls the speeds of up to six fans using six
+> +  independent PWM outputs. The desired fan speeds (or PWM duty cycles)
+> +  are written through the I2C interface.
+> +
+> +  Datasheets:
+> +    https://datasheets.maximintegrated.com/en/ds/MAX31790.pdf
+> +
+> +properties:
+> +  compatible:
+> +    const: maxim,max31790
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  "#pwm-cells":
+> +    const: 1
+> +
+> +patternProperties:
+> +  "^fan-[0-9]+$":
+> +    $ref: fan-common.yaml#
+> +    unevaluatedProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      pwm_provider: fan-controller@20 {
+> +        compatible = "maxim,max31790";
+> +        reg = <0x20>;
+> +        clocks = <&sys_clk>;
+> +        resets = <&reset 0>;
+> +        #pwm-cells = <1>;
+> +
+> +        fan-0 {
+> +          pwms = <&pwm_provider 1>;
+> +        };
+> +
+> +        fan-1 {
+> +          pwms = <&pwm_provider 2>;
+> +        };
+> +      };
+> +    };
+> +
