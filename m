@@ -1,85 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D56CE95B6E8
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 15:34:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABE4A95BB40
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 18:01:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WqPLT4C6jz30T3
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2024 23:34:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WqScq2nZNz30WS
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 02:01:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.12
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724333644;
-	cv=none; b=czJJIif9z1PHF1aWuqF6QlaCVHw05r1CcuVJ6jo+fLckJLyOPMCVIeElo1AOt61jv56H4/xShVRwpQy9B93xzJJegyzW5ABLmuBIv/JhUew5s8ywpKRwOdmOsNGzPf0Sz9v+sFlujq3/qkrT58PfaKfs68r9rW2TUq8aZLLpTVm9h41aFKiHBmpdOz5TrVA+ZlbMqzL0No1iPotx7e6G2oey0PUFzPqavadSlMx7EeComg6o4gJKldbxZNQCaUoDnlP7EdlDl/2+12P3a6wVzRWzzn/ZC0UsiGqyA0wAXsA8GCSiew1a44vrlYWvEoTHJ4dwZXUWdFn1wI6Cem8gLw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724342503;
+	cv=none; b=BJ7OeEAtpkAUwx/OMxhRuoyElvw0gJ7O3vFk0NMfGxtDIM1/xVTSvgq8+W9J01mAjk/Uz7YT1+6UQKdJRLeLWJp687Two1OavFKWicBaPmvJ1EZgyiMb1fVcgdXG5BtHghdj+kgh7MhCfgOIzWwTs2AArY/g8GC7t8BkjknlAm23jmBArso0jZOJuceOpSg0XHUDjwyUDlxq3kYbltLX9ZeGceBZ+TzDlX0CIb6AU7OrK1pvJmqTQUUtelXOwQcbHxqxx1eTCDaPHO2JFprRsqwPPODzXv/KDK2j3iK5O4PTu8l9HxUaH/qRNINlioV906TMICOBq5UE3/IeNRFuWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724333644; c=relaxed/relaxed;
-	bh=bi1QBbh7hAzIoULG/eq5q7HY53X3VoG8tvBZ+pRxdF4=;
-	h=X-Greylist:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:
-	 To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:Organization; b=N/SvV0egHEPshCmdXsv3O+cVA0URtTvs8KxLDHSTfUbUEP/AEJTctTpQ2vXzS/pJo8wG/IAJnDVMeduG13shhrEXwAVlpMEM4pm7w3+VtVrOUnVYPqfVBTKO10iR1VjayRo7becSaYG5tYzn9sLlDf9Kw459olXL8AekfDvs2MpytzNB0kaj7REvW4crz5KHE1Zcu2Sqt+dz7iaw900ubvC3I2+p1jRNIh7yh0lGFVhTtk4rc/iwb06bpLIHJwbkAAueqkTWJfcjXnHqacr6lNrfInlOJjGDsdV6JDIyD/8CiodscBdPDIqtuKO8VOdFkTVspQ1so8vgSP+QPvEfGA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IdID/3bz; dkim-atps=neutral; spf=none (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+	t=1724342503; c=relaxed/relaxed;
+	bh=BY7tVZu/eJWX4jiAze7wa466KGT/clrPEDHC4odn/wI=;
+	h=X-Greylist:Received:Received:DKIM-Signature:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Tz3/N2aNFzjAGR1T54+jhfRTqq4Pf0n++p6j9svF6MRkjNGmdiYg/zXZLm6L7M+U8sv6aIomoZrqmoTMjWSDvdtEjlY8xzIvSzO6Ozycr70VPHPsmeolb1demjbI5GGweF7KCzsVdwDREMoEUqSRpyOfmbWSjEGSD/hMfDKT3Hbb0wZ5sD53oFgOnhyNjFlc8qX0V9pRjGMHtAKhhOr4tNR/nTDd6uJlsX+neYA0u5eeCPk1uj8Rlhv/1rD5AvdrojbY/5o7DLyrt9MBssl1EgqOuO8TLIq25HU86O8jyujeAeO+3Ddqrmrg8GAV1h3CC2nvaXLKPUzBJJNJfUuc2Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qoBqUWbS; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IdID/3bz;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qoBqUWbS;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Thu, 22 Aug 2024 23:34:03 AEST
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
+X-Greylist: delayed 489 seconds by postgrey-1.37 at boromir; Fri, 23 Aug 2024 02:01:43 AEST
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WqPLM22zYz2yZ4;
-	Thu, 22 Aug 2024 23:34:02 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724333644; x=1755869644;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Ey9GWCaehbSnTHtTO44xwcZKYcD9SIp9LLt318G94E4=;
-  b=IdID/3bzY5fvJP/7Haz337VFt3L117tvwS8iQnhm6mHmTlLH5iydbqKG
-   6tq2dVt4h/qCMZeVsI81ATK3Dksc9smUNSxcuPZTBllCF0/t7jB7zC+2A
-   REB4iG8+Kw51ae5W0qykRzJ/s9EMoVpiTj4ypJMojgKBh9cPZXiU/FKDe
-   qoNf7m/jIi3lZdj0PV4G4ivW1d5m13xvMGI4osr/ewYxFhqnvnXq99K2X
-   UCiuZK7ojTyf95GAj39azlxMPTB/JCUkhX2fD3cGwd+M4OtIdabfAM/1q
-   XFOuoEzV7vvoZqUqnaW//rd00wSgip3Vf7n4zAj+7FhoVZ3+Xe3gt7W1g
-   A==;
-X-CSE-ConnectionGUID: 9QiHbIqOSEW2VrF/DYHqqg==
-X-CSE-MsgGUID: FRvwyE4TRV+Ms6+fqXxUiA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11172"; a="34128591"
-X-IronPort-AV: E=Sophos;i="6.10,167,1719903600"; 
-   d="scan'208";a="34128591"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2024 06:32:55 -0700
-X-CSE-ConnectionGUID: 6EKnKbPLSVqplxDBOPNGlQ==
-X-CSE-MsgGUID: ZnLsCKtgSW+HwUkAsDZXXg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,167,1719903600"; 
-   d="scan'208";a="61468279"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2024 06:32:50 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sh7vh-00000000St9-3oX7;
-	Thu, 22 Aug 2024 16:32:45 +0300
-Date: Thu, 22 Aug 2024 16:32:45 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-Subject: Re: [PATCH v13 2/3] i2c: aspeed: support AST2600 i2c new register
- mode driver
-Message-ID: <Zsc9_UddBybdnM1Z@smile.fi.intel.com>
-References: <20240819092850.1590758-1-ryan_chen@aspeedtech.com>
- <20240819092850.1590758-3-ryan_chen@aspeedtech.com>
- <ZsNT7LPZ7-szrgBJ@smile.fi.intel.com>
- <OS8PR06MB7541EE5BA5B400445FE0295EF28E2@OS8PR06MB7541.apcprd06.prod.outlook.com>
- <ZsXVU2qy0GIANFrc@smile.fi.intel.com>
- <OS8PR06MB7541945591A62B956DA28AD9F28F2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WqScl4fVRz2xxx;
+	Fri, 23 Aug 2024 02:01:43 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by nyc.source.kernel.org (Postfix) with ESMTP id A5688A40B0E;
+	Thu, 22 Aug 2024 15:53:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97399C4AF0C;
+	Thu, 22 Aug 2024 15:53:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724342010;
+	bh=y8Ghfe/tRkWEXDuR4Lt66t9U6fIcWdkJxTjW9OqUWss=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=qoBqUWbSPmX9Pg8nA8QQm3Iu2itlnQcAwlPS/64dWFUekUSXYIn4EAlVNBJAMjvQQ
+	 wwgFtfoPcrSWsY5VN2Z2qSQh897FGGCpBr853lZfm1deo8Y11o+IMAFUr8NXfTAklp
+	 PAILip0H3otcs+udH26gHm1TI7yyKOOIQTdivZ91y7gtzwGciLSg1UTUf3h5gM5q3l
+	 OF44LGIWu7JozQ0oyAQO5p0HigHcumInjHcX3o9Se2G8jl6C53YYUN4eCGvmRf8oUS
+	 ps/C1psbZXVF/lZsmnv2F4ec26d73JbD91kpGSPL/Vo4itFaM9fMVz0AUu99CYrLPO
+	 rtHIcexDSYxMQ==
+Date: Thu, 22 Aug 2024 16:53:25 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] dt-bindings: i2c: aspeed: drop redundant multi-master
+Message-ID: <20240822-sibling-divinely-be19cb9cc0b0@spud>
+References: <20240822132708.51884-1-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="vAAMaBzo7gFTFXce"
 Content-Disposition: inline
-In-Reply-To: <OS8PR06MB7541945591A62B956DA28AD9F28F2@OS8PR06MB7541.apcprd06.prod.outlook.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20240822132708.51884-1-krzysztof.kozlowski@linaro.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,182 +68,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "andi.shyti@kernel.org" <andi.shyti@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, Rayn Chen <rayn_chen@aspeedtech.com>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 22, 2024 at 02:24:26AM +0000, Ryan Chen wrote:
-> > On Wed, Aug 21, 2024 at 06:43:01AM +0000, Ryan Chen wrote:
-> > > > On Mon, Aug 19, 2024 at 05:28:49PM +0800, Ryan Chen wrote:
 
-...
+--vAAMaBzo7gFTFXce
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > > > > +	/* Check 0x14's SDA and SCL status */
-> > > > > +	state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
-> > > > > +	if (!(state & AST2600_I2CC_SDA_LINE_STS) && (state &
-> > > > AST2600_I2CC_SCL_LINE_STS)) {
-> > > > > +		writel(AST2600_I2CM_RECOVER_CMD_EN, i2c_bus->reg_base
-> > +
-> > > > AST2600_I2CM_CMD_STS);
-> > > > > +		r = wait_for_completion_timeout(&i2c_bus->cmd_complete,
-> > > > i2c_bus->adap.timeout);
-> > > > > +		if (r == 0) {
-> > > > > +			dev_dbg(i2c_bus->dev, "recovery timed out\n");
-> > > > > +			ret = -ETIMEDOUT;
-> > > > > +		} else {
-> > > > > +			if (i2c_bus->cmd_err) {
-> > > > > +				dev_dbg(i2c_bus->dev, "recovery error\n");
-> > > > > +				ret = -EPROTO;
-> > > > > +			}
-> > > > > +		}
-> > > > > +	}
-> > > >
-> > > > ret is set but maybe overridden.
-> > >
-> > > If will modify by following.
-> > > 		if (r == 0) {
-> > > 			dev_dbg(i2c_bus->dev, "recovery timed out\n");
-> > > 			ret = -ETIMEDOUT;
-> > > 		} else if (i2c_bus->cmd_err) {
-> > > 			dev_dbg(i2c_bus->dev, "recovery error\n");
-> > > 			ret = -EPROTO;
-> > > 		}
-> > > If no error keep ret = 0;
-> > 
-> > It doesn't change the behaviour. Still ret can be overridden below...
-> 
-> Yes, it is expectable, previous is issue recovery command out then the
-> following is double confirm the bus status.
-> If bus still busy, the function still return recovery fail.
-> 
-> Or should I modify by following?
-> 	/* Check 0x14's SDA and SCL status */
-> 	state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
-> 	if (!(state & AST2600_I2CC_SDA_LINE_STS) && (state & AST2600_I2CC_SCL_LINE_STS)) {
-> 		writel(AST2600_I2CM_RECOVER_CMD_EN, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
-> 		r = wait_for_completion_timeout(&i2c_bus->cmd_complete, i2c_bus->adap.timeout);
-> 		if (r == 0) {
-> 			dev_dbg(i2c_bus->dev, "recovery timed out\n");
+On Thu, Aug 22, 2024 at 03:27:08PM +0200, Krzysztof Kozlowski wrote:
+> 'multi-master' property is defined by core i2c-controller schema in
+> dtschema package, so binding which references it and has
+> unevaluatedProperties:false, does not need to mention it.  It is
+> completely redundant here.
+>=20
+> Suggested-by: Andi Shyti <andi.shyti@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> 			ret = -ETIMEDOUT;
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-This assignment doesn't make sense.
+--vAAMaBzo7gFTFXce
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 		} else if (i2c_bus->cmd_err) {
-> 				dev_dbg(i2c_bus->dev, "recovery error\n");
-> 				ret = -EPROTO;
-> 		}
-> 		/* check bus status */
-> 		state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
-> 		if (state & AST2600_I2CC_BUS_BUSY_STS) {
-> 			dev_dbg(i2c_bus->dev, "Can't recover bus [%x]\n", state);
-> 			ret = -EPROTO;
-> 		}
-> 	}
+-----BEGIN PGP SIGNATURE-----
 
-> > > > > +	/* Recovery done */
-> > > >
-> > > > Even if it fails above?
-> > >
-> > > This will keep check the bus status, if bus busy, will give ret =
-> > > -EPROTO;
-> > >
-> > > > > +	state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
-> > > > > +	if (state & AST2600_I2CC_BUS_BUSY_STS) {
-> > > > > +		dev_dbg(i2c_bus->dev, "Can't recover bus [%x]\n", state);
-> > > > > +		ret = -EPROTO;
-> > 
-> > ...here.
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZsde9QAKCRB4tDGHoIJi
+0ushAP9C1yIfxWTQ99m6oo/wi/XM+H4jeZV+tKwrhhhzcmD0WAEAzNs+M49QgnKF
+hxJp9x49f0FYIRnNsWDMLxqEEimrWwE=
+=CiH4
+-----END PGP SIGNATURE-----
 
-See above.
-
-> > > > > +	}
-> > > > > +
-> > > > > +	/* restore original master/slave setting */
-> > > > > +	writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
-> > > > > +	return ret;
-
-...
-
-> > > > > +		i2c_bus->master_dma_addr =
-> > > > > +			dma_map_single(i2c_bus->dev, i2c_bus->master_safe_buf,
-> > > > > +				       msg->len, DMA_TO_DEVICE);
-> > > >
-> > > > > +		if (dma_mapping_error(i2c_bus->dev,
-> > i2c_bus->master_dma_addr))
-> > > > {
-> > > > > +			i2c_put_dma_safe_msg_buf(i2c_bus->master_safe_buf,
-> > msg,
-> > > > false);
-> > > > > +			i2c_bus->master_safe_buf = NULL;
-> > > >
-> > > > > +			return -ENOMEM;
-> > > >
-> > > > Why is the dma_mapping_error() returned error code shadowed?
-> > >
-> > > Sorry, please point me why you are think it is shadowed?
-> > > As I know dma_mapping_error() will return 0 or -ENOMEM. So I check if it
-> > is !=0.
-> > > Than return -ENOMEM.
-> > 
-> > First of all, it is a bad style to rely on the implementation details where it's not
-> > crucial. Second, today it may return only ENOMEM, tomorrow it can return a
-> > different code or codes. And in general, one should not shadow an error code
-> > without justification.
-> > 
-> Understood, The following is better, am I right? (if yest, those will update in driver)
-
-Yes.
-
-> 		Int ret;
-> 		.....
-> 		ret = dma_mapping_error(i2c_bus->dev, i2c_bus->master_dma_addr)
-> 		if (ret) {
-> 			i2c_put_dma_safe_msg_buf(i2c_bus->master_safe_buf, msg, false);
-> 			i2c_bus->master_safe_buf = NULL;
-> 			return ret;
-> 		}
-> 
-> > > > > +		}
-
-...
-
-> > > > > +	if (i2c_bus->mode == BUFF_MODE) {
-> > > > > +		i2c_bus->buf_base =
-> > > > devm_platform_get_and_ioremap_resource(pdev, 1, &res);
-> > > > > +		if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
-> > > > > +			i2c_bus->buf_size = resource_size(res) / 2;
-> > > > > +		else
-> > > > > +			i2c_bus->mode = BYTE_MODE;
-> > > >
-> > > > What's wrong with positive conditional? And is it even possible to
-> > > > have NULL here?
-> > > >
-> > > Yes, if dtsi fill not following yaml example have reg 1, that will failure at buffer
-> > mode.
-> > > And I can swith to byte mode.
-> > >
-> > > reg = <0x80 0x80>, <0xc00 0x20>;
-> > 
-> > I was asking about if (!IS_ERR_OR_NULL(...)) line:
-> > 1) Why 'if (!foo) {} else {}' instead of 'if (foo) {} else {}'?
-> I will update to following.
-> 		if (IS_ERR(i2c_bus->buf_base))
-> 			i2c_bus->mode = BYTE_MODE;
-> 		else
-> 			i2c_bus->buf_size = resource_size(res) / 2;
-> 
-> > 2) Why _NULL?
-> 	If dtsi file is claim only 1 reg offset. reg = <0x80 0x80>; that will goto byte mode.
-> 	reg = <0x80 0x80>, <0xc00 0x20>; can support buffer mode.
-> 	due to 2nd is buffer register offset.
-
-I have asked why IS_ERR_OR_NULL() and not IS_ERR().
-
-> > > > > +	}
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+--vAAMaBzo7gFTFXce--
