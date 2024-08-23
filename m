@@ -1,78 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1F9795C54A
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 08:18:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7C0095C54C
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 08:18:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wqqcp1yKkz30Tm
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 16:18:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wqqcs5Mb1z3c2F
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 16:18:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::c30"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724393879;
-	cv=none; b=LmZ1H235mHIzBb/APogykM99aZPoQza80cVc/5neoNHGKg/5WhTrAaAZtMKwQJw5dwIy+Md0Hc9FIZ8eccoQ74yKrpHKM2rR+rnQwH4LXPXDvxeIP867Qa9e/oKMX5BfrpIg/vl1GHEiaid0dBiL1LDUcpt42x/KrwlUxuoNxGagt2eahuJBkZm8tNOL2Y0jnRYMIhqBExSq3ArRCQ9ndLMQEuowEo9MYQ4Av9/OnlER46Q2Fs+Guv4r0PHnkHtydNgQqfbwDSRYsMz79gymE0o5ySRm/vwHPdnWi1YaxYoBkSOSIii8P9G925KZm6Q8NCU47oyIBHy18jwCxvWizw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4860:4864:20::29"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724393881;
+	cv=none; b=VAi6s05fZRWmg8jf6GfMS7lU9FOr6N4yjxuUhU+2nP1nBqa+WkanoxVWpgT4ndFBjBBVC0lqDJ/4fBC7JZf95k7Ytd3i6d7hApAlBibtjllFDkiIH3HKkcNLMcBRcgufIQpCWdGAZFBgSRSnhLnEVBB/JsnBSjDlFTPZuZ4wt2B2t4xnHYPLetBv+ZOlu5T7TVLvAVhjwRNijcuxJlC2a4QsFhVMnbh6yFgKjdLreApLLuD/FYUQ6b+wjlKVjuFa9C3uD5rM414S3Oc94B4S1VA7ruOaxylkBdpCYgA5bROz4CVBmaBBuNNegXqHZacvg4kbZuTuaLGckB9lANZ+Hw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724393879; c=relaxed/relaxed;
-	bh=FzXi7KJvkozlQsOgy3LQjxMEO/KCFfyhO5VA5K1X/3s=;
+	t=1724393881; c=relaxed/relaxed;
+	bh=MqZgILwCJnO4fiF3lzwtEIcS40ie6qnN0WYtughNHhg=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Google-Smtp-Source:
 	 X-Received:Received:From:To:Cc:Subject:Date:Message-Id:X-Mailer:
-	 MIME-Version:Content-Transfer-Encoding; b=lntmeLvEE0tBw5T1LfoZ7uEx5KJCocQMFQKkC4ufKFEAc9yLIliDlVtge4YC+rC0rKGBXad+vOMViZWJUJMBhRiHTsaP7UydBbA0429GJuaOEh0/fSl+U6ZdldfJuo8hHejzFb7w+bFN3J4H1NYYvSYxQPj7zr7CBvWoBUhji6BTx4KzEJq8IENIJE+pOp89XtvewxuQZV88JUXcYmeozZMmLy+n5FXSz0Sh2QOfvIpM6MCqKIiBN+T6Ut8XorIvjPy63TK46LDlPEMKtlebIIo/vkqxSbI/eeq7Maf1dy6wHoDepMQFl5hWu7ba3ut7A1kFGX7RxVK5pxD8S/BfFg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VyuVPVQf; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::c30; helo=mail-oo1-xc30.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding; b=XcgTUTtl+A0tpbPr6BORgUbfgLRUUbYdBQiNpCLq/3X9ZLA9I+00U/5PXUlHIJ5spSzvEp8F7Rik97GgHk/mKz98Fn5NcNBfZD2Qo/5vkAQTbgB/cI1oQcSOHLC9UdWLcPMhvr2BPDsGruJ5YuPd+/9FQ+zukVQ4BwyU8QrRCjMBcSNiCK6x8XNAE9+bOCG4VZDIdcGdoUvJHZpLc3dwTLMD3PKX8PCGnWxtrlgkHmqyJ2CbeupnTp05BCpM3dhCzxgMJeegVFBTBQg48Oq5p+34wcIonQV2gs7BSTVeQo9svJYUrm57ljB0It3MbkKPXjjecEkPgwjvH5XtzHbTdw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=f7RGXJ6M; dkim-atps=neutral; spf=pass (client-ip=2001:4860:4864:20::29; helo=mail-oa1-x29.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VyuVPVQf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=f7RGXJ6M;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c30; helo=mail-oo1-xc30.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2001:4860:4864:20::29; helo=mail-oa1-x29.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wqqck2ln4z2yXd
-	for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2024 16:17:57 +1000 (AEST)
-Received: by mail-oo1-xc30.google.com with SMTP id 006d021491bc7-5d608060241so1224680eaf.1
-        for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2024 23:17:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wqqcn1yt0z2ytN
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2024 16:18:01 +1000 (AEST)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-2701824beeeso1177242fac.1
+        for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2024 23:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724393874; x=1724998674; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FzXi7KJvkozlQsOgy3LQjxMEO/KCFfyhO5VA5K1X/3s=;
-        b=VyuVPVQf4yAnrrP0vebu2iq5N6HkFREUpaVhAoc2kT+8xFASmG3UeM/lYJymTBnkUr
-         xm7sZE8eskoG9ciemezRStHtGUrLQcH3hcYNqGuDkRaFQZQ+VyLRr+RWHFNMMvMeVFSO
-         GnegfD2RsHyMs6h9RE2CGyDV1wiCSH7uvdqzBttUocNbT0vOiUwDPEYPI4IO8R18nlWN
-         hIFeyoc4yawdi6hjn9IOhyUowdGCDb5Pdax/67L4qIkzJ0GWRKSEQRWswkE3ycC3G9f8
-         7bKFcae5ZI2gOu9WUULmisKjOdhW8/Yu4DoEGuc/Au6MBxtLEgvZYLcWY4DR4etXZOhY
-         DejA==
+        d=gmail.com; s=20230601; t=1724393878; x=1724998678; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MqZgILwCJnO4fiF3lzwtEIcS40ie6qnN0WYtughNHhg=;
+        b=f7RGXJ6MiRKdh2MYmthqw43hBSbqceeU5Jbmagr3dHLSOaIR5WQvfMfqXgzvpRTXNv
+         KJRUC7W3iWdgyMXxMdEulfp39weiHjUopa6uQbEM3JErW7p1GvkkmE4ydvREHPEf74kY
+         qfD+xZKEIqFl9v7dSgM1LRnCBwXzYyHHJW/rvaHgByGO0c4C6aogAoXHNVoApurur+n8
+         Pp716NQi/iaOkeDLyPMgOUELw6ShpMjAgr5MvVo9eWKEmDbea+xgGDQ00MZXWWCWLaek
+         2JA0fGTzW6EaRxmg4s1uL4Dc+C8EVLzqK4QojMPDSCopj4XH6WRE/SNjJ2ZM40ymgOqE
+         sM1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724393874; x=1724998674;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FzXi7KJvkozlQsOgy3LQjxMEO/KCFfyhO5VA5K1X/3s=;
-        b=ZQQe78wesFr1EUYCM+WbfqjKAYp7NH2jDFfZKoF9+Ep3X5S5FSoyNXvMkxasFmBcCY
-         eXrNAWGBF50BlCZ5nR3kcFd5OvDqxTVc2li6VpVFvks3w5GvWGAdfAbOHQAbLmvpFwXa
-         ZrP42RX0QcnZN+D+wQXx1tD/6VdwpOmUUrPycIVPE5v6OTGTKG5HG1h0wlEDnFS5PizX
-         04g19luhrCy56zPX+SM9A0xog115a+uBuTkZbNoa3ebpWM/m5ogodLOX91hsGJ2U4AaQ
-         kn5vCwdV0snDY2YzvmgGUnW6tNwHYUcuQVdPSW49YQV5IYGKSbO/SVgHtIwHFwRIokdL
-         1Y3A==
-X-Forwarded-Encrypted: i=1; AJvYcCVAR3ByM0dhOMteOzzDVzLFvZdwtjWpvWXt+9+hOwMW35aKvxUwP6K3McR5GaQyFvfU1DYHjwLg@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yyba05m1o9bBBd97BMTpbsDHdOiWjT2N/oFc6HB4FnOk7BkyCtD
-	sPyRgsVgt0tyVsAu5R0Kz6H/cBjRprPypSI2fInBCdgXTqmXnSsW
-X-Google-Smtp-Source: AGHT+IGe9AJ10XUEUYaYIQziDIHCkyTkMXyRF0EFqEkJmHi+eY7SP0R61PSq8jrOuS5pP+q86Y4JVQ==
-X-Received: by 2002:a05:6358:5908:b0:1ac:9bc7:2da5 with SMTP id e5c5f4694b2df-1b5c22e9a1fmr154061955d.27.1724393873708;
-        Thu, 22 Aug 2024 23:17:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724393878; x=1724998678;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MqZgILwCJnO4fiF3lzwtEIcS40ie6qnN0WYtughNHhg=;
+        b=wiq4QbSQnHYrMpdKhuuL5CDVuet/bx/RLdHANdNbSDcZXL3aj5uz8T87AXCKSz/V3F
+         +ISvQokt+TYkfY5EqLS+Oxwirgz1PmfkPB6av/UwwPR8WoCwlr640ezcgxH0Ky1DKbs3
+         5apYJF5HkJcT/WUEfBtRaiFF2kKYIXowtvKhsLSczQab1aAoPtcM5M0bgoPBOY0kMC3r
+         2ctnjYKLEDPVI6V+kHfcuvvvdTw5SDv7DoZLbuKnMNLMqKjz0QJoNgh4x6DJMoSMh0NB
+         0h4rJYjo0oGgOEPDb3/NZBahlNJNxdUEpHEj3ggUHL+f0L16Qwd5S3YGPJEsXEXJCLeG
+         77Qg==
+X-Forwarded-Encrypted: i=1; AJvYcCV9quCHWyJA8cEl6Q+HtIJDbEb31I0gA+oegrvqgkZoSO2YlyFAkbRQhQcEMLz979BMHe0jxiDY@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwNmxYV7NGyLWXNmN7Y4/uDxTTJ/oS8XxRjg8wvLYFoZK1ZOWhI
+	2arPkXIEu4y3C/ozLtJc6VxubG0XpBJASpX+MRijLzh9mv1Q5EmG
+X-Google-Smtp-Source: AGHT+IEmdbH5j6ArBYnY+KmuX9zMvmWHEn7IZyhgdQdVJZ8jjQNBcBxASLuVNAW1O3W48Tc+rWuR5w==
+X-Received: by 2002:a05:6870:e0ce:b0:270:29df:e5f0 with SMTP id 586e51a60fabf-273e63e6be4mr1236698fac.5.1724393878381;
+        Thu, 22 Aug 2024 23:17:58 -0700 (PDT)
 Received: from cosmo-ubuntu-2204.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71434255798sm2319551b3a.82.2024.08.22.23.17.51
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71434255798sm2319551b3a.82.2024.08.22.23.17.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Aug 2024 23:17:53 -0700 (PDT)
+        Thu, 22 Aug 2024 23:17:57 -0700 (PDT)
 From: Cosmo Chou <chou.cosmo@gmail.com>
 To: andrew@codeconstruct.com.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.6] dt-bindings: vendor-prefixes: add asteralabs
-Date: Fri, 23 Aug 2024 14:15:31 +0800
-Message-Id: <20240823061533.3463647-1-chou.cosmo@gmail.com>
+Subject: [PATCH linux dev-6.6] dt-bindings: trivial-devices: add Astera Labs PT5161L
+Date: Fri, 23 Aug 2024 14:15:32 +0800
+Message-Id: <20240823061533.3463647-2-chou.cosmo@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240823061533.3463647-1-chou.cosmo@gmail.com>
+References: <20240823061533.3463647-1-chou.cosmo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -90,30 +93,29 @@ Cc: chou.cosmo@gmail.com, Conor Dooley <conor.dooley@microchip.com>, cosmo.chou@
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add vendor prefix for Astera Labs, Inc.
-https://www.asteralabs.com
+Add dt-bindings for pt5161l temperature monitoring.
 
 Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
 Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20240115100518.2887549-2-chou.cosmo@gmail.com
+Link: https://lore.kernel.org/r/20240115100518.2887549-3-chou.cosmo@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 25158559471c..c734ea4de428 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -161,6 +161,8 @@ patternProperties:
-     description: ASPEED Technology Inc.
-   "^asrock,.*":
-     description: ASRock Inc.
-+  "^asteralabs,.*":
-+    description: Astera Labs, Inc.
-   "^asus,.*":
-     description: AsusTek Computer Inc.
-   "^atheros,.*":
+diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+index 088b23ed2ae6..842eb65e4c03 100644
+--- a/Documentation/devicetree/bindings/trivial-devices.yaml
++++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+@@ -47,6 +47,8 @@ properties:
+           - adi,lt7182s
+             # AMS iAQ-Core VOC Sensor
+           - ams,iaq-core
++            # Temperature monitoring of Astera Labs PT5161L PCIe retimer
++          - asteralabs,pt5161l
+             # i2c serial eeprom (24cxx)
+           - at,24c08
+             # ATSHA204 - i2c h/w symmetric crypto module
 -- 
 2.34.1
 
