@@ -1,83 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 354C995CC38
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 14:15:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5778495CEC0
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 16:04:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WqzYZ0hq0z30Wh
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2024 22:15:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wr1zM2F7Rz30gG
+	for <lists+openbmc@lfdr.de>; Sat, 24 Aug 2024 00:04:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=212.227.15.15
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724415343;
-	cv=none; b=DCiT1FvhT3Ac1h9lFcddkkO8WvJiEUFypgSMmU7zes5A/uKE/NXObKhWPH/fL/gUu/kdkiz/FPp30b1/PgSGxgfi54zYU28zrWv5sdWhrHsCIslOQPaW849XO5W00J1zwkzmudPkL4LmxL/nfpTMzkGz/0Fn6nSB9P70HQ66jPUg2He10ht/tzoib5G6keFEttZCtDGOJPEdK1EMNPvBh6oFN7H4zC/g2VKK41lWftG6msjL8/zYnPxZ70TixyhOhRRez5ZlIpETYohtGrWIDyWSyA8BP24sbJMoJMeSF1oLLZ2jKEO8ghsu/eOi685nxK+aeCaioF4CCpeF981+3w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.16
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724421878;
+	cv=none; b=Q5cPdrPld2Vk3zULCc/Efd2eSuI09b0fNRJOix5MNlGL7/MRCxLw4uWLZUpkIU0kVb6jDJc2UxHeBl6ktfObonxGSU+oqMGBZDHOR9CBN9S8BXoFD0ZDHPM4WoV21XwKak3klsMGuUCqMvgGwB+viyIsBA24U2EP7qwEIxMjcHaDe70Spqwjz4B2Q/dOVjNTNT9+qnPRioYsRIILZ6wq7cZ+Y/8tMPSyQRNt5aZg4YHtuKK+jdYZd9Xu7CJpPWNn96p8LBgJgdhq8MmQZSkPpIIyrkghd30Za2+W6ByOu8IAv3ySg67NvYq46LUgUgFbCuDv5tOoPYvbEMoWsfipbA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724415343; c=relaxed/relaxed;
-	bh=h0BQB0MX4qUA3/Dn+xSqWXZtaezatHOedl+Kg5HoD1c=;
-	h=DKIM-Signature:X-UI-Sender-Class:Received:Date:From:To:Cc:Subject:
+	t=1724421878; c=relaxed/relaxed;
+	bh=LMqUEed/sXqW/W8xHRqkME37+Jf/EyyC1Z0y4foryX0=;
+	h=DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:X-IronPort-AV:
+	 X-IronPort-AV:Received:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-ExtLoop1:X-IronPort-AV:Received:Received:Date:From:To:Cc:Subject:
 	 Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Provags-ID:X-Spam-Flag:UI-OutboundReport; b=THoiDmboVTVleIxTX+9u6Lq9DUrJce1Knuh9l2DmEVC7fAyZXKN/cMgeva3DaKF1wPYqli47RPNJQF9JiaxSviwp3O5UNwztCBtx++21brN+3lDras5Jqerv1haW70mLlm7wnsnCexhIphpXr6LhtpcyxZfytorQ6o56Xh6QJoyoWiQAvdKFszyUB7LhJz3KX9NFt6YXRGbnL7CGhg8lKi96vot1NFeRUvWo2lBUORTGkhSmTGCtZyAQVgdFDvxYdkxeFAIHB+dCeI1sPpeNGGjW4ZEG4cXrCcgcgzHFLdjw4U7HcEVAAxSu5LFpXzGeKD7Vkjpx9iGJFFn4oKtpHQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=UyR6++HB; dkim-atps=neutral; spf=pass (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org) smtp.mailfrom=gmx.net
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+	 Content-Disposition:In-Reply-To:Organization; b=CQFJSoCx+WHMvxDZevfMDA7wojDleGW0TgWd7F0mfACDtBhGYf8OyfmFUXOFwt70KhKKdAVEqxchMeb7mbRogOORg/+MMPm0NItmxHdXplJ2xl/Sm1zRE9nNDa8HUom86ZwdmWQGGkZCo4+gpqkvET9wrg+r/zwNyPXuaDKVXjQeM9Gki2MEVHi0Gzc4hwvpx55z7j30onVyjUWyPtnsNKQDe1Uk76FMjEAVnpKVzdUcP/XRMz2lAHjZ12ddR0R9lX0rL1F/+L3o/0E4Uqk5gXZo5S/YzFTVaijMG54M4+9wE7+FQpts93itsn/JcLumCGgTx6z37wFi5JVLl6RCMw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IZgH/eBw; dkim-atps=neutral; spf=none (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=UyR6++HB;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IZgH/eBw;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WqzYS2LGvz2ysb
-	for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2024 22:15:38 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1724415316; x=1725020116; i=j.neuschaefer@gmx.net;
-	bh=h0BQB0MX4qUA3/Dn+xSqWXZtaezatHOedl+Kg5HoD1c=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=UyR6++HBhq6qq43EyD0NdghBR9fobTpWMSvyT34NWlTQBtODLblFUm9CuMFKv3JS
-	 XvygoTUbydjTgTX4t98hXwetY/rtkQzfKswfbUQWG4XUKbc6nhaiJytqrUicOsZHl
-	 5eJLJ+wrcaWSRvnd3aK9BPKuSLciQOjCmK6jPSSMcCHya9RxFbTJm2gq1D640334d
-	 CDeEiq8GjM5EcJ2+Z3odyvYndGFwLPopKXN8RRoj7aNZo7t4B4sKhiceWb4MvezDn
-	 T6DO6S9WN4G48lB1Fv8SM830sk/8XYpadz5rS7RrZ929n1rOIsOg6jfnZLe7EH7ac
-	 zl6b5YqoX1MSxlpU4Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([84.44.134.213]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5QF5-1siq6j37zx-008Cax; Fri, 23
- Aug 2024 14:15:16 +0200
-Date: Fri, 23 Aug 2024 14:15:12 +0200
-From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Subject: Re: [PATCH -next] spi: wpcm-fiu: Use
- devm_platform_ioremap_resource_byname()
-Message-ID: <Zsh9UA4iXvMzm2HW@probook>
-References: <20240820123518.1788294-1-ruanjinjie@huawei.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wr1z80MxRz2ygY;
+	Sat, 24 Aug 2024 00:04:34 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724421876; x=1755957876;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=RarjRljA012H8GjcXE0795+YxS0vJ/uKSKtUTKIt+3k=;
+  b=IZgH/eBwLNPigyJF/STffyJKueCbMLwPqqkImafrfdsD/I5F7w2oDdZo
+   IoxbXmp9kMhWOO/FOYimkXtymcC0iAadF2JgmKvBfcTpt5n1ai9kPm99c
+   gjn6cSH74afK2wbhJkC0O8dFpkbwv934XU/SZi2L9S5pZ28pic07DBiup
+   nV02LYBFzav4cJG0MyVSVvi+0xKIpd+1Wbyz6yDJ2nTTYQL1gEVqW44Ze
+   14lCPHUE9X5C/P/39PAhlRCN6MayOmN0ahOlvmQGIDX6H0WTZnpnBCtKg
+   KSJU1AVPCzlc85hARNAkm6oTkInZ8iEaWJTD54xdKLTzysEWMsrt19uvh
+   g==;
+X-CSE-ConnectionGUID: EQL1VrAPTD6E++0plPh/xw==
+X-CSE-MsgGUID: aTNWHhcnQH6p7b34vpQabg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11172"; a="23016214"
+X-IronPort-AV: E=Sophos;i="6.10,170,1719903600"; 
+   d="scan'208";a="23016214"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Aug 2024 07:03:59 -0700
+X-CSE-ConnectionGUID: 5SVtqCkpR1OhiuzSknEhTQ==
+X-CSE-MsgGUID: o2GSPqwpSdKx8bDzLi+utw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,170,1719903600"; 
+   d="scan'208";a="66126708"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Aug 2024 07:03:54 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1shUsq-00000000oWR-0s0k;
+	Fri, 23 Aug 2024 17:03:20 +0300
+Date: Fri, 23 Aug 2024 17:03:19 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH v13 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+Message-ID: <ZsiWp5ENQ0BeBjMn@smile.fi.intel.com>
+References: <20240819092850.1590758-1-ryan_chen@aspeedtech.com>
+ <20240819092850.1590758-3-ryan_chen@aspeedtech.com>
+ <ZsNT7LPZ7-szrgBJ@smile.fi.intel.com>
+ <OS8PR06MB7541EE5BA5B400445FE0295EF28E2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <ZsXVU2qy0GIANFrc@smile.fi.intel.com>
+ <OS8PR06MB7541945591A62B956DA28AD9F28F2@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <Zsc9_UddBybdnM1Z@smile.fi.intel.com>
+ <OS8PR06MB75419F3E3A222AE941DE3007F2882@OS8PR06MB7541.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240820123518.1788294-1-ruanjinjie@huawei.com>
-X-Provags-ID: V03:K1:K7cBbWoIShlD66049cmP2FqksWnx3SN+H5lXc21nFVbBvdqE/B9
- U2bnn5C7QchLuXPugvq4JJViBCFCyxJVwHaoue/jLmBmuHzBDQbssFZnv4pHZM8RoBmDBH7
- zYba+W1Q8G4bz9sj80cnVv94dxzFMArr6ng489n+Yf4GvsaFn7tehUrcGCpgtbCGe3bbFnS
- SSHutCmO/PK8eo7gE2wmA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Lh+VwlgWObU=;GJNmrYaMKTYmGGyPde2c8PtyC89
- d0XquKzpM3w9sQ3Ttun4EdmGS+2Yxr5xXHDiANRgVImt4CbvTqGf3qQsZIX7mJXXg5IOifawD
- 4OasJRwKY7Qn1t01Lb5/BFZT4ZO21IKpCgwVMAXll7DMMn7njL41+g7ZkBnF7gDZjJ4z9emsn
- QLWXhoY4nh1hoBrdejLylxJptP6U1SekHXLHeFOSHt00rxWdq2fBgqhPAkXKdV2yax1U3l273
- YUSRzIfpK4mcuRjIBDLKPgaLirpchLDi35azvucT2uG85qO1ukyTLwU3oNwTH2jMT9mryxfsC
- /tm4VR0xaQ9PUDttUlqpzGHZotLvYvcF8z0zEPeJL9CKh51gZNeuF0jaRqEXD3K4ufHrI3CZ4
- 9TkgrOE4BkMjxOEnC0z6zXsWGGCSA3sksmwUwpHihqBjswjTjGHrmf4GH0bB3d7N7U3/erXyY
- rr1tyNqtwiHwx10f85cM1aiXTc6948AdjWOZdq6N7MUWbsO14aG2ArpaG9MxQa4Ip1cNREU1d
- SGhSa+W/HsTWiyJV1MfHQ9vIqia/Xlb275mCwSoCj2Rci9FYAEKHGWiODzLT7Rgu05VYhs1Ei
- tGjKqpapt8ygNCIpDNuxNn2glVgY65WjCUbk16Qov4IwWPIqgQLaQe4fp3stI/4jz1xW7RczA
- PQg8MDYf353lSeUOtweKLYEJZ7GS6kB2fA3f5o/9eP647J2bZ6l//CnmDyHvHUzzvKtA8ddGI
- nDIVs7ZTsmCXdiv21wGj9YFhGYT8CJNxoly9+KHSa/iirJ9p6Pz46TvpfVe9yjtES7zNSWgZP
- grZSzqK6ygRvC5IW3lTkx2vg==
+In-Reply-To: <OS8PR06MB75419F3E3A222AE941DE3007F2882@OS8PR06MB7541.apcprd06.prod.outlook.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,52 +92,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, broonie@kernel.org, j.neuschaefer@gmx.net, linux-spi@vger.kernel.org
+Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "andi.shyti@kernel.org" <andi.shyti@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 20, 2024 at 08:35:18PM +0800, Jinjie Ruan wrote:
-> Use the devm_platform_ioremap_resource_byname() helper instead of
-> calling platform_get_resource_byname() and devm_ioremap_resource()
-> separately.
->
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+On Fri, Aug 23, 2024 at 06:23:54AM +0000, Ryan Chen wrote:
+> > On Thu, Aug 22, 2024 at 02:24:26AM +0000, Ryan Chen wrote:
+> > > > On Wed, Aug 21, 2024 at 06:43:01AM +0000, Ryan Chen wrote:
+> > > > > > On Mon, Aug 19, 2024 at 05:28:49PM +0800, Ryan Chen wrote:
 
-Looks good to me, thanks!
+...
 
-Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > > > > > > +	if (i2c_bus->mode == BUFF_MODE) {
+> > > > > > > +		i2c_bus->buf_base =
+> > > > > > devm_platform_get_and_ioremap_resource(pdev, 1, &res);
+> > > > > > > +		if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
+> > > > > > > +			i2c_bus->buf_size = resource_size(res) / 2;
+> > > > > > > +		else
+> > > > > > > +			i2c_bus->mode = BYTE_MODE;
+> > > > > >
+> > > > > > What's wrong with positive conditional? And is it even possible
+> > > > > > to have NULL here?
+> > > > > >
+> > > > > Yes, if dtsi fill not following yaml example have reg 1, that will
+> > > > > failure at buffer
+> > > > mode.
+> > > > > And I can swith to byte mode.
+> > > > >
+> > > > > reg = <0x80 0x80>, <0xc00 0x20>;
+> > > >
+> > > > I was asking about if (!IS_ERR_OR_NULL(...)) line:
+> > > > 1) Why 'if (!foo) {} else {}' instead of 'if (foo) {} else {}'?
+> > > I will update to following.
+> > > 		if (IS_ERR(i2c_bus->buf_base))
+> > > 			i2c_bus->mode = BYTE_MODE;
+> > > 		else
+> > > 			i2c_bus->buf_size = resource_size(res) / 2;
+> > >
+> > > > 2) Why _NULL?
+> > > 	If dtsi file is claim only 1 reg offset. reg = <0x80 0x80>; that will goto byte
+> > mode.
+> > > 	reg = <0x80 0x80>, <0xc00 0x20>; can support buffer mode.
+> > > 	due to 2nd is buffer register offset.
+> > 
+> > I have asked why IS_ERR_OR_NULL() and not IS_ERR().
+> > 
+> OH, I will doing by this.
+> 		if (IS_ERR_OR_NULL(i2c_bus->buf_base))
 
-> ---
->  drivers/spi/spi-wpcm-fiu.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/spi/spi-wpcm-fiu.c b/drivers/spi/spi-wpcm-fiu.c
-> index 886d6d7771d4..47e485fd8f84 100644
-> --- a/drivers/spi/spi-wpcm-fiu.c
-> +++ b/drivers/spi/spi-wpcm-fiu.c
-> @@ -448,8 +448,7 @@ static int wpcm_fiu_probe(struct platform_device *pd=
-ev)
->  	fiu =3D spi_controller_get_devdata(ctrl);
->  	fiu->dev =3D dev;
->
-> -	res =3D platform_get_resource_byname(pdev, IORESOURCE_MEM, "control");
-> -	fiu->regs =3D devm_ioremap_resource(dev, res);
-> +	fiu->regs =3D devm_platform_ioremap_resource_byname(pdev, "control");
->  	if (IS_ERR(fiu->regs)) {
->  		dev_err(dev, "Failed to map registers\n");
->  		return PTR_ERR(fiu->regs);
-> @@ -459,8 +458,7 @@ static int wpcm_fiu_probe(struct platform_device *pd=
-ev)
->  	if (IS_ERR(fiu->clk))
->  		return PTR_ERR(fiu->clk);
->
-> -	res =3D platform_get_resource_byname(pdev, IORESOURCE_MEM, "memory");
-> -	fiu->memory =3D devm_ioremap_resource(dev, res);
-> +	fiu->memory =3D devm_platform_ioremap_resource_byname(pdev, "memory");
->  	fiu->memory_size =3D min_t(size_t, resource_size(res), MAX_MEMORY_SIZE=
-_TOTAL);
->  	if (IS_ERR(fiu->memory)) {
->  		dev_err(dev, "Failed to map flash memory window\n");
-> --
-> 2.34.1
->
+The question about _NULL remains unanswered...
+
+> 			i2c_bus->mode = BYTE_MODE;
+> 		else
+> 			i2c_bus->buf_size = resource_size(res) / 2;
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
