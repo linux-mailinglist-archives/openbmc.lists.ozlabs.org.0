@@ -2,56 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF0F95F91A
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2024 20:43:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA12695FAD8
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2024 22:47:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wt01G40W9z30VY
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 04:43:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wt2mF635Gz30Vk
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 06:47:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=89.163.150.210
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724697791;
-	cv=none; b=Y/uWaUUUBVkiRYOyEuXCOTdv5VSGmKRFo33b06IyQYnHlauB8pjPxhRO7wRQArpm4w4fYwVEu4x3LTRwdQSiern7J14LheuTicrFmTdSI6w+vTVYxaz4PWoO8pBhRf2ByVW9onlYiTDYPzmfjdbDJkOGB44z+319lYCxZT0D4qdSfMSZ7EJB97vO/rhHEyhQJAvI44X3c5Y7Qz+QRnqiGUHHau9kSemeXCUGpftLdAAHbN33FMBY2JC7m4GZfbd1dPjgFvnfmXOJRjfrituziFXx1P01CHIeiAofuIAU/QwOWx9ANRYcNicygT8AyU95aToEUSt1WiUae4X5BldMFg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.15
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724705225;
+	cv=none; b=WITvZS9OPhZWaW11H9nMVrpqLE118A3/N40oD8FGIfeGMR9hehp/bXQAoB0p1LMh+JaFCUd1d3lHF8nVh1QG8UpjDgMdO2qmggho1pXssL41px3cxacYHxEgEV9mAYp2Rc2NdW2moIfOd3W63Oe9mCH6T+ZYGOueqnc4/rvdYtt30ywOaZRjZhDecb/krdJvssU7dyf0s+qc0J8NVLcQRCfKWrDPgsj62sw4qVFt9XxZoFcWDvviTN0VspCncHaZ3v6fL1THGhJcnZJ9NBo7qmI6uRDaQ1T/mGNRjx3aK8fHzoieNSTKqnxyBn3HEA5wYIocgUFw7g+iUr2nocesxQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724697791; c=relaxed/relaxed;
-	bh=13bEpxcTLQVhi3RrJyd+u6v6KGDEpWPFwnZQPwwAxNU=;
-	h=X-Greylist:DKIM-Signature:Received:Date:From:To:Subject:
-	 Message-ID:MIME-Version:Content-Type:Content-Disposition; b=XooIU9PfohSnMiioTuEO7ucF4aRkX2UOal8nuPRBJM12Zo/OvdaZd9s51XTMVKsNxDuMpxq40vcpf78q/MT5zUavmVjLam/CfsJmJ3TJ6FULMMnXyo5a8B/7T3hRsjKqwasTCum3jMWdIBmejKsbEJmH/rLBu1inGEl55w692/9MF3yE3Hz6Q8tIezrLxGE1WHCIBT8iCPNdMo09HkTKWUAcWlWMbs92ui4I1q29BLd27SSqvfTBoIm9bZk34NsvDTFWh2HeCdcsGX058nMwGq5gxtlXrTqR54Ku21YeKBTSzadAJWi023GqeVgU5CLyt9AjN/HEfeX4SApJQhFjlA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=truschnigg.info; dkim=pass (2048-bit key; unprotected) header.d=truschnigg.info header.i=@truschnigg.info header.a=rsa-sha256 header.s=m22 header.b=T6YWWDws; dkim-atps=neutral; spf=pass (client-ip=89.163.150.210; helo=truschnigg.info; envelope-from=johannes@truschnigg.info; receiver=lists.ozlabs.org) smtp.mailfrom=truschnigg.info
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=truschnigg.info
+	t=1724705225; c=relaxed/relaxed;
+	bh=/GDQt7nPUccEXpcXkGCb/xR0EDei9fnFk5LAcz/YnnE=;
+	h=DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:X-IronPort-AV:
+	 X-IronPort-AV:Received:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-ExtLoop1:X-IronPort-AV:Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding; b=USXRYO+XCJ9MYHPCy14FVArwwZf7prfomQ2g10gK2gIoGN34QQ9n621JiippEDc46AH0rhzf9bbJMa3iVdBaTouw0FyxzVa3PpzdytlHe6QLL21JikhMWjMLTsXnyFmKYNeAb6Oa7lOZDuVVZ8JfYHjstk7pkE+8u39ZRAg0zucQ0MqUSzOG21GsWcVkE54o0Oa12x8YrbHZ4koEHsIZFBEZJkiAE3yhuMyYnjVroZXv9UFjebm3996dwEUqSXHCANieYyRaa5i328egtDUdRFS84wEgHEF+iFsOA/o1UiNWiSPsYMpBjr0Wq9UUkXvL5ZoB2rLqy0LdzY7zcA90VA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QJH8SqpN; dkim-atps=neutral; spf=none (client-ip=198.175.65.15; helo=mgamail.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=truschnigg.info header.i=@truschnigg.info header.a=rsa-sha256 header.s=m22 header.b=T6YWWDws;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QJH8SqpN;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=truschnigg.info (client-ip=89.163.150.210; helo=truschnigg.info; envelope-from=johannes@truschnigg.info; receiver=lists.ozlabs.org)
-X-Greylist: delayed 442 seconds by postgrey-1.37 at boromir; Tue, 27 Aug 2024 04:43:10 AEST
-Received: from truschnigg.info (truschnigg.info [89.163.150.210])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.15; helo=mgamail.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wt01B65KXz2yLJ
-	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 04:43:10 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=truschnigg.info;
-	s=m22; t=1724697343;
-	bh=zBBy/rUKwvMPqG+k7w6PyDT6h0wqcil3EU77DaRoMLw=;
-	h=Date:From:To:Subject:From;
-	b=T6YWWDwsADiYOJ3k33xib96HJplDG1GRXh/Ai+p68RPL/atUHlVIt6HrAI2rUuACU
-	 tDlLFpwRAUAq2y/Yz5Uu1O05LieIsPiZ3OVbw/K/NzH/0I96w9wVNC5YxD5nEJBxxO
-	 Y/qVMJAX1kSsCydDEuXg713SWjrvx6H80PJAS6W1iUoP7SG79kMRuClz/sLbMOgZI+
-	 S+sH2xyijfgJojeE0lHdRZczgY7rrmwI35bFIYWHOiMsuUf0KD8DyWaNWu7QxtZkmj
-	 YaTv9YtbMR6i3WLq6Cos26YC5rgXC8Q3dZYeaQL1aSxsUX6tnfijEAE9Uzt7rtxY7z
-	 u0yCQ4Y929ozw==
-Received: from vault.lan (unknown [IPv6:2a02:1748:fafe:cf3f:1eb7:2cff:fe02:8261])
-	by truschnigg.info (Postfix) with ESMTPSA id 4F8F2201B2
-	for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2024 18:35:43 +0000 (UTC)
-Date: Mon, 26 Aug 2024 20:35:41 +0200
-From: Johannes Truschnigg <johannes@truschnigg.info>
-To: openbmc@lists.ozlabs.org
-Subject: Plea for help with GPIO pin naming
-Message-ID: <ZszK_Zj1QpH--xv1@vault.lan>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wt2m66QQtz2xZr
+	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 06:47:00 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724705224; x=1756241224;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=hlpilJ/c0pgQq/9hbVnGGCwXd0+7mZLBFm7br5aNB+8=;
+  b=QJH8SqpNoZHeAkzL1hr3d/tyD01b2rcZFq3/7BTwoqfNySXo/wLM2sXY
+   Aeao39sOSNl45fqbFI0oAGqcIUL1+dQ0m2SKhpUJkgDLysVmLA1mMSIie
+   X6jppDfSEDIUq9bxPTGfnQmE75QW++BBOzFDZCb5eQyDf/MuPUsIzOy5/
+   HitN8MfBrTolizK9NZ7YQouG08zj2qhPvRBVtw00tha6Kg/3TJmrlDKmp
+   rAGZH91eeloZl1ZmO4TlbbFpimUPcVgaQYCE2hvXr05s2+YgHA/vh6Wdg
+   +5oUlRUh61zHZ9d/LuZ+w/Y8CiCZy1aka0yy6QWN8VlOhXZHJKMuxmLu1
+   g==;
+X-CSE-ConnectionGUID: krLSr/j0TdKCklpIZbO36A==
+X-CSE-MsgGUID: LvwE8kF8TFmA3BQFE4o95Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11176"; a="26921365"
+X-IronPort-AV: E=Sophos;i="6.10,178,1719903600"; 
+   d="scan'208";a="26921365"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2024 13:46:57 -0700
+X-CSE-ConnectionGUID: 5bgZsMWWT1SDnvrF09bSmA==
+X-CSE-MsgGUID: s1Ggb81hSICFXV7YPSYdUg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,178,1719903600"; 
+   d="scan'208";a="62456442"
+Received: from linux.intel.com ([10.54.29.200])
+  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2024 13:46:57 -0700
+Received: from [10.124.100.41] (jmbills-mobl1.amr.corp.intel.com [10.124.100.41])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by linux.intel.com (Postfix) with ESMTPS id D9C7920CFED7
+	for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2024 13:46:56 -0700 (PDT)
+Message-ID: <76955a65-9716-4d32-81d7-377df0d7b25e@linux.intel.com>
+Date: Mon, 26 Aug 2024 14:46:55 -0600
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TAbrMjHdI9ANUg2h"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: Plea for help with GPIO pin naming
+To: openbmc@lists.ozlabs.org
+References: <ZszK_Zj1QpH--xv1@vault.lan>
+Content-Language: en-US
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <ZszK_Zj1QpH--xv1@vault.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,88 +91,78 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---TAbrMjHdI9ANUg2h
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Dear list,
+On 8/26/2024 12:35 PM, Johannes Truschnigg wrote:
+> Dear list,
+> 
+> in my ongoing hobbyist quest to port OpenBMC to the Gigabyte MC12-LE0, I face
+> some challenges that leave me scratching my head - hence me posting here.
+> Today's questions concern GPIO line names and x86-power-control aka
+> /usr/bin/power-control.
+> 
+> I've been reverse-engineering my board's GPIO pins for a while now, and once I
+> figure out what a particular pin is (probably) actually good and used for, I
+> most of the time have a hard time identifying the proper name/label for that
+> particular pin.
+> 
+> I don't have a background in electronics, much less PCB design, but I guess
+> most line names in OpenBMC's DTS files are lifted verbatim from board
+> schematics, which I do not have for my board. That, as well as the sprawl of
+> pin labels and names used between existing platforms and boards, makes it very
+> hard for me to infer the meaning of most pins defined for supported OpenBMC
+> machines.
 
-in my ongoing hobbyist quest to port OpenBMC to the Gigabyte MC12-LE0, I fa=
-ce
-some challenges that leave me scratching my head - hence me posting here.
-Today's questions concern GPIO line names and x86-power-control aka
-/usr/bin/power-control.
+The original thought in x86-power-control was for the GPIO names to 
+remain static and be routed to the correct pin in the DTS. This didn't 
+turn out to be the direction, so the config file was created later to 
+allow specifying GPIO names.
 
-I've been reverse-engineering my board's GPIO pins for a while now, and onc=
-e I
-figure out what a particular pin is (probably) actually good and used for, I
-most of the time have a hard time identifying the proper name/label for that
-particular pin.
+> 
+> My research led me to a design document from 2020 with the promising title
+> "Device Tree GPIO Naming in OpenBMC"[0], but since I can't seem to find the
+> proposed names in any of OpenBMC meta layers, I guess it always remained a
+> proposal, without proper uptake in the real world? This hunch of mine is
+> somewhat exacerbated by the fact that the x86-power-control package assumes
+> very different pin names in its default example config file[1] (although a
+> GitHub issue[2] exists that makes it somewhat plausible that might not be 100%
+> deliberate)...
 
-I don't have a background in electronics, much less PCB design, but I guess
-most line names in OpenBMC's DTS files are lifted verbatim from board
-schematics, which I do not have for my board. That, as well as the sprawl of
-pin labels and names used between existing platforms and boards, makes it v=
-ery
-hard for me to infer the meaning of most pins defined for supported OpenBMC
-machines.
+The GPIO names in x86-power-control pre-date the proposal and would just 
+need some transition with backward-compatibility to move to the proposed 
+names, if the community would like to go that direction.
 
-My research led me to a design document from 2020 with the promising title
-"Device Tree GPIO Naming in OpenBMC"[0], but since I can't seem to find the
-proposed names in any of OpenBMC meta layers, I guess it always remained a
-proposal, without proper uptake in the real world? This hunch of mine is
-somewhat exacerbated by the fact that the x86-power-control package assumes
-very different pin names in its default example config file[1] (although a
-GitHub issue[2] exists that makes it somewhat plausible that might not be 1=
-00%
-deliberate)...
+If I understand that GitHub issue, it's just that the README doesn't 
+list all the GPIOs that must be defined (which doesn't really apply 
+anymore since the config file allows any GPIO name). But it may be good 
+to update the README overall.
 
-What I'd like to have is a solid guideline on how to interpret existing boa=
-rds'
-DTS pin names (unfortunately, I don't know what either of SIO_POWER_GOOD or
-PS_PWROK exactly describe, or what the difference between the concepts the =
-two
-strings of characters map to in the physical world might be), assuming litt=
-le
-prior knowledge of these dark arts. Is there material on the web that isn't
-buried under mountains of mainboard-designer-specific NDAs that could help =
-me
-with making sense of all the jargon I don't know? I'd be very thankful if
-someone could point me a way!
+> 
+> What I'd like to have is a solid guideline on how to interpret existing boards'
+> DTS pin names (unfortunately, I don't know what either of SIO_POWER_GOOD or
+> PS_PWROK exactly describe, or what the difference between the concepts the two
+> strings of characters map to in the physical world might be), assuming little
+> prior knowledge of these dark arts. Is there material on the web that isn't
+> buried under mountains of mainboard-designer-specific NDAs that could help me
+> with making sense of all the jargon I don't know? I'd be very thankful if
+> someone could point me a way!
 
-Thanks very much for reading this far! :)
+I won't be able to help with general guidelines for existing boards' 
+DTSes, but I can definitely help with what x86-power-control uses.
 
-[0]: https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-n=
-aming.md
-[1]: https://github.com/openbmc/x86-power-control/blob/master/config/power-=
-config-host0.json
-[2]: https://github.com/openbmc/x86-power-control/issues/4
+SIO_POWER_GOOD is named for the POWER_GOOD pin on the Aspeed BMC SIO 
+signal block (probably a poor name in hindsight). On every system I have 
+worked on, the CPU Power Good signal has been connected to that BMC pin. 
+In x86-power-control, this signals that the system is fully powered and 
+running.
 
---=20
-with best regards:
-- Johannes Truschnigg ( johannes@truschnigg.info )
+PS_PWROK is the Power Good or Power OK signal from the power supplies. 
+In x86-power-control, this signals that the power supplies are enabled 
+and supplying power to the system.
 
-www:   https://johannes.truschnigg.info/
-
---TAbrMjHdI9ANUg2h
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEGu9IhkI+7/aKLUWF95W3jMsYfLUFAmbMyvYACgkQ95W3jMsY
-fLWbHQ//bnDRaTiyDZNcyk3rmEm0WCVfwpNrX7cn5mB8crFKoFzVSIHQZ0p8HlxH
-hQ5HxwdtmDKGwKtCtQn2/uLENSz0XY1PDk2vzxtAXlH7LfyNUFrz16DTYY2HEBCs
-X6wIhHM2cbF/LYZRxBPj6uZI4mhwykiu276g164VKw2s/P2HYIut1/0OBufLr4LN
-+grolkXBJamK1bvtRl3KyicIMGFRLvk66oGrU1CJ/iQkMD6R1ql1iQJA/guLQwWp
-5J9ftcydYoZcQMfk/HF0ItjH14ZORctnWsnbj5Lw91a3+Jwh3zsaJBG38T8g3XcT
-zo+xjkeIuxle73/iKvk6H6VM5Z1wU1rVFsk6WW7l7tFSCZg5YNyH/ZdaVurTbcIn
-waYMfbZPb0VJI5/uc2Fhq5lol1T5XVjk+yVbFju8SC4QqRb7yfDLZEMFhtPOvMZx
-xEcVbtgKJ0skGTIKm8GiTsTRlQhJSpA5jufLp1EQXB6m9yhofvV7LFueHMWj3jix
-SY9j7RdlhjlJBR2Hz4VE1bP5CtgOU/oThN3cg7oWzExn/ugxieLwM39PoPMUilVk
-sV+PfMba2JX2yeuPSJpja9ZRZjgceUCCw9uzuENiE1UwFVJUVmcdBPcI/EeiBWqB
-ZmwQB0pt8VGruTkniAeOQWfQrkcO+E3oE/BASgUfrxExsRHOHHE=
-=QFb2
------END PGP SIGNATURE-----
-
---TAbrMjHdI9ANUg2h--
+> 
+> Thanks very much for reading this far! :)
+> 
+> [0]: https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+> [1]: https://github.com/openbmc/x86-power-control/blob/master/config/power-config-host0.json
+> [2]: https://github.com/openbmc/x86-power-control/issues/4
+> 
