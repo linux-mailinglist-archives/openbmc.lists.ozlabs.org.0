@@ -1,57 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C94A95FE0D
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 02:49:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A12DA95FEDC
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 04:10:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wt87V73cxz30W2
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 10:49:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wt9xh2KKPz30Vr
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 12:10:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=45.249.212.255
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724678120;
-	cv=none; b=U0tM+bTu6i1FKCxFAq0dMVuK6NqnuDjN+wpszcz20MsLi8GzyLI91B0fgwfpEBHOhuEM+TFyVOmeosmZP9SLejgl2/txCmyMgOF0sr+wUrzsCafDC8ifjZ5eOi1WRYY+yJNuUy4u3e4zlk7TVzigH+3R7jFw4ObxKOvhvA7zsAb6cVRg8QPZXZwU53TQbcRnEtQP2Z+7DlnjYO7jyrNbyeIVXzfvZx1vm9+rIbUCzeaLx00Ln0xqrRdCoxAmpr6c73MqsvjKSZ2XQ2Q789jPtxqf3sKETTRSMLj15ixIuYGFIS8b3TqCD7xWEPgSD6W3kZZ/kxlTV7GF3qjY0xhCfg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724724644;
+	cv=none; b=SpLWjYu6EEghLs27ccKhxHgOR0TYWtydZeABKi/2YZWrh8W2jxeVE2YmqTKihUUogL++4nJ4FoxXPCHKS11Vuzm5I1vAdktLMllEnPbznGunL5aSjF8CFMOM16J+tyYiFZFTghFanx3tkW3UQY9g8fKnjfRk2RJazkSp+GHNVa+RfUz5s7IaP5n/HRZN4vPotIszEidlzVlKEAtzxyISSwlvLxDx34scnydGpOAS+U9T9A1LlYTQLJ1kJjgDHOMFKq230Blx4AgU/pAOCyR33lkHqJJUrZw2R78ivPBhVQ05eCU+AgKzsME3c6+w3JwAGZgOMedhMadlxc00UEM7hg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724678120; c=relaxed/relaxed;
-	bh=Ihg09e/tJZgw5gOu2as+RrKzNtENaPWCgz54qdp5M2E=;
-	h=X-Greylist:Received:Received:Received:From:To:CC:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
-	 Content-Type:X-Originating-IP:X-ClientProxiedBy; b=KJfKfHWv+mcJdJgi3nWIdbB+in8cpdMYR7uLxZ007gM04rN3Ai6rqW7hUT7vqtNXVkWo2Jplx/g7tEbTJ55kfsdKMqtcvQ0S20SMaqMTM+fNlWSz2HwyBRsx4ExwEx6zO6zvbWMLyTpUfGMfhTihRjAW9WKPXYqlC0fWZm3qFtm9fZX3cusclPv9fZkgNcAAOBSOBwaEmN/NOViZWbXQ13FmYYW0ohHCLLDJxcLjomYX9LNdGaFa5Kw22GYnlJqtAgsPpg/YDTN17wOZJZJyS+L0t6aEq/lG8eegggdlDuqh6769pctk8gIWqxqhO9irz5xGHMXV8r7o2FjY1zh/Hw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass (client-ip=45.249.212.255; helo=szxga08-in.huawei.com; envelope-from=liaochen4@huawei.com; receiver=lists.ozlabs.org) smtp.mailfrom=huawei.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=huawei.com (client-ip=45.249.212.255; helo=szxga08-in.huawei.com; envelope-from=liaochen4@huawei.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 1084 seconds by postgrey-1.37 at boromir; Mon, 26 Aug 2024 23:15:20 AEST
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1724724644; c=relaxed/relaxed;
+	bh=9j30gj+qp/C7SdKEpmSsJzayBMelBsPxi/9o36B59C0=;
+	h=DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:Date:
+	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
+	 User-Agent:MIME-Version; b=fO7DQG2ZpdBrToWXxd6Fv+tJ50ylweukBxoY0HZUOSRc7t4tW7YiVVRZSqiNjNbjcNRqDGAWe1XH8XCy6yJzybKieaZ/E5rISQBcfBhWy0g00IHhSXpoiw8sIEUTb7bgt3z2P3rGgNsS0sYP8A53eFJbltdGYVgtp8FOxkW+7ZzdrwhIXc0CjqkkMXA5V03/dRyYjH6hDhLO3DQk2cBIav/wHRW0MP3cWYObq9v0rlbHbufMYEseejX15MMKX63h51LXUKEjJONl+nZZxQcXxQ99ZRWA6ciXO8AlSvoOceBbYIrLtmSJtIWIXJcLgZjLZtFyBp+fttGd0ZvBc5iFSg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=WztVIcGY; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=WztVIcGY;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wsrkw0yj1z2y8t;
-	Mon, 26 Aug 2024 23:15:15 +1000 (AEST)
-Received: from mail.maildlp.com (unknown [172.19.163.48])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4WsrJx2GScz146qY;
-	Mon, 26 Aug 2024 20:56:17 +0800 (CST)
-Received: from dggpemm500020.china.huawei.com (unknown [7.185.36.49])
-	by mail.maildlp.com (Postfix) with ESMTPS id F069818006C;
-	Mon, 26 Aug 2024 20:57:02 +0800 (CST)
-Received: from huawei.com (10.67.174.77) by dggpemm500020.china.huawei.com
- (7.185.36.49) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 26 Aug
- 2024 20:57:02 +0800
-From: Liao Chen <liaochen4@huawei.com>
-To: <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
-	<linux-mmc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH -next] mmc: sdhci-of-aspeed: fix module autoloading
-Date: Mon, 26 Aug 2024 12:48:51 +0000
-Message-ID: <20240826124851.379759-1-liaochen4@huawei.com>
-X-Mailer: git-send-email 2.34.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wt9xb5wgkz2xZt;
+	Tue, 27 Aug 2024 12:10:43 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1724724640;
+	bh=9j30gj+qp/C7SdKEpmSsJzayBMelBsPxi/9o36B59C0=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=WztVIcGYX9waqgzvv+NSUHCtUC14eoRTRFdgWOsbLHv75norQcg8+AN7PsQ9Uc7Cv
+	 tCLQZiECwGN6Os+WeHJUSxws2MziDvtu4TN82alu7WKKLlOTODSWpSxqIWeLrEL4Xf
+	 +1NMhr1wxoqzXtyK3yDPKACznY8pmIUhdE+z1m+Bxq8USispFqAJYVYKSvDOUSjyQo
+	 m/J4U0xtKdcECPJxVM1wmZWsfQZOJp4z3K/hokIlJefRDksWEy7hHtHcKKyZNNPrAK
+	 ywMDoBUjddkaR1NOL2pd3YhsY+UdvEM09adBVKDk9iHYrFYMNNYoj4snfT3QvMb83k
+	 yboVnh+I/waOg==
+Received: from [192.168.68.112] (ppp118-210-185-99.adl-adc-lon-bras34.tpg.internode.on.net [118.210.185.99])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 7C22665140;
+	Tue, 27 Aug 2024 10:10:37 +0800 (AWST)
+Message-ID: <9a810b982c7d9b3c2b6ea1feb560ee9cd8ffe113.camel@codeconstruct.com.au>
+Subject: Re: [PATCH -next] mmc: sdhci-of-aspeed: fix module autoloading
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Liao Chen <liaochen4@huawei.com>, linux-aspeed@lists.ozlabs.org, 
+	openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Date: Tue, 27 Aug 2024 11:40:35 +0930
+In-Reply-To: <20240826124851.379759-1-liaochen4@huawei.com>
+References: <20240826124851.379759-1-liaochen4@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.77]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- dggpemm500020.china.huawei.com (7.185.36.49)
-X-Mailman-Approved-At: Tue, 27 Aug 2024 10:49:08 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,26 +71,10 @@ Cc: ulf.hansson@linaro.org, adrian.hunter@intel.com, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from of_device_id table.
+On Mon, 2024-08-26 at 12:48 +0000, Liao Chen wrote:
+> Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+> based on the alias from of_device_id table.
+>=20
+> Signed-off-by: Liao Chen <liaochen4@huawei.com>
 
-Signed-off-by: Liao Chen <liaochen4@huawei.com>
----
- drivers/mmc/host/sdhci-of-aspeed.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index 430c1f90037b..37240895ffaa 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -510,6 +510,7 @@ static const struct of_device_id aspeed_sdhci_of_match[] = {
- 	{ .compatible = "aspeed,ast2600-sdhci", .data = &ast2600_sdhci_pdata, },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(of, aspeed_sdhci_of_match);
- 
- static struct platform_driver aspeed_sdhci_driver = {
- 	.driver		= {
--- 
-2.34.1
-
+Acked-by: Andrew Jeffery <andrew@codeconstruct.com.au>
