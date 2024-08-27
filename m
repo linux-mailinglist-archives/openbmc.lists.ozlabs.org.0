@@ -2,82 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70B8C96001A
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 05:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B70D960C2A
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 15:35:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WtDJH3C3xz30Vr
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 13:57:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WtT7r3Kgzz3c4y
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 23:35:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724731019;
-	cv=none; b=AwaPwAoYlgz6nob37FT0FzVOtAoJxyvZCT8TpFZe/dtKBuvKntIMFw1OgiEsWk2Adh7ZU5d4Vl1vcOSqMuvo5bsy+sa27r1lOKqJ5bSpHfDqW/czbF+3Fnp0J//nW18vEmG/RwCJAJ81b4eUGK6AeOZTo9IBgGAhjsW3PLDp3yk21zlrcIjz9SaSzYBEDpQenA+uwXbycopiUWADL2KXAmYgSKzaIccu0nam/AHOtz25f1lwCnZM2Udc29Uew6mkhloQa2wwM/P67SpWI+QGuBTheuYDl4A90s9q3twBlP08wDAppP9RNa9vSF4rM8LOqG3GEfh527uDWZmKwaI+cQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=212.199.177.27
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724765729;
+	cv=none; b=YuIBgXMA1z5+9Rg1fYFY1NlHCGYj6lkMIFsNXHv9rQl+v5i7qDAe5qe+e6iXeCtq7NvfZnVMRXu2xgvCB+1cOnhDUxhdg4B/BESL1Ln034e7Z9MWXs/hDYZHx76I6H/AP0NIo26gvfE2JkN5GtDgy3Vt90NqF0v2LxsPpTw0qy2GW3rvWfCvdbxccMZ6LAmXTTMSf+AHjo1worENAr21tQQMPBYcyC1uUX3ASuL2XAGgQHD8cOcasiqWm4CQAaph8kHjgSfPx8waGPm2fB4FBD1R9kCH33KGSX49LEMbKy85hhZDuRsdcRwhPP+Jpsn9BnvZYSMq1oiSJ5OM86K1uQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724731019; c=relaxed/relaxed;
-	bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Google-Smtp-Source:
-	 X-Received:Received:Sender:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To; b=MwUW8I9eeJa1PGbmmlO5MhkFlKww4pdL5uof9IczaV0DN1s4OAwSYmapMc08JNbGzATGsVwMDsvTLt/WPHyZoY2LjP9LN+GWZsnXf4TKb6K5r4E7203d9CeZVo0cmPINgPrIYQUdXzwORfzJ8faGpu8/zmv1GC7eLh2pgcBtg3/W11DpDPPRVeond/5/zgSXTmGxWSBxz0Xbb940NlfalFKJuyIYWr10uYcM3xhPhmu8pUIKSLyrDfe2LIElEvXA2H2msqVFfYu1FYql2Q6maA6D9KgYLetN1hpPalrzcVIHBKJUakpXlcW+C7rvRbR+8s2lKJ6DeoB21MLMp8Na+w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLL/uZYD; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLL/uZYD;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1724765729; c=relaxed/relaxed;
+	bh=ouI/yOGn2dumphO/sk9e0TthFB6mEZPQl6tDephwYdw=;
+	h=Received:Received:Received:Received:Received:Received:From:To:CC:
+	 Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-NotSetDelaration; b=dEOVYY9VIae/qpyFWGdttuHnrpIS5/EX8gwvO4EPhJS8IIqqH/+teI9zminxhMiXtw8I3pUWvntYWqxldkRQWNbaFDwOcA0O4u8szejs82Utcnc1bjCdTNXGf5ypzK0jMUE8UwHB4jHKomZ525BrrJjrNgu+2+yl81zfBtHppOJ5L6NFNOIeaD/++aB9MkIh0Jeu0H6o0WiUuoZTDDqJ6UGjV87Zga8Sezj2pYwtfEZ5D4Mliq5l5YTLuSg1YQh6uj3G4Mr9TYtkJGLMe8Xnbl+0QLfjh9HUYALhgrHLbw1suAu/uPAhdIaKbKm5cVv+Tmjh1IZ+KbblnclrbzfA2w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=none (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org) smtp.mailfrom=taln60.nuvoton.co.il
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=taln60.nuvoton.co.il (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WtDJB2wKlz2xs4
-	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 13:56:57 +1000 (AEST)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-204d391f53bso12792935ad.2
-        for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2024 20:56:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724731015; x=1725335815; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
-        b=JLL/uZYD+c4GGVeucWorHnlDxKkVKNgrSpak2kmzgpuh6apBMkizSuJwrpkIq5E4GH
-         /z30dXaHQf8xRxl14ktQ+qyksoE2lLpmkwDNxoueWHx5BK3gIkMjEcMeu9YCOYgwHQ8N
-         A/5olaS8C4DTBM1+I7ezYzoizLK9ysS3g3Up/zAYMQFG/BsQz8ypGhd7XH3IcqjIiBnI
-         WL5CA5237AIaoMRE8GHa4I5Bxs2LRV8gOSMzh7hfc2jUYX52ctE2CAsKKSJjz71dvYXd
-         XjzYLAX4P4k6i/nyz0fJExPj7QzK1gpA7aiwgmIpKfpQfasJTJbtl6JcXyES/I+l+XaA
-         T4WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724731015; x=1725335815;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
-        b=avATrChZgE/w3m7QYJONjyAhVSwBKEY1dc+4/eXIA/Pfi9ClYSXEpF27hNW+2CC19H
-         dQhiIjpqbDwJTEPZ1UoHKCidCnfryqVtILUe7BK7+I65z9QN2qpNizhezzJStF7xaWiS
-         1pw/Zh5OZVq6/tEFkr0Z1Jc19wcA8A6ipA3EOLx5DcgwWw/XgxQhlLNNJfUcYRIjnT0k
-         7o5qH9Xcfphl///DOXSvv2LBQLCDVSRWqg7IxwCYU8zeGdZuyos+aIMWhGgaoD0W6y/y
-         FM8m3JdwuedQVsYKRxki5LLFVTOsnd71szmLbTlYs1QWFn3+mHT21hHflOXkkhrOHHaN
-         FQsw==
-X-Forwarded-Encrypted: i=1; AJvYcCUDKhjK1YwxpqpqfiApHi6TWfOGklMEWFi6Ny39IXZinBXelI9spITiRGnhm982HBvY1q/fo5c0@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yw74Fz8RaxNBR2lslW7Zj+2urRhY7qgkrXozC6ySUTCKbm3Mc0u
-	fLW/j19enbjFTJJS+Gs9VAxC6hkhe3l957bGvsyWrxDIxozzU6VR
-X-Google-Smtp-Source: AGHT+IFxneXRFmZ1WmEVJIBaliCW7se8z0sLkUpG6VSRORjfjkBu0029f/W74ZEp6JtRVQdyr0mBRA==
-X-Received: by 2002:a17:902:b20f:b0:1fb:72b4:8775 with SMTP id d9443c01a7336-204df4d39a1mr16138875ad.40.1724731014747;
-        Mon, 26 Aug 2024 20:56:54 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038556657asm74264205ad.47.2024.08.26.20.56.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Aug 2024 20:56:54 -0700 (PDT)
-Date: Mon, 26 Aug 2024 20:56:53 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Chanh Nguyen <chanh@os.amperecomputing.com>
-Subject: Re: [PATCH v4] dt-bindings: hwmon: Add maxim max31790
-Message-ID: <3382f952-daae-43ff-bb85-fa4820ecbc5f@roeck-us.net>
-References: <20240822084808.299884-1-chanh@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WtT7b4FPQz2yQL
+	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 23:35:20 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 47RDZ6qW032608
+	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 16:35:07 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 27 Aug
+ 2024 16:35:06 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 27 Aug
+ 2024 21:35:04 +0800
+Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Tue, 27 Aug 2024 21:35:04 +0800
+Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
+	by taln58.nuvoton.co.il (Postfix) with ESMTP id 65D2A5F5BB;
+	Tue, 27 Aug 2024 16:35:03 +0300 (IDT)
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 56065DC13C0; Tue, 27 Aug 2024 16:35:03 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [linux dev-6.6 v3 0/3] Add NPCM8XX clock driver
+Date: Tue, 27 Aug 2024 16:34:58 +0300
+Message-ID: <20240827133501.3451302-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240822084808.299884-1-chanh@os.amperecomputing.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,17 +66,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, Khanh Pham <khpham@amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Phong Vo <phong@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Justin Ledford <justinledford@google.com>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>
+Cc: Joel Stanley <joel@jms.id.au>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 22, 2024 at 08:48:08AM +0000, Chanh Nguyen wrote:
-> Add device tree bindings and an example for max31790 device.
-> 
-> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This patchset adds clock support for the Nuvoton
+Arbel NPCM8XX Board Management controller (BMC) SoC family.
 
-Applied.
+The NPCM8xx clock controller is created using the auxiliary device framework
+and set up in the npcm reset driver since the NPCM8xx clock is using the
+same register region.
 
-Thanks,
-Guenter
+This patchset based on NPCM8xx clock controller V27
+https://patchwork.kernel.org/project/linux-clk/cover/20240815150255.3996258-1-tmaimon77@gmail.com/
+
+This patchset was tested on the Arbel NPCM8XX evaluation board.
+
+Changes since version 2:
+ - Remove trailing whitespaces
+
+Changes since version 1:
+ - Align with NPCM8xx clock controller V27.
+ - Remove patches that are not in the clock patchset.
+
+Tomer Maimon (3):
+  dt-bindings: reset: npcm: add clock properties
+  reset: npcm: register npcm8xx clock auxiliary bus device
+  clk: npcm8xx: add clock controller
+
+ .../bindings/reset/nuvoton,npcm750-reset.yaml |  18 +
+ drivers/clk/Kconfig                           |   8 +
+ drivers/clk/Makefile                          |   1 +
+ drivers/clk/clk-npcm8xx.c                     | 429 ++++++++++++++++++
+ drivers/reset/Kconfig                         |   1 +
+ drivers/reset/reset-npcm.c                    |  74 ++-
+ include/soc/nuvoton/clock-npcm8xx.h           |  16 +
+ 7 files changed, 546 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
+ create mode 100644 include/soc/nuvoton/clock-npcm8xx.h
+
+--
+2.34.1
+
