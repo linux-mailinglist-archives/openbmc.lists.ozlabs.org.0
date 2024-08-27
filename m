@@ -1,60 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A11CE95FF04
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 04:24:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70B8C96001A
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 05:57:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WtBFh1qQsz30Vn
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 12:24:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WtDJH3C3xz30Vr
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2024 13:57:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724725477;
-	cv=none; b=R8IHvmYoRiDD5x1e+2GOUm8+l+Ts5+pauEmfZniHJoNS30cyXB0OgMBsRr9vKPGN2Q5WjTvhArtMA1J7dYPyhltDojZ2uKQwStTjk8XZXSNohNJCgM661Z7ElbYrGSDWuXsNoIlZEcky1PR89BW3Z3Z3xll1bMznnY/IMg5w6FcKYgnbbTGmgCE1xiFDYrWlAQRQ+4mJgd5wfniBZSnuwswSsU22Tr1ZGqPq2xuaWfAC0e68p6Bnn3nQgB67LRQRI+E5E8w5uUA631ghzHSzEYSK0LEmxavKxALHIHWdQ90/txVFzqXclI1k2I3H9VPTD/xmjqXmuUPfBeCgwwO2Wg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724731019;
+	cv=none; b=AwaPwAoYlgz6nob37FT0FzVOtAoJxyvZCT8TpFZe/dtKBuvKntIMFw1OgiEsWk2Adh7ZU5d4Vl1vcOSqMuvo5bsy+sa27r1lOKqJ5bSpHfDqW/czbF+3Fnp0J//nW18vEmG/RwCJAJ81b4eUGK6AeOZTo9IBgGAhjsW3PLDp3yk21zlrcIjz9SaSzYBEDpQenA+uwXbycopiUWADL2KXAmYgSKzaIccu0nam/AHOtz25f1lwCnZM2Udc29Uew6mkhloQa2wwM/P67SpWI+QGuBTheuYDl4A90s9q3twBlP08wDAppP9RNa9vSF4rM8LOqG3GEfh527uDWZmKwaI+cQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724725477; c=relaxed/relaxed;
-	bh=Hb7nm8Xoc/HUv6ETkDz3UJbKSyfJcgRGPbSbHDmjpoY=;
-	h=DKIM-Signature:Received:Message-ID:Subject:From:To:Cc:Date:
-	 In-Reply-To:References:Content-Type:Content-Transfer-Encoding:
-	 User-Agent:MIME-Version; b=E/s0/n2yfaGRQNrKP3bNNNAatoJQfqMrL1nBYutWihslNfH8X+Z/UbcoZCnXWIxcMT72psoTJy9TDX2eEl/BVa9lmo4LKvRvs99IRVdRpgwGi99/QMIQfPOyTvsxFJv6/HCGfy7nIjEfhAkHZ05hSp78AQ5NtbhfsrMg0XYWZc/7ZKrGNNKedbwQ1KzTQMvkzpYsAOUSbnuv8JFjt68sarFcZOsm1xByO0owTFOmYcoUtk6UJT1Yf7rmVbrlDYWCDcljDE8q1NmJSP9zjCyTBkiYudayYvUzhMPoDxerq2Lm89rAO77AFRT5w2RqeXojhQqxMQMyAImM38S/U4xqhg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=l7cYvllj; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+	t=1724731019; c=relaxed/relaxed;
+	bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Google-Smtp-Source:
+	 X-Received:Received:Sender:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To; b=MwUW8I9eeJa1PGbmmlO5MhkFlKww4pdL5uof9IczaV0DN1s4OAwSYmapMc08JNbGzATGsVwMDsvTLt/WPHyZoY2LjP9LN+GWZsnXf4TKb6K5r4E7203d9CeZVo0cmPINgPrIYQUdXzwORfzJ8faGpu8/zmv1GC7eLh2pgcBtg3/W11DpDPPRVeond/5/zgSXTmGxWSBxz0Xbb940NlfalFKJuyIYWr10uYcM3xhPhmu8pUIKSLyrDfe2LIElEvXA2H2msqVFfYu1FYql2Q6maA6D9KgYLetN1hpPalrzcVIHBKJUakpXlcW+C7rvRbR+8s2lKJ6DeoB21MLMp8Na+w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLL/uZYD; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=l7cYvllj;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLL/uZYD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WtBFd2Crfz2xYY
-	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 12:24:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WtDJB2wKlz2xs4
+	for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2024 13:56:57 +1000 (AEST)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-204d391f53bso12792935ad.2
+        for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2024 20:56:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1724725476;
-	bh=Hb7nm8Xoc/HUv6ETkDz3UJbKSyfJcgRGPbSbHDmjpoY=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=l7cYvllje6kc+o3q9vHUgu/15zHZWjjJcFRHtmmYdiji5BO/KY2K36XrSCFtoHEPS
-	 /vt3DYC21dVVvZ6V1idTB7nW5yPTPj32g5sjw7t4dvCd1nQhORcLePKVPnlo+kCgeV
-	 3RIwKx7dQiVIgFXX4Vp4a0RObp8usDN+FZtXOgNfboDOlg5HKXGGsfG1XZRSmspFJW
-	 lRXy9adhqwl2x53GCjRke0pwHShX312bveNj0lHvJ4e0r9QBgtFkxwYTWLz00XORa4
-	 XcmBsgE5w/uGh9JDrwImpG4bq85HnJdF0rC6V8sS1YlPAR0O8OZBS5Xwv9mkD8SXzg
-	 daIgd6fj9oCAA==
-Received: from [192.168.68.112] (ppp118-210-185-99.adl-adc-lon-bras34.tpg.internode.on.net [118.210.185.99])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 69AC9650A4;
-	Tue, 27 Aug 2024 10:24:36 +0800 (AWST)
-Message-ID: <0cb34763d4d360403ccac84362eb2f61cc11b0f4.camel@codeconstruct.com.au>
-Subject: Re: [linux dev-6.6 v2 3/3] clk: npcm8xx: add clock controller
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Tomer Maimon <tmaimon77@gmail.com>, openbmc@lists.ozlabs.org
-Date: Tue, 27 Aug 2024 11:54:35 +0930
-In-Reply-To: <20240826071128.3030154-4-tmaimon77@gmail.com>
-References: <20240826071128.3030154-1-tmaimon77@gmail.com>
-	 <20240826071128.3030154-4-tmaimon77@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+        d=gmail.com; s=20230601; t=1724731015; x=1725335815; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
+        b=JLL/uZYD+c4GGVeucWorHnlDxKkVKNgrSpak2kmzgpuh6apBMkizSuJwrpkIq5E4GH
+         /z30dXaHQf8xRxl14ktQ+qyksoE2lLpmkwDNxoueWHx5BK3gIkMjEcMeu9YCOYgwHQ8N
+         A/5olaS8C4DTBM1+I7ezYzoizLK9ysS3g3Up/zAYMQFG/BsQz8ypGhd7XH3IcqjIiBnI
+         WL5CA5237AIaoMRE8GHa4I5Bxs2LRV8gOSMzh7hfc2jUYX52ctE2CAsKKSJjz71dvYXd
+         XjzYLAX4P4k6i/nyz0fJExPj7QzK1gpA7aiwgmIpKfpQfasJTJbtl6JcXyES/I+l+XaA
+         T4WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724731015; x=1725335815;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KTvOR/DS9knaRzY3sdxLzqaq9zQJwZGfns9IyQ9Yg/c=;
+        b=avATrChZgE/w3m7QYJONjyAhVSwBKEY1dc+4/eXIA/Pfi9ClYSXEpF27hNW+2CC19H
+         dQhiIjpqbDwJTEPZ1UoHKCidCnfryqVtILUe7BK7+I65z9QN2qpNizhezzJStF7xaWiS
+         1pw/Zh5OZVq6/tEFkr0Z1Jc19wcA8A6ipA3EOLx5DcgwWw/XgxQhlLNNJfUcYRIjnT0k
+         7o5qH9Xcfphl///DOXSvv2LBQLCDVSRWqg7IxwCYU8zeGdZuyos+aIMWhGgaoD0W6y/y
+         FM8m3JdwuedQVsYKRxki5LLFVTOsnd71szmLbTlYs1QWFn3+mHT21hHflOXkkhrOHHaN
+         FQsw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDKhjK1YwxpqpqfiApHi6TWfOGklMEWFi6Ny39IXZinBXelI9spITiRGnhm982HBvY1q/fo5c0@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yw74Fz8RaxNBR2lslW7Zj+2urRhY7qgkrXozC6ySUTCKbm3Mc0u
+	fLW/j19enbjFTJJS+Gs9VAxC6hkhe3l957bGvsyWrxDIxozzU6VR
+X-Google-Smtp-Source: AGHT+IFxneXRFmZ1WmEVJIBaliCW7se8z0sLkUpG6VSRORjfjkBu0029f/W74ZEp6JtRVQdyr0mBRA==
+X-Received: by 2002:a17:902:b20f:b0:1fb:72b4:8775 with SMTP id d9443c01a7336-204df4d39a1mr16138875ad.40.1724731014747;
+        Mon, 26 Aug 2024 20:56:54 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038556657asm74264205ad.47.2024.08.26.20.56.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Aug 2024 20:56:54 -0700 (PDT)
+Date: Mon, 26 Aug 2024 20:56:53 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Chanh Nguyen <chanh@os.amperecomputing.com>
+Subject: Re: [PATCH v4] dt-bindings: hwmon: Add maxim max31790
+Message-ID: <3382f952-daae-43ff-bb85-fa4820ecbc5f@roeck-us.net>
+References: <20240822084808.299884-1-chanh@os.amperecomputing.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240822084808.299884-1-chanh@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,24 +89,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Joel Stanley <joel@jms.id.au>, Benjamin Fair <benjaminfair@google.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>, Khanh Pham <khpham@amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Phong Vo <phong@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Justin Ledford <justinledford@google.com>, Quan Nguyen <quan@os.amperecomputing.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Open Source Submission <patches@amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2024-08-26 at 10:11 +0300, Tomer Maimon wrote:
-> Add auxiliary driver to support Nuvoton Arbel BMC NPCM8XX contains an
-> integrated clock controller which generates and supplies clocks to all
-> modules within the BMC.
->=20
-> The NPCM8xx clock controller is created using the auxiliary device
-> framework and set up in the npcm reset driver since the NPCM8xx clock is
-> using the same register region.
->=20
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> Tested-by: Benjamin Fair <benjaminfair@google.com>
+On Thu, Aug 22, 2024 at 08:48:08AM +0000, Chanh Nguyen wrote:
+> Add device tree bindings and an example for max31790 device.
+> 
+> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Just a note that this patch generates a bunch of checkpatch warnings.
-Is this something you've considered? I ask because it's best to try
-remove all reasons for Stephen not to apply your series...
+Applied.
 
-Andrew
+Thanks,
+Guenter
