@@ -1,110 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 780BA9624E3
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2024 12:27:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2696962847
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2024 15:10:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wv0wT3s2gz30Wh
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2024 20:27:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wv4Wj6yfDz30Tk
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2024 23:09:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724840846;
-	cv=none; b=jkIvbiag8UBHTfyWdnQ/58PZBjmeWQJx915WrL1VhKJlqch2mD33CFgCRCFe9C2iHlb+J6hhaoCZ9uQAjCcUHboCqEs5LkJ/AAJXrc7gwVod61gHyU0ew9rwL2Wr03uOy7z+zonorLgLVNXMdvvvykfHd4BcsfcobRGKei6PKL1lMmSdwXDgvRxukXIgiNHe5xPLcFwBwoHhnKie9Yi18+Bd1m84KjeDR6ADrGeKU2rVBxhK44BPp6Z2/2FRZVBjewcOoVFanCewaQVo/nE7hhkH1j5Fy6TQnRAG+GvmJOAQMm75F5+rraBRqVsffbqPIQX+6yXj1qDXm1xP/aLZnA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::112d"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724850591;
+	cv=none; b=TJ5gT/7CWWcqJbk+tT6I1stQtzRLwa6C8wS6RBlXWB9opDLAobcQ0NsJLS6mrIVWbYtRaMhj41NpTCeuM6NbGImIeyde8P2GBBsI1b/Ary4AcM0kG3PR4T3xHyf0EORbkAMnIBZLmsDbWq7V3B/IS6qg1C7bNSKT7vsmkOKONcCrO0yUO0JcUcI+NnRw6TTiNSE9cXz+ctwS7+PGpKHQgnMV4UnwcIhngqHtPs02sB019UV25AOV60tSc3uHpmjKi5P8VaVKUeWxJyKeWfgdC9pDt7N+Z6FuBAk0I1nxStnH5Pu2die/F6EIZtuyvVC4Jk5HA1NxnxZEkEt9L6so9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724840846; c=relaxed/relaxed;
-	bh=9olwBJDt0RqDFwYls01bbi85T6s6g+I7LbBSH4MlAjo=;
-	h=Received:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:From:Content-Language:
-	 Autocrypt:In-Reply-To:Content-Type:Content-Transfer-Encoding; b=frr3h6GNg2FOYMwLLgA/1mLjy3DtVkQW/NP9ItPnsiXSd045Lu8CVDXHiEhLqth5hXRZ/tBR4Lm/qZFK8Xf2pInPdRbJYL8UDBBWo7SozJeGzzvPUeECWro2/IhCDO4lHmd1WaK2uMVLjr9TdcWBJj3umWsHSxKMnTTvUH91QbDAIuHnKdho1WFLWag3QXLbBtSpdmeHYUwpDqU5QXvKSTyf78zcxk7Sw2qaew0KZDwSQHjAYvGkT43/NRgplLQRtPa0t1rnUTrmCsa2ke4xPZLQlzBjleX1xOZkrieEyUtgMb+g79/JHi7m79EDE5ojOh+rABXEr6Yi1ny3U1vuSQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dAGLj+IR; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1724850591; c=relaxed/relaxed;
+	bh=pn+bgosfQGc/U/4A/vvbZfZVsETzq5wXRPVs5CidOvo=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type; b=KI8cJUQm/1W32GN+/beT4dFpKKYPn6K7zwtikZDGRgTflBkrJziYRNuxzXcUaUfQMv9jxo7tUfF/hrrovX27/+H+rZGiAosLIR5k4zD4FOg5dgv+Oz/Fu4cH5xZjyGEVfo3IeHcVbLaWM6PO3MmBI/6Ey3f24ieNw4v4ZA+oNyo6YHeVGgplUgM4D9ar4Vi+2zSgs/fvh4Jx5darB2Ejouo9lOfNi/uqOCWEUt27RUqqXSis4NW+0koKnn5Zdta6x0QpxMU421ImZUxxr5prCEby+OWJQRXM5xfVeE9V5+7Ai2yuwc9LnRpy/IVn9oHeyuNTqOgwbsAwJ7qWuQ/o7g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lK2r15D3; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::112d; helo=mail-yw1-x112d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dAGLj+IR;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lK2r15D3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112d; helo=mail-yw1-x112d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wv0wG0zqHz2ygZ;
-	Wed, 28 Aug 2024 20:27:26 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 90544A434C4;
-	Wed, 28 Aug 2024 10:27:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59685C515A3;
-	Wed, 28 Aug 2024 09:10:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724836258;
-	bh=4wjsCstqQZZ/e4H4a4DtBSqr+93zTZjzDFUyeOtQ3Ac=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dAGLj+IR7aLFNJhsGX3eoFhoosVgIUZyVEoWteFasKTgp0e+ZwXSSb43FFYAeFMP/
-	 5MhW+Z5/pImqftHjK+DTTly4Cb6k1AHg+0LaCXNC0DRYMecxfALg+FEfN/xEOV54BH
-	 baDqbZPA/LxJraY5PIeSLrl2VALs0zLZ1HQ6caDBPRaWZGTBRUx7tuMKhmU4PRxsuV
-	 HztmIlx9un/9NVq13F/5mBH1D+39Dlui9znn78rCLth8PYXdr0KGZEYBOesi2qW1n9
-	 akMlK0pv38zuihRWnV4a1TR44jZ6B++0uuGhhr2xmeyNkE1XbO1Z5qtbZPyWYVVZo5
-	 qtOAocZIeXcfA==
-Message-ID: <8908eee4-d3a4-4d15-a68e-d0937bbca9f0@kernel.org>
-Date: Wed, 28 Aug 2024 11:10:52 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wv4Wf3FQ0z2yZZ
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2024 23:09:49 +1000 (AEST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-6c130ffa0adso66907247b3.3
+        for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2024 06:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724850586; x=1725455386; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pn+bgosfQGc/U/4A/vvbZfZVsETzq5wXRPVs5CidOvo=;
+        b=lK2r15D36ncM2t3wvn+gVQTIJ6o49g9DCcOmJZ+1m9OzbOyUHCgl778fv2Drvzoek1
+         +7breRcFUxPV0w8uMCC0/Rr5ymwhhJBbtDr1FPtfWNAcKe+Y+Vw5Po2yIL1DTX2nybRq
+         NqpWq6AR1kDqoV4lVzCtyyI5FFZxe0+I3TmKZ4mZc+jnMwqCXvkalbLL0tzzRR2T0jN8
+         wpDvuWYJbcKcIPgqyHy8HrgeIoRhL3dUjaIEuWbdrQBG/tYSnAIWf8M9MSUQSOp7c+HT
+         hpJlhKfJo4kDezqM1ooYANf23Ty83o16u55IOiKd1WvLbOb6cOQ5unYlO+S0pau5T79p
+         rlHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724850586; x=1725455386;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pn+bgosfQGc/U/4A/vvbZfZVsETzq5wXRPVs5CidOvo=;
+        b=Fy0c8UGTA7kiIo/wvnKVE0xSDspNS24a22DjqHkJ4Ij2XO+k9c4+kpW6v0qZi4cNjK
+         btDPrYNNDBR6wyIFmC5Uix1dJXRa1YmqdbgLZKcustFtf02xIFtUZyw3P5xKZ+lJIu+r
+         MQlaZL52Bh0gDPPtZaEI+VZZC17XNU9Q6r4h0hc0nNXDU7O5zRkbaKd5NpIk+rvUPpXP
+         c6QV/eHahmMLOJ8L/0vZgNKtNNhrHiaWVtc8wWXctJwSCFpODLjGFDj5+x8/g7xEtmy6
+         SNLRnyhTAkvSCvsTpRL4TVFhzToarQ0ZDbEsu7Ppva0FTSFSYx456l6TuWURf3wvwDs7
+         TAEw==
+X-Gm-Message-State: AOJu0YyDbaqPtNDk3So6XfnDCHTrvL7VbNlmUmjS5bzBUBB0RrrfzCKo
+	E0ZsXc75IZnUVctG1L+BT6kKNTVEdb+2EsUKHlCBo3a2ZZI9+zzkVEg/R/zVAwec/EAUoc/xtsz
+	WNt6+Ykl5NFK2ZWL2PSQY+rbp+aOEWA==
+X-Google-Smtp-Source: AGHT+IHBIOn/qTKdcEU5wMm2p7AdcljvoX4yR3j5hvJzp7BQdxmMnkpvlbBJSDJRThLv5/KVGqi9LnEoJ6lYDq7IzKA=
+X-Received: by 2002:a05:690c:6ac2:b0:6af:fd49:67e0 with SMTP id
+ 00721157ae682-6d171e6329amr18649317b3.46.1724850586549; Wed, 28 Aug 2024
+ 06:09:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: arm: aspeed: Add aspeed,video binding
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-References: <20240819080859.1304671-1-jammy_huang@aspeedtech.com>
- <20240819080859.1304671-2-jammy_huang@aspeedtech.com>
- <nnjcjt2kuplsy5bbxujuubkn2xdtpifjeiqt5qfvktdmaorzuz@x444p5ezcoch>
- <TYZPR06MB6568AB9E260263DBB1ED474DF1882@TYZPR06MB6568.apcprd06.prod.outlook.com>
- <a17f963e-0e6d-4132-817f-2e663268ee2d@kernel.org>
- <TYZPR06MB6568A38AD08F72EC637EFA7BF1952@TYZPR06MB6568.apcprd06.prod.outlook.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <TYZPR06MB6568A38AD08F72EC637EFA7BF1952@TYZPR06MB6568.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240827133501.3451302-1-tmaimon77@gmail.com> <20240827133501.3451302-4-tmaimon77@gmail.com>
+ <7b9f4c904b3a6e8775726c071f7fb4831854f352.camel@codeconstruct.com.au>
+In-Reply-To: <7b9f4c904b3a6e8775726c071f7fb4831854f352.camel@codeconstruct.com.au>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 28 Aug 2024 16:09:35 +0300
+Message-ID: <CAP6Zq1jS6v3UF8D=Knq5rarnbQOAZBgHbOeu2VZe_kvApVFinw@mail.gmail.com>
+Subject: Re: [linux dev-6.6 v3 3/3] clk: npcm8xx: add clock controller
+To: Andrew Jeffery <andrew@codeconstruct.com.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,41 +84,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "pmenzel@molgen.mpg.de" <pmenzel@molgen.mpg.de>, "andrew@aj.id.au" <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "eajames@linux.ibm.com" <eajames@linux.ibm.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "hverkuil@xs4all.nl" <hverkuil@xs4all.nl>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "mchehab@kernel.org" <mchehab@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 28/08/2024 08:05, Jammy Huang wrote:
-> Hi Krzysztof,
-> 
-> Sorry for the troublesome e-mail notice. We have informed IT to remove it.
-> 
-> On 2024/8/23 下午 02:13, Krzysztof Kozlowski wrote:
->> On 23/08/2024 03:11, Jammy Huang wrote:
->>
->>>
->>>>
->>>>> @@ -0,0 +1,81 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) %YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/arm/aspeed/aspeed,video.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: ASPEED Video Engine
->>>>
->>>> ASPEED or Aspeed?
->>> I prefer ASPEED.
->>
->> What is the name of the company? How is it called in all bindings? Is it an
->> acronym?
-> It's ASPEED Technology Inc. You can find brief introduction here, https://www.aspeedtech.com/about_vision/.
-> I did check it in bindings, but both ASPEED and Aspeed can be found.
-> If you have suggestion, please let me know.
+Hi Andrew,
 
-Keep official name, so ASPEED.
+Thanks for your comments,
+
+Send V4 with fixed exceed line length.
+
+Tomer
 
 
-
-Best regards,
-Krzysztof
-
+On Wed, 28 Aug 2024 at 04:48, Andrew Jeffery
+<andrew@codeconstruct.com.au> wrote:
+>
+> On Tue, 2024-08-27 at 16:35 +0300, Tomer Maimon wrote:
+> > Add auxiliary driver to support Nuvoton Arbel BMC NPCM8XX contains an
+> > integrated clock controller which generates and supplies clocks to all
+> > modules within the BMC.
+> >
+> > The NPCM8xx clock controller is created using the auxiliary device
+> > framework and set up in the npcm reset driver since the NPCM8xx clock is
+> > using the same register region.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > Tested-by: Benjamin Fair <benjaminfair@google.com>
+>
+> So checkpatch still warns on this one, though I think whitespace is
+> less of a problem.
+>
+> For what it's worth, here's the output I get:
+>
+>    Executing: ./scripts/checkpatch.pl --strict -g HEAD
+>    WARNING: please write a help paragraph that fully describes the config symbol
+>    #33: FILE: drivers/clk/Kconfig:328:
+>    +config COMMON_CLK_NPCM8XX
+>    +       tristate "Clock driver for the NPCM8XX SoC Family"
+>    +       depends on ARCH_NPCM || COMPILE_TEST
+>    +       help
+>    +         This driver supports the clocks on the Nuvoton BMC NPCM8XX SoC Family,
+>    +         all the clocks are initialized by the bootloader, so this driver
+>    +         allows only reading of current settings directly from the hardware.
+>    +
+>
+>    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+>    #57:
+>    new file mode 100644
+>
+>    WARNING: line length of 112 exceeds 100 columns
+>    #252: FILE: drivers/clk/clk-npcm8xx.c:191:
+>    +       { NPCM8XX_CLKDIV1, 26, 2, "ahb", &hw_pre_clk, CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM8XX_CLK_AHB },
+>
+>    WARNING: line length of 137 exceeds 100 columns
+>    #257: FILE: drivers/clk/clk-npcm8xx.c:196:
+>    +       { NPCM8XX_CLKDIV1, 28, 3, "adc", &npcm8xx_pre_divs[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_ADC },
+>
+>    WARNING: line length of 107 exceeds 100 columns
+>    #259: FILE: drivers/clk/clk-npcm8xx.c:198:
+>    +       { NPCM8XX_CLKDIV1, 11, 5, "mmc", &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_MMC },
+>
+>    WARNING: line length of 106 exceeds 100 columns
+>    #261: FILE: drivers/clk/clk-npcm8xx.c:200:
+>    +       { NPCM8XX_CLKDIV1, 2, 4, "pci", &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_PCI },
+>
+>    WARNING: line length of 139 exceeds 100 columns
+>    #263: FILE: drivers/clk/clk-npcm8xx.c:202:
+>    +       { NPCM8XX_CLKDIV2, 30, 2, "apb4", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB4 },
+>
+>    WARNING: line length of 139 exceeds 100 columns
+>    #264: FILE: drivers/clk/clk-npcm8xx.c:203:
+>    +       { NPCM8XX_CLKDIV2, 28, 2, "apb3", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB3 },
+>
+>    WARNING: line length of 139 exceeds 100 columns
+>    #265: FILE: drivers/clk/clk-npcm8xx.c:204:
+>    +       { NPCM8XX_CLKDIV2, 26, 2, "apb2", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB2 },
+>
+>    WARNING: line length of 139 exceeds 100 columns
+>    #266: FILE: drivers/clk/clk-npcm8xx.c:205:
+>    +       { NPCM8XX_CLKDIV2, 24, 2, "apb1", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB1 },
+>
+>    WARNING: line length of 139 exceeds 100 columns
+>    #267: FILE: drivers/clk/clk-npcm8xx.c:206:
+>    +       { NPCM8XX_CLKDIV2, 22, 2, "apb5", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB5 },
+>
+>    WARNING: line length of 113 exceeds 100 columns
+>    #268: FILE: drivers/clk/clk-npcm8xx.c:207:
+>    +       { NPCM8XX_CLKDIV2, 16, 5, "clkout", &npcm8xx_muxes[8].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_CLKOUT },
+>
+>    WARNING: line length of 107 exceeds 100 columns
+>    #269: FILE: drivers/clk/clk-npcm8xx.c:208:
+>    +       { NPCM8XX_CLKDIV2, 13, 3, "gfx", &npcm8xx_muxes[7].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_GFX },
+>
+>    WARNING: line length of 112 exceeds 100 columns
+>    #270: FILE: drivers/clk/clk-npcm8xx.c:209:
+>    +       { NPCM8XX_CLKDIV2, 8, 5, "usb_bridge", &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU },
+>
+>    WARNING: line length of 112 exceeds 100 columns
+>    #271: FILE: drivers/clk/clk-npcm8xx.c:210:
+>    +       { NPCM8XX_CLKDIV2, 4, 4, "usb_host", &npcm8xx_muxes[4].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SU48 },
+>
+>    WARNING: line length of 108 exceeds 100 columns
+>    #272: FILE: drivers/clk/clk-npcm8xx.c:211:
+>    +       { NPCM8XX_CLKDIV2, 0, 4, "sdhc", &npcm8xx_muxes[2].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SDHC },
+>
+>    WARNING: line length of 112 exceeds 100 columns
+>    #274: FILE: drivers/clk/clk-npcm8xx.c:213:
+>    +       { NPCM8XX_CLKDIV3, 16, 8, "spi1", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI1 },
+>
+>    WARNING: line length of 111 exceeds 100 columns
+>    #275: FILE: drivers/clk/clk-npcm8xx.c:214:
+>    +       { NPCM8XX_CLKDIV3, 11, 5, "uart2", &npcm8xx_muxes[3].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_UART2 },
+>
+>    WARNING: line length of 111 exceeds 100 columns
+>    #276: FILE: drivers/clk/clk-npcm8xx.c:215:
+>    +       { NPCM8XX_CLKDIV3, 6, 5, "spi0", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI0 },
+>
+>    WARNING: line length of 111 exceeds 100 columns
+>    #277: FILE: drivers/clk/clk-npcm8xx.c:216:
+>    +       { NPCM8XX_CLKDIV3, 1, 5, "spix", &npcm8xx_pre_divs[1].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPIX },
+>
+>    WARNING: line length of 106 exceeds 100 columns
+>    #279: FILE: drivers/clk/clk-npcm8xx.c:218:
+>    +       { NPCM8XX_CLKDIV4, 28, 4, "rg", &npcm8xx_muxes[11].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RG },
+>
+>    WARNING: line length of 108 exceeds 100 columns
+>    #280: FILE: drivers/clk/clk-npcm8xx.c:219:
+>    +       { NPCM8XX_CLKDIV4, 12, 4, "rcp", &npcm8xx_muxes[12].hw, CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_RCP },
+>
+>    WARNING: line length of 133 exceeds 100 columns
+>    #282: FILE: drivers/clk/clk-npcm8xx.c:221:
+>    +       { NPCM8XX_THRTL_CNT, 0, 2, "th", &npcm8xx_muxes[0].hw, CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_TH },
+>
+>    WARNING: Prefer "GPL" over "GPL v2" - see commit bf7fbeeae6db ("module: Cure the MODULE_LICENSE "GPL" vs. "GPL v2" bogosity")
+>    #490: FILE: drivers/clk/clk-npcm8xx.c:429:
+>    +MODULE_LICENSE("GPL v2");
+>
+>    total: 0 errors, 24 warnings, 0 checks, 450 lines checked
+>
+> Andrew
