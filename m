@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B3E7963DCA
-	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2024 09:55:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88F2B963DD2
+	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2024 09:56:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WvYVp5NHpz30WD
-	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2024 17:55:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WvYWm1KGHz30g3
+	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2024 17:56:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724918143;
-	cv=none; b=cNAi7kOxumfuWnAVBkGehLNOMfSkvTyksbJ0Fcw4libMMS9PiGFYIKUC3JcGuy0OWr+W9UPdivAzyzpbWt9loEN9q7tk5dbjNQ1sUXFWbys+onL9P+jD0TXwg7j7jv1MzgqqjdjPMcQFuDmXhuG0k3r0i4bIOScSbB0te8DwQmxnrPG/E2YHoIt633932rV011lqkpBviAenW27ws7v4Kx5/m9Egf/9HZt6292gYfmH3ZU9Hii+aM+lIFQRVOxlbTvkqwpemiV544oSrVJZDFkryqtMrhnQ8dCXwqiX0wSjMCNPyBgHgEu+ztdCawNIbUH9vE5UE7Pe4BscASAGsow==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1724918190;
+	cv=none; b=a19mUrTXOgiBSvHl2A9HVyzEuB3PBcY4o0JHoGLuLcLzJpGiAG7AaYYF3iI30QGeyQspCUCue/mmnWpsScBbGo/2pm4EXoSZNhRuBOIrbtWIKYWklFicKzVXLH/N0fC96eSAH7VJ453TkI25/an4JTY3kGe0or7r/IDbpuyKNEjNEui5uDGsRmzq7NBJuyRqA2iyRgpuDf0PfTtNuJaBKXu09B5vBE+VA+YcIUSQu8Hkv5LuiP6CutW71QUamFPDNO3NRHSiGqUQ0GXrD46O/BprJPkPbwXRQpaVpXcmcWzetDlSj82Ty/5Bpyj84NfgFOp1HwF0e/hq5UhXrMq1RA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1724918143; c=relaxed/relaxed;
-	bh=pvAeXM7K5Qqn25SzkYIHfirqQIehtXnvX8OG92iEb0w=;
+	t=1724918190; c=relaxed/relaxed;
+	bh=BZE4NSxoDViCo/lDaIDH4sQ+VWeufMF1o1CDTXuWKmM=;
 	h=Received:Received:DKIM-Signature:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:From:Content-Language:
-	 Autocrypt:In-Reply-To:Content-Type:Content-Transfer-Encoding; b=dIjNLF2rmgnk2Azb8TqBmJ5IrANOgwXi2X0vlAvuQn0hXJYRpm7856HJKw4GCsSAQ/Hce0RoTuO6/EQbDTD52aEUZMSPVLQZjH5ZnOdgSJFxe6pM1zSwVJFH9fNImAR5VG3NxTnzcjjpMz0H+IFHL2eKoKDcaATNVdoyQpOBnDZeZT3vCHZ0cM2NjACn6Nylszwjd3y/oDzZdXa3nicM9DCAwx+VOxSV4E1qdz52uB3bNLCI6ww/FLZGphtB7qv3bzTDep4F1U3HDTy8gVL6Dnm50BfHSjKWMokSX8BomnjAT5hfueRSs9tp2nCOKbYMBbSYi4Z/GJnkbrmK1+hi0g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OciKxiMe; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 Autocrypt:In-Reply-To:Content-Type:Content-Transfer-Encoding; b=IPLCDrL//spuxxA5l6lWU+fLjxzhDzvnF0xzgaLHktCAPfJAW8EcWyuJ57VjlT5tnNFALaRPqohTwy7Dp5mazrXt3Owv7uxqqdcXMXyMcYnorcuzpynuhty0mgEWNGxO8DPiu3TYrwc5IqA9rrdTBLw9pR6AGnrYmdEI1UZl5A9Fx6lWAxUaVo+t1HmVI/ZJADpB1PwADc1xMBDbmcFVTpdBOhbVYW5eCXo+zUzvywODk1t2nNUfL/viN/ePatiiJtBwkywW5sRYrNZlVzNSh1CyozCMIdarZY4CUrWOLUJ5nG78edlHT6Qch9LZlPm9Lq4T3TDXqlto+n//YjfFmA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O5rzzodc; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OciKxiMe;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O5rzzodc;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WvYVl1Qw5z2ysf;
-	Thu, 29 Aug 2024 17:55:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4WvYWf3yt1z2yn1;
+	Thu, 29 Aug 2024 17:56:30 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 51822A41B61;
-	Thu, 29 Aug 2024 07:55:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22735C4CEC1;
-	Thu, 29 Aug 2024 07:55:33 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 9B43CA43C50;
+	Thu, 29 Aug 2024 07:56:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D10C4CEC1;
+	Thu, 29 Aug 2024 07:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724918138;
-	bh=gfwdGkshrn41f6ZPGzSwIbOrEfaOncX7XjVktdIoKMs=;
+	s=k20201202; t=1724918187;
+	bh=L35tVttQDP3DiTHl/7msj81N0HAs96f+ggKxIEB/ncg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OciKxiMeWeucX59OyqP9P1woa59CF909KQAk9RW4bWF437Xo5fk36WARTd9cWfkSs
-	 Q1/nYuTsdjijVVRQd4vCuD7cRbt0zplTslUD25VUBtPrUSYDd1j1c+ok0k7X/AmFG6
-	 CM81Oqh8JAsugp79kv04NeAr4vWe3wHZQ/BdAh7/d3cFlT+30xmB09Jg1jA+FnKApe
-	 MwWL5V6/WbQd5kBjhKtTSLYbbNJCmlMZW5ev5UWdPyLcsssQxliGw/8xOgxDturACN
-	 rR2+R4Tve7AjmG83nBDKLa3ZfXyZdvGuNlZoFFtDY3sjOf3FXzAFX90tKqiGBedjUj
-	 R2fq25LQsCG5A==
-Message-ID: <8ce757a9-ea4c-4dd2-8aaa-e04f21eb3f63@kernel.org>
-Date: Thu, 29 Aug 2024 09:55:30 +0200
+	b=O5rzzodcYeVSU6L0YNdobG69J6rctkyh45HAsOuZLJHWVpm9V0nN0aU2duPJeIIii
+	 SyhvG0xRa9BBAs1LJGyC5wYL1HlPQD/0KI8caPz+ZSwJlpiRJd9Oz5YPx6nQLuM0HU
+	 yya/rLje/ZYu6jkKancbO9NQWcWHR5EzAu3Dmr9YVDdpvK+SCD+DLQt5xfXQZen4FU
+	 sUULdtMvbW+dKQfNU8HJyju16ppFc7ck3rLikhwqITPOVpRJohGfg8ZRIk7v305hcR
+	 6E3XNTEK60DW9qW7ZBZlKUdBowLX6QDIQanCO2MkAAtjMx0ZoqC5k0vfIWOBu6Tnf1
+	 4s1BuPhfVI98g==
+Message-ID: <51d48faf-9f62-431f-b1bf-b78f0a30ae14@kernel.org>
+Date: Thu, 29 Aug 2024 09:56:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] dt-bindings: media: convert aspeed-video.txt to
- dt-schema
+Subject: Re: [PATCH v6 2/2] media: aspeed: Allow to capture from SoC display
+ (GFX)
 To: Jammy Huang <jammy_huang@aspeedtech.com>, robh@kernel.org,
  conor+dt@kernel.org, eajames@linux.ibm.com, mchehab@kernel.org,
  joel@jms.id.au, andrew@aj.id.au, hverkuil@xs4all.nl, pmenzel@molgen.mpg.de,
  krzk+dt@kernel.org
 References: <20240829064508.3706672-1-jammy_huang@aspeedtech.com>
- <20240829064508.3706672-2-jammy_huang@aspeedtech.com>
+ <20240829064508.3706672-3-jammy_huang@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -102,7 +102,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240829064508.3706672-2-jammy_huang@aspeedtech.com>
+In-Reply-To: <20240829064508.3706672-3-jammy_huang@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -121,62 +121,40 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 29/08/2024 08:45, Jammy Huang wrote:
-> Convert the ASPEED SoCs video txt bindings to dt-schema.
+> ASPEED BMC IC has 2 different display engines. Please find AST2600's
+> datasheet to get detailed information.
 > 
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
->  .../bindings/media/aspeed,video-engine.yaml   | 78 +++++++++++++++++++
->  .../bindings/media/aspeed-video.txt           | 33 --------
->  2 files changed, 78 insertions(+), 33 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
->  delete mode 100644 Documentation/devicetree/bindings/media/aspeed-video.txt
-
-Fix the paths in kernel (git grep).
 
 ...
 
+>  
+> +/*
+> + * Get regmap without checking res, such as clk/reset, that could lead to
+> + * conflict.
+> + */
+> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
+> +{
+> +	struct device_node *syscon_np __free(device_node) = of_parse_phandle(np, property, 0);
 > +
-> +  resets:
-> +    maxItems: 1
+> +	if (!syscon_np)
+> +		return ERR_PTR(-ENODEV);
 > +
-> +  interrupts:
-> +    maxItems: 1
+> +	return device_node_to_regmap(syscon_np);
+> +}
 > +
-> +  memory-region:
-> +    description: |
-> +      Phandle to a memory region to allocate from, as defined in
-> +      Documentation/devicetree/bindings/reserved-memory/reserved-memory.txt
+>  static int aspeed_video_init(struct aspeed_video *video)
+>  {
+>  	int irq;
+>  	int rc;
+>  	struct device *dev = video->dev;
+>  
+> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
+> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
 
-Useless description, completely redundant. Please say something useful
-about this particular memory region and its usage.
+So that's a new property? Not related to conversion? Then split the
+patches. Conversion is one logical change. Adding properties for new
+hardware is completely different.
 
-Missing maxItems.
-
-> +
-> +  aspeed,scu:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: |
-> +      Specifies the scu node that is needed if video wants to capture
-> +      from sources other than Host VGA.
-> +
-> +  aspeed,gfx:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: |
-> +      Specifies the Soc Display(gfx) node that needs to be queried to get
-> +      related information if video wants to use gfx as capture source.
-
-These two were not in the binding. Mention in the commit msg any changes
-from pure conversion with rationale WHY you are changing the binding.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +
-> +additionalProperties: false
 Best regards,
 Krzysztof
 
