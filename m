@@ -2,64 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60DDD96B170
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 08:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4AF39686E5
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2024 14:00:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WzC6m4Dpcz3c6c
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 16:21:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Wy6ky2gDjz3cDV
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2024 22:00:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a01:4f8:c0c:45b4::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725133291;
-	cv=none; b=iKukslF6R99vYjcws3c1bEOWKvARg2P7DVN7JqGFhUgjI3vIAG1/FqP8LCO9A/yN0rhVqj7U2nvHytnt5EEQPnn/pttSCXgND2eoOoFYEBRx+BUKOlEvl3T8bMVBO7T81byZ4/WHngKMKwhybcgaK50jqiS47Tsnz062+KyFbuVvR2LNc1p9RHZMtT8laWAd+qhBJqAT3qMEcUIoD7Q4RDrNcGcTdCMlVnK8eaYeNjzPe8qVDJvhrgYZ6J02Axkb5RhmNK4AITmwexvfOahT4soXj9zYaJpGGOXTVIATM8vFfoApIt2o/IhrFNZJniebG+A95oCGOjVY/xt5j/PNMw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.14
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725278406;
+	cv=none; b=YFy9KHQqetR+47xnP26nA+AL9TJIuE+r6BtVyUz7z/t8nQ7XvpMYcpgjiztOjTxogDSMcYnOclgE2DVCfCTz3zVYEZMFejO0fjC7yeWj3XoZl27j2eLQgz+f/UuLN9LWoIauVerna+k8FGK+OeT3mdVeJZPOrIwZzT2zMtCEEOxHUQyObpxGMlNRny/PTocKrslHQwFkGs2sglMY/FPsWe0mm5rGlvvxyneJREcCiLFtl+S47nD9HPoMA/Nd/pwPbebDSuUqKMif5H+3DXhXg2siWH+igNk4er2AN6HMNVqXOs/qpQakLoSkta2ruJ76TSyyoydLT7Vgb6EzncAXJw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725133291; c=relaxed/relaxed;
-	bh=46QX0kuhx180X/8BVQKfdic538oR3Z6r3UiNROg8Mi8=;
-	h=X-Greylist:Received:DKIM-Signature:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Last-TLS-Session-Version; b=IHbWZ/pVal3JUlnPpjsQhvzsK9iLHM3BLLsWBPBcoKEVMpJtTuaaC5DEh0iEgwnj0Nv5MfEx69Ahcx+2ihTjGouY3Lw0uukDcYXhBZ5o3UkiOgI7arkvS92inyn8mBSuh8CXKFjevWdoe2UBY4RxjQtpVPNCjBZAHx4AIhw6y6x3jw+MvPG6rqPToXtP/SWwPcMmB90lsnE+go/XCGrX2N8amuW68kOmRP/YOxAha7y+8NloAT7AAC2qsZesLwViMbEc3ETuFAc0yJlqVK8CM1QyqsFBRV6pm0Y60OIFHRSbETsRYf5tg7dJ8QwmHTmFSP+fsEjZZ2NNs3OplR74Pw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=diekuehnen.com; dkim=pass (2048-bit key; unprotected) header.d=diekuehnen.com header.i=@diekuehnen.com header.a=rsa-sha256 header.s=dkim header.b=T7lf2pXs; dkim-atps=neutral; spf=pass (client-ip=2a01:4f8:c0c:45b4::3; helo=mail.diekuehnen.com; envelope-from=andreas.kuehn@diekuehnen.com; receiver=lists.ozlabs.org) smtp.mailfrom=diekuehnen.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=diekuehnen.com
+	t=1725278406; c=relaxed/relaxed;
+	bh=kSoBVc4tKvGkmvCrjydyHYLIbTEvLClDKVwDwJsYwhs=;
+	h=DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=fS4YFU+hGnP5fzVI+imwWTYERo3C9n8QAr2yQpYaBR34w3Em4aRdsCfyofxgdCWAKrl88daYDnPvxJTO9OmRgncZ7l+O6DVs9U0KhzmWmWO+uhq9A0NneTKwGr0whlm43tSxTooa60fW8veTQ76BXmyYGKT5t9tILY9NeweOHcCeRiJ53i7JkBKRybhgr1v4CgqKg4QM6cXeDCvQIEFfP3jHY+7fVUjeFVUC9pqJQtbDUIvISYUxA3gQLE714BwQH+Uj2+h32p3RjDj/kcoCHWzh9atjnqgnOHUQe6lO7AlfAPBbAS7eoocVGJwjDFJL5BtQiYs2xRRwwGu0FOlCHQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=m04E5lzz; dkim-atps=neutral; spf=none (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=diekuehnen.com header.i=@diekuehnen.com header.a=rsa-sha256 header.s=dkim header.b=T7lf2pXs;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=m04E5lzz;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=diekuehnen.com (client-ip=2a01:4f8:c0c:45b4::3; helo=mail.diekuehnen.com; envelope-from=andreas.kuehn@diekuehnen.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 314 seconds by postgrey-1.37 at boromir; Sun, 01 Sep 2024 05:41:30 AEST
-Received: from mail.diekuehnen.com (mail.diekuehnen.com [IPv6:2a01:4f8:c0c:45b4::3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wx54B1XdMz2yDx
-	for <openbmc@lists.ozlabs.org>; Sun,  1 Sep 2024 05:41:30 +1000 (AEST)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 17CBA7E699;
-	Sat, 31 Aug 2024 21:36:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=diekuehnen.com;
-	s=dkim; t=1725132967;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=46QX0kuhx180X/8BVQKfdic538oR3Z6r3UiNROg8Mi8=;
-	b=T7lf2pXsSKOnmASVTCVThS7v+FSiSl+ZgeUhKY/kPdUlCRCWjb+hHnoj/rHaBsnEU+lj1h
-	et9GEtGPAYjp5isu1sRgRrmL44oBlOYNl/NV5dDEZecEi6aJqrfFwS90nQxUF9Ee1xOzfR
-	v2tsGDtD0Se+IENU7xyLpg0q5Aelm7J5fJPJYaM56xA+2Oj2w1mbCgN9vVYdTCR/g87LZz
-	ajljGKi1MYGSF5oQRQRtedXIYUjDKsc7TWxcCLmggbZmDGHqRr++uzPpm0nJQViJi2BgBF
-	JIvtc23HLLmXj+BJb4lv+rNQWcYZL918sHbUp3UbCxFaJrXVcP7xqhuu+HEb8w==
-From: =?UTF-8?q?Andreas=20K=C3=BChn?= <andreas.kuehn@diekuehnen.com>
-To: avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	tali.perry1@gmail.com,
-	venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com,
-	peter.chen@kernel.org,
-	gregkh@linuxfoundation.org
-Subject: [PATCH] usb: chipidea: npcm: Fix coding style with missing space
-Date: Sat, 31 Aug 2024 21:34:06 +0200
-Message-ID: <20240831193407.11302-1-andreas.kuehn@diekuehnen.com>
-X-Mailer: git-send-email 2.43.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wy6ks5XYSz2xjH
+	for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2024 22:00:05 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1725278407; x=1756814407;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=s5PNXJylVeTaejUqfvcmHm17nL+lhZdgF7rPHmXu+Dc=;
+  b=m04E5lzz6Kf1hH5brdVtFNetH+J9cpWupV2BQgXC+Sq2b1JAQChfK6x0
+   7asmdm02vdeOBud8ByN0LUozNcK4Ab3ZQb6UJ+EcvPNYyKoRPUnyA4qq7
+   BMTilmo0RlTgB1Ko0A4a57qlxrOCLZ9m+3UUCe8jBD44vwV/qYU8xz0fy
+   mCabkjd5h4eGS984Eb7TEBhe1ngVtIRquaucxaJT6ugvKV0Z0TOeGiCT6
+   PfQWTkJnymEMM7Ew40Ck3ydCMC3aAefoX2LML4V7tKx4xkeaHa07Ib80I
+   3iLk5jw+9n7Qal5tCp7+nQhm+5Oxcb/AgCe+naGTIlDWnU7U/IFGJ4Kgn
+   A==;
+X-CSE-ConnectionGUID: AqfCCoAZR9u5VSJ22IBeaw==
+X-CSE-MsgGUID: tzx5tjzhRDmaHrzEeN10jA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11182"; a="27643889"
+X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
+   d="scan'208";a="27643889"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:53:42 -0700
+X-CSE-ConnectionGUID: bBchEQG1RTKmqrN4miqtxA==
+X-CSE-MsgGUID: bamhgSFwRwK8MR+qtAi4vA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,195,1719903600"; 
+   d="scan'208";a="65308475"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2024 04:53:36 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sl5cj-00000004LfJ-1Jbb;
+	Mon, 02 Sep 2024 14:53:33 +0300
+Date: Mon, 2 Sep 2024 14:53:33 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tali Perry <tali.perry1@gmail.com>
+Subject: Re: [PATCH v2 6/7] i2c: npcm: use i2c frequency table
+Message-ID: <ZtWnPTSu1RKmIlhK@smile.fi.intel.com>
+References: <20240830034640.7049-1-kfting@nuvoton.com>
+ <20240830034640.7049-7-kfting@nuvoton.com>
+ <ZtIbM4NTbldBIDXf@smile.fi.intel.com>
+ <CAHb3i=vWNmokQYyOZJOVeaJaT6XAroct2gZiJYPVQf6rHzR5LA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-X-Mailman-Approved-At: Wed, 04 Sep 2024 16:21:02 +1000
+In-Reply-To: <CAHb3i=vWNmokQYyOZJOVeaJaT6XAroct2gZiJYPVQf6rHzR5LA@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,30 +85,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, =?UTF-8?q?Andreas=20K=C3=BChn?= <andreas.kuehn@diekuehnen.com>
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, linux-kernel@vger.kernel.org, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, Tyrone Ting <warp5tw@gmail.com>, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Fixed coding style issue: added missing space.
+On Sun, Sep 01, 2024 at 06:53:38PM +0300, Tali Perry wrote:
+> On Fri, Aug 30, 2024 at 10:19 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> >
+> > On Fri, Aug 30, 2024 at 11:46:39AM +0800, Tyrone Ting wrote:
+> > > Modify i2c frequency from table parameters
+> > > for NPCM i2c modules.
+> > >
+> > > Supported frequencies are:
+> > >
+> > > 1. 100KHz
+> > > 2. 400KHz
+> > > 3. 1MHz
+> >
+> > There is no explanations "why". What's wrong with the calculations done in the
+> > current code?
+> >
+> > --
+> > With Best Regards,
+> > Andy Shevchenko
+> >
+> >
+> Hi Andy,
+> 
+> The original equations were tested on a variety of chips and base clocks.
+> Since we added devices that use higher frequencies of the module we
+> saw that there is a mismatch between the equation and the actual
+> results on the bus itself, measured on scope.
+> So instead of using the equations we did an optimization per module
+> frequency, verified on a device.
+> Most of the work was focused on the rise time of the SCL and SDA,
+> which depends on external load of the bus and PU.
+> We needed to make sure that in all valid range of load the rise time
+> is compliant of the SMB spec timing requirements.
+> 
+> This patch include the final values after extensive testing both at
+> Nuvoton as well as at customer sites.
 
-Signed-off-by: Andreas Kühn <andreas.kuehn@diekuehnen.com>
----
- drivers/usb/chipidea/ci_hdrc_npcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+But:
+1) why is it better than do calculations?
+2) can it be problematic on theoretically different PCB design in the future?
 
-diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-index b14127873c55..c89c68f41ccc 100644
---- a/drivers/usb/chipidea/ci_hdrc_npcm.c
-+++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-@@ -28,7 +28,7 @@ static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
- 		hw_write(ci, OP_USBMODE, 0xffffffff, 0x0);
- 		break;
- 	default:
--		dev_dbg(dev, "unknown ci_hdrc event (%d)\n",event);
-+		dev_dbg(dev, "unknown ci_hdrc event (%d)\n", event);
- 		break;
- 	}
- 
+P.S. If there is a good explanations to these and more, elaborate this in the
+commit message.
+
 -- 
-2.43.0
+With Best Regards,
+Andy Shevchenko
+
 
