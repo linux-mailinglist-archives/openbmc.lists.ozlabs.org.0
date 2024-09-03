@@ -1,84 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA35796914D
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2024 04:08:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 829D696B173
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 08:21:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WyTYN2qV2z3cC9
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2024 12:08:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WzC6q3Jrtz3cfR
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 16:21:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::62d"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725329285;
-	cv=none; b=I3QnasSsTGMjrc4GW8MFADhX0S+jFAH8DOG1Bo8sgjCLz2cAT56geImB+O/EhLbOEXYdH64yD7xSqFdhOnRdi7d09JrD1cr+CMDHxqzQTPYNicbdZpbSEu+2vIX3SZ4WjmAejzE8qFdCYxylg2MyRBc1fOeZrVMkAtiaem+OdRlJf+Qde0KrjE4KAAKMl5dvVra3J7s6iXvlNfCbneNre55pKKB1oIA+nkhyd0kvC3PBq6fHHfXPTiAM6xXOKaXh7jeTY59JsSCmltJC3kt9PbB2v4YuKQaotSJLI/PcJN/PprqtY8bre0YOVCoR8QyKwknkdw1ns56DxeyMIcjXcQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a01:4f8:c0c:45b4::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725370078;
+	cv=none; b=L2LzBhrM6/Rp7lHS9QUWfvf/s4DNNpe/mkKwBH7/RZOcbYtzk9ivNxeAj4yRn7dxiS+ijS+It8S83bGOw4SM0V8Ux+fnQBqPt0MrW+aULlbUpKD+fCpstBUrXW6lure77reeF1n76itY6DqGSstGqE4/54M83tHNkK0ZfnY0XghHSqiDeq4OAtKZTJk6P6VHnobtn5K/zp/vDGi6P1SldVDtBTLEA25PNUzr+pf4WpM9x2EcOUSJ07jJ77DTc1HPZzA+7VVI6KXASKk8uRFbPArRuEjvAL8vgyjphxfSX51TOfZn4PvmGj3yfD+eK1/EP6SLY1hjxsw9nnZmw7eQ9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725329285; c=relaxed/relaxed;
-	bh=T1GuxGVThsSRhyDuyn4cmCRQjYF0xXBu34+O3FRfXrc=;
-	h=DKIM-Signature:MIME-Version:References:In-Reply-To:From:Date:
-	 Message-ID:Subject:To:Cc:Content-Type; b=C/IgfGbkkwBChvpPfCnFLVHSyWDjy3J6/gIQcLobQCcPGON1Gv2ADS74tpzpBvJknjJUKw2KU9ZsrwF4eCdnARUgoDTfW46pRRSIg2PDcy/PBkGOv/XZzPb6zF03QQVhg4eIKUzHl9J9pFVS+BSskaUdXa/S6LX5vb4VqKnvHoV/ZizblWfyWTpujxsRcbazip/HEhT6nN+ZJhuBrDLXCnOZn4eETOU744Tf+dmIqdi3UcXtAC/ZMVReJbJUd8UfFIcCrRUriGD1raGm2AVUgwkXsr/lxpispZ47YhZbljbn2+hYIfTKWd5NrHPHwaq3321Z12ZfYJYTSTsQPLM2FQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=keljqYv5; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::62d; helo=mail-ej1-x62d.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1725370078; c=relaxed/relaxed;
+	bh=HV2hf1nSATsA3NNJxSWkfgMwLvWvQ3pMvRpwUZxKkXc=;
+	h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type; b=HVkqBq9t91zH6CFKncQlzA/+ufE6cfFNOtPEdYLvfmOU7qGjTadrgit9b/dS9p1sM1EDWN5AoPQClU4wrhAhL5O1DxVFwznHFDYPz9E1k+MGtIqG9gV5c1rMx1Tnf/uISDIWPNZyOA5Gdjqv3hnEtNxJTLLNqo1ah77sgEPOlOfUrexHg8MWbujBuZCvgo39YZJhtGqs9bgY4UWxD6IF3A4/LDCAgk1JKjqGBLuFBkphwiZiUF/XX5Qv0VFRErUvZG1J0Y/nwHpkaWG7cWGldxvXeCDIlX77g73gba7JaPqRD+lE0PF4F41KdK9cpRc7YOZzoYZxLJN1S7zu9fG5GA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=diekuehnen.com; dkim=pass (2048-bit key; unprotected) header.d=diekuehnen.com header.i=@diekuehnen.com header.a=rsa-sha256 header.s=dkim header.b=yp1r/26l; dkim-atps=neutral; spf=pass (client-ip=2a01:4f8:c0c:45b4::3; helo=mail.diekuehnen.com; envelope-from=andreas.kuehn@diekuehnen.com; receiver=lists.ozlabs.org) smtp.mailfrom=diekuehnen.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=diekuehnen.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=keljqYv5;
+	dkim=pass (2048-bit key; unprotected) header.d=diekuehnen.com header.i=@diekuehnen.com header.a=rsa-sha256 header.s=dkim header.b=yp1r/26l;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62d; helo=mail-ej1-x62d.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=diekuehnen.com (client-ip=2a01:4f8:c0c:45b4::3; helo=mail.diekuehnen.com; envelope-from=andreas.kuehn@diekuehnen.com; receiver=lists.ozlabs.org)
+Received: from mail.diekuehnen.com (mail.diekuehnen.com [IPv6:2a01:4f8:c0c:45b4::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4WyTYJ0zvlz2yDM
-	for <openbmc@lists.ozlabs.org>; Tue,  3 Sep 2024 12:08:03 +1000 (AEST)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-a868831216cso548148366b.3
-        for <openbmc@lists.ozlabs.org>; Mon, 02 Sep 2024 19:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725329278; x=1725934078; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T1GuxGVThsSRhyDuyn4cmCRQjYF0xXBu34+O3FRfXrc=;
-        b=keljqYv5ZhqN+AbO48ytcSPjfGgHoudRardBusz34nPCTaufV2QsKEd8o8gP7y4wYg
-         TXjA0VlMBT6Y94oHW7qjcHrDzagV8zPftq+2x0GRRwfzoNAI24scODGmsDzWLwSGTC+S
-         ZyP7IELmhqf0In/9/hWSo4NH5XEgAQMg//YJ82ycujCLAGmyYBzrZsbIAxsW37gzmvNd
-         bTgIQ6DtlG84ghq8MBmyyDLT1GgQ9Og59Y2L3Ispqk1CjQ67z1Aj4/avEZOxtzZHkJq3
-         QvCXj5vibK8TilcYiQJae+Ec0bsUpol1ODg2reCQ0PR2kVo9mbIo+XT9qSmDNrT4H7Nn
-         fWRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725329278; x=1725934078;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T1GuxGVThsSRhyDuyn4cmCRQjYF0xXBu34+O3FRfXrc=;
-        b=DisYkarl3iFAzNMQPh4imBGU2Rdh7djSYwuKdwo7rmgJUnVRDPRjzVja74Ab5AdxBj
-         7j6X4X3F6jg0syZuoFAGKLQUtV9JaGZk39wtC93BhhKUO//ovitdk8BoN4ornCUbbcls
-         FGtZKGgt9kkIwRw+fsXHrPmtB6yHU5LjqbnapUHmokfrpVCG7qvVoG8BN0H1btSuqKQL
-         El5T7HbtQ9zcOIhiiZdL1WnNg1L8w+GKI3my5XD94GuP8kDBtufmo9pujhyBCTWkBT6S
-         wde9RZpb6urZfXeUG1TfToO7+DrKd2WydQCjFiMot95EryoF/GlxemkzCiAlegoSMP21
-         5BPA==
-X-Gm-Message-State: AOJu0YyB1X+7QWkfgmDtDd0D8L9nwp1kDK4EcYmGjGbN2jea7Sh1xABi
-	hlgZMrbMss0TRP/S4Lv7V98dUOQ+A+XsDlyh45tGOWUOtAgnT7UPHXgPY+ltEoaLyUkJFBKgoMq
-	HUlgX/AEsANduK1DC2eS4zk77Wg==
-X-Google-Smtp-Source: AGHT+IGrC74Ctz0HzdIiD7tPawwv+UqDvOFvoUGHiH77vBFIYeFjLsTp/nj7HnVFDEBLZ4qvEkvOCGuZe0mvz2lIzBk=
-X-Received: by 2002:a17:906:f586:b0:a86:8917:fcd6 with SMTP id
- a640c23a62f3a-a89b9733607mr529621766b.60.1725329277088; Mon, 02 Sep 2024
- 19:07:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wymdp2ZgLz2xtK
+	for <openbmc@lists.ozlabs.org>; Tue,  3 Sep 2024 23:27:57 +1000 (AEST)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CD2EE7E70D;
+	Tue,  3 Sep 2024 15:27:45 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=diekuehnen.com;
+	s=dkim; t=1725370068;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding; bh=HV2hf1nSATsA3NNJxSWkfgMwLvWvQ3pMvRpwUZxKkXc=;
+	b=yp1r/26lNKqk7dD7+0Bh9E7ZrMQKfgz+bGiBEeBdChNJ567eFsyqrGZq1VTcMhFk4hoGwg
+	ZpUBSD0nmRlaGKi+SSeQnVLwBY/d/7R7o67TUMm/KcJlLOT57Imw6g2tXihs+Hp397/Kin
+	8WFCA/oHt1CBebwGnNIw9qBQrGMtBJFcYIkOwup+hDeWJa1aSCm+UrSuyB7hTI90ttxHLH
+	XCsQsPFsXflPnWPHchXA2uTfQ4ET/WKP4Epez4sMkqNpuOqN1xRXCeJTp9m7TM0AGirIPq
+	ouIESRkTIQtc2p6gpjXtn+51mF/8cssoG+wsiI2hOh8DVvcmh7WjR8j8T6KAHA==
+From: =?UTF-8?q?Andreas=20K=C3=BChn?= <andreas.kuehn@diekuehnen.com>
+To: avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com,
+	peter.chen@kernel.org,
+	gregkh@linuxfoundation.org
+Subject: [PATCH] usb: chipidea: npcm: Fix coding style with clarification of data type
+Date: Tue,  3 Sep 2024 15:25:15 +0200
+Message-ID: <20240903132535.15554-1-andreas.kuehn@diekuehnen.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240830034640.7049-1-kfting@nuvoton.com> <20240830034640.7049-6-kfting@nuvoton.com>
- <ZtIaofiTqyFwNXrO@smile.fi.intel.com> <CACD3sJbZ-Yy3PfPWisMSiPYCbztbi1+Q+=udMG8EjNvE+xA1mg@mail.gmail.com>
- <ZtWnd8bmiu-M4fQg@smile.fi.intel.com>
-In-Reply-To: <ZtWnd8bmiu-M4fQg@smile.fi.intel.com>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Tue, 3 Sep 2024 10:07:45 +0800
-Message-ID: <CACD3sJass-6gu6MQxrYwLGi6OMgWnntO+N7Ob9nV6o3siFHNVg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] i2c: npcm: Modify the client address assignment
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, avifishman70@gmail.com, 
-	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
-	yuenn@google.com, benjaminfair@google.com, andi.shyti@kernel.org, 
-	wsa@kernel.org, rand.sec96@gmail.com, wsa+renesas@sang-engineering.com, 
-	kwliu@nuvoton.com, jjliu0@nuvoton.com, avi.fishman@nuvoton.com, 
-	tali.perry@nuvoton.com, tomer.maimon@nuvoton.com, kfting@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
+X-Mailman-Approved-At: Wed, 04 Sep 2024 16:21:02 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,55 +69,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: =?UTF-8?q?Andreas=20K=C3=BChn?= <andreas.kuehn@diekuehnen.com>, linux-usb@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andy:
+Fixed coding style issue: unsigned to unsigned int.
 
-Thank you for your feedback.
+Signed-off-by: Andreas Kühn <andreas.kuehn@diekuehnen.com>
+---
+ drivers/usb/chipidea/ci_hdrc_npcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2024=E5=B9=B4=
-9=E6=9C=882=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=887:54=E5=AF=AB=E9=
-=81=93=EF=BC=9A
->
-> On Mon, Sep 02, 2024 at 09:40:09AM +0800, Tyrone Ting wrote:
-> > Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2024=E5=
-=B9=B48=E6=9C=8831=E6=97=A5 =E9=80=B1=E5=85=AD =E4=B8=8A=E5=8D=883:16=E5=AF=
-=AB=E9=81=93=EF=BC=9A
-> > > On Fri, Aug 30, 2024 at 11:46:38AM +0800, Tyrone Ting wrote:
-> > > > Store the client address earlier since it's used in the i2c_recover=
-_bus
-> > > > logic flow.
-> > >
-> > > Here no explanation why it's now left-shifted by one bit.
-> >
-> > The address is stored from bit 1 to bit 7 in the register for sending
-> > the i2c address later.
->
-> Yes, but previously it was stored w/o that shift.
->
+diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
+index c89c68f41ccc..3e5e05dbda89 100644
+--- a/drivers/usb/chipidea/ci_hdrc_npcm.c
++++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
+@@ -18,7 +18,7 @@ struct npcm_udc_data {
+ 	struct ci_hdrc_platform_data pdata;
+ };
+ 
+-static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
++static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned int event)
+ {
+ 	struct device *dev = ci->dev->parent;
+ 
+-- 
+2.43.0
 
-Previously, the address was stored w/o that shift and with that shift
-in the following call to npcm_i2c_master_start_xmit,
-just like what https://github.com/torvalds/linux/blob/master/drivers/i2c/bu=
-sses/i2c-npcm7xx.c#L2043
-shows.
-
-Since there are cases that the i2c_recover_bus gets called at the
-early stage of the function npcm_i2c_master_xfer,
-the address is stored with the shift and used in the i2c_recover_bus call.
-
-> > I'll write some comments about the left-shifted by one bit behavior
-> > above this modification in next patch set.
->
-> --
-> With Best Regards,
-> Andy Shevchenko
->
->
-
-Thank you.
-
-Regards,
-Tyrone
