@@ -1,88 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD71396A37C
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2024 18:00:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1E5096B177
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 08:21:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Wyr1C4jrwz3c7q
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 01:59:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4WzC6s6tr5z3dXc
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2024 16:21:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725379196;
-	cv=none; b=kY5WVKdmBmmp+P5KkfSQ6FaM/pHUk7XoyrQfu3zq5MeEOd2GRbGEU3RXg+xHJBkJzOyuxm371ZBpVzye1kEg8kqosgAYve26beQfJ0FUr7Tyrujn98ehChRn3Jf714fDUYymUHDo5DeiAtK02fST8oCKXVoFitEQujLoRmgLDJJCA7gGk+3B64EuR46OiZa/IYPo6ltrELv4PpzH8LXfWKwstA8kEoEjxpeNl3+vxDqmhLD+zL/eFvV8SKyh4d8c6NiLe34G/hkioqR2q1+3X2Af2yiQBq9IEjUDmpe/WIdLc7/Os59Ge1v4Jdr4qNvl+K1GWm2xgFyCIAnvIg/MoA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=61.220.76.156
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725421347;
+	cv=none; b=hzlMENsgI+eeJAOJFfFIwNuCdgH6KwyhjiLDxrENoz3WiU7FY2INCGQKA7JwD5CcRFs6OdwzFZBlRHgteZnxQgeHMtcRH8TQibaeFyalIVwXdpfq+DmVXSIJ/sitkJcVpAoDufMbvsNGX55N+6BAGjL8hARy0Y4R6pbTRH5925sKzTXM28M5xVtTIFBYly7SNCCOC4Cv0Sgto2+XI3uZR48uGS0kRX1pOJNhgp/gmmRO1YUf84C2DrxnKoWF5sAe8WiraQAL9xQo5fVFZonO4YfKwROUHfX0KoY0ksrWFCJrVupK8UJ+fgpNBSjo7cIv7TJKlGaZM6o8ERMuA1EOPw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725379196; c=relaxed/relaxed;
-	bh=YObX343rc2ZfeM1gQQp4Yw9bsw9NAFoEiVxyfkfxbnI=;
-	h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:MIME-Version;
-	b=SqlICErYZpKm0ed093hsT073mA/oPO3LkSwOykzjbfOMr6yQE6z9hUNNp9d/PkbE29YmlmnIpOIHuUjmkyih88C3USQkxaqfikvFCcs9pOer1nudjzFNSfVsyCqG2VU1B/fBBbTQfy+7nyFOfxMJL14xzqRrlYiQXTnz5hot91Vy2j243aY4nasItAK5kc9Ofz2P1x6352fUrxugzRqbDWKvYRfPYd0GIpUzzY7pDAwcLpeafAIUP0mt/q9pziGdVWAZs0NVmIBlYwmAx4IkzJE0YQGXtOXegci3Kli5xw3LuP8YGV1Duh5klRi4+FVATlsk8c+/YKaVbHp4UJQt/w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=R8tQpabt; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+	t=1725421347; c=relaxed/relaxed;
+	bh=8k61Xr5AeEsjNn+6pNirkk8WtuGEpsuET7iyvWC7TFw=;
+	h=DKIM-Signature:From:To:Subject:Date:Message-ID:Content-Type:
+	 MIME-Version; b=YwhvvUOtleADNAzV+WWIVDHCddquMQnp8SS+rT+F0Nrt/sydhHgOctAl4g+kSf37dfG827U6XugI3ryRyB7MGfg+gfxDTLh9aUcq9D/Ksf6Bp0aGpIdHHUk0Qz5AvJgNsWeSbLAkV1qsozsU591LzM1EWt6ClJdacqv83HCF5JKcDqMzAdWW2N/U2ocuPw16RGujBET2dThSH1HaytunVb2FXKts2Ys0f8Qxtg9YxIv5QwElcvICs20C16h1KHMq8W1I09zZ/4GVicC8ONiIFfelk2c6YqVtWwi69BoTj0QLKc6jEPpv1h3dgmMOUjzbYnurudiU4Ncy72p7sTq5eQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=inventec.com; dkim=pass (2048-bit key; unprotected) header.d=inventec.com header.i=@inventec.com header.a=rsa-sha256 header.s=SEx04 header.b=IF5rmQKU; dkim-atps=neutral; spf=pass (client-ip=61.220.76.156; helo=mail.inventec.com; envelope-from=chiang.brian@inventec.com; receiver=lists.ozlabs.org) smtp.mailfrom=inventec.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=inventec.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=R8tQpabt;
+	dkim=pass (2048-bit key; unprotected) header.d=inventec.com header.i=@inventec.com header.a=rsa-sha256 header.s=SEx04 header.b=IF5rmQKU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=inventec.com (client-ip=61.220.76.156; helo=mail.inventec.com; envelope-from=chiang.brian@inventec.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 905 seconds by postgrey-1.37 at boromir; Wed, 04 Sep 2024 13:42:26 AEST
+Received: from mail.inventec.com (mail.inventec.com [61.220.76.156])
+	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wyr181Sbhz2xYk
-	for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2024 01:59:55 +1000 (AEST)
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483EGm9o003206
-	for <openbmc@lists.ozlabs.org>; Tue, 3 Sep 2024 15:59:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
-	:to:cc:subject:date:message-id:mime-version
-	:content-transfer-encoding; s=pp1; bh=YObX343rc2ZfeM1gQQp4Yw9bsw
-	9NAFoEiVxyfkfxbnI=; b=R8tQpabtSCZIET6FqZfpJwXDKOnnl1RgCC7aYMkSmu
-	WG0TDXnSCmgeivseX15lcpncFDtLKsxw5Ki7UppzjHbpa+LKV4OU24M5c9ds6+kU
-	hS9VMOL10qmlLcCX8IxJ2fNz5UUN+iuScZ1GnBJ2inq905ZV+gP8J+GK042t/jg6
-	RXhCaB3xyFQm+mM7+pNV3tDTActZgKFLwLlpGpbpBTpMn18T2mJQKZ+e5h6dRAgL
-	ThMkPH80u5MaH2c7esLEeJ/VJhq7d+FMaHMZOYz5k74/7E90egrXckw31bKssI8z
-	FbAHMcsBf/OZyK59zc7gHKNN4NQ5eRHbQ971rBZWcyZw==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 41bskkxuds-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 03 Sep 2024 15:59:53 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 483CtZDL007995
-	for <openbmc@lists.ozlabs.org>; Tue, 3 Sep 2024 15:59:52 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 41cfqmu71f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 03 Sep 2024 15:59:52 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 483FxpR138535690
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 3 Sep 2024 15:59:51 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2CF6D5805D;
-	Tue,  3 Sep 2024 15:59:51 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 150FF58052;
-	Tue,  3 Sep 2024 15:59:51 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.11.70])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  3 Sep 2024 15:59:51 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.6] ARM: dts: aspeed: Fix Rainier and Blueridge GPIO LED names
-Date: Tue,  3 Sep 2024 10:59:47 -0500
-Message-ID: <20240903155947.425132-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wz7bk265Rz2xfR
+	for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2024 13:42:26 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+    s=SEx04; d=inventec.com;
+    h=from:to:subject:date:message-id:content-type:mime-version;
+    bh=8k61Xr5AeEsjNn+6pNirkk8WtuGEpsuET7iyvWC7TFw=;
+    b=IF5rmQKUr+d3xsH1jAxv4giXv3wurIKq+Xu3gUFSFDzwwbqSqz3WsOX98F4g66
+      +YPt8SpbENwJFGdXgTcgHpLzl+zONXpSUUO7In34W1aPSrKYa+NjwBvvoGbl27
+      jPySoucMCBLCwJPvDuWBHgkf7A3r4iMeTNhbPJL+NW+FmngrmeWVn/NFlWkWJb
+      iqfhMBY5UadutSVTsmt9/liUXjiQSBBN0FeXRkRmys3IumWRRzl/p5TNG/4SN6
+      MqxvRSaapzTHHShK3vWhUw5Y+dNsGGTEO4VWlSieeIE6BUC9S7yhMK3YRMB8Dh
+      xEZt8dqlQZBtSGwKRrKveoVTRu2HJaEg==
+Received: from IEC1-EX2016-03.iec.inventec (10.15.2.59) by
+ IEC1-EX2016-04.iec.inventec (10.1.254.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.37; Wed, 4 Sep 2024 11:27:09 +0800
+Received: from IEC1-MSE-FE2.inventec.com (10.1.254.204) by
+ IEC1-EX2016-03.iec.inventec (10.15.2.59) with Microsoft SMTP Server id
+ 15.1.2507.39 via Frontend Transport; Wed, 4 Sep 2024 11:27:09 +0800
+Received: from IEC1-EX2016-01.iec.inventec (IEC1-EX2016-01.iec.inventec [10.15.2.58])
+	by IEC1-MSE-FE2.inventec.com with ESMTP id 4843R4KT059328
+	for <openbmc@lists.ozlabs.org>; Wed, 4 Sep 2024 11:27:04 +0800 (GMT-8)
+	(envelope-from Chiang.Brian@inventec.com)
+Received: from IEC1-EX2016-02.iec.inventec (10.1.254.221) by
+ IEC1-EX2016-01.iec.inventec (10.15.2.58) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.37; Wed, 4 Sep 2024 11:27:04 +0800
+Received: from IEC1-EX2016-02.iec.inventec ([fe80::5433:d118:ed4a:f767]) by
+ IEC1-EX2016-02.iec.inventec ([fe80::5433:d118:ed4a:f767%3]) with mapi id
+ 15.01.2507.037; Wed, 4 Sep 2024 11:27:04 +0800
+From: =?ks_c_5601-1987?B?Q2hpYW5nLkJyaWFuIMuw57b2xiBUQU8=?=
+	<Chiang.Brian@inventec.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: No CI executed in gerrit
+Thread-Topic: No CI executed in gerrit
+Thread-Index: AQHa/ninCrP4HzD3/E2u5ZqmbzjU0w==
+Date: Wed, 4 Sep 2024 03:27:04 +0000
+Message-ID: <1d0f4c32d611462a9352875d0c054647@inventec.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: multipart/alternative;
+	boundary="_000_1d0f4c32d611462a9352875d0c054647inventeccom_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: oqOM7in6cPhCOE4PCFcE7RztwCXImA0m
-X-Proofpoint-ORIG-GUID: oqOM7in6cPhCOE4PCFcE7RztwCXImA0m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-03_03,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- mlxlogscore=549 clxscore=1011 phishscore=0 spamscore=0 bulkscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409030127
+X-MAIL: IEC1-MSE-FE2.inventec.com 4843R4KT059328
+X-TM-SNTS-SMTP: 5BFFF564C0454ACEA9067F94343232986AE48C4C915C4BF02B7406F1BF11BE692000:8
+X-Mailman-Approved-At: Wed, 04 Sep 2024 16:21:02 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,92 +86,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Blueridge updated the LED names to include the "led-" prefix as
-upstream required. Rainier should match for ease of application
-design. In addition, the gpio line name needs to match.
+--_000_1d0f4c32d611462a9352875d0c054647inventeccom_
+Content-Type: text/plain; charset="ks_c_5601-1987"
+Content-Transfer-Encoding: base64
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- .../arm/boot/dts/aspeed/aspeed-bmc-ibm-blueridge.dts |  5 +++--
- arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier.dts  | 12 ++++++------
- 2 files changed, 9 insertions(+), 8 deletions(-)
+SGVsbG8sIHRoaXMgaXMgQ2hpYW5nIEJyaWFuIGZyb20gSW52ZW50ZWMuIFJlY2VudGx5LCBJoa92
+ZSBhZGRlZCBpbnRvIENMQSBhbmQgcHVzaGVkIHNvbWUgY29tbWl0cyB0byBvcGVuYm1jIGdlcnJp
+dDsgaG93ZXZlciwgaXQgc3RpbGwgc2F5cyBVc2VyIG5vdCBhcHByb3ZlZCwgc2VlIGFkbWluLCBu
+byBDSSBzb21laG93LiAgSSB3b3VsZCBsaWtlIHRvIGFzayB3aGV0aGVyIGlzIHRoZXJlIHNvbWV0
+aGluZyBJIG1pc3MNCk9yIGlzIHRoZXJlIGFueXRoaW5nIEkgY2FuIGRvIHdpdGg/IFRoYW5rIGZv
+ciBoZWxwaW5nLg0KDQpIZXJlIGlzIHRoZSBDTEEgbGlzdDogSW52ZW50ZWMgLSBHb29nbGUgRHJp
+dmU8aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2RyaXZlL2ZvbGRlcnMvMTlSSk5zRTlubk5WOHBN
+blYtNlE2M21iaERNWEtUVW8xPiBhbmQgdGhlIGNvbW1pdHMNCmVudGl0eS1tYW5hZ2VyOiBTdHJp
+cCBzcGFjZSBvZiBOVk1lIFNTRHMgUE4gYW5kIFNOICg3NDIxMCkgoaQgR2Vycml0IENvZGUgUmV2
+aWV3IChvcGVuYm1jLm9yZyk8aHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcvYy9vcGVuYm1jL2Vu
+dGl0eS1tYW5hZ2VyLysvNzQyMTA+DQpkYnVzLXNlbnNvcjogc3VwcG9ydCB0aGUgcHN1IHNlbnNv
+ciBwZWFrIHJlYWRpbmcgKDc0MjI1KSChpCBHZXJyaXQgQ29kZSBSZXZpZXcgKG9wZW5ibWMub3Jn
+KTxodHRwczovL2dlcnJpdC5vcGVuYm1jLm9yZy9jL29wZW5ibWMvZGJ1cy1zZW5zb3JzLysvNzQy
+MjU+DQoNCkJlc3QgUmVnYXJkcywNCg0KQnJpYW4gQ2hpYW5nDQoNCvD0IFdpbmRvd3Mg7tzp6Mvs
+PGh0dHBzOi8vZ28ubWljcm9zb2Z0LmNvbS9md2xpbmsvP0xpbmtJZD01NTA5ODY+7u7h6g0KDQo=
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-blueridge.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-blueridge.dts
-index a170b4b7c0fb7..63dceb8af82c2 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-blueridge.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-blueridge.dts
-@@ -207,7 +207,8 @@ &gpio0 {
- 	/*F0-F7*/	"","","rtc-battery-voltage-read-enable","reset-cause-pinhole","","",
- 			"factory-reset-toggle","",
- 	/*G0-G7*/	"","","","","","","","",
--	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
-+	/*H0-H7*/	"","led-bmc-ingraham0","led-rear-enc-id0","led-rear-enc-fault0","","","",
-+			"",
- 	/*I0-I7*/	"","","","","","","bmc-secure-boot","",
- 	/*J0-J7*/	"","","","","","","","",
- 	/*K0-K7*/	"","","","","","","","",
-@@ -215,7 +216,7 @@ &gpio0 {
- 	/*M0-M7*/	"","","","","","","","",
- 	/*N0-N7*/	"","","","","","","","",
- 	/*O0-O7*/	"","","","usb-power","","","","",
--	/*P0-P7*/	"","","","","pcieslot-power","","","",
-+	/*P0-P7*/	"","","","","led-pcieslot-power","","","",
- 	/*Q0-Q7*/	"cfam-reset","","regulator-standby-faulted","","","","","",
- 	/*R0-R7*/	"bmc-tpm-reset","power-chassis-control","power-chassis-good","","","","",
- 			"",
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier.dts
-index a98612c5a8c7f..d6bb9b03594c1 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier.dts
-@@ -109,22 +109,22 @@ leds {
- 		compatible = "gpio-leds";
- 
- 		/* BMC Card fault LED at the back */
--		bmc-ingraham0 {
-+		led-bmc-ingraham0 {
- 			gpios = <&gpio0 ASPEED_GPIO(H, 1) GPIO_ACTIVE_LOW>;
- 		};
- 
- 		/* Enclosure ID LED at the back */
--		rear-enc-id0 {
-+		led-rear-enc-id0 {
- 			gpios = <&gpio0 ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
- 		};
- 
- 		/* Enclosure fault LED at the back */
--		rear-enc-fault0 {
-+		led-rear-enc-fault0 {
- 			gpios = <&gpio0 ASPEED_GPIO(H, 3) GPIO_ACTIVE_LOW>;
- 		};
- 
- 		/* PCIE slot power LED */
--		pcieslot-power {
-+		led-pcieslot-power {
- 			gpios = <&gpio0 ASPEED_GPIO(P, 4) GPIO_ACTIVE_LOW>;
- 		};
- 	};
-@@ -203,7 +203,7 @@ &gpio0 {
- 	/*E0-E7*/	"","","","","","","","",
- 	/*F0-F7*/	"","","rtc-battery-voltage-read-enable","reset-cause-pinhole","","","factory-reset-toggle","",
- 	/*G0-G7*/	"","","","","","","","",
--	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
-+	/*H0-H7*/	"","led-bmc-ingraham0","led-rear-enc-id0","led-rear-enc-fault0","","","","",
- 	/*I0-I7*/	"","","","","","","bmc-secure-boot","",
- 	/*J0-J7*/	"","","","","","","","",
- 	/*K0-K7*/	"","","","","","","","",
-@@ -211,7 +211,7 @@ &gpio0 {
- 	/*M0-M7*/	"","","","","","","","",
- 	/*N0-N7*/	"","","","","","","","",
- 	/*O0-O7*/	"","","","usb-power","","","","",
--	/*P0-P7*/	"","","","","pcieslot-power","","","",
-+	/*P0-P7*/	"","","","","led-pcieslot-power","","","",
- 	/*Q0-Q7*/	"cfam-reset","","regulator-standby-faulted","","","","","",
- 	/*R0-R7*/	"bmc-tpm-reset","power-chassis-control","power-chassis-good","","","","","",
- 	/*S0-S7*/	"presence-ps0","presence-ps1","presence-ps2","presence-ps3",
--- 
-2.43.0
+--_000_1d0f4c32d611462a9352875d0c054647inventeccom_
+Content-Type: text/html; charset="ks_c_5601-1987"
+Content-Transfer-Encoding: quoted-printable
 
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dks_c_5601=
+-1987">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+@font-face
+	{font-family:Roboto;
+	panose-1:2 0 0 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"ZH-TW" link=3D"blue" vlink=3D"#954F72" style=3D"word-wrap:bre=
+ak-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello, this is Chiang Brian fro=
+m Inventec. Recently, I=A1=AFve added into CLA and pushed some commits to o=
+penbmc gerrit; however, it still says
+</span><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-family:Roboto;co=
+lor:#E8EAED;background:#2F3034">User not approved, see admin, no CI</span><=
+span lang=3D"EN-US"> somehow. &nbsp;I would like to ask whether is there so=
+mething I miss</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Or is there anything I can do w=
+ith? Thank for helping.
+<br>
+<br>
+Here is the CLA list: <a href=3D"https://drive.google.com/drive/folders/19R=
+JNsE9nnNV8pMnV-6Q63mbhDMXKTUo1">
+Inventec - Google Drive</a> and the commits<br>
+<a href=3D"https://gerrit.openbmc.org/c/openbmc/entity-manager/&#43;/74210"=
+>entity-manager: Strip space of NVMe SSDs PN and SN (74210) =A1=A4 Gerrit C=
+ode Review (openbmc.org)</a><br>
+<a href=3D"https://gerrit.openbmc.org/c/openbmc/dbus-sensors/&#43;/74225">d=
+bus-sensor: support the psu sensor peak reading (74225) =A1=A4 Gerrit Code =
+Review (openbmc.org)</a><br>
+<br>
+Best Regards,<br>
+<br>
+Brian Chiang<br>
+<br>
+</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;=E3=E6=E1=AC=D9=A5=
+=F4=F7&quot;,serif">=F0=F4</span><span lang=3D"EN-US"> Windows
+</span><span style=3D"font-family:&quot;=E3=E6=E1=AC=D9=A5=F4=F7&quot;,seri=
+f">=EE=DC</span><span lang=3D"EN-US"><a href=3D"https://go.microsoft.com/fw=
+link/?LinkId=3D550986"><span lang=3D"EN-US" style=3D"font-family:&quot;=E3=
+=E6=E1=AC=D9=A5=F4=F7&quot;,serif"><span lang=3D"EN-US">=E9=E8=CB=EC</span>=
+</span></a></span><span style=3D"font-family:&quot;=E3=E6=E1=AC=D9=A5=F4=F7=
+&quot;,serif">=EE=EE=E1=EA</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:&quot;=E3=
+=E6=E1=AC=D9=A5=F4=F7&quot;,serif"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_1d0f4c32d611462a9352875d0c054647inventeccom_--
