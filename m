@@ -2,60 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2ABB96D0B0
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2024 09:46:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1994B96E503
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2024 23:24:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4WzrzC0fJzz3c9g
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2024 17:46:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X0C6H4KKdz3cFM
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2024 07:24:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725522404;
-	cv=none; b=M1zMA4Zoz93UD9tLBwQwLdFCKxvVnvDbYoEXJJq3kyqlYoHMw1e9jyBTiyzJTQsD1g6vkqpfluEO+ailDFL4gzAWo5uSe+9bYcVOnBIZyLJlUWo1pyrFYmugm9TNkDwC4K4WuKe5w2JulxOCRUawQpb732dvK5VZJif1BWxWFT8/eNxcEkqZ+49fExPGp0ge4pSohGxuofDESMv4UwDJFiahnKP8gDPBuXIi3tH7Zx4FH5XXzRZ4RYJbr1GrAbs+NmE+2glZ+6uIOCXxLt5HHYLkfWTPOD34oInu7dZEZLGSEA0dc/KpbizoU/iIrkhkehsMfU+te1RUGkP2p+u/Pg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725571444;
+	cv=none; b=OsFSWhLULfTz6hcvLq9GgHQqDN0aZoiIzZ6oLrxQ5SadZweT+lOtDJjtQtU8c0efgf1V4nVWnDqTrsrLoq+su50jiao3I1ehueGJjxFtEO7fZP9PyqdZzkzyYhN84iAW0/v5qsYaxNzQEV2/h+9/F8n77Yt3EbXdKN7GeiU/19KPuwARiWDVyD2kLC+JAqB3Sk1f/H2AcE4sh1cTD6a7jwUfII0LHfkI8j2iyAOXB8MfrX1vDPtRrNz8V3RYyccsbXmk7J2upI5W/v7TdzZfwhYniVEoHAxtufjjfP9hPCof0qK7FmWaA/PjZwTZF0qaME9XeQcZm5He+Ot1ZRjKGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725522404; c=relaxed/relaxed;
-	bh=KkpHYEUlojqD4egST17h/NJcHKTftwER4zMqeYHg7qw=;
+	t=1725571444; c=relaxed/relaxed;
+	bh=zC1D/y44BrImKY4P7qE8StM+oCGhlhr7yN+yFUsOiMA=;
 	h=DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=jCtEg2Pbs7RYRE/vmpUvvouakcqRUhwX/2Cp/1Q5EHDFxJr5/L+oM7bY5T8RuLA3ioAg7X1w7rUdsVHaA7KZotzjF76EwtSDFHdNVtAetSgI3wCGRlkEfdNnXJfmeLe86fTx2lnsKGZZ69LftYatMVmCHqG84P71LxZwKjonhlBc7hKLDLhMEqClfhDBdYDFC3GRAnjR5t3s1Ck14U7Y9jIxW1Jp31SS+txRt9Ju7qq0ymyXlSnaZcJAIqZq39uLeAhkD8YQX0GVRNVjzi3wRsswwQFpt3W/QoPBUjX6XpnxUWr6TCKmYLDYWQ1i/qIeRJGoCSXnV3F69Q3hurcVZQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QWBVVBWL; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=peter.chen@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=d3EjzlS6LN04+QmJvlaOjam/6cHxmMCLs61+f0SCyUiE1k3pdeW9X4fcHMn83NJaOFcfVmDznCKacY5f7Gn6COxabryiEApENBcBC0w/taTZ819GqNf6Myglmk82mAqKoa2yYKLgqBK7U3UQISbFHhDjCI4xcz0uDFtAhnb2Byr+buXO78r8in7+ZnVEMOfn0T4Ntn2jG9x3yZAFWJdW1uvgPogGuaVz2RDWZeKjqTsFPLiC8XWtO+wfQedVy5kmHjFsf7Tk40fGpK0HQeMKM4CXAcwqsRiREADZEto/59Lh5BRkkWdK/M+fpqfR7ErLwQn7Bl62ab7ulz5DQ/rQmA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=vB3qGyo3; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QWBVVBWL;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=vB3qGyo3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=peter.chen@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Wzrz76M9Tz2xJ6
-	for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2024 17:46:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X0C6C5v0Vz2yVV
+	for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2024 07:24:03 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 6C7EA5C0FFA;
-	Thu,  5 Sep 2024 07:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB37C4CEC4;
-	Thu,  5 Sep 2024 07:46:37 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 4AB80A404BA;
+	Thu,  5 Sep 2024 21:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726F7C4CEC3;
+	Thu,  5 Sep 2024 21:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725522399;
-	bh=ZA2xtBa0ZD9doRYaDtQI6rey1VJXbSnib3Nj3waz1sU=;
+	s=k20201202; t=1725571440;
+	bh=b3ULdFogwoeI0XvlpVirzfRUhuJ43tY9H/6dFn25c6w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QWBVVBWLPLUPKsa1B4jwatcUCnd9AB9Aq+Nu6f6W2MGoibG4OmY83InU+xPQKj5Fd
-	 0Dh/SwWqWGD0nd1AX+AsGyEfclzNga+JpgCD6SrNz9Zd6GC1pEA6JUVcMubSWZexHN
-	 H7wYxBMU+LUX71GYgMTLaIkE0563KP/MEf3o6djXM/08xpa1MdOig1AxfLVWyZmJUE
-	 rpSVPSFm9Jfo8AbKkcmXEqSKJcUDIolxxacLwMxdOxwxJyXo2/vwAVHyPrdg3LkFzX
-	 NvqTFMOqACEIrlnPKyWxBBeN9eSA673Ljv/CFPLacz0DhxJEtkz4g9GO/6LhfIgRoy
-	 sp23g+wR/d8vw==
-Date: Thu, 5 Sep 2024 15:46:30 +0800
-From: Peter Chen <peter.chen@kernel.org>
-To: Andreas =?iso-8859-1?Q?K=FChn?= <andreas.kuehn@diekuehnen.com>
-Subject: Re: [PATCH] usb: chipidea: npcm: Fix coding style with clarification
- of data type
-Message-ID: <20240905074630.GA325295@nchen-desktop>
-References: <20240903132535.15554-1-andreas.kuehn@diekuehnen.com>
+	b=vB3qGyo35LrR5C41h10LIV33t3xyDtceS/qKSEAHhWj1WDAH7+lAjcSvT7wJOdMTZ
+	 gu0VqPYo7BEEGeq4qjd0vvVuRFUoX0TUgUn35MI5LjJfQAUncHYCYOcoCxQ997V8WX
+	 49sn5PdSFqnZEUbGWquG7epp6wRZnXrkpIgX11wPAtxJ8ooJf6wJ5LEOYHI2iOnzWD
+	 mJnMvjhgbTduP1YutUQ6oGYsni/GJtxOam6Plc3ohf8fA3WcI5nxun01OxDUG1Drz6
+	 37tfxXxFLK9YIhv28cmAFJCr0AWmdnINNxQPR8RFu0CbemhsLB1UHN0nXSHX57JnrG
+	 SSI1MwV9twtJw==
+Date: Thu, 5 Sep 2024 23:23:56 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v2 1/7] i2c: npcm: restore slave addresses array length
+Message-ID: <o4vds7grtpvgn34afke5vbkb5ymqqglvudi2hdb4oekz52ujs6@ymuhslhr5oh7>
+References: <20240830034640.7049-1-kfting@nuvoton.com>
+ <20240830034640.7049-2-kfting@nuvoton.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240903132535.15554-1-andreas.kuehn@diekuehnen.com>
+In-Reply-To: <20240830034640.7049-2-kfting@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,35 +67,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, gregkh@linuxfoundation.org, tmaimon77@gmail.com
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, wsa@kernel.org, tali.perry@nuvoton.com, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 24-09-03 15:25:15, Andreas Kühn wrote:
-> Fixed coding style issue: unsigned to unsigned int.
+Hi Tyrone,
+
+On Fri, Aug 30, 2024 at 11:46:34AM GMT, Tyrone Ting wrote:
+> The smatch check warning is "buffer overflow 'npcm_i2caddr' 2 <= 9".
+> The original design supports 10 slave addresses although only 2
+
+please remember that the "slave" term has been replaced by the
+"target" term. I will change it when applying the patch.
+
+> addresses are required for current implementation.
 > 
-> Signed-off-by: Andreas Kühn <andreas.kuehn@diekuehnen.com>
+> Restore the npcm_i2caddr array length to fix the smatch warning.
+> 
+> Fixes: 47d506d1a28f ("i2c: npcm: Remove own slave addresses 2:10")
 
-Acked-by: Peter Chen <peter.chen@kernel.org>
+I don't think the Fixes tag is necessary here. This change is
+primarily addressing a static analyzer warning. While some cases
+come close to a buffer overflow, it couldnâ€™t have occurred in
+practice since we don't actually have the devices listed in
+npcm_i2caddr[].
 
-
+> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Closes: https://lore.kernel.org/r/202408130818.FgDP5uNm-lkp@intel.com/
+> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 > ---
->  drivers/usb/chipidea/ci_hdrc_npcm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/i2c/busses/i2c-npcm7xx.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-> index c89c68f41ccc..3e5e05dbda89 100644
-> --- a/drivers/usb/chipidea/ci_hdrc_npcm.c
-> +++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-> @@ -18,7 +18,7 @@ struct npcm_udc_data {
->  	struct ci_hdrc_platform_data pdata;
->  };
+> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+> index 2fe68615942e..bbcb4d6668ce 100644
+> --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> @@ -136,11 +136,13 @@ enum i2c_addr {
+>   * Since the addr regs are sprinkled all over the address space,
+>   * use this array to get the address or each register.
+>   */
+> -#define I2C_NUM_OWN_ADDR 2
+> +#define I2C_NUM_OWN_ADDR 10
+>  #define I2C_NUM_OWN_ADDR_SUPPORTED 2
 >  
-> -static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
-> +static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned int event)
->  {
->  	struct device *dev = ci->dev->parent;
+>  static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
+> -	NPCM_I2CADDR1, NPCM_I2CADDR2,
+> +	NPCM_I2CADDR1, NPCM_I2CADDR2, NPCM_I2CADDR3, NPCM_I2CADDR4,
+> +	NPCM_I2CADDR5, NPCM_I2CADDR6, NPCM_I2CADDR7, NPCM_I2CADDR8,
+> +	NPCM_I2CADDR9, NPCM_I2CADDR10,
+
+Looks a bit hacky, but serves the purpose.
+
+The core issue in "npcm_i2c_slave_enable()" is the lack of an
+upper boundary check, which could potentially lead to a buffer
+overflow. In practice, we rely on the assumption that these
+addresses donâ€™t exist in the real world.
+
+An easier fix could have been:
+
+@@ -629,7 +629,7 @@ static int npcm_i2c_slave_enable(struct npcm_i2c *bus, enum i2c_addr addr_type,
+        if (addr_type > I2C_SLAVE_ADDR2 && addr_type <= I2C_SLAVE_ADDR10)
+                dev_err(bus->dev, "try to enable more than 2 SA not supported\n");
+
+-       if (addr_type >= I2C_ARP_ADDR)
++       if (addr_type > I2C_SLAVE_ADDR2)
+                return -EFAULT;
+
+        /* Set and enable the address */
+
+But yours is a bit more robust, so that I'm going to take this
+patch.
+
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+
+Thanks,
+Andi
+
+>  };
+>  #endif
 >  
 > -- 
-> 2.43.0
+> 2.34.1
 > 
