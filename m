@@ -1,60 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49B1D96EB85
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2024 09:06:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EF5A96ED03
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2024 10:01:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X0S1l0c13z3cHb
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2024 17:06:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X0TG14YDQz3cH2
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2024 18:01:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725606359;
-	cv=none; b=P1SB2MQ5Y6pH4Nr0I4AB9u29V1XNQ3sEs5UALdd5B4Tcyp3hQjHZA9MBW8kBVPuL6HsM8B9vWTD0LKWJ+8N6KlZf/UktJQilDuwmTUX55SvwTBzqCRidOWF4I4meUzpOpJzhOTHAHbivA3yGAsXdSsIyn5yKDuUkcDwCxFqvI19RyNhYm/p58BoIynxrpOg6cRn8QX3OodsL772971IV15EJeE8ubyuQ77vXxVAwL7d8kA8/DaoT8NdF9E1DsEQ2mMiC+pBqaeOGbCSUuRQxVd8x0zRiVevOiEWRb8tO453iSqGnpLdTFPLKtnLqi8dytQyoG0SDiL38/kasfc6CDQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::630"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725609700;
+	cv=none; b=Rfb5g1VWw1ojP60WxYX8WGVKjrxxmBxsWDXQoQjxUdkUVsvs8OrScuWC0n0JhABIUWNW4V/cWvcLmWcOdWIbzdhbHhXUcVIw+OSajLOtxp56x2l+kCys8GUAVncZTiLeL79D9ILd55s4jFmlqGQcsAEn003i3ineqXBIulpwlaiNkU43xlCyo7Vk5D+Xr+Px+WRw5un2KHXBed6sPnZbFSVt6B8Peyf3jGh5f30TZIdrdJC/EhUEV7pkpQvrmhXzccLsrAPVsF0Smi8hyrb82EPxpRCkxrctDBdf7ndWuM756Pp6yNCxNa/Ycvv8fCA9MEWQ7IOsg21Oha3K+dXs5A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725606359; c=relaxed/relaxed;
-	bh=TxaVJD8d81aZ+N8Hn8Ru6afpYwJWN+eYnzxgtxQxHEc=;
-	h=DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=ihTiEPXoflrzgPKyHrKRMnkWkzk+aLuZZg6Tp7IuUrNvzzM4+qmP+eJagKodqEmTlYAyWYfNcbPPSKjcqvpXGW0B0C85A5rAfza4AaBLtynuvj7mhvTNVZIvzfh90ynIDPUiN/bT8b3myQ0mMJQbzQ2qGiCt+GTu4lgMhkfgnc/DCIKS2EqbnlMf3BxS62R9RxfQG8u2QOXuxyPw2P5LX5Wb9nACJvR60n5yB3T7UkzhJsxoupINkoVfelNQhbJOBUdq3bNsXqV4bDxyJB3FFrqosgqozRnUwXA2lvN07bCWWiw+ex71MC7VjNJmVO0IJm/84RZDjOzouavv9gyUyw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=r1MoESgT; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1725609700; c=relaxed/relaxed;
+	bh=2utWfBFe4M/uAhG/mbeNIzfoaB38VL0KOKjTpL2+30M=;
+	h=DKIM-Signature:MIME-Version:References:In-Reply-To:From:Date:
+	 Message-ID:Subject:To:Cc:Content-Type; b=IaHiSh50qRyNx7Op7nMIvQafU6BFoR/SLKn/9h0duiDN3tkIFu5Xi0FWliSqPkU5r3wo8mtgTo6hSu1BxRIhWBX29W5Yh5VOiCNnX5l4uqXc11PewqfXw62UCbnc9LSgXCkVy07KJ+ZJ8wHATHQHBBz8t6hJy8oUYZatVg/wSyK9YVAR/7e2SZA7ZJR7Xgfz2EC1Frp7JvSLZ8qjs4IUOwayo5qf5S2p4pq+HAHITfbY/nbA/OCI6GLH/0YG2QGiIpyegKJe7GoBZ4aJKCukECZxFKprO1MF3jtgE7SH+Auavm98gBSU5ghl6UVaTAyPnhWDL47AaMzALWJ32Fc1Pg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ObGV0NO2; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=r1MoESgT;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ObGV0NO2;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X0S1g4TkZz302N
-	for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2024 17:05:59 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 472BEA44979;
-	Fri,  6 Sep 2024 07:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC54C4CEC8;
-	Fri,  6 Sep 2024 07:05:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725606356;
-	bh=oDrorMdX9k1okUgl5LsV5arhu2DByaxXuJRBbgjF4V0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r1MoESgT7X9hOR2b1uyfvxtTsVwxVl9+WbJPHieq3wIpfPEERTrJ2iUmOMV4jx0Qe
-	 bIZe+an+cFqgiK3EBynDn82selrAcef9P8eqxbQmLGCYQin4wv/WHpk+V+y4U/nhN1
-	 tEya3A/eUG/sWJb/M1sLDnYHhG1xuqaypPGcgH1IjydV4Yw3LRD9kFLdQlkfAGeZw1
-	 fZ9WF+Iso2mfObfFCmlKtcYhVdt3mpIPt1jcbFcXvPGaW2l81++OMWsYmSLbYxqm2Y
-	 bNMOaXdUlWR+OCjkoP/Ymfu2dRVPOb2jEp27lZAkeCeDQu9qagsaqSoM82GnNZUHqn
-	 //NneqgHK5DEA==
-Date: Fri, 6 Sep 2024 09:05:52 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v2 1/7] i2c: npcm: restore slave addresses array length
-Message-ID: <6tyecc6mf6fnfhwydac2e6ncme52qtj6pyhqhcbbo654xgtibq@txvlihb52dxn>
-References: <20240830034640.7049-1-kfting@nuvoton.com>
- <20240830034640.7049-2-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X0TFv1btnz2yN8
+	for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2024 18:01:37 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-a86acbaddb4so222734766b.1
+        for <openbmc@lists.ozlabs.org>; Fri, 06 Sep 2024 01:01:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725609691; x=1726214491; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2utWfBFe4M/uAhG/mbeNIzfoaB38VL0KOKjTpL2+30M=;
+        b=ObGV0NO2va9KIfW6hineW26d4iXA9QItO7hiqpl54e/mGfNtGtCIL6f4P5jkwmlSez
+         bKsrku0aTaT/vWvBISb6uXbpZo0i3NaHggjvt4Igqpil0HTMZs2XT4lsLyRNvoVW1L4J
+         zgKVPJxWF+Yvijo88dTGQwFdhfMIBMuFKhmv9xp5sl+OM3X2yZGmfzlm2EHKai4QnGWX
+         IeCZaADKulaeBiiDiMfIRc74TFY99keq2zRp1YV5vAFWdRGX4gZl4KdMYPUw8xuWlgfu
+         vejSH7PMxHGb+FyQ570JHPKqNs+KXy5OgOWnFBAQ02G6H5SOCfo/ruZLZL/x5oSnqK0k
+         sJhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725609691; x=1726214491;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2utWfBFe4M/uAhG/mbeNIzfoaB38VL0KOKjTpL2+30M=;
+        b=xQcysZz1pGzDhYOTNhYzC7f2anGGktcNS8reCO6mEOGfPTWueoeEei4crOZCbLHdDt
+         4q/PILitbesG8d4nAR1cUC9jTXQTlfWh/ew8A4Z02d0mqdFAWbKwM8JB+4kd97RgDdqV
+         +KR4pehvtkh7joVWx96qBHOWIhZ7ns+BYDnftawMdlzyHKvXwpQoJLjCdtRMdcmB6bG9
+         1+qX62DPMSs2GxqWD1LejX5qcq6FiUraK2O7guGaEP6fbxWLF4F+tgtrApv2nAvzFQEp
+         T8p/I9ej39n4TKvE+IWsXqcK+rwgsqmqXQXdj3lLdzt8kxJrrc0oVsePPWOkkOjYO5uD
+         3Zyg==
+X-Forwarded-Encrypted: i=1; AJvYcCXt1nUTMtdzNWcMlY69acSdqZofYgU8HBcKpcO25sT2v7xjIY+qXIdXDHXA0Zdg2scyZ10H+lwO@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzgCcUnDfr+8NDZahBke/TT5aJpBygSBTGZJGcWa0y1gCf0eCJI
+	SdEx8xi9eaO5uEWypZVNjTsjjwmPJ/15VCtsPIPa5Gs5GYNj77wzzEFkLzvvK8Avm4/D8ji0Skm
+	tUgx5WD0bdP6mQeOPwQAetnvybQ==
+X-Google-Smtp-Source: AGHT+IFaK/Sc02N/SttRJy/FczDOr34Kkr47PNs58c54+IJo3F577WuXb4byWkb9fTG1oIEjYSvR2h0idCrwUKGTwcE=
+X-Received: by 2002:a17:907:2d8e:b0:a7a:b73f:7584 with SMTP id
+ a640c23a62f3a-a897f92014bmr1930227866b.34.1725609690498; Fri, 06 Sep 2024
+ 01:01:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240830034640.7049-2-kfting@nuvoton.com>
+References: <20240830034640.7049-1-kfting@nuvoton.com> <20240830034640.7049-2-kfting@nuvoton.com>
+ <6tyecc6mf6fnfhwydac2e6ncme52qtj6pyhqhcbbo654xgtibq@txvlihb52dxn>
+In-Reply-To: <6tyecc6mf6fnfhwydac2e6ncme52qtj6pyhqhcbbo654xgtibq@txvlihb52dxn>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Fri, 6 Sep 2024 16:01:18 +0800
+Message-ID: <CACD3sJZBqzQg+5gKiDQEpDst0OKPERkF0z6vnfQSHEAhVpPtEA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] i2c: npcm: restore slave addresses array length
+To: Andi Shyti <andi.shyti@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,22 +89,34 @@ Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+re
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tyrone,
+Hi Andi:
 
-On Fri, Aug 30, 2024 at 11:46:34AM GMT, Tyrone Ting wrote:
-> The smatch check warning is "buffer overflow 'npcm_i2caddr' 2 <= 9".
-> The original design supports 10 slave addresses although only 2
-> addresses are required for current implementation.
-> 
-> Restore the npcm_i2caddr array length to fix the smatch warning.
-> 
-> Fixes: 47d506d1a28f ("i2c: npcm: Remove own slave addresses 2:10")
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Closes: https://lore.kernel.org/r/202408130818.FgDP5uNm-lkp@intel.com/
-> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Thank you for your prompt response and help.
 
-with the changes we agreed, I merged just this first patch in
-i2c/i2c-host.
+Andi Shyti <andi.shyti@kernel.org> =E6=96=BC 2024=E5=B9=B49=E6=9C=886=E6=97=
+=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=883:05=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> Hi Tyrone,
+>
+> On Fri, Aug 30, 2024 at 11:46:34AM GMT, Tyrone Ting wrote:
+> > The smatch check warning is "buffer overflow 'npcm_i2caddr' 2 <=3D 9".
+> > The original design supports 10 slave addresses although only 2
+> > addresses are required for current implementation.
+> >
+> > Restore the npcm_i2caddr array length to fix the smatch warning.
+> >
+> > Fixes: 47d506d1a28f ("i2c: npcm: Remove own slave addresses 2:10")
+> > Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> > Closes: https://lore.kernel.org/r/202408130818.FgDP5uNm-lkp@intel.com/
+> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+>
+> with the changes we agreed, I merged just this first patch in
+> i2c/i2c-host.
+>
+> Thanks,
+> Andi
 
-Thanks,
-Andi
+Have a nice day.
+
+Regards,
+Tyrone
