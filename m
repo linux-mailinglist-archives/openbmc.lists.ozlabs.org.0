@@ -2,62 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6932971A24
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 14:57:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6932A971A36
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 15:00:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X2Rgb472Zz3cG0
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 22:57:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X2RlB0QLmz3cHN
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 23:00:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725886631;
-	cv=none; b=Pes/Nvx7+tQEc86RtD5oa52320UC9Vj4vpYX1s6CacPBwWAqi8YbFtjs7OBkrrle9S8gdmnbeW/42tL9pn8tvbm4rP+1uRkFw6YbS8qPXtDd9riWQNSFq08zBwrtmpRhO8KzvTc8ya7DP/7fo9NO9SIUQueEpLIhCeBO92fSktuMogvfvI0Y5DhkVtk4UYnEdSyiC1LjeSuf8jgfb47Os+Or6GExiE+uH+yCQyotyPMEDev/Z7lEqdBZGFtCfrL787WptOg9Sa84mhOERjhs7qlvoFF9wnVsl0WPhtvF/76jIAaHFgHwcCBgzVe5i0cGsoQaPCJMSHVWeea7Irga8w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725886819;
+	cv=none; b=SJyw5YsXwe7CE5QMWXDEX62VIvgBBcF4MvMJ+3VosY6JPoHV9rN88IwM/550J3ceiDT9ZRzFfbmGPLHXDdbO/cUT0EkKCE4Xb3LqyTRyYQ0/tV54O38P2FsKKvj9AHGQVyxCVatKyeO63Efw8taXtZylB7/g8Hc9y/k+pPHT91uQ5gtQIhi9g5LN+GRmzjEqWfblIgdf8JLIampAoQH67wUMGIS6i6CCtcP3914PrV7c0eEgEjzqO6OKsXxcuAKGY7yMWNNT2BjrusyQ5N36Vg4M2v7Mr+kjjOjHfL8Dq8XRdgn+9QHBJERNnmc6VdpnJMugM1cpM1tA0kyvTvuEyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725886631; c=relaxed/relaxed;
-	bh=IoWOk+MadJq4aQPitAOEe4gF4LU/y3wUC36xSO9O4n0=;
+	t=1725886819; c=relaxed/relaxed;
+	bh=zwsfhKrVwb/we3c6vVFUv79KDd8E8tEqs9s7mb6vTZc=;
 	h=DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=S2e1Gkhajwr+qrlDLfq3p9wGRLIzRBMRNfioOZU8kBxAtlnAdOKWywFtsj8vvoRRrg6e5iMm5ldjXzv0+Vlz3GiIXTAZOtoxrIFOek7ZSnNuD5PRjiDlSNTZ6uOVbZZ/2dYiAHdq6V6hlt0hFnLu5/jPIc16j0cIraAA4IZBlS+aui9qHViSQoHdb1f993uDPuq89fuiDtw4UAUgBwNb4P3qIUpNfoS9ncDaBMz1hmjHtGQvzxOtTLv3niyt/U1Bm87XMLuY5sRS6JO1MvXcSYrsyhaMp7+a9HHlpYmoEplSjlodLyop99JTwwwx8Ieidd8ioUEMaqqD7MxXxFxW/Q==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=g4NVS6Sl; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=Zfzpk4lXDHXXilBSd6ZddRHhFK6PHKq6DWpRQthO8T8iqPQWDkc1+dKW/u1fX5hRRZFPEyeOQ1tEeujK5CUNebRftnu+sAimcSQE2rkJ0duuX0E3Mno6Y7EJSiuHwG6eh5TuqiKy2OfmaAOIC9QkH4YOh+Ulbaea0D0ELGGaikQDfU/WAXC3rFyI2pvAQPd5/5efEff3d42wtp3zby9uOyVhlSMMxcFv+3LT2drbvLMX4vEmQJqr6Wg96koG+p4zr1Mcwli1RY/9Cc2tFTc/tsm96mgamjyYw8pzVq96JY6AmbQa6yBRFGGR0CQdneLd96tBw6Wurp8vrobZ1TSuDQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=phi5IflI; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=g4NVS6Sl;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=phi5IflI;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X2RgW56mqz2yL0
-	for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2024 22:57:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X2Rl66B6zz2xWb
+	for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2024 23:00:18 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 546765C4D29;
-	Mon,  9 Sep 2024 12:57:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0746EC4CEC5;
-	Mon,  9 Sep 2024 12:57:06 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 33D11A437D7;
+	Mon,  9 Sep 2024 13:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691E6C4CEC5;
+	Mon,  9 Sep 2024 13:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725886627;
-	bh=n1LtFgen2lM9wDK2rBgOQxPzxNJOXud50nqNizGKKoA=;
+	s=k20201202; t=1725886815;
+	bh=ruHz9KHuDIKm3cQM/2NT6sIheDvmMycaOm0h2WUqGKc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g4NVS6Sl/mpDVc76o61sNyZZWAnteT9uMb/RNeRdfJMDPr/i7R6sQ/le8t+iGghoC
-	 dmzDrVBEBII2dyxxWUS7ygw5EDxMAYDz8S+NLvHDL36wt8P8omaajqyFvtT5dKJySP
-	 mQlLpZWZ+e7xXfjHdX95O/WBpOQSS+5TxP/Gporh3hVZIUaF1mR5cR43a5TJrKdTUj
-	 B+B4kp6dmJ1tlUfRjFyycyB5thY5R+24dftbTIu6BTE11D4UCrCggI9VIlNU0oSsgd
-	 xbRlQDkcpWUp1bo9LuVOUEBKPphoGNAQQaOXB/zWv6olrAv1sCAtKukMUYyJMRAQwz
-	 Dnm+0POZAVqqQ==
-Date: Mon, 9 Sep 2024 14:57:03 +0200
+	b=phi5IflIz+sPJez3pTiHiRXgsY5nGq8Ma8vBQFvAcCj+LdwafZMzpuIILyTSZivgx
+	 l74g2su/9m6h3LjLk8Dv1UXO3TYu9DVmj8l20wYIYy0G2xrsCFoMPc5kxSLGpf4zmJ
+	 d9p43OXT6MDiKdNupoj4LtXuW6w/rEhT3gmt83azYOthj29IATEtux5QrhImdL1j+Y
+	 y4xmYwNi0aPlfGl6e+5IjrQprSiHhkwjAIgOZKUFOvw9UhCmTIW0WLLn49+IPcKRNg
+	 HMezMCXocPpuDsMDa9gU3qoOP23ACS+P1Oq5ys3WTT4+KoniPgLM2HzdUWjkNMAPDY
+	 5YAgJ2AybwUOw==
+Date: Mon, 9 Sep 2024 15:00:11 +0200
 From: Andi Shyti <andi.shyti@kernel.org>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v2 6/7] i2c: npcm: use i2c frequency table
-Message-ID: <2kqhf2ad3omx3dsjucrqhtnonnox7ghtp7vkogrwrdfh3dgg2o@4cpa4gfg6c3f>
+Subject: Re: [PATCH v2 0/7] i2c: npcm: Bug fixes read/write operation,
+ checkpatch
+Message-ID: <qr3q7stbuwl3ylcqnfftg43nvnzi5cz2wcrhinlek6kvzb7wyi@uqgq4z5b6ob5>
 References: <20240830034640.7049-1-kfting@nuvoton.com>
- <20240830034640.7049-7-kfting@nuvoton.com>
- <3wz36hrpicogoakqhmveppcrt6s52zmlcgjpio3wwpil3rdwdi@ft7tloqqf2zt>
- <CACD3sJYFNV9Vxmq1Ydp=+wh-52DOCMsECO+RmP_K6t4B8wzbmA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACD3sJYFNV9Vxmq1Ydp=+wh-52DOCMsECO+RmP_K6t4B8wzbmA@mail.gmail.com>
+In-Reply-To: <20240830034640.7049-1-kfting@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,56 +70,68 @@ Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+re
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Sep 09, 2024 at 09:56:25AM GMT, Tyrone Ting wrote:
-> Hi Andi:
-> 
-> Thank you for your review.
-> 
-> Andi Shyti <andi.shyti@kernel.org> 於 2024年9月6日 週五 上午5:43寫道：
-> >
-> > Hi,
-> >
-> > On Fri, Aug 30, 2024 at 11:46:39AM GMT, Tyrone Ting wrote:
-> > > Modify i2c frequency from table parameters
-> > > for NPCM i2c modules.
-> > >
-> > > Supported frequencies are:
-> > >
-> > > 1. 100KHz
-> > > 2. 400KHz
-> > > 3. 1MHz
-> >
-> > I agree with Andy, please add a good explanation for this change.
-> >
-> > > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > > ---
-> > >  drivers/i2c/busses/i2c-npcm7xx.c | 230 +++++++++++++++++++------------
-> > >  1 file changed, 144 insertions(+), 86 deletions(-)
-> > >
-> > > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-> > > index 67d156ed29b9..cac4ea0b69b8 100644
-> > > --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> > > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > > @@ -263,6 +263,121 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
-> > >  #define I2C_FREQ_MIN_HZ                      10000
-> > >  #define I2C_FREQ_MAX_HZ                      I2C_MAX_FAST_MODE_PLUS_FREQ
-> > >
-> > > +struct SMB_TIMING_T {
-> >
-> > Please run checkpatch.pl before sending the patches.
-> I did run the checkpatch.pl against this patch.
-> Here is the log from the checkpatch.pl:
-> -------------------------------------------------------------
-> ./patch_i2c_v2/v2-0006-i2c-npcm-use-i2c-frequency-table.patch
-> -------------------------------------------------------------
-> total: 0 errors, 0 warnings, 265 lines checked
-> 
-> ./patch_i2c_v2/v2-0006-i2c-npcm-use-i2c-frequency-table.patch has no
-> obvious style problems and is ready for submission.
+Hi,
 
-mmhhh... I thought checkpatch hated capital letter declarations.
+On Fri, Aug 30, 2024 at 11:46:33AM GMT, Tyrone Ting wrote:
+> This patchset includes the following fixes:
+> 
+> - Restore the npcm_i2caddr array length to fix the smatch warning.
+> - Enable the target functionality in the interrupt handling routine 
+>   when the i2c transfer is about to finish.
+> - Correct the read/write operation procedure.
+> - Introduce a software flag to handle the bus error (BER) condition
+>   which is not caused by the i2c transfer.
+> - Modify timeout calculation.
+> - Assign the client address earlier logically.
+> - Use an i2c frequency table for the frequency parameters assignment.
+> - Coding style fix.
+> 
+> The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
 
-Please, then, use only lower character names for declarations.
+first of all, Thanks Tali for your reviews.
+
+Second, Tyronne, can we please incorporate Tali's comments into
+commit messages and improve the code comments so that we don't
+leave room for more questions?
+
+Consider that not everyone knows the device and we need good
+reasons for accepting the changes.
 
 Thanks,
 Andi
+
+
+> Addressed comments from:
+> - kernel test robot : https://lore.kernel.org/oe-kbuild-all/
+>   202408080319.de2B6PgU-lkp@intel.com/
+> - Dan Carpenter : https://lore.kernel.org/all/202408130818
+>   .FgDP5uNm-lkp@intel.com/
+> - Andrew Jeffery : https://lore.kernel.org/lkml/
+>   20240807100244.16872-7-kfting@nuvoton.com/T/
+>   #m3ed3351bf59675bfe0de89c75aae1fb26cad5567
+> 
+> Changes since version 1:
+> - Restore the npcm_i2caddr array length to fix the smatch warning.
+> - Remove unused variables.
+> - Handle the condition where scl_table_cnt reaches to the maximum value.
+> - Fix the checkpatch warning.
+> 
+> Charles Boyer (1):
+>   i2c: npcm: Enable slave in eob interrupt
+> 
+> Tyrone Ting (6):
+>   i2c: npcm: restore slave addresses array length
+>   i2c: npcm: correct the read/write operation procedure
+>   i2c: npcm: use a software flag to indicate a BER condition
+>   i2c: npcm: Modify timeout evaluation mechanism
+>   i2c: npcm: Modify the client address assignment
+>   i2c: npcm: use i2c frequency table
+> 
+>  drivers/i2c/busses/i2c-npcm7xx.c | 276 +++++++++++++++++++------------
+>  1 file changed, 172 insertions(+), 104 deletions(-)
+> 
+> 
+> base-commit: 5be63fc19fcaa4c236b307420483578a56986a37
+> -- 
+> 2.34.1
+> 
