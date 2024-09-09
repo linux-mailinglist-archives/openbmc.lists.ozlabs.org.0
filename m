@@ -1,76 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9C03970B85
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 03:49:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46D38970B90
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 03:56:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X28s354GLz3cFw
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 11:49:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X291V6kxkz3cG6
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2024 11:56:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::132"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725846564;
-	cv=none; b=Lhmk3Bi4zkC81h976Meo5cmS7XIpKHGJ5btY4psUPdy1i0ixQ1R85fWnZOQVC1hEelgWO8+ipwczW1zVHi2lKsZiF1cUVEpXEGC1/O+52KPIZUEOVj5Xl39VEsIskvA5ZO1yMIdMKztkCHNo3/EPwcLWV+5k1LsN8xgvGmV6lr92LRN5n9Q02L9U+n5IVSkdb4oBX9IzgY3wIROw0uI4ehGe4bAwh1WuGql0KR29uzdjBzX/Svn5zbqYn7hQfw2R/AfeIruuOw9b0OShDwQ7ZTGin7Aseddn2feZDpo8lPt0NYEl8sqzvjjgTIsLgWJqh664+mLOvWG4BA7jtDWY5Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::635"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1725847002;
+	cv=none; b=OYlHRAI23bhjwozgNj2wECsWszTNfsHmoK2fXFeK0PR39Ds5jdxIidTcgDv7GGe6OoHKTgfht3TyyBXLyyvwp0nT6N+68d3kZiKjX22o0f5TR8Ro0JuKp+IjzMwjl9siOldbdNdsP3E77KIfj6PS/x6xfmt5ap9vi+MykLA86nakKQzrpErtn3n6wNI+aGntnjn4Uz3GPlSkHOVjPogGirC0+gDdd4BJ4vLdfworG/RjbWU0m/Olp47sHj0gStHr1O4VKWp8sTE9ttJeGKFvpBVP6qs6K0VrRrJIqR2qlycEVap/1FjnYavkErsyMsgilemM+6PFlmGEGuz5GxwXlg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1725846564; c=relaxed/relaxed;
-	bh=1DBLxzOHYDxcsNwOMRYkWi8QMRo95NS/vm6yH32jIt0=;
+	t=1725847002; c=relaxed/relaxed;
+	bh=uCJjcmJDKMrQ+us9cppRbmfBwPVnybr35b5gsVcmfwU=;
 	h=DKIM-Signature:MIME-Version:References:In-Reply-To:From:Date:
-	 Message-ID:Subject:To:Cc:Content-Type; b=BSP/QW3zKBnODifzhZkbi36yI1fwlExMUMxtjzxX5SQ+aenmQeZ6o5TJdGvTBIMDHaI4xQy6WQiBFSJyBvUmI1gWVLTJa0liu8C8h2hC/+BXZVzljNoRv3erBmZRjQ3vVxLvI9QEaEgUPQkCBEFjhJqKnP/jeEp+PXiNmFcxp0UCrzHtCTT4c6AuFd9MO6Y8ju4T9XVKKUK75AyAx6WP3P51h9HcGA/lgQjVQdgLGCH+E1aU2OKtRj9E0w+n+c2TUMPBXGWq1tEBILteWw1SxVdJ3TkpzOAKz0+bTU6ER0aAvu0lh8iqRxaqrNKccs6M+VwdSuzJVx/KoVp7O1k7lw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLlkSFVF; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 Message-ID:Subject:To:Cc:Content-Type; b=bxZ59jp+WKH0G42A7pmc1x3jj1fdJBKyXgWpIO4PpCmgV2CwHt14Ok6rCsAnDJicXgSO1njorR++a34WMFc6nBOwFa75yEBEUQuJTVKdvohQSVq+ird9PXilnpf7yx/BKT+W+ULZ81EnFBaQXtb4yNMT8KSxurEepsMJc2AVpAY33v9xZqIXcMyLxtjr1vkJZojo3p6Pin/GAFCZc4IErFIVmw4z5cYrdBZoDsU8XjgDwSYNASn48CQ5/HtvuzS1bkkvrcLtQRPMWPU+srl6wL++Ar0qJTKU9vA3jy+RANI1xbd267fXlsklW98hK0gxz3uuOydSCZMnnXhRY5VVLA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=O2wFQbH5; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::635; helo=mail-ej1-x635.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JLlkSFVF;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=O2wFQbH5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::635; helo=mail-ej1-x635.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X28rz3lf5z2xf2
-	for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2024 11:49:23 +1000 (AEST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-5356aa9a0afso6670202e87.2
-        for <openbmc@lists.ozlabs.org>; Sun, 08 Sep 2024 18:49:23 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X291P6hrgz2xf2
+	for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2024 11:56:40 +1000 (AEST)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-a8ce5db8668so347733866b.1
+        for <openbmc@lists.ozlabs.org>; Sun, 08 Sep 2024 18:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725846560; x=1726451360; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1725846997; x=1726451797; darn=lists.ozlabs.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1DBLxzOHYDxcsNwOMRYkWi8QMRo95NS/vm6yH32jIt0=;
-        b=JLlkSFVF9Nv3fTFnixMQwydzUiLSrp8dYWbA/GJEV7WBt5xfimx8vlwakuN1LN173f
-         PpbgKqXz+TRH6+7SZZgqmg3MgkoWtqiDgUxlvHkVC2FJBR2uwygNn1LqmPTIZF6Q1aML
-         chzBvmazXOjPtJ3HpB1AG/TCBU9lJumEXz/OD9W0DZBCw/KaPHfoMNg279czhGam4ix5
-         vWRuwl91lmFcng3Mx9RX2a7XruCl9iuMmzNtlTx3NQcW6CsYH4B45zv23j4KSCXKEH4O
-         ie2oTD1fWfUopzPSwe1LkAH6ACpzSRfBn5eBsOeL+0goL31fZjlr5ir7Ve4Kg2NtUMoK
-         RIow==
+        bh=uCJjcmJDKMrQ+us9cppRbmfBwPVnybr35b5gsVcmfwU=;
+        b=O2wFQbH5bUSwqONfVO/DNn79EEKIefYJ6C3j/H4hWLHSF59RGrKbvqi5R8yP1gVwlw
+         StG5yFGEYv2u39dB0KRukLyB+VDG2j1r5p+Z0b8UjI4ElEeIXwuHVeEEqMI6/RTxH5+4
+         BjY1M7tBDd8Dz35OnBNNrPh5wWTrwSbKFJS/jGe6RyROFLTjLHvG6os4skctDaEkYHbb
+         C7HZPnhvM5Gt25dt3EPtf0R+JOb/wtMxOmVNmaNrGhdLV76sWHJ6sQC4h1tWraZIdgLa
+         0lrHQz5Sn2aVKDwDIv7M15VUQpiihOuxE3swOOksH5JYXSEGZU3ahnzWjHzCDRJRz0ZH
+         sGkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725846560; x=1726451360;
+        d=1e100.net; s=20230601; t=1725846997; x=1726451797;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1DBLxzOHYDxcsNwOMRYkWi8QMRo95NS/vm6yH32jIt0=;
-        b=sTgRXTupdIIxgNZ6EhzbfFXjnZqqmSCsYAMAZrGwbN/xbXqgtOncYqwCZJmQuwHMOa
-         P53ikqlh3hPrF5JT8x2mifu4zR8U/uVQUhEAcpIzZao5h6zaacCcF7hO6NFFTPYSyPBH
-         2+vYWoMpp6rCn+yV2GVe4/WGaavCc9EoZd0ockvIgwc27R+n43PAdJqkfse91QOr/8C3
-         9sSaDatYH3Iae5Ip98ZDcbN/KkvVuqfNaclfIed5R74O35gC67s3m2fZxj/PhFv+X0Dp
-         I29r+WuD09EopRKYV5m/EPApEKVb9QlUTMfB5wvk4HGLTPekknmYJzdRtmvAXRYipg+o
-         VQxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXvKVE5iygAlgnqY7hG6aOtsUwR5QdQ+FKjNaQIXvvlkZ3Nw+3AvWj3pAuW4QMBABBvXq+Y22M6@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwHgxSJ8RSHjHPpUmt5Np9d7yCABqavUR3h++NpeDpr3MfbWI6P
-	Zhr+GlP95B7xIEyyljGRdifwi1Vyyk5S1UftEyVKL806eFpxKi6A3RfOAezqcOiBhIMwr4VKGSs
-	Oip0rsyzXq8vf4o90kKVBP2TWPFBiFqw=
-X-Google-Smtp-Source: AGHT+IGUTBnBdo2MDFMCXRuCZfg+3U+TmHQMD8jAWdwAxp47hlreehyNTYkpqoeZqRiHMOumze1d0UCgGCpscB41k/4=
-X-Received: by 2002:a05:6512:3983:b0:533:71f:3a3d with SMTP id
- 2adb3069b0e04-536587ae7a3mr8414317e87.24.1725846558780; Sun, 08 Sep 2024
- 18:49:18 -0700 (PDT)
+        bh=uCJjcmJDKMrQ+us9cppRbmfBwPVnybr35b5gsVcmfwU=;
+        b=MtaUGRiSXEtJ53ina653htg2u75jljoBmLyPmJ0+buyUMNrdFppfjofV73xcB2tIav
+         Bc5aHPECNGfq/Dba62tAn7R5Lz5HK/PbTT9q257hSpiuY/ABO1B+Za/h1caai1skxwqf
+         +BkGM7zLcxL8bqhISrQxtgb4jALfOTnNpRHyBYOgRXL7Fj1P1dG2PmqpQiyjTVttch1l
+         cys0h9GOzcKWhzpQB9iCbyVLxGG6hpJo8V8fVWn0MiIxNhURt/KkNCC16B88V4rMN5L3
+         r3iI6aexd9G3fOp0hSjMckkOPPcM/PvRi7cFUZOzyGmz2tqKuXEubh8kWVkcz4ATAxaj
+         NoKg==
+X-Forwarded-Encrypted: i=1; AJvYcCW6C8vZi7jhMhYB9QugRxA+JbGtgTs61LwOdh6Su6mIat/cbMuwXkQ1aSJnFeT8ehTuiKk/zov2@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxYrWW5cr6jKIUUdyTPbWvz2Ssa6Id6q6PBDkKW4c9BDJMVY5EX
+	jKfgumRQNXjoLJS/z47wV2ux1tDkhJ2qn0bvU1zS0OQ9Tu6kGR2XTzBjosH86bhiLjMLnfcp+ur
+	c2NQjtQdE6oG4q9hpzAYXIpumFg==
+X-Google-Smtp-Source: AGHT+IHMalItQyCwxTtL77V0zr8I2TJKjvPfT7o1+ANn5fimShLiSwPZZusUqd9F6N6LzZkQOlwLmH7vTO6V+4zCbS0=
+X-Received: by 2002:a17:907:6e8d:b0:a8a:794b:9891 with SMTP id
+ a640c23a62f3a-a8d1c72daffmr628007566b.51.1725846996519; Sun, 08 Sep 2024
+ 18:56:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240830034640.7049-1-kfting@nuvoton.com> <20240830034640.7049-3-kfting@nuvoton.com>
- <cfdfldh5tuhb4r5pdpgolcr2roeewsobedet2uvmpbnqlw5yh4@c4a2szsbs2r2>
-In-Reply-To: <cfdfldh5tuhb4r5pdpgolcr2roeewsobedet2uvmpbnqlw5yh4@c4a2szsbs2r2>
+References: <20240830034640.7049-1-kfting@nuvoton.com> <20240830034640.7049-7-kfting@nuvoton.com>
+ <3wz36hrpicogoakqhmveppcrt6s52zmlcgjpio3wwpil3rdwdi@ft7tloqqf2zt>
+In-Reply-To: <3wz36hrpicogoakqhmveppcrt6s52zmlcgjpio3wwpil3rdwdi@ft7tloqqf2zt>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Mon, 9 Sep 2024 09:49:06 +0800
-Message-ID: <CACD3sJYfpo+kTFCYdEnwk=GuHUa7y8SHFUFg_Knx5bnrkdKvUw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] i2c: npcm: correct the read/write operation procedure
+Date: Mon, 9 Sep 2024 09:56:25 +0800
+Message-ID: <CACD3sJYFNV9Vxmq1Ydp=+wh-52DOCMsECO+RmP_K6t4B8wzbmA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] i2c: npcm: use i2c frequency table
 To: Andi Shyti <andi.shyti@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -94,72 +94,57 @@ Hi Andi:
 Thank you for your review.
 
 Andi Shyti <andi.shyti@kernel.org> =E6=96=BC 2024=E5=B9=B49=E6=9C=886=E6=97=
-=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=885:29=E5=AF=AB=E9=81=93=EF=BC=9A
+=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=885:43=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> Hi Tyronne,
+> Hi,
 >
-> On Fri, Aug 30, 2024 at 11:46:35AM GMT, Tyrone Ting wrote:
-> > Originally the driver uses the XMIT bit in SMBnST register to decide
-> > the upcoming i2c transaction. If XMIT bit is 1, then it will be an i2c
-> > write operation. If it's 0, then a read operation will be executed.
+> On Fri, Aug 30, 2024 at 11:46:39AM GMT, Tyrone Ting wrote:
+> > Modify i2c frequency from table parameters
+> > for NPCM i2c modules.
 > >
-> > After checking the datasheet, the XMIT bit is valid when the i2c module
-> > is acting in a slave role. Use the software status to control the i2c
-> > transaction flow instead when the i2c module is acting in a master role=
-.
+> > Supported frequencies are:
 > >
-> > Fixes: 48acf8292280 ("i2c: Remove redundant comparison in npcm_i2c_reg_=
-slave")
+> > 1. 100KHz
+> > 2. 400KHz
+> > 3. 1MHz
 >
-> Fixes needs to be used if you are fixing a bug (crash,
-> device malfunction, etc.). If you want to use it, please describe
-> the bug you are fixing. Otherwise, please, remove it.
+> I agree with Andy, please add a good explanation for this change.
 >
-Understood. I'll remove the Fixes tag in the next patch set.
-
 > > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 > > ---
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 7 ++-----
-> >  1 file changed, 2 insertions(+), 5 deletions(-)
+> >  drivers/i2c/busses/i2c-npcm7xx.c | 230 +++++++++++++++++++------------
+> >  1 file changed, 144 insertions(+), 86 deletions(-)
 > >
 > > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-=
 npcm7xx.c
-> > index bbcb4d6668ce..2b76dbfba438 100644
+> > index 67d156ed29b9..cac4ea0b69b8 100644
 > > --- a/drivers/i2c/busses/i2c-npcm7xx.c
 > > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -1628,13 +1628,10 @@ static void npcm_i2c_irq_handle_sda(struct npcm=
-_i2c *bus, u8 i2cst)
-> >                       npcm_i2c_wr_byte(bus, bus->dest_addr | BIT(0));
-> >       /* SDA interrupt, after start\restart */
-> >       } else {
-> > -             if (NPCM_I2CST_XMIT & i2cst) {
-> > -                     bus->operation =3D I2C_WRITE_OPER;
-> > +             if (bus->operation =3D=3D I2C_WRITE_OPER)
-> >                       npcm_i2c_irq_master_handler_write(bus);
-> > -             } else {
-> > -                     bus->operation =3D I2C_READ_OPER;
-> > +             else if (bus->operation =3D=3D I2C_READ_OPER)
-> >                       npcm_i2c_irq_master_handler_read(bus);
+> > @@ -263,6 +263,121 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =
+=3D {
+> >  #define I2C_FREQ_MIN_HZ                      10000
+> >  #define I2C_FREQ_MAX_HZ                      I2C_MAX_FAST_MODE_PLUS_FR=
+EQ
+> >
+> > +struct SMB_TIMING_T {
 >
-> mmmhhh... you are changing the logic here and you are not
-> describing the logic change in the commit log.
->
-> Without looking at the details, if this is a state machine you
-> are breaking it.
->
-> Can anyone from the ARM/NUVOTON NPCM supporters and reviewers
-> take a look at this patch?
+> Please run checkpatch.pl before sending the patches.
+I did run the checkpatch.pl against this patch.
+Here is the log from the checkpatch.pl:
+-------------------------------------------------------------
+./patch_i2c_v2/v2-0006-i2c-npcm-use-i2c-frequency-table.patch
+-------------------------------------------------------------
+total: 0 errors, 0 warnings, 265 lines checked
+
+./patch_i2c_v2/v2-0006-i2c-npcm-use-i2c-frequency-table.patch has no
+obvious style problems and is ready for submission.
+
+It seems that the values of I2C_FREQ_MIN_HZ and I2C_FREQ_MAX_HZ are
+not aligned in the email but they're
+aligned in my editor (Vim with a default configuration).
 >
 > Thanks,
 > Andi
->
-> > -             }
-> >       }
-> >  }
-> >
-> > --
-> > 2.34.1
-> >
 
 Thank you.
 
