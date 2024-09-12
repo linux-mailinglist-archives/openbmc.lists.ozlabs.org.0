@@ -1,57 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C6E9977127
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2024 21:11:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35DCE977129
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2024 21:11:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X4Rqb6Bmcz3chF
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2024 05:11:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X4Rqj5JkBz3fqy
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2024 05:11:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=212.199.177.27
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726168259;
-	cv=none; b=Zag3VOspoSAjyNxV4al+PgsGkYqZDk3ucq8gtilk4utOhpUr9tLQKmyF5C6idrAEvhSfUB1y8840GeqDsjslzKHJVe7mNuNVJXjbelCh/vpR7NSkO2FssIxjMd/GpHsiCCbhvdGfEthWt8FO5ERRHGkE4LkEM4tUslLFLHJAzLXjLmqtC4A/hDgVls5TM9gAS0RkXtU8kUusvR8vaTrV9OKJJ9waJ+RSt+DwSS96c/MhkO9QnQfGg8MejG0gTkDfVTzMRRqWa+DcuCnREnozcslf5OyayRschb6zDJf03loOu19lzeM/OMhZjYjyj/JoRKD8x5owxBPe9N8/BDU0Ww==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726168260;
+	cv=none; b=kZWhPs/9VYejy5iGRgAeRazsrwHDLV9x/bJucec5tKrZGAEf9jNwNka0ePMf6rtFv+HQYk7XrbjS1duxgPda5ufDyBeIBshVuj8gGRiHt1p6sOOdK++kg3ihH2V3+LkVcJ+KUHqPqWChzjWntwitKc8QBygbGzbSwMsg+Rk4fS0hPsvUTinYTeYo1syMuramtYNZRtZ9IjOpsq6ZGf7UJk9pl/WdRLY9LikHzSthJlC2BV2dvY1rSxbXupdNsgud8HOZlBsiB2zeHzReUpbasDTOiPBsopecH21JoDc6x+nP+TvZ9icUHOtumQMz9CoDp5BIq6TilFGDhyWZJFbsdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1726168259; c=relaxed/relaxed;
-	bh=Bsp6Fu2EwmNWI4JUeaL8+uK9d/eheOZNExD2CIqLPZk=;
+	t=1726168260; c=relaxed/relaxed;
+	bh=gY/VwM51W7Jix8sfRhkDAfFEL23WDjCVpVbOm7Lwv6c=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fvdd2vgWmfqr+6CiO1RKBkgNg7bWEgb0LBUQwsUhQn1z5yIgFVqzPqH4Y0GBJBM1iGvlGA56dE6PjXK2hV2DOLuRI2/U7JWTIDxIR+CwVibabHZEm+ZIZEv029asJ4JcAHeK5ECHmAdWS4yUYaguYSWFx42vA9eUTEHZvZBt6MOgE0cgcaaHn7wyTTadGjdEe9sWmLKduAtHr4WsjIlk8aSmYFhXFkq+suqlt5O1lZPTBB+Cjk4s2q9ySbpU74DXfbCi+PwJ1AfArJ3pmVG5a4jIXn7sS036kYmnJKljHftIt9jA7Lv+q/iSDFn1SmqMTHU9c+wXzGEyIRdqtvqoPQ==
+	 MIME-Version:Content-Type; b=ERroZYY4qgUZnSDtGQyppp1Qf22thESt1XknE79dWIHt00l0ad3yH/Hb3xKLZjsJ7oKJSeEYQkmo+sfHRCxpd1/GC+M5h+daa4UznlpHNn3S0evd3tRWwIGBqod/kZ80RvxFIo+wlRa5vMFvtsh40s4JVzcnZu8kEAlg1dQns6y0rsEjlyNh8EK0u5z1a1OjxlCKfAIzqLKgELd4NHfnFv3HX4Nl6M8GvzzFMmehjL3YndpErvmfiqCZKrDivWWjdKNIASN4ZFnShOHrpuwKZ9i3QdP7WQoxOqE8Cs31utUL7/H3Uzq2owxulLXRtehDZrjIwBPt6c2Pd9iJKjVXbA==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=none (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org) smtp.mailfrom=taln60.nuvoton.co.il
 Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=taln60.nuvoton.co.il (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon@taln60.nuvoton.co.il; receiver=lists.ozlabs.org)
 Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X4RqN6wNbz2yLJ
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X4RqN6tTPz2yGh
 	for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2024 05:10:53 +1000 (AEST)
 Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 48CJAhIa008444
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 48CJAhIb008444
 	for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2024 22:10:44 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTILML01.nuvoton.com
- (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
+Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 12 Sep
- 2024 22:10:42 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS01.nuvoton.com
- (10.1.8.28) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 22:10:43 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01A.nuvoton.com
+ (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 13 Sep
  2024 03:10:41 +0800
 Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
  (10.1.8.28) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
  Transport; Fri, 13 Sep 2024 03:10:40 +0800
 Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
-	by taln58.nuvoton.co.il (Postfix) with ESMTP id 172035F5DF;
+	by taln58.nuvoton.co.il (Postfix) with ESMTP id 1C3F15F621;
 	Thu, 12 Sep 2024 22:10:40 +0300 (IDT)
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 099F7DC0AFB; Thu, 12 Sep 2024 22:10:40 +0300 (IDT)
+	id 15445DC13FC; Thu, 12 Sep 2024 22:10:40 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: <mturquette@baylibre.com>, <sboyd@kernel.org>, <p.zabel@pengutronix.de>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
         <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
         <yuenn@google.com>, <benjaminfair@google.com>
-Subject: [PATCH v28 1/3] dt-bindings: reset: npcm: add clock properties
-Date: Thu, 12 Sep 2024 22:10:36 +0300
-Message-ID: <20240912191038.981105-2-tmaimon77@gmail.com>
+Subject: [PATCH v28 2/3] reset: npcm: register npcm8xx clock auxiliary bus device
+Date: Thu, 12 Sep 2024 22:10:37 +0300
+Message-ID: <20240912191038.981105-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240912191038.981105-1-tmaimon77@gmail.com>
 References: <20240912191038.981105-1-tmaimon77@gmail.com>
@@ -70,61 +70,194 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds a 25MHz reference clock and clock-cell properties to
-the NPCM reset document. The addition is necessitated by the integration
-of the NPCM8xx clock auxiliary bus device into the NPCM reset driver.
+Add NPCM8xx clock controller auxiliary bus device registration.
 
-The inclusion of the NPCM8xx clock properties in the reset document is
-crucial as the reset block also serves as a clock provider for the
-NPCM8xx clock. This enhancement is intended to facilitate the use of the
-NPCM8xx clock driver.
+The NPCM8xx clock controller is registered as an aux device because the
+reset and the clock controller share the same register region.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Tested-by: Benjamin Fair <benjaminfair@google.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 ---
- .../bindings/reset/nuvoton,npcm750-reset.yaml  | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/reset/Kconfig               |  1 +
+ drivers/reset/reset-npcm.c          | 78 ++++++++++++++++++++++++++++-
+ include/soc/nuvoton/clock-npcm8xx.h | 18 +++++++
+ 3 files changed, 95 insertions(+), 2 deletions(-)
+ create mode 100644 include/soc/nuvoton/clock-npcm8xx.h
 
-diff --git a/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml b/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
-index d82e65e37cc0..72523f1bbc18 100644
---- a/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
-+++ b/Documentation/devicetree/bindings/reset/nuvoton,npcm750-reset.yaml
-@@ -21,6 +21,13 @@ properties:
-   '#reset-cells':
-     const: 2
+diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+index 67bce340a87e..c6bf5275cca2 100644
+--- a/drivers/reset/Kconfig
++++ b/drivers/reset/Kconfig
+@@ -157,6 +157,7 @@ config RESET_MESON_AUDIO_ARB
+ config RESET_NPCM
+ 	bool "NPCM BMC Reset Driver" if COMPILE_TEST
+ 	default ARCH_NPCM
++	select AUXILIARY_BUS
+ 	help
+ 	  This enables the reset controller driver for Nuvoton NPCM
+ 	  BMC SoCs.
+diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
+index 8935ef95a2d1..4f3b9fc58de0 100644
+--- a/drivers/reset/reset-npcm.c
++++ b/drivers/reset/reset-npcm.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Copyright (c) 2019 Nuvoton Technology corporation.
  
-+  '#clock-cells':
-+    const: 1
-+
-+  clocks:
-+    items:
-+      - description: specify external 25MHz reference clock.
-+
-   nuvoton,sysgcr:
-     $ref: /schemas/types.yaml#/definitions/phandle
-     description: a phandle to access GCR registers.
-@@ -39,6 +46,17 @@ required:
-   - '#reset-cells'
-   - nuvoton,sysgcr
++#include <linux/auxiliary_bus.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+@@ -10,11 +11,14 @@
+ #include <linux/property.h>
+ #include <linux/reboot.h>
+ #include <linux/reset-controller.h>
++#include <linux/slab.h>
+ #include <linux/spinlock.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/regmap.h>
+ #include <linux/of_address.h>
  
-+if:
-+  properties:
-+    compatible:
-+      contains:
-+        enum:
-+          - nuvoton,npcm845-reset
-+then:
-+  required:
-+    - '#clock-cells'
-+    - clocks
++#include <soc/nuvoton/clock-npcm8xx.h>
 +
- additionalProperties: false
+ /* NPCM7xx GCR registers */
+ #define NPCM_MDLR_OFFSET	0x7C
+ #define NPCM7XX_MDLR_USBD0	BIT(9)
+@@ -89,6 +93,7 @@ struct npcm_rc_data {
+ 	const struct npcm_reset_info *info;
+ 	struct regmap *gcr_regmap;
+ 	u32 sw_reset_number;
++	struct device *dev;
+ 	void __iomem *base;
+ 	spinlock_t lock;
+ };
+@@ -372,6 +377,67 @@ static const struct reset_control_ops npcm_rc_ops = {
+ 	.status		= npcm_rc_status,
+ };
  
- examples:
++static void npcm_clock_unregister_adev(void *_adev)
++{
++	struct auxiliary_device *adev = _adev;
++
++	auxiliary_device_delete(adev);
++	auxiliary_device_uninit(adev);
++}
++
++static void npcm_clock_adev_release(struct device *dev)
++{
++	struct auxiliary_device *adev = to_auxiliary_dev(dev);
++	struct npcm_clock_adev *rdev = to_npcm_clock_adev(adev);
++
++	kfree(rdev);
++}
++
++static struct auxiliary_device *npcm_clock_adev_alloc(struct npcm_rc_data *rst_data, char *clk_name)
++{
++	struct npcm_clock_adev *rdev;
++	struct auxiliary_device *adev;
++	int ret;
++
++	rdev = kzalloc(sizeof(*rdev), GFP_KERNEL);
++	if (!rdev)
++		return ERR_PTR(-ENOMEM);
++
++	rdev->base = rst_data->base;
++
++	adev = &rdev->adev;
++	adev->name = clk_name;
++	adev->dev.parent = rst_data->dev;
++	adev->dev.release = npcm_clock_adev_release;
++	adev->id = 555u;
++
++	ret = auxiliary_device_init(adev);
++	if (ret) {
++		kfree(rdev);
++		return ERR_PTR(ret);
++	}
++
++	return adev;
++}
++
++static int npcm8xx_clock_controller_register(struct npcm_rc_data *rst_data, char *clk_name)
++{
++	struct auxiliary_device *adev;
++	int ret;
++
++	adev = npcm_clock_adev_alloc(rst_data, clk_name);
++	if (IS_ERR(adev))
++		return PTR_ERR(adev);
++
++	ret = auxiliary_device_add(adev);
++	if (ret) {
++		auxiliary_device_uninit(adev);
++		return ret;
++	}
++
++	return devm_add_action_or_reset(rst_data->dev, npcm_clock_unregister_adev, adev);
++}
++
+ static int npcm_rc_probe(struct platform_device *pdev)
+ {
+ 	struct npcm_rc_data *rc;
+@@ -392,6 +458,7 @@ static int npcm_rc_probe(struct platform_device *pdev)
+ 	rc->rcdev.of_node = pdev->dev.of_node;
+ 	rc->rcdev.of_reset_n_cells = 2;
+ 	rc->rcdev.of_xlate = npcm_reset_xlate;
++	rc->dev = &pdev->dev;
+ 
+ 	ret = devm_reset_controller_register(&pdev->dev, &rc->rcdev);
+ 	if (ret) {
+@@ -408,12 +475,19 @@ static int npcm_rc_probe(struct platform_device *pdev)
+ 			rc->restart_nb.priority = 192,
+ 			rc->restart_nb.notifier_call = npcm_rc_restart,
+ 			ret = register_restart_handler(&rc->restart_nb);
+-			if (ret)
++			if (ret) {
+ 				dev_warn(&pdev->dev, "failed to register restart handler\n");
++				return ret;
++			}
+ 		}
+ 	}
+ 
+-	return ret;
++	switch (rc->info->bmc_id) {
++	case BMC_NPCM8XX:
++		return npcm8xx_clock_controller_register(rc, "clk-npcm8xx");
++	default:
++		return 0;
++	}
+ }
+ 
+ static struct platform_driver npcm_rc_driver = {
+diff --git a/include/soc/nuvoton/clock-npcm8xx.h b/include/soc/nuvoton/clock-npcm8xx.h
+new file mode 100644
+index 000000000000..1d974e89d8a8
+--- /dev/null
++++ b/include/soc/nuvoton/clock-npcm8xx.h
+@@ -0,0 +1,18 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __SOC_NPCM8XX_CLOCK_H
++#define __SOC_NPCM8XX_CLOCK_H
++
++#include <linux/auxiliary_bus.h>
++#include <linux/container_of.h>
++
++struct npcm_clock_adev {
++	void __iomem *base;
++	struct auxiliary_device adev;
++};
++
++static inline struct npcm_clock_adev *to_npcm_clock_adev(struct auxiliary_device *_adev)
++{
++	return container_of(_adev, struct npcm_clock_adev, adev);
++}
++
++#endif
 -- 
 2.34.1
 
