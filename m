@@ -2,96 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1356C97849B
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2024 17:21:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E37FC9799CB
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2024 03:36:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X4ygS5sblz3cGc
-	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2024 01:20:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X6SDM4V0Wz3c9k
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2024 11:36:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.146
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726240846;
-	cv=none; b=mHAEWrhBqVhmVF6K+l7YbH6RYums88MFhkyV9zVHy3aJ9/bkotAyRbmohlc/br+O5D0OQFaewpbOCN4IMR3YN81A6luxFfJFpSVM35dT3dUdJBA2aDx1zeGDIcjXUcbDGybMKBpPwnArOWbV8dEI1fcZ+fAy8RpVWBtJQelbE7j3lBY/t5DCDJCKgO2hnrHhtwJW5UcG+IvDNkKcikaYDr1YP3WzP4jGFdAMJ/DiDOuaSOi7sOXKlZ+lcH29JrUKZxdkxCa8yJXCIOV2dqGP0Irsiblw9r5jo/DnMsCFei9F2cHKlPSpZI70FdWpUxL76D3wUke1/6HNBgXH2et7Ow==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::631"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726450560;
+	cv=none; b=mNuJdSw2c61fTQ6TjU25yu0X/mgSO1FASgRWVOTIPmm5cRaCFd01Vbh4DHQU8RwfrIy5FN9hzJZXwK2wBNQ8Rh1HUiF7EnNaycMtuxXyTdebKjvgH3+nMEMUNL5rOVwCKTdATZHpnTmi/uDY/XkwwAOEjSeplLkYqc7k4J5l76bUBVB8gamKHvHTLAXDE/ktgVveVfDZh8okOV6pZUlyfBBUxlgRxvaDehughMvgrM6CoNiWqRaFZb0ivDElQynFY/7V+fnM3+gVUl6NlmYAUlRyC5l+3hSQ1540deze5mCRpsOdaRcsreiKJ3d9v3HfdW4ItUSt7FNnaQFMz20Sbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1726240846; c=relaxed/relaxed;
-	bh=t9WLTTEAfmIo/h8DCHSGBKwP19w+IMf5wBBH3pxpDQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JiVkQwlRO7WQgQtZHcormfYsVW051lkvsZV/sUxGIZ97aklkSsen/GUwlVj6srmf32Ug7lZ56CT+x/y6dR07NUU0SNmnBlO48frTtHcpc965UKSTs+tA1oBzbhO/vd6I8WQItTEVy4XazB6COe1FeIopDbAqimdCOv2Wg3AR9VJNalOF/hy0whm7LM+NZc5k5WkVTezz0lB3r6Sv2+E3nreUBJh8ZQnd08dKcfk7Rr0RKjnBnYse5C3fyiJKizKQK6m+rnBL85VT3X5gpK/0Do8ELlTVDc7bQqugJsPCTjpIannR+agRIbdzP+kt0EmFOIWx1egdSMfTMxD444YxWw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Q2TVatOn; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=VKlWXaO7; dkim-atps=neutral; spf=pass (client-ip=103.168.172.146; helo=fout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+	t=1726450560; c=relaxed/relaxed;
+	bh=A3Opgofkq69zE6QCehvO/0WQhRq7E+ZOUJLxNG6PQyU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KfK+qnZuubFUfvIYZrFd5naPDvWsSzCXqSH/Dhi5i6OqTNUi6Xz0aMOheSLRP5v3QJmr74PEZlMeY0nkMWnHu+Vn4iZICAgcQYyrIgpTuBwQWgWFKJDHxPJWu88c5IhspaR5rXyFRN5ocJflHC77L59NzBH6B/1nmY0S+YcI1NYpEZXOly9gMorvv6quA0buBc99dqFzONwDngu+lmVk3jp2EdujmURtcBEyaWArwzx7OW3oMyG5zRmc3Sr6SfxcJMDx+27AfyZ+iGXkW7/j/4bUhd+84EHgYkvV0SyEmZ9sMzVTAzIvEHBlJziWO5PUlryCF1hAIbdKmU3KTJ769A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dUup9r3N; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::631; helo=mail-ej1-x631.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Q2TVatOn;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=VKlWXaO7;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dUup9r3N;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.146; helo=fout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::631; helo=mail-ej1-x631.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X4ygH1JPfz2yps
-	for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2024 01:20:41 +1000 (AEST)
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4AAA71380303;
-	Fri, 13 Sep 2024 11:20:38 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Sep 2024 11:20:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1726240838; x=1726327238; bh=t9WLTTEAfm
-	Io/h8DCHSGBKwP19w+IMf5wBBH3pxpDQA=; b=Q2TVatOnErdBwrg6qhQ+Tmeein
-	us3KGN7YzNn9z1kX6U35o8MM0JALTq/BDK75AVCrNM+S91JO83RRiZOmKpLHHJH7
-	5gfix1W/EwA9wvLlNCNKRS2CQHqn5OQQg5c87WAqfbPSn5Enwh2e/XaKwj0Snn3U
-	I52K5b3HOnP+cew6cwX2148n7+3HagBuO2tHFbSQV1NEVSQGvik7ESQPcJ8c9Q8T
-	wEEkZDisGXtVA+KrcES8jkYTbq9ep4jxg2fJLPr01ZYVtgPGj5vD1gcodxcGRmqI
-	JE26Pgl6wa7nnzHYQ949qEDzk3C4yLBIH5OEReXHg/iW01VrVD51cilRXqiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1726240838; x=1726327238; bh=t9WLTTEAfmIo/h8DCHSGBKwP19w+
-	IMf5wBBH3pxpDQA=; b=VKlWXaO7/8alrW/3LCipsgrduiOMoN+AEzARYj+Z/yI1
-	cg0xzIfVm47x7DoEDPVMCPeJsP1xiCEf7iRvPjfw6Rej4Fux0wdunfgxasV3Kt+H
-	Cs1xMjtHdaHn+sqWgyTHKegb9MuUGmBwCtVzWyHT28od2DLp9Hd/UriMKhkiUX6O
-	fdoGYXJkuaVSlKBzyRsUTuVjWJs6ey/2YxNGsXpasaZgeP/fFTsLjed2FUlC9vWO
-	c9JX+pE/34L77h8YCstUxEy5AK5k7tiGh44dK0nRZ+RSOq1WsMOmC2m1uFc+Fl2f
-	o+Lba6for0N5CBh+HXYGj40bDS4PuFBUXjg/cDlBTg==
-X-ME-Sender: <xms:RVjkZnUfjyBC_vIUxl8viQajK-L06o9mg0At1tHSA2Ts3CGQywPCIw>
-    <xme:RVjkZvmeBTFSFVGtpNB23TBnsik_VoXxtWG8txpSHtar0kWMuwsKDycKuO7k3FByb
-    qo84-Sh2jrBzDXXlW0>
-X-ME-Received: <xmr:RVjkZja-JF-pr2kwTGunEgW5-9RjH4Tca6YaMcbxdUKH5PT-XjJuAqK-NIs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudejjedgkeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnegfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhf
-    gggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmsh
-    cuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeej
-    heeftdejiedvfeekffehledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehs
-    thiftgigrdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehguhhnughurdgsrggsrghsihhkrghnuggrrheslhhtthhsrdgtohhmpdhr
-    tghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdhorhhgpdhrtghpth
-    htohepsggrlhgrrdhsuhgsrhgrmhgrnhhihigrnheslhhtthhsrdgtohhm
-X-ME-Proxy: <xmx:RVjkZiXtNPgbWCckMMx7cEoWrTVf6Kooxesx_7w-3s_5iFc7YUiKeg>
-    <xmx:RVjkZhn79ytkLd4DMQmudEJ3zSRG1RFrekCX-PAmYbz53Do5bE1x0A>
-    <xmx:RVjkZvf7IC4J2vfN6MS3aGP5PU55OpxqO4RYCfw-2Um2yeh_Kxqeww>
-    <xmx:RVjkZrHDvDLUvyFLey81D4fY1r3-P3MVCzYRg4sYU79-1KmTn4sC8Q>
-    <xmx:RljkZnhJGigqHQ0ArIfsg6o51KtLGUl8kFAREdFWth2ghzvP9EbmUnPi>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Sep 2024 11:20:37 -0400 (EDT)
-Date: Fri, 13 Sep 2024 11:20:36 -0400
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Gundu Baba Sikandar <gundu.babasikandar@ltts.com>
-Subject: Re: Help with "ipmitool chassis power on"
-Message-ID: <ZuRYREE7yKY-u4wK@heinlein.vulture-banana.ts.net>
-References: <PN0PR01MB9336C133AE2B5EC1C3415336E09B2@PN0PR01MB9336.INDPRD01.PROD.OUTLOOK.COM>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X6SDH2k7Pz2xYr
+	for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2024 11:35:58 +1000 (AEST)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-a86e9db75b9so621424566b.1
+        for <openbmc@lists.ozlabs.org>; Sun, 15 Sep 2024 18:35:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726450554; x=1727055354; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A3Opgofkq69zE6QCehvO/0WQhRq7E+ZOUJLxNG6PQyU=;
+        b=dUup9r3NoB5v524jzPj4csTN7+cZkp5W3MpLNTa/qW3b+PKY6Wx4OGGuDESZptnvvY
+         tKkAZUMvyFaPdxFTd6DmaNas4Etl3cWvgX7qgCpqY18+bxFQy9HmTQNi8qzeGgVTOpaa
+         My6+sKuKiYPs1ewCH7aabIoVZEsFJY1jnbtspst9voiOvXRNqq8u179XvnemWzbNIID2
+         ekhDzUElbe1IftzcFhuqhmkB5yFhW7IgFzWHk7pecuPIxL+vHq1AMr4F8gm3lzIO6ylA
+         6ENavJKGbIykxbuX/S63kiY49UcTE1+mQrBlU67g22dwLmtzfydTn+KbkurJfR2ZIG/t
+         VanQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726450554; x=1727055354;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=A3Opgofkq69zE6QCehvO/0WQhRq7E+ZOUJLxNG6PQyU=;
+        b=vdJS+z+pRXn22S5hglTxZrf5HgKxBFvFvKq56Ram7xMXn0OiHdMiFRdZ4pAbxIA5K6
+         dXZ65VIC/OFKwozG8TP0MpxzQzyEy6Y7qSv1YNR/R2AoKd5mURR1n3enRw9jJeH8+aQY
+         UyoZpwdjyzsZdSgTYId36YEGYJZ3j/FpoLmk275OFrlE63816nuPzWCydrbnQy1hgrSw
+         pNL+88+nT9aHw+xcNjhaz4BMv83G/piabfLCV4wBTe+xkEHvXyMPug9t5niyaz/myn0w
+         MGQJOLFZp2XpFriw4GCeJhAW5eKpW9GvXK2dA4ngTF/KwsvlWUApbpqu9QyUAGV7n5m+
+         KSdA==
+X-Forwarded-Encrypted: i=1; AJvYcCXOCw+JU3+jZKHvmBXOAC4qKW5+8XJxLdm35yGxjhD0z9e7XzE2x7QFMd09+cBTr0e4vhrFhqYA@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yx2cQe94ASYMlZWHwhgkk9HaFZJxHEVqfnvPJjMVi/xFDArUZR+
+	5RAPZAOhNYSZftqTG2jXF0Zx2hAE2WsX8aaaX/fuIALwU8muJ8/1phSRZbT8Vtk/Bx3imX5xZES
+	jqbX4fplFNOYE9UkwO3spuI7GlA==
+X-Google-Smtp-Source: AGHT+IEO62RmfPKA1taE0s+BQuDJGAh3xFptX8NIrEJDh8tUggxJEVWWR+hy0jIiUhytHDQqg3LV3XdeZU5inzye0J0=
+X-Received: by 2002:a17:907:efcb:b0:a77:f2c5:84a9 with SMTP id
+ a640c23a62f3a-a9029504f45mr1448444966b.18.1726450553787; Sun, 15 Sep 2024
+ 18:35:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="uL+XKfKOpls5eA15"
-Content-Disposition: inline
-In-Reply-To: <PN0PR01MB9336C133AE2B5EC1C3415336E09B2@PN0PR01MB9336.INDPRD01.PROD.OUTLOOK.COM>
+References: <20240913101445.16513-1-kfting@nuvoton.com> <ZuQUfCK7d7DuR9eH@smile.fi.intel.com>
+In-Reply-To: <ZuQUfCK7d7DuR9eH@smile.fi.intel.com>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Mon, 16 Sep 2024 09:35:42 +0800
+Message-ID: <CACD3sJbv60bYc_CRSa+YEAJuthqDxCu6pR=pgSsKX892LKNHww@mail.gmail.com>
+Subject: Re: [PATCH v3 0/6] i2c: npcm: Bug fixes read/write operation, checkpatch
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,59 +84,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Bala Subramaniyan <Bala.Subramaniyan@Ltts.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Andy:
 
---uL+XKfKOpls5eA15
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you for your feedback.
 
-On Wed, Sep 11, 2024 at 02:37:20PM +0000, Gundu Baba Sikandar wrote:
-> Hi all,
->=20
-> I am working in openbmc and using ipmitool for chassis power control. Bel=
-ow is the error I'm getting for "ipmitool chassis power on".
-> root@ast2600-default:~# ipmitool chassis power on
-> Set Chassis Power Control to Up/On failed: Unspecified error
-> root@ast2600-default:~#
+Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2024=E5=B9=B4=
+9=E6=9C=8813=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=886:31=E5=AF=AB=E9=
+=81=93=EF=BC=9A
+>
+> On Fri, Sep 13, 2024 at 06:14:40PM +0800, warp5tw@gmail.com wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
+> >
+> > This patchset includes the following fixes:
+> >
+> > - Enable the target functionality in the interrupt handling routine
+> >   when the i2c transfer is about to finish.
+> > - Correct the read/write operation procedure.
+> > - Introduce a software flag to handle the bus error (BER) condition
+> >   which is not caused by the i2c transfer.
+> > - Modify timeout calculation.
+> > - Assign the client address earlier logically.
+> > - Use an i2c frequency table for the frequency parameters assignment.
+> > - Coding style fix.
+> >
+> > The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
+>
+> The series titled as "Bug fixes...", however I haven't noticed many
+> Fixes tags in it.
+Understood. I'll remove the "Bug fixes" in the title in the next patch set.
 
-There is far too little information here to
-help you out.
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
-1. What commit are you building from?
-2. What hardware is this that you're targeting?  Do you have
-   un-upstreamed configuration for this machine?
-3. Have you checked the underlying dbus objects for state-management,
-   rather than going right to `ipmitool`?
-4. Are you using `phosphor-state-manager` or `x86-power-control`?
+Thank you.
 
-(Generally people do not use `ipmitool` from the BMC itself and instead
- interact with local facilities)
-
---=20
-Patrick Williams
-
---uL+XKfKOpls5eA15
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmbkWEIACgkQqwNHzC0A
-wRk3phAApl8MxYTAU20cpAkS0koQrg0OUjjtPx1FVfAARSTF7tohlP0NiaM9hXPd
-5fU+q/w+DSr2luZY/8pyK8mJ+ZQt4AQDBizv8naGFYEdHPFuhz0fccGLO5PMUXVv
-JjW/3dZQv+iyKplL9G4gWTkLi9Gd9kSlMPEs8pDVRiAMZrP/A1xypUDypjC7EVGa
-sEHa3y4t5IqhuHHUXDhc98WV3RTk3KamZHwGPk6VWAKOoGCVNDEQRjzgcgKiEFhe
-UNn0DmM41Plpwayu8tD0hdz6Kqa6SNt+389msOdkTaSPL1IJ9sY5mOZ6SFpv4OTY
-RtHsfGgZRs8HRcQRgOYE/QB2wLDKZlu7x5pvH9lNq0ihB7BSx0CSjlYZm3Ol97T9
-DnKPhhd4JiJjTP122cfY2CeSeyVvelf5+Er/MX5b1xpnomQzNjX5fpxKhOP2qa0Y
-oQCzZCKgDVCrN3S1Kq7Qol7DXXdEmpV3V5PpIOKwaQbrIAy+ceowPxyduct0wa1X
-MAiGMLmZuvBa9Dm0U7+xI8MvbeGshvDMRI1ShUur82mmKxlFbtjKhFhFAj+SQElX
-8RHcbHZN0KoGEjWVJRYsA0jWKjDl+cvqZNUJyyolpXJD5pSSbY/OAT6Ubzptwv9j
-yAlPW98VWbCUc/xMObGWfqdI9I1j4mebJMZ5SnqEEnGPD67ETx4=
-=IG4U
------END PGP SIGNATURE-----
-
---uL+XKfKOpls5eA15--
+Regards,
+Tyrone
