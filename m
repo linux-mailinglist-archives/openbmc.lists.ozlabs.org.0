@@ -2,65 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6DAD97D411
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 12:18:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C82097D414
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 12:19:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X97dS5y4Mz3c72
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 20:18:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X97dX4QRZz3cdV
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 20:18:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::52a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726827512;
-	cv=none; b=H5Ha9BdBURf46S6c1PCToPCxDbIIqibCQOcQAGTmJjXpsbqExzA8pa29XJ7LH4tnDiuGdve9FvLuhDlEiCz7DrTmPEE7CDw07uUy1PYEt2emn2ZWaLQCQ2B0SlyqaRExNH3MLDb0/s96QTLV7vtQL48DyIUiMG9kz8DuWhYv5cXJbm/Z2FhTrQkaH0wF6zjheIuL7L3esMB9ECJUKCa9qO1ZTaDlN5Q993ANq8TfJw1wgnqQhv3ID5X/P+OhQluEuwtqevDRvRnm4QioHdjD/EqcKvFj5PnHnv6tx4N4NPB9+v/JAxGdjrVuqkmv9kRLKLOPx8wGXC34d8XMydRGFQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::532"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726827516;
+	cv=none; b=Mq+urQY65QpVhgd/6pg8J/WX1vLIwtx7mARFn8K74Q/sAKn25usKucHefNKoVa2j5YZGy986a59LlcefZ3CX0TnqBVcq4ldYIn3OYzMloKQWS4oGm68jg+L0qf1XBlsLe/u2IkAj0o8CDuKWXMsYcYGn/XGj7fqLI0y2PvhT7SvsfyL1YiBQkeNQA6sxtdljAr0Sb+T+mp+Ub45DGt4QREyJWMHQ12FxZzf782MdMFR8QtHwp7lyKmqddcOCAETs/4zrXWq3sauFyzYOxDDFl1sU+9zzwEkgW5RQagqHvvDBYCJ5mESZw3jEWMhxmAgVGwRnBLUD459LByMleXYCaw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1726827512; c=relaxed/relaxed;
-	bh=qBcCIjRoxiVjgDZ5MgMhXd2EKuQeYew6JZXuK1tPsac=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=abrzEHlBgLf5dRN8eTRVS/jB3utf2S5pOaj0dMPLsAW/olrdk12deCyT2ztJ31S16ffZE1G/DsMeD/hfX6wcYciWzfMGTrN4N6xZTtgaj0DIumI4xzhX7A7cCZ2VNcS7upC5c+1HVoIyZpuaEuC3KJEPADNugkcyl8TEPIAXJ0Kd9NleG6nY0VOLukI+J5CFkTgUYvJ4f0gMekY2DytxVwrcYn8o0eexs+FxHMIHe2jMS1b7dqkQYGrIEk5eX32pZ+Db+tNw5Q9XFPGHlXXlzArE0oU7mFj06thyE7fn/ffZcbSTixgxrWUgfVNoiuRnXV/Dnv+UPdh0L/fFC+O2dQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DPMiPcBZ; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1726827516; c=relaxed/relaxed;
+	bh=b5x6COaWYuBZ+I/ktGSPVnQK2t9IfKl2Gymo5GZUYVM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=BJ7tv6IC47W9V54VY47l0izmXUMv3oRY9MC8sC1SNFEg5c2jEnXGHYXDBakwd6yLjXAlu+lYbk09BvCnUMW15w4krcdXpKdhENlgQJB87L6e2Pz8HR7iuy2Tv0ZxaA10UpZaKt7YqIMDULEa02BBY4bYVioYOvHeUCijKq+YZ7/ZZwqTzFR+KfwoYFDiCU+Nj3LLkiiMedcKoCX+HMsK41Yf5ivmIgwa1vUBmOBSO44fVGzyHv2egUFGB0BwxDxG0RL02BSBoIljeTIBnNQwTP4FrTU/PpZDT7+TMRCTfW7Z7YyxTsLDxxh/wmKDECJ3DkrL3PTJJWUrniNmLkBfEA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=K3v27Rgy; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::532; helo=mail-pg1-x532.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DPMiPcBZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=K3v27Rgy;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::532; helo=mail-pg1-x532.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X97dM7142z2xYg
-	for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 20:18:30 +1000 (AEST)
-Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-7db90a28cf6so891519a12.0
-        for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 03:18:30 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X97dS5Xmjz3c6P
+	for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 20:18:36 +1000 (AEST)
+Received: by mail-pg1-x532.google.com with SMTP id 41be03b00d2f7-7d666fb3fb9so942734a12.0
+        for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 03:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726827507; x=1727432307; darn=lists.ozlabs.org;
-        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qBcCIjRoxiVjgDZ5MgMhXd2EKuQeYew6JZXuK1tPsac=;
-        b=DPMiPcBZ44hljFbPbJGlulxALKShJeSg9WP4/nBiixerIRgoWW0IIGpbxmCMGHHEwk
-         W8vlUo5V23EAEcH+YabKgXwQuErT3xk/JcwZai/b/qXk0+AHs/+S6WiK27I9JxD3UxR9
-         onmGMv/9RNIelTnenhfn834E7oLJluTpF0FGKLs0yASBmIVsViYwkrJqUfOme9qW/bSF
-         T/Vv0aTaztVJG/i4gGeHSXOmTydtM/43JPO0bdGrVBcnbMgZGpN0vUcrjwhaxGKvO9dD
-         rG689JSoR1D+zAuNv9KAI1RHmkKVfOzYQ45MTx38KeYLTWR2FMKDihc875DvOxzoBOby
-         tHFQ==
+        d=gmail.com; s=20230601; t=1726827514; x=1727432314; darn=lists.ozlabs.org;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=b5x6COaWYuBZ+I/ktGSPVnQK2t9IfKl2Gymo5GZUYVM=;
+        b=K3v27Rgy2AGSWHYWLlcLOBRBIznV9O6Qb6w1NaBroAFjbi5cstgC9uJcY2lMVhvtLo
+         uRSqCge8O9ErhmKUuykz0bY6eJ/Ze1CB3FJ8oek7gjFshfJIJ1bKZaMEn9pfpazfrtIj
+         HHdn4fv1qaDQSTSXCVTU68m5qiSC9bcfs9dCx/UPAXo0Qs2bbqi66ewENEmyM/23WR9R
+         gMIBKCsbqJBs5onFA8m0BdZb0xYF7ck1tDNb64vVjVP3Q5k2dp6tUbeItBozYRk4Zp9F
+         VnW2bv2IyyVF2oq/ypgHIl5SdffPs+fiFDLt0O58eaV8gBVQVdAEl4p2dbvuV0DDIf8G
+         ivNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726827507; x=1727432307;
-        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qBcCIjRoxiVjgDZ5MgMhXd2EKuQeYew6JZXuK1tPsac=;
-        b=jDhKsr/afrRAJBvXg+kkAZzpMci4G9ULR28/uze/4jqjKAS85+EVNuu0nC3ZBGkxjP
-         UbW6Ah6963KYzUpCd7f/ww9gfNufH9kUD3j/JRrkFjWhIobd3Zn/QyLCO/r+6gtKtprR
-         dCOU1Ipjya3zR9NMOgDmZTF/TiiBiM8hZfKihLL5kiH+PPAA2qXEnH60/j6KSDHFWGCw
-         /us+cW0MGEuNAEic9I2nf4xP0xMJ8bkHyawkLQ+nczSJ/lGRfICiSQ7wmpltrXzkMYxK
-         0pGxIfcXGpHDs3DJq/lzSAcpfpRcxez1H9Qe9eCzUCbTakF8uLP/2QYMvC3G+g72W+Dm
-         ucWg==
-X-Gm-Message-State: AOJu0Yzb321olBl44K+A3zp3Y11EW4vMGcQSm8UNByzI9B3a8Q9ypffx
-	T8Wu4GFib0RzOm6AHJHKaQ3U5CSfl7zs9iMBsBghn/c484laDWI=
-X-Google-Smtp-Source: AGHT+IFbP/eoSZq3hbpekXAbmM4GZBdYL25BhV5ix8BcXAh8aBgnpApziN0RHvvL0/JIKZRAtrQzmw==
-X-Received: by 2002:a17:90a:d906:b0:2d8:aa5d:5856 with SMTP id 98e67ed59e1d1-2dd7ed20097mr4122520a91.11.1726827507470;
-        Fri, 20 Sep 2024 03:18:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726827514; x=1727432314;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b5x6COaWYuBZ+I/ktGSPVnQK2t9IfKl2Gymo5GZUYVM=;
+        b=RH9i2KD6TY2dKT4Qo3gVIIrAJMdSXT8Be1fgIKZQfxythTc6BoTWlJ8Wp75UAmqmNr
+         OM2DxF1xA8XP+bTyCDsPjAYuTfFohFNHrQAGc53pwJV+z0mU/B/YpVyTFPnWlur018Jf
+         734HCMnfOxpwYPMWwV1W3LGnP3JF0+kAaSfrWQ0dUvNWQ/NbtcHT/mkdHL4ZDStcwLcZ
+         AhZqFWk8nVWR+1jWuRafVTueh4d+IQIZu0/wqaUBNNjJks5xchZUngwTsq20J5rwPWIR
+         VoKDKCh0c7eIEdPNaV+iftfLxmQDJTpZZibCNBrUpeJewr6txjJG2BckMxiSjZf3/pUb
+         9fMQ==
+X-Gm-Message-State: AOJu0Yzo0jccHnpIiMCdGS5HeV5+r8U8q90VOnEUnt0otqbqL3kTZKwe
+	6dRQy/QNOPvssAkz/LlvDRshHj0FAyWeHzYMYXy33ObV9yNTUCo=
+X-Google-Smtp-Source: AGHT+IEHwBHrwTHTEv0Pp/iXOeAFo6lVrY7n+mRIq3slFlGs00IXkri4xKe99XIYbrrJH0TpeFpgOA==
+X-Received: by 2002:a05:6a21:83:b0:1ce:d403:612d with SMTP id adf61e73a8af0-1d2fca71fe1mr6873701637.13.1726827513723;
+        Fri, 20 Sep 2024 03:18:33 -0700 (PDT)
 Received: from localhost (2001-b400-e35c-9cc2-447a-d760-d4f6-01f4.emome-ip6.hinet.net. [2001:b400:e35c:9cc2:447a:d760:d4f6:1f4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd6ef93b3asm3631278a91.54.2024.09.20.03.18.26
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7db4998b4f3sm10636251a12.72.2024.09.20.03.18.32
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Sep 2024 03:18:26 -0700 (PDT)
+        Fri, 20 Sep 2024 03:18:33 -0700 (PDT)
 From: warp5tw@gmail.com
 X-Google-Original-From: kfting@nuvoton.com
 To: avifishman70@gmail.com,
@@ -81,10 +81,12 @@ To: avifishman70@gmail.com,
 	KWLIU@nuvoton.com,
 	JJLIU0@nuvoton.com,
 	kfting@nuvoton.com
-Subject: [PATCH v4 0/6] i2c: npcm: read/write operation, checkpatch
-Date: Fri, 20 Sep 2024 18:18:14 +0800
-Message-Id: <20240920101820.44850-1-kfting@nuvoton.com>
+Subject: [PATCH v4 1/6] i2c: npcm: correct the read/write operation procedure
+Date: Fri, 20 Sep 2024 18:18:15 +0800
+Message-Id: <20240920101820.44850-2-kfting@nuvoton.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240920101820.44850-1-kfting@nuvoton.com>
+References: <20240920101820.44850-1-kfting@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,60 +104,51 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tyrone Ting <kfting@nuvoton.com>
 
-This patchset includes the following fixes:
+From: Tyrone Ting <kfting@nuvoton.com>
 
-- Enable the target functionality in the interrupt handling routine 
-  when the i2c transfer is about to finish.
-- Correct the read/write operation procedure.
-- Introduce a software flag to handle the bus error (BER) condition
-  which is not caused by the i2c transfer.
-- Modify timeout calculation.
-- Assign the client address earlier logically.
-- Use an i2c frequency table for the frequency parameters assignment.
-- Coding style fix.
+Originally the driver uses the XMIT bit in SMBnST register to decide
+the upcoming i2c transaction. If XMIT bit is 1, then it will be an i2c
+write operation. If it's 0, then a read operation will be executed.
 
-The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
+In slave mode the XMIT bit can simply be used directly to set the state.
+XMIT bit can be used as an indication to the current state of the state
+machine during slave operation. (meaning XMIT = 1 during writing and
+XMIT = 0 during reading).
 
-Addressed comments from:
-- Andy Shevchenko : https://lore.kernel.org/linux-i2c/ZuQUfCK7d7DuR9eH
-  @smile.fi.intel.com/
-- Andy Shevchenko : https://lore.kernel.org/linux-i2c/ZuQU2iIZwW4mAumo
-  @smile.fi.intel.com/
-- Andy Shevchenko : https://lore.kernel.org/linux-i2c/ZuQWYabomv_xyYyj
-  @smile.fi.intel.com/ 
+In master operation XMIT is valid only if there are no bus errors.
+For example: in a multi master where the same module is switching from
+master to slave at runtime, and there are collisions, the XMIT bit
+cannot be trusted.
 
-Changes since version 3:
-- Remove "Bug fixes" in the cover letter title.
-- Modify the term "function" to "func()" in the commit message and
-  code comments.
-- Correct the coding style.
+However the maser already "knows" what the bus state is, so this bit
+is not needed and the driver can just track what it is currently doing.
 
-Changes since version 2:
-- Add more explanations in the commit message and code modification.
-- Use lower character names for declarations.
-- Remove Fixes tags in commits which are not to fix bugs.
+Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
+---
+ drivers/i2c/busses/i2c-npcm7xx.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Changes since version 1:
-- Restore the npcm_i2caddr array length to fix the smatch warning.
-- Remove unused variables.
-- Handle the condition where scl_table_cnt reaches to the maximum value.
-- Fix the checkpatch warning.
-
-Charles Boyer (1):
-  i2c: npcm: Enable slave in eob interrupt
-
-Tyrone Ting (5):
-  i2c: npcm: correct the read/write operation procedure
-  i2c: npcm: use a software flag to indicate a BER condition
-  i2c: npcm: Modify timeout evaluation mechanism
-  i2c: npcm: Modify the client address assignment
-  i2c: npcm: use i2c frequency table
-
- drivers/i2c/busses/i2c-npcm7xx.c | 425 +++++++++++++++++++++++--------
- 1 file changed, 323 insertions(+), 102 deletions(-)
-
-
-base-commit: f56f4ba2fc1dbefd3242946f2fad35338a60e3bc
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index bbcb4d6668ce..2b76dbfba438 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -1628,13 +1628,10 @@ static void npcm_i2c_irq_handle_sda(struct npcm_i2c *bus, u8 i2cst)
+ 			npcm_i2c_wr_byte(bus, bus->dest_addr | BIT(0));
+ 	/* SDA interrupt, after start\restart */
+ 	} else {
+-		if (NPCM_I2CST_XMIT & i2cst) {
+-			bus->operation = I2C_WRITE_OPER;
++		if (bus->operation == I2C_WRITE_OPER)
+ 			npcm_i2c_irq_master_handler_write(bus);
+-		} else {
+-			bus->operation = I2C_READ_OPER;
++		else if (bus->operation == I2C_READ_OPER)
+ 			npcm_i2c_irq_master_handler_read(bus);
+-		}
+ 	}
+ }
+ 
 -- 
 2.34.1
 
