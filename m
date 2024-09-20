@@ -2,91 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BB3D97D425
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 12:20:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9239597D6EC
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 16:31:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X97f16QV5z3gJL
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 20:19:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4X9FDt01rSz3c7R
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2024 00:31:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::102d"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726827540;
-	cv=none; b=RJkAjc4rEc25n/tFh+l0KtqevFC7r+o9Xl7boX8dVlJH84YpmQHPrQ70mJUbwdG+b/eaW8AUpk9z+s++mK9vILemY2GUmEOsgEumBvSQhcjRHsETXlJutDkUJqds2DgF5ISc02hNzXmAjO5q4MLczgFX63QkTlS5K9aTMV3fxopMv5d1RdRY9uU67E0eGlI3Q5Hb9C5KY6vVbgInEQ4/PvS8UwSrInGWhzNB6PiLYkFqGrvAe/chyBHzRW5YXlcsfc5KjPDfIrMa7oM40X6jbyrqk/ko09QLcMWQz5yHDN6zrsoeuYxtS/aK4UCfu+pbMJsqWyYOhmMq13aDzUKZqg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.16
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726842665;
+	cv=none; b=mdFYb1yq9gdEU+lG4bBSksEHoT7MvsotoUlRaROA5+HUG6RE1tpYsKajWrRngiUZyCNoQbtcbv+h8W+MgQ3Pkz+JU4kMZsPJIWd//2d008H9Gz0hVaM86oWC29/QRb1hx8toboh66PzYFtAUzLt//XYZ1xvK2aosmDcEDu2bu7mRw+P/UabWq83n1C+nkkKap/cOspMh6BMUETvWNT6M5Zi6YQGPe3464IasKUxFka80ylEH4hRBxELSsFVoIC7bBQfp1EZSRzL2SteWGx1WwWgUhiOFB7pMcKd+rMeHZ8Eb8Ye32LkQBQY/3I7a/aBb6GTx2ZBrruyL3wtcica2SQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1726827540; c=relaxed/relaxed;
-	bh=MOSQS2phhZy9vhfSdqHxVy6juQR6vrzN7E2tXsy++5Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=fACC3KM0/YpmUpsBzqtSFiYJC/I5bK3vJfegt6eqA9eYc/sldKFh1ZCKQw13vWu+03iGCga/cSp4Ym6WrES6X27bCLscNOrNWWUVlqy03g2oiJmSuxJnjqgFotnKEX9cnkUHLsKDOwPkUDBio4qifuaig3qmxav18Tf7A1tPMFsBNo6nW3zLx85nlCgzTCvvyQ1xSdku6SUE493t13OgeS6yDx1B+j76Od/+MEIeTCXIyZW6EYcLbdtbqxRHD/XleJlns+DCqFvml8pIbKzAKoOZUsl3YVKMjN9h+Vgp2h5sKwTv1j5QUbR1wGdn79bJ6mbrjEUSCprNkga3XgXvBg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=m/ZaW4nV; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1726842665; c=relaxed/relaxed;
+	bh=9RdAB2YVu7y2cUTrtUP0O78tvWjTMKm6rnP7gJgm4YI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ox073yZeL/8pB9nADDWjDXgRW9N/MCA94SSBjNhCddQ1r3i7mB3hA4ehMZLQhOyfLlf/0SY9wIV6VhHB+hWxCqsNgpl6mktxe2tnTxAV7sC2W6iM4P84OnEiVXSy8FrrTxOY2pDv4TTxcq2zFf2v9rz0m2lZth4Fk4nKXY95I32PLi8Yy6jkdaa1NNmZxrfRtqnaRFWBINtqHB9jzKyxi1fBDF9+trKK8PEytkrpT+NhwklzL0nFN/GyTLYlcu9I85IaDt/Fr8IpQ4YuCzgGYveGweUeC2TIpK95MoxCfJWzkX33vwCWq69SOn8+p7hRwpCCcbm7fKCej1Rk/CXjag==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IRVK1ppa; dkim-atps=neutral; spf=none (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=m/ZaW4nV;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IRVK1ppa;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X97dw40b1z2yV8
-	for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 20:19:00 +1000 (AEST)
-Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-2daaa9706a9so1654952a91.1
-        for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2024 03:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726827538; x=1727432338; darn=lists.ozlabs.org;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MOSQS2phhZy9vhfSdqHxVy6juQR6vrzN7E2tXsy++5Y=;
-        b=m/ZaW4nVA3jeEW61MaR8AAq6ATgl0IKXMHa3oAnwr/WSqoBK1j0cNdd4bzXkBlavo9
-         1YDE4A/w5hJr8lGb8l+AoV64sSQZAiCyayjmEanZdGKGKFmhj/rS5fy5/PJRFeIGzYge
-         xSQ+fNZfxRw7sCvD+t2KkCaRS4PvxJeyJXcmlSr41qTJMY8ZnjQy7GAYYL+cenMzShVp
-         ZSjB6cBT56YnZEzcirVQrdHM7xNZ99kQY1vsz++kyjoe9x7qQgQ6efku6WYwbVUGTOna
-         f+w+IK8QunwVH6hJGnqSqWZwAz46YxJVEYIDJUq0Wn5nGchehWazOwPMLbtUXFUtck6x
-         julQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726827538; x=1727432338;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MOSQS2phhZy9vhfSdqHxVy6juQR6vrzN7E2tXsy++5Y=;
-        b=T8MUGRqBopFiqFskf8HQY+ALFn/rqjKueIfY3ZZBMAFc8YpaF8uuHen2mFpAGsCmxU
-         CLEJTSS6SkncSZsh9BGIiSRSPcDIlI2FEFH3YE9exMW8PWbHV9H8aH1MoXg/ZCIo1Cye
-         0XPOrntNGZ35FuB69RsGq5XK4Ph2AuQmbPe/UsiVT7hDcNmiAep0/cmt2cHVrvgNL9lj
-         w7OG6t9OcQPVwfniqQblQCgFLenYYwDyJTeeh77bTsOdo8XZpBvtMcKLMX9YzRGS9kB7
-         liflQGcAChqfrylIpqBVXoOPqCUDSBlGUZfMtcGsek+jjgw12N2bkVxTkz+/ZILrKMLu
-         KQyg==
-X-Gm-Message-State: AOJu0YzUWejoIrFodWW3SSvS5AXrp2QS+3qnlRKFs70eWEEUdeBxilPu
-	m4PJSDtbXA4r1ght4nlx9M3iCiBWltSIXS6mO7sdAQzJ/wuaEno=
-X-Google-Smtp-Source: AGHT+IFG40FXFa7cL/Nwmch53MN0BC+f2vfZG29tfUmd80whMxH/9pjTgZnrwZksfCx6vZxpzJKgrA==
-X-Received: by 2002:a17:90a:9313:b0:2d3:cd22:e66f with SMTP id 98e67ed59e1d1-2dd865e77e5mr1171550a91.9.1726827537966;
-        Fri, 20 Sep 2024 03:18:57 -0700 (PDT)
-Received: from localhost (2001-b400-e35c-9cc2-447a-d760-d4f6-01f4.emome-ip6.hinet.net. [2001:b400:e35c:9cc2:447a:d760:d4f6:1f4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2dd7f947427sm1487476a91.48.2024.09.20.03.18.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 20 Sep 2024 03:18:57 -0700 (PDT)
-From: warp5tw@gmail.com
-X-Google-Original-From: kfting@nuvoton.com
-To: avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	tali.perry1@gmail.com,
-	venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com,
-	andi.shyti@kernel.org,
-	andriy.shevchenko@linux.intel.com,
-	wsa@kernel.org,
-	rand.sec96@gmail.com,
-	wsa+renesas@sang-engineering.com,
-	warp5tw@gmail.com,
-	tali.perry@nuvoton.com,
-	Avi.Fishman@nuvoton.com,
-	tomer.maimon@nuvoton.com,
-	KWLIU@nuvoton.com,
-	JJLIU0@nuvoton.com,
-	kfting@nuvoton.com
-Subject: [PATCH v4 6/6] i2c: npcm: Enable slave in eob interrupt
-Date: Fri, 20 Sep 2024 18:18:20 +0800
-Message-Id: <20240920101820.44850-7-kfting@nuvoton.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240920101820.44850-1-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4X9FDk6gzWz2yKD
+	for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2024 00:31:00 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1726842663; x=1758378663;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vb1mlYEI0m2HdYRCsq804tsecR/GPPDj7yvi33gn2g0=;
+  b=IRVK1ppatyWkgcUIzKNSK4uthbZB9P3DTjNT94RQN9aZXlXR/Fb7y0UU
+   dAjvGil1SLqJZlAsNu1pul0JSmXkQ6BIhF4a0AAIJVdYZ85G1b2pp64GE
+   6nFJWHnBlDCDt59o+ZV5eMdrTdQWVs3wmwbvYY9XU+DjLOqCyazXNZ7IS
+   tbPw+v5C6T2yLmXch3Xq2bw7zw6z8K0Ad6/0jz6VyMiaGCFKETZceP6Fb
+   MkSK6j2lz/l2i0r0a7WoKPN32CqvGqdW8ve7ruYdNqNCJ4oCrslpi38dS
+   oHNH8Tp+Czu16Th9TfZGmnduYPvEtrHlIiuYLctoKjgLItVSXM00bByS2
+   A==;
+X-CSE-ConnectionGUID: BDGxsognRXecdAxKyseDRQ==
+X-CSE-MsgGUID: qwtCR1+vSwG3R+BSoH+IFA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11200"; a="25948019"
+X-IronPort-AV: E=Sophos;i="6.10,244,1719903600"; 
+   d="scan'208";a="25948019"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2024 07:30:58 -0700
+X-CSE-ConnectionGUID: PRjBQ4eRSZ25VQOQKvFwNg==
+X-CSE-MsgGUID: cL6Lh7OnQLafA4rleM5aRQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,244,1719903600"; 
+   d="scan'208";a="71167211"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2024 07:30:53 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sreeo-0000000AwIn-1X9L;
+	Fri, 20 Sep 2024 17:30:50 +0300
+Date: Fri, 20 Sep 2024 17:30:50 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: warp5tw@gmail.com
+Subject: Re: [PATCH v4 1/6] i2c: npcm: correct the read/write operation
+ procedure
+Message-ID: <Zu2HGte_05AA6yky@smile.fi.intel.com>
 References: <20240920101820.44850-1-kfting@nuvoton.com>
+ <20240920101820.44850-2-kfting@nuvoton.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240920101820.44850-2-kfting@nuvoton.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,46 +83,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Charles Boyer <Charles.Boyer@fii-usa.com>, Vivekanand Veeracholan <vveerach@google.com>, linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Charles Boyer <Charles.Boyer@fii-usa.com>
+On Fri, Sep 20, 2024 at 06:18:15PM +0800, warp5tw@gmail.com wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
+> 
+> From: Tyrone Ting <kfting@nuvoton.com>
 
-Nuvoton slave enable was in user space API call master_xfer, so it is
-subject to delays from the OS scheduler. If the BMC is not enabled for
-slave mode in time for master to send response, then it will NAK the
-address match. Then the PLDM request timeout occurs.
+Something wrong with your email setup. This patch may not be applied in this form.
 
-If the slave enable is moved to the EOB interrupt service routine, then
-the BMC can be ready in slave mode by the time it needs to receive a
-response.
+But before (re-)sending, wait for others to comment (up to 1 week).
 
-Signed-off-by: Charles Boyer <Charles.Boyer@fii-usa.com>
-Signed-off-by: Vivekanand Veeracholan <vveerach@google.com>
-Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-Reviewed-by: Tali Perry <tali.perry1@gmail.com>
----
- drivers/i2c/busses/i2c-npcm7xx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 9d533873e477..aa3310afbf6d 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -1925,6 +1925,12 @@ static int npcm_i2c_int_master_handler(struct npcm_i2c *bus)
- 	    (FIELD_GET(NPCM_I2CCST3_EO_BUSY,
- 		       ioread8(bus->reg + NPCM_I2CCST3)))) {
- 		npcm_i2c_irq_handle_eob(bus);
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+		/* reenable slave if it was enabled */
-+		if (bus->slave)
-+			iowrite8((bus->slave->addr & 0x7F) | NPCM_I2CADDR_SAEN,
-+				 bus->reg + NPCM_I2CADDR1);
-+#endif
- 		return 0;
- 	}
- 
 -- 
-2.34.1
+With Best Regards,
+Andy Shevchenko
+
 
