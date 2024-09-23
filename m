@@ -2,75 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3C2497D6F1
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2024 16:33:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 67A9D97E4AF
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2024 03:52:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4X9FHF5HbMz3c7Q
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2024 00:33:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XBmFt41hpz3bxZ
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2024 11:52:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.14
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1726842790;
-	cv=none; b=mmkdb/HKQgRT9JjSkTTYL1OjwqQVPXXR0aYlzhsmm/w+3IymEDfcaO37E0jy4qtOC7L9M6e0SLSH/kqeyXAFlfG2L8zSoyYbrPbdZvfOa6YJnDnGcG0Jqm59dbsacJdgVtWbJiBZdDeAam8DWoELNbxOeHwwE+lB2j6MwJ3Gjz0cHpi4OAcuDxo3YRVPl6bTn04mTjjBYDi1Wy5enEAIjgoSZg+hA/LJkb53osVYwjcdjgSrt9iHw2NIyY84JBS4oSEDBT0ExFmRgpnXUUVQKbgYOsM561YGAN/tM7QWxMGtJhsHrN7nLcz+WtPCSmEYstDdEOEDA70AR88OautR2w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::630"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727056335;
+	cv=none; b=CTvdkYjstGu3ywDu5U2uEYedWGdm4Yg9Vt4UaeU5/vVVnzGS8wIsl3B5MqE2wnu7LkiVInFTdMsdRp1ILa2zy/xnfFVLWXgOsPVUmOUnMek2IymVJrxpZEFyLlOfckBUZu19OvT2BkK7ONkvA6Fl+V87BKMG6XXcrSEyg9FInz57KW49XgRvDX6dQm3htJp/MCzlaAc0WiAjpppt31gWCVQC6DTVxQKB+nvjDbXX++yWajh9C30mGJaNAKSOYCM9FyE3dX4olioMbU/1SujANdv1Ww6gFXAkzDqACnifg8zQq/E8fRf44wAU2uWUVGwktwcxTR86lLw7/eAg2VEZ8A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1726842790; c=relaxed/relaxed;
-	bh=9VK5+kcQg7hEc43tRiHJKpoIevPWo/Ko0TUcBiXgHBQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qa1i4xL4mJn8mA6LTspSpgBu4UAExK69fYEtyKAbOsacfDtGBXAJM7M0MlApzUtVb8VMJQaHoePyzT/uH3oAtvW6P7DX5awPF042ttGVb3zAy530e1MbItv6/kojWGnbIIk6r0RbOMtyP0WD+Isr1GKzeIsDMfeIkLmwVI+rNtGlvsCzpVwU41QY4RWahQRYJrlUjM/SKQXn2wiR4MH0YQBt4ixtD9UkqrzqtzPJzBL2jZlwchiRrvw55+T7KRrQg9YBsqo3VpdlIdE+iHsgUPC5q8WF1hxMLRr6McsDzJZTE42fWPyKb5nXaZirMi28L6plaeJsPVmMLIjs14wrQQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=md+kZtQI; dkim-atps=neutral; spf=none (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1727056335; c=relaxed/relaxed;
+	bh=sWMVVxxW+AfDBr5LSOb/cH6eDOfidObguR+oCv5UphQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OiOhLiFuO+A/aCQxcwHn5xcu3x427rbEMPGoOdDMjJxKDESZrQxI7sJsojpTDe1//V0V+iqh+F5F9Wr37StfCuKzf9cZkPXoxzGPfxTGkARmIoineikLJN2MsRnV+OlqsQ086V3P/zhchrEiygoeKuldJO39d7V6CROF1yq1c7VM3mR8+KM88drVmQ+dxaDOpMEopIFWAKzzJT57IjziS9WQAPtA5coDzrqhLxB3TYZfAo5SVo+2TV21NrU8jRP0rtQtlEA59gajRTYLKQKoJMnHRpA+9D2NmOray8vJpqRwoDQBOZWBMtNLFMwRegVptLDUlDjCGOuoZHIvbf64oQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Ki5uQxBp; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=md+kZtQI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Ki5uQxBp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4X9FHB016Lz2xnQ
-	for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2024 00:33:09 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1726842790; x=1758378790;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=FmZ1iPfYLpvXQ9iWVPvde2w99WvWCFNwTvXH1ZHG+/s=;
-  b=md+kZtQI3p6hjkmAjHpvafET9nj4Nv5Ra+xyhxZaSwOUDYwoPkeizv+v
-   gzFkaszZYr5HZ7aaFPh0nzg1hs9rDYQEoTN/16ohfljwGFNiCpyyLJi7t
-   Sw3WA8mb+qh+310WnJdCcZk30HAZCcpx7/Fwz8Vzss2tYkrwndLHUe+f/
-   l/zLwjxrNHPZ+3bQ0NPPsYN+xmALdecGGJNJcVLx5gENAMq7++EsjCCIk
-   GEwyB9DK9SMFdAtvQ9ex5q95ml3Q2sFEs6JmPa+O0olQTKbHDsDfOoKX/
-   ru1TxhSeOO/6/F3wvOLbrbTDu+f1b9aZxThOszFd1OvcBKVDhKwtnhOEY
-   w==;
-X-CSE-ConnectionGUID: bGxYnx9kTIWCIhPpCleC1A==
-X-CSE-MsgGUID: xemhsyVqQ1e2v6ZwXOHiqQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11200"; a="29638675"
-X-IronPort-AV: E=Sophos;i="6.10,244,1719903600"; 
-   d="scan'208";a="29638675"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2024 07:33:06 -0700
-X-CSE-ConnectionGUID: VlqCpYX8QHyARjpiYlo3Pg==
-X-CSE-MsgGUID: eQh73CTxSP6P2ajTxgRzEg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,244,1719903600"; 
-   d="scan'208";a="70198558"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2024 07:33:01 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sregs-0000000AwL1-2MqZ;
-	Fri, 20 Sep 2024 17:32:58 +0300
-Date: Fri, 20 Sep 2024 17:32:58 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: warp5tw@gmail.com
-Subject: Re: [PATCH v4 4/6] i2c: npcm: Modify the client address assignment
-Message-ID: <Zu2HmkagbpMf_CNE@smile.fi.intel.com>
-References: <20240920101820.44850-1-kfting@nuvoton.com>
- <20240920101820.44850-5-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XBmFp1zlvz2xYk
+	for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2024 11:52:13 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-a8d6d0fe021so614520566b.1
+        for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2024 18:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727056326; x=1727661126; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sWMVVxxW+AfDBr5LSOb/cH6eDOfidObguR+oCv5UphQ=;
+        b=Ki5uQxBpnlJW/avFKltloV8y3wOY8Vv3DjX2CSY4R6KKR9iImd4DtVrXe8rcv/0WL/
+         HyVw0yV+D+42CwRVk8PKKgoNFOw4qkY+7W2G4teBXdieWE7wWWwu7YmRSpLz+HTEGhVr
+         +bFoCEXnz64wm23DSHslN1wwtNW5cP4hT+1RaCMvGMjweRZX8EFFrjoBabgxEvLHg9eA
+         0QLP1jEf482Qf7tGK4UXy9gjLd/Vz1iAwGC0ajl1SJgk/e9hLwp1n5zO3xIOOzzxAH7L
+         txdGaknNQJJS2KD+kytJCBxXtN29faCWcOUUJIo5wEDI+cCbR7CKy38lQzPdDFaA5Fsk
+         WflQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727056326; x=1727661126;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sWMVVxxW+AfDBr5LSOb/cH6eDOfidObguR+oCv5UphQ=;
+        b=WFuvCdTmp5j56C/W4HZ0gBv7VSnf65reL0OiZr2r/q56B7ACG6jgm4E9+cv4nree3R
+         fEZwzsa6Qh84vJDfpCe/eOtCxe5MqIUjn3VDwjsGpzYeiRtAPsAbL/97V85400EylKDN
+         1K4uOQ5p0aNc55RYrftwVpwsxaywhbmAWfLyAW1iPy6OECPd+aYzeJPkWOVePu2jOncm
+         gKpVEhsOJaE9z9Y4RbmEy9HvCKeSZiAgu/QI28y++6w+SmxxAWVimkmO/1IT1qWcUwcQ
+         w2jGsNzu0xHUadwEx4xoNF+LphsTqXPd/KQTrE3ljSGGOLgmF0tTJd6ADX0Z/xKmOv/i
+         bNHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWMmTKrA6O6M1Dw+kweuaSDaMdpgMMsqzbtipiA0DJOaCVnFshLKU6eceoHLltt65vmTuK336WD@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxzBjhPUXzpByoJ+FyHFwNoyfrq9H9Lp9N8RgomVgxeGyWQqq+7
+	XN9/m3kHARKqw7cIhDHAE1bIysqH1BRdiUpYka/de6C0SSmS6bIbles/RiUzimAEpl7qzWhwVUR
+	m9BcTu8Vhv1+iE2ViC1P8DeEKtw==
+X-Google-Smtp-Source: AGHT+IFFETaOQGu652OB7nrGXOP/MzYyqIndUDFmdQaGb9RRqPWu8MVcTogmukY38ENE6g3voRpeLnI43t2ioo+hnB8=
+X-Received: by 2002:a17:907:d3dc:b0:a7d:e956:ad51 with SMTP id
+ a640c23a62f3a-a90d4ffe2a3mr912415966b.21.1727056326270; Sun, 22 Sep 2024
+ 18:52:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240920101820.44850-5-kfting@nuvoton.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240920101820.44850-1-kfting@nuvoton.com> <20240920101820.44850-2-kfting@nuvoton.com>
+ <Zu2HGte_05AA6yky@smile.fi.intel.com>
+In-Reply-To: <Zu2HGte_05AA6yky@smile.fi.intel.com>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Mon, 23 Sep 2024 09:51:54 +0800
+Message-ID: <CACD3sJYqWz3y2EZ1N3SqboNz20gdjZRaLz5c49u2bfztoVsudQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/6] i2c: npcm: correct the read/write operation procedure
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,24 +89,35 @@ Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, b
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Sep 20, 2024 at 06:18:18PM +0800, warp5tw@gmail.com wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
-> 
-> From: Tyrone Ting <kfting@nuvoton.com>
+Hi Andy:
 
-It seems all your mails have an issue.
+Thank you for your feedback.
 
-> Store the client address earlier since it might get called in
-> the i2c_recover_bus logic flow at the early stage of the func()
-> npcm_i2c_master_xfer.
+Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2024=E5=B9=B4=
+9=E6=9C=8820=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=8810:30=E5=AF=AB=
+=E9=81=93=EF=BC=9A
+>
+> On Fri, Sep 20, 2024 at 06:18:15PM +0800, warp5tw@gmail.com wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
+> >
+> > From: Tyrone Ting <kfting@nuvoton.com>
+>
+> Something wrong with your email setup. This patch may not be applied in t=
+his form.
+>
+> But before (re-)sending, wait for others to comment (up to 1 week).
+>
 
-You got my comment really wrong.
+I'll remove the "--from" parameter to git send-email command in next patch =
+set.
 
-func() in my example was to refer to _a_ function mentioned in the text.
-And IIRC I even posted the example, like: i2c_recover_bus().
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
--- 
-With Best Regards,
-Andy Shevchenko
+Thank you.
 
-
+Regards,
+Tyrone
