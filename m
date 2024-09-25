@@ -1,78 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41E3F9851F2
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2024 06:17:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1429D985687
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2024 11:40:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XD3NC5sJcz3c58
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2024 14:17:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XDBXt6rd8z3c5M
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2024 19:40:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727237831;
-	cv=none; b=ZID/h48oVJgqzwsMfY/E5Wc3V2Q2u4sZFvSL3EILoBrkCjQX1as+AvFENG71iTS7bB+vu1ivv8NXabbsZQnuV2Ntg8ew5rFAfhy3Ck4DYjL67gyTlfsWZU+qMu6lQswuOB14dZJz+xe4iDzJT7e7T+Egrev4rVZnNrcUhwQGbdCxFCXQSPP85R4yf7O4ZETwQaiiBLYYdpZjebdSffQpn/Qu9sMV+K+zIhDvkZOUQe8U60AymCk3IJzrBKHxXUIvAMTxOXm0pUQvQxtsI6kaOgHD054oIEBa3hhULuRWUwWdrZMlsCltb9BtUYUZb7GLswBoshPsDbQWBEFXQGktYQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727257210;
+	cv=none; b=kyh+fsQzkCNMQzZSilAHju4hNooblGFtcJZr1Kl6uHqgaKd/alM3fQTVMR/9uj68HcwJYSuU8N4x5ioQnm6f6opW9WiGNqSj0cLfF/g7TnDHOdedPtFE8Uc/JfLdVq/c8da3aui8MT2mm0qt9pE20nmQKOOsFlZ3lTX7L7PtUYtwdBqewF+1u42bfQ6dmaB3qFaNVJvaO/ONBxSnyHUbgupvc6wAcBJBdkHvu0xjFDtcG2o3fOA9mOfDNE1GN7ZYZPSudq2h9AMevTKgccvairlsXsMoWNcHsWz17e3ZbcCL4hkJkI/+IaSGw27GLxVkOsupBuqmFLfzIbSPIqJGBA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727237831; c=relaxed/relaxed;
-	bh=3QnC1DiR1cl2DuuwxCo/TfvfT4koLiFgbH0Py2ePfcQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MC//ul5+niZHMkcNvkw/R+7WElEh+S0QABYf45KlS86uIY43Y0inA2lOfNZCujPGjBxC1Q3r1e6id539rU0et7Q0tNPFzESd/RJ0NLDYfoNKlJA88iSZX5VhsnPUcuxILXfvdapDVNNKSvEe/WMwJX4cnk3+E5cmV66ETjTd3JeRCaIpvifCJSdk0W6hyNsvDtQ6rLyEPO0K3ePYGMLc6i9HcQOmNG5HLV0tB6U62liaZeDGJB5+t1vRPIWNYBmybdRp1N1+X8HJHUvEzgRMk6Sax7OqcsNooDWHBLv1cvm8hFD8hJ2YfBxLMGfJh34hwodECrxG21tbE7/drfDeCw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cLqMFTnp; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1727257210; c=relaxed/relaxed;
+	bh=+hVeQm3M9Kb5BEWPHPjrFASpqXLbXMnOU9Rk2NX8DNc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dx0SL0MBiX66gYzwraqsLwCsrXIjgFkQS0ma81esmhZPFhZNO5ovMrqQIzN2ZNG/9hGF3LUkCMdUDsydOEs4xKVp6RBpXhfwKP2Q99HGVRx/rR2Y9KY0SY/uiag0HavwEWMfP/JEb67ocIQoxtCaZ74jeZtYW02lY63D/eF/WADr8CtXYxPfBU5mnwOjBhw9zHIwpAo71yUAjPeEdoVOqQ+UNxlEKFEzqNhuBUtXtrzAk4+T8+2dvdUD5NnB65Kc2dYPng3w7V5JXegwKZ+WOEpheMF9qYk1VWMe3sRL+zFnwZzeNxaMPs0ksToW975/7RxSrdqPsi/aXeJevdSndw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com; dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=1QyFweGu; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org) smtp.mailfrom=wkennington.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cLqMFTnp;
+	dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=1QyFweGu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=wkennington.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XD3N66WC2z2xjH
-	for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2024 14:17:09 +1000 (AEST)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-5365cc68efaso2009375e87.1
-        for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2024 21:17:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XDBXm73sLz2xHt
+	for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2024 19:40:07 +1000 (AEST)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-206bd1c6ccdso61555595ad.3
+        for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2024 02:40:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727237823; x=1727842623; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3QnC1DiR1cl2DuuwxCo/TfvfT4koLiFgbH0Py2ePfcQ=;
-        b=cLqMFTnp2pgr9LKdak3GwmIaopwznHkjnArihacXynGwxSDOiwvej77fbjGaqN5tml
-         EpHS0x9U77i/JxCa/QzkXA1nwCTvlu5zm20rKXSvOPV3y18tHJ17gumVTS8TjF64vsqg
-         0wsE/fxjEpv0T6gmvZST8RIY46N7JI40hhvFbjGj8tIrudas93v4GgmPIbIdxIE5CNJq
-         moyBTVYM918RF2xQuFVZje0yWfIn7HXm44FlmkfD1KAMa1Kb9TGzlJMVUia+LkAJOwVk
-         Kg4GpbKBCslHnaskGpYmptClLuSxZQyhxRtexKW5ADWSZKKVbiYSWWZQa6bOgKdPjWMK
-         pu7w==
+        d=wkennington-com.20230601.gappssmtp.com; s=20230601; t=1727257204; x=1727862004; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+hVeQm3M9Kb5BEWPHPjrFASpqXLbXMnOU9Rk2NX8DNc=;
+        b=1QyFweGu1oxHxY0U0R70Cf8f8iDPO4UFvv4u3HWUPAy5z317E1W2O6Oug7Tr5w0kXQ
+         pYTWIlsxan6ReMsBLTEpDTIV/D0oFtm0kZ3yDdEcyY6qgoYX59YyexXEkJazo4OtcblQ
+         fBuYM5MfhbSMscjHNfcSo6hT8zAWxgZ+1JiLBBFbPvGkyo1AOSj7Ek4QrZe+2SAk2Etg
+         ccilBYZlqmJRhjN0MnCVS8PuVaYdjhH1M0vYewkBY2xu/8pGDgqAhQ/b/hX4yyc/esLK
+         XU0+l+GBryDBzqdJzAGLhMgiIX43TkIPTwFOAVyLrJ+KW1jemuHmE3FIck8oHVPqT7sC
+         rakQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727237823; x=1727842623;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3QnC1DiR1cl2DuuwxCo/TfvfT4koLiFgbH0Py2ePfcQ=;
-        b=dXmM9UnJa/W2KReVMuBApstLp1nT1Cijn7j0g9k/Va+DKDJkY4ywXiUaAUEY+Mrw0h
-         q5w/csXTkY4LPtjYY5W+lTM+P+VZkkhTE3Ox/2NAsWklpFkSQR6VCaNy31lmc52gmeH+
-         ZpCipAv8Tdjm8xtfmlkwy0E+tRAVTB8of++m75+SxwsIzCR4aleOZdL3rsEJLnLbyPw6
-         3BRM36hEE/MAIlDxyOh2diZvM+vxnfPyCY58JsBJ1qTzHCHOq8745aObPwKwZ/+p9ayb
-         dH0TluwnVzdo0DujLA0TVY3n7/Csl1qoyEgk4BPvBP4kvk+N/817VhIvIOACbklVWbpp
-         /wNg==
-X-Gm-Message-State: AOJu0YzKKk60j+0DBPWhGmDPI1s3IqRI+vx1crl9q4O3iHwajsvq7+qq
-	tYePPvvyFbFFmeP0z9DYVQyQKIILAFtSqO8ixHd2J1HG3Xe0lgNz56AYTz3KyNn2Mat8rRxquvB
-	WhXg+0Zl7ansdnh9mvejX1jrp3AI=
-X-Google-Smtp-Source: AGHT+IFaZNtjh4Kj1Eyr3O5d4v5iGSUcwry1BYm5vyKqyoZd9cO/cbUCubFWZFIwl31tJnzcBtCzlQB/VQQE0AGDxk8=
-X-Received: by 2002:a05:6512:32c6:b0:52c:e3bd:c708 with SMTP id
- 2adb3069b0e04-5387048bca4mr600901e87.10.1727237822894; Tue, 24 Sep 2024
- 21:17:02 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727257204; x=1727862004;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+hVeQm3M9Kb5BEWPHPjrFASpqXLbXMnOU9Rk2NX8DNc=;
+        b=rd7ufLSvw1nvUR+XnroV/Tjidl0pdU4Gx1+tlVO/2bQnR2Ahj649ceTHQ5JCUUXcPC
+         5XGLm4a0UInduhOp2TkYWxjPazIxXmtCfDHLARMx76mL0CiauCz00Iqr9w8sKTY7WylB
+         a/OC/A/dLuAYGFXV7P85RVNZTpkhnNcS4mpHrUwwYGx45nn5YzOiFrF0jkCjAY24+pCg
+         a4dMLDo/9g1Znl+yLeqUZQd3kmjBuLiu0AcemrQhUqnzqrO8K5XFfYb/bsMFHabYK9A9
+         GfCjjAQeJmgRCvas+G0vfySVuPUbafcrMdb5V32cgFT8X4Z+9AjTpI0CYLfXeHizQykz
+         q+Zw==
+X-Forwarded-Encrypted: i=1; AJvYcCWtQYvC5gOeN1fpxvbBpKUMITyL47c+1Nkm3f6GX4sx+BQw8EcrqVhN34fMhCBvsxyJG2ZkrGyx@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yxn5os6eicnNyWsXjarkoj0ubZ+e1W4H0hB9LQj/++uPjBQ4wtn
+	v6F0LrrSquK4Fl4KeZYbMy8vDP2shMHPLaVzwqGNyyAQ33K/E1/sYUz9IENfwXs=
+X-Google-Smtp-Source: AGHT+IEcO5h5KcZFuc3iAGK66yGyxhN/Om1kVIyoX9CJW9qNJjpCSqoZx1payz3X0gYgWX71SgJidw==
+X-Received: by 2002:a17:902:f68b:b0:206:ba7c:9f2e with SMTP id d9443c01a7336-20afc46b986mr28767005ad.25.1727257204439;
+        Wed, 25 Sep 2024 02:40:04 -0700 (PDT)
+Received: from wak-linux.svl.corp.google.com ([2620:15c:2a3:200:a147:cceb:deb3:ec96])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20afb021af7sm10037905ad.168.2024.09.25.02.40.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Sep 2024 02:40:03 -0700 (PDT)
+From: "William A. Kennington III" <william@wkennington.com>
+To: Tomer Maimon <tmaimon77@gmail.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH] ARM: dts: nuvoton: Add UDC nodes
+Date: Wed, 25 Sep 2024 02:39:56 -0700
+Message-ID: <20240925093956.2449119-1-william@wkennington.com>
+X-Mailer: git-send-email 2.46.0.792.g87dc391469-goog
 MIME-Version: 1.0
-References: <20240925004643.1298510-1-potin.lai.pt@gmail.com> <01d01f82826546656898a919430f3de3ae28e040.camel@codeconstruct.com.au>
-In-Reply-To: <01d01f82826546656898a919430f3de3ae28e040.camel@codeconstruct.com.au>
-From: Potin Lai <potin.lai.pt@gmail.com>
-Date: Wed, 25 Sep 2024 12:16:51 +0800
-Message-ID: <CAGfYmwUonWZo-o8j8fV0r54_HzsCEHB67Eca_wuhpSuzAnv8RA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-6.6 1/1] rtc: nuvoton: Compatible with
- NCT3015Y-R and NCT3018Y-R
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,94 +83,184 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, "William A. Kennington III" <william@wkennington.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Sep 25, 2024 at 9:50=E2=80=AFAM Andrew Jeffery
-<andrew@codeconstruct.com.au> wrote:
->
-> On Wed, 2024-09-25 at 08:46 +0800, Potin Lai wrote:
-> > From: Mia Lin <mimi05633@gmail.com>
-> >
-> > The NCT3015Y-R and NCT3018Y-R use the same datasheet
-> >     but have different topologies as follows.
-> > - Topology (Only 1st i2c can set TWO bit and HF bit)
-> >   In NCT3015Y-R,
-> >     rtc 1st i2c is connected to a host CPU
-> >     rtc 2nd i2c is connected to a BMC
-> >   In NCT3018Y-R,
-> >     rtc 1st i2c is connected to a BMC
-> >     rtc 2nd i2c is connected to a host CPU
-> > In order to be compatible with NCT3015Y-R and NCT3018Y-R,
-> > - In probe,
-> >   If part number is NCT3018Y-R, only set HF bit to 24-Hour format.
-> >   Else, do nothing
-> > - In set_time,
-> >   If part number is NCT3018Y-R && TWO bit is 0,
-> >      change TWO bit to 1, and restore TWO bit after updating time.
-> >
-> > Signed-off-by: Mia Lin <mimi05633@gmail.com>
-> > ---
-> >  drivers/rtc/rtc-nct3018y.c | 52 +++++++++++++++++++++++++++++++++-----
-> >  1 file changed, 46 insertions(+), 6 deletions(-)
->
-> So I looked at the history of this driver upstream, and it appears that
-> this is (approximately) a backport of an existing change:
->
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3D14688f1a91e1f37bc6bf50ff5241e857f24338e0
->
-> In the future, can you please provide such a link in the patch notes
-> (i.e. here, below the `---` above but before the diff markers below).
->
-Yes, this is a backport patch.
-Thank you for the notice, I will include the link in future.
+The driver support was already added but we are missing the nodes in our
+common devicetree. This enables npcm7xx platforms to enable the udc
+nodes and expose USB devices endpoints.
 
-> I compared what you've sent here and the patch above:
->
-> ```
-> 0 andrew@heihei:~/src/kernel.org/linux/openbmc ((c58d8005433d...)) $ git =
-diff 14688f1a91e1f37bc6bf50ff5241e857f24338e0 HEAD -- drivers/rtc/rtc-nct30=
-18y.c
-> diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
-> index f488a189a465..076d8b99f913 100644
-> --- a/drivers/rtc/rtc-nct3018y.c
-> +++ b/drivers/rtc/rtc-nct3018y.c
-> @@ -102,6 +102,8 @@ static int nct3018y_get_alarm_mode(struct i2c_client =
-*client, unsigned char *ala
->                 if (flags < 0)
->                         return flags;
->                 *alarm_enable =3D flags & NCT3018Y_BIT_AIE;
-> +               dev_dbg(&client->dev, "%s:alarm_enable:%x\n", __func__, *=
-alarm_enable);
-> +
->         }
->
->         if (alarm_flag) {
-> @@ -110,11 +112,9 @@ static int nct3018y_get_alarm_mode(struct i2c_client=
- *client, unsigned char *ala
->                 if (flags < 0)
->                         return flags;
->                 *alarm_flag =3D flags & NCT3018Y_BIT_AF;
-> +               dev_dbg(&client->dev, "%s:alarm_flag:%x\n", __func__, *al=
-arm_flag);
->         }
->
-> -       dev_dbg(&client->dev, "%s:alarm_enable:%x alarm_flag:%x\n",
-> -               __func__, *alarm_enable, *alarm_flag);
-> -
->         return 0;
->  }
-> ```
->
-> Given the hunks are fairly benign I've instead directly backported the
-> upstream change.
->
-> If you have any issues with this, please let me know.
-No issue from me, thank you for the quick response and support.
+Signed-off-by: William A. Kennington III <william@wkennington.com>
+---
+ .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   | 71 +++++++++++++++++++
+ .../arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi | 65 +++++++++++++++++
+ 2 files changed, 136 insertions(+)
 
-Potin
+diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+index 868454ae6bde..358b52894ac0 100644
+--- a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
++++ b/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+@@ -99,6 +99,11 @@ rst: rst@801000 {
+ 		};
+ 	};
+ 
++	udc0_phy: usb-phy {
++		compatible = "usb-nop-xceiv";
++		#phy-cells = <0>;
++	};
++
+ 	ahb {
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+@@ -179,6 +184,72 @@ fiux: spi@fb001000 {
+ 			status = "disabled";
+ 		};
+ 
++		udc5: udc@f0835000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0835000 0x1000
++			       0xfffd2800 0x800>;
++			interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc6: udc@f0836000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0836000 0x1000
++			       0xfffd3000 0x800>;
++			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc7: udc@f0837000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0837000 0x1000
++			       0xfffd3800 0x800>;
++			interrupts = <GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc8: udc@f0838000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0838000 0x1000
++			       0xfffd4000 0x800>;
++			interrupts = <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc9: udc@f0839000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0839000 0x1000
++			       0xfffd4800 0x800>;
++			interrupts = <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			nuvoton,sysgcr = <&gcr>;
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
+ 		apb {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi
+index 30eed40b89b5..00615e7d1462 100644
+--- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi
++++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi
+@@ -58,5 +58,70 @@ gmac1: eth@f0804000 {
+ 					&rg2mdio_pins>;
+ 			status = "disabled";
+ 		};
++
++		udc0:udc@f0830000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0x0 0xf0830000 0x0 0x1000
++			       0x0 0xfffeb000 0x0 0x800>;
++			interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc1:udc@f0831000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0x0 0xf0831000 0x0 0x1000
++			       0x0 0xfffeb800 0x0 0x800>;
++			interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc2:udc@f0832000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0x0 0xf0832000 0x0 0x1000
++			       0x0 0xfffec000 0x0 0x800>;
++			interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc3:udc@f0833000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0x0 0xf0833000 0x0 0x1000
++			       0x0 0xfffec800 0x0 0x800>;
++			interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
++
++		udc4:udc@f0834000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0x0 0xf0834000 0x0 0x1000
++			       0x0 0xfffed000 0x0 0x800>;
++			interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++			phys = <&udc0_phy>;
++			phy_type = "utmi_wide";
++			dr_mode = "peripheral";
++			status = "disabled";
++		};
+ 	};
+ };
+-- 
+2.46.0.792.g87dc391469-goog
 
->
-> Andrew
