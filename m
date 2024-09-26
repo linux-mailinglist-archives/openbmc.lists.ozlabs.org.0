@@ -2,59 +2,110 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7C3398679E
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2024 22:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77901986CE4
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2024 08:50:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XDSrM0KxYz3c85
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2024 06:24:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XDkkL5zVtz3c9G
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2024 16:50:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727295871;
-	cv=none; b=mn37CxfWetyqvTSvc/3Q5vVp43E7rlxQ8w+0bmh3n6FPzPNxmMyAzx+PEPu8mVdpXcluP8+sRWw3HuwRTzoWr/Pyq1fD9vwJ5xHq1DZReQZg1Lh/846yPgZbyr++YHaCpmoYBXoGPKpELWy/8kXhLkuvTs5yeLJ1N91IFvRKlf3eRUQqKwDlWH68MztKyeLvHswZowlVg50wOPSDerpQ/Kn374DyHRkcTzfkqP0zcJyCTBDYFhIFda909UZoIUNYdmVk2QFYycg5DhiSSr3kmibBTqMcdK4GfJpAjMo+KErh3ZXPbbxXX3AK4f1bA0fV1O8lDIrimkMVjfKpPLDgZA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727333412;
+	cv=none; b=d3s3lEUIJbmh8uUjNwJraVKyqGHokPNDGzoR99lsA5/rHZCuuqPRbiELmlZEpNlhRix/IgDu2D6BPIsywlNk8TowqVY615iDzzpM4z2Rl6m+7N7rGVbiEO3SMqCBP7BCuLPmBA/zc4B7rHU+NFPec/z05UD16NA6XFKPnXTmqNnTkVTQeHr2HRas2Nv/aYknOo3+/XTs78EOVCDXsYlbS78PJGWU3cVUKgBRKKhamSshtDw6lXhqObOvrT9zNuipZFDfcNghKypkCLQq9CvmqgcJh3AUonGAKfmVa/xEehw9LGtfzwwwG8J9PLyMZUuWPozqgKw2GTcgMLGyoy3zRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727295871; c=relaxed/relaxed;
-	bh=+HYvSzIhlBnIdBTU8Eak7vJdRZ4I+8nYy0H0l2kS+t8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nwPsKRqsTrgDHjLJqBKEV0e7aPJHqdKlS8oqNFW8JdxVcMplBXn41t0MaKAZQbeAwGrFeqDfGdsN9yrEFYt8OSFyBbJCRi5tnKWUXn1NIJtXS85bBvJ032BoY3+pMSGEfjSx9qLSXPJsjR+Ux2otIITn0UzxHAiYWXijor1BAQOD7it5tRKvnLwAJA3G1kzxr2BB2V/DLeTylpGNFX4E/paq8mnVRGFFRMwKGzt9zQKV+fdRerSuxJEAMKtePrygvrknZ2kPix6gk+vSOQQ4ykMXXqsX5z1HI3JO73gHRw/8E4QgHcZ/OHdSBuTubv9OoW1jemuabiI/zPB8prlp1A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DhbC+J/t; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1727333412; c=relaxed/relaxed;
+	bh=qwqmiYidwmEGDzEBEHR/2peetM4+EP3vmGeP2Lm+fMk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BPv84/VUP/lyzCT88AV32Po+qFdQYKTopeHsVIQTG7oqpqwWwvjSoxfVLzmOIfHg1tA3r/xbLPcCS/mSTEOzM0S8x8IoEHswgvryq2E8mAPUrt4B3N9Ws6z5qITrYjQN9BXsHutcQWbM30rvLQmRto3w1GgjG+F0h+ifkrusCE11zCuaMv1cO8eHjJ9IRg2D2Ovmuuei2YUg7A0Bpk8XacflGJ9T+8o71kdj/8azTBP17vr19fjRa+pkj3gRIxWVuOPl+a01x318yiSgiFOIDjXoq564IluoXznBcBsLkI2xeyB7c9uCHASxp2hvmTHGAAyiyAk+AMQZ4XYuDR6BSw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tf+WJbj9; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DhbC+J/t;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tf+WJbj9;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XDSrH2fc1z2xjH
-	for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2024 06:24:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XDkkD12pCz2yVP
+	for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2024 16:50:12 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 7C2D25C1115;
-	Wed, 25 Sep 2024 20:24:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6697AC4CEC3;
-	Wed, 25 Sep 2024 20:24:28 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 5DB795C5D48;
+	Thu, 26 Sep 2024 06:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7512C4CEC5;
+	Thu, 26 Sep 2024 06:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727295869;
-	bh=eF5LP5/MDlE2ovTR7G62APQbt2APjNBnDJBCBg8A4RI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DhbC+J/tEPihqzxq/2I1xXH96g/4GU1fX+Wc8BDhEwggy1LKBQSBcmDXk8aRyf4PD
-	 4SSSxA0wBwQrfy1yD4hz5/3jA8klY48Bt0lKBrBcy/stwoyl+3H+PRuX0er6r51xwg
-	 lyT9QAfkSL3Zy77PWWh7cbQF9RL4ZxGuF/bX5U9YljPLjoUeLcZYYf4HObd6JDd6FY
-	 ZpJvGAxwPGAmOqeDGTZqX4qWiw81ZhQk+fPNxLmDX3n06l2TXs2DpGlibkwFGFZpMz
-	 4mevOTO8dSZU3FlAA5vJzesU5l9UswSbRrHoOcQj/t2jMMvJY30L6DUJEh25SXoQRt
-	 O1WjNPHH98HfA==
-Date: Wed, 25 Sep 2024 22:24:25 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: warp5tw@gmail.com
-Subject: Re: [PATCH v4 3/6] i2c: npcm: Modify timeout evaluation mechanism
-Message-ID: <z4g5alkk3cug7v5bsmrmzspgvo4hhu2ebtykht72ewwhsqxqgq@kg2tlpvz3ctp>
-References: <20240920101820.44850-1-kfting@nuvoton.com>
- <20240920101820.44850-4-kfting@nuvoton.com>
+	s=k20201202; t=1727333409;
+	bh=E4LSLy4ULIrcghVqgh+TGHWhILmrnkPWnCzjV0nJ3fI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=tf+WJbj9GXHUjBOxp65CWoWk7KbCgi42pUzog0Y/WGBNY90dB+i8a584tNBVxtl/I
+	 Mi7/Q7mPOPB1wreflrd6Hc3d2t1leT6Ew8fOfnbHqeXpV9tjKHf0nrSihChV5CjSsH
+	 E7eTpq/ZFDFGeGO0DqJre1NtsgASjwG8Y2GzOqVagxAGO4lMwoxAOr1MNhQnwIKs/u
+	 4DLpqdq6ceetdtZlOXv8rb9iJmk1+1XhCx4L4srO/X6Ws3iSkIx6MRpcabYQ1te63L
+	 bO01gDTueke8wbAl0twTeJvG9r3SsB1ji6Wtn3Jmr9zavQKLmWQePf5ZSGhPbIRKTl
+	 +Lq0aUv7tA7ug==
+Message-ID: <5fb1bb74-4e10-4593-aa45-04a1570c933e@kernel.org>
+Date: Thu, 26 Sep 2024 08:50:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240920101820.44850-4-kfting@nuvoton.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dt-bindings: trivial-devices: add onnn,adt7462
+To: Chanh Nguyen <chanh@os.amperecomputing.com>, Rob Herring
+ <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>,
+ Peter Yin <peteryin.openbmc@gmail.com>, Noah Wang
+ <noahwang.wang@outlook.com>, Marek Vasut <marex@denx.de>,
+ Fabio Estevam <festevam@gmail.com>, Lukas Wunner <lukas@wunner.de>,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20240923093800.892949-1-chanh@os.amperecomputing.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240923093800.892949-1-chanh@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,72 +117,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, wsa@kernel.org, tali.perry@nuvoton.com, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, rand.sec96@gmail.com, tmaimon77@gmail.com
+Cc: Open Source Submission <patches@amperecomputing.com>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tyrone,
-
-...
-
-> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-> index 2d034503d8bc..68f3d47323ab 100644
-> --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> @@ -2132,19 +2132,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->  		}
->  	}
->  
-> -	/*
-> -	 * Adaptive TimeOut: estimated time in usec + 100% margin:
-> -	 * 2: double the timeout for clock stretching case
-> -	 * 9: bits per transaction (including the ack/nack)
-> -	 */
-> -	timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
-> -	timeout = max_t(unsigned long, bus->adap.timeout, usecs_to_jiffies(timeout_usec));
->  	if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
->  		dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
->  		return -EINVAL;
->  	}
->  
-> -	time_left = jiffies + timeout + 1;
-> +	time_left = jiffies + bus->adap.timeout / bus->adap.retries + 1;
->  	do {
->  		/*
->  		 * we must clear slave address immediately when the bus is not
-> @@ -2183,6 +2176,14 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->  	if (npcm_i2c_master_start_xmit(bus, slave_addr, nwrite, nread,
->  				       write_data, read_data, read_PEC,
->  				       read_block)) {
-> +		/*
-> +		 * Adaptive TimeOut: estimated time in usec + 100% margin:
-> +		 * 2: double the timeout for clock stretching case
-> +		 * 9: bits per transaction (including the ack/nack)
-> +		 */
-> +		timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
-> +		timeout = max_t(unsigned long, bus->adap.timeout / bus->adap.retries,
-> +				usecs_to_jiffies(timeout_usec));
->  		time_left = wait_for_completion_timeout(&bus->cmd_complete,
->  							timeout);
->  
-> @@ -2308,7 +2309,7 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
->  	adap = &bus->adap;
->  	adap->owner = THIS_MODULE;
->  	adap->retries = 3;
-> -	adap->timeout = msecs_to_jiffies(35);
-> +	adap->timeout = 2 * HZ;
-
-Same here, I need some good description of why timeout is set to
-2 seconds. If the datasheet says 35ms, I do not exclude that
-someone in the future will send a patch saying "we don't need to
-wait 2 seconds, wait 35ms as per datasheet".
-
-Thanks,
-Andi
-
->  	adap->algo = &npcm_i2c_algo;
->  	adap->quirks = &npcm_i2c_quirks;
->  	adap->algo_data = bus;
-> -- 
-> 2.34.1
+On 23/09/2024 11:38, Chanh Nguyen wrote:
+> The adt7462 supports monitoring and controlling up to
+> four PWM Fan drive outputs and eight TACH inputs measures.
+> The adt7462 supports reading a single on chip temperature
+> sensor and three remote temperature sensors. There are up
+> to 13 voltage monitoring inputs.
 > 
+> Add device tree bindings for the adt7462 device.
+> 
+> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+> ---
+> Change in v2:
+>    - Add onnn,adt7462 to the list of trivial devices       [Guenter]
+> ---
+>  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+> index 0108d7507215..15f89d7ecf73 100644
+> --- a/Documentation/devicetree/bindings/trivial-devices.yaml
+> +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+> @@ -311,6 +311,8 @@ properties:
+>            - nuvoton,w83773g
+>              # OKI ML86V7667 video decoder
+>            - oki,ml86v7667
+> +            # ON Semiconductor ADT7462 Temperature, Voltage Monitor and Fan Controller
+> +          - onnn,adt7462
+
+I suggest to add the compatible to the driver, for explicit matching via OF.
+
+Best regards,
+Krzysztof
+
