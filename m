@@ -2,75 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74E1C987CCD
-	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2024 04:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40499987CD3
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2024 04:04:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XFDH65DnLz3cMl
-	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2024 12:01:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XFDKZ4wVlz3cQH
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2024 12:04:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::62a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727402511;
-	cv=none; b=FBCBvktjUq+NIDVX8tNw3hqFGhIhdrPkGhhuA22dobJQAcKaJ83tAjM0fIwbZisrqsuPkdhhry3HeqB0uzBjFq51zZFaauvUh1t3QnVNWdE3o714g3DZsoOeD+vyqHz8xJj+pqPEpNHfbU2sSEetk+cU0lhCdum+4bFCkmH2E+2GtmhQ9yDz30J/vRxg264aOx/L4STBH+luS5R7+p8X/RTH/FqGBrXCOTeAyWl5FvcQXHEjnpoqENG7691M6JzkqdX/J7GbPGIdwVQzFSglRpq2iI30Q2XgMYce3Gj3zwz9BQ0Ma4XRHogdOToWwfqxKVaAlQX5HH9GSkL2PfKuiw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::d33"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727402639;
+	cv=none; b=hqRrYiyTolauXZy/jJB3kaVI/Wqn7SLBQ3oRX5o9u3gZiDE5SLTYPqkQ+0mgJ+1czaGMmZTiG3nplMczfZKKmKqAK1lOZvA5esLEtB1cgPvgvIHPzDu/VPTFmmTA7bg9FJkq1HED1Ur2jchsWxmIvoXACTMjK7C5Xr97fR2rRJCO83V7oPXA+YAcRyXGUUQpGxYytAMmr2A3KdDSPW+THpke/XzoYxwDIsAnKOpWSItqX00mz0McTlglg9XOVMGhSItS16UcQfxj98tuwzie/5JjOW9f2Qgnr38r2IvOF1ZImNtErotmX7rxsx406bbAMmIOPyt0RGxUJkPmEvuoeQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727402511; c=relaxed/relaxed;
-	bh=rkTECjsLGOP17IwUdNFjlpHyC8AHloYdla7ykRMJQA0=;
+	t=1727402639; c=relaxed/relaxed;
+	bh=+Jh6r0BOOneL+0+uXM+raqfA4bRD3EJOioSx3dRRd20=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NaI3aZa/72udkZwWPssJbq+F6yPQu6GCIhyxdGVuiw4Dh/H1EQtWzSj3SSHpMpmY1TZCgDJDzeq7XZ5A1bwE97B9l9aaOVL6CKSUl5n8ahWpD2AvdUsLs0UM2X/Da4mb/elsY+D2+QUq2N485lFDHBA4iiT+Z6OWInG+DNWImkEAp8M5rm0SfrxbQnsLd/bFzYQHADtkYKOIpx9mF6Tz1g4WOz/j6dCZV8fDbUgul0XLffsYgQ7Vi3cT97OJdGnFUJTt5ms6l1ugOhD33EW3QH+SVrmVfa5HOUbHP1IQin9QLyLK1f0wxa2iAZ2/y+vkV/1fOwiRS4BwM4swIyE1qA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i430nO8y; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::62a; helo=mail-ej1-x62a.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=L987OnWP2fZX6YsOGq9y0KNZY/L/wcjpq7pO2jlVWol9IViQkUzjceIdQcV5rE0jWmXQXPaJrq0JsRVrTKTrGVotKgdyOfWfunQD53ujPs2cq/wVCKOgS0PRuCCPl6uBiFxuLK7kWPzIfovkfGbwen2NSdOzO7XargaMLq8sGGotFCm0FfmGo5ooRA/W2wyglagMYtbHrdp5hsLVeoFkTq+lc12qwiD7//4pAkLyhQgO5w5FLGdqsN/8Q4DLFIeQEq3JsSRfKKiR6JXD7gZzeXjAe4iMEL9ekMICTjguHL5wqid3fFK6E0NhkAQefJ4UXyO4luZMJ+9artuaGiEKLg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OrzEpkZb; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::d33; helo=mail-io1-xd33.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=i430nO8y;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OrzEpkZb;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a; helo=mail-ej1-x62a.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d33; helo=mail-io1-xd33.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XFDH30H5Vz2yj3
-	for <openbmc@lists.ozlabs.org>; Fri, 27 Sep 2024 12:01:50 +1000 (AEST)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so462410766b.0
-        for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2024 19:01:50 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XFDKW07kGz2yl1
+	for <openbmc@lists.ozlabs.org>; Fri, 27 Sep 2024 12:03:58 +1000 (AEST)
+Received: by mail-io1-xd33.google.com with SMTP id ca18e2360f4ac-82cd872755dso74922339f.1
+        for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2024 19:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727402508; x=1728007308; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1727402636; x=1728007436; darn=lists.ozlabs.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rkTECjsLGOP17IwUdNFjlpHyC8AHloYdla7ykRMJQA0=;
-        b=i430nO8yuxNRhqBeBn4YrlZ1ItSZQWQUFxvLPC1FbCLIrqLsUmArwLr7RBCtpdoTal
-         h4Gh+03IEpnmJgYWTmFzyPFO7zGvn1c+7v+wKHYVsDULVjKbmFuuT9psOFT+Li2+RmSw
-         Je0yi7s2A9RVtK9r49vYWd/kLkvybv/41N0pew2mrJ3EMy+ZEt7M86gd7lMPAV+EnuxV
-         yqEGY7W7lNtO7NCurH74eVImZV7LcNzjRizJmwVy6e2D+/V7QXlSA20sK1hXtdcCVjhn
-         go3lPlMsmn2OBRuX79FYW2e5yk10KJGo8HAPgFpBl4yqwnzkAyqNzu5KN8M5/UJlAPwb
-         StPQ==
+        bh=+Jh6r0BOOneL+0+uXM+raqfA4bRD3EJOioSx3dRRd20=;
+        b=OrzEpkZbU9W2dFC3mJUGCkq1pNZTj+hS605mkjECoZ1nlh1bdQr2f/33CsHHtvQlEo
+         4qfnRe/tZDVt6iqr1wzbgWlNDDB/vWVDm/Nii2I8kpZ4InNYRLVMygshfdZXPfGc1Ndy
+         1VeMgL8g+WgiDAvKdRZoqELpqShq6D3/uoA3qtlyeCZ0xbx0A+aSOGQ3moZGmjio8ynx
+         cnN4fooDWxKWDg0B1tWc4cPNZk0NfcBztz05ZlQai0R8+fDBgvAh3a6YnW9N9qmD4Yr8
+         qJ3w8AzTzIe0GCD1+YqbzayWJ2ddodCxeuUOk0ft3CST4E9pRJlur2ISIuipQrd0ukRl
+         +bOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727402508; x=1728007308;
+        d=1e100.net; s=20230601; t=1727402636; x=1728007436;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rkTECjsLGOP17IwUdNFjlpHyC8AHloYdla7ykRMJQA0=;
-        b=bCEtYjD/ROBPF3JifUZSC8aXZoS/huSb77yP2D+1yZefwyiruDJuUlebJHNdnAjNbN
-         l/hD/52Hva+xfNODZxKBwctAhYbHplFAUfIPGHOGM0bQyW+ZUM0Lwt3xPWugKFyJyXSR
-         UwRlrKv+IxwPoXbOXNDRKOaGgqldJwSmRmcYxUwTKKwJ1WMp6jqoUEqCs1Z83/xdZTTX
-         HXeBs0JHsVrNT84AJu/jQEeL9Y7MlxCgqQtuYNLso/L2H2nvgQlxW8kac6R4qrtniBAO
-         z564HMERUcMEKOXs641yByYjNJmUyvWlVzhK+2bkkvw43U2YsFXMsNnjgRBOykNqN3ok
-         VXAA==
-X-Forwarded-Encrypted: i=1; AJvYcCVy9sZ6TX/edYDOqKc9TpvfmqUH+0Jtt4YAmB4uGU0pJ20icyAxJcew+YinWkERLNXynPn4gaCJ@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyDRZAZrTSCJ+OTUC0f6eBduT2S6ePbAdLpABoWFh6SY2dSg9AJ
-	p2N8CV1eeZCMdl1rARbonSo9bw9PVNy/RkX82oJzVkp0DwBAAbUzp7k9ZftPKJJUcX4JSeOQH7b
-	ezbfnGm49ta7uNMRtgY4QwcAJ/w==
-X-Google-Smtp-Source: AGHT+IEZoctL8CVImNJMZdfqDrbfmGmv0+KZg1Q9jtDnJdIOA4H9s6GPic5UlvyL1JjK5tLPN+4Y+w5mAOimJVKqtg8=
-X-Received: by 2002:a17:907:d1a:b0:a8d:592d:f56 with SMTP id
- a640c23a62f3a-a93b167a9ffmr512809166b.31.1727402507806; Thu, 26 Sep 2024
- 19:01:47 -0700 (PDT)
+        bh=+Jh6r0BOOneL+0+uXM+raqfA4bRD3EJOioSx3dRRd20=;
+        b=TcLxPZhjW4lixsA0vdQg5iz+NR8pKJ7VPbdybDJmd/WUkP+oTxU9in2Eu/XrmQ2tp2
+         JgCiQk2ncio2/ZIEKlasEHm6S4KrsregQFgGDWg3Zk5pKK6sC1I4CRMV4WcqueK5Nq2N
+         k7Vjn5PVxXMnjXnUzyhUA6ze0Md1XqUed74qw1W4sVxaluxKC+dNhjzuA5qruidNdD8x
+         8BolwF+CyJbXZU8ZGVYppzvxKaiqhO6r5d+/gWhu9BclvT1FmwG3XbiN/Mq1HahlyTBm
+         ea0XBCLDeDWn5Z9A6uP3O4AggSM18t1DsLo27p1xjqfM8cA2AE+XHobh2D2wYhgiUOJK
+         y1qw==
+X-Forwarded-Encrypted: i=1; AJvYcCXxKGUAQk868URDSK9Dn7YPMux0GUNREdzkT0W8RjSi/9kYEOD3fJAdnREkufbXlgmdU/WoMl4m@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yxu6LQ9K/893IBSga7u4ivbXtZ804stofCJG4qZneQHnxsjuiIy
+	wsJ0DShbdb26qHtCJs50hjvdHfOfSRifA9ddXgKeTkyI3DmR4Wvh8R3PXm3I2Txamto6e22Ko5e
+	F34dM2EJoX/f96SYTMTFSqhWxrg==
+X-Google-Smtp-Source: AGHT+IFU/HiFTzaHHaNmdW5DFz3sLC3XjW0Ap8eMqLs0Mmx/9EAtSI7Jx44H3OOpWGoXkIL0krrAP/BNe96Mye39TWw=
+X-Received: by 2002:a05:6602:2c92:b0:82a:a403:f0df with SMTP id
+ ca18e2360f4ac-8349318bdadmr162621939f.2.1727402635762; Thu, 26 Sep 2024
+ 19:03:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240920101820.44850-1-kfting@nuvoton.com> <20240920101820.44850-3-kfting@nuvoton.com>
- <5mxsciw6443k5rlpymrs7addvme53f5v3zuj5u7tvlggfeirik@dy2bvyz2lyue>
-In-Reply-To: <5mxsciw6443k5rlpymrs7addvme53f5v3zuj5u7tvlggfeirik@dy2bvyz2lyue>
+References: <20240920101820.44850-1-kfting@nuvoton.com> <20240920101820.44850-4-kfting@nuvoton.com>
+ <z4g5alkk3cug7v5bsmrmzspgvo4hhu2ebtykht72ewwhsqxqgq@kg2tlpvz3ctp>
+In-Reply-To: <z4g5alkk3cug7v5bsmrmzspgvo4hhu2ebtykht72ewwhsqxqgq@kg2tlpvz3ctp>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Fri, 27 Sep 2024 10:01:36 +0800
-Message-ID: <CACD3sJZuy_6e8hgY9_+gJpHFpOZx_KY=hAb9CY0PtqYP=FMhMQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/6] i2c: npcm: use a software flag to indicate a BER condition
+Date: Fri, 27 Sep 2024 10:03:42 +0800
+Message-ID: <CACD3sJZ8zSSO9kE30qAAYFf-qw+LQ3RRUbPgqnWO_BsxFV2fOw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/6] i2c: npcm: Modify timeout evaluation mechanism
 To: Andi Shyti <andi.shyti@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -93,119 +93,90 @@ Hi Andi:
 
 Thank you for your feedback.
 
+Your comments will be addressed.
+
 Andi Shyti <andi.shyti@kernel.org> =E6=96=BC 2024=E5=B9=B49=E6=9C=8826=E6=
-=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=884:22=E5=AF=AB=E9=81=93=EF=BC=9A
+=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=884:24=E5=AF=AB=E9=81=93=EF=BC=9A
 >
 > Hi Tyrone,
 >
-> patch looks good, but...
+> ...
 >
-> On Fri, Sep 20, 2024 at 06:18:16PM GMT, warp5tw@gmail.com wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > If not clearing the BB (bus busy) condition in the BER (bus error)
-> > interrupt, the driver causes a timeout and hence the i2c core
-> > doesn't do the i2c transfer retry but returns the driver's return
-> > value to the upper layer instead.
-> >
-> > Clear the BB condition in the BER interrupt and a software flag is
-> > used. The driver does an i2c recovery without causing the timeout
-> > if the flag is set.
-> >
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > Reviewed-by: Tali Perry <tali.perry1@gmail.com>
-> > ---
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 6 +++++-
-> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> >
 > > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-=
 npcm7xx.c
-> > index 2b76dbfba438..2d034503d8bc 100644
+> > index 2d034503d8bc..68f3d47323ab 100644
 > > --- a/drivers/i2c/busses/i2c-npcm7xx.c
 > > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -334,6 +334,7 @@ struct npcm_i2c {
-> >       u64 nack_cnt;
-> >       u64 timeout_cnt;
-> >       u64 tx_complete_cnt;
-> > +     bool ber_state;
->
-> I need some comment here, what is this ber state? You described
-> it in the commit log, but people won't be browsing much of the
-> commit log rather than the code itself.
->
-> You could perhaps mention the meaning as:
->
->         bool ber_state; /* brief description */
->
-
-Understood. I'll add some descriptions.
-
-> and...
->
-> >  };
-> >
-> >  static inline void npcm_i2c_select_bank(struct npcm_i2c *bus,
-> > @@ -1521,6 +1522,7 @@ static void npcm_i2c_irq_handle_ber(struct npcm_i=
-2c *bus)
-> >       if (npcm_i2c_is_master(bus)) {
-> >               npcm_i2c_master_abort(bus);
-> >       } else {
-> > +             bus->ber_state =3D true;
-> >               npcm_i2c_clear_master_status(bus);
-> >
-> >               /* Clear BB (BUS BUSY) bit */
-> > @@ -1699,6 +1701,7 @@ static int npcm_i2c_recovery_tgclk(struct i2c_ada=
-pter *_adap)
-> >               dev_dbg(bus->dev, "bus%d-0x%x recovery skipped, bus not s=
-tuck",
-> >                       bus->num, bus->dest_addr);
-> >               npcm_i2c_reset(bus);
-> > +             bus->ber_state =3D false;
-> >               return 0;
+> > @@ -2132,19 +2132,12 @@ static int npcm_i2c_master_xfer(struct i2c_adap=
+ter *adap, struct i2c_msg *msgs,
+> >               }
 > >       }
 > >
-> > @@ -1763,6 +1766,7 @@ static int npcm_i2c_recovery_tgclk(struct i2c_ada=
-pter *_adap)
-> >               if (bus->rec_succ_cnt < ULLONG_MAX)
-> >                       bus->rec_succ_cnt++;
+> > -     /*
+> > -      * Adaptive TimeOut: estimated time in usec + 100% margin:
+> > -      * 2: double the timeout for clock stretching case
+> > -      * 9: bits per transaction (including the ack/nack)
+> > -      */
+> > -     timeout_usec =3D (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nr=
+ead + nwrite);
+> > -     timeout =3D max_t(unsigned long, bus->adap.timeout, usecs_to_jiff=
+ies(timeout_usec));
+> >       if (nwrite >=3D 32 * 1024 || nread >=3D 32 * 1024) {
+> >               dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
+> >               return -EINVAL;
 > >       }
-> > +     bus->ber_state =3D false;
-> >       return status;
-> >  }
 > >
-> > @@ -2158,7 +2162,7 @@ static int npcm_i2c_master_xfer(struct i2c_adapte=
-r *adap, struct i2c_msg *msgs,
+> > -     time_left =3D jiffies + timeout + 1;
+> > +     time_left =3D jiffies + bus->adap.timeout / bus->adap.retries + 1=
+;
+> >       do {
+> >               /*
+> >                * we must clear slave address immediately when the bus i=
+s not
+> > @@ -2183,6 +2176,14 @@ static int npcm_i2c_master_xfer(struct i2c_adapt=
+er *adap, struct i2c_msg *msgs,
+> >       if (npcm_i2c_master_start_xmit(bus, slave_addr, nwrite, nread,
+> >                                      write_data, read_data, read_PEC,
+> >                                      read_block)) {
+> > +             /*
+> > +              * Adaptive TimeOut: estimated time in usec + 100% margin=
+:
+> > +              * 2: double the timeout for clock stretching case
+> > +              * 9: bits per transaction (including the ack/nack)
+> > +              */
+> > +             timeout_usec =3D (2 * 9 * USEC_PER_SEC / bus->bus_freq) *=
+ (2 + nread + nwrite);
+> > +             timeout =3D max_t(unsigned long, bus->adap.timeout / bus-=
+>adap.retries,
+> > +                             usecs_to_jiffies(timeout_usec));
+> >               time_left =3D wait_for_completion_timeout(&bus->cmd_compl=
+ete,
+> >                                                       timeout);
 > >
-> >       } while (time_is_after_jiffies(time_left) && bus_busy);
-> >
-> > -     if (bus_busy) {
-> > +     if (bus_busy || bus->ber_state) {
+> > @@ -2308,7 +2309,7 @@ static int npcm_i2c_probe_bus(struct platform_dev=
+ice *pdev)
+> >       adap =3D &bus->adap;
+> >       adap->owner =3D THIS_MODULE;
+> >       adap->retries =3D 3;
+> > -     adap->timeout =3D msecs_to_jiffies(35);
+> > +     adap->timeout =3D 2 * HZ;
 >
-> /*
->  * Check the BER (bus error) state, if it's true means that blah
->  * blah blah, while when it's false blah blah blah and we should
->  * or should not do blah blah blah
->  */
-> if (bus_busy || bus->ber_state) {
->         ...
-> }
+> Same here, I need some good description of why timeout is set to
+> 2 seconds. If the datasheet says 35ms, I do not exclude that
+> someone in the future will send a patch saying "we don't need to
+> wait 2 seconds, wait 35ms as per datasheet".
 >
-
-Understood. Your comments will be addressed.
-
 > Thanks,
 > Andi
 >
-> >               iowrite8(NPCM_I2CCST_BB, bus->reg + NPCM_I2CCST);
-> >               npcm_i2c_reset(bus);
-> >               i2c_recover_bus(adap);
+> >       adap->algo =3D &npcm_i2c_algo;
+> >       adap->quirks =3D &npcm_i2c_quirks;
+> >       adap->algo_data =3D bus;
 > > --
 > > 2.34.1
 > >
 
-Thank you.
+Have a nice day.
 
 Regards,
 Tyrone
