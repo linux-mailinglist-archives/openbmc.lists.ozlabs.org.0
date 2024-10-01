@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30D9B98B45B
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 08:30:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F313C98B460
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 08:30:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XHp2T264Kz3dHw
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 16:29:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XHp2b2SYvz3fmm
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 16:29:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1031"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727764189;
-	cv=none; b=jIfWuysGgW5ktsAQL+xrQMRKUxsbExptH1K1WvSNVE+wM6yivm9KdmlFB2KLe5EH6hnouJrbVO3t5TzqY3PIY2H7NykUdwwNXt4iKjeVgZoicRG/O0LcBjWLcs47nirYhQ9gIRUEYHgI/SSiEkKENBLv5a17HVQ5sb/Navn3eEL8/T9px5TzvCGD43u4+JMHzNAdAieMLPy5QdSYHFloaoUiNfOTqdrOFu8OfDiLnc9Brky2yPbslx536r5ve830rAee8lTF2OLuzPEe8w1+gNrNlQ4CSISXnWhX7h0zN/qtfXNa9kwiwdN1fr2l+qhGuiU6OJ3T7sb+ObvZKDuSSw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::633"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727764193;
+	cv=none; b=TsCi+gSObBQtw+jXZ9YRnokNWq/Ma8Mc9WPmIqas4Th6FWdI1t5bmE62KSMEJfioAD1vOSq9vEnb66hJgeWZbhMqEbL6BOev1pDbP2fZliHP+0C7dF+31Ph+vakjNO2g8rEODq70ECRHbdPjYnQoL1exnHrAkCIw/bfxmr7qMpVRnjtqs5FpC4JaIun7+MZBHU7NhFJms+Gn93m0xraNRPa+dVbK/EusV5ov0Bhf8RerqGcC29bewKhJlQLu0S69mpsPsMqgP6YfypdPXnUDtQau4nvQJWq5K9CJR9RTd4UEDtiiWvFPgObjOQHP2RHAE3+qCwgwCWneQphzTMMIbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727764189; c=relaxed/relaxed;
-	bh=oZTR7VWZlUhx2yQtNiZmirEwYuAooSCpN3CWuoP2Uac=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=ncxvkXBQvtQjGe8V/qVJBTvEUJFVIpIsNVfBZ/62GluLvwabk7S1ctLrykjcF3Gl3tfc1Z5yPWEqDymwBsHGjR/xnWhbNHP2WZRBYazBhKZ4ghkSVAACRiyub/cbtjwM+YhsotFjt5krttXZjAUsM5mR9aTNO+LoctuXddT6PaX6NqFif81RYIndBy7U5lrDUPj2oWRrwDajEG5ZaaQGwBFIJ678gvzTruMAkrFFoDQQ8uogSwDKiZ0VEUaTSW9s4pe/jK00aluldwykcRPah3VLOLA3fbO3DY8b8z74A6ENr0XDVJMqa+Qd/24tT8rIJVwSJ843QB/ExTmo/IymHQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eigy4Bk1; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1727764193; c=relaxed/relaxed;
+	bh=sVINhRisx7tHA2uWGJZ1rYfyR16go1Qbe2bSN3dCkJs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=dINzPNQsXBTZsGPYgbfeRwlf5SBHEC/kwlRREWh3AFsmGz7mgn3jecjuZVLJQ5XkMFQQTcRd+a9OTAB63bwgvJaAKMwxlKecE/kPHCDE4L5T0DVPIFF3aN8fmdSk0g2qFomBBIuf8jjhUDgSfRRxTL0OI0X+yaSe4/nLuJWZoVUTMlw3BKND0x20xwOs7Z/Np0OvspO97EBSzHqZRf7qp0AHku3hVsK+rcZIWCQgZ1Wzq2FjpG/Set7UPntx19OI5+7Ey5pYC/enNjAXV0iEnRKLdg6s3xmISSDJuIn+ppnDE6bRebuKNEJN9GWpuFGI2hMEezb9NXlWHy0n/2imwg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QF0nhXbO; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eigy4Bk1;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QF0nhXbO;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XHp2P4FcDz3cQL
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 16:29:49 +1000 (AEST)
-Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-2e07d91f78aso3918724a91.1
-        for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2024 23:29:49 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XHp2T06L3z3d26
+	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 16:29:52 +1000 (AEST)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-20b49ee353cso34928195ad.2
+        for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2024 23:29:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727764187; x=1728368987; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1727764190; x=1728368990; darn=lists.ozlabs.org;
         h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=oZTR7VWZlUhx2yQtNiZmirEwYuAooSCpN3CWuoP2Uac=;
-        b=eigy4Bk15o+ZHIuluwKQSx1aAZI2fsyXRuRQgbqBhe+0LCOo0MHFu0EUs5QtkBlsaP
-         l2ZzHM7hZARlup5Idhh19Sjg889jNrTspDrhkQ4l75+alAvFzmxOImsqzwUJlTnQpDu3
-         uHcTZXDbGR11HdElSeKgLLtHP9fONZjLiv21qG10VxuFQWsbXwo/bh7StsCYec5ucqWH
-         kzvFfVE+OBHcFFo38wrSsTYO40R6tThRXRZwEoxMdP7sO4UPNOqV3X0cRchUSqdiks0Q
-         fspN9KdynNjI3pUpBor+neNvYElona3owbfoYu5ZVM/YsfUyQU6jN9ZWAtTUcBE/JZSk
-         7L1w==
+        bh=sVINhRisx7tHA2uWGJZ1rYfyR16go1Qbe2bSN3dCkJs=;
+        b=QF0nhXbORmEKY58/FBHuRfY+EhCht4hsUBFQ+oX0NwvbMvcpd7HCGJw8qlErbvMeoq
+         h/QnQ6HLyQtMnWeQqV1x7oRK3U6nCl6qGMuO5XgQCgTBysEb+HgucokqBVPbnGsD52o2
+         AZ+DufJbEbFyidAePcU7M+ioV1X0vynCQMpjZFPXscByujpOBYuQ/mHr7BOWfGGDz9cn
+         Et6bfEzprYMnGyXlZF2aoXzA5Lf4/WSL6KqkcLfE8BLKtNuvARdcHIk0JVq0A4eYOJbL
+         GYn8govYgjFjh3rmBU89fifPNFDD22IPizfe0o4AROXyku1KpqMux4DO6p/kjXBCO92D
+         xiaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727764187; x=1728368987;
+        d=1e100.net; s=20230601; t=1727764190; x=1728368990;
         h=references:in-reply-to:message-id:date:subject:cc:to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oZTR7VWZlUhx2yQtNiZmirEwYuAooSCpN3CWuoP2Uac=;
-        b=FurpWmVcTzIEp91ZaHuNMAuZP04CFdFTQJFCmm5gRBm8Xc0VqkSk8jJfmn0ZCKLWes
-         J2y+6hN9ssgFJDXG5EVad96s+jzx10wZikEpZmpt+tI0Xs3Kl2upA1Ly8ffpMyOSAKv1
-         VxPy/5p9PXs1j2e2BmtFTdcyYbFpmiPlvUSw3kz2LnaX+sn2XZqlTmLY4ZGm/idw5IgR
-         aWWvdH6otnOXm6yX3IHp938Q/K64S4iHXpwxo3xRa9LefM3W7NLrB7fezfiefL433iyB
-         hx1sx+wqwBlEnKnUAluktKkR393TItGtVU+Y21VQp+9THCvnSeeeOzY3kRNm1jLA9+Qx
-         CA8w==
-X-Gm-Message-State: AOJu0YyccOH/ZprBlvca9X7rvgxmQPiCgwZgi6ZlFc9x8AXJG3gzTGkZ
-	FPvovW8h44iikhYLie+VYgEYyfdFKXl1dq2aXuprYwcAFQgqWec=
-X-Google-Smtp-Source: AGHT+IEfyPM2bsYwU45GdSmrXMiZ6q9HsEacf6Me68JtTyniOZIOco8TVIapaymb385TIN8YRuKDAw==
-X-Received: by 2002:a17:90a:8c18:b0:2d8:c17b:5018 with SMTP id 98e67ed59e1d1-2e0b89f0613mr17616802a91.11.1727764187176;
-        Mon, 30 Sep 2024 23:29:47 -0700 (PDT)
+        bh=sVINhRisx7tHA2uWGJZ1rYfyR16go1Qbe2bSN3dCkJs=;
+        b=wKEVhH4zX6f0iLXpMTL9grQEGOdE1XELcxhi2VPVqGw7rpfCI1QFNp6E33zKjoBBT1
+         mqhJvuxFWJEjIE6T1GpNemOUzLkQiqgEprt+su9m2t4hwsZPE5dkjyRHO8Pm9lKrOEO+
+         bf/LJ0P/2tyIaUa2PpGrLFDFmE40GlqEw3X1gAvIObn3KlDP/wwHv1Q0ZSC6pTvjVqef
+         2FP+TFAIFYCg/ByLUUaSlUh2j0hb/9WDU1zc+cVhBlS3RzxsJh9deRupI6RgnOYVtSud
+         H22UltfiYHm2qomQk9DccIEWLR/rLvulTqF/QRwU6WZ12OkKT4dPwDB2brlQWm/7IAHm
+         0x/w==
+X-Gm-Message-State: AOJu0YwolcQbdYIyVWno9cPC4+l5OVx1lKLyr+mogB363Ucd8KIsooQf
+	wRmD1P+LNqCDPxNeWaEvC0Uac0KoIKYNMm30LUkbpKuWubLRO6A=
+X-Google-Smtp-Source: AGHT+IGCkLE3x8E2oi3I+0hAAwg49dV46n8uUHwJq3wdp083muDYwMdqM2bQc6gqMV0beAmdPRwTBA==
+X-Received: by 2002:a17:903:2305:b0:20b:84cc:5937 with SMTP id d9443c01a7336-20b84cc5f89mr89980095ad.31.1727764190444;
+        Mon, 30 Sep 2024 23:29:50 -0700 (PDT)
 Received: from localhost (2001-b400-e30e-7f15-c94a-d42b-025a-8ff3.emome-ip6.hinet.net. [2001:b400:e30e:7f15:c94a:d42b:25a:8ff3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e0b6e29081sm9228277a91.53.2024.09.30.23.29.46
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37e5de0asm63596585ad.265.2024.09.30.23.29.49
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 30 Sep 2024 23:29:46 -0700 (PDT)
+        Mon, 30 Sep 2024 23:29:50 -0700 (PDT)
 From: Tyrone Ting <warp5tw@gmail.com>
 X-Google-Original-From: Tyrone Ting <kfting@nuvoton.com>
 To: avifishman70@gmail.com,
@@ -81,9 +81,9 @@ To: avifishman70@gmail.com,
 	KWLIU@nuvoton.com,
 	JJLIU0@nuvoton.com,
 	kfting@nuvoton.com
-Subject: [PATCH v5 3/6] i2c: npcm: Modify timeout evaluation mechanism
-Date: Tue,  1 Oct 2024 14:28:52 +0800
-Message-Id: <20241001062855.6928-4-kfting@nuvoton.com>
+Subject: [PATCH v5 4/6] i2c: npcm: Modify the client address assignment
+Date: Tue,  1 Oct 2024 14:28:53 +0800
+Message-Id: <20241001062855.6928-5-kfting@nuvoton.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20241001062855.6928-1-kfting@nuvoton.com>
 References: <20241001062855.6928-1-kfting@nuvoton.com>
@@ -108,77 +108,48 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tyrone Ting <kfting@nuvoton.com>
 
-The users want to connect a lot of masters on the same bus.
-This timeout is used to determine the time it takes to take bus ownership.
-The transactions are very long, so waiting 35ms is not enough.
-
-Increase the timeout and treat it as the total timeout, including retries.
-The total timeout is 2 seconds now.
-
-The i2c core layer will have chances to retry to call the i2c driver
-transfer function if the i2c driver reports that the bus is busy and
-returns EAGAIN.
+Store the client address earlier since it might get called in
+the i2c_recover_bus() logic flow at the early stage of
+npcm_i2c_master_xfer().
 
 Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 Reviewed-by: Tali Perry <tali.perry1@gmail.com>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 7620bdcdc235..03d6c8702ecf 100644
+index 03d6c8702ecf..0ee77e1fbc08 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2132,19 +2132,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 		}
- 	}
+@@ -2155,6 +2155,19 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
  
--	/*
--	 * Adaptive TimeOut: estimated time in usec + 100% margin:
--	 * 2: double the timeout for clock stretching case
--	 * 9: bits per transaction (including the ack/nack)
--	 */
--	timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
--	timeout = max_t(unsigned long, bus->adap.timeout, usecs_to_jiffies(timeout_usec));
- 	if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
- 		dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
- 		return -EINVAL;
- 	}
+ 	} while (time_is_after_jiffies(time_left) && bus_busy);
  
--	time_left = jiffies + timeout + 1;
-+	time_left = jiffies + bus->adap.timeout / bus->adap.retries + 1;
- 	do {
- 		/*
- 		 * we must clear slave address immediately when the bus is not
-@@ -2192,6 +2185,14 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	if (npcm_i2c_master_start_xmit(bus, slave_addr, nwrite, nread,
- 				       write_data, read_data, read_PEC,
- 				       read_block)) {
-+		/*
-+		 * Adaptive TimeOut: estimated time in usec + 100% margin:
-+		 * 2: double the timeout for clock stretching case
-+		 * 9: bits per transaction (including the ack/nack)
-+		 */
-+		timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
-+		timeout = max_t(unsigned long, bus->adap.timeout / bus->adap.retries,
-+				usecs_to_jiffies(timeout_usec));
- 		time_left = wait_for_completion_timeout(&bus->cmd_complete,
- 							timeout);
- 
-@@ -2317,7 +2318,12 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
- 	adap = &bus->adap;
- 	adap->owner = THIS_MODULE;
- 	adap->retries = 3;
--	adap->timeout = msecs_to_jiffies(35);
 +	/*
-+	 * The users want to connect a lot of masters on the same bus.
-+	 * This timeout is used to determine the time it takes to take bus ownership.
-+	 * The transactions are very long, so waiting 35ms is not enough.
++	 * Previously, the address was stored w/o left-shift by one bit and
++	 * with that shift in the following call to npcm_i2c_master_start_xmit().
++	 *
++	 * Since there are cases that the i2c_recover_bus() gets called at the
++	 * early stage of npcm_i2c_master_xfer(), the address is stored with
++	 * the shift and used in the i2c_recover_bus().
++	 *
++	 * The address is stored from bit 1 to bit 7 in the register for
++	 * sending the i2c address later so it's left-shifted by 1 bit.
 +	 */
-+	adap->timeout = 2 * HZ;
- 	adap->algo = &npcm_i2c_algo;
- 	adap->quirks = &npcm_i2c_quirks;
- 	adap->algo_data = bus;
++	bus->dest_addr = slave_addr << 1;
++
+ 	/*
+ 	 * Check the BER (bus error) state, when ber_state is true, it means that the module
+ 	 * detects the bus error which is caused by some factor like that the electricity
+@@ -2172,7 +2185,6 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	}
+ 
+ 	npcm_i2c_init_params(bus);
+-	bus->dest_addr = slave_addr;
+ 	bus->msgs = msgs;
+ 	bus->msgs_num = num;
+ 	bus->cmd_err = 0;
 -- 
 2.34.1
 
