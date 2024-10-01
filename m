@@ -1,99 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1199298B903
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 12:11:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AA9298BD28
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 15:14:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XHtyF1BjDz30T6
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 20:11:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XHz1S2q0Xz30W5
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 23:14:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.159
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727777487;
-	cv=none; b=A7AVtZLdHaze/udbWLu2EMizHEQapeQuC3CxN1ah0HSGxXX4iGT3nQ5P8DxrarFooXQMEe9faV6vPGHWy8KdEd8xQBE7wALmBqsFBFvQtNMIDizS4r7mnas3f4thvdrbCAYRJ58yIlRqFjEp6Vcwcf/a9mGIaRuwa6fm+ITcYpnJgijh4+MhQzEQJn3F8mHx1IX23CEwzyvsMlaZEaZGokHePmhOB9tl+trNrXn7ETny2dJTtzvcOYrFbu/EDAkmFZSDxzN5nQ6A/gT5L1kUJ3gjFmIE8mhxBf320SLuuB8D5qysnC7+OZp1LILWxsklqd1LXfvYektmZ9O4l99aOw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.16
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727788471;
+	cv=none; b=ETiQuCxsbqb4MfekMTzSdhp5yFKabh+ESFxRRP4/AYvNfG3ymehmybmfD/elTnzmMtnxeDlvl9i5ZwadGH8rscelb3h4yqzefzfhiPSBofZild8+xsobaONZDnlISxjy6ObE7D9z/bhQGmlSZKIl9itZfHeW3Durx4g0v8RQ884Vh7cWhFMMXnJWwCEAbdDkMtmB3iHO2xvkLH1xlwksFx/+pqtVL63e5imXrkU2AWnIYxOR33RdIPEvwZ0PMtb9A8F9NFfe1AKxcrFWMCbIVitsKHv1Q3tGN1MSVwliacQPuQqJt60IGO4o380T1AXLu5B5GQ3CRNhLVHbn6xbPLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727777487; c=relaxed/relaxed;
-	bh=t7kvX5e+VnjTDgjLqfyiRBEwfl0KxygOVpHSVmIE7a4=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JV9nfCdkfOSdJUXAOi+VLMt1R0IETcp8xs2w30Dpd8PDN1RAQxQ2uyDqmJCWJKXEYCudGM2cdkR8xqdIe2UR7hh/YflR3ZcfZOdmK4D4El0+PBFBKlWZEmFCG2m7JWFAf3opdTSOQhKOf1Yz3kxB6phqcc4GiawenCkzfa/7AjBnfYN+l0/fu6RezW8rzI9iRKDtzezIynUTYBvJlzyG3xA8JVC/LF6lY+tIevHyTPQBFd3XfGdw0DTcAueVpU3nMRmosnOKQg1UdWZex7QuLtHth//f766GhjaAXd9HuXwq1+zNXm13RvKHqfuRYQank1fETA7gMlKxJwSFS+kCCw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=GdA1bdsG; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IRnKZNN5; dkim-atps=neutral; spf=pass (client-ip=103.168.172.159; helo=fhigh-a8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+	t=1727788471; c=relaxed/relaxed;
+	bh=+JVff5JlAGfma9DB9RVA5Vfv/EuA3a6CIlYES9g6oAY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lacvitLv7pdOkaWFN0j2QgQvWZk65KyuwG0MoQYhuPh5d7WhFXLIAz1ww+kbbDofn8KIWrThCo101RAzqLOo683e3vxXkpH5wAgQy7cmVE2r9Mp0lz0AgN7w0i2MKSQeV0zZQh+tA1HIiMEeC/44eqhnzbD0nQogdNqNJK4Dng+dcNxpQ+iYECGLCXf7s+Bm3NsSa0ofipyVnMtw2It4Rk3kLY8gx84cGXPVJMia0MWRN4OYlknY/myPX6My7O1zs8mHb/C6X/ThtQjR3b2c4BK8vZgp8qiUeXs5Y0rlLAfwcQAzlaMiqW1tLacqcxaVC8FRm70ea7lAObSHoCl8aA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SVWm1Eaq; dkim-atps=neutral; spf=none (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=GdA1bdsG;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=IRnKZNN5;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SVWm1Eaq;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.159; helo=fhigh-a8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XHty43gLFz2xpf
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 20:11:23 +1000 (AEST)
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1611A114120E
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 06:11:20 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 01 Oct 2024 06:11:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1727777480; x=1727863880; bh=t7kvX5e+Vn
-	jTDgjLqfyiRBEwfl0KxygOVpHSVmIE7a4=; b=GdA1bdsG5GgihXqtsmwyKvHrwF
-	hYJfYd94Tm69K6wdGEeZGs5+NKosIImlVNRfQctPfwRFLq3jmGQu4pzVhQuWQ/eq
-	lw1KdnIwiBFtR5clOC2cQCQ7Jm43GZ7fhaHnhiiUXEurAiyjDzW4JkewUYJ6hbj+
-	1DRSTd1eeFDglGn5MB+SJMlCk+Dkq16QhPGeOVL2eI5vZ49sGK+SmgA25YFDO42v
-	TaEBpPmHRuiZWd2XMOxuSyDfbcHuu2syM6iz4wpFzYZkQwxOVJrgdv4OX4rqt35c
-	enQb/sIXL6XAMDvBsrhThIo5SUFoYlVIWDBQvIXV78wTCe+wsuDntmYLy7qg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1727777480; x=1727863880; bh=t7kvX5e+VnjTDgjLqfyiRBEwfl0K
-	xygOVpHSVmIE7a4=; b=IRnKZNN5NKfBe07wyJLh3un+BlXV08G6uFtxYQv7kEJ+
-	5lhThSzOwKdAnKhl+BEKFqPup0k1Fvd1FmIt/FBMrPQkCjgV6fLpK/eutQf20J/6
-	Jrwfzlm92w6DvB5bNhZsqnIauqsfvbo6B+mRuh7QD19DzXvFrJ8laO4GWn4tFV8W
-	hNNGs47TSlTu7EVY43DWrAheTbNY7hNpyx+oy5rIDr6UXVYUrlC9S0agxzs8Wm5p
-	9brFSAsHlN/NaqeStB9ymhUWDCLdwwnab3V4tGEi+Upc4ltrUIrnt570/9Hfikab
-	KM6P3xQvpNORHKa6KAYtfVh/p2oBE3iiIGQHafdpCA==
-X-ME-Sender: <xms:x8r7ZsQsOKva6NJfE3gcFYkwtekj6ypwWacfI6flRaotCWWBgK8AxQ>
-    <xme:x8r7ZpxDyeMSzlmfxiAO_fLjqEuVy43DkyzkUCzhL5BkZuh9S61huwA0jg4-jzcd3
-    _d5W6Y9u6iQgfv8Q5A>
-X-ME-Received: <xmr:x8r7Zp1JoGIEbPxsjuReMRZDRGSC3J_x5Coiil75ubw48eUQfG4KolPAmtA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvddujedgvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnegfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkfhgg
-    tggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuc
-    eophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeef
-    keetveffgeetffdufeehleefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrih
-    hnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiiipdhnsggprhgtphhtth
-    hopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehophgvnhgsmhgtsehlihhs
-    thhsrdhoiihlrggsshdrohhrgh
-X-ME-Proxy: <xmx:x8r7ZgDSAUi24Ad4SMlP3csNxfaQfajNth_QKRvC5305PV0AuZTnSA>
-    <xmx:x8r7Zlguth8PYA2OGHG3c01ilrEczl3w6UIGLTuEFoDV1gFC8rtEmg>
-    <xmx:x8r7ZspnO7gew5djbl4yPOTt4x1rDxqyIoDGwJ_mgSI2_kZ8zS00xA>
-    <xmx:x8r7Zog-YB0VaiGGRSjdKdlsKsLYNmyEde8h1OhiSPGBIRmzPSDEmw>
-    <xmx:yMr7ZlYdAd8L07KmX_g1ydboB90YIfh_8xvP9uFPZnTY2kTmPDympNHO>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Tue, 1 Oct 2024 06:11:19 -0400 (EDT)
-Date: Tue, 1 Oct 2024 06:11:18 -0400
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: TOF elections for 2024H2
-Message-ID: <ZvvKxr6Fb54In-4E@heinlein.vulture-banana.ts.net>
-References: <ZttaJPIq6-jKt4eu@heinlein.vulture-banana.ts.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XHz1J1M9vz2xnX
+	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 23:14:26 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727788469; x=1759324469;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=PJNiEgbOR/XVTDdp1Jdns/xshRQMPHYvX91kndFUefY=;
+  b=SVWm1EaqKaNhbCzPIUOSRXFL8PeQ8ANAyClFFY4EZbvWQuIhHrxyuYAg
+   pR1WErLW3EO119j+1s5iaUIHU36BL8WFB62bg4QGJAj6gdR6QzqZPIx03
+   iyPNVhug0t2WhXF8l4g5G+5whvhGO9FMnqyDTzpLw6nZx+5+CdTcSvyG3
+   E+3fZRJC+SI6LdmsjOyTlKHoe2C3SlMufAKCFDFxLfiM0q/2WtIyT8byb
+   q2L+0bPUI+3/uZ+aKcn2hTzBkc7gGa2YCOes+UHXUYP8NllkjqV31DC60
+   SPMdEBHZoms1gjXkwCZo87sq+iCSwKvDkU86qkNhuWBV20SASimm3dN4+
+   w==;
+X-CSE-ConnectionGUID: arCJw5wXSOCqbkseTm4Z2A==
+X-CSE-MsgGUID: LujEEaLpSUuBvOCdfobQ1Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11212"; a="14541860"
+X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
+   d="scan'208";a="14541860"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:14:12 -0700
+X-CSE-ConnectionGUID: Ma3gRYy8Rg67o/OpEJBLmw==
+X-CSE-MsgGUID: Xj2342VOQI2bwAH8+7KC7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
+   d="scan'208";a="74459795"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:14:07 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1svchY-0000000FCZ5-03jr;
+	Tue, 01 Oct 2024 16:14:04 +0300
+Date: Tue, 1 Oct 2024 16:14:03 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v5 3/6] i2c: npcm: Modify timeout evaluation mechanism
+Message-ID: <Zvv1m3RT916dyYRC@smile.fi.intel.com>
+References: <20241001062855.6928-1-kfting@nuvoton.com>
+ <20241001062855.6928-4-kfting@nuvoton.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="degjDfMT8IABNNi1"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZttaJPIq6-jKt4eu@heinlein.vulture-banana.ts.net>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
-	SPF_PASS autolearn=disabled version=4.0.0
+In-Reply-To: <20241001062855.6928-4-kfting@nuvoton.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-0.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,SPF_HELO_NONE,SPF_NONE
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -106,62 +86,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, Oct 01, 2024 at 02:28:52PM +0800, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
+> 
+> The users want to connect a lot of masters on the same bus.
+> This timeout is used to determine the time it takes to take bus ownership.
+> The transactions are very long, so waiting 35ms is not enough.
+> 
+> Increase the timeout and treat it as the total timeout, including retries.
+> The total timeout is 2 seconds now.
+> 
+> The i2c core layer will have chances to retry to call the i2c driver
+> transfer function if the i2c driver reports that the bus is busy and
+> returns EAGAIN.
 
---degjDfMT8IABNNi1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-EAGAIN
 
-On Fri, Sep 06, 2024 at 03:38:12PM -0400, Patrick Williams wrote:
-> Hello everyone,
->=20
-> It is that time again for TOF elections.  The current roll-call is
-> available at:
->     https://github.com/openbmc/tof-election/blob/main/2024H2/rollcall.json
->=20
-> For this half, we have 3 seats up for election.  Currently those are
-> held by Andrew G., Ed, and Zev.  As Zev wrote earlier, he does not plan
-> on rejoining.
->=20
-> Nominations for those 3 seats may be sent to the mailing list by
-> replying to this email.  Only those eligible to vote may be nominated.
->=20
-> Nominations are due by Friday September 20th, 2024.  The election, if
-> required, will be held immediately after with more details to follow.
->=20
-> As usual, disagreements with the rollcall results can be raised to the
-> TOF.
->=20
-> --=20
-> Patrick Williams
+...
 
-There were 3 open seats and 3 nominations: Andrew G., Ed, and Manoj.  As
-such, no election is necessary this half.
+> +		/*
+> +		 * Adaptive TimeOut: estimated time in usec + 100% margin:
+> +		 * 2: double the timeout for clock stretching case
+> +		 * 9: bits per transaction (including the ack/nack)
+> +		 */
+> +		timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
 
---=20
-Patrick Williams
+Side note (as I see it was in the original code), from physics
+point of view the USEC_PER_SEC here should be simply MICRO
+(as 1/Hz == s, and here it will be read as s^2 in the result),
+but if one finds the current more understandable, okay then.
 
---degjDfMT8IABNNi1
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
+With Best Regards,
+Andy Shevchenko
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmb7ysUACgkQqwNHzC0A
-wRkMXQ//YcQwZ9dzuJ12EaUEHb3q3hAS2XFe4tFujKv365bIx7jlldlbTT0zuchn
-iQDX9m5iCYUOcg2kOiK7nJDYtm57Y6eSHfDp6aUkBY2lYwBsPV8hNQ0fr+PYQrYO
-BPw1qU0I/h3TIKgL6fyLoJSPJEr3rNnFdO4iNOtqQW0PjLI56w0cMejaCcut2ogn
-oLihijlM1sE352HdsKFWYQGoOCI13xOFZ3tq9jYlaT5L6KGmBy4+bLpQBxUkelY0
-P4fBSj0Hb4Oo0MbFPmIK+xqUDnSucvAlS5y+gziCcmii7lPei9kUo1N98+HfaYUU
-jmthqxPyD4x6tYN29/L1UfmBoOZiCRnGgQHzzx9sbvJhqkm8X0Zg6Qgbkyl05HOF
-fzTEDIj0eN66EjhJlflzhdQ5Y5FHUEYySR7XJg5VFI7m9z13dNqfn0E6PP1Hr1UT
-+kImbCdlsK/mwRZV71VBNtaDmJx3J71N6xSJGXENKnx22r9FBJUo7acIbswzj+gb
-oEcfkJm3cvmf2dpA/4i9c+8XTMtRwpLFkiMLSJQPTZNYJmEZ5VYdXNyVn+qt7f7Y
-Gk7lYKGbBbIYErW2aQyWl8kO4bHuHb8TT2ri5lzTdwjpnIgF/OcHpEDabJ6E4WL7
-mCKXG2QzTZFSWAMSdb/CER189Ot9JYhNJmMIbqbep5s2m255Z2w=
-=T+uS
------END PGP SIGNATURE-----
-
---degjDfMT8IABNNi1--
