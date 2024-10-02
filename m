@@ -1,78 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E83498DBE4
-	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2024 16:36:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AFF998E3EB
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2024 22:08:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XJcmr6LvTz3c6C
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2024 00:35:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XJm7p1wgjz3c6f
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2024 06:07:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.13
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727879752;
-	cv=none; b=eOEmJznQL5Y+GZ4p1lCg40wd4MhNQgnXssoaCBw9ZSKSLXTAtC/AkujpIbf7WDnBLCSsdhTtbLyZI5U7heK88bbpuUDmBJqWq2Qzk/l3FlCOM/SGbEtrnTETkhJsnkkJyv/YgOteN0yuWXujbGy29jQ5j3qpNMZH7Yc9CN3cqXdeBT/4hj5upCYplLvn6O2KWUO8CHmrufkjOiL+IZznzfRkwH9qYaWUki4XGHqdiAQp3lQhjsb89RkAPspzzSC/Bd/U6j9aaZ+Iuhxsc7nbtGcm6wOzEerJc9qmgKaRQ+fQiFE0z5PqEQYtjeRG+Xixoy91GsQM3zRAPgCKExdxrw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.155
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727899664;
+	cv=none; b=c8SifOcZHjKePV6UNyYLLesEInkNDWwdfMw7uzhQ8G4Bggl4Rokrlj8mx2O8+ty3OOf1CCh7AKeiOv2wcEO20VLP4rPZSnYb0QdhnFjxxKGyTXqG6ECmpbm3MYVzv+sxMDjfBrg7sm0dOL3LMxYrGDkqPp/de5BsFPTA4D0noJxJahoLjWx26LQLpEzaw0HfPsWAifi+Ufia/8poE8YwfvDuDGN1MevZD7lvs+MEtAuCyX40hDMYZPe9S6QXlEIS4w3/6nXzrVGKe32mde493x7BC47R6vQxssbX3dPLI80Xiu5hqk0aqn1KPCmGqvG4hIEibztyX6QXvXVUat8cSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727879752; c=relaxed/relaxed;
-	bh=vzmnonUYYNTjfRnTO717pspGElvMrH83A8Nt//JrkIo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mUNgcJKJ9bQ+SMG6qnAvv3iI5Af88RPbRbTf830HL3Sr06EhPTWzVWcQ0oc7GleRXZGwTWGppS5s3uESDx7W5HePNRM8ApsBmWkoxYbWKVQKJ9kh0AN3uzRIBz6GzESJGINDnR0M79dh10q25/qGEO/3IsRXDzucxTrR8VRd8Nb6E2yRvlW17F80g+zod/GbHhtT6k97rsYkYnmVZM+QybRxmJcYgUm6JdfpowLGkJXimv1OwAhOEXn5sQi0YjFGwc7C/hf/LnkQn4usvqtC7SEpxwxFUdVBnrEsGEhNhVxuO9C18EUE7r60E+xa7VJ1T5HN+JXCND7pIR9C2zkAFA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eOvVM+2Q; dkim-atps=neutral; spf=none (client-ip=198.175.65.13; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1727899664; c=relaxed/relaxed;
+	bh=vGBIeOQrZvmzHHw3KuzOB3B0Orb3a3RsMoIdPchpNMY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=UuAd9Hcibw7CeSZEDN88m5ECjtjjbB2Kd2gKbHwCHdDEGQT0B2Fr247Z8gPY/RafIhNp51u86r7h8qF/HAulDgG5PhTgrK/WLFUrxXZZyti3uaK4E2hgderyzPUWMUX7IwOnsVNWXSh0xHuoX4k7WvGee6WNq5J1b/nkOh5XuJ9WAAuOwkH38s26DI6lC2Zs2/gXGcTFuXVyM9ko2cCt8GfMPVL/V6jFMgYgwtku4939pZelljuogcOlwiVCaB3HXSAUn/H4NOVejVqKMrogcbTd/6cgraQemfr7wNWMIs2mSVBIv3Nf6sLqLx6Ejgbv9rd9YnAh8/w+v+P5ynyE3w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=p6KuNbnh; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YgutmyzP; dkim-atps=neutral; spf=pass (client-ip=103.168.172.155; helo=fhigh-a4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eOvVM+2Q;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=p6KuNbnh;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=YgutmyzP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.13; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.155; helo=fhigh-a4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XJcmj355Dz2yP8
-	for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2024 00:35:47 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727879750; x=1759415750;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=reX/HEz8p8JLCDKEMNA3o/Kp5RQsQN6emEVJh9u5XcE=;
-  b=eOvVM+2QHcsaVdXg2qCl1edCyTgWFujPB1QAWikfnAf8+FCeDwjmxJP1
-   0mh1arY4xI610oLOeMhheGH3JNtQTaDvc6lAeoVeyb4nCwblIH24R2N2u
-   JV10gfP/DwjJPqSW9NYvmH4+HtSPAqg8zR4A7uYdux687NeWys2L34cGU
-   iytVUt6C1JfSQPurGLhaD60ysWAJ6ravTCIbhouoGGNScP/wSTW1bdmt1
-   1FNeaaArCbygYfJE3HdNhlvzsanC4V9gIlftx0PSdCbUGZ8+JPUHEASRE
-   x/I6LwQK2L95kgdogfmv71xzbBTOr+9m9c5kln8vKj2nHqAmIW3xDFUYW
-   w==;
-X-CSE-ConnectionGUID: sSFEjqC8SWKMfkEXlP41sA==
-X-CSE-MsgGUID: 00jsCKpQR4mmeYgOVdlvNw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11213"; a="38179590"
-X-IronPort-AV: E=Sophos;i="6.11,171,1725346800"; 
-   d="scan'208";a="38179590"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2024 07:35:44 -0700
-X-CSE-ConnectionGUID: +Yds6v1JQI6HXv66faUHeQ==
-X-CSE-MsgGUID: AkbSVDKJSyaGbdwMNNJS3A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,171,1725346800"; 
-   d="scan'208";a="74262436"
-Received: from unknown (HELO smile.fi.intel.com) ([10.237.72.154])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2024 07:35:40 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1sw0S1-0000000FhjB-1sj4;
-	Wed, 02 Oct 2024 17:35:37 +0300
-Date: Wed, 2 Oct 2024 17:35:37 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-Subject: Re: [PATCH v14 0/3] Add ASPEED AST2600 I2Cv2 controller driver
-Message-ID: <Zv1aOedi9xl2mg9b@smile.fi.intel.com>
-References: <20241002070213.1165263-1-ryan_chen@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XJm7c6r7Xz2yQn
+	for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2024 06:07:38 +1000 (AEST)
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A6B7114013C
+	for <openbmc@lists.ozlabs.org>; Wed,  2 Oct 2024 16:07:36 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Wed, 02 Oct 2024 16:07:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1727899656; x=1727986056; bh=vGBIeOQrZvmzHHw3KuzOB3B0Orb3a3Rs
+	MoIdPchpNMY=; b=p6KuNbnhzJRobwXL4YZuO4sp+oKO269FczXCrPjo9M16UQAN
+	jOhuX/tO8/iTsizr156ovRCQ7UBd2qfpSSAZ59ViI/s7L1bRlGyVGasGY0MunZ2y
+	BA74kxbwtBSxW/Ksz+ONNbPk31t8pDrGrxoGI0t9SatB3tw7CGkrQsM+yfSGQFM1
+	UXrwxHg9KBo4dn/qR/0tB/fx82k+5Jl9umamMNMhkdHfEavmMuUjQCMWAl7VE/7m
+	qdlDyLJbkg+YBI25jvSW6bEUE1DT76sz1VVWHF9QOWCM0wJJ+hUp2Hv0qD+zvpN9
+	Umh8fxXm8t7jLENW2+WR3W+JYhhfKg4fvpO1zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1727899656; x=1727986056; bh=vGBIeOQrZvmzHHw3KuzOB3B0Orb3a3RsMoI
+	dPchpNMY=; b=YgutmyzPwQD5dCz/ioc0elHnPfU1vKn84AskTamumLeSIgfC00p
+	J2RJvp6ac4F1AI98EqIXsKeyoEj5+F4xZSSRY62Lw201u16ORRAVunb/EfyCM1UL
+	9k3lsfNJG6G/lFDzx0hzg/Ej1G9CbZSOaV44Myj3jCgnDzImhMlL3JvnMI+mVMhl
+	Evcf5ghsBrj+8XoeXb613HmWaJNe8xTWPwH2TWuq/Mrp56N1M2vE2h37FyK89zKe
+	tdixU7ABoWDznjdXHF1OiaLxMvwXDo3mqdNiUimxokmmUHzwFXJaMvJZhAJ3CTNH
+	HCtdBWJyH1wjwTW4JYuhlcyfkE1v7Y5DdBQ==
+X-ME-Sender: <xms:B6j9ZhuXfvAD1Gj6ZujI0uiuLOzcWKh09D-DKrC_aXrGj9lij3uotQ>
+    <xme:B6j9Zqe0giBStRdCJznvgIzp1UuLV1tBgN4kYXfoGZkNEJdZAj-Se4RBM4P7zWbh8
+    2lLLQosp7V_7GegGHo>
+X-ME-Received: <xmr:B6j9ZkxNSZngC4mqc4aLj1fWAW7pICR2wcVDe8SwHf_qCpNEh06XEvKqRaU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdduledgudegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculd
+    dvfedmnecujfgurhepfffhvffukfggtggusehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenuc
+    ggtffrrghtthgvrhhnpeffhefgtddukedtteduvdekteegheelhfdvtdeiffeujeffieet
+    keevhfejhfeukeenucffohhmrghinhepohhpvghnsghmtgdrohhrghenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthif
+    tgigrdighiiipdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrgh
+X-ME-Proxy: <xmx:B6j9ZoOdm46wkBdea1ZscwMIDUypUzFVJJVQT0XN243GNBwOJZm4Sg>
+    <xmx:B6j9Zh-HzZKUvmGToa-nDFc8vx7TaU-1VsH0x7U84QwF_lLO58VBqw>
+    <xmx:B6j9ZoX-YhwR9jx4U94bvLNnt_bg0yrx-3cBlacVlaXvo-CpH1N32w>
+    <xmx:B6j9ZiduC3JDrFbAGFqyAbVJliK9Tc72RkWFBJ3wAc0-gvHIs1hakg>
+    <xmx:CKj9Zjm2KUUwBD-r3BjTwJcrsJsJi35uDfw-Dlzn1qAbzJCCSiMlo42k>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Wed, 2 Oct 2024 16:07:34 -0400 (EDT)
+Date: Wed, 2 Oct 2024 16:07:34 -0400
+From: Patrick Williams <patrick@stwcx.xyz>
+To: openbmc@lists.ozlabs.org
+Subject: Announcing Topic-Based CI
+Message-ID: <Zv2oBkO0J6OEUvie@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="vU1KBLjt3ROryVI9"
 Content-Disposition: inline
-In-Reply-To: <20241002070213.1165263-1-ryan_chen@aspeedtech.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-0.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,SPF_HELO_NONE,SPF_NONE
-	autolearn=disabled version=4.0.0
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H4,
+	RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -85,110 +104,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: robh@kernel.org, conor+dt@kernel.org, andi.shyti@kernel.org, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, brendan.higgins@linux.dev, joel@jms.id.au, p.zabel@pengutronix.de, krzk+dt@kernel.org, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 02, 2024 at 03:02:10PM +0800, Ryan Chen wrote:
-> This series add AST2600 i2cv2 new register set driver. The i2cv2 driver
-> is new register set that have new clock divider option for more
-> flexiable generation. And also have separate i2c master and slave register
-> set for control, patch #2 is i2c master driver only, patch #3 is add
-> i2c slave mode driver.
-> 
-> The legacy register layout is mix master/slave register control together.
-> The following is add more detail description about new register layout.
-> And new feature set add for register.
-> 
-> -Add new clock divider option for more flexible and accurate clock rate
-> generation -Add tCKHighMin timing to guarantee SCL high pulse width.
-> -Add support dual pool buffer mode, split 32 bytes pool buffer of each
-> device into 2 x 16 bytes for Tx and Rx individually.
-> -Increase DMA buffer size to 4096 bytes and support byte alignment.
-> -Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
-> -Re-define registers for separating master and slave mode control.
-> -Support 4 individual DMA buffers for master Tx and Rx, slave Tx and Rx.
-> 
-> And following is new register set for package transfer sequence.
-> -New Master operation mode:
->  S -> Aw -> P
->  S -> Aw -> TxD -> P
->  S -> Ar -> RxD -> P
->  S -> Aw -> RxD -> Sr -> Ar -> TxD -> P
-> -Bus SDA lock auto-release capability for new master DMA command mode.
-> -Bus auto timeout for new master/slave DMA mode.
-> 
-> The following is two versus register layout.
-> Old:
-> {I2CD00}: Function Control Register
-> {I2CD04}: Clock and AC Timing Control Register
-> {I2CD08}: Clock and AC Timing Control Register
-> {I2CD0C}: Interrupt Control Register
-> {I2CD10}: Interrupt Status Register
-> {I2CD14}: Command/Status Register
-> {I2CD18}: Slave Device Address Register
-> {I2CD1C}: Pool Buffer Control Register
-> {I2CD20}: Transmit/Receive Byte Buffer Register
-> {I2CD24}: DMA Mode Buffer Address Register
-> {I2CD28}: DMA Transfer Length Register
-> {I2CD2C}: Original DMA Mode Buffer Address Setting
-> {I2CD30}: Original DMA Transfer Length Setting and Final Status
-> 
-> New Register mode
-> {I2CC00}: Master/Slave Function Control Register
-> {I2CC04}: Master/Slave Clock and AC Timing Control Register
-> {I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
-> {I2CC0C}: Master/Slave Pool Buffer Control Register
-> {I2CM10}: Master Interrupt Control Register
-> {I2CM14}: Master Interrupt Status Register
-> {I2CM18}: Master Command/Status Register
-> {I2CM1C}: Master DMA Buffer Length Register
-> {I2CS20}: Slave~ Interrupt Control Register
-> {I2CS24}: Slave~ Interrupt Status Register
-> {I2CS28}: Slave~ Command/Status Register
-> {I2CS2C}: Slave~ DMA Buffer Length Register
-> {I2CM30}: Master DMA Mode Tx Buffer Base Address
-> {I2CM34}: Master DMA Mode Rx Buffer Base Address
-> {I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
-> {I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
-> {I2CS40}: Slave Device Address Register
-> {I2CM48}: Master DMA Length Status Register
-> {I2CS4C}: Slave  DMA Length Status Register
-> {I2CC50}: Current DMA Operating Address Status
-> {I2CC54}: Current DMA Operating Length  Status
-> 
-> aspeed,global-regs:
-> This global register is needed, global register is setting for
-> new clock divide control, and new register set control.
-> 
-> ASPEED SOC chip is server product, i2c bus may have fingerprint
-> connect to another board. And also support hotplug.
-> The following is board-specific design example.
-> Board A                                         Board B
-> -------------------------                       ------------------------
-> |i2c bus#1(master/slave)  <===fingerprint ===> i2c bus#x (master/slave)|
-> |i2c bus#2(master)-> tmp i2c device |          |                       |
-> |i2c bus#3(master)-> adc i2c device |          |                       |
-> -------------------------                       ------------------------
-> 
-> i2c-scl-clk-low-timeout-us:
-> For example I2C controller as slave mode, and suddenly disconnected.
-> Slave state machine will keep waiting for master clock in for rx/tx
-> transmit. So it need timeout setting to enable timeout unlock controller
-> state. And in another side. In Master side also need avoid suddenly
-> slave miss(un-plug), Master will timeout and release the SDA/SCL.
-> 
-> aspeed,enable-dma:
-> For example The bus#1 have trunk data needed for transfer,
-> it can enable bus dma mode transfer, it can reduce cpu utilized.
-> Others bus bus#2/3 use defautl buffer mode.
 
-Is it possible to switch to new terminology wherever it's possible?
-I.e. master --> controller, slave --> target. See, for example,
-f872d28500bd ("i2c: uniphier-f: reword according to newest specification").
+--vU1KBLjt3ROryVI9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-With Best Regards,
-Andy Shevchenko
+Greetings,
 
+Up until now we've not been able to perform CI on dependent commits that
+span repositories.  Generally you have to inform the maintainer(s) that
+the commits are dependent and let them know that CI will fail until one
+of the commits are merged.  Often, maintainers ignore commits that
+have a "-1 Verified", so this can slow down the code review process.
 
+In order to improve this situation I've written an enhancement[1] to our
+CI that allows us to run CI on dependent commits, using Gerrit "topics".
+
+Typically we run into this with phosphor-dbus-interfaces, but any
+repository specified in the `build-unit-test-docker` can act as a
+library / dependency for CI.  In order to get this to pass, upload the
+PDI change to Gerrit first and add a "topic" (you can do this either
+through the UI or by adding "%topic=3Dfoobar" to your `refs/for/branch`).
+Then upload the depender change to Gerrit and add the same "topic".
+Jenkins will then download the dependency when building the Docker
+container to execute CI.
+
+Caveats:
+    1. To simplify the implementation, I only allow topic-based commit
+       per repository.
+
+       Suppose you have 3 commits to PLDM and 1 commit
+       to PDI under the same topic.  This is fine because each PLDM
+       commit will leverage the single PDI dependency and the PLDM
+       commits will be tested individually (in git-order).
+
+       Suppose you have 1 commit to PLDM and 3 commits to PDI.  This
+       will not work unless the _last_ commit to PDI was the only one
+       with the "topic" set.
+
+    2. MAINTAINERS need to keep any eye out for this and confirm that
+       all of the "topic" dependencies are ready for merge.  If you
+       merge a commit, but the dependencies are rejected, we're going to
+       have to revert.  You need to make sure there is good alignment on
+       the direction across all the commits in the topic before
+       accepting.
+
+None that this currently doesn't affect openbmc/openbmc recipe bump
+commits.  We'll still need to manually rebase and/or squash those to
+ensure the proper merge order.  AndrewG and myself usually keep an eye
+out on those and take care of it.
+
+[1]: https://gerrit.openbmc.org/c/openbmc/openbmc-build-scripts/+/74987
+
+--=20
+Patrick Williams
+
+--vU1KBLjt3ROryVI9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmb9qAMACgkQqwNHzC0A
+wRlcTRAAhLEXpfxSe/nlIhdCM8XYOUrt/O1BAgpf4rlDlbwHw2V1Zotmv5LLhkGd
+yL6h/1qilP4ocHUNeTdHBTbFFOg+bPamFV1/5p2zhap09gAVbYveyiZASLFckRxX
+fPYulyENUiGaYhP5trxyiiZQ+vEptbdZbwx7QElJA9D3Ot/2gIwEgLRuVycaYGtx
+slkJ1g9hMRmVyyNyZnJsv5yeVo769IkHGuXSiQRMlo3yT5m0PbD4UFe181Iu2QHI
+NDDJbxx6rRzTeBX3HVxpku1sxVkzMtWCDt8Z1pumcLaFCRQF67MVINfcAScTFhwp
+YnIQJYDTBw2N24SgMnTY/rmAgcQ1NIYlcDlLcxBzvQDxoMV/t4p1I/ugSzUbAcfj
+kM/dliDMD4legzXGQxoMrnyKjafqT5eXcGjLxrH93rxjyZ+NRn/Vvi2KyKFtAAXX
+daAtRFTDzEdp49qPl37K7uGVuuLOoeBE/UlM3qHG8xpBo3/CeZOjkXKn3Fk+fM39
+Iz4UhhNuq6nJDHAfa3Y9VHt4SZJyJisQWN6eNd7rfZU3KmbXT4VqfXOVt6ZqJmYg
+suEJeKOmZAjEsRvNv0xhPCSO6vQRXd1DRqEk2Pvnz+ujPper5Vpl20Hnyw4cObBm
+m/YABjhJ8aMpvqmw6N/xKv2CA4cOfQv087srqbxa6VCK6LS/oYg=
+=7TRB
+-----END PGP SIGNATURE-----
+
+--vU1KBLjt3ROryVI9--
