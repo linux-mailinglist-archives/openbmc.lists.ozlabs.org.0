@@ -1,80 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A3C98BD6C
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 15:23:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD37F98CB55
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2024 04:45:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XHzCk1BC2z3bwJ
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2024 23:23:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XJK1T6XWlz30gG
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2024 12:45:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.18
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727789006;
-	cv=none; b=JQNxZNtEEq2bxZ48ibLomTbdewYmFmLUCwY9gTvVHrix4sUgoXFSexVu8tYvBZoPse5UKuB/GF2oUraATWydPjUe/J4bewGQg1Ne+F5VCkeIV/GrkUTkCNxZL/5f1+kx5osM2xXKVha4QRC7XmCle7M7o87vnwmIUqYq/tm3UMfHU6jm2ZNIyda6B3JWxmjfCT+0bjr8+0W6Xa2EvCrCwUEZ2tHW2mbSOvDRM4sA9d0GX16bQ0Kpf4nD1iCS+q+VYsbb7cM+SJgwyvSRn2kUZGzxQTKQA69qwxqJutDOAQEXxLVJ0f5qSCGRfbjDhae/2J8rA8Rw2go8WUvn7dEyrw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727837146;
+	cv=none; b=AWN8wppnAI4d2t9v+wpZZyf1j6qg0WIndtGQbputlSlkE2+p9odNrokBUy0CRWM0Pwyo+g9EPZPW31PjQCA/gKkiUuMEkQ0Hf/WvDnzKDIyygTiOLiFtsWvI3S5TMH15XYPGXGuXmwtZ/PIffAQJO9SrtuQLpuNiQwhz4b7vB2SGSCBHhm/t8wBHDFDGpNk2prUdvQD4848qWrqKTXv5S07Tbx3cAtMbEjZHjWpI2g2qqrf0gUY9+R8GC+YuqUCFn3bsf31kxPJU3BgPiraA58AOfOa0TdIb0NWclqjE1Cj2FYGqwkat4hVETpoNMoSXHO2IMGv8cUfmsKbANoFGPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727789006; c=relaxed/relaxed;
-	bh=FVHP38VY22rYi4pgRHMwf2+4U7m3Q5p8ks3k7sgqL20=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ur8YUyLgoW7JMoTFIXsIi6mPBCsFHGDeCcIYOmfDBQpD9t19x13BliummxrPvK3vPQSRHOg/5eS1AZi7Dm41erBhTkNhTxelsUEnxXz09vagO8PjgHIY4DIEUwhh9OCXhZK3M4/AFp8qYgDDAatqEIARN8VqiWKuUlmRQBrZtlC+KGYWsWBtaVLb2BtCXQSPWusFMZSNsInO5NX8cIfixHbwluJEwRc7EiN7tAxkARgb+MrEuLdtbI+OJVKLF0aFj2nKa4/HDqLal4ZRcoqpN/gcayP6NJ/3KNLEGdqHdfCupRFbu3pxL01UmznN5GiccHnt8R1+GPIPWirnVFoj7g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=TdTFvbST; dkim-atps=neutral; spf=none (client-ip=198.175.65.18; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1727837146; c=relaxed/relaxed;
+	bh=ZUn9UovPgHmeFFF+zpOHis/BLdKXh4bjjfAz3/zpkgg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Tt1G0nIAmvP/6sWfstdRut6/TJaGoLStkgRnmN8T6AX9PmFrDHU19M7JM7aVkTrc/TtIYJrTelFdHC7GcsL6J2Whs3pze7zWl1S7rCxNBSxpq78n165H/YJmjSU5kc5MDGyEl8Vr6RVBjTFpgc0vc+gNWnr968Mf/pSXJlhP50PKcnOlYpQ6jz9ud8JahKwVxm6yKxpty6fl5fAda/yC7KRy3ZclYgRKjv6t14En/hQ6dePv7fiQ+3gB4Nm8Zw4m0tkfJYAjdDBqT2xID1Kha4QHsfjYdleLJXDFLQGWqsHZaioagdPRGpGE78tHchuDixrpdF/MRonwoy19oujBdw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jZ5Ityfj; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=TdTFvbST;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jZ5Ityfj;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.18; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XHzCd6b9zz2y3Z
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2024 23:23:25 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727789006; x=1759325006;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=fQ2vhUzLtGvkWyq8DZsTCLJmKFg82cwiPY8f99KGWqw=;
-  b=TdTFvbSTNkkU+98mK2yFhPAI1yFcmXR6AfMwI4loMSbByAJMnYEO7ehA
-   GNXAggJfET19bCfpahCvfw7uGGKn6cKsfwmLvOFPci6HkcFhlq9+W5Z5G
-   fGo0F7RugRLb/PWH+peC/qE6cE3/HLDfQ3oTzt2WRq/0a0ZA0BPZL30aL
-   mJ96A+0K6mgdQDKTFejTKWO8ljBSuW57zsPsA9EBya260Wh9IsposTDEl
-   bZhUYbQHye1znRtsw3hh8D1ikvAA7WLmAJGyrHfP3KMRCIbXFla44Hd3K
-   VcXmb3BrhYRuqWMqQGLmH7UE20na8ucIh5gap09t/gGEhKIX8r0mkiJhW
-   Q==;
-X-CSE-ConnectionGUID: pIt52mMQSWqfQPmekRlkDA==
-X-CSE-MsgGUID: gYJQEP7jRraASKuqokkAnA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11212"; a="27061999"
-X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
-   d="scan'208";a="27061999"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:23:22 -0700
-X-CSE-ConnectionGUID: cEVT+0U0RLiRN7ywqh996Q==
-X-CSE-MsgGUID: mVzLgWZCQkeWYNTyQqvzAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
-   d="scan'208";a="74079983"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:23:18 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1svcqR-0000000FCj1-08ap;
-	Tue, 01 Oct 2024 16:23:15 +0300
-Date: Tue, 1 Oct 2024 16:23:14 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v5 5/6] i2c: npcm: use i2c frequency table
-Message-ID: <Zvv3ws1_jUMVnAAJ@smile.fi.intel.com>
-References: <20241001062855.6928-1-kfting@nuvoton.com>
- <20241001062855.6928-6-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XJK1Q4Yczz2y66
+	for <openbmc@lists.ozlabs.org>; Wed,  2 Oct 2024 12:45:46 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1727837144;
+	bh=ZUn9UovPgHmeFFF+zpOHis/BLdKXh4bjjfAz3/zpkgg=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=jZ5ItyfjzqHkHG4BJI0XaEm5VX2scMBhebfeXRkfxMNTrPj32sSp2GZq3PgfolvSJ
+	 iLUeicqHmM4RE/mIeOjNwdHrJVoXM+DItiSnxU8F2M0Z+B0C8OwNsaiuBnMmaL8A4c
+	 ht4M4PjWdlVEqc03BlIUbwf14Ohd8TwbcSnraWOTX49gx0X4aSeeVUUAjc98ag2Y4M
+	 m1t/qZ3uJHJsdzE+jnIaTW1Kx633YCyMCPlse1XROs4TLTW4Brylmr5oFRMQTOUBq6
+	 R+pW3ivP3sAhrMTdFwlbeymtepypAwbufkz3Lx1SfBbZQBS6iHNOaFqNiXB61tB/6u
+	 ISKt5NCWru9tA==
+Received: from [192.168.68.112] (ppp118-210-73-17.adl-adc-lon-bras32.tpg.internode.on.net [118.210.73.17])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id F237964BDC;
+	Wed,  2 Oct 2024 10:45:43 +0800 (AWST)
+Message-ID: <965d0f005ed9a36eeaefe69d897cad44839d06cc.camel@codeconstruct.com.au>
+Subject: Re: [PATCH] ARM: dts: nuvoton: Add UDC nodes
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: "William A. Kennington III" <william@wkennington.com>, Tomer Maimon
+	 <tmaimon77@gmail.com>, Rob Herring <robh@kernel.org>
+Date: Wed, 02 Oct 2024 12:15:43 +0930
+In-Reply-To: <20240925093956.2449119-1-william@wkennington.com>
+References: <20240925093956.2449119-1-william@wkennington.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241001062855.6928-6-kfting@nuvoton.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-0.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,SPF_HELO_NONE,SPF_NONE
-	autolearn=disabled version=4.0.0
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -87,63 +69,203 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tmaimon77@gmail.com
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 01, 2024 at 02:28:54PM +0800, Tyrone Ting wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
-> 
-> Modify i2c frequency from table parameters
-> for NPCM i2c modules.
+Hi William,
 
-This two lines have a too small wrapping limit.
+On Wed, 2024-09-25 at 02:39 -0700, William A. Kennington III wrote:
+> The driver support was already added but we are missing the nodes in our
+> common devicetree. This enables npcm7xx platforms to enable the udc
+> nodes and expose USB devices endpoints.
+>=20
+> Signed-off-by: William A. Kennington III <william@wkennington.com>
+> ---
+>  .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   | 71 +++++++++++++++++++
+>  .../arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi | 65 +++++++++++++++++
+>  2 files changed, 136 insertions(+)
+>=20
+> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi b/arch=
+/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+> index 868454ae6bde..358b52894ac0 100644
+> --- a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+> @@ -99,6 +99,11 @@ rst: rst@801000 {
+>  		};
+>  	};
+> =20
+> +	udc0_phy: usb-phy {
+> +		compatible =3D "usb-nop-xceiv";
+> +		#phy-cells =3D <0>;
+> +	};
+> +
+>  	ahb {
+>  		#address-cells =3D <1>;
+>  		#size-cells =3D <1>;
+> @@ -179,6 +184,72 @@ fiux: spi@fb001000 {
+>  			status =3D "disabled";
+>  		};
+> =20
+> +		udc5: udc@f0835000 {
 
-> Supported frequencies are:
-> 
-> 1. 100KHz
-> 2. 400KHz
-> 3. 1MHz
-> 
-> The original equations were tested on a variety of chips and base clocks.
-> Since we added devices that use higher frequencies of the module we
-> saw that there is a mismatch between the equation and the actual
-> results on the bus itself, measured on scope.
-> 
-> Meanwhile, the equations were not accurate to begin with.
-> They are an approximation of the ideal value. The ideal value is
-> calculated per frequency of the core module.
-> 
-> So instead of using the equations we did an optimization per module
-> frequency, verified on a device.
-> 
-> Most of the work was focused on the rise time of the SCL and SDA,
-> which depends on external load of the bus and PU.
-> 
-> Different PCB designs, or specifically to this case: the number
-> and type of targets on the bus, impact the required values for
-> the timing registers.
-> 
-> Users can recalculate the numbers for each bus and get an even better
-> optimization, but our users chose not to.
-> 
-> We manually picked values per frequency that match the entire valid
-> range of targets (from 1 to max number). Then we check against the
-> AMR described in SMB spec and make sure that none of the values
-> is exceeding.
-> 
-> This process was led by the chip architect and included a lot of testing.
+Testing this with `make CHECK_DTBS=3Dy nuvoton/nuvoton-npcm750-evb.dtb`
+causes the following additional warning:
 
-Personally I consider table approach is not so flexible and it is definitely
-does not scale (in the result — hard to maintain for all customers), but if
-it's hard to calculate all necessary data and there are other pros of it,
-I'm fine.
++/home/andrew/src/kernel.org/linux/origin/build.multi_v5/arch/arm/boot/dts/=
+nuvoton/nuvoton-npcm750-evb.dtb: udc@f0835000: $nodename:0: 'udc@f0835000' =
+does not match '^usb(@.*)?'
++       from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
 
-TL;DR: I don't like this patch, but I don't want to stop you, hence no tags
-from me.
+This is the same for all the other nodes added.
 
--- 
-With Best Regards,
-Andy Shevchenko
+Can you please fix that up in a v2?
 
+Andrew
+
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0xf0835000 0x1000
+> +			       0xfffd2800 0x800>;
+> +			interrupts =3D <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc6: udc@f0836000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0xf0836000 0x1000
+> +			       0xfffd3000 0x800>;
+> +			interrupts =3D <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc7: udc@f0837000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0xf0837000 0x1000
+> +			       0xfffd3800 0x800>;
+> +			interrupts =3D <GIC_SPI 58 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc8: udc@f0838000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0xf0838000 0x1000
+> +			       0xfffd4000 0x800>;
+> +			interrupts =3D <GIC_SPI 59 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc9: udc@f0839000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0xf0839000 0x1000
+> +			       0xfffd4800 0x800>;
+> +			interrupts =3D <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			nuvoton,sysgcr =3D <&gcr>;
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+>  		apb {
+>  			#address-cells =3D <1>;
+>  			#size-cells =3D <1>;
+> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi b/arch/arm/bo=
+ot/dts/nuvoton/nuvoton-npcm750.dtsi
+> index 30eed40b89b5..00615e7d1462 100644
+> --- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750.dtsi
+> @@ -58,5 +58,70 @@ gmac1: eth@f0804000 {
+>  					&rg2mdio_pins>;
+>  			status =3D "disabled";
+>  		};
+> +
+> +		udc0:udc@f0830000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0x0 0xf0830000 0x0 0x1000
+> +			       0x0 0xfffeb000 0x0 0x800>;
+> +			interrupts =3D <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc1:udc@f0831000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0x0 0xf0831000 0x0 0x1000
+> +			       0x0 0xfffeb800 0x0 0x800>;
+> +			interrupts =3D <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc2:udc@f0832000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0x0 0xf0832000 0x0 0x1000
+> +			       0x0 0xfffec000 0x0 0x800>;
+> +			interrupts =3D <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc3:udc@f0833000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0x0 0xf0833000 0x0 0x1000
+> +			       0x0 0xfffec800 0x0 0x800>;
+> +			interrupts =3D <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+> +
+> +		udc4:udc@f0834000 {
+> +			compatible =3D "nuvoton,npcm750-udc";
+> +			reg =3D <0x0 0xf0834000 0x0 0x1000
+> +			       0x0 0xfffed000 0x0 0x800>;
+> +			interrupts =3D <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks =3D <&clk NPCM7XX_CLK_SU>;
+> +			clock-names =3D "clk_usb_bridge";
+> +			phys =3D <&udc0_phy>;
+> +			phy_type =3D "utmi_wide";
+> +			dr_mode =3D "peripheral";
+> +			status =3D "disabled";
+> +		};
+>  	};
+>  };
 
