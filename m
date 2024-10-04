@@ -2,80 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBAD298EF5C
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2024 14:39:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7854A98FC01
+	for <lists+openbmc@lfdr.de>; Fri,  4 Oct 2024 03:45:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XKB886T73z3c7b
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2024 22:39:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XKWZh3mbmz3c0H
+	for <lists+openbmc@lfdr.de>; Fri,  4 Oct 2024 11:45:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.16
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1727959173;
-	cv=none; b=mEtewm+e1bKdwhJyyNnOIPa33gc0osz/ZM/aDe4lOQMxxf+U6kdTKbjzUw738RZ16tg7JYYKmar2X08U8T3MJn0HM5GfXAQm1mEKfaYbG4jM7O4QG7Et4lSVdK4hARBwmxLdJEW5AKrX62MN6DMV5hBDpdULpjTFO7HIynu0sHLm+pTbPEZ3hn5l+Y4Mep7aWL5Dq1NUA5wrBpMpS6OXfXewk7Pe8nzbOf6i+IrGCMFq7aLQTEasCLvwT5K3sYt3nZ+HRgULLJZZM/OKVf+ZQnDEW1p+kfRsyFlOoxUapJioRKIX+jqQb3JbjFeClcxP32IG66WVVOtrBEwvRadOvQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::52f"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728006313;
+	cv=none; b=mb9gJmd+xNCpNtAlHQHBzbzuR+/hFWPJsm+F7IzaLRKx2rWxPykbzhaFK/iP4VTZ9pL7VxuFo0UBcpNvOGCI8fBAB+o5qchbjLzifzOPafAa7uhnN+cEVDkaiEk/3hI2dj/F5tsMtcyZXaE+sC6FXfnWxubJhM2gtxHOlGMwFRaXEh04zeguZ8ie3ROLls/96ki0Twl2DrYbitJoLMV4Hg5QYHEduK05V+6p2gQnBP4o+oeiC8yggQgNGWTAHhDlNgcjVqE9wCk+qkIWZGtzcyKfk+IlposJPguqnDyrNvG/lIxRcf/9MsGtaxd9nKgy30LZxmvWxJ9nQqg6/6XX+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1727959173; c=relaxed/relaxed;
-	bh=bqoVeqJgqT0M1flxfT93zxVXlDysL5pQlp7hNngjZ0w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T62YqaaTf/924nkgIicQnUVoXlEjrzsr8dTLutm9+17ma/NAcLnlxesC99cFTH76np1+ncab/i90YAOjeRKVCxrGsG6l4pTBmLeEyL4BdV7MTqvpDgrQV6/NqSUMCX2gy4/iGhiBaHfOYWPgXEPUycUNp6iwFHoC3cP6V+zZJes57SJmqikna+iHDoBe4zzVItkreJ0rNObPbUPyjZ5NPIppXxks7ODJVLhNSgaROWn9/dO40ZpMZss+WKmTX3EpClKCrGk7cBC69Sx5Xjoa1sTVt/N4CMIUqTSERaIjuElACwA7gVoVnV8FfFJBFZwlu4dGPO2bYvhw8h93IwrwmQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iSKhYUoB; dkim-atps=neutral; spf=none (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1728006313; c=relaxed/relaxed;
+	bh=dRI2Il62UAfyDHeebNL7M6bB8VH+L673JhKSjWxVXHw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FBhtlPz4CqFcO5B/pJpfCMzNDgwZKnFfryk+xIG+8eSBas+ZfCsTCrK9BQR5usHGoZrEF/EGTHDHxQN/afYtfivfdcPPPW8Al6oif4Q7+aOP0nJL16ls9SslK/hWK1UXJx/MP/KtknTlPNmavTuCPurTwtdZ6hGtVX6otR4nadlyf353UdVVTFcCHJTWHYL3e2kiZAy5UzmJHrwl5D88cI+v2N7+B4XeFfLIU4AxZtWHaFl0jvvXNYruW4RHm9hCyjn020sfY7iRHUXxfSh4AAv0ccrUqg76OJrPagg1dX1O1vqZOqlt3eDEeZ6bkrzoZPkedGVsi4OkumibjmLAKw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Rvo2r+8E; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iSKhYUoB;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Rvo2r+8E;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XKB814Nklz2yR3;
-	Thu,  3 Oct 2024 22:39:27 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727959170; x=1759495170;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=jJqZlWZyRRWoe9bZ1pTGj+NsxagcVSsJs5dIspW8QMY=;
-  b=iSKhYUoBLVw9mB80jX53I/XjRaetvMDbPP3WT7j5+5RdUoexaG3sH4jw
-   GGL3bjQCWQnV0gWANCPG+2KiQvdZbB6fiBKrhJvEZU6ZB4wvA5gPutOQw
-   MAJDvKwv08GNaHpgxhH2BIEWAlqwgJnO9YhOqo84fN8mJNuAHf35kevLC
-   /1Y0SXcYmHRK65XYCmwp/T8eoYXP1gLf7lNkbJUGEmti0a96KB3HKJmmb
-   Pzp7dr9fQmIqUQDzBCC6FEbrFwqaU7XJfWtfuk/TafU+w73LeSo7Unob6
-   8zffxnmLK9es/W3JAPbYsXUcPYLw7kceXXI/IuOX0NjBQ7lR6jnwtjS/i
-   w==;
-X-CSE-ConnectionGUID: o0b/XQ4xTFqwIStH3HbzsA==
-X-CSE-MsgGUID: bdQA9fGIQvKPXcEzMSj8kw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11214"; a="14766781"
-X-IronPort-AV: E=Sophos;i="6.11,174,1725346800"; 
-   d="scan'208";a="14766781"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2024 05:39:25 -0700
-X-CSE-ConnectionGUID: VZ4FQ9ZJTiukwSGcRxIw8w==
-X-CSE-MsgGUID: Q+m6TP+eSkKye7Bb4NxYAQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,174,1725346800"; 
-   d="scan'208";a="74188410"
-Received: from unknown (HELO smile.fi.intel.com) ([10.237.72.154])
-  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2024 05:39:22 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1swL70-0000000G8x5-0KUx;
-	Thu, 03 Oct 2024 15:39:18 +0300
-Date: Thu, 3 Oct 2024 15:39:17 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andi Shyti <andi.shyti@kernel.org>
-Subject: Re: [PATCH v14 0/3] Add ASPEED AST2600 I2Cv2 controller driver
-Message-ID: <Zv6QdUuiUFvXjcd4@smile.fi.intel.com>
-References: <20241002070213.1165263-1-ryan_chen@aspeedtech.com>
- <Zv1aOedi9xl2mg9b@smile.fi.intel.com>
- <SI6PR06MB75359904E108D7D0CC89A329F2712@SI6PR06MB7535.apcprd06.prod.outlook.com>
- <Zv5u1gTK9yug7rbK@smile.fi.intel.com>
- <dun5dterlkikft4p2yuuebb2e4nyzed7xeofmeivzldeardhmf@kzv3iokk6cxn>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XKWZb27Szz2xwH
+	for <openbmc@lists.ozlabs.org>; Fri,  4 Oct 2024 11:45:10 +1000 (AEST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-5c89bdb9019so1848533a12.0
+        for <openbmc@lists.ozlabs.org>; Thu, 03 Oct 2024 18:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728006306; x=1728611106; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dRI2Il62UAfyDHeebNL7M6bB8VH+L673JhKSjWxVXHw=;
+        b=Rvo2r+8EUS/9lkhFIV6l9n7qUFWqx9dtL8ndAwq400Tb86mF5q1NZfGloaeXPbpjPF
+         10Sut2xLjXjVvWDkuYB4ZMjwRVpVV9kUczUeCx8II+MpQdDTe4lA4ymbo7SARR7LRScv
+         sw3HSw0zVN0T/hLUvKD4SBkC2pVKffw3qZ+Ye8Y3eiWMk6vuRtGCuS3EDkd65AwisHV1
+         42L3hdVDeTF+vf7y3hOU0NR3OzEuANnEjMedZP9DdNLwTJ1guAarP1bebx2KpSaCigQc
+         /CB2gOxNjAB3ul4aXCJSPcZAWC8SNDzoJ5wTSQGbAtYoVMqMN4tOe9Hk1/DqGEgNLsqa
+         I4mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728006306; x=1728611106;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dRI2Il62UAfyDHeebNL7M6bB8VH+L673JhKSjWxVXHw=;
+        b=I5Xal8nqvH4Fu6TZdQHGzYL27zJxfZpCe+HuReeY8aNwfl/WlhAOVh5K76iDOj2kHp
+         i2WzkrfSCPbOLsV/FLlSEy6E6ZV2IuRAjHgS73Yen3rQPgf1DNVHyQVVN9g36xMO/kre
+         D3f/uT73MFZ4kwgzuaRK3eGDRLC78TCroG2hM0XH3sxWETqDznWeheaJB4W8arEnPt+q
+         F8iLw5aIiRuhDB5pYfdqXpNfu+P+ysRn6pRD306tUOpEUqAKJ3DkqIuy2ADlhu0qpHmu
+         GoWhGpB+PTQFx/ZlgEHmGlai/pU1qkkNsSqsGtKySdYfKpNkUhCWbCCYn2aRD8zDcMtl
+         LLqw==
+X-Forwarded-Encrypted: i=1; AJvYcCWWxbwa4aojiADK9LGm9AmMlSn23oPnfDq050GZkJ9tBeA7jvjHC+NBlLqXPTcz5rBM7f8S7OZu@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yy7n0J3IcUji0lGXYkNLZ0b88qhXWVf8YJu8pXHxQBLf9jwrhPM
+	JbLMmY2vBqkyy7Wk7QC6MMaTfZLg/otmV3cKKfOMSyzvo0ne/YiFsh2O0aRS7UhAtI0AwFYmwa9
+	RYwaikkMwr8BymCBq/+RWFwW2KA==
+X-Google-Smtp-Source: AGHT+IFSm2nBg9gUUpBfHWVXeRjIe0yYzQSwipt/YKlvygbTx8qK062Iy8NDRPf5361rguU97G4YSoWKWU9ShduSQ0c=
+X-Received: by 2002:a17:907:e2ea:b0:a8d:5f69:c854 with SMTP id
+ a640c23a62f3a-a991bd44726mr89559966b.24.1728006305584; Thu, 03 Oct 2024
+ 18:45:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dun5dterlkikft4p2yuuebb2e4nyzed7xeofmeivzldeardhmf@kzv3iokk6cxn>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-0.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,SPF_HELO_NONE,SPF_NONE autolearn=disabled version=4.0.0
+References: <20241001062855.6928-1-kfting@nuvoton.com> <k5ifxaqtm76aorvxur6kl7j3pnfc7qmvua7mq64pobg3tiabvu@h2ygjs7ieidh>
+In-Reply-To: <k5ifxaqtm76aorvxur6kl7j3pnfc7qmvua7mq64pobg3tiabvu@h2ygjs7ieidh>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Fri, 4 Oct 2024 09:44:54 +0800
+Message-ID: <CACD3sJZEqt0i6nz2gwQOwVADTaJtTc9MTQqAUFcP1kwOWWyQTg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] i2c: npcm: read/write operation, checkpatch
+To: Andi Shyti <andi.shyti@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -88,36 +88,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, Ryan Chen <ryan_chen@aspeedtech.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, wsa@kernel.org, tali.perry@nuvoton.com, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 03, 2024 at 02:20:54PM +0200, Andi Shyti wrote:
-> On Thu, Oct 03, 2024 at 01:15:50PM GMT, Andy Shevchenko wrote:
-> > On Thu, Oct 03, 2024 at 03:41:57AM +0000, Ryan Chen wrote:
-> > > > On Wed, Oct 02, 2024 at 03:02:10PM +0800, Ryan Chen wrote:
+Hi Andi:
 
-...
+Thank you for your support.
 
-> > > > Is it possible to switch to new terminology wherever it's possible?
-> > > > I.e. master --> controller, slave --> target. See, for example, f872d28500bd
-> > > > ("i2c: uniphier-f: reword according to newest specification").
-> > > > 
-> > > Just for cover latter? Or I should modify for each patches commit message?
-> > > Or entire i2c driver statement need switch to target?
-> > 
-> > I believe everywhere, where it applies: driver code, comments, documentation,
-> > commit messages...
-> 
-> If the datasheet refers to a register, state, or any other
-> hardware property as master/slave, we should retain the
-> master/slave terminology. Otherwise, we should follow the i2c and
-> smbus specifications and use controller/target.
+Andi Shyti <andi.shyti@kernel.org> =E6=96=BC 2024=E5=B9=B410=E6=9C=882=E6=
+=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=884:34=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> Hi Tyrone,
+>
+> > Tyrone Ting (5):
+> >   i2c: npcm: correct the read/write operation procedure
+> >   i2c: npcm: use a software flag to indicate a BER condition
+>
+> I merged just these two patches to i2c/i2c-host.
+>
+> Thanks,
+> Andi
+>
+> >   i2c: npcm: Modify timeout evaluation mechanism
+> >   i2c: npcm: Modify the client address assignment
+> >   i2c: npcm: use i2c frequency table
 
-Indeed, makes sense. Thank you, Andi, for the corrections!
+Have a nice day.
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Regards,
+Tyrone
