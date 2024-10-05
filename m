@@ -2,65 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEE4299151B
-	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 09:38:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 43B3D9915A3
+	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 12:02:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XLHMc5vCMz3c3l
-	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 17:38:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XLLYq46VRz3c3x
+	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 20:02:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.12
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728113898;
-	cv=none; b=LdwuOFUAerBCiQUoc9f6w9xTddNfLJ+E5X+Shu+qnHXDAiXuRBcMeE4e632/72xO49iWOBPvFGDEnDqS97y8a3mbETB9t+eokkopG5pUgKU5bplAqeu6t9FpsiT1OAZN4ynZE5totBFasPFrbB2g4TCW/m5bt/tee42byGpPCThHLUd1LeknXbIOB7xtZ3Q3PjW5I7/2cszRIW5pX69Y1OzFEANjaD3ZRPsa0ENWlxjr8lnk7PqfS0+wt3VUVu9mSJKkOEJbZ+Tq09XKIDv2muFT18pBd5sZmfLCSzVpJ6hFwgGtGAAvnQQsy2qsOB8DOV09UCYYtsvRV1d0mR2pzw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.16
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728122540;
+	cv=none; b=oV7PY90qI/WlXWDBVA5LevzosSURZqhgTI2/XIF/1vhy+V/LAC9dyr2meZHawr9eGwueW6D+gmpbnc1wz15OzK2saP37rPyetIWK6+b6vnuT0Bdfe0Ost2VWrd1ERB8y+JsuA36ASSVB0OFoN+lHl9PbtxpmOltxQRRWZ4AnmdGJtafAGVs7z+4V4RhFMh12zpaY6hwO6UZh8xrjK/xWLMBHzoYnBUsukbeVQVRtLUgr6Mvnb7/FxKwiTgLDfQbHPHvd+jz3hpjnaT4EyfR9iWGjwwcUvmysDh3PXRwmbgGsrFZszZtovAlLuFSjXOwrRpD+/VpcqfgLUKDUY4id+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1728113898; c=relaxed/relaxed;
-	bh=ZkNgLHMw44oNNkQN4d4HJxy8L+gik/cbCPxW6GPkBAw=;
+	t=1728122540; c=relaxed/relaxed;
+	bh=8+uCBuz8TgxlE76ehikGDkBzb24ZPACcaJkYOutgSLY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=drR5fMpZMfDnpWQymwpMJDsR5RLTHj+cmFqcAbayw7tnaM8PTUCyrZZ5NWRwtfTRWJXavgr31ZirEMz2cDtcaNpKW0EWlrn70XEMRDj8ndQ8y62GyprmNZWSJ+8rhd4MPd161Z+1tkvI4OqIa2W5J9aeQePVAoe4srGwCR73eHvHlRm5ixcYKsNQn0d5ZhHu6gKcKqfrwgD9Fe1LEb2ZnT/sso7LoNKhWOqIYuJ/EVI/oWL+wV+hhsdCe0EImp3zX4IEjHV3Lt0fYOJoD+tLNAQa0imKYboskOddRn8AWqmfiYOYtQoPKBg6pjesfZ5hJQp9HDjkrvSDKWGGrlANdA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DA5Uzinm; dkim-atps=neutral; spf=pass (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=kD6K7ugSO5qgwcghc00p/n2lrmZT4HRMscRdc5EdcrzseowzvRBC/Su2HZ+WoJ3FqL19FeMk+hKX2gZiaNHU4wEo6SMCwhFVYr2dSDnIvvu7r+YYl/6DxkR2fUP3OgTloYJtQgYctEbq7J8cxu0z0TKLx1aDBD2ZL+kooWqjHwICd1187Zq8hUG3iEqUfhmLvq4yePBavntvTnwzq8mT/GrxRSWLI7ACp8fUlgFFPKmLGyK8Bg43EawpY7spcWzOSDZAV+JnKbq7DupCcDV9wRrbKvp+6ylWlwWoZgVf/+IuCK90UR9rVCwirXhmO2GUtdKvIGuqE0XZf3wysVVS8w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ktXqArpv; dkim-atps=neutral; spf=pass (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DA5Uzinm;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ktXqArpv;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Sat, 05 Oct 2024 17:38:17 AEST
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Sat, 05 Oct 2024 20:02:19 AEST
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XLHMY0hVgz2yGD
-	for <openbmc@lists.ozlabs.org>; Sat,  5 Oct 2024 17:38:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XLLYl3B4cz2yVD
+	for <openbmc@lists.ozlabs.org>; Sat,  5 Oct 2024 20:02:18 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728113897; x=1759649897;
+  t=1728122540; x=1759658540;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=u6WMt7NaLIFTr5THXasDszPWd+K083tVONyzoKZD91Q=;
-  b=DA5UzinmsylEsrkoIHCox3Vl53tbmneHK0yHosoPkH0ydPebuUf6jm8J
-   mbi91+1MHPIU1OIXpq9JA7ImQgrNGqxQYujFI4LfgP938THilq/Gd4Bx5
-   l9aH2LWyavttvJ0k1mIFVGFHXKlcp+NtauFI8kF+r9o2GI5ggAjhVcVzi
-   hIWR/I0JHzXSFg+zhw+2apP9ybmc0lmlY8gADN+TGMJ30jjXzZ5H4Foct
-   5mVmGusdAX+obHIJ0apXNtKzPPugsf9q0eq+YIvRsnnAAmH4sfQHRyDjL
-   bzDmwjK6yAxfnA6DMAcNneP5vX+OWJ8wehiEhb/5EmJUa7PunpR0hRA/n
+  bh=AS66JIPtXx2sZQ/smwiZJMTI3t0JMMag9/KeDzC1/38=;
+  b=ktXqArpvpMd1U7uGt3UK0FlSJSnvfPgEFaDE0jAMKmmD4UThOCQFbRMv
+   RrqLJrsIBYdZFbbDGBYTKbRGZeu2nJmuYrAdergYovCuWOyRJMxSDaAZ1
+   ihwXqpZwTUH7Dos14M/SY9/mQO4+x8wPjKxunyvWmFVgXzAAFxIBR4IG6
+   adOBMHmVGdu7t6tLrZw4AiHL4GpLGE3cXRNi1MD5AKz3tmULbdo+tNWW8
+   dv8MCrzWQE4kEaxp4pDuBegasWBxpjdk3Wzemlwde3fPgNfu4PQstGWCK
+   UvNSDQk6YFPyg/AR6xOmB1OoU/HGi5mpqowON+qn3H6CPE8SlAyytFroz
    Q==;
-X-CSE-ConnectionGUID: W4Bi7R8ERbW4GycUKORPDg==
-X-CSE-MsgGUID: Co96BAhMSi6aUIG4I1D96Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11215"; a="31218603"
-X-IronPort-AV: E=Sophos;i="6.11,179,1725346800"; 
-   d="scan'208";a="31218603"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2024 00:37:06 -0700
-X-CSE-ConnectionGUID: v7tGEJ1EQsSmbuMbbEYZGg==
-X-CSE-MsgGUID: i2WP+xpVR8S+46CU4OAu8A==
+X-CSE-ConnectionGUID: bRRYtfNrQQS8HGMsp9vgJw==
+X-CSE-MsgGUID: ZVrCXLOOS8G1PFxoQEYSSw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11215"; a="27426136"
+X-IronPort-AV: E=Sophos;i="6.11,180,1725346800"; 
+   d="scan'208";a="27426136"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2024 03:01:10 -0700
+X-CSE-ConnectionGUID: qc9AevAoQe6hbVVwa7kNtw==
+X-CSE-MsgGUID: gqkgz86BSNeOu8NTBwAbZw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,179,1725346800"; 
-   d="scan'208";a="79892116"
+X-IronPort-AV: E=Sophos;i="6.11,180,1725346800"; 
+   d="scan'208";a="105707403"
 Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 05 Oct 2024 00:37:02 -0700
+  by fmviesa001.fm.intel.com with ESMTP; 05 Oct 2024 03:01:05 -0700
 Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1swzLX-0002k8-2H;
-	Sat, 05 Oct 2024 07:36:59 +0000
-Date: Sat, 5 Oct 2024 15:36:16 +0800
+	id 1sx1ax-0002ps-0H;
+	Sat, 05 Oct 2024 10:01:03 +0000
+Date: Sat, 5 Oct 2024 18:00:52 +0800
 From: kernel test robot <lkp@intel.com>
 To: Ryan Chen <ryan_chen@aspeedtech.com>, brendan.higgins@linux.dev,
 	benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
@@ -72,7 +72,7 @@ To: Ryan Chen <ryan_chen@aspeedtech.com>, brendan.higgins@linux.dev,
 	linux-kernel@vger.kernel.org
 Subject: Re: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register
  mode driver
-Message-ID: <202410051547.vOL3qMOc-lkp@intel.com>
+Message-ID: <202410051759.bRIS387l-lkp@intel.com>
 References: <20241002070213.1165263-3-ryan_chen@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -93,7 +93,7 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: oe-kbuild-all@lists.linux.dev
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
@@ -111,33 +111,30 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Ryan-Chen/dt-bindings-i2c
 base:   v6.11
 patch link:    https://lore.kernel.org/r/20241002070213.1165263-3-ryan_chen%40aspeedtech.com
 patch subject: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register mode driver
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20241005/202410051547.vOL3qMOc-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241005/202410051547.vOL3qMOc-lkp@intel.com/reproduce)
+config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20241005/202410051759.bRIS387l-lkp@intel.com/config)
+compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241005/202410051759.bRIS387l-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410051547.vOL3qMOc-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410051759.bRIS387l-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
-   drivers/i2c/busses/i2c-ast2600.c: In function 'ast2600_i2c_setup_buff_tx':
->> drivers/i2c/busses/i2c-ast2600.c:437:41: error: implicit declaration of function 'get_unaligned_le16'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+>> drivers/i2c/busses/i2c-ast2600.c:437:6: error: call to undeclared function 'get_unaligned_le16'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
      437 |                                         get_unaligned_le16(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^~~~~~~~~~~~~~~~~~
-         |                                         get_unalign_ctl
->> drivers/i2c/busses/i2c-ast2600.c:441:41: error: implicit declaration of function 'get_unaligned_le24'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+         |                                         ^
+>> drivers/i2c/busses/i2c-ast2600.c:441:6: error: call to undeclared function 'get_unaligned_le24'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
      441 |                                         get_unaligned_le24(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^~~~~~~~~~~~~~~~~~
-         |                                         get_unalign_ctl
->> drivers/i2c/busses/i2c-ast2600.c:445:41: error: implicit declaration of function 'get_unaligned_le32'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+         |                                         ^
+>> drivers/i2c/busses/i2c-ast2600.c:445:6: error: call to undeclared function 'get_unaligned_le32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
      445 |                                         get_unaligned_le32(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^~~~~~~~~~~~~~~~~~
-         |                                         get_unalign_ctl
+         |                                         ^
+   3 errors generated.
 
 
-vim +437 drivers/i2c/busses/i2c-ast2600.c
+vim +/get_unaligned_le16 +437 drivers/i2c/busses/i2c-ast2600.c
 
    405	
    406	static int ast2600_i2c_setup_buff_tx(u32 cmd, struct ast2600_i2c_bus *i2c_bus)
