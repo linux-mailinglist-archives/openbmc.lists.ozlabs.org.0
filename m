@@ -2,85 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43B3D9915A3
-	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 12:02:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A0F3992338
+	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2024 05:53:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XLLYq46VRz3c3x
-	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2024 20:02:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XMQGm54spz3c01
+	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2024 14:53:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.16
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728122540;
-	cv=none; b=oV7PY90qI/WlXWDBVA5LevzosSURZqhgTI2/XIF/1vhy+V/LAC9dyr2meZHawr9eGwueW6D+gmpbnc1wz15OzK2saP37rPyetIWK6+b6vnuT0Bdfe0Ost2VWrd1ERB8y+JsuA36ASSVB0OFoN+lHl9PbtxpmOltxQRRWZ4AnmdGJtafAGVs7z+4V4RhFMh12zpaY6hwO6UZh8xrjK/xWLMBHzoYnBUsukbeVQVRtLUgr6Mvnb7/FxKwiTgLDfQbHPHvd+jz3hpjnaT4EyfR9iWGjwwcUvmysDh3PXRwmbgGsrFZszZtovAlLuFSjXOwrRpD+/VpcqfgLUKDUY4id+w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728273178;
+	cv=none; b=or5XDY6kr2OtXwhj6YyG5klG4IhSXUCUGaZ+MDmujpyiZeY7jGBE2/OxEfTbUt7bdcal3baka9zucyxH5uscwW3Nz5vCBkDUA/JD/LquO+qGJwS7FHf9GY2x9YY+nWqrOb2eWFEdDAHnMeDRqHYUVXxp8dg3LOSO4sA57Yphb09zlJUCHVLZ5uuTTTykEVVRWZHQ/McRKu+B3YUKXGCyI3srL4D1Dyjl6iWpR1bGYWO+1J1JV7uDosh1A8xXD5rpsPu4/2TixfLLuNRBuNcQJNPmur9Mff2umE19vJEwPtpK2zqGlAB6dJknSOqoEcBaErH7tld1ZUmNXj4drZi4Zg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1728122540; c=relaxed/relaxed;
-	bh=8+uCBuz8TgxlE76ehikGDkBzb24ZPACcaJkYOutgSLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kD6K7ugSO5qgwcghc00p/n2lrmZT4HRMscRdc5EdcrzseowzvRBC/Su2HZ+WoJ3FqL19FeMk+hKX2gZiaNHU4wEo6SMCwhFVYr2dSDnIvvu7r+YYl/6DxkR2fUP3OgTloYJtQgYctEbq7J8cxu0z0TKLx1aDBD2ZL+kooWqjHwICd1187Zq8hUG3iEqUfhmLvq4yePBavntvTnwzq8mT/GrxRSWLI7ACp8fUlgFFPKmLGyK8Bg43EawpY7spcWzOSDZAV+JnKbq7DupCcDV9wRrbKvp+6ylWlwWoZgVf/+IuCK90UR9rVCwirXhmO2GUtdKvIGuqE0XZf3wysVVS8w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ktXqArpv; dkim-atps=neutral; spf=pass (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ktXqArpv;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Sat, 05 Oct 2024 20:02:19 AEST
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	t=1728273178; c=relaxed/relaxed;
+	bh=gh+MveeZS/E4hKAqL6tUfapcuHFyVuMf2axmhS4kGIo=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n01kaIswVWFhxRfZ1DVGh6d7HXfGV28BsSAYNX1I8yyYfLWwUHiYIdLxKdNgAbs9wxvSJSqPp72tWi2uGQ7biG3KiVT7UBy9EQ9hhJot0cuglduESaHED+YiMicMvAKMnactEP7yBxT6gZj6GrG4Vy+G7y9E/6oSdRE2IdWhltiH3OjUqpvBPlJsbB5wz3FHlBfjgDeS9ic99Cq/i0GlT0WFY2j5Rw7YwN/bsJQ7fKdpCKgRN1XH8KyKLK0DRIYOkjJeQXBQoKeb5DBLlyBeK4rlAOKrA4Yav21gfPVsUia0PCIMp9P5mWXGT+BUyXghZRkpYm4hWRYEs2zjRUb1mg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XLLYl3B4cz2yVD
-	for <openbmc@lists.ozlabs.org>; Sat,  5 Oct 2024 20:02:18 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728122540; x=1759658540;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AS66JIPtXx2sZQ/smwiZJMTI3t0JMMag9/KeDzC1/38=;
-  b=ktXqArpvpMd1U7uGt3UK0FlSJSnvfPgEFaDE0jAMKmmD4UThOCQFbRMv
-   RrqLJrsIBYdZFbbDGBYTKbRGZeu2nJmuYrAdergYovCuWOyRJMxSDaAZ1
-   ihwXqpZwTUH7Dos14M/SY9/mQO4+x8wPjKxunyvWmFVgXzAAFxIBR4IG6
-   adOBMHmVGdu7t6tLrZw4AiHL4GpLGE3cXRNi1MD5AKz3tmULbdo+tNWW8
-   dv8MCrzWQE4kEaxp4pDuBegasWBxpjdk3Wzemlwde3fPgNfu4PQstGWCK
-   UvNSDQk6YFPyg/AR6xOmB1OoU/HGi5mpqowON+qn3H6CPE8SlAyytFroz
-   Q==;
-X-CSE-ConnectionGUID: bRRYtfNrQQS8HGMsp9vgJw==
-X-CSE-MsgGUID: ZVrCXLOOS8G1PFxoQEYSSw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11215"; a="27426136"
-X-IronPort-AV: E=Sophos;i="6.11,180,1725346800"; 
-   d="scan'208";a="27426136"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2024 03:01:10 -0700
-X-CSE-ConnectionGUID: qc9AevAoQe6hbVVwa7kNtw==
-X-CSE-MsgGUID: gqkgz86BSNeOu8NTBwAbZw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,180,1725346800"; 
-   d="scan'208";a="105707403"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 05 Oct 2024 03:01:05 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sx1ax-0002ps-0H;
-	Sat, 05 Oct 2024 10:01:03 +0000
-Date: Sat, 5 Oct 2024 18:00:52 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>, brendan.higgins@linux.dev,
-	benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andrew@codeconstruct.com.au, p.zabel@pengutronix.de,
-	andriy.shevchenko@linux.intel.com, linux-i2c@vger.kernel.org,
-	openbmc@lists.ozlabs.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register
- mode driver
-Message-ID: <202410051759.bRIS387l-lkp@intel.com>
-References: <20241002070213.1165263-3-ryan_chen@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XMQGc6qrYz2xWt;
+	Mon,  7 Oct 2024 14:52:54 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 7 Oct
+ 2024 11:52:35 +0800
+Received: from twmbx02.aspeed.com (192.168.10.152) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 7 Oct 2024 11:52:35 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: <brendan.higgins@linux.dev>, <benh@kernel.crashing.org>, <joel@jms.id.au>,
+	<andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <andrew@codeconstruct.com.au>,
+	<p.zabel@pengutronix.de>, <andriy.shevchenko@linux.intel.com>,
+	<linux-i2c@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+	<ryan_chen@aspeedtech.com>
+Subject: [PATCH v15 0/3] Add ASPEED AST2600 I2Cv2 controller driver
+Date: Mon, 7 Oct 2024 11:52:32 +0800
+Message-ID: <20241007035235.2254138-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241002070213.1165263-3-ryan_chen@aspeedtech.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -93,104 +61,249 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ryan,
+This series add AST2600 i2cv2 new register set driver. The i2cv2 driver
+is new register set that have new clock divider option for more flexiable
+generation. And also have separate i2c controller and target register
+set for control, patch #2 is i2c controller driver only, patch #3 is add
+i2c target mode driver.
 
-kernel test robot noticed the following build errors:
+The legacy register layout is mix controller/target register control
+together. The following is add more detail description about new register
+layout. And new feature set add for register.
 
-[auto build test ERROR on v6.11]
-[cannot apply to andi-shyti/i2c/i2c-host v6.12-rc1 linus/master next-20241004]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+-Add new clock divider option for more flexible and accurate clock rate
+generation -Add tCKHighMin timing to guarantee SCL high pulse width.
+-Add support dual pool buffer mode, split 32 bytes pool buffer of each
+device into 2 x 16 bytes for Tx and Rx individually.
+-Increase DMA buffer size to 4096 bytes and support byte alignment.
+-Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
+-Re-define registers for separating controller and target mode control.
+-Support 4 individual DMA buffers for controller Tx and Rx,
+target Tx and Rx.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ryan-Chen/dt-bindings-i2c-aspeed-support-for-AST2600-i2cv2/20241002-150410
-base:   v6.11
-patch link:    https://lore.kernel.org/r/20241002070213.1165263-3-ryan_chen%40aspeedtech.com
-patch subject: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register mode driver
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20241005/202410051759.bRIS387l-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241005/202410051759.bRIS387l-lkp@intel.com/reproduce)
+And following is new register set for package transfer sequence.
+-New Master operation mode:
+ S -> Aw -> P
+ S -> Aw -> TxD -> P
+ S -> Ar -> RxD -> P
+ S -> Aw -> RxD -> Sr -> Ar -> TxD -> P
+-Bus SDA lock auto-release capability for new controller DMA command mode.
+-Bus auto timeout for new controller/target DMA mode.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410051759.bRIS387l-lkp@intel.com/
+The following is two versus register layout.
+Old:
+{I2CD00}: Function Control Register
+{I2CD04}: Clock and AC Timing Control Register
+{I2CD08}: Clock and AC Timing Control Register
+{I2CD0C}: Interrupt Control Register
+{I2CD10}: Interrupt Status Register
+{I2CD14}: Command/Status Register
+{I2CD18}: Slave Device Address Register
+{I2CD1C}: Pool Buffer Control Register
+{I2CD20}: Transmit/Receive Byte Buffer Register
+{I2CD24}: DMA Mode Buffer Address Register
+{I2CD28}: DMA Transfer Length Register
+{I2CD2C}: Original DMA Mode Buffer Address Setting
+{I2CD30}: Original DMA Transfer Length Setting and Final Status
 
-All errors (new ones prefixed by >>):
+New Register mode
+{I2CC00}: Master/Slave Function Control Register
+{I2CC04}: Master/Slave Clock and AC Timing Control Register
+{I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
+{I2CC0C}: Master/Slave Pool Buffer Control Register
+{I2CM10}: Master Interrupt Control Register
+{I2CM14}: Master Interrupt Status Register
+{I2CM18}: Master Command/Status Register
+{I2CM1C}: Master DMA Buffer Length Register
+{I2CS20}: Slave~ Interrupt Control Register
+{I2CS24}: Slave~ Interrupt Status Register
+{I2CS28}: Slave~ Command/Status Register
+{I2CS2C}: Slave~ DMA Buffer Length Register
+{I2CM30}: Master DMA Mode Tx Buffer Base Address
+{I2CM34}: Master DMA Mode Rx Buffer Base Address
+{I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
+{I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
+{I2CS40}: Slave Device Address Register
+{I2CM48}: Master DMA Length Status Register
+{I2CS4C}: Slave  DMA Length Status Register
+{I2CC50}: Current DMA Operating Address Status
+{I2CC54}: Current DMA Operating Length  Status
 
->> drivers/i2c/busses/i2c-ast2600.c:437:6: error: call to undeclared function 'get_unaligned_le16'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     437 |                                         get_unaligned_le16(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^
->> drivers/i2c/busses/i2c-ast2600.c:441:6: error: call to undeclared function 'get_unaligned_le24'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     441 |                                         get_unaligned_le24(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^
->> drivers/i2c/busses/i2c-ast2600.c:445:6: error: call to undeclared function 'get_unaligned_le32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     445 |                                         get_unaligned_le32(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-         |                                         ^
-   3 errors generated.
+aspeed,global-regs:
+This global register is needed, global register is setting for
+new clock divide control, and new register set control.
 
+ASPEED SOC chip is server product, i2c bus may have fingerprint
+connect to another board. And also support hotplug.
+The following is board-specific design example.
+Board A                                       Board B
+-------------------------                     ------------------------
+|i2c bus#1(controller/target)<=fingerprint=>i2c bus#x (controller/target)|
+|i2c bus#2(controller)-> tmp i2c device |     |                          |
+|i2c bus#3(controller)-> adc i2c device |     |                          |
+-------------------------                     ------------------------
 
-vim +/get_unaligned_le16 +437 drivers/i2c/busses/i2c-ast2600.c
+i2c-scl-clk-low-timeout-us:
+For example I2C controller as slave mode, and suddenly disconnected.
+Slave state machine will keep waiting for controller clock in for rx/tx
+transmit. So it need timeout setting to enable timeout unlock controller
+state. And in another side. In Master side also need avoid suddenly
+slave miss(un-plug), Master will timeout and release the SDA/SCL.
 
-   405	
-   406	static int ast2600_i2c_setup_buff_tx(u32 cmd, struct ast2600_i2c_bus *i2c_bus)
-   407	{
-   408		struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
-   409		u32 wbuf_dword;
-   410		int xfer_len;
-   411		int i;
-   412	
-   413		cmd |= AST2600_I2CM_PKT_EN;
-   414		xfer_len = msg->len - i2c_bus->master_xfer_cnt;
-   415		if (xfer_len > i2c_bus->buf_size)
-   416			xfer_len = i2c_bus->buf_size;
-   417		else if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
-   418			cmd |= AST2600_I2CM_STOP_CMD;
-   419	
-   420		if (cmd & AST2600_I2CM_START_CMD)
-   421			cmd |= AST2600_I2CM_PKT_ADDR(msg->addr);
-   422	
-   423		if (xfer_len) {
-   424			cmd |= AST2600_I2CM_TX_BUFF_EN | AST2600_I2CM_TX_CMD;
-   425			/*
-   426			 * The controller's buffer register supports dword writes only.
-   427			 * Therefore, write dwords to the buffer register in a 4-byte aligned,
-   428			 * and write the remaining unaligned data at the end.
-   429			 */
-   430			for (i = 0; i < xfer_len; i += 4) {
-   431				switch (min(xfer_len - i, 4) % 4) {
-   432				case 1:
-   433					wbuf_dword = msg->buf[i2c_bus->master_xfer_cnt + i];
-   434					break;
-   435				case 2:
-   436					wbuf_dword =
- > 437						get_unaligned_le16(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-   438					break;
-   439				case 3:
-   440					wbuf_dword =
- > 441						get_unaligned_le24(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-   442					break;
-   443				default:
-   444					wbuf_dword =
- > 445						get_unaligned_le32(&msg->buf[i2c_bus->master_xfer_cnt + i]);
-   446					break;
-   447				}
-   448				writel(wbuf_dword, i2c_bus->buf_base + i);
-   449			}
-   450			writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
-   451			       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
-   452		}
-   453	
-   454		writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
-   455	
-   456		return 0;
-   457	}
-   458	
+aspeed,enable-dma:
+For example The bus#1 have trunk data needed for transfer,
+it can enable bus dma mode transfer, it can reduce cpu utilized.
+Others bus bus#2/3 use defautl buffer mode.
+
+v15:
+-i2c-ast2600.c
+ -add include unaligned.h
+ -rename all master -> controller, slave -> target.
+ -keep multi-master to align property.
+ -remove no used element in ast2600_i2c_bus.
+v14:
+-aspeed,i2c.yaml
+ -v13 change people reviewed-by tag, v14 fixed to original people tag,
+modify to Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ -struct ast2600_i2c_bus layout optimal.
+ -ast2600_select_i2c_clock refine.
+ -ast2600_i2c_recover_bus overridden fix.
+ -dma_mapping_error() returned error code shadowed modify.
+ -buffer register in a 4-byte aligned simplified
+ -remove smbus alert
+
+v13:
+ -separate i2c master and slave driver to be two patchs.
+ -modify include header list, add bits.h include. remove of*.h
+ -modify (((x) >> 24) & GENMASK(5, 0)) to (((x) & GENMASK(29, 24)) >> 24)
+ -modify ast2600_select_i2c_clock function implement.
+ -modify ast2600_i2c_recover_bus function u32 claim to
+u32 state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+
+v12:
+-aspeed,i2c.yaml
+ -add Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+-i2c-ast2600.c
+ -update include by alphabetical order
+ -make just a one TAB and put the last two lines on the single one
+ -remove no used timing_table structre
+ -remove enum explicit assinment
+ -rewritten to avoid this and using loop in ast2600_select_i2c_clock
+ -use GENMASK for most 0xffff
+ -remove too many parentheses
+ -use str_read_write replace read write string
+ -remove redundant blank line after ast2600_i2c_bus_of_table
+ -fix wrong multi-line style of the comment
+ -use macro for i2c standard speeds
+ -remove useless noise dev_info
+
+v11:
+-aspeed,i2c.yaml
+ -no change, the same with v10.
+-i2c-ast2600.c
+ -modify alert_enable from int -> boolean.
+ -modify dbg string recovery -> recover.
+ -remove no need to init 0.
+ -remove new line after break.
+ -remove unneeded empty line.
+ -modify dma_alloc_coherent to dmam_alloc_coherent
+ -modify probe nomem return dev_err_probe
+ -modify i2c_add_adapter to devm_i2c_adapter
+ -modify checkpatch: Alignment should match open parenthesis
+ -modify checkpatch: braces {} should be used on all arms of this statement
+ -modify checkpatch: Unbalanced braces around else statement
+
+v10:
+-aspeed,i2c.yaml
+ -move unevaluatedProperties after allOf.
+ -remove extra one blank line.
+-i2c-ast2600.c
+ -no change, the same with v8.
+
+v9:
+-aspeed,i2c.yaml
+ -backoff to v7.
+  -no fix typo in maintainer's name and email. this would be another patch.
+  -no remove address-cells, size-cells, this would be another patch.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -no change, the same with v8
+
+v8:
+-aspeed,i2c.yaml
+ -modify commit message.
+  -Fix typo in maintainer's name and email.
+ -remove address-cells, size-cells.
+-i2c-ast2600.c
+ -move "i2c timeout counter" comment description before property_read.
+ -remove redundant code "return ret" in probe end.
+
+v7:
+-aspeed,i2c.yaml
+ -Update ASPEED I2C maintainers email.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -remove aspeed,xfer-mode instead of aspeed,enable-dma mode. buffer mode
+is default.
+ -remove aspeed,timeout instead of i2c-scl-clk-low-timeout-us for
+timeout setting.
+
+v6:
+-remove aspeed,i2cv2.yaml, merge to aspeed,i2c.yaml -add support for
+ i2cv2 properites.
+-i2c-ast2600.c
+ -fix ast2600_i2c_remove ordering.
+ -remove ast2600_i2c_probe goto labels, and add dev_err_probe -remove
+  redundant deb_dbg debug message.
+ -rename gr_regmap -> global_regs
+
+v5:
+-remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+-i2c-ast2600.c
+ -remove legacy clock divide, all go for new clock divide.
+ -remove duplicated read isr.
+ -remove no used driver match
+ -fix probe return for each labels return.
+ -global use mfd driver, driver use phandle to regmap read/write.
+-rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml -remove bus-frequency.
+-add required aspeed,gr
+-add timeout, byte-mode, buff-mode properites.
+
+v4:
+-fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+ master slave mode both enable.
+-fix kmemleak issue when use dma mode.
+-fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+-fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+-fix i2c global clock divide default value.
+-remove i2c slave no used dev_dbg info.
+
+v2:
+-add i2c global ymal file commit.
+-rename file name from new to ast2600.
+ aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+ aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+ i2c-new-aspeed.c -> i2c-ast2600.c
+-rename all driver function name to ast2600.
+Ryan Chen (3):
+  dt-bindings: i2c: aspeed: support for AST2600-i2cv2
+  i2c: aspeed: support AST2600 i2c new register mode driver
+  i2c: aspeed: support AST2600 i2c new register target mode driver
+
+ .../devicetree/bindings/i2c/aspeed,i2c.yaml   |   51 +-
+ drivers/i2c/busses/Kconfig                    |   11 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-ast2600.c              | 1553 +++++++++++++++++
+ 4 files changed, 1613 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
