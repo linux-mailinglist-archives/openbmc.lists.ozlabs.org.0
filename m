@@ -1,144 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C9319973CA
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2024 19:52:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0D369987F5
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2024 15:40:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XP0pB59NFz3c3g
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2024 04:52:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XPW9H6V9Kz3cNq
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2024 00:40:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c105::1" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728496335;
-	cv=pass; b=m6YKETXk4agEVjSO/3GNOdg58Sts+shFwI3cFV0OpbRb9Vh7WDbeSpBizFRNSUdKb8ZrFCX1f3pzL1yJLTHcdIAuzGePZIx34Jn87JDsgXxZFtRlu6ZO+6uLS2OYdmBF2pilMmlndGhKD89AdNbvMEy9w03ziBSkdjFbqKIWanCnw7xuVwcKBNvjzgtLI0DT1jzKzIsFMg6cqPFRuRuXAjDO1deNJYyfM3y+BwxkhALOS2bbQwCIVJj1WPfaf6zJVmJpEGhCp9WSX6Wv53ihR+IUKMVFjVtGu9XmLvs/jWhP4V12hVyjTeC3J1XTRoEGoYMD++dtF6S/AdNY8Ly9xg==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1728496335; c=relaxed/relaxed;
-	bh=O13M/Yk4iobw6dk8zoKwoWa0/33zsiIXR20yhJ4QYho=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=b6a6g1BMxUt7xM9WBXlmA2geHeWiGve5AJIjBfxrw3VjspBKX9SeXLN4CfOmUSSl9FjkvnP1P9DPWql3yHdQOCoIs+EzaLfEAdeTP5nFaszcJt+DpA2Fry/WkC/+mn/650KMcGWEZTsG7nGVGWp8cZX2KVCwPo0UK0TQto/S+j8VqWU40bSi8SWmpjLXvCsYE9coA47FNyJ3iW/3qdh+d3m3t2ogFFMevG+dgqIkMdf4jx0ck+WFSvybKrFPEGdmUCsPnqOF/VHBEsF7D7z0C9advLVNSDZm+2pv9k8f4p0G/lR5NGeEvBPSj4uyRJYPRQHmPe/ElWMmAT3IMQvgSg==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=smartm.com; dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=HNTfk19a; dkim-atps=neutral; spf=permerror (client-ip=2a01:111:f403:c105::1; helo=ch1pr05cu001.outbound.protection.outlook.com; envelope-from=rajesh.ananth@smartm.com; receiver=lists.ozlabs.org) smtp.mailfrom=smartm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=smartm.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.9
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728567632;
+	cv=none; b=BFFmLBYP7uzc/eELvXMUr9uP0Yhc/4J+3g0LRnKskG3/7KOuXar+WbcW4Abn+5str+ssOmhgOlwPLOHuJK3Q8Btv0pwGILSQjNVyqGOO5knvNHa7s78ARg1BEHfsb2a1hS1trVPZYsIxh62s3X5AWe0IOPWAB6GIT9/RM1v91R3OW0zqQ4fmsWo2aaBQeyf158FabO1SmMICEfUrT3UHkZ6sCiHEo/0mSF78q4WDDGpvYB9Vb3PqBOwRp1nWJdSFxfYznl1M59D9LdrFkjIJ9Ke5F3YDeumAr0tEeqEtIDf1zmKxonqTBlyyhJ3AOX4wdc4kdtZm4aM80MMniIkHWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1728567632; c=relaxed/relaxed;
+	bh=yURt0B4WjxE0mMEo4JtzJb1U8wpbNcr0VdmeKOsgGtE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z+Pd7RcTymb2hleMZsfa7WOrPNMV5BDD6gQE55CnOvD/jMvjLOswgoDTJK25Na8usCcCb+YiSJl1zHPowG+HB1CKUA2uRxVH4BUn7Jprwt0boA4s1xku4VC23JUottP0aVuOdnP2+7PTJvlVusKteBcqwGfI6e/8dz4vpO4jnvyOA7Yr43s7UaurbUxJgk2Ge3B1aCKxAAsQEuS9ap6avN7C2V+el7UFGIfhupBRvqyZtF/H4zoZdKu+FEcimf6EIxxlXSSEalk0FywndFNgVWSdXVZ52TgI6gEKwkJJtGSeT6IfcQqrViVBXW5QtjFcPRh5CUs+pDIdu2ryP58qtw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=AjIPpctq; dkim-atps=neutral; spf=none (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=smartm.com header.i=@smartm.com header.a=rsa-sha256 header.s=selector1 header.b=HNTfk19a;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=AjIPpctq;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=permerror (SPF Permanent Error: Void lookup limit of 2 exceeded) smtp.mailfrom=smartm.com (client-ip=2a01:111:f403:c105::1; helo=ch1pr05cu001.outbound.protection.outlook.com; envelope-from=rajesh.ananth@smartm.com; receiver=lists.ozlabs.org)
-Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazlp170100001.outbound.protection.outlook.com [IPv6:2a01:111:f403:c105::1])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XP0p174Z1z2yRC
-	for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2024 04:52:06 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s6iz3/AApE7pbz9iasndttc+9FpKVp8VIvnGoIOlhIVougeOY8ZudF6rZOrE+Pb8k59o5I2TMwryCIteYLXWf7/p+80Tcy92yNzX9UJ8kkYGYHZ1oVOdQUHAy1FQQ8I9mWtjtf1AuXqu/FYmt+caxwYlD7HKLcqbz/mORUh4pAT9+HU55wEQZMuLImhbQ5isyVNFvgg4fgyFX/W1uKcbagcToafOL85C4djUX/VMT5blVoHUyKg4D+yjmWWyOynN/Z2NlPL+4NYU85wBq2OLI/pD0RVdsX2N9BaI+msJfWPHrQ+YSVVOqFPtcAQi2i2eXOMeO1yqhEweOwYeui30MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O13M/Yk4iobw6dk8zoKwoWa0/33zsiIXR20yhJ4QYho=;
- b=NJDG/CsqB74lSb6T/vv8/XGQip+NQCJIFh3gKAP76YAKnk6LYXcBws6/FZmAbC9ImGadp3i0DHLYY0Q+QVwkT101+IXj7V78nKF1RDbpPq+EpWTHrjfQPaRPvourGaTB8Zwu875y6QaiB99vdY9RGQx2YBaaEJLxxwEWxC5yXvNRUNerYrIf6H6sj1vcYNoC/RdYIIwmsX2X/skTCSqoL97H4GwpQnAiwyKsXLjgO62i31QXs1t96ELgDZrdSDgNoxtZFa32QVyI3GEekrtYmZzD/5eoITAa5qUy6StDoAHlh5WfuVTRqMgmC7PKm7+fRoxaEFWkgcJSbwdui9F/MQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=smartm.com; dmarc=pass action=none header.from=smartm.com;
- dkim=pass header.d=smartm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smartm.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O13M/Yk4iobw6dk8zoKwoWa0/33zsiIXR20yhJ4QYho=;
- b=HNTfk19aSHvExKQv8tfLAtAUIoe8wf1L+zDrKA0Lskf6oReInDjvFpO6pYuiZoCEgjthGDWIg7jJBuqsQaCY26+W1b+H+JEMcqbyRtKFMejCYmwXLmUkoGOK6XUrIrUwB0bOPeuFz+cuW8+pZbryhfHZVAY07cbpNe9WyROpLGxmrJ5F7B0MbPyxd5UOKWm/ZmrOz10wz586qaEnMRgMDlHAho9euqtF/5YIDEIZk8lV8KVy5MwjdrGPKb7PloKREQeH9MOYQapUEo6DDePImYlFJc/1gAW7/N/F3OSxTYzTBV/ASmfoPW2Nlv7sjH/Ot3mJ0g83Xc9gOls8HWeO0A==
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com (2603:10b6:408:a7::27)
- by CH2PR04MB7110.namprd04.prod.outlook.com (2603:10b6:610:98::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.16; Wed, 9 Oct
- 2024 17:51:31 +0000
-Received: from BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3]) by BN8PR04MB5906.namprd04.prod.outlook.com
- ([fe80::15ff:a949:91cb:8bf3%6]) with mapi id 15.20.8026.020; Wed, 9 Oct 2024
- 17:51:31 +0000
-From: "Ananth, Rajesh" <rajesh.ananth@smartm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: OpenBMC validation kit
-Thread-Topic: OpenBMC validation kit
-Thread-Index: Adsac2AkK6xgrMlWTxObxKyubMCHrw==
-Date: Wed, 9 Oct 2024 17:51:31 +0000
-Message-ID:  <BN8PR04MB5906400DF066DEA14E17A7C7947F2@BN8PR04MB5906.namprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=smartm.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN8PR04MB5906:EE_|CH2PR04MB7110:EE_
-x-ms-office365-filtering-correlation-id: b75c8620-12bc-4cf8-9d66-08dce88b0217
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?TtB1m8/2Eep7FRgyyJv4KdUrP1PS7f756+hY2mBu6Jb8l5h25sC+S+efrY02?=
- =?us-ascii?Q?qFM9kABTBA02lTPjo8xkfPZUsLuhZz0Wvjso7m2Tz0Z3aV0A7VERDlwYE6h2?=
- =?us-ascii?Q?rMcDk28rJ4Lh/T1To+sKsX8CD1+8oBUj71eInzn2SJAB2tweoCbFH7TsIwHJ?=
- =?us-ascii?Q?edS9FLz6NpPpePsyaaovQwv6JI2rGPwJ09I8svnMVIsmcgXLLZDWlZu30q2k?=
- =?us-ascii?Q?c0BrBSsrOPjFtBgK4IL/JOmOqAlkCriht7hhxCzCbcXZ49yRAwKKkaihEeGP?=
- =?us-ascii?Q?gJvl0mkvp+qTmQal22NNKoBRvcZ3F1WyMCyNukE788aSqAsHqrP/YC38n5TR?=
- =?us-ascii?Q?4e9g9E8XJ8ue2Cw6wIcxfBWTdJaVs9/JH2cpnGFQGbQ4TgAZpfxlOtRybRih?=
- =?us-ascii?Q?KSBf+pvTFClrcBFAFKOHHvlR6BgynHbW5FLXSPOV9jsRlpRM1kQikBI8etHE?=
- =?us-ascii?Q?jy1O8yRRFc4qXHeopsLcRLHBBUz1hvalR0JOvXwf/8IKSRevJIdgs1JEEFs8?=
- =?us-ascii?Q?+CVrndb8bOptP/0zjH0GNAapyOkB8T3/+B6E9FQhu1NIhwhgyOcXk0UFgfCR?=
- =?us-ascii?Q?PKirszVEg0VwLsi5SUAfvCbbvR5ryHJsuZPOHAeaxdzlWfagxxyQWakb7TLf?=
- =?us-ascii?Q?eahgL8pyZI4bHEMSOOzVvnTFaj3LzxaCTrTvV3M8CBQDVO45BanROpuMgEK/?=
- =?us-ascii?Q?2nut5lw8y3ttGCj65z0BXFx7/LhCHMch+3pnq0XCoOnbCA28l35PVNhVR2jr?=
- =?us-ascii?Q?TCthv8bgkff3cojwXLEf2pSMr8J1je36Brq3AGy5AADkY2fq5JJf4tTpBYGh?=
- =?us-ascii?Q?+Ausbi08Zhv08jqZdgczakOnf8hmdXmAW6gr38C6mtMYIIuQ1t5lxjEHguZt?=
- =?us-ascii?Q?Qv9RQtGwzaoKGyfDBvLBfn/mBoPsczLtnEwpcDoWdKOu+kzt3iXvr357V2WL?=
- =?us-ascii?Q?WzlKAiX+FdwbDlJJ3FCvmUnF1AwzYW9PgYDLonVzlBFid1QIdAZbBs3EpG8W?=
- =?us-ascii?Q?rahDCMlTxlR5txEmXgzECS9MXFOXkxlJIn2aFQzJDJP/F26r1WnZIM3XL7Jy?=
- =?us-ascii?Q?tfy2w9idLA/ILNzPlepgw36MBVLolBtJJc6K1xy62gdj2OJXs/Jbz3RHmgVt?=
- =?us-ascii?Q?GVtdDEkGvWW91KJ+JqQ7I50tS/u7RoDJ3M0ROkLT15TD5/Be9U3PNcWi0LtV?=
- =?us-ascii?Q?S4qbk84MPuG+We8kKofUW8nAiKVm+tvINxKd2b70hc3J9mTKtJYQso7dK775?=
- =?us-ascii?Q?luUwZFHolQyZAEFZ/e2VTcdbQnSTh05nQuBoyG7h2ziog5VIDJ2O7dH4glMc?=
- =?us-ascii?Q?0hGRMUFORDnbkFVL9kDXfsqOfDzcVaSWy/qe8GUP0I91nw=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR04MB5906.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?tCSXoFeltYOqXskIqQFsP53XwTV8lJZy4lCenMYU66SkcdrZUaraoDgiogXo?=
- =?us-ascii?Q?SVZkFI2cU48/xyvrjMvYXFmsleepGfc/RABggyYkAkn+h+cvsM1L1mIxosWT?=
- =?us-ascii?Q?fMHD6u3zCsMMLwkOx9k2PDwr35two1g1L73F0mvf/hP1N5rzeVewzM39/OWW?=
- =?us-ascii?Q?DCH6nUFXgzCMitdAhU2e3dwuBXi7309mdIfkEU4s8konJbKRpE2O9jhq88Kb?=
- =?us-ascii?Q?RczZMlUyZGiySYvTwU8cNUhcUJfFIkGzQ/ikJwPcgTyz37VkLZNqsJflYHLY?=
- =?us-ascii?Q?n0+Zy3ynRJhV5KEy06oXMmqkp0vbidofmyTlu3RQeRsmaqnhvRtG/m7rpg9o?=
- =?us-ascii?Q?87uCcAXqLHP5ZdNyFietktkOx8V1NS1dO9i9J57pm/ewbPpTi/t9ej0KLR8/?=
- =?us-ascii?Q?2sFvsF7LxpsKI6JHCZFvolATIcnKkJUmhH5MKBqi2HlBPKWxhN2rClfpK9VF?=
- =?us-ascii?Q?VvTezosJSDOunnAO+mU0zzJQemyg3hvpihjgdfh08nVjvuHRVfvLvWQULGwf?=
- =?us-ascii?Q?tfgWYBxm0tjCgawNpNB/NvaLXHFrhDwDloTMUyWvJ/N+Ye3Ga6SmJ2eiDnMb?=
- =?us-ascii?Q?DAnFkCPfARlfuznNYC7t1RYmbBIMorZl/8sVNF2ef+ucgsDYl+1StPONjxmC?=
- =?us-ascii?Q?wNtaAi6MSV6knuS5XyeVZcjG5YxVXD7hnDNLqqpFDJMEijuP1DtZ7QdLcjTS?=
- =?us-ascii?Q?aHTzgsi+633E3KUi2rN19uQmpoH212Vd/Pq1KFxbNsj/AjyfmU6gMSpywdAP?=
- =?us-ascii?Q?CA28ZWIi4q8BH8AZ78JXLp4H7Yf37fSe9vsqqxbD0fONT1q0t9utcdI5aHa0?=
- =?us-ascii?Q?d0CoL2Ye9OdAp49JGVLWcTmCtbUAGvlxg4cd9NPpNhPyTfvMFL/i/2xct/hq?=
- =?us-ascii?Q?KhoKwLUJ4ojYRcH64qesRF0BX9flNgRetmtIt7AcQP+QjudOriuHU08r9CBr?=
- =?us-ascii?Q?qcP3SB8vsZKBO+NuKX9d1+6lMMRcKhBBuF3rZI0z0eP6RW6jPQ38iYB+kd63?=
- =?us-ascii?Q?FfNXZC9QhvsIhk2qD+EzTxS5OO9AxaDcDIj+AiXjIfz3UvckBKzPlDN8q+YR?=
- =?us-ascii?Q?oiuXfueVQjIPYSlWEYArTpyZQ2v4ChKJYiepAR1HvYGtL1Rl4An00cSdYo+N?=
- =?us-ascii?Q?H1kE3aU9L2fRYlF0eYp6Av/Hj1nNIgZzKhhT3NDS7k1+d9UUqhJiMH5IYWSc?=
- =?us-ascii?Q?yp7/BPaodFy1yVchEjnqBBeTEBPD5xpYamOnjjfZLPV8JSBCcvVMeXuEFp0a?=
- =?us-ascii?Q?D5JgqDTajAJa/0WMLnPB4llfIwJRlDxw0dLUehOIWhbnh1UYzkW20isICM6D?=
- =?us-ascii?Q?r5KdUqhShUwstDvrtBbMK2dtaGR/P/mZ7SRGscV+FycZNTJrgA5qi+yVQffQ?=
- =?us-ascii?Q?hwsC6cW8dDKOjzu3KFMLQ3VpI6wkvORLE0003wJ9CjQd4FpOCDdKJ15xT5EM?=
- =?us-ascii?Q?if+ZBAY+WpGcljTQAdWB6xBXyIBBhYMx2oYwtQU77YpwuDsFTIfkCwa6R0u6?=
- =?us-ascii?Q?FEgLJLBUbFBJRB36bXo4KLHHHAayadedEp5xeBB+FYqbHoHoZrcgIhZfUXOS?=
- =?us-ascii?Q?XK12bC0l4SxYNvE1ISLIp7u1KK4yDBRuRJfLTfG4?=
-Content-Type: multipart/alternative;
-	boundary="_000_BN8PR04MB5906400DF066DEA14E17A7C7947F2BN8PR04MB5906namp_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XPW983Npyz2ywR;
+	Fri, 11 Oct 2024 00:40:26 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1728567629; x=1760103629;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=sfahgSvO20tuszyXcjplQnhiPIH1X5txk1P6D/qzB7E=;
+  b=AjIPpctqn/q+hbuYEbfK7svWDYzsVFtLCTIMtvQa+SwNr7NYolo+X8JZ
+   GnvsBnGV0qgSQrgfk8Y81U+VvhAoPQkJ/alZRxlC9nDbauiMcj0GrfPO6
+   +rOIyoITNNXy1WEFjRJTalx2eYchtaHsMNPk3YfPxggT0rgxqChvpqyr6
+   KhfKk+nP/ekhbVQchgJB5ldgAiM5VWYk/9EnmJlSLd5wklL1qN7MsGQ2p
+   FL5ciCKBW/0VdafJOOpD532v7qkfQS+cMK0QNljcNlTsJbIdbJFksodwe
+   uveBxJ460Fuq7nuEWXGSQVDEDQpQaDtTLxH4wuhpgQ7tR32Fv9N9VfyZA
+   Q==;
+X-CSE-ConnectionGUID: a8JqgenpS2+9ZE8yPyrxNQ==
+X-CSE-MsgGUID: tXqbFc1oR6SaxAwL+CGiOA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11220"; a="50461097"
+X-IronPort-AV: E=Sophos;i="6.11,193,1725346800"; 
+   d="scan'208";a="50461097"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2024 06:40:23 -0700
+X-CSE-ConnectionGUID: 6qJ+jMC/SH249H8sQKl5+A==
+X-CSE-MsgGUID: wQZfN4DVSJqib9HV7c/yeQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,193,1725346800"; 
+   d="scan'208";a="76504990"
+Received: from smile.fi.intel.com ([10.237.72.154])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Oct 2024 06:40:20 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1sytOp-00000001Y6Z-3aj9;
+	Thu, 10 Oct 2024 16:40:15 +0300
+Date: Thu, 10 Oct 2024 16:40:15 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+Message-ID: <ZwfZP0LeqKobdbgK@smile.fi.intel.com>
+References: <20241002070213.1165263-3-ryan_chen@aspeedtech.com>
+ <202410051547.vOL3qMOc-lkp@intel.com>
 MIME-Version: 1.0
-X-OriginatorOrg: smartm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN8PR04MB5906.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b75c8620-12bc-4cf8-9d66-08dce88b0217
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2024 17:51:31.2622
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f0fd7909-cd13-4779-b0f9-5ced6b7a2c68
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nc6L9uAgt/qyZ5ru33wnYGoFXa+RvFQsRD7kXbQzgkqKauvpaTX6YaBdjNmyNrpfr3YuwZZWYHOcM4rU6ySUSrZw3n5JzovgKQRQ5/A4D7E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR04MB7110
-X-Spam-Status: No, score=0.8 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-	HTML_MESSAGE,SPF_HELO_PASS,T_SPF_PERMERROR autolearn=disabled
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202410051547.vOL3qMOc-lkp@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
 	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -152,207 +87,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: robh@kernel.org, conor+dt@kernel.org, Ryan Chen <ryan_chen@aspeedtech.com>, andi.shyti@kernel.org, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, brendan.higgins@linux.dev, joel@jms.id.au, p.zabel@pengutronix.de, oe-kbuild-all@lists.linux.dev, krzk+dt@kernel.org, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BN8PR04MB5906400DF066DEA14E17A7C7947F2BN8PR04MB5906namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+On Sat, Oct 05, 2024 at 03:36:16PM +0800, kernel test robot wrote:
+> Hi Ryan,
+> 
+> kernel test robot noticed the following build errors:
+> 
+> [auto build test ERROR on v6.11]
+> [cannot apply to andi-shyti/i2c/i2c-host v6.12-rc1 linus/master next-20241004]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Ryan-Chen/dt-bindings-i2c-aspeed-support-for-AST2600-i2cv2/20241002-150410
+> base:   v6.11
+> patch link:    https://lore.kernel.org/r/20241002070213.1165263-3-ryan_chen%40aspeedtech.com
+> patch subject: [PATCH v14 2/3] i2c: aspeed: support AST2600 i2c new register mode driver
+> config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20241005/202410051547.vOL3qMOc-lkp@intel.com/config)
+> compiler: sh4-linux-gcc (GCC) 14.1.0
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241005/202410051547.vOL3qMOc-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202410051547.vOL3qMOc-lkp@intel.com/
+> 
+> All errors (new ones prefixed by >>):
+> 
+>    drivers/i2c/busses/i2c-ast2600.c: In function 'ast2600_i2c_setup_buff_tx':
+> >> drivers/i2c/busses/i2c-ast2600.c:437:41: error: implicit declaration of function 'get_unaligned_le16'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+>      437 |                                         get_unaligned_le16(&msg->buf[i2c_bus->master_xfer_cnt + i]);
+>          |                                         ^~~~~~~~~~~~~~~~~~
+>          |                                         get_unalign_ctl
+> >> drivers/i2c/busses/i2c-ast2600.c:441:41: error: implicit declaration of function 'get_unaligned_le24'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+>      441 |                                         get_unaligned_le24(&msg->buf[i2c_bus->master_xfer_cnt + i]);
+>          |                                         ^~~~~~~~~~~~~~~~~~
+>          |                                         get_unalign_ctl
+> >> drivers/i2c/busses/i2c-ast2600.c:445:41: error: implicit declaration of function 'get_unaligned_le32'; did you mean 'get_unalign_ctl'? [-Wimplicit-function-declaration]
+>      445 |                                         get_unaligned_le32(&msg->buf[i2c_bus->master_xfer_cnt + i]);
+>          |                                         ^~~~~~~~~~~~~~~~~~
+>          |                                         get_unalign_ctl
 
-Hello,
+You need to add
+
+#include <asm/unaligned.h>
+
+_after_ other #include <linux/*.h> in the code.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-For our PCI-e CXL controller cards, we are looking for OpenBMC based soluti=
-ons that could give us MCTP over Smbus/Pci-e VDM, and the suite of PLDM and=
- SPDM tools for our product validation.
-Our PCI-e CXL controller card supports MCTP (over SMBus and PCI-e/VDM), PLD=
-M, and SPDM protocols. We are in need to set up a testing environment.
-
-We are in need of a OpenBMC kit/platform (preferably ASPEED based) that cou=
-ld be used for our validation purposes. The available ones we looked at do =
-not have the software stack we require, and we don't have any expertise in =
-building on our own.
-
-What we are looking for in the OpenBMC image for the kit:
-
-
-  1.  An integrated OpenBMC image that has the MCTP support to recognize ou=
-r CXL controllers over SMBus  and/or PCI-e VDM.
-  2.  An OpenBMC image that has the DMTF standard PLDM tools (pldmtool,  li=
-bpldm etc.,) to validate the PLDM functionality in our CXL controller card.
-  3.  PLDM Type-5 functionality to validate firmware update is our main req=
-uirement.
-  4.  An OpenBMC image that has the DMTF standard SPDM tools for security v=
-erification.
-
-Thanks,
-Rajesh
-
---_000_BN8PR04MB5906400DF066DEA14E17A7C7947F2BN8PR04MB5906namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@PMingLiU";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-@font-face
-	{font-family:-apple-system;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-language:EN-US;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p
-	{mso-style-priority:99;
-	mso-margin-top-alt:auto;
-	margin-right:0in;
-	mso-margin-bottom-alt:auto;
-	margin-left:0in;
-	font-size:12.0pt;
-	font-family:"PMingLiU",serif;
-	mso-fareast-language:ZH-TW;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:191769956;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1427634390 67698703 67698713 67698715 67698703 6769=
-8713 67698715 67698703 67698713 67698715;}
-@list l0:level1
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level2
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level3
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l0:level4
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level5
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level6
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l0:level7
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level8
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l0:level9
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hello,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p style=3D"mso-margin-top-alt:7.5pt;margin-right:0in;margin-bottom:0in;mar=
-gin-left:0in;margin-bottom:.0001pt;background:white">
-<span style=3D"font-size:10.5pt;font-family:-apple-system;color:#172B4D">Fo=
-r our PCI-e CXL controller cards, we are looking for OpenBMC based solution=
-s that could give us MCTP over Smbus/Pci-e VDM, and the suite of PLDM and S=
-PDM tools for our product validation.<o:p></o:p></span></p>
-<p class=3D"MsoNormal">Our PCI-e CXL controller card supports MCTP (over SM=
-Bus and PCI-e/VDM), PLDM, and SPDM protocols. We are in need to set up a te=
-sting environment.<o:p></o:p></p>
-<p style=3D"mso-margin-top-alt:7.5pt;margin-right:0in;margin-bottom:0in;mar=
-gin-left:0in;margin-bottom:.0001pt;background:white">
-<span style=3D"font-size:10.5pt;font-family:-apple-system;color:#172B4D">We=
- are in need of a OpenBMC kit/platform (preferably ASPEED based) that could=
- be used for our validation purposes. The available ones we looked at do no=
-t have the software stack we require,
- and we don&#8217;t have any expertise in building on our own.<o:p></o:p></=
-span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">What we are looking for in the OpenBMC image for the=
- kit:<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<ol style=3D"margin-top:0in" start=3D"1" type=3D"1">
-<li class=3D"MsoNormal" style=3D"mso-list:l0 level1 lfo1">An integrated Ope=
-nBMC image that has the MCTP support to recognize our CXL controllers over =
-SMBus&nbsp; and/or PCI-e VDM.
-<o:p></o:p></li><li class=3D"MsoNormal" style=3D"mso-list:l0 level1 lfo1">A=
-n OpenBMC image that has the DMTF standard PLDM tools (pldmtool,&nbsp; libp=
-ldm etc.,) to validate the PLDM functionality in our CXL controller card.
-<o:p></o:p></li><li class=3D"MsoNormal" style=3D"mso-list:l0 level1 lfo1">P=
-LDM Type-5 functionality to validate firmware update is our main requiremen=
-t.<o:p></o:p></li><li class=3D"MsoNormal" style=3D"mso-list:l0 level1 lfo1"=
->An OpenBMC image that has the DMTF standard SPDM tools for security verifi=
-cation.<o:p></o:p></li></ol>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Rajesh<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_BN8PR04MB5906400DF066DEA14E17A7C7947F2BN8PR04MB5906namp_--
