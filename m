@@ -2,78 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59F9099A23A
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2024 13:02:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DE4399A54E
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2024 15:45:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XQ3cc362lz3cTf
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2024 22:02:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XQ7D019ypz3cVj
+	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2024 00:45:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.14
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728644556;
-	cv=none; b=Tf7XDsWcHm5MPD8dpUOK2RbvnQdRFG0Y4xAQV+QdfKIX3MF9n/zxCbD7kQEG0X5a6sUsVQotlGG96MXso6fSANsNe1cmZimOp3exN4M02iNmmj3ZnI8rKzxPdbDRc1HNdbVfXHeJ1xwfQ8OFTT+4xlZugyZ/HrQw8RSFTFHIE0C/InjrPEQHPWLptb61yYPqP2Ft16mBVJ6PGT0E542eQJ84TFrnZj7u2uz18+shtgZnBEQ0aWIy4oXngLtU3JDFZw8DKnZiI/MiywShjvgTlOwqileD+kK4im4Ci7wGK4xqDjkxtQuklERRwynym0ugnNnfXcNgdCAlo8AhGGi/nA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::62b"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1728654300;
+	cv=none; b=mLyOknNUISCJsiHvhPDR+JZwFIoFqNOCfs4j2G5ELn8FkfyECDpNnwJzktW+LJVHCZgClyPhRjxzWxIwKk6BLzRVOmMAWnLWTRD5tFsidAA/Qp0Tt3sUNPreEYv+i1YrL2n7omk4T9Sx9C0TUb9ItmOyGtiH7L+y0Wp2Zue7Co2LFVDMrra/o2uyw/BgPbALBtrtw3fXwYL8aKS7YXf3K3gtZYyQ7AYATvlE/2L9u5OETfPc0dQYmW4svu8uUEpmWoI9EGYGFxlZux3wxtddVlAzGd5sjUoP4WiU6Z2S6eArQprFaGnNryooW0/qtlCiaMuFv/DLg9jochgvWOaPUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1728644556; c=relaxed/relaxed;
-	bh=Lm4Idxpm5Fjt1++DICt/89A1ro/70Nc1OvzFuKEEPls=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HnNSCmmckrO9TtbgxQO/NgxWVOmIv5FWr7fd90GYUmgsJJeuPp3VzmEGB9ckGczounNVSZMsF5A4H54ZRzIUOYQP8lgTHT9hKEszn9wxHF/AbdIfBsAyhmffEVcg1p3zq0lVtqdiMCLnW9NwYisGLpM1KgAkccl2DcBhyWEA7Mutw/8OMQkn3/Nh59N5HYLdpuKbTvu10KkHqaSMT9mC5zKvnwBKrOJ8cazRQ/h8I2IxGl8ws7i6p/m0piepUTgV59ayMOms6tJ74VFbCBBVl6yziioo6orcQf8aePLlT9muwOZacj9qW9JMyHl0kT6ZIIqG00v9YB5s33LYwxNFbA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PfKH2aTX; dkim-atps=neutral; spf=none (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1728654300; c=relaxed/relaxed;
+	bh=VFmcATx1odRBRodNNtT/YMf8Rdbu+ncYOjMaxBgaZqo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SXwsOZ06DkmKeXX8yHmJlO2Xug1LXOGhqLIna8meKKBQo5GPDQqvA6e1Cq+VtGZqiZm9vVunwMbuRtte487VJgtrPqY3TJQk3bNQvSe+wA7eR7tKRzTbzNuFdIdT72GKC17VA0exCIL/vHKD8Wnojrurq2LZ8NstXJSf7+oY11xLtXSbFhYBHCXdf9PrTjZ1f3TwNRP4IhceojkFe5UoKZz1XvYM9S0aMGJ0Zd4IYkBgzHDdO7RQEBT1jMBDR2I56iRggW3H31XNSH/vek1Pfd/uVqQE1Des8+JWldMGpafC/9NdgvoeH32F0J5ncvCjU3Na4u+CEhAhqqSDFSw89g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hjxcipzf; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PfKH2aTX;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hjxcipzf;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.14; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XQ3cV5sMMz3bxM
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2024 22:02:34 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728644555; x=1760180555;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=UncUJn9yZxkr9bOQkMsz4eQD82edd1qYiWUFWxGXe/I=;
-  b=PfKH2aTX0Nt3RxwlkSozI0FLIRhWk65PO4wQX+KDQbtZ3LIDL37Se3Gs
-   wlIVHdUCveEzKYQcSjcFX/HdPI+8V6BsOjKRPXWTzEK+gz46uq+eoKmCI
-   jxIa1iP2p70VtahhUjkri2oQlNwdROYxMbd5PwDi/PQKI6nxhqa6y3pI1
-   ELldxT9P4YCUsCOCHBdbXn67GSNx5zCxUu3CueMNQMp04GtkMC59DlBIy
-   FZe3gAx4vk5Z30dBrNSXqYUciAflt4V3Ol1/02rQLrpv3recv9ZCFMkVT
-   G/aNeODtWd5stkQYGbbcQJB/sr9qeAScijw0Ir44ZTTvTNJaOehm3+RCi
-   Q==;
-X-CSE-ConnectionGUID: BEhI3Za0QMOJvai5Knli6Q==
-X-CSE-MsgGUID: +A3KOeJMRSq8hbUUEpSJHQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11221"; a="31835431"
-X-IronPort-AV: E=Sophos;i="6.11,195,1725346800"; 
-   d="scan'208";a="31835431"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2024 04:02:32 -0700
-X-CSE-ConnectionGUID: fCD2AnhvRDyKVn8emBfNHQ==
-X-CSE-MsgGUID: ieOYz05aQXGx22OfgXaNkw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,195,1725346800"; 
-   d="scan'208";a="80889908"
-Received: from smile.fi.intel.com ([10.237.72.154])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2024 04:02:27 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1szDPc-00000001rrg-1ZFR;
-	Fri, 11 Oct 2024 14:02:24 +0300
-Date: Fri, 11 Oct 2024 14:02:24 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v6 4/4] i2c: npcm: Enable slave in eob interrupt
-Message-ID: <ZwkFwABviY8ClyUo@smile.fi.intel.com>
-References: <20241011055231.9826-1-kfting@nuvoton.com>
- <20241011055231.9826-5-kfting@nuvoton.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XQ7Ct4D9Vz3c0H
+	for <openbmc@lists.ozlabs.org>; Sat, 12 Oct 2024 00:44:56 +1100 (AEDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-a998a5ca499so290617966b.0
+        for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2024 06:44:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728654293; x=1729259093; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VFmcATx1odRBRodNNtT/YMf8Rdbu+ncYOjMaxBgaZqo=;
+        b=hjxcipzf/mJ6+haS4R2azoCLssXU+Qz+Ro8Z+YM5+w12Pwd8H2uQghdWJx+bKDjUpE
+         jD3IK7xjL0WvzhUjFXyRkATFHSIpla/tiv4KHARmDarZDxr+G2POiv5TK6ALhfjcvFzQ
+         lxFb9hCiuxtfv1xPkErfQ6LyLmWw0MwTFz+xTIXvvyTdZQaVtqtivwnOhYscdvgzduFe
+         feBw6zLcZ1mlhz0uOnj0Bm7ON8Qz54bz1Vs2lj5Nsok2fvFEjwfWIRTIYMnvYSVZHXQn
+         g0/qVD3fiuKAdiJ7/qleLCS8XKYwp0/eEs/NubRV71GhDLj7hIMCcqvq9q/PWCYACXJC
+         9HMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728654293; x=1729259093;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VFmcATx1odRBRodNNtT/YMf8Rdbu+ncYOjMaxBgaZqo=;
+        b=OgYDHob7b0S81ZXq8IaVMdIcyMJx2C3Y3NgC4otMwSnHl4/rN3um/6PWAtWNeDR+UZ
+         KA+ASISYUqUphfTrnDWQLcXSwDfWve3VB91Upy3iMbD+vaDmowfu2RozuH/Z8iJSkO1j
+         SNGYhhgW0PkvgehDgpcABOt7d3Sfw+YA08KaE3TCUnM6omw53qILgP3JZJ1+cRRz5EqV
+         B3k67XasDLtIqvT4mEbTNNueU4VtQl2wlPAkScSbdtFf9Z3BSKzyemn7G/qCRkbO1flB
+         /qhbZG5Di45luU9PIntu8ZAoV+o9HqL0CO6bV/vv2ZpD9doZDqIFeTM8X4BHQpN3Pyrp
+         gayA==
+X-Forwarded-Encrypted: i=1; AJvYcCU7vlQldJxtBsFt+eKi1OTxkywMMoVfHwWlK0PdtvHVl5dnRZ2/dtED3bWqvLcf2txY7QKSESHF@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Ywr2Cty+cx1XFu+qYc3xRWfDMGdjdt2WUDOX58iWHMF6rP/1Xm6
+	TQZ3L80hJE0YVf2iOZ4yHHT63GcB1oBAyCI1/Jf/jCGEeSwY9jZNtYDER40lItk5iUqkrk76h8f
+	/ham+3TY6U0F7btP/RRSvZnBX8A==
+X-Google-Smtp-Source: AGHT+IGDVt0dw5a0G5CT/lg3sbm+HcJzm8qRuJl8QBnUjs0jZTr5VLEwZcO2c6Bra3147lynUJXcW0UTD9RWKIUKq84=
+X-Received: by 2002:a17:907:94d2:b0:a93:d5d3:be4 with SMTP id
+ a640c23a62f3a-a99b93018f2mr214011066b.13.1728654293099; Fri, 11 Oct 2024
+ 06:44:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241011055231.9826-5-kfting@nuvoton.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-2.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
-	autolearn=disabled version=4.0.0
+References: <20241011055231.9826-1-kfting@nuvoton.com> <20241011055231.9826-3-kfting@nuvoton.com>
+ <ZwkFWVC3_5xr6OQW@smile.fi.intel.com>
+In-Reply-To: <ZwkFWVC3_5xr6OQW@smile.fi.intel.com>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Fri, 11 Oct 2024 21:44:42 +0800
+Message-ID: <CACD3sJY_79_VTe1EHPdh-1+FCBwb2KCW_N19==TMHAsrFL-rzg@mail.gmail.com>
+Subject: Re: [PATCH v6 2/4] i2c: npcm: Modify the client address assignment
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -86,37 +89,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, Charles Boyer <Charles.Boyer@fii-usa.com>, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, Vivekanand Veeracholan <vveerach@google.com>, rand.sec96@gmail.com, tmaimon77@gmail.com
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, tali.perry@nuvoton.com, tali.perry1@gmail.com, wsa@kernel.org, andi.shyti@kernel.org, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 11, 2024 at 01:52:31PM +0800, Tyrone Ting wrote:
-> From: Charles Boyer <Charles.Boyer@fii-usa.com>
-> 
-> Nuvoton slave enable was in user space API call master_xfer, so it is
-> subject to delays from the OS scheduler. If the BMC is not enabled for
-> slave mode in time for master to send response, then it will NAK the
-> address match. Then the PLDM request timeout occurs.
-> 
-> If the slave enable is moved to the EOB interrupt service routine, then
-> the BMC can be ready in slave mode by the time it needs to receive a
-> response.
+Hi Andy:
 
-...
+Thank you for your comments.
 
-> +#if IS_ENABLED(CONFIG_I2C_SLAVE)
-> +		/* reenable slave if it was enabled */
-> +		if (bus->slave)
-> +			iowrite8((bus->slave->addr & 0x7F) | NPCM_I2CADDR_SAEN,
+Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2024=E5=B9=B4=
+10=E6=9C=8811=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=887:00=E5=AF=AB=
+=E9=81=93=EF=BC=9A
+>
+> On Fri, Oct 11, 2024 at 01:52:29PM +0800, Tyrone Ting wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
+> >
+> > Store the client address earlier since it might get called in
+> > the i2c_recover_bus() logic flow at the early stage of
+> > npcm_i2c_master_xfer().
+>
+> ...
+>
+> > +     /*
+> > +      * Previously, the address was stored w/o left-shift by one bit a=
+nd
+> > +      * with that shift in the following call to npcm_i2c_master_start=
+_xmit().
+> > +      *
+> > +      * Since there are cases that the i2c_recover_bus() gets called a=
+t the
+> > +      * early stage of npcm_i2c_master_xfer(), the address is stored w=
+ith
+> > +      * the shift and used in the i2c_recover_bus().
+> > +      *
+> > +      * The address is stored from bit 1 to bit 7 in the register for
+> > +      * sending the i2c address later so it's left-shifted by 1 bit.
+> > +      */
+>
+> I would rephrase it a bit like
+>
+>         /*
+>          * Previously, the 7-bit address was stored and being converted t=
+o
+>          * the address of event in the following call to npcm_i2c_master_=
+start_xmit().
+>          *
+>          * Since there are cases that the i2c_recover_bus() gets called a=
+t the
+>          * early stage of npcm_i2c_master_xfer(), the address of event is=
+ stored
+>          * and then used in the i2c_recover_bus().
+>          */
+>
+> (E.g., the last paragraph just describes 101 about I2C 7-bit addresses us=
+age
+>  and may be dropped completely.)
+>
 
-GENMASK()?
-But why do we need it? Do we expect this to be 10-bit address or...?
+Understood. I'll modify the comments and remove the last paragraph.
 
-> +				 bus->reg + NPCM_I2CADDR1);
-> +#endif
+> > +     bus->dest_addr =3D i2c_8bit_addr_from_msg(msg0);
+>
+> ...
+>
+> > +             /*
+> > +              * Since the transfer might be a read operation, remove t=
+he I2C_M_RD flag
+> > +              * from the bus->dest_addr for the i2c_recover_bus() call=
+ later.
+> > +              *
+> > +              * The i2c_recover_bus() uses the address in a write dire=
+ction to recover
+> > +              * the i2c bus if some error condition occurs.
+> > +              */
+>
+> > +             if (bus->dest_addr & I2C_M_RD)
+>
+> Redundant.
+>
 
--- 
-With Best Regards,
-Andy Shevchenko
+Just to double check. Is the code "if (bus->dest_addr & I2C_M_RD)" redundan=
+t?
 
+> > +                     bus->dest_addr &=3D ~I2C_M_RD;
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
+Thank you again.
+
+Regards,
+Tyrone
