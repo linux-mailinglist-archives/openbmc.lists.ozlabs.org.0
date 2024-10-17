@@ -1,59 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA89D9A3093
-	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2024 00:23:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2147D9A3097
+	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2024 00:23:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XV2Qm6Jlfz3cMg
-	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2024 09:22:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XV2R132Pjz3cSJ
+	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2024 09:23:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729203774;
-	cv=none; b=Pyy8XIOJUh4TPCzEYg77tjtgg0M6BOIqV4Eif8AK8OH7ruYxPidFO/Uq2PXdZJ2pqg9EeTtdFBFNnCQm8Zg4qpQp5OXPDYGTppYmBuFuGVXAjdxFlEEvlkUkkUOUkW6qNoa9cozRHZVV0PUSXTCBxknB0tbfhQ0r2V7NBipnuxh5/RXJdfRcnqlaDp3DGF6Az8OfqkVZ2Ao9/YkT9tyNpbCvDpaZTWRRdypSj9dPPa7ytkEe4jcNegtVTx9twbRYnLljX08Zw8n/D8a7qnl7lDsco4Bb81yNFl6GI9rv8by5hm+I16S6lg+SHFSeotfe7JxNrYwKFrf6wtGWjf3l5A==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729203786;
+	cv=none; b=OjAetvCIMfMmW258UmQvmbQG9eYHSzOyGdIlcKE8/dlOoR9gbKGTMA41Gsr81anLmQRF1dz0/Rf28dn+kCMe17SejI2f//hLTw2SOU3SiEaq2JEai9nOZQaZ3MZmmnqGs+liP+JfY/9qKp+ipoOZ7rxsslrxg+hsJIhMqMVV8KxFom/d2Uvih65ZLgH78QWgU7YJSOvFecWl4mAYeE6wOAs1ujAxI+iso5FHI9Jp3mPEsKvXeM3PFYrSa1Mv67JpEsvYnOpJYBMrxz3deog90Q26S7rlHV+JMBujGzAPBm34tLST8zu4W5KUN7XYcSEWactCuwSqQHyFBYJlg7+jQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729203774; c=relaxed/relaxed;
-	bh=nwZJpFaMGkIfJiwNAu/kb2SQ2syXsOgdOQCJzbi6/fE=;
+	t=1729203786; c=relaxed/relaxed;
+	bh=+3MEtwbMVg+pwHIOeCpCnFSyC1XGVPop3/Krqu4bssQ=;
 	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=a1yRHeI+fbdwu5NIsebc6ikDXwlqEv0e+mWam19aqUI3mr5rQ7UkNMAW7Qwdxw8MGYjuMChGirdAnCF51NtLONK/IAMDf4bwxnuennPwquHi9dLtcOqOb8V1A5QM1s+hxvoNIevYQ4bJUA+hpXPo2dt/W1HXbCt7OwEHC2D8vY6mt9+vibSXPzyskJY9uy8BloL11hjpqA7l+7N1lBz4+5qNpkE59LaaHmeTzzYSDUhxcDRTdQ9vE1lptbuA0qPdhZZ9KjaGKdsDBzbJbEDdf8Q/Tj/K+dDfJykrTkR80j3nZCo7zDLwJ6bfalc0syEEe9xNAYnmfT9iiyjwx/MhYw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=GdV1IPcM; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 Subject:From:Cc:To:Date; b=YKTCG4oDva1zZRSmK+2FTd26EP8HAhNAdxWC/XXBsLnnw3/B+M8lHqBi5W3Trfkza+JDTtIlS5vcdeHPTGrhsQ5qjzH3k4Iu0om/JxH8Brc/oqTExcFMVTU2JELKT3PSENMYVIxuWWATqRXbLMzv+5kMbuBKZxOEQ281vkjcho1rTeydvQ+Lnyx/d/nkTnBZD/grHvdGAZsW4+SwmnZPS9Q4F9g86ZpVsQeHDeJQxrc4cNc0lErXxM0GRuL1s+nxvoovFqzHDnMXGqCYq8XKnypnZ70gDZeGyvykGbRk8xmLWUeOJvyqAWGJ5/Ntpg6AZ4q7MAel26FaN4n7my32PQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ttsCIhsD; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=GdV1IPcM;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ttsCIhsD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XV2Qj1qbNz3bjL
-	for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2024 09:22:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XV2Qx3v9zz2yV8
+	for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2024 09:23:05 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 9E9A6A4417B;
-	Thu, 17 Oct 2024 22:22:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5D0C4CEC3;
-	Thu, 17 Oct 2024 22:22:50 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 781C7A441A3;
+	Thu, 17 Oct 2024 22:22:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDBAC4CEC7;
+	Thu, 17 Oct 2024 22:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729203770;
-	bh=nwZJpFaMGkIfJiwNAu/kb2SQ2syXsOgdOQCJzbi6/fE=;
+	s=k20201202; t=1729203783;
+	bh=+3MEtwbMVg+pwHIOeCpCnFSyC1XGVPop3/Krqu4bssQ=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=GdV1IPcM10+H6sFnd8NYu7K0PWRGUbsmZFp8bicC/7fby30Z9/6vC7j+rcnYeXb/p
-	 2ptfEOMuDuTjjimma2lFuqBT9zx2hlEGQsMwVpG39ubat7p1iPtL9dUSv8ViCoVjSX
-	 G6Hz01Ikw7KVE9xpAgqpn3dbCnOT8bsvHEWJiKXMJr+IokT/OaSWLaPmivNyn/0LOS
-	 CArW+2A3T/pt6Nq8iYKFHXLzh6jiZxrAaf9bgXSp5vXoRZW9EfO4tzXwAHKnPGf+w/
-	 S/aJXr748ckabDH7O9tpjV7e8Eagaud1OGAqHjVK+7AE0UqVh/okEmK4dmNWZwTDjL
-	 /ySNsSsmYrkjA==
-Message-ID: <46ce613f0e6e5c656f943f5572e95d45.sboyd@kernel.org>
+	b=ttsCIhsDOxpnh4ZxU3GKaWXCvvBSUdXqX6jTUljO5LLzwOHtsf6r4OqsN1iH/Ch5+
+	 PJqgb189ELh3Ie7EpHW6vdOZJl+JfnLofOGVXgz3fXamudWuFK4tBvuQ4ShNH1Zf0d
+	 bTscJprk8amaKk5GdD7Jj/FnmdypN9iM8ZJf9WmFy+7TgML1it4CA0SDuDdlOsdDVu
+	 WMHixm16XLvyW+ZNfSy9Vc9NrJ3FjyOnM0BcTbWcfvbJLMoLMzG8R03Z9fbspgNjr0
+	 bT90uIuLSzGVtfcy4oi9DDLpXX7HX2E8n7TPAmdkzKXEaPd1Q44VkpV2hGcaoOxT7W
+	 sgP3CL8NtiP+w==
+Message-ID: <f85d4a18a18859e15989732caff2144f.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240912191038.981105-2-tmaimon77@gmail.com>
-References: <20240912191038.981105-1-tmaimon77@gmail.com> <20240912191038.981105-2-tmaimon77@gmail.com>
-Subject: Re: [PATCH v28 1/3] dt-bindings: reset: npcm: add clock properties
+In-Reply-To: <20240912191038.981105-3-tmaimon77@gmail.com>
+References: <20240912191038.981105-1-tmaimon77@gmail.com> <20240912191038.981105-3-tmaimon77@gmail.com>
+Subject: Re: [PATCH v28 2/3] reset: npcm: register npcm8xx clock auxiliary bus device
 From: Stephen Boyd <sboyd@kernel.org>
 To: Tomer Maimon <tmaimon77@gmail.com>, benjaminfair@google.com, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com, p.zabel@pengutronix.de, robh+dt@kernel.org, tali.perry1@gmail.com, venture@google.com, yuenn@google.com
-Date: Thu, 17 Oct 2024 15:22:48 -0700
+Date: Thu, 17 Oct 2024 15:23:01 -0700
 User-Agent: alot/0.10
 X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
@@ -70,22 +70,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Quoting Tomer Maimon (2024-09-12 12:10:36)
-> This commit adds a 25MHz reference clock and clock-cell properties to
-> the NPCM reset document. The addition is necessitated by the integration
-> of the NPCM8xx clock auxiliary bus device into the NPCM reset driver.
+Quoting Tomer Maimon (2024-09-12 12:10:37)
+> Add NPCM8xx clock controller auxiliary bus device registration.
 >=20
-> The inclusion of the NPCM8xx clock properties in the reset document is
-> crucial as the reset block also serves as a clock provider for the
-> NPCM8xx clock. This enhancement is intended to facilitate the use of the
-> NPCM8xx clock driver.
+> The NPCM8xx clock controller is registered as an aux device because the
+> reset and the clock controller share the same register region.
 >=20
 > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+> Tested-by: Benjamin Fair <benjaminfair@google.com>
+> Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 > ---
 
 Applied to clk-next
