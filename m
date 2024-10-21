@@ -1,63 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBC0E9A9023
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 21:50:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B6729A93E1
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2024 01:08:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XXQrr4BWYz3c52
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2024 06:50:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XXWFc3vkwz3c4r
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2024 10:08:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729540216;
-	cv=none; b=lWjojW8YYStNWK2bR2WnL2CDFjjVrSGtxTKHXfyoMKnU6cVlqDVE6Bv/xB+sV3FJcc4HtwM/XgIdDV7YyJVOrA3hLvquZS/P1/ayIHwndJksEdqR/y/YAuSZF4Hq0moAzkcVpDvqZ/oh67UlgLfVN/alTLhfBs+OoXSRg9BlJMaU79uSXqxGsD7JWBRgKh2JirINiLM9tafGJ1T2eK/p+OCUiRlCQjvOkH5R2UESNmuwxT4Wsg5P/eT7OMI0lcm04+smVB7e4fo/WRLKIT1V66v3oi8zvFUHJ1QP2HiCvM4blI1o1BuLXsqJPRy55ax57NvQEO9J6cblE6w5HuBpGw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729552113;
+	cv=none; b=k3J6lrDrWyZ2UbrR5m95GguLe8oe6shnhqKRYsh9HGNJps1kdhOzcyQhzNO5F9OpeLKWCGuzyjaXN1J6hgtKzYQvstFxquFXX+KlLnt4we/se2jcRmcDMB9SQIz7S8T797605AB8eV7XL+uvhlZYTgzd477306CGk+DAeHPNGHpDzZWsFjHqY/e5YEBzIwRSheZsZzrsWmWjHCrHg6NzVUSkStm4DukRiB1qJgCkBEYsORDFFPPZmyJgmlytkAPlPhoM5Gn5j3iEsS7aRsPU2qVc/SkWuBskN/7tYv+fz2BNu+7mmLch47YJKSZFtv6jdAckCvpJ9hW9b3mWvLqNEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729540216; c=relaxed/relaxed;
-	bh=6RAWm5EvMBXINnlfWkkxno/INvB5EfxJ2HRQAGorfn0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TeslSQ8ER86Sv2KxEro73Qb6sdRWxnKR99ZtllGNttC1CffWFBRTYp59OCIrF9Go6KTeqvg7e1XkWD7IspdS4GcJbXGh4LtwORqdEXL1qqy5VqZ2n9pbdvYk3rKELRtPEmDInjFd0WPYd9JyGDhR1LM8x6NT+saGNiXclKUJ5AYr7qMsqbq/YnJKHE7uUtHoFmx6QbDqwr64mxgp+ICsjOUY36ve2zQb27tcHQnm8q4gCi1DnHUZie5+Fo0k8OIUjgH69Fb3JWduY0W5fYONNg6iRheqE2BP8tg9rHGR49bxXe0JkaC75OXw0du+fP9dx7De+RIpmpZvjxkBIQ0uug==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=uyhZIGvk; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1729552113; c=relaxed/relaxed;
+	bh=HujQp2mhg09W7KS1yS8qHdzqq2w6ddNhAO0OXRrftPo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=UC2K970GjoHwygYqmOuRDOeGLPylQ3dZT+r///eNqZRhEV1BPB7j+HwHFbVUnzNYITNlLaPewU+XrHv5U3bH5cfTh+BmINdWNxbYeLiCO6fZlnC/PwdbY7iqSsqibE4UWmwZUt1WHUPWPM8ErQtVamqOQtBMuW8zlv1YPyQACe5kFL0o8WMYJqGwxbB4mnlxaXk8V4R0iMUPj95ADTPBLT5IOiqkHHEWVhiWOlvEFrkdCpXsnvuUaGwuugfmHXEWK0KhWokxwgTl5urkKJHAMlQXxg8+DTDLJD8VxgGIxjZxq4iGVrfh/CzOIkvumJZHW5cHj3UvJ4ovblWEVHkAFA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=dkR86t8C; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=uyhZIGvk;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=dkR86t8C;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XXQrl6JmSz2yRG;
-	Tue, 22 Oct 2024 06:50:15 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 6A27C5C5A5B;
-	Mon, 21 Oct 2024 19:50:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64046C4CEE5;
-	Mon, 21 Oct 2024 19:50:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729540212;
-	bh=eZYf3GJHPEiM9OohyeCcgFDCaHIVP50U9kyroIh1Xm4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uyhZIGvkS2Onm//7dOxuVzku5f4l75aicLhlLCLxV+xc4DCV6MbYTlEHMhpiFK2/D
-	 Ig2V5GO1I20kaQOYfAVPjexFqjmrR154+RmH92/WvOro4oUR88cZpdpdWTXcU5e54o
-	 xVBOGpqmtSpcWovV45eGhiAk0EyFAuXnJ1oDm7TGWfPJQykSut9PIXa3E2T8Y5Fnyt
-	 w63ClYON3N/XKApIdPju660n8Ddig3FGo6JZ598U2i3vXsH+TR89/uBhL0aaVWn4GD
-	 M/4/oivOKvJ6DBk3Y8LX60FdFoQm5dcIR5H4H+PB/ekWDBaEgqfPsTDBTOxMv9iaNX
-	 5+N44evzinVTQ==
-Date: Mon, 21 Oct 2024 14:50:11 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Chanh Nguyen <chanh@os.amperecomputing.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: aspeed: add Mt. Jefferson board
-Message-ID: <172954021092.1028025.10007351603543504033.robh@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XXWFW5zS4z2xgM;
+	Tue, 22 Oct 2024 10:08:31 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1729552109;
+	bh=HujQp2mhg09W7KS1yS8qHdzqq2w6ddNhAO0OXRrftPo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=dkR86t8CL5wPWttnIx/R3K27EXqKSO9uxKGzUpNOQKCo5VwlrzbdM7hjH51AxDFW8
+	 43XUNUuZqmOo8opCDec3kBg6CrI0RY3OKEK5AIOEBlzKZBe9jkCuTCA9xx2j++6RSv
+	 2x1HzoR+dWNWmWZTJY8R7XuFzyyVVM6xNSswBmm/EKiaiLq+6tUVWKSbWLcO6t0xnJ
+	 /+D0YKKcL3Eylu1dy9TLOfrUp67iW0amUdx/sbJf6V6aoDNewQBYk3Ao6Kr2BzX58V
+	 dg+kZcGFbuQ1ML3hDN9bhagsM51sC5se2r2Vg3VkHqkaPnOXkq54pW1raATxRdIcUP
+	 UU0+gLVbz+8dQ==
+Received: from [127.0.1.1] (ppp118-210-184-223.adl-adc-lon-bras34.tpg.internode.on.net [118.210.184.223])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 3AE3A6881A;
+	Tue, 22 Oct 2024 07:08:26 +0800 (AWST)
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, 
+ Open Source Submission <patches@amperecomputing.com>, 
+ Chanh Nguyen <chanh@os.amperecomputing.com>
+In-Reply-To: <20241021083702.9734-1-chanh@os.amperecomputing.com>
 References: <20241021083702.9734-1-chanh@os.amperecomputing.com>
- <20241021083702.9734-2-chanh@os.amperecomputing.com>
+Subject: Re: [PATCH v2 0/2] Add device tree for Ampere's Mt. Jefferson BMC
+Message-Id: <172955210690.47095.10418122883150753763.b4-ty@codeconstruct.com.au>
+Date: Tue, 22 Oct 2024 09:38:26 +1030
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241021083702.9734-2-chanh@os.amperecomputing.com>
-X-Spam-Status: No, score=-2.6 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,22 +74,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-aspeed@lists.ozlabs.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Open Source Submission <patches@amperecomputing.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-kernel@lists.infradead.org, Joel Stanley <joel@jms.id.au>
+Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On Mon, 21 Oct 2024 08:37:01 +0000, Chanh Nguyen wrote:
-> Document Ampere's Mt. Jefferson BMC board compatible.
+On Mon, 21 Oct 2024 08:37:00 +0000, Chanh Nguyen wrote:
+> The Mt. Jefferson BMC is an ASPEED AST2600-based BMC for the Mt. Jefferson
+> hardware reference platform with AmpereOne(TM)M processor.
 > 
-> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
-> ---
+> These patches add a device-tree and binding for the Ampere's Mt. Jefferson
+> BMC board.
+> 
 > Changes in v2:
->   - Document Mt. Jefferson board compatible                   [Krzysztof]
-> ---
->  Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  - Document Mt. Jefferson board compatible                      [Krzysztof]
+>  - Remove the PSU node with pmbus compatible                       [Andrew]
+>  - Remove clock-names property in mac3 node                        [Andrew]
 > 
+> [...]
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Thanks, I've applied this to be picked up through the BMC tree.
+
+--
+Andrew Jeffery <andrew@codeconstruct.com.au>
 
