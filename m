@@ -1,157 +1,148 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1BB29A5ECD
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 10:38:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 846749A65D4
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 13:05:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XX7xL1gb8z3fVj
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 19:38:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XXCBx00wTz3cDk
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 22:05:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c10d::1" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729499884;
-	cv=pass; b=S92Tx8dY+NW3gOLhI4Trhz/+YTfwoVDbZ32qedXWe/6T/kbfRo9EN6uf7ms8yvHsBYjr7MVT/hzAlhD4Ji883bFWjprumK/N1KmWqbdrvUZouFkIsDBYDKWLhzM9+ZmVzcae9wmMLRKftX/0vPU6XdfTDZzrfEy656xrWXlArZgryxD/FmftxVYcreQcxAiq2+cfc1z0zwuUFS6fZKkLWTo7Q5XM+HbieI+hxeLFzon2et0GkU+oJLVi2NriQREwtsmf+vCzLS5YRwh+aZRz9/ZeJZ++/Z+nZg35YtK0uXSpYvET1PxdyjHNtr4Y7PYpJBJLjrAB31Mms6TE2mhlSQ==
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c409::1" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729508709;
+	cv=pass; b=HnyB3/z7TyCvUC+qc/OwnkPkZ0k+SliGdK68X6gZJfBf0A/gSe9vXz1uEQ3oMlrrkjFf8MTT8Axohm1YeuTVsan2vYUQ5JcT5pnE0dJJ9xYEhd3hLS4aVpbxR89mcDvPZ53JopvfFsEsQqkkjSe3FKBYQPwrY8oEEz4DGWHGwsHoNRVlFvZlisJ2+H111ojYGTqhGKBIYOaicm0j1cl9+499t/bSSoSY1lFRrjSpLJPdtD8nY8lYdC3LBJ7/tbQ2cRC1YpiEfkJ2cBLqBIbN5p8Wv6yhh+2g8mWweX6vkspSC8LOKD1rLwibKZ2PPMmtSxl+iGUbRQQoI0aWkGnh4w==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729499884; c=relaxed/relaxed;
-	bh=EcqUdzsTK2SxdYXe7X1yX1MP8kGD47O83QE6ASw27lY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=A+XT3dzNQ1vU+RkyX5WS3vU+ezEpgWHYJgTdX80nOLnrQgnm/0TujloIdX45VqidNz8xZWHXgaoArY90YQYR9glqJOEf2hOCzVebttIZwBW6edcgOZ5VzIy7Cg2L8tXeywcewtH0BHaEDskhkzG/T4moe0cA0sAfDFuyehZUQ/WMWrw1F30D6cSbRzNOqsabitDyOakAgsjLcHUk5qv6px1eT6mt3sKbwd7mueZe1Vk0EdtHn9pJEzuhN1ChW9s0P8rM6U/lj1JEArx3/O/sV8NABqVmhjE2hEWxOZQP8tXPJTSCHtLNbBiBKqQPgzGGRrYYpmvZrIETnHVBtgrBsA==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=os.amperecomputing.com; dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=HsQGtSbF; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c10d::1; helo=sn4pr2101cu001.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org) smtp.mailfrom=os.amperecomputing.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=os.amperecomputing.com
+	t=1729508709; c=relaxed/relaxed;
+	bh=a9Cf5Mdz7QVWI6FXurO50B2Jum+LciFb7hYK2syBzRQ=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=geKYsTUzvN751LpOM5IA2kuUN/zkm8FLwp07Rq+XMF57dQ5+0CvGoc4rtpHlEo2HhcIJHATahaLY+K7WOM/J7PMPcwbc1iLSp6ZxGFzfrQB/A2rnnsNmf7wQr22SMO5Sr2DelmSPdhh0qg8PWyff65J9GSf91RZkECHxCDc5ftS8hBNul+rEMxFsvORExj+KCDOiOZpfxz0QqOqdGxE6Ug837MtdHsnABl7yzvx4Qzdjiv126m250vrY/lTolynPOE0nZTav2mmA5bF97fs9lh/5KRUrEG3snlt40Q++1TPlAnEq+zFSwFrT4aEynC0WQRDutDm1YtnSrJOKASJUUQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=Ltts.com; dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=XeoELN70; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c409::1; helo=ma0pr01cu009.outbound.protection.outlook.com; envelope-from=bala.subramaniyan@ltts.com; receiver=lists.ozlabs.org) smtp.mailfrom=ltts.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=Ltts.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=HsQGtSbF;
+	dkim=pass (2048-bit key; unprotected) header.d=ltts.com header.i=@ltts.com header.a=rsa-sha256 header.s=selector2 header.b=XeoELN70;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:c10d::1; helo=sn4pr2101cu001.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazlp170120001.outbound.protection.outlook.com [IPv6:2a01:111:f403:c10d::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ltts.com (client-ip=2a01:111:f403:c409::1; helo=ma0pr01cu009.outbound.protection.outlook.com; envelope-from=bala.subramaniyan@ltts.com; receiver=lists.ozlabs.org)
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazlp170100001.outbound.protection.outlook.com [IPv6:2a01:111:f403:c409::1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XX7x64yS8z2yLT;
-	Mon, 21 Oct 2024 19:38:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XXCBp4zM4z2yVT
+	for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2024 22:05:06 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FAbBaK72bwWJDdyEt0r6qqbvaSrw7cMubDY0SghuIPEKE2se4l3Hwwowxj6znggugUNZFDYw3AUbSShfY2ybIm+7PTmO4ln/SZaDUzRpO2UwAUXl++MYT8mVYyXdzc+B+7azyNdpGj8iJUjrQi5P5LUaLTqkQG4mQLCz3k4wAgzF29TAETPHOn0gthvfHTLrZp2Dtj+egAvaM9lqBXa2A87IhJAv+6HXEQq9z0ClLiEWYUNAt6SINqY6cb5p4RyVBvMmC+94h/7Np5xAekxDw4iw5tY9bgdk+YgrAS99SGtcnZhaQR7iUrgGzRZeKktl2H3RCSB+ViVyvUP8ZsjF7Q==
+ b=zFqsv070a/4gimcD600h13Cp3wIA8J4nYToPC+xz7TNUoxc5+DSSIkQwikPovHZrTWdEOh8Ruzv9QNhcq2ieCz/PO1uoIDR13xsJZPIL4uoJ3bWhJqAt52O4OIS6K/2FPArwO+Mb9w32GcP+EIuY0I40fnVnKOLSlbxfi7pCq1vuQCv7sOXNLNLU+MACMQ7Ou++NDUmmM1sRzRdclfJI1R/yK10B7IP8i/2tyt1au6vT9NembSxQ0rwXcFDd473wgNHX6k0BoMzySmb1sD2Hlr5rTLw1IFwNXsF/JTl//dgzIKRGspY4a9MG3C3CKnLVqGs7xRuiRGOEbQ/ZGVhe3A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EcqUdzsTK2SxdYXe7X1yX1MP8kGD47O83QE6ASw27lY=;
- b=GoaooFRz9e/1QQ5UsPdGod4WQJyCgS85+tTSjNp+zBxjh+ssNrrKGd4K3MPkoSOt+47s2NfOomDxKMrr/F77OcDAn7bFBjl8nu9i2DBGETvpR6vO6o+IMRf2QKuYEj3K1ekpZdCL6MZFpm/W7eFjZiQ9KRbf6LKkz1m5Bq/mgTclV5TC161Dgxl1SAoonYNe48dBFrYOzlEdvD+3p1IaEUiwnrA/cQ7kak76x8kOtkEJYvwmB/KLTJ5JK9Uuid2Zxhgf3+XcAMqVb0G07M5Cs+u4h7X/dU18sTIACVzg94c3xbOsvINgAoLaIaA3wrliv67Rz0wIxILB9OWit7j/Tg==
+ bh=a9Cf5Mdz7QVWI6FXurO50B2Jum+LciFb7hYK2syBzRQ=;
+ b=GLh/lMxBsSvo6tw6UOqHqcsz/J98TaZ3ux8cEI5JFW4kP+13RKxr0aqcNDpkuK7OiJhRvQhdXbh8CSRUeVXrtYnd6nlaDztpZmXXtoSBTh18mX5ZzGkE+8hhC3qX6G9aHb8onNyAFOInjG6yjUyUoPHZyLZEMBTqte6hYmTMdtPFo2Sx7mLv3P9rUoz2KgJVuwSbFJ7htDp0qN++cDi25aN0z1u+9WIzJU6oFy2i88S785P+MPlqFSqihk5ArS6CfuGz0HQJbkzJs9lL0EsmOWsLx+lsM72iNuoz1bh5UZp9bFA8wVbe9aHjvPgbv2cOXnoRmE4WoMajAPT+VI8YWA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ smtp.mailfrom=ltts.com; dmarc=pass action=none header.from=ltts.com;
+ dkim=pass header.d=ltts.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ltts.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EcqUdzsTK2SxdYXe7X1yX1MP8kGD47O83QE6ASw27lY=;
- b=HsQGtSbF6K8zU8owOY3ARkzUsvty1WfplRl4UnelwK5FSsCI+TuySQ9kw32mxOD4doBwWulmsRc1L9f5/WONDz4NskVadZ697c6XK1z1+Abc2THNxqcpk7kB5pMDAP1n5S+DBS/xMT9mkYNsoolQ1ICT0uMR+TJ0e2hZimo+S0Q=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from BL3PR01MB7057.prod.exchangelabs.com (2603:10b6:208:35c::16) by
- SJ2PR01MB8049.prod.exchangelabs.com (2603:10b6:a03:4ce::10) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8069.20; Mon, 21 Oct 2024 08:37:43 +0000
-Received: from BL3PR01MB7057.prod.exchangelabs.com
- ([fe80::b69e:5684:ed7c:4d09]) by BL3PR01MB7057.prod.exchangelabs.com
- ([fe80::b69e:5684:ed7c:4d09%4]) with mapi id 15.20.7982.033; Mon, 21 Oct 2024
- 08:37:43 +0000
-From: Chanh Nguyen <chanh@os.amperecomputing.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org,
-	OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH v2 2/2] ARM: dts: aspeed: Add device tree for Ampere's Mt. Jefferson BMC
-Date: Mon, 21 Oct 2024 08:37:02 +0000
-Message-ID: <20241021083702.9734-3-chanh@os.amperecomputing.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241021083702.9734-1-chanh@os.amperecomputing.com>
-References: <20241021083702.9734-1-chanh@os.amperecomputing.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR06CA0181.apcprd06.prod.outlook.com (2603:1096:4:1::13)
- To BL3PR01MB7057.prod.exchangelabs.com (2603:10b6:208:35c::16)
+ bh=a9Cf5Mdz7QVWI6FXurO50B2Jum+LciFb7hYK2syBzRQ=;
+ b=XeoELN70/adwuwIkLepaCejT+I0rS/xvjMNNxxwhpyPvE6mcMxEbmgZJaDnMGmYaHy2N7TKLtQpkd8f+bs1JSeE1hJZ31Tb56l6D+O2/HLWyWS0zQqKTV+k/N1zr0aKMrQt8VQQ/+CuIj/ReGOuL34lD2E6RWsUozOjvp0Cl3VaXBinDbk4HlHEFbCKLepN6GcyccSVclX7g8yQ4X9FtywV5qeNKnVNk3QwlxMIsxj1TswUmbvh5ulvrt2WsPMzVIyFChhbNXaBTuCszcgsNep1n0BXZ7ladySkyj8dDlUX98567F9t4nXz/0WD1jK0vcqk/W9TneecR9UVxrmv2zw==
+Received: from MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:17::13)
+ by PNZPR01MB4496.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Mon, 21 Oct
+ 2024 11:04:40 +0000
+Received: from MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::260a:a479:6e10:ae9a]) by MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::260a:a479:6e10:ae9a%6]) with mapi id 15.20.8069.027; Mon, 21 Oct 2024
+ 11:04:40 +0000
+From: Bala Subramaniyan <Bala.Subramaniyan@Ltts.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Help with SEL
+Thread-Topic: Help with SEL
+Thread-Index: AQHbI4tOhhKoA/b1WEmZNvGQJVoJlA==
+Date: Mon, 21 Oct 2024 11:04:40 +0000
+Message-ID:  <MA1PR01MB4308EE28D3B88AD2FFFF756D80432@MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=Ltts.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MA1PR01MB4308:EE_|PNZPR01MB4496:EE_
+x-ms-office365-filtering-correlation-id: 100ed068-d0a2-4e41-b6d1-08dcf1c02936
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|366016|376014|8096899003|38070700018;
+x-microsoft-antispam-message-info:  =?iso-8859-1?Q?VvePtmDOuxVkdAE+L25ivS56EwyZuYhCbvYZyJk5/lGEfiSG+Sf8PBQNd4?=
+ =?iso-8859-1?Q?ApYdLVQe6VDH1mrikOzz01v6vlYWoOBiA83gFdiBS9saSRz4pVf5oLdvwH?=
+ =?iso-8859-1?Q?v3rEjkejLn08ALz4Okbp8U2vijXWNtKL44TYjsC1STspBvshCjFJvmaJEa?=
+ =?iso-8859-1?Q?Ji++VGDSOVXXTMQJKNgE6/MbWalkbqgOxAPzDqRuWuvLkuNkOevMO+6JBn?=
+ =?iso-8859-1?Q?qK2bDjYVxsYU4nF69EhkGxhjm0cPATRi38xzNvt14F4Ra52LqePJxrZPUp?=
+ =?iso-8859-1?Q?tF4wvEbJ826U0wT9OTXNOB7n3VwEQIQ/xI/2GeXXiH1oaAtQkAG0lXMyh0?=
+ =?iso-8859-1?Q?Ia1H5FyA3Fq4esbYARleAxuaDVXuUJyX7pnXrl9f9u0B0qR8E9WSoivy5m?=
+ =?iso-8859-1?Q?8WRO/E6vwzJX4Yxd5FrNxv1Te4Qdh10Ulrw6JdOPSCfz/G+AX70rOyTGl2?=
+ =?iso-8859-1?Q?hSxVKv+NREgVt75h9XTHi537SWdejxLB6mPQ2J6g6TLJxL0UCo20b//uyU?=
+ =?iso-8859-1?Q?C73eKiC7nMTFXwvqdK8LZoxDedtzTyYKhckmN8klj1U/c1ucw1CReUOobI?=
+ =?iso-8859-1?Q?C7s5pZkrwZhP54Z3aGiXojFyAnW/PHDoMBtpwmCu8fvDHyXoh35zFNCadz?=
+ =?iso-8859-1?Q?kb/BIXyPHyTowzOPbrKOW7k6LBgL59k1aQOyNHVe0rg02lX3kFyEkaL1cm?=
+ =?iso-8859-1?Q?qn51kSDj+PKTC3LvgFXnI/QZzLOFw6/qcIZYKz78k1++LmCHNzjBGHe+gZ?=
+ =?iso-8859-1?Q?wZYxNCP2rKiANyHquwKWg80l1PQEPLVZRCdwP5AIufnyJEugCvb2dJCCsY?=
+ =?iso-8859-1?Q?6uf5u4qRr7ZVVzRN7sWCNjbr/hZilE1EnVDNFk5xTPuszWEgv5kpPFWsOW?=
+ =?iso-8859-1?Q?l1jaIGpDoxAEgGh+cQuw9JFtFutSwEUBaRSXjm2qYhg9HM3v75uLJEF1Ei?=
+ =?iso-8859-1?Q?yd6ycf12C+dO3DnIYH0FPZ/AVkio0tN5J7kRBaxKviOW4v9b+4HB5mNFtT?=
+ =?iso-8859-1?Q?UcMNvRyht1quO0TnOMrSQ2YUj88wBcF/D5ntZkdA3OCI/m4DbnizTek5yy?=
+ =?iso-8859-1?Q?S+q7atN4STXiCn3F8jZ1OUGbJ/NvxuxllbXS0o0xoXKTGLxBw0ZtVlRE/X?=
+ =?iso-8859-1?Q?PChaIS4Zyb9VNVQSw2hxIJblHoMAB0CWXz2OeyjTKP63nCE/2a8tlmNxaF?=
+ =?iso-8859-1?Q?FDsXWQmFofHkGU/4ntKyjSYFBrXA/GcK5KCBPalKWGoWYd+S2hcbe7Ce42?=
+ =?iso-8859-1?Q?BHzt6ortukpv022/Qw0cRBXIhE7wq8YXtdLintdYCc4vGSpgw4g0bDiDWY?=
+ =?iso-8859-1?Q?bRbpJqxh1Fkd4pXVaRLz3TpEQF6hs6VZ4vAJR43z4YJfTBkp3Q8moalcds?=
+ =?iso-8859-1?Q?sERmahpkBE?=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(8096899003)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?swl7uuaVFSRu5qlY7/q2nPD7z9djRvtsjFcz5HQw2OTjfEJyQmw+cmI815?=
+ =?iso-8859-1?Q?MQhQi88KCWnpNG1UI2Zvpvt7hENcqELwRrm6yXI0ZeYzFoorQf/k44bq48?=
+ =?iso-8859-1?Q?PhN0E2zRQXMoM6uWjkJ8a3q8YfpkOGeDS8CQ0WdS5w/iJYu3iIt1VlLywu?=
+ =?iso-8859-1?Q?TGkwmxsg4z/dFpyC/6wSNIwm7fGKJ3tgwL7/rHXDJgX9G9w9oUflQZNC4S?=
+ =?iso-8859-1?Q?Em5CkitYK2nDITgzjyiXxS4fhZZd2faR0TKLFwtnCoQLgIj7VBNY323tVF?=
+ =?iso-8859-1?Q?+Lnxis0iPR0sGJ2EXX+gBL9rR+BHaOEYbRcTL0Huin+LozeWG90ShY7fR4?=
+ =?iso-8859-1?Q?Iv3yPfxAFjOsbTIIlGmroaZ3DV5AJBdi6U8CePhOAwt3WJsllEKubO6laI?=
+ =?iso-8859-1?Q?XgtA/UXJyVGpwXpzZGMaUVdS34s3b+709hJRppRK/+VOKufyjK3r6h9Oqo?=
+ =?iso-8859-1?Q?kt2LeecTql+pQu4Id5WlMZiXgpXvt+7vrnEgTRVRPUHBx8VhVHTPVT+YRU?=
+ =?iso-8859-1?Q?CVJNrqkQ/v0Yi9kbbmIEH/berM0t4PjwBv7xXzksAiICjQbfKksaQY+eT/?=
+ =?iso-8859-1?Q?oW0ShV3OlTQjgO7qD6nIhRWKJ2lUyH60rCldjdl+cWx4K2SSc/eqH9BsfG?=
+ =?iso-8859-1?Q?WrsFfeTdof3JZtyOwe1OlCz7X4dx2CnZihsp4bg27ZSoFwRZCyHhe1eE6T?=
+ =?iso-8859-1?Q?IpKoJmIwKyzswzY+TMNqtsKHr96VBumdOtANHA3059ZtQmoBuKSK4eyrUs?=
+ =?iso-8859-1?Q?87oQMCQbYafVRbEaNDgROt7DtBzHgGfQ2h+8iq5TdG+erOprfLGjti2F/e?=
+ =?iso-8859-1?Q?WE+eUAuHzJWoTdg9Vdp8AVX0pZeUcDyog/eA9gGwE/drdmPbO7rMWkE7Ak?=
+ =?iso-8859-1?Q?BhXPggClUIbyLezACpIVPV2gWZiag1ukHqHm2LVXs6aYdNy6lqY5LHtvc5?=
+ =?iso-8859-1?Q?EBadTEKc58jvfEHcD3lbeteAjLvRxYar20MkPOXWFMZugjMX7kzHxNv+Hi?=
+ =?iso-8859-1?Q?lGo84h6jqwX6ypG8s1SyIBhNettJ7QtVULBSmIHhi5SWH0T/XdoX0TQtZ7?=
+ =?iso-8859-1?Q?gf2v/x3aDgOlQ3r5yL0KU4aWL+MbyXl0VfrZ2gEMTypxBqUKQJ/g5gTXFN?=
+ =?iso-8859-1?Q?u0efd+OGqFvbiF2OsWoptQUrpS7gVcTS8bydH9QYo7C2NL+/nouZ9h/FnJ?=
+ =?iso-8859-1?Q?kYtpaCwBbTkwh1ZuPDBpcyebD38Kx2VWvaQh5x5JuH3wfFhmiEPopfmESI?=
+ =?iso-8859-1?Q?qNNX0pVx/gjFxoTl5mBu5wnE9B8IQ0wJIo3dNgZB3rWkScdv/i7JMe+4pA?=
+ =?iso-8859-1?Q?aR+QZzuIxhggaTKRucPwxp1DE0/qGvBqmCAj/fgs8MVAvjNxa/JDXrltCD?=
+ =?iso-8859-1?Q?uiTDDsKPtxOQy4bIytENeUyrAxkhIe3fEUgAW2HnwLx+dirfa93kW+v3BS?=
+ =?iso-8859-1?Q?gAmR6mXr8SAiBInINmJAJ3fOdlkPVgxa/+UotDO2cP/GfAEG2l9q5ufde9?=
+ =?iso-8859-1?Q?4NEjLlyKAh0kZPk7DKDBSWebc/tEePsqPi0QZnl8xYJ1AruVIZoWLfgMK5?=
+ =?iso-8859-1?Q?koJlyEJ4tt4EifTOL7d3dRaC0CDbQYADIr2FyMFrgIzYBVzTq+9+GOwqG5?=
+ =?iso-8859-1?Q?XHjSYtXuNgkJ5wSYrhSjFfDLZOo+6tHLhH9wl5+vPPvvHldugHSXjDvw?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: multipart/related;
+	boundary="_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_";
+	type="multipart/alternative"
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL3PR01MB7057:EE_|SJ2PR01MB8049:EE_
-X-MS-Office365-Filtering-Correlation-Id: f010cfcd-5ea1-476c-7d3b-08dcf1aba1cd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: 	BCL:0;ARA:13230040|376014|52116014|7416014|366016|1800799024|921020|38350700014;
-X-Microsoft-Antispam-Message-Info: 	=?us-ascii?Q?OifcEP0TxdfJipyGL9gXAmMfb3qvxcTFIBh5p0ae1g2Djvkf1/nzxMqD7rJO?=
- =?us-ascii?Q?FVbP9j24GBxqlT5YMetB9B/tZ+LMFMLrx5H6b73za5+r8fTlLRws8IBoPZXG?=
- =?us-ascii?Q?wjTSRn7Xhw4Ovat0SmPn/EFbRy5kyJS6S/qfN5dZszc5P/bSGtoB1wbvLacb?=
- =?us-ascii?Q?oJJCbqDdKuwuh+fvwz7acC9lPqchSRIcexEIK6LCYAfVYj8NEFrNh+w7eI1x?=
- =?us-ascii?Q?PWa9whZea9goU6SX36QRmMfzOxsYayz6EtmsnAyJuSiSfUoaM7ZeIjNitpCS?=
- =?us-ascii?Q?JMvg9xQIxUCn/9wqKhDnBSOUejapnMUL4gEwgeo2FyW+eSAS+m4R9rjhexac?=
- =?us-ascii?Q?6UCbBu/K3DMkbBUjrL79VVIw3a7NTjNuimp+Hi1jTL8noId+aJ1ss9PNQZC4?=
- =?us-ascii?Q?6jq1sFHeWF9UB0koLdiyes9iBI04JQIPtwLyxGdSlzk8Rd0Hz6PU3XwKqfqC?=
- =?us-ascii?Q?FY2IC2INuG0gCvqu+wJUXTc0mXr4yTBjckeMkFIqi1Hq54RPnfLC/9djQJkr?=
- =?us-ascii?Q?4Bfp3qszilaFrDNqTSP5fr3BS5ClPGcF736FnFonxRHFSPMShq7wbBj2AFUI?=
- =?us-ascii?Q?oWIz4hw0CXfN4Ua6FATjqIo393vFmq3cnWeQH9XEmypfiSZ2znhSQtbzm8tz?=
- =?us-ascii?Q?j9xJAu98L25IGyGbLYELisRtWwTW7i2koXf7/ND9886FSxTF4boeiiT0vihB?=
- =?us-ascii?Q?2eQlgq8UYHWEARbh/11DnKw/Ome7lXjGY8qQZc5i856lsDx97rmxGVvSgab9?=
- =?us-ascii?Q?UowX/baKlYllL5VRaNV2jJW2W2YG37N5lEOgWkUSdXwaQSrvoODsFLwvh/vB?=
- =?us-ascii?Q?gVHsKf6CMpXBFnctsSSGApA2saLlxxVcBARZGXzTGajJ6EiCE+JZtBt+O18l?=
- =?us-ascii?Q?ES+ksb2X1aW/G2XPHq5BG7yKCMJfVp8VWNjogvww/wNOooK6nw1KoLJZJ7Xa?=
- =?us-ascii?Q?uerHOmxDHav7zfV2J34qfu8xkdSBsb+1Oj6NI2ClqtcezIwShjo0Wlgm28MH?=
- =?us-ascii?Q?eGBX5jIzwHH1MZQ4Kwwv6KWawgrB2u28eBL0C4V3h2NTXKVC+5+smaQhcFEo?=
- =?us-ascii?Q?kXMfvA6eTWTr0gzE2fq6S1KaXmO9QvJTezB1s2DXM9JnhrMSnPC3TTCgcsYW?=
- =?us-ascii?Q?agY5NWvt1rQgmpFxk9FQ3PSZOjAvoWOiUZAQcRz5LmtUCftxp5IwQT7T6GB/?=
- =?us-ascii?Q?0szwnECyGMMwsnUpdHLiOntXCv5Y16UgDrmf0CIgi/YCDWKVfCyD2xGkj0wj?=
- =?us-ascii?Q?mUdoRt+VTItG43oMWyTS3Jp8WM4M3S1l+fX+higBcF1pXBLcr7eSuUikc55u?=
- =?us-ascii?Q?gZs2Io7S4trnIwyxdv5UGCtuAxxL0NFLfBk3u/+JJYLbUkR+fplW3O9H6G7X?=
- =?us-ascii?Q?gL9mQcX40g+pUhSMaAoGq08Xvqhq?=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL3PR01MB7057.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(7416014)(366016)(1800799024)(921020)(38350700014);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?yEmJzRElrgsYgWA5WxXSbxhXXstpihFJ8NLf/R2j8Rmh+J5OTRJse3EQX4dD?=
- =?us-ascii?Q?I11nNIXJxiNjJ0zLGBuo7VKvoHRaGQNV5nClVecBud6uVUzg3CnEC9JOXDd0?=
- =?us-ascii?Q?C5Q/FosaNRVuyn7ToNWwGGTczSMF5DDhJLJsSWtnV0tLV8mxSXdaE3ybhdoW?=
- =?us-ascii?Q?ClA3NO2kvoYK0vaW/536YDkxJxcvhdj5otWt89KA1cHmYanyFImjcBFEjYFC?=
- =?us-ascii?Q?CFYIhAkG72fZny5sPDL2jr+1Nw75nhVfyR0ciWAR9lyHCCroiJxBJK9HkHHi?=
- =?us-ascii?Q?q/gXLkNek9J8BcPTcHTfhyXkYsBAUHjT8w7B6fpzcWs1FToCHLOyBUuiU79N?=
- =?us-ascii?Q?dYILVXJgkFbKfpt6/KBJiTw9DpB3mNmForxUlTIEEVRePT2cDdwe5hy305eS?=
- =?us-ascii?Q?Rj2voKwZtGrI7oxYAzxQrTXt0+5aJkeLhvtSg4OEct2oEXLTpMkop4+2p3nZ?=
- =?us-ascii?Q?SMweRLBovAscMoODOHxyDsVypN+OMslNUZH+MEMCeGB6HTug3XGqdjgV8eez?=
- =?us-ascii?Q?PRq8TwHSfo877cjrZ7rTZa+z2N8n2Z0sucbRViHCmA7dnCaeKJurivtiQ7ll?=
- =?us-ascii?Q?Vk6HCZwsmvWWqOhyfjZhAiTwVBgoKkVRjecs/dNZq80qFxrubyDahn+3YepL?=
- =?us-ascii?Q?xnUrsfB/x4+BgNgB7cTVde94LQe4O+3R6imMWeEQQFJduaCHGwA3O5HEqCp5?=
- =?us-ascii?Q?6GNAvT1djhi1zx573OPny4TqYZzZl2aLdcTV1upDOy6nLzBrwc33gOue5zzw?=
- =?us-ascii?Q?VzQCb3oaiP92pn4V7iD0w5XflXJ+arPowyeHe+SAnzmKPdg1oBRceRUUNSPV?=
- =?us-ascii?Q?5g37eoweo339YqcoIC53xmzdrK/rifOudW+9NJRwl+SG5Leb12b7cBcLDUXl?=
- =?us-ascii?Q?5mECs5nS/DNbENh+t1no4RxFsmK9TRvqXiMOHMfbPRtL9+tU5feXUjrkN+5D?=
- =?us-ascii?Q?7cfhW1HBPTwmOhoI0TnguUq0xZ3ptmR4B6OjSBpfpz6vgqubZ6DLjk9jsyLg?=
- =?us-ascii?Q?gEvdnZf5C/irMx7iR2/b5zpqOmIzZ1ZcS93THyQt14k0DbruAFW08CIappsR?=
- =?us-ascii?Q?qgH8UVyvlS7iRyn3z/offEwxmg9+6q84xtLhGN/jydAtWyzwUyM/crhyHT+x?=
- =?us-ascii?Q?G0DLioyvq0bqo6TgvSVduRsJ5badmT2o7Msqk3o1BbfTrX85gVdn4YrkYEH6?=
- =?us-ascii?Q?BXY1Nq2GhMD3vlG+/1L7rIh6TXRm9cD6JAqpLYhv4c/SVfytazqeAjH2qOqm?=
- =?us-ascii?Q?tkccwC4yNwYOmcFb5YvmdTsio50ZyEGsNxJ0qA3i9I9eseXoISlxJQ9JGtF5?=
- =?us-ascii?Q?rY0oRRQclCmHT8JEXWgomlhkGvw19ihlFTGapKcP83U0iJQZVY4zUIUN9d/F?=
- =?us-ascii?Q?SSwa3gnN6tW+xGJ1raNlMNmqUXp2TdzjCB/jYvLKni9Hp6pnC8JJt+P6RZGt?=
- =?us-ascii?Q?WAfWB/M9YJWWvcIIrJzjTLDPv5LppgTUvof7CEGRk8QGCI7p6ZBHOL4twBS+?=
- =?us-ascii?Q?rqc9tdsH41jv/ogrClxg9+C25A1Cu8A5A4ArXU4U0Z8klv6YeZAb2KqdqbSL?=
- =?us-ascii?Q?dutRQUhvnyXzSQRpsq58Hzb+DCIoJ0fKO+GkSOvFKdzi53t9hjPO7eAwPKp3?=
- =?us-ascii?Q?lO4tNlfg9mdBSPUF9wvDd40=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f010cfcd-5ea1-476c-7d3b-08dcf1aba1cd
-X-MS-Exchange-CrossTenant-AuthSource: BL3PR01MB7057.prod.exchangelabs.com
+X-OriginatorOrg: ltts.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2024 08:37:43.8093
+X-MS-Exchange-CrossTenant-AuthSource: MA1PR01MB4308.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 100ed068-d0a2-4e41-b6d1-08dcf1c02936
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2024 11:04:40.7071
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8A/rgQTqwWJlwA4fWLjBXmLSXO3WcosoP8o4jJZ4EY4m6UbC2dzaHWUZim77WlgQsGeCBmO0DIJ6pRdcxYQm3bpp92VnSm7JICAc36D0hH4HuYh1779Ia4ejQpwq6l4g
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR01MB8049
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 311b3378-8e8a-4b5e-a33f-e80a3d8ba60a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cWgx+R5DYFBErRH7WyBCDczC+2RgmOBwo7ZZnMMWskQcUCJPl6ZT6B2QZ43/JblzCBQ3hO9E90kbDZiNz4526nCDn/76yVs1GePQ/dAGKNw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNZPR01MB4496
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
-	SPF_PASS,WEIRD_QUOTING autolearn=disabled version=4.0.0
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,HTML_MESSAGE,
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -164,664 +155,341 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Chanh Nguyen <chanh@os.amperecomputing.com>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Mt. Jefferson BMC is an ASPEED AST2600-based BMC for the Mt. Jefferson
-hardware reference platform with AmpereOne(TM)M processor.
+--_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: multipart/alternative;
+	boundary="_000_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_"
 
-Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
----
-Changes in v2:
-  - Remove the PSU node with pmbus compatible                     [Andrew]
-  - Remove clock-names property in mac3 node                      [Andrew]
----
- arch/arm/boot/dts/aspeed/Makefile             |   1 +
- .../aspeed/aspeed-bmc-ampere-mtjefferson.dts  | 622 ++++++++++++++++++
- 2 files changed, 623 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjefferson.dts
+--_000_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
-index c4f064e4b073..b1fb0853a789 100644
---- a/arch/arm/boot/dts/aspeed/Makefile
-+++ b/arch/arm/boot/dts/aspeed/Makefile
-@@ -6,6 +6,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-amd-daytonax.dtb \
- 	aspeed-bmc-amd-ethanolx.dtb \
- 	aspeed-bmc-ampere-mtjade.dtb \
-+	aspeed-bmc-ampere-mtjefferson.dtb \
- 	aspeed-bmc-ampere-mtmitchell.dtb \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-asrock-e3c246d4i.dtb \
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjefferson.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjefferson.dts
-new file mode 100644
-index 000000000000..c435359a4bd9
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjefferson.dts
-@@ -0,0 +1,622 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright 2024 Ampere Computing LLC.
-+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include <dt-bindings/i2c/i2c.h>
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "Ampere Mt. Jefferson BMC";
-+	compatible = "ampere,mtjefferson-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		i2c20 = &i2c4_bus70_chn0;
-+		i2c22 = &i2c4_bus70_chn2;
-+
-+		/*
-+		 *  I2C OCP alias port
-+		 */
-+		i2c30 = &ocpslot;
-+
-+		/*
-+		 *  I2C NVMe alias port
-+		 */
-+		i2c48 = &nvmeslot_0;
-+		i2c49 = &nvmeslot_1;
-+		i2c50 = &nvmeslot_2;
-+		i2c51 = &nvmeslot_3;
-+		i2c52 = &nvmeslot_4;
-+		i2c53 = &nvmeslot_5;
-+		i2c54 = &nvmeslot_6;
-+		i2c55 = &nvmeslot_7;
-+		i2c56 = &nvmeslot_8;
-+		i2c57 = &nvmeslot_9;
-+		i2c58 = &nvmeslot_10;
-+		i2c59 = &nvmeslot_11;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x80000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		gfx_memory: framebuffer {
-+			size = <0x01000000>;
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+
-+		video_engine_memory: video {
-+			size = <0x04000000>;
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+
-+		vga_memory: region@bf000000 {
-+			no-map;
-+			compatible = "shared-dma-pool";
-+			reg = <0xbf000000 0x01000000>;  /* 16M */
-+		};
-+	};
-+
-+	voltage_mon_reg: voltage-mon-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ltc2497_reg";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-always-on;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		led-bmc-ready {
-+			gpios = <&gpio0 ASPEED_GPIO(W, 5) (GPIO_ACTIVE_HIGH | GPIO_TRANSITORY)>;
-+		};
-+
-+		led-sw-heartbeat {
-+			gpios = <&gpio0 ASPEED_GPIO(N, 3) GPIO_ACTIVE_HIGH>;
-+		};
-+
-+		led-identify {
-+			gpios = <&gpio0 ASPEED_GPIO(S, 3) GPIO_ACTIVE_HIGH>;
-+		};
-+
-+		led-fault {
-+			gpios = <&gpio0 ASPEED_GPIO(P, 4) GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels =   <&adc0 0>, <&adc0 1>, <&adc0 2>,
-+				<&adc_i2c_2 0>, <&adc_i2c_2 1>,
-+				<&adc_i2c_2 2>, <&adc_i2c_2 3>,
-+				<&adc_i2c_2 4>, <&adc_i2c_2 5>,
-+				<&adc_i2c_2 6>, <&adc_i2c_2 7>,
-+				<&adc_i2c_2 8>, <&adc_i2c_2 9>,
-+				<&adc_i2c_2 10>, <&adc_i2c_2 11>,
-+				<&adc_i2c_2 12>, <&adc_i2c_2 13>,
-+				<&adc_i2c_2 14>, <&adc_i2c_2 15>,
-+				<&adc_i2c_0 0>, <&adc_i2c_0 1>,
-+				<&adc_i2c_0 2>, <&adc_i2c_0 3>,
-+				<&adc_i2c_0 4>, <&adc_i2c_0 5>,
-+				<&adc_i2c_0 6>, <&adc_i2c_0 7>,
-+				<&adc_i2c_0 8>, <&adc_i2c_0 9>,
-+				<&adc_i2c_0 10>, <&adc_i2c_0 11>,
-+				<&adc_i2c_0 12>;
-+	};
-+};
-+
-+&mdio0 {
-+	status = "okay";
-+
-+	ethphy0: ethernet-phy@0 {
-+		compatible = "ethernet-phy-ieee802.3-c22";
-+		reg = <0>;
-+	};
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	phy-mode = "rgmii";
-+	phy-handle = <&ethphy0>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii1_default>;
-+};
-+
-+&mac3 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii4_default>;
-+	use-ncsi;
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout-64.dtsi"
-+	};
-+
-+	flash@1 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "alt-bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout-64-alt.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-max-frequency = <20000000>;
-+	};
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+	bus-frequency = <1000000>;
-+	multi-master;
-+	mctp-controller;
-+
-+	mctp@10 {
-+		compatible = "mctp-i2c-controller";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9545";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c4_bus70_chn0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x0>;
-+
-+			eeprom@52 {
-+				compatible = "atmel,24c256";
-+				reg = <0x52>;
-+				pagesize = <32>;
-+			};
-+			temperature-sensor@48 {
-+				compatible = "ti,tmp75";
-+				reg = <0x48>;
-+			};
-+			temperature-sensor@49 {
-+				compatible = "ti,tmp75";
-+				reg = <0x49>;
-+			};
-+			temperature-sensor@4a{
-+				compatible = "ti,tmp75";
-+				reg = <0x4a>;
-+			};
-+			temperature-sensor@4b {
-+				compatible = "ti,tmp464";
-+				reg = <0x4b>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				channel@0 {
-+					reg = <0x0>;
-+					status = "disabled";
-+				};
-+				channel@1 {
-+					reg = <0x1>;
-+					status = "disabled";
-+				};
-+				channel@2 {
-+					reg = <0x2>;
-+					status = "disabled";
-+				};
-+				channel@3 {
-+					reg = <0x3>;
-+					status = "disabled";
-+				};
-+				channel@4 {
-+					reg = <0x4>;
-+				};
-+			};
-+			temperature-sensor@4d {
-+				compatible = "ti,tmp75";
-+				reg = <0x4d>;
-+			};
-+			temperature-sensor@4e {
-+				compatible = "ti,tmp75";
-+				reg = <0x4e>;
-+			};
-+			temperature-sensor@4f {
-+				compatible = "ti,tmp75";
-+				reg = <0x4f>;
-+			};
-+			temperature-sensor@28 {
-+				compatible = "nuvoton,nct7802";
-+				reg = <0x28>;
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				channel@1 { /* RTD1 */
-+					reg = <1>;
-+					sensor-type = "temperature";
-+					temperature-mode = "thermistor";
-+				};
-+			};
-+			adc_i2c_0: adc@14 {
-+				compatible = "lltc,ltc2497";
-+				reg = <0x14>;
-+				vref-supply = <&voltage_mon_reg>;
-+				#io-channel-cells = <1>;
-+			};
-+		};
-+
-+		i2c4_bus70_chn2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x2>;
-+
-+			adc_i2c_2: adc@14 {
-+				compatible = "lltc,ltc2497";
-+				reg = <0x14>;
-+				vref-supply = <&voltage_mon_reg>;
-+				#io-channel-cells = <1>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0x0>;
-+
-+			i2c-mux@71 {
-+				compatible = "nxp,pca9548";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				reg = <0x71>;
-+				i2c-mux-idle-disconnect;
-+
-+				nvmeslot_8: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x0>;
-+				};
-+				nvmeslot_9: i2c@1 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x1>;
-+				};
-+				nvmeslot_10: i2c@2 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x2>;
-+				};
-+				nvmeslot_11: i2c@3 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x3>;
-+				};
-+			};
-+
-+			i2c-mux@72 {
-+				compatible = "nxp,pca9548";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				reg = <0x72>;
-+				i2c-mux-idle-disconnect;
-+
-+				nvmeslot_4: i2c@4 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x4>;
-+				};
-+				nvmeslot_5: i2c@5 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x5>;
-+				};
-+				nvmeslot_6: i2c@6 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x6>;
-+				};
-+				nvmeslot_7: i2c@7 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x7>;
-+				};
-+			};
-+
-+			i2c-mux@74 {
-+				compatible = "nxp,pca9548";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				reg = <0x74>;
-+				i2c-mux-idle-disconnect;
-+
-+				ocpslot: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x0>;
-+
-+					ocpslot_temp: temperature-sensor@1f {
-+						compatible = "ti,tmp421";
-+						reg = <0x1f>;
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+
-+						channel@0 {
-+							reg = <0x0>;
-+							status = "disabled";
-+						};
-+						channel@1 {
-+							reg = <0x1>;
-+						};
-+					};
-+				};
-+
-+				nvmeslot_0: i2c@4 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x4>;
-+				};
-+				nvmeslot_1: i2c@5 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x5>;
-+				};
-+				nvmeslot_2: i2c@6 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x6>;
-+				};
-+				nvmeslot_3: i2c@7 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x7>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+
-+	rtc@51 {
-+		compatible = "nxp,pcf8563";
-+		reg = <0x51>;
-+	};
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	temperature-sensor@4f {
-+		compatible = "ti,tmp75";
-+		reg = <0x4f>;
-+	};
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	fan-controller@5c {
-+		compatible = "onnn,adt7462";
-+		reg = <0x5c>;
-+	};
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c02";
-+		reg = <0x50>;
-+	};
-+
-+	eeprom@52 {
-+		compatible = "atmel,24c02";
-+		reg = <0x52>;
-+	};
-+
-+	temperature-sensor@18 {
-+		compatible = "jedec,jc-42.4-temp";
-+		reg = <0x18>;
-+	};
-+
-+	temperature-sensor@1a {
-+		compatible = "jedec,jc-42.4-temp";
-+		reg = <0x1a>;
-+	};
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+	ssif-bmc@10 {
-+		compatible = "ssif-bmc";
-+		reg = <0x10>;
-+	};
-+};
-+
-+&i2c14 {
-+	status = "okay";
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+
-+	bmc_ast2600_cpu: temperature-sensor@48 {
-+		compatible = "ti,tmp75";
-+		reg = <0x48>;
-+	};
-+};
-+
-+&i2c15 {
-+	status = "okay";
-+	gpio_expander1: gpio-expander@22 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x22>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"presence-ocp1","presence-ocp2",
-+			"","",
-+			"","",
-+			"","",
-+			"","",
-+			"","",
-+			"","",
-+			"","";
-+	};
-+};
-+
-+&adc0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-+		&pinctrl_adc2_default>;
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
-+
-+&gpio0 {
-+	gpio-line-names =
-+	/*A0-A7*/	"","","","","cpu-type-detect","i2c2-reset-n","i2c6-reset-n","i2c5-reset-n",
-+	/*B0-B7*/	"","","","","host0-sysreset-n","host0-pmin-n","fru-rd-complete",
-+			"chassis-id-sel",
-+	/*C0-C7*/	"s0-vrd-fault-n","","bmc-debug-mode","","cpld-3v3-irq-n","","vrd-sel",
-+			"spd-sel",
-+	/*D0-D7*/	"presence-ps0","presence-ps1","hsc-12vmain-alt2-n","ext-high-temp-n",
-+			"","","","",
-+	/*E0-E7*/	"eth-phy-rst-n","eth-phy-int-n","","","","","","",
-+	/*F0-F7*/	"s0-pcp-oc-warn-n","","power-chassis-control",
-+			"cpu-bios-recover","s0-heartbeat","hs-scout-proc-hot","s0-vr-hot-n","",
-+	/*G0-G7*/	"","","hsc-12vmain-alt1-n","","","bp-cpld-program-en","led-fp-sta-gr",
-+			"led-fp-sta-amb",
-+	/*H0-H7*/	"jtag-program-sel","jtag-cmpl2","wd-disable-n","power-chassis-good","","",
-+			"","",
-+	/*I0-I7*/	"","","","","","","power-button","rtc-battery-voltage-read-enable",
-+	/*J0-J7*/	"","","","","","","","",
-+	/*K0-K7*/	"","","","","","","","",
-+	/*L0-L7*/	"","","","","reset-button","","","",
-+	/*M0-M7*/	"nmi-n","s0-ddr-save","soc-spi-nor-access","presence-cpu0","s0-rtc-lock",
-+			"","","",
-+	/*N0-N7*/	"hpm-fw-recovery","hpm-stby-rst-n","jtag-sel-s0","led-sw-hb",
-+			"jtag-dbgr-prsnt-n","","","",
-+	/*O0-O7*/	"","","","","","","","",
-+	/*P0-P7*/	"ps0-ac-loss-n","ps1-ac-loss-n","","","led-fault","user-mode","jtag-srst-n",
-+			"led-bmc-hb",
-+	/*Q0-Q7*/	"","","","","","","","",
-+	/*R0-R7*/	"","","","","","","","",
-+	/*S0-S7*/	"","","identify-button","led-identify","","spi-nor-access","host0-ready","",
-+	/*T0-T7*/	"","","","","","","","",
-+	/*U0-U7*/	"","","","","","","","",
-+	/*V0-V7*/	"s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n",
-+			"host0-reboot-ack-n","s0-fw-boot-ok","host0-shd-req-n",
-+			"host0-shd-ack-n","s0-overtemp-n",
-+	/*W0-W7*/	"ocp-aux-pwren","ocp-main-pwren","ocp-pgood","",
-+			"bmc-ok","bmc-ready","spi0-program-sel","spi0-backup-sel",
-+	/*X0-X7*/	"","","","","","","","",
-+	/*Y0-Y7*/	"","","","vrd-prg-en-n","","","","host0-special-boot",
-+	/*Z0-Z7*/	"","ps0-pgood","ps1-pgood","","","","","";
-+
-+	ocp-aux-pwren-hog {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(W, 0) GPIO_ACTIVE_HIGH>;
-+		output-high;
-+		line-name = "ocp-aux-pwren";
-+	};
-+
-+};
-+
-+&gpio1 {
-+	gpio-line-names =
-+	/*18A0-18A7*/	"","","","","","","","",
-+	/*18B0-18B7*/	"","","","","s0-soc-pgood","vga-ft-press-n","emmc-rst-n","s01-uart1-sel",
-+	/*18C0-18C7*/	"uart1-mode0","uart1-mode1","uart2-mode0","uart2-mode1",
-+			"","","","",
-+	/*18D0-18D7*/	"","","","","","","","",
-+	/*18E0-18E3*/	"","","","";
-+};
--- 
-2.43.0
+Hi All,
 
+I'm working in adding Custom GPIO events to SEL.
+
+I read a post on mailing list (https://lists.ozlabs.org/pipermail/openbmc/2=
+020-July/022290.html) on adding it as discrete sensor and calling the D-Bus=
+ object using IpmiSelAdd to log SEL. But it is for intel-ipmi-oem. For aspe=
+ed SDK it is handled by phosphor-ipmi-host.
+
+Can anyone help me in adding GPIO as a discrete sensor.
+
+Hardware: Aspeed AST2600EVB.
+Software:  Aspeed SDK 9.0
+
+
+
+Thanks, and regards,
+Bala Subramaniyan M,
+Senior Engineer,
+
+
+
+
+[cid:7ff12bdf-016d-4043-bc5a-5a747473a156]<https://www.ltts.com/>
+
+
+S1 Building, L&T Tech Park, Bellary Road,
+
+Next to Raintree Boulevard, Park View Layout,
+
+Byatarayanapura, Bengaluru-560092
+
+Mobile: +91 9677035467
+
+ENGINEERING THE CHANGE | www.LTTS.com<https://www.ltts.com/>
+
+
+
+L&T Technology Services Ltd
+
+www.LTTS.com
+
+L&T Technology Services Limited (LTTS) is committed to safeguard your priva=
+cy. Read the appropriate privacy notice<https://www.ltts.com/privacy-polici=
+es-notices> applicable to you to know more about how LTTS collects, uses an=
+d stores your personal data. Please visit our privacy policy<https://www.lt=
+ts.com/data-privacy-policy> available on our website www.Ltts.com for more =
+information about our commitment towards data privacy under applicable data=
+ protection laws. This email may contain confidential or privileged informa=
+tion for the intended recipient(s). If you are not the intended recipient, =
+please do not use or disseminate the information, notify the sender and del=
+ete it from your system.
+
+--_000_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
+serif; font-size: 12pt; color: rgb(0, 0, 0);">
+Hi All,</div>
+<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
+serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
+serif; font-size: 12pt; color: rgb(0, 0, 0);">
+I'm working in adding Custom GPIO events to SEL.&nbsp;</div>
+<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
+serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Arial, Helvetica, sans-=
+serif; font-size: 12pt; color: rgb(0, 0, 0);">
+I read a post on mailing list (<a href=3D"https://lists.ozlabs.org/pipermai=
+l/openbmc/2020-July/022290.html" id=3D"LPlnk233934" class=3D"OWAAutoLink">h=
+ttps://lists.ozlabs.org/pipermail/openbmc/2020-July/022290.html</a>) on add=
+ing it as discrete sensor and calling
+ the D-Bus object using IpmiSelAdd to log SEL. But it is for intel-ipmi-oem=
+. For aspeed SDK it is handled by phosphor-ipmi-host.</div>
+<div id=3D"Signature" class=3D"elementToProof">
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Can anyone help me in adding GPIO as a discrete sensor.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Hardware: Aspeed AST2600EVB.</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Software:&nbsp; Aspeed SDK 9.0</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<b>Thanks, and regards,</b></div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<b>Bala Subramaniyan M,</b></div>
+<div style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Senior Engineer,</div>
+<p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
+t; color: rgb(0, 0, 0);"><img id=3D"Picture_x0020_12" width=3D"330" height=
+=3D"2" style=3D"width: 330px; height: 2px; max-width: 728px; margin-top: 0p=
+x; margin-bottom: 0px;" data-outlook-trace=3D"F:1|T:1" src=3D"cid:852a2d8c-=
+2ea3-4cb7-93a0-7c1cb2894e6e"></span></p>
+<p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
+t; color: rgb(0, 0, 0);"><br>
+</span></p>
+<p><span style=3D"font-family: Arial, Helvetica, sans-serif; font-size: 12p=
+t; color: rgb(0, 0, 0);"><a href=3D"https://www.ltts.com/" id=3D"OWA187404d=
+a-0d88-7584-a1a6-e165d6b2b41b" class=3D"OWAAutoLink" style=3D"color: rgb(0,=
+ 0, 0); margin-top: 0px; margin-bottom: 0px;"><img id=3D"Graphic_x0020_2" w=
+idth=3D"249" height=3D"38" style=3D"width: 249px; height: 38px; max-width: =
+728px; margin-top: 0px; margin-bottom: 0px;" data-outlook-trace=3D"F:1|T:1"=
+ src=3D"cid:7ff12bdf-016d-4043-bc5a-5a747473a156"></a></span></p>
+<p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;"><b=
+r>
+</span></p>
+<p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;">S1=
+ Building, L&amp;T Tech Park, Bellary Road,
+</span></p>
+<p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;">Ne=
+xt to Raintree Boulevard, Park View Layout,
+</span></p>
+<p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;">By=
+atarayanapura, Bengaluru-560092</span></p>
+<p style=3D"line-height: 115%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 115%;">Mo=
+bile: +91 9677035467</span></p>
+<p style=3D"line-height: 150%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(13, 13, 13); line-height: 150%;"=
+>ENGINEERING<b> THE CHANGE</b></span><span style=3D"font-family: Arial, Hel=
+vetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); line-height: 150%=
+;">
+ | </span><span style=3D"font-family: Arial, Helvetica, sans-serif; font-si=
+ze: 12pt; color: rgb(13, 13, 13); line-height: 150%;"><a href=3D"https://ww=
+w.ltts.com/" id=3D"OWA15b4ef24-a176-ae19-8911-29348e989cb7" class=3D"OWAAut=
+oLink" style=3D"color: rgb(13, 13, 13); margin-top: 0px; margin-bottom: 0px=
+;">www.LTTS.com</a></span></p>
+<p style=3D"line-height: 150%;"><span style=3D"font-family: Arial, Helvetic=
+a, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);"><img id=3D"Picture_x0=
+020_12" width=3D"330" height=3D"2" style=3D"width: 330px; height: 2px; max-=
+width: 728px; margin-top: 0px; margin-bottom: 0px;" data-outlook-trace=3D"F=
+:1|T:1" src=3D"cid:2f00e60e-4459-4080-8701-0ad431f05088"></span></p>
+</div>
+<p><strong>L&amp;T Technology Services Ltd</strong></p>
+<p><a href=3D"" http:=3D"" www.LTTS.com=3D"" ??=3D"" target=3D"" _blank??=
+=3D"">www.LTTS.com</a></p>
+<p>L&amp;T Technology Services Limited (LTTS) is committed to safeguard you=
+r privacy. Read the appropriate
+<a href=3D"https://www.ltts.com/privacy-policies-notices" target=3D"_blank"=
+>privacy notice</a> applicable to you to know more about how LTTS collects,=
+ uses and stores your personal data. Please visit our
+<a href=3D"https://www.ltts.com/data-privacy-policy" target=3D"_blank">priv=
+acy policy</a> available on our website www.Ltts.com for more information a=
+bout our commitment towards data privacy under applicable data protection l=
+aws. This email may contain confidential
+ or privileged information for the intended recipient(s). If you are not th=
+e intended recipient, please do not use or disseminate the information, not=
+ify the sender and delete it from your system.</p>
+</body>
+</html>
+
+--_000_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_--
+
+--_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-xprlwwlw.png"
+Content-Description: Outlook-xprlwwlw.png
+Content-Disposition: inline; filename="Outlook-xprlwwlw.png"; size=99;
+	creation-date="Mon, 21 Oct 2024 11:04:40 GMT";
+	modification-date="Mon, 21 Oct 2024 11:04:40 GMT"
+Content-ID: <852a2d8c-2ea3-4cb7-93a0-7c1cb2894e6e>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
+WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
+
+--_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-dewy5wx2.png"
+Content-Description: Outlook-dewy5wx2.png
+Content-Disposition: inline; filename="Outlook-dewy5wx2.png"; size=5482;
+	creation-date="Mon, 21 Oct 2024 11:04:40 GMT";
+	modification-date="Mon, 21 Oct 2024 11:04:40 GMT"
+Content-ID: <7ff12bdf-016d-4043-bc5a-5a747473a156>
+Content-Transfer-Encoding: base64
+
+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
+AABJRU5ErkJggg==
+
+--_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_
+Content-Type: image/png; name="Outlook-4wgbw4sx.png"
+Content-Description: Outlook-4wgbw4sx.png
+Content-Disposition: inline; filename="Outlook-4wgbw4sx.png"; size=99;
+	creation-date="Mon, 21 Oct 2024 11:04:40 GMT";
+	modification-date="Mon, 21 Oct 2024 11:04:40 GMT"
+Content-ID: <2f00e60e-4459-4080-8701-0ad431f05088>
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAUoAAAACCAYAAAA+VZWwAAAAKklEQVRIS+3QAQEAAAQAIPY55jUL
+WFATysCAAQMG3oGM6nFkwIABA/fAAnjMAdUWFbQgAAAAAElFTkSuQmCC
+
+--_006_MA1PR01MB4308EE28D3B88AD2FFFF756D80432MA1PR01MB4308INDP_--
