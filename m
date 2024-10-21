@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47A1F9A5A53
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 08:28:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 849459A5A56
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 08:28:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XX53043Kqz3dW9
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 17:27:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XX5355kVZz3fmk
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2024 17:28:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1030"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729492074;
-	cv=none; b=SQxdKKQpTCWZfmfNoDmNj/sy4j/6Yr7XIFqT5AUq+C8RFFnbd3hIbw+NBUr0xHI6dB5xyEM2xAdg5sT4v4eGUMF9LgrgkbxcW+hS1hQbnfkXCxaOyZedFxC02/VQ7BuIFzvqVLiRg+AI5rGc5OZ+rvwIKJcxWzcEBgrH5QOFPSaCZW3JQSLmo8EdL5xAJWLHtn5kHwg0Z8qEgooI+P2/dTnSLjfA2cx/hkXUn2pA+luBXoVtZx5OR9N/ajWfkRRBKjJb/jtqQkD5fcgFwUmBu29Hkpo+LDIErN+GJSH86FUEknR1Q3Q/k3JdVd7vIvYqGlDtuQCQyjwR/NVnoE1uVg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::22e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729492078;
+	cv=none; b=dQYfGRkUr6e4tzmyEmbwDdI9JVTNoD6EwDP023L4Ss1R4jdfL03K0V/7xRQGqJcBNfz+cz6L5jvXiAH2mUqJzbBFFYzXkbp5D6xL4Fh1L+F5DcDUL+ZUOZTRPLRbJ1Z9aLax7w52xHvQSJ1qjO/F02VzzSWn4QN0U0wteN3CVCdleJFK++jRWS7DzdUo6D00J0cUwgQwkhuubGqyrXAPBmaFAnY8DzQlcrrIac1zGyOqpudTT7f2KLVDby4zdhS+tG2UCvzInL+Bq8DXD1RVTzdo1qsW55BIlj8YPoDx7Cs3VW8+H947LfyteqjruXJva58VzqK8jrp+nRc1Tt+RGA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729492074; c=relaxed/relaxed;
-	bh=CYjjxH/6sVW4vPAuNqG1v24L702GKNztR3YORCVScdw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=SYd5ALuVojJdcvcbp7rvxHRf/qLhThuBt7ALA1+yoprEoOxikzBCqXlqR7H+N+0YkZbJF6oYxF8xaUC/sXmOopFSKC9OX2qqZQEOkcKkoRwyxc8qhMznIavmKLXvFDPE2s7+TcQA8uuSzk0rIcqH2CuSD+kShlfzIHF0H0E6XqAkYWikGdkFzOl79o56qZq5uSwydYP8JL7/OL3X3m1+naoejhviqq+yy2SaYo7drNZ9UDYzNynqRenmXde2LgZ858DLc3nIl2VmuePMAfyD7VAcasN/8q5ly809xqEojOLSyJq9jk0tV/UxbnYiGLjvS0aO9BC1djObgaE9A1Syhg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W9Ar4y9I; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1030; helo=mail-pj1-x1030.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1729492078; c=relaxed/relaxed;
+	bh=eWSyC2espM7ydjn5gySkWbFjXNw5iBOec49BkKYhVoU=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=GRilLRMwLImW22OoBBxiZ3TXk5EY0Rb/rC757hSdjRiKWvY4bd1Kcpf0Gyx+DZProWAIvnE8v/ZNP6S71IVuHbvM70at76IwQSu+GaCkaS3Famj+hMElqyVcDJ1uFjwqklfeRYscDHL8GSpMKguFrlkegqODvzo7x79cPNPsWERM+XKJEe5pmX1N0HInrvTKKBSd1xecHUjAob5MsKOe1bVxxTsa+s+Mz+ZtFZwYrAF57RkuWnjBBfuQxOqm9Kx5pBUV0CtCbnenW+U72vAn6VtnFHErJMMIuv+qGxZ/0R9ceci5V6FfK86ERyUw4hPddIYwOQ67b29YPBKAZd4AxQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MS0AADMO; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::22e; helo=mail-oi1-x22e.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=W9Ar4y9I;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MS0AADMO;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1030; helo=mail-pj1-x1030.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e; helo=mail-oi1-x22e.google.com; envelope-from=warp5tw@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XX52x0DGmz3clY
-	for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2024 17:27:53 +1100 (AEDT)
-Received: by mail-pj1-x1030.google.com with SMTP id 98e67ed59e1d1-2e2dc61bc41so2737495a91.1
-        for <openbmc@lists.ozlabs.org>; Sun, 20 Oct 2024 23:27:52 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XX5314Wfsz3fRg
+	for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2024 17:27:57 +1100 (AEDT)
+Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3e5f86e59f1so1841197b6e.1
+        for <openbmc@lists.ozlabs.org>; Sun, 20 Oct 2024 23:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729492070; x=1730096870; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1729492074; x=1730096874; darn=lists.ozlabs.org;
         h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=CYjjxH/6sVW4vPAuNqG1v24L702GKNztR3YORCVScdw=;
-        b=W9Ar4y9I4EqnS9TfBSctoJzpdduTgROqGrviBQZk0/AoiMHuQ3don+38nyj2iVRmna
-         k3vg8YACkd1xGE8Nwu+OZfjK/icPUBJ6/F3JLf78ynH2mvgfLJhiYE3VjIE9woeE/qFs
-         Sqw4bWjtZqZIxfQ8T3lX4d27zzq4DxLhMnrQakPa736CHE6h7/qbTmCbxinNcvtfekP3
-         yqH2CQAJsBHgf9LCXtF5RGabooZLXyYPPip7skft6FqkTyExvuKX6tavyqBnh3csj2Wk
-         pIoE0H2/vUWLFbE9xNpT1POujCsaLX9d7OhJ+tex1Iv2qPUCqQQrZmNw3qZCg9jBaVjX
-         PUcA==
+        bh=eWSyC2espM7ydjn5gySkWbFjXNw5iBOec49BkKYhVoU=;
+        b=MS0AADMOaHC6IvwMGnH+pwaoz02NRRbLC76BJ/ylxIkclRp9OGFB9J1tHaLXhilPM4
+         8Ba0vVlz5EdSqooY3wBh51nXqqUZp+ZUmpXBIks+RVaDpkG+sR4V0X0D1ywrGbmpIbww
+         JzEY1cdJ+mPnKm4BOzq8nX1ZlAB0SoDFon8Y0YB45RtDkNY5Kn/lJRlDc/Nq6U9SzX0K
+         N5kFwIVgLgBcHdchY5mbLXaMKPO8zo7XdgRquPUHVHcgmaVBiJSU2p41HAy4zabvET9f
+         k/z5SWPA1/VVVOH2tgF8JraIwzfoQdZUIP+GK5EVpUgQvOlTK6EvJV7lbMwgyd5mJLZ8
+         YnOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729492070; x=1730096870;
+        d=1e100.net; s=20230601; t=1729492074; x=1730096874;
         h=references:in-reply-to:message-id:date:subject:cc:to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CYjjxH/6sVW4vPAuNqG1v24L702GKNztR3YORCVScdw=;
-        b=PrFxMM1E8nAK/QegcsW2Zr2FM/n4LBqNJtRg+f0uTuomrC9NlRYPRT7WzdqALg/QPj
-         //0U7y9g67tJEU1fLY6Qw1634/prbMsFQ3AvukZ9jJ07XMSPC5bgEi/YHOwarazEe0ko
-         3wpl5jvmWPqVq+5K8EG1Q5v8QaZ58FwKz7h+mcA6DvA+N2Ij/8S/EZZsHFhmxZrSQMzF
-         pSwVAoPtO5TJXWbpqxLJkz/BFI5onLZ/a64eWmHlWgL1D/DL6I6H3OLBMRPZ412SsfiW
-         tTrwYdLGXrXImNsasFULh3h58MxlcxHzJR/xyy9KIxRji9oyxrD7w2639Oyz4FLTztiu
-         NUlw==
-X-Gm-Message-State: AOJu0YzYw7zwQ+J5gEE8K4YagLEGU72qHqk1M57OdzwuTDiMprkyQ3BJ
-	C1fK5bf9yCPApzKJZ2/ZGv1mZ3+MFz69zATv199BllPfg/2IfxM=
-X-Google-Smtp-Source: AGHT+IFFpVgdw28i4FRp0IbBH2AXunBvqGNfnBaxFYwBvnU1BFlVOQU2Chz5Ii9cWnEzNwKwGduwAA==
-X-Received: by 2002:a17:90a:d386:b0:2e0:8719:5f00 with SMTP id 98e67ed59e1d1-2e5617570e4mr11165488a91.22.1729492070322;
-        Sun, 20 Oct 2024 23:27:50 -0700 (PDT)
+        bh=eWSyC2espM7ydjn5gySkWbFjXNw5iBOec49BkKYhVoU=;
+        b=Y+erINGKWMbg4aMhIyDGBSps3bNJMqcp2dgsa8YVQWyUgSW4wQJZptUhhXYpeYExBM
+         LjYWyDXvAxa3voWdTyM8uj2H9Y6uVxp3HIxBnTctYXl83/SikzMddAhsvnwWh3r6NfNF
+         ta/gNeIkWaXIEl9vgeke3DXaLFOltnFoPSygQePxNtRUDwo4U9AP7w5SNGlFn5o5FF8R
+         Us6reuxKeol4iuafodkWHyE+il8yq1KBOtogXDuX9FQyzLzDwATGCdfFzuxfrhqzWCJj
+         0HOStT/S5gPq3b9WN2sQlp43LkaPmDEYeE0nu0GXpqxpcyknf3kgm4LgZsgrVuFFm0Qz
+         V2zw==
+X-Gm-Message-State: AOJu0Yw9frh5QmfDKP0NfdnCpW6UCo/00mr/nXhRARPu1ROOdE2BoFRg
+	VYfIgVW5UDroshm+o338nXJlbrkxCfO5I/J8wzGvcMQYf80v408=
+X-Google-Smtp-Source: AGHT+IFfNhZWzGxX849ort1Ktd6Xx0TzIu5FQjYTFFlchl2XNZZ5PZ+BFx5OnrOYHlagj8I8RrivPw==
+X-Received: by 2002:a05:6808:3197:b0:3e5:f9d0:b33b with SMTP id 5614622812f47-3e602bccb5dmr8701179b6e.0.1729492074493;
+        Sun, 20 Oct 2024 23:27:54 -0700 (PDT)
 Received: from localhost (2001-b400-e38e-c9a7-dd38-775c-4093-c057.emome-ip6.hinet.net. [2001:b400:e38e:c9a7:dd38:775c:4093:c057])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e5ad389d04sm2734545a91.31.2024.10.20.23.27.49
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7eaeaafd36esm2283088a12.6.2024.10.20.23.27.53
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 20 Oct 2024 23:27:49 -0700 (PDT)
+        Sun, 20 Oct 2024 23:27:54 -0700 (PDT)
 From: Tyrone Ting <warp5tw@gmail.com>
 X-Google-Original-From: Tyrone Ting <kfting@nuvoton.com>
 To: avifishman70@gmail.com,
@@ -81,9 +81,9 @@ To: avifishman70@gmail.com,
 	KWLIU@nuvoton.com,
 	JJLIU0@nuvoton.com,
 	kfting@nuvoton.com
-Subject: [PATCH v7 2/4] i2c: npcm: Modify the client address assignment
-Date: Mon, 21 Oct 2024 14:27:30 +0800
-Message-Id: <20241021062732.5592-3-kfting@nuvoton.com>
+Subject: [PATCH v7 3/4] i2c: npcm: use i2c frequency table
+Date: Mon, 21 Oct 2024 14:27:31 +0800
+Message-Id: <20241021062732.5592-4-kfting@nuvoton.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20241021062732.5592-1-kfting@nuvoton.com>
 References: <20241021062732.5592-1-kfting@nuvoton.com>
@@ -108,61 +108,465 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tyrone Ting <kfting@nuvoton.com>
 
-Store the client address earlier since it might get called in
-the i2c_recover_bus() logic flow at the early stage of
-npcm_i2c_master_xfer().
+Modify i2c frequency from table parameters for NPCM i2c modules.
+
+Supported frequencies are:
+
+1. 100KHz
+2. 400KHz
+3. 1MHz
+
+The original equations were tested on a variety of chips and base clocks.
+Since we added devices that use higher frequencies of the module we
+saw that there is a mismatch between the equation and the actual
+results on the bus itself, measured on scope.
+
+Meanwhile, the equations were not accurate to begin with.
+They are an approximation of the ideal value. The ideal value is
+calculated per frequency of the core module.
+
+So instead of using the equations we did an optimization per module
+frequency, verified on a device.
+
+Most of the work was focused on the rise time of the SCL and SDA,
+which depends on external load of the bus and PU.
+
+Different PCB designs, or specifically to this case: the number
+and type of targets on the bus, impact the required values for
+the timing registers.
+
+Users can recalculate the numbers for each bus and get an even better
+optimization, but our users chose not to.
+
+We manually picked values per frequency that match the entire valid
+range of targets (from 1 to max number). Then we check against the
+AMR described in SMB spec and make sure that none of the values
+is exceeding.
+
+This process was led by the chip architect and included a lot of testing.
 
 Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 Reviewed-by: Tali Perry <tali.perry1@gmail.com>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 374 ++++++++++++++++++++++++-------
+ 1 file changed, 288 insertions(+), 86 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index c96a25d37c14..a9a9b21f1f0b 100644
+index a9a9b21f1f0b..7c13f9f6014a 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2155,6 +2155,16 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+@@ -263,6 +263,265 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
+ #define I2C_FREQ_MIN_HZ			10000
+ #define I2C_FREQ_MAX_HZ			I2C_MAX_FAST_MODE_PLUS_FREQ
  
- 	} while (time_is_after_jiffies(time_left) && bus_busy);
++struct smb_timing_t {
++	u32 core_clk;
++	u8 hldt;
++	u8 dbcnt;
++	u16 sclfrq;
++	u8 scllt;
++	u8 sclht;
++	bool fast_mode;
++};
++
++static struct smb_timing_t smb_timing_100khz[] = {
++	{
++		.core_clk = 100000000, .hldt = 0x2A, .dbcnt = 0x4,
++		.sclfrq = 0xFB, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 62500000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x9D, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 50000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x7E, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 48000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x79, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 40000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x65, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 30000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x4C, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 29000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x49, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 26000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x42, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 25000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x3F, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 24000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x3D, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 20000000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x33, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 16180000, .hldt = 0x2A, .dbcnt = 0x1,
++		.sclfrq = 0x29, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 15000000, .hldt = 0x23, .dbcnt = 0x1,
++		.sclfrq = 0x26, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 13000000, .hldt = 0x1D, .dbcnt = 0x1,
++		.sclfrq = 0x21, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 12000000, .hldt = 0x1B, .dbcnt = 0x1,
++		.sclfrq = 0x1F, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 10000000, .hldt = 0x18, .dbcnt = 0x1,
++		.sclfrq = 0x1A, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 9000000, .hldt = 0x16, .dbcnt = 0x1,
++		.sclfrq = 0x17, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 8090000, .hldt = 0x14, .dbcnt = 0x1,
++		.sclfrq = 0x15, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 7500000, .hldt = 0x7, .dbcnt = 0x1,
++		.sclfrq = 0x13, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 6500000, .hldt = 0xE, .dbcnt = 0x1,
++		.sclfrq = 0x11, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++	{
++		.core_clk = 4000000, .hldt = 0x9, .dbcnt = 0x1,
++		.sclfrq = 0xB, .scllt = 0x0, .sclht = 0x0,
++		.fast_mode = false,
++	},
++};
++
++static struct smb_timing_t smb_timing_400khz[] = {
++	{
++		.core_clk = 100000000, .hldt = 0x2A, .dbcnt = 0x3,
++		.sclfrq = 0x0, .scllt = 0x47, .sclht = 0x35,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 62500000, .hldt = 0x2A, .dbcnt = 0x2,
++		.sclfrq = 0x0, .scllt = 0x2C, .sclht = 0x22,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 50000000, .hldt = 0x21, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x24, .sclht = 0x1B,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 48000000, .hldt = 0x1E, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x24, .sclht = 0x19,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 40000000, .hldt = 0x1B, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x1E, .sclht = 0x14,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 33000000, .hldt = 0x15, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x19, .sclht = 0x11,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 30000000, .hldt = 0x15, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x19, .sclht = 0xD,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 29000000, .hldt = 0x11, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x15, .sclht = 0x10,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 26000000, .hldt = 0x10, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x13, .sclht = 0xE,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 25000000, .hldt = 0xF, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x13, .sclht = 0xD,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 24000000, .hldt = 0xD, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x12, .sclht = 0xD,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 20000000, .hldt = 0xB, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xF, .sclht = 0xA,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 16180000, .hldt = 0xA, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xC, .sclht = 0x9,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 15000000, .hldt = 0x9, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xB, .sclht = 0x8,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 13000000, .hldt = 0x7, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xA, .sclht = 0x7,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 12000000, .hldt = 0x7, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xA, .sclht = 0x6,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 10000000, .hldt = 0x6, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x8, .sclht = 0x5,
++		.fast_mode = true,
++	},
++};
++
++static struct smb_timing_t smb_timing_1000khz[] = {
++	{
++		.core_clk = 100000000, .hldt = 0x15, .dbcnt = 0x4,
++		.sclfrq = 0x0, .scllt = 0x1C, .sclht = 0x15,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 62500000, .hldt = 0xF, .dbcnt = 0x3,
++		.sclfrq = 0x0, .scllt = 0x11, .sclht = 0xE,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 50000000, .hldt = 0xA, .dbcnt = 0x2,
++		.sclfrq = 0x0, .scllt = 0xE, .sclht = 0xB,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 48000000, .hldt = 0x9, .dbcnt = 0x2,
++		.sclfrq = 0x0, .scllt = 0xD, .sclht = 0xB,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 41000000, .hldt = 0x9, .dbcnt = 0x2,
++		.sclfrq = 0x0, .scllt = 0xC, .sclht = 0x9,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 40000000, .hldt = 0x8, .dbcnt = 0x2,
++		.sclfrq = 0x0, .scllt = 0xB, .sclht = 0x9,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 33000000, .hldt = 0x7, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0xA, .sclht = 0x7,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 25000000, .hldt = 0x4, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x7, .sclht = 0x6,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 24000000, .hldt = 0x7, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x8, .sclht = 0x5,
++		.fast_mode = true,
++	},
++	{
++		.core_clk = 20000000, .hldt = 0x4, .dbcnt = 0x1,
++		.sclfrq = 0x0, .scllt = 0x6, .sclht = 0x4,
++		.fast_mode = true,
++	},
++};
++
+ struct npcm_i2c_data {
+ 	u8 fifo_size;
+ 	u32 segctl_init_val;
+@@ -1805,102 +2064,45 @@ static void npcm_i2c_recovery_init(struct i2c_adapter *_adap)
+  */
+ static int npcm_i2c_init_clk(struct npcm_i2c *bus, u32 bus_freq_hz)
+ {
+-	u32  k1 = 0;
+-	u32  k2 = 0;
+-	u8   dbnct = 0;
+-	u32  sclfrq = 0;
+-	u8   hldt = 7;
++	struct  smb_timing_t *smb_timing;
++	u8   scl_table_cnt = 0, table_size = 0;
+ 	u8   fast_mode = 0;
+-	u32  src_clk_khz;
+-	u32  bus_freq_khz;
  
-+	/*
-+	 * Previously, the 7-bit address was stored and being converted to
-+	 * the address of event in the following call to npcm_i2c_master_start_xmit().
-+	 *
-+	 * Since there are cases that the i2c_recover_bus() gets called at the
-+	 * early stage of npcm_i2c_master_xfer(), the address of event is stored
-+	 * and then used in the i2c_recover_bus().
-+	 */
-+	bus->dest_addr = i2c_8bit_addr_from_msg(msg0);
-+
- 	/*
- 	 * Check the BER (bus error) state, when ber_state is true, it means that the module
- 	 * detects the bus error which is caused by some factor like that the electricity
-@@ -2165,6 +2175,15 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	 * bus is busy.
- 	 */
- 	if (bus_busy || bus->ber_state) {
-+		/*
-+		 * Since the transfer might be a read operation, remove the I2C_M_RD flag
-+		 * from the bus->dest_addr for the i2c_recover_bus() call later.
-+		 *
-+		 * The i2c_recover_bus() uses the address in a write direction to recover
-+		 * the i2c bus if some error condition occurs.
-+		 */
-+		bus->dest_addr &= ~I2C_M_RD;
-+
- 		iowrite8(NPCM_I2CCST_BB, bus->reg + NPCM_I2CCST);
- 		npcm_i2c_reset(bus);
- 		i2c_recover_bus(adap);
-@@ -2172,7 +2191,6 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+-	src_clk_khz = bus->apb_clk / 1000;
+-	bus_freq_khz = bus_freq_hz / 1000;
+ 	bus->bus_freq = bus_freq_hz;
+ 
+-	/* 100KHz and below: */
+-	if (bus_freq_hz <= I2C_MAX_STANDARD_MODE_FREQ) {
+-		sclfrq = src_clk_khz / (bus_freq_khz * 4);
+-
+-		if (sclfrq < SCLFRQ_MIN || sclfrq > SCLFRQ_MAX)
+-			return -EDOM;
+-
+-		if (src_clk_khz >= 40000)
+-			hldt = 17;
+-		else if (src_clk_khz >= 12500)
+-			hldt = 15;
+-		else
+-			hldt = 7;
+-	}
+-
+-	/* 400KHz: */
+-	else if (bus_freq_hz <= I2C_MAX_FAST_MODE_FREQ) {
+-		sclfrq = 0;
++	switch (bus_freq_hz) {
++	case I2C_MAX_STANDARD_MODE_FREQ:
++		smb_timing = smb_timing_100khz;
++		table_size = ARRAY_SIZE(smb_timing_100khz);
++		break;
++	case I2C_MAX_FAST_MODE_FREQ:
++		smb_timing = smb_timing_400khz;
++		table_size = ARRAY_SIZE(smb_timing_400khz);
+ 		fast_mode = I2CCTL3_400K_MODE;
+-
+-		if (src_clk_khz < 7500)
+-			/* 400KHZ cannot be supported for core clock < 7.5MHz */
+-			return -EDOM;
+-
+-		else if (src_clk_khz >= 50000) {
+-			k1 = 80;
+-			k2 = 48;
+-			hldt = 12;
+-			dbnct = 7;
+-		}
+-
+-		/* Master or Slave with frequency > 25MHz */
+-		else if (src_clk_khz > 25000) {
+-			hldt = clk_coef(src_clk_khz, 300) + 7;
+-			k1 = clk_coef(src_clk_khz, 1600);
+-			k2 = clk_coef(src_clk_khz, 900);
+-		}
+-	}
+-
+-	/* 1MHz: */
+-	else if (bus_freq_hz <= I2C_MAX_FAST_MODE_PLUS_FREQ) {
+-		sclfrq = 0;
++		break;
++	case I2C_MAX_FAST_MODE_PLUS_FREQ:
++		smb_timing = smb_timing_1000khz;
++		table_size = ARRAY_SIZE(smb_timing_1000khz);
+ 		fast_mode = I2CCTL3_400K_MODE;
+-
+-		/* 1MHZ cannot be supported for core clock < 24 MHz */
+-		if (src_clk_khz < 24000)
+-			return -EDOM;
+-
+-		k1 = clk_coef(src_clk_khz, 620);
+-		k2 = clk_coef(src_clk_khz, 380);
+-
+-		/* Core clk > 40 MHz */
+-		if (src_clk_khz > 40000) {
+-			/*
+-			 * Set HLDT:
+-			 * SDA hold time:  (HLDT-7) * T(CLK) >= 120
+-			 * HLDT = 120/T(CLK) + 7 = 120 * FREQ(CLK) + 7
+-			 */
+-			hldt = clk_coef(src_clk_khz, 120) + 7;
+-		} else {
+-			hldt = 7;
+-			dbnct = 2;
+-		}
++		break;
++	default:
++		return -EINVAL;
  	}
  
- 	npcm_i2c_init_params(bus);
--	bus->dest_addr = slave_addr;
- 	bus->msgs = msgs;
- 	bus->msgs_num = num;
- 	bus->cmd_err = 0;
+-	/* Frequency larger than 1 MHz is not supported */
+-	else
+-		return -EINVAL;
++	for (scl_table_cnt = 0; scl_table_cnt < table_size; scl_table_cnt++)
++		if (bus->apb_clk >= smb_timing[scl_table_cnt].core_clk)
++			break;
+ 
+-	if (bus_freq_hz >= I2C_MAX_FAST_MODE_FREQ) {
+-		k1 = round_up(k1, 2);
+-		k2 = round_up(k2 + 1, 2);
+-		if (k1 < SCLFRQ_MIN || k1 > SCLFRQ_MAX ||
+-		    k2 < SCLFRQ_MIN || k2 > SCLFRQ_MAX)
+-			return -EDOM;
+-	}
++	if (scl_table_cnt == table_size)
++		return -EINVAL;
+ 
+ 	/* write sclfrq value. bits [6:0] are in I2CCTL2 reg */
+-	iowrite8(FIELD_PREP(I2CCTL2_SCLFRQ6_0, sclfrq & 0x7F),
++	iowrite8(FIELD_PREP(I2CCTL2_SCLFRQ6_0, smb_timing[scl_table_cnt].sclfrq & 0x7F),
+ 		 bus->reg + NPCM_I2CCTL2);
+ 
+ 	/* bits [8:7] are in I2CCTL3 reg */
+-	iowrite8(fast_mode | FIELD_PREP(I2CCTL3_SCLFRQ8_7, (sclfrq >> 7) & 0x3),
++	iowrite8(FIELD_PREP(I2CCTL3_SCLFRQ8_7, (smb_timing[scl_table_cnt].sclfrq >> 7) & 0x3) |
++		 fast_mode,
+ 		 bus->reg + NPCM_I2CCTL3);
+ 
+ 	/* Select Bank 0 to access NPCM_I2CCTL4/NPCM_I2CCTL5 */
+@@ -1912,13 +2114,13 @@ static int npcm_i2c_init_clk(struct npcm_i2c *bus, u32 bus_freq_hz)
+ 		 * k1 = 2 * SCLLT7-0 -> Low Time  = k1 / 2
+ 		 * k2 = 2 * SCLLT7-0 -> High Time = k2 / 2
+ 		 */
+-		iowrite8(k1 / 2, bus->reg + NPCM_I2CSCLLT);
+-		iowrite8(k2 / 2, bus->reg + NPCM_I2CSCLHT);
++		iowrite8(smb_timing[scl_table_cnt].scllt, bus->reg + NPCM_I2CSCLLT);
++		iowrite8(smb_timing[scl_table_cnt].sclht, bus->reg + NPCM_I2CSCLHT);
+ 
+-		iowrite8(dbnct, bus->reg + NPCM_I2CCTL5);
++		iowrite8(smb_timing[scl_table_cnt].dbcnt, bus->reg + NPCM_I2CCTL5);
+ 	}
+ 
+-	iowrite8(hldt, bus->reg + NPCM_I2CCTL4);
++	iowrite8(smb_timing[scl_table_cnt].hldt, bus->reg + NPCM_I2CCTL4);
+ 
+ 	/* Return to Bank 1, and stay there by default: */
+ 	npcm_i2c_select_bank(bus, I2C_BANK_1);
 -- 
 2.34.1
 
