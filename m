@@ -2,59 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D7809AE203
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2024 12:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 629499AE260
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2024 12:20:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XZ1j71vcjz3c4l
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2024 21:04:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XZ23h71hVz3c4y
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2024 21:20:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729764248;
-	cv=none; b=AM2lMrzlBpWRELM8JPXJ1Bj7gX5kXzyyMZ/rY3xiHpZWmLMIwlTTiudeteLXIigdmqlcmdJDPphypNUiLma+Ko9OJX1IhW1S4BjRB08sxTATqGvApeKtSgC5DqLDNIWwp/eZ4FOLwzdq0JsAsiDyCZtOQSNr/S+k7gRvw0tlH7YEZ7yiyhAygAq9SCj1LyyDeBdf6NhjkJl40QK54sqFgVn3zI8mxSkhqgsJQhLKvODZBJq/1XpLrnRagaAmg5T3Gs7g0tniJDULke3L1zihW58YnoOCtRw0ePZEI8M/hXm+KU+MtRFwxXx/1rgjZNPFCdgAd+jKLUNFqGAUkftX3w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729765213;
+	cv=none; b=AGyhtZ9PjsFKXR5cWbaP/NZUL0OdKeScSfUAVFt/Lcfj+/1zmkce59Q7QMJllGFrpgKvmD5Fodc3rnz5Xo1Pz795/0gUsoFxOajzYljOZodj7V2PItt22xZVT/BV6Rm2kCsALNodFGnJJyBBUBiyjKzo70gaa54TtzDYCwYh+HrQUEX7YM3Y/XDNs2QFmuTp6bFwzQvG24SeZ007G+pad9CUaYhaaafKs452Kh48xZbB1IKaCBhTfQOG/zY+ZyGdFHO9jAa3Tbey8P7Hsv9uDHDi+VEFzFmEYO5e+BOUKGQG14SHZ/bjtrWYBl6i9KGycbbUTNwqAJOc+CArJzG2pw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729764248; c=relaxed/relaxed;
-	bh=nFDkW+0IEc7tuCOTVpx+RsOxnpyr5OTDfb7y2Wf47Eg=;
+	t=1729765213; c=relaxed/relaxed;
+	bh=RvHJU9EAOF9xOUpM45mYWiQ61gp7TJG3qkWoVzsZDZk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=idrMTUzgwPXWWVMnYJcHFupZB6AiakMp7H681KQMnTxmduoZe6iQ1JkFj9Tr2V6+jdlHFCoF0kIwAmq3hKeSsCIbOG7hzZ0U3UKdoNA/o5kA5i6ICvBjcj623pRRV7Qk9cxMo0s7Z5M7f73ECdnSr9oucKHTvJeOlDqyz1M7RPR9GwG1wSMKecOBqJE2NorcRTDYFiMbR4ZRxI1JH/LzzHHblMe6NRoi+b4tB91mmcCk5yDG8U4nmtnt9sa4M8qxEyT6QSXsS6d8XLdaPfLKoLwc7FB3vkpMQPpU9b5urLivO5rhOqnp2HeGmmizvcIwzBibLwaMOMQuL5k+XDw63g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cfMH7Pt3; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=dDX61s13dDNqEhy25wReDr1TNs198HKuQRcIy6BGRi2INWhR+/WTB0lJA0iFGovmrzo0MU2vOjpQC2GyZ0oelC70mIxbYHUu28PZ1kndqzKhv+3LDM5xWH3RL2aPR8cv+CwhLWMLMZKJs+v6ECcSc5PFWaQVggNpySTTIU62F/fUaUT6X/nQhKsvdScU28zjw5c0DtKTnOSVuce+1P2A7kEB9duMoeJaCctNgT7AMgdvP5SIhpYQmHAkpSBBiHy0Tg/JZB3ZRui4smJdjZw5tx1gNI7+FYJ6eSwxeYdUjOpTik5PO/pDO6Z5ahGDBJGKCzyfyTKYQz6BK7PMFHdCYg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=SA2w5szo; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cfMH7Pt3;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=SA2w5szo;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XZ1j35Qg3z2yYk
-	for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2024 21:04:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XZ23c07lqz2yYk
+	for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2024 21:20:11 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id AD23CA452F9;
-	Thu, 24 Oct 2024 10:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C975C4CEC7;
-	Thu, 24 Oct 2024 10:04:02 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 451E0A45330;
+	Thu, 24 Oct 2024 10:20:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91D8C4CEC7;
+	Thu, 24 Oct 2024 10:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729764244;
-	bh=DCLSjyVxD4E+9mxp2TmkqInRMBTjZIgH6PevLvpjvDY=;
+	s=k20201202; t=1729765209;
+	bh=JZRT/LML4GQueNnOCFhx/XljE+CECLtfbjWTWn0M5qM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cfMH7Pt3Slfn+IkPJz+EEREtdoLxD4HMjtuOFx/Gm7sM35LGlmr0ywDNu4huJVpIX
-	 RSXbv/2Gj3QUZuV28TlHmMcXkCabzFJQvgufTSjZg7Nu8uy3QEtUqCbyafwaO2jtaq
-	 aCIYypoI/wWQzULj5o2IIS/ba+Px59gAZOsf8QCoq2bv/c51J2f3+wxxsPd+moVox7
-	 WZzVl+ZKQ3R2pP+lgBrR2IGh4PK5Xa6+hHHI7Br7uV2yrH4jB2p0/bBmhhDbCrd9Pd
-	 CiiuRrG8rGAmIoCxLyhxOa4U+N9wVsgcUbe5shl/HrqJ3wCOCPKGki42biep3qH/8v
-	 Imp7nB2S5Sl4Q==
-Date: Thu, 24 Oct 2024 12:03:57 +0200
+	b=SA2w5szoWW2BU+Mf4zmP7FiFjH4iVCZmxCMflLXidIUuRUUTZ1ytMhG27HIercfbf
+	 wkMowBMShKDw1Ey5mRNdzBoUvJcwcUo+vPBYlNOL+hqzwkQX0eky30pcFtGk386rLn
+	 27Zk8qFLxPpFT0cMNBQ2e3+VQhvrZTXGm+7QkXquEfoqMGJuuuxn2aJ9il53fI5Ib9
+	 DFCfGISL7OXw+1Tn7/Th/eC2BuUwGDiHxcjSwHe0MjyeM/4LnBWMH4qyzfxujpV3MS
+	 3XWW9hVIs4V6oVVYsHYrJvaLALQIR+k86ZJh8N9VGa35vrONdI3ktam4bvjOltGzmq
+	 WkJmjbnzR5d3Q==
+Date: Thu, 24 Oct 2024 12:20:00 +0200
 From: Andi Shyti <andi.shyti@kernel.org>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v7 2/4] i2c: npcm: Modify the client address assignment
-Message-ID: <kzsvr3jepoqjahn7n2jch5vrqim5eknylrasvsbjugfhzny46o@bemfk6knfmxi>
+Subject: Re: [PATCH v7 3/4] i2c: npcm: use i2c frequency table
+Message-ID: <fh43vyo4oviet35jmihew5yew5ez3nyaqgsyntqtd7x7s5mdrv@ezpal3a4banw>
 References: <20241021062732.5592-1-kfting@nuvoton.com>
- <20241021062732.5592-3-kfting@nuvoton.com>
+ <20241021062732.5592-4-kfting@nuvoton.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241021062732.5592-3-kfting@nuvoton.com>
+In-Reply-To: <20241021062732.5592-4-kfting@nuvoton.com>
 X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.0
@@ -78,63 +78,93 @@ Hi Tyrone,
 
 ...
 
-> +	/*
-> +	 * Previously, the 7-bit address was stored and being converted to
-> +	 * the address of event in the following call to npcm_i2c_master_start_xmit().
+> -	/* 100KHz and below: */
+> -	if (bus_freq_hz <= I2C_MAX_STANDARD_MODE_FREQ) {
+> -		sclfrq = src_clk_khz / (bus_freq_khz * 4);
+> -
+> -		if (sclfrq < SCLFRQ_MIN || sclfrq > SCLFRQ_MAX)
+> -			return -EDOM;
+> -
+> -		if (src_clk_khz >= 40000)
+> -			hldt = 17;
+> -		else if (src_clk_khz >= 12500)
+> -			hldt = 15;
+> -		else
+> -			hldt = 7;
+> -	}
+> -
+> -	/* 400KHz: */
+> -	else if (bus_freq_hz <= I2C_MAX_FAST_MODE_FREQ) {
+> -		sclfrq = 0;
+> +	switch (bus_freq_hz) {
+> +	case I2C_MAX_STANDARD_MODE_FREQ:
+> +		smb_timing = smb_timing_100khz;
+> +		table_size = ARRAY_SIZE(smb_timing_100khz);
+> +		break;
+> +	case I2C_MAX_FAST_MODE_FREQ:
+> +		smb_timing = smb_timing_400khz;
+> +		table_size = ARRAY_SIZE(smb_timing_400khz);
+>  		fast_mode = I2CCTL3_400K_MODE;
+> -
+> -		if (src_clk_khz < 7500)
+> -			/* 400KHZ cannot be supported for core clock < 7.5MHz */
+> -			return -EDOM;
+> -
+> -		else if (src_clk_khz >= 50000) {
+> -			k1 = 80;
+> -			k2 = 48;
+> -			hldt = 12;
+> -			dbnct = 7;
+> -		}
+> -
+> -		/* Master or Slave with frequency > 25MHz */
+> -		else if (src_clk_khz > 25000) {
+> -			hldt = clk_coef(src_clk_khz, 300) + 7;
+> -			k1 = clk_coef(src_clk_khz, 1600);
+> -			k2 = clk_coef(src_clk_khz, 900);
+> -		}
+> -	}
+> -
+> -	/* 1MHz: */
+> -	else if (bus_freq_hz <= I2C_MAX_FAST_MODE_PLUS_FREQ) {
+> -		sclfrq = 0;
+> +		break;
+> +	case I2C_MAX_FAST_MODE_PLUS_FREQ:
+> +		smb_timing = smb_timing_1000khz;
+> +		table_size = ARRAY_SIZE(smb_timing_1000khz);
+>  		fast_mode = I2CCTL3_400K_MODE;
+> -
+> -		/* 1MHZ cannot be supported for core clock < 24 MHz */
+> -		if (src_clk_khz < 24000)
+> -			return -EDOM;
+> -
+> -		k1 = clk_coef(src_clk_khz, 620);
+> -		k2 = clk_coef(src_clk_khz, 380);
+> -
+> -		/* Core clk > 40 MHz */
+> -		if (src_clk_khz > 40000) {
+> -			/*
+> -			 * Set HLDT:
+> -			 * SDA hold time:  (HLDT-7) * T(CLK) >= 120
+> -			 * HLDT = 120/T(CLK) + 7 = 120 * FREQ(CLK) + 7
+> -			 */
+> -			hldt = clk_coef(src_clk_khz, 120) + 7;
+> -		} else {
+> -			hldt = 7;
+> -			dbnct = 2;
+> -		}
+> +		break;
+> +	default:
+> +		return -EINVAL;
 
-Do we care how it was done previously? I think this is not a
-useful information as the code readers will se the code the way
-it is now, not the way it was done "previously".
+There is here a slight change of behaiour which is not mentioned
+in the commit log. Before the user could set a bus_freq_hz which
+had to be <= I2C_MAX_..._MODE_FREQ, while now it has to be
+precisely that.
 
-(there is a related comment at the end)
+Do we want to check what the user has set in the DTS?
 
-> +	 * Since there are cases that the i2c_recover_bus() gets called at the
-> +	 * early stage of npcm_i2c_master_xfer(), the address of event is stored
-> +	 * and then used in the i2c_recover_bus().
+(Or am I missing something?)
 
-I could rephrase this sentence to something like:
-
-/*
- * Store the address early in a global position to ensure it is
- * accessible for a potential call to i2c_recover_bus().
- */
-
-> +	 */
-> +	bus->dest_addr = i2c_8bit_addr_from_msg(msg0);
-> +
->  	/*
->  	 * Check the BER (bus error) state, when ber_state is true, it means that the module
->  	 * detects the bus error which is caused by some factor like that the electricity
-> @@ -2165,6 +2175,15 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->  	 * bus is busy.
->  	 */
->  	if (bus_busy || bus->ber_state) {
-> +		/*
-> +		 * Since the transfer might be a read operation, remove the I2C_M_RD flag
-> +		 * from the bus->dest_addr for the i2c_recover_bus() call later.
-> +		 *
-> +		 * The i2c_recover_bus() uses the address in a write direction to recover
-> +		 * the i2c bus if some error condition occurs.
-> +		 */
-> +		bus->dest_addr &= ~I2C_M_RD;
-> +
->  		iowrite8(NPCM_I2CCST_BB, bus->reg + NPCM_I2CCST);
->  		npcm_i2c_reset(bus);
->  		i2c_recover_bus(adap);
-> @@ -2172,7 +2191,6 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->  	}
->  
->  	npcm_i2c_init_params(bus);
-> -	bus->dest_addr = slave_addr;
-
-We can now get rid of slave_addr. It's just used in
-npcm_i2c_master_start_xmit(). Right?
-
+Thanks,
 Andi
-
->  	bus->msgs = msgs;
->  	bus->msgs_num = num;
->  	bus->cmd_err = 0;
-> -- 
-> 2.34.1
-> 
