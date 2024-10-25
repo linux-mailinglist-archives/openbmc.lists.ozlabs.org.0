@@ -1,64 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 808A49AE600
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2024 15:23:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C32B9AF5F6
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2024 02:16:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XZ66h6CW4z3c57
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2024 00:23:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XZNcD3Lr9z3cDt
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2024 11:16:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729776186;
-	cv=none; b=Ctu8EKmPULJkEbVFp4vcuuGH1Z4OM8X5Mj1xHFLtq7aK9Da1jYYtJ1O6TZXmuFT0fZF1P0DU7yZ4VnkQIZGOFPz7SL0y84T3YmBmWkS88VL65Vo44E/rU7+WMitoIfPRsh3OvIoLV53dtRPj02u0XDtpbVt1AEGUV0QNd029Y/HktKVgH1KVhs4eQB181p21HbRx696DnUU9oL0eBEJiUpMoB6oS+Eb2q1l/uL/dUHD9pZC1vomXWWLQwmTzLsFAgdgkUq2BmTQ7bjEigcgLJ3H50MQrk1wjVQoidCmRDUruZ9p9xw5Y/28ZhBdervYg2bTH1TbJz2VnfV93fTG8KQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1729815368;
+	cv=none; b=BKgIARkQ2r1TNvq1aH8VL89IcGnzwLBg1acOipnvvBGfslArn8HuPa3nqz5jkAkA763mtmNaSVmlYaFDzdEvvstTV/J6jhX0TUKLAy6iy/zwM4qWsWKam6++j4qv+SfGTNK3101s7f0Cl5EjxZdjLs7Op7Onemtuo3JL9zdylc9XBnRbtvLRoUXceYj7OxBlBrbsg+S8Yd9UIe6T7aC/DeerUR2deXR58rKhs55abcrEcaf+WAReA1YM0tefbTMA67vvre82I1wASclAwaRHQMbnnubqNi/uEY6NUNNRPVUbmfdKMDTAlPNBggFOoP1tplIwVAcBrQ7vlykOjI/m/Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1729776186; c=relaxed/relaxed;
-	bh=08lXJgKcAe8N3lleod88TNBbTcd1+2/PW8hqN4eL/LU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AjsPl88s0cI0pedOzu3mwpE4HlOncIh/gLlWqr99vhOKcF10sZzbNUorD/sqCUtdOugS1n+Ooyat0nvHCBDnUVuPbfP/WGqY7cSC3P+aMlfHsdbXhS2xV5iMUijEYi+RqdoX9yj2DGsgUGkKm4DD0LpDXXquOdirEBEYJMlQva2o5E84Erq+IDx7l2oBxx26SSnsY5Wiiw/sz3VffYtT76ZYHY+Yxwugy0qA2wMqAkv/tnGwkVokvXFaO4bLPQi7mDOxdzfcocMRvxa9dRW8CP/uwaBCwhCoK76MMX6zzs/kM95AgiDztvgr0o3vJJvSjoujkk5S4J95GjudmWLsuw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=UE3qlqoc; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1729815368; c=relaxed/relaxed;
+	bh=ns1ald87qt1gqCmT58j8v7HUZhlPtry/TNup+6aiyls=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=fVTEBTtU1VTlkClBILffvNcWRRHdtaUQ17vqbK9AZKj/D3/BWOouUJm7RMWs23XGIUAXkbkMKS7ZPDMa53+phOaUaXJok36D7799YPUBLcfs/9vgxGmWV0+KKhfL8ceCg1Y1NF2d3tuXVVl2Xj3Tka0HyUEbR2Znu94gFYy3v601i5b74mWfVqsL1gIYCK1MlWi6pqbKiVbH5xL2h6413/BfERPgNjKNu543+8JUGN0fOay1oj4z0ajnPj5foPFtq/lBQni7slNJ7YDkYIaN2XsUdauglL6QahFjPs6c8IvSX3wjM3dUKRa8JZaYNqvNteOgSF2EIt1A3dK55uQiLg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=a2oAY/3N; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=UE3qlqoc;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=a2oAY/3N;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XZ66c6slWz2yj3;
-	Fri, 25 Oct 2024 00:23:04 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 76001A45419;
-	Thu, 24 Oct 2024 13:22:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B136AC4CEC7;
-	Thu, 24 Oct 2024 13:22:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729776180;
-	bh=xYOd1PGCn+k3tNRpgbdP98I0aYi1W9inhgTkL3ocTDw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UE3qlqocUQQwG7+oevrCYRcqdU5t6igksP5NXhM/w/Avp9vTWc9do/b/XFIaLNfV5
-	 nF5Mu09+yamxjgYhYGBEQmyp0jczN/DdGoDW33UtiPMUXVeEbuIhBF22CiQpgWVwV0
-	 qUkHRqiDvnAE6+n+Gx1vJ81KFaa+9tUo6F6L3DmpRpnwHnc377u3qWPsgOaTM457VE
-	 v9l5/b2mhN5jG+3lRx8YjH+eLwlL5IZ6wRAjXlWNtm0ptENvdOtcjvulFw+AvWDq6L
-	 LQWX29+MFnAHc+tALWO1lyKg/mbG/pBQ6CBRa5K0LSHIpv+WZigHO6oDUKFVVqZmqs
-	 gAPURf4qcQhJA==
-Date: Thu, 24 Oct 2024 15:22:56 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Tommy Huang <tommy_huang@aspeedtech.com>
-Subject: Re: [PATCH] i2c: aspeed: Consider i2c reset for muti-master case
-Message-ID: <c3ss6ralf4tpyknsda5p745a65xjprlzecdq3s4zy4dpckuxi4@izf7emrzykay>
-References: <20241018034919.974025-1-tommy_huang@aspeedtech.com>
- <e06a0db538bf62d4aeb7352ecc81a3a679fb9eec.camel@codeconstruct.com.au>
- <TYZPR06MB6191EBA63B87FE5152AF029DE14C2@TYZPR06MB6191.apcprd06.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XZNc81bmQz2yLg
+	for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2024 11:16:08 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1729815367;
+	bh=ns1ald87qt1gqCmT58j8v7HUZhlPtry/TNup+6aiyls=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=a2oAY/3NwAPOrYq/Ij2m5wMCodul+/3Gg0fQqjDsGj4BAzOs4VFSU0laZbCH/IopV
+	 f3lzn0r8Lybc0O2HK4meewMcJfwTuqBk37cP5ek56Xbe6ruyP8T0MAnBJg2c4GxnkC
+	 7Db7YtW0Z9c/3gLcTnrGQ+zeN6j5kgpIfqxjq8EPUJrcaKyZAAJYaZpVwdE/kW1gll
+	 IG6B8AlULcNdHOH/qc+E5iUFThTP5G+WA6SwPs1zx0PHqm7bA4rCjIInAlwqkGVLPZ
+	 tJWM8NIssPreM1wh4GOEgYtiz5h061dd77bu/LTXMbohBXlE+tP8zryW4yV9D0TmqY
+	 oioIDSWc1N/8A==
+Received: from [192.168.68.112] (ppp118-210-190-208.adl-adc-lon-bras34.tpg.internode.on.net [118.210.190.208])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 46B2369AC6;
+	Fri, 25 Oct 2024 08:16:07 +0800 (AWST)
+Message-ID: <9c048e8a161e59aece0acec324eeb48291abec8c.camel@codeconstruct.com.au>
+Subject: Re: OpenBMC and the Yocto Project
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Richard Purdie <richard.purdie@linuxfoundation.org>, 
+	openbmc@lists.ozlabs.org
+Date: Fri, 25 Oct 2024 10:46:06 +1030
+In-Reply-To: <9939a99a8397f4473f21dd2931a6340ee552df68.camel@linuxfoundation.org>
+References: 	<9939a99a8397f4473f21dd2931a6340ee552df68.camel@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <TYZPR06MB6191EBA63B87FE5152AF029DE14C2@TYZPR06MB6191.apcprd06.prod.outlook.com>
-X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,27 +69,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "brendanhiggins@google.com" <brendanhiggins@google.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org" <stable@vger.kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tommy,
+Hi Richard,
 
-On Tue, Oct 22, 2024 at 02:42:08AM +0000, Tommy Huang wrote:
-> Hi Andrew,
-> 
-> 	Thanks for your comments.
-> 	I want to fix the situation when our controller is set as target mode and reading / writing by other i2c host.
-> 	However, this host is stopped by any other reason (DC on/off..etc).
-> 	It will cause the controller is stuck in this situation.
-> 	But I find it might not have clear hints to identify this situation is normal or abnormal.
-> 	So, this patch should not be applied into mainstream.
+On Tue, 2024-10-22 at 21:33 +0100, Richard Purdie wrote:
+> Hi,
+>=20
+> I know OpenBMC uses the Yocto Project and we occasionally see patches
+> from you. Some of the companies involved are Yocto Project members.
+>=20
+> We're working on creating better information about who is using Yocto
+> Project and thought that the BMC use case might make an interesting
+> example.
+>=20
 
-Please, avoid top posting, I don't understand which part of the
-original message you are trying to comment on.
+Nice!
 
-Second thing, please, before sending a patch, always always
-always make sure that checkpatch.pl reports '0' errors and '0'
-warnings, except for few sporadic cases.
+>  I looked through the openBMC docs but couldn't really work out
+> who the right people/group to talk to was about that.
+>=20
 
-Andi
+Posting to the list is fine, though getting in touch with the current
+members of the Technical Oversight Forum is probably the answer to your
+question:
+
+https://github.com/openbmc/docs/blob/master/tof/membership-and-voting.md
+
+... we should probably put the email addresses of the members into that
+table.
+
+>  Is such a case
+> study something the project would be interested in and is there someone
+> we could work with on that? It should be good PR for both projects.
+
+I'm interested in it, at least :)
+
+>=20
+> While I'm here I've also wondered how you're finding Yocto Project and
+> if there is anything we need to discuss. We tend to assume things must
+> be ok or you'd be talking to us but if that isn't the case, let us
+> know!
+
+I've Cc'ed Andrew Geissler and Patrick Williams who have been battling
+some turbulence with recent OE updates in OpenBMC.
+
+There's a series ending roughly at the patch below that's trying to
+deal with the fallout:
+
+https://gerrit.openbmc.org/c/openbmc/openbmc/+/75338
+
+Andrew
