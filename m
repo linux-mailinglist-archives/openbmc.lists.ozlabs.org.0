@@ -1,86 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 644D39B93AD
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2024 15:48:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 589E69BA8EE
+	for <lists+openbmc@lfdr.de>; Sun,  3 Nov 2024 23:34:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Xg3dh6nRCz3c52
-	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2024 01:48:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XhTsR6vQhz3c4v
+	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2024 09:33:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::435"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730472517;
-	cv=none; b=B+K/TwGgOKO/oNbM/W1vYWkNhrmjWxBdPH6g6jkD3KuDr4qcKQdnTekaIvQJrfkGhKR77sSudUvaNA3IJY0Xhq0WkJVAjkInjUWUTztTJpLSozRMlQEg/kvLOTIqrtC4VXevN7/Jgi94VSLSOR0aPfYKYhZL7+tO44n4pF1EBp2GHRMDVkeYXRsugryqjQVOtI9NarteshqsRkAM31EANLE2pMoGlHHLq0znawXFyaC/XoZz953v08+ZyvvIoahmIy0TG6t7G2HVMio0oT0wnl2WWYixFpd98YEk481cFx+S3V9dukiIBrceEIqgbIdpIhVA4upYl665IadGeQ1EJg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::629"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730492990;
+	cv=none; b=YwrmsUPt1zg+Z2BboWSM4CUP4h2y3M1ELi542T/qz+lqpsbtwlYOkcI+SugRioNe378kpqgfNHvLbLocNnI5nrQivNQNz4FGqrHyXGdEQ5tAOPsejmV2yBR9o11lza6b9Ysxl1H3cOEHpyBETUmbZGAEvIQTSMpbQaNgjmwqKjBpieVtCnv0WVDvHAaEsrWQcD3tFmI9pYIc8W+Otdfke6/Iemsp8yC/hVd4HssJXZInFND7eNc0zaiS2jl7F/PTPhMyTAxEHQ5/fHMrIh/U0bM5DzpVSwVaPmPyWlobeITQts3pUJHgw1ktLxwf6I6+PpDNWzC5h79jNGeQacgvNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1730472517; c=relaxed/relaxed;
-	bh=ikLF17TGv2d8/HjXENzyIcikHXnbEzedUUKC+eQvlMo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Hng7JzNhSyQZzoUd/yoOYozOc1qCrWxj2109Ru0KOhhNAwO2axP8HqnOXXhOVrc19HoaJTXYLsTdMG1UnY0+7b9OdTq0fVV76Tw/hVS+q5dAaIRlPRmXFzyW6NbxKXYznG0NihhQD9GrOI/kD+2vMnfxOjJdTY9BcFOoOurQqbZA8OlAIKTMYwWPsNdSA6o7Nh2prn5ViMS1NfLOr3YorxUTnoKbberBK8NzAIAwR4hNJoHe++b1mFoyJXPk6AbdSbSNHXJeBC/t3cJDCm/vX4xj+3QFHRqbT9lW4I/yRQ/v1X0AsKEapcsRU60jBMOxOX0YzQPo0prgzY7PUHTWPA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=RK1DAAjd; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::435; helo=mail-pf1-x435.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	t=1730492990; c=relaxed/relaxed;
+	bh=13nnIQ+RPgggLcjKMNs6nmDQzdsDlidYy5CQKwZLAws=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gmqvyuzaoenovbmdP6CjGd6r3C+OQrtzhDg31fkl7EqxtOBA2SEdOwYPCyp/VoH7fo+wGCmP0CTYsEOJIZVAhmUjOL4wVuP+9/pi8GbBvSyVgIQH8wi9NXv8UTpRxliyc5hrcmmDoVxeuFcenIcZ2bbZhChdEgqbQABTHyZLA9YzlMa45tRcgUIy4eT5X2Cu7fDhZmzPiziGm0LMjocbgArg9awx6KIbG6g7hRCaPk8oa3wWlvdEiG1FugDCUpudwpatZlq1Qhl97ULI9oGwZw0yg5pnfwtV/aXb5wbl8HiWiK7qxPDcUDY+qwR85zqDMNeYmaHQfPoLuetXzwQvIQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=sntElkCj; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com; envelope-from=elbadrym@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=RK1DAAjd;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=sntElkCj;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::435; helo=mail-pf1-x435.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com; envelope-from=elbadrym@google.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xg3dc4cdgz2yx7
-	for <openbmc@lists.ozlabs.org>; Sat,  2 Nov 2024 01:48:36 +1100 (AEDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-718e9c8bd83so2420121b3a.1
-        for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2024 07:48:36 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XgCCJ3537z2yDp
+	for <openbmc@lists.ozlabs.org>; Sat,  2 Nov 2024 07:29:47 +1100 (AEDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-20c87b0332cso12575ad.1
+        for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2024 13:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730472514; x=1731077314; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ikLF17TGv2d8/HjXENzyIcikHXnbEzedUUKC+eQvlMo=;
-        b=RK1DAAjdKdacKNMOqYtY3WtpPj2ZGdi/xQ0mDMgb3TMiuXi+KfhGXu2XXndsiZVbfM
-         BmDW8rTulSmIbCGMBmGCD/y+uzBSMR5K4/PP2AcWfZfASMPtczBTjtycu9jAF501YAfg
-         zpf3cWldxFQP/O3Ea085fdCAYyWdsKZn4lGlzUJlgeubPYQ8mhVEAZ/6IBf9mO+9Bts5
-         K8FfNtHXEyi6njf9qHxKk40OfCzEz1RFv32KrjCGEkDNfHRjrN8Hk1BrUUNujtM+KGtk
-         I0vwcuwODXDw87JM3VkxRGRFQa6vj97J3QIH4fN/RYgBvJsCpo5ygxDyYL2hYDvA1mr1
-         jejw==
+        d=google.com; s=20230601; t=1730492979; x=1731097779; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=13nnIQ+RPgggLcjKMNs6nmDQzdsDlidYy5CQKwZLAws=;
+        b=sntElkCjwyTzRom7kDou7fhO/KKE0CQWd5iaPcgSti5AChGdtKpfZfyxlw11T6oGr9
+         aXkKhrBhtdzAEqXw5oqAi5br5tZAtSK6DJfsYSqXcD3MGd7izyZv42Qli3i9tAUh5kmF
+         M0KUVLAOl5Y5sOoz1J8wspeuLILhoUP5Z/HRd/23JsDJIL/Wq7p8wdXluiCktBemAdVa
+         Cl1tz4husumKFb285e5oDwpPvFztRroXup/U0OGuQgtqlM0PiLK9bDI184KGOsnBSI3l
+         zRhOZcTXqs/uuJGfjxlF15Wap8xonDvuO9XPc0dGxM1gYIQzwwoP5gsn++QiEcH/+er3
+         CR9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730472514; x=1731077314;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ikLF17TGv2d8/HjXENzyIcikHXnbEzedUUKC+eQvlMo=;
-        b=pE3FZJbcvQFJcw6S3p8y3llF5GWfwNUqWOmnPCwMTZZeWtjgqU5ABEQJe55e+KRLu1
-         ye4VmhHH6I7HDIWd1bE5hYcBUrevfPnke6sV7Wcj228D/DIsbTNpnOyxQJoGcq1n+AQt
-         5qfrYUFn6eriD7/QUgA5F0eiU6MR/4Nz4n7w6CVgzfmjiG8BLhJGgJtrmnETckvE0QEQ
-         oWot4o79EV86gxSFvoVTx5JfC53dW1y9Wi/BxnkE45SebPW23HBq5VJ/QJd8bVnszhmG
-         q5Pazx+I987jVEsJOF1g1T3iAedTHsEIMgvmRFxUbH+xCxuGICklkcQpWCU7OnYr7r3U
-         upJg==
-X-Forwarded-Encrypted: i=1; AJvYcCX/M4EAGMDCEho+S4qptT5VgagpReM8vwLYUOUbCwB7CG2hukQHm20stJd47QSBf5yAJTYdv1Yq@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzuOed/14NWXO3EqTfV6hhO6dawwwnUgXm23OrkiYIyKtwf1S8r
-	CIfjv+0EcRNpBm6crgSuwcDz7fXVDPvpZJ40sntKIfsvIB+sGtOZ
-X-Google-Smtp-Source: AGHT+IEud0i2QRxm/ssibxG0ytuDAv7M+mnTsOZohBA1h7lUg1MTloaGNER2mbVW0mDknyn5OpCdQQ==
-X-Received: by 2002:a05:6a20:4c21:b0:1d9:15b2:83e with SMTP id adf61e73a8af0-1db94f6467emr8939450637.7.1730472513686;
-        Fri, 01 Nov 2024 07:48:33 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc1b8987sm2745643b3a.7.2024.11.01.07.48.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 07:48:32 -0700 (PDT)
-Date: Fri, 1 Nov 2024 07:48:31 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: baneric926@gmail.com
-Subject: Re: [PATCH v6 2/2] hwmon: Add driver for I2C chip Nuvoton NCT7363Y
-Message-ID: <319d7395-680b-478a-aec3-08bae9177f73@roeck-us.net>
-References: <20241022052905.4062682-1-kcfeng0@nuvoton.com>
- <20241022052905.4062682-3-kcfeng0@nuvoton.com>
+        d=1e100.net; s=20230601; t=1730492979; x=1731097779;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=13nnIQ+RPgggLcjKMNs6nmDQzdsDlidYy5CQKwZLAws=;
+        b=oXRXc9YQL1m05chXWul/ONzed8yEr3QTEuRDE+DRB+a9RcGSLH/dZTr7Jhwg74nNkU
+         Jh0p/aR/41O73CHZREWKtmJ92CMyCNt/eDZhZvXWtURNFzD1GcF/PH/T/osdntIbHtbP
+         fdWuPkTKgOLpZjPECgbSc7GJB7fssCTQsYWQ3r4Phj+1Mbz9hnj+Zo/XqHFyv6v7eRQO
+         KpLpM7Ixd/GrEOEwnfqRipGxLbRdspWeNA4OwTrZZ4vYkY2moHd/dX62/A4W0KIMjBGS
+         HyTjHcvgKys/fp/7AHdfE/EXgw7/8tHqsUY9j3jQAFotugBDEYIgn/BmG98p1Py5cur1
+         ZQkw==
+X-Gm-Message-State: AOJu0YzhA7kp+RH5gFsWtxKWMqfSV52laSuAyeiZITAOhKtArIftCWG9
+	VXqm2wATdyVPOkYYJN6dx+1FLyj2o+O/Kbj/f+rChJ3lFUy/XzzSMeVrrZJGq5UvU3fxEAYO0oo
+	rCng0YAmc9HlCiNbtqLLnDVyzzPwB66tR2wOxgjul/G5maL86Yw==
+X-Gm-Gg: ASbGncssS9h3PjbISXeBihtvECPkJrBWgsJQ+h78Ixl9MqA+e891kMWiyzfbRxpAgEQ
+	TIHL8yPFykefxNov3xy+treP2NlT9MJHDCD24A1lhTC4zijmhLQK8cAHyF4ad
+X-Google-Smtp-Source: AGHT+IHXVHKhOGZqrpeHaZqonv8AyL3ckHi/M9BkcKS9jp6E7nJ3jeJlBBP6LDRUuYTquyy9xb7IhG2Yt9t9VkJeXVo=
+X-Received: by 2002:a17:903:2441:b0:20c:ecd8:d0ac with SMTP id
+ d9443c01a7336-21134d11b7emr44595ad.9.1730492979050; Fri, 01 Nov 2024 13:29:39
+ -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241022052905.4062682-3-kcfeng0@nuvoton.com>
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+From: Mo Elbadry <elbadrym@google.com>
+Date: Fri, 1 Nov 2024 13:29:28 -0700
+Message-ID: <CAOO6b=ub=zw4Tu4PM3NbSsqNb=hz_pxLAxTCwqqJjCr2jQ8ENA@mail.gmail.com>
+Subject: Gerrit Account Merge
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000004df4860625dfcbce"
+X-Spam-Status: No, score=-15.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
+X-Mailman-Approved-At: Mon, 04 Nov 2024 09:33:43 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,25 +85,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 22, 2024 at 01:29:05PM +0800, baneric926@gmail.com wrote:
-> From: Ban Feng <kcfeng0@nuvoton.com>
-> 
-> The NCT7363Y is a fan controller which provides up to 16
-> independent FAN input monitors. It can report each FAN input count
-> values. The NCT7363Y also provides up to 16 independent PWM
-> outputs. Each PWM can output specific PWM signal by manual mode to
-> control the FAN duty outside.
-> 
-> Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+--0000000000004df4860625dfcbce
+Content-Type: text/plain; charset="UTF-8"
 
-Applied. I did fix a couple of the nitpicks raised by Christophe,
-but I did not replace for_each_child_of_node() with
-for_each_child_of_node_scoped() since I can not test the code
-and did not want to make a functional change.
+Hi,
 
-Thanks,
-Guenter
+I just noticed that when I changed my github username openbmc gerrit
+created a different account for me and I cannot access the old account
+which is tied to my Google email.
+
+If I may ask, is it possible to help fix this? I don't mind losing the old
+account but need the Google email free so I can tie it to the new github
+username.
+
+Previous username: melbadry97
+new username: elbadrym-x
+
+Thank you,
+Mo
+
+--0000000000004df4860625dfcbce
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<div><br></div><div>I just noticed that when I changed =
+my github username openbmc gerrit created a different account for me and I =
+cannot access the old account which is tied to my Google email.</div><div><=
+br></div><div>If I may ask, is it possible=C2=A0to help fix this? I don&#39=
+;t mind losing the old account but need the Google email free so I can tie =
+it to the new github username.</div><div><br></div><div>Previous username: =
+melbadry97</div><div>new username: elbadrym-x</div><div><br></div><div>Than=
+k you,</div><div>Mo</div></div>
+
+--0000000000004df4860625dfcbce--
