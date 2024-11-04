@@ -2,75 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81C859BB5F2
-	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2024 14:26:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A5CA9BC116
+	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2024 23:50:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XhsgQ22fSz3bvP
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2024 00:26:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Xj6BD2r1Gz3c1D
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2024 09:50:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730726783;
-	cv=none; b=do9rHkUSruXRUjYfWqu9N56CS9fJGXBDEaEx+QaSEi4pF1VigAvLUf1THdkIBSWntd5LwQ1pevQDNc8V6AABqLYJbAzi/kUmCkQJDx8Rh0zdEl3E2n5fwDAzpHP+c1aZIvcUfSuIMj460LrGYTgy2aiGzt80ss3gdpTwCml+uOez6DEbmB4nAL+bqFZUIjdGzzam+5euQo/pu8AbcxFuEUUz7k8+fftyxyikMevY39dX+wBR1rxubpX17Vcn8O7lCT0VR+96cLB8OOZ2Fz9aEvz7m33Zu0ojKOx8v5AKjD5OT6WPYhzT3vM1hkeR9jIL1aVGUeqI3VIIqNPom9mDSQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::234"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730707960;
+	cv=none; b=NFCq+Kqpw+oudxSi0nQcPN4J+Dh2lOfuw70qEDd5aV+WsXv8kBwAXwcWOUpxoeBswI6nqZCXjZq47kRRXwvsbwe8i3p5od8GNeC007/JChDXSNI5x8i01gCrvouL06FMM/OabVoV1mdA+16zballEWL/HQzWLO1juGd12o/Mj4tiQ9dgyC2Fz/sBipkt5lUr5LuBkjahG0dWnWRl4ILLmcSxGMp1i4M14l9NNU4SMQXW1F9sBAofV3b3aww+sZcYqfvUZgSMWOhIAIoOX7QmJWE2J/pqo8+nGwbuwKQlS5g2VuvPzTuRRyPegZsjTDYX5dCD/KvIfxEYVF05sek1Lw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1730726783; c=relaxed/relaxed;
-	bh=WXKh5DLRlvHaU92lpfnw/9OzY04qwQC+jHOwzlvY+/k=;
+	t=1730707960; c=relaxed/relaxed;
+	bh=XCX6qrzCMImbBpxh+YBej+RlpN9TLIbz23OhwpXYnmc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kWJE9ArdQ6cKwMR+GoXih87wFTTQ5fUmxK/Y+ssHc0RAgXgq4syy3indJWHNsbgvFHbCokpMgb85r+wib4ig5ohkpVF3LHNZ1S3uz4S6yM7UY/kJxuQoBPVcfm3cUZ/r0qtJ54D1ScYMLaRN3ULdnNY7BIJQDZHF0C+pLrZpzph2s3QDpA6olyCrVB6a8frceHEzdbHB9F6NQcwo+G1jPfAtPI0bvcBlY/Zo52myGk9q+l+/7xnnHzCw3OVsu1osoG8safbTG9kItv4l3GCCQqhNLLwiZp36YdapEoUzsQr0CAVUYaxufnTrLFKFmpEf/qfugcsix41SD0lIObf+gw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=M8S7YWTl; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	 To:Cc:Content-Type; b=DexJFVDEu7tsS0tPJxROHsDiVHSlNWIn4YjbGftyHbQx2TFyZk8p9OxjjujfOHLWC/vwowLiCRJoGTeA/bXUB7ZmcEu//QcnvoHGf2SePKYTNtSwYsQshRr6DPctLdxSW31+Sro5Vo05phm9E80Qt4FsRbnQN/SSV7NkaO/AQoRUHA76p0w1k/ljJwjy276lpsw+gp5mX7NXLMv3IJ2hRRO5jX0Qu+NlGzkrXFIVlLUJfeRlwqjoq9iXOiQSibZQfCh9o/RFCCh7PdMX9CGXmecxI9DQUiCO6fzob+9UZ0/CA2/HbGGp9el6+NeFMvfGTsRILMgnS4/AIoixctGdkA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BPGZwT+Y; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=M8S7YWTl;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BPGZwT+Y;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com; envelope-from=baneric926@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XhsgJ0C6Qz2xH8
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2024 00:26:19 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id DB2C0A42F5D
-	for <openbmc@lists.ozlabs.org>; Mon,  4 Nov 2024 13:24:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D48C4AF0B
-	for <openbmc@lists.ozlabs.org>; Mon,  4 Nov 2024 13:26:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730726776;
-	bh=Ijo8Sq1mgBUB6sBszy//feBUAboDIQErEOZUwjZS0JI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=M8S7YWTl+LeAP5CbBcAv72Zcx5wrIgUTNgW3dav7Ek9DtMb/NFGuLb3i0yPH5eZn7
-	 TDKgKax5EWxJD9p0xKJOljllimViMRwy0Fl098Lzj4rkwwYY8XcLHqxjW8TSyx9lys
-	 NHvm2Q0tIw6a5Xb4W7BLeQWO/E1llQh5lxvvsj4xwiBCyfT9FZ8vMZI2BoU9EFXrdb
-	 aEaZg9Esc/JFy64HGu0FVXklOItWs02swCQnhVPeIAI/VwqSPzudqVZOZr/xiM+ssb
-	 uaFAWRDagfev/ceJM4QSkO5SVQwvmBKfsWJB99DwO5+59qO0A72fzqc8hmdcq3ZhOR
-	 bMKDWiVtgFUXg==
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6ea8419a57eso13996577b3.1
-        for <openbmc@lists.ozlabs.org>; Mon, 04 Nov 2024 05:26:16 -0800 (PST)
-X-Gm-Message-State: AOJu0Yx3AR2t3PTaHleeobwblvibEKILz10HN2Ll3bTBQLyizBKJpXfP
-	4JopHGDehXVhluzdAr749pQ683P545hECdMjwfKDN4NJSy+R7YI55FwRjsIzkPvfcevpH9z3Gk3
-	EwCUZm14FyYhppX1RBJVym/lAXA==
-X-Google-Smtp-Source: AGHT+IENFmPCgLa2f0tPo8wbahVEAD5smWzhDagnbAka8mwN23BytgHgO4bTbOLBkWEzwe5RdypOb1vOLgv6wD8TjbY=
-X-Received: by 2002:a05:690c:9c0f:b0:6de:a3:a7ca with SMTP id
- 00721157ae682-6e9d8acb4a9mr376026027b3.32.1730726775947; Mon, 04 Nov 2024
- 05:26:15 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XhkjM433Yz2xQ8
+	for <openbmc@lists.ozlabs.org>; Mon,  4 Nov 2024 19:12:39 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3e60e57a322so2117705b6e.3
+        for <openbmc@lists.ozlabs.org>; Mon, 04 Nov 2024 00:12:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730707950; x=1731312750; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XCX6qrzCMImbBpxh+YBej+RlpN9TLIbz23OhwpXYnmc=;
+        b=BPGZwT+Yo536PoOmzDhKxriqNIDHPoufci8iN3yWpceJhvtVpnu3SfLTKaBe61yFQV
+         8TdOGJg5Bz3NhsQd+cOQ/QQPELWcKWv6Xl6OqeZsUGkvTrEL3RSHRWQf44FbT91mO/bf
+         GcKSG4H80tLF/oXRh6TCghGerakco/ns1UQ/hzJabwu5rJ50yzbDI9dDA1TwWYQUo7w/
+         xkP5TLeNgkIGYf4lTKQRkVuaPT+N82BAw3vjvB3QOy8yT7PcZtixKwWYqXTqKry7upGD
+         EthTOPljnshXD84Offkw0nJA12WXmoqMgnnsH9QAOTbzr8fmCp3pUpXqZwYsXKs9Kvf+
+         E/eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730707950; x=1731312750;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XCX6qrzCMImbBpxh+YBej+RlpN9TLIbz23OhwpXYnmc=;
+        b=hzhNIUtXzKCfshUgJz6XrasvGUL0IdeeA2VZaGljzeaHFY+vowzwWezbIla98LyNuV
+         1fuMBe5LMYqZnZldvFuriiZZD3Hbm5nvczaQHh4pr9sxUn1YoUqnaMxSdV09v++glQGS
+         LSxpJ5t0o3vqeerjpdz9IhhckPktOtuMLs1QVzNQ4m/QpGoddvO7FuEGamlrLDtDfScN
+         WAu4O4AI5yj0+NAkg17rsB/cwBcF6yGuB5rcmktM+UuZUZRqux11qf8y33rfNy1nDBaL
+         zyS71mfe3+h7Gr/U2y5vLQI+l6YD+Kgfk1P0PsqMwpw27yYc/FVSGW+TAcZtk5lLZNUh
+         HhFg==
+X-Forwarded-Encrypted: i=1; AJvYcCWkoq8gAcbTgZZPg6yGcq0vRwu9XGf09DxtLRL0H7l3ZYurlMVfNqsBazcJricvEPIMXH/2RjnQ@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yx1Zd3Ezv4pkxtDpZPDlUJ3LO51mKOP+36omnw3YxqvLD6JGHmh
+	2qBVfCwK4ZL6Lz55Z7bKf5/zuJiKWtXUtTPFAlmnybXD0QZ7AWGJ6rYD3PDI/CMzkNu8hlmq+3l
+	acpsWaQgfH04KLR6DR0cTX7mCKmA=
+X-Google-Smtp-Source: AGHT+IHyNmXIv/Qkf7hr1oDZ5RSdZMwySKzbkHyHElTN8xOk9/nD1kciEaKHao+bZTDKxz2iSJGs2BZ1r4zKnk+g5NA=
+X-Received: by 2002:a05:6808:448b:b0:3e6:23b7:bf4c with SMTP id
+ 5614622812f47-3e63846135emr26460681b6e.13.1730707950027; Mon, 04 Nov 2024
+ 00:12:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20240910215905.823337-1-robh@kernel.org>
-In-Reply-To: <20240910215905.823337-1-robh@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Mon, 4 Nov 2024 07:26:05 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJBeoD4yPj1Wva5cbPHweK3RU6pF-Vn=P+MsW0-RhKhZQ@mail.gmail.com>
-Message-ID: <CAL_JsqJBeoD4yPj1Wva5cbPHweK3RU6pF-Vn=P+MsW0-RhKhZQ@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: nuvoton: Fix at24 EEPROM node names
-To: Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
-	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
-	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+References: <20241022052905.4062682-1-kcfeng0@nuvoton.com> <20241022052905.4062682-3-kcfeng0@nuvoton.com>
+ <319d7395-680b-478a-aec3-08bae9177f73@roeck-us.net>
+In-Reply-To: <319d7395-680b-478a-aec3-08bae9177f73@roeck-us.net>
+From: Ban Feng <baneric926@gmail.com>
+Date: Mon, 4 Nov 2024 16:12:18 +0800
+Message-ID: <CALz278a9ypz+2j7yfHQ1t9M_HxJW_8oW6rmYOOgUSKCTxMz+Vg@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] hwmon: Add driver for I2C chip Nuvoton NCT7363Y
+To: Guenter Roeck <linux@roeck-us.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
+X-Mailman-Approved-At: Tue, 05 Nov 2024 09:50:25 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,70 +91,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org, jdelvare@suse.com, corbet@lwn.net, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, kcfeng0@nuvoton.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, kwliu@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 10, 2024 at 4:59=E2=80=AFPM Rob Herring (Arm) <robh@kernel.org>=
- wrote:
+On Fri, Nov 1, 2024 at 10:48=E2=80=AFPM Guenter Roeck <linux@roeck-us.net> =
+wrote:
 >
-> at24.yaml defines the node name for at24 EEPROMs as 'eeprom'.
+> On Tue, Oct 22, 2024 at 01:29:05PM +0800, baneric926@gmail.com wrote:
+> > From: Ban Feng <kcfeng0@nuvoton.com>
+> >
+> > The NCT7363Y is a fan controller which provides up to 16
+> > independent FAN input monitors. It can report each FAN input count
+> > values. The NCT7363Y also provides up to 16 independent PWM
+> > outputs. Each PWM can output specific PWM signal by manual mode to
+> > control the FAN duty outside.
+> >
+> > Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
 >
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> ---
->  arch/arm/boot/dts/nuvoton/nuvoton-npcm730-gbs.dts           | 6 +++---
->  .../arm/boot/dts/nuvoton/nuvoton-npcm750-runbmc-olympus.dts | 2 +-
->  2 files changed, 4 insertions(+), 4 deletions(-)
+> Applied. I did fix a couple of the nitpicks raised by Christophe,
+> but I did not replace for_each_child_of_node() with
+> for_each_child_of_node_scoped() since I can not test the code
+> and did not want to make a functional change.
+>
+> Thanks,
+> Guenter
 
-Ping!
+Hi Guenter,
 
->
-> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-gbs.dts b/arch/arm=
-/boot/dts/nuvoton/nuvoton-npcm730-gbs.dts
-> index 9f64c85e1c20..c3501786d600 100644
-> --- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-gbs.dts
-> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm730-gbs.dts
-> @@ -661,7 +661,7 @@ &i2c5 {
->         clock-frequency =3D <100000>;
->         status =3D "okay";
->
-> -       mb_fru@50 {
-> +       eeprom@50 {
->                 compatible =3D "atmel,24c64";
->                 reg =3D <0x50>;
->         };
-> @@ -704,7 +704,7 @@ max31725@5d {
->                                 reg =3D <0x5d>;
->                                 status =3D "okay";
->                         };
-> -                       fan_fru@51 {
-> +                       eeprom@51 {
->                                 compatible =3D "atmel,24c64";
->                                 reg =3D <0x51>;
->                         };
-> @@ -714,7 +714,7 @@ i2c5_hsbp_fru_3: i2c@3 {
->                         #address-cells =3D <1>;
->                         #size-cells =3D <0>;
->                         reg =3D <3>;
-> -                       hsbp_fru@52 {
-> +                       eeprom@52 {
->                                 compatible =3D "atmel,24c64";
->                                 reg =3D <0x52>;
->                                 status =3D "okay";
-> diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-runbmc-olympus.dts=
- b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-runbmc-olympus.dts
-> index 087f4ac43187..f67ede148209 100644
-> --- a/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-runbmc-olympus.dts
-> +++ b/arch/arm/boot/dts/nuvoton/nuvoton-npcm750-runbmc-olympus.dts
-> @@ -824,7 +824,7 @@ tmp75@4a {
->                 reg =3D <0x4a>;
->                 status =3D "okay";
->         };
-> -       m24128_fru@51 {
-> +       eeprom@51 {
->                 compatible =3D "atmel,24c128";
->                 reg =3D <0x51>;
->                 pagesize =3D <64>;
-> --
-> 2.45.2
->
+Appreciate your kind support,
+I'll keep following your version and check the part of
+for_each_child_of_node_scoped.
+
+Thanks,
+Ban
