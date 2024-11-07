@@ -1,67 +1,111 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B1B09BFCDE
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2024 04:11:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE63C9C0487
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2024 12:47:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XkRsz3dm0z3cF8
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2024 14:11:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XkgKt2nryz3cK5
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2024 22:47:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730949059;
-	cv=none; b=dl7GSUZQkvdc1NLStXfTySPuazs/1PQYHSObo/KvKj2ooY0cKUhTJWc5DbXgAeJOd5as3PRRM7ARK8oQDjVdwk4KWhE/OFNX74HECi2MemhGYAFtX/oo8AdzzDXDeZDuDdDd/Y2a5r4hv33Jxre0Q5rMqAvepHhsK+rfPoyVQphqa8Ul9ksHg9EemdsfKALpSoZx4PBeRga+/xolZffh8XP7nbVlyYEaPWpk5kwUHFZBGrLin1oashg0tf9b68fljGHh/xac6XpsLyDBUvs5vz88Og2F09D2g/Y9xQ2hpJ9E30fIlwgTZSVXzZw2n/CzWmVm7zohlmkvNlRhy5dpVA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1730980047;
+	cv=none; b=mtg8NnsIuoE7HCDspR/I+9Bg7oYXCILovGvvcqk6iMkEIITb8Pg+1QWidCF2FnwccuzKTrmhNGtzuoj3WpYXXXMeUUOM++0dU/j9A67QJqL1yqhL4KXdtJVB48GIVdEFFx7dRPKpmdSeZytvKV8oGasza+SQbte8d+hQxiwHqkDWSjmWgr09UllPK6W/WUsMyiZZK6bvUsy3G0R7SwRiIAxYHCrtVZC8gR5uZU9bvOqd/QY8sCalDViTT64CpI2v18D/YzCtE1ZYY+IxZ57JnuK+NU/dC5UQLHY9kTBzc2xV9zAiD/Nyln8oOpXgfEdbB+QfctT3Gybr2uwLzzkMog==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1730949059; c=relaxed/relaxed;
-	bh=erZFG6Q0iFzHtXVVJZKWsaL8nS/sZz25HN4vZXCTXxw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=K32bSxnsZHprfr7S2KaWVAEWfMTVw+1ER86BPpfSMrficujDNC3HAVuE4sOh9FxRKluI1A9iv+tRjrWaxJK5jBnN7rxnfdwuLQsGqkFUBmSLzccQs/X2ws9n8r1Qd5h5dxn2CcTaEYAVyh/Nntrmf3QIQl5dHzY3nntKjvKaO4+2PaysY02dIKAokIL9AftfiRXw31ssMULBJHZbIVUZRUaUe1g3qakbttPma75ykQ71QOGvqXhwUhmbygbcZB8OTN+uauvCYiR9OS6P7EGM8JG+pDSR0InQafLA9yIKheaZFZ79wt02UovjbZ+yptNg0dxWDbrw6h4/YJLP8PmZDg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=fktRzNUH; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=matt@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+	t=1730980047; c=relaxed/relaxed;
+	bh=GE5Uzr/o8xcOMXyHH8WSqGqNkB+66Q9qV1g3961C59U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LXqWOONEJb4I+EgJ18oyR4IHsCA7yaxJX44gavaO5KUrEoWmEiG0Nq+SPPA8EbtgaJfAVHCw8Z8N+pART3eEPjtBfY/bTc1K3f0VRfd2X+woacHRD+Rsa8mHnQNypVawnk64A4F6UoXCqC0qYMQ6ob8V1IfwmNvrFuhagtDiE1P7bKSYiXmvI/1YNw2dYb/tSE6SK4hDITRUTYkY26S8pneAygiEj4XLMvDR6b7coLY75pqf7gRjjPNqWy0No2pj7GiIjZWUnZmbsi6XwkT5cST4Kfw8l2cKPurGExcsjhtmY4lIF9GyebhMSjlgqL5tRkyhzSKgRA4vttgYeSB1yA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qk8w4ckO; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=fktRzNUH;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qk8w4ckO;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=matt@codeconstruct.com.au; receiver=lists.ozlabs.org)
-X-Greylist: delayed 344 seconds by postgrey-1.37 at boromir; Thu, 07 Nov 2024 14:10:58 AEDT
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XkRst6yfNz300M
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2024 14:10:58 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1730948711;
-	bh=erZFG6Q0iFzHtXVVJZKWsaL8nS/sZz25HN4vZXCTXxw=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=fktRzNUHs4idIS1oslvsPvtGaZOaLFSukofrNnKtqjqeVdMPWMshQkEAVGD51IzSb
-	 ECZycc8Ck+ROhQyppNi97DpnsHsREsvFji5zNXjB0O0Ecq51z8nGTRZCR4i+TsIzo6
-	 3hWTpZ7uNZLssI3qfc/RcO9DbiArBtm4u1avvnhiBkzGlVC+gJ08A2D6MzY5pt+tM8
-	 bjGU5Ywm702tGgwSWUyvJjvY3/eUSxWav4QdI1zMZp4IDswPOh13wlGSarvU1SDX8E
-	 XiuM4AwfrmpzwoZG3bcXe7csWmi3nLM9rm5mOhdfJYxkcvrAkXHMA5lCMntpEWIx2J
-	 O4kUjRVQWsJMQ==
-Received: from [192.168.12.102] (unknown [159.196.94.230])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id CDE776B83E;
-	Thu,  7 Nov 2024 11:05:08 +0800 (AWST)
-Message-ID: <a5349550f7b66ff53c0875b6bcefd20dcd165711.camel@codeconstruct.com.au>
-Subject: Re: [PATCH net-next] net: mctp: Expose transport binding identifier
- via IFLA attribute
-From: Matt Johnston <matt@codeconstruct.com.au>
-To: Khang Nguyen <khangng@os.amperecomputing.com>, Jeremy Kerr
- <jk@codeconstruct.com.au>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>, Simon Horman
- <horms@kernel.org>, netdev@vger.kernel.org,  linux-kernel@vger.kernel.org
-Date: Thu, 07 Nov 2024 11:05:08 +0800
-In-Reply-To: <20241105071915.821871-1-khangng@os.amperecomputing.com>
-References: <20241105071915.821871-1-khangng@os.amperecomputing.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-0ubuntu1 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XkgKn4LF8z2yVD
+	for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2024 22:47:25 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 6448E5C105E;
+	Thu,  7 Nov 2024 11:46:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341CFC4CECC;
+	Thu,  7 Nov 2024 11:47:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730980042;
+	bh=N3STylp9DRVHJJwMV5PYjRYhRw05MG1PGIvFWU84xCM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=qk8w4ckOMlH9WIsrJp3xFR6TvNFS6mqbCTPNEENTrqTyXRTD/SaLivCii8hyI7/Ab
+	 npdO3gN4FYjnFTW6VoM98vlDupmNmjv8F5R+/zALaLU2FCWdG0lz49NM02wfNyrPzW
+	 hTgqKeyrsst8K90EGoheifTorNid5wc+qUg7yBvo14RP9pT5xIlQffkP13UPATFRPc
+	 +SFcD0CJpHG1unOYRq3pn2DOG9n6XGjULFLvucj8vFnWJRfYUglodKsK6AzGpY02cD
+	 t4pT34IROmTXygPDq3e7CxU1nqK4vvPP8lICySxlre3GLM6er3lJfSOQfduLRZVDAN
+	 m65pFdUTky7kQ==
+Message-ID: <f6a6f9db-2cf7-4281-b6cb-106e0897da8e@kernel.org>
+Date: Thu, 7 Nov 2024 12:47:13 +0100
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: net: nuvoton: Add schema for Nuvoton
+ MA35 family GMAC
+To: Joey Lu <a0987203069@gmail.com>, Conor Dooley <conor@kernel.org>
+References: <20241106111930.218825-1-a0987203069@gmail.com>
+ <20241106111930.218825-2-a0987203069@gmail.com>
+ <20241106-bloated-ranch-be94506d360c@spud>
+ <7c2f6af3-5686-452a-8d8a-191899b3d225@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <7c2f6af3-5686-452a-8d8a-191899b3d225@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,221 +118,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, ampere-linux-kernel@lists.amperecomputing.com, Hieu Le <hieul@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, Phong Vo <pvo@amperecomputing.com>, Thu Nguyen <thu@os.amperecomputing.com>, patches@amperecomputing.com, Chanh Nguyen <chanh@os.amperecomputing.com>
+Cc: robh@kernel.org, conor+dt@kernel.org, linux-stm32@st-md-mailman.stormreply.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, netdev@vger.kernel.org, richardcochran@gmail.com, ychuang3@nuvoton.com, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, edumazet@google.com, joabreu@synopsys.com, linux-arm-kernel@lists.infradead.org, mcoquelin.stm32@gmail.com, schung@nuvoton.com, kuba@kernel.org, krzk+dt@kernel.org, pabeni@redhat.com, davem@davemloft.net, yclu4@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Khang, this looks good.
+On 07/11/2024 11:15, Joey Lu wrote:
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +    #include <dt-bindings/clock/nuvoton,ma35d1-clk.h>
+>>> +    #include <dt-bindings/reset/nuvoton,ma35d1-reset.h>
+>>> +    //Example 1
+>>> +    eth0: ethernet@40120000 {
+>> The eth0 label is not used, drop it.
+> The label is used in dtsi and dts.
 
-On Tue, 2024-11-05 at 14:19 +0700, Khang Nguyen wrote:
-> MCTP control protocol implementations are transport binding dependent.
-> Endpoint discovery is mandatory based on transport binding.
-> Message timing requirements are specified in each respective transport
-> binding specification.
->=20
-> However, we currently have no means to get this information from MCTP
-> links.
->=20
-> Add a IFLA_MCTP_PHYS_BINDING netlink link attribute, which represents
-> the transport type using the DMTF DSP0239-defined type numbers, returned
-> as part of RTM_GETLINK data.
->=20
-> We get an IFLA_MCTP_PHYS_BINDING attribute for each MCTP link, for
-> example:
->=20
-> - 0x00 (unspec) for loopback interface;
-> - 0x01 (SMBus/I2C) for mctpi2c%d interfaces; and
-> - 0x05 (serial) for mctpserial%d interfaces.
->=20
-> Signed-off-by: Khang Nguyen <khangng@os.amperecomputing.com>
-> ---
->  drivers/net/mctp/mctp-i2c.c    |  3 ++-
->  drivers/net/mctp/mctp-i3c.c    |  2 +-
->  drivers/net/mctp/mctp-serial.c |  5 +++--
->  include/net/mctp.h             | 18 ++++++++++++++++++
->  include/net/mctpdevice.h       |  4 +++-
->  include/uapi/linux/if_link.h   |  1 +
->  net/mctp/device.c              | 12 +++++++++---
->  7 files changed, 37 insertions(+), 8 deletions(-)
->=20
-> diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-> index 4dc057c121f5..86151a03570e 100644
-> --- a/drivers/net/mctp/mctp-i2c.c
-> +++ b/drivers/net/mctp/mctp-i2c.c
-> @@ -877,7 +877,8 @@ static int mctp_i2c_add_netdev(struct mctp_i2c_client=
- *mcli,
->  		goto err;
->  	}
-> =20
-> -	rc =3D mctp_register_netdev(ndev, &mctp_i2c_mctp_ops);
-> +	rc =3D mctp_register_netdev(ndev, &mctp_i2c_mctp_ops,
-> +				  MCTP_PHYS_BINDING_SMBUS);
->  	if (rc < 0) {
->  		dev_err(&mcli->client->dev,
->  			"register netdev \"%s\" failed %d\n",
-> diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
-> index 1bc87a062686..9adad59b8676 100644
-> --- a/drivers/net/mctp/mctp-i3c.c
-> +++ b/drivers/net/mctp/mctp-i3c.c
-> @@ -607,7 +607,7 @@ __must_hold(&busdevs_lock)
->  		goto err_free_uninit;
->  	}
-> =20
-> -	rc =3D mctp_register_netdev(ndev, NULL);
-> +	rc =3D mctp_register_netdev(ndev, NULL, MCTP_PHYS_BINDING_I3C);
->  	if (rc < 0) {
->  		dev_warn(&ndev->dev, "netdev register failed: %d\n", rc);
->  		goto err_free_netdev;
-> diff --git a/drivers/net/mctp/mctp-serial.c b/drivers/net/mctp/mctp-seria=
-l.c
-> index e63720ec3238..26c9a33fd636 100644
-> --- a/drivers/net/mctp/mctp-serial.c
-> +++ b/drivers/net/mctp/mctp-serial.c
-> @@ -23,6 +23,7 @@
-> =20
->  #include <linux/mctp.h>
->  #include <net/mctp.h>
-> +#include <net/mctpdevice.h>
->  #include <net/pkt_sched.h>
-> =20
->  #define MCTP_SERIAL_MTU		68 /* base mtu (64) + mctp header */
-> @@ -470,7 +471,7 @@ static int mctp_serial_open(struct tty_struct *tty)
->  	spin_lock_init(&dev->lock);
->  	INIT_WORK(&dev->tx_work, mctp_serial_tx_work);
-> =20
-> -	rc =3D register_netdev(ndev);
-> +	rc =3D mctp_register_netdev(ndev, NULL, MCTP_PHYS_BINDING_SERIAL);
->  	if (rc)
->  		goto free_netdev;
-> =20
-> @@ -492,7 +493,7 @@ static void mctp_serial_close(struct tty_struct *tty)
->  	struct mctp_serial *dev =3D tty->disc_data;
->  	int idx =3D dev->idx;
-> =20
-> -	unregister_netdev(dev->netdev);
-> +	mctp_unregister_netdev(dev->netdev);
->  	ida_free(&mctp_serial_ida, idx);
->  }
-> =20
-> diff --git a/include/net/mctp.h b/include/net/mctp.h
-> index 28d59ae94ca3..1ecbff7116f6 100644
-> --- a/include/net/mctp.h
-> +++ b/include/net/mctp.h
-> @@ -298,4 +298,22 @@ void mctp_routes_exit(void);
->  int mctp_device_init(void);
->  void mctp_device_exit(void);
-> =20
-> +/* MCTP IDs and Codes from DMTF specification
-> + * "DSP0239 Management Component Transport Protocol (MCTP) IDs and Codes=
-"
-> + * https://www.dmtf.org/sites/default/files/standards/documents/DSP0239_=
-1.11.1.pdf
-> + */
-> +enum mctp_phys_binding {
-> +	MCTP_PHYS_BINDING_UNSPEC	=3D 0x00,
-> +	MCTP_PHYS_BINDING_SMBUS		=3D 0x01,
-> +	MCTP_PHYS_BINDING_PCIE_VDM	=3D 0x02,
-> +	MCTP_PHYS_BINDING_USB		=3D 0x03,
-> +	MCTP_PHYS_BINDING_KCS		=3D 0x04,
-> +	MCTP_PHYS_BINDING_SERIAL	=3D 0x05,
-> +	MCTP_PHYS_BINDING_I3C		=3D 0x06,
-> +	MCTP_PHYS_BINDING_MMBI		=3D 0x07,
-> +	MCTP_PHYS_BINDING_PCC		=3D 0x08,
-> +	MCTP_PHYS_BINDING_UCIE		=3D 0x09,
-> +	MCTP_PHYS_BINDING_VENDOR	=3D 0xFF,
-> +};
-> +
->  #endif /* __NET_MCTP_H */
-> diff --git a/include/net/mctpdevice.h b/include/net/mctpdevice.h
-> index 5c0d04b5c12c..957d9ef924c5 100644
-> --- a/include/net/mctpdevice.h
-> +++ b/include/net/mctpdevice.h
-> @@ -22,6 +22,7 @@ struct mctp_dev {
->  	refcount_t		refs;
-> =20
->  	unsigned int		net;
-> +	enum mctp_phys_binding	binding;
-> =20
->  	const struct mctp_netdev_ops *ops;
-> =20
-> @@ -44,7 +45,8 @@ struct mctp_dev *mctp_dev_get_rtnl(const struct net_dev=
-ice *dev);
->  struct mctp_dev *__mctp_dev_get(const struct net_device *dev);
-> =20
->  int mctp_register_netdev(struct net_device *dev,
-> -			 const struct mctp_netdev_ops *ops);
-> +			 const struct mctp_netdev_ops *ops,
-> +			 enum mctp_phys_binding binding);
->  void mctp_unregister_netdev(struct net_device *dev);
-> =20
->  void mctp_dev_hold(struct mctp_dev *mdev);
-> diff --git a/include/uapi/linux/if_link.h b/include/uapi/linux/if_link.h
-> index 8516c1ccd57a..2575e0cd9b48 100644
-> --- a/include/uapi/linux/if_link.h
-> +++ b/include/uapi/linux/if_link.h
-> @@ -1958,6 +1958,7 @@ struct ifla_rmnet_flags {
->  enum {
->  	IFLA_MCTP_UNSPEC,
->  	IFLA_MCTP_NET,
-> +	IFLA_MCTP_PHYS_BINDING,
->  	__IFLA_MCTP_MAX,
->  };
-> =20
-> diff --git a/net/mctp/device.c b/net/mctp/device.c
-> index 3d75b919995d..26ce34b7e88e 100644
-> --- a/net/mctp/device.c
-> +++ b/net/mctp/device.c
-> @@ -371,6 +371,8 @@ static int mctp_fill_link_af(struct sk_buff *skb,
->  		return -ENODATA;
->  	if (nla_put_u32(skb, IFLA_MCTP_NET, mdev->net))
->  		return -EMSGSIZE;
-> +	if (nla_put_u8(skb, IFLA_MCTP_PHYS_BINDING, mdev->binding))
-> +		return -EMSGSIZE;
->  	return 0;
->  }
-> =20
-> @@ -385,6 +387,7 @@ static size_t mctp_get_link_af_size(const struct net_=
-device *dev,
->  	if (!mdev)
->  		return 0;
->  	ret =3D nla_total_size(4); /* IFLA_MCTP_NET */
-> +	ret +=3D nla_total_size(1); /* IFLA_MCTP_PHYS_BINDING */
->  	mctp_dev_put(mdev);
->  	return ret;
->  }
-> @@ -480,7 +483,8 @@ static int mctp_dev_notify(struct notifier_block *thi=
-s, unsigned long event,
->  }
-> =20
->  static int mctp_register_netdevice(struct net_device *dev,
-> -				   const struct mctp_netdev_ops *ops)
-> +				   const struct mctp_netdev_ops *ops,
-> +				   enum mctp_phys_binding binding)
->  {
->  	struct mctp_dev *mdev;
-> =20
-> @@ -489,17 +493,19 @@ static int mctp_register_netdevice(struct net_devic=
-e *dev,
->  		return PTR_ERR(mdev);
-> =20
->  	mdev->ops =3D ops;
-> +	mdev->binding =3D binding;
-> =20
->  	return register_netdevice(dev);
->  }
-> =20
->  int mctp_register_netdev(struct net_device *dev,
-> -			 const struct mctp_netdev_ops *ops)
-> +			 const struct mctp_netdev_ops *ops,
-> +			 enum mctp_phys_binding binding)
->  {
->  	int rc;
-> =20
->  	rtnl_lock();
-> -	rc =3D mctp_register_netdevice(dev, ops);
-> +	rc =3D mctp_register_netdevice(dev, ops, binding);
->  	rtnl_unlock();
-> =20
->  	return rc;
+But we do not talk about DTSI or DTS here. Comments appear in specific
+places in specific patches. We do not discuss here other patches :/
 
-Reviewed-by: Matt Johnston <matt@codeconstruct.com.au>
+Best regards,
+Krzysztof
+
