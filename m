@@ -1,91 +1,168 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EE529C34E8
-	for <lists+openbmc@lfdr.de>; Sun, 10 Nov 2024 23:03:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 984CD9C34EF
+	for <lists+openbmc@lfdr.de>; Sun, 10 Nov 2024 23:03:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XmmsC6b2Zz3bmJ
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 09:03:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XmmsH6sHGz3d9t
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 09:03:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::42e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731036256;
-	cv=none; b=VF2nfj5pSH/R5PYLTAw3HBxlk2HYES1enSplAcNH5Nc08XFialKSHD4odB0qvk+M4pXV01s76GrZLBllV8FNuoRrz7Cw7tH0846lkg1WV9eujvJas/u/cMsf3w2TevndbreS4wcCYpIKCO0annK/nB6TrTZSDM2rdsIYhbyM2VCFyRqTC5LteRQ6qyfOSBq865ptJ2znsY5ZvcJMzFikQ/8qmVx2i3aiwKnETVH1W/weJ2k0BwTkxlLJGstjgoB7siNfHfoRzJ6nesMz3gWbpXzfdvMCwdsz0VtXf/k1DMEZPcGTzwZpNt6zZ5ErG1tbPTTNng4GzB2MTfYWJ96k3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731036256; c=relaxed/relaxed;
-	bh=FiQi+zVrti/4lwYHeXMzDjh6Y9tSUZHidpZ6r5DzMFs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oiXiUuPFo/dhvLEzRiVZ+3/p0NQKV9WmylN8ciBdEqn/mD7F7pjxRam1patZLHmyzQO1VHhsH4XF1fSxlBAjfd2IYuTifQZ++2VEETvv+fnFlc43X4WhMhXo4rhX8M90zKROMsgPjCKwn7aO+aqCothDOVa5OH6qeu1a5328OQb+LCYpCTjWxVOzN9MI0D9LSrpHV/Ocnl9B2F05EMiucbkoQH4aYcmMN7Pb5tkErg7piH+Y4xtpIzBFj8Jt39UYudKr6ktgD2sqlZSYULi/ltafVIW0Ke7lv78Xhm8yvk8SAc1QCnZxFVfAXpIqAh8C6aXcU+BKRcF8rkysWC3E/A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GXhC7s4w; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::42e; helo=mail-pf1-x42e.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c112::" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731044896;
+	cv=pass; b=cSW2J2txvhggRedrFUTA29ACOZCPugvaw68aPORO9IG3ajUz9Jb+ojRlEIG/D9uGxjEJ1VNxhxXe0s41k4sBX2mamseHfh2WDIT6Odkvs0Ekl+fLsjzi66G1AG949g3A7boQdcgz0mK3pxxvawsyHlW7Lw0X/osrOoWZK1DEMsSvlUaiG8Zla2EZkAX2C11DCtxgjHyCQbCs1telhtyXDZmPoxCS2ESz2j7bzBzGZ/NL3evB5w1bMPYJSiwDTbhQfmtb/FggjpW88u2X4QTHKglyuVc5DeYuqpR/M2HR0Qx+UCB5KLD+BOjlhGwMc/k3/R8UCEEBvzjQigTmx95PSg==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1731044896; c=relaxed/relaxed;
+	bh=0g1risCGKK5h67zjiZTGrXuP7L9A3FHTwE5lntsLpUg=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=HaOG3Z9yrS4Ysg7U42/Ot9cXknjTnqFG5EjVSOg6QGzf07Ik+omJoM8YC8gItT4ZmCMBGgaGjy3p0CrVcGFOO61eCF+WF9Th9mDoy47qPWvkVQswCTe3fM6rfnOi3m/K6hrxd3G7rR7o+hhKaqWttu4XIG9V6wOOJoyRWsZA/89KMWhnGFy0I4ZBJTwPQyr9Kd9iSYgBlU+PQzhJsiag0kxudCOOhiO0l4s8FibQegmDIQLoTAjjRIw9I8VfaDJwqFYbfgvb9De/UyWijMIm3PE2LrSfH9NRDPJW75corYQUa2/wKB82UR8Ce4rVhB+dJzNUxyFA3O+DW6FeRoRAbQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com; dkim=fail header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=yC+ZuF/I reason="key not found in DNS"; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c112::; helo=cy4pr05cu001.outbound.protection.outlook.com; envelope-from=khangng@os.amperecomputing.com; receiver=lists.ozlabs.org) smtp.mailfrom=os.amperecomputing.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GXhC7s4w;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=yC+ZuF/I;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42e; helo=mail-pf1-x42e.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f403:c112::; helo=cy4pr05cu001.outbound.protection.outlook.com; envelope-from=khangng@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from CY4PR05CU001.outbound.protection.outlook.com (mail-westcentralusazlp170100000.outbound.protection.outlook.com [IPv6:2a01:111:f403:c112::])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xl46k3RgFz2yxP
-	for <openbmc@lists.ozlabs.org>; Fri,  8 Nov 2024 14:24:13 +1100 (AEDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-720aa3dbda5so1223551b3a.1
-        for <openbmc@lists.ozlabs.org>; Thu, 07 Nov 2024 19:24:13 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xl7Jt5Njqz3bcS
+	for <openbmc@lists.ozlabs.org>; Fri,  8 Nov 2024 16:48:13 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=onXlgV0ZLpyrylkfCJOWHJ1IsN3RzZXjaBQi1csnw7IO2JM1WNJ1CYN3aTl4OgTVzU5ZBfEeEXfYpFuFOXHkQSZ+XGdYEabd9feoV2yq6C/Yz0TSVKNvtO0623zTsLJ6XHI8jfwzCZNHSHt1XFna5Us/R3ZogookrbmVl8nzDMhRkg7T2ODg4ydETE5oiVHdExN2ogFV7q0LPDZVcuZJG9s0jQeCsIXKaXRE0Se0cpv5qD/BnXkA8zzzlsVqkiJDkXVJ0j0p7IMgurySKtlppMh0Z4FG6TvqUXJXQzaOtHwXigYgvms/io4mP5bBHmIryOEvm6kxA1OZFeAP06rbtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0g1risCGKK5h67zjiZTGrXuP7L9A3FHTwE5lntsLpUg=;
+ b=cjQf7Low0lUYFqhzwgq5ld9p8qjCLfnr5CRLzADwMjcl6uDr5g8xDE0NN419Smasm0mlQtkTQN3lCHLRC52IRW6IwSjL9pq+2+mcwH9nCEF6tVrhbZhDNJyIz68vOLKxxMDQm5Ew+WqGHmSBvJ8vSTghwyLLHHCqOR2d8OGxPdwyOT/eWOO8spFcgcx3xkJ/bgFygR3ClRnBJfmdz/vVSXZKTfsmAP7MbeR1fNmaGp79l8fAwpdC/xenBqRzy5B6kBlhBU8Clk9Mfs03cQEygHMcJ99XL9+LbqgfIPwuX6xtutVDfUGqNYhXZ8TNl8MWbdqu2uzC/mJ6pGQ9Fjtg4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731036251; x=1731641051; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FiQi+zVrti/4lwYHeXMzDjh6Y9tSUZHidpZ6r5DzMFs=;
-        b=GXhC7s4wEccaA2p7BD6Q/4ClN5iChVVG2zhv3bn7oDzqx/kuKS2lw7E3QmdzV6IpkX
-         Zdw9POVOjr/WuFZd+hUHxypdJIknyT7K+2K39NiWykuVr0Kurg7OvNcHUXyJaL6L7oz8
-         H6qOQy8q02DPQky6NBjpnJbXvJQYqy2b2G4zQ9ZPVSyXPQWQuz6TufDSyBT0WNlKPPJi
-         TJeWiAEK1q/MAT1gWJnUql1m5H1n8xD8170lFMXmSye22C3RCW7d4OseIrZEyfFU3FAf
-         AN8h8d+PMeLVxA1rYElREM7K8wAGRTuJ7NFj0PAp+APejQ76R6Yi4MSw29sVpgooPGSJ
-         m+NA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731036251; x=1731641051;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FiQi+zVrti/4lwYHeXMzDjh6Y9tSUZHidpZ6r5DzMFs=;
-        b=ud+isEVpMdLTEbQxOlZiEw3cmbG9j2WAy8zF+KhNipdVVrrMc9uJ+8pNpl1SIdefyq
-         UZrUCMsXBvRIpbUYpF+q6GaU2qoSGZt/1bwKOA5iBUdv7jado19QfX0ANj1HYj/PlUBl
-         bS4QzIx+qb2WJ7dtXQmpgWbLIadZ2Cn9yv19RR81hYvRdfqVMt9PslURDGRH9RxTLezv
-         +5BsA90EYZ1mmXTaN2JlXRqD5zTZ6Tu3nHBCnDk7B2KKTxXuM4msTYkBZj1V9H2xvYK9
-         afTv9fip8EufGDBrIXolxGmPC1qN4Gul6V4EAAtVGelll3G0u07WsAzxo6UvwXjkLmz5
-         bx2g==
-X-Forwarded-Encrypted: i=1; AJvYcCX8olC5OVs2oQPc42M+L8CV1FfM1Fkg/wdhWwAwtDmL77Uc29LmPPoJ+BPtlX/wafO2RNhoqoK+@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yyzcmr9UCaPOKQuaLhHF8MV2zeCd3LwblL2dfocHeHENQDnp/I8
-	QIzCT7Isut8c2vCHLtGPLUlCxOsbAdo/EUxIGLVCBccIJLw3Hnjg
-X-Google-Smtp-Source: AGHT+IEuCqDHEhTNFZCpyyg20d0b3Zu/p1XC6BTzBjuWov+1G8DqVUKH6K6wMKylQPRL5ggF5yB5RQ==
-X-Received: by 2002:a05:6a00:1a89:b0:71e:4ee1:6d78 with SMTP id d2e1a72fcca58-7241327a424mr1559577b3a.1.1731036250950;
-        Thu, 07 Nov 2024 19:24:10 -0800 (PST)
-Received: from [192.168.0.104] (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7240785fbe9sm2556540b3a.37.2024.11.07.19.24.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 19:24:10 -0800 (PST)
-Message-ID: <7a476087-9efc-4271-bd2c-d04a0c1d0dff@gmail.com>
-Date: Fri, 8 Nov 2024 11:24:04 +0800
-MIME-Version: 1.0
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0g1risCGKK5h67zjiZTGrXuP7L9A3FHTwE5lntsLpUg=;
+ b=yC+ZuF/IJj39QITx1MFfietLkesKpVHwZTW75yLwHskbw5fRqVEM9nY2FRkfY7ObbsUm2rNUIUG4PX6ksyLai+CRuCsXj5VrCtoA38uI8e8FaWh/vVAeIRjIzwvzPsJrhjutokxhAXcxyfKTR3YxXGsG/YjxlSyBEg3qnGq7P10=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from SN4PR01MB7520.prod.exchangelabs.com (2603:10b6:806:207::19) by
+ BY1PR01MB8801.prod.exchangelabs.com (2603:10b6:a03:5b1::12) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8137.18; Fri, 8 Nov 2024 05:47:48 +0000
+Received: from SN4PR01MB7520.prod.exchangelabs.com
+ ([fe80::3ad8:b11:de24:6087]) by SN4PR01MB7520.prod.exchangelabs.com
+ ([fe80::3ad8:b11:de24:6087%4]) with mapi id 15.20.8137.018; Fri, 8 Nov 2024
+ 05:47:48 +0000
+Message-ID: <4c5b08d2-e81e-4492-a1a7-7e1e6445ddc4@amperemail.onmicrosoft.com>
+Date: Fri, 8 Nov 2024 12:47:36 +0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: net: nuvoton: Add schema for Nuvoton
- MA35 family GMAC
-To: Conor Dooley <conor@kernel.org>
-References: <20241106111930.218825-1-a0987203069@gmail.com>
- <20241106111930.218825-2-a0987203069@gmail.com>
- <20241106-bloated-ranch-be94506d360c@spud>
- <7c2f6af3-5686-452a-8d8a-191899b3d225@gmail.com>
- <20241107-slip-graceful-767507d20d1b@spud>
+Subject: Re: [PATCH net-next] net: mctp: Expose transport binding identifier
+ via IFLA attribute
+To: Jakub Kicinski <kuba@kernel.org>,
+ Khang Nguyen <khangng@os.amperecomputing.com>
+References: <20241105071915.821871-1-khangng@os.amperecomputing.com>
+ <20241107204157.683bca11@kernel.org>
 Content-Language: en-US
-From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <20241107-slip-graceful-767507d20d1b@spud>
+From: Khang D Nguyen <khangng@amperemail.onmicrosoft.com>
+In-Reply-To: <20241107204157.683bca11@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BYAPR06CA0003.namprd06.prod.outlook.com
+ (2603:10b6:a03:d4::16) To SN4PR01MB7520.prod.exchangelabs.com
+ (2603:10b6:806:207::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7520:EE_|BY1PR01MB8801:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2de706d8-7044-4a05-d6d1-08dcffb8e014
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
+X-Microsoft-Antispam-Message-Info: 	=?utf-8?B?YTZvV0I5Yk9zQWlXYWN5bmVwSjFrNTZLSmg0cEsvdm9SRWQzQ2FqejFkVFR1?=
+ =?utf-8?B?WFdRTVNHcVpMdkYydzQzZ3BGWnc2Z2szMzZJakNsVzdLS0xOVlVPb1JuLzVh?=
+ =?utf-8?B?djRiRlFXOU1WeUxudXg3THk4bVVJQ3R6enZqK0J3NkZHVFlYWmRjRElaSmth?=
+ =?utf-8?B?eFFHWGlwWXozZ09Zdk1HSUxOb210NjVVaVY4cUMrNlo4Q0FwZ3RJY0d0M00r?=
+ =?utf-8?B?cGk1cTFXUlYxMS83QklXc2NOanVsWm5kVFllY1JpMVYrK2JhdTlwbEx0dmoz?=
+ =?utf-8?B?YkJ0cTZLMHozVzFSV0tXbDZmN3IwQU5TYW0vUmE4MjRIYzJqbTVzNWt3SXI2?=
+ =?utf-8?B?b2s5dFFiVk9lVExOa1VMbzgrc0xpdXRNSjNZdW5ld3dkeVlzMm5kVmZHYTB0?=
+ =?utf-8?B?d0sxcmVVMFF2dnRJVEVheElmQisrdm9vZW5HUFNxN2kyem9ZSE5wdm53MGl5?=
+ =?utf-8?B?WUd3Z05va1FheHYzdGFCN3Ura3FEN0loc2lPTnFDZmxDSmVaMkpvb1JkVDFh?=
+ =?utf-8?B?dU82bUM2Rll3MUZRWFZtWjBlblNFckx3ZEdoelVwTUFadEJJUnNMeWtkMUV6?=
+ =?utf-8?B?elVKVC94bkFBT2xIaTNORU9rMWp4L0srQm83NEQ4N1NGZzdsS0hoWlE5ajUv?=
+ =?utf-8?B?a3BzejFyU04wdXltaVFldGxzUlgreHhlMzBuWkU2elduZGd3UDlXZHFmRW5u?=
+ =?utf-8?B?T0E1ZWtyeE53aytOZTU3SmNVVGF3cnpkbVVpb2gvWnZPMFpOZTVhOHN6K0xh?=
+ =?utf-8?B?ek5TRUgvM1ZXeXFsLzljT1MwY2NUV1pXWVplOWFIeExveEtEbkNxSTBUY1Bu?=
+ =?utf-8?B?NG9rekZRQlhsYWNDWG1oNXNrVlRhUXZLQzNDVFhDZENpTVAxRlVXZXh2V0Jo?=
+ =?utf-8?B?Qi9aMDRJa1hreHlSTWJwc0FybE9JbFJ1SjNjRm9CamhOS2hobk14OWdUdjd5?=
+ =?utf-8?B?aitaOE92Z0RwNHgvTFVOMER5THpjeFV1bmlPRWVuWGx1dE1nSlhNbWdIT2ND?=
+ =?utf-8?B?RVZJOFh2dlRmMVBtQ3hkaStGVzAyUEUzSmxkemJJNmwzMld0U2dqWnNBcEh1?=
+ =?utf-8?B?WURnK0xJZUJoQ3BsQzBacC82dTI2YjFTaTZPbUlKWVZqRklhUlBqUURNRkIz?=
+ =?utf-8?B?RG5uU3lTWlB5MWlTaDFDS3U2dk5KY0JTUkk1eFFTZ2JkTU1OaTJlazFDbDJQ?=
+ =?utf-8?B?L0FyWitoZW9aWXBIVklhY1ozbjdkMkw4enpMZ3VMRVBSRHl6YWNROFJWbFJM?=
+ =?utf-8?B?czZwMUxxWElobDA2ZFFxVkhmZTk1TWJQVXhrbXVtZjJVUzl3UTFLTG9Dbms4?=
+ =?utf-8?B?NHMvSkwvT3plWXlXaTlrMlpPV1pIUE9wWm9mdm52YytPWjBBc2cwcTJXckpH?=
+ =?utf-8?B?L1JJZ3hseXFnZ2xXN0ZNdXVONlRBTk1xbUZJdmxZNzNIeWZXbnd5TkU1end3?=
+ =?utf-8?B?bUNuY1o5ejM0RlNYczN5ak85aDJuSFptekpCUVlWMkRIOVY5bHBLNGdzenlV?=
+ =?utf-8?B?QVl2MkM4TlcxMUU0ekxocU5sMURFOU9lVGlMVUp5c1N2akt4bEhmQnVJNFFK?=
+ =?utf-8?B?QmpMUXBpa3FqODllQksvdzVVa3B3L1JiU2dqTU1ZRk5rbUJ2aHVIK24xdGZS?=
+ =?utf-8?B?c0k1YjdqWHV5S2F0WDkzQjIzOE1sVUNrenpmMlk1NlN4NmxCZXVNN28yOTI2?=
+ =?utf-8?B?bFJRSUlId1VWTndJeTRwVU9nUjUxVGVzR21panJQNTR5WHJKamZoUktCdEFl?=
+ =?utf-8?Q?OiGpZfJgsq+Z91q5Oy+4M1RliIf5k3gNS2VbMfv?=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7520.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?eDZobzBPUkZkbEZGazY2NkwyVGZWby9sbVBWNUlId0V4RnJKTzh5dWhmNWRK?=
+ =?utf-8?B?b1VIUVIrR0lMMXBCM2NxaytVenI4TUpVaHl6SnZoWWVJVDNPTHhmb25oeEc5?=
+ =?utf-8?B?d1p1WHZjRHBqNUhFQmwwTm1uc1dtbWVDR3I5T3NiSXU3N0RUWkFsZkN3VWpX?=
+ =?utf-8?B?UytuS20wT2daOUFFQWFsbnB3MnFxaVhCdkV5Y1B0WUROZ0RUOEVrU3FnQlJs?=
+ =?utf-8?B?cFhiMjlqalNtYVFMZjg1ZERUTk9TUytlc2FhZkZiV3pYRFlRT0JVRDBob2tt?=
+ =?utf-8?B?VWlzREE1S0JRWDZ1K2RXMTVFaWplZkJpQlppNzk4YmNScENSSVV1RTZ3cDZw?=
+ =?utf-8?B?cEpHamFBcitKb3FoUlBxM01qZnB2WTd2YkNTbkUraURoN29vejJFZDROOHpP?=
+ =?utf-8?B?UFhPaE5XOTdzeFI0bEdwY2VHVjRFNGtGQ1c2WmdYcU1kZTV2bnV1K3BrUjFR?=
+ =?utf-8?B?b2pLRE1xOC9GRWdvbnNNMUNiRGZkZHRPOFA0S1I4ZnFaU3RBZnh0RTN4Tmp0?=
+ =?utf-8?B?VkVaWVFLVk5ITkhURU9RMDBMbldSZ0xvNHNObmVVdktXL2hocWg3VUxqcU9P?=
+ =?utf-8?B?MXcvQ3NmRG5mZmpiQ1VrL1RtenRaSnArNmIvenVrRjNJQXN6Q3RBZ25INTc3?=
+ =?utf-8?B?ZVJ3eW5IZGVXai9saVh4YzdTZ2srcitqUXkxZG5DcjJpSm1VVjdoT0ZsS25z?=
+ =?utf-8?B?RUludHAzUmc1SndidVNJK0MrRkFsNzhiUXpNZHljZlpVYXBxdUpvWEZFd3Bo?=
+ =?utf-8?B?cDE0SUMvWXZYamRWbm40OEJKU3k4SE5iaXpidmhybjRIeWQyRU9PZzg0eXZk?=
+ =?utf-8?B?SGJVV2pPaGdra0lSZHBrcHMyQW1sSVZ2RTh4WWIxKzVxWDVjSEFIeTh1NnNL?=
+ =?utf-8?B?UTF1R2kyVmY3eUtNbWJxdENRWkcyYzcwR3ZZQ25TY29ybGJxU2pBQUF0dkg0?=
+ =?utf-8?B?TzdFaXB1cDMySDBmbzdLVlEwaFhlbzV0TjBKbjFZTzhPWGo3ZXNRdkhCazd1?=
+ =?utf-8?B?aks3bFFsbC9vMkZjeTRZRG5odWNNTlE4RDAvUXdvUFBpeEdjeFBTTDFaSW5v?=
+ =?utf-8?B?aXJ4UFZ1UlIvY1pmVS9SZWx2Y0gveDJnVmtLd0ROK2RLRWZicTZTTDdFQVhw?=
+ =?utf-8?B?V05FZFI2UGRjTUU5Tk55Mmx3MGl1dEQrejl3NFk1b0t2S0RVK3lEdDZDVGFQ?=
+ =?utf-8?B?a2VjeDVUN09uZGswV3RuY2JHUm1uOXNVTUwzQTFoVEZUN05RcGpJdmlocCs1?=
+ =?utf-8?B?cUcvQjlhc3BnYXZpbm9IQnp4TnZyYmVpeTY1U2xSY0VTZkRVTVFDblhHVW4v?=
+ =?utf-8?B?OHlVdXlNd3pzSGk1UFBsUmFrMDNlc0Fnc2JPN0JEWW9vTi9qVmI5V0FBWkFt?=
+ =?utf-8?B?eW5zK29nYWUyNDlNUnZqbWU2SVcveDB3czhvQmg5NEtqd0RrZkg0UzJYaFBD?=
+ =?utf-8?B?eDlHeksycnJ0bnZiQVoxN2pGc2d3aDFlZit2V0tiQWtGL2VUU2xqTXEwV0g0?=
+ =?utf-8?B?UkVmL1o3MlZoMlZOcFNYc3o3REZSN3BodDVSK0dVSFIydUJibWFrUEx0UlZq?=
+ =?utf-8?B?c2xNWks3MnVMR1FONjRBMzNlQ0ZmWGdZVWxUNk9aVVBBbHJKZ3JzUEVyRFd6?=
+ =?utf-8?B?a3pmU082S2hiTVQ3SVB1L0FZQTJtU1VaOE9icXA5VU43V01Ndkd1d0J5MDRP?=
+ =?utf-8?B?Z2RJOWFGK3ZBc2pMY0NQRm9xS2N1WnhqTVdZendXZVB1dGRiVXBGdTRMN25N?=
+ =?utf-8?B?QUxaYlZ5Y0NLcnBpOUptKzFPZ1d4VGp4a1dQSDVUQ2VvK2tyYVJ2eDJpaHI5?=
+ =?utf-8?B?OG03dFZCSi9oU1ozQ0NWd25YMkpPQlNLazFFNmh5bmtycmkyLzZhR0FienQ1?=
+ =?utf-8?B?Q3I3SERDRnBPL0NmU3E2ZUprdWROV3RmSU1nbkJsTmp0NU10MVlTY1lmRENX?=
+ =?utf-8?B?TXgyMDBHWWxaczkwVHQ3Ty85Z0R2V1RFZEYwckZER1RlRk5lUklyL29PZVE3?=
+ =?utf-8?B?MGY2aGFRdE1rVGJzbTRoVHlNRFhvMzNpNzVCYWpXUEpVb2U3THNmQTNvNDIw?=
+ =?utf-8?B?MXd3Wi9KWERCRlU0dWphK2JQVFR5a2FEL3dVNmd3K3BFN2JUczE1cUx6YUsw?=
+ =?utf-8?B?UDNHZlFjTUwwc0U3UHdOenNvb2loM2ZicTNYRlJrV1RqTkZBR1JOZzh5NUFG?=
+ =?utf-8?Q?NF5yIyASPHYFQ9T6SPKSGXM=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2de706d8-7044-4a05-d6d1-08dcffb8e014
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7520.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Nov 2024 05:47:48.1173
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: D4SfCG/m5zx4Jy2EFrcZ9bFE9nn/TM6Nd68RP3i8CSYEiEWB/EGWdgww4T+IBqTPZj4StWR+lyB8QfnqknufnIIiu+G9M9ECahpAQHwoZgL7eSNC7bPunR+uMA8MZ1qf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR01MB8801
+X-Spam-Status: No, score=0.5 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Mon, 11 Nov 2024 09:03:25 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -99,49 +176,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-stm32@st-md-mailman.stormreply.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, netdev@vger.kernel.org, richardcochran@gmail.com, ychuang3@nuvoton.com, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, edumazet@google.com, joabreu@synopsys.com, linux-arm-kernel@lists.infradead.org, mcoquelin.stm32@gmail.com, schung@nuvoton.com, kuba@kernel.org, krzk+dt@kernel.org, pabeni@redhat.com, davem@davemloft.net, yclu4@nuvoton.com
+Cc: patches@amperecomputing.com, Thu Nguyen <thu@os.amperecomputing.com>, Khanh Pham <khpham@amperecomputing.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, ampere-linux-kernel@lists.amperecomputing.com, Phong Vo <phong@os.amperecomputing.com>, Andrew Lunn <andrew+netdev@lunn.ch>, Eric Dumazet <edumazet@google.com>, Hieu Le <hieul@amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>, Simon Horman <horms@kernel.org>, Phong Vo <pvo@amperecomputing.com>, Jeremy Kerr <jk@codeconstruct.com.au>, Matt Johnston <matt@codeconstruct.com.au>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 08/11/2024 11:41, Jakub Kicinski wrote:
+> On Tue,  5 Nov 2024 14:19:15 +0700 Khang Nguyen wrote:
+>> However, we currently have no means to get this information from MCTP
+>> links.
+> 
+> I'm not opposed to the netlink attribute, but to be clear this info
+> is indirectly available in sysfs, right? We link the netdev to
+> the parent device so the type of /sys/class/net/$your_ifc/device
+> should reveal what the transport is?
 
-Conor Dooley 於 11/8/2024 1:09 AM 寫道:
-> On Thu, Nov 07, 2024 at 06:15:51PM +0800, Joey Lu wrote:
->> Conor Dooley 於 11/6/2024 11:44 PM 寫道:
->>> On Wed, Nov 06, 2024 at 07:19:28PM +0800, Joey Lu wrote:
->>>> +  nuvoton,sys:
->>>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>>> +    description: phandle to access GCR (Global Control Register) registers.
->>> Why do you need a phandle to this? You appear to have multiple dwmacs on
->>> your device if the example is anything to go by, how come you don't need
->>> to access different portions of this depending on which dwmac instance
->>> you are?
->> On our platform, a system register is required to specify the TX/RX clock
->> path delay control, switch modes between RMII and RGMII, and configure other
->> related settings.
->>>> +  resets:
->>>> +    maxItems: 1
->>>> +
->>>> +  reset-names:
->>>> +    items:
->>>> +      - const: stmmaceth
->>>> +
->>>> +  mac-id:
->>>> +    maxItems: 1
->>>> +    description:
->>>> +      The interface of MAC.
->>> A vendor prefix is required for custom properties, but I don't think you
->>> need this and actually it is a bandaid for some other information you're
->>> missing. Probably related to your nuvoton,sys property only being a
->>> phandle with no arguments.
->> This property will be removed.
-> I'm almost certain you can't just remove this property, because you need
-> it to tell which portion of the GCR is applicable to the dwmac instance
-> in question. Instead, you need to ad an argument to your phandle. The
-> starfive dwmac binding/driver has an example of what you can do.
+Good point, I did not think about using the parent device, that would be 
+a good workaround for the currently supported interfaces.
 
-Yes, I will use this method instead.🙂
+For the long term, we should still need the attribute. For example, 
+vendor-defined transports need their 0xFF code, which cannot be derived 
+anywhere. Or binding implementations that have parent SoC platform 
+devices from the device tree, which do not always have a clear type 
+shown in the sysfs...
 
-mac-id and tx/rx-delay will be arguments of syscon.
-
-Thanks!
-
+(The MCTP-over-serial binding also does not have a parent device 
+currently, but I believe we can fix that if necessary)
