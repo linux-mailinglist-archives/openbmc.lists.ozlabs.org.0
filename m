@@ -2,84 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79C1B9C4952
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 23:50:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB5B39C4954
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 23:50:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XnPrY6myvz3bkg
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 09:50:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XnPrf12Yzz3d8G
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 09:50:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::636"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731311149;
-	cv=none; b=JWvtTcYK1nO4cMG2fjIQ4uRdOfd0wm1kweunO11Wgsxot1X0o1BlG+hMM22ksmH4KL3w12Ybk6hXM05nVogE6FGaM8HIYuKk37qcdKUtSGdkVH3IrdMl4hdIZvHaNlhGIIPkPAIkbj+BtYTGOeXsP53N46nHvbHfIlZ/nTQc7Cm4yesr4czfoFO8sGLDjzPFyr7hM5eiA/bOsRRSg6MAFutcoKY6dWu5C4fN1a5X/g3hdxpL0mqnxP8qr7pGAo+at44B/rU07y6uekfaWYrqyOdqh6WRRP4s6cfHgM/65nk0IWkYb+pLPi8Oh9yXFhekTWPoLhAxMlFfMPwET48X2A==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::234"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731316681;
+	cv=none; b=UqUuFsRyNQvTRrv6Ol0zvkYZcgUh1mGkVz0yN2W6WxXLZSPzc1d+P8oRH4NwtPyrNNW7FMWqQ4r+gTeDsLnEJQVDK8YnWnwkeLUNwcOSAY7G7UuVBOnX0kuPrluj3WMIxbQXwU4JpC19Nv0HKhB7czizewvMzyLq9cHRrn1gsdjzrGueNo/VvZukKaDPJ/lc+pd7lLwcQ1C3fg2SuyBkcWskQY5FjqHXYfJUdrvSJiU1VufOnQpQzXNTdaZKjjNCtDL2zD3GSR3TXoRteFosNzuUtwEjWtTOnK+GN9OHhYfekhyAp8yKncqdfsPG+7yiSQREy4P7HQmvMgLW7Qq8bA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731311149; c=relaxed/relaxed;
-	bh=tlYEoLWgXvf50waTFfyvkqu6l2VBpvmR0XQbzw8Cmd8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Je5Q9Da/4hqRTtEN6QPKlLw8Ou1zheZDtUgMyU9WHloCnYVofkh+HKLwsHC517Qe3eqxYFMWlZ/7ITCxy0fuCk2/0At3ebae1SasJKqo6KP+vjuzIt1YeuEihvUUCBqZcCf9+tCpEBcevtfr/49HQeyMn6CjOVhsUI02jde36xNvXGIF7LZWTnYVSRhEd//FFviCM2bCw0NDIiLvEgAvljcVnPES4x1cQJ82V0iKqLRhlJU2abbfCraggwQ3QVbTcPfuvBkixcsySKm8hsA0bZeQijYHHejjqxhqYQCF9W0t9cSyP+kKsrALdV1HuzN153z4hSALHw0ImmAqB+0ukg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SXYzzdqx; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::636; helo=mail-ej1-x636.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1731316681; c=relaxed/relaxed;
+	bh=SgzDV6XTYtXT/ZAEBGBUP7h48Bysqg7RCg25yVB5U/k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dB6h1adbK+jxhShgdYRa2glqTUni3ZuAnwFmN7w5o8tGdGct01HIMHyYN7AhXrQbJGDPL/xLGYxt8/k8KDJzANrdbJliVkGJUXTqw8fmw8z78knJ5rQZK5ayf2baQfHg2oqyvAvnUNpTnBuCwj5dTI3aBjcrSNot1aAZeLyjs9f6AhzivwjwcEKZa5ccmn0RikeirmNDpuX80yRKM/OUjp0NeE92eyuGIY4jPpeo2ssYJ/ZbWPJ+fKGdcvQYtGCmXsUbv7GlN3ii4BGyUbLhW841x5Qf2zXnY+bDFD8SCazxh27AhNgf/7M9ASPuiUzcH3nnq60S5f/yc5QHEvLvqg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aHQZMq0l; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SXYzzdqx;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aHQZMq0l;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::636; helo=mail-ej1-x636.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xn1n74y1Xz2yVZ
-	for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2024 18:45:46 +1100 (AEDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-a9a4031f69fso711432166b.0
-        for <openbmc@lists.ozlabs.org>; Sun, 10 Nov 2024 23:45:45 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xn3qX19pgz2yNn
+	for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2024 20:17:59 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3e60825aa26so2529569b6e.1
+        for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2024 01:17:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731311140; x=1731915940; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tlYEoLWgXvf50waTFfyvkqu6l2VBpvmR0XQbzw8Cmd8=;
-        b=SXYzzdqxKA4cUj0Fg+maJaGnvXBzOkTeHJk4esJb7ruFl3D2T+GM6FidV0bCPZdDg1
-         GPgu2xf8yGCVMKomzV1/yVUHsLfdheEsn9V90Mjx0U5jec9d6tpuN1/ITrAokvueR4+W
-         ZqtFLHiP/z4Ull6TtzYLXHg/PggYS1j5HkpF8zUu/JEyT4tL6KUGBXJJbt5mFwuER3n+
-         +VXBtIqGb4vMjguFix2cBVvtZ3wd9AuVBBtHv+aelSmaTmE0OlfgeylAavwj4prDdHEd
-         aAn8W20F1qBVOJu7Zyd9lzZPKb6s29ftIVISeTfZXEtg3hRuvnBDMbvjRmGFb7V7Y9cO
-         MWNw==
+        d=gmail.com; s=20230601; t=1731316676; x=1731921476; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SgzDV6XTYtXT/ZAEBGBUP7h48Bysqg7RCg25yVB5U/k=;
+        b=aHQZMq0lsMypOfbi8GDqFms6yQkQU1HIIxUCr9Rna3u/R0YnwSk76oA86SL/RpZ3bq
+         kqJlQQOECWAJFSC+/ym0CTZ/l0/W5QVRFCoa4JbLXmoOKs/pMQ+R6FXZ6VS9as7MpwAe
+         gT+1dK9adonbk1dMIPUgSlLqKDT/xUdgQTGzFMPxrmg7KLZY0/sJY/M0ckvfOw++mB7c
+         q0+1cwEqF4xmKUis3j0yFQ8FPmlGr7p+F4hc26xLRpQzOwuRirQbWqHYpoY/QJicDCLJ
+         3SjN3FiDJ33wke3vxZ+hLJdlmYWWrmduRJpIJFImtATY1lXTfda9Jy59OeebPc96VqQw
+         AMWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731311140; x=1731915940;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tlYEoLWgXvf50waTFfyvkqu6l2VBpvmR0XQbzw8Cmd8=;
-        b=SXLqt/jcJDDMIFiizg4EsibwwcEUL1Di01odz+FnUFcmRRz+dcqd1FFm4kxBxx/8TH
-         Ollq3W1KTVPFJ0ungRUFRkuCwB7ENjMkrM9espbFxCLbHvmGcvDSyxGZNz9uVli9YfM/
-         BVWiWnRlEqCr9qWy8TZmUFht4AutqUIlvSTgon5VlTQv3UFG/ec3mKSaKeHCNK5L+XpI
-         nm08Au6IkGfFYqBSANpjYN64MOP5HE2ruruSO3YokuYnNaJbV+JrwXC3DCpxplOloIw3
-         z+JIukK51yMdN7+04DRO2XtYaCPYbKq4lVSPmJcINTEjuVqXZeQeru6ixiWyjSVSChBJ
-         Tn0A==
-X-Forwarded-Encrypted: i=1; AJvYcCWxq7pkogdxp3ibHs3SJfEo0v50pjr/Ni+NTmIh+LJTS+U/SuZveWzchJGKJBa8lEetIvXI2maE@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yyc7+yVOJbUxABZR/AL9YeromclXgnVxfWOx0SX8d7CC8gNAhCM
-	E9TzgmqQSCVEAG/DngYyAXHZ7XTG2Yr7wWZTq0ESaC67pIeWc+Nb/u7ajVIum51PxbGiGO9uXFw
-	XnvR8rWFtIgcvR4EMA0YsxaMshTk=
-X-Google-Smtp-Source: AGHT+IH0KLR+0s7nW02uC0eKWTUgxxMYz1DzkxED3149OYbLx/SStp/Kw6ce/5yR+YmhbYjwOTnDum2ZPJHSCyvFgkY=
-X-Received: by 2002:a17:907:25c2:b0:a99:ecaf:4543 with SMTP id
- a640c23a62f3a-a9eeff41732mr1209496866b.25.1731311140145; Sun, 10 Nov 2024
- 23:45:40 -0800 (PST)
+        d=1e100.net; s=20230601; t=1731316676; x=1731921476;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SgzDV6XTYtXT/ZAEBGBUP7h48Bysqg7RCg25yVB5U/k=;
+        b=VWV8moZAE3T73Th/vpUXacgGRFeUpPb2isfnO3Lk1Z4avIrU5pYsjS2pDRG8T9HrKN
+         nJRBeGBHM3v2+PERTA09xMY3qdvGtlwo0ZbZ4CoEW1KaiM6grZ5t97NmaCa9biqhHmpF
+         TvX3Id2gECRP0jAXeb7IsA8MWUvak3WChIbbJ8iP5reMBx65Hn/CsPDhicHjACLHWE3/
+         pS+HcNMOlNgQPVEsvE3eHJgSkE3dJiQB+mVVQQojmCZjlLaW7wFXmXw7AMEJySGRCvht
+         +oq3KMaoqlYDjS2pNTMJjtKIgD7UI4G93GEZIYf7UpnNDaG2Hhd3fhZUyYNytrdBHbcl
+         Xsew==
+X-Forwarded-Encrypted: i=1; AJvYcCW/cK8k5G1gyJ8Q9NIAE6EGv0SudMIB/5Gj1OYLZIeVUTL+SHPg+KcShiE1eqRO0qwBrwpnLP/I@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzR5bVPT1ls7whohax7T5a6wIsBFrR+mNdB9kZGUGP6f2L6zGxq
+	sReqojyZkwqyeJFibu6TFJwFSV3HzMMQ5au0d95DiHedVYhbvjPX
+X-Google-Smtp-Source: AGHT+IH5XF4fHujuj+ksffR1RtxhphO0REZBT78S9uIbUEfLxCgT7hRETIpEKjykIRYtuUK5CY8I6Q==
+X-Received: by 2002:a05:6808:16ab:b0:3e7:5af4:f8e7 with SMTP id 5614622812f47-3e794680de1mr10057389b6e.1.1731316676277;
+        Mon, 11 Nov 2024 01:17:56 -0800 (PST)
+Received: from [192.168.0.101] (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f5bab50sm6863158a12.25.2024.11.11.01.17.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 01:17:55 -0800 (PST)
+Message-ID: <cb718d0f-75a5-4720-b0c1-d8fb1f1c653b@gmail.com>
+Date: Mon, 11 Nov 2024 17:17:51 +0800
 MIME-Version: 1.0
-References: <20241106023916.440767-1-j2anfernee@gmail.com> <20241106023916.440767-2-j2anfernee@gmail.com>
- <6c20875c-4145-4c91-b3b5-8f70ecb126f0@amperemail.onmicrosoft.com>
- <CA+4VgcJD74ar9zQCj38M2w8FzGWpq+u5Z7ip9M7a1Lu7u8rojw@mail.gmail.com>
- <20241109134228.4359d803@jic23-huawei> <20241109142943.3d960742@jic23-huawei>
-In-Reply-To: <20241109142943.3d960742@jic23-huawei>
-From: Yu-Hsian Yang <j2anfernee@gmail.com>
-Date: Mon, 11 Nov 2024 15:45:03 +0800
-Message-ID: <CA+4VgcJ=8wDWWnmgEt-UkEUfnfD8kGtHe44G5+dcRYt=KdwNfw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] dt-bindings: iio: adc: Add binding for Nuvoton
- NCT720x ADCs
-To: Jonathan Cameron <jic23@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: net: nuvoton: Add schema for Nuvoton
+ MA35 family GMAC
+To: Andrew Lunn <andrew@lunn.ch>
+References: <20241106111930.218825-1-a0987203069@gmail.com>
+ <20241106111930.218825-2-a0987203069@gmail.com>
+ <f3c6b67f-5c15-43e2-832e-28392fbe52ec@lunn.ch>
+ <21a00f02-7f2f-46da-a67f-be3e64019303@gmail.com>
+ <9455e2f6-b41d-476e-bda9-fc01958e48d5@lunn.ch>
+Content-Language: en-US
+From: Joey Lu <a0987203069@gmail.com>
+In-Reply-To: <9455e2f6-b41d-476e-bda9-fc01958e48d5@lunn.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Tue, 12 Nov 2024 09:50:02 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -93,192 +99,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, marius.cristea@microchip.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, olivier.moysan@foss.st.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, mike.looijmans@topic.nl, Chanh Nguyen <chanh@amperemail.onmicrosoft.com>, joao.goncalves@toradex.com, nuno.sa@analog.com, matteomartelli3@gmail.com, chanh@os.amperecomputing.com, andy@kernel.org, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, krzk+dt@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, linux-stm32@st-md-mailman.stormreply.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, netdev@vger.kernel.org, richardcochran@gmail.com, ychuang3@nuvoton.com, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, edumazet@google.com, joabreu@synopsys.com, linux-arm-kernel@lists.infradead.org, mcoquelin.stm32@gmail.com, schung@nuvoton.com, kuba@kernel.org, krzk+dt@kernel.org, pabeni@redhat.com, davem@davemloft.net, yclu4@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Jonathan Cameron,
 
-For property read-vin-data-size, we have a internal discussion.
-
-For Nuvoton NCT7201/NCT7202 chip,
-Take an example as to Vin1:
-The VIN reading supports Byte read (One Byte) and Word read (Two Byte)
-
-For Byte read:
-First read Index 00h to get VIN1 MSB, then read Index 0Fh Bit 3~7 to
-get VIN1 LSB.
-Index 0Fh is a shared LSB for all VINs.
-
-For Word read:
-Read Index 00h and get 2 Byte (VIN1 MSB and VIN1 LSB).
-
-We would refer your suggestion,
-we  declare a property named "nvuoton,read-vin-data-size" with default valu=
-e 16
-for user to use.
-
-Jonathan Cameron <jic23@kernel.org> =E6=96=BC 2024=E5=B9=B411=E6=9C=889=E6=
-=97=A5 =E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=8810:29=E5=AF=AB=E9=81=93=EF=BC=
-=9A
+On 11/7/24 21:18, Andrew Lunn wrote:
+> On Thu, Nov 07, 2024 at 06:31:26PM +0800, Joey Lu wrote:
+>> Dear Andrew,
+>>
+>> Thank you for your reply.
+>>
+>> Andrew Lunn 於 11/7/2024 2:13 AM 寫道:
+>>>> +  phy-mode:
+>>>> +    enum:
+>>>> +      - rmii
+>>>> +      - rgmii-id
+>>> The phy-mode deepened on the board design. All four rgmii values are
+>>> valid.
+>> I will add them.
+>>>> +
+>>>> +  tx_delay:
+>>>> +    maxItems: 1
+>>>> +    description:
+>>>> +      Control transmit clock path delay in nanoseconds.
+>>>> +
+>>>> +  rx_delay:
+>>>> +    maxItems: 1
+>>>> +    description:
+>>>> +      Control receive clock path delay in nanoseconds.
+>>> If you absolutely really need these, keep them, but i suggest you drop
+>>> them. They just cause confusion, when ideally we want the PHY to be
+>>> adding RGMII delays, not the MAC.
+>>>
+>>> If you do need them, then they should be in pS.
+>> I will fix it.
+>>
+>> We have customers who use a fixed link instead of a PHY, so these properties
+>> may be necessary.
+> That is a legitimate use case which can require the MAC to add delays,
+> but i generally try to get the switch on the other end to add the
+> delays, just to keep with the uniform setup.
 >
-> On Sat, 9 Nov 2024 13:42:28 +0000
-> Jonathan Cameron <jic23@kernel.org> wrote:
+> Also, please take a look at ethernet-controller.yaml, these should be
+> called rx-internal-delay-ps & tx-internal-delay-ps.
 >
-> > On Wed, 6 Nov 2024 17:22:35 +0800
-> > Yu-Hsian Yang <j2anfernee@gmail.com> wrote:
-> >
-> > > Dear Chanh Nguyen,
-> > >
-> > > Thank you for your response.
-> > >
-> > > Chanh Nguyen <chanh@amperemail.onmicrosoft.com> =E6=96=BC 2024=E5=B9=
-=B411=E6=9C=886=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=8812:58=E5=AF=
-=AB=E9=81=93=EF=BC=9A
-> > > >
-> > > >
-> > > >
-> > > > On 06/11/2024 09:39, Eason Yang wrote:
-> > > > > This adds a binding specification for the Nuvoton NCT7201/NCT7202
-> > > > > family of ADCs.
-> > > > >
-> > > > > Signed-off-by: Eason Yang <j2anfernee@gmail.com>
-> > > > > ---
-> > > > >   .../bindings/iio/adc/nuvoton,nct720x.yaml     | 47 ++++++++++++=
-+++++++
-> > > > >   MAINTAINERS                                   |  1 +
-> > > > >   2 files changed, 48 insertions(+)
-> > > > >   create mode 100644 Documentation/devicetree/bindings/iio/adc/nu=
-voton,nct720x.yaml
-> > > > >
-> > > > > diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,nc=
-t720x.yaml b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct720x.yaml
-> > > > > new file mode 100644
-> > > > > index 000000000000..3052039af10e
-> > > > > --- /dev/null
-> > > > > +++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct720x.y=
-aml
-> > > > > @@ -0,0 +1,47 @@
-> > > > > +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> > > > > +%YAML 1.2
-> > > > > +---
-> > > > > +$id: http://devicetree.org/schemas/iio/adc/nuvoton,nct720x.yaml#
-> > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > > +
-> > > > > +title: Nuvoton nct7202 and similar ADCs
-> > > > > +
-> > > > > +maintainers:
-> > > > > +  - Eason Yang <yhyang2@nuvoton.com>
-> > > > > +
-> > > > > +description: |
-> > > > > +   Family of ADCs with i2c interface.
-> > > > > +
-> > > > > +properties:
-> > > > > +  compatible:
-> > > > > +    enum:
-> > > > > +      - nuvoton,nct7201
-> > > > > +      - nuvoton,nct7202
-> > > > > +
-> > > > > +  reg:
-> > > > > +    maxItems: 1
-> > > > > +
-> > > > > +  read-vin-data-size:
-> > > >
-> > > > Is it generic property or vendor property? I tried to find in the
-> > > > https://github.com/torvalds/linux/tree/master/Documentation/devicet=
-ree/bindings
-> > > > , but it seems this property hasn't been used on other devices.
-> > > >
-> > > > If it is vendor property, then I think it should include a vendor
-> > > > prefix. For examples:
-> > > >
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/adi%2Cad7780.yaml#L50
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/fsl%2Cvf610-adc.yaml#L42
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/st%2Cstmpe-adc.yaml#L22
-> > > >
-> > > >
-> > >
-> > > I would add a vendor prefix for it.
-> >
-> > Why do we want this at all?  Is this device sufficiently high
-> > performance that Linux will ever want to trade of resolution against
-> > sampling speed?
-> >
-> > If so that seems like a policy control that belongs in userspace. Note
-> > that to support that in IIO I would want a strong justification for why=
- we dno't
-> > just set it to 16 always. We just go for maximum resolution in the vast=
- majority
-> > of drivers that support control of this.
-> I'd misunderstood what this is. It's a control no what the i2c word size =
-is.
-> Do we actually care about supporting rubbish i2c controllers?  How many
-> can't do a word access?
->
-> If you do it should be detected from the controller rather than in DT.
->
-> >
-> >
-> > >
-> > > > > +    description: number of data bits per read vin
-> > > > > +    $ref: /schemas/types.yaml#/definitions/uint32
-> > > > > +    enum: [8, 16]
-> > > > > +
-> > > > > +required:
-> > > > > +  - compatible
-> > > > > +  - reg
-> > > > > +  - read-vin-data-size
-> > > > > +
-> > > > > +additionalProperties: false
-> > > > > +
-> > > > > +examples:
-> > > > > +  - |
-> > > > > +    i2c {
-> > > > > +        #address-cells =3D <1>;
-> > > > > +        #size-cells =3D <0>;
-> > > > > +
-> > > > > +        nct7202@1d {
-> > > >
-> > > > I think the Node name should follow
-> > > > https://devicetree-specification.readthedocs.io/en/latest/chapter2-=
-devicetree-basics.html#generic-names-recommendation
-> > > >
-> > > >
-> > > > For some examples that were merged before
-> > > >
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/adi%2Cad7091r5.yaml#L102
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/maxim%2Cmax1238.yaml#L73
-> > > > https://github.com/torvalds/linux/blob/master/Documentation/devicet=
-ree/bindings/iio/adc/ti%2Cadc081c.yaml#L49
-> > > >
-> > >
-> > > I would change it for the node naming.
-> > >
-> > > > > +            compatible =3D "nuvoton,nct7202";
-> > > > > +            reg =3D <0x1d>;
-> > > > > +            read-vin-data-size =3D <8>;
-> > > > > +        };
-> > > > > +    };
-> > > > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > > > index 91d0609db61b..68570c58e7aa 100644
-> > > > > --- a/MAINTAINERS
-> > > > > +++ b/MAINTAINERS
-> > > > > @@ -2746,6 +2746,7 @@ L:      openbmc@lists.ozlabs.org (moderated=
- for non-subscribers)
-> > > > >   S:  Supported
-> > > > >   F:  Documentation/devicetree/bindings/*/*/*npcm*
-> > > > >   F:  Documentation/devicetree/bindings/*/*npcm*
-> > > > > +F:   Documentation/devicetree/bindings/iio/adc/nuvoton,nct720x.y=
-aml
-> > > > >   F:  Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
-> > > > >   F:  arch/arm/boot/dts/nuvoton/nuvoton-npcm*
-> > > > >   F:  arch/arm/mach-npcm/
-> > > >
-> >
-> >
->
+> 	Andrew
+
+Thank you, sir. I will use rx-internal-delay-ps and tx-internal-delay-ps 
+instead.
+
+                 Joey
+
