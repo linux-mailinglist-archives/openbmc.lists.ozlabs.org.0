@@ -1,66 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E3059C34F7
-	for <lists+openbmc@lfdr.de>; Sun, 10 Nov 2024 23:04:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BF1D9C379E
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 05:49:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Xmmsj1Nd3z3cjt
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 09:03:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XmxsV3tBjz3bmJ
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2024 15:49:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731163052;
-	cv=none; b=a/yLd3YSGScKlJtskg25EMShVAFCBN9Zua7B/W3JZVNnukbwgsmJFKvNxLDZUFwg2SsILYWetAsWheky05wrreJv0OtBEI7xjIpHyDgnHG4qdoVGBlXIIvZV0lq5oICJc0kp9u+GEt4NOorCF6my1OudzUeVwa7yG1wCmzNtzgal9vZa8RN6ZHv1zpYSz3aVMoVN+6CgH0DZlV/RGvoopXJL9vcYBTCVoggV0nJpNFkIQ+uLlsmRLJA0NfOtDQDdMaY7YcsgTCvKTI6SX792Ab2S1+CHiu0mFOOeIWcdIdsRowFfvnv2Ex6+lcF6MPPtiWHkP0Yg1qIXLyFSo/UT0w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731300555;
+	cv=none; b=DlYYyHk7V0jiAFz8oB5e1sdkONVUPPnA/ZpMbcAf+MgEFNnNpykOH4kARX8j9U6ScSFUrh19Z2oFzzyX1QE27CdsxVeP0qHhJ7z3xzFlf8PtUuMx1l9IfssaoC46Qw0jp4SMaFphY8pLGKjPVa7NYdF579QZLAIOFUlmBUy+ckzwFA0ToRl4yr0SMYK6C/hK6y5JzXxl3vN7Mxp8UII4vEkOSdMDPk0w0SB31TuBWgalFaB3ldYYFX+zXI0Zn3/ezTjQdEh1eaQdLBRJ11+vMWTpu+fe7k/O1B92woQvzkP/Gq4WWZMpqN3moW1+DDRHRl3JoTMhQszRTM9oCawrwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731163052; c=relaxed/relaxed;
-	bh=oDerJ9P58hhajZxa8ndzbqHixDBIBwwMK0MthLKwJ+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2lbFyjCTmgBNTZFveXnqj0X8YEfiMjYpK6GHLBVExCP3zJWdGXrJpKisjNwHrBG7fBV70cMBKVmTjnQm+19yYPTGoFQeSV3wj37scWd0a1hqIKwVOttE3+hmISXKMzdjZDvCR17S0ykc/4EyTpci240Wm1nnQ4qAVmOVoLtpGOawT0vmql7r28+HfJxb3TmxCRvDmtJO++erBsEeiza/Z2hYZBmk+8L/gwof99KmQLwBG6QhCcNcOi1urKqpo0k2CpL4Bsb/N7D+kZyM5xE9WywYz8UQIFLJ2UYxEmK3F4SQ3fODoCz+14BII5Qus/aV+TMlS0llHotEG6HHrA1Qg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=oZJB+rxb; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1731300555; c=relaxed/relaxed;
+	bh=usVtKTwHCFOrZTgz0XXZa10e04cdDcZS1OBiQazzMXQ=;
+	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:MIME-Version; b=oIBj9VuKEPwzCsn4hsJ9vJbOKKVfwXV68cVQZKt7ljF5vT4oAT1jkxXeLN35vu1pfGiMJw0BAx/SYo/s08cZHGxZCkKg65eLc2jEkH5IGFR11Oa6d/ytQWab0lwrtt8+RXHlYQcfW5O9DSEfRd3f8JQEKfvq4EOUYs8yFPw9HUyXBqRHiYDc5393BuAzVSkPsvvEtlCcP4yUvUlp3xvVri/6SD994MoOXYM5UoJT2tZw6x4uxZ2IOQojl58BHiyXgHKg0Bd83xgMMpuf4EathXhdi8gm3ic+8Ka53n8feJiRsu+u3ioHOF4KKyVT7YBQwXS46TKUqb1wkhSBPmydjQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=l/zHwD8n; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=oZJB+rxb;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=l/zHwD8n;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xlz171Vrbz2xQK
-	for <openbmc@lists.ozlabs.org>; Sun, 10 Nov 2024 01:37:31 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id D641BA40134;
-	Sat,  9 Nov 2024 14:35:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BD2C4CECE;
-	Sat,  9 Nov 2024 14:37:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731163047;
-	bh=fp3dUZNu5k8TsBe0ONSPMYGbnxHP+1IYGa0+jNP4xik=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=oZJB+rxbxlgqVQPNQ9ZcAcRtgp5DAEI9jmqK2d4zwRj15avRRMEyfJ55MgFUIEv+7
-	 1EB7KXqd2+3QOtdlMJfT/seF4+3s6JBO4ZLlD13ZX1mBsknUbg6iy77Rt54qZYUMZy
-	 KfYG0HvzEmD7twXU/beE9JzE0p9mGvNwl43DmXkla0p3qdSe9nvtXqqR98kLXF96Lv
-	 vpeaoCo9kU6mwip2PKMM5AppEEvL9XF94cfCa4NfXHJUvQZQ7DFzEqJebcPm9Woe8D
-	 CqZ4u10GHJTJZrjukrV9aIEbMWdaZNVWW+ta76W0J61vJ5alx0z8hiUqYorq260hNS
-	 rfTFO59GW/gig==
-Date: Sat, 9 Nov 2024 14:37:14 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Eason Yang <j2anfernee@gmail.com>
-Subject: Re: [PATCH v1 2/2] iio: adc: add Nuvoton NCT720x ADC driver
-Message-ID: <20241109143714.70f68cd8@jic23-huawei>
-In-Reply-To: <20241106023916.440767-3-j2anfernee@gmail.com>
-References: <20241106023916.440767-1-j2anfernee@gmail.com>
-	<20241106023916.440767-3-j2anfernee@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XmxsP53gbz2yWK;
+	Mon, 11 Nov 2024 15:49:13 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1731300551;
+	bh=usVtKTwHCFOrZTgz0XXZa10e04cdDcZS1OBiQazzMXQ=;
+	h=Subject:From:To:Cc:Date;
+	b=l/zHwD8nV2XhoeT5F5ZRgx77E/Q/2t/muD8r2BV4z4S32BYxddYl6TVIao8AQHwYF
+	 dwB8n7lyKChboB/Z1GuIrlP0wb4Za2p5OEGd6uM6Vvi7tBasVRyNdvA3CI5P7Rz4Xx
+	 CCGE/QWR1q6CZgKLbnuGXiYSCe8Fxbyzy+QBdMTMBPBab7wx0kqwE7BvG4RHlgfoZs
+	 ZeG6Jaaf0KvaSvvUiZYaHBcx06MBpBuhYRPNJar32zw7FqFB/PlKDiRMxpdkGHFmUo
+	 3aD51hgasLuF86xB0rpZSXQaECTJNd0Drixc5ivkWfxAofG0RnrCasIlUi9zvF/ly/
+	 jqJxz9IBPKAfA==
+Received: from [192.168.91.88] (ppp118-210-71-122.adl-adc-lon-bras32.tpg.internode.on.net [118.210.71.122])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id AFD1865FD5;
+	Mon, 11 Nov 2024 12:49:06 +0800 (AWST)
+Message-ID: <b386a9e98412b06b6186ee5dea81ac6a69bc4f8b.camel@codeconstruct.com.au>
+Subject: Pruning obsolete BMC devicetrees
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: openbmc <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>
+Date: Mon, 11 Nov 2024 15:19:04 +1030
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Mon, 11 Nov 2024 09:03:25 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,691 +65,227 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, marius.cristea@microchip.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, olivier.moysan@foss.st.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, mike.looijmans@topic.nl, joao.goncalves@toradex.com, nuno.sa@analog.com, matteomartelli3@gmail.com, chanh@os.amperecomputing.com, andy@kernel.org, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, krzk+dt@kernel.org
+Cc: linux-arm-kernel <linux-arm-kernel@lists.infradead.org>, linux-aspeed <linux-aspeed@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed,  6 Nov 2024 10:39:16 +0800
-Eason Yang <j2anfernee@gmail.com> wrote:
+Hi all,
 
-> Add Nuvoton NCT7201/NCT7202 system voltage monitor 12-bit ADC driver
-> 
-> NCT7201/NCT7202 supports up to 12 analog voltage monitor inputs and up to
-> 4 SMBus addresses by ADDR pin. Meanwhile, ALERT# hardware event pins for
-> independent alarm signals, and the all threshold values could be set for
-> system protection without any timing delay. It also supports reset input
-> RSTIN# to recover system from a fault condition.
-> 
-> Currently, only single-edge mode conversion and threshold events support.
-> 
-> Signed-off-by: Eason Yang <j2anfernee@gmail.com>
-You've gotten some good review already so I may well repeat stuff plus
-will only take a fairly superficial look at this version.
+We now have quite a collection of BMC-related devicetrees upstream.
+There's interest in whether we can prune some of them out.
 
+If you've added a board you no-longer require, or know of one added for
+a project you were working on that will not revisit upstream kernel
+support, please let us know if you're happy to queue it up for removal
+after the next LTS release.
 
-> diff --git a/drivers/iio/adc/nct720x.c b/drivers/iio/adc/nct720x.c
-> new file mode 100644
-> index 000000000000..e589479fd06e
-> --- /dev/null
-> +++ b/drivers/iio/adc/nct720x.c
+For interest's sake, I did some analysis on when the Aspeed devicetrees
+were last touched by commits that weren't obviously broad fixups:
 
-> +
-> +/* List of supported devices */
-> +enum nct720x_chips {
-> +	nct7201, nct7202
-This should be replaced by chip specific information structures.
-That ends up a lot more extensible than using an enum and fixing up
-what happens in all code paths on a per enum value basis.
+   2018-06-22 876c5d891c9d7442d2734871317bc6480cd9f80e: aspeed-bmc-opp-palm=
+etto.dts
+   2019-01-10 869d1375a495e6217fdfda6a59b13812d2f3a569: aspeed-bmc-arm-star=
+dragon4800-rep2.dts
+   2019-01-17 43d78e726a2b5fef0c0e0f07e2bed0faa4918d1b: aspeed-bmc-inspur-o=
+n5263m5.dts
+   2019-04-04 8bc7d3ed7cf4a1d44e63301c44bcbd41e6f50f65: aspeed-bmc-opp-lany=
+ang.dts
+   2019-04-25 29b871f344f43ef428aa55ee9ed2a76b5bee0f87: aspeed-bmc-quanta-q=
+71l.dts
+   2019-05-05 9831ae33750db5341bcfcb3a54758e016dfc0c81: aspeed-bmc-lenovo-h=
+r630.dts
+   2019-05-21 130413736376e299e77328760209fd3307d02201: aspeed-bmc-microsof=
+t-olympus.dts
+   2019-06-25 dc4bea0b989cfa3e3dfd8fe79a18abcfaca19767: aspeed-bmc-lenovo-h=
+r855xg2.dts
+   2019-11-18 e4aab38ed5d1b8316f25786e6ec6adb34449b294: aspeed-bmc-opp-vesn=
+in.dts
+   2019-12-03 53820e00aaa173db268e0288d0407806539b4c3e: aspeed-bmc-opp-swif=
+t.dts
+   2020-03-06 1f2c9d31e4806177aa97819d4ddc83dacd437ba2: aspeed-bmc-opp-romu=
+lus.dts
+   2020-03-06 fa09a28ca3e966582d6d92ef1536de360c8b194b: aspeed-bmc-opp-zaiu=
+s.dts
+   2020-04-29 697538bd65ad22a92598b5efded3666d3c59d1cc: aspeed-bmc-opp-nico=
+le.dts
+   2020-08-24 11c4124d5343b86e828c7c120cb8d1ece720dd0c: aspeed-bmc-facebook=
+-yamp.dts
+   2020-08-24 f883a606097d0017079b0e40125aac47ab221616: aspeed-bmc-facebook=
+-cmm.dts
+   2020-09-22 9e1cc9679776f5b9e42481d392b1550753ebd084: aspeed-bmc-intel-s2=
+600wf.dts
+   2020-12-21 13177f6ed3ea380011cea8a2f798c918e1ffc436: aspeed-bmc-supermic=
+ro-x11spi.dts
+   2021-01-21 286a596da2937d292828927a2b2ade4e03188f6c: aspeed-bmc-opp-mowg=
+li.dts
+   2021-04-13 45171b7dd2b81dbd38dc4027686774f8b02f2390: aspeed-bmc-ibm-rain=
+ier-1s4u.dts
+   2021-04-15 f0145db24e65f6cf13347a90ffb86e5ef2ff2ca2: aspeed-bmc-facebook=
+-tiogapass.dts
+   2021-04-30 189e847a0f0bcf99df5aea85e634abada5fbfbf4: aspeed-bmc-ibm-rain=
+ier-4u.dts
+   2021-05-26 419cc0b8c127193f6f447b905b1240765d2087c7: aspeed-bmc-inspur-n=
+f5280m6.dts
+   2021-07-18 00e9e776fa197592addc1f3002c63585f884a5dd: aspeed-bmc-facebook=
+-wedge100.dts
+   2021-07-18 5501ab03b9f1412a44e993e469f9375276de5399: aspeed-bmc-facebook=
+-galaxy100.dts
+   2021-07-18 c8a66b42d689e2b90878416e4b83a7ed3f58b708: aspeed-bmc-facebook=
+-wedge40.dts
+   2021-07-19 813e3f1d51fda49c7c9ce8552177968cd63a2af6: aspeed-bmc-facebook=
+-minipack.dts
+   2021-10-14 4eb7fe3333a021c8d0f35bcb5cd7c4e42800df62: aspeed-bmc-inspur-f=
+p5280g2.dts
+   2021-10-19 2561b4f6ecc741cb96e67c5fe250915548a83bb2: aspeed-bmc-inventec=
+-transformers.dts
+   2021-11-19 67ac01d03862b274d4ca3fa76092e96b00f478af: aspeed-bmc-vegman-n=
+110.dts
+   2021-11-19 67ac01d03862b274d4ca3fa76092e96b00f478af: aspeed-bmc-vegman-s=
+x20.dts
+   2021-11-30 4fcbe1f5b6ba71e0c464a303e3769bf1ce1fe54c: aspeed-bmc-tyan-s71=
+06.dts
+   2021-12-10 b26965e99788ea163fc217bdca1c2b17a5d70c90: aspeed-bmc-bytedanc=
+e-g220a.dts
+   2022-03-25 7b46aa7c008d2becd5df46c174d8cb4239e24659: aspeed-bmc-nuvia-dc=
+-scm.dts
+   2022-05-26 94d0a03297615cad2d40b0f02ceab902a7339062: aspeed-bmc-portwell=
+-neptune.dts
+   2022-06-23 390ffde2b97c8d50f87bf450208b3a4ed70cc2db: aspeed-bmc-arm-cent=
+riq2400-rep.dts
+   2022-06-24 7f058112873e86ca760f2d2b0e1ccc2ab111f418: aspeed-bmc-qcom-dc-=
+scm-v1.dts
+   2022-08-30 50c7e281f44726249b5ab7f148c02bbba751fea1: aspeed-bmc-facebook=
+-elbert.dts
+   2022-08-30 50c7e281f44726249b5ab7f148c02bbba751fea1: aspeed-bmc-facebook=
+-fuji.dts
+   2022-09-22 3293fca4a689dae1090b997145a46c816ff03a4a: aspeed-bmc-amd-dayt=
+onax.dts
+   2022-10-21 fe87f88eaf696b064231143536a33a618d5e0cd2: aspeed-bmc-opp-miha=
+wk.dts
+   2023-01-11 03d24e12749281f51545c9011fc953ac844df413: aspeed-bmc-amd-etha=
+nolx.dts
+   2023-01-18 8803d9438ef65c96b03ae95472e19b3ac072c930: aspeed-bmc-tyan-s80=
+36.dts
+   2023-01-19 28cfb03afcb20a841e96e821ba20870a7c437034: aspeed-bmc-ufispace=
+-ncplite.dts
+   2023-07-03 3f2879e4040cd8145d4b2f66ee8f9738e438e055: aspeed-bmc-inventec=
+-starscream.dts
+   2023-09-14 fe93af86526b93de6f11ca3c201525dbd961fb8f: aspeed-bmc-facebook=
+-minerva-cmc.dts
+   2024-01-13 8412c47d68436b9f9a260039a4a773daa6824925: aspeed-bmc-facebook=
+-bletchley.dts
+   2024-01-13 8412c47d68436b9f9a260039a4a773daa6824925: aspeed-bmc-facebook=
+-wedge400.dts
+   2024-01-31 247997184b0eb70f7af29fbe3e32f7a4eff2651e: aspeed-bmc-asrock-e=
+3c246d4i.dts
+   2024-02-24 dc260f505bd57f57b23bb343285e29533a6264f3: aspeed-bmc-asrock-r=
+omed8hm3.dts
+   2024-02-26 4ed43e8a1b9080a3ba393606b0523cf8bb311083: aspeed-bmc-delta-ah=
+e50dc.dts
+   2024-04-03 c61838aa458b5f96d5824733bef164da2d7ee860: aspeed-bmc-asrock-x=
+570d4u.dts
+   2024-04-05 f956245e4b74312cb238ce6a21fe02f60ef592f4: aspeed-bmc-facebook=
+-yosemitev2.dts
+   2024-04-10 1bd612936b558f6868ea1c5734e72fcea3bc49f2: aspeed-bmc-facebook=
+-cloudripper.dts
+   2024-04-30 d8bdd1e8acd54631a59c56f637b18816c5381f61: aspeed-bmc-asus-x4t=
+f.dts
+   2024-05-01 c44211af1aa9c6b93178a3993e18a7ebffab7488: aspeed-bmc-asrock-e=
+3c256d4i.dts
+   2024-05-20 76c5533925434b0383f95a56a4da2e81e3e8a3d3: aspeed-bmc-asrock-s=
+pc621d8hm3.dts
+   2024-05-22 787d4cbff0dc2fb5c4a344fb5f5f14ca5d7d0a9c: aspeed-bmc-ibm-blue=
+ridge-4u.dts
+   2024-08-02 1c8b6faf882de15fd62094e08b2ca5bf7870b767: aspeed-bmc-ibm-bonn=
+ell.dts
+   2024-08-02 1c8b6faf882de15fd62094e08b2ca5bf7870b767: aspeed-bmc-opp-taco=
+ma.dts
+   2024-08-02 1c8b6faf882de15fd62094e08b2ca5bf7870b767: aspeed-bmc-opp-with=
+erspoon.dts
+   2024-08-06 326bed426c43645cdce46197c420f929969a18c4: aspeed-bmc-ampere-m=
+tjade.dts
+   2024-08-16 ef1e32cb6314898da9188e2371a398c217db238a: aspeed-bmc-facebook=
+-greatlakes.dts
+   2024-09-05 a16edad0afa57424b85ae512a574b21ad02ee9a5: aspeed-bmc-ampere-m=
+tmitchell.dts
+   2024-09-09 8da6f02e0cbd2a54a1c322f12a104ae6d0aaac26: aspeed-bmc-facebook=
+-harma.dts
+   2024-09-10 e87ee9893c576b2d3916b017bb672f2f3c0e231a: aspeed-bmc-quanta-s=
+6q.dts
+   2024-09-10 e87ee9893c576b2d3916b017bb672f2f3c0e231a: aspeed-bmc-vegman-r=
+x20.dts
+   2024-09-24 ef73fe22bdd97bd829246299f69cd701f29ffb07: aspeed-bmc-facebook=
+-minerva.dts
+   2024-09-26 e9414665bb9f80c6072b8ecd3f43f395a0c5b916: aspeed-bmc-facebook=
+-catalina.dts
+   2024-10-01 5270aac729e2f2ad5ed0529bcb2618c92735e9f1: aspeed-bmc-ibm-syst=
+em1.dts
+   2024-10-03 faabe02697d7348f5c7cb7be4d93f9c9041021f7: aspeed-bmc-facebook=
+-yosemite4.dts
+   2024-10-21 8e2e003ccafe87795a9940ffed456600f71a0fd7: aspeed-bmc-ampere-m=
+tjefferson.dts
+   2024-11-04 275017f75a4fefd004962024c3b4a1587a95bdfe: aspeed-bmc-ibm-sbp1=
+.dts
+   2024-11-06 c63cd57bb09abfb15b6907e85d2df7be152d9f25: aspeed-bmc-ibm-ever=
+est.dts
+   2024-11-07 2eff056a229e21d9e287a74f1305f947ff6b141b: aspeed-bmc-ibm-fuji=
+.dts
+   2024-11-08 ed280dbf0e488347c33bef359f8b101f0835f89b: aspeed-bmc-ibm-blue=
+ridge.dts
+   2024-11-08 ed280dbf0e488347c33bef359f8b101f0835f89b: aspeed-bmc-ibm-rain=
+ier.dts
+  =20
+Out of further curiosity, I also filtered the list by machines that
+aren't mentioned in upstream OpenBMC (not that that's where they must
+be used, but it might be an indication of stalled efforts to upstream
+support):
 
-> +};
-> +
-> +struct nct720x_chip_info {
-> +	struct i2c_client	*client;
-> +	enum nct720x_chips	type;
-> +	struct mutex		access_lock;	/* for multi-byte read and write operations */
-> +	int vin_max;				/* number of VIN channels */
-> +	u32 vin_mask;
-> +	bool use_read_byte_vin;
-> +};
+   2019-01-10 869d1375a495e6217fdfda6a59b13812d2f3a569: aspeed-bmc-arm-star=
+dragon4800-rep2.dts
+   2019-01-17 43d78e726a2b5fef0c0e0f07e2bed0faa4918d1b: aspeed-bmc-inspur-o=
+n5263m5.dts
+   2019-04-04 8bc7d3ed7cf4a1d44e63301c44bcbd41e6f50f65: aspeed-bmc-opp-lany=
+ang.dts
+   2019-05-05 9831ae33750db5341bcfcb3a54758e016dfc0c81: aspeed-bmc-lenovo-h=
+r630.dts
+   2019-06-25 dc4bea0b989cfa3e3dfd8fe79a18abcfaca19767: aspeed-bmc-lenovo-h=
+r855xg2.dts
+   2020-08-24 11c4124d5343b86e828c7c120cb8d1ece720dd0c: aspeed-bmc-facebook=
+-yamp.dts
+   2021-01-21 286a596da2937d292828927a2b2ade4e03188f6c: aspeed-bmc-opp-mowg=
+li.dts
+   2021-05-26 419cc0b8c127193f6f447b905b1240765d2087c7: aspeed-bmc-inspur-n=
+f5280m6.dts
+   2021-07-18 00e9e776fa197592addc1f3002c63585f884a5dd: aspeed-bmc-facebook=
+-wedge100.dts
+   2021-07-18 5501ab03b9f1412a44e993e469f9375276de5399: aspeed-bmc-facebook=
+-galaxy100.dts
+   2021-07-18 c8a66b42d689e2b90878416e4b83a7ed3f58b708: aspeed-bmc-facebook=
+-wedge40.dts
+   2021-07-19 813e3f1d51fda49c7c9ce8552177968cd63a2af6: aspeed-bmc-facebook=
+-minipack.dts
+   2021-10-14 4eb7fe3333a021c8d0f35bcb5cd7c4e42800df62: aspeed-bmc-inspur-f=
+p5280g2.dts
+   2022-05-26 94d0a03297615cad2d40b0f02ceab902a7339062: aspeed-bmc-portwell=
+-neptune.dts
+   2022-06-23 390ffde2b97c8d50f87bf450208b3a4ed70cc2db: aspeed-bmc-arm-cent=
+riq2400-rep.dts
+   2022-08-30 50c7e281f44726249b5ab7f148c02bbba751fea1: aspeed-bmc-facebook=
+-elbert.dts
+   2022-10-21 fe87f88eaf696b064231143536a33a618d5e0cd2: aspeed-bmc-opp-miha=
+wk.dts
+   2024-01-13 8412c47d68436b9f9a260039a4a773daa6824925: aspeed-bmc-facebook=
+-wedge400.dts
+   2024-01-13 8412c47d68436b9f9a260039a4a773daa6824925: aspeed-bmc-facebook=
+-wedge400.dts
+   2024-04-10 1bd612936b558f6868ea1c5734e72fcea3bc49f2: aspeed-bmc-facebook=
+-cloudripper.dts
+   2024-04-30 d8bdd1e8acd54631a59c56f637b18816c5381f61: aspeed-bmc-asus-x4t=
+f.dts
 
-> +#define NCT720X_VOLTAGE_CHANNEL(chan, addr)				\
-> +	{								\
-> +		.type = IIO_VOLTAGE,					\
-> +		.indexed = 1,						\
-> +		.channel = chan,					\
-> +		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED),	\
-> +		.address = addr,					\
-> +		.event_spec = nct720x_events,				\
-> +		.num_event_specs = ARRAY_SIZE(nct720x_events),		\
-> +	}
-> +
-> +#define NCT720X_VOLTAGE_CHANNEL_DIFF(chan1, chan2, addr)		\
-> +	{								\
-> +		.type = IIO_VOLTAGE,					\
-> +		.indexed = 1,						\
-> +		.channel = (chan1),					\
-> +		.channel2 = (chan2),					\
-> +		.differential = 1,					\
-> +		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED),	\
-See below - should be _RAW and _SCALE not _PROCESSED.
-> +		.address = addr,					\
-> +		.event_spec = nct720x_events,				\
-> +		.num_event_specs = ARRAY_SIZE(nct720x_events),		\
-> +	}
-> +
-> +static const struct iio_chan_spec nct720x_channels[] = {
-> +	NCT720X_VOLTAGE_CHANNEL(1, 1),
-> +	NCT720X_VOLTAGE_CHANNEL(2, 2),
-> +	NCT720X_VOLTAGE_CHANNEL(3, 3),
-> +	NCT720X_VOLTAGE_CHANNEL(4, 4),
-> +	NCT720X_VOLTAGE_CHANNEL(5, 5),
-> +	NCT720X_VOLTAGE_CHANNEL(6, 6),
-> +	NCT720X_VOLTAGE_CHANNEL(7, 7),
-> +	NCT720X_VOLTAGE_CHANNEL(8, 8),
-> +	NCT720X_VOLTAGE_CHANNEL(9, 9),
-> +	NCT720X_VOLTAGE_CHANNEL(10, 10),
-> +	NCT720X_VOLTAGE_CHANNEL(11, 11),
-> +	NCT720X_VOLTAGE_CHANNEL(12, 12),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(1, 2, 1),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(3, 4, 3),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(5, 6, 5),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(7, 8, 7),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(9, 10, 9),
-> +	NCT720X_VOLTAGE_CHANNEL_DIFF(11, 12, 11),
-> +};
-> +
-> +/* Read 1-byte register. Returns unsigned byte data or -ERRNO on error. */
-> +static int nct720x_read_reg(struct nct720x_chip_info *chip, u8 reg)
-> +{
-> +	struct i2c_client *client = chip->client;
-> +
-> +	return i2c_smbus_read_byte_data(client, reg);
-> +}
-> +
-> +/* Read 1-byte register. Returns unsigned word data or -ERRNO on error. */
-> +static int nct720x_read_word_swapped_reg(struct nct720x_chip_info *chip, u8 reg)
-> +{
-> +	struct i2c_client *client = chip->client;
-> +
-> +	return i2c_smbus_read_word_swapped(client, reg);
+Some of the earlier devicetrees might be candidates for consideration.
 
-Don't provide these wrappers as they don't add anything useful.
-Make the calls directly inline.
+Andrew
 
-> +}
-> +
-> +/*
-> + * Read 2-byte register. Returns register in big-endian format or
-> + * -ERRNO on error.
-> + */
-> +static int nct720x_read_reg16(struct nct720x_chip_info *chip, u8 reg)
-> +{
-> +	struct i2c_client *client = chip->client;
-> +	int ret, low;
-> +
-> +	mutex_lock(&chip->access_lock);
-guard() 
-
-> +	ret = i2c_smbus_read_byte_data(client, reg);
-> +	if (ret >= 0) {
-> +		low = ret;
-> +		ret = i2c_smbus_read_byte_data(client, reg + 1);
-> +		if (ret >= 0)
-> +			ret = low | (ret << 8);
-		if (ret < 0)
-			return ret;
-
-			reg = get_unaligned_le16()
-on an appropriate u8 data[2]; ideally filled by a bulk regmap read.
-
-
-> +	}
-> +
-> +	mutex_unlock(&chip->access_lock);
-> +	return ret;
-> +}
-> +
-> +/* Write 1-byte register. Returns 0 or -ERRNO on error. */
-> +static int nct720x_write_reg(struct nct720x_chip_info *chip, u8 reg, u8 val)
-> +{
-> +	struct i2c_client *client = chip->client;
-> +	int err;
-> +
-> +	err = i2c_smbus_write_byte_data(client, reg, val);
-> +	/* wait for write command to be finished */
-If this is needed, provide a datasheet reference. It is very ususual to
-see a significant delay needed. 
-> +	mdelay(10);
-> +
-> +	return err;
-> +}
-> +
-> +static int nct720x_read_raw(struct iio_dev *indio_dev,
-> +			    struct iio_chan_spec const *chan,
-> +			    int *val, int *val2, long mask)
-> +{
-> +	int index = nct720x_chan_to_index[chan->address];
-> +	int v1, v2, volt, err;
-> +	struct nct720x_chip_info *chip = iio_priv(indio_dev);
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	switch (mask) {
-> +	case IIO_CHAN_INFO_PROCESSED:
-> +		mutex_lock(&chip->access_lock);
-> +		if (chip->use_read_byte_vin) {
-
-Ah.  So resolution doesn't change, you are controlling the i2c acceses?
-
-That should come from the i2c controller capabilities, not DT for this
-device.
-
-
-
-> +			/*
-> +			 * MNTVIN Low Byte together with MNTVIN High Byte
-> +			 * forms the 13-bit count value. If MNTVIN High
-> +			 * Byte readout is read successively, the
-> +			 * NCT7201/NCT7202 will latch the MNTVIN Low Byte
-> +			 * for next read.
-> +			 */
-> +			v1 = nct720x_read_reg(chip, REG_VIN[index]);
-> +			if (v1 < 0) {
-> +				err = v1;
-> +				goto abort;
-> +			}
-> +
-> +			v2 = nct720x_read_reg(chip, REG_VOLT_LOW_BYTE);
-> +			if (v2 < 0) {
-> +				err = v2;
-> +				goto abort;
-> +			}
-> +			volt = (v1 << 8) | v2;	/* Convert back to 16-bit value */
-> +		} else {
-> +			/* NCT7201/NCT7202 also supports read word-size data */
-> +			volt = nct720x_read_word_swapped_reg(chip, REG_VIN[index]);
-> +		}
-> +
-> +		/* Voltage(V) = 13bitCountValue * 0.0004995 */
-Present this as _RAW and provide _SCALE to userspace to be able to do this
-maths.  Very unusual for an ADC driver to provided processed channels. Normally
-only occurs it there is something non linear going on.
-
-
-> +		volt = (volt >> 3) * NCT720X_IN_SCALING;
-> +		*val = volt / 10000;
-> +		mutex_unlock(&chip->access_lock);
-> +		return IIO_VAL_INT;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +abort:
-> +	mutex_unlock(&chip->access_lock);
-> +	return err;
-> +}
-> +
-> +static int nct720x_read_event_value(struct iio_dev *indio_dev,
-> +				    const struct iio_chan_spec *chan,
-> +				    enum iio_event_type type,
-> +				    enum iio_event_direction dir,
-> +				    enum iio_event_info info,
-> +				    int *val, int *val2)
-> +{
-> +	struct nct720x_chip_info *chip = iio_priv(indio_dev);
-> +	int v1, v2, err;
-> +	int volt = 0;
-> +	int index = nct720x_chan_to_index[chan->address];
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (info == IIO_EV_INFO_VALUE) {
-As below - flip logic.
-
-> +		if (dir == IIO_EV_DIR_FALLING) {
-> +			if (chip->use_read_byte_vin) {
-> +				/*
-> +				 * Low limit VIN Low Byte together with Low limit VIN High Byte
-> +				   forms the 13-bit count value
-> +				 */
-> +				mutex_lock(&chip->access_lock);
-> +				v1 = nct720x_read_reg(chip, REG_VIN_LOW_LIMIT[index]);
-> +				if (v1 < 0) {
-> +					err = v1;
-> +					goto abort;
-> +				}
-> +
-> +				v2 = nct720x_read_reg(chip, REG_VIN_LOW_LIMIT_LSB[index]);
-> +				if (v2 < 0) {
-> +					err = v2;
-> +					goto abort;
-> +				}
-> +				mutex_unlock(&chip->access_lock);
-> +				volt = (v1 << 8) | v2;	/* Convert back to 16-bit value */
-
-rather see this as a get_unaligned_le16 on an array of u8.
-In some cases that ends up quite a bit cheaper and it also documents what is going on.
-
-> +			} else {
-> +				/* NCT7201/NCT7202 also supports read word-size data */
-> +				volt = nct720x_read_word_swapped_reg(chip,
-> +					REG_VIN_LOW_LIMIT[index]);
-> +			}
-> +		} else {
-> +			if (chip->use_read_byte_vin) {
-> +				/*
-> +				 * High limit VIN Low Byte together with high limit VIN High Byte
-> +				 * forms the 13-bit count value
-> +				 */
-> +				mutex_lock(&chip->access_lock);
-> +				v1 = nct720x_read_reg(chip, REG_VIN_HIGH_LIMIT[index]);
-> +				if (v1 < 0) {
-> +					err = v1;
-> +					goto abort;
-> +				}
-> +
-> +				v2 = nct720x_read_reg(chip, REG_VIN_HIGH_LIMIT_LSB[index]);
-> +				if (v2 < 0) {
-> +					err = v2;
-> +					goto abort;
-> +				}
-> +				mutex_unlock(&chip->access_lock);
-> +				volt = (v1 << 8) | v2;	/* Convert back to 16-bit value */
-> +			} else {
-> +				/* NCT7201/NCT7202 also supports read word-size data */
-> +				volt = nct720x_read_word_swapped_reg(chip,
-> +					REG_VIN_HIGH_LIMIT[index]);
-> +			}
-> +		}
-> +	}
-> +	/* Voltage(V) = 13bitCountValue * 0.0004995 */
-> +	volt = (volt >> 3) * NCT720X_IN_SCALING;
-> +	*val = volt / 10000;
-> +
-> +	return IIO_VAL_INT;
-> +abort:
-> +	mutex_unlock(&chip->access_lock);
-guard() in appropriate places.
-Again, the lock and unlock should ideally be in same scope.
-
-> +	return err;
-> +}
-> +
-> +static int nct720x_write_event_value(struct iio_dev *indio_dev,
-> +				     const struct iio_chan_spec *chan,
-> +				     enum iio_event_type type,
-> +				     enum iio_event_direction dir,
-> +				     enum iio_event_info info,
-> +				     int val, int val2)
-> +{
-> +	struct nct720x_chip_info *chip = iio_priv(indio_dev);
-> +	int index, err = 0;
-> +	long v1, v2, volt;
-> +
-> +	index = nct720x_chan_to_index[chan->address];
-> +	volt = (val * 10000) / NCT720X_IN_SCALING;
-> +	v1 = volt >> 5;
-> +	v2 = (volt & 0x1f) << 3;
-Some explanatory comments for this would be good.
-
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (info == IIO_EV_INFO_VALUE) {
-Flip logic.
-	if (info != IIO_EV_INFO_VALUE)
-		return -EINVAL;
-
-	if (dir == IIO_EVE_DIR_FALLING) etc
-
-> +		if (dir == IIO_EV_DIR_FALLING) {
-> +			mutex_lock(&chip->access_lock);
-This is badly nested.  Mutex lock and unlock should be in same scope.
-So I'd pull mutex_lock() out of this if stack and use guard(mutex) instead.
-That way you can just return on error.
-
-> +			err = nct720x_write_reg(chip, REG_VIN_LOW_LIMIT[index], v1);
-> +			if (err < 0) {
-> +				pr_err("Failed to write REG_VIN%d_LOW_LIMIT\n", index + 1);
-> +				goto abort;
-> +			}
-> +
-> +			err = nct720x_write_reg(chip, REG_VIN_LOW_LIMIT_LSB[index], v2);
-> +			if (err < 0) {
-> +				pr_err("Failed to write REG_VIN%d_LOW_LIMIT_LSB\n", index + 1);
-> +				goto abort;
-> +			}
-> +		} else {
-> +			mutex_lock(&chip->access_lock);
-> +			err = nct720x_write_reg(chip, REG_VIN_HIGH_LIMIT[index], v1);
-> +			if (err < 0) {
-> +				pr_err("Failed to write REG_VIN%d_HIGH_LIMIT\n", index + 1);
-> +				goto abort;
-> +			}
-> +
-> +			err = nct720x_write_reg(chip, REG_VIN_HIGH_LIMIT_LSB[index], v2);
-> +			if (err < 0) {
-> +				pr_err("Failed to write REG_VIN%d_HIGH_LIMIT_LSB\n", index + 1);
-> +				goto abort;
-> +			}
-> +		}
-> +	}
-> +abort:
-> +	mutex_unlock(&chip->access_lock);
-> +	return err;
-> +}
-
-> +
-> +static int nct720x_write_event_config(struct iio_dev *indio_dev,
-> +				      const struct iio_chan_spec *chan,
-> +				      enum iio_event_type type,
-> +				      enum iio_event_direction dir,
-> +				      int state)
-> +{
-> +	int err = 0;
-> +	struct nct720x_chip_info *chip = iio_priv(indio_dev);
-> +	int index = nct720x_chan_to_index[chan->address];
-> +	unsigned int mask;
-> +
-> +	mask = BIT(index);
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (!state && (chip->vin_mask & mask))
-> +		chip->vin_mask &= ~mask;
-> +	else if (state && !(chip->vin_mask & mask))
-> +		chip->vin_mask |= mask;
-> +
-> +	mutex_lock(&chip->access_lock);
-guard(mutex)(&chip->access_lock);
-
-> +
-> +	err = nct720x_write_reg(chip, REG_CHANNEL_ENABLE_1, chip->vin_mask & 0xff);
-> +	if (err < 0) {
-> +		pr_err("Failed to write REG_CHANNEL_ENABLE_1\n");
-> +		goto abort;
-		dev_err()
-		return err;
-
-> +	}
-> +
-> +	if (chip->type == nct7202) {
-
-Gain, base this on a chip_info flag.
-
-> +		err = nct720x_write_reg(chip, REG_CHANNEL_ENABLE_2, chip->vin_mask >> 8);
-> +		if (err < 0) {
-> +			pr_err("Failed to write REG_CHANNEL_ENABLE_2\n");
-> +			goto abort;
-Same as above.
-> +		}
-> +	}
-> +abort:
-> +	mutex_unlock(&chip->access_lock);
-> +	return err;
-> +}
-> +
-> +static int nct720x_detect(struct i2c_client *client,
-> +			  struct i2c_board_info *info)
-> +{
-> +	struct i2c_adapter *adapter = client->adapter;
-> +
-> +	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA |
-> +				     I2C_FUNC_SMBUS_WORD_DATA))
-> +		return -ENODEV;
-> +
-> +	/* Determine the chip type. */
-> +	if (i2c_smbus_read_byte_data(client, REG_VENDOR_ID) != NUVOTON_ID ||
-> +	    i2c_smbus_read_byte_data(client, REG_CHIP_ID) != NCT720X_ID ||
-> +	    i2c_smbus_read_byte_data(client, REG_DEVICE_ID) != NCT720X_DEVICE_ID)
-> +		return -ENODEV;
-> +
-> +	strscpy(info->type, "nct720x", I2C_NAME_SIZE);
-as below. It's unusual to find a detect in an IIO driver because the firmware
-normally tells us what is there.
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct iio_info nct720x_info = {
-> +	.read_raw = &nct720x_read_raw,
-> +	.read_event_config = &nct720x_read_event_config,
-> +	.write_event_config = &nct720x_write_event_config,
-> +	.read_event_value = &nct720x_read_event_value,
-> +	.write_event_value = &nct720x_write_event_value,
-> +};
-> +
-> +static const struct i2c_device_id nct720x_id[];
-> +
-> +static int nct720x_init_chip(struct nct720x_chip_info *chip)
-> +{
-> +	int value = 0;
-> +	int err = 0;
-> +
-> +	/* Initial reset */
-Maybe ignore datasheet naming and call that CONFIGURATION_INIT CONFIGURATION_RESET
-at which point he comment is unneeded.
-
-> +	err = nct720x_write_reg(chip, REG_CONFIGURATION, CONFIGURATION_INIT);
-> +	if (err) {
-> +		pr_err("Failed to write REG_CONFIGURATION\n");
-> +		return err;
-> +	}
-> +
-> +	/* Enable Channel */
-> +	err = nct720x_write_reg(chip, REG_CHANNEL_ENABLE_1, 0xff);
-What does 0xFF represent?  I guess all channels.  If so maybe need
-to build with GENMASK so it is obvious this is enabling 8 channels.
-
-> +	if (err) {
-> +		pr_err("Failed to write REG_CHANNEL_ENABLE_1\n");
-> +		return err;
-> +	}
-> +
-> +	if (chip->type == nct7202) {
-
-Make this 'data' in the chip_info structure.  Probably a flat to say
-there is a REG_CHANNEL_ENABLE_2.  That chip->type wants to go away infavour
-of chip->chip_info.X flags.
-
-
-> +		err = nct720x_write_reg(chip, REG_CHANNEL_ENABLE_2, 0xf);
-> +		if (err) {
-> +			pr_err("Failed to write REG_CHANNEL_ENABLE_2\n");
-> +			return err;
-> +		}
-> +	}
-> +
-> +	value = nct720x_read_reg16(chip, REG_CHANNEL_ENABLE_1);
-> +	if (value < 0)
-> +		return value;
-> +	chip->vin_mask = value;
-> +
-> +	/* Start monitoring if needed */
-> +	value = nct720x_read_reg(chip, REG_CONFIGURATION);
-
-Using regmap would let you simple do a single bit write in one call
-Definitely look at whether there is anything stopping  you using that
-helpful infrastructure.
-
-> +	if (value < 0) {
-> +		pr_err("Failed to read REG_CONFIGURATION\n");
-> +		return value;
-> +	}
-> +
-> +	value |= CONFIGURATION_START;
-> +	err = nct720x_write_reg(chip, REG_CONFIGURATION, value);
-> +	if (err < 0) {
-> +		pr_err("Failed to write REG_CONFIGURATION\n");
-
-dev_err() if not called only from probe, return dev_err_probe() if only called
-from probe()
-
-
-> +		return err;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int nct720x_probe(struct i2c_client *client)
-> +{
-> +	const struct i2c_device_id *id = i2c_client_get_device_id(client);
-> +	struct nct720x_chip_info *chip;
-> +	struct iio_dev *indio_dev;
-> +	int ret;
-> +	u32 tmp;
-> +
-> +	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*chip));
-> +	if (!indio_dev)
-> +		return -ENOMEM;
-> +	chip = iio_priv(indio_dev);
-> +
-> +	if (client->dev.of_node)
-> +		chip->type = (enum nct720x_chips)device_get_match_data(&client->dev);
-> +	else
-> +		chip->type = i2c_match_id(nct720x_id, client)->driver_data;
-
-i2c_get_match_data() but careful with zeros... It is much better to use that with
-an actual pointer.
-
-
-> +
-> +	chip->vin_max = (chip->type == nct7201) ? NCT7201_VIN_MAX : NCT7202_VIN_MAX;
-> +
-> +	ret = of_property_read_u32(client->dev.of_node, "read-vin-data-size", &tmp);
-As in dt binding. If we keep this (I'm doubtful that it makes sense) define a default
-so that the property doesn't need to be provided.  16 would be the most obvious choice.
-Then just don't check the error value when reading the property. That is.
-	
-	tmp = 16;
-	of_property_read_u32();
-
-
-	
-> +	if (ret < 0) {
-> +		pr_err("read-vin-data-size property not found\n");
-> +		return ret;
-> +	}
-> +
-> +	if (tmp == 8) {
-> +		chip->use_read_byte_vin = true;
-> +	} else if (tmp == 16) {
-> +		chip->use_read_byte_vin = false;
-> +	} else {
-> +		pr_err("invalid read-vin-data-size (%d)\n", tmp);
-> +		return -EINVAL;
-> +	}
-> +
-> +	mutex_init(&chip->access_lock);
-For new code prefer
-	ret = devm_mutex_init()
-	if (ret)
-		return ret;
-
-It only helps in weird debug cases but also costs us very little to support those.
-> +
-> +	/* this is only used for device removal purposes */
-> +	i2c_set_clientdata(client, indio_dev);
-Won't be needed after the change below.
-
-> +
-> +	chip->client = client;
-> +
-> +	ret = nct720x_init_chip(chip);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	indio_dev->name = id->name;
-Put the name in the chip_info structure.  id->name is a complex thing
-when other firmwares come into play, so better to just hard code the strings
-somewhere so we always know what we are getting.
-
-> +	indio_dev->channels = nct720x_channels;
-> +	indio_dev->num_channels = ARRAY_SIZE(nct720x_channels);
-> +	indio_dev->info = &nct720x_info;
-> +	indio_dev->modes = INDIO_DIRECT_MODE;
-> +
-> +	iio_device_register(indio_dev);
-	return devm_iio_device_register();
-
-Then you can drop the remove callback.
-
-> +
-> +	return 0;
-> +}
-> +
-> +static void nct720x_remove(struct i2c_client *client)
-
-Don't use wildcards even within the driver. Just name everything
-after one supported part.
-nct7202_remove() etc.
-
-
-> +{
-> +	struct iio_dev *indio_dev = i2c_get_clientdata(client);
-> +
-> +	iio_device_unregister(indio_dev);
-> +}
-> +
-> +static const unsigned short nct720x_address_list[] = {
-> +	0x1d, 0x1e, 0x35, 0x36, I2C_CLIENT_END
-> +};
-> +
-> +static const struct i2c_device_id nct720x_id[] = {
-> +	{ "nct7201", nct7201 },
-> +	{ "nct7202", nct7202 },
-> +	{}
-	{ }
-
-I'm trying to slowly standardise on this formatting in IIO
-so keen not to introduce more cases.  It's an arbitrary choice
-but I went with the space.
-
-> +};
-> +MODULE_DEVICE_TABLE(i2c, nct720x_id);
-> +
-> +static const struct of_device_id nct720x_of_match[] = {
-> +	{
-> +		.compatible = "nuvoton,nct7201",
-> +		.data = (void *)nct7201
-> +	},
-> +	{
-> +		.compatible = "nuvoton,nct7202",
-> +		.data = (void *)nct7202
-Use a pointer to a chip_info structure with all the chip specific
-stuff encoded as data.  That is both more extensible and removes some
-ambiguities around whether zero is an error or not.
-
-> +	},
-> +	{ },
-No trailing comma
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, nct720x_of_match);
-> +
-> +static struct i2c_driver nct720x_driver = {
-> +	.driver = {
-> +		.name	= "nct720x",
-> +		.of_match_table = nct720x_of_match,
-> +	},
-> +	.probe = nct720x_probe,
-> +	.remove = nct720x_remove,
-> +	.id_table = nct720x_id,
-> +	.detect = nct720x_detect,
-
-Do you need detect?  That's kind of ancient infrastructure that I thought
-no one used any more (same for the address list).
-
-> +	.address_list = nct720x_address_list,
-> +};
-> +
-> +module_i2c_driver(nct720x_driver);
-> +
-> +MODULE_AUTHOR("Eason Yang <YHYANG2@nuvoton.com>");
-> +MODULE_DESCRIPTION("Nuvoton NCT720x voltage monitor driver");
-> +MODULE_LICENSE("GPL");
-
+(data produced and post-processed with awful invocations of git log,
+awk and one-liner shell scripts. Happy to pass them on by request)
