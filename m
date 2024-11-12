@@ -2,182 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 606D19C4F11
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 08:00:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D5E59C51D5
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 10:22:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XnckQ0nvpz3bYy
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 18:00:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Xngtf3Rl5z3bZ4
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2024 20:22:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:200e::70b" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731394825;
-	cv=pass; b=AFnE1CoR3NdoIKIks+mJjs0QgGtJiK5Gajp9Y0LuB15SM7nm/70VqY1pJQgfi2GIn5GZndKaDmQbxSbjjEOIvGMRU4HT4XV/I8IPjxPSvvj009bF0xcOJQJyHEGRHelNtrrFIoI+p57nYY0WOD6qc8h7sNgdQTFGGghRmYkhHiB/y9zvYxlqy3f6cwYV8s3XAIQJZe4qb9APjYSZ3R6VrtkY7nR6LGgbquGeCcqEAkGlNeWXTCwM+TIiIeJ8c/MGSlZYzQg6mro/Nh3oEoOMesJhYOuEk1TLaL/TXt1qpsf8VRzOKrwyyziCUvShx2nFQgl0M7EA6fq5lAsoAswLxA==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731394825; c=relaxed/relaxed;
-	bh=2499vG9Nxv3G8BoYae0hwWj49fduazE3sCNKhCiXKNE=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=kI1bS+xy1NLsV1M2Az0QibdAgaQ1sdOF3G4n/wcO8a1BqkNRLo1WyBRqcEIcdi1gOh4XH5x6RUgds2Rl/xFu347bNFhq4s9TJ7nBM/Alwi+lLpTpdxnBcf9JzYFX2zXoV2ATXK19r56QuH41WenQ7aJODxb/iRTA1hUUfLK+z0GYQWPIjSaSrOsIQO1YxGxg3Ipg5aNlRxLe8uPwy3Hb9p0rL+1dfm/DboEaOr8VXImzoo0xh3GBIS9IrdECYJybn5b46oQl952rh/+RwZZKVLNqvKZLBDPRnngSW5gSLTTeU2ZWJyXeOLGA9ia/H4bUDGm8gdpqgyzjvDITzSo3vw==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=Eu0TVLAA; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:200e::70b; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::102b"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731403364;
+	cv=none; b=NFmzW3UYYC7pyxb942R3uN5WZxNdRpCagy2msX+Y4uRtPj4DIcGxP23U5Cs5/1ETa6L6JE5KZNCtobXLKu23d1tzx8XD0JRjvIZPUMW6T0mtO36HFuHqYkcXbPSW4E94odq3blAAavpBFMXoKQOvgzqwymPLjXfaau1C6BLGjlk1fpAEhOoZhAQlXj7CixEfKjnx2QAV4oxATot5xiNvkS/jdOsWuvRHSFYcCoJ7RpV2M81NCa2F+AvuFL7Cj3Lc8XdEjYRO7j6f7Ktl+zzEqx3kB1C2BBfY1XCjLU3Ksd5Fzj+oWQvlsSiPqn160/efaSoqUMUog981Z2G04TlzTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1731403364; c=relaxed/relaxed;
+	bh=hpVqwRBEvMEtedxfTPzGqP78gTKUWfltqg2sr669R3o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CDvx6VEHln3BJVwXqUiYmTLR8BB0iiQdzQnfzGDFq/3CD8zIqNL418tmY2Vu4XWJVxZz30r8ul7IM+YFAilJyFp+HHmVkYyv5nydoh8yZpy24bIRvXJQn6g+BiwAYWgqnV69WrFLPfJ9ed9jpSmL6K8Vdmh8WiG0qgKJqB2rgjk2V76MPJjsyBNtpDW4Mv7OvXtR4DZHYRScVMgjCSrm5yIzJ9F48vOGP/Hvve6TQYxzOrqk7ySpXRamXb7IWLzSsJfsyHXBOQCxUXO8zq0BCh0G0pusx8uvuAU3thh/iMyGbmnhCee4iVGUVqSGrX4EpvndaO35QmLGZzLTn8zZSQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com; dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=Y0cWvb6N; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::102b; helo=mail-pj1-x102b.google.com; envelope-from=naresh.solanki@9elements.com; receiver=lists.ozlabs.org) smtp.mailfrom=9elements.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=Eu0TVLAA;
+	dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=Y0cWvb6N;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:200e::70b; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2070b.outbound.protection.outlook.com [IPv6:2a01:111:f403:200e::70b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=9elements.com (client-ip=2607:f8b0:4864:20::102b; helo=mail-pj1-x102b.google.com; envelope-from=naresh.solanki@9elements.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XnckH6zDhz2xlF;
-	Tue, 12 Nov 2024 18:00:23 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xg5+t5yl9YNYbayFHqCmVA5p55Lh2SdzVCTOnJWnAs+gEIVPSba58CZHipCb729QDnF0g/3jOdNk08G+QwkIG7Ya9jEMrEfabuiEnDa0CHEV7BxOU7OfHLGLS5Ae1inkxkY8EwUfQrRqT62MizMCkLjcEH7UNBr0OA4uM8HLg9VFIiSPMF+1RYyq+IhIFr361lBWQQfU/M+RyxM4knysjzlhjJjXtRbAZkUcb2d7+91tuvR836SgVuQCQMgh7ZeLlsxEXMkv2rmTWS+RfF/TcS78IJxrDIJ7rqBWEQSlsySaMDxzglzcwi9goTtH4UcNuncQWNTYfBiZ7knZ/RbaYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2499vG9Nxv3G8BoYae0hwWj49fduazE3sCNKhCiXKNE=;
- b=ebqFIw4EkicB4nuSTsLlNvTGfoT0FMJhCikJpCXtFfyLp83IyrBwdgCxrQzjCq37gOH5h8jJInqCwlou7gUXh7/Tn2c1ynrHnd6qnZ2oqhrKwHjBnSiD0gZtFFjV2PgamYCjTHuioYAa81j1rQrSgFXhtF2XroV1RUnVtFiwSKZ9WsBZLnUaU8E1LxpYiYVNC7yW/s8mxs1wXXBz0uwFEErKoJZ9u5fn5fvRZwGDJ3z90dHWptaMSEZ6pRTgIborgaG0/d2++vHDZYwcH3BNazUzoohHA0HDPzOpHO+JvrErmoLPAYU1a5K/JAiqxpptfbzh3Z6Lo9SefdKVi6l9TQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2499vG9Nxv3G8BoYae0hwWj49fduazE3sCNKhCiXKNE=;
- b=Eu0TVLAArZAZOyR5OTxRwlXi48XgNo4HPhr/faoIJqyWty0UsM9rBCKy0DFsSyuTSSlVnPt/tIC7etQ1RRTemVmXIR/hKHPMvX4db+kx8lVjmNUKXxFuxXKSy70eoNjcufDuuddTsq0c+LQ23bfkIeEMHxS7m10abAjpQ52hQ23m9JmW9MABuyhPiEhuTQvLX50mTTjPj90m1oFOiK2SfcyvkPvu9bkJ5Ce8IUkcX1OU52pz0pgzFiXzE+ehsox05LgdDxnwnH+bRKFehoHtq0Nt3tU4z/O5FmgXlXu+QXM5V0IFWOaS0hwZ83ijPXRnKR7BsnQBsA93jGFy7ogkEA==
-Received: from OS8PR06MB7541.apcprd06.prod.outlook.com (2603:1096:604:2b1::11)
- by TYZPR06MB6860.apcprd06.prod.outlook.com (2603:1096:405:1d::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.14; Tue, 12 Nov
- 2024 07:00:02 +0000
-Received: from OS8PR06MB7541.apcprd06.prod.outlook.com
- ([fe80::9f51:f68d:b2db:da11]) by OS8PR06MB7541.apcprd06.prod.outlook.com
- ([fe80::9f51:f68d:b2db:da11%6]) with mapi id 15.20.8158.011; Tue, 12 Nov 2024
- 07:00:02 +0000
-From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: Naresh Solanki <naresh.solanki@9elements.com>, "brendan.higgins@linux.dev"
-	<brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
-	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
-	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
-	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
-	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
-	<andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
-	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
-	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new register
- mode driver
-Thread-Topic: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new register
- mode driver
-Thread-Index: AQHbGGxcfd5QCYaLt02IHuq/iSVWarKyIOAAgAFPInA=
-Date: Tue, 12 Nov 2024 07:00:02 +0000
-Message-ID:  <OS8PR06MB7541AA299ABFBB5A2AA1CDC5F2592@OS8PR06MB7541.apcprd06.prod.outlook.com>
-References: <20241007035235.2254138-1-ryan_chen@aspeedtech.com>
- <20241007035235.2254138-3-ryan_chen@aspeedtech.com>
- <9717830f-0efe-4921-81ab-40fa0cb143e9@9elements.com>
-In-Reply-To: <9717830f-0efe-4921-81ab-40fa0cb143e9@9elements.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OS8PR06MB7541:EE_|TYZPR06MB6860:EE_
-x-ms-office365-filtering-correlation-id: 7b263c4a-e1b7-4b21-f62e-08dd02e7a159
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|366016|7416014|376014|38070700018|921020;
-x-microsoft-antispam-message-info:  =?utf-8?B?OFE4aTFpYnMyU1pZMi9la0JsMDNZa3prVU5IS0NxUHF0T0VPWHQwZFpaTGQ3?=
- =?utf-8?B?cmZxLzlTZzVqaDRUN00xWUQ4blU3RlREOTVMTWsxZ2g2MlJwQU5renVzSGpN?=
- =?utf-8?B?RWFXNVF2ZXZ1MkJlZnZhdFRvUGZFT1laU0c4SW9DVmszVlpycUErSXBKQ1pD?=
- =?utf-8?B?eDQ2TXJ5VGtHRnd2R3lESWpKVUlqdUpHU2lrcHQ4K2wxSlcrRlR6RFZkelZC?=
- =?utf-8?B?eGlNY2pxUU0xOVFlNWRVcjVrZHBnSmhBejVLUmNuaXhQVjM1Y1djTnJtNjBw?=
- =?utf-8?B?bzdWRDV3MkM3bUthUERzY1RWSXErb2srdWJ1UXhyWWErQzlNWE9TdWlzOVB3?=
- =?utf-8?B?aGxHcWJXaUdBV3lWVmxFaktjS2tsdzVkUWd0dEcvWkROcDE5NDNaWHNxeGVU?=
- =?utf-8?B?aGhRd2xjNE8yRHlRT1gxeTZBQnNnM1N0SzJtUnZiaDkrVll5TFVvQUc1SFVJ?=
- =?utf-8?B?MGdPeTJ3dEdtS2VQb3paVFFTdDJZYzl6ajFLbXloNnVabS9JaXN3U0dHT1NE?=
- =?utf-8?B?MTRVWHNQM0R3WXJPUm16WTNsb3B5S2tyWXhMYnlmQkJMd2NjY0wwV2t1bDRY?=
- =?utf-8?B?NGEzSXhsak9jR0Nyald6bWtPQUNUZ0I4VzBZSXRJUlo1d21KakYwalpxbnpG?=
- =?utf-8?B?a0VLYWh6RzVXSEEwRVBOK1Y4VmRxcFBjelQ0aUl6MzhMR1pQb0ExL1gvYWZL?=
- =?utf-8?B?b2EySStMZnhJRkhiL3UrRU51bXIyTi9XTWo0cC9ZMzlRYWp4VW91eDQrQXRE?=
- =?utf-8?B?TEZNQWF0djJ5anJDdzNJTlh2UDFWUWtMY0NSL1pwMmRwZzRUUnEyaWV4c211?=
- =?utf-8?B?YmRtbEhNRS85eHZxY1QwbWZoNjZxTlMrUEFVKzlJQ0VxWUpHQVVQY2g0SlJR?=
- =?utf-8?B?ZC9SUzBmOFdBM05ybk1SMk9DNnVoRGVWNVNSUENmdG8reHFuamxFMmJMUllW?=
- =?utf-8?B?S0hwcFUreUdlQUJ6Y3JzdmdhVHpkRlRkaFJjYmh4eFFuUlJpTWFlZEw0UUJo?=
- =?utf-8?B?TzdTS0tJR2s4T0hjODZOSkM5SFdtbUxZWmVWbXNMY2l0MjdjbE00cW8vV25O?=
- =?utf-8?B?Q2hEbmRpS2pFQlNEdmRubmRVYndiSVBnTnR2L3drblc4VGNzSmthYVVoTDZ1?=
- =?utf-8?B?dDR0R2V1V09lNVRzazA5a1lDWkc4K3lTbERwTFRvRk4zS2JvaHVRbEpzeEMv?=
- =?utf-8?B?Y3dRWXhMTzJXNm1aTnQvRmhjOWRONm5aUmtJdzZBK1QzM3V0OWVqR21uVHpG?=
- =?utf-8?B?a1JxTUJ6c0ZGOUdXUjllai8ra1IwK0JIZU10dDlBM2VhYXZJdzBUbnlRWmJ5?=
- =?utf-8?B?KzRVZ0xrSTAzUlJvazB4MDF6U2NmNjVKQlNqVEpOOXZxSjRFVysvakdBOE0y?=
- =?utf-8?B?UlFjWml1QzFCRFpEdUFWVWNWbGpGMThVVGtLcUkzVlR5dTR0ZjB0Y2hQRFdG?=
- =?utf-8?B?NisxdFNwUHJYL01naUdVMXhzL2pBbXRob3JJWEhES2JJWmJKOURRY3I5R1Zj?=
- =?utf-8?B?NU5GdkpDNHE0UDk3Zm5ISVYzQ2ltRWdUdW1JazA4b0c5VG83cDVDc0c5MTdk?=
- =?utf-8?B?VXZQYkk4L2ZVNURUam05ZFdTYkUwUkpCZ2FVejdwUHZJUUZFMWV0VzJWUDJN?=
- =?utf-8?B?WXNlYVUwZTZGU2M1bk90T293dmRqRmEzbTNyQmlPMlk2SDF2NEFyUmlkYVl6?=
- =?utf-8?B?R3FqMkJjNFczYmkxTmhmcXBIWXNWSkxYN3hBZ0l6bFVVc01yTXltZDlHbjZh?=
- =?utf-8?B?dEY5b3ZGQmhRZjJ0bHByMVJMME5PY3FIWmJwR0dPT3F5Yk1pdFIzNHU5cEJ0?=
- =?utf-8?B?QUVib0drL2pMbHhmakdUQT09?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OS8PR06MB7541.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700018)(921020);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?QTN5Q1h2RUNaQ1hNT1NUckR0aVRZVXdhcG96VkVVbWk5Mk1zc2Vkc0c5SHJz?=
- =?utf-8?B?bFV1M0pma2MvbFo3VHV2d3QzVnFtaHFwdVVZWm9DcXBIa2QvTXkrbFFJM0M2?=
- =?utf-8?B?YlVZeDkwRVNYQjltUStrTmFLTDVROERIOW9lc3Fta2VPbmMvYWZzYkJQVStG?=
- =?utf-8?B?bXZ2MENkOGZMcENRb1FZTmhOMkZWOTRadXorb244QWdFUWJGMWs2SnREa3Vl?=
- =?utf-8?B?ZEJ4TXFXakc0c3ZIaTJKazJ2T1hEV0duUVorblRJYW5DbzErSzJoZ0hBNDkz?=
- =?utf-8?B?Wk1rZzMvY2s1VnJya2ZwRGNJSW43U3JZeFN6ZGUvRG42a3AyUFVmUG1EdGtJ?=
- =?utf-8?B?bWZlV2hKWTFkcTREQ0tibHdlWVNwQzdwUExVUXE2d0JJNnZTbjhCeWtzVFpr?=
- =?utf-8?B?cDBnTGEweG44bUV2U0hlbC9Cdm1QUzVEZENob1RtcVJIelEwcElhQVZnTFlz?=
- =?utf-8?B?U2RKT0pLQ3kxOHhlTWc1MGdBeFBiYjNaM1lDeXFXQnBaRDAyZlRJdHdrdWVI?=
- =?utf-8?B?VngxNDNwZ3FqYlQ4dWxNL3dJd1FzZlFCM3A1S0xncW9qNGxRUVRWK3hlSDBR?=
- =?utf-8?B?ZVlkZlFEUUJJbjg4L29BNit0SmlOeVFXbktxV0xQL29YMWtTVUkxSXd3dXBu?=
- =?utf-8?B?T3AxZlRnR3NNUFE1Zlo2TmFGckJCaVlUWFBMeEFzYjY1OUJoZHhwNmVUd3lL?=
- =?utf-8?B?U1FvMkNSVDFkM3BveUZJNkZCcWw0b0wzdXVkSU9pQ2FqMXhJR1VlNXhWUUo5?=
- =?utf-8?B?YVl0QjJMeVJaL3BVZExWL1pFakJmV0tHTXN1S0E2Y1ZqZzVqMGJiOTJFcWpw?=
- =?utf-8?B?ZGhkNGxMYTMyUTJNRit5WGNIaHhNOTN3eEppN0RtOW9TQzhrSUFGVDUwYk5k?=
- =?utf-8?B?WFJHVGlBZnZZajJpQnd2eUtVenRKRTlEWTYwNUgxdTN6b3lMejE1QStJK0RU?=
- =?utf-8?B?K3VPbmt4M0xXZWdLOTF6MDhCVGVVeFJZUXV6L0lRNnZpNGdCTTVBVHo4WTlV?=
- =?utf-8?B?YTVhY0dMT0VERTVYYlowMEx1dWtTY1VJbWVZbloveTI4bmh4bUdDVHhlOG5O?=
- =?utf-8?B?aXp5OXhkOG84ZWNDa3FGTG5ZVm5iVmxnNGl2b3hVUEJ0SjFCQm5GSVBMN1pt?=
- =?utf-8?B?Z0ZZY3JMVWNRWEc0RC9YaGFjcVNqbEV1dk10OEtqc0VMOW05cnE2UVlPN0VB?=
- =?utf-8?B?Tnh6aTViQnBoQjllalc4TW5jQlR3aHpSQzU2SVlPT3o3d0h3QVVxSzB0anpl?=
- =?utf-8?B?OHNKeUs4WFB1VU5xelpoOFdBZENWUlQ2WjNsaGIzUDJkTXBKT1Q5TFVLZFhQ?=
- =?utf-8?B?TzQ5bStCWmYvMjJtQmViMVVIQmlCSEhtd21IOGkzdkxMWFBWallPYUhqc2t0?=
- =?utf-8?B?N3M4eUhyN2JFKzFEblEyeXF0bjJRMTFmZkdKMVpkM051UXF0Yi8vc1NIQ0wv?=
- =?utf-8?B?bWI3L0xjWEpWdVJYOXJFejBLZExrVndUUE51eXVWSEplWFczbUVvVlhKSjFv?=
- =?utf-8?B?MFQrUGJFMlZCZUsydkNKLys0alMwMDd3dE85NjJPZ3NUay84Q0xEZ3IyYVkx?=
- =?utf-8?B?VHFFZjB3VWFvVkloc3RWZ2tKejArbnhxV3NFbjVORzd0YWVjZ1B1Y1FienRR?=
- =?utf-8?B?aG91djljMENNM3k1Yytobzh1VW9TTFkyM3hiQTVhWGtJbUQ0VGZGN2VkVG9w?=
- =?utf-8?B?U3d1Nkt1VzNnRlJxY2tiakpIMzhLalZ4SjhEWGZGaGh6OThRMmNIalY0bUtj?=
- =?utf-8?B?K0F5ZE5IN3kvSW9nQzFIOWlaUVVFcXRQLzJkRmdDdG4xRFBVcElCRXVIUFVY?=
- =?utf-8?B?aWZSc3dJR0ZMankrcmRZNzd5S2pyeGFRY3hNbThVMmxWZ3F2RkJLVVQvVTha?=
- =?utf-8?B?SXprcE5ibjdLMWdEQWNlVHZEdFhGbmVZRlc0bGlEOGF4M2E2UHdESjFrbGFi?=
- =?utf-8?B?M1BQNzhNT09mSkhTak1LOUVMdFQ4alVzcER1TG1lWEtCRVJLKzR6WFQyazQ2?=
- =?utf-8?B?VElLSCt3MlZEdnBMSzFVTS92UUpBWlNwekJFdFVtYmg2TUs5NEtmK2RoeEpQ?=
- =?utf-8?B?T0NlTkJxUFkxdkF6MDM5YlhGQmx3MFdTQWttVFkxTFI2MzBQdHV3T0pyV01R?=
- =?utf-8?Q?Th6i+Rj0oL5eDrZz3B90Qni4L?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XngtV0wDPz2xgX
+	for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2024 20:22:41 +1100 (AEDT)
+Received: by mail-pj1-x102b.google.com with SMTP id 98e67ed59e1d1-2e3686088c3so4206265a91.0
+        for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2024 01:22:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=9elements.com; s=google; t=1731403358; x=1732008158; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hpVqwRBEvMEtedxfTPzGqP78gTKUWfltqg2sr669R3o=;
+        b=Y0cWvb6NzAdllhBQzYKhAVyGoY5EWuauMvuA1rgMMbcMcirpgF7DmIKpwAiX2WeKrZ
+         NDXMMZd+/Joy//mMbdQhwMbcN6nCcqTRPsU6tGpdM3xa7qqkinx/vFWx3GX/fjVo2mfA
+         +JW1EFYV4AoklSfc2Sc7np/7JeyYbZqxixffPh2+LmXbiqBXG5NnjWe95waXf/xMDD6d
+         mabSyYBfzKFo4nxEdUBkw1/MgNN76V1pbUmSGVA0zXYlP0xGnScV7fWLVaJkNhz2kFFu
+         bCWA2Lu1YE8Lf8oVyRDVQRZb2FZnJ0wVxS0jQTF+K1p6nhs31P4bWbftRhppACLcTM6o
+         Zh8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731403358; x=1732008158;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hpVqwRBEvMEtedxfTPzGqP78gTKUWfltqg2sr669R3o=;
+        b=G8HNble+hP7vcBGLPObwRtI/KPpxgQgf7H8kOdwmbIwvk6bJhCrZbnnLpaDxpmTxO8
+         M9Ko9WkLxVErKdD4WXQ6W76OjWNy3HbzxZJmSbvlzDIa7j+bCbUcesrEDF1n7D+SiARy
+         GNBnxV4xIlV96iAObWsEMbrRg1JF6mUtefy1xl2lssWF9YoEKtr7pErDVziPW5JZOFv2
+         FYkB+9ZHTzBNKU9+G0D9iiymKoI/BA9TT8mr4lezrosbR8bmaXZCGtDOtNDMyy7dWoi+
+         b+bRL27IPn0HaQqn5pYJOuUhNm6AS2Ym+PPKRO3By+T3G/3HpYddhiCNyNtQyutfJmkH
+         wtKA==
+X-Forwarded-Encrypted: i=1; AJvYcCVPTHo0JqAeJF3IvN8NJqYkLkIGqK9jqev3CFKsmqavHddOjNWB1P9CMKgeLbULgNfzhfN6hUQP@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YymHclMn25QBevwPLICAe6ALK7zOGXQGylyuYDCZk9OvinX6BiJ
+	WXOTNNtaWBaU381PxEf3pAQ4RZ6v2q/7WPL3JSfHieoz4J6X584QLpDIXPreLNFGlUOiiAx/9zK
+	81Xp76RffbeqkAx6nVYNzNzfoh7KnAPziidQkCQ==
+X-Google-Smtp-Source: AGHT+IFEuT4OaKTYPcygVxvzJgOkfREdZ4PCH6MzBHNFPLFjhiYTSZiEiAfCNly2qOA4r+TXSnVpFx/EJSwnx/S1coY=
+X-Received: by 2002:a17:90a:e7d0:b0:2d8:dd14:79ed with SMTP id
+ 98e67ed59e1d1-2e9e4c9e8cbmr2703389a91.31.1731403358150; Tue, 12 Nov 2024
+ 01:22:38 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OS8PR06MB7541.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7b263c4a-e1b7-4b21-f62e-08dd02e7a159
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Nov 2024 07:00:02.3946
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HC5QVO0a2yzpM4Icsf3c4XXn9RLgsc3gAhak6oTm59cXCsAK8c8Ing95FHQa18E0Rxds/KbwSD119lD/Rs1ZRWp73yBVUXutpMfWjY23Sl8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6860
-X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
-	SPF_PASS autolearn=disabled version=4.0.0
+References: <20241007035235.2254138-1-ryan_chen@aspeedtech.com>
+ <20241007035235.2254138-3-ryan_chen@aspeedtech.com> <9717830f-0efe-4921-81ab-40fa0cb143e9@9elements.com>
+ <OS8PR06MB7541AA299ABFBB5A2AA1CDC5F2592@OS8PR06MB7541.apcprd06.prod.outlook.com>
+In-Reply-To: <OS8PR06MB7541AA299ABFBB5A2AA1CDC5F2592@OS8PR06MB7541.apcprd06.prod.outlook.com>
+From: Naresh Solanki <naresh.solanki@9elements.com>
+Date: Tue, 12 Nov 2024 14:52:26 +0530
+Message-ID: <CABqG17hHnibPcpYehsSUm87vhS6_bSv7PObyh9p2W5gYWnaKQA@mail.gmail.com>
+Subject: Re: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -190,748 +89,1194 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>, "andi.shyti@kernel.org" <andi.shyti@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxNSAyLzNdIGkyYzogYXNwZWVkOiBzdXBwb3J0IEFTVDI2
-MDAgaTJjIG5ldyByZWdpc3Rlcg0KPiBtb2RlIGRyaXZlcg0KPiANCj4gSGkgUnlhbiwNCj4gDQo+
-IEkndmUgdGVzdGVkIHRoZSBkcml2ZXIgY2hhbmdlcyBpbiBteSBtYWNoaW5lIGJhc2VkIG9uICJT
-T0M6IEFTVDI2MDAtQTMiLg0KPiANCj4gSSBmYWNlZCBzb21lIGlzc3VlIHRlc3RpbmcgdGhlIGRy
-aXZlci4NCj4gV2hpbGUgdGhlIGRyaXZlciBmdW5jdGlvbnMgY29ycmVjdGx5IGluDQo+IE5vcm1h
-bCBtb2RlLCBJIGVuY291bnRlcmVkIGlzc3VlcyB3aGVuIGF0dGVtcHRpbmcgdG8gcnVuIGl0IGlu
-IERNQSBhbmQNCj4gQlVGRiBtb2Rlcy4gR2l2ZW4gdGhlIGluc3RhYmlsaXR5IGluIHRoZXNlIG1v
-ZGVzLCBJIHN1c3BlY3QgdGhlcmUgbWF5IGJlDQo+IG1pc2NvbmZpZ3VyYXRpb25zIGluIG15IGRl
-dmljZSB0cmVlIHNldHVwLg0KPiANCj4gQ291bGQgeW91IHBsZWFzZSBwcm92aWRlIGEgc2FtcGxl
-IGNvbmZpZ3VyYXRpb24gZm9yIHRoZSBkZXZpY2UgdHJlZSB0aGF0IHdvdWxkDQo+IGVuc3VyZSBz
-dGFibGUgb3BlcmF0aW9uIG9mIHRoZSBkcml2ZXIgaW4gYm90aCBETUEgYW5kIEJVRkYgbW9kZXM/
-DQo+IA0KWW91IG1heSByZWZlciB0aGUgZm9sbG93aW5nIGR0c2kuDQpodHRwczovL2dpdGh1Yi5j
-b20vQXNwZWVkVGVjaC1CTUMvbGludXgvYmxvYi9hc3BlZWQtbWFzdGVyLXY2LjYvYXJjaC9hcm0v
-Ym9vdC9kdHMvYXNwZWVkL2FzcGVlZC1nNi5kdHNpI0wxMzM0LUwxMzU3DQoNCj4gVGhhbmsgeW91
-IGZvciB5b3VyIHN1cHBvcnQuDQo+IA0KPiBSZWdhcmRzLA0KPiBOYXJlc2gNCj4gDQo+IA0KPiBP
-biAwNy0xMC0yMDI0IDA5OjIyOjM0LCBSeWFuIENoZW4gd3JvdGU6DQo+ID4gQWRkIGkyYyBuZXcg
-cmVnaXN0ZXIgbW9kZSBkcml2ZXIgdG8gc3VwcG9ydCBBU1QyNjAwIGkyYyBuZXcgcmVnaXN0ZXIN
-Cj4gPiBtb2RlLiBBU1QyNjAwIGkyYyBjb250cm9sbGVyIGhhdmUgbGVnYWN5IGFuZCBuZXcgcmVn
-aXN0ZXIgbW9kZS4gVGhlDQo+ID4gbmV3IHJlZ2lzdGVyIG1vZGUgaGF2ZSBnbG9iYWwgcmVnaXN0
-ZXIgc3VwcG9ydCA0IGJhc2UgY2xvY2sgZm9yIHNjbA0KPiA+IGNsb2NrIHNlbGVjdGlvbiwgYW5k
-IG5ldyBjbG9jayBkaXZpZGVyIG1vZGUuIFRoZSBuZXcgcmVnaXN0ZXIgbW9kZQ0KPiA+IGhhdmUg
-c2VwYXJhdGUgcmVnaXN0ZXIgc2V0IHRvIGNvbnRyb2wgaTJjIGNvbnRyb2xsZXIgYW5kIHRhcmdl
-dC4gVGhpcw0KPiA+IHBhdGNoIGlzIGZvciBpMmMgY29udHJvbGxlciBtb2RlIGRyaXZlci4NCj4g
-Pg0KPiA+IFNpZ25lZC1vZmYtYnk6IFJ5YW4gQ2hlbiA8cnlhbl9jaGVuQGFzcGVlZHRlY2guY29t
-Pg0KPiA+IC0tLQ0KPiA+ICAgZHJpdmVycy9pMmMvYnVzc2VzL0tjb25maWcgICAgICAgfCAgIDEx
-ICsNCj4gPiAgIGRyaXZlcnMvaTJjL2J1c3Nlcy9NYWtlZmlsZSAgICAgIHwgICAgMSArDQo+ID4g
-ICBkcml2ZXJzL2kyYy9idXNzZXMvaTJjLWFzdDI2MDAuYyB8IDEwMzINCj4gKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrDQo+ID4gICAzIGZpbGVzIGNoYW5nZWQsIDEwNDQgaW5zZXJ0aW9u
-cygrKQ0KPiA+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGRyaXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXN0
-MjYwMC5jDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9pMmMvYnVzc2VzL0tjb25maWcg
-Yi9kcml2ZXJzL2kyYy9idXNzZXMvS2NvbmZpZw0KPiA+IGluZGV4IGEyMmY5MTI1MzIyYS4uYWJm
-YjAyNzM1MGQ0IDEwMDY0NA0KPiA+IC0tLSBhL2RyaXZlcnMvaTJjL2J1c3Nlcy9LY29uZmlnDQo+
-ID4gKysrIGIvZHJpdmVycy9pMmMvYnVzc2VzL0tjb25maWcNCj4gPiBAQCAtNDEwLDYgKzQxMCwx
-NyBAQCBjb25maWcgSTJDX0FMVEVSQQ0KPiA+ICAgCSAgVGhpcyBkcml2ZXIgY2FuIGFsc28gYmUg
-YnVpbHQgYXMgYSBtb2R1bGUuICBJZiBzbywgdGhlIG1vZHVsZQ0KPiA+ICAgCSAgd2lsbCBiZSBj
-YWxsZWQgaTJjLWFsdGVyYS4NCj4gPg0KPiA+ICtjb25maWcgSTJDX0FTVDI2MDANCj4gPiArCXRy
-aXN0YXRlICJBc3BlZWQgSTJDIHYyIENvbnRyb2xsZXIiDQo+ID4gKwlkZXBlbmRzIG9uIEFSQ0hf
-QVNQRUVEIHx8IENPTVBJTEVfVEVTVA0KPiA+ICsJc2VsZWN0IEkyQ19TTUJVUw0KPiA+ICsJaGVs
-cA0KPiA+ICsJICBJZiB5b3Ugc2F5IHllcyB0byB0aGlzIG9wdGlvbiwgc3VwcG9ydCB3aWxsIGJl
-IGluY2x1ZGVkIGZvciB0aGUNCj4gPiArCSAgQXNwZWVkIEkyQyBjb250cm9sbGVyIHdpdGggbmV3
-IHJlZ2lzdGVyIHNldC4NCj4gPiArDQo+ID4gKwkgIFRoaXMgZHJpdmVyIGNhbiBhbHNvIGJlIGJ1
-aWx0IGFzIGEgbW9kdWxlLiAgSWYgc28sIHRoZSBtb2R1bGUNCj4gPiArCSAgd2lsbCBiZSBjYWxs
-ZWQgaTJjLWFzdDI2MDAuDQo+ID4gKw0KPiA+ICAgY29uZmlnIEkyQ19BU1BFRUQNCj4gPiAgIAl0
-cmlzdGF0ZSAiQXNwZWVkIEkyQyBDb250cm9sbGVyIg0KPiA+ICAgCWRlcGVuZHMgb24gQVJDSF9B
-U1BFRUQgfHwgQ09NUElMRV9URVNUIGRpZmYgLS1naXQNCj4gPiBhL2RyaXZlcnMvaTJjL2J1c3Nl
-cy9NYWtlZmlsZSBiL2RyaXZlcnMvaTJjL2J1c3Nlcy9NYWtlZmlsZSBpbmRleA0KPiA+IDc4ZDA1
-NjEzMzllNS4uNTY2NWI2MGIxNTY2IDEwMDY0NA0KPiA+IC0tLSBhL2RyaXZlcnMvaTJjL2J1c3Nl
-cy9NYWtlZmlsZQ0KPiA+ICsrKyBiL2RyaXZlcnMvaTJjL2J1c3Nlcy9NYWtlZmlsZQ0KPiA+IEBA
-IC0zOSw2ICszOSw3IEBAIG9iai0kKENPTkZJR19JMkNfUE9XRVJNQUMpCSs9IGkyYy1wb3dlcm1h
-Yy5vDQo+ID4gICBvYmotJChDT05GSUdfSTJDX0FMVEVSQSkJKz0gaTJjLWFsdGVyYS5vDQo+ID4g
-ICBvYmotJChDT05GSUdfSTJDX0FNRF9NUDIpCSs9IGkyYy1hbWQtbXAyLXBjaS5vDQo+IGkyYy1h
-bWQtbXAyLXBsYXQubw0KPiA+ICAgb2JqLSQoQ09ORklHX0kyQ19BU1BFRUQpCSs9IGkyYy1hc3Bl
-ZWQubw0KPiA+ICtvYmotJChDT05GSUdfSTJDX0FTVDI2MDApCSs9IGkyYy1hc3QyNjAwLm8NCj4g
-PiAgIG9iai0kKENPTkZJR19JMkNfQVQ5MSkJCSs9IGkyYy1hdDkxLm8NCj4gPiAgIGkyYy1hdDkx
-LW9ianMJCQk6PSBpMmMtYXQ5MS1jb3JlLm8gaTJjLWF0OTEtbWFzdGVyLm8NCj4gPiAgIGlmZXEg
-KCQoQ09ORklHX0kyQ19BVDkxX1NMQVZFX0VYUEVSSU1FTlRBTCkseSkNCj4gPiBkaWZmIC0tZ2l0
-IGEvZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1hc3QyNjAwLmMNCj4gPiBiL2RyaXZlcnMvaTJjL2J1
-c3Nlcy9pMmMtYXN0MjYwMC5jDQo+ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQNCj4gPiBpbmRleCAw
-MDAwMDAwMDAwMDAuLjE3YmEwZWU3N2MyNw0KPiA+IC0tLSAvZGV2L251bGwNCj4gPiArKysgYi9k
-cml2ZXJzL2kyYy9idXNzZXMvaTJjLWFzdDI2MDAuYw0KPiA+IEBAIC0wLDAgKzEsMTAzMiBAQA0K
-PiA+ICsvLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMC1vbmx5DQo+ID4gKy8qDQo+
-ID4gKyAqIEFTUEVFRCBBU1QyNjAwIG5ldyByZWdpc3RlciBzZXQgSTJDIGNvbnRyb2xsZXIgZHJp
-dmVyDQo+ID4gKyAqDQo+ID4gKyAqIENvcHlyaWdodCAoQykgQVNQRUVEIFRlY2hub2xvZ3kgSW5j
-Lg0KPiA+ICsgKi8NCj4gPiArI2luY2x1ZGUgPGFzbS91bmFsaWduZWQuaD4NCj4gPiArI2luY2x1
-ZGUgPGxpbnV4L2FycmF5X3NpemUuaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L2JpdHMuaD4NCj4g
-PiArI2luY2x1ZGUgPGxpbnV4L2Nsay5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvY29tcGxldGlv
-bi5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvZGVsYXkuaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4
-L2RtYS1tYXBwaW5nLmg+DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9lcnIuaD4NCj4gPiArI2luY2x1
-ZGUgPGxpbnV4L2kyYy5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvaTJjLXNtYnVzLmg+DQo+ID4g
-KyNpbmNsdWRlIDxsaW51eC9pbnRlcnJ1cHQuaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L2lvLmg+
-DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9taW5tYXguaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L21m
-ZC9zeXNjb24uaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L21vZHVsZS5oPg0KPiA+ICsjaW5jbHVk
-ZSA8bGludXgvcGxhdGZvcm1fZGV2aWNlLmg+DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9wcm9wZXJ0
-eS5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvcmVnbWFwLmg+DQo+ID4gKyNpbmNsdWRlIDxsaW51
-eC9yZXNldC5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvc2xhYi5oPg0KPiA+ICsjaW5jbHVkZSA8
-bGludXgvc3RyaW5nX2hlbHBlcnMuaD4NCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNH
-X0lTUgkJCTB4MDANCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0dfU0xBVkVfSVNSCQkweDA0DQo+
-ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNHX09XTkVSCQkweDA4DQo+ID4gKyNkZWZpbmUgQVNUMjYw
-MF9JMkNHX0NUUkwJCTB4MEMNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0dfQ0xLX0RJVl9DVFJM
-CTB4MTANCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNHX1NMQVZFX1BLVF9OQUsJQklU
-KDQpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNHX01fU19TRVBBUkFURV9JTlRSCUJJVCgzKQ0K
-PiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDR19DVFJMX05FV19SRUcJQklUKDIpDQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNHX0NUUkxfTkVXX0NMS19ESVYJQklUKDEpDQo+ID4gKyNkZWZpbmUgQVNU
-MjYwMF9HTE9CQUxfSU5JVAlcDQo+ID4gKwkoQVNUMjYwMF9JMkNHX0NUUkxfTkVXX1JFRyB8DQo+
-IEFTVDI2MDBfSTJDR19DVFJMX05FV19DTEtfRElWKQ0KPiA+ICsvKg0KPiA+ICsgKiBBUEIgY2xr
-IDogMTAwTWh6DQo+ID4gKyAqIGRpdgk6IHNjbAkJOiBiYXNlY2xrIFtBUEIvKChkaXYvMikgKyAx
-KV0gOiB0QnVmIFsxL2JjbGsgKiAxNl0NCj4gPiArICogSTJDRzEwWzMxOjI0XSBiYXNlIGNsazQg
-Zm9yIGkyYyBhdXRvIHJlY292ZXJ5IHRpbWVvdXQgY291bnRlcg0KPiA+ICsoMHhDNikNCj4gPiAr
-ICogSTJDRzEwWzIzOjE2XSBiYXNlIGNsazMgZm9yIFN0YW5kYXJkLW1vZGUgKDEwMEtoeikgbWlu
-IHRCdWYgNC43dXMNCj4gPiArICogMHgzYyA6IDEwMC44S2h6CTogMy4yMjVNaHoJCQkJCSAgOiA0
-Ljk2dXMNCj4gPiArICogMHgzZCA6IDk5LjJLaHoJOiAzLjE3NE1oegkJCQkJICA6IDUuMDR1cw0K
-PiA+ICsgKiAweDNlIDogOTcuNjVLaHoJOiAzLjEyNU1oegkJCQkJICA6IDUuMTJ1cw0KPiA+ICsg
-KiAweDQwIDogOTcuNzVLaHoJOiAzLjAzTWh6CQkJCQkgIDogNS4yOHVzDQo+ID4gKyAqIDB4NDEg
-OiA5OS41S2h6CTogMi45OE1oegkJCQkJICA6IDUuMzZ1cyAoZGVmYXVsdCkNCj4gPiArICogSTJD
-RzEwWzE1OjhdIGJhc2UgY2xrMiBmb3IgRmFzdC1tb2RlICg0MDBLaHopIG1pbiB0QnVmIDEuM3Vz
-DQo+ID4gKyAqIDB4MTIgOiA0MDBLaHoJOiAxME1oegkJCQkJCSAgOiAxLjZ1cw0KPiA+ICsgKiBJ
-MkNHMTBbNzowXSBiYXNlIGNsazEgZm9yIEZhc3QtbW9kZSBQbHVzICgxTWh6KSBtaW4gdEJ1ZiAw
-LjV1cw0KPiA+ICsgKiAweDA4IDogMU1oegkJOiAyME1oegkJCQkJCSAgOiAwLjh1cw0KPiA+ICsg
-Ki8NCj4gPiArI2RlZmluZSBJMkNDR19ESVZfQ1RSTCAweEM2NDExMjA4DQo+ID4gKw0KPiA+ICsv
-KiAweDAwIDogSTJDQyBDb250cm9sbGVyL1RhcmdldCBGdW5jdGlvbiBDb250cm9sIFJlZ2lzdGVy
-ICAqLw0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDQ19GVU5fQ1RSTAkJMHgwMA0KPiA+ICsjZGVm
-aW5lIEFTVDI2MDBfSTJDQ19TTEFWRV9BRERSX1JYX0VOCQlCSVQoMjApDQo+ID4gKyNkZWZpbmUg
-QVNUMjYwMF9JMkNDX01BU1RFUl9SRVRSWV9NQVNLCQlHRU5NQVNLKDE5LCAxOCkNCj4gPiArI2Rl
-ZmluZSBBU1QyNjAwX0kyQ0NfTUFTVEVSX1JFVFJZKHgpCQkoKCh4KSAmIEdFTk1BU0soMSwgMCkp
-DQo+IDw8IDE4KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDQ19CVVNfQVVUT19SRUxFQVNFCQlC
-SVQoMTcpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNDX01fU0RBX0xPQ0tfRU4JCQlCSVQoMTYp
-DQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNDX01VTFRJX01BU1RFUl9ESVMJCUJJVCgxNSkNCj4g
-PiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfTV9TQ0xfRFJJVkVfRU4JCQlCSVQoMTQpDQo+ID4gKyNk
-ZWZpbmUgQVNUMjYwMF9JMkNDX01TQl9TVFMJCQkJQklUKDkpDQo+ID4gKyNkZWZpbmUgQVNUMjYw
-MF9JMkNDX1NEQV9EUklWRV8xVF9FTgkJQklUKDgpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkND
-X01fU0RBX0RSSVZFXzFUX0VOCQlCSVQoNykNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfTV9I
-SUdIX1NQRUVEX0VOCQlCSVQoNikNCj4gPiArLyogcmVzZXJ2ZXIgNSA6IDIgKi8NCj4gPiArI2Rl
-ZmluZSBBU1QyNjAwX0kyQ0NfU0xBVkVfRU4JCQlCSVQoMSkNCj4gPiArI2RlZmluZSBBU1QyNjAw
-X0kyQ0NfTUFTVEVSX0VOCQkJQklUKDApDQo+ID4gKw0KPiA+ICsvKiAweDA0IDogSTJDQyBDb250
-cm9sbGVyL1RhcmdldCBDbG9jayBhbmQgQUMgVGltaW5nIENvbnRyb2wgUmVnaXN0ZXIgIzEgKi8N
-Cj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfQUNfVElNSU5HCQkweDA0DQo+ID4gKyNkZWZpbmUg
-QVNUMjYwMF9JMkNDX1RUSU1FT1VUKHgpCQkJKCgoeCkgJiBHRU5NQVNLKDQsIDApKQ0KPiA8PCAy
-NCkNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfVENLSElHSE1JTih4KQkJCSgoKHgpICYgR0VO
-TUFTSygzLCAwKSkNCj4gPDwgMjApDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNDX1RDS0hJR0go
-eCkJCQkoKCh4KSAmIEdFTk1BU0soMywgMCkpIDw8IDE2KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBf
-STJDQ19UQ0tMT1coeCkJCQkoKCh4KSAmIEdFTk1BU0soMywgMCkpIDw8IDEyKQ0KPiA+ICsjZGVm
-aW5lIEFTVDI2MDBfSTJDQ19USEREQVQoeCkJCQkoKCh4KSAmIEdFTk1BU0soMSwgMCkpIDw8IDEw
-KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDQ19UT1VUQkFTRUNMSyh4KQkJCSgoKHgpICYgR0VO
-TUFTSygxLA0KPiAwKSkgPDwgOCkNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfVEJBU0VDTEso
-eCkJCQkoKHgpICYgR0VOTUFTSygzLCAwKSkNCj4gPiArDQo+ID4gKy8qIDB4MDggOiBJMkNDIENv
-bnRyb2xsZXIvVGFyZ2V0IFRyYW5zbWl0L1JlY2VpdmUgQnl0ZSBCdWZmZXIgUmVnaXN0ZXIgKi8N
-Cj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfU1RTX0FORF9CVUZGCQkweDA4DQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNDX1RYX0RJUl9NQVNLCQkJR0VOTUFTSygzMSwgMjkpDQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNDX1NEQV9PRQkJCQlCSVQoMjgpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9J
-MkNDX1NEQV9PCQkJCUJJVCgyNykNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfU0NMX09FCQkJ
-CUJJVCgyNikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfU0NMX08JCQkJQklUKDI1KQ0KPiA+
-ICsNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0NfU0NMX0xJTkVfU1RTCQkJQklUKDE4KQ0KPiA+
-ICsjZGVmaW5lIEFTVDI2MDBfSTJDQ19TREFfTElORV9TVFMJCQlCSVQoMTcpDQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNDX0JVU19CVVNZX1NUUwkJCUJJVCgxNikNCj4gPiArDQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNDX0dFVF9SWF9CVUZGKHgpCQkJKCgoeCkgPj4gOCkgJg0KPiBHRU5NQVNL
-KDcsIDApKQ0KPiA+ICsNCj4gPiArLyogMHgwQyA6IEkyQ0MgQ29udHJvbGxlci9UYXJnZXQgUG9v
-bCBCdWZmZXIgQ29udHJvbCBSZWdpc3RlciAgKi8NCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ0Nf
-QlVGRl9DVFJMCQkweDBDDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNDX0dFVF9SWF9CVUZfTEVO
-KHgpICAgICAgKCgoeCkgJiBHRU5NQVNLKDI5LA0KPiAyNCkpID4+IDI0KQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDQ19TRVRfUlhfQlVGX0xFTih4KQkJKCgoKCh4KSAtIDEpICYgR0VOTUFTSyg0
-LA0KPiAwKSkgPDwgMTYpIHwgQklUKDApKQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDQ19TRVRf
-VFhfQlVGX0xFTih4KQkJKCgoKCh4KSAtIDEpICYgR0VOTUFTSyg0LA0KPiAwKSkgPDwgOCkgfCBC
-SVQoMCkpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNDX0dFVF9UWF9CVUZfTEVOKHgpICAgICAg
-KCgoKHgpICYgR0VOTUFTSygxMiwNCj4gOCkpID4+IDgpICsgMSkNCj4gPiArDQo+ID4gKy8qIDB4
-MTAgOiBJMkNNIENvbnRyb2xsZXIgSW50ZXJydXB0IENvbnRyb2wgUmVnaXN0ZXIgKi8NCj4gPiAr
-I2RlZmluZSBBU1QyNjAwX0kyQ01fSUVSCQkJMHgxMA0KPiA+ICsvKiAweDE0IDogSTJDTSBDb250
-cm9sbGVyIEludGVycnVwdCBTdGF0dXMgUmVnaXN0ZXIgICA6IFdDICovDQo+ID4gKyNkZWZpbmUg
-QVNUMjYwMF9JMkNNX0lTUgkJCTB4MTQNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNN
-X1BLVF9USU1FT1VUCQkJQklUKDE4KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9QS1RfRVJS
-T1IJCQlCSVQoMTcpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1BLVF9ET05FCQkJQklUKDE2
-KQ0KPiA+ICsNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fQlVTX1JFQ09WRVJfRkFJTAkJQklU
-KDE1KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9TREFfRExfVE8JCQlCSVQoMTQpDQo+ID4g
-KyNkZWZpbmUgQVNUMjYwMF9JMkNNX0JVU19SRUNPVkVSCQkJQklUKDEzKQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDTV9TTUJVU19BTFQJCQlCSVQoMTIpDQo+ID4gKw0KPiA+ICsjZGVmaW5lIEFT
-VDI2MDBfSTJDTV9TQ0xfTE9XX1RPCQkJQklUKDYpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNN
-X0FCTk9STUFMCQkJQklUKDUpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX05PUk1BTF9TVE9Q
-CQkJQklUKDQpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX0FSQklUX0xPU1MJCQlCSVQoMykN
-Cj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fUlhfRE9ORQkJCUJJVCgyKQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDTV9UWF9OQUsJCQkJQklUKDEpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNN
-X1RYX0FDSwkJCQlCSVQoMCkNCj4gPiArDQo+ID4gKy8qIDB4MTggOiBJMkNNIENvbnRyb2xsZXIg
-Q29tbWFuZC9TdGF0dXMgUmVnaXN0ZXIgICAqLw0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9D
-TURfU1RTCQkweDE4DQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1BLVF9BRERSKHgpCQkJKCgo
-eCkgJiBHRU5NQVNLKDYsIDApKQ0KPiA8PCAyNCkNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01f
-UEtUX0VOCQkJCUJJVCgxNikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fU0RBX09FX09VVF9E
-SVIJCQlCSVQoMTUpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1NEQV9PX09VVF9ESVIJCQlC
-SVQoMTQpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1NDTF9PRV9PVVRfRElSCQkJQklUKDEz
-KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9TQ0xfT19PVVRfRElSCQkJQklUKDEyKQ0KPiA+
-ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9SRUNPVkVSX0NNRF9FTgkJCUJJVCgxMSkNCj4gPiArDQo+
-ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1JYX0RNQV9FTgkJCUJJVCg5KQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDTV9UWF9ETUFfRU4JCQlCSVQoOCkNCj4gPiArLyogQ29tbWFuZCBCaXQgKi8N
-Cj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fUlhfQlVGRl9FTgkJCUJJVCg3KQ0KPiA+ICsjZGVm
-aW5lIEFTVDI2MDBfSTJDTV9UWF9CVUZGX0VOCQkJQklUKDYpDQo+ID4gKyNkZWZpbmUgQVNUMjYw
-MF9JMkNNX1NUT1BfQ01ECQkJQklUKDUpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1JYX0NN
-RF9MQVNUCQkJQklUKDQpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1JYX0NNRAkJCQlCSVQo
-MykNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1RYX0NNRAkJCQlCSVQoMSkNCj4g
-PiArI2RlZmluZSBBU1QyNjAwX0kyQ01fU1RBUlRfQ01ECQkJQklUKDApDQo+ID4gKw0KPiA+ICsv
-KiAweDFDIDogSTJDTSBDb250cm9sbGVyIERNQSBUcmFuc2ZlciBMZW5ndGggUmVnaXN0ZXIJICov
-DQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX0RNQV9MRU4JCTB4MUMNCj4gPiArLyogVHggUngg
-c3VwcG9ydCBsZW5ndGggMSB+IDQwOTYgKi8NCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fU0VU
-X1JYX0RNQV9MRU4oeCkJKCgoKHgpICYgR0VOTUFTSygxMSwgMCkpDQo+IDw8IDE2KSB8IEJJVCgz
-MSkpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNNX1NFVF9UWF9ETUFfTEVOKHgpCSgoKHgpICYg
-R0VOTUFTSygxMSwgMCkpDQo+IHwgQklUKDE1KSkNCj4gPiArDQo+ID4gKy8qIDB4MjAgOiBJMkNT
-IFRhcmdldCBJbnRlcnJ1cHQgQ29udHJvbCBSZWdpc3RlciAgICovDQo+ID4gKyNkZWZpbmUgQVNU
-MjYwMF9JMkNTX0lFUgkJCTB4MjANCj4gPiArLyogMHgyNCA6IEkyQ1MgVGFyZ2V0IEludGVycnVw
-dCBTdGF0dXMgUmVnaXN0ZXIJICovDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0lTUgkJCTB4
-MjQNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0FERFJfSU5ESUNBVEVfTUFTSwlH
-RU5NQVNLKDMxLCAzMCkNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfU0xBVkVfUEVORElORwkJ
-CUJJVCgyOSkNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX1dBSVRfVFhfRE1BCQkJ
-QklUKDI1KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19XQUlUX1JYX0RNQQkJCUJJVCgyNCkN
-Cj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0FERFIzX05BSwkJCUJJVCgyMikNCj4g
-PiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfQUREUjJfTkFLCQkJQklUKDIxKQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDU19BRERSMV9OQUsJCQlCSVQoMjApDQo+ID4gKw0KPiA+ICsjZGVmaW5lIEFT
-VDI2MDBfSTJDU19BRERSX01BU0sJCQlHRU5NQVNLKDE5LCAxOCkNCj4gPiArI2RlZmluZSBBU1Qy
-NjAwX0kyQ1NfUEtUX0VSUk9SCQkJQklUKDE3KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19Q
-S1RfRE9ORQkJCUJJVCgxNikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfSU5BQ1RJVkVfVE8J
-CQlCSVQoMTUpDQo+ID4gKw0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19TTEFWRV9NQVRDSAkJ
-CUJJVCg3KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19BQk5PUl9TVE9QCQkJQklUKDUpDQo+
-ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX1NUT1AJCQkJQklUKDQpDQo+ID4gKyNkZWZpbmUgQVNU
-MjYwMF9JMkNTX1JYX0RPTkVfTkFLCQkJQklUKDMpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNT
-X1JYX0RPTkUJCQlCSVQoMikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfVFhfTkFLCQkJCUJJ
-VCgxKQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19UWF9BQ0sJCQkJQklUKDApDQo+ID4gKw0K
-PiA+ICsvKiAweDI4IDogSTJDUyBUYXJnZXQgQ01EL1N0YXR1cyBSZWdpc3RlciAgICovDQo+ID4g
-KyNkZWZpbmUgQVNUMjYwMF9JMkNTX0NNRF9TVFMJCTB4MjgNCj4gPiArI2RlZmluZSBBU1QyNjAw
-X0kyQ1NfQUNUSVZFX0FMTAkJCUdFTk1BU0soMTgsIDE3KQ0KPiA+ICsjZGVmaW5lIEFTVDI2MDBf
-STJDU19QS1RfTU9ERV9FTgkJCUJJVCgxNikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfQVVU
-T19OQUtfTk9BRERSCQlCSVQoMTUpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0FVVE9fTkFL
-X0VOCQkJQklUKDE0KQ0KPiA+ICsNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfQUxUX0VOCQkJ
-CUJJVCgxMCkNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfUlhfRE1BX0VOCQkJQklUKDkpDQo+
-ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX1RYX0RNQV9FTgkJCUJJVCg4KQ0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDU19SWF9CVUZGX0VOCQkJQklUKDcpDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9J
-MkNTX1RYX0JVRkZfRU4JCQlCSVQoNikNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfUlhfQ01E
-X0xBU1QJCQlCSVQoNCkNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX1RYX0NNRAkJ
-CQlCSVQoMikNCj4gPiArDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0RNQV9MRU4JCTB4MkMN
-Cj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfU0VUX1JYX0RNQV9MRU4oeCkJKCgoKCh4KSAtIDEp
-ICYgR0VOTUFTSygxMSwgMCkpDQo+IDw8IDE2KSB8IEJJVCgzMSkpDQo+ID4gKyNkZWZpbmUgQVNU
-MjYwMF9JMkNTX1NFVF9UWF9ETUFfTEVOKHgpCSgoKCh4KSAtIDEpICYgR0VOTUFTSygxMSwgMCkp
-DQo+IHwgQklUKDE1KSkNCj4gPiArDQo+ID4gKy8qIEkyQ00gQ29udHJvbGxlciBETUEgVHggQnVm
-ZmVyIFJlZ2lzdGVyICAgKi8NCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ01fVFhfRE1BCQkJMHgz
-MA0KPiA+ICsvKiBJMkNNIENvbnRyb2xsZXIgRE1BIFJ4IEJ1ZmZlciBSZWdpc3RlcgkqLw0KPiA+
-ICsjZGVmaW5lIEFTVDI2MDBfSTJDTV9SWF9ETUEJCQkweDM0DQo+ID4gKy8qIEkyQ1MgVGFyZ2V0
-IERNQSBUeCBCdWZmZXIgUmVnaXN0ZXIgICAqLw0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19U
-WF9ETUEJCQkweDM4DQo+ID4gKy8qIEkyQ1MgVGFyZ2V0IERNQSBSeCBCdWZmZXIgUmVnaXN0ZXIg
-ICAqLw0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19SWF9ETUEJCQkweDNDDQo+ID4gKw0KPiA+
-ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19BRERSX0NUUkwJCTB4NDANCj4gPiArDQo+ID4gKyNkZWZp
-bmUJQVNUMjYwMF9JMkNTX0FERFIzX01BU0sJCUdFTk1BU0soMjIsIDE2KQ0KPiA+ICsjZGVmaW5l
-CUFTVDI2MDBfSTJDU19BRERSMl9NQVNLCQlHRU5NQVNLKDE0LCA4KQ0KPiA+ICsjZGVmaW5lCUFT
-VDI2MDBfSTJDU19BRERSMV9NQVNLCQlHRU5NQVNLKDYsIDApDQo+ID4gKw0KPiA+ICsjZGVmaW5l
-IEFTVDI2MDBfSTJDTV9ETUFfTEVOX1NUUwkJMHg0OA0KPiA+ICsjZGVmaW5lIEFTVDI2MDBfSTJD
-U19ETUFfTEVOX1NUUwkJMHg0Qw0KPiA+ICsNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ19HRVRf
-VFhfRE1BX0xFTih4KQkJKCh4KSAmIEdFTk1BU0soMTIsIDApKQ0KPiA+ICsjZGVmaW5lIEFTVDI2
-MDBfSTJDX0dFVF9SWF9ETUFfTEVOKHgpICAgICAgICAoKCh4KSAmIEdFTk1BU0soMjgsDQo+IDE2
-KSkgPj4gMTYpDQo+ID4gKw0KPiA+ICsvKiAweDQwIDogVGFyZ2V0IERldmljZSBBZGRyZXNzIFJl
-Z2lzdGVyICovDQo+ID4gKyNkZWZpbmUgQVNUMjYwMF9JMkNTX0FERFIzX0VOQUJMRQkJCUJJVCgy
-MykNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1NfQUREUjMoeCkJCQkoKHgpIDw8IDE2KQ0KPiA+
-ICsjZGVmaW5lIEFTVDI2MDBfSTJDU19BRERSMl9FTkFCTEUJCQlCSVQoMTUpDQo+ID4gKyNkZWZp
-bmUgQVNUMjYwMF9JMkNTX0FERFIyKHgpCQkJKCh4KSA8PCA4KQ0KPiA+ICsjZGVmaW5lIEFTVDI2
-MDBfSTJDU19BRERSMV9FTkFCTEUJCQlCSVQoNykNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ1Nf
-QUREUjEoeCkJCQkoeCkNCj4gPiArDQo+ID4gKyNkZWZpbmUgSTJDX1RBUkdFVF9NU0dfQlVGX1NJ
-WkUJCTI1Ng0KPiA+ICsNCj4gPiArI2RlZmluZSBBU1QyNjAwX0kyQ19ETUFfU0laRQkJNDA5Ng0K
-PiA+ICsNCj4gPiArI2RlZmluZSBDT05UUk9MTEVSX1RSSUdHRVJfTEFTVF9TVE9QDQo+IAkoQVNU
-MjYwMF9JMkNNX1JYX0NNRF9MQVNUIHwgQVNUMjYwMF9JMkNNX1NUT1BfQ01EKQ0KPiA+ICsjZGVm
-aW5lIFRBUkdFVF9UUklHR0VSX0NNRAkoQVNUMjYwMF9JMkNTX0FDVElWRV9BTEwgfA0KPiBBU1Qy
-NjAwX0kyQ1NfUEtUX01PREVfRU4pDQo+ID4gKw0KPiA+ICsjZGVmaW5lIEFTVF9JMkNfVElNRU9V
-VF9DTEsJCTB4Mg0KPiA+ICsNCj4gPiArZW51bSB4ZmVyX21vZGUgew0KPiA+ICsJQllURV9NT0RF
-LA0KPiA+ICsJQlVGRl9NT0RFLA0KPiA+ICsJRE1BX01PREUsDQo+ID4gK307DQo+ID4gKw0KPiA+
-ICtzdHJ1Y3QgYXN0MjYwMF9pMmNfYnVzIHsNCj4gPiArCXN0cnVjdCBpMmNfYWRhcHRlcglhZGFw
-Ow0KPiA+ICsJc3RydWN0IGRldmljZQkJKmRldjsNCj4gPiArCXZvaWQgX19pb21lbQkJKnJlZ19i
-YXNlOw0KPiA+ICsJc3RydWN0IHJlZ21hcAkJKmdsb2JhbF9yZWdzOw0KPiA+ICsJc3RydWN0IHJl
-c2V0X2NvbnRyb2wJKnJzdDsNCj4gPiArCXN0cnVjdCBjbGsJCSpjbGs7DQo+ID4gKwlzdHJ1Y3Qg
-aTJjX3RpbWluZ3MJdGltaW5nX2luZm87DQo+ID4gKwlzdHJ1Y3QgY29tcGxldGlvbgljbWRfY29t
-cGxldGU7DQo+ID4gKwlzdHJ1Y3QgaTJjX21zZwkJKm1zZ3M7DQo+ID4gKwl1OAkJCSpjb250cm9s
-bGVyX2RtYV9zYWZlX2J1ZjsNCj4gPiArCWRtYV9hZGRyX3QJCWNvbnRyb2xsZXJfZG1hX2FkZHI7
-DQo+ID4gKwl1MzIJCQlhcGJfY2xrOw0KPiA+ICsJdTMyCQkJdGltZW91dDsNCj4gPiArCWludAkJ
-CWlycTsNCj4gPiArCWludAkJCWNtZF9lcnI7DQo+ID4gKwlpbnQJCQltc2dzX2luZGV4Ow0KPiA+
-ICsJaW50CQkJbXNnc19jb3VudDsNCj4gPiArCWludAkJCWNvbnRyb2xsZXJfeGZlcl9jbnQ7DQo+
-ID4gKwlzaXplX3QJCQlidWZfaW5kZXg7DQo+ID4gKwlzaXplX3QJCQlidWZfc2l6ZTsNCj4gPiAr
-CWVudW0geGZlcl9tb2RlCQltb2RlOw0KPiA+ICsJYm9vbAkJCW11bHRpX21hc3RlcjsNCj4gPiAr
-CS8qIEJ1ZmZlciBtb2RlICovDQo+ID4gKwl2b2lkIF9faW9tZW0JCSpidWZfYmFzZTsNCj4gPiAr
-CXN0cnVjdCBpMmNfc21idXNfYWxlcnRfc2V0dXAJYWxlcnRfZGF0YTsNCj4gPiArfTsNCj4gPiAr
-DQo+ID4gK3N0YXRpYyB1MzIgYXN0MjYwMF9zZWxlY3RfaTJjX2Nsb2NrKHN0cnVjdCBhc3QyNjAw
-X2kyY19idXMgKmkyY19idXMpDQo+ID4gK3sNCj4gPiArCXVuc2lnbmVkIGxvbmcgYmFzZV9jbGtb
-MTZdOw0KPiA+ICsJaW50IGJhc2VjbGtfaWR4ID0gMDsNCj4gPiArCWludCBkaXZpc29yID0gMDsN
-Cj4gPiArCXUzMiBjbGtfZGl2X3JlZzsNCj4gPiArCXUzMiBzY2xfbG93Ow0KPiA+ICsJdTMyIHNj
-bF9oaWdoOw0KPiA+ICsJdTMyIGRhdGE7DQo+ID4gKw0KPiA+ICsJcmVnbWFwX3JlYWQoaTJjX2J1
-cy0+Z2xvYmFsX3JlZ3MsIEFTVDI2MDBfSTJDR19DTEtfRElWX0NUUkwsDQo+ID4gKyZjbGtfZGl2
-X3JlZyk7DQo+ID4gKw0KPiA+ICsJZm9yIChpbnQgaSA9IDA7IGkgPCBBUlJBWV9TSVpFKGJhc2Vf
-Y2xrKTsgaSsrKSB7DQo+ID4gKwkJaWYgKGkgPT0gMCkNCj4gPiArCQkJYmFzZV9jbGtbaV0gPSBp
-MmNfYnVzLT5hcGJfY2xrOw0KPiA+ICsJCWVsc2UgaWYgKGkgPCA1KQ0KPiA+ICsJCQliYXNlX2Ns
-a1tpXSA9IChpMmNfYnVzLT5hcGJfY2xrICogMikgLw0KPiA+ICsJCQkgICAoKChjbGtfZGl2X3Jl
-ZyA+PiAoKGkgLSAxKSAqIDgpKSAmIEdFTk1BU0soNywgMCkpICsgMik7DQo+ID4gKwkJZWxzZQ0K
-PiA+ICsJCQliYXNlX2Nsa1tpXSA9IGJhc2VfY2xrWzRdID4+IChpIC0gNSk7DQo+ID4gKw0KPiA+
-ICsJCWlmICgoYmFzZV9jbGtbaV0gLyBpMmNfYnVzLT50aW1pbmdfaW5mby5idXNfZnJlcV9oeikg
-PD0gMzIpIHsNCj4gPiArCQkJYmFzZWNsa19pZHggPSBpOw0KPiA+ICsJCQlkaXZpc29yID0gRElW
-X1JPVU5EX1VQKGJhc2VfY2xrW2ldLA0KPiBpMmNfYnVzLT50aW1pbmdfaW5mby5idXNfZnJlcV9o
-eik7DQo+ID4gKwkJCWJyZWFrOw0KPiA+ICsJCX0NCj4gPiArCX0NCj4gPiArCWJhc2VjbGtfaWR4
-ID0gbWluKGJhc2VjbGtfaWR4LCAxNSk7DQo+ID4gKwlkaXZpc29yID0gbWluKGRpdmlzb3IsIDMy
-KTsNCj4gPiArCXNjbF9sb3cgPSBtaW4oZGl2aXNvciAqIDkgLyAxNiAtIDEsIDE1KTsNCj4gPiAr
-CXNjbF9oaWdoID0gKGRpdmlzb3IgLSBzY2xfbG93IC0gMikgJiBHRU5NQVNLKDMsIDApOw0KPiA+
-ICsJZGF0YSA9IChzY2xfaGlnaCAtIDEpIDw8IDIwIHwgc2NsX2hpZ2ggPDwgMTYgfCBzY2xfbG93
-IDw8IDEyIHwgYmFzZWNsa19pZHg7DQo+ID4gKwlpZiAoaTJjX2J1cy0+dGltZW91dCkgew0KPiA+
-ICsJCWRhdGEgfD0gQVNUMjYwMF9JMkNDX1RPVVRCQVNFQ0xLKEFTVF9JMkNfVElNRU9VVF9DTEsp
-Ow0KPiA+ICsJCWRhdGEgfD0gQVNUMjYwMF9JMkNDX1RUSU1FT1VUKGkyY19idXMtPnRpbWVvdXQp
-Ow0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCXJldHVybiBkYXRhOw0KPiA+ICt9DQo+ID4gKw0KPiA+
-ICtzdGF0aWMgdTggYXN0MjYwMF9pMmNfcmVjb3Zlcl9idXMoc3RydWN0IGFzdDI2MDBfaTJjX2J1
-cyAqaTJjX2J1cykgew0KPiA+ICsJdTMyIHN0YXRlID0gcmVhZGwoaTJjX2J1cy0+cmVnX2Jhc2Ug
-KyBBU1QyNjAwX0kyQ0NfU1RTX0FORF9CVUZGKTsNCj4gPiArCWludCByZXQgPSAwOw0KPiA+ICsJ
-dTMyIGN0cmw7DQo+ID4gKwlpbnQgcjsNCj4gPiArDQo+ID4gKwlkZXZfZGJnKGkyY19idXMtPmRl
-diwgIiVkLWJ1cyByZWNvdmVyeSBidXMgWyV4XVxuIiwNCj4gPiAraTJjX2J1cy0+YWRhcC5uciwg
-c3RhdGUpOw0KPiA+ICsNCj4gPiArCWN0cmwgPSByZWFkbChpMmNfYnVzLT5yZWdfYmFzZSArIEFT
-VDI2MDBfSTJDQ19GVU5fQ1RSTCk7DQo+ID4gKw0KPiA+ICsJLyogRGlzYWJsZSBjb250cm9sbGVy
-ICovDQo+ID4gKwl3cml0ZWwoY3RybCAmIH4oQVNUMjYwMF9JMkNDX01BU1RFUl9FTiB8IEFTVDI2
-MDBfSTJDQ19TTEFWRV9FTiksDQo+ID4gKwkgICAgICAgaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1Qy
-NjAwX0kyQ0NfRlVOX0NUUkwpOw0KPiA+ICsNCj4gPiArCXdyaXRlbChyZWFkbChpMmNfYnVzLT5y
-ZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19GVU5fQ1RSTCkgfA0KPiBBU1QyNjAwX0kyQ0NfTUFTVEVS
-X0VOLA0KPiA+ICsJICAgICAgIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNDX0ZVTl9D
-VFJMKTsNCj4gPiArDQo+ID4gKwlyZWluaXRfY29tcGxldGlvbigmaTJjX2J1cy0+Y21kX2NvbXBs
-ZXRlKTsNCj4gPiArCWkyY19idXMtPmNtZF9lcnIgPSAwOw0KPiA+ICsNCj4gPiArCS8qIENoZWNr
-IDB4MTQncyBTREEgYW5kIFNDTCBzdGF0dXMgKi8NCj4gPiArCXN0YXRlID0gcmVhZGwoaTJjX2J1
-cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ0NfU1RTX0FORF9CVUZGKTsNCj4gPiArCWlmICghKHN0
-YXRlICYgQVNUMjYwMF9JMkNDX1NEQV9MSU5FX1NUUykgJiYgKHN0YXRlICYNCj4gQVNUMjYwMF9J
-MkNDX1NDTF9MSU5FX1NUUykpIHsNCj4gPiArCQl3cml0ZWwoQVNUMjYwMF9JMkNNX1JFQ09WRVJf
-Q01EX0VOLCBpMmNfYnVzLT5yZWdfYmFzZSArDQo+IEFTVDI2MDBfSTJDTV9DTURfU1RTKTsNCj4g
-PiArCQlyID0gd2FpdF9mb3JfY29tcGxldGlvbl90aW1lb3V0KCZpMmNfYnVzLT5jbWRfY29tcGxl
-dGUsDQo+IGkyY19idXMtPmFkYXAudGltZW91dCk7DQo+ID4gKwkJaWYgKHIgPT0gMCkgew0KPiA+
-ICsJCQlkZXZfZGJnKGkyY19idXMtPmRldiwgInJlY292ZXJ5IHRpbWVkIG91dFxuIik7DQo+ID4g
-KwkJCXdyaXRlbChjdHJsLCBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19GVU5fQ1RS
-TCk7DQo+ID4gKwkJCXJldHVybiAtRVRJTUVET1VUOw0KPiA+ICsJCX0gZWxzZSBpZiAoaTJjX2J1
-cy0+Y21kX2Vycikgew0KPiA+ICsJCQlkZXZfZGJnKGkyY19idXMtPmRldiwgInJlY292ZXJ5IGVy
-cm9yXG4iKTsNCj4gPiArCQkJcmV0ID0gLUVQUk9UTzsNCj4gPiArCQl9DQo+ID4gKwl9DQo+ID4g
-Kw0KPiA+ICsJLyogUmVjb3ZlcnkgZG9uZSAqLw0KPiA+ICsJc3RhdGUgPSByZWFkbChpMmNfYnVz
-LT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19TVFNfQU5EX0JVRkYpOw0KPiA+ICsJaWYgKHN0YXRl
-ICYgQVNUMjYwMF9JMkNDX0JVU19CVVNZX1NUUykgew0KPiA+ICsJCWRldl9kYmcoaTJjX2J1cy0+
-ZGV2LCAiQ2FuJ3QgcmVjb3ZlciBidXMgWyV4XVxuIiwgc3RhdGUpOw0KPiA+ICsJCXJldCA9IC1F
-UFJPVE87DQo+ID4gKwl9DQo+ID4gKw0KPiA+ICsJLyogcmVzdG9yZSBvcmlnaW5hbCBjb250cm9s
-bGVyIHNldHRpbmcgKi8NCj4gPiArCXdyaXRlbChjdHJsLCBpMmNfYnVzLT5yZWdfYmFzZSArIEFT
-VDI2MDBfSTJDQ19GVU5fQ1RSTCk7DQo+ID4gKwlyZXR1cm4gcmV0Ow0KPiA+ICt9DQo+ID4gKw0K
-PiA+ICtzdGF0aWMgaW50IGFzdDI2MDBfaTJjX3NldHVwX2RtYV90eCh1MzIgY21kLCBzdHJ1Y3Qg
-YXN0MjYwMF9pMmNfYnVzDQo+ID4gKyppMmNfYnVzKSB7DQo+ID4gKwlzdHJ1Y3QgaTJjX21zZyAq
-bXNnID0gJmkyY19idXMtPm1zZ3NbaTJjX2J1cy0+bXNnc19pbmRleF07DQo+ID4gKwlpbnQgeGZl
-cl9sZW47DQo+ID4gKwlpbnQgcmV0Ow0KPiA+ICsNCj4gPiArCWNtZCB8PSBBU1QyNjAwX0kyQ01f
-UEtUX0VOOw0KPiA+ICsJeGZlcl9sZW4gPSBtc2ctPmxlbiAtIGkyY19idXMtPmNvbnRyb2xsZXJf
-eGZlcl9jbnQ7DQo+ID4gKwlpZiAoeGZlcl9sZW4gPiBBU1QyNjAwX0kyQ19ETUFfU0laRSkNCj4g
-PiArCQl4ZmVyX2xlbiA9IEFTVDI2MDBfSTJDX0RNQV9TSVpFOw0KPiA+ICsJZWxzZSBpZiAoaTJj
-X2J1cy0+bXNnc19pbmRleCArIDEgPT0gaTJjX2J1cy0+bXNnc19jb3VudCkNCj4gPiArCQljbWQg
-fD0gQVNUMjYwMF9JMkNNX1NUT1BfQ01EOw0KPiA+ICsNCj4gPiArCWlmIChjbWQgJiBBU1QyNjAw
-X0kyQ01fU1RBUlRfQ01EKSB7DQo+ID4gKwkJY21kIHw9IEFTVDI2MDBfSTJDTV9QS1RfQUREUiht
-c2ctPmFkZHIpOw0KPiA+ICsJCWkyY19idXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVmID0NCj4g
-aTJjX2dldF9kbWFfc2FmZV9tc2dfYnVmKG1zZywgMSk7DQo+ID4gKwkJaWYgKCFpMmNfYnVzLT5j
-b250cm9sbGVyX2RtYV9zYWZlX2J1ZikNCj4gPiArCQkJcmV0dXJuIC1FTk9NRU07DQo+ID4gKwkJ
-aTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfYWRkciA9DQo+ID4gKwkJCWRtYV9tYXBfc2luZ2xlKGky
-Y19idXMtPmRldiwNCj4gaTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfc2FmZV9idWYsDQo+ID4gKwkJ
-CQkgICAgICAgbXNnLT5sZW4sIERNQV9UT19ERVZJQ0UpOw0KPiA+ICsJCXJldCA9IGRtYV9tYXBw
-aW5nX2Vycm9yKGkyY19idXMtPmRldiwNCj4gaTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfYWRkcik7
-DQo+ID4gKwkJaWYgKHJldCkgew0KPiA+ICsJCQlpMmNfcHV0X2RtYV9zYWZlX21zZ19idWYoaTJj
-X2J1cy0+Y29udHJvbGxlcl9kbWFfc2FmZV9idWYsDQo+IG1zZywgZmFsc2UpOw0KPiA+ICsJCQlp
-MmNfYnVzLT5jb250cm9sbGVyX2RtYV9zYWZlX2J1ZiA9IE5VTEw7DQo+ID4gKwkJCXJldHVybiBy
-ZXQ7DQo+ID4gKwkJfQ0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCWlmICh4ZmVyX2xlbikgew0KPiA+
-ICsJCWNtZCB8PSBBU1QyNjAwX0kyQ01fVFhfRE1BX0VOIHwgQVNUMjYwMF9JMkNNX1RYX0NNRDsN
-Cj4gPiArCQl3cml0ZWwoQVNUMjYwMF9JMkNNX1NFVF9UWF9ETUFfTEVOKHhmZXJfbGVuIC0gMSks
-DQo+ID4gKwkJICAgICAgIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNNX0RNQV9MRU4p
-Ow0KPiA+ICsJCXdyaXRlbChpMmNfYnVzLT5jb250cm9sbGVyX2RtYV9hZGRyICsNCj4gaTJjX2J1
-cy0+Y29udHJvbGxlcl94ZmVyX2NudCwNCj4gPiArCQkgICAgICAgaTJjX2J1cy0+cmVnX2Jhc2Ug
-KyBBU1QyNjAwX0kyQ01fVFhfRE1BKTsNCj4gPiArCX0NCj4gPiArDQo+ID4gKwl3cml0ZWwoY21k
-LCBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDTV9DTURfU1RTKTsNCj4gPiArDQo+ID4g
-KwlyZXR1cm4gMDsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIGludCBhc3QyNjAwX2kyY19z
-ZXR1cF9idWZmX3R4KHUzMiBjbWQsIHN0cnVjdCBhc3QyNjAwX2kyY19idXMNCj4gPiArKmkyY19i
-dXMpIHsNCj4gPiArCXN0cnVjdCBpMmNfbXNnICptc2cgPSAmaTJjX2J1cy0+bXNnc1tpMmNfYnVz
-LT5tc2dzX2luZGV4XTsNCj4gPiArCXUzMiB3YnVmX2R3b3JkOw0KPiA+ICsJaW50IHhmZXJfbGVu
-Ow0KPiA+ICsJaW50IGk7DQo+ID4gKw0KPiA+ICsJY21kIHw9IEFTVDI2MDBfSTJDTV9QS1RfRU47
-DQo+ID4gKwl4ZmVyX2xlbiA9IG1zZy0+bGVuIC0gaTJjX2J1cy0+Y29udHJvbGxlcl94ZmVyX2Nu
-dDsNCj4gPiArCWlmICh4ZmVyX2xlbiA+IGkyY19idXMtPmJ1Zl9zaXplKQ0KPiA+ICsJCXhmZXJf
-bGVuID0gaTJjX2J1cy0+YnVmX3NpemU7DQo+ID4gKwllbHNlIGlmIChpMmNfYnVzLT5tc2dzX2lu
-ZGV4ICsgMSA9PSBpMmNfYnVzLT5tc2dzX2NvdW50KQ0KPiA+ICsJCWNtZCB8PSBBU1QyNjAwX0ky
-Q01fU1RPUF9DTUQ7DQo+ID4gKw0KPiA+ICsJaWYgKGNtZCAmIEFTVDI2MDBfSTJDTV9TVEFSVF9D
-TUQpDQo+ID4gKwkJY21kIHw9IEFTVDI2MDBfSTJDTV9QS1RfQUREUihtc2ctPmFkZHIpOw0KPiA+
-ICsNCj4gPiArCWlmICh4ZmVyX2xlbikgew0KPiA+ICsJCWNtZCB8PSBBU1QyNjAwX0kyQ01fVFhf
-QlVGRl9FTiB8IEFTVDI2MDBfSTJDTV9UWF9DTUQ7DQo+ID4gKwkJLyoNCj4gPiArCQkgKiBUaGUg
-Y29udHJvbGxlcidzIGJ1ZmZlciByZWdpc3RlciBzdXBwb3J0cyBkd29yZCB3cml0ZXMgb25seS4N
-Cj4gPiArCQkgKiBUaGVyZWZvcmUsIHdyaXRlIGR3b3JkcyB0byB0aGUgYnVmZmVyIHJlZ2lzdGVy
-IGluIGEgNC1ieXRlIGFsaWduZWQsDQo+ID4gKwkJICogYW5kIHdyaXRlIHRoZSByZW1haW5pbmcg
-dW5hbGlnbmVkIGRhdGEgYXQgdGhlIGVuZC4NCj4gPiArCQkgKi8NCj4gPiArCQlmb3IgKGkgPSAw
-OyBpIDwgeGZlcl9sZW47IGkgKz0gNCkgew0KPiA+ICsJCQlpbnQgeGZlcl9jbnQgPSBpMmNfYnVz
-LT5jb250cm9sbGVyX3hmZXJfY250ICsgaTsNCj4gPiArDQo+ID4gKwkJCXN3aXRjaCAobWluKHhm
-ZXJfbGVuIC0gaSwgNCkgJSA0KSB7DQo+ID4gKwkJCWNhc2UgMToNCj4gPiArCQkJCXdidWZfZHdv
-cmQgPSBtc2ctPmJ1Zlt4ZmVyX2NudF07DQo+ID4gKwkJCQlicmVhazsNCj4gPiArCQkJY2FzZSAy
-Og0KPiA+ICsJCQkJd2J1Zl9kd29yZCA9IGdldF91bmFsaWduZWRfbGUxNigmbXNnLT5idWZbeGZl
-cl9jbnRdKTsNCj4gPiArCQkJCWJyZWFrOw0KPiA+ICsJCQljYXNlIDM6DQo+ID4gKwkJCQl3YnVm
-X2R3b3JkID0gZ2V0X3VuYWxpZ25lZF9sZTI0KCZtc2ctPmJ1Zlt4ZmVyX2NudF0pOw0KPiA+ICsJ
-CQkJYnJlYWs7DQo+ID4gKwkJCWRlZmF1bHQ6DQo+ID4gKwkJCQl3YnVmX2R3b3JkID0gZ2V0X3Vu
-YWxpZ25lZF9sZTMyKCZtc2ctPmJ1Zlt4ZmVyX2NudF0pOw0KPiA+ICsJCQkJYnJlYWs7DQo+ID4g
-KwkJCX0NCj4gPiArCQkJd3JpdGVsKHdidWZfZHdvcmQsIGkyY19idXMtPmJ1Zl9iYXNlICsgaSk7
-DQo+ID4gKwkJfQ0KPiA+ICsJCXdyaXRlbChBU1QyNjAwX0kyQ0NfU0VUX1RYX0JVRl9MRU4oeGZl
-cl9sZW4pLA0KPiA+ICsJCSAgICAgICBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19C
-VUZGX0NUUkwpOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCXdyaXRlbChjbWQsIGkyY19idXMtPnJl
-Z19iYXNlICsgQVNUMjYwMF9JMkNNX0NNRF9TVFMpOw0KPiA+ICsNCj4gPiArCXJldHVybiAwOw0K
-PiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgaW50IGFzdDI2MDBfaTJjX3NldHVwX2J5dGVfdHgo
-dTMyIGNtZCwgc3RydWN0IGFzdDI2MDBfaTJjX2J1cw0KPiA+ICsqaTJjX2J1cykgew0KPiA+ICsJ
-c3RydWN0IGkyY19tc2cgKm1zZyA9ICZpMmNfYnVzLT5tc2dzW2kyY19idXMtPm1zZ3NfaW5kZXhd
-Ow0KPiA+ICsJaW50IHhmZXJfbGVuOw0KPiA+ICsNCj4gPiArCXhmZXJfbGVuID0gbXNnLT5sZW4g
-LSBpMmNfYnVzLT5jb250cm9sbGVyX3hmZXJfY250Ow0KPiA+ICsNCj4gPiArCWNtZCB8PSBBU1Qy
-NjAwX0kyQ01fUEtUX0VOOw0KPiA+ICsNCj4gPiArCWlmIChjbWQgJiBBU1QyNjAwX0kyQ01fU1RB
-UlRfQ01EKQ0KPiA+ICsJCWNtZCB8PSBBU1QyNjAwX0kyQ01fUEtUX0FERFIobXNnLT5hZGRyKTsN
-Cj4gPiArDQo+ID4gKwlpZiAoKGkyY19idXMtPm1zZ3NfaW5kZXggKyAxID09IGkyY19idXMtPm1z
-Z3NfY291bnQpICYmDQo+ID4gKwkgICAgKChpMmNfYnVzLT5jb250cm9sbGVyX3hmZXJfY250ICsg
-MSkgPT0gbXNnLT5sZW4pKQ0KPiA+ICsJCWNtZCB8PSBBU1QyNjAwX0kyQ01fU1RPUF9DTUQ7DQo+
-ID4gKw0KPiA+ICsJaWYgKHhmZXJfbGVuKSB7DQo+ID4gKwkJY21kIHw9IEFTVDI2MDBfSTJDTV9U
-WF9DTUQ7DQo+ID4gKwkJd3JpdGVsKG1zZy0+YnVmW2kyY19idXMtPmNvbnRyb2xsZXJfeGZlcl9j
-bnRdLA0KPiA+ICsJCSAgICAgICBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19TVFNf
-QU5EX0JVRkYpOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCXdyaXRlbChjbWQsIGkyY19idXMtPnJl
-Z19iYXNlICsgQVNUMjYwMF9JMkNNX0NNRF9TVFMpOw0KPiA+ICsNCj4gPiArCXJldHVybiAwOw0K
-PiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgaW50IGFzdDI2MDBfaTJjX3NldHVwX2RtYV9yeChz
-dHJ1Y3QgYXN0MjYwMF9pMmNfYnVzICppMmNfYnVzKQ0KPiA+ICt7DQo+ID4gKwlzdHJ1Y3QgaTJj
-X21zZyAqbXNnID0gJmkyY19idXMtPm1zZ3NbaTJjX2J1cy0+bXNnc19pbmRleF07DQo+ID4gKwlp
-bnQgeGZlcl9sZW47DQo+ID4gKwl1MzIgY21kOw0KPiA+ICsJaW50IHJldDsNCj4gPiArDQo+ID4g
-KwljbWQgPSBBU1QyNjAwX0kyQ01fUEtUX0VOIHwgQVNUMjYwMF9JMkNNX1BLVF9BRERSKG1zZy0+
-YWRkcikNCj4gfA0KPiA+ICsJICAgICAgQVNUMjYwMF9JMkNNX1NUQVJUX0NNRCB8IEFTVDI2MDBf
-STJDTV9SWF9ETUFfRU47DQo+ID4gKw0KPiA+ICsJaWYgKG1zZy0+ZmxhZ3MgJiBJMkNfTV9SRUNW
-X0xFTikgew0KPiA+ICsJCXhmZXJfbGVuID0gMTsNCj4gPiArCX0gZWxzZSBpZiAobXNnLT5sZW4g
-PiBBU1QyNjAwX0kyQ19ETUFfU0laRSkgew0KPiA+ICsJCXhmZXJfbGVuID0gQVNUMjYwMF9JMkNf
-RE1BX1NJWkU7DQo+ID4gKwl9IGVsc2Ugew0KPiA+ICsJCXhmZXJfbGVuID0gbXNnLT5sZW47DQo+
-ID4gKwkJaWYgKGkyY19idXMtPm1zZ3NfaW5kZXggKyAxID09IGkyY19idXMtPm1zZ3NfY291bnQp
-DQo+ID4gKwkJCWNtZCB8PSBDT05UUk9MTEVSX1RSSUdHRVJfTEFTVF9TVE9QOw0KPiA+ICsJfQ0K
-PiA+ICsJd3JpdGVsKEFTVDI2MDBfSTJDTV9TRVRfUlhfRE1BX0xFTih4ZmVyX2xlbiAtIDEpLA0K
-PiBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDTV9ETUFfTEVOKTsNCj4gPiArCWkyY19i
-dXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVmID0gaTJjX2dldF9kbWFfc2FmZV9tc2dfYnVmKG1z
-ZywNCj4gMSk7DQo+ID4gKwlpZiAoIWkyY19idXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVmKQ0K
-PiA+ICsJCXJldHVybiAtRU5PTUVNOw0KPiA+ICsJaTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfYWRk
-ciA9DQo+ID4gKwkJZG1hX21hcF9zaW5nbGUoaTJjX2J1cy0+ZGV2LCBpMmNfYnVzLT5jb250cm9s
-bGVyX2RtYV9zYWZlX2J1ZiwNCj4gPiArCQkJICAgICAgIG1zZy0+bGVuLCBETUFfRlJPTV9ERVZJ
-Q0UpOw0KPiA+ICsJcmV0ID0gZG1hX21hcHBpbmdfZXJyb3IoaTJjX2J1cy0+ZGV2LCBpMmNfYnVz
-LT5jb250cm9sbGVyX2RtYV9hZGRyKTsNCj4gPiArCWlmIChyZXQpIHsNCj4gPiArCQlpMmNfcHV0
-X2RtYV9zYWZlX21zZ19idWYoaTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfc2FmZV9idWYsDQo+IG1z
-ZywgZmFsc2UpOw0KPiA+ICsJCWkyY19idXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVmID0gTlVM
-TDsNCj4gPiArCQlyZXR1cm4gcmV0Ow0KPiA+ICsJfQ0KPiA+ICsJd3JpdGVsKGkyY19idXMtPmNv
-bnRyb2xsZXJfZG1hX2FkZHIsIGkyY19idXMtPnJlZ19iYXNlICsNCj4gPiArQVNUMjYwMF9JMkNN
-X1JYX0RNQSk7DQo+ID4gKw0KPiA+ICsJd3JpdGVsKGNtZCwgaTJjX2J1cy0+cmVnX2Jhc2UgKyBB
-U1QyNjAwX0kyQ01fQ01EX1NUUyk7DQo+ID4gKw0KPiA+ICsJcmV0dXJuIDA7DQo+ID4gK30NCj4g
-PiArDQo+ID4gK3N0YXRpYyBpbnQgYXN0MjYwMF9pMmNfc2V0dXBfYnVmZl9yeChzdHJ1Y3QgYXN0
-MjYwMF9pMmNfYnVzICppMmNfYnVzKQ0KPiA+ICt7DQo+ID4gKwlzdHJ1Y3QgaTJjX21zZyAqbXNn
-ID0gJmkyY19idXMtPm1zZ3NbaTJjX2J1cy0+bXNnc19pbmRleF07DQo+ID4gKwlpbnQgeGZlcl9s
-ZW47DQo+ID4gKwl1MzIgY21kOw0KPiA+ICsNCj4gPiArCWNtZCA9IEFTVDI2MDBfSTJDTV9QS1Rf
-RU4gfCBBU1QyNjAwX0kyQ01fUEtUX0FERFIobXNnLT5hZGRyKQ0KPiB8DQo+ID4gKwkgICAgICBB
-U1QyNjAwX0kyQ01fU1RBUlRfQ01EIHwgQVNUMjYwMF9JMkNNX1JYX0JVRkZfRU47DQo+ID4gKw0K
-PiA+ICsJaWYgKG1zZy0+ZmxhZ3MgJiBJMkNfTV9SRUNWX0xFTikgew0KPiA+ICsJCWRldl9kYmco
-aTJjX2J1cy0+ZGV2LCAic21idXMgcmVhZFxuIik7DQo+ID4gKwkJeGZlcl9sZW4gPSAxOw0KPiA+
-ICsJfSBlbHNlIGlmIChtc2ctPmxlbiA+IGkyY19idXMtPmJ1Zl9zaXplKSB7DQo+ID4gKwkJeGZl
-cl9sZW4gPSBpMmNfYnVzLT5idWZfc2l6ZTsNCj4gPiArCX0gZWxzZSB7DQo+ID4gKwkJeGZlcl9s
-ZW4gPSBtc2ctPmxlbjsNCj4gPiArCQlpZiAoaTJjX2J1cy0+bXNnc19pbmRleCArIDEgPT0gaTJj
-X2J1cy0+bXNnc19jb3VudCkNCj4gPiArCQkJY21kIHw9IENPTlRST0xMRVJfVFJJR0dFUl9MQVNU
-X1NUT1A7DQo+ID4gKwl9DQo+ID4gKwl3cml0ZWwoQVNUMjYwMF9JMkNDX1NFVF9SWF9CVUZfTEVO
-KHhmZXJfbGVuKSwgaTJjX2J1cy0+cmVnX2Jhc2UgKw0KPiA+ICtBU1QyNjAwX0kyQ0NfQlVGRl9D
-VFJMKTsNCj4gPiArDQo+ID4gKwl3cml0ZWwoY21kLCBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2
-MDBfSTJDTV9DTURfU1RTKTsNCj4gPiArDQo+ID4gKwlyZXR1cm4gMDsNCj4gPiArfQ0KPiA+ICsN
-Cj4gPiArc3RhdGljIGludCBhc3QyNjAwX2kyY19zZXR1cF9ieXRlX3J4KHN0cnVjdCBhc3QyNjAw
-X2kyY19idXMgKmkyY19idXMpDQo+ID4gK3sNCj4gPiArCXN0cnVjdCBpMmNfbXNnICptc2cgPSAm
-aTJjX2J1cy0+bXNnc1tpMmNfYnVzLT5tc2dzX2luZGV4XTsNCj4gPiArCXUzMiBjbWQ7DQo+ID4g
-Kw0KPiA+ICsJY21kID0gQVNUMjYwMF9JMkNNX1BLVF9FTiB8IEFTVDI2MDBfSTJDTV9QS1RfQURE
-Uihtc2ctPmFkZHIpDQo+IHwNCj4gPiArCSAgICAgIEFTVDI2MDBfSTJDTV9TVEFSVF9DTUQgfCBB
-U1QyNjAwX0kyQ01fUlhfQ01EOw0KPiA+ICsNCj4gPiArCWlmIChtc2ctPmZsYWdzICYgSTJDX01f
-UkVDVl9MRU4pIHsNCj4gPiArCQlkZXZfZGJnKGkyY19idXMtPmRldiwgInNtYnVzIHJlYWRcbiIp
-Ow0KPiA+ICsJfSBlbHNlIGlmIChpMmNfYnVzLT5tc2dzX2luZGV4ICsgMSA9PSBpMmNfYnVzLT5t
-c2dzX2NvdW50KSB7DQo+ID4gKwkJaWYgKG1zZy0+bGVuID09IDEpDQo+ID4gKwkJCWNtZCB8PSBD
-T05UUk9MTEVSX1RSSUdHRVJfTEFTVF9TVE9QOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCXdyaXRl
-bChjbWQsIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNNX0NNRF9TVFMpOw0KPiA+ICsN
-Cj4gPiArCXJldHVybiAwOw0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgaW50IGFzdDI2MDBf
-aTJjX2RvX3N0YXJ0KHN0cnVjdCBhc3QyNjAwX2kyY19idXMgKmkyY19idXMpIHsNCj4gPiArCXN0
-cnVjdCBpMmNfbXNnICptc2cgPSAmaTJjX2J1cy0+bXNnc1tpMmNfYnVzLT5tc2dzX2luZGV4XTsN
-Cj4gPiArDQo+ID4gKwkvKiBzZW5kIHN0YXJ0ICovDQo+ID4gKwlkZXZfZGJnKGkyY19idXMtPmRl
-diwgIlslZF0gJXMgJWQgYnl0ZSVzICVzIDB4JTAyeFxuIiwNCj4gPiArCQlpMmNfYnVzLT5tc2dz
-X2luZGV4LCBzdHJfcmVhZF93cml0ZShtc2ctPmZsYWdzICYgSTJDX01fUkQpLA0KPiA+ICsJCW1z
-Zy0+bGVuLCBzdHJfcGx1cmFsKG1zZy0+bGVuKSwNCj4gPiArCQltc2ctPmZsYWdzICYgSTJDX01f
-UkQgPyAiZnJvbSIgOiAidG8iLCBtc2ctPmFkZHIpOw0KPiA+ICsNCj4gPiArCWkyY19idXMtPmNv
-bnRyb2xsZXJfeGZlcl9jbnQgPSAwOw0KPiA+ICsJaTJjX2J1cy0+YnVmX2luZGV4ID0gMDsNCj4g
-PiArDQo+ID4gKwlpZiAobXNnLT5mbGFncyAmIEkyQ19NX1JEKSB7DQo+ID4gKwkJaWYgKGkyY19i
-dXMtPm1vZGUgPT0gRE1BX01PREUpDQo+ID4gKwkJCXJldHVybiBhc3QyNjAwX2kyY19zZXR1cF9k
-bWFfcngoaTJjX2J1cyk7DQo+ID4gKwkJZWxzZSBpZiAoaTJjX2J1cy0+bW9kZSA9PSBCVUZGX01P
-REUpDQo+ID4gKwkJCXJldHVybiBhc3QyNjAwX2kyY19zZXR1cF9idWZmX3J4KGkyY19idXMpOw0K
-PiA+ICsJCWVsc2UNCj4gPiArCQkJcmV0dXJuIGFzdDI2MDBfaTJjX3NldHVwX2J5dGVfcngoaTJj
-X2J1cyk7DQo+ID4gKwl9IGVsc2Ugew0KPiA+ICsJCWlmIChpMmNfYnVzLT5tb2RlID09IERNQV9N
-T0RFKQ0KPiA+ICsJCQlyZXR1cm4NCj4gYXN0MjYwMF9pMmNfc2V0dXBfZG1hX3R4KEFTVDI2MDBf
-STJDTV9TVEFSVF9DTUQsIGkyY19idXMpOw0KPiA+ICsJCWVsc2UgaWYgKGkyY19idXMtPm1vZGUg
-PT0gQlVGRl9NT0RFKQ0KPiA+ICsJCQlyZXR1cm4gYXN0MjYwMF9pMmNfc2V0dXBfYnVmZl90eChB
-U1QyNjAwX0kyQ01fU1RBUlRfQ01ELA0KPiBpMmNfYnVzKTsNCj4gPiArCQllbHNlDQo+ID4gKwkJ
-CXJldHVybg0KPiBhc3QyNjAwX2kyY19zZXR1cF9ieXRlX3R4KEFTVDI2MDBfSTJDTV9TVEFSVF9D
-TUQsIGkyY19idXMpOw0KPiA+ICsJfQ0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgaW50IGFz
-dDI2MDBfaTJjX2lycV9lcnJfdG9fZXJybm8odTMyIGlycV9zdGF0dXMpIHsNCj4gPiArCWlmIChp
-cnFfc3RhdHVzICYgQVNUMjYwMF9JMkNNX0FSQklUX0xPU1MpDQo+ID4gKwkJcmV0dXJuIC1FQUdB
-SU47DQo+ID4gKwlpZiAoaXJxX3N0YXR1cyAmIChBU1QyNjAwX0kyQ01fU0RBX0RMX1RPIHwNCj4g
-QVNUMjYwMF9JMkNNX1NDTF9MT1dfVE8pKQ0KPiA+ICsJCXJldHVybiAtRUJVU1k7DQo+ID4gKwlp
-ZiAoaXJxX3N0YXR1cyAmIChBU1QyNjAwX0kyQ01fQUJOT1JNQUwpKQ0KPiA+ICsJCXJldHVybiAt
-RVBST1RPOw0KPiA+ICsNCj4gPiArCXJldHVybiAwOw0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0
-aWMgdm9pZCBhc3QyNjAwX2kyY19jb250cm9sbGVyX3BhY2thZ2VfaXJxKHN0cnVjdCBhc3QyNjAw
-X2kyY19idXMNCj4gPiArKmkyY19idXMsIHUzMiBzdHMpIHsNCj4gPiArCXN0cnVjdCBpMmNfbXNn
-ICptc2cgPSAmaTJjX2J1cy0+bXNnc1tpMmNfYnVzLT5tc2dzX2luZGV4XTsNCj4gPiArCXUzMiBj
-bWQgPSBBU1QyNjAwX0kyQ01fUEtUX0VOOw0KPiA+ICsJaW50IHhmZXJfbGVuOw0KPiA+ICsJaW50
-IGk7DQo+ID4gKw0KPiA+ICsJc3RzICY9IH5BU1QyNjAwX0kyQ01fUEtUX0RPTkU7DQo+ID4gKwl3
-cml0ZWwoQVNUMjYwMF9JMkNNX1BLVF9ET05FLCBpMmNfYnVzLT5yZWdfYmFzZSArDQo+IEFTVDI2
-MDBfSTJDTV9JU1IpOw0KPiA+ICsJc3dpdGNoIChzdHMpIHsNCj4gPiArCWNhc2UgQVNUMjYwMF9J
-MkNNX1BLVF9FUlJPUjoNCj4gPiArCQlpMmNfYnVzLT5jbWRfZXJyID0gLUVBR0FJTjsNCj4gPiAr
-CQljb21wbGV0ZSgmaTJjX2J1cy0+Y21kX2NvbXBsZXRlKTsNCj4gPiArCQlicmVhazsNCj4gPiAr
-CWNhc2UgQVNUMjYwMF9JMkNNX1BLVF9FUlJPUiB8IEFTVDI2MDBfSTJDTV9UWF9OQUs6IC8qIGEw
-IGZpeCBmb3INCj4gaXNzdWUgKi8NCj4gPiArCQlmYWxsdGhyb3VnaDsNCj4gPiArCWNhc2UgQVNU
-MjYwMF9JMkNNX1BLVF9FUlJPUiB8IEFTVDI2MDBfSTJDTV9UWF9OQUsgfA0KPiBBU1QyNjAwX0ky
-Q01fTk9STUFMX1NUT1A6DQo+ID4gKwkJaTJjX2J1cy0+Y21kX2VyciA9IC1FTlhJTzsNCj4gPiAr
-CQljb21wbGV0ZSgmaTJjX2J1cy0+Y21kX2NvbXBsZXRlKTsNCj4gPiArCQlicmVhazsNCj4gPiAr
-CWNhc2UgQVNUMjYwMF9JMkNNX05PUk1BTF9TVE9QOg0KPiA+ICsJCS8qIHdyaXRlIDAgYnl0ZSBv
-bmx5IGhhdmUgc3RvcCBpc3IgKi8NCj4gPiArCQlpMmNfYnVzLT5tc2dzX2luZGV4Kys7DQo+ID4g
-KwkJaWYgKGkyY19idXMtPm1zZ3NfaW5kZXggPCBpMmNfYnVzLT5tc2dzX2NvdW50KSB7DQo+ID4g
-KwkJCWlmIChhc3QyNjAwX2kyY19kb19zdGFydChpMmNfYnVzKSkgew0KPiA+ICsJCQkJaTJjX2J1
-cy0+Y21kX2VyciA9IC1FTk9NRU07DQo+ID4gKwkJCQljb21wbGV0ZSgmaTJjX2J1cy0+Y21kX2Nv
-bXBsZXRlKTsNCj4gPiArCQkJfQ0KPiA+ICsJCX0gZWxzZSB7DQo+ID4gKwkJCWkyY19idXMtPmNt
-ZF9lcnIgPSBpMmNfYnVzLT5tc2dzX2luZGV4Ow0KPiA+ICsJCQljb21wbGV0ZSgmaTJjX2J1cy0+
-Y21kX2NvbXBsZXRlKTsNCj4gPiArCQl9DQo+ID4gKwkJYnJlYWs7DQo+ID4gKwljYXNlIEFTVDI2
-MDBfSTJDTV9UWF9BQ0s6DQo+ID4gKwljYXNlIEFTVDI2MDBfSTJDTV9UWF9BQ0sgfCBBU1QyNjAw
-X0kyQ01fTk9STUFMX1NUT1A6DQo+ID4gKwkJaWYgKGkyY19idXMtPm1vZGUgPT0gRE1BX01PREUp
-DQo+ID4gKwkJCXhmZXJfbGVuID0NCj4gQVNUMjYwMF9JMkNfR0VUX1RYX0RNQV9MRU4ocmVhZGwo
-aTJjX2J1cy0+cmVnX2Jhc2UgKw0KPiA+ICsJCQkJCQkJICBBU1QyNjAwX0kyQ01fRE1BX0xFTl9T
-VFMpKTsNCj4gPiArCQllbHNlIGlmIChpMmNfYnVzLT5tb2RlID09IEJVRkZfTU9ERSkNCj4gPiAr
-CQkJeGZlcl9sZW4gPQ0KPiBBU1QyNjAwX0kyQ0NfR0VUX1RYX0JVRl9MRU4ocmVhZGwoaTJjX2J1
-cy0+cmVnX2Jhc2UgKw0KPiA+ICsJCQkJCQkJICAgQVNUMjYwMF9JMkNDX0JVRkZfQ1RSTCkpOw0K
-PiA+ICsJCWVsc2UNCj4gPiArCQkJeGZlcl9sZW4gPSAxOw0KPiA+ICsNCj4gPiArCQlpMmNfYnVz
-LT5jb250cm9sbGVyX3hmZXJfY250ICs9IHhmZXJfbGVuOw0KPiA+ICsNCj4gPiArCQlpZiAoaTJj
-X2J1cy0+Y29udHJvbGxlcl94ZmVyX2NudCA9PSBtc2ctPmxlbikgew0KPiA+ICsJCQlpZiAoaTJj
-X2J1cy0+bW9kZSA9PSBETUFfTU9ERSkgew0KPiA+ICsJCQkJZG1hX3VubWFwX3NpbmdsZShpMmNf
-YnVzLT5kZXYsDQo+IGkyY19idXMtPmNvbnRyb2xsZXJfZG1hX2FkZHIsDQo+ID4gKwkJCQkJCSBt
-c2ctPmxlbiwgRE1BX1RPX0RFVklDRSk7DQo+ID4gKw0KPiAJaTJjX3B1dF9kbWFfc2FmZV9tc2df
-YnVmKGkyY19idXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVmLA0KPiA+ICsJCQkJCQkJIG1zZywg
-dHJ1ZSk7DQo+ID4gKwkJCQlpMmNfYnVzLT5jb250cm9sbGVyX2RtYV9zYWZlX2J1ZiA9IE5VTEw7
-DQo+ID4gKwkJCX0NCj4gPiArCQkJaTJjX2J1cy0+bXNnc19pbmRleCsrOw0KPiA+ICsJCQlpZiAo
-aTJjX2J1cy0+bXNnc19pbmRleCA9PSBpMmNfYnVzLT5tc2dzX2NvdW50KSB7DQo+ID4gKwkJCQlp
-MmNfYnVzLT5jbWRfZXJyID0gaTJjX2J1cy0+bXNnc19pbmRleDsNCj4gPiArCQkJCWNvbXBsZXRl
-KCZpMmNfYnVzLT5jbWRfY29tcGxldGUpOw0KPiA+ICsJCQl9IGVsc2Ugew0KPiA+ICsJCQkJaWYg
-KGFzdDI2MDBfaTJjX2RvX3N0YXJ0KGkyY19idXMpKSB7DQo+ID4gKwkJCQkJaTJjX2J1cy0+Y21k
-X2VyciA9IC1FTk9NRU07DQo+ID4gKwkJCQkJY29tcGxldGUoJmkyY19idXMtPmNtZF9jb21wbGV0
-ZSk7DQo+ID4gKwkJCQl9DQo+ID4gKwkJCX0NCj4gPiArCQl9IGVsc2Ugew0KPiA+ICsJCQlpZiAo
-aTJjX2J1cy0+bW9kZSA9PSBETUFfTU9ERSkNCj4gPiArCQkJCWFzdDI2MDBfaTJjX3NldHVwX2Rt
-YV90eCgwLCBpMmNfYnVzKTsNCj4gPiArCQkJZWxzZSBpZiAoaTJjX2J1cy0+bW9kZSA9PSBCVUZG
-X01PREUpDQo+ID4gKwkJCQlhc3QyNjAwX2kyY19zZXR1cF9idWZmX3R4KDAsIGkyY19idXMpOw0K
-PiA+ICsJCQllbHNlDQo+ID4gKwkJCQlhc3QyNjAwX2kyY19zZXR1cF9ieXRlX3R4KDAsIGkyY19i
-dXMpOw0KPiA+ICsJCX0NCj4gPiArCQlicmVhazsNCj4gPiArCWNhc2UgQVNUMjYwMF9JMkNNX1JY
-X0RPTkU6DQo+ID4gKwljYXNlIEFTVDI2MDBfSTJDTV9SWF9ET05FIHwgQVNUMjYwMF9JMkNNX05P
-Uk1BTF9TVE9QOg0KPiA+ICsJCS8qIGRvIG5leHQgcnggKi8NCj4gPiArCQlpZiAoaTJjX2J1cy0+
-bW9kZSA9PSBETUFfTU9ERSkgew0KPiA+ICsJCQl4ZmVyX2xlbiA9DQo+IEFTVDI2MDBfSTJDX0dF
-VF9SWF9ETUFfTEVOKHJlYWRsKGkyY19idXMtPnJlZ19iYXNlICsNCj4gPiArCQkJCQkJCQkgICAg
-QVNUMjYwMF9JMkNNX0RNQV9MRU5fU1RTKSk7DQo+ID4gKwkJfSBlbHNlIGlmIChpMmNfYnVzLT5t
-b2RlID09IEJVRkZfTU9ERSkgew0KPiA+ICsJCQl4ZmVyX2xlbiA9DQo+IEFTVDI2MDBfSTJDQ19H
-RVRfUlhfQlVGX0xFTihyZWFkbChpMmNfYnVzLT5yZWdfYmFzZSArDQo+ID4gKwkJCQkJCQkJICAg
-ICBBU1QyNjAwX0kyQ0NfQlVGRl9DVFJMKSk7DQo+ID4gKwkJCWZvciAoaSA9IDA7IGkgPCB4ZmVy
-X2xlbjsgaSsrKQ0KPiA+ICsJCQkJbXNnLT5idWZbaTJjX2J1cy0+Y29udHJvbGxlcl94ZmVyX2Nu
-dCArIGldID0NCj4gPiArCQkJCQlyZWFkYihpMmNfYnVzLT5idWZfYmFzZSArIDB4MTAgKyBpKTsN
-Cj4gPiArCQl9IGVsc2Ugew0KPiA+ICsJCQl4ZmVyX2xlbiA9IDE7DQo+ID4gKwkJCW1zZy0+YnVm
-W2kyY19idXMtPmNvbnRyb2xsZXJfeGZlcl9jbnRdID0NCj4gPiArCQkJCUFTVDI2MDBfSTJDQ19H
-RVRfUlhfQlVGRihyZWFkbChpMmNfYnVzLT5yZWdfYmFzZSArDQo+ID4gKwkJCQkJCSAgICAgQVNU
-MjYwMF9JMkNDX1NUU19BTkRfQlVGRikpOw0KPiA+ICsJCX0NCj4gPiArDQo+ID4gKwkJaWYgKG1z
-Zy0+ZmxhZ3MgJiBJMkNfTV9SRUNWX0xFTikgew0KPiA+ICsJCQltc2ctPmxlbiA9IG1pbl90KHVu
-c2lnbmVkIGludCwgbXNnLT5idWZbMF0sDQo+IEkyQ19TTUJVU19CTE9DS19NQVgpOw0KPiA+ICsJ
-CQltc2ctPmxlbiArPSAoKG1zZy0+ZmxhZ3MgJiBJMkNfQ0xJRU5UX1BFQykgPyAyIDogMSk7DQo+
-ID4gKwkJCW1zZy0+ZmxhZ3MgJj0gfkkyQ19NX1JFQ1ZfTEVOOw0KPiA+ICsJCX0NCj4gPiArCQlp
-MmNfYnVzLT5jb250cm9sbGVyX3hmZXJfY250ICs9IHhmZXJfbGVuOw0KPiA+ICsNCj4gPiArCQlp
-ZiAoaTJjX2J1cy0+Y29udHJvbGxlcl94ZmVyX2NudCA9PSBtc2ctPmxlbikgew0KPiA+ICsJCQlp
-ZiAoaTJjX2J1cy0+bW9kZSA9PSBETUFfTU9ERSkgew0KPiA+ICsJCQkJZG1hX3VubWFwX3Npbmds
-ZShpMmNfYnVzLT5kZXYsDQo+IGkyY19idXMtPmNvbnRyb2xsZXJfZG1hX2FkZHIsDQo+ID4gKwkJ
-CQkJCSBtc2ctPmxlbiwgRE1BX0ZST01fREVWSUNFKTsNCj4gPiArDQo+IAlpMmNfcHV0X2RtYV9z
-YWZlX21zZ19idWYoaTJjX2J1cy0+Y29udHJvbGxlcl9kbWFfc2FmZV9idWYsDQo+ID4gKwkJCQkJ
-CQkgbXNnLCB0cnVlKTsNCj4gPiArCQkJCWkyY19idXMtPmNvbnRyb2xsZXJfZG1hX3NhZmVfYnVm
-ID0gTlVMTDsNCj4gPiArCQkJfQ0KPiA+ICsNCj4gPiArCQkJaTJjX2J1cy0+bXNnc19pbmRleCsr
-Ow0KPiA+ICsJCQlpZiAoaTJjX2J1cy0+bXNnc19pbmRleCA9PSBpMmNfYnVzLT5tc2dzX2NvdW50
-KSB7DQo+ID4gKwkJCQlpMmNfYnVzLT5jbWRfZXJyID0gaTJjX2J1cy0+bXNnc19pbmRleDsNCj4g
-PiArCQkJCWNvbXBsZXRlKCZpMmNfYnVzLT5jbWRfY29tcGxldGUpOw0KPiA+ICsJCQl9IGVsc2Ug
-ew0KPiA+ICsJCQkJaWYgKGFzdDI2MDBfaTJjX2RvX3N0YXJ0KGkyY19idXMpKSB7DQo+ID4gKwkJ
-CQkJaTJjX2J1cy0+Y21kX2VyciA9IC1FTk9NRU07DQo+ID4gKwkJCQkJY29tcGxldGUoJmkyY19i
-dXMtPmNtZF9jb21wbGV0ZSk7DQo+ID4gKwkJCQl9DQo+ID4gKwkJCX0NCj4gPiArCQl9IGVsc2Ug
-ew0KPiA+ICsJCQkvKiBuZXh0IHJ4ICovDQo+ID4gKwkJCWNtZCB8PSBBU1QyNjAwX0kyQ01fUlhf
-Q01EOw0KPiA+ICsJCQlpZiAoaTJjX2J1cy0+bW9kZSA9PSBETUFfTU9ERSkgew0KPiA+ICsJCQkJ
-Y21kIHw9IEFTVDI2MDBfSTJDTV9SWF9ETUFfRU47DQo+ID4gKwkJCQl4ZmVyX2xlbiA9IG1zZy0+
-bGVuIC0gaTJjX2J1cy0+Y29udHJvbGxlcl94ZmVyX2NudDsNCj4gPiArCQkJCWlmICh4ZmVyX2xl
-biA+IEFTVDI2MDBfSTJDX0RNQV9TSVpFKSB7DQo+ID4gKwkJCQkJeGZlcl9sZW4gPSBBU1QyNjAw
-X0kyQ19ETUFfU0laRTsNCj4gPiArCQkJCX0gZWxzZSB7DQo+ID4gKwkJCQkJaWYgKGkyY19idXMt
-Pm1zZ3NfaW5kZXggKyAxID09IGkyY19idXMtPm1zZ3NfY291bnQpDQo+ID4gKwkJCQkJCWNtZCB8
-PSBDT05UUk9MTEVSX1RSSUdHRVJfTEFTVF9TVE9QOw0KPiA+ICsJCQkJfQ0KPiA+ICsJCQkJd3Jp
-dGVsKEFTVDI2MDBfSTJDTV9TRVRfUlhfRE1BX0xFTih4ZmVyX2xlbiAtIDEpLA0KPiA+ICsJCQkJ
-ICAgICAgIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNNX0RNQV9MRU4pOw0KPiA+ICsJ
-CQkJd3JpdGVsKGkyY19idXMtPmNvbnRyb2xsZXJfZG1hX2FkZHIgKw0KPiBpMmNfYnVzLT5jb250
-cm9sbGVyX3hmZXJfY250LA0KPiA+ICsJCQkJICAgICAgIGkyY19idXMtPnJlZ19iYXNlICsgQVNU
-MjYwMF9JMkNNX1JYX0RNQSk7DQo+ID4gKwkJCX0gZWxzZSBpZiAoaTJjX2J1cy0+bW9kZSA9PSBC
-VUZGX01PREUpIHsNCj4gPiArCQkJCWNtZCB8PSBBU1QyNjAwX0kyQ01fUlhfQlVGRl9FTjsNCj4g
-PiArCQkJCXhmZXJfbGVuID0gbXNnLT5sZW4gLSBpMmNfYnVzLT5jb250cm9sbGVyX3hmZXJfY250
-Ow0KPiA+ICsJCQkJaWYgKHhmZXJfbGVuID4gaTJjX2J1cy0+YnVmX3NpemUpIHsNCj4gPiArCQkJ
-CQl4ZmVyX2xlbiA9IGkyY19idXMtPmJ1Zl9zaXplOw0KPiA+ICsJCQkJfSBlbHNlIHsNCj4gPiAr
-CQkJCQlpZiAoaTJjX2J1cy0+bXNnc19pbmRleCArIDEgPT0gaTJjX2J1cy0+bXNnc19jb3VudCkN
-Cj4gPiArCQkJCQkJY21kIHw9IENPTlRST0xMRVJfVFJJR0dFUl9MQVNUX1NUT1A7DQo+ID4gKwkJ
-CQl9DQo+ID4gKwkJCQl3cml0ZWwoQVNUMjYwMF9JMkNDX1NFVF9SWF9CVUZfTEVOKHhmZXJfbGVu
-KSwNCj4gPiArCQkJCSAgICAgICBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19CVUZG
-X0NUUkwpOw0KPiA+ICsJCQl9IGVsc2Ugew0KPiA+ICsJCQkJaWYgKChpMmNfYnVzLT5tc2dzX2lu
-ZGV4ICsgMSA9PSBpMmNfYnVzLT5tc2dzX2NvdW50KSAmJg0KPiA+ICsJCQkJICAgICgoaTJjX2J1
-cy0+Y29udHJvbGxlcl94ZmVyX2NudCArIDEpID09IG1zZy0+bGVuKSkgew0KPiA+ICsJCQkJCWNt
-ZCB8PSBDT05UUk9MTEVSX1RSSUdHRVJfTEFTVF9TVE9QOw0KPiA+ICsJCQkJfQ0KPiA+ICsJCQl9
-DQo+ID4gKwkJCXdyaXRlbChjbWQsIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNNX0NN
-RF9TVFMpOw0KPiA+ICsJCX0NCj4gPiArCQlicmVhazsNCj4gPiArCWRlZmF1bHQ6DQo+ID4gKwkJ
-ZGV2X2RiZyhpMmNfYnVzLT5kZXYsICJ1bmhhbmRsZWQgc3RzICV4XG4iLCBzdHMpOw0KPiA+ICsJ
-CWJyZWFrOw0KPiA+ICsJfQ0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgaW50IGFzdDI2MDBf
-aTJjX2NvbnRyb2xsZXJfaXJxKHN0cnVjdCBhc3QyNjAwX2kyY19idXMNCj4gPiArKmkyY19idXMp
-IHsNCj4gPiArCXUzMiBzdHMgPSByZWFkbChpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJD
-TV9JU1IpOw0KPiA+ICsJdTMyIGN0cmw7DQo+ID4gKw0KPiA+ICsJc3RzICY9IH5BU1QyNjAwX0ky
-Q01fU01CVVNfQUxUOw0KPiA+ICsNCj4gPiArCWlmIChBU1QyNjAwX0kyQ01fQlVTX1JFQ09WRVJf
-RkFJTCAmIHN0cykgew0KPiA+ICsJCXdyaXRlbChBU1QyNjAwX0kyQ01fQlVTX1JFQ09WRVJfRkFJ
-TCwgaTJjX2J1cy0+cmVnX2Jhc2UgKw0KPiBBU1QyNjAwX0kyQ01fSVNSKTsNCj4gPiArCQljdHJs
-ID0gcmVhZGwoaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ0NfRlVOX0NUUkwpOw0KPiA+
-ICsJCXdyaXRlbCgwLCBpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19GVU5fQ1RSTCk7
-DQo+ID4gKwkJd3JpdGVsKGN0cmwsIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNDX0ZV
-Tl9DVFJMKTsNCj4gPiArCQlpMmNfYnVzLT5jbWRfZXJyID0gLUVQUk9UTzsNCj4gPiArCQljb21w
-bGV0ZSgmaTJjX2J1cy0+Y21kX2NvbXBsZXRlKTsNCj4gPiArCQlyZXR1cm4gMTsNCj4gPiArCX0N
-Cj4gPiArDQo+ID4gKwlpZiAoQVNUMjYwMF9JMkNNX0JVU19SRUNPVkVSICYgc3RzKSB7DQo+ID4g
-KwkJd3JpdGVsKEFTVDI2MDBfSTJDTV9CVVNfUkVDT1ZFUiwgaTJjX2J1cy0+cmVnX2Jhc2UgKw0K
-PiBBU1QyNjAwX0kyQ01fSVNSKTsNCj4gPiArCQlpMmNfYnVzLT5jbWRfZXJyID0gMDsNCj4gPiAr
-CQljb21wbGV0ZSgmaTJjX2J1cy0+Y21kX2NvbXBsZXRlKTsNCj4gPiArCQlyZXR1cm4gMTsNCj4g
-PiArCX0NCj4gPiArDQo+ID4gKwlpMmNfYnVzLT5jbWRfZXJyID0gYXN0MjYwMF9pMmNfaXJxX2Vy
-cl90b19lcnJubyhzdHMpOw0KPiA+ICsJaWYgKGkyY19idXMtPmNtZF9lcnIpIHsNCj4gPiArCQl3
-cml0ZWwoQVNUMjYwMF9JMkNNX1BLVF9ET05FLCBpMmNfYnVzLT5yZWdfYmFzZSArDQo+IEFTVDI2
-MDBfSTJDTV9JU1IpOw0KPiA+ICsJCWNvbXBsZXRlKCZpMmNfYnVzLT5jbWRfY29tcGxldGUpOw0K
-PiA+ICsJCXJldHVybiAxOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCWlmIChBU1QyNjAwX0kyQ01f
-UEtUX0RPTkUgJiBzdHMpIHsNCj4gPiArCQlhc3QyNjAwX2kyY19jb250cm9sbGVyX3BhY2thZ2Vf
-aXJxKGkyY19idXMsIHN0cyk7DQo+ID4gKwkJcmV0dXJuIDE7DQo+ID4gKwl9DQo+ID4gKw0KPiA+
-ICsJcmV0dXJuIDA7DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyBpcnFyZXR1cm5fdCBhc3Qy
-NjAwX2kyY19idXNfaXJxKGludCBpcnEsIHZvaWQgKmRldl9pZCkgew0KPiA+ICsJc3RydWN0IGFz
-dDI2MDBfaTJjX2J1cyAqaTJjX2J1cyA9IGRldl9pZDsNCj4gPiArDQo+ID4gKwlyZXR1cm4gSVJR
-X1JFVFZBTChhc3QyNjAwX2kyY19jb250cm9sbGVyX2lycShpMmNfYnVzKSk7DQo+ID4gK30NCj4g
-PiArDQo+ID4gK3N0YXRpYyBpbnQgYXN0MjYwMF9pMmNfY29udHJvbGxlcl94ZmVyKHN0cnVjdCBp
-MmNfYWRhcHRlciAqYWRhcCwNCj4gPiArc3RydWN0IGkyY19tc2cgKm1zZ3MsIGludCBudW0pIHsN
-Cj4gPiArCXN0cnVjdCBhc3QyNjAwX2kyY19idXMgKmkyY19idXMgPSBpMmNfZ2V0X2FkYXBkYXRh
-KGFkYXApOw0KPiA+ICsJdW5zaWduZWQgbG9uZyB0aW1lb3V0Ow0KPiA+ICsJaW50IHJldDsNCj4g
-PiArDQo+ID4gKwlpZiAoIWkyY19idXMtPm11bHRpX21hc3RlciAmJg0KPiA+ICsJICAgIChyZWFk
-bChpMmNfYnVzLT5yZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19TVFNfQU5EX0JVRkYpICYNCj4gQVNU
-MjYwMF9JMkNDX0JVU19CVVNZX1NUUykpIHsNCj4gPiArCQlyZXQgPSBhc3QyNjAwX2kyY19yZWNv
-dmVyX2J1cyhpMmNfYnVzKTsNCj4gPiArCQlpZiAocmV0KQ0KPiA+ICsJCQlyZXR1cm4gcmV0Ow0K
-PiA+ICsJfQ0KPiA+ICsNCj4gPiArCWkyY19idXMtPmNtZF9lcnIgPSAwOw0KPiA+ICsJaTJjX2J1
-cy0+bXNncyA9IG1zZ3M7DQo+ID4gKwlpMmNfYnVzLT5tc2dzX2luZGV4ID0gMDsNCj4gPiArCWky
-Y19idXMtPm1zZ3NfY291bnQgPSBudW07DQo+ID4gKwlyZWluaXRfY29tcGxldGlvbigmaTJjX2J1
-cy0+Y21kX2NvbXBsZXRlKTsNCj4gPiArCXJldCA9IGFzdDI2MDBfaTJjX2RvX3N0YXJ0KGkyY19i
-dXMpOw0KPiA+ICsJaWYgKHJldCkNCj4gPiArCQlnb3RvIGNvbnRyb2xsZXJfb3V0Ow0KPiA+ICsJ
-dGltZW91dCA9IHdhaXRfZm9yX2NvbXBsZXRpb25fdGltZW91dCgmaTJjX2J1cy0+Y21kX2NvbXBs
-ZXRlLA0KPiBpMmNfYnVzLT5hZGFwLnRpbWVvdXQpOw0KPiA+ICsJaWYgKHRpbWVvdXQgPT0gMCkg
-ew0KPiA+ICsJCXUzMiBjdHJsID0gcmVhZGwoaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0ky
-Q0NfRlVOX0NUUkwpOw0KPiA+ICsNCj4gPiArCQlkZXZfZGJnKGkyY19idXMtPmRldiwgInRpbWVv
-dXQgaXNyWyV4XSwgc3RzWyV4XVxuIiwNCj4gPiArCQkJcmVhZGwoaTJjX2J1cy0+cmVnX2Jhc2Ug
-KyBBU1QyNjAwX0kyQ01fSVNSKSwNCj4gPiArCQkJcmVhZGwoaTJjX2J1cy0+cmVnX2Jhc2UgKyBB
-U1QyNjAwX0kyQ0NfU1RTX0FORF9CVUZGKSk7DQo+ID4gKwkJd3JpdGVsKDAsIGkyY19idXMtPnJl
-Z19iYXNlICsgQVNUMjYwMF9JMkNDX0ZVTl9DVFJMKTsNCj4gPiArCQl3cml0ZWwoY3RybCwgaTJj
-X2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ0NfRlVOX0NUUkwpOw0KPiA+ICsNCj4gPiArCQlp
-ZiAoaTJjX2J1cy0+bXVsdGlfbWFzdGVyICYmDQo+ID4gKwkJICAgIChyZWFkbChpMmNfYnVzLT5y
-ZWdfYmFzZSArIEFTVDI2MDBfSTJDQ19TVFNfQU5EX0JVRkYpICYNCj4gPiArCQkgICAgQVNUMjYw
-MF9JMkNDX0JVU19CVVNZX1NUUykpDQo+ID4gKwkJCWFzdDI2MDBfaTJjX3JlY292ZXJfYnVzKGky
-Y19idXMpOw0KPiA+ICsNCj4gPiArCQlyZXQgPSAtRVRJTUVET1VUOw0KPiA+ICsJfSBlbHNlIHsN
-Cj4gPiArCQlyZXQgPSBpMmNfYnVzLT5jbWRfZXJyOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCWRl
-dl9kYmcoaTJjX2J1cy0+ZGV2LCAiYnVzJWQtbTogJWQgZW5kXG4iLCBpMmNfYnVzLT5hZGFwLm5y
-LA0KPiA+ICtpMmNfYnVzLT5jbWRfZXJyKTsNCj4gPiArDQo+ID4gK2NvbnRyb2xsZXJfb3V0Og0K
-PiA+ICsJaWYgKGkyY19idXMtPm1vZGUgPT0gRE1BX01PREUpIHsNCj4gPiArCQlrZnJlZShpMmNf
-YnVzLT5jb250cm9sbGVyX2RtYV9zYWZlX2J1Zik7DQo+ID4gKwkJaTJjX2J1cy0+Y29udHJvbGxl
-cl9kbWFfc2FmZV9idWYgPSBOVUxMOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCXJldHVybiByZXQ7
-DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIGFzdDI2MDBfaTJjX2luaXQoc3RydWN0
-IGFzdDI2MDBfaTJjX2J1cyAqaTJjX2J1cykgew0KPiA+ICsJc3RydWN0IHBsYXRmb3JtX2Rldmlj
-ZSAqcGRldiA9IHRvX3BsYXRmb3JtX2RldmljZShpMmNfYnVzLT5kZXYpOw0KPiA+ICsJdTMyIGZ1
-bl9jdHJsID0gQVNUMjYwMF9JMkNDX0JVU19BVVRPX1JFTEVBU0UgfA0KPiA+ICtBU1QyNjAwX0ky
-Q0NfTUFTVEVSX0VOOw0KPiA+ICsNCj4gPiArCS8qIEkyQyBSZXNldCAqLw0KPiA+ICsJd3JpdGVs
-KDAsIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNDX0ZVTl9DVFJMKTsNCj4gPiArDQo+
-ID4gKwlpMmNfYnVzLT5tdWx0aV9tYXN0ZXIgPSBkZXZpY2VfcHJvcGVydHlfcmVhZF9ib29sKCZw
-ZGV2LT5kZXYsDQo+ICJtdWx0aS1tYXN0ZXIiKTsNCj4gPiArCWlmICghaTJjX2J1cy0+bXVsdGlf
-bWFzdGVyKQ0KPiA+ICsJCWZ1bl9jdHJsIHw9IEFTVDI2MDBfSTJDQ19NVUxUSV9NQVNURVJfRElT
-Ow0KPiA+ICsNCj4gPiArCS8qIEVuYWJsZSBDb250cm9sbGVyIE1vZGUgKi8NCj4gPiArCXdyaXRl
-bChmdW5fY3RybCwgaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ0NfRlVOX0NUUkwpOw0K
-PiA+ICsJLyogZGlzYWJsZSB0YXJnZXQgYWRkcmVzcyAqLw0KPiA+ICsJd3JpdGVsKDAsIGkyY19i
-dXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNTX0FERFJfQ1RSTCk7DQo+ID4gKw0KPiA+ICsJLyog
-U2V0IEFDIFRpbWluZyAqLw0KPiA+ICsJd3JpdGVsKGFzdDI2MDBfc2VsZWN0X2kyY19jbG9jayhp
-MmNfYnVzKSwgaTJjX2J1cy0+cmVnX2Jhc2UgKw0KPiA+ICtBU1QyNjAwX0kyQ0NfQUNfVElNSU5H
-KTsNCj4gPiArDQo+ID4gKwkvKiBDbGVhciBJbnRlcnJ1cHQgKi8NCj4gPiArCXdyaXRlbChHRU5N
-QVNLKDI3LCAwKSwgaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ01fSVNSKTsgfQ0KPiA+
-ICsNCj4gPiArc3RhdGljIHUzMiBhc3QyNjAwX2kyY19mdW5jdGlvbmFsaXR5KHN0cnVjdCBpMmNf
-YWRhcHRlciAqYWRhcCkgew0KPiA+ICsJcmV0dXJuIEkyQ19GVU5DX0kyQyB8IEkyQ19GVU5DX1NN
-QlVTX0VNVUwgfA0KPiA+ICtJMkNfRlVOQ19TTUJVU19CTE9DS19EQVRBOyB9DQo+ID4gKw0KPiA+
-ICtzdGF0aWMgY29uc3Qgc3RydWN0IGkyY19hbGdvcml0aG0gaTJjX2FzdDI2MDBfYWxnb3JpdGht
-ID0gew0KPiA+ICsJLnhmZXIgPSBhc3QyNjAwX2kyY19jb250cm9sbGVyX3hmZXIsDQo+ID4gKwku
-ZnVuY3Rpb25hbGl0eSA9IGFzdDI2MDBfaTJjX2Z1bmN0aW9uYWxpdHksIH07DQo+ID4gKw0KPiA+
-ICtzdGF0aWMgaW50IGFzdDI2MDBfaTJjX3Byb2JlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBk
-ZXYpIHsNCj4gPiArCXN0cnVjdCBkZXZpY2UgKmRldiA9ICZwZGV2LT5kZXY7DQo+ID4gKwlzdHJ1
-Y3QgYXN0MjYwMF9pMmNfYnVzICppMmNfYnVzOw0KPiA+ICsJc3RydWN0IHJlc291cmNlICpyZXM7
-DQo+ID4gKwl1MzIgZ2xvYmFsX2N0cmw7DQo+ID4gKwlpbnQgcmV0Ow0KPiA+ICsNCj4gPiArCWky
-Y19idXMgPSBkZXZtX2t6YWxsb2MoZGV2LCBzaXplb2YoKmkyY19idXMpLCBHRlBfS0VSTkVMKTsN
-Cj4gPiArCWlmICghaTJjX2J1cykNCj4gPiArCQlyZXR1cm4gLUVOT01FTTsNCj4gPiArDQo+ID4g
-KwlpMmNfYnVzLT5yZWdfYmFzZSA9IGRldm1fcGxhdGZvcm1faW9yZW1hcF9yZXNvdXJjZShwZGV2
-LCAwKTsNCj4gPiArCWlmIChJU19FUlIoaTJjX2J1cy0+cmVnX2Jhc2UpKQ0KPiA+ICsJCXJldHVy
-biBQVFJfRVJSKGkyY19idXMtPnJlZ19iYXNlKTsNCj4gPiArDQo+ID4gKwlpMmNfYnVzLT5yc3Qg
-PSBkZXZtX3Jlc2V0X2NvbnRyb2xfZ2V0X3NoYXJlZChkZXYsIE5VTEwpOw0KPiA+ICsJaWYgKElT
-X0VSUihpMmNfYnVzLT5yc3QpKQ0KPiA+ICsJCXJldHVybiBkZXZfZXJyX3Byb2JlKGRldiwgUFRS
-X0VSUihpMmNfYnVzLT5yc3QpLCAiTWlzc2luZyByZXNldA0KPiA+ICtjdHJsXG4iKTsNCj4gPiAr
-DQo+ID4gKwlyZXNldF9jb250cm9sX2RlYXNzZXJ0KGkyY19idXMtPnJzdCk7DQo+ID4gKw0KPiA+
-ICsJaTJjX2J1cy0+Z2xvYmFsX3JlZ3MgPQ0KPiA+ICsJCXN5c2Nvbl9yZWdtYXBfbG9va3VwX2J5
-X3BoYW5kbGUoZGV2X29mX25vZGUoZGV2KSwNCj4gImFzcGVlZCxnbG9iYWwtcmVncyIpOw0KPiA+
-ICsJaWYgKElTX0VSUihpMmNfYnVzLT5nbG9iYWxfcmVncykpDQo+ID4gKwkJcmV0dXJuIFBUUl9F
-UlIoaTJjX2J1cy0+Z2xvYmFsX3JlZ3MpOw0KPiA+ICsNCj4gPiArCXJlZ21hcF9yZWFkKGkyY19i
-dXMtPmdsb2JhbF9yZWdzLCBBU1QyNjAwX0kyQ0dfQ1RSTCwgJmdsb2JhbF9jdHJsKTsNCj4gPiAr
-CWlmICgoZ2xvYmFsX2N0cmwgJiBBU1QyNjAwX0dMT0JBTF9JTklUKSAhPSBBU1QyNjAwX0dMT0JB
-TF9JTklUKSB7DQo+ID4gKwkJcmVnbWFwX3dyaXRlKGkyY19idXMtPmdsb2JhbF9yZWdzLCBBU1Qy
-NjAwX0kyQ0dfQ1RSTCwNCj4gQVNUMjYwMF9HTE9CQUxfSU5JVCk7DQo+ID4gKwkJcmVnbWFwX3dy
-aXRlKGkyY19idXMtPmdsb2JhbF9yZWdzLCBBU1QyNjAwX0kyQ0dfQ0xLX0RJVl9DVFJMLA0KPiBJ
-MkNDR19ESVZfQ1RSTCk7DQo+ID4gKwl9DQo+ID4gKw0KPiA+ICsJaTJjX2J1cy0+ZGV2ID0gZGV2
-Ow0KPiA+ICsJaTJjX2J1cy0+bW9kZSA9IEJVRkZfTU9ERTsNCj4gPiArDQo+ID4gKwlpZiAoZGV2
-aWNlX3Byb3BlcnR5X3JlYWRfYm9vbChkZXYsICJhc3BlZWQsZW5hYmxlLWRtYSIpKQ0KPiA+ICsJ
-CWkyY19idXMtPm1vZGUgPSBETUFfTU9ERTsNCj4gPiArDQo+ID4gKwlpZiAoaTJjX2J1cy0+bW9k
-ZSA9PSBCVUZGX01PREUpIHsNCj4gPiArCQlpMmNfYnVzLT5idWZfYmFzZSA9DQo+IGRldm1fcGxh
-dGZvcm1fZ2V0X2FuZF9pb3JlbWFwX3Jlc291cmNlKHBkZXYsIDEsICZyZXMpOw0KPiA+ICsJCWlm
-IChJU19FUlIoaTJjX2J1cy0+YnVmX2Jhc2UpKQ0KPiA+ICsJCQlpMmNfYnVzLT5tb2RlID0gQllU
-RV9NT0RFOw0KPiA+ICsJCWVsc2UNCj4gPiArCQkJaTJjX2J1cy0+YnVmX3NpemUgPSByZXNvdXJj
-ZV9zaXplKHJlcykgLyAyOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiArCS8qDQo+ID4gKwkgKiBpMmMg
-dGltZW91dCBjb3VudGVyOiB1c2UgYmFzZSBjbGs0IDFNaHosDQo+ID4gKwkgKiBwZXIgdW5pdDog
-MS8oMTAwMC80MDk2KSA9IDQwOTZ1cw0KPiA+ICsJICovDQo+ID4gKwlyZXQgPSBkZXZpY2VfcHJv
-cGVydHlfcmVhZF91MzIoZGV2LCAiaTJjLXNjbC1jbGstbG93LXRpbWVvdXQtdXMiLA0KPiAmaTJj
-X2J1cy0+dGltZW91dCk7DQo+ID4gKwlpZiAoIXJldCkNCj4gPiArCQlpMmNfYnVzLT50aW1lb3V0
-IC89IDQwOTY7DQo+ID4gKw0KPiA+ICsJaW5pdF9jb21wbGV0aW9uKCZpMmNfYnVzLT5jbWRfY29t
-cGxldGUpOw0KPiA+ICsNCj4gPiArCWkyY19idXMtPmlycSA9IHBsYXRmb3JtX2dldF9pcnEocGRl
-diwgMCk7DQo+ID4gKwlpZiAoaTJjX2J1cy0+aXJxIDwgMCkNCj4gPiArCQlyZXR1cm4gaTJjX2J1
-cy0+aXJxOw0KPiA+ICsNCj4gPiArCXBsYXRmb3JtX3NldF9kcnZkYXRhKHBkZXYsIGkyY19idXMp
-Ow0KPiA+ICsNCj4gPiArCWkyY19idXMtPmNsayA9IGRldm1fY2xrX2dldChpMmNfYnVzLT5kZXYs
-IE5VTEwpOw0KPiA+ICsJaWYgKElTX0VSUihpMmNfYnVzLT5jbGspKQ0KPiA+ICsJCXJldHVybiBk
-ZXZfZXJyX3Byb2JlKGkyY19idXMtPmRldiwgUFRSX0VSUihpMmNfYnVzLT5jbGspLCAiQ2FuJ3QN
-Cj4gPiArZ2V0IGNsb2NrXG4iKTsNCj4gPiArDQo+ID4gKwlpMmNfYnVzLT5hcGJfY2xrID0gY2xr
-X2dldF9yYXRlKGkyY19idXMtPmNsayk7DQo+ID4gKw0KPiA+ICsJaTJjX3BhcnNlX2Z3X3RpbWlu
-Z3MoaTJjX2J1cy0+ZGV2LCAmaTJjX2J1cy0+dGltaW5nX2luZm8sIHRydWUpOw0KPiA+ICsNCj4g
-PiArCS8qIEluaXRpYWxpemUgdGhlIEkyQyBhZGFwdGVyICovDQo+ID4gKwlpMmNfYnVzLT5hZGFw
-Lm93bmVyID0gVEhJU19NT0RVTEU7DQo+ID4gKwlpMmNfYnVzLT5hZGFwLmFsZ28gPSAmaTJjX2Fz
-dDI2MDBfYWxnb3JpdGhtOw0KPiA+ICsJaTJjX2J1cy0+YWRhcC5yZXRyaWVzID0gMDsNCj4gPiAr
-CWkyY19idXMtPmFkYXAuZGV2LnBhcmVudCA9IGkyY19idXMtPmRldjsNCj4gPiArCWRldmljZV9z
-ZXRfbm9kZSgmaTJjX2J1cy0+YWRhcC5kZXYsIGRldl9md25vZGUoZGV2KSk7DQo+ID4gKwlpMmNf
-YnVzLT5hZGFwLmFsZ29fZGF0YSA9IGkyY19idXM7DQo+ID4gKwlzdHJzY3B5KGkyY19idXMtPmFk
-YXAubmFtZSwgcGRldi0+bmFtZSk7DQo+ID4gKwlpMmNfc2V0X2FkYXBkYXRhKCZpMmNfYnVzLT5h
-ZGFwLCBpMmNfYnVzKTsNCj4gPiArDQo+ID4gKwlhc3QyNjAwX2kyY19pbml0KGkyY19idXMpOw0K
-PiA+ICsNCj4gPiArCXJldCA9IGRldm1fcmVxdWVzdF9pcnEoZGV2LCBpMmNfYnVzLT5pcnEsIGFz
-dDI2MDBfaTJjX2J1c19pcnEsIDAsDQo+ID4gKwkJCSAgICAgICBkZXZfbmFtZShkZXYpLCBpMmNf
-YnVzKTsNCj4gPiArCWlmIChyZXQgPCAwKQ0KPiA+ICsJCXJldHVybiBkZXZfZXJyX3Byb2JlKGRl
-diwgcmV0LCAiVW5hYmxlIHRvIHJlcXVlc3QgaXJxICVkXG4iLA0KPiA+ICtpMmNfYnVzLT5pcnEp
-Ow0KPiA+ICsNCj4gPiArCXdyaXRlbChBU1QyNjAwX0kyQ01fUEtUX0RPTkUgfCBBU1QyNjAwX0ky
-Q01fQlVTX1JFQ09WRVIsDQo+ID4gKwkgICAgICAgaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAw
-X0kyQ01fSUVSKTsNCj4gPiArDQo+ID4gKwlyZXQgPSBkZXZtX2kyY19hZGRfYWRhcHRlcihkZXYs
-ICZpMmNfYnVzLT5hZGFwKTsNCj4gPiArCWlmIChyZXQpDQo+ID4gKwkJcmV0dXJuIHJldDsNCj4g
-PiArDQo+ID4gKwlyZXR1cm4gMDsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIHZvaWQgYXN0
-MjYwMF9pMmNfcmVtb3ZlKHN0cnVjdCBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpIHsNCj4gPiArCXN0
-cnVjdCBhc3QyNjAwX2kyY19idXMgKmkyY19idXMgPSBwbGF0Zm9ybV9nZXRfZHJ2ZGF0YShwZGV2
-KTsNCj4gPiArDQo+ID4gKwkvKiBEaXNhYmxlIGV2ZXJ5dGhpbmcuICovDQo+ID4gKwl3cml0ZWwo
-MCwgaTJjX2J1cy0+cmVnX2Jhc2UgKyBBU1QyNjAwX0kyQ0NfRlVOX0NUUkwpOw0KPiA+ICsJd3Jp
-dGVsKDAsIGkyY19idXMtPnJlZ19iYXNlICsgQVNUMjYwMF9JMkNNX0lFUik7IH0NCj4gPiArDQo+
-ID4gK3N0YXRpYyBjb25zdCBzdHJ1Y3Qgb2ZfZGV2aWNlX2lkIGFzdDI2MDBfaTJjX2J1c19vZl90
-YWJsZVtdID0gew0KPiA+ICsJew0KPiA+ICsJCS5jb21wYXRpYmxlID0gImFzcGVlZCxhc3QyNjAw
-LWkyY3YyIiwNCj4gPiArCX0sDQo+ID4gKwl7fQ0KPiA+ICt9Ow0KPiA+ICtNT0RVTEVfREVWSUNF
-X1RBQkxFKG9mLCBhc3QyNjAwX2kyY19idXNfb2ZfdGFibGUpOw0KPiA+ICsNCj4gPiArc3RhdGlj
-IHN0cnVjdCBwbGF0Zm9ybV9kcml2ZXIgYXN0MjYwMF9pMmNfYnVzX2RyaXZlciA9IHsNCj4gPiAr
-CS5wcm9iZSA9IGFzdDI2MDBfaTJjX3Byb2JlLA0KPiA+ICsJLnJlbW92ZSA9IGFzdDI2MDBfaTJj
-X3JlbW92ZSwNCj4gPiArCS5kcml2ZXIgPSB7DQo+ID4gKwkJLm5hbWUgPSBLQlVJTERfTU9ETkFN
-RSwNCj4gPiArCQkub2ZfbWF0Y2hfdGFibGUgPSBhc3QyNjAwX2kyY19idXNfb2ZfdGFibGUsDQo+
-ID4gKwl9LA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArbW9kdWxlX3BsYXRmb3JtX2RyaXZlcihhc3Qy
-NjAwX2kyY19idXNfZHJpdmVyKTsNCj4gPiArDQo+ID4gK01PRFVMRV9BVVRIT1IoIlJ5YW4gQ2hl
-biA8cnlhbl9jaGVuQGFzcGVlZHRlY2guY29tPiIpOw0KPiA+ICtNT0RVTEVfREVTQ1JJUFRJT04o
-IkFTUEVFRCBBU1QyNjAwIEkyQyBDb250cm9sbGVyIERyaXZlciIpOw0KPiA+ICtNT0RVTEVfTElD
-RU5TRSgiR1BMIik7DQoNCg==
+Hi Ryan,
+
+On Tue, 12 Nov 2024 at 12:30, Ryan Chen <ryan_chen@aspeedtech.com> wrote:
+>
+> > Subject: Re: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new register
+> > mode driver
+> >
+> > Hi Ryan,
+> >
+> > I've tested the driver changes in my machine based on "SOC: AST2600-A3".
+> >
+> > I faced some issue testing the driver.
+> > While the driver functions correctly in
+> > Normal mode, I encountered issues when attempting to run it in DMA and
+> > BUFF modes. Given the instability in these modes, I suspect there may be
+> > misconfigurations in my device tree setup.
+> >
+> > Could you please provide a sample configuration for the device tree that would
+> > ensure stable operation of the driver in both DMA and BUFF modes?
+> >
+> You may refer the following dtsi.
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi#L1334-L1357
+That worked for me. Thanks a ton :)
+
+Regards,
+Naresh
+>
+> > Thank you for your support.
+> >
+> > Regards,
+> > Naresh
+> >
+> >
+> > On 07-10-2024 09:22:34, Ryan Chen wrote:
+> > > Add i2c new register mode driver to support AST2600 i2c new register
+> > > mode. AST2600 i2c controller have legacy and new register mode. The
+> > > new register mode have global register support 4 base clock for scl
+> > > clock selection, and new clock divider mode. The new register mode
+> > > have separate register set to control i2c controller and target. This
+> > > patch is for i2c controller mode driver.
+> > >
+> > > Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
+> > > ---
+> > >   drivers/i2c/busses/Kconfig       |   11 +
+> > >   drivers/i2c/busses/Makefile      |    1 +
+> > >   drivers/i2c/busses/i2c-ast2600.c | 1032
+> > ++++++++++++++++++++++++++++++
+> > >   3 files changed, 1044 insertions(+)
+> > >   create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+> > >
+> > > diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+> > > index a22f9125322a..abfb027350d4 100644
+> > > --- a/drivers/i2c/busses/Kconfig
+> > > +++ b/drivers/i2c/busses/Kconfig
+> > > @@ -410,6 +410,17 @@ config I2C_ALTERA
+> > >       This driver can also be built as a module.  If so, the module
+> > >       will be called i2c-altera.
+> > >
+> > > +config I2C_AST2600
+> > > +   tristate "Aspeed I2C v2 Controller"
+> > > +   depends on ARCH_ASPEED || COMPILE_TEST
+> > > +   select I2C_SMBUS
+> > > +   help
+> > > +     If you say yes to this option, support will be included for the
+> > > +     Aspeed I2C controller with new register set.
+> > > +
+> > > +     This driver can also be built as a module.  If so, the module
+> > > +     will be called i2c-ast2600.
+> > > +
+> > >   config I2C_ASPEED
+> > >     tristate "Aspeed I2C Controller"
+> > >     depends on ARCH_ASPEED || COMPILE_TEST diff --git
+> > > a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile index
+> > > 78d0561339e5..5665b60b1566 100644
+> > > --- a/drivers/i2c/busses/Makefile
+> > > +++ b/drivers/i2c/busses/Makefile
+> > > @@ -39,6 +39,7 @@ obj-$(CONFIG_I2C_POWERMAC)        += i2c-powermac.o
+> > >   obj-$(CONFIG_I2C_ALTERA)  += i2c-altera.o
+> > >   obj-$(CONFIG_I2C_AMD_MP2) += i2c-amd-mp2-pci.o
+> > i2c-amd-mp2-plat.o
+> > >   obj-$(CONFIG_I2C_ASPEED)  += i2c-aspeed.o
+> > > +obj-$(CONFIG_I2C_AST2600)  += i2c-ast2600.o
+> > >   obj-$(CONFIG_I2C_AT91)            += i2c-at91.o
+> > >   i2c-at91-objs                     := i2c-at91-core.o i2c-at91-master.o
+> > >   ifeq ($(CONFIG_I2C_AT91_SLAVE_EXPERIMENTAL),y)
+> > > diff --git a/drivers/i2c/busses/i2c-ast2600.c
+> > > b/drivers/i2c/busses/i2c-ast2600.c
+> > > new file mode 100644
+> > > index 000000000000..17ba0ee77c27
+> > > --- /dev/null
+> > > +++ b/drivers/i2c/busses/i2c-ast2600.c
+> > > @@ -0,0 +1,1032 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * ASPEED AST2600 new register set I2C controller driver
+> > > + *
+> > > + * Copyright (C) ASPEED Technology Inc.
+> > > + */
+> > > +#include <asm/unaligned.h>
+> > > +#include <linux/array_size.h>
+> > > +#include <linux/bits.h>
+> > > +#include <linux/clk.h>
+> > > +#include <linux/completion.h>
+> > > +#include <linux/delay.h>
+> > > +#include <linux/dma-mapping.h>
+> > > +#include <linux/err.h>
+> > > +#include <linux/i2c.h>
+> > > +#include <linux/i2c-smbus.h>
+> > > +#include <linux/interrupt.h>
+> > > +#include <linux/io.h>
+> > > +#include <linux/minmax.h>
+> > > +#include <linux/mfd/syscon.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/platform_device.h>
+> > > +#include <linux/property.h>
+> > > +#include <linux/regmap.h>
+> > > +#include <linux/reset.h>
+> > > +#include <linux/slab.h>
+> > > +#include <linux/string_helpers.h>
+> > > +
+> > > +#define AST2600_I2CG_ISR                   0x00
+> > > +#define AST2600_I2CG_SLAVE_ISR             0x04
+> > > +#define AST2600_I2CG_OWNER         0x08
+> > > +#define AST2600_I2CG_CTRL          0x0C
+> > > +#define AST2600_I2CG_CLK_DIV_CTRL  0x10
+> > > +
+> > > +#define AST2600_I2CG_SLAVE_PKT_NAK BIT(4)
+> > > +#define AST2600_I2CG_M_S_SEPARATE_INTR     BIT(3)
+> > > +#define AST2600_I2CG_CTRL_NEW_REG  BIT(2)
+> > > +#define AST2600_I2CG_CTRL_NEW_CLK_DIV      BIT(1)
+> > > +#define AST2600_GLOBAL_INIT        \
+> > > +   (AST2600_I2CG_CTRL_NEW_REG |
+> > AST2600_I2CG_CTRL_NEW_CLK_DIV)
+> > > +/*
+> > > + * APB clk : 100Mhz
+> > > + * div     : scl           : baseclk [APB/((div/2) + 1)] : tBuf [1/bclk * 16]
+> > > + * I2CG10[31:24] base clk4 for i2c auto recovery timeout counter
+> > > +(0xC6)
+> > > + * I2CG10[23:16] base clk3 for Standard-mode (100Khz) min tBuf 4.7us
+> > > + * 0x3c : 100.8Khz : 3.225Mhz                                        : 4.96us
+> > > + * 0x3d : 99.2Khz  : 3.174Mhz                                        : 5.04us
+> > > + * 0x3e : 97.65Khz : 3.125Mhz                                        : 5.12us
+> > > + * 0x40 : 97.75Khz : 3.03Mhz                                         : 5.28us
+> > > + * 0x41 : 99.5Khz  : 2.98Mhz                                         : 5.36us (default)
+> > > + * I2CG10[15:8] base clk2 for Fast-mode (400Khz) min tBuf 1.3us
+> > > + * 0x12 : 400Khz   : 10Mhz                                           : 1.6us
+> > > + * I2CG10[7:0] base clk1 for Fast-mode Plus (1Mhz) min tBuf 0.5us
+> > > + * 0x08 : 1Mhz             : 20Mhz                                           : 0.8us
+> > > + */
+> > > +#define I2CCG_DIV_CTRL 0xC6411208
+> > > +
+> > > +/* 0x00 : I2CC Controller/Target Function Control Register  */
+> > > +#define AST2600_I2CC_FUN_CTRL              0x00
+> > > +#define AST2600_I2CC_SLAVE_ADDR_RX_EN              BIT(20)
+> > > +#define AST2600_I2CC_MASTER_RETRY_MASK             GENMASK(19, 18)
+> > > +#define AST2600_I2CC_MASTER_RETRY(x)               (((x) & GENMASK(1, 0))
+> > << 18)
+> > > +#define AST2600_I2CC_BUS_AUTO_RELEASE              BIT(17)
+> > > +#define AST2600_I2CC_M_SDA_LOCK_EN                 BIT(16)
+> > > +#define AST2600_I2CC_MULTI_MASTER_DIS              BIT(15)
+> > > +#define AST2600_I2CC_M_SCL_DRIVE_EN                        BIT(14)
+> > > +#define AST2600_I2CC_MSB_STS                               BIT(9)
+> > > +#define AST2600_I2CC_SDA_DRIVE_1T_EN               BIT(8)
+> > > +#define AST2600_I2CC_M_SDA_DRIVE_1T_EN             BIT(7)
+> > > +#define AST2600_I2CC_M_HIGH_SPEED_EN               BIT(6)
+> > > +/* reserver 5 : 2 */
+> > > +#define AST2600_I2CC_SLAVE_EN                      BIT(1)
+> > > +#define AST2600_I2CC_MASTER_EN                     BIT(0)
+> > > +
+> > > +/* 0x04 : I2CC Controller/Target Clock and AC Timing Control Register #1 */
+> > > +#define AST2600_I2CC_AC_TIMING             0x04
+> > > +#define AST2600_I2CC_TTIMEOUT(x)                   (((x) & GENMASK(4, 0))
+> > << 24)
+> > > +#define AST2600_I2CC_TCKHIGHMIN(x)                 (((x) & GENMASK(3, 0))
+> > << 20)
+> > > +#define AST2600_I2CC_TCKHIGH(x)                    (((x) & GENMASK(3, 0)) << 16)
+> > > +#define AST2600_I2CC_TCKLOW(x)                     (((x) & GENMASK(3, 0)) << 12)
+> > > +#define AST2600_I2CC_THDDAT(x)                     (((x) & GENMASK(1, 0)) << 10)
+> > > +#define AST2600_I2CC_TOUTBASECLK(x)                        (((x) & GENMASK(1,
+> > 0)) << 8)
+> > > +#define AST2600_I2CC_TBASECLK(x)                   ((x) & GENMASK(3, 0))
+> > > +
+> > > +/* 0x08 : I2CC Controller/Target Transmit/Receive Byte Buffer Register */
+> > > +#define AST2600_I2CC_STS_AND_BUFF          0x08
+> > > +#define AST2600_I2CC_TX_DIR_MASK                   GENMASK(31, 29)
+> > > +#define AST2600_I2CC_SDA_OE                                BIT(28)
+> > > +#define AST2600_I2CC_SDA_O                         BIT(27)
+> > > +#define AST2600_I2CC_SCL_OE                                BIT(26)
+> > > +#define AST2600_I2CC_SCL_O                         BIT(25)
+> > > +
+> > > +#define AST2600_I2CC_SCL_LINE_STS                  BIT(18)
+> > > +#define AST2600_I2CC_SDA_LINE_STS                  BIT(17)
+> > > +#define AST2600_I2CC_BUS_BUSY_STS                  BIT(16)
+> > > +
+> > > +#define AST2600_I2CC_GET_RX_BUFF(x)                        (((x) >> 8) &
+> > GENMASK(7, 0))
+> > > +
+> > > +/* 0x0C : I2CC Controller/Target Pool Buffer Control Register  */
+> > > +#define AST2600_I2CC_BUFF_CTRL             0x0C
+> > > +#define AST2600_I2CC_GET_RX_BUF_LEN(x)      (((x) & GENMASK(29,
+> > 24)) >> 24)
+> > > +#define AST2600_I2CC_SET_RX_BUF_LEN(x)             (((((x) - 1) & GENMASK(4,
+> > 0)) << 16) | BIT(0))
+> > > +#define AST2600_I2CC_SET_TX_BUF_LEN(x)             (((((x) - 1) & GENMASK(4,
+> > 0)) << 8) | BIT(0))
+> > > +#define AST2600_I2CC_GET_TX_BUF_LEN(x)      ((((x) & GENMASK(12,
+> > 8)) >> 8) + 1)
+> > > +
+> > > +/* 0x10 : I2CM Controller Interrupt Control Register */
+> > > +#define AST2600_I2CM_IER                   0x10
+> > > +/* 0x14 : I2CM Controller Interrupt Status Register   : WC */
+> > > +#define AST2600_I2CM_ISR                   0x14
+> > > +
+> > > +#define AST2600_I2CM_PKT_TIMEOUT                   BIT(18)
+> > > +#define AST2600_I2CM_PKT_ERROR                     BIT(17)
+> > > +#define AST2600_I2CM_PKT_DONE                      BIT(16)
+> > > +
+> > > +#define AST2600_I2CM_BUS_RECOVER_FAIL              BIT(15)
+> > > +#define AST2600_I2CM_SDA_DL_TO                     BIT(14)
+> > > +#define AST2600_I2CM_BUS_RECOVER                   BIT(13)
+> > > +#define AST2600_I2CM_SMBUS_ALT                     BIT(12)
+> > > +
+> > > +#define AST2600_I2CM_SCL_LOW_TO                    BIT(6)
+> > > +#define AST2600_I2CM_ABNORMAL                      BIT(5)
+> > > +#define AST2600_I2CM_NORMAL_STOP                   BIT(4)
+> > > +#define AST2600_I2CM_ARBIT_LOSS                    BIT(3)
+> > > +#define AST2600_I2CM_RX_DONE                       BIT(2)
+> > > +#define AST2600_I2CM_TX_NAK                                BIT(1)
+> > > +#define AST2600_I2CM_TX_ACK                                BIT(0)
+> > > +
+> > > +/* 0x18 : I2CM Controller Command/Status Register   */
+> > > +#define AST2600_I2CM_CMD_STS               0x18
+> > > +#define AST2600_I2CM_PKT_ADDR(x)                   (((x) & GENMASK(6, 0))
+> > << 24)
+> > > +#define AST2600_I2CM_PKT_EN                                BIT(16)
+> > > +#define AST2600_I2CM_SDA_OE_OUT_DIR                        BIT(15)
+> > > +#define AST2600_I2CM_SDA_O_OUT_DIR                 BIT(14)
+> > > +#define AST2600_I2CM_SCL_OE_OUT_DIR                        BIT(13)
+> > > +#define AST2600_I2CM_SCL_O_OUT_DIR                 BIT(12)
+> > > +#define AST2600_I2CM_RECOVER_CMD_EN                        BIT(11)
+> > > +
+> > > +#define AST2600_I2CM_RX_DMA_EN                     BIT(9)
+> > > +#define AST2600_I2CM_TX_DMA_EN                     BIT(8)
+> > > +/* Command Bit */
+> > > +#define AST2600_I2CM_RX_BUFF_EN                    BIT(7)
+> > > +#define AST2600_I2CM_TX_BUFF_EN                    BIT(6)
+> > > +#define AST2600_I2CM_STOP_CMD                      BIT(5)
+> > > +#define AST2600_I2CM_RX_CMD_LAST                   BIT(4)
+> > > +#define AST2600_I2CM_RX_CMD                                BIT(3)
+> > > +
+> > > +#define AST2600_I2CM_TX_CMD                                BIT(1)
+> > > +#define AST2600_I2CM_START_CMD                     BIT(0)
+> > > +
+> > > +/* 0x1C : I2CM Controller DMA Transfer Length Register      */
+> > > +#define AST2600_I2CM_DMA_LEN               0x1C
+> > > +/* Tx Rx support length 1 ~ 4096 */
+> > > +#define AST2600_I2CM_SET_RX_DMA_LEN(x)     ((((x) & GENMASK(11, 0))
+> > << 16) | BIT(31))
+> > > +#define AST2600_I2CM_SET_TX_DMA_LEN(x)     (((x) & GENMASK(11, 0))
+> > | BIT(15))
+> > > +
+> > > +/* 0x20 : I2CS Target Interrupt Control Register   */
+> > > +#define AST2600_I2CS_IER                   0x20
+> > > +/* 0x24 : I2CS Target Interrupt Status Register     */
+> > > +#define AST2600_I2CS_ISR                   0x24
+> > > +
+> > > +#define AST2600_I2CS_ADDR_INDICATE_MASK    GENMASK(31, 30)
+> > > +#define AST2600_I2CS_SLAVE_PENDING                 BIT(29)
+> > > +
+> > > +#define AST2600_I2CS_WAIT_TX_DMA                   BIT(25)
+> > > +#define AST2600_I2CS_WAIT_RX_DMA                   BIT(24)
+> > > +
+> > > +#define AST2600_I2CS_ADDR3_NAK                     BIT(22)
+> > > +#define AST2600_I2CS_ADDR2_NAK                     BIT(21)
+> > > +#define AST2600_I2CS_ADDR1_NAK                     BIT(20)
+> > > +
+> > > +#define AST2600_I2CS_ADDR_MASK                     GENMASK(19, 18)
+> > > +#define AST2600_I2CS_PKT_ERROR                     BIT(17)
+> > > +#define AST2600_I2CS_PKT_DONE                      BIT(16)
+> > > +#define AST2600_I2CS_INACTIVE_TO                   BIT(15)
+> > > +
+> > > +#define AST2600_I2CS_SLAVE_MATCH                   BIT(7)
+> > > +#define AST2600_I2CS_ABNOR_STOP                    BIT(5)
+> > > +#define AST2600_I2CS_STOP                          BIT(4)
+> > > +#define AST2600_I2CS_RX_DONE_NAK                   BIT(3)
+> > > +#define AST2600_I2CS_RX_DONE                       BIT(2)
+> > > +#define AST2600_I2CS_TX_NAK                                BIT(1)
+> > > +#define AST2600_I2CS_TX_ACK                                BIT(0)
+> > > +
+> > > +/* 0x28 : I2CS Target CMD/Status Register   */
+> > > +#define AST2600_I2CS_CMD_STS               0x28
+> > > +#define AST2600_I2CS_ACTIVE_ALL                    GENMASK(18, 17)
+> > > +#define AST2600_I2CS_PKT_MODE_EN                   BIT(16)
+> > > +#define AST2600_I2CS_AUTO_NAK_NOADDR               BIT(15)
+> > > +#define AST2600_I2CS_AUTO_NAK_EN                   BIT(14)
+> > > +
+> > > +#define AST2600_I2CS_ALT_EN                                BIT(10)
+> > > +#define AST2600_I2CS_RX_DMA_EN                     BIT(9)
+> > > +#define AST2600_I2CS_TX_DMA_EN                     BIT(8)
+> > > +#define AST2600_I2CS_RX_BUFF_EN                    BIT(7)
+> > > +#define AST2600_I2CS_TX_BUFF_EN                    BIT(6)
+> > > +#define AST2600_I2CS_RX_CMD_LAST                   BIT(4)
+> > > +
+> > > +#define AST2600_I2CS_TX_CMD                                BIT(2)
+> > > +
+> > > +#define AST2600_I2CS_DMA_LEN               0x2C
+> > > +#define AST2600_I2CS_SET_RX_DMA_LEN(x)     (((((x) - 1) & GENMASK(11, 0))
+> > << 16) | BIT(31))
+> > > +#define AST2600_I2CS_SET_TX_DMA_LEN(x)     ((((x) - 1) & GENMASK(11, 0))
+> > | BIT(15))
+> > > +
+> > > +/* I2CM Controller DMA Tx Buffer Register   */
+> > > +#define AST2600_I2CM_TX_DMA                        0x30
+> > > +/* I2CM Controller DMA Rx Buffer Register  */
+> > > +#define AST2600_I2CM_RX_DMA                        0x34
+> > > +/* I2CS Target DMA Tx Buffer Register   */
+> > > +#define AST2600_I2CS_TX_DMA                        0x38
+> > > +/* I2CS Target DMA Rx Buffer Register   */
+> > > +#define AST2600_I2CS_RX_DMA                        0x3C
+> > > +
+> > > +#define AST2600_I2CS_ADDR_CTRL             0x40
+> > > +
+> > > +#define    AST2600_I2CS_ADDR3_MASK         GENMASK(22, 16)
+> > > +#define    AST2600_I2CS_ADDR2_MASK         GENMASK(14, 8)
+> > > +#define    AST2600_I2CS_ADDR1_MASK         GENMASK(6, 0)
+> > > +
+> > > +#define AST2600_I2CM_DMA_LEN_STS           0x48
+> > > +#define AST2600_I2CS_DMA_LEN_STS           0x4C
+> > > +
+> > > +#define AST2600_I2C_GET_TX_DMA_LEN(x)              ((x) & GENMASK(12, 0))
+> > > +#define AST2600_I2C_GET_RX_DMA_LEN(x)        (((x) & GENMASK(28,
+> > 16)) >> 16)
+> > > +
+> > > +/* 0x40 : Target Device Address Register */
+> > > +#define AST2600_I2CS_ADDR3_ENABLE                  BIT(23)
+> > > +#define AST2600_I2CS_ADDR3(x)                      ((x) << 16)
+> > > +#define AST2600_I2CS_ADDR2_ENABLE                  BIT(15)
+> > > +#define AST2600_I2CS_ADDR2(x)                      ((x) << 8)
+> > > +#define AST2600_I2CS_ADDR1_ENABLE                  BIT(7)
+> > > +#define AST2600_I2CS_ADDR1(x)                      (x)
+> > > +
+> > > +#define I2C_TARGET_MSG_BUF_SIZE            256
+> > > +
+> > > +#define AST2600_I2C_DMA_SIZE               4096
+> > > +
+> > > +#define CONTROLLER_TRIGGER_LAST_STOP
+> >       (AST2600_I2CM_RX_CMD_LAST | AST2600_I2CM_STOP_CMD)
+> > > +#define TARGET_TRIGGER_CMD (AST2600_I2CS_ACTIVE_ALL |
+> > AST2600_I2CS_PKT_MODE_EN)
+> > > +
+> > > +#define AST_I2C_TIMEOUT_CLK                0x2
+> > > +
+> > > +enum xfer_mode {
+> > > +   BYTE_MODE,
+> > > +   BUFF_MODE,
+> > > +   DMA_MODE,
+> > > +};
+> > > +
+> > > +struct ast2600_i2c_bus {
+> > > +   struct i2c_adapter      adap;
+> > > +   struct device           *dev;
+> > > +   void __iomem            *reg_base;
+> > > +   struct regmap           *global_regs;
+> > > +   struct reset_control    *rst;
+> > > +   struct clk              *clk;
+> > > +   struct i2c_timings      timing_info;
+> > > +   struct completion       cmd_complete;
+> > > +   struct i2c_msg          *msgs;
+> > > +   u8                      *controller_dma_safe_buf;
+> > > +   dma_addr_t              controller_dma_addr;
+> > > +   u32                     apb_clk;
+> > > +   u32                     timeout;
+> > > +   int                     irq;
+> > > +   int                     cmd_err;
+> > > +   int                     msgs_index;
+> > > +   int                     msgs_count;
+> > > +   int                     controller_xfer_cnt;
+> > > +   size_t                  buf_index;
+> > > +   size_t                  buf_size;
+> > > +   enum xfer_mode          mode;
+> > > +   bool                    multi_master;
+> > > +   /* Buffer mode */
+> > > +   void __iomem            *buf_base;
+> > > +   struct i2c_smbus_alert_setup    alert_data;
+> > > +};
+> > > +
+> > > +static u32 ast2600_select_i2c_clock(struct ast2600_i2c_bus *i2c_bus)
+> > > +{
+> > > +   unsigned long base_clk[16];
+> > > +   int baseclk_idx = 0;
+> > > +   int divisor = 0;
+> > > +   u32 clk_div_reg;
+> > > +   u32 scl_low;
+> > > +   u32 scl_high;
+> > > +   u32 data;
+> > > +
+> > > +   regmap_read(i2c_bus->global_regs, AST2600_I2CG_CLK_DIV_CTRL,
+> > > +&clk_div_reg);
+> > > +
+> > > +   for (int i = 0; i < ARRAY_SIZE(base_clk); i++) {
+> > > +           if (i == 0)
+> > > +                   base_clk[i] = i2c_bus->apb_clk;
+> > > +           else if (i < 5)
+> > > +                   base_clk[i] = (i2c_bus->apb_clk * 2) /
+> > > +                      (((clk_div_reg >> ((i - 1) * 8)) & GENMASK(7, 0)) + 2);
+> > > +           else
+> > > +                   base_clk[i] = base_clk[4] >> (i - 5);
+> > > +
+> > > +           if ((base_clk[i] / i2c_bus->timing_info.bus_freq_hz) <= 32) {
+> > > +                   baseclk_idx = i;
+> > > +                   divisor = DIV_ROUND_UP(base_clk[i],
+> > i2c_bus->timing_info.bus_freq_hz);
+> > > +                   break;
+> > > +           }
+> > > +   }
+> > > +   baseclk_idx = min(baseclk_idx, 15);
+> > > +   divisor = min(divisor, 32);
+> > > +   scl_low = min(divisor * 9 / 16 - 1, 15);
+> > > +   scl_high = (divisor - scl_low - 2) & GENMASK(3, 0);
+> > > +   data = (scl_high - 1) << 20 | scl_high << 16 | scl_low << 12 | baseclk_idx;
+> > > +   if (i2c_bus->timeout) {
+> > > +           data |= AST2600_I2CC_TOUTBASECLK(AST_I2C_TIMEOUT_CLK);
+> > > +           data |= AST2600_I2CC_TTIMEOUT(i2c_bus->timeout);
+> > > +   }
+> > > +
+> > > +   return data;
+> > > +}
+> > > +
+> > > +static u8 ast2600_i2c_recover_bus(struct ast2600_i2c_bus *i2c_bus) {
+> > > +   u32 state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > > +   int ret = 0;
+> > > +   u32 ctrl;
+> > > +   int r;
+> > > +
+> > > +   dev_dbg(i2c_bus->dev, "%d-bus recovery bus [%x]\n",
+> > > +i2c_bus->adap.nr, state);
+> > > +
+> > > +   ctrl = readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +   /* Disable controller */
+> > > +   writel(ctrl & ~(AST2600_I2CC_MASTER_EN | AST2600_I2CC_SLAVE_EN),
+> > > +          i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +   writel(readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL) |
+> > AST2600_I2CC_MASTER_EN,
+> > > +          i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +   reinit_completion(&i2c_bus->cmd_complete);
+> > > +   i2c_bus->cmd_err = 0;
+> > > +
+> > > +   /* Check 0x14's SDA and SCL status */
+> > > +   state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > > +   if (!(state & AST2600_I2CC_SDA_LINE_STS) && (state &
+> > AST2600_I2CC_SCL_LINE_STS)) {
+> > > +           writel(AST2600_I2CM_RECOVER_CMD_EN, i2c_bus->reg_base +
+> > AST2600_I2CM_CMD_STS);
+> > > +           r = wait_for_completion_timeout(&i2c_bus->cmd_complete,
+> > i2c_bus->adap.timeout);
+> > > +           if (r == 0) {
+> > > +                   dev_dbg(i2c_bus->dev, "recovery timed out\n");
+> > > +                   writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +                   return -ETIMEDOUT;
+> > > +           } else if (i2c_bus->cmd_err) {
+> > > +                   dev_dbg(i2c_bus->dev, "recovery error\n");
+> > > +                   ret = -EPROTO;
+> > > +           }
+> > > +   }
+> > > +
+> > > +   /* Recovery done */
+> > > +   state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > > +   if (state & AST2600_I2CC_BUS_BUSY_STS) {
+> > > +           dev_dbg(i2c_bus->dev, "Can't recover bus [%x]\n", state);
+> > > +           ret = -EPROTO;
+> > > +   }
+> > > +
+> > > +   /* restore original controller setting */
+> > > +   writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +   return ret;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_dma_tx(u32 cmd, struct ast2600_i2c_bus
+> > > +*i2c_bus) {
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   int xfer_len;
+> > > +   int ret;
+> > > +
+> > > +   cmd |= AST2600_I2CM_PKT_EN;
+> > > +   xfer_len = msg->len - i2c_bus->controller_xfer_cnt;
+> > > +   if (xfer_len > AST2600_I2C_DMA_SIZE)
+> > > +           xfer_len = AST2600_I2C_DMA_SIZE;
+> > > +   else if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +           cmd |= AST2600_I2CM_STOP_CMD;
+> > > +
+> > > +   if (cmd & AST2600_I2CM_START_CMD) {
+> > > +           cmd |= AST2600_I2CM_PKT_ADDR(msg->addr);
+> > > +           i2c_bus->controller_dma_safe_buf =
+> > i2c_get_dma_safe_msg_buf(msg, 1);
+> > > +           if (!i2c_bus->controller_dma_safe_buf)
+> > > +                   return -ENOMEM;
+> > > +           i2c_bus->controller_dma_addr =
+> > > +                   dma_map_single(i2c_bus->dev,
+> > i2c_bus->controller_dma_safe_buf,
+> > > +                                  msg->len, DMA_TO_DEVICE);
+> > > +           ret = dma_mapping_error(i2c_bus->dev,
+> > i2c_bus->controller_dma_addr);
+> > > +           if (ret) {
+> > > +                   i2c_put_dma_safe_msg_buf(i2c_bus->controller_dma_safe_buf,
+> > msg, false);
+> > > +                   i2c_bus->controller_dma_safe_buf = NULL;
+> > > +                   return ret;
+> > > +           }
+> > > +   }
+> > > +
+> > > +   if (xfer_len) {
+> > > +           cmd |= AST2600_I2CM_TX_DMA_EN | AST2600_I2CM_TX_CMD;
+> > > +           writel(AST2600_I2CM_SET_TX_DMA_LEN(xfer_len - 1),
+> > > +                  i2c_bus->reg_base + AST2600_I2CM_DMA_LEN);
+> > > +           writel(i2c_bus->controller_dma_addr +
+> > i2c_bus->controller_xfer_cnt,
+> > > +                  i2c_bus->reg_base + AST2600_I2CM_TX_DMA);
+> > > +   }
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_buff_tx(u32 cmd, struct ast2600_i2c_bus
+> > > +*i2c_bus) {
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   u32 wbuf_dword;
+> > > +   int xfer_len;
+> > > +   int i;
+> > > +
+> > > +   cmd |= AST2600_I2CM_PKT_EN;
+> > > +   xfer_len = msg->len - i2c_bus->controller_xfer_cnt;
+> > > +   if (xfer_len > i2c_bus->buf_size)
+> > > +           xfer_len = i2c_bus->buf_size;
+> > > +   else if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +           cmd |= AST2600_I2CM_STOP_CMD;
+> > > +
+> > > +   if (cmd & AST2600_I2CM_START_CMD)
+> > > +           cmd |= AST2600_I2CM_PKT_ADDR(msg->addr);
+> > > +
+> > > +   if (xfer_len) {
+> > > +           cmd |= AST2600_I2CM_TX_BUFF_EN | AST2600_I2CM_TX_CMD;
+> > > +           /*
+> > > +            * The controller's buffer register supports dword writes only.
+> > > +            * Therefore, write dwords to the buffer register in a 4-byte aligned,
+> > > +            * and write the remaining unaligned data at the end.
+> > > +            */
+> > > +           for (i = 0; i < xfer_len; i += 4) {
+> > > +                   int xfer_cnt = i2c_bus->controller_xfer_cnt + i;
+> > > +
+> > > +                   switch (min(xfer_len - i, 4) % 4) {
+> > > +                   case 1:
+> > > +                           wbuf_dword = msg->buf[xfer_cnt];
+> > > +                           break;
+> > > +                   case 2:
+> > > +                           wbuf_dword = get_unaligned_le16(&msg->buf[xfer_cnt]);
+> > > +                           break;
+> > > +                   case 3:
+> > > +                           wbuf_dword = get_unaligned_le24(&msg->buf[xfer_cnt]);
+> > > +                           break;
+> > > +                   default:
+> > > +                           wbuf_dword = get_unaligned_le32(&msg->buf[xfer_cnt]);
+> > > +                           break;
+> > > +                   }
+> > > +                   writel(wbuf_dword, i2c_bus->buf_base + i);
+> > > +           }
+> > > +           writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> > > +                  i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> > > +   }
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_byte_tx(u32 cmd, struct ast2600_i2c_bus
+> > > +*i2c_bus) {
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   int xfer_len;
+> > > +
+> > > +   xfer_len = msg->len - i2c_bus->controller_xfer_cnt;
+> > > +
+> > > +   cmd |= AST2600_I2CM_PKT_EN;
+> > > +
+> > > +   if (cmd & AST2600_I2CM_START_CMD)
+> > > +           cmd |= AST2600_I2CM_PKT_ADDR(msg->addr);
+> > > +
+> > > +   if ((i2c_bus->msgs_index + 1 == i2c_bus->msgs_count) &&
+> > > +       ((i2c_bus->controller_xfer_cnt + 1) == msg->len))
+> > > +           cmd |= AST2600_I2CM_STOP_CMD;
+> > > +
+> > > +   if (xfer_len) {
+> > > +           cmd |= AST2600_I2CM_TX_CMD;
+> > > +           writel(msg->buf[i2c_bus->controller_xfer_cnt],
+> > > +                  i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> > > +   }
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_dma_rx(struct ast2600_i2c_bus *i2c_bus)
+> > > +{
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   int xfer_len;
+> > > +   u32 cmd;
+> > > +   int ret;
+> > > +
+> > > +   cmd = AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> > |
+> > > +         AST2600_I2CM_START_CMD | AST2600_I2CM_RX_DMA_EN;
+> > > +
+> > > +   if (msg->flags & I2C_M_RECV_LEN) {
+> > > +           xfer_len = 1;
+> > > +   } else if (msg->len > AST2600_I2C_DMA_SIZE) {
+> > > +           xfer_len = AST2600_I2C_DMA_SIZE;
+> > > +   } else {
+> > > +           xfer_len = msg->len;
+> > > +           if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +                   cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +   }
+> > > +   writel(AST2600_I2CM_SET_RX_DMA_LEN(xfer_len - 1),
+> > i2c_bus->reg_base + AST2600_I2CM_DMA_LEN);
+> > > +   i2c_bus->controller_dma_safe_buf = i2c_get_dma_safe_msg_buf(msg,
+> > 1);
+> > > +   if (!i2c_bus->controller_dma_safe_buf)
+> > > +           return -ENOMEM;
+> > > +   i2c_bus->controller_dma_addr =
+> > > +           dma_map_single(i2c_bus->dev, i2c_bus->controller_dma_safe_buf,
+> > > +                          msg->len, DMA_FROM_DEVICE);
+> > > +   ret = dma_mapping_error(i2c_bus->dev, i2c_bus->controller_dma_addr);
+> > > +   if (ret) {
+> > > +           i2c_put_dma_safe_msg_buf(i2c_bus->controller_dma_safe_buf,
+> > msg, false);
+> > > +           i2c_bus->controller_dma_safe_buf = NULL;
+> > > +           return ret;
+> > > +   }
+> > > +   writel(i2c_bus->controller_dma_addr, i2c_bus->reg_base +
+> > > +AST2600_I2CM_RX_DMA);
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_buff_rx(struct ast2600_i2c_bus *i2c_bus)
+> > > +{
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   int xfer_len;
+> > > +   u32 cmd;
+> > > +
+> > > +   cmd = AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> > |
+> > > +         AST2600_I2CM_START_CMD | AST2600_I2CM_RX_BUFF_EN;
+> > > +
+> > > +   if (msg->flags & I2C_M_RECV_LEN) {
+> > > +           dev_dbg(i2c_bus->dev, "smbus read\n");
+> > > +           xfer_len = 1;
+> > > +   } else if (msg->len > i2c_bus->buf_size) {
+> > > +           xfer_len = i2c_bus->buf_size;
+> > > +   } else {
+> > > +           xfer_len = msg->len;
+> > > +           if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +                   cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +   }
+> > > +   writel(AST2600_I2CC_SET_RX_BUF_LEN(xfer_len), i2c_bus->reg_base +
+> > > +AST2600_I2CC_BUFF_CTRL);
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_setup_byte_rx(struct ast2600_i2c_bus *i2c_bus)
+> > > +{
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   u32 cmd;
+> > > +
+> > > +   cmd = AST2600_I2CM_PKT_EN | AST2600_I2CM_PKT_ADDR(msg->addr)
+> > |
+> > > +         AST2600_I2CM_START_CMD | AST2600_I2CM_RX_CMD;
+> > > +
+> > > +   if (msg->flags & I2C_M_RECV_LEN) {
+> > > +           dev_dbg(i2c_bus->dev, "smbus read\n");
+> > > +   } else if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count) {
+> > > +           if (msg->len == 1)
+> > > +                   cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +   }
+> > > +
+> > > +   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_do_start(struct ast2600_i2c_bus *i2c_bus) {
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +
+> > > +   /* send start */
+> > > +   dev_dbg(i2c_bus->dev, "[%d] %s %d byte%s %s 0x%02x\n",
+> > > +           i2c_bus->msgs_index, str_read_write(msg->flags & I2C_M_RD),
+> > > +           msg->len, str_plural(msg->len),
+> > > +           msg->flags & I2C_M_RD ? "from" : "to", msg->addr);
+> > > +
+> > > +   i2c_bus->controller_xfer_cnt = 0;
+> > > +   i2c_bus->buf_index = 0;
+> > > +
+> > > +   if (msg->flags & I2C_M_RD) {
+> > > +           if (i2c_bus->mode == DMA_MODE)
+> > > +                   return ast2600_i2c_setup_dma_rx(i2c_bus);
+> > > +           else if (i2c_bus->mode == BUFF_MODE)
+> > > +                   return ast2600_i2c_setup_buff_rx(i2c_bus);
+> > > +           else
+> > > +                   return ast2600_i2c_setup_byte_rx(i2c_bus);
+> > > +   } else {
+> > > +           if (i2c_bus->mode == DMA_MODE)
+> > > +                   return
+> > ast2600_i2c_setup_dma_tx(AST2600_I2CM_START_CMD, i2c_bus);
+> > > +           else if (i2c_bus->mode == BUFF_MODE)
+> > > +                   return ast2600_i2c_setup_buff_tx(AST2600_I2CM_START_CMD,
+> > i2c_bus);
+> > > +           else
+> > > +                   return
+> > ast2600_i2c_setup_byte_tx(AST2600_I2CM_START_CMD, i2c_bus);
+> > > +   }
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_irq_err_to_errno(u32 irq_status) {
+> > > +   if (irq_status & AST2600_I2CM_ARBIT_LOSS)
+> > > +           return -EAGAIN;
+> > > +   if (irq_status & (AST2600_I2CM_SDA_DL_TO |
+> > AST2600_I2CM_SCL_LOW_TO))
+> > > +           return -EBUSY;
+> > > +   if (irq_status & (AST2600_I2CM_ABNORMAL))
+> > > +           return -EPROTO;
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static void ast2600_i2c_controller_package_irq(struct ast2600_i2c_bus
+> > > +*i2c_bus, u32 sts) {
+> > > +   struct i2c_msg *msg = &i2c_bus->msgs[i2c_bus->msgs_index];
+> > > +   u32 cmd = AST2600_I2CM_PKT_EN;
+> > > +   int xfer_len;
+> > > +   int i;
+> > > +
+> > > +   sts &= ~AST2600_I2CM_PKT_DONE;
+> > > +   writel(AST2600_I2CM_PKT_DONE, i2c_bus->reg_base +
+> > AST2600_I2CM_ISR);
+> > > +   switch (sts) {
+> > > +   case AST2600_I2CM_PKT_ERROR:
+> > > +           i2c_bus->cmd_err = -EAGAIN;
+> > > +           complete(&i2c_bus->cmd_complete);
+> > > +           break;
+> > > +   case AST2600_I2CM_PKT_ERROR | AST2600_I2CM_TX_NAK: /* a0 fix for
+> > issue */
+> > > +           fallthrough;
+> > > +   case AST2600_I2CM_PKT_ERROR | AST2600_I2CM_TX_NAK |
+> > AST2600_I2CM_NORMAL_STOP:
+> > > +           i2c_bus->cmd_err = -ENXIO;
+> > > +           complete(&i2c_bus->cmd_complete);
+> > > +           break;
+> > > +   case AST2600_I2CM_NORMAL_STOP:
+> > > +           /* write 0 byte only have stop isr */
+> > > +           i2c_bus->msgs_index++;
+> > > +           if (i2c_bus->msgs_index < i2c_bus->msgs_count) {
+> > > +                   if (ast2600_i2c_do_start(i2c_bus)) {
+> > > +                           i2c_bus->cmd_err = -ENOMEM;
+> > > +                           complete(&i2c_bus->cmd_complete);
+> > > +                   }
+> > > +           } else {
+> > > +                   i2c_bus->cmd_err = i2c_bus->msgs_index;
+> > > +                   complete(&i2c_bus->cmd_complete);
+> > > +           }
+> > > +           break;
+> > > +   case AST2600_I2CM_TX_ACK:
+> > > +   case AST2600_I2CM_TX_ACK | AST2600_I2CM_NORMAL_STOP:
+> > > +           if (i2c_bus->mode == DMA_MODE)
+> > > +                   xfer_len =
+> > AST2600_I2C_GET_TX_DMA_LEN(readl(i2c_bus->reg_base +
+> > > +                                                     AST2600_I2CM_DMA_LEN_STS));
+> > > +           else if (i2c_bus->mode == BUFF_MODE)
+> > > +                   xfer_len =
+> > AST2600_I2CC_GET_TX_BUF_LEN(readl(i2c_bus->reg_base +
+> > > +                                                      AST2600_I2CC_BUFF_CTRL));
+> > > +           else
+> > > +                   xfer_len = 1;
+> > > +
+> > > +           i2c_bus->controller_xfer_cnt += xfer_len;
+> > > +
+> > > +           if (i2c_bus->controller_xfer_cnt == msg->len) {
+> > > +                   if (i2c_bus->mode == DMA_MODE) {
+> > > +                           dma_unmap_single(i2c_bus->dev,
+> > i2c_bus->controller_dma_addr,
+> > > +                                            msg->len, DMA_TO_DEVICE);
+> > > +
+> >       i2c_put_dma_safe_msg_buf(i2c_bus->controller_dma_safe_buf,
+> > > +                                                    msg, true);
+> > > +                           i2c_bus->controller_dma_safe_buf = NULL;
+> > > +                   }
+> > > +                   i2c_bus->msgs_index++;
+> > > +                   if (i2c_bus->msgs_index == i2c_bus->msgs_count) {
+> > > +                           i2c_bus->cmd_err = i2c_bus->msgs_index;
+> > > +                           complete(&i2c_bus->cmd_complete);
+> > > +                   } else {
+> > > +                           if (ast2600_i2c_do_start(i2c_bus)) {
+> > > +                                   i2c_bus->cmd_err = -ENOMEM;
+> > > +                                   complete(&i2c_bus->cmd_complete);
+> > > +                           }
+> > > +                   }
+> > > +           } else {
+> > > +                   if (i2c_bus->mode == DMA_MODE)
+> > > +                           ast2600_i2c_setup_dma_tx(0, i2c_bus);
+> > > +                   else if (i2c_bus->mode == BUFF_MODE)
+> > > +                           ast2600_i2c_setup_buff_tx(0, i2c_bus);
+> > > +                   else
+> > > +                           ast2600_i2c_setup_byte_tx(0, i2c_bus);
+> > > +           }
+> > > +           break;
+> > > +   case AST2600_I2CM_RX_DONE:
+> > > +   case AST2600_I2CM_RX_DONE | AST2600_I2CM_NORMAL_STOP:
+> > > +           /* do next rx */
+> > > +           if (i2c_bus->mode == DMA_MODE) {
+> > > +                   xfer_len =
+> > AST2600_I2C_GET_RX_DMA_LEN(readl(i2c_bus->reg_base +
+> > > +                                                               AST2600_I2CM_DMA_LEN_STS));
+> > > +           } else if (i2c_bus->mode == BUFF_MODE) {
+> > > +                   xfer_len =
+> > AST2600_I2CC_GET_RX_BUF_LEN(readl(i2c_bus->reg_base +
+> > > +                                                                AST2600_I2CC_BUFF_CTRL));
+> > > +                   for (i = 0; i < xfer_len; i++)
+> > > +                           msg->buf[i2c_bus->controller_xfer_cnt + i] =
+> > > +                                   readb(i2c_bus->buf_base + 0x10 + i);
+> > > +           } else {
+> > > +                   xfer_len = 1;
+> > > +                   msg->buf[i2c_bus->controller_xfer_cnt] =
+> > > +                           AST2600_I2CC_GET_RX_BUFF(readl(i2c_bus->reg_base +
+> > > +                                                AST2600_I2CC_STS_AND_BUFF));
+> > > +           }
+> > > +
+> > > +           if (msg->flags & I2C_M_RECV_LEN) {
+> > > +                   msg->len = min_t(unsigned int, msg->buf[0],
+> > I2C_SMBUS_BLOCK_MAX);
+> > > +                   msg->len += ((msg->flags & I2C_CLIENT_PEC) ? 2 : 1);
+> > > +                   msg->flags &= ~I2C_M_RECV_LEN;
+> > > +           }
+> > > +           i2c_bus->controller_xfer_cnt += xfer_len;
+> > > +
+> > > +           if (i2c_bus->controller_xfer_cnt == msg->len) {
+> > > +                   if (i2c_bus->mode == DMA_MODE) {
+> > > +                           dma_unmap_single(i2c_bus->dev,
+> > i2c_bus->controller_dma_addr,
+> > > +                                            msg->len, DMA_FROM_DEVICE);
+> > > +
+> >       i2c_put_dma_safe_msg_buf(i2c_bus->controller_dma_safe_buf,
+> > > +                                                    msg, true);
+> > > +                           i2c_bus->controller_dma_safe_buf = NULL;
+> > > +                   }
+> > > +
+> > > +                   i2c_bus->msgs_index++;
+> > > +                   if (i2c_bus->msgs_index == i2c_bus->msgs_count) {
+> > > +                           i2c_bus->cmd_err = i2c_bus->msgs_index;
+> > > +                           complete(&i2c_bus->cmd_complete);
+> > > +                   } else {
+> > > +                           if (ast2600_i2c_do_start(i2c_bus)) {
+> > > +                                   i2c_bus->cmd_err = -ENOMEM;
+> > > +                                   complete(&i2c_bus->cmd_complete);
+> > > +                           }
+> > > +                   }
+> > > +           } else {
+> > > +                   /* next rx */
+> > > +                   cmd |= AST2600_I2CM_RX_CMD;
+> > > +                   if (i2c_bus->mode == DMA_MODE) {
+> > > +                           cmd |= AST2600_I2CM_RX_DMA_EN;
+> > > +                           xfer_len = msg->len - i2c_bus->controller_xfer_cnt;
+> > > +                           if (xfer_len > AST2600_I2C_DMA_SIZE) {
+> > > +                                   xfer_len = AST2600_I2C_DMA_SIZE;
+> > > +                           } else {
+> > > +                                   if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +                                           cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +                           }
+> > > +                           writel(AST2600_I2CM_SET_RX_DMA_LEN(xfer_len - 1),
+> > > +                                  i2c_bus->reg_base + AST2600_I2CM_DMA_LEN);
+> > > +                           writel(i2c_bus->controller_dma_addr +
+> > i2c_bus->controller_xfer_cnt,
+> > > +                                  i2c_bus->reg_base + AST2600_I2CM_RX_DMA);
+> > > +                   } else if (i2c_bus->mode == BUFF_MODE) {
+> > > +                           cmd |= AST2600_I2CM_RX_BUFF_EN;
+> > > +                           xfer_len = msg->len - i2c_bus->controller_xfer_cnt;
+> > > +                           if (xfer_len > i2c_bus->buf_size) {
+> > > +                                   xfer_len = i2c_bus->buf_size;
+> > > +                           } else {
+> > > +                                   if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> > > +                                           cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +                           }
+> > > +                           writel(AST2600_I2CC_SET_RX_BUF_LEN(xfer_len),
+> > > +                                  i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> > > +                   } else {
+> > > +                           if ((i2c_bus->msgs_index + 1 == i2c_bus->msgs_count) &&
+> > > +                               ((i2c_bus->controller_xfer_cnt + 1) == msg->len)) {
+> > > +                                   cmd |= CONTROLLER_TRIGGER_LAST_STOP;
+> > > +                           }
+> > > +                   }
+> > > +                   writel(cmd, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > > +           }
+> > > +           break;
+> > > +   default:
+> > > +           dev_dbg(i2c_bus->dev, "unhandled sts %x\n", sts);
+> > > +           break;
+> > > +   }
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_controller_irq(struct ast2600_i2c_bus
+> > > +*i2c_bus) {
+> > > +   u32 sts = readl(i2c_bus->reg_base + AST2600_I2CM_ISR);
+> > > +   u32 ctrl;
+> > > +
+> > > +   sts &= ~AST2600_I2CM_SMBUS_ALT;
+> > > +
+> > > +   if (AST2600_I2CM_BUS_RECOVER_FAIL & sts) {
+> > > +           writel(AST2600_I2CM_BUS_RECOVER_FAIL, i2c_bus->reg_base +
+> > AST2600_I2CM_ISR);
+> > > +           ctrl = readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +           writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +           writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +           i2c_bus->cmd_err = -EPROTO;
+> > > +           complete(&i2c_bus->cmd_complete);
+> > > +           return 1;
+> > > +   }
+> > > +
+> > > +   if (AST2600_I2CM_BUS_RECOVER & sts) {
+> > > +           writel(AST2600_I2CM_BUS_RECOVER, i2c_bus->reg_base +
+> > AST2600_I2CM_ISR);
+> > > +           i2c_bus->cmd_err = 0;
+> > > +           complete(&i2c_bus->cmd_complete);
+> > > +           return 1;
+> > > +   }
+> > > +
+> > > +   i2c_bus->cmd_err = ast2600_i2c_irq_err_to_errno(sts);
+> > > +   if (i2c_bus->cmd_err) {
+> > > +           writel(AST2600_I2CM_PKT_DONE, i2c_bus->reg_base +
+> > AST2600_I2CM_ISR);
+> > > +           complete(&i2c_bus->cmd_complete);
+> > > +           return 1;
+> > > +   }
+> > > +
+> > > +   if (AST2600_I2CM_PKT_DONE & sts) {
+> > > +           ast2600_i2c_controller_package_irq(i2c_bus, sts);
+> > > +           return 1;
+> > > +   }
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static irqreturn_t ast2600_i2c_bus_irq(int irq, void *dev_id) {
+> > > +   struct ast2600_i2c_bus *i2c_bus = dev_id;
+> > > +
+> > > +   return IRQ_RETVAL(ast2600_i2c_controller_irq(i2c_bus));
+> > > +}
+> > > +
+> > > +static int ast2600_i2c_controller_xfer(struct i2c_adapter *adap,
+> > > +struct i2c_msg *msgs, int num) {
+> > > +   struct ast2600_i2c_bus *i2c_bus = i2c_get_adapdata(adap);
+> > > +   unsigned long timeout;
+> > > +   int ret;
+> > > +
+> > > +   if (!i2c_bus->multi_master &&
+> > > +       (readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF) &
+> > AST2600_I2CC_BUS_BUSY_STS)) {
+> > > +           ret = ast2600_i2c_recover_bus(i2c_bus);
+> > > +           if (ret)
+> > > +                   return ret;
+> > > +   }
+> > > +
+> > > +   i2c_bus->cmd_err = 0;
+> > > +   i2c_bus->msgs = msgs;
+> > > +   i2c_bus->msgs_index = 0;
+> > > +   i2c_bus->msgs_count = num;
+> > > +   reinit_completion(&i2c_bus->cmd_complete);
+> > > +   ret = ast2600_i2c_do_start(i2c_bus);
+> > > +   if (ret)
+> > > +           goto controller_out;
+> > > +   timeout = wait_for_completion_timeout(&i2c_bus->cmd_complete,
+> > i2c_bus->adap.timeout);
+> > > +   if (timeout == 0) {
+> > > +           u32 ctrl = readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +           dev_dbg(i2c_bus->dev, "timeout isr[%x], sts[%x]\n",
+> > > +                   readl(i2c_bus->reg_base + AST2600_I2CM_ISR),
+> > > +                   readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF));
+> > > +           writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +           writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +           if (i2c_bus->multi_master &&
+> > > +               (readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF) &
+> > > +               AST2600_I2CC_BUS_BUSY_STS))
+> > > +                   ast2600_i2c_recover_bus(i2c_bus);
+> > > +
+> > > +           ret = -ETIMEDOUT;
+> > > +   } else {
+> > > +           ret = i2c_bus->cmd_err;
+> > > +   }
+> > > +
+> > > +   dev_dbg(i2c_bus->dev, "bus%d-m: %d end\n", i2c_bus->adap.nr,
+> > > +i2c_bus->cmd_err);
+> > > +
+> > > +controller_out:
+> > > +   if (i2c_bus->mode == DMA_MODE) {
+> > > +           kfree(i2c_bus->controller_dma_safe_buf);
+> > > +           i2c_bus->controller_dma_safe_buf = NULL;
+> > > +   }
+> > > +
+> > > +   return ret;
+> > > +}
+> > > +
+> > > +static void ast2600_i2c_init(struct ast2600_i2c_bus *i2c_bus) {
+> > > +   struct platform_device *pdev = to_platform_device(i2c_bus->dev);
+> > > +   u32 fun_ctrl = AST2600_I2CC_BUS_AUTO_RELEASE |
+> > > +AST2600_I2CC_MASTER_EN;
+> > > +
+> > > +   /* I2C Reset */
+> > > +   writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +
+> > > +   i2c_bus->multi_master = device_property_read_bool(&pdev->dev,
+> > "multi-master");
+> > > +   if (!i2c_bus->multi_master)
+> > > +           fun_ctrl |= AST2600_I2CC_MULTI_MASTER_DIS;
+> > > +
+> > > +   /* Enable Controller Mode */
+> > > +   writel(fun_ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +   /* disable target address */
+> > > +   writel(0, i2c_bus->reg_base + AST2600_I2CS_ADDR_CTRL);
+> > > +
+> > > +   /* Set AC Timing */
+> > > +   writel(ast2600_select_i2c_clock(i2c_bus), i2c_bus->reg_base +
+> > > +AST2600_I2CC_AC_TIMING);
+> > > +
+> > > +   /* Clear Interrupt */
+> > > +   writel(GENMASK(27, 0), i2c_bus->reg_base + AST2600_I2CM_ISR); }
+> > > +
+> > > +static u32 ast2600_i2c_functionality(struct i2c_adapter *adap) {
+> > > +   return I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL |
+> > > +I2C_FUNC_SMBUS_BLOCK_DATA; }
+> > > +
+> > > +static const struct i2c_algorithm i2c_ast2600_algorithm = {
+> > > +   .xfer = ast2600_i2c_controller_xfer,
+> > > +   .functionality = ast2600_i2c_functionality, };
+> > > +
+> > > +static int ast2600_i2c_probe(struct platform_device *pdev) {
+> > > +   struct device *dev = &pdev->dev;
+> > > +   struct ast2600_i2c_bus *i2c_bus;
+> > > +   struct resource *res;
+> > > +   u32 global_ctrl;
+> > > +   int ret;
+> > > +
+> > > +   i2c_bus = devm_kzalloc(dev, sizeof(*i2c_bus), GFP_KERNEL);
+> > > +   if (!i2c_bus)
+> > > +           return -ENOMEM;
+> > > +
+> > > +   i2c_bus->reg_base = devm_platform_ioremap_resource(pdev, 0);
+> > > +   if (IS_ERR(i2c_bus->reg_base))
+> > > +           return PTR_ERR(i2c_bus->reg_base);
+> > > +
+> > > +   i2c_bus->rst = devm_reset_control_get_shared(dev, NULL);
+> > > +   if (IS_ERR(i2c_bus->rst))
+> > > +           return dev_err_probe(dev, PTR_ERR(i2c_bus->rst), "Missing reset
+> > > +ctrl\n");
+> > > +
+> > > +   reset_control_deassert(i2c_bus->rst);
+> > > +
+> > > +   i2c_bus->global_regs =
+> > > +           syscon_regmap_lookup_by_phandle(dev_of_node(dev),
+> > "aspeed,global-regs");
+> > > +   if (IS_ERR(i2c_bus->global_regs))
+> > > +           return PTR_ERR(i2c_bus->global_regs);
+> > > +
+> > > +   regmap_read(i2c_bus->global_regs, AST2600_I2CG_CTRL, &global_ctrl);
+> > > +   if ((global_ctrl & AST2600_GLOBAL_INIT) != AST2600_GLOBAL_INIT) {
+> > > +           regmap_write(i2c_bus->global_regs, AST2600_I2CG_CTRL,
+> > AST2600_GLOBAL_INIT);
+> > > +           regmap_write(i2c_bus->global_regs, AST2600_I2CG_CLK_DIV_CTRL,
+> > I2CCG_DIV_CTRL);
+> > > +   }
+> > > +
+> > > +   i2c_bus->dev = dev;
+> > > +   i2c_bus->mode = BUFF_MODE;
+> > > +
+> > > +   if (device_property_read_bool(dev, "aspeed,enable-dma"))
+> > > +           i2c_bus->mode = DMA_MODE;
+> > > +
+> > > +   if (i2c_bus->mode == BUFF_MODE) {
+> > > +           i2c_bus->buf_base =
+> > devm_platform_get_and_ioremap_resource(pdev, 1, &res);
+> > > +           if (IS_ERR(i2c_bus->buf_base))
+> > > +                   i2c_bus->mode = BYTE_MODE;
+> > > +           else
+> > > +                   i2c_bus->buf_size = resource_size(res) / 2;
+> > > +   }
+> > > +
+> > > +   /*
+> > > +    * i2c timeout counter: use base clk4 1Mhz,
+> > > +    * per unit: 1/(1000/4096) = 4096us
+> > > +    */
+> > > +   ret = device_property_read_u32(dev, "i2c-scl-clk-low-timeout-us",
+> > &i2c_bus->timeout);
+> > > +   if (!ret)
+> > > +           i2c_bus->timeout /= 4096;
+> > > +
+> > > +   init_completion(&i2c_bus->cmd_complete);
+> > > +
+> > > +   i2c_bus->irq = platform_get_irq(pdev, 0);
+> > > +   if (i2c_bus->irq < 0)
+> > > +           return i2c_bus->irq;
+> > > +
+> > > +   platform_set_drvdata(pdev, i2c_bus);
+> > > +
+> > > +   i2c_bus->clk = devm_clk_get(i2c_bus->dev, NULL);
+> > > +   if (IS_ERR(i2c_bus->clk))
+> > > +           return dev_err_probe(i2c_bus->dev, PTR_ERR(i2c_bus->clk), "Can't
+> > > +get clock\n");
+> > > +
+> > > +   i2c_bus->apb_clk = clk_get_rate(i2c_bus->clk);
+> > > +
+> > > +   i2c_parse_fw_timings(i2c_bus->dev, &i2c_bus->timing_info, true);
+> > > +
+> > > +   /* Initialize the I2C adapter */
+> > > +   i2c_bus->adap.owner = THIS_MODULE;
+> > > +   i2c_bus->adap.algo = &i2c_ast2600_algorithm;
+> > > +   i2c_bus->adap.retries = 0;
+> > > +   i2c_bus->adap.dev.parent = i2c_bus->dev;
+> > > +   device_set_node(&i2c_bus->adap.dev, dev_fwnode(dev));
+> > > +   i2c_bus->adap.algo_data = i2c_bus;
+> > > +   strscpy(i2c_bus->adap.name, pdev->name);
+> > > +   i2c_set_adapdata(&i2c_bus->adap, i2c_bus);
+> > > +
+> > > +   ast2600_i2c_init(i2c_bus);
+> > > +
+> > > +   ret = devm_request_irq(dev, i2c_bus->irq, ast2600_i2c_bus_irq, 0,
+> > > +                          dev_name(dev), i2c_bus);
+> > > +   if (ret < 0)
+> > > +           return dev_err_probe(dev, ret, "Unable to request irq %d\n",
+> > > +i2c_bus->irq);
+> > > +
+> > > +   writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER,
+> > > +          i2c_bus->reg_base + AST2600_I2CM_IER);
+> > > +
+> > > +   ret = devm_i2c_add_adapter(dev, &i2c_bus->adap);
+> > > +   if (ret)
+> > > +           return ret;
+> > > +
+> > > +   return 0;
+> > > +}
+> > > +
+> > > +static void ast2600_i2c_remove(struct platform_device *pdev) {
+> > > +   struct ast2600_i2c_bus *i2c_bus = platform_get_drvdata(pdev);
+> > > +
+> > > +   /* Disable everything. */
+> > > +   writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> > > +   writel(0, i2c_bus->reg_base + AST2600_I2CM_IER); }
+> > > +
+> > > +static const struct of_device_id ast2600_i2c_bus_of_table[] = {
+> > > +   {
+> > > +           .compatible = "aspeed,ast2600-i2cv2",
+> > > +   },
+> > > +   {}
+> > > +};
+> > > +MODULE_DEVICE_TABLE(of, ast2600_i2c_bus_of_table);
+> > > +
+> > > +static struct platform_driver ast2600_i2c_bus_driver = {
+> > > +   .probe = ast2600_i2c_probe,
+> > > +   .remove = ast2600_i2c_remove,
+> > > +   .driver = {
+> > > +           .name = KBUILD_MODNAME,
+> > > +           .of_match_table = ast2600_i2c_bus_of_table,
+> > > +   },
+> > > +};
+> > > +
+> > > +module_platform_driver(ast2600_i2c_bus_driver);
+> > > +
+> > > +MODULE_AUTHOR("Ryan Chen <ryan_chen@aspeedtech.com>");
+> > > +MODULE_DESCRIPTION("ASPEED AST2600 I2C Controller Driver");
+> > > +MODULE_LICENSE("GPL");
+>
