@@ -1,93 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 947349C7E14
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 23:06:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CE9E9C7E16
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 23:06:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XpcmP3Nt1z3fql
-	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 09:05:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XpcmS4PSvz3g1X
+	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 09:05:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4860:4864:20::36"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731475213;
-	cv=none; b=fVfpppIzhvuIhtvPn5uq+VGG7aW9hsUjqr53pVI+sNiZ9jK/Ci/OAG/ZNnXUl4duAAxesYArLWclXtOb9dkLD7qREcTKTR8D2fYZIjJGSu5O3T33mGS2REmhVx7Rz1S/OQFkuB2A7gOhUNEm7rWLeMClRivnKLXow1vaaeaQbG+M9y9LcMvmYr27ZfUxEbYEZAOADZBhg8W21OswW0CXNZ7wXLk5rvabl5R2YQSST+Jfgm9QzeLwrKaNL4qFtGLkOf7UY8UOZheoFuJCzR1+XMrYtTUPp9b0cy3o4o01clbctWVLRTC0UdWYvTsQV6CqMYa8yK0Cr2fdvKASrj4nNA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=209.97.181.73
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731477856;
+	cv=none; b=i5g+td9eX+oa4H219UOleMmvShGdOBU2DrE1N3jLpaGYWTMSpnpgcV33Tzo7betvEuZqFlYVd8EM2L4Wxulc/z2lyHDn04ESY6JtsxJiyqJAyOucBi3lUunp44CPy36I+LqNWup6tQdkw2KeWuhJ2pzJdpl+5Xa3fs2AI3umN1sl9gT3p2nVydIZmHhZfcKrX+NLnFz24q9/Eji0SzuLfznfzJ9iZYQjvezR9zBkd7xJRHg5uZZHvsWuyN83ZtzLyttHBcGoA/jwi0lmDBdah70D9oHGWr3F6LAu88ODm5RLaBpHfm9ISUhtTvzOmcF7v4qfWFmyWZ47P6ao2EXJpw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731475213; c=relaxed/relaxed;
-	bh=5353xv9nfR949Aq3luMMcKblmb1cgT053z7RFtTwcFU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Rh5hj8pI8RddhTvLXxL1ULRRABCyRnq1FZt5LkL75d7thWlOt8w9g7IESAoJZ6PjsqW5uj3zmA1F4CzsSxeMPa7l+gLjm6umqbZ4UerF4pYGdWas5Hx4kwAImbTw8rGNfmWJlNwEV3EJYlS0YOvaxNQByKm8vgoTCkziBgUicKxg5JHFJgex/+2CqQYpWJr5nNySquQME9RSq91X0nwRU5NDACEYlORwy0zbLP0WFFMQC1i8dWzvfwdZzTo0l4V9hXBwTNiHOOJVsaxTNfqmh+n9vbzw8z2u14niMiBYcwqNuaqE/GmAJdDlxbdH+mIYP0P2ilSjxrLkeH99ZG3qhw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QhiDjYos; dkim-atps=neutral; spf=pass (client-ip=2001:4860:4864:20::36; helo=mail-oa1-x36.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=QhiDjYos;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2001:4860:4864:20::36; helo=mail-oa1-x36.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XpBSD1Tdgz2xpm
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2024 16:20:12 +1100 (AEDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-288642376bcso3321871fac.1
-        for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2024 21:20:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731475209; x=1732080009; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5353xv9nfR949Aq3luMMcKblmb1cgT053z7RFtTwcFU=;
-        b=QhiDjYosq+pCBCDtVq7+OId1wDSGd9zG1N9lPwNYgvmmOwPFUIPokWIUPgBn9LfuMb
-         y/4+neXB1v663SvAuCYAUufG0sKJev8OXJxwy9fvbI8lYifV80V3mIndNP0zrY2G3ASE
-         96yNvcTc8OI2NspZRyHzIQOZjJOAHRtFpLWKe1mXhk2IBX/SxabKX8JWp7L4dYR/mOt/
-         8OmCI0pLA90+3paDqZtpfDzpPxNSyxQh5jMHshVcpDUyqQkMppLN0l4yWEv5rMiEO4C6
-         q6496fQGz2SMXpNwftgprCTBtqkctFXRzEGsA5Cm7QY9ymiOelpNjCdcioFNnQKlQkRj
-         IjnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731475209; x=1732080009;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5353xv9nfR949Aq3luMMcKblmb1cgT053z7RFtTwcFU=;
-        b=AAwbCM64jCUD7egXkQjhw5a2cTg3alkztvAGj4vHkm0+yTLQxmw9Jc9j3t07SEbY3K
-         Rym5kViUxNBWp4X9mmoerFUuF4NEdPWA99DjQl9Dk79/Igz/7GZpjVY92Nqi6igxBulx
-         eNFw+HPVjZUPWc9R2sfuTLCu5Ph059EwUrYzK7AyXaIoPIBd2AQ0ln4Mn0VY3qWRjrhk
-         Te1dDxiXJloicnn7vZRE5taG4RhA+zPTDoehhD+bAyYXXJeWNhf+Brporx72P4l0MhLM
-         DCyIoyVWRB8hK0RlIxMYbUBkPQ18RpVhp+pRj17Dx6l8Vi9BhrTJNiJxi306KFueLiRS
-         n0gQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW3C4kElZdfsTS0gBgC/j35aOcihmT/YwgI3C6kupVb+5U4wA8wqk9wpn/YaAJitt8lnYGoisEJ@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwBLqR2/f+2UuNOK4wJfvYO/S7A76SRlzCgqWGhrG68kkofh/Tl
-	qEXj7dT+0trXUDVOIdi+uer03ZRsNlH8meCF8ryJrlMXfoMCgTqf
-X-Google-Smtp-Source: AGHT+IFA7M9iVYxjJX9yzGaZF33PqN+3je2YxeBLIbH3+k+DhcZianzX1wGkCN8eQ4smDjyciHl1ng==
-X-Received: by 2002:a05:6870:230a:b0:254:bd24:de83 with SMTP id 586e51a60fabf-29560065134mr17026514fac.12.1731475209174;
-        Tue, 12 Nov 2024 21:20:09 -0800 (PST)
-Received: from yclu-ubuntu.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724079aaa01sm12644376b3a.100.2024.11.12.21.20.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 21:20:08 -0800 (PST)
-From: Joey Lu <a0987203069@gmail.com>
-To: andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mcoquelin.stm32@gmail.com,
-	richardcochran@gmail.com
-Subject: [PATCH v2 3/3] net: stmmac: dwmac-nuvoton: Add dwmac support for MA35 family
-Date: Wed, 13 Nov 2024 13:18:57 +0800
-Message-Id: <20241113051857.12732-4-a0987203069@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241113051857.12732-1-a0987203069@gmail.com>
-References: <20241113051857.12732-1-a0987203069@gmail.com>
+	t=1731477856; c=relaxed/relaxed;
+	bh=8pKd4LpvVscxjJ4Jx8AQbjmDxA3pXWNLVZeiKAjUpnI=;
+	h=Date:From:To:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ehZ2dWM3rA2FEObb4X8QEaMprn8TDAtp3qgDNYDOL5cGGfk5UpGlMZW5v21bNiQWwIwg/lLT/+NUP4cg9lqM5EjWcbybnYXUevPbfiGSVdDP3vHmHINpWTi1t6ErnjiJxdzYD9VNAWB9c/zU44kJjsUNJuoJIkKLgDI4Mlg4asuhlg0eTbavG34KyzrjbgXuIwbpBU1Mwon6hQbcc2ZAn+3kQX8KdhcxRV7JTfhDpmtPtxUzTwZEh+7n4GHaglyl1zXa6R3n6+UA+qmqNclKEwI4tz9703szL0iDF0rR+9eAe2JcljNvUoq/biC4X1SXnndD8VmRrW0Uu/f/2lxZDA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=phytium.com.cn; spf=pass (client-ip=209.97.181.73; helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net; envelope-from=yubowei0982@phytium.com.cn; receiver=lists.ozlabs.org) smtp.mailfrom=phytium.com.cn
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=phytium.com.cn
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=phytium.com.cn (client-ip=209.97.181.73; helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net; envelope-from=yubowei0982@phytium.com.cn; receiver=lists.ozlabs.org)
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net (zg8tmja5ljk3lje4ms43mwaa.icoremail.net [209.97.181.73])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XpCQx34b6z2xks
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2024 17:03:58 +1100 (AEDT)
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+	by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDHz_NFQTRn9JcUAQ--.29528S2;
+	Wed, 13 Nov 2024 14:03:49 +0800 (CST)
+Received: from yubowei0982$phytium.com.cn (
+ [240e:469:611:8755:1cbd:467:9101:36df] ) by ajax-webmail-mail (Coremail) ;
+ Wed, 13 Nov 2024 14:03:48 +0800 (GMT+08:00)
+X-Originating-IP: [240e:469:611:8755:1cbd:467:9101:36df]
+Date: Wed, 13 Nov 2024 14:03:48 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5Za75p+P54Kc?= <yubowei0982@phytium.com.cn>
+To: openbmc@lists.ozlabs.org
+Subject: Re: BMCWEB debug question
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
+ 20240812(cfb32469) Copyright (c) 2002-2024 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <18393666.6642.1931e8207af.Coremail.yubowei0982@phytium.com.cn>
+References: <18393666.6642.1931e8207af.Coremail.yubowei0982@phytium.com.cn>
+X-CM-CTRLDATA: CvZrlmZvb3Rlcl9odG09Nzc1NDo0Njg=
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_103972_1665195754.1731477828051"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+Message-ID: <607cb6f4.693a.193241ef1d4.Coremail.yubowei0982@phytium.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: AQAAfwDHHntFQTRn5VpPAA--.8785W
+X-CM-SenderInfo: 51xe04lhlqmmus6sx5pwlxzhxfrphubq/1tbiAQAHE2cyYBACrAAC
+	sc
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=yubowei098
+	2@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Aw15XrW8JFW7CF1rXrW5Jrb_yoW8KFW3pF
+	ZIya4xZw47Xw1xGrWrKa1I9a4aqr97Gr47G3s5Gr18AFsrWr12yasFv3yYva43Cr1qyr1j
+	vw1agF1DurZ8CFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+	DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+	UUUUU
+X-Spam-Status: No, score=0.0 required=5.0 tests=HTML_MESSAGE,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Thu, 14 Nov 2024 09:05:26 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -101,239 +73,199 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, ychuang3@nuvoton.com, Joey Lu <a0987203069@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, joabreu@synopsys.com, schung@nuvoton.com, yclu4@nuvoton.com, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add support for Gigabit Ethernet on Nuvoton MA35 series using dwmac driver.
+------=_Part_103972_1665195754.1731477828051
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Signed-off-by: Joey Lu <a0987203069@gmail.com>
----
- drivers/net/ethernet/stmicro/stmmac/Kconfig   |  11 ++
- drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
- .../ethernet/stmicro/stmmac/dwmac-nuvoton.c   | 179 ++++++++++++++++++
- 3 files changed, 191 insertions(+)
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
+V2FpdHRpbmcgZm9yIHlvdXIgcmVwbHksdGhhbmtzIQoKCgoKCgoKLS0tLS3ljp/lp4vpgq7ku7Yt
+LS0tLQrlj5Hku7bkuro65Za75p+P54KcIDx5dWJvd2VpMDk4MkBwaHl0aXVtLmNvbS5jbj4K5Y+R
+6YCB5pe26Ze0OjIwMjQtMTEtMTIgMTE6NTQ6MTggKOaYn+acn+S6jCkK5pS25Lu25Lq6OiBvcGVu
+Ym1jQGxpc3RzLm96bGFicy5vcmcK5Li76aKYOiBCTUNXRUIgZGVidWcgcXVlc3Rpb24KCgoKSGVs
+bG8scG0KCgoKCkVhY2ggdGltZSBkZWJ1Z2luZyBhIGZ1bmNpb24gb2Ygb25lIGxpbmUgY29kZSB3
+aWxsIGNvc3QgbWUgdG9vIG11Y2ggdGltZS4KMS50eXBlICJiaXRiYWtlIGJtY3dlYiIsdGhpcyBh
+Y3Rpb24gd2lsbCBjb3N0IG1lIDUgbWludXRlcy4KMi5SZXBsYWNlIGJtY3dlYiBiaW5hcnkgZmls
+ZS4KMy5yZWJvb3QgYm1jd2ViLgoKVGhpcyBzZXJpZXJzIG9mIGFjdGlvbnMgY29zdCBtZSB0b28g
+bXVjaCB0aW1lLkkgZG9uJ3QgdGhpbmsgaXQgaXMgYSByaWdodCBkZXZlbG9wIGZsb3cgYXMgYSB3
+ZWIgZW5naW5lZXIuQ291bGQgdSBzaG93IG1lIHJpZ2h0IHdheSBmb3IgZGVidWdpbmc/CgoKCgpU
+aGUgc2Vjb25kIHF1ZXN0aW9uIGlzIHRoYXQgSSBkaWRuJ3QgZmluZCBhbnkgYWN0aW9uIHJlbGF0
+ZSB3aXRoICJtZXNvbiBzZXR1cCBidWlsZGRlciAmJiBuaW5qYSAiIGluIGJtY3dlYi5iYi5Ib3cg
+ZG9lcyBpdCB3b3JrP2hvdyBjYW4gSSB1c2Ug4oCcSW5jcmVtZW50YWwgSW1wbGVtZW50YXRpb27i
+gJ0gdG8gZGVjcmVhc2Ugd2FzdGUgdGltZSBpbiBhY3Rpb24gImJpdGJha2UgYm1jd2ViIiB3aGlj
+aCBjb3N0IG1lIHRvbyBtdWNoIHRpbWUuCgoKCgpUaGUgdGhpcmQgcXVlc3Rpb24uRG9zZSBibWN3
+ZWIgaGF2ZSBIb3QgRGVwbG95bWVudCBtZXRob2Q/TXVzdCBJIHJlcGxhY2UgYmluYXJ5IGJtY3dl
+YiBpbiBvYm1jLXBob3NwaG9yLWltYWdlIGZvciBkZXRlY3R0aW5nIHdyaXRpbmcgcmVzdWx0PwoK
+RG9zZSBpdCBleGlzdCBhIGZ1bmN0aW9uIHRvIGRldGVjdCByZXN1bHQgbW9yZSBjb252aW5lbnRs
+eSBsaWtlIG5wbSBydW4gc2VydmUgaW4gd2VidWktdnVlLHRoYXQgaXMgbW9yZSBjb252ZW5pZW50
+IGFuZCBtb3JlIHNhZmUuSXQgdXNlZCBwcm94eSBhbmQgd2lsbCBuZXZlciByZXBsYWNlIGJpbmFy
+eSBmaWxlIGluIG9ibWMuCgoKCgpUaGFua3MhCgoKCgoKCuS/oeaBr+WuieWFqOWjsOaYju+8muac
+rOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7hOe7h+aJgOaciSzlj5Hku7bk
+urrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInmnYPliKnjgILor7fmjqXmlLbo
+gIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K645Y+vLOS4jeW+l+WQkeS7u+S9
+leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7tuaJgOWQq+S/oeaBr+OAggpJ
+bmZvcm1hdGlvbiBTZWN1cml0eSBOb3RpY2U6IFRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaW4g
+dGhpcyBtYWlsIGlzIHNvbGVseSBwcm9wZXJ0eSBvZiB0aGUgc2VuZGVyJ3Mgb3JnYW5pemF0aW9u
+LlRoaXMgbWFpbCBjb21tdW5pY2F0aW9uIGlzIGNvbmZpZGVudGlhbC5SZWNpcGllbnRzIG5hbWVk
+IGFib3ZlIGFyZSBvYmxpZ2F0ZWQgdG8gbWFpbnRhaW4gc2VjcmVjeSBhbmQgYXJlIG5vdCBwZXJt
+aXR0ZWQgdG8gZGlzY2xvc2UgdGhlIGNvbnRlbnRzIG9mIHRoaXMgY29tbXVuaWNhdGlvbiB0byBv
+dGhlcnMu
+------=_Part_103972_1665195754.1731477828051
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-index 05cc07b8f48c..55d94f669be3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
-+++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-@@ -121,6 +121,17 @@ config DWMAC_MESON
- 	  the stmmac device driver. This driver is used for Meson6,
- 	  Meson8, Meson8b and GXBB SoCs.
- 
-+config DWMAC_NUVOTON
-+	tristate "Nuvoton MA35 dwmac support"
-+	default ARCH_MA35
-+	depends on OF && (ARCH_MA35 || COMPILE_TEST)
-+	select MFD_SYSCON
-+	help
-+	  Support for Ethernet controller on Nuvoton MA35 series SoC.
-+
-+	  This selects the Nuvoton MA35 series SoC glue layer support
-+	  for the stmmac device driver.
-+
- config DWMAC_QCOM_ETHQOS
- 	tristate "Qualcomm ETHQOS support"
- 	default ARCH_QCOM
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
-index c2f0e91f6bf8..c08fcfdd7b31 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Makefile
-+++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
-@@ -19,6 +19,7 @@ obj-$(CONFIG_DWMAC_IPQ806X)	+= dwmac-ipq806x.o
- obj-$(CONFIG_DWMAC_LPC18XX)	+= dwmac-lpc18xx.o
- obj-$(CONFIG_DWMAC_MEDIATEK)	+= dwmac-mediatek.o
- obj-$(CONFIG_DWMAC_MESON)	+= dwmac-meson.o dwmac-meson8b.o
-+obj-$(CONFIG_DWMAC_NUVOTON)	+= dwmac-nuvoton.o
- obj-$(CONFIG_DWMAC_QCOM_ETHQOS)	+= dwmac-qcom-ethqos.o
- obj-$(CONFIG_DWMAC_ROCKCHIP)	+= dwmac-rk.o
- obj-$(CONFIG_DWMAC_RZN1)	+= dwmac-rzn1.o
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
-new file mode 100644
-index 000000000000..68c71d2b46f4
---- /dev/null
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
-@@ -0,0 +1,179 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/**
-+ * dwmac-nuvoton.c - Nuvoton MA35 series DWMAC specific glue layer
-+ *
-+ * Copyright (C) 2024 Nuvoton Technology Corp.
-+ *
-+ * Author: Joey Lu <yclu4@nuvoton.com>
-+ */
-+
-+#include <linux/mfd/syscon.h>
-+#include <linux/of_device.h>
-+#include <linux/of_net.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/stmmac.h>
-+
-+#include "stmmac.h"
-+#include "stmmac_platform.h"
-+
-+#define PATHDLY_DEC         134
-+#define TXDLY_OFST          16
-+#define TXDLY_MSK           GENMASK(19, 16)
-+#define RXDLY_OFST          20
-+#define RXDLY_MSK           GENMASK(23, 20)
-+
-+#define REG_SYS_GMAC0MISCR  0x108
-+#define REG_SYS_GMAC1MISCR  0x10C
-+
-+#define MISCR_RMII          BIT(0)
-+
-+struct nvt_priv_data {
-+	struct platform_device *pdev;
-+	struct regmap *regmap;
-+};
-+
-+static struct nvt_priv_data *
-+nuvoton_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct nvt_priv_data *bsp_priv;
-+	phy_interface_t phy_mode;
-+	u32 tx_delay, rx_delay;
-+	u32 macid, arg, reg;
-+
-+	bsp_priv = devm_kzalloc(dev, sizeof(*bsp_priv), GFP_KERNEL);
-+	if (!bsp_priv)
-+		return ERR_PTR(-ENOMEM);
-+
-+	bsp_priv->regmap =
-+		syscon_regmap_lookup_by_phandle_args(dev->of_node, "nuvoton,sys", 1, &macid);
-+	if (IS_ERR(bsp_priv->regmap)) {
-+		dev_err(dev, "Failed to get sys register\n");
-+		return ERR_PTR(-ENODEV);
-+	}
-+	if (macid > 1) {
-+		dev_err(dev, "Invalid sys arguments\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	if (of_property_read_u32(dev->of_node, "tx-internal-delay-ps", &arg)) {
-+		tx_delay = 0; /* Default value is 0 */
-+	} else {
-+		if (arg > 0 && arg <= 2000) {
-+			tx_delay = (arg == 2000) ? 0xF : (arg / PATHDLY_DEC);
-+			dev_dbg(dev, "Set Tx path delay to 0x%x\n", tx_delay);
-+		} else {
-+			tx_delay = 0;
-+			dev_err(dev, "Invalid Tx path delay argument. Setting to default.\n");
-+		}
-+	}
-+	if (of_property_read_u32(dev->of_node, "rx-internal-delay-ps", &arg)) {
-+		rx_delay = 0; /* Default value is 0 */
-+	} else {
-+		if (arg > 0 && arg <= 2000) {
-+			rx_delay = (arg == 2000) ? 0xF : (arg / PATHDLY_DEC);
-+			dev_dbg(dev, "Set Rx path delay to 0x%x\n", rx_delay);
-+		} else {
-+			rx_delay = 0;
-+			dev_err(dev, "Invalid Rx path delay argument. Setting to default.\n");
-+		}
-+	}
-+
-+	regmap_read(bsp_priv->regmap,
-+		    macid == 0 ? REG_SYS_GMAC0MISCR : REG_SYS_GMAC1MISCR, &reg);
-+	reg &= ~(TXDLY_MSK | RXDLY_MSK);
-+
-+	if (of_get_phy_mode(pdev->dev.of_node, &phy_mode)) {
-+		dev_err(dev, "missing phy mode property\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	switch (phy_mode) {
-+	case PHY_INTERFACE_MODE_RGMII:
-+	case PHY_INTERFACE_MODE_RGMII_ID:
-+	case PHY_INTERFACE_MODE_RGMII_RXID:
-+	case PHY_INTERFACE_MODE_RGMII_TXID:
-+		reg &= ~MISCR_RMII;
-+		break;
-+	case PHY_INTERFACE_MODE_RMII:
-+		reg |= MISCR_RMII;
-+		break;
-+	default:
-+		dev_err(dev, "Unsupported phy-mode (%d)\n", phy_mode);
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	if (!(reg & MISCR_RMII)) {
-+		reg |= tx_delay << TXDLY_OFST;
-+		reg |= rx_delay << RXDLY_OFST;
-+	}
-+
-+	regmap_write(bsp_priv->regmap,
-+		     macid == 0 ? REG_SYS_GMAC0MISCR : REG_SYS_GMAC1MISCR, reg);
-+
-+	bsp_priv->pdev = pdev;
-+
-+	return bsp_priv;
-+}
-+
-+static int nuvoton_gmac_probe(struct platform_device *pdev)
-+{
-+	struct plat_stmmacenet_data *plat_dat;
-+	struct stmmac_resources stmmac_res;
-+	int ret;
-+
-+	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
-+	if (ret)
-+		return ret;
-+
-+	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
-+	if (IS_ERR(plat_dat))
-+		return PTR_ERR(plat_dat);
-+
-+	/* Nuvoton DWMAC configs */
-+	plat_dat->has_gmac = 1;
-+	plat_dat->tx_fifo_size = 2048;
-+	plat_dat->rx_fifo_size = 4096;
-+	plat_dat->multicast_filter_bins = 0;
-+	plat_dat->unicast_filter_entries = 8;
-+	plat_dat->flags &= ~STMMAC_FLAG_USE_PHY_WOL;
-+
-+	plat_dat->bsp_priv = nuvoton_gmac_setup(pdev, plat_dat);
-+	if (IS_ERR(plat_dat->bsp_priv)) {
-+		ret = PTR_ERR(plat_dat->bsp_priv);
-+		return ret;
-+	}
-+
-+	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
-+	if (ret)
-+		return ret;
-+
-+	/* We support WoL by magic packet, override pmt to make it work! */
-+	plat_dat->pmt = 1;
-+	dev_info(&pdev->dev, "Wake-Up On Lan supported\n");
-+	device_set_wakeup_capable(&pdev->dev, 1);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id nuvoton_dwmac_match[] = {
-+	{ .compatible = "nuvoton,ma35d1-dwmac"},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, nuvoton_dwmac_match);
-+
-+static struct platform_driver nuvoton_dwmac_driver = {
-+	.probe  = nuvoton_gmac_probe,
-+	.remove_new = stmmac_pltfr_remove,
-+	.driver = {
-+		.name           = "nuvoton-dwmac",
-+		.pm		= &stmmac_pltfr_pm_ops,
-+		.of_match_table = nuvoton_dwmac_match,
-+	},
-+};
-+module_platform_driver(nuvoton_dwmac_driver);
-+
-+MODULE_AUTHOR("Joey Lu <yclu4@nuvoton.com>");
-+MODULE_DESCRIPTION("Nuvoton DWMAC specific glue layer");
-+MODULE_LICENSE("GPL v2");
--- 
-2.34.1
+PHN0eWxlIGNsYXNzPSJrZS1zdHlsZSI+CltsaXN0LXN0eWxlLXR5cGVdIHtwYWRkaW5nLWxlZnQ6
+MjBweDtsaXN0LXN0eWxlLXBvc2l0aW9uOmluc2lkZX0KW2xpc3Qtc3R5bGUtdHlwZV0gbGkge21h
+cmdpbjowfQpbbGlzdC1zdHlsZS10eXBlXSBsaTpiZWZvcmUsIHNwYW4ua2UtbGlzdC1pdGVtLW1h
+dHRlciB7Zm9udC1mYW1pbHk6InNhbnMgc2VyaWYiLHRhaG9tYSx2ZXJkYW5hLGhlbHZldGljYX0K
+W2xpc3Qtc3R5bGUtdHlwZV0gbGkgcCxbbGlzdC1zdHlsZS10eXBlXSBsaSBoMSxbbGlzdC1zdHls
+ZS10eXBlXSBsaSBoMixbbGlzdC1zdHlsZS10eXBlXSBsaSBoMyxbbGlzdC1zdHlsZS10eXBlXSBs
+aSBoNCxbbGlzdC1zdHlsZS10eXBlXSBsaSBoNSxbbGlzdC1zdHlsZS10eXBlXSBsaSBkaXYsW2xp
+c3Qtc3R5bGUtdHlwZV0gbGkgYmxvY2txdW90ZXtkaXNwbGF5OmlubGluZTt3b3JkLWJyZWFrOmJy
+ZWFrLWFsbH0KW2xpc3Qtc3R5bGUtdHlwZV0gbGkgdGFibGUge2Rpc3BsYXk6aW5saW5lLWJsb2Nr
+O3ZlcnRpY2FsLWFsaWduOnRvcH0KcHttYXJnaW46MH0KdGQge3dvcmQtYnJlYWs6IGJyZWFrLXdv
+cmR9Ci5kZWZhdWx0LWZvbnQtMTczMTQ3NzgwMzEwMnsKZm9udC1zaXplOjE0cHg7Cn0KPC9zdHls
+ZT48ZGl2IGNsYXNzPSJkZWZhdWx0LWZvbnQtMTczMTQ3NzgwMzEwMiIgZGlyPSJsdHIiPjxwPldh
+aXR0aW5nIGZvciB5b3VyIHJlcGx5LHRoYW5rcyE8L3A+PHA+PGJyPjwvcD48cD48YnI+PC9wPjxi
+bG9ja3F1b3RlIG5hbWU9InJlcGx5Q29udGVudCIgY2xhc3M9IlJlZmVyZW5jZVF1b3RlIiBzdHls
+ZT0icGFkZGluZy1sZWZ0OjVweDttYXJnaW4tbGVmdDo1cHg7Ym9yZGVyLWxlZnQ6I2I2YjZiNiAy
+cHggc29saWQ7bWFyZ2luLXJpZ2h0OjA7Ij4tLS0tLeWOn+Wni+mCruS7ti0tLS0tPGJyPgo8Yj7l
+j5Hku7bkuro6PC9iPiA8c3BhbiBpZD0icmNfZnJvbSI+5Za75p+P54KcICZsdDt5dWJvd2VpMDk4
+MkBwaHl0aXVtLmNvbS5jbiZndDs8L3NwYW4+PGJyPgo8Yj7lj5HpgIHml7bpl7Q6PC9iPiA8c3Bh
+biBpZD0icmNfc2VudHRpbWUiPjIwMjQtMTEtMTIgMTE6NTQ6MTggKOaYn+acn+S6jCk8L3NwYW4+
+PGJyPgo8Yj7mlLbku7bkuro6PC9iPiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8YnI+CjxiPuS4
+u+mimDo8L2I+IEJNQ1dFQiBkZWJ1ZyBxdWVzdGlvbjxicj48YnI+PHN0eWxlIGNsYXNzPSJrZS1z
+dHlsZSI+CltsaXN0LXN0eWxlLXR5cGVdIHtwYWRkaW5nLWxlZnQ6MjBweDtsaXN0LXN0eWxlLXBv
+c2l0aW9uOmluc2lkZX0KW2xpc3Qtc3R5bGUtdHlwZV0gbGkge21hcmdpbjowfQpbbGlzdC1zdHls
+ZS10eXBlXSBsaTpiZWZvcmUsIHNwYW4ua2UtbGlzdC1pdGVtLW1hdHRlciB7Zm9udC1mYW1pbHk6
+InNhbnMgc2VyaWYiLHRhaG9tYSx2ZXJkYW5hLGhlbHZldGljYX0KW2xpc3Qtc3R5bGUtdHlwZV0g
+bGkgcCxbbGlzdC1zdHlsZS10eXBlXSBsaSBoMSxbbGlzdC1zdHlsZS10eXBlXSBsaSBoMixbbGlz
+dC1zdHlsZS10eXBlXSBsaSBoMyxbbGlzdC1zdHlsZS10eXBlXSBsaSBoNCxbbGlzdC1zdHlsZS10
+eXBlXSBsaSBoNSxbbGlzdC1zdHlsZS10eXBlXSBsaSBkaXYsW2xpc3Qtc3R5bGUtdHlwZV0gbGkg
+YmxvY2txdW90ZXtkaXNwbGF5OmlubGluZTt3b3JkLWJyZWFrOmJyZWFrLWFsbH0KW2xpc3Qtc3R5
+bGUtdHlwZV0gbGkgdGFibGUge2Rpc3BsYXk6aW5saW5lLWJsb2NrO3ZlcnRpY2FsLWFsaWduOnRv
+cH0KcHttYXJnaW46MH0KdGQge3dvcmQtYnJlYWs6IGJyZWFrLXdvcmR9Ci5kZWZhdWx0LWZvbnQt
+MTczMTM4MzQxNzc3N3sKZm9udC1zaXplOjE0cHg7Cn0KPC9zdHlsZT48ZGl2IGNsYXNzPSJkZWZh
+dWx0LWZvbnQtMTczMTM4MzQxNzc3NyIgZGlyPSJsdHIiPjxwIGRpcj0iYXV0byIgc3R5bGU9ImJv
+eC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW4tYm90dG9tOnZhcigtLWJhc2Utc2l6ZS0xNik7Y29s
+b3I6IzFGMjMyODtmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQs
+ICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwg
+QXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtT
+ZWdvZSBVSSBFbW9qaSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3JvdW5kLWNvbG9yOiNGRkZG
+RkY7Ij5IZWxsbyxwbTwvcD48cCBkaXI9ImF1dG8iIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1i
+b3g7bWFyZ2luLWJvdHRvbTp2YXIoLS1iYXNlLXNpemUtMTYpO2NvbG9yOiMxRjIzMjg7Zm9udC1m
+YW1pbHk6LWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZx
+dW90OywgJnF1b3Q7Tm90byBTYW5zJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlm
+LCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVv
+dDs7dGV4dC13cmFwOndyYXA7YmFja2dyb3VuZC1jb2xvcjojRkZGRkZGOyI+PGJyPjwvcD48cCBk
+aXI9ImF1dG8iIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1ib3g7bWFyZ2luLWJvdHRvbTp2YXIo
+LS1iYXNlLXNpemUtMTYpO2NvbG9yOiMxRjIzMjg7Zm9udC1mYW1pbHk6LWFwcGxlLXN5c3RlbSwg
+QmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90OywgJnF1b3Q7Tm90byBTYW5z
+JnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBF
+bW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDs7dGV4dC13cmFwOndyYXA7YmFj
+a2dyb3VuZC1jb2xvcjojRkZGRkZGOyI+RWFjaCB0aW1lIGRlYnVnaW5nIGEgZnVuY2lvbiBvZiBv
+bmUgbGluZSBjb2RlIHdpbGwgY29zdCBtZSB0b28gbXVjaCB0aW1lLjxiciBzdHlsZT0iYm94LXNp
+emluZzpib3JkZXItYm94OyI+MS50eXBlICJiaXRiYWtlIGJtY3dlYiIsdGhpcyBhY3Rpb24gd2ls
+bCBjb3N0IG1lIDUgbWludXRlcy48YnIgc3R5bGU9ImJveC1zaXppbmc6Ym9yZGVyLWJveDsiPjIu
+UmVwbGFjZSBibWN3ZWIgYmluYXJ5IGZpbGUuPGJyIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1i
+b3g7Ij4zLnJlYm9vdCBibWN3ZWIuPC9wPjxwIGRpcj0iYXV0byIgc3R5bGU9ImJveC1zaXppbmc6
+Ym9yZGVyLWJveDttYXJnaW4tYm90dG9tOnZhcigtLWJhc2Utc2l6ZS0xNik7Y29sb3I6IzFGMjMy
+ODtmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1Nl
+Z29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNh
+bnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBF
+bW9qaSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3JvdW5kLWNvbG9yOiNGRkZGRkY7Ij5UaGlz
+IHNlcmllcnMgb2YgYWN0aW9ucyBjb3N0IG1lIHRvbyBtdWNoIHRpbWUuSSBkb24ndCB0aGluayBp
+dCBpcyBhIHJpZ2h0IGRldmVsb3AgZmxvdyBhcyBhIHdlYiBlbmdpbmVlci5Db3VsZCB1IHNob3cg
+bWUgcmlnaHQgd2F5IGZvciBkZWJ1Z2luZz88L3A+PHAgZGlyPSJhdXRvIiBzdHlsZT0iYm94LXNp
+emluZzpib3JkZXItYm94O21hcmdpbi1ib3R0b206dmFyKC0tYmFzZS1zaXplLTE2KTtjb2xvcjoj
+MUYyMzI4O2ZvbnQtZmFtaWx5Oi1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1
+b3Q7U2Vnb2UgVUkmcXVvdDssICZxdW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0aWNhLCBBcmlh
+bCwgc2Fucy1zZXJpZiwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29l
+IFVJIEVtb2ppJnF1b3Q7O3RleHQtd3JhcDp3cmFwO2JhY2tncm91bmQtY29sb3I6I0ZGRkZGRjsi
+Pjxicj48L3A+PHAgZGlyPSJhdXRvIiBzdHlsZT0iYm94LXNpemluZzpib3JkZXItYm94O21hcmdp
+bi1ib3R0b206dmFyKC0tYmFzZS1zaXplLTE2KTtjb2xvcjojMUYyMzI4O2ZvbnQtZmFtaWx5Oi1h
+cHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssICZx
+dW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgJnF1b3Q7
+QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7O3RleHQt
+d3JhcDp3cmFwO2JhY2tncm91bmQtY29sb3I6I0ZGRkZGRjsiPlRoZSBzZWNvbmQgcXVlc3Rpb24g
+aXMgdGhhdCBJIGRpZG4ndCBmaW5kIGFueSBhY3Rpb24gcmVsYXRlIHdpdGggIm1lc29uIHNldHVw
+IGJ1aWxkZGVyICZhbXA7JmFtcDsgbmluamEgIiBpbiBibWN3ZWIuYmIuSG93IGRvZXMgaXQgd29y
+az9ob3cgY2FuIEkgdXNlIOKAnEluY3JlbWVudGFsIEltcGxlbWVudGF0aW9u4oCdIHRvIGRlY3Jl
+YXNlIHdhc3RlIHRpbWUgaW4gYWN0aW9uICJiaXRiYWtlIGJtY3dlYiIgd2hpY2ggY29zdCBtZSB0
+b28gbXVjaCB0aW1lLjwvcD48cCBkaXI9ImF1dG8iIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1i
+b3g7bWFyZ2luLWJvdHRvbTp2YXIoLS1iYXNlLXNpemUtMTYpO2NvbG9yOiMxRjIzMjg7Zm9udC1m
+YW1pbHk6LWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZx
+dW90OywgJnF1b3Q7Tm90byBTYW5zJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlm
+LCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVv
+dDs7dGV4dC13cmFwOndyYXA7YmFja2dyb3VuZC1jb2xvcjojRkZGRkZGOyI+PGJyPjwvcD48cCBk
+aXI9ImF1dG8iIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1ib3g7bWFyZ2luLWJvdHRvbTp2YXIo
+LS1iYXNlLXNpemUtMTYpO2NvbG9yOiMxRjIzMjg7Zm9udC1mYW1pbHk6LWFwcGxlLXN5c3RlbSwg
+QmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90OywgJnF1b3Q7Tm90byBTYW5z
+JnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBF
+bW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDs7dGV4dC13cmFwOndyYXA7YmFj
+a2dyb3VuZC1jb2xvcjojRkZGRkZGOyI+VGhlIHRoaXJkIHF1ZXN0aW9uLkQ8c3BhbiBzdHlsZT0i
+Y29sb3I6IzFGMjMyODtmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZv
+bnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGlj
+YSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVv
+dDtTZWdvZSBVSSBFbW9qaSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3JvdW5kLWNvbG9yOiNG
+RkZGRkY7Ij5vc2UgYm1jd2ViIGhhdmUgSG90IERlcGxveW1lbnQgbWV0aG9kPzxzcGFuIHN0eWxl
+PSJjb2xvcjojMUYyMzI4O2ZvbnQtZmFtaWx5Oi1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVt
+Rm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssICZxdW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0
+aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZx
+dW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7O3RleHQtd3JhcDp3cmFwO2JhY2tncm91bmQtY29sb3I6
+I0ZGRkZGRjsiPk11c3QgSSByZXBsYWNlIGJpbmFyeSBibWN3ZWIgaW4gb2JtYy1waG9zcGhvci1p
+bWFnZSBmb3IgZGV0ZWN0dGluZyB3cml0aW5nIHJlc3VsdD88L3NwYW4+PC9zcGFuPjwvcD48cD48
+c3BhbiBzdHlsZT0iY29sb3I6IzFGMjMyODtmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlu
+a01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVv
+dDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2pp
+JnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3Jv
+dW5kLWNvbG9yOiNGRkZGRkY7Ij5Eb3NlIGl0IGV4aXN0IGEgZnVuY3Rpb24gdG8gZGV0ZWN0IHJl
+c3VsdCBtb3JlIGNvbnZpbmVudGx5IGxpa2UgbnBtIHJ1biBzZXJ2ZSBpbiB3ZWJ1aS12dWUsdGhh
+dCBpcyBtb3JlIGNvbnZlbmllbnQgYW5kIG1vcmUgc2FmZS5JdCB1c2VkIHByb3h5IGFuZCB3aWxs
+IG5ldmVyIHJlcGxhY2UgYmluYXJ5IGZpbGUgaW4gb2JtYy48L3NwYW4+PC9wPjxwPjxiciBzdHls
+ZT0iYm94LXNpemluZzpib3JkZXItYm94O2NvbG9yOiMxRjIzMjg7Zm9udC1mYW1pbHk6LWFwcGxl
+LXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90OywgJnF1b3Q7
+Tm90byBTYW5zJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBs
+ZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDs7dGV4dC13cmFw
+OndyYXA7YmFja2dyb3VuZC1jb2xvcjojRkZGRkZGOyI+PC9wPjxwPjxzcGFuIHN0eWxlPSJjb2xv
+cjojMUYyMzI4O2ZvbnQtZmFtaWx5Oi1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwg
+JnF1b3Q7U2Vnb2UgVUkmcXVvdDssICZxdW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0aWNhLCBB
+cmlhbCwgc2Fucy1zZXJpZiwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1Nl
+Z29lIFVJIEVtb2ppJnF1b3Q7O3RleHQtd3JhcDp3cmFwO2JhY2tncm91bmQtY29sb3I6I0ZGRkZG
+RjsiPlRoYW5rcyE8L3NwYW4+PC9wPjxwIGRpcj0iYXV0byIgc3R5bGU9ImJveC1zaXppbmc6Ym9y
+ZGVyLWJveDttYXJnaW4tYm90dG9tOnZhcigtLWJhc2Utc2l6ZS0xNik7Y29sb3I6IzFGMjMyODtm
+b250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29l
+IFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMt
+c2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9q
+aSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3JvdW5kLWNvbG9yOiNGRkZGRkY7Ij48c3BhbiBz
+dHlsZT0iY29sb3I6IzFGMjMyODtmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5
+c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhl
+bHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7
+LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90Ozt0ZXh0LXdyYXA6d3JhcDtiYWNrZ3JvdW5kLWNv
+bG9yOiNGRkZGRkY7Ij48L3NwYW4+PGJyPjwvcD48L2Rpdj48YnI+PGJyPjxpIHN0eWxlPSJjb2xv
+cjojNzc3Nzc3O2ZvbnQtZmFtaWx5OuWui+S9kztmb250LXNpemU6eC1zbWFsbDsiPuS/oeaBr+Wu
+ieWFqOWjsOaYju+8muacrOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7hOe7
+h+aJgOaciSzlj5Hku7bkurrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInmnYPl
+iKnjgILor7fmjqXmlLbogIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K645Y+v
+LOS4jeW+l+WQkeS7u+S9leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7tuaJ
+gOWQq+S/oeaBr+OAgjxicj5JbmZvcm1hdGlvbiBTZWN1cml0eSBOb3RpY2U6IFRoZSBpbmZvcm1h
+dGlvbiBjb250YWluZWQgaW4gdGhpcyBtYWlsIGlzIHNvbGVseSBwcm9wZXJ0eSBvZiB0aGUgc2Vu
+ZGVyJ3Mgb3JnYW5pemF0aW9uLlRoaXMgbWFpbCBjb21tdW5pY2F0aW9uIGlzIGNvbmZpZGVudGlh
+bC5SZWNpcGllbnRzIG5hbWVkIGFib3ZlIGFyZSBvYmxpZ2F0ZWQgdG8gbWFpbnRhaW4gc2VjcmVj
+eSBhbmQgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gZGlzY2xvc2UgdGhlIGNvbnRlbnRzIG9mIHRoaXMg
+Y29tbXVuaWNhdGlvbiB0byBvdGhlcnMuPC9pPjwvYmxvY2txdW90ZT48L2Rpdj48YnI+PGJyPjxp
+IHN0eWxlPSJjb2xvcjogcmdiKDExOSwgMTE5LCAxMTkpOyBmb250LWZhbWlseTog5a6L5L2TOyBm
+b250LXNpemU6IHgtc21hbGw7Ij7kv6Hmga/lronlhajlo7DmmI7vvJrmnKzpgq7ku7bljIXlkKvk
+v6Hmga/lvZLlj5Hku7bkurrmiYDlnKjnu4Tnu4fmiYDmnIks5Y+R5Lu25Lq65omA5Zyo57uE57uH
+5a+56K+l6YKu5Lu25oul5pyJ5omA5pyJ5p2D5Yip44CC6K+35o6l5pS26ICF5rOo5oSP5L+d5a+G
+LOacque7j+WPkeS7tuS6uuS5pumdouiuuOWPryzkuI3lvpflkJHku7vkvZXnrKzkuInmlrnnu4Tn
+u4flkozkuKrkurrpgI/pnLLmnKzpgq7ku7bmiYDlkKvkv6Hmga/jgII8YnI+SW5mb3JtYXRpb24g
+U2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgbWFpbCBp
+cyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNlbmRlcidzIG9yZ2FuaXphdGlvbi5UaGlzIG1haWwg
+Y29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRpYWwuUmVjaXBpZW50cyBuYW1lZCBhYm92ZSBhcmUg
+b2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3JlY3kgYW5kIGFyZSBub3QgcGVybWl0dGVkIHRvIGRp
+c2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlzIGNvbW11bmljYXRpb24gdG8gb3RoZXJzLjwvaT4=
+
+------=_Part_103972_1665195754.1731477828051--
 
