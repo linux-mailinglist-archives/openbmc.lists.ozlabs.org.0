@@ -1,82 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38A609C6C55
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 11:04:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E1939C6E77
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 12:59:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XpJmb5H8nz3bWq
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 21:04:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XpMJs1Sjkz3bgy
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2024 22:59:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a0a:edc0:2:b01:1d::104"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731492277;
-	cv=none; b=YjwwkcQaBwXS+5T2+fkRBv0kxHOrN+MW2msWFwlFSYgpn/bkZUKV/Uc2LZ+Scky4n52jVDfN0sKqPiRThQbEJR4Nw6XsgW/xyPisE4GQ79n5Q745RZZRWq+4y0oIpi2A2l3yT4Qev86JPuL+plSsS8ezU/j/cTcbcYnFgOqDDIi5vFiQYrIxjDLGyvA2h61O/Ab6NB0mt5L3GO3VOhHtfnHU7yssmpVcKRlc8NH0ZfXAqbu1ZwH7Bl4QxGY8XWSo3+Iway/caLK7kDCjlhrkRr3JRECn2JS+KIxbP0oveJCZNZa5+gucVY6wAx54OFgYfAy7iEj7YNkmnibkEWg0Xw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.12
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731499161;
+	cv=none; b=izJzMIFT6U8OGkcSge0ngdWrzIkVy7gIeP4CU/ip9hrq6+LIGHmHOKZuX860kUZXbOByac7ah+fvwBjwW7d7pYs2lL0oJW4pQgdJlqYmvli09U+On/Rymww3zQHCl2Ox7cFQ317sHkNDx+5wN7acfzobt4IIFt9j3FLD6fgE6z93UfzfarEGPrV80EBVawW6UEEO6IJAQ2dwTrjUX1tqw8sS660Bp/GX7edxCNYDZXU9zEysMEMtbDEsgcXAYOKZRZXCm8YCRr/CgraTKmDL90Yz3gf5DCMk/Ebd7iU3PI5sUA3YJ/M4n1S3FMFlUe857HYzm9KkSLpb7s9Ag8eyBg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731492277; c=relaxed/relaxed;
-	bh=KihtNbifDm6WbD0d3qZBWnRWMaUKN4RzGEp0IW3rza8=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=TrvdRl12RfxkqNjfsFUZmldniK+Q2jp+VvqELugaXdyKuc1+R7RlhvEOvUjPis+y1LJIX3/ILZ6b7j1wvKKAoLfmRuLcC+IhH5dDhUUe5boYqoZF28ubpBczYCsrr4E5MEcIU1Ucl/fg3Trd+DY2aaaws0VkHfqPlLuDehUIgsAiJBhjrV6qw/KhvQyt+1gwcjtr1psjGiNLZcQXS8MZFeNHXekwwWGXnIACBFdOaeipRcWzYxy0eSeA/tuHPvlT4GC+RfXk87iC7Ud+Vnwhh/fdtDUtMUZo1axHCWe1gxSi/sJ6WfkpUqhw72wZwObY0wMkV5T+wu0KxOd0Rh2Y5A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org) smtp.mailfrom=pengutronix.de
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1731499161; c=relaxed/relaxed;
+	bh=jxIKeVOKKznOiEAzo4EieHm79MDFj0Uu1MUXw8ICZPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DmmQV1XGEaUBbuy/JJOg7F4al+szIekhv4et0IYOcoisoUaawRST+dkbgrev20KAtEXTi4Rz7w6Pz9nPuQgrhsBM+9uBF/nbTi/OBJ3E6EjYIcq5tSFpSzfYoYAmD6x9uHPSX3e6rmocURKzb0BDqvbE4/LpkagUzqXH1l3mz0z6WM9+gjzmFbBZzqETlMqgfs8/391b6F2PtVAOdDoSYVJ4bw0ot2HnHYY8uAJgqPYdyfHXPyHY4yF0W1OnAsce3oDSkxgK701y7hDd0gjBm5PooQAP8nj5Wu9VCXa+0xe9mbGXzVo95AbpCl65jVfcm3ssksXugwuzq8o1VwiHKA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=hcAKbHsn; dkim-atps=neutral; spf=pass (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=hcAKbHsn;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XpJmM4v8gz2yWK
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2024 21:04:33 +1100 (AEDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tBAE9-0007LF-0u; Wed, 13 Nov 2024 11:03:57 +0100
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tBAE4-000YV1-2h;
-	Wed, 13 Nov 2024 11:03:52 +0100
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tBAE4-000387-2O;
-	Wed, 13 Nov 2024 11:03:52 +0100
-Message-ID: <6d8a0d8916e185090423d42217262450ee948088.camel@pengutronix.de>
-Subject: Re: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new register
- mode driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Ryan Chen <ryan_chen@aspeedtech.com>, "brendan.higgins@linux.dev"
-	 <brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
-	 <benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>, 
-	"andi.shyti@kernel.org"
-	 <andi.shyti@kernel.org>, "robh@kernel.org" <robh@kernel.org>, 
-	"krzk+dt@kernel.org"
-	 <krzk+dt@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, 
-	"andrew@codeconstruct.com.au"
-	 <andrew@codeconstruct.com.au>, "andriy.shevchenko@linux.intel.com"
-	 <andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
-	 <linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
-	 <openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
-	 <devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	 <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
-	 <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
-	 <linux-kernel@vger.kernel.org>
-Date: Wed, 13 Nov 2024 11:03:52 +0100
-In-Reply-To: <OS8PR06MB7541739C4D1E69C0981CBCB4F25A2@OS8PR06MB7541.apcprd06.prod.outlook.com>
-References: <20241007035235.2254138-1-ryan_chen@aspeedtech.com>
-	 <20241007035235.2254138-3-ryan_chen@aspeedtech.com>
-	 <6aea003a286162c465d0ee7681988b3697feb103.camel@pengutronix.de>
-	 <OS8PR06MB7541739C4D1E69C0981CBCB4F25A2@OS8PR06MB7541.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XpMJl1QCrz2yR9
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2024 22:59:16 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1731499159; x=1763035159;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=S2yXI+RpE/4Z6IIWIoXWreQT7e9SUd1QZeV3E85aBM8=;
+  b=hcAKbHsn36vd2uie2CI1ZGMir44EIdiGQhhtP1WAk7tNuQbRf8nqRh4F
+   d/o+muVUszAJy4eitVfTB02AxBtIoTfcOZwYsZS8QYicuNItJmD1AJd3y
+   bKVcqwIZIOvjazCC2tQ4bEpqAG/LPx7Eo8fD9SNdWbS7uwzCe72bCG657
+   eVoQcwmGOuKW8YCnm5DnUOq+g3AiQmB/VXxb13zXDYR66M/Ba1ph2VGyz
+   N6c5ZGoRxgnKxQwGIwg5iHPBhFLQsLajNh4i/4qRGtyxAwYzok1bweXgy
+   zT8+4HNN7puPtl0q9MJ7ke2vhDee6pJqp5yYSaSz0G7SAkNtkFDePleMk
+   g==;
+X-CSE-ConnectionGUID: efgrTwwuQv6l4VCBq3/gbQ==
+X-CSE-MsgGUID: m4zbHR7OSHqXcdEfK/JQKw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11254"; a="35314458"
+X-IronPort-AV: E=Sophos;i="6.12,150,1728975600"; 
+   d="scan'208";a="35314458"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2024 03:59:11 -0800
+X-CSE-ConnectionGUID: mbuIIPKWTsC2Zo2OOWA+8Q==
+X-CSE-MsgGUID: Drm0ljxqRt6tHanbqPmqGA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,150,1728975600"; 
+   d="scan'208";a="87842391"
+Received: from lkp-server01.sh.intel.com (HELO 80bd855f15b3) ([10.239.97.150])
+  by orviesa009.jf.intel.com with ESMTP; 13 Nov 2024 03:59:05 -0800
+Received: from kbuild by 80bd855f15b3 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tBC1X-0000Kv-0X;
+	Wed, 13 Nov 2024 11:59:03 +0000
+Date: Wed, 13 Nov 2024 19:58:08 +0800
+From: kernel test robot <lkp@intel.com>
+To: Joey Lu <a0987203069@gmail.com>, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mcoquelin.stm32@gmail.com,
+	richardcochran@gmail.com
+Subject: Re: [PATCH v2 3/3] net: stmmac: dwmac-nuvoton: Add dwmac support for
+ MA35 family
+Message-ID: <202411131946.ozq1D0f2-lkp@intel.com>
+References: <20241113051857.12732-4-a0987203069@gmail.com>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241113051857.12732-4-a0987203069@gmail.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -89,67 +89,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, ychuang3@nuvoton.com, Joey Lu <a0987203069@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, joabreu@synopsys.com, oe-kbuild-all@lists.linux.dev, schung@nuvoton.com, yclu4@nuvoton.com, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mi, 2024-11-13 at 07:43 +0000, Ryan Chen wrote:
-> > Subject: Re: [PATCH v15 2/3] i2c: aspeed: support AST2600 i2c new
-> > register
-> > mode driver
-> >=20
-> > On Mo, 2024-10-07 at 11:52 +0800, Ryan Chen wrote:
-> > > Add i2c new register mode driver to support AST2600 i2c new
-> > > register
-> > > mode. AST2600 i2c controller have legacy and new register mode.
-> > > The
-> > > new register mode have global register support 4 base clock for
-> > > scl
-> > > clock selection, and new clock divider mode. The new register
-> > > mode
-> > > have separate register set to control i2c controller and target.
-> > > This
-> > > patch is for i2c controller mode driver.
-> > >=20
-> > > Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> > > ---
-> > > =C2=A0drivers/i2c/busses/Kconfig       |   11 +
-> > > =C2=A0drivers/i2c/busses/Makefile      |    1 +
-> > > =C2=A0drivers/i2c/busses/i2c-ast2600.c | 1032
-> > > ++++++++++++++++++++++++++++++
-> > > =C2=A03 files changed, 1044 insertions(+)
-> > > =C2=A0create mode 100644 drivers/i2c/busses/i2c-ast2600.c
-> > >=20
-> > [...]
-> > > diff --git a/drivers/i2c/busses/i2c-ast2600.c
-> > > b/drivers/i2c/busses/i2c-ast2600.c
-> > > new file mode 100644
-> > > index 000000000000..17ba0ee77c27
-> > > --- /dev/null
-> > > +++ b/drivers/i2c/busses/i2c-ast2600.c
-> > > @@ -0,0 +1,1032 @@
-> > [...]
-> > > +static int ast2600_i2c_probe(struct platform_device *pdev) {
-> > [...]
-> > > +	i2c_bus->rst =3D devm_reset_control_get_shared(dev, NULL);
-> > > +	if (IS_ERR(i2c_bus->rst))
-> > > +		return dev_err_probe(dev, PTR_ERR(i2c_bus->rst),
-> > > "Missing reset
-> > > +ctrl\n");
-> > > +
-> > > +	reset_control_deassert(i2c_bus->rst);
-> >=20
-> > The shared reset should be asserted again in ast2600_i2c_remove().
-> >=20
-> Hello,
-> It is share reset, if unbond driver and asserted the reset, it will
-> affect others driver running (which is share with the same reset.)
+Hi Joey,
 
-Shared reset_control_deassert/assert are refcounted, like
-clk_enable/disable, see [1]. The reset line will only be asserted when
-the last driver calls reset_control_assert.
+kernel test robot noticed the following build warnings:
 
-[1] https://docs.kernel.org/driver-api/reset.html#shared-and-exclusive-rese=
-ts
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on net-next/main net/main linus/master v6.12-rc7 next-20241113]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-regards
-Philipp
+url:    https://github.com/intel-lab-lkp/linux/commits/Joey-Lu/dt-bindings-net-nuvoton-Add-schema-for-MA35-family-GMAC/20241113-132300
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20241113051857.12732-4-a0987203069%40gmail.com
+patch subject: [PATCH v2 3/3] net: stmmac: dwmac-nuvoton: Add dwmac support for MA35 family
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20241113/202411131946.ozq1D0f2-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241113/202411131946.ozq1D0f2-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411131946.ozq1D0f2-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c:20: warning: expecting prototype for dwmac(). Prototype was for PATHDLY_DEC() instead
+
+Kconfig warnings: (for reference only)
+   WARNING: unmet direct dependencies detected for GET_FREE_REGION
+   Depends on [n]: SPARSEMEM [=n]
+   Selected by [m]:
+   - RESOURCE_KUNIT_TEST [=m] && RUNTIME_TESTING_MENU [=y] && KUNIT [=m]
+
+
+vim +20 drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
+
+    19	
+  > 20	#define PATHDLY_DEC         134
+    21	#define TXDLY_OFST          16
+    22	#define TXDLY_MSK           GENMASK(19, 16)
+    23	#define RXDLY_OFST          20
+    24	#define RXDLY_MSK           GENMASK(23, 20)
+    25	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
