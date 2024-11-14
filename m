@@ -1,60 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD67A9C8135
-	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 03:57:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C4F99C8155
+	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 04:09:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XplDL65HPz3blg
-	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 13:56:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XplVy5nlhz3blk
+	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2024 14:09:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=156.67.10.101
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731553007;
-	cv=none; b=hcVzcDKUFfzb1BmxTsjPItvNSIyxWWJAeL+pV/lEhUEEaWF86z2Du1f+7v3fXeBqhU1DZMcI6ePJbkLkCYI1ARDKMyye/L8q9JHAzvbv9w+24/YdpQKM8YCYKadAkUHNH6xbePvLnMIXzN8xC4HiOZMQmSFwGWiFZV+CEyy1Q165tmq9d2GWwCOZFJV4TI+6Pmsd2LMjLca+p3pOc9BAAdnKcDMCu/W4XK4D6eRd5izuQhB+b8Uc2gJ8wA6TWyGq1WE9h9pX67zZecf0NNb2LLyeWqinay1QOc8bzJ06il9jq4y3HEtj3wyAg676DAJNNxGQCpFJ1JbOQViUJUg9eA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731553767;
+	cv=none; b=JGiuz9kjRpT8273LN90qQm2x8U8A5DRGFd3UDW1xtb0tz7bv8gtS6copk4ksCVdXNNQGd7MNC9AaEbx+ZAtGJ29dpJepUJaRFbEmMQLdcfE21eaE0XJuGkdNUXuBi0Tqjf8hHuxeRk6JfU35dSFEb6ZiURJpLOn9BXqi2EkdlVrRclw/0ieiLDfu0Xw1oALFmr64csRpS4Wt97u4uKyQDb4MmervhcM6juHC+I/yZxs4iRbTBvbku/Rf77zhOdY5PSn0v8lSgJ0YQC3BbwEFXP+ucmf3G0xaMhx5L6MXeJNZy2IJNJxv7YkbtrvSFQQSvFYzR4uHx9+oGPAO5wzMiQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731553007; c=relaxed/relaxed;
-	bh=JJq+FCylc0jmdKMgnYo/ob9xvCnB0F5KgIKVz3m2Nfs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jfs0Wi3+VvvOjofhyUANXrabJLY3+YqyX8emx0stb1XLw/s5A2oysPBh/wsUVcYHzqKNpZ9aKwScaPITL9baqXgjerWzMl4A3/KADbOxfuAp1wL23eIkV7JE4piC6//shzNEMxtyZA5SdOJqYSRAICjfGIqP5z+T4U6xJ/DcaYgR86YxLabsMnHr6tbWzzD53Jcfpy86cuxz26eOS/SW2oddAYyJpVpzzZ0iUqpkq33EBYh91Sb+rC+lzDCN7NVIhO7XIK/3AAhOwpXu4FvkG6SfKUXg+oxOp9vVf27fblea5cpeltzmR8IqDiZqOoqRuYnHCl/eXrz7J7iz9QU5XA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=rXHBOzef; dkim-atps=neutral; spf=pass (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org) smtp.mailfrom=lunn.ch
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+	t=1731553767; c=relaxed/relaxed;
+	bh=Jp6q/hzaronqL1OOIiSDXonIRum5UBHnh9k/VcRsoPg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SeJjKSi8RopttGpr3Utj76R8xSAWdnycJ+jNRcK7DK0PxnEICe6PH92hZZ23H/8JwiI0k7e0usjNgoSJZkBRBFzk66V7ozX4nncs3acmSCck47Lm0v8oUFTTbBUkQ33R8Zy1WAQbJdYvI2IU+W3h8CDkPMA/G0dTJCKb2iggTngeiBDA65yL8sYYEckQ76G50ovTmLvyKhQ5bij7RlcK0Q9Jv/iG16I19j080HlUQvkwodf0n2J/syH7RMe4t1RtNoHwOTkOhLRoMppk30DPcoFcISHBXVCI1cu7oLzI3K0jFsXgrydCkbr23PpPLOEvTQ9iBOdvrNOf/U3agspKlQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QQG4UBxZ; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=kuba@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=rXHBOzef;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QQG4UBxZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=kuba@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XplDF1m2xz2xyG
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Nov 2024 13:56:44 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=JJq+FCylc0jmdKMgnYo/ob9xvCnB0F5KgIKVz3m2Nfs=; b=rXHBOzefIqgQ8x33CXqamAs/rK
-	nzL1Spdpkwe3YloUQNFyv7UIdHE4tWNPm7JLtHn0sNJgC1M2Cug/DVCLmcVedA9kiJoboJ9v1Ski4
-	4+eI6HBVUo72sS9vIr6cyhHIOd8tVnFRxjPAXkiP9GXLB2s3QwLLF7SMzoUf1wDK4nfA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tBQ1x-00DEnU-TW; Thu, 14 Nov 2024 03:56:25 +0100
-Date: Thu, 14 Nov 2024 03:56:25 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Joey Lu <a0987203069@gmail.com>
-Subject: Re: [PATCH v2 3/3] net: stmmac: dwmac-nuvoton: Add dwmac support for
- MA35 family
-Message-ID: <b7fb59a9-989e-42b9-ac72-71f353854812@lunn.ch>
-References: <20241113051857.12732-1-a0987203069@gmail.com>
- <20241113051857.12732-4-a0987203069@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XplVt0qddz2yMv
+	for <openbmc@lists.ozlabs.org>; Thu, 14 Nov 2024 14:09:26 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id D0A265C5808;
+	Thu, 14 Nov 2024 03:08:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68434C4CEC3;
+	Thu, 14 Nov 2024 03:09:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731553761;
+	bh=aNA+MUiXR33lNnb7g+eD9z36PEo+w4KP8BYPgK0Kh2w=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=QQG4UBxZzz99WLCh1CqhlhsxLgYpBVK2nXRK8PkrOJ1mtquva9FvsnXw1+Pvo1u01
+	 kSoXoKQiAyD+nsX0Os/T+IldoBGTutZN8QeYsOQWACKR6kiENdOaRl3yjSfmZmlm9s
+	 KNF+MSBp2oCkJb7cdVy0+vI5buypTfdDmifDPRCy6Y9M4YNvY85ZFan3GIn3blCBYD
+	 JAOlzbq1vawb+i3Qh6SodcO1n6xxgKj/n+Sl2mHyiQiISKC3JZRFeoWFG+/Ag4w1yb
+	 qwmxitYYnkKiAe0EJaElkWrY0I1Jciy5ki/Zjhmxi2d3//xSeBERMYfmaHdbEsU8P5
+	 9MR0sqfovkxlQ==
+Date: Wed, 13 Nov 2024 19:09:20 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Jian Zhang <zhangjian.3032@bytedance.com>
+Subject: Re: [PATCH net-next] mctp i2c: notify user space on TX failure
+Message-ID: <20241113190920.0ceaddf2@kernel.org>
+In-Reply-To: <20241108094206.2808293-1-zhangjian.3032@bytedance.com>
+References: <20241108094206.2808293-1-zhangjian.3032@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241113051857.12732-4-a0987203069@gmail.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,23 +69,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-stm32@st-md-mailman.stormreply.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, netdev@vger.kernel.org, richardcochran@gmail.com, ychuang3@nuvoton.com, alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, edumazet@google.com, joabreu@synopsys.com, linux-arm-kernel@lists.infradead.org, mcoquelin.stm32@gmail.com, schung@nuvoton.com, kuba@kernel.org, krzk+dt@kernel.org, pabeni@redhat.com, davem@davemloft.net, yclu4@nuvoton.com
+Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, open list <linux-kernel@vger.kernel.org>, Eric Dumazet <edumazet@google.com>, Jeremy Kerr <jk@codeconstruct.com.au>, Matt Johnston <matt@codeconstruct.com.au>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> +	if (of_property_read_u32(dev->of_node, "tx-internal-delay-ps", &arg)) {
-> +		tx_delay = 0; /* Default value is 0 */
-> +	} else {
-> +		if (arg > 0 && arg <= 2000) {
-> +			tx_delay = (arg == 2000) ? 0xF : (arg / PATHDLY_DEC);
-> +			dev_dbg(dev, "Set Tx path delay to 0x%x\n", tx_delay);
-> +		} else {
-> +			tx_delay = 0;
-> +			dev_err(dev, "Invalid Tx path delay argument. Setting to default.\n");
+On Fri,  8 Nov 2024 17:42:06 +0800 Jian Zhang wrote:
+> diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+> index 4dc057c121f5..e9a835606dfc 100644
+> --- a/drivers/net/mctp/mctp-i2c.c
+> +++ b/drivers/net/mctp/mctp-i2c.c
+> @@ -485,6 +485,7 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
+>  	struct mctp_i2c_hdr *hdr;
+>  	struct i2c_msg msg = {0};
+>  	u8 *pecp;
+> +	struct sock *sk;
+>  	int rc;
+>  
+
+nit: order the variable declaration lines longest to shortest
+
+> @@ -551,6 +552,14 @@ static void mctp_i2c_xmit(struct mctp_i2c_dev *midev, struct sk_buff *skb)
+>  		dev_warn_ratelimited(&midev->adapter->dev,
+>  				     "__i2c_transfer failed %d\n", rc);
+>  		stats->tx_errors++;
+> +
+> +		sk = skb->sk;
+> +		if (sk) {
+> +			sk->sk_err = -rc;
+> +			if (!sock_flag(sk, SOCK_DEAD))
+> +				sk_error_report(sk);
 > +		}
-> +	}
 
-The device tree binding says that only [0, 2000] are valid. You should
-enforce this here, return -EINVAL of any other value.
-
-	Andrew
+notifying socket in the xmit handler of a netdev is a bit strange,
+could you do it somewhere higher in the MCTP stack?
+-- 
+pw-bot: cr
