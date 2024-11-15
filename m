@@ -2,71 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD1D89D06B6
-	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2024 23:45:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FE519D06B7
+	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2024 23:45:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Xs5S83Qc0z3cPZ
-	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2024 09:45:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Xs5SC40zdz3dRS
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2024 09:45:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a0a:edc0:2:b01:1d::104"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731660695;
-	cv=none; b=bhEnw9jb3itNMfFmua9EkWCEeoKVzV837YJ8ePJZIVOD6ywkiXV8MflJ3L6XsC/cIsTHTPgt9VTVv0CMh/HVZz4MrCEGgqo2eYRMqXdhAcxRfpBzsoUcayePHCZBX4diNPBsg4IOBnYmImj7Xq3xcjS5bBk4tKLrUmZZgQ2ZuSz7kc41HiS8v/UPv6xE0VL6ONe4pWvwvE/8tXWXMwn9OaYTFXdSwECKlP8erQQE3aTD93xSHCIrH1oscc+KMmySGk4MDuAiQmWI2Xdt4jFhy2dwiRUAcEqMZjxUj2vKUGAUnHVg2ydUTO86sZ/kRfLDTSRH2Rau0PD+kRcf2DbwUw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=194.117.254.33
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731662018;
+	cv=none; b=hj0bf0+3n2nQT7qsdlvXNeuvKPC9gfxF8VtdxM3IKlLTYxhsBEjwCgJl9jn6nn8Ovfac0rk8uEjj1UPRNm6PJ45Unvk+PeC96VXVAq7kWIReCBpj/A/VMAXahrlbJ7yS0TD85DeZvOrXLw2c6WCCRi9Y8q3VsdOh9j05AgQjH/EFZ4BesN044w1pV/Nvlu9TyTdu5+qV7X6DuHTBD4ppaQ2XQPGFgmPGGjV1mcz3ANudpEy7NoHI65Q1sxcdc7Zcg6toCQ6BSQ85H7C33DRVWbzX5JKnfiZFCj9nbRSP6n274tFPIIquOkWcCv8E/9kQNatYHFNYHbSXfEldQj716w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731660695; c=relaxed/relaxed;
-	bh=XkqWXf7ZvjAOVDTZSmrCmO9IUaeP8XfGOR0vYgcZ52o=;
+	t=1731662018; c=relaxed/relaxed;
+	bh=yPZVsgKXclOlJH1qoJgcuarPoZsvQmU+kn7v0TjKgwM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SYAcJ3WiD5psX83HBzjKrENF0h5iZ5R17Vi7FvTK6QR0JeDNlEi1UzDjsupRpdz+78523kq615JrbLUpkdXOcC/Rr1hgzB7sJqFLnGx2y0BVkWjIAtYmUU46prEGW/zPflJH2X+Crv7ILcidTi8LBsTUEQ9x0M3HZ15lJh2QJiOcglRvIdomdHmdDCXvNvVIJMUuNvUdBh/66A0iQLOFrO/fgJ34AN4WaD9vP7ZhpR655kaVmwt+v0gmx6j4YIVPZKXHPASyiVEKKVmzGJAhnOHW9Xx0fhfef3ecJPq3xJq52U1QFHJK88bILvRFQl0TA5O3W7xNNnhO6FB4ZcGN8w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=mkl@pengutronix.de; receiver=lists.ozlabs.org) smtp.mailfrom=pengutronix.de
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=mkl@pengutronix.de; receiver=lists.ozlabs.org)
-X-Greylist: delayed 1210 seconds by postgrey-1.37 at boromir; Fri, 15 Nov 2024 19:51:33 AEDT
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	 Content-Type:Content-Disposition:In-Reply-To; b=QVzrsBNixmFOiwPpXMMGK0wgPDGAsF8zo4rL+RmAvBBYK0okvQhmDZlRNec63JihNBZ4bnDSCP2wzIWqz7R9adxL9J1mPzoXLTwx8lk17RVI3V0yiIXuaB57i3nwTfu8igCpkLjoN4AtStmS8xEbxr7YJed2zbn0gEUTW7OVcpmZSx8+mCyloYxReSaCLEsrsLyIhLKvQjwWgUEPSocKB6cKq88l1YVIJBhyKtVn0Mxx1fCi1jxA4lCZkJEh6F/bPpkd0Q2RgbDt0VyVyDnKtgy4hNVQ3YIW4KhH/1JLcjy47ksjNLwCocRdaRgjwdRxf30gvLmvvph09IglHjStuw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=Zsb7PJ5B; dkim-atps=neutral; spf=pass (client-ip=194.117.254.33; helo=mail.zeus03.de; envelope-from=wsa+renesas@sang-engineering.com; receiver=lists.ozlabs.org) smtp.mailfrom=sang-engineering.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=Zsb7PJ5B;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sang-engineering.com (client-ip=194.117.254.33; helo=mail.zeus03.de; envelope-from=wsa+renesas@sang-engineering.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 394 seconds by postgrey-1.37 at boromir; Fri, 15 Nov 2024 20:13:31 AEDT
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XqW390xRrz2yfm
-	for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2024 19:51:33 +1100 (AEDT)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1tBrjF-0000SB-St; Fri, 15 Nov 2024 09:30:57 +0100
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1tBrjD-000sSC-07;
-	Fri, 15 Nov 2024 09:30:55 +0100
-Received: from pengutronix.de (pd9e59fec.dip0.t-ipconnect.de [217.229.159.236])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id AA09D373AB0;
-	Fri, 15 Nov 2024 08:30:54 +0000 (UTC)
-Date: Fri, 15 Nov 2024 09:30:54 +0100
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: [PATCH net-next] mctp i2c: notify user space on TX failure
-Message-ID: <20241115-scrupulous-mantis-of-purring-1c41fe-mkl@pengutronix.de>
-References: <20241108094206.2808293-1-zhangjian.3032@bytedance.com>
- <20241113190920.0ceaddf2@kernel.org>
- <da9b94909dcda3f0f7e48865e63d118c3be09a8d.camel@codeconstruct.com.au>
- <20241113191909.10cf495e@kernel.org>
- <42761fa6276dcfc64f961d25ff7a46b764d35851.camel@codeconstruct.com.au>
- <20241114070235.79f9a429@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XqWXW6kYNz2xYs
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2024 20:13:31 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=yPZV
+	sgKXclOlJH1qoJgcuarPoZsvQmU+kn7v0TjKgwM=; b=Zsb7PJ5BXCpssQ0r+SWz
+	lH2RNcqPi4KUfnvHZ6wJb1EWjoitv0ZP5RTR9j+jlhEqbzfX+k4VIwnHdLXXdGk5
+	Qse5Q8hoznXgveNraWKDo/szDYToU33oCRGd0OuwtPZvli2eaH/xvO+4wGc4JrRl
+	zjz57QkZX4sK5vlA2t+d92Y3YxHoIVRupK7aNk7ROaee0B2tJOJy5nysUiJeE3eH
+	/Z5rTmX9b/U2MR6YPN4Ginosjgp81gH4iz5xtcAh38Tvh93auPytpSGyaRzFEvxV
+	sjEedwRNwrt9hTKZYe1Hq/IZ+a6+S/BNZVzo/mYnMvOl5fiB2kL65BI1ss8tgj0o
+	QQ==
+Received: (qmail 3419175 invoked from network); 15 Nov 2024 10:06:47 +0100
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 15 Nov 2024 10:06:47 +0100
+X-UD-Smtp-Session: l3s3148p1@nSH84u8mLK9ehhtH
+Date: Fri, 15 Nov 2024 10:06:47 +0100
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Brendan Higgins <brendanhiggins@google.com>
+Subject: Re: [RFC v1] MAINTAINERS: transfer i2c-aspeed maintainership from
+ Brendan to Ryan
+Message-ID: <ZzcPJ9sweqxLZOGf@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	tommy_huang@aspeedtech.com, benh@kernel.crashing.org,
+	joel@jms.id.au, andi.shyti@kernel.org, andrew@codeconstruct.com.au,
+	wsa@kernel.org, ryan_chen@aspeedtech.com, linux-i2c@vger.kernel.org,
+	openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org, BMC-SW@aspeedtech.com,
+	brendan.higgins@linux.dev
+References: <20241115044303.50877-1-brendanhiggins@google.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vt3m2lwmvec4zdoq"
+	protocol="application/pgp-signature"; boundary="nK9GppicB146/nY+"
 Content-Disposition: inline
-In-Reply-To: <20241114070235.79f9a429@kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+In-Reply-To: <20241115044303.50877-1-brendanhiggins@google.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Mon, 18 Nov 2024 09:45:09 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -80,66 +79,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Eric Dumazet <edumazet@google.com>, open list <linux-kernel@vger.kernel.org>, Jian Zhang <zhangjian.3032@bytedance.com>, Jeremy Kerr <jk@codeconstruct.com.au>, Matt Johnston <matt@codeconstruct.com.au>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>
+Cc: BMC-SW@aspeedtech.com, ryan_chen@aspeedtech.com, andi.shyti@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, wsa@kernel.org, brendan.higgins@linux.dev, linux-i2c@vger.kernel.org, tommy_huang@aspeedtech.com, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---vt3m2lwmvec4zdoq
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
+--nK9GppicB146/nY+
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH net-next] mctp i2c: notify user space on TX failure
-MIME-Version: 1.0
 
-On 14.11.2024 07:02:35, Jakub Kicinski wrote:
-> On Thu, 14 Nov 2024 14:48:57 +0800 Jeremy Kerr wrote:
-> > > routing isn't really my forte, TBH, what eats the error so that it
-> > > doesn't come out of mctp_local_output() ? Do you use qdiscs on top
-> > > of the MCTP devices? =20
-> >=20
-> > There are no qdiscs involved at this stage, as we need to preserve
-> > packet ordering in most cases. The route output functions will end up
-> > in a dev_queue_xmit, so any tx error would have been decoupled from the
-> > route output at that stage.
+On Fri, Nov 15, 2024 at 04:43:03AM +0000, Brendan Higgins wrote:
+> Remove Brendan Higgins <brendanhiggins@google.com> from i2c-aspeed entry
+> and replace with Ryan Chen <ryan_chen@aspeedtech.com>.
 >=20
-> Ah, it's the driver eating the errors, it puts the packet on a local
-> queue and returns OK no matter what. The I2C transfer happens from=20
-> a thread.
+> Signed-off-by: Brendan Higgins <brendanhiggins@google.com>
+> ---
+> I am leaving Google and am going through and cleaning up my @google.com
+
+Thanks for your work on this driver.
+
+> address in the relevant places. I was just going to remove myself from
+> the ASPEED I2C DRIVER since I haven't been paying attention to it, but
+> then I saw Ryan is adding a file for the I2C functions on 2600, which
+> made my think: Should I replace myself with Ryan as the maintainer?
 >=20
-> I wonder if there is precedent, let's ask CAN experts.
->=20
-> Mark, MCTP would like to report errors from the drivers all the way=20
-> to the socket. Do CAN drivers do something along these lines?
+> I see that I am the only person actually listed as the maintainer at the
+> moment, and I don't want to leave this in an unmaintained state. What
+> does everyone think? Are we cool with Ryan as the new maintainer?
 
-On CAN_RAW we send fixed size messages (struct can_frame) and there is a
-bit left to mark a can_frame as an error frame. This basically means we
-send the error notification inline.
+I am fine, depends on Ryan as far as I am concerned.
 
-What about using sock_queue_err_skb()? We do this in CAN_J1939.
 
-regards,
-Marc
-
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---vt3m2lwmvec4zdoq
+--nK9GppicB146/nY+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUEC6huC2BN0pvD5fKDiiPnotvG8FAmc3BrsACgkQKDiiPnot
-vG+fYgf/Va/T2YBUFonO4TuAsteq+Vjzg37H/7ok0NZCvgSfZ8QqVGaI54B/ByJH
-fdknhCQ6xHUH0ov7SkK7I8TS2LZHQ3N092ApMCtENsfCTg5ZybIiibPS2Teb+lPP
-lKbktQqtS/5UX/ZJdstAl43zm/MYrNMHnfV2D+BUXDMpr3JvMFX6B6/jeUwZ/lAS
-6r5QAne4+DWNfWf+1S+YWsYHqI1r5cuzN1ZcVPM2WhTM0LdksgkojKAvV5t7zDes
-zwlUtToIF6nfehDyeue5wjMy0WrPOZQs8cTVi0GK3Z2petxKnGFWAvn5mkVg6T0k
-Wc7MKFi1s015Oh1cjnxV6VwvambeUg==
-=XgKe
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmc3DyYACgkQFA3kzBSg
+KbakuxAAhyZAhgBDfdxkF5LlZpy0BWTyWqEP8GXLw6CcwvZK8FtelfWQ7fJp2q+N
+WVUtpFgaiHmEdRr4OGD+1HVFtQgRVu8ybw/jyAt6P3ht1v0AZazUbKrxhJU9atKb
+JbMDn5fMwiZu4YXAnfMXDA4VIrLYG3oTAjdDk4dYR4QwCh9EVRA9SJ4Oi+GkKdWg
+jEu/KQiKNNTchEmr4Hm/A1tql1hOVKfKCg1dcOtnmzFJrrmWfL1zx2TurjyntpET
++DnDJGYx/96tWCxEVgmp517xxr1A4ontZeGw1VaozHzRjmOBXoW9NECyEg/J7zCd
+hz1HefaJvPHACQH8vDYqtYUcAgdQqa06b/emsybRKhyIKkRkY6EG04ExbKEEM4tN
+h+CMRFszsBPSIUQF9tErfHCXnK5z3cVHFrl56RVdBUx6Pb4uqIIVeoHGVjPKoCrs
+HGSlFczraaD1v2bqneRbpdXoBBmbQjp/N555olQ8k9r9HYKxIYr7wr6eM+4quRz4
+pSvGANzlRd6MDxCIInT3bNJ2Agl0qtQxNcjvJHosSuvHNS9Go2fx2To+Qogthww2
++p9jR8SFgPR6Obt0+jj2EoyrPI1ecFreTUxR7D6114J48e7N3oOgEgUsjysS6DBJ
+Qz5L3N28hseO7jDZE16gbtqLJgVOKVjUmqJYo3sOSf3wYcy5sJI=
+=yNAx
 -----END PGP SIGNATURE-----
 
---vt3m2lwmvec4zdoq--
+--nK9GppicB146/nY+--
