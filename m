@@ -1,73 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FE519D06B7
-	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2024 23:45:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EC619D05B1
+	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2024 21:14:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Xs5SC40zdz3dRS
-	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2024 09:45:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Xs25r50tlz3cTn
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2024 07:14:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=194.117.254.33
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731662018;
-	cv=none; b=hj0bf0+3n2nQT7qsdlvXNeuvKPC9gfxF8VtdxM3IKlLTYxhsBEjwCgJl9jn6nn8Ovfac0rk8uEjj1UPRNm6PJ45Unvk+PeC96VXVAq7kWIReCBpj/A/VMAXahrlbJ7yS0TD85DeZvOrXLw2c6WCCRi9Y8q3VsdOh9j05AgQjH/EFZ4BesN044w1pV/Nvlu9TyTdu5+qV7X6DuHTBD4ppaQ2XQPGFgmPGGjV1mcz3ANudpEy7NoHI65Q1sxcdc7Zcg6toCQ6BSQ85H7C33DRVWbzX5JKnfiZFCj9nbRSP6n274tFPIIquOkWcCv8E/9kQNatYHFNYHbSXfEldQj716w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::42a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1731874445;
+	cv=none; b=ZdUXys4GjZSpvyoiWpKF4nRD56KeNtdyJYILTZOZRlgw/BD58IRz80iNdzWjZMx7+VcxlCeIjbbf1YqLHE+/wAu2RajYFNk0pLXUiyzTmIBLhdbF8uD2cUmRoFpW60hG3KZc66v36mdblvV+pHPS3lIshclE/JmqSzhpcU9Egkxvhg6hXkwLmJ2NryA9leAaPHhb6o6jUztiZecZgZbKNMYCwsWAmfgz+7X5m6BdgIkcY7Q+sPcFIaVh5CDxM5q0W8A3xVXf4tCGIO/QaKu46kc/bY2lR/nZY8LnCmLcIpxhDF2349bemXDUI3ZX4FrpSi0xtcE6I+FyjuPNplPGLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1731662018; c=relaxed/relaxed;
-	bh=yPZVsgKXclOlJH1qoJgcuarPoZsvQmU+kn7v0TjKgwM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVzrsBNixmFOiwPpXMMGK0wgPDGAsF8zo4rL+RmAvBBYK0okvQhmDZlRNec63JihNBZ4bnDSCP2wzIWqz7R9adxL9J1mPzoXLTwx8lk17RVI3V0yiIXuaB57i3nwTfu8igCpkLjoN4AtStmS8xEbxr7YJed2zbn0gEUTW7OVcpmZSx8+mCyloYxReSaCLEsrsLyIhLKvQjwWgUEPSocKB6cKq88l1YVIJBhyKtVn0Mxx1fCi1jxA4lCZkJEh6F/bPpkd0Q2RgbDt0VyVyDnKtgy4hNVQ3YIW4KhH/1JLcjy47ksjNLwCocRdaRgjwdRxf30gvLmvvph09IglHjStuw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=Zsb7PJ5B; dkim-atps=neutral; spf=pass (client-ip=194.117.254.33; helo=mail.zeus03.de; envelope-from=wsa+renesas@sang-engineering.com; receiver=lists.ozlabs.org) smtp.mailfrom=sang-engineering.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+	t=1731874445; c=relaxed/relaxed;
+	bh=JQ22dxBuxJ3SOQxpojU/s+vE8bpP8RDnTxJHezr/asE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hvo+gZ991P0HhlBkD03qZ1A4b3ZxY+APU48Kb/E0qufIeHoxgJZUoTQMX87iGtVz97IrL5ud7gE2cVBeLLQQApBJqTGniPQpJqaGSkQczst2oODWAHl0YklvHwiN4MNaqkIWe+fGIoms61YFh8EZpbOzA1pPQiwLwQeVa+rDtJVDa4p77WAGcbh4t/k7MmsStCRFuogJeCp0iDXEy7CytBbTSbB3OXqckERl9DodS21SlnffclGEjfkC3HPdrINqkdE99/rJHJRANYJXjOdsrcpItzAuFQ+Bihlyd2IZX6NzLY7DK8jlzQE/wkDedLl8BMS+R1Fe+W5gpZTURh/C4g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=tanous.net; dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=NEjvBqpA; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::42a; helo=mail-pf1-x42a.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org) smtp.mailfrom=tanous.net
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=sang-engineering.com header.i=@sang-engineering.com header.a=rsa-sha256 header.s=k1 header.b=Zsb7PJ5B;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=NEjvBqpA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sang-engineering.com (client-ip=194.117.254.33; helo=mail.zeus03.de; envelope-from=wsa+renesas@sang-engineering.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 394 seconds by postgrey-1.37 at boromir; Fri, 15 Nov 2024 20:13:31 AEDT
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2607:f8b0:4864:20::42a; helo=mail-pf1-x42a.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XqWXW6kYNz2xYs
-	for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2024 20:13:31 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=yPZV
-	sgKXclOlJH1qoJgcuarPoZsvQmU+kn7v0TjKgwM=; b=Zsb7PJ5BXCpssQ0r+SWz
-	lH2RNcqPi4KUfnvHZ6wJb1EWjoitv0ZP5RTR9j+jlhEqbzfX+k4VIwnHdLXXdGk5
-	Qse5Q8hoznXgveNraWKDo/szDYToU33oCRGd0OuwtPZvli2eaH/xvO+4wGc4JrRl
-	zjz57QkZX4sK5vlA2t+d92Y3YxHoIVRupK7aNk7ROaee0B2tJOJy5nysUiJeE3eH
-	/Z5rTmX9b/U2MR6YPN4Ginosjgp81gH4iz5xtcAh38Tvh93auPytpSGyaRzFEvxV
-	sjEedwRNwrt9hTKZYe1Hq/IZ+a6+S/BNZVzo/mYnMvOl5fiB2kL65BI1ss8tgj0o
-	QQ==
-Received: (qmail 3419175 invoked from network); 15 Nov 2024 10:06:47 +0100
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 15 Nov 2024 10:06:47 +0100
-X-UD-Smtp-Session: l3s3148p1@nSH84u8mLK9ehhtH
-Date: Fri, 15 Nov 2024 10:06:47 +0100
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Brendan Higgins <brendanhiggins@google.com>
-Subject: Re: [RFC v1] MAINTAINERS: transfer i2c-aspeed maintainership from
- Brendan to Ryan
-Message-ID: <ZzcPJ9sweqxLZOGf@ninjato>
-Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Brendan Higgins <brendanhiggins@google.com>,
-	tommy_huang@aspeedtech.com, benh@kernel.crashing.org,
-	joel@jms.id.au, andi.shyti@kernel.org, andrew@codeconstruct.com.au,
-	wsa@kernel.org, ryan_chen@aspeedtech.com, linux-i2c@vger.kernel.org,
-	openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org, BMC-SW@aspeedtech.com,
-	brendan.higgins@linux.dev
-References: <20241115044303.50877-1-brendanhiggins@google.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xs25k6M5bz2y8d
+	for <openbmc@lists.ozlabs.org>; Mon, 18 Nov 2024 07:14:00 +1100 (AEDT)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-720cb6ac25aso2746697b3a.3
+        for <openbmc@lists.ozlabs.org>; Sun, 17 Nov 2024 12:14:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tanous-net.20230601.gappssmtp.com; s=20230601; t=1731874436; x=1732479236; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JQ22dxBuxJ3SOQxpojU/s+vE8bpP8RDnTxJHezr/asE=;
+        b=NEjvBqpA1h2GioAJOqHuPyetFqQUUurXZMmKUjK5TrOHqv3HdB4Z2EzHvXHhjthtb7
+         f78AMsEmHck5voSe+VPEcCbTMAm3E4Pm8QxKKhFmbMbtTsuFJ6B4jCkQU+/Y1x34schc
+         xSy01BWZBjwI9xlc9mT1Nqwi5JnFVLHf0L+SxDh2/AO75VG6EyFpYakQHvgAxiKNtWhE
+         zWKTwQ9V0DhqGfiCiIaQYQOUoXfK64m9eebVHYoapabZSUzGCnaW2Zh9WRlR+5fi5MWd
+         Ezmaqk3Qi7Gi431PQcvk0w06U5x2YpD1N/e4aS1ESzEg3paqn4v1sGMb+Y9DG7jVuO4x
+         LCqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731874436; x=1732479236;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JQ22dxBuxJ3SOQxpojU/s+vE8bpP8RDnTxJHezr/asE=;
+        b=LoC5tFQhVxnc0wRaz3foNUuq1mBffxSvOypxH62gCHLsY8Jp5GSsB4e7/1ne1pADYn
+         rRPjsfmK9fmGfSMO0gQC/CjrSQL5wuXWbeEWLeiLMaNsYlWvALK59OOOdfBEdKtZVkTS
+         +MFKaEt92FIjrL/sq1bq3+4UdhODFsFPAZQttEfWgCjiBypoWP1y6RxDQyULncniLkrk
+         7gejrUF6sbSHdTzsIH19xQiZdonoHI0CMZ8870T1RGpabT4lcSQto+EwVl9k/0wPpDTp
+         CSKI8u1oz2Qi3fcYBvF+BjFFskAGiRcWdbNVSU3lTtSKnSE+j1e0TlPEOwoZNhexFXTK
+         dh7A==
+X-Gm-Message-State: AOJu0YxRGBiXxamTveF+88vHEV+25oYMP6VRAlsVfAIBmncPN8+VLguj
+	/HOBRk+cjoQH6XOt49AH1dcjh1KwIb6dFqN6d8crb9S+kuxsmsbUMReBcJMCs6hoYJ5mo5W0pSi
+	B2S3Ign5hqk/ovJD6aSY8Xwl8qEDeAWiqkDaayIHJW3uB/M1+NdE=
+X-Google-Smtp-Source: AGHT+IE2u7qczij1wBlgQKaUU81dXj9yDW7X4GPevNqhah8CNOzAbaw1rIFFVwrDPly9NFgl77DrD9xWp6mSb02u6Xo=
+X-Received: by 2002:a17:90b:4b50:b0:2ea:7a22:5390 with SMTP id
+ 98e67ed59e1d1-2ea7a319e89mr1365600a91.5.1731874436235; Sun, 17 Nov 2024
+ 12:13:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nK9GppicB146/nY+"
-Content-Disposition: inline
-In-Reply-To: <20241115044303.50877-1-brendanhiggins@google.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.0
+References: <18393666.6642.1931e8207af.Coremail.yubowei0982@phytium.com.cn>
+In-Reply-To: <18393666.6642.1931e8207af.Coremail.yubowei0982@phytium.com.cn>
+From: Ed Tanous <ed@tanous.net>
+Date: Sun, 17 Nov 2024 12:13:45 -0800
+Message-ID: <CACWQX83vpXO_jNs1qnvEsd49smTQ9wrGjUapV01VJi2CJ-18hg@mail.gmail.com>
+Subject: Re: BMCWEB debug question
+To: =?UTF-8?B?5Za75p+P54Kc?= <yubowei0982@phytium.com.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Mon, 18 Nov 2024 09:45:09 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,56 +87,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com, ryan_chen@aspeedtech.com, andi.shyti@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, wsa@kernel.org, brendan.higgins@linux.dev, linux-i2c@vger.kernel.org, tommy_huang@aspeedtech.com, joel@jms.id.au
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Tue, Nov 12, 2024 at 2:39=E2=80=AFPM =E5=96=BB=E6=9F=8F=E7=82=9C <yubowe=
+i0982@phytium.com.cn> wrote:
+>
+> Hello,pm
+>
+>
+> Each time debuging a funcion of one line code will cost me too much time.
+> 1.type "bitbake bmcweb",this action will cost me 5 minutes.
+> 2.Replace bmcweb binary file.
+> 3.reboot bmcweb.
 
---nK9GppicB146/nY+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+First of all, the ideal workflow involves not building all of bmcweb
+in your "main" work loop.  Write unit tests, and develop the unit
+tests until you have confidence in your code.
 
-On Fri, Nov 15, 2024 at 04:43:03AM +0000, Brendan Higgins wrote:
-> Remove Brendan Higgins <brendanhiggins@google.com> from i2c-aspeed entry
-> and replace with Ryan Chen <ryan_chen@aspeedtech.com>.
->=20
-> Signed-off-by: Brendan Higgins <brendanhiggins@google.com>
-> ---
-> I am leaving Google and am going through and cleaning up my @google.com
+If you have ubuntu 24.04 or newer, you can do this simply with:
+# configure the project
+meson builddir --buildtype=3Ddebug
 
-Thanks for your work on this driver.
+# build the specific unit test
+ninja -C builddir utility_test (replace with name of test you want to build=
+)
 
-> address in the relevant places. I was just going to remove myself from
-> the ASPEED I2C DRIVER since I haven't been paying attention to it, but
-> then I saw Ryan is adding a file for the I2C functions on 2600, which
-> made my think: Should I replace myself with Ryan as the maintainer?
->=20
-> I see that I am the only person actually listed as the maintainer at the
-> moment, and I don't want to leave this in an unmaintained state. What
-> does everyone think? Are we cool with Ryan as the new maintainer?
+# run the unit test
+./builddir/utility_test
 
-I am fine, depends on Ryan as far as I am concerned.
+This loop on my machine takes about 90 seconds if I'm making edits to
+the shared library code, and ~25 seconds if I'm only updating the unit
+test code, which doesn't require a shared-file recompile.  This is
+still too long (ideally it would be a few seconds), but it's
+significantly shorter than your workflow now.
+
+Once that is done, I will generally switch to qemu, which is faster to
+boot up, and can test non-hardware changes quickly.
+
+After that I will generally run on real hardware.
+
+>
+> This seriers of actions cost me too much time.I don't think it is a right=
+ develop flow as a web engineer.Could u show me right way for debuging?
+>
+>
+> The second question is that I didn't find any action relate with "meson s=
+etup buildder && ninja " in bmcweb.bb.How does it work?how can I use =E2=80=
+=9CIncremental Implementation=E2=80=9D to decrease waste time in action "bi=
+tbake bmcweb" which cost me too much time.
+
+Take a look at the meson.bbclass in yocto, and it will give you an
+idea of how it works.
+There's a tradeoff made here between binary size and link time.
+bmcweb enables LTO, and builds most of the application logic into a
+single library that's then static linked into the executable and the
+unit tests.  b_lto controls this setting in yocto, and is disabled
+implicitly in debug build types.  You could try both of these things
+in your workflow and see if it's better.
+
+>
+>
+> The third question.Dose bmcweb have Hot Deployment method?Must I replace =
+binary bmcweb in obmc-phosphor-image for detectting writing result?
+
+https://github.com/openbmc/bmcweb/blob/02c1e29fceae14aa5cb7a1b3d6bcaa4c0a25=
+6f2e/TESTING.md?plain=3D1#L42
+
+I suspect is what you're looking for?  bmcweb will happily run from
+tmp, detect the "normal" binary running, and start on a different
+port.  If you're really needing to make quick edits on hardware, this
+is generally faster than loading a full image, but has some caveats.
+
+>
+> Dose it exist a function to detect result more convinently like npm run s=
+erve in webui-vue,that is more convenient and more safe.It used proxy and w=
+ill never replace binary file in obmc.
+
+If you build with the instructions above, bmcweb will happily launch
+from your desktop, although without dbus services, there's not a lot
+you can test when running in that mode unless you set up more services
+on your desktop (user auth, etc)
 
 
---nK9GppicB146/nY+
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+If you have any patches that would improve your workflow, please send
+them to gerrit.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmc3DyYACgkQFA3kzBSg
-KbakuxAAhyZAhgBDfdxkF5LlZpy0BWTyWqEP8GXLw6CcwvZK8FtelfWQ7fJp2q+N
-WVUtpFgaiHmEdRr4OGD+1HVFtQgRVu8ybw/jyAt6P3ht1v0AZazUbKrxhJU9atKb
-JbMDn5fMwiZu4YXAnfMXDA4VIrLYG3oTAjdDk4dYR4QwCh9EVRA9SJ4Oi+GkKdWg
-jEu/KQiKNNTchEmr4Hm/A1tql1hOVKfKCg1dcOtnmzFJrrmWfL1zx2TurjyntpET
-+DnDJGYx/96tWCxEVgmp517xxr1A4ontZeGw1VaozHzRjmOBXoW9NECyEg/J7zCd
-hz1HefaJvPHACQH8vDYqtYUcAgdQqa06b/emsybRKhyIKkRkY6EG04ExbKEEM4tN
-h+CMRFszsBPSIUQF9tErfHCXnK5z3cVHFrl56RVdBUx6Pb4uqIIVeoHGVjPKoCrs
-HGSlFczraaD1v2bqneRbpdXoBBmbQjp/N555olQ8k9r9HYKxIYr7wr6eM+4quRz4
-pSvGANzlRd6MDxCIInT3bNJ2Agl0qtQxNcjvJHosSuvHNS9Go2fx2To+Qogthww2
-+p9jR8SFgPR6Obt0+jj2EoyrPI1ecFreTUxR7D6114J48e7N3oOgEgUsjysS6DBJ
-Qz5L3N28hseO7jDZE16gbtqLJgVOKVjUmqJYo3sOSf3wYcy5sJI=
-=yNAx
------END PGP SIGNATURE-----
-
---nK9GppicB146/nY+--
+>
+>
+> Thanks!
+>
+>
+>
+>
+> =E4=BF=A1=E6=81=AF=E5=AE=89=E5=85=A8=E5=A3=B0=E6=98=8E=EF=BC=9A=E6=9C=AC=
+=E9=82=AE=E4=BB=B6=E5=8C=85=E5=90=AB=E4=BF=A1=E6=81=AF=E5=BD=92=E5=8F=91=E4=
+=BB=B6=E4=BA=BA=E6=89=80=E5=9C=A8=E7=BB=84=E7=BB=87=E6=89=80=E6=9C=89,=E5=
+=8F=91=E4=BB=B6=E4=BA=BA=E6=89=80=E5=9C=A8=E7=BB=84=E7=BB=87=E5=AF=B9=E8=AF=
+=A5=E9=82=AE=E4=BB=B6=E6=8B=A5=E6=9C=89=E6=89=80=E6=9C=89=E6=9D=83=E5=88=A9=
+=E3=80=82=E8=AF=B7=E6=8E=A5=E6=94=B6=E8=80=85=E6=B3=A8=E6=84=8F=E4=BF=9D=E5=
+=AF=86,=E6=9C=AA=E7=BB=8F=E5=8F=91=E4=BB=B6=E4=BA=BA=E4=B9=A6=E9=9D=A2=E8=
+=AE=B8=E5=8F=AF,=E4=B8=8D=E5=BE=97=E5=90=91=E4=BB=BB=E4=BD=95=E7=AC=AC=E4=
+=B8=89=E6=96=B9=E7=BB=84=E7=BB=87=E5=92=8C=E4=B8=AA=E4=BA=BA=E9=80=8F=E9=9C=
+=B2=E6=9C=AC=E9=82=AE=E4=BB=B6=E6=89=80=E5=90=AB=E4=BF=A1=E6=81=AF=E3=80=82
+> Information Security Notice: The information contained in this mail is so=
+lely property of the sender's organization.This mail communication is confi=
+dential.Recipients named above are obligated to maintain secrecy and are no=
+t permitted to disclose the contents of this communication to others.
