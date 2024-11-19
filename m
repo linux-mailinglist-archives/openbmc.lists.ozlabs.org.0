@@ -1,65 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6576F9D300E
-	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2024 22:32:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84229D3068
+	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2024 23:23:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XtHkt3vThz3c7R
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2024 08:32:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XtJsR0Zvdz3c7d
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2024 09:22:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=80.12.242.27
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732051922;
-	cv=none; b=Flwy0RDDc+7k4iPaqFI69S2fbj8lMjin/6NiqH285UZpJ15QbJbhjCeBEKAPbmJKq0ivS2p7410dYHL3t+VMzOjEvHG1nwmvfjm+f6it8q24vrI9bVhQJSGlUNsUUIJyLy4X0ndJH0H8GAXJNCrusNERKXpGQVQTK3mjEDsD2RMuIDXrUyAIojYuxsnX1O+SiGzeSobX0v2fbal7ilI5hNyt3vpKxICLcdiF9Pomo+Cnsl/54nhtw2rQPo9zb8RfhhH8i7+qB5xcRpdiMNz+Zwod+VyyfH0HewuMQK/x34/tIJMDLZigLZ34hSxUY4eyGmdhacAQf0NvivEGQSnDgA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732054967;
+	cv=none; b=Gm4GuRV9q6lDHBKxFyt2ZOhAa4YxsST+aKvfA6UgaZ3UiNo/Echo2wJb2ieKBa/97Zkpf1r+znngP10RT14abKUqTEJl/vTRBGbdycUElqopRDveLGGGKIUCymc7pT9riyng1FT8I502VnAWJ2ArHjb4NBS/N2vif7RlpyBE75NaGWpH4v1K+jzgsrSulAbB8kgui58G5jgzwS9B3iop2WvozgrYyKZGLjWVfIhhrefwQ4r0Fnitknf1alFWvevEBeVUdGZr8U2u3yIlNG544ho6pXVhY3pcX9cPCBS5lk+jRUKgx0oikvMYGGY88yDgboE1ZcHxuU8KTe43o7h8Ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732051922; c=relaxed/relaxed;
-	bh=EjYh1cknlZ7PMy6sRG187xTDVC5FFJcX/Odw6mzP5bM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ntv5iQ/WmBYrUhKfcYAYy6Z3xpRggPr3rBwDTVUhFA+dhppDvin2YTlKMZdnUMIPDu+5SN+ZMOcZveQHqbeGTmPdlH6XyYTb/YtMUknG+gOXI+WgXSTW/39jInLq8Gf8/Eqm+QBP6KYfAXEecDMSpPqKAyHCQiapLU+8MjgYMa1TTRQck8ub5AM5/PgrzlYDN2vzT4GaMrhmbRLeeFQOZpRpuddTpRBCnEmcNyUd1vHVSSZ855uEqa8Z0qcRkqJRFykM0jkF5A7ZurTWQtyKvm6ehsY3noOD9KLAiHofomz5UMulKgFdcqcsKVFApg9XyCgTDi2AC/qXUoGbDHePzA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; dkim=pass (2048-bit key; unprotected) header.d=wanadoo.fr header.i=@wanadoo.fr header.a=rsa-sha256 header.s=t20230301 header.b=fs6XKAXK; dkim-atps=neutral; spf=pass (client-ip=80.12.242.27; helo=smtp.smtpout.orange.fr; envelope-from=christophe.jaillet@wanadoo.fr; receiver=lists.ozlabs.org) smtp.mailfrom=wanadoo.fr
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+	t=1732054967; c=relaxed/relaxed;
+	bh=VJVmzaginJmQ7F7tSneOieAVuosgCnUAAnwsNZcDlbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LKvYdXSAhgkQzKiYSSwqtmxGWCSa4uOnfLUkGXF+1VZtuEmM5jPqLFfJ6TOnNYcrTsndvbqqcSDu7IHEXt0FDY4GgMvULlnuTgxQzSOmkksJKXmKlB1HEYek3ck4FKbIey/F+oWqg0iAR/wTn9LoK2cB0m6pM7R4CihIirZUPQzr5xUWcSKhHoJAv4sea2As9FYQ5Myz/4olpWHk/PJ5wZi5nH3+1WYoQz10lh87BwpcUDKVWRLgZYMlfiSWqY+QitGYIT3G8F3186DEctTMvlkmM7mdYwV0VtU0Yn7RQMFI8tbq2Rh2bLGn1WvCBf2hBibMuKbN+wJpuMnlKaZvWg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DEpwJ3MG; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wanadoo.fr header.i=@wanadoo.fr header.a=rsa-sha256 header.s=t20230301 header.b=fs6XKAXK;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DEpwJ3MG;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wanadoo.fr (client-ip=80.12.242.27; helo=smtp.smtpout.orange.fr; envelope-from=christophe.jaillet@wanadoo.fr; receiver=lists.ozlabs.org)
-Received: from smtp.smtpout.orange.fr (smtp-27.smtpout.orange.fr [80.12.242.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XtHkl5nHpz2xrC
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2024 08:31:56 +1100 (AEDT)
-Received: from localhost.localdomain ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id DVo0tZBgMlMRCDVo0teyUl; Tue, 19 Nov 2024 22:30:49 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1732051849;
-	bh=EjYh1cknlZ7PMy6sRG187xTDVC5FFJcX/Odw6mzP5bM=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=fs6XKAXKEa7OiGdYVIxWxoX52NB9X9sFNwHavWtknoVS7Z1y0i9KjA7T5Hcz2N04G
-	 oGU7ylyi7JaqkPL4uNOf8Qk/bK7w/mBi0klb3GdO73sCvx76Qx4AGs7GAZjXMWs0N3
-	 uX/cFd2bZHVehren5fcaR5tkVEH+EmLU1QCfrLU9crfmdQO+ck55e3SvNxfM1ycuM3
-	 0dZbgx1nxMHEae/5hr54Un7Ta4Y1f49V21pB9poCOHlOuJMQ2pHfL21MvriwpNQM+w
-	 eWKSG3bJhYwZT1m1VrxKdg4OqVRgIQpGTtElsaT46/a3uXEqkcMPWrNN1N57pXeVyT
-	 QqRSxYCfY4y1g==
-X-ME-Helo: localhost.localdomain
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Tue, 19 Nov 2024 22:30:49 +0100
-X-ME-IP: 90.11.132.44
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Mark Brown <broonie@kernel.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PATCH] spi: aspeed: Fix an error handling path in aspeed_spi_[read|write]_user()
-Date: Tue, 19 Nov 2024 22:30:29 +0100
-Message-ID: <4052aa2f9a9ea342fa6af83fa991b55ce5d5819e.1732051814.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.47.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XtJsL1395z2xpl
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2024 09:22:46 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by nyc.source.kernel.org (Postfix) with ESMTP id 801E8A40DC6;
+	Tue, 19 Nov 2024 22:20:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18ACCC4CECF;
+	Tue, 19 Nov 2024 22:22:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732054961;
+	bh=zqKj2HCLC2L9GHTZn+KhLac8fwhAptxey2L9oF72u1w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DEpwJ3MGZvf21K+uD84+JsfQMN4Dk31IaVnCzT7faclZ/R84rYlx6ibPGzFBbgCgU
+	 Y36yAZnPHA9MXqWnPGuPiZrBHQO7yzlKHiNMvv+o+x/Txi5bQRDpBw5RItTfdMdgjp
+	 jOOrfGr/RNxXkPf01C+Mpg0UPZuaQtt6C2WFBW9N7aqHGMcxBuhBX3iFCEd307OQHw
+	 EGTTrs4C7wIT/SWxUVoSmd5XlQ+HFeJZGf/T0g6Ahe5HiqFKfQb5Cl3EfIfCepPxoZ
+	 kLo12uAi+2hiZWCjyRLSO0QcGhfHjp2H3Fn188SHBEWtUh0O23h0ut6VM3HW/9LVVs
+	 kh3z6DRR1ok1Q==
+Date: Tue, 19 Nov 2024 23:22:38 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v7 2/4] i2c: npcm: Modify the client address assignment
+Message-ID: <cexpymszobfl7676acibp474eq3qx242ppo22wrbjepxhufkvt@w4ptnmfjx7yo>
+References: <20241021062732.5592-1-kfting@nuvoton.com>
+ <20241021062732.5592-3-kfting@nuvoton.com>
+ <kzsvr3jepoqjahn7n2jch5vrqim5eknylrasvsbjugfhzny46o@bemfk6knfmxi>
+ <CACD3sJbWKkBtyq-gnicASJvRnz_nGjVAyVgnreNV7RS+MLOWJw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H4,
-	RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACD3sJbWKkBtyq-gnicASJvRnz_nGjVAyVgnreNV7RS+MLOWJw@mail.gmail.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,66 +72,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, linux-arm-kernel@lists.infradead.org
+Cc: KWLIU@nuvoton.com, tomer.maimon@nuvoton.com, benjaminfair@google.com, wsa+renesas@sang-engineering.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kfting@nuvoton.com, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, wsa@kernel.org, tali.perry@nuvoton.com, linux-i2c@vger.kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, rand.sec96@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A aspeed_spi_start_user() is not balanced by a corresponding
-aspeed_spi_stop_user().
-Add the missing call.
+Hi Tyrone,
 
-Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-Compile tested only.
+Sorry for the late reply!
 
+...
 
-This patch is completely speculative, review with care!
+> > > @@ -2172,7 +2191,6 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+> > >       }
+> > >
+> > >       npcm_i2c_init_params(bus);
+> > > -     bus->dest_addr = slave_addr;
+> >
+> > We can now get rid of slave_addr. It's just used in
+> > npcm_i2c_master_start_xmit(). Right?
+> 
+> Yes, slave_addr is just used as the link
+> https://github.com/torvalds/linux/blob/master/drivers/i2c/busses/i2c-npcm7xx.c#L2182
+> suggests with this patch.
 
-It is only based on naming where a _start() function if not followed by a
-_stop() in some paths but is in other paths.
----
- drivers/spi/spi-aspeed-smc.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+What I mean is that slave_addr now is completely unused. We
+declare it, we initialize it to msg0->addr and it stays like
+this.
 
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index 8eb843ddb25f..e9beae95dded 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -239,7 +239,7 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
- 
- 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, offset, op->cmd.opcode);
- 	if (ret < 0)
--		return ret;
-+		goto stop_user;
- 
- 	if (op->dummy.buswidth && op->dummy.nbytes) {
- 		for (i = 0; i < op->dummy.nbytes / op->dummy.buswidth; i++)
-@@ -249,8 +249,9 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
- 	aspeed_spi_set_io_mode(chip, io_mode);
- 
- 	aspeed_spi_read_from_ahb(buf, chip->ahb_base, len);
-+stop_user:
- 	aspeed_spi_stop_user(chip);
--	return 0;
-+	return ret;
- }
- 
- static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
-@@ -261,10 +262,11 @@ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
- 	aspeed_spi_start_user(chip);
- 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, op->addr.val, op->cmd.opcode);
- 	if (ret < 0)
--		return ret;
-+		goto stop_user;
- 	aspeed_spi_write_to_ahb(chip->ahb_base, op->data.buf.out, op->data.nbytes);
-+stop_user:
- 	aspeed_spi_stop_user(chip);
--	return 0;
-+	return ret;
- }
- 
- /* support for 1-1-1, 1-1-2 or 1-1-4 */
--- 
-2.47.0
+What I'm suggesting is to remove it completely.
 
+Andi
