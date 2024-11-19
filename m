@@ -2,90 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A48049D30AC
-	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2024 23:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B538A9D270D
+	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2024 14:36:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XtKSF3bmnz3c7q
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2024 09:49:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Xt59Y3fQbz3cCh
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2024 00:36:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732010904;
-	cv=none; b=jcPwAdHGJto13Ir73f1Af+1/Q0BhcQuKYimgq5DL+RMyDJOxRo4uDVAN2LMBRQOmQoL1VNSB9YdVz93vIJR2qzFCLiwUMGJtVc+EUFany5PZhyxPO7bXKIqZ6xRLhwhRfbFdt4pbikz6tyaJgZW/8/H2sV8C3sJQRQ1oVCY3L3a7obfZTZWWgq6BMeL10CyvOxt4Lo0K+rgublbA7560c4+CtG2c+hO4XVaTtD2wUrIDeIZiJGsZfkk5GYY0A/sJGREHOdlpkdDsS1FcBcPLcRJeytMMByChvALOFRxtkRMXBS5FI6wkaUzV2ag9mABWrjCYzt4YF2If8fOy7dWsaA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732023357;
+	cv=none; b=cR/SY5+sejEqksjmlQtT7tu0hT6wuyl5A2WXXqj/bDBrXtqnEkeiy0Y+kA7YJuq87Tyob8YR2C9xcGO6ZBmPp8i3rlWZb2wTe0XEfi86wD+fsoHIEQf1UixtJ0qTUszXSPuTFqOaaavZZMK4tDByrkfjqOcZW99OZpb0VZuRvGwj7trJcx2cFYqAgTcdPDeoDkskCN8PDhr7lowGod56pFifrc+a+l3X3A7a6DvNOTSTfGtLzF7xqWzbX4tz09/fCGvpNC2XQmwr6VBszBhwghkUSXRuOu8JM6YRP3yPJVgbA8RR1TK+zRu3Tf8+BNL0hfQ5adhV1Is7mXdojNg6Kg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732010904; c=relaxed/relaxed;
-	bh=cWTYfL2NcNvtJ7hT2DfleWj2jSJLFnsNcjBnW0uewCg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VIkoGA2uOAkjGCkzSt5PKkml9Q0zhlyaC/tFPFlXsDvgXaWD+IQArfj2OGTZQ3LiJnbUNDT7IhkznKxNuOcAYTr/1LL574QtQOP4i0x7vyrbg008oKktniux9pmEzvmrukXmSgXqgtLaFTBXSHBdUwwKUHg2tjIPBvUdQKb22D7O3aEzA8D2vlY4n3ESw+AlOKeXN1k+rK/3iEOHcd9HeK+M/9hkTB0vMIgB/oUR0e2raU8VXpYXlWrSMpeAVC2I6mDZwT1a+GtLcMMcHdnRCPiE0RRsWPUZiZNfs45zzFdLVlOAC/p5Ns7TA2jQGCvvqvPiESvMj91v4Lz8TtjAxg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=C29N1NRZ; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1732023357; c=relaxed/relaxed;
+	bh=Wjea4FlwXiv3hwGbFMl+5M469Qx4kTcDewT9eAG6hxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y+spxDQ/ucO3Kma6HxnqYyrrbTgw2PHL3V0shvydTHILa4b9y/KyY4WfzMB5PZLak2V4G4YmygpSPdg4igws0JLAM7AVIOR7iQlx6bU6+j8v+3Wia8HksLgZGxs6ORrXl6ntpPz8zlKlD35hnWqmu1WoqhZkVip7+aPvWTdPVhH8RkwD/WeK7UxVE1819CgpsC89edwTMeGghMfnVoQ6u2n4wGUpfczl1GD1VFenx62Xi8QYlNDLx2ilmAy/N+n8Ix3UOZ1GIQJB5Tl8TquY6i5U25PMeNzeom81Z/43kQBhjkCgX/1Kks+IDRnBJPvsqZjofQqH8q/e6BvQnMQg5Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AebHnbAQ; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=C29N1NRZ;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AebHnbAQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xt0Z00lb1z2yMb
-	for <openbmc@lists.ozlabs.org>; Tue, 19 Nov 2024 21:08:23 +1100 (AEDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-20c9978a221so6659125ad.1
-        for <openbmc@lists.ozlabs.org>; Tue, 19 Nov 2024 02:08:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732010901; x=1732615701; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cWTYfL2NcNvtJ7hT2DfleWj2jSJLFnsNcjBnW0uewCg=;
-        b=C29N1NRZehc8F9J2EMfne9W4UD2tylMxX/B9iT/Uw3IOOaCpDFKNJJaWwLKuUlbnPh
-         K/w+a/HctLl2mvvixD9r5/SJdH4BG1okr5KMFRfkg9MYVTCsY+EvJXRDfc3DxMP0RZNT
-         QtPVRendS3GpX0s3dMVTMgnexC5p1M+W8cDflCsx/pCHBrD971nJuDG7F5fySFhEF5av
-         ONU3OTORZVfMi20WEcZXsUR2/XaOdWINh9M3Azg2GzDaU/z74ZanzgPXGMmX/0oQyhiO
-         c5YXKScyRTObs2I/NX7hAKc8kq2ihPxoePBkiphTPYJqRBOxKA96xo4qvgnH6NklllXX
-         8iqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732010901; x=1732615701;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cWTYfL2NcNvtJ7hT2DfleWj2jSJLFnsNcjBnW0uewCg=;
-        b=esy4998vu4/FDDztPKEwhRDUJQhlQLHLyYOUdsF3fpnGZGboaPeN6xcZd6wn2yGvBn
-         +H8ydFw+jqFIa+Sx/SgXUNdHMYWG6mNru8HmK8w3o+BT0ebvIeqKzIK78YEWsMpRCkru
-         8Kp92sByDo7uKmqSYonW3VzfZrv62FoNT3QycjJHQp7JxIz0khCrwlQ3wNMwWfFsjVoZ
-         WBGd+BBdaMGnM5cK06af+2UWW9J5A3tfDhe+sGU7NSIInW3tOCnjtexpmAd+YRlOa569
-         MAunqZwDUO76CcwMxxEOHdaU8G+lV42WcOY42MeSin5UfpzlF6cStO7NQxQsENOOQtNc
-         K9sA==
-X-Forwarded-Encrypted: i=1; AJvYcCUpF3USKumbE02IRJB3GT4k3JrviIADDAeZO5HpAozK1BT3ofVuh1sX801Hi0y3xvQpln8kyuaq@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyBjuXiwYm7nJAx94buebg+MrKgd+lX595s4+Y8YM/HlUXpzQaZ
-	q97J9rwlZu1kDM7y2smmcZEMV2q8uFrpDkwNeq94glDkMDqEODzV
-X-Google-Smtp-Source: AGHT+IEAjyQGdRHNm7PwkX2khYpceIhQ92EAPL/Ia7j4slTtR5ja4Ryry5i8z7VVQ8n6txgqIQJr+w==
-X-Received: by 2002:a17:903:1d1:b0:20c:9983:27ae with SMTP id d9443c01a7336-211d0ecdac7mr237798475ad.48.1732010900702;
-        Tue, 19 Nov 2024 02:08:20 -0800 (PST)
-Received: from [192.168.0.102] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2120ac39585sm41966965ad.261.2024.11.19.02.08.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Nov 2024 02:08:20 -0800 (PST)
-Message-ID: <191ebf4b-231d-4ebc-9ff2-4916ef718970@gmail.com>
-Date: Tue, 19 Nov 2024 18:08:14 +0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xt59S6344z2xsM;
+	Wed, 20 Nov 2024 00:35:56 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by nyc.source.kernel.org (Postfix) with ESMTP id 4E24CA42A33;
+	Tue, 19 Nov 2024 13:33:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392E8C4CECF;
+	Tue, 19 Nov 2024 13:35:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1732023351;
+	bh=oLpoc2WvoUsUhrS1aPvboIlqwN760aHoq0UZupZxYjQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AebHnbAQkG2N53GlUQn1JKbPsQYgSuLJ3rIaWjBB1+Cz/TCXT/sTExaoTfk1RdkaX
+	 qptk0tFf5g5zglEsN0RoWn1letpAIHLW/3okldSWHABXmTBHP4uUm/XkvCfqliWsbM
+	 cVFTfMGunVzFG9oVsnGg7/hkneH5HGDpv1hq0GnfFZLJI8yzx/D75zVTUivGmlX4/H
+	 gM3kIpPHrPmhAVlpdxt6jPUvkVHzBSi1uCac2FIAyEG9N/HqkD9of+N7nf1Kaec2o+
+	 TZskTdPA3hLcTCm2WHYwZ1cNLKRDgNEI0qVNVgW2Yd9BUV32McmtVAZlv262Nx8X4R
+	 8GZ/c0vgqwXyA==
+Date: Tue, 19 Nov 2024 14:35:48 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [RFC v1] MAINTAINERS: transfer i2c-aspeed maintainership from
+ Brendan to Ryan
+Message-ID: <x2rt6k5hw2km2vm4wjnqihop3xcy3uirhxs5wvhnesxc2athgb@c2ra7a62mfve>
+References: <20241115044303.50877-1-brendanhiggins@google.com>
+ <ZzcPJ9sweqxLZOGf@ninjato>
+ <OS8PR06MB75413EC87F76AD0B1BBA0FEFF2272@OS8PR06MB7541.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] net: stmmac: dwmac-nuvoton: Add dwmac glue for
- Nuvoton MA35 family
-To: Andrew Lunn <andrew@lunn.ch>
-References: <20241118082707.8504-1-a0987203069@gmail.com>
- <20241118082707.8504-4-a0987203069@gmail.com>
- <4d44bc93-6a81-4dc8-9f22-a103882f25e1@lunn.ch>
-Content-Language: en-US
-From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <4d44bc93-6a81-4dc8-9f22-a103882f25e1@lunn.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <OS8PR06MB75413EC87F76AD0B1BBA0FEFF2272@OS8PR06MB7541.apcprd06.prod.outlook.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Wed, 20 Nov 2024 09:49:30 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,43 +72,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: ychuang3@nuvoton.com, edumazet@google.com, schung@nuvoton.com, yclu4@nuvoton.com, linux-stm32@st-md-mailman.stormreply.com, robh@kernel.org, openbmc@lists.ozlabs.org, joabreu@synopsys.com, kuba@kernel.org, pabeni@redhat.com, devicetree@vger.kernel.org, conor+dt@kernel.org, richardcochran@gmail.com, alexandre.torgue@foss.st.com, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, mcoquelin.stm32@gmail.com, krzk+dt@kernel.org, davem@davemloft.net
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "brendan.higgins@linux.dev" <brendan.higgins@linux.dev>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Brendan Higgins <brendanhiggins@google.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "wsa@kernel.org" <wsa@kernel.org>, Wolfram Sang <wsa+renesas@sang-engineering.com>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, Tommy Huang <tommy_huang@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Ryan,
 
-Andrew Lunn 於 11/19/2024 9:48 AM 寫道:
->> +	if (of_property_read_u32(dev->of_node, "tx-internal-delay-ps", &arg)) {
->> +		tx_delay = 0; /* Default value is 0 */
->> +	} else {
->> +		if (arg <= 2000) {
->> +			tx_delay = (arg == 2000) ? 0xF : (arg / PATH_DELAY_DEC);
->> +			dev_dbg(dev, "Set Tx path delay to 0x%x\n", tx_delay);
-> The device tree binding says:
->
-> +  tx-internal-delay-ps:
-> +    enum: [0, 2000]
->
->
-> So only two values are allowed. Yet the C code is
->
-> arg / PATH_DELAY_DEC
->
-> which seems to allow 16 values?
->
-> Please make this consistent.
->
->
->      Andrew
+On Mon, Nov 18, 2024 at 12:25:56AM +0000, Ryan Chen wrote:
+> > Subject: Re: [RFC v1] MAINTAINERS: transfer i2c-aspeed maintainership from
+> > Brendan to Ryan
+> > 
+> > On Fri, Nov 15, 2024 at 04:43:03AM +0000, Brendan Higgins wrote:
+> > > Remove Brendan Higgins <brendanhiggins@google.com> from i2c-aspeed
+> > > entry and replace with Ryan Chen <ryan_chen@aspeedtech.com>.
+> > >
+> > > Signed-off-by: Brendan Higgins <brendanhiggins@google.com>
+> > > ---
+> > > I am leaving Google and am going through and cleaning up my
+> > > @google.com
+> > 
+> > Thanks for your work on this driver.
+> > 
+> > > address in the relevant places. I was just going to remove myself from
+> > > the ASPEED I2C DRIVER since I haven't been paying attention to it, but
+> > > then I saw Ryan is adding a file for the I2C functions on 2600, which
+> > > made my think: Should I replace myself with Ryan as the maintainer?
+> > >
+> > > I see that I am the only person actually listed as the maintainer at
+> > > the moment, and I don't want to leave this in an unmaintained state.
+> > > What does everyone think? Are we cool with Ryan as the new maintainer?
+> > 
+> > I am fine, depends on Ryan as far as I am concerned.
+> Thanks a lot, Brendan.
+> I am ok to be a maintainer.
 
-Oops. That was my misuse; I will change it to minimum and maximum.
+can I take this as an a-b by you?
 
-Thanks!
-
-BR,
-
-Joey
-
->
-> ---
-> pw-bot: cr
+Andi
