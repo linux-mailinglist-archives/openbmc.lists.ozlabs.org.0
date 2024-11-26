@@ -1,60 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F5BC9D9529
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 11:09:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 566D29D9532
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 11:11:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XyJFd088Lz3bP7
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 21:09:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XyJHl4TlPz3bSm
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 21:10:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732615745;
-	cv=none; b=lwiOR5OKry6T738a1FqwP+xG7AkP+lOI7Tm+sYe5DrYou3iWB0yFBpX4M3fu70Z5w7dNIYziOLGX8z9c5ny0zxSDEhIeMs4tQ0Lz9GeoyJ2otfy49Sc/KSpE8ziQQdsYq9aIttS3uWNuHsxV6tP0oLo06ZvzNgkUS1p/7gWZmJTbpihJ6sWIx2Gr4hXrRGKJCxOmg0Mv8FDQYybLaccCJqx53bZ5ufcACSuVZn8cilMm6lnwVnlZip/FyWes7TspXl8xGBRWRSSv8n7OhoBwvkvU1EPWtZ0xhndFzjq3cUa1465IBkuXC4KE4YC0tJnyAnheXme6g/o7ZVtWW6diJQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732615855;
+	cv=none; b=UrYv49617Nf6/Rth1NYLPdBmvH/ccRZLWcdgPT51kfK/6ixeNL/msMjlw2Ig8CBIp+IUbcZkji6Z+xOoQWgtJ3/reZHxxZDOC8xuzKvbz1ShNpumprEU9PBZmpDtEF1ZRZIHOslGQtdLRj6jMzCeSr/8pBGeV9oqNf36VMn8N/6z0fP0XyG455yOuxIhX5dWKOacLuHZWu/1xASXq4x1RehqsE3kmiyLkgLWnkjwjqcBQtM7Od0RfRfaVduFGEM9R05AayTxpnwDVCpTRdiUC81fb0h4/JfLLfPcW6X/H4pf6bW+PjaRrI3PrpLaKegN9gFzUwrOfKlKZtSP/ZWyQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732615745; c=relaxed/relaxed;
-	bh=PnnsBll7qYBpVP2Y5FkotdT1wHxm1nEsLbKct2VQe4c=;
+	t=1732615855; c=relaxed/relaxed;
+	bh=/gsHh8aZJZ90wy+eEkPcJ0iknlieI4wUGHMAGpnBzgk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CUfInjHQUvlf2G1anOR95HPHH9Uk2dZVyL5+BsjRZuBAwzdic/pN/CkJ6QS3+cvBZfZvQnVGGVlWoOyoPTvuwzUizR2dQpMofbKmSp/uPOwbM/wqmcL6UQxZS0Y0K/zQv9qt+WB73ftsxH4A5DYx4JI9ldTJdRtDKpoDKi9vYaga0wiekKSgzoRV3j7WR3LcqARTfDpWkRYboINeQBuKpIDKZ7i7vzkLZmShBNK2DntI/C1PMajivj9Qd12ByAGfARh+7tAk3Hv1Hxai3DP9M+j9SzrtQIUumzCDXBpGQImVA50+jhjouQrVppRQfxM1aS0ysthRT4IqWUP3lJSrog==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EGIWVjyo; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=fA4ScqkEuksfV0YaWF/bcBlEglwPopcPe2jMRe0gjT4yBhhabPYI0WH2YtkZTZpX9nYMoE8/+5hkCnfzJLtYLrB4w4qU78xNQujQWpw78+3ElSA2Pdxw2FLZ9pBC3IrKLSWTwODV/+RKKqDlOum3oLZ4NPw6n4NTOf7i4KiHvbCHTu+t+Cv+EnDWWYvjxX5UposdyrsUf0X0TrUCuNTWaOjI8Orpejb3020S3anHVcrDgjIjqQYztWhz3NH0QXLCaESfsCLd9Y5MpPTC+3ZYCHrmPL2cWUY/BhhnRtoEQQMSnRN3FL9ut2t72LpO26Bh2vLgXvfJLLWhv9N5JYqB4g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=WYjFnX4y; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EGIWVjyo;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=WYjFnX4y;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XyJFX13TDz2xvh
-	for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2024 21:09:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XyJHf5Mzcz2yD6
+	for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2024 21:10:54 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 1AD78A41B97;
-	Tue, 26 Nov 2024 10:07:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB49AC4CECF;
-	Tue, 26 Nov 2024 10:08:53 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 867C35C5C99;
+	Tue, 26 Nov 2024 10:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CABDC4CED0;
+	Tue, 26 Nov 2024 10:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1732615739;
-	bh=Tebs3ugs2aGJ3acWfA3ph5gJOpJqpLnIB3l/SR+YbG8=;
+	s=k20201202; t=1732615851;
+	bh=Byra4Kx0/QZ5Uz0Ky2GZAawD0zrEdfweETc4Lk5nnIs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EGIWVjyoydTiJvuc1ZUZhSqpAeY2sZhNEWLCA3S+X192vYeq/MGk9N88dM90Kiqpg
-	 9Fip6SmUHoaaz0oBlJUlxS2Sm8Aj6CffgLn97xP3pxowQi7EdJaeZjGBrd4Z0UHCV1
-	 39ce8gA0M8IOnhCygwQilpJKL9utKk58XsuLh3uv6AHhmMqOkuJOqsZjieQyfo7K56
-	 aa3eCn24N5EaGaA8gVSXSnXcyjO/RtjRpO4HEIW3d7hp12a35pY2AHEDD//kx5zcCT
-	 RsJTN9FtPzcatXkydp2p3tnhOnwY8qBQzPb40EOqjBVv3L04GeF7Tf1Ts5MeBEiVIj
-	 vc0PcOJeRXC2w==
-Message-ID: <a220d407-de40-4398-a837-de11e01d2381@kernel.org>
-Date: Tue, 26 Nov 2024 11:08:52 +0100
+	b=WYjFnX4y0o0UuVhysolvR/eLfEB1pJTaXWYL0wyi9+r7CdSRSi23fWiMoWP8CBomE
+	 dZE+1qYJt0RUXqHdXAr+TCkgxG6es0uDy+lyZoF+xdTQrtDklmEi+lrJWed9vzZwFB
+	 TS0WhOvTkxr0KFoUasehLvvJyKutxDxHnLwU4v0cfx/oYoxA8xY/2q1uzfxYa3c7UM
+	 fLJRMa603+pw2x6cxUh33PIRsR0RPPa4HFtEnX1Jk4naJr62Gvm38dUbN0oj6T9Qyx
+	 q36MswkTleWWmlU8fep9hpgmDid2VsU7r2qoV2Amia3F3AleJCP2iC+uiT2Ap5D70b
+	 466l6Gl+C0G7Q==
+Message-ID: <7c132784-87db-44f9-8be4-a0805e438735@kernel.org>
+Date: Tue, 26 Nov 2024 11:10:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] arm64: dts: nuvoton: Add Ethernet nodes
+Subject: Re: [PATCH v3 3/3] net: stmmac: dwmac-nuvoton: Add dwmac glue for
+ Nuvoton MA35 family
 To: Joey Lu <a0987203069@gmail.com>, andrew+netdev@lunn.ch,
  davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
  pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  mcoquelin.stm32@gmail.com, richardcochran@gmail.com
 References: <20241118082707.8504-1-a0987203069@gmail.com>
- <20241118082707.8504-3-a0987203069@gmail.com>
+ <20241118082707.8504-4-a0987203069@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -100,11 +101,11 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241118082707.8504-3-a0987203069@gmail.com>
+In-Reply-To: <20241118082707.8504-4-a0987203069@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+X-Spam-Status: No, score=-5.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
 	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -123,30 +124,58 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 18/11/2024 09:27, Joey Lu wrote:
-> diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
-> index e51b98f5bdce..2e0071329309 100644
-> --- a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
-> +++ b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
-> @@ -379,5 +379,57 @@ uart16: serial@40880000 {
->  			clocks = <&clk UART16_GATE>;
->  			status = "disabled";
->  		};
 > +
-> +		gmac0: ethernet@40120000 {
-> +			compatible = "nuvoton,ma35d1-dwmac";
-> +			reg = <0x0 0x40120000 0x0 0x10000>;
-> +			interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "macirq";
-> +			clocks = <&clk EMAC0_GATE>, <&clk EPLL_DIV8>;
-> +			clock-names = "stmmaceth", "ptp_ref";
+> +static struct nvt_priv_data *
+> +nuvoton_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct nvt_priv_data *bsp_priv;
+> +	phy_interface_t phy_mode;
+> +	u32 tx_delay, rx_delay;
+> +	u32 macid, arg, reg;
 > +
-> +			nuvoton,sys = <&sys 0>;
-> +			resets = <&sys MA35D1_RESET_GMAC0>;
-> +			reset-names = "stmmaceth";
-> +			status = "disabled";
+> +	bsp_priv = devm_kzalloc(dev, sizeof(*bsp_priv), GFP_KERNEL);
+> +	if (!bsp_priv)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	bsp_priv->regmap =
+> +		syscon_regmap_lookup_by_phandle_args(dev->of_node, "nuvoton,sys", 1, &macid);
+> +	if (IS_ERR(bsp_priv->regmap)) {
+> +		dev_err(dev, "Failed to get sys register\n");
 
-Status is always, always the last property. Please read and follow DTS
-coding style.
+Syntax is: return dev_err_probe
+
+> +		return ERR_PTR(-ENODEV);
+> +	}
+> +	if (macid > 1) {
+> +		dev_err(dev, "Invalid sys arguments\n");
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+
+
+
+...
+
+
+> +
+> +	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* We support WoL by magic packet, override pmt to make it work! */
+> +	plat_dat->pmt = 1;
+> +	dev_info(&pdev->dev, "Wake-Up On Lan supported\n");
+
+
+Drop, driver should be silent on success.
+
+> +	device_set_wakeup_capable(&pdev->dev, 1);
+> +
+> +	return 0;
+> +}
+
+
 
 Best regards,
 Krzysztof
