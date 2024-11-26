@@ -2,78 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55FE39D8EA4
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2024 23:40:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A05049D9F53
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 23:58:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Xy0z15Y1kz30hj
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2024 09:40:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4XydK741CDz3bVK
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2024 09:58:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::42a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732517969;
-	cv=none; b=UHQVnaw05Bri8bNzTlRpb5I2SPFt+TWPz7M9F0MbkqkYlQDPDqNKQtXayK6sT0vM3aEvuZyciRkBiNtM720q7A+tZyANV74gaTiMl3SmkfUpqVHB/M/JaNKP3bTDv1eqHK5PbBZMH4NCIZvXxi4PtyZPou77KTkYxSHvM5N9VRjbB1779/5cpT0ba/tl6ubR3VUEaIB369dJGi18zP/cw9ttjuI4gPmFQw9Wbg+YTLPqhT/0OxaMfyamq1ir3ml7I3XNEMK+QsmGRhGcaMM5c6D9qWjNKw+lSeB5U0pkdn0L3hkJuc4lrlEvEkMuB8A9sy3pC2X/j5lfCtIxu3Ylfg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::22f"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732613986;
+	cv=none; b=Dw70paWc42kTxTjZA0bENLVSL1P4X/Rna1qToImVEU9RW4KAX2gaUkkN8oxM8URhnCgBn8lRvVM8wmQsKTQ2DgiUhPy74ZDvYBSMjWVQVpH6MMlsyZhFjZ7MErbNuqEhwVYUvmEEjnqj8s8Bmbt0TVT+lGb3kfER+OdT1xYUEt6jGvEknSDq2bZXReOJU4EpfolQw0mT5Zr1+9fq0GUqvDjNTd0mc4jKShqsQDO8f9VYBCSNO+nGcd/RVyAicM1Q5iMi8PX1nYlTw8ce5XyiMKsTVST0pKK06+iLAQ6MgvxkyA2LnEgvB/cyTpZCcj1r+0gJoFfmTYuo4lCQAxHgRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732517969; c=relaxed/relaxed;
-	bh=PqcyyAv2i0PkJrduNO2hdcJKVmr0nOG+uIypgYM+ZxE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=AIdOBAo5uLCSjz7SvCpvNPXdIeVgHO6lw2QaWHvBh2ShYyT2/1PGPqd8dEmo2QjTnFitKHGErn8+U7gtrptufeJIMMesFw9N2yW8OYcR94D3qrAKJxVmYghN9NnPwqeviNTOhinROEYvppAl1bUr+1jGOeMtdsWjoGzsl94bG01HvrQ9v+fvAYeBeJXKX7fS9/QMgpMfSWl5Z0JkRZ3yqiFCs+KvFj3aDzo8yuYYD022gaX47c2IsWnLRm8M42i0smd8kv4XirRj2eC4WGWtziiuIvvYWAFW3VHYbq2kgNPLG+18OOpV43Qj+mt5Y/dsq4l4ZjgwqdMruBHWWClghg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=j1LsTmu5; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::42a; helo=mail-wr1-x42a.google.com; envelope-from=jack738847@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1732613986; c=relaxed/relaxed;
+	bh=5VqTNP1l3I0fkOuZ3WrWUQyb1/49E8EQXioZGwnik0g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mw/FIA/dZ2dQeS2vkNk9N+89swAO3WYgKZKFnJGXECirI7Boip3184ljFfi5MdJka4T52pKQuw4FrnOZekNdhd0namPOqOhFG2HnPgA1Tbc/GzirQtqsUwXqrVtEeAu0FkXe77HtHY0xhQ66czDE5dXlUhuho04YYp4P+1FNDNJNDE/zav56LiBXtyz6awG8MC1lDFytQ+Y79B7JT2WPXvBd1dps7dh7Le/huXs43KmfD+ThL5aEnz2X6heCCneyod21Xcw4ztxGgSrHmPdToU2KF7DC5BGrJo5BJnqzThIu1sJYf2RCOrkAFkRvVJmTf3ElzQ6eqSHn8300tlNtgw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=A75G9XUv; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::22f; helo=mail-oi1-x22f.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=j1LsTmu5;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=A75G9XUv;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42a; helo=mail-wr1-x42a.google.com; envelope-from=jack738847@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f; helo=mail-oi1-x22f.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Xxc5C0htbz2xxt
-	for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2024 17:59:26 +1100 (AEDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3823cae4be1so2504260f8f.3
-        for <openbmc@lists.ozlabs.org>; Sun, 24 Nov 2024 22:59:26 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4XyHbh29YYz2xCp
+	for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2024 20:39:43 +1100 (AEDT)
+Received: by mail-oi1-x22f.google.com with SMTP id 5614622812f47-3ea5a7a5e48so305154b6e.0
+        for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2024 01:39:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732517962; x=1733122762; darn=lists.ozlabs.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PqcyyAv2i0PkJrduNO2hdcJKVmr0nOG+uIypgYM+ZxE=;
-        b=j1LsTmu504pi126hsqsVzROHVJJ67hELVkLBRBDalhcLVutjgamD4i8muKVSHEzZPc
-         6H6GFao4l3vM2qf8eBumbq/+0oSjiT1D2RzV8GTTEDgAQhcntm9AlV6PhALLj8WwAYCp
-         n922A2pf1TdxA3BSRa+mJDU7zYjzMj78kJaxUlZ65TCF9KjDuwMaIDn5JNAp5YzQTi78
-         NoWgqUBCyVsURbWl+oU9Kk3IZPr/ZKzSl8wj7d7azJSI1A9AvAPccmaZf5pRpXP9DNZD
-         By2yO+Ambt4ZxFxmWQ/J2Cabs819ZAJ7TOcO/f4kWYGch3eQcMaBFTVxqMddeXnI9dc/
-         ZDQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732517962; x=1733122762;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=gmail.com; s=20230601; t=1732613979; x=1733218779; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PqcyyAv2i0PkJrduNO2hdcJKVmr0nOG+uIypgYM+ZxE=;
-        b=PSz4BBwK/V2NDjkKrQlif+BdNaj0Hzo3H4SPHseefLaZnFwVV6egQvXPuFGZ2otEdG
-         c1N2OI6JM6gHb+SjtEGjtC68eyJrBrRHJNQlWbUiYpGQrbtL64LHyDs6njazTh3TdMuI
-         d1oCdsGhkkdxOyMt8bEsJRNaK7KU1x0keF06iCdNWOp23eeTjHOne0x8VPSi/ShRxe4f
-         hJsGcZuO+fQUTab0amoNl9i57rLMvuZ2n2D87FqiwFa26yH77AP0VIBYpKh6mgMnwFzK
-         0vm/hAaCpp+ZwKWmJ4WqlKHXLYWhrZ73ENqF4PNLZ7I8J/Q60VZakiQU8oe8xJstHvHe
-         ZyHg==
-X-Gm-Message-State: AOJu0Yy8U6ePKhHNhzHtFhxbo0/jHvkvHVuAlEPldRaSQ04619AJVAbF
-	6H1p26dqjmGfbiGuzrMA/FycfnGrh9tqAlHcfCQgsPfIyMPRmlanbC369kHaeP7p8U8kmwRe9XZ
-	cXieJ3ZhHTgXvkyYbZ9g9TSgzEE9X4tg=
-X-Gm-Gg: ASbGncu5GBoDw9GnEpMXnx2sBMYMVEKnpcmkbbgEL/vr1UUTvIWLOxCJ2Au0dkd6JW/
-	UIkCmSt5H6UHOkSIMBOg0zNqO+A==
-X-Google-Smtp-Source: AGHT+IElYJfVxhNktQ0Yrt7+qdUHPVZMDTEJMK+AMRtXe/JwekQNDOE2CgoRjuW3t5STpLjtuaCyfTnc1WVXBJKuAI8=
-X-Received: by 2002:a05:6000:1887:b0:382:5284:989 with SMTP id
- ffacd0b85a97d-38260bcdbc5mr10545654f8f.46.1732517962001; Sun, 24 Nov 2024
- 22:59:22 -0800 (PST)
+        bh=5VqTNP1l3I0fkOuZ3WrWUQyb1/49E8EQXioZGwnik0g=;
+        b=A75G9XUvFNd9mWFeg1v5QXEHk+3MabWDeTeVuISMysMrlWskC5xVuTYQTQQpdx+IHs
+         l0Zxe0cF/E6FiudtPKk5cWiTgAoTmr9B9vaaYTyZdWQew51TnEJ5sNqsByBaPnBV/9Lm
+         4aUmkqyDkcPDGfOMhwv3lUQRpzU02njYM9dC5N0x1w6to3b/yOktRPUNyVU2RXBQEFEG
+         +ozdtR7P7KUBFtmkKD4wLsiuScNEOLTEZwkX309iCt5BfiK0TjK5sDFzytE0bS6S9mhw
+         GmB0EeSEPOpj4wHrwpQwvS0PyOcrzSJP3ZsU9K9sSmrtTRJCjTS5GvALWE2fx7ijKwI1
+         RkaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732613979; x=1733218779;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5VqTNP1l3I0fkOuZ3WrWUQyb1/49E8EQXioZGwnik0g=;
+        b=eWW/2GPh0yhRAKLR52HR28linb6TJ/WhfY32np309bb/sMCL+eOd+sm/3AJUijdjRH
+         aUqJnFMY2INIRiEjHOZQUrN3wTjR1JrkYEBjFyNiG+vQsWWLMz2OO0L66oThE3PX3D/n
+         wKMv4jvlvB03pXsv1j8u91fVniGt40/GoWN0pWdDVyGvLd2aaaBVHt/DuF0+MRpmuhYf
+         SAUXTQjGCeE1sOz5emgK4wZ6C/UoJsQGGmDwEMzKkbpzjmwSUcZdd6cgCPA0NS+bqsGi
+         DUPVDGEdUAzIWM9dXQ1W01VK++OadS80O+KSFgePtWusny3b+KHrnZOw6Nc1XYlutvP1
+         9x2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWelVWS/LVFKlLxXsoY8+WkeCrQgw4IFi7cg7n2UxFHf8JOUod89x/cCEhhUbieCeamzqwR26zb@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyMeDyEPC0SqEyX6c/LBe3kSKBcVfEBMa37XKft3zYXYffixpQs
+	iDg4jjQ+uqTS0Emy51TteSbBcJoeK0T7jtriybFKlCDIeYxXx+Xw
+X-Gm-Gg: ASbGnct1c441vl95/3ojwNKo1zDik1e86OjZcRbTVrci2DjAlZHXlsfE20nsOwm8EJX
+	duBuvK6jC8WhCPMwALxbo6fW+r+MlVVZ41GpD1BJoyXt/5WIUNjQFt4f8yO+SpAwmx0MOzWLW6A
+	yk8/6qris0RetzthXSNBizsdXYrGOQM94JV92hN09rtDf0rCrt6/LvVXQYXqvxY1KUb0KaM8Pzm
+	6QemNkfKC3Rvk11kuBakr9As0kv5IkK5eZPkoZ9KIUX/mfkDTsxWmDEf+J9u3tP/DTyFb07MBqk
+	sXOCikyFh1KpEri1nADKw5eTS9Ld
+X-Google-Smtp-Source: AGHT+IGrPjDu68pnnnryOtllFazbBZWaKbpvb8qp33lzobhDwUA1rKma6IACU9y0c2nXW4nq4Bk1hA==
+X-Received: by 2002:a05:6808:2395:b0:3e7:5cfa:87d1 with SMTP id 5614622812f47-3e915aef033mr13135476b6e.27.1732613978760;
+        Tue, 26 Nov 2024 01:39:38 -0800 (PST)
+Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724de531247sm8159148b3a.104.2024.11.26.01.39.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Nov 2024 01:39:38 -0800 (PST)
+Message-ID: <75e4881c-8b04-4b57-ab0d-e7eb18b31a84@gmail.com>
+Date: Tue, 26 Nov 2024 17:39:31 +0800
 MIME-Version: 1.0
-From: Jack <jack738847@gmail.com>
-Date: Mon, 25 Nov 2024 12:29:10 +0530
-Message-ID: <CAKMbc5vCGEaR3rLn0+3kqyEhj02i+o9ceF61i3LOuf1huz1vXw@mail.gmail.com>
-Subject: Fetching Bios Attributes on BMC side.
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000b133610627b745b8"
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] net: stmmac: dwmac-nuvoton: Add dwmac glue for
+ Nuvoton MA35 family
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+References: <20241118082707.8504-1-a0987203069@gmail.com>
+ <20241118082707.8504-4-a0987203069@gmail.com>
+ <klp4a7orsswfvh7s33575glcxhlwql2b7otrpchvucajydihsi@dqdkugwf5ze5>
+Content-Language: en-US
+From: Joey Lu <a0987203069@gmail.com>
+In-Reply-To: <klp4a7orsswfvh7s33575glcxhlwql2b7otrpchvucajydihsi@dqdkugwf5ze5>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Tue, 26 Nov 2024 09:40:28 +1100
+X-Mailman-Approved-At: Wed, 27 Nov 2024 09:58:16 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,38 +102,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: ychuang3@nuvoton.com, edumazet@google.com, schung@nuvoton.com, yclu4@nuvoton.com, linux-stm32@st-md-mailman.stormreply.com, robh@kernel.org, openbmc@lists.ozlabs.org, joabreu@synopsys.com, kuba@kernel.org, pabeni@redhat.com, devicetree@vger.kernel.org, conor+dt@kernel.org, richardcochran@gmail.com, alexandre.torgue@foss.st.com, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, mcoquelin.stm32@gmail.com, krzk+dt@kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b133610627b745b8
-Content-Type: text/plain; charset="UTF-8"
+Dear Uwe,
 
-I'm working on remote BIOS setup support for *intel based platform*.
-In my case the BaseBIOSTable attribute is empty which pldmd is responsible
-for populating this attribute.
-I taken property of BaseBIOSTable from busctl utility where it show
-*"a{s(sbsssvva(sv))}
-0"*.
-The *0* at the end of the output likely indicates the number of elements in
-the array (a),
-meaning that the array is currently empty or doesn't contain any entries.
-So what should i do if i want to take Bios attributes at BMC side & also i
-did'y find any .json or xml file in BMC side?
+Thank you for the details!
 
---000000000000b133610627b745b8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Uwe Kleine-König 於 11/20/2024 10:56 PM 寫道:
+> Hello,
+>
+> On Mon, Nov 18, 2024 at 04:27:07PM +0800, Joey Lu wrote:
+>> +static struct platform_driver nuvoton_dwmac_driver = {
+>> +	.probe  = nuvoton_gmac_probe,
+>> +	.remove_new = stmmac_pltfr_remove,
+> Please use .remove instead of .remove_new.
+>
+> Thanks
+> Uwe
 
-<div dir=3D"ltr">I&#39;m working on remote BIOS setup support for <b>intel =
-based platform</b>.<div>In my case the <code class=3D"gmail-inline">BaseBIO=
-STable</code> attribute is empty which=C2=A0<code class=3D"gmail-inline">pl=
-dmd</code> is responsible for populating this attribute.</div><div>I taken =
-property of BaseBIOSTable from busctl utility where it show <b>&quot;a{s(sb=
-sssvva(sv))} 0&quot;</b>.</div><div>The <b>0</b> at the end of the output l=
-ikely indicates the number of elements in the array (a),<br>meaning that th=
-e array is currently empty or doesn&#39;t contain any entries.</div><div>So=
- what should i do if i want to take Bios attributes at BMC side &amp; also =
-i did&#39;y find any .json or xml file in BMC side?</div><code class=3D"gma=
-il-inline"></code></div>
+I will use .remove instead.
 
---000000000000b133610627b745b8--
+Thanks!
+
+BR,
+
+Joey
+
