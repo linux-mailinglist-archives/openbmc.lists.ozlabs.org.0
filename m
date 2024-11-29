@@ -1,91 +1,100 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7E319DE967
-	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2024 16:30:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AA899DF767
+	for <lists+openbmc@lfdr.de>; Mon,  2 Dec 2024 00:10:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Y0HFG12Snz3bTN
-	for <lists+openbmc@lfdr.de>; Sat, 30 Nov 2024 02:30:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Y1jL04dYTz30g5
+	for <lists+openbmc@lfdr.de>; Mon,  2 Dec 2024 10:09:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::32a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732894239;
-	cv=none; b=fWmhGPYkkuBipmCiPtP8K6GpvSGGlhQwvbGQU3kiHiqoNTM/07R8ePCsnVpUk8+vc5kUXF/CyNORwlHsZaLIFFBctJ1B16HfYf48R9QMDoV8NaXZCtpGatVpJ4RMs7pejiT5OgV+Ga9kjuA+GB5IWBnc97OlMAG04l7BBmAlZvZlSbgLaQ1knFYIe+92cFH4EUrgcyLHj2exFQFUbHch7jo401YEhLIQ4xpAg1RnWQevtdI9P3l46b0fepBn2DO2fNguUzhKDc0StvZUqOY683tDwoe/CPlkrlf1tDOTzXHsDT2wyq2AO+NkL0dxoWwmPbhgLmDxMMUK8lLJhgvoUw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::233"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732891842;
+	cv=none; b=P0tiH7o1wxstDTNWK04OisHHfo/4hWcOVvPFvJb6CHvf/d1ad1yqsEja6gda9fITnRfosotb+/0lZZsKWSKyKVeMXsbB3JYhfzMRq+m3tkpXP33ciuk867hklVln5lpqXOiftxqLT1hxNSSwPBWoIRRpIOrNQYRvoBaYTOwA33IBM0rFStkQDPl+iXYW8c4sQXuRvIpuqmMMvsFAsIJX/MOOVLqGomXwPjotDNvPXgjTZUvder7NzG3nc86ignEy66os8ey7oXZaS9GJbnudzy5yIKoY6qsJSWvlGHMnxb3imyP8FE/2btNoFsAX0rqLatWHKnptgafhkv6HXybVHg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732894239; c=relaxed/relaxed;
-	bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:References:
-	 Cc:From:In-Reply-To; b=eUc91n55sagvvAIu+HV/J2ojYlR+QJon1JyCdDQ04csx7cZRCp6Kkmy+nnvtwjmU45UFwFW6wxI16mHn3XN4glRTGTVZP+XeZN7K2EZ1+W0ysdcwWZpRjmZPMa9Pb5FMxynGL7zOPfZgFd0JytGYSvDuLER6//iBrO1CmSTNcbfzC+TrQgw/ava7zY2JF7Qox8yj3omykwQQVxzywpJJKHintBP5402uyU9J2Iahs1ed9+uvtnvQ0gajOdRH3+Eq1nfkefSKHDDPiKPSsLl2nD8fJepoQfnh6i2wylD/3xVF6gPdypGy5u6qqEKhrn6O28pmdMqghSUNKMKo0Pi7yw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fXMCMUZi; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1732891842; c=relaxed/relaxed;
+	bh=x6BUgFKMvWqnE3HjIPVzbYBbQhrG+0D/ZXL7z6iEv+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ngZ6/ciRjjCJTejUKZGBVfbgGSRdRdAHOjGtPUOR/S+9BPTEDv1B38ZdKu9Z2aHQf79mTWf0PLBTaXrFat7Y3LCGfha9Kdy46RFDMk2QAMMvZXkthFnfmbrUBr7XfhXRZzz/T1/zHVYVnRZjD37L/UotKjk6qhoewg23nfwZnMiYhnYdR+vA6ANf/3mI7BmzzvjVn8QIOmvIrBiQEZARPFeyd348951HmdNR1O1Fnlo7cxznflEnRQdr9DRe816gqLL6hNf8r52raRSX2qgbWCLlj7gHlr0Fn4IOH7x2+zO+aEocDyILjOTN0hc9RHPAHhrz9+ncvkDj2XXk+2OH3Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=DitXCuIf; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::233; helo=mail-oi1-x233.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fXMCMUZi;
+	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=DitXCuIf;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2607:f8b0:4864:20::233; helo=mail-oi1-x233.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y0HF84Ffgz2y8q
-	for <openbmc@lists.ozlabs.org>; Sat, 30 Nov 2024 02:30:35 +1100 (AEDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 46e09a7af769-71d4ba17cd2so796614a34.3
-        for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2024 07:30:35 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y0GM422zWz2xbS
+	for <openbmc@lists.ozlabs.org>; Sat, 30 Nov 2024 01:50:36 +1100 (AEDT)
+Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-3ea3bf79a03so872140b6e.2
+        for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2024 06:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732894232; x=1733499032; darn=lists.ozlabs.org;
-        h=in-reply-to:from:cc:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
-        b=fXMCMUZijfHfs7JAWcycJ4wNmuK/G60/hTr8wT0nO/vDJjFlDP8S1lkOtEZhjSTc2V
-         yH0UI7jkI1tgYOhnO6DU3mrwBySzlDQ8sIZdqa/EfCSVn7RqKP49n4/kKQOyAkayIXYj
-         6PRI66TNJoWUo10z0hF4PfJVm58XDDoAn3HURGFebwVloHrgGyBko+AgFVh8YH/jn/cC
-         3V9rvEYsviDnV+tuYXp57XHbq+xeJ9lGl9Roz5fbJEXhIf2THIp4EvJTrQATlkiS0TSk
-         FYA04RdOOumXcuvv9rHqwl/sA71FCHnrV/E5d3mOGEJJcNgYRVq+2Fpj4/KTjrgMxvA7
-         C+mg==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1732891831; x=1733496631; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x6BUgFKMvWqnE3HjIPVzbYBbQhrG+0D/ZXL7z6iEv+Q=;
+        b=DitXCuIf6xGWsnEKZDhphrtk4V5ZCBOOOOmXD2bawejBNySbU9gegcH6X17iHeDdF5
+         vYQH4DIUxWoiBy0cOeMu42icsG76OJxTq9pkIpT846DZCT2AJnB6h3i7+hZzL6pqiKhL
+         HpKdQpGW7aZ2ewEToqy+aUbztBDzSUYAV6ri6584VHQ9t2xd953BHxtZPiv0fiNQaKh/
+         WqWdja+BRfBgQvaCcQ9rHD5MVJjSbUFzaDjQo7usenZof/J2a4Cex85u+L0QGZfmVJDX
+         YaQxGJuX39OX+UVm0H8MiqB6FvvLrcyX50edsHcRjrxqK8m0SJaicse6fNsee5BX5mK9
+         d0JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732894232; x=1733499032;
-        h=in-reply-to:from:cc:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
-        b=j1yTr8zeRM7RDH+2J/8eHv0ZckxuDwU6XgHb13oIzv145PMjCGrcIS1S1uzYV9WuXt
-         CVjzoYjTyZF/1xv806tDr8hRawXZ5M8N0GZGHlQQ8lTLQ9ohwNkU6Rk7hBlYH4d4pB+i
-         5ofDQnhGAo01mRtzXWjLZNyR/gXKufsxRmGU092s+CutoA6+3AhNGKsMVAgA7fplzJRZ
-         vv/XKmOPjM7c208ll18Su0UMSEHv4n6BQSZDVH+zVot2A3yMP/hUM/3YMYz2M+a6hlcD
-         EoloAYRHESJjRdh4jRNqWecEtxfU7lHw/tgOnVANU/R2iVxWfw1AEKnvQSKsocf1E2t5
-         12Ow==
-X-Gm-Message-State: AOJu0Yw7qML83+29opIRPLwUEdAjJ36CW1Pe10O2fqgj8tGT6QKm7569
-	pPL13A4Gwn6kxE5XdmcmYZdzsTzbgm+f67FkDx8Uh5e3/WRCqN5qBrxUI797
-X-Gm-Gg: ASbGncv68AXjfT6cgboj+kBwWDmYBejDSQyrk3J9dpOC5M4RYYOWptjY2qqcKZeGfjS
-	zPVHxRLWyllGsP1FMqT/tMKN+2dAoHqEfI6t6uHNEiz24c76V1sNhQjTKvp99QLy0zl31Rsv1Ji
-	uzXuHE9SVjDbCanBSebcpohQ8WFbJJDUCYR+Yk0OcbA9h9HXwb+y6dFLB5RY+Kj6SbyLrGqBjDi
-	vjC8Vgq454lo3MCAw5SRdR/ESsho10FQQ7jKpTcmPzRYtusgXaURlTxXKyjDfjuCcY10SlQYIlm
-	GCIFAz63DhVPKS026sWObtbtcE8qHki0
-X-Google-Smtp-Source: AGHT+IGQjdmVpSxnmXfKlvAyQAbv8Gnl/UQddzLnvowZvfp3nLtgRD9tTnGgThtkAMJxlZJ1h2lcNw==
-X-Received: by 2002:a05:6830:6e9c:b0:719:dd54:ee79 with SMTP id 46e09a7af769-71d65cafa6dmr10629753a34.15.1732894232515;
-        Fri, 29 Nov 2024 07:30:32 -0800 (PST)
-Received: from ?IPV6:2605:a601:aa83:2800:790f:f0a3:3837:4689? ([2605:a601:aa83:2800:790f:f0a3:3837:4689])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71d7255f7bfsm770350a34.38.2024.11.29.07.30.31
+        d=1e100.net; s=20230601; t=1732891831; x=1733496631;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x6BUgFKMvWqnE3HjIPVzbYBbQhrG+0D/ZXL7z6iEv+Q=;
+        b=AmkkgAEUfZ8KWcWFpGJSQBzTlzlWoHlRwNv7umKOJAsuYUSEegU1mcYGj+p8SJw8kS
+         NO4V6M1oS4QFRz2CyS2HmzzQVSyfLH+2l53r+JxmreGKXCmCw4O347q/n5/ajnHEEk+1
+         CdR+OqXTr+6uUbGGsVFZeXF8Nh5FitsoA7a8ZPsFd9YM0ivomktkBfJASBWUe/VuViMF
+         ooD2bxN2t09zzo3ibLJFmSV7KUwpeUlMc1l+MDBYalQ2hTsWLgsKBiyWSr2P+JGNBsnP
+         +DxxCDowxqyJTUDi/lZbyU/lzCuSpImNVXXK4L44ujHS6zZyxa8qyFbYT+vLORkLoc+a
+         nrEg==
+X-Forwarded-Encrypted: i=1; AJvYcCWbPUYuzrplPd2NA/e6EnszvKEpGPHWdT8XVG2+slgQ4uolg3m+A1ChzAbXMN02qn6Ny+S1Cp64@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxptvSRUJfzEJOHiPqDl5Dx7An0LpzpVNFOwq/tkF/thP6KlXuc
+	U8hckQDdrR8ROUuCrHnawJ2AWGKk9Eqy9KEJDFm5uH44srQ+M25Lp2/9fyUDRfg=
+X-Gm-Gg: ASbGncszuE5EUo2eAMbSwlbqSQ6WUNuPlB4RjCu6YaCgm0suntUDs3zlyjT5Sc8hWi+
+	X5oj0+8wdchdeWohCqNYEm23ejj/aYqDc0neFFBhPP1g5RAiWhhfMGmEDp3jFO4Mcs0B0lqZby6
+	lBxvzT0HsHNZBvDVwdu6xivpmiN49aoTOLoObHW+8lxLLHnlF6zKCUA9tBOU9D3aSPT9fzGPzHh
+	oeXmIzVzX+MxhCRU2FNHboVBgVnP7HpbwrPQrA4zRN9ALcUJ4Lrjsd4GCXW+tqu++u4Xn8fCixk
+	qABqsVYLFYY=
+X-Google-Smtp-Source: AGHT+IGVek3mzhHMDzBdQxy7s1b0Zz14fviIHcadw7BkAuoKul+rfGZmueHuYf7hYyYauL0qiEX+qA==
+X-Received: by 2002:a05:6808:1829:b0:3ea:50a8:4559 with SMTP id 5614622812f47-3ea6dbb1d5cmr12276229b6e.11.1732891831338;
+        Fri, 29 Nov 2024 06:50:31 -0800 (PST)
+Received: from [192.168.0.142] (ip98-183-112-25.ok.ok.cox.net. [98.183.112.25])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3ea86036a2dsm743394b6e.9.2024.11.29.06.50.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Nov 2024 07:30:32 -0800 (PST)
-Content-Type: multipart/alternative;
- boundary="------------D03D2bjWyiIy01eAqfgMiW27"
-Message-ID: <ea506101-a1e8-4078-a1f3-0ed4926d64a4@gmail.com>
-Date: Fri, 29 Nov 2024 09:30:31 -0600
+        Fri, 29 Nov 2024 06:50:30 -0800 (PST)
+Message-ID: <6d8e9512-2be8-4337-9791-0d956b0968c5@baylibre.com>
+Date: Fri, 29 Nov 2024 08:50:28 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Quantas CCLA Schedule A update 20241121
-To: Litzung.Chen@quantatw.com
-References: <TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com>
+Subject: Re: [PATCH v1 1/2] dt-bindings: iio: adc: Add binding for Nuvoton
+ NCT720x ADCs
+To: Yu-Hsian Yang <j2anfernee@gmail.com>, Jonathan Cameron <jic23@kernel.org>
+References: <20241106023916.440767-1-j2anfernee@gmail.com>
+ <20241106023916.440767-2-j2anfernee@gmail.com>
+ <6c20875c-4145-4c91-b3b5-8f70ecb126f0@amperemail.onmicrosoft.com>
+ <CA+4VgcJD74ar9zQCj38M2w8FzGWpq+u5Z7ip9M7a1Lu7u8rojw@mail.gmail.com>
+ <20241109134228.4359d803@jic23-huawei> <20241109142943.3d960742@jic23-huawei>
+ <CA+4VgcJ=8wDWWnmgEt-UkEUfnfD8kGtHe44G5+dcRYt=KdwNfw@mail.gmail.com>
+ <20241123144750.43eaa1c5@jic23-huawei>
+ <CA+4Vgc+rqnxne6saUgUO_kR6chX9+HZcb40_9dpO6p6KuskSAg@mail.gmail.com>
 Content-Language: en-US
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
+From: David Lechner <dlechner@baylibre.com>
+In-Reply-To: <CA+4Vgc+rqnxne6saUgUO_kR6chX9+HZcb40_9dpO6p6KuskSAg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
+X-Mailman-Approved-At: Mon, 02 Dec 2024 10:09:41 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,145 +106,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, marius.cristea@microchip.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, olivier.moysan@foss.st.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, mike.looijmans@topic.nl, Chanh Nguyen <chanh@amperemail.onmicrosoft.com>, joao.goncalves@toradex.com, nuno.sa@analog.com, matteomartelli3@gmail.com, chanh@os.amperecomputing.com, andy@kernel.org, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, krzk+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------D03D2bjWyiIy01eAqfgMiW27
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-
-On 11/21/2024 3:35 AM, Litzung Chen (陳利琮) wrote:
->
-> Hiteam,
->
-> Please find the attached file for updated Schedule A of CCLA from Quanta.
->
-Thanks for keeping it up to date. I've uploaded it to the Quanta CLA folder.
-
-> Best Regards,
->
-> Litzung
->
-> Software Advanced R&D Division
->
-> Business Headquarters
->
-> Quanta Computer Inc.
->
---------------D03D2bjWyiIy01eAqfgMiW27
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 11/21/2024 3:35 AM, Litzung Chen
-      (陳利琮) wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator"
-        content="Microsoft Word 15 (filtered medium)">
-      <style>@font-face
-	{font-family:新細明體;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
-	{font-family:Verdana;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
-	{font-family:微軟正黑體;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
-	{font-family:"\@微軟正黑體";}@font-face
-	{font-family:"\@新細明體";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Verdana",sans-serif;
-	color:blue;}span.apple-converted-space
-	{mso-style-name:apple-converted-space;}.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}div.WordSection1
-	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Hi</span><span
-            class="apple-converted-space"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC"> </span></span><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">team</span><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">,</span><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue"> </span><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">Please
-            find the attached file for updated Schedule A of CCLA from
-            Quanta.</span><span lang="EN-US"><br>
-          </span></p>
-      </div>
-    </blockquote>
-    Thanks for keeping it up to date. I've uploaded it to the Quanta CLA
-    folder.<br>
-    <br>
-    <blockquote type="cite"
-cite="mid:TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com">
-      <div class="WordSection1">
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Best
-            Regards,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Litzung<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Software
-            Advanced R&amp;D Division<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Business
-            Headquarters<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Quanta
-            Computer Inc.</span><span lang="EN-US" style="color:blue"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------D03D2bjWyiIy01eAqfgMiW27--
+On 11/27/24 8:14 PM, Yu-Hsian Yang wrote:
+> Dear Jonathan Cameron,
+> 
+> Thank you for your advice.
+> 
+> I would remove the "nvuoton,read-vin-data-size" property.
+> 
+> Read VIN info can use word read or byte read, and other registers
+> should use byte read.
+> If I use word read for VIN info and byte read for other registers,
+> I encounter an issue when I use regmap instead of i2c smbus API.
+> 
+> I need two regmap configs with val_bits 8/16.
+> After I call devm_regmap_init_i2c these two configs,
+> the error message:
+> "debugfs: Directory '5-001d' with parent 'regmap' already present!"
+> 
+> Do you have any suggestions?
+> 
+Give each regmap a unique name, like "5-001d-8bit" and "5-001d-16bit".
