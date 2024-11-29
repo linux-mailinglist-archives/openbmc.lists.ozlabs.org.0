@@ -1,77 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 971F89DB2B4
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2024 07:07:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7E319DE967
+	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2024 16:30:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4XzQng3vjgz3bM7
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2024 17:07:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Y0HFG12Snz3bTN
+	for <lists+openbmc@lfdr.de>; Sat, 30 Nov 2024 02:30:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::c2f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732774036;
-	cv=none; b=KYdG+VtEdRfihZvy8tkyQHqFQZOhsmZg9KsSXXFbu6G+24BdJRN9P9gVdBd/nghUxN1yXmp292e2BToA5wqISShFJ8FY2DmGWjpiKsTnqOGk5iSkqpfSDQHGIy2EOi4vbvYOhiOo+PRJTqDGeXGs0S6au/xeGbAYRPLK6ZmMZ2jzvw36JCv01ggcvt/+mLbk5gatOsuB4hW2pU0ArERCwwa2WGfNNRKn8T1dLvLE6jFfuUJdI1cytMmVqGEFDoZJxFeDZ01nQwqLusrL6UMHfx/JG+iwmgkrrj3swfXh77l6Y+N9nErJzessPrdXEGCtydIDcapkUFFhCwa+j8oX3Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::32a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1732894239;
+	cv=none; b=fWmhGPYkkuBipmCiPtP8K6GpvSGGlhQwvbGQU3kiHiqoNTM/07R8ePCsnVpUk8+vc5kUXF/CyNORwlHsZaLIFFBctJ1B16HfYf48R9QMDoV8NaXZCtpGatVpJ4RMs7pejiT5OgV+Ga9kjuA+GB5IWBnc97OlMAG04l7BBmAlZvZlSbgLaQ1knFYIe+92cFH4EUrgcyLHj2exFQFUbHch7jo401YEhLIQ4xpAg1RnWQevtdI9P3l46b0fepBn2DO2fNguUzhKDc0StvZUqOY683tDwoe/CPlkrlf1tDOTzXHsDT2wyq2AO+NkL0dxoWwmPbhgLmDxMMUK8lLJhgvoUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1732774036; c=relaxed/relaxed;
-	bh=1E/rD/+zzdOF3JlgUs0sjhSQG1L0dzjl0VfFf2I6Ho8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i9/JABBTa4kXWtQXHV555R4Kgf9KGGorUgtTeI62eQLFaHjzQp5zWfYTaaA8lMyCXFo/L45W6+/LtA5gwLZGRp6lILp9iSNk7VihkILPRK2OBZi5LwIcvEBSzHCnGvCc7KL1ug74hFWp2opSJ6K3ObzaeQ0j0clm+TQMnNsJnq3dq1MMppwn9i6vXA4K19tsSWabhP9S65Kkz9by8/KIqO99Bh2ZgfagFYwX4mfpsqPUjSfRDu1n6rQo9gTQ9mEcCgfE06C3BLWsISrXXvpNS4kHK97N8bBuhp5VsVCnAT6JF6daLYX37CiRzDJwdDzH9NEzFeFhgAz7eZYpDzcOCg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GZJQfV0i; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::c2f; helo=mail-oo1-xc2f.google.com; envelope-from=ojayanth@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1732894239; c=relaxed/relaxed;
+	bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:References:
+	 Cc:From:In-Reply-To; b=eUc91n55sagvvAIu+HV/J2ojYlR+QJon1JyCdDQ04csx7cZRCp6Kkmy+nnvtwjmU45UFwFW6wxI16mHn3XN4glRTGTVZP+XeZN7K2EZ1+W0ysdcwWZpRjmZPMa9Pb5FMxynGL7zOPfZgFd0JytGYSvDuLER6//iBrO1CmSTNcbfzC+TrQgw/ava7zY2JF7Qox8yj3omykwQQVxzywpJJKHintBP5402uyU9J2Iahs1ed9+uvtnvQ0gajOdRH3+Eq1nfkefSKHDDPiKPSsLl2nD8fJepoQfnh6i2wylD/3xVF6gPdypGy5u6qqEKhrn6O28pmdMqghSUNKMKo0Pi7yw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fXMCMUZi; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GZJQfV0i;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fXMCMUZi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2f; helo=mail-oo1-xc2f.google.com; envelope-from=ojayanth@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4XzQnZ19W2z2xvh
-	for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2024 17:07:13 +1100 (AEDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id 006d021491bc7-5f1e73033cbso212440eaf.3
-        for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2024 22:07:12 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y0HF84Ffgz2y8q
+	for <openbmc@lists.ozlabs.org>; Sat, 30 Nov 2024 02:30:35 +1100 (AEDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 46e09a7af769-71d4ba17cd2so796614a34.3
+        for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2024 07:30:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732774028; x=1733378828; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1E/rD/+zzdOF3JlgUs0sjhSQG1L0dzjl0VfFf2I6Ho8=;
-        b=GZJQfV0iudX8NNPXQfVEoWMEs2DOXBq6qy3VsGboYt8+YuklStbmv2dfh4zL+NNeKi
-         Bbhi0c8PTQYM5EY7V6EeGQki+wPBp9L5o8u4LWirzCVuw9/byMUAlXypFwkmVC+6Lfdb
-         nc3ELIC0LBm5M9NmwijwJkIQqCiv+BTqJEIweRFQx2hvLazELQuzX532dkvJ51JPikDq
-         WLuwG5VDpKUenKGVA6fNL7Y3ynUpWNT+fwd1q/DBl+l9qXwAhOk6FgIWisQYl8Dym92S
-         HOK+lPA2tmaMR5xUGhnmn505sbIJW8HDwSI1a0Ti7u94wqSrM4yLBo29miYqACaeeWm1
-         2PbQ==
+        d=gmail.com; s=20230601; t=1732894232; x=1733499032; darn=lists.ozlabs.org;
+        h=in-reply-to:from:cc:content-language:references:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
+        b=fXMCMUZijfHfs7JAWcycJ4wNmuK/G60/hTr8wT0nO/vDJjFlDP8S1lkOtEZhjSTc2V
+         yH0UI7jkI1tgYOhnO6DU3mrwBySzlDQ8sIZdqa/EfCSVn7RqKP49n4/kKQOyAkayIXYj
+         6PRI66TNJoWUo10z0hF4PfJVm58XDDoAn3HURGFebwVloHrgGyBko+AgFVh8YH/jn/cC
+         3V9rvEYsviDnV+tuYXp57XHbq+xeJ9lGl9Roz5fbJEXhIf2THIp4EvJTrQATlkiS0TSk
+         FYA04RdOOumXcuvv9rHqwl/sA71FCHnrV/E5d3mOGEJJcNgYRVq+2Fpj4/KTjrgMxvA7
+         C+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732774028; x=1733378828;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1E/rD/+zzdOF3JlgUs0sjhSQG1L0dzjl0VfFf2I6Ho8=;
-        b=HN7DmMguvnewVt1SMD0KRERiRKTKFyxNa9z2BNRYuht2W4k8Y7u6CQD5GqxO/v3mb7
-         VNlV4yPVuL8lX0vpEbCP4jOyfioBbV08TpgthZteRtItlCF9KQlu+8rbmIHNOLr97vL4
-         wm16QO57exg9yACqyTxdl13hS4fvCiEJg7qtPYoC6QfeCmQaW4KP7urgH5zn+vFmAuh7
-         hWv17ZCrWuu+HZepPrH752v2M6EyFlycaBELUBvwXn02lmnUXRBpa9yPF+73j3nkraLz
-         fCgq520NycM78Ll5qAw3mlkE+dDmzTdEq3ql7cTMOWeEs6UsMrBWOk8Z4AwBg22D/4SJ
-         um0g==
-X-Gm-Message-State: AOJu0Yy+e5hHgti051gz19QWcnzQR34Ayno3N1lxtRHD9EFRDIepSFg/
-	vQl76/AIWCkb55z98BfRZrCQdW03WRSaSnRpc9HUgOWn5DZ4pZSgvec6Canjrmjuclvbs/jZETZ
-	j4EqbdwqV8lHTO1VVjaQeFqq4/QQ=
-X-Gm-Gg: ASbGncuEg1TsZDZM3EJRe6AM5lUOSUJT7UBewyNoIHhMxUJ8AbWqYHoz5wln11byki4
-	rWsf3s5Gugr9hz+j2CfqspObEsnCyeA==
-X-Google-Smtp-Source: AGHT+IGZ+2yvQW/LQCIwNey+o8Wm3RQvTKsZ6vokpPA5W7/c9hc//Ypk67L0yQyo274NYwssCz4XXN5DwCkEFBoy3mk=
-X-Received: by 2002:a05:6820:1896:b0:5ee:56d:69f8 with SMTP id
- 006d021491bc7-5f20a2582c1mr5381366eaf.7.1732774028009; Wed, 27 Nov 2024
- 22:07:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732894232; x=1733499032;
+        h=in-reply-to:from:cc:content-language:references:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kInNx0j466caoP9Tqr4sobkJilcpxFkciOlrig1dWWo=;
+        b=j1yTr8zeRM7RDH+2J/8eHv0ZckxuDwU6XgHb13oIzv145PMjCGrcIS1S1uzYV9WuXt
+         CVjzoYjTyZF/1xv806tDr8hRawXZ5M8N0GZGHlQQ8lTLQ9ohwNkU6Rk7hBlYH4d4pB+i
+         5ofDQnhGAo01mRtzXWjLZNyR/gXKufsxRmGU092s+CutoA6+3AhNGKsMVAgA7fplzJRZ
+         vv/XKmOPjM7c208ll18Su0UMSEHv4n6BQSZDVH+zVot2A3yMP/hUM/3YMYz2M+a6hlcD
+         EoloAYRHESJjRdh4jRNqWecEtxfU7lHw/tgOnVANU/R2iVxWfw1AEKnvQSKsocf1E2t5
+         12Ow==
+X-Gm-Message-State: AOJu0Yw7qML83+29opIRPLwUEdAjJ36CW1Pe10O2fqgj8tGT6QKm7569
+	pPL13A4Gwn6kxE5XdmcmYZdzsTzbgm+f67FkDx8Uh5e3/WRCqN5qBrxUI797
+X-Gm-Gg: ASbGncv68AXjfT6cgboj+kBwWDmYBejDSQyrk3J9dpOC5M4RYYOWptjY2qqcKZeGfjS
+	zPVHxRLWyllGsP1FMqT/tMKN+2dAoHqEfI6t6uHNEiz24c76V1sNhQjTKvp99QLy0zl31Rsv1Ji
+	uzXuHE9SVjDbCanBSebcpohQ8WFbJJDUCYR+Yk0OcbA9h9HXwb+y6dFLB5RY+Kj6SbyLrGqBjDi
+	vjC8Vgq454lo3MCAw5SRdR/ESsho10FQQ7jKpTcmPzRYtusgXaURlTxXKyjDfjuCcY10SlQYIlm
+	GCIFAz63DhVPKS026sWObtbtcE8qHki0
+X-Google-Smtp-Source: AGHT+IGQjdmVpSxnmXfKlvAyQAbv8Gnl/UQddzLnvowZvfp3nLtgRD9tTnGgThtkAMJxlZJ1h2lcNw==
+X-Received: by 2002:a05:6830:6e9c:b0:719:dd54:ee79 with SMTP id 46e09a7af769-71d65cafa6dmr10629753a34.15.1732894232515;
+        Fri, 29 Nov 2024 07:30:32 -0800 (PST)
+Received: from ?IPV6:2605:a601:aa83:2800:790f:f0a3:3837:4689? ([2605:a601:aa83:2800:790f:f0a3:3837:4689])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71d7255f7bfsm770350a34.38.2024.11.29.07.30.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Nov 2024 07:30:32 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------D03D2bjWyiIy01eAqfgMiW27"
+Message-ID: <ea506101-a1e8-4078-a1f3-0ed4926d64a4@gmail.com>
+Date: Fri, 29 Nov 2024 09:30:31 -0600
 MIME-Version: 1.0
-References: <CAAYvRVMG-ae1Z64jHMHUWVdj2wqCzgjRoPYLQj8UtBtq6AS8AA@mail.gmail.com>
-In-Reply-To: <CAAYvRVMG-ae1Z64jHMHUWVdj2wqCzgjRoPYLQj8UtBtq6AS8AA@mail.gmail.com>
-From: Jayanth Othayoth <ojayanth@gmail.com>
-Date: Thu, 28 Nov 2024 11:36:55 +0530
-Message-ID: <CACkAXSrWt1LY1A4ifSUuQT=CQ3c5f-PgG0Ne57e+sFV0m_t0PQ@mail.gmail.com>
-Subject: Re: Logging in with certificates issue
-To: Paul Gildea <Paul.Gildea@klasgroup.com>
-Content-Type: multipart/alternative; boundary="0000000000006a6ee50627f2e47b"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Quantas CCLA Schedule A update 20241121
+To: Litzung.Chen@quantatw.com
+References: <TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com>
+Content-Language: en-US
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
 	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
@@ -92,216 +101,141 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006a6ee50627f2e47b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------D03D2bjWyiIy01eAqfgMiW27
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Paul,
 
+On 11/21/2024 3:35 AM, Litzung Chen (陳利琮) wrote:
+>
+> Hiteam,
+>
+> Please find the attached file for updated Schedule A of CCLA from Quanta.
+>
+Thanks for keeping it up to date. I've uploaded it to the Quanta CLA folder.
 
-   - *Background*: The link
-   https://gerrit.openbmc.org/c/openbmc/phosphor-certificate-manager/+/4913=
-0
-   to the Gerrit review provides context on why the certificate manager all=
-ows
-   the installation of certificates even when the
-   X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT error is encountered.
-   - *Current Behavior*: With the latest code, the certificate manager
-   permits the installation of certificates with this specific error, and
-   BMCweb can use these certificates.
+> Best Regards,
+>
+> Litzung
+>
+> Software Advanced R&D Division
+>
+> Business Headquarters
+>
+> Quanta Computer Inc.
+>
+--------------D03D2bjWyiIy01eAqfgMiW27
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-If you have more questions or need clarification, we can discuss here or on
-Discord.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 11/21/2024 3:35 AM, Litzung Chen
+      (陳利琮) wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator"
+        content="Microsoft Word 15 (filtered medium)">
+      <style>@font-face
+	{font-family:新細明體;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
+	{font-family:微軟正黑體;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
+	{font-family:"\@微軟正黑體";}@font-face
+	{font-family:"\@新細明體";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Verdana",sans-serif;
+	color:blue;}span.apple-converted-space
+	{mso-style-name:apple-converted-space;}.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}div.WordSection1
+	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoNormal"
+          style="text-align:justify;text-justify:inter-ideograph"><span
+            lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Hi</span><span
+            class="apple-converted-space"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC"> </span></span><span
+            lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">team</span><span
+            lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">,</span><span
+            lang="EN-US"><o:p></o:p></span></p>
+        <p class="MsoNormal"
+          style="text-align:justify;text-justify:inter-ideograph"><span
+            lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue"> </span><span
+            lang="EN-US"><o:p></o:p></span></p>
+        <p class="MsoNormal"
+          style="text-align:justify;text-justify:inter-ideograph"><span
+            lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">Please
+            find the attached file for updated Schedule A of CCLA from
+            Quanta.</span><span lang="EN-US"><br>
+          </span></p>
+      </div>
+    </blockquote>
+    Thanks for keeping it up to date. I've uploaded it to the Quanta CLA
+    folder.<br>
+    <br>
+    <blockquote type="cite"
+cite="mid:TYZPR04MB774135726E51B37D588B80E3F1222@TYZPR04MB7741.apcprd04.prod.outlook.com">
+      <div class="WordSection1">
+        <p class="MsoNormal"
+          style="text-align:justify;text-justify:inter-ideograph"><span
+            lang="EN-US"><o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Best
+            Regards,<o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Litzung<o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Software
+            Advanced R&amp;D Division<o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Business
+            Headquarters<o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"
+style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Quanta
+            Computer Inc.</span><span lang="EN-US" style="color:blue"><o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
+      </div>
+    </blockquote>
+  </body>
+</html>
 
-On Wed, Nov 27, 2024 at 9:01=E2=80=AFPM Paul Gildea <Paul.Gildea@klasgroup.=
-com>
-wrote:
-
-> Hi,
->
-> I'm trying to log in over HTTPS via certificate with my browser and it
-> doesn't work. I've followed this setup process and checked that the
-> verification is correct:
->
->
-> https://gerrit.openbmc.org/plugins/gitiles/openbmc/docs/+/ef6af2726cdd976=
-a6d767e569fabd639f8abb6d2/security/TLS-configuration.md
->
-> Checking the logs I see this output:
->
-> Nov 22 14:35:33 vm3 phosphor-certificate-manager[215]: Certificate
->> install, FILEPATH:/tmp/Cert
->> s.Adv311/cert.pem
->> Nov 22 14:35:33 vm3 systemd[1]: Reloading Start bmcweb server...
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Check if host is
->> running
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Host is running!
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Received signal
->> that host is running
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Change to Host
->> State: xyz.openbmc_projec
->> t.State.Host.HostState.Running
->> Nov 22 14:35:33 vm3 systemd[1]: Reloaded Start bmcweb server.
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Check if host is
->> running
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Host is running!
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Received signal
->> that host is running
->> Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Change to Host
->> State: xyz.openbmc_projec
->> t.State.Host.HostState.Running
->> Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Certificate
->> install, FILEPATH:/tmp/Cert
->> s.jDVxEN/cert.pem
->>
->> *Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Error occurred
->> during X509_verify_cert**call, checking for known error, ERRCODE:20,
->> ERROR_STR:unable to get local issuer certificate*
->> Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Certificate
->> compareKeys, FILEPATH:/tmp/
->> Certs.jDVxEN/cert.pem
->> Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Inotify callback
->> to update certificate
->> properties
->> Nov 22 14:36:16 vm3 systemd[1]: Reloading Start bmcweb server...
->> Nov 22 14:36:16 vm3 systemd[1]: Reloaded Start bmcweb server.
->
->
->
-> Noting the error and looking at a build based on old code from a few year=
-s
-> ago I get the same error in the logs, but it does log in with the
-> certificate anyway.
->
-> Reading the code, there looks to be a trusted chain bypass for certain
-> issues, including this one, but from my understanding this still shouldn'=
-t
-> log in over HTTPS, and the newer behaviour is correct? If so, any idea wh=
-at
-> might be wrong?
->
-> Thanks,
-> Paul
->
->
->
-> This message is intended solely for the person or entity to which it is
-> addressed and may contain confidential and/or privileged material.  If yo=
-u
-> have received this message in error, please send it back to us, immediate=
-ly
-> and permanently delete it, and do not use, copy or disclose the informati=
-on
-> contained in this message or in any attachment.
->
-> Klas LTD (Company Number 163303) trading as Klas, an Irish private compan=
-y
-> limited by shares, with its registered office at One Kilmainham Square,
-> Dublin 8, Ireland D08 ET1W.
->
-> Klas Telecom Inc., a Virginia Corporation with offices at 1101 30th St.
-> NW, Washington, DC 20007.
->
-
---0000000000006a6ee50627f2e47b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><span style=3D"color:rgb(33,33,33);font-family:inherit;fon=
-t-size:13.006px">Paul,</span><div><font color=3D"#212121"><span style=3D"fo=
-nt-size:13.006px"><br></span></font></div><div><ul style=3D"margin-left:0px=
-;padding-left:0px;margin-top:10px;margin-bottom:10px;color:rgb(36,36,36);fo=
-nt-size:14px"><li style=3D"list-style-type:disc;margin-left:20px"><strong>B=
-ackground</strong>: The link=C2=A0
-
-<span style=3D"color:rgb(34,34,34);font-size:small"><a href=3D"https://gerr=
-it.openbmc.org/c/openbmc/phosphor-certificate-manager/+/49130">https://gerr=
-it.openbmc.org/c/openbmc/phosphor-certificate-manager/+/49130</a></span>=C2=
-=A0 to the Gerrit review provides context on why the certificate manager al=
-lows the installation of certificates even when the=C2=A0<code style=3D"ove=
-rflow-wrap: break-word;">X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT</code>=C2=A0e=
-rror is encountered.</li><li style=3D"list-style-type:disc;margin-left:20px=
-"><strong>Current Behavior</strong>: With the latest code, the certificate =
-manager permits the installation of certificates with this specific error, =
-and BMCweb can use these certificates.</li></ul><p style=3D"margin:0px 0px =
-1em;color:rgb(36,36,36);font-size:14px">If you have more questions or need =
-clarification, we can discuss here or on Discord.</p></div></div><br><div c=
-lass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 27, =
-2024 at 9:01=E2=80=AFPM Paul Gildea &lt;<a href=3D"mailto:Paul.Gildea@klasg=
-roup.com">Paul.Gildea@klasgroup.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi,<div><br></div><div>=
-I&#39;m trying to log in over HTTPS via certificate with my browser and it =
-doesn&#39;t work. I&#39;ve followed this setup process and checked that the=
- verification is correct:</div><div><br><a href=3D"https://gerrit.openbmc.o=
-rg/plugins/gitiles/openbmc/docs/+/ef6af2726cdd976a6d767e569fabd639f8abb6d2/=
-security/TLS-configuration.md" target=3D"_blank">https://gerrit.openbmc.org=
-/plugins/gitiles/openbmc/docs/+/ef6af2726cdd976a6d767e569fabd639f8abb6d2/se=
-curity/TLS-configuration.md</a><br><br>Checking the logs I see this output:=
-<br><br><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex"><font face=3D"mon=
-ospace">Nov 22 14:35:33 vm3 phosphor-certificate-manager[215]: Certificate =
-install, FILEPATH:/tmp/Cert<br></font><font face=3D"monospace">s.Adv311/cer=
-t.pem<br></font><font face=3D"monospace">Nov 22 14:35:33 vm3 systemd[1]: Re=
-loading Start bmcweb server...<br></font><font face=3D"monospace">Nov 22 14=
-:35:33 vm3 phosphor-host-state-manager[367]: Check if host is running<br></=
-font><font face=3D"monospace">Nov 22 14:35:33 vm3 phosphor-host-state-manag=
-er[367]: Host is running!<br></font><font face=3D"monospace">Nov 22 14:35:3=
-3 vm3 phosphor-host-state-manager[367]: Received signal that host is runnin=
-g<br></font><font face=3D"monospace">Nov 22 14:35:33 vm3 phosphor-host-stat=
-e-manager[367]: Change to Host State: xyz.openbmc_projec<br></font><font fa=
-ce=3D"monospace">t.State.Host.HostState.Running<br></font><font face=3D"mon=
-ospace">Nov 22 14:35:33 vm3 systemd[1]: Reloaded Start bmcweb server.<br></=
-font><font face=3D"monospace">Nov 22 14:35:33 vm3 phosphor-host-state-manag=
-er[367]: Check if host is running<br></font><font face=3D"monospace">Nov 22=
- 14:35:33 vm3 phosphor-host-state-manager[367]: Host is running!<br></font>=
-<font face=3D"monospace">Nov 22 14:35:33 vm3 phosphor-host-state-manager[36=
-7]: Received signal that host is running<br></font><font face=3D"monospace"=
->Nov 22 14:35:33 vm3 phosphor-host-state-manager[367]: Change to Host State=
-: xyz.openbmc_projec<br></font><font face=3D"monospace">t.State.Host.HostSt=
-ate.Running<br></font><font face=3D"monospace">Nov 22 14:36:16 vm3 phosphor=
--certificate-manager[216]: Certificate install, FILEPATH:/tmp/Cert<br></fon=
-t><font face=3D"monospace">s.jDVxEN/cert.pem<br></font><font face=3D"monosp=
-ace"><b>Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Error occurr=
-ed during X509_verify_cert<br></b></font><font face=3D"monospace"><b>call, =
-checking for known error, ERRCODE:20, ERROR_STR:unable to get local issuer =
-certificate</b><br></font><font face=3D"monospace">Nov 22 14:36:16 vm3 phos=
-phor-certificate-manager[216]: Certificate compareKeys, FILEPATH:/tmp/<br><=
-/font><font face=3D"monospace">Certs.jDVxEN/cert.pem<br></font><font face=
-=3D"monospace">Nov 22 14:36:16 vm3 phosphor-certificate-manager[216]: Inoti=
-fy callback to update certificate<br></font><font face=3D"monospace">proper=
-ties<br></font><font face=3D"monospace">Nov 22 14:36:16 vm3 systemd[1]: Rel=
-oading Start bmcweb server...<br></font><font face=3D"monospace">Nov 22 14:=
-36:16 vm3 systemd[1]: Reloaded Start bmcweb server.</font></blockquote><div=
-><br></div><br>Noting the error and looking at a build based on old code fr=
-om a few years ago I get the same error in the logs, but it does log in wit=
-h the certificate anyway.</div><div><br></div><div>Reading the code, there =
-looks to be a trusted chain bypass for certain issues, including this one, =
-but from my understanding this still shouldn&#39;t log in over HTTPS, and t=
-he newer behaviour is correct? If so, any idea what might be wrong?<br><br>=
-Thanks,</div><div>Paul</div></div>
-
-<br>
-<div style=3D"font-size:1.3em"><img src=3D"https://www.klasgroup.com/wp-con=
-tent/uploads/2020/11/Klas-Logo-30px.png"></div><div style=3D"font-size:1.3e=
-m"><br></div><div style=3D"font-family:Arial,Helvetica,sans-serif"><div sty=
-le=3D"font-family:Arial,Helvetica,sans-serif"><span style=3D"font-size:1.3e=
-m"><img></span><br><div style=3D"font-family:Arial,Helvetica,sans-serif"><d=
-iv dir=3D"ltr" style=3D"color:rgb(34,34,34);background-color:rgb(255,255,25=
-5)"><font size=3D"1">This message is intended solely for the person or enti=
-ty to which it is addressed and may contain confidential and/or privileged =
-material.=C2=A0=C2=A0If you have received this message in error, please sen=
-d it back to us, immediately and permanently delete it,=C2=A0and do not use=
-, copy or disclose the information contained in this message or in any atta=
-chment.<br></font></div><div dir=3D"ltr" style=3D"color:rgb(34,34,34);backg=
-round-color:rgb(255,255,255)"><div dir=3D"ltr"><font size=3D"1"><br></font>=
-</div><div dir=3D"ltr"><font size=3D"1">Klas LTD (Company Number 163303) tr=
-ading as Klas, an Irish private company limited by shares, with its registe=
-red office at One Kilmainham Square, Dublin 8, Ireland D08 ET1W.<br></font>=
-</div><div dir=3D"ltr"><font size=3D"1"><br></font></div><div dir=3D"ltr"><=
-/div></div><span style=3D"color:rgb(80,0,80);background-color:rgb(255,255,2=
-55)"><div dir=3D"ltr"><font size=3D"1">Klas Telecom Inc., a Virginia Corpor=
-ation with offices at 1101 30th St. NW, Washington, DC 20007.</font></div><=
-/span></div></div></div></blockquote></div>
-
---0000000000006a6ee50627f2e47b--
+--------------D03D2bjWyiIy01eAqfgMiW27--
