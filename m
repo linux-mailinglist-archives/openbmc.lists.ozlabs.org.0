@@ -2,102 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75A499E60C9
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2024 23:47:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5D4B9E885A
+	for <lists+openbmc@lfdr.de>; Sun,  8 Dec 2024 23:50:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Y48dX4zhqz3dHc
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2024 09:46:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Y60Zc3vXRz3bTj
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2024 09:50:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::22a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1733425321;
-	cv=none; b=gusdRAt6L4iCdMEd/q/VILY3ZqKtZ/rsnWEzSvYvq9fySXwt07CU4a7g7p1dHXveE+pkm2CvcEEC1ErRx2pYDz+wz3w+p6pVo8eXBul5PvFi9+LLAfp+OkyNL8ulTfVIatzt9d9gNQJdw+PzNR62t4ZjuaH33mTlwlJPe+Q7tu+Cx5df6GXofD64z+4kshUMVXGikhcsHvVahDrFgAZwZzesVAmAesmUsGQvNDFhlPBuaJMnTa42/8WDg7ndGiFXTJ0bA43quysSMBxdVz+nBADmiWnt/opXlAFsA6JAR/x2L04MVolCdJhkpASyo7RtZ6+qiEY7gdagHlPoYp8dHw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62c"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1733455080;
+	cv=none; b=C1hi+IL+4oKJCvCdZORD++jn5IxOYaNezbkvh7UTOyuz8O+Xg32fC4zdzvrg8L7LerNav25EZZCqMI75u9jaCErDuwb+rPiSHTDkPF+5sEmfq19yTlsJ2ZkQWrteDwFQCI/EOVNSqaN/TZlGsoACUX8nhhc7Z2iyvlxm6JY1BRnAnaQBZxslvNVHrftzyyq+8Exr4S/QB5z3mqkkIcxD/aqQ651QqTYab4Q9b9YsS5chJAxXyMAu2v5qgE09qDPee3Pxtgi/MSOEJd6Fcvb8ng67LdzSFTDSEVAlQgf/EDpKTc6b307xPSFyEgCckLEHl1SG7bC8LLMPLIXAZ7wCng==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1733425321; c=relaxed/relaxed;
-	bh=IaFOO/mfjUBixXAYtvSMoA7J8PbrmSflkGjEoxaTBzw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lSx/2hcJultBnTOEyQ9PbOgdM9XHSOfypK1TDUa7hbKbz7iF1xH/XzFTyUYmh9ij7OHOQ7mWJyox3t8dxB4EMcTLm2haQxcXFXyuzapenUrsIPZZx7zNDakZcKSvHoXgHowlAfMt5Wifqgb4ibBfIrmECI0DM7Es1tDOByD5j1tmYgdigWFcRhEGmhpRlg+Qalbz23YsmeRBkB08PAOdvH3BD0lns+W0q4KvXg8z8/cPHa1EoBzz4xcyptjp6yyvHp+W6uRZ/N/oz5pbgtmUoGJt+J2M7IxFSBoJjTU1nc9SZRS3b6slqw8pUyC2kmCjfsTD2WfXinSSNJRXCo9dsw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=N9QP3TVJ; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::22a; helo=mail-oi1-x22a.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+	t=1733455080; c=relaxed/relaxed;
+	bh=+2PCozrlzgkk4F9S6TYNgGPd0ZRNLkVWbIj1PK8TFjk=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=eeMi62TaRcuj96o0D8aeXLJ/DevcMxTH/K+H916WvueH6B2avm+w+Lg74xYrvkxhJI/nXnrAsRbspWJR27qWmPqu/lM6wxIuVd+1LumIv0cyDOgv36hpAxNckiIJdBSWP4R+KIRKvlOt/0C5VKeKIGLWcVHvFaIcUBe4I8/uHc7nlSQBk5uiUxqyNKLFSHtBhqe3blR5NiojnwuFciYTvyZ4rSktSgC/NIxxFoc1YYqRhbIvjFMTQ8v5jnda79l888XM56mzER2fRKe4LOTtS6idqhus99ds2mUtCLqJ2ofZC85+zwAHCNWkNXVIx+ynt1PNMrgyKSXqVyHeVWECBg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Us6xAKZ6; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=N9QP3TVJ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Us6xAKZ6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2607:f8b0:4864:20::22a; helo=mail-oi1-x22a.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y43fH4sTcz2xWT
-	for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2024 06:01:57 +1100 (AEDT)
-Received: by mail-oi1-x22a.google.com with SMTP id 5614622812f47-3ea427001c5so805853b6e.3
-        for <openbmc@lists.ozlabs.org>; Thu, 05 Dec 2024 11:01:57 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y4Gfb5cDMz2xvh
+	for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2024 14:17:57 +1100 (AEDT)
+Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-2155157c58cso10156125ad.0
+        for <openbmc@lists.ozlabs.org>; Thu, 05 Dec 2024 19:17:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1733425315; x=1734030115; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=IaFOO/mfjUBixXAYtvSMoA7J8PbrmSflkGjEoxaTBzw=;
-        b=N9QP3TVJIC5ZzhF4LNoxYY6nJkc8Y4LCY2bf97O+1aLvMGQXSt+Jb1D/BBh9jcMZmv
-         TRpTJAhzvKB26HiQduIVACey70bE4+5NBtF0IMaGyQihJUSnaobhujEcUuXWewnkgZdG
-         VLc/VyT6mmLXBOCQ8xyNOTXGsE7mAk/2Am59wJG4+/Nn9TGlAn95hUqbVarKbYs7GKBY
-         ydGEbliJpPQzrwcy0E8rs1YV1JfmwaNp6tCaRWUcl0wrIz/LLV6VriyXe+lefyepnuRY
-         P+kwAcVGQ5XjYlUmaf3a8fJ2KarJRAwYi1+Xbape91Hzt2jBX9SMmiFklZofZEJjK3QS
-         iZdQ==
+        d=gmail.com; s=20230601; t=1733455075; x=1734059875; darn=lists.ozlabs.org;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+2PCozrlzgkk4F9S6TYNgGPd0ZRNLkVWbIj1PK8TFjk=;
+        b=Us6xAKZ6HbIY0Td++WNrEvleRppsS2wunN3VDidcK3Zx0nK2vGPQ68h9y+3MluGNQf
+         qjWdQbcukmG+kaEncE59Zd+jXCqfKSd4TQmlT2dWJi4uBVJDq2+BJlCfocsu5V99O4ls
+         RqVHPuROyrrjMZxTBcWs8HvCll2j9i15Br0gYwMMKMms5EjP8mj1MsN3QAoicUQCEN6C
+         lVweC95n+TNGYwC5NmBga0WeSb4vj3h0qeDn9zfR/KRIv1hBKAc3Dth0zvfREG82Ndmy
+         b+xH/9EFS0WfqkbbGjawKTYzEsD98E5PSrX/Ay8iOWgkN+Vf6Q/2/63zt/WZDstcStTy
+         b3sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733425315; x=1734030115;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IaFOO/mfjUBixXAYtvSMoA7J8PbrmSflkGjEoxaTBzw=;
-        b=UND6kNFVpDZr+Ty7VzlcYZFs8D/ZqIOGdXYPXjrdzXi7wr233HjvF1TOWVMC5ddP/v
-         ClM6jvwvf/aKJhh9DsraOlX+ZALxbseLorcIUweuI177hjG1riquN4KA81/MSHSF2qhL
-         0lNqiUBhZyA+kYgHtpEjIGriNyXaWkAyjuFOJjuhV8ku1UeTStwv4leFg/kdyN1+If9/
-         t5FgKcubsjYeXu9mQa9ifbBxV/NcILjRT0fjauU9GRc9wpebB+a8QsKtjFv8RSi7mLrc
-         zBIwxG3L8iwhDNUbE+W+V/L1KkTFP0CdTxkYHsBRvdNGfDuqUlBHgkcZ6KpqQEzbMQyn
-         qZRA==
-X-Gm-Message-State: AOJu0Yyi0t+BvjjXUT9zktRC4BlR8XhOBU0oHYN4HWdfR8+m4mESiuOY
-	IN28G9a637pA7RPLfYsHMK4PSnZX8lVRaOCW6uH0Wbd57unxfpST1t2FiVHTGVE=
-X-Gm-Gg: ASbGnctQu/WWnW8FqRutxKheZF430prkWZO840YACGa+UikhHBjD/Kzzp61nIeAEsIZ
-	B6+a8puKNgHOA+WpSD2Ut7vsIxx89spStKL7oK6wJaYS5YK8Dg36bRXIpb4w0M7O/fCwMKNkbu8
-	tF1GGsVOGMrYfwI0ca1ZEgdi3qUrJJ+cxImUaxv1sV2zqzsiBg5SGmMsFSeqEi/g9CIeUf1cjdn
-	UwQPG+wnbYZGiPezbD73z5dqqBcMyDOjwXANm7nlu1Ny8/XiE83JkawsZyffsGslD9l6FHo6VEd
-	f8aHgYgiGI4=
-X-Google-Smtp-Source: AGHT+IFUDmVuFaNfj2c7OVLcgWFCxMQtCVuhMU/p4FrORrns3HwZaKiwq8nLNxh6O55/Euxmzx2I2w==
-X-Received: by 2002:a05:6808:1898:b0:3e6:2772:2a4b with SMTP id 5614622812f47-3eb19c168a3mr59071b6e.9.1733425314900;
-        Thu, 05 Dec 2024 11:01:54 -0800 (PST)
-Received: from [192.168.0.142] (ip98-183-112-25.ok.ok.cox.net. [98.183.112.25])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3eb07869655sm408646b6e.50.2024.12.05.11.01.51
+        d=1e100.net; s=20230601; t=1733455075; x=1734059875;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+2PCozrlzgkk4F9S6TYNgGPd0ZRNLkVWbIj1PK8TFjk=;
+        b=QJVoeCpS+MVzNTD2mftKS4fgQj5xbVjD0T8r0BdT9IEimpaqqFju9njWiR3N5ENKhy
+         MKc72yJxeM3WSF/RWWuy2TJetxVpkCshQJgWsA/613+ahj/4QWjk85FAGMCA6fKqcmnn
+         M9/rPZKj4i2lFqO08Tojjeovqa7769XdH2uZCpOPER5/1ksBhmbyOvGMS28VdA/UQulP
+         Pf8kESadR8zG2hyCQrB3fk6SgaKizXd+/Rs9sVYQJeH+GAJGMc8N+ybwSyuBB4qjBgcQ
+         8MXT0jPAhxy84vSOU818Uy7NCyjbs1NDFTqHX1khFf+5b0NzVQckqrWjk2SH8Eke9xIO
+         wygQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUA9R414pV4exP3s0R6wf7NuH1JJ+wTi0cG449btyVrWbXEb27OsXWL8beU1qOmgPDp0vJpKTu0@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yx26NsWMSM5tplU4EneB6h8l7KYbJ9uJv4N9TfDJEd2vQAknW1N
+	Wxt5RxiJrag9DULGgnvu7InT7aC/RR3JTxfWxOY/Uh0c3y/6bfHf
+X-Gm-Gg: ASbGncs2V8fLDPFkiSWsy3Sf3vppXAKmaU329+ttPMkqsF0uoRTwJpBMRAPm+eddQW8
+	6An/H6ItAuNkXdbfh0z8St4lXZ1XLIRUjlPf5ndDVJUYF8nNRzrgJmzFhEOGp5p7dsdEagQrC3p
+	t7F7FXH6ifb2rPeB/f48U2kRO+m13yCPFPW2soYt4e0ZhqHKD2w5+ktopph93PBWerWIpvSij/r
+	EufzqBxx2ybZckfPn6bOEaUSE7wts603Kw2oaOIv0JTi6J2Hyd45tNPA1qaFIL8KeCVabAGLhI0
+	OaZnpYPhNKK+ZJ6q5XcrUBHvQVS4
+X-Google-Smtp-Source: AGHT+IGDlgK5ekXU1dDHXYTMek3JFEwGnrBNY4Rq6mtyCRiHABLK12AyQB+it31T7CPCmp44KWDIkw==
+X-Received: by 2002:a17:902:cad1:b0:215:7cde:7fa3 with SMTP id d9443c01a7336-21614d607d7mr15764585ad.25.1733455074908;
+        Thu, 05 Dec 2024 19:17:54 -0800 (PST)
+Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215f8f09487sm19543975ad.181.2024.12.05.19.17.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2024 11:01:53 -0800 (PST)
-Message-ID: <a4cd4d74-93bc-4c63-a9ee-aa25957b96d9@baylibre.com>
-Date: Thu, 5 Dec 2024 13:01:51 -0600
+        Thu, 05 Dec 2024 19:17:54 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------n00hxg0U6LlaFrj0mkXlgU8G"
+Message-ID: <b571fcd4-fb76-4538-8e73-4fc98e455b14@gmail.com>
+Date: Fri, 6 Dec 2024 11:17:48 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] iio: adc: add Nuvoton NCT720x ADC driver
-From: David Lechner <dlechner@baylibre.com>
-To: Eason Yang <j2anfernee@gmail.com>, avifishman70@gmail.com,
- tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, jic23@kernel.org,
- lars@metafoo.de, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- nuno.sa@analog.com, javier.carrasco.cruz@gmail.com,
- andriy.shevchenko@linux.intel.com, marcelo.schmitt@analog.com,
- olivier.moysan@foss.st.com, mitrutzceclan@gmail.com, tgamblin@baylibre.com,
- matteomartelli3@gmail.com, alisadariana@gmail.com, gstols@baylibre.com,
- thomas.bonnefille@bootlin.com, ramona.nechita@analog.com,
- mike.looijmans@topic.nl, chanh@os.amperecomputing.com, KWLIU@nuvoton.com,
- yhyang2@nuvoton.com
-References: <20241203091540.3695650-1-j2anfernee@gmail.com>
- <20241203091540.3695650-3-j2anfernee@gmail.com>
- <8f5ca298-54ba-4274-a35d-83be868fcfc8@baylibre.com>
+Subject: Re: [PATCH v4 3/3] net: stmmac: dwmac-nuvoton: Add dwmac glue for
+ Nuvoton MA35 family
+To: Andrew Lunn <andrew@lunn.ch>
+References: <20241202023643.75010-1-a0987203069@gmail.com>
+ <20241202023643.75010-4-a0987203069@gmail.com>
+ <9f2c8532-8e52-439a-b253-ad2ceb07b21b@lunn.ch>
+ <75eb13d7-b582-4056-b707-706865611706@gmail.com>
+ <ba09cea2-4cf7-4203-ae98-ea5d8413f69e@lunn.ch>
 Content-Language: en-US
-In-Reply-To: <8f5ca298-54ba-4274-a35d-83be868fcfc8@baylibre.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.0
+From: Joey Lu <a0987203069@gmail.com>
+In-Reply-To: <ba09cea2-4cf7-4203-ae98-ea5d8413f69e@lunn.ch>
+X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	FROM_LOCAL_HEX,HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Fri, 06 Dec 2024 09:46:33 +1100
+X-Mailman-Approved-At: Mon, 09 Dec 2024 09:50:29 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,53 +104,151 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: ychuang3@nuvoton.com, edumazet@google.com, schung@nuvoton.com, yclu4@nuvoton.com, linux-stm32@st-md-mailman.stormreply.com, robh@kernel.org, openbmc@lists.ozlabs.org, joabreu@synopsys.com, kuba@kernel.org, pabeni@redhat.com, devicetree@vger.kernel.org, conor+dt@kernel.org, richardcochran@gmail.com, alexandre.torgue@foss.st.com, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, andrew+netdev@lunn.ch, mcoquelin.stm32@gmail.com, krzk+dt@kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/5/24 12:22 PM, David Lechner wrote:
-> On 12/3/24 3:15 AM, Eason Yang wrote:
+This is a multi-part message in MIME format.
+--------------n00hxg0U6LlaFrj0mkXlgU8G
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
->> +static int nct720x_read_raw(struct iio_dev *indio_dev,
->> +			    struct iio_chan_spec const *chan,
->> +			    int *val, int *val2, long mask)
->> +{
->> +	int index = nct720x_chan_to_index[chan->address];
->> +	u16 volt;
->> +	unsigned int value;
->> +	int err;
->> +	struct nct720x_chip_info *chip = iio_priv(indio_dev);
->> +
->> +	if (chan->type != IIO_VOLTAGE)
->> +		return -EOPNOTSUPP;
->> +
->> +	guard(mutex)(&chip->access_lock);
->> +	switch (mask) {
->> +	case IIO_CHAN_INFO_RAW:
->> +		err = regmap_read(chip->regmap16, REG_VIN[index], &value);
->> +		if (err < 0)
->> +			return err;
->> +		volt = (u16)value;
->> +		*val = volt >> 3;
-> 
-> It seems strange that this is 13 bits when the chips are 8 and 12 bit.
-> 
->> +		return IIO_VAL_INT;
->> +	case IIO_CHAN_INFO_SCALE:
->> +		/* From the datasheet, we have to multiply by 0.0004995 */
-> 
-> The scale is the same for both 8 bit and 12 bit chips?
-> 
->> +		*val = 0;
->> +		*val2 = 499500;
->> +		return IIO_VAL_INT_PLUS_NANO;
->> +	default:
->> +		return -EINVAL;
->> +	}
->> +}
->> +
+Andrew Lunn 於 12/3/2024 10:58 PM 寫道:
+> On Tue, Dec 03, 2024 at 05:12:24PM +0800, Joey Lu wrote:
+>> Dear Andrew,
+>>
+>> You're correct. In the stmmac_hw_init function within stmmac_main.c, whether
+>> pmt is true is determined by checking the pmt_remote_wake_up bit in the
+>> hardware feature register. However, our hardware configuration only supports
+>> magic packet and not remote wakeup, so it must be overwritten in the glue
+>> driver.
+> Please add a comment explaining this.
+>
+>
+> I'm not sure why the original code doesn't include magic packet as part
+>> of pmt.
+>>
+>> source code:
+>>
+>>          stmmac_hw_init() @net/ethernet/stmicro/stmmac/stmmac_main.c
+>>
+>>          priv->plat->enh_desc = priv->dma_cap.enh_desc;
+>>          priv->plat->pmt = priv->dma_cap.pmt_remote_wake_up &&
+>>                  !(priv->plat->flags & STMMAC_FLAG_USE_PHY_WOL);
+>>          priv->hw->pmt = priv->plat->pmt;
+>>
+>> Or modify the condition as follows:
+>>
+>>          priv->plat->pmt = (priv->dma_cap.pmt_remote_wake_up || priv->
+>> dma_cap.pmt_magic_frame) &&
+>>                  !(priv->plat->flags & STMMAC_FLAG_USE_PHY_WOL);
+> Are there other glue drivers which would benefit from this? It is hard
+> for me to say if you hardware is odd, or if this should be a generic
+> feature which other glue drivers would use.
+>
+> 	Andrew
 
-Sorry, I got confused. The difference between the two chips is the
-number of channels, not the number of bits. Please ignore these two
-comments.
+After reviewing the Synopsys DWMAC databook, it turns out that RWK is 
+actually optional.
+
+I reviewed the usage of the PMT flag in the core driver. In 
+|/stmmac_ethtool.c/|, within the |/stmmac_set_wol/| function, the driver 
+supports two wake-up methods corresponding to |/pmt_remote_wake_up/| 
+and/|pmt_magic_frame|/. When the hardware is configured for magic packet 
+only, |device_can_wakeup()| returns not supported. However, magic packet 
+is the more widely used option.
+
+In |/stmmac_hw_init()/|, adding a condition to check |pmt_magic_frame| 
+for PMT flag will not affect the existing glue layer drivers, regardless 
+of whether they config only RWK or both RWK and MGK.
+
+However, it is hard for me to decide whether to modify stmmac driver. 
+Overwriting the PMT flag and leaving a comment is fine for me.
+
+BR,
+
+Joey
+
+--------------n00hxg0U6LlaFrj0mkXlgU8G
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">Andrew Lunn 於 12/3/2024 10:58 PM 寫道:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:ba09cea2-4cf7-4203-ae98-ea5d8413f69e@lunn.ch">
+      <pre wrap="" class="moz-quote-pre">On Tue, Dec 03, 2024 at 05:12:24PM +0800, Joey Lu wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">Dear Andrew,
+
+You're correct. In the stmmac_hw_init function within stmmac_main.c, whether
+pmt is true is determined by checking the pmt_remote_wake_up bit in the
+hardware feature register. However, our hardware configuration only supports
+magic packet and not remote wakeup, so it must be overwritten in the glue
+driver.
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Please add a comment explaining this. 
+
+
+I'm not sure why the original code doesn't include magic packet as part
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">of pmt.
+
+source code:
+
+        stmmac_hw_init() @net/ethernet/stmicro/stmmac/stmmac_main.c
+
+        priv-&gt;plat-&gt;enh_desc = priv-&gt;dma_cap.enh_desc;
+        priv-&gt;plat-&gt;pmt = priv-&gt;dma_cap.pmt_remote_wake_up &amp;&amp;
+                !(priv-&gt;plat-&gt;flags &amp; STMMAC_FLAG_USE_PHY_WOL);
+        priv-&gt;hw-&gt;pmt = priv-&gt;plat-&gt;pmt;
+
+Or modify the condition as follows:
+
+        priv-&gt;plat-&gt;pmt = (priv-&gt;dma_cap.pmt_remote_wake_up || priv-&gt;
+dma_cap.pmt_magic_frame) &amp;&amp;
+                !(priv-&gt;plat-&gt;flags &amp; STMMAC_FLAG_USE_PHY_WOL);
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Are there other glue drivers which would benefit from this? It is hard
+for me to say if you hardware is odd, or if this should be a generic
+feature which other glue drivers would use.
+
+	Andrew</pre>
+    </blockquote>
+    <p>After reviewing the Synopsys DWMAC databook, it turns out that
+      RWK is actually optional.</p>
+    <p>I reviewed the usage of the PMT flag in the core driver. In <code><i>stmmac_ethtool.c</i></code>,
+      within the <code><i>stmmac_set_wol</i></code> function, the
+      driver supports two wake-up methods corresponding to <code><i>pmt_remote_wake_up</i></code>
+      and<i> <code>pmt_magic_frame</code></i>. When the hardware is
+      configured for magic packet only, <code>device_can_wakeup()</code>
+      returns not supported. However, magic packet is the more widely
+      used option.</p>
+    <p>In <code><i>stmmac_hw_init()</i></code>, adding a condition to
+      check <code>pmt_magic_frame</code> for PMT flag will not affect
+      the existing glue layer drivers, regardless of whether they config
+      only RWK or both RWK and MGK.</p>
+    <p>However, it is hard for me to decide whether to modify stmmac
+      driver. Overwriting the PMT flag and leaving a comment is fine for
+      me.</p>
+    <p>BR,</p>
+    <p>Joey</p>
+  </body>
+</html>
+
+--------------n00hxg0U6LlaFrj0mkXlgU8G--
