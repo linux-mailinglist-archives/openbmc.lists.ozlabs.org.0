@@ -1,80 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FD199EBF4C
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2024 00:32:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9095B9EBF4E
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2024 00:32:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Y7FPj27WSz3dC2
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2024 10:32:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Y7FPn2zyTz3bxf
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2024 10:32:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::62d"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1733808503;
-	cv=none; b=S0Fh8THLUbMDhsjX/Xr0qHIbhtMNu4A1hycOOlC3UQG5Q9Eu2LOQgOGBc6i9mJIOp8IfBLA/B+3NsHNQV+5MMFsRG2PDnxA6VwtgmbYBkoDJj2MsYO1vIvEKKn4llsmDwPB+xHq2I+mBonsPWEbyT2vJFfpHW1I/4i7TjIl/f9iJFGGlW2xGa2C8WZ6ERgMXW1QxEkzV1zlFMSaCdHG8lMCDkxzTsxBEpqrQ3yXmxX0Y7JltgoRXgsuKeCQhkyZin3GCG+r8hSSaZ0TmIJLq1SFG3nunLKWAz3+rsVwn0sGFIceLzEKPfyXpktPN/OH7n5KXPj/OKh5dA2yUw92hxQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::534"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1733809142;
+	cv=none; b=G+X/dWwUv3I5/XVRCcdPC8aqRQnvrEUuSVzcUC9Wm83pic8EdbwqOZJ8bDrldj+oNXVCEfVXTkIe+babxMDcd08p2MwRGFwx3BcLMut74fZH0ZfQOuUPNRFI3MW84aJGO9pvG5hztkblsUnsRH/UTJME8UNaVf4Rm35g+Qc5ND2/3YmgQVCdymEn16Nvuzw0NOCl+hM51JLFWjms+5hO+Iy7IoSCGXbkgomMwRY8JC2p7xcpdwGPLotdH6rwWNhmV2CxNuegVu5lUxPNqHOTDt9sTOLJbOLPkHNDmZ8HxSbdVrXDC5eluujbzH0gday6SbavWZXSQei7G3IqouEJJA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1733808503; c=relaxed/relaxed;
-	bh=iahb3Sc0n+N6aK3kht+20K6wy2Ru9xprYtQWnbXt+98=;
+	t=1733809142; c=relaxed/relaxed;
+	bh=u0Sd2Zpia9p4I/P5QdOCIki3q8PzF5alQXfg+WQOIIw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J4DaBwhwkNddoC3BwnTHtudfqxz4h1+yUnjRRwJKPvDUHT5keXuh2CQhvKtrcLCnvozZvIietX3VkAGNSHvgNvnTSjPpYGF/Ih3qxr1zUgNipRKHm0LSp+pIpt4nAaeI0ynEB8lUeM38XxP6BVo/5obFjk87EeXMywprp07/damtr7JMy2bH3tIfnyuva1qeA9qzxg+Cpw/UjymdbyJYKjU9RFrTMyMPIjES512rYkn4vYrMz7ODUKOoJwrETJWNlxjX22ItUl6oRO2mbfh6oum3KbUIA/V5XpUUac+PHWOxrpOGuQugNsKR7QAsTTNbhNvKoay5A4TBG5vrpvQrww==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b0TJZN2g; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::62d; helo=mail-ej1-x62d.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=aLdFBnKwc7gxCwIEyCM8g9TX/1ra1PexGzfGG/AVxL5ZOjcPYvx8i2Uz5Qp9KIwc7iLs0ctYF9ywvb/zEfIPnkA2voFFeQrBJAZ5uhSd5NMReIldvTvDxoyTSOyJnBftlkZ304YfS/xWuzZ4DfzMSkQGXYbS1mEWUly3x87/RsCcBZbejSZL0mT3DwMZLhUv9FRGIPtonxhvXRsQ1PJT/ix2x81oVRDCKk3DAGOyCbtpBRz6uQuNMRrP2vNjfBkE7SYesVnTcr+LSOclBkfsLV4canrwsVSsJBJR1AqBxwwyAJBjoesmdu08d2fbXYJfvkF+slx9D+AjFjyEiE6Zyg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kVvdNB7u; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::534; helo=mail-ed1-x534.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b0TJZN2g;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kVvdNB7u;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62d; helo=mail-ej1-x62d.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::534; helo=mail-ed1-x534.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y6nM93F8Tz2yQJ
-	for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2024 16:28:20 +1100 (AEDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-a9a0ef5179dso732299866b.1
-        for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2024 21:28:20 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Y6nbS6P15z2yWK
+	for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2024 16:39:00 +1100 (AEDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5d3e9a88793so3684773a12.1
+        for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2024 21:38:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733808497; x=1734413297; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1733809137; x=1734413937; darn=lists.ozlabs.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iahb3Sc0n+N6aK3kht+20K6wy2Ru9xprYtQWnbXt+98=;
-        b=b0TJZN2gEyQgwcEUE8K/Jf1fRUGQQAhsPXtqrvQqAa5Eh1U0nnUw1JGGlDKyXOsjqS
-         GU3aiamikfM7LCR2vwC2sPxFLx9eck3d2RoKdCHnrRiLGcAho1ZgshvoSSNO6YGzpuP8
-         iC/WDNyKAb0TCW1Rl3M+ETs4xa5uZjt/FZY5malYgzdzZhOqziOfOrY5gxmPPa1/YXO5
-         TajXC6GLxmZeskbM+vG6ZmEdkMZWqURmLXaIZMfelW0+6mvBB1/a6xp7RpafDaT/N0Dt
-         JocNuF1nK/slUgtAuujw2+NMAQerifqyB33CyDWSCIlG6Q94Q9Ddpcjh0NG1FJ+ibSmh
-         IkaA==
+        bh=u0Sd2Zpia9p4I/P5QdOCIki3q8PzF5alQXfg+WQOIIw=;
+        b=kVvdNB7ud+RqUJfG5fGwDSQhzpxN68bf4pXn31MreC7YefwNoGvi6ouNrWD07suMd+
+         Kty1bW14lNKyWhcp0aHdg8Xgbtf9ApVjJpCPcGuH4gkddplpP0LUjc+qW/AvPICAPXRb
+         tiHIRO/ECWFlzvkxED6qn3dqL71VzAdLYPQcDZVMSja+dN2BwoAmtJxroPVnWT+xNlMC
+         DM7wunhxVhx6NcxlbcX0amk3oRbmZBlH8FDfhNfgUczldtfq9KSqXb/YJoHLdG1mtpI6
+         D/e8LKSCknrEGWC/NqPJu7z/LOc6amg6J0CVmrnAs+dIUqB5eVRblrCJDzksJYklLcFe
+         mHtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733808497; x=1734413297;
+        d=1e100.net; s=20230601; t=1733809137; x=1734413937;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iahb3Sc0n+N6aK3kht+20K6wy2Ru9xprYtQWnbXt+98=;
-        b=d+b2KRCmJZ5fDyjfy/Elh6t8sdVi7GZ0+A4PX4l5PqZRLIVYfrNugQG79whXjYz8ij
-         LaQ189b/HwzDp7u4gWCnqAglQ2ko7g2dois2ODaHZhUVPVW+3xfcNE9j9LKzQe8MFewg
-         Cn39Bxpw6901GWoKXIgXk6fu6DWcCSGcG3bDqyjncjeMOlxjM1Ia/0UXjqiK+m9bRb9M
-         JWYVkkaNOo6a0QG9ed/BH6BC2Fc/Sxx9OYduy0Yklpdst+BKZcCEATIM1oiTQG//e/Mh
-         dgsqr5UU4KSgbBB1W5LASFwNsYCSWJ521lIXTGOaAReJWuwzdQ9swHG7BmxIo/e0hQtk
-         JAPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVl26WAhFvKinw968l5HLv8frZvsNesoGKkpU5Q2Q6gIDEdNPVPWyW/5Gm5ZQfFeD97oYdqkQaf@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwSsW3c3iICNuPSGPrPOFxsiunSq+plI9wLvREMr66xCCe+61wQ
-	8/598qQTY3U2Sm+vh3jbYtr6gr7HmgGVHkPcYCbBoVVZ169oEjCwOoHTbIVHdhL72t+Dz5ey37d
-	BxYC3d6sqyustzt3l8SbsqRVTNHs=
-X-Gm-Gg: ASbGncs7TNM66c1/gjP36/bUvrIHCi7waTbO2yxxXMOphyEFgzXAjnfAEWtZa8gUN02
-	sssMq/o8mA2poYkkD0l2t5yj4+XNm7Ag1f3s=
-X-Google-Smtp-Source: AGHT+IEl8ns+cPO0dh6oNxLl3Hy89Vyof1Yn6p4dY5lR+i3YkD30mfiis7m7alp59zPhWqLBAQWw4dOz/Y4XLwVMzMI=
-X-Received: by 2002:a17:906:18aa:b0:aa6:8096:2043 with SMTP id
- a640c23a62f3a-aa6809621a9mr587539966b.8.1733808496899; Mon, 09 Dec 2024
- 21:28:16 -0800 (PST)
+        bh=u0Sd2Zpia9p4I/P5QdOCIki3q8PzF5alQXfg+WQOIIw=;
+        b=rZHQl5YFGTQT6nB0xe9kE6sgCwxib6Pz/mPPPHyaWJCt2+PdzaB/9Vy09vW8yz7bUV
+         yFk/MI/IK6kk78jPL69N3OD/bOi0CHbV6nG+b36ZRqBKz2Ihs07yISOt2gVNEWtlVA9P
+         MHDvbdv2BQnWI5NSfxUT/a5ocFDgGLXRM1PuQuBcY5IoYCnVKmvLyY5FCkdBYirL/0eZ
+         Zp981Zv973WuLmzs5KMCFSryU+vFPPMSnwqvJ59bumWBfeaGfBbF6/17HAow90dAfl/z
+         NJZH2d8SCOlVuIXX+VIrenaKxSegJKOcTJtiYku/A7fg1IaqwCAOj5P2NU58YuZ7pa6X
+         v2pg==
+X-Forwarded-Encrypted: i=1; AJvYcCWBLFB+dfF5fHRzLDTvAwkagNaK4wVEL57prlO2Ibp25EmcRph7htbNa4wOR3ohVcsyC9FaTdg8@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyOXqFnpVQoVmXgL1Hf3OL29ZQNW6oK8ZgyW8rhP/t2yYR6wCVp
+	L/kChRjVHYoV39hPeGeO22hRtZCIRMPaMvKQFtdf8HOm1EtBmjwMP3IXOyY3SkeoSxcmqGIHZ3F
+	ZbbuiZgCObtx2tLMWNR1YjygPwRQ=
+X-Gm-Gg: ASbGncvNuT2Zr+C4Wy9o3N5LWEmCAv0zRSklonkmKOUWrgpNbWWAnGMkq6CK0dLE4vj
+	ltDC0XxQAEa3GzwyLF1en1rt3LiWbPqegSRs=
+X-Google-Smtp-Source: AGHT+IFWbXXbBezRYu2d1fSrlQAyQx6qXKQ3cBECIyITs7BFiWP0aspN3Q/SDYVvcQ/SU/o5GUBIsTMaCpt6LiptpYg=
+X-Received: by 2002:a17:906:2922:b0:aa6:8edf:bca5 with SMTP id
+ a640c23a62f3a-aa69cd4639dmr307534666b.19.1733809137091; Mon, 09 Dec 2024
+ 21:38:57 -0800 (PST)
 MIME-Version: 1.0
 References: <20241203091540.3695650-1-j2anfernee@gmail.com>
- <20241203091540.3695650-3-j2anfernee@gmail.com> <8f5ca298-54ba-4274-a35d-83be868fcfc8@baylibre.com>
- <a4cd4d74-93bc-4c63-a9ee-aa25957b96d9@baylibre.com>
-In-Reply-To: <a4cd4d74-93bc-4c63-a9ee-aa25957b96d9@baylibre.com>
+ <20241203091540.3695650-3-j2anfernee@gmail.com> <20241208172236.18441e64@jic23-huawei>
+In-Reply-To: <20241208172236.18441e64@jic23-huawei>
 From: Yu-Hsian Yang <j2anfernee@gmail.com>
-Date: Tue, 10 Dec 2024 13:27:40 +0800
-Message-ID: <CA+4VgcKjK9N+Y=q5iAz2nJOtcyyuBdkSPvggSd+5KQ49F=+ttg@mail.gmail.com>
+Date: Tue, 10 Dec 2024 13:38:20 +0800
+Message-ID: <CA+4Vgc+veFb6hCP4A7mPH_uiUCnmbsa=guWySRekYj660osQyg@mail.gmail.com>
 Subject: Re: [PATCH v2 2/2] iio: adc: add Nuvoton NCT720x ADC driver
-To: David Lechner <dlechner@baylibre.com>
+To: Jonathan Cameron <jic23@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -93,65 +92,235 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tgamblin@baylibre.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, ramona.nechita@analog.com, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, mike.looijmans@topic.nl, andriy.shevchenko@linux.intel.com, krzk+dt@kernel.org, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, gstols@baylibre.com, jic23@kernel.org
+Cc: tgamblin@baylibre.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, ramona.nechita@analog.com, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, mike.looijmans@topic.nl, andriy.shevchenko@linux.intel.com, krzk+dt@kernel.org, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, gstols@baylibre.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear David Lechner,
+Dear Jonathan Cameron,
 
-David Lechner <dlechner@baylibre.com> =E6=96=BC 2024=E5=B9=B412=E6=9C=886=
-=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=883:01=E5=AF=AB=E9=81=93=EF=BC=
-=9A
->
-> On 12/5/24 12:22 PM, David Lechner wrote:
-> > On 12/3/24 3:15 AM, Eason Yang wrote:
->
->
-> >> +static int nct720x_read_raw(struct iio_dev *indio_dev,
-> >> +                        struct iio_chan_spec const *chan,
-> >> +                        int *val, int *val2, long mask)
-> >> +{
-> >> +    int index =3D nct720x_chan_to_index[chan->address];
-> >> +    u16 volt;
-> >> +    unsigned int value;
-> >> +    int err;
-> >> +    struct nct720x_chip_info *chip =3D iio_priv(indio_dev);
-> >> +
-> >> +    if (chan->type !=3D IIO_VOLTAGE)
-> >> +            return -EOPNOTSUPP;
-> >> +
-> >> +    guard(mutex)(&chip->access_lock);
-> >> +    switch (mask) {
-> >> +    case IIO_CHAN_INFO_RAW:
-> >> +            err =3D regmap_read(chip->regmap16, REG_VIN[index], &valu=
-e);
-> >> +            if (err < 0)
-> >> +                    return err;
-> >> +            volt =3D (u16)value;
-> >> +            *val =3D volt >> 3;
-> >
-> > It seems strange that this is 13 bits when the chips are 8 and 12 bit.
-> >
-> >> +            return IIO_VAL_INT;
-> >> +    case IIO_CHAN_INFO_SCALE:
-> >> +            /* From the datasheet, we have to multiply by 0.0004995 *=
-/
-> >
-> > The scale is the same for both 8 bit and 12 bit chips?
-> >
-> >> +            *val =3D 0;
-> >> +            *val2 =3D 499500;
-> >> +            return IIO_VAL_INT_PLUS_NANO;
-> >> +    default:
-> >> +            return -EINVAL;
-> >> +    }
-> >> +}
-> >> +
->
-> Sorry, I got confused. The difference between the two chips is the
-> number of channels, not the number of bits. Please ignore these two
-> comments.
+Thanks for your comment.
 
-Yes, The difference between nct7201 and nct7202 is the vin numbers.
-And VOLTAGE SENSE DATA FORMAT is
-Voltage(V) =3D13bitCountValue * 0.0004995
+Jonathan Cameron <jic23@kernel.org> =E6=96=BC 2024=E5=B9=B412=E6=9C=889=E6=
+=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8A=E5=8D=881:22=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> On Tue,  3 Dec 2024 17:15:40 +0800
+> Eason Yang <j2anfernee@gmail.com> wrote:
+>
+> > Add Nuvoton NCT7201/NCT7202 system voltage monitor 12-bit ADC driver
+> >
+> > NCT7201/NCT7202 supports up to 12 analog voltage monitor inputs and up =
+to
+> > 4 SMBus addresses by ADDR pin. Meanwhile, ALERT# hardware event pins fo=
+r
+> > independent alarm signals, and the all threshold values could be set fo=
+r
+> > system protection without any timing delay. It also supports reset inpu=
+t
+> > RSTIN# to recover system from a fault condition.
+> >
+> > Currently, only single-edge mode conversion and threshold events suppor=
+t.
+> >
+> > Signed-off-by: Eason Yang <j2anfernee@gmail.com>
+> Hi Eason,
+>
+> Given you have some good reviews already I only took a very quick glance
+> through.  A few things inline
+>
+> Jonathan
+>
+> > diff --git a/drivers/iio/adc/nct720x.c b/drivers/iio/adc/nct720x.c
+> > new file mode 100644
+> > index 000000000000..b28b5f4d7d70
+> > --- /dev/null
+> > +++ b/drivers/iio/adc/nct720x.c
+>
+> > +
+> > +static int nct720x_write_event_value(struct iio_dev *indio_dev,
+> > +                                  const struct iio_chan_spec *chan,
+> > +                                  enum iio_event_type type,
+> > +                                  enum iio_event_direction dir,
+> > +                                  enum iio_event_info info,
+> > +                                  int val, int val2)
+> > +{
+> > +     struct nct720x_chip_info *chip =3D iio_priv(indio_dev);
+> > +     int index, err =3D 0;
+> > +     long v1, v2, volt;
+> > +
+> > +     index =3D nct720x_chan_to_index[chan->address];
+> > +     volt =3D (val * NCT720X_IN_SCALING_FACTOR) / NCT720X_IN_SCALING;
+> > +     v1 =3D volt >> 5;
+> > +     v2 =3D (volt & REG_VIN_LIMIT_LSB_MASK) << 3;
+> > +
+> > +     if (chan->type !=3D IIO_VOLTAGE)
+> > +             return -EOPNOTSUPP;
+> > +
+> > +     if (info =3D=3D IIO_EV_INFO_VALUE) {
+> > +             if (dir =3D=3D IIO_EV_DIR_FALLING) {
+> > +                     guard(mutex)(&chip->access_lock);
+>
+> Might as well move this up one level as it is called in both legs.
+>
+
+I would remove guard(mutex) up one level.
+
+> > +                     err =3D regmap_write(chip->regmap, REG_VIN_LOW_LI=
+MIT[index], v1);
+> > +                     if (err < 0)
+> > +                             dev_err(&indio_dev->dev, "Failed to write=
+ REG_VIN%d_LOW_LIMIT\n",
+> > +                                     index + 1);
+> > +
+> > +                     err =3D regmap_write(chip->regmap, REG_VIN_LOW_LI=
+MIT_LSB[index], v2);
+> > +                     if (err < 0)
+> > +                             dev_err(&indio_dev->dev, "Failed to write=
+ REG_VIN%d_LOW_LIMIT_LSB\n",
+> > +                                     index + 1);
+> > +
+> > +             } else {
+> > +                     guard(mutex)(&chip->access_lock);
+> > +                     err =3D regmap_write(chip->regmap, REG_VIN_HIGH_L=
+IMIT[index], v1);
+> > +                     if (err < 0)
+> > +                             dev_err(&indio_dev->dev, "Failed to write=
+ REG_VIN%d_HIGH_LIMIT\n",
+> > +                                     index + 1);
+> > +
+> > +                     err =3D regmap_write(chip->regmap, REG_VIN_HIGH_L=
+IMIT_LSB[index], v2);
+> > +                     if (err < 0)
+> > +                             dev_err(&indio_dev->dev, "Failed to write=
+ REG_VIN%d_HIGH_LIMIT_LSB\n",
+> > +                                     index + 1);
+> > +             }
+> > +     }
+> > +     return err;
+> > +}
+>
+> > +
+> > +static const struct iio_info nct720x_info =3D {
+> > +     .read_raw =3D nct720x_read_raw,
+> > +     .read_event_config =3D nct720x_read_event_config,
+> > +     .write_event_config =3D nct720x_write_event_config,
+> > +     .read_event_value =3D nct720x_read_event_value,
+> > +     .write_event_value =3D nct720x_write_event_value,
+>
+> Given you are supporting with and without interrupts, should probably pic=
+k between
+> versions of this that have the event config part and one that doesn't.
+>
+
+Sorry, could you give some examples for us to refer.
+
+> > +};
+> > +
+> > +static const struct nct720x_adc_model_data nct7201_model_data =3D {
+> > +     .model_name =3D "nct7201",
+> > +     .channels =3D nct7201_channels,
+> > +     .num_channels =3D ARRAY_SIZE(nct7201_channels),
+> > +     .vin_max =3D 8,
+> > +};
+> > +
+> > +static const struct nct720x_adc_model_data nct7202_model_data =3D {
+> > +     .model_name =3D "nct7202",
+> > +     .channels =3D nct7202_channels,
+> > +     .num_channels =3D ARRAY_SIZE(nct7202_channels),
+> > +     .vin_max =3D 12,
+> > +};
+> > +
+> > +static int nct720x_init_chip(struct nct720x_chip_info *chip)
+> > +{
+> > +     u8 data[2];
+> > +     unsigned int value;
+> > +     int err;
+> > +
+> > +     err =3D regmap_write(chip->regmap, REG_CONFIGURATION, BIT_CONFIGU=
+RATION_RESET);
+> > +     if (err) {
+> > +             dev_err(&chip->client->dev, "Failed to write REG_CONFIGUR=
+ATION\n");
+> > +             return err;
+> > +     }
+> > +
+> > +     /*
+> > +      * After about 25 msecs, the device should be ready and then
+> > +      * the Power Up bit will be set to 1. If not, wait for it.
+> > +      */
+> > +     mdelay(25);
+> > +     err  =3D regmap_read(chip->regmap, REG_BUSY_STATUS, &value);
+> > +     if (err < 0)
+> > +             return err;
+> > +     if (!(value & BIT_PWR_UP))
+> > +             return err;
+> > +
+> > +     /* Enable Channel */
+> > +     err =3D regmap_write(chip->regmap, REG_CHANNEL_ENABLE_1, REG_CHAN=
+NEL_ENABLE_1_MASK);
+> > +     if (err) {
+> > +             dev_err(&chip->client->dev, "Failed to write REG_CHANNEL_=
+ENABLE_1\n");
+> > +             return err;
+> > +     }
+> > +
+> > +     if (chip->vin_max =3D=3D 12) {
+> > +             err =3D regmap_write(chip->regmap, REG_CHANNEL_ENABLE_2, =
+REG_CHANNEL_ENABLE_2_MASK);
+> > +             if (err) {
+> > +                     dev_err(&chip->client->dev, "Failed to write REG_=
+CHANNEL_ENABLE_2\n");
+> > +                     return err;
+> > +             }
+> > +     }
+> > +
+> > +     guard(mutex)(&chip->access_lock);
+> > +     err  =3D regmap_read(chip->regmap, REG_CHANNEL_ENABLE_1, &value);
+> > +     if (err < 0)
+> > +             return err;
+> > +     data[0] =3D (u8)value;
+> > +
+> > +     err  =3D regmap_read(chip->regmap, REG_CHANNEL_ENABLE_2, &value);
+> > +     if (err < 0)
+> > +             return err;
+>
+> Here I think you can use a bulk read as the registers are next to each ot=
+her.
+>
+
+Generally, registers with 8 bits support Byte format, and registers
+with more than 8 bits support Word format.
+If transmission a Word command to a register that supports Byte
+format, the second byte will get 0xFF.
+Here, if we use regmap_bulk_read(), we would get first byte correct
+and second byte is wrong 0xff.
+I use i2ctransfer to demo it.
+root@evb-npcm845:~# i2ctransfer -f -y 5 w1@0x1d 0x13 r1
+0xff
+root@evb-npcm845:~# i2ctransfer -f -y 5 w1@0x1d 0x14 r1
+0x0f
+
+
+
+> > +     data[1] =3D (u8)value;
+> > +
+> > +     value =3D get_unaligned_le16(data);
+> > +     chip->vin_mask =3D value;
+> > +
+> > +     /* Start monitoring if needed */
+> > +     err =3D regmap_read(chip->regmap, REG_CONFIGURATION, &value);
+> > +     if (err < 0) {
+> > +             dev_err(&chip->client->dev, "Failed to read REG_CONFIGURA=
+TION\n");
+> > +             return value;
+> > +     }
+> > +
+> > +     value |=3D BIT_CONFIGURATION_START;
+> > +     err =3D regmap_write(chip->regmap, REG_CONFIGURATION, value);
+> > +     if (err < 0) {
+> > +             dev_err(&chip->client->dev, "Failed to write REG_CONFIGUR=
+ATION\n");
+> > +             return err;
+> > +     }
+> > +
+> > +     return 0;
+> > +}
