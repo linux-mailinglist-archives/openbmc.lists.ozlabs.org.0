@@ -1,77 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BFE4A01C69
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 00:14:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE81EA01C6A
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 00:14:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YRCln5574z3vXq
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 10:13:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YRClr6wKdz3vj1
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 10:13:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::b30"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1735269789;
-	cv=none; b=CXYucMmCX7YUdDceSqmcyH4Bnbeo72V4q7r2UBPRXEDbOjwJp1b4YOmkK/EQCKDmuVxT9gzljhUAfIifsT9lNCQ5wOhJ/02qjjnshieBPWlUzqjLxS1dGPonmqfWtEazfew0AdQOE2tCp6gDaC+lcXnCJM9ivil1d+CDR68R+bNna//h0udXIh3iKHVufLEaccdLVNTcrjAvSFlCRc+G7hWOIn2aEuSLZ+TLgZ+YwQ5B8IaHWgm8h26tiB1Arv8J4CZVnGvkIr3SAI8NF/LGswDx0hnzjsCA6rSPyF22jOLPoZdr8O8w/Tbr5B7Lw69GnlBUjbUvZje+ncx2xmXsvA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1735287475;
+	cv=none; b=lgUmqmFo5TyXJiCbF+P9DnmU/nBDJaBk6lnujVvcgMzV7QgBUF39iJncA4iI14vZanFwMzDYkdg50kaD4lg1HzQlM/ORRWzW1zx4IzDe5XVap5B/4xkn9DembAo4TjuoStrwdl7HlToeWEC/olIVDWv6hdbwmV8MGtE5YMZ90Fz99D49f7FM1EQDFO1AqA9ID6ErrgpK2aiwY+h+Ur3gQ47FqxKLG5o+zeHZoHIbP5MXO5mvG9+PF4FZCIf6grEUmQQ0i1Q0f/5Zaeq7ZE3MCVlXP7NRw5omrM0Lz3rODnDl3/wHfnvsexrpdp1xo+Zxlt5gcyDGK5FrrC6Jtwx9+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1735269789; c=relaxed/relaxed;
-	bh=GBUCN/dT/+LjApBLY70GChmQ3HYMxMbbxyRIqO99c4M=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EA0G+Js4dkKpTyV5/zURn3W/v6x+eV3xVPh0ESWfADRamiQCIkfdwfEOd1EdAkat/Kb3wriIc8iMlse6rTeI9JUcaeOzq8aipLw+uqcEXBnvYhUPM2wCnBwXrS6k041a87RNmsQ39jn55b2kmwAKl7+kzi8zzYlaHji4th5EC+S/sxCTXQedLUDsi5R7cBI0u24dv0NsA9c5vf1Poc56kLA7P/rIoXn1cKeHV9zlAHDlfunMCLw8bboK0ubL1zAbzpIHUemDlPuJhsOy9cPKZ1Ya44z9X5W7jy+qqcgcrLZzKKy7+zPUD0DyyIYoDNv6amQHTtXjX4gGZ1/O8rRJ2A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hia1Ml+8; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com; envelope-from=ivan.zundel11@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1735287475; c=relaxed/relaxed;
+	bh=F2jCgYCtr6woLWRdCdaW5VPkj1ZqB7cqqChSOkuctDg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MdHPfr0XY8ORc0fL1CJh2d3SIIEWsSBPsA7ydx/hzgXs8SehbJ+vO4/emyJyEsinSbJwG186YNsOjjFxgaKxQqsS1ZPEu/I1yKVS5DSVb+N9Bdyd1aaZXXsgSjhxk0MbjhTKiteYExCFKiLWCn/Xjtf6Twtvb0rdEp9yPB4OBV0Io8/y5vVkV4VMQ7NIb9HrfnueCmeoI5zaz/Xr1UpkYi+c5uCTS0eB30AgDYs2fJmxI+IvG2ktHbUfpzJK0c4fPROukCBiNpefKqEU4nGdpUr9N38TxHBUP8wVqohVOj/a/KFmLSk23lBiT04Tjv2wLzZn7rxgD4+sKgut69KmuA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QmyNvC5h; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hia1Ml+8;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QmyNvC5h;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com; envelope-from=ivan.zundel11@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YK9mr2Ykkz2xGC
-	for <openbmc@lists.ozlabs.org>; Fri, 27 Dec 2024 14:23:08 +1100 (AEDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-e53a5ff2233so5728876276.3
-        for <openbmc@lists.ozlabs.org>; Thu, 26 Dec 2024 19:23:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735269785; x=1735874585; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GBUCN/dT/+LjApBLY70GChmQ3HYMxMbbxyRIqO99c4M=;
-        b=hia1Ml+85zcq9KK9Re2dJ3mopYqT2v5mrzGjXXYqW68PRzKHiivA5zg47pWCb0rP7I
-         QVf8H+Za22L0x/F+WzjU2Ekm40mDHnfRU7bRmdrNYPooaOVDySB1PwLwwww9xqKdAeUF
-         xOeh5JOGGLegW2Tqb/Ns0/wX4sbv/oYcOiguCpdRohIi0W6psPofjmNghpXQ9n7SPFS3
-         1zfGOAleSzMiAKyaLOSXB/o0giXoQAJYO2Aeyn1tnVJjEbyZpEtpeg44zqVtUUSEsi5k
-         JJwv2VRcA3d3WLx5TGTYpd/XcGY/DeZ28IfAJ4tSTPlgQFSBy325F6MgMX9WNIKIGMsl
-         Q13w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735269785; x=1735874585;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GBUCN/dT/+LjApBLY70GChmQ3HYMxMbbxyRIqO99c4M=;
-        b=GTFsdju/n74hVhJgPqi+GCRD6hDshZ7GNXmKusUfKBzusTq2e6Vwfiys6tgWGhgwt6
-         zwG0Sj+JZpzP/ogvmFT6Mps6SdsPhg7Ksi74aQP/NydD2vUKXVX889zqcPoDJhca93Y+
-         DnSaoM8X8wkhF7cza67KCXGJlSZwpZ5lY71MJnfjTO4arl5z4eMKsU2VZAQBVoDPlLbM
-         wT4EWZRgDcDokL7nL8MObb6wXcY97pjeuNLfun2OveqIzWH5dAc9FtFgW5u6RTooyn2Y
-         8nXQ0DMpCubU9WJtS+4CW+T1sbAaB/5zysMCgsgH5vtFizZg4EDPgrgPozM5A3F4sZe9
-         fmSQ==
-X-Gm-Message-State: AOJu0YygI5Gd/TaicKS5E6i7XvQj2D8By/KNzfz0A4Tn/laGm3dKP5tw
-	EwBojY2K/TFnYhUnqrjJR+d7blsRGCabUvJ6AfFevTKwHWsiSsJmvJk+I3WFNsyT4ejsydJhwZY
-	EdlwWRD5A7K6rVYfYQoSLrAq84W7JE14=
-X-Gm-Gg: ASbGnctBOovPDii0+ZncjtnFODmm7rmBzB1OMVxdt9Fo5OfBdEFUimMgkGpJzhFleaw
-	5UV69y8+Cgmj5byzCCD5/mgxhpOGc5KN/9WM/Fs8OtTawSesrSlevIG6M9pc82rUcF0ON4g==
-X-Google-Smtp-Source: AGHT+IH5gZSgtl3BpSjn6hXrV3KZqv7zZl8om68rQ5crhvgo+2Lq/Fm8rrRNW3WBlOdbzzjHP/UXu/rCNZCu6dKrtlc=
-X-Received: by 2002:a05:6902:704:b0:e39:8d87:f146 with SMTP id
- 3f1490d57ef6-e538c22410dmr20812044276.22.1735269785302; Thu, 26 Dec 2024
- 19:23:05 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YKJJy5WRMz2x9T
+	for <openbmc@lists.ozlabs.org>; Fri, 27 Dec 2024 19:17:54 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by nyc.source.kernel.org (Postfix) with ESMTP id A2844A412C5;
+	Fri, 27 Dec 2024 08:16:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F933C4CED0;
+	Fri, 27 Dec 2024 08:17:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735287470;
+	bh=TZfQMDuOUiOku2tocDJE/MOog1QxlRrq59siThHFlm0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QmyNvC5hhlproSM8IRx63sjNFTIfuc+0R5crGQrMFZe9OSGTcEWdsxt7wl9bdUoFX
+	 6UWUjyGe8UAtpE7iI61xBH1id0waMBrllvZVLsoEuDz9QPWDBhUbY+Io66RqlDncka
+	 h7RLFMvZIqHzGng1T46cFOjSz/BEqRl+6pikux7bU0XnviiEbbAJFEwVd6GQqDOuaN
+	 Y4y+yCTm/KiWohwy2NXtSGOrTrMOK1o5B7b4MYm0PV1OQ0f4DLqrxgtvxCAszc96Jp
+	 K48WDajJVSOsgrh4TuYYEDUO4MHOGw8boe3lC+IE9BEHkavXF6xOuWQK69PbL+/TYY
+	 Z0x9n66QVwlVw==
+Date: Fri, 27 Dec 2024 09:17:46 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Eason Yang <j2anfernee@gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: iio: adc: Add binding for Nuvoton
+ NCT720x ADCs
+Message-ID: <lfthwnvwodqogsk446r5nzpmjunfnpdv33xmaookedwjgpdu4n@llvla6siyl5f>
+References: <20241226055313.2841977-1-j2anfernee@gmail.com>
+ <20241226055313.2841977-2-j2anfernee@gmail.com>
 MIME-Version: 1.0
-From: Ivan <ivan.zundel11@gmail.com>
-Date: Thu, 26 Dec 2024 22:22:29 -0500
-Message-ID: <CAJAqOU0+_PYs-53wPzu4xB3O347C-5VpW5hKp6ZM9ef0bSF17Q@mail.gmail.com>
-Subject: meta-amd
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000247eb2062a37fb05"
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241226055313.2841977-2-j2anfernee@gmail.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Mon, 06 Jan 2025 10:12:37 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -85,47 +72,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: supreeth.venkatesh@amd.com
+Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, andriy.shevchenko@linux.intel.com, krzk+dt@kernel.org, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, gstols@baylibre.com, jic23@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000247eb2062a37fb05
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Dec 26, 2024 at 01:53:12PM +0800, Eason Yang wrote:
+> Adds a binding specification for the Nuvoton NCT7201/NCT7202
 
-Hi,
-I recently purchased a SP5 machine and I'm trying to update the bmc since
-it's not detecting a lot of the hardware due to some issues. Is there any
-way to compile the OpenBMC for this ruby machine or if you could send me a
-compiled build? I don't have internal access so it's erroring out.
 
-Thank you!
+I gave you link to exact line with exact text to use. Read it again and
+use it, instead inventing your own wording. The documentation does not
+say "Adds" but explicitly asks you to say "Add". Why using different?
 
-root@ruby-208c:~# cat /etc/os-release
-ID=openbmc-phosphor
-NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
-VERSION="v2.11.0.15b"
-VERSION_ID=v2.11.0.15b
-PRETTY_NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
-v2.11.0.15b"
-BUILD_ID="v2.11.0.15b"
-OPENBMC_TARGET_MACHINE="sp5"
-root@ruby-208c:~#
+Subject: nothing improved.
 
---000000000000247eb2062a37fb05
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> 
+> Signed-off-by: Eason Yang <j2anfernee@gmail.com>
+> ---
+>  .../bindings/iio/adc/nuvoton,nct7201.yaml     | 49 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 50 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+> new file mode 100644
+> index 000000000000..08b52258e4af
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/iio/adc/nuvoton,nct7201.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Nuvoton nct7201 and similar ADCs
+> +
+> +maintainers:
+> +  - Eason Yang <j2anfernee@gmail.com>
+> +
+> +description: |
+> +   Family of ADCs with i2c interface.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - nuvoton,nct7201
+> +      - nuvoton,nct7202
 
-<div dir=3D"ltr">Hi,<div>I recently purchased a SP5 machine and I&#39;m try=
-ing to update the bmc since it&#39;s not detecting a lot of the hardware du=
-e to some issues. Is there any way to compile the OpenBMC for this ruby mac=
-hine or if you could send me a compiled build? I don&#39;t have internal ac=
-cess so it&#39;s erroring out.=C2=A0</div><div><br></div><div>Thank you!</d=
-iv><div><br></div><div>root@ruby-208c:~# cat /etc/os-release<br>ID=3Dopenbm=
-c-phosphor<br>NAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project Refer=
-ence Distro)&quot;<br>VERSION=3D&quot;v2.11.0.15b&quot;<br>VERSION_ID=3Dv2.=
-11.0.15b<br>PRETTY_NAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project =
-Reference Distro) v2.11.0.15b&quot;<br>BUILD_ID=3D&quot;v2.11.0.15b&quot;<b=
-r>OPENBMC_TARGET_MACHINE=3D&quot;sp5&quot;<br>root@ruby-208c:~#<div class=
-=3D"gmail-yj6qo"></div><div class=3D"gmail-adL"><br></div></div></div>
+Devices aren't compatible? Explain in the commit msg why they aren't or
+use proper compatibility (oneOf, see numerous other bindings or example-schema).
 
---000000000000247eb2062a37fb05--
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  reset-gpios:
+> +    description:
+> +      Reset pin for the device.
+
+Drop description, obvious.
+
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        adc@1d {
+> +            compatible = "nuvoton,nct7202";
+> +            reg = <0x1d>;
+
+
+Make the example complete: add interrupts and reset-gpios.
+
+Best regards,
+Krzysztof
+
