@@ -1,111 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5083A032DB
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 23:44:07 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19ED5A032DC
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2025 23:44:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YRq334n6wz3g4X
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2025 09:43:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YRq364xFzz3gDg
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2025 09:43:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1736161153;
-	cv=none; b=A6TqUWWbr/YgBeCdgnKRgQHD7fFzG6oU5hbzNIioqzE0yTeW60F0+vnr6ro/DpdXojQHG9H0trBuCppssmacz9k29edMS5Mq5JEXl4A7U4IPAsPvYBdgRrTVMe+6z7bEBmkdhjbgoiNLZuNGY3bnfEaln1avRL3YIfzm6pyKKDnc2OYo+MFJhXrR+2qyznqmJdLfU7/5Up3/2Er+LubfOcRQbGwcMKnZ5mrBZWAs4gnjL3Uv8tr9uemcbNCQQ/caj/hiliyjAKZetpifrMDrLI8DpYeS5UKCFLiudR2dChFeisDJayisVhIwifz0XOZIvDeDDV0t+dzMIWKZaZ91UA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4860:4864:20::32"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1736175035;
+	cv=none; b=Oj2VMy86TORrVHw8LEI5DvanJ9koSsW2K4mvtL+XGTe0nECC0rcP3PR2ULmtcfum9mNGREp4fJU5YXpcHr5aeL3FrYzoOQkMrifsxzAsrG6SmpRjqoTrP8u54kMvJJ2H33YcY7lPEqm2oyifO4zBCYjCyZ1utbbwMD2nwbmWaKTKg+YX60cvjEL5uwgDCOOk4xTt3+fdk4CKrTQ1k70ewvHxHWzblvtMWK6W3SNL47hEdaUVweE0sKvyVgCW36mUslj80X21GLeZfO3y85c6jJFNjHjyHKNPnxQVMmwyaTIqTHJeUy7ycAXIA/xdkIWW8H9cLb27hn0CiisfBaQY9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1736161153; c=relaxed/relaxed;
-	bh=GgTgG1RLdbgIQHgBM/oIn4FWESZ0nzeWueXvhM4MH88=;
+	t=1736175035; c=relaxed/relaxed;
+	bh=2Vxw3Mx8N/hDAKeHqp+8V3fNQAbCKUACtVfPIZJk7BE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZZvJwivn+vVTed9Oeow2/bTa6GuqIb52nAB68xw4OhXbnEiCJg1QICA2AwMlZga+GeJENAvUf+E5yhkAbJhnOLH7zfVR/eGr7VjvuGFYCBBFGJ7SASn3fiGqwFeAaeKXk4S5RROfSzyBjkZMq9dwJASph5Y9lQZh2RtoZ/noeeniQw83tF/gvvjF/v3VSKHXGoFVqlBAnkqLAG42HcWAeHf0QZpWw0k8F6THstFfKDVFog9cV4hPqzcFrpDm0fn2TH489bDbkJbH/G+Rg8wMuwUraMFL5qfr4BZE0p+x27Z5Zfd3d9HMxYyoLvcUg3ze41xdmz5oL+AosJpJ5JfSBg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqoUdcns; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	 In-Reply-To:Content-Type; b=hyQFFsKa41ktpN4aJejy2KPrDcMTwHWf8fiSI5gJi6daDK7yv86FpY3IvT6jK1uQOLR+WfDp/Rr1tHtGSMZCBZp2dY+c259x0+N27NuQCzr9Kylx9GcfgVOqxFRKFOrDr5ytV1JFj2Cce0Cjjhv1zfy9cYRGL7ewusfCkDcygtoc6q/+WZ0FHFuHDZnaP1Bj29GSPvdfMIMM9FORfmeLIBWXqDYA/SUz89A0aF4EY9TZYtwi2W9kRBEmXbsOLI0Yo2rnDT+mawA1yHulClzjfsrYcQMDuugrR+4ZXrKAxYGZHP0iIZiTSIj+DPFGCriloZ7AIde1hMLQw+FgL+Z6Xw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=OOIks3NN; dkim-atps=neutral; spf=pass (client-ip=2001:4860:4864:20::32; helo=mail-oa1-x32.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqoUdcns;
+	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=OOIks3NN;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2001:4860:4864:20::32; helo=mail-oa1-x32.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org)
+Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YRWQS2rqwz2yNH
-	for <openbmc@lists.ozlabs.org>; Mon,  6 Jan 2025 21:59:12 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 2264FA414DF;
-	Mon,  6 Jan 2025 10:57:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC94BC4CEDD;
-	Mon,  6 Jan 2025 10:58:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736161146;
-	bh=sPnK4NincK9ONjdqEGtqrcdtTHIRO612NkOB1/BvDOM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EqoUdcnsg+VIh+OkW0itMm9HUHRBuiX251fwQ8fEl0m9x5iNaWZuW0UGnwkniy3wr
-	 5/oi/UbCIXtHUJ5Ih4YtuU9mWo92dvnApo0grsjfYPnGMNuBvFkRzhKH6N/i9lZzPp
-	 0oUlwiWN21LKuYDQGkEt2qEEoGeI/FR/mjSfrxl+q4v3NqotfbqgonMsA4lwznQbI3
-	 BF4Y04Qr7GGkrj2s8oE4YPqqA/bMpX/8KMwLUH1GeOfMySj6ZA8A4oyPGWs/r4Wt6n
-	 S+fBA0BDMoCoylextHETj8UX4qt3P7fyGeF9Ote0BVdt4ugZlaGcvf5XiIiANucLjF
-	 ZcURZ/V6r15Zw==
-Message-ID: <ef13cebd-6772-4d03-8677-a6a2d4884d77@kernel.org>
-Date: Mon, 6 Jan 2025 11:58:54 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YRcYP2xYJz30B8
+	for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2025 01:50:30 +1100 (AEDT)
+Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-29e91e58584so10086688fac.2
+        for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2025 06:50:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1736175022; x=1736779822; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2Vxw3Mx8N/hDAKeHqp+8V3fNQAbCKUACtVfPIZJk7BE=;
+        b=OOIks3NN/hwBddGoVpkt++aidy7lwC9dFgcRsqdPbxN1OBWomEVxNhj0Iilm/AFUB3
+         GZprhEWhAPg4UVQaEPTn7CP7VOLdR0geFv4Eyl6SLWqXXuFMeooIfTnu7KVhVJ8GrN4D
+         KlNrHlEi1M0HlKeGn8KB2Pqxplaw3mpJ/BCTueafU4/2oq15DaDgbEQIZGsubFeRIqDo
+         a0uUbSWPsCHVebGMEv5rqSOERMmwdG/B4U7Hih3L9KsEJnoROWuMAqOZ02uzrDbqVkV8
+         sblg63Etm6MhAQ00dhJhiHU7AcFJ1DYmkSl16LpQomqGDTyua6ckmRaW8LEgasB7IbHT
+         +yjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736175022; x=1736779822;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2Vxw3Mx8N/hDAKeHqp+8V3fNQAbCKUACtVfPIZJk7BE=;
+        b=tYori2J+p7VusiVHVRu+TWp3yIdTfjJpmbLEosJRqBu/OKD9Cba6D9kT43iLiubDnF
+         Y4UyOn2os8yUHZT+RUhMaolA+M/EmqgsiwIIeuuzeXlGyF2VIMs28TP0qrmm4ZA/gkJA
+         RtwKIKiugM0YDF0c4E1DLWaye+ect0yUdH3hL6OrvLiEwGwcVyeiD1VLx+fExJ9KK16E
+         GZzffb1AP+hJw6QWYy8vGD85mkTI58da5stB+ochU8AH/cXsI6ls0VYafzZaI7ocCKM5
+         OSeWV3F/yyLzoHVsPqF/oo/zap55ierK+qE/yDFQ2SBcfnHiavO1/MBY3Qak4hzWi36C
+         5/Nw==
+X-Forwarded-Encrypted: i=1; AJvYcCXVuDSPi27LQ1dKSHMqrKccGYptbQ1hAivAdmMN/Bq/rPNrYQdOczx2RP0UMVqyWdfFcF21WAKB@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxLOEhRMf2+CnAPmct2QPqGw9VFi2oTkv2yG7ScW2htNyFeQiYP
+	rDVJ3dOw3HfkaJLarWkRotcykR/Mx1LVt3LJUi2QRfO9XgqFohsIEnpjWj4jcu8=
+X-Gm-Gg: ASbGncsuX2acohJus1GzvWIthKc0WAE8AYIfcCVc9tXOMoiUq4ZmXhnE+oDog0Pd3fS
+	4tDOO4dhYI8Bh4x1VY1i8NyLp0Li3EVMEXsptBeeaHtxTR6fErRjT9q/Lpwb+Sy2k0kaZGcKkmn
+	WLl2FBqxq5kLNZrzTV5v+RUkZ/S3sB/OSbrdSi8Q8gATjhpNH8LBplsU7zxSdCrj46rb9M/y65a
+	43yxW7qx5qxFY3wqeNuyrln2xaGyHJlH4qY3NTUpeT2RN6BCw5cD8LQeOUneHj1jT7XjmuMnmmi
+	PYObdJuzkuKssQJb8Q==
+X-Google-Smtp-Source: AGHT+IGHWEdxTp5zhyCbR+/gT72Zro13mUmLbxDzfT8L1TIAIkymARuWNbGkjWke8WKfrMR5lpr8Fg==
+X-Received: by 2002:a05:6870:430d:b0:29e:8485:197b with SMTP id 586e51a60fabf-2a7fb00afd6mr31908359fac.2.1736175021803;
+        Mon, 06 Jan 2025 06:50:21 -0800 (PST)
+Received: from [192.168.0.142] (ip98-183-112-25.ok.ok.cox.net. [98.183.112.25])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2a7d751e457sm11753372fac.25.2025.01.06.06.50.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jan 2025 06:50:20 -0800 (PST)
+Message-ID: <2a4f0a3d-3288-4f59-8c18-c53ab4b596e5@baylibre.com>
+Date: Mon, 6 Jan 2025 08:50:18 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: iio: adc: Add binding for Nuvoton
- NCT720x ADCs
-To: Yu-Hsian Yang <j2anfernee@gmail.com>
+Subject: Re: [PATCH v3 2/2] iio: adc: add Nuvoton NCT7201 ADC driver
+To: Yu-Hsian Yang <j2anfernee@gmail.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 References: <20241226055313.2841977-1-j2anfernee@gmail.com>
- <20241226055313.2841977-2-j2anfernee@gmail.com>
- <lfthwnvwodqogsk446r5nzpmjunfnpdv33xmaookedwjgpdu4n@llvla6siyl5f>
- <CA+4VgcK_9_YD0d7LUKbxU6yd3Qo9RT4yNbi90mMN=kK0LHXwow@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20241226055313.2841977-3-j2anfernee@gmail.com>
+ <Z26aMVayh-EdYA8n@smile.fi.intel.com>
+ <CA+4VgcK4apNKWXhWvViPU6JfyXu9ZTQ7-TBauTaYUHnp0j1s-w@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <CA+4VgcK_9_YD0d7LUKbxU6yd3Qo9RT4yNbi90mMN=kK0LHXwow@mail.gmail.com>
+From: David Lechner <dlechner@baylibre.com>
+In-Reply-To: <CA+4VgcK4apNKWXhWvViPU6JfyXu9ZTQ7-TBauTaYUHnp0j1s-w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Tue, 07 Jan 2025 09:43:11 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -119,63 +102,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, andriy.shevchenko@linux.intel.com, krzk+dt@kernel.org, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, gstols@baylibre.com, jic23@kernel.org
+Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, nuno.sa@analog.com, krzk+dt@kernel.org, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, gstols@baylibre.com, jic23@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 06/01/2025 08:22, Yu-Hsian Yang wrote:
->>> ---
->>>  .../bindings/iio/adc/nuvoton,nct7201.yaml     | 49 +++++++++++++++++++
->>>  MAINTAINERS                                   |  1 +
->>>  2 files changed, 50 insertions(+)
->>>  create mode 100644 Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+On 1/6/25 2:33 AM, Yu-Hsian Yang wrote:
+> Dear Andy,
+> 
+> Thanks for your comments.
+> 
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com> 於 2024年12月27日 週五 下午8:14寫道：
+>>
+>> On Thu, Dec 26, 2024 at 01:53:13PM +0800, Eason Yang wrote:
+>>> Add Nuvoton NCT7201/NCT7202 system voltage monitor 12-bit ADC driver
 >>>
->>> diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
->>> new file mode 100644
->>> index 000000000000..08b52258e4af
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
->>> @@ -0,0 +1,49 @@
->>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/iio/adc/nuvoton,nct7201.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Nuvoton nct7201 and similar ADCs
->>> +
->>> +maintainers:
->>> +  - Eason Yang <j2anfernee@gmail.com>
->>> +
->>> +description: |
->>> +   Family of ADCs with i2c interface.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - nuvoton,nct7201
->>> +      - nuvoton,nct7202
+>>> NCT7201/NCT7202 supports up to 12 analog voltage monitor inputs and up to
+>>> 4 SMBus addresses by ADDR pin. Meanwhile, ALERT# hardware event pins for
+>>> independent alarm signals, and the all threshold values could be set for
+>>> system protection without any timing delay. It also supports reset input
+>>> RSTIN# to recover system from a fault condition.
+>>>
+>>> Currently, only single-edge mode conversion and threshold events support.
 >>
->> Devices aren't compatible? Explain in the commit msg why they aren't or
->> use proper compatibility (oneOf, see numerous other bindings or example-schema).
+
+...
+
 >>
+>>> +static const struct regmap_config nct7201_regmap8_config = {
+>>> +     .name = "vin-data-read-byte",
+>>> +     .reg_bits = 8,
+>>> +     .val_bits = 8,
+>>> +     .max_register = 0xff,
+>>> +};
+>>> +
+>>> +static const struct regmap_config nct7201_regmap16_config = {
+>>> +     .name = "vin-data-read-word",
+>>> +     .reg_bits = 8,
+>>> +     .val_bits = 16,
+>>> +     .max_register = 0xff,
+>>> +};
+>>
+>> I don't see how these configurations will prevent, e.g., debugfs to access
+>> 16-bit registers via 8-bit IO and vice versa.
 >>
 > 
-> +  compatible:
-> -    enum:
-> -      - nuvoton,nct7201
-> -      - nuvoton,nct7202
-> +    oneOf:
-> +      - const: nuvoton,nct7201
-> +      - const: nuvoton,nct7202
+> Read VIN info can use word read or byte read, and other registers
+> should use byte read.
+> 
+> The design is that VIN info registers are used 16-bit debugfs to access and
+> other registers are used 8-bit debugfs to access.
+> 
+> We need to probe 8-bit regmap and 16-bit regmap,
+> but I have no idea how to prevent 8-bit IO to access 16-bit registers
+> and vice versa.
+
+You can do this with struct regmap_access_table via wr_table and rd_table
+in the struct regmap_config.
 
 
-Nothing improved. I referenced 'oneOf' for the case of compatibility.
-Don't use it to code enum in different way.
-
-Address the comment and questions. You did not respond to several
-comments, so I assume you are going to implement/fix all of pointed out
-things.
-
-Best regards,
-Krzysztof
