@@ -1,61 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60FAEA0FE98
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2025 03:17:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26D27A0FEB5
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2025 03:22:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YXCSg1wSJz3dVl
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2025 13:17:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YXCZb19znz3dVl
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2025 13:22:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=156.67.10.101
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1736821039;
-	cv=none; b=aOKadFY97p4Zcst0ylGnLclqrEX0wl2b58Ty23Ngr3ygDYkvqxGETJ5MEOyHAowToVb0P5wLHvgBgdCXOeGOtf1rAvAoki+6cH63dRxA6gLGil/K4eAudR+falHUS3AwIBcHk57D+5Onc2E1ddoNE+Z4UTKvmQIfnh2EKmDAsDEf3R4Gs61r9TzTfkA/m57K7mSS4Ah0pFs4kqmF0mMPj44OvNqL2isP51rxmKUl/Fd6se4HqWENH/gaMMl7MW0SjpVn4F1sMBgnGY3c9WZps4WFWgOxgAL0X00aoWfTPD0dyyJc1FUmdNs6imtSD3qmHLQguJ/erZpERy+3kcmVPg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=141.14.17.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1736821347;
+	cv=none; b=D9SiH/Nj+wObCT/BjZ4FhyCNu+6iElkLXQ5oUGbbLiL7tBXTtup/CbzSP2bPbt3tnhzgjeoO3tE8TMFrUnNm/T/z8vQDS5CxnZxwfuudNcoDXneWsic0imP8HvcKFTPqP3aavqx9Bg8KhVD0CqMZVGCyfVez3krzENMdd/lLOZP/2qWmC6RjYch6l7ARe1dn80t/e2tSP7H2MyvcQWllI6JQCnCvZr8WJWPbxEzfix29nMw89yxo2dfrXm8D3eKFQnsB8A+jdlVTaAS6cMpGMk/JIQNvD3PnDOx646BpV5PxkwVEMelrlHcFn0kiJ9lJyBAMaEhvpLVlu0xc1Mewuw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1736821039; c=relaxed/relaxed;
-	bh=P1SIEN3E6aqrThhxwat3Nx/SdisRq4J3tMD+nuJgrUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eDpHjyNg8iFTeRQ1ofJs4UyTFMefZ+Oj/N2jTQDgS86qYRXH9HVxGrf2Q7/anV5WC6t20bLbcBi/097uYN3cA4l3O9tE8OWtDUI/7vw2ZrvV9BPREabXlYXiAEON0K66PJJ7b7heHSDi5l3Nl4fqpToJIIzCo13LVtJpDx/ZQEoquHCNCn3s4woVYtOo1i5CppfS9oAn6blLOuXrziO4u40Wi8DrS2NXX1GDWU1a+lcSwZS0rPXTPj/qRqs6uRRRd63jEOqOwCnXFgRulwwd/VICPSKbfgjfeZnrZTlBg3YehKRR07+5VwY7mFXEdd0QjGOmhP5AHyKYjxIoGpfXeg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=ig1VG/Jv; dkim-atps=neutral; spf=pass (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org) smtp.mailfrom=lunn.ch
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=ig1VG/Jv;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	t=1736821347; c=relaxed/relaxed;
+	bh=q++QPyxHMp/WwXTDrHwqKxKHjtWXHAXL/aKMbF08JiE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b7iEgF96IbLncrAgrxw4AUqHcsxIYrogbxPC0aM/895O7Iy72kKbdrmKPFTvjiiBoKayEtlSlSgemyLL+n7Tshb1IlBTVawAcqon8NP1Y6bOHH4bGppp+t72+8cwu/yPLKuRxeB9BRgfA+MQ0EYJN8cyuZ/HxaKFRN5mdl+2aGOaj/0NtaCG9YyTKAvDwMsmznbmFtI0Kz+HLYHBhuhX/gJ7f8db6uJH9hF5LJudpsBIwySptSOIpx0pTOJvK69077/V1/oTwW9oRPviG1YKKYuXezBYpMt/q5ScofS2OgEWQoZdgNLyjXjC45X+NHVkqBCQoEnmLHiQzUBZvcfXqg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org) smtp.mailfrom=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YXCSZ4zvrz3dBG
-	for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2025 13:17:18 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=P1SIEN3E6aqrThhxwat3Nx/SdisRq4J3tMD+nuJgrUc=; b=ig1VG/JvMUnpVn3G1nBjH7GmvJ
-	zoLv1nz0dIwYHbMWp7Z9UvXr/HpAd2Ze/y9+Di+8jRDXjo+sLl4ShiK2e81vMUX8yZE8X4V4rQ0NH
-	C6ShuctKHa25uulz+afqGQTrob6TnSSLEQForwvpbl8KGrFEgSKsrhevMK0toA77jBts=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tXWUD-004Im6-Bo; Tue, 14 Jan 2025 03:16:57 +0100
-Date: Tue, 14 Jan 2025 03:16:57 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Paul Menzel <pmenzel@molgen.mpg.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YXCZV2jLsz3dBG
+	for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2025 13:22:26 +1100 (AEDT)
+Received: from [192.168.0.224] (ip5f5ae8ae.dynamic.kabel-deutschland.de [95.90.232.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 55E1861E64780;
+	Tue, 14 Jan 2025 03:22:03 +0100 (CET)
+Message-ID: <d9fc5212-9710-449e-90b9-a195305d990f@molgen.mpg.de>
+Date: Tue, 14 Jan 2025 03:21:59 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH net-next v7 3/3] net: stmmac: dwmac-nuvoton: Add dwmac
  glue for Nuvoton MA35 family
-Message-ID: <e7041d36-9bc7-482a-877d-6d8f549c0ada@lunn.ch>
+To: Andrew Lunn <andrew@lunn.ch>
 References: <20250113055434.3377508-1-a0987203069@gmail.com>
  <20250113055434.3377508-4-a0987203069@gmail.com>
  <a30b338f-0a6f-47e7-922b-c637a6648a6d@molgen.mpg.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a30b338f-0a6f-47e7-922b-c637a6648a6d@molgen.mpg.de>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+ <e7041d36-9bc7-482a-877d-6d8f549c0ada@lunn.ch>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <e7041d36-9bc7-482a-877d-6d8f549c0ada@lunn.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,35 +67,51 @@ Cc: alexandre.torgue@foss.st.com, linux-kernel@vger.kernel.org, edumazet@google.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> > +#define NVT_MISCR_RMII          BIT(0)
-> > +
-> > +/* 2000ps is mapped to 0x0 ~ 0xF */
+Dear Andrew,
+
+
+Thank you for your quick reply.
+
+
+Am 14.01.25 um 21:16 schrieb Andrew Lunn:
+>>> +#define NVT_MISCR_RMII          BIT(0)
+>>> +
+>>> +/* 2000ps is mapped to 0x0 ~ 0xF */
+>>
+>> Excuse my ignorance: What is ps?
 > 
-> Excuse my ignorance: What is ps?
+> picoseconds. An RGMII link needs a 2ns delay between the clock line
+> and the data lines. Some MACs allow you to tune the delay they can
+> insert, in this case in steps of 2ns / 16.
 
-picoseconds. An RGMII link needs a 2ns delay between the clock line
-and the data lines. Some MACs allow you to tune the delay they can
-insert, in this case in steps of 2ns / 16.
+Thank you for the clarification. Maybe it’s my English, but I didn’t 
+deduce this from how the comment is worded. I do not have a better idea 
+either.
 
-> > +#define NVT_PATH_DELAY_DEC      134
-> > +#define NVT_TX_DELAY_MASK       GENMASK(19, 16)
-> > +#define NVT_RX_DELAY_MASK       GENMASK(23, 20)
-> > +
-> > +struct nvt_priv_data {
-> > +	struct platform_device *pdev;
-> > +	struct regmap *regmap;
-> > +};
-> > +
-> > +static struct nvt_priv_data *
-> > +nvt_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
-> > +{
-> > +	struct device *dev = &pdev->dev;
-> > +	struct nvt_priv_data *bsp_priv;
-> > +	phy_interface_t phy_mode;
-> > +	u32 tx_delay, rx_delay;
+>>> +#define NVT_PATH_DELAY_DEC      134
+>>> +#define NVT_TX_DELAY_MASK       GENMASK(19, 16)
+>>> +#define NVT_RX_DELAY_MASK       GENMASK(23, 20)
+>>> +
+>>> +struct nvt_priv_data {
+>>> +	struct platform_device *pdev;
+>>> +	struct regmap *regmap;
+>>> +};
+>>> +
+>>> +static struct nvt_priv_data *
+>>> +nvt_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
+>>> +{
+>>> +	struct device *dev = &pdev->dev;
+>>> +	struct nvt_priv_data *bsp_priv;
+>>> +	phy_interface_t phy_mode;
+>>> +	u32 tx_delay, rx_delay;
+>>
+>> Please append the unit to the variable name.
 > 
-> Please append the unit to the variable name.
+> Which is trick, because they are in units of 2000/16 of a picosecond.
 
-Which is trick, because they are in units of 2000/16 of a picosecond.
+Understood. Maybe a comment could be added?
 
-	Andrew
+
+Kind regards,
+
+Paul
