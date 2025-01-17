@@ -2,54 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC238A16674
-	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2025 06:58:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F36DFA16677
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2025 06:59:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yc0556hbMz3c7R
-	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2025 16:58:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yc05F5TXXz3g0n
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2025 16:58:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a01:4f8:d0a:203a::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737107081;
-	cv=none; b=e2BNsLQVE2kO6DBfCi1y/RvucakWnf6Ae3qZ3EN6F5SA9ejGRJSwt03TnqLHsTA/8h5g3gtH0IXREjryAWe+ALhf5wbpuBRRX7L2fR2J4ZZXub/Xa4KlV98zhG9vkZmq9NLlNPTmHRUyoZYwz4o+QhqXkZ95PFzTqH7x8olSp85BOAKSPTQkC5lLzbGJgKbc71jDF/5CLWlDlnWZw5/ANwiLHZIO7xeHFW7dSpO0NotySb17p8U9h4mnho53xcY7zGQSUfsgCDRWybit0c/JVH8AHJ6KDYf/j6kZ9qdP5KcCqcZB4QngWpCOVsAx/K2AqyBoyo7yVBFiw9Ne6MhU0w==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737107083;
+	cv=none; b=I+ktiCV5XD/MsaBJ5lubFRqKgEN74BMlm+qjyj1CdpAPjojYEbga210DEecbQ3yp0zyahWGUlUEqvvluIbEBX0QbtfmDX/m2U5LsHkcbcDO35yXfjhAUevRv06c/RauPooN84vyko432TKQP57xVOssEf+lD9D59ZxK7dMKF6T1bkoHf6/H1XQfNfAR7BBiejM2sm1Bb0KpmBk0AeAta3NQwSSvbWxI+JODK0rx+olecSks0nNVB/aEtx2LuLSZHK4VKyerR4D8jgv2H5QGKU2QvxbgtIDB0+EYwNFVqWBrVDRilfHkYzLAzEU0+H1fJ7KkWw2Mj+urogSfEzwHUbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1737107081; c=relaxed/relaxed;
-	bh=HpanrZa2wclQWiIHg4/MRBEQnvbyg0RqkGfjqG6EB6U=;
+	t=1737107083; c=relaxed/relaxed;
+	bh=rM+bQBfncBy6kitQoUVdaT9KpEwH5/FIfpZz0ICBa3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLOm+5TiCw23sVyOO5ERT8ABZEtt1kQYRzSQlzR9W/8Nf5n9DowU51EzBg4jDdO50QMRFCvsn4c3f446b3JFA5bJwa4dsYFoJlzYum720iC5N8fYE5G5n2hr4ueAtSl62OtX3Bi4yVH0f2k9zbh2qlLhjZX86onPW9JKl+XGmhHIJ3s40O1bkuaAiWmA5Wc27Mm154VJqzifpi/rIXXwg7uuBURB0sh7LyH/605Zyy7uXJBZlr84p0g75SIJ3A4ykPRcc1ZXOvyTgpKpPsmFgDrXEe5hYfv76RcsCMoLrvleKyRNQphTitDtnevx+QFLT+59G3+Qh/9iMAYIAGf6Dw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=hetzner.com; dkim=pass (2048-bit key; unprotected) header.d=hetzner.com header.i=@hetzner.com header.a=rsa-sha256 header.s=lms2212 header.b=RuZq9I90; dkim-atps=neutral; spf=pass (client-ip=2a01:4f8:d0a:203a::1; helo=mail.hetzner.company; envelope-from=tan.siewert@hetzner.com; receiver=lists.ozlabs.org) smtp.mailfrom=hetzner.com
+	 MIME-Version; b=XmSlEfbQPidrtqSGfFq7iAmiDaOlHZJ/U4eQkKjOHe32TxcoIYCgI5RoR8/tiGKBKyfo0/mZMELl4hg7eWESkXN02ezvR22bMeNp2NovZBcB5wO17W+PJm3vQcOsJOYQCCw1ICYLAGuJmeWOFczI2awMRbglRNNIAeBFch8Mb1hmcxk4lp71rUY+Z6J3oAEfEjFE0yqD/ZxsEZu2Ovsgl9l2/4rRGjv/skyHrOaG0u0iVOHrYy1eNzweuc52lfRuxYifMbCvpo6Enx1ka3zcYFX6nl6YzMGFx4pAwMBEtBCGBK9g3yqR8r/ISV7mdw7CSqKpLYF6w3aD/hCEovLQuQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=hetzner.com; dkim=pass (2048-bit key; unprotected) header.d=hetzner.com header.i=@hetzner.com header.a=rsa-sha256 header.s=lms2212 header.b=KK0njkFW; dkim-atps=neutral; spf=pass (client-ip=2a01:4f8:d0a:203a::1; helo=mail.hetzner.company; envelope-from=tan.siewert@hetzner.com; receiver=lists.ozlabs.org) smtp.mailfrom=hetzner.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=hetzner.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hetzner.com header.i=@hetzner.com header.a=rsa-sha256 header.s=lms2212 header.b=RuZq9I90;
+	dkim=pass (2048-bit key; unprotected) header.d=hetzner.com header.i=@hetzner.com header.a=rsa-sha256 header.s=lms2212 header.b=KK0njkFW;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hetzner.com (client-ip=2a01:4f8:d0a:203a::1; helo=mail.hetzner.company; envelope-from=tan.siewert@hetzner.com; receiver=lists.ozlabs.org)
 Received: from mail.hetzner.company (mail.hetzner.company [IPv6:2a01:4f8:d0a:203a::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YZFFM0P2Tz3cjS
-	for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2025 20:44:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YZFFP0zSZz3cjr
+	for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2025 20:44:41 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hetzner.com
 	; s=lms2212; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID; bh=HpanrZa2wclQWiIHg4/MRBEQnvbyg0RqkGfjqG6EB6U=; b=RuZq9I
-	90YGsTnK0FMZ97ROBJINTf8Zgem6+82+31rOJSS3UPzRQ3O+yRbfbxtFWm2VrnHZ0LtNMYSdLoMMk
-	mupd5XzDm7uiU5fYx0J5WABm+zhPE0ocaKeR+WURLGNuhGD15VC4AmntBAtE0+gOlyH43C4VPSp2w
-	t0uigcdsisSaVvQqy3ikm1TunVT7vSaR+C8X+O30KUaCSJj51iqfHSRkqQM4fFp5VbEo5HshiI0cc
-	Jmz1mCPKsFS/gqoIsaCFnc0fzgZ58u+vlsBggDr6UmzMaeEXkw4OVI6oEWncwiu7Uh1u5flNLJ4G+
-	ho519hEopIrs9YsC4XKJABpm+3CQ==;
+	:Resent-Message-ID; bh=rM+bQBfncBy6kitQoUVdaT9KpEwH5/FIfpZz0ICBa3E=; b=KK0njk
+	FWj51HfkpkVL8c2LRvQPGxDA/inpMsO5+EBRctF9QereT9AC5JvgUPhGnQiY/RIAJkq/dHHlDkZmn
+	oypikXjuYhc28poArKOCPfRqi+IKIu2NwmMPMTmWPDb9NhwAgmde93JbemE15LMGR9HOXrt+DrMKZ
+	Roptzwhpx1awvOaQTs95yATC8iPvR5x4VTaQdWlGSd8n9DONCEtCbGLwoTV7KRVCY2TqX6Su3mi0S
+	iF6jPqO24xW8AloMep4m5B3lc9yOS0Sy3iyGUsMeg/K9tPuBREV8m6tMMaLB0X0mdN7H2BvGS2zB/
+	L9V9ryVR1NdFZaBGNpRAX0sAaJhg==;
 Received: from [2a01:4f8:0:a0a7::4c:0] (helo=localhost.localdomain)
 	by mail.hetzner.company with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
 	(Exim 4.94.2)
 	(envelope-from <tan.siewert@hetzner.com>)
-	id 1tYiu2-000A1S-Vt; Fri, 17 Jan 2025 10:44:35 +0100
+	id 1tYiu3-000A1S-3v; Fri, 17 Jan 2025 10:44:35 +0100
 From: Tan Siewert <tan.siewert@hetzner.com>
 To: openbmc@lists.ozlabs.org,
 	andrew@aj.id.au
-Subject: [PATCH u-boot, v2019.04-aspeed-openbmc 02/12] misc: i2c_eeprom: support DT pagesize property
-Date: Fri, 17 Jan 2025 10:44:21 +0100
-Message-ID: <20250117094434.16641-3-tan.siewert@hetzner.com>
+Subject: [PATCH u-boot, v2019.04-aspeed-openbmc 03/12] misc: i2c_eeprom: add eeprom write support
+Date: Fri, 17 Jan 2025 10:44:22 +0100
+Message-ID: <20250117094434.16641-4-tan.siewert@hetzner.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250117094434.16641-1-tan.siewert@hetzner.com>
 References: <20250117094434.16641-1-tan.siewert@hetzner.com>
@@ -78,33 +78,54 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Baruch Siach <baruch@tkos.co.il>
 
-Read the page size from DT when available.
+Write up to page size in each i2c transfer.
 
 Signed-off-by: Baruch Siach <baruch@tkos.co.il>
 Reviewed-by: Heiko Schocher <hs@denx.de>
-(cherry picked from commit a29034d1e6d1c1535055f455b5af5906a7edbc04)
+(cherry picked from commit 84c80c63d53bc8a7779b1e7e7084ee3b2d20e768)
 Signed-off-by: Tan Siewert <tan.siewert@hetzner.com>
 ---
- drivers/misc/i2c_eeprom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/misc/i2c_eeprom.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/misc/i2c_eeprom.c b/drivers/misc/i2c_eeprom.c
-index 29ad87c1d7b..ce2cad44d8d 100644
+index ce2cad44d8d..f25d0540075 100644
 --- a/drivers/misc/i2c_eeprom.c
 +++ b/drivers/misc/i2c_eeprom.c
-@@ -50,6 +50,12 @@ static int i2c_eeprom_std_ofdata_to_platdata(struct udevice *dev)
- {
- 	struct i2c_eeprom *priv = dev_get_priv(dev);
- 	u64 data = dev_get_driver_data(dev);
-+	u32 pagesize;
-+
-+	if (dev_read_u32(dev, "pagesize", &pagesize) == 0) {
-+		priv->pagesize = pagesize;
-+		return 0;
-+	}
+@@ -5,6 +5,7 @@
  
- 	/* 6 bit -> page size of up to 2^63 (should be sufficient) */
- 	priv->pagewidth = data & 0x3F;
+ #include <common.h>
+ #include <linux/err.h>
++#include <linux/kernel.h>
+ #include <dm.h>
+ #include <i2c.h>
+ #include <i2c_eeprom.h>
+@@ -38,7 +39,24 @@ static int i2c_eeprom_std_read(struct udevice *dev, int offset, uint8_t *buf,
+ static int i2c_eeprom_std_write(struct udevice *dev, int offset,
+ 				const uint8_t *buf, int size)
+ {
+-	return -ENODEV;
++	struct i2c_eeprom *priv = dev_get_priv(dev);
++	int ret;
++
++	while (size > 0) {
++		int write_size = min_t(int, size, priv->pagesize);
++
++		ret = dm_i2c_write(dev, offset, buf, write_size);
++		if (ret)
++			return ret;
++
++		offset += write_size;
++		buf += write_size;
++		size -= write_size;
++
++		udelay(10000);
++	}
++
++	return 0;
+ }
+ 
+ static const struct i2c_eeprom_ops i2c_eeprom_std_ops = {
 -- 
 2.47.0
 
