@@ -1,79 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B36A19B68
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 00:22:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7357A19B69
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 00:22:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ydg7m0p3Kz3fV0
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 10:21:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ydg7q0zq8z3fvN
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 10:21:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::f2b"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737494102;
-	cv=none; b=lmsi28kZfx5AYKu9BxAKBs6xg0LyIl9t9woZ6NAEb+IkoXHm9Rt4upbxJQC62238VyTTbrmhujGRZa3sijukVcKgei/7F0JrtS6VevcMhfEffbnLM+hq6rusORCSphTIxVthfuKCijRSz5gkCZ4jKYYcQEivhipSC5IF6C7cVGA7Fh9mw8MN6K5+Nc90V06fBIbS315n63ITJknOa+jwZ0McX+55p1fqD5c9tua8APt3LGa4VJRfitcypKEClRRoTMVQxPcKU22V/gUq+SEhLtnmA7L2UVNGUKmcnb8yNEZ8iEbV38cm4+mNYzcp1gVfU5fTaIktfxLkwTskQ9VL2Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::f33"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737494103;
+	cv=none; b=IU1Tyb+2ajBUrjYOlPQELmdvEvoOGZkHFhlXSYlCZV9Lq637wTe8HRRiLnCOFRV2wB0ivxTEc8qpdZa9+QG95v3TaeeyLgOYUoI3nPFjZcUYIlqo97/eNjyKbSxzzvQ3W7sulEO3LzkakFIO0u+iLN/J7Xr/zy6usbOeuuRxddh7YaDfw5LVeXSYEHbY9rbC7Sr4ipGE8C/NhUMDBaV2qEZtAVVnoJ7OS77gsikuSYZalhxFp1H/4me7LyB/jgF02EoqK2uFYC2rR9n3kY+kyBDyde1MrzKXaCdfaYuTmXV5DFFjNmLJ/k8ZCwVMre8aKnxy9lWm4uZhi2wJ1wPyfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1737494102; c=relaxed/relaxed;
-	bh=YKIWMYbFrbAqwI1LUECt3RJuovYReI3o7uvAyeGPPzQ=;
+	t=1737494103; c=relaxed/relaxed;
+	bh=EDypBRxJvQaUqQoINiNHn6E1UtSb53KvENj6pqF6igs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZZPZgXFMu5n4DGANT93ucmDHjvqpWQeVpk00qBxMuZ1YJtOGl0PZBcgfYm++wRXk0c3ELlb4iG9wna9kyBg3MJQNE6idN/xYzgkraoKxgemoBsWHhUJRFvKFOdoYdQiI4zpVeZ2gdGZqmPl2wtXwBqfIiTkgfdw/ezTfwJVNUcQE8x8+CgFh8QpKeo8vjRFpzDg3PgRlOHNJa+g5vUiocoeLf/ltDsIZDC1WABu+vzDDluUCTNt3/QVhe15Ze7+cEjMyrr+MIxaRoRd3pP4orAdNCgw+UDJLoyBFHOoUX0BeWyqimYYj84SuTQW6Pt3MS02DXKFTUyaTA1XejfgsfA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org; dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=kIqnSu2S; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::f2b; helo=mail-qv1-xf2b.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org) smtp.mailfrom=chromium.org
+	 In-Reply-To:To:Cc; b=YQYgcY4T5uwb22zKYxAEdWFW+B97gCotU7Lj5LbPUqwHrblbADf8RGA9cXjPhqvy6vw4tJa51JLRjHKnvWNWeYECJZIBIdMEfEsVl+J4GX6rcNNsorxfFhV8PNLzCxzpeVgdzY5gRZAvZKAfQQ4E7CYkcZPu3/9rGxiafSG6vA3oWueSu559y6AQzrrWaiTrIb9kkMU7BBfqhFxuvvrObBQPmr8b4S1YiTOnaDJoSkYPeHsVQTjOS+FOjIORg05znCTGUakD58fX6PAcgCT7m2Uo9aj6M4iN8G0sxgb1lVbrBljDaV6wEnQH5FU3Qp3ASBwxrXejasBU6VTiw+OiLA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org; dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=JuUJna+I; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::f33; helo=mail-qv1-xf33.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org) smtp.mailfrom=chromium.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=kIqnSu2S;
+	dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=JuUJna+I;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=chromium.org (client-ip=2607:f8b0:4864:20::f2b; helo=mail-qv1-xf2b.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org)
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=chromium.org (client-ip=2607:f8b0:4864:20::f33; helo=mail-qv1-xf33.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org)
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yd0N54mnhz2yLr
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Jan 2025 08:15:01 +1100 (AEDT)
-Received: by mail-qv1-xf2b.google.com with SMTP id 6a1803df08f44-6dd43aa1558so56322786d6.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yd0N63LTNz2yGF
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jan 2025 08:15:02 +1100 (AEDT)
+Received: by mail-qv1-xf33.google.com with SMTP id 6a1803df08f44-6d900c27af7so61139046d6.2
         for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2025 13:15:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1737494099; x=1738098899; darn=lists.ozlabs.org;
+        d=chromium.org; s=google; t=1737494100; x=1738098900; darn=lists.ozlabs.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YKIWMYbFrbAqwI1LUECt3RJuovYReI3o7uvAyeGPPzQ=;
-        b=kIqnSu2S4kEzO3cn/0oBJwkzZrX721cqIZcLVQkKyTQblnqSM7dL81kk6xezOMCJ5J
-         Axj2GSopF5Ba+2suC51Tqzk+GuaNoaWfFpVrIFk0JJyEWZtcLssIROAeAk4GBSghslTi
-         nLP0L7jK6vbcSWzrxa+hPJbdp8fKDKs6mJFao=
+        bh=EDypBRxJvQaUqQoINiNHn6E1UtSb53KvENj6pqF6igs=;
+        b=JuUJna+IQnZSmm5J2yeCnkRRqxtb0q1JxBAEqKa1ngDjUfUqCfgIIDERK2O3wiWj4e
+         N7wYHO5whvOPQk3mqpYzF1VETtT0H0++hiH9AiSwFO19oiGjnlEakCi1vie16xTrAB2H
+         LsrMuGZ/TCmfjFar29je2udcYWZwNvaBjgO9U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737494099; x=1738098899;
+        d=1e100.net; s=20230601; t=1737494100; x=1738098900;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YKIWMYbFrbAqwI1LUECt3RJuovYReI3o7uvAyeGPPzQ=;
-        b=Is+SgNOnNa7EQCVLbQ9U1V7Em+a/15tlMIuFzU8hbr8zxPDjlGetv++lk2h4yDG49W
-         j3afFotP9dpvUEpUfUHqGCD92yU9RqWpbjKO9QGom0qSITYecl94x9n87zbv6Put96OV
-         8GJGmkyr+Q4TEwOI8+OjjGlUC6tFsGqck1ipoEqfmcA7piKEieVGFAchqSzQ9clztOk+
-         xMfpJLFcByO8gAZ2B5NmjYJFsCO1136ZTxxdSQ/7Zud89frkgm/YsewxEEb9p9yWm6ld
-         WDQ/WlMHjBwugsC5rzIbvlWN7qlvRS3obsIb+fGnDjfDHj194Dwcm72dJFHP04GGQVlA
-         UiAw==
-X-Forwarded-Encrypted: i=1; AJvYcCXBIpKKfu+TUF3niiP7KxUbdSywpUlJNcXUZSe72b6uUxc2PAwcWMTV0wJ24UXx7n8SVxXu3VRF@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yx9DpaCJ/ZRTsE3d1obGT+Hr3CUl5ZzkZjlW060B4iBPnvy/cfE
-	0dogMtQEUpaJPuOGYWf67jvK15TdCKPhkss6/prbISDDUUWfp2NPOmaLIDADcA==
-X-Gm-Gg: ASbGncs2or5kFDe21hCyV9xGnmlwaQinkQpS9adMBxi4nTWStoDoHWgdIdNtvk6aofd
-	xzbrtBZ23+P28Si2Hn84hcfFfZ8+v93QeKorjAX9bfVWKGCgjvf+eh+vpY1k3b5p29rTLZkrRr3
-	7xLfrCiTQG21kfMzRQysUFZcPZX+Kw+HfSh7eMqaqEvklJvDsMcZdPw+rKqRlt5ZhyDBftZA7eY
-	enfEG2YWtwLl8p0dKaS2JdbjhATQbV1ekeYPlCudyJbgbNuz5wpRAgWumj6MBy4wTii6RgK7htv
-	DxB7dqepfrFO0FgmGJEf45tVajiMn6NlTqN8EqxBnHdJYSF+Sw==
-X-Google-Smtp-Source: AGHT+IGahO5uMTq52/oBAxLhuuA75vO0AMXdFYbDv0vle1LutgvuSuhG7TKF9rnDFYbC8l6q7rTkxQ==
-X-Received: by 2002:a05:6214:486:b0:6d8:95c9:af2b with SMTP id 6a1803df08f44-6e1b224ca45mr298377446d6.35.1737494099195;
-        Tue, 21 Jan 2025 13:14:59 -0800 (PST)
+        bh=EDypBRxJvQaUqQoINiNHn6E1UtSb53KvENj6pqF6igs=;
+        b=i4+h5twWEJdTb5c8AKb9chK3prv14yZmVRT0b0kMZoPD1uA0t4wTgXHqsBIyVDSI2N
+         8hYECmTes1Sn5XCTagKGlijs6L5//usUXx1XLbNj06FeULYebkB+XoZxTrVzx53Isx/+
+         aUosNLwFcT4eMKeOUNcTWXOhuZCLRanHojfxUV66CimPXFMaeGQEDnFKoZABH9gZmWuS
+         cS0D1M5DYLZEvyKzUFwNYFXQJ3t0pJCPfibK7KfyxeW9lJqEutCC3zb21fykaao/g8s+
+         NXHVVsWwc/TYVKR3R8/GEAYDk+023tw1JM3WeoP2k58hCajZ5yproOHCBGJTbPWLmVc0
+         9qGg==
+X-Forwarded-Encrypted: i=1; AJvYcCWmW4nfTYPus4jwYusdoFeHtTGDem2izqmLqdRkFv6GAfwa+hQc7hXfdSWnhjimmkWU8hh0SdP4@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxUD5//+OHUvJdhg2fhEvK4fvKeHhwTTYSupLyF1mRdNuAm9EzH
+	ua1V/VvmBQRQVBQP4DJIczVcbhPd5jkj6IPQN4rQUyeWmM//dL2wLDGbdL0EWw==
+X-Gm-Gg: ASbGnct5T8dltqtd1gxSQ8aheChiZZX2fKN2AP0BkgIR1HFAekT2aiUBsoT0GaD6jsq
+	tUkH2C4WAGusCUCt1+7/fDIlo/4Jp0S4d2Ko5TVzxTz6oJsNvVN+NfPUxPcLynOtJud2hfXcD/e
+	wR8/Ms20jZiyY0tSj5I5RmOcnEezReqdBA6d+m96pH6nmnAGbwVNLNGy4c08OthPLWroLHS4DcF
+	GZXqsG40RDF3Fdy0kM4/EhvqH5sbshygYnAs6Gun0B7tJnXrPM4/Xq0Os59i1cIcfU0Fjbj0Tv+
+	A3U+1nTfkrL3oEhh9/b1mvqCsX81aBifWQ6YYp/Ggz4MFYv9RA==
+X-Google-Smtp-Source: AGHT+IH2nW3HKiyhk/ib7bj/aH6TJVLtiNxwx87MHvq1Ur/SwGzlc6RDNTd7PprtRI9dniJmJVuT3A==
+X-Received: by 2002:ad4:5d6a:0:b0:6d4:215d:91c3 with SMTP id 6a1803df08f44-6e1b220e572mr291236936d6.28.1737494100024;
+        Tue, 21 Jan 2025 13:15:00 -0800 (PST)
 Received: from denia.c.googlers.com (172.174.245.35.bc.googleusercontent.com. [35.245.174.172])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e1afc28f84sm54790186d6.63.2025.01.21.13.14.57
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e1afc28f84sm54790186d6.63.2025.01.21.13.14.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 13:14:58 -0800 (PST)
+        Tue, 21 Jan 2025 13:14:59 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 21 Jan 2025 21:14:51 +0000
-Subject: [PATCH 2/4] media: nuvoton: Fix reference handling of ece_node
+Date: Tue, 21 Jan 2025 21:14:52 +0000
+Subject: [PATCH 3/4] media: nuvoton: Use cleanup.h macros for device_node
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250121-nuvoton-v1-2-1ea4f0cdbda2@chromium.org>
+Message-Id: <20250121-nuvoton-v1-3-1ea4f0cdbda2@chromium.org>
 References: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
 In-Reply-To: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
 To: Joseph Liu <kwliu@nuvoton.com>, Marvin Lin <kflin@nuvoton.com>, 
@@ -96,42 +96,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Marvin Lin <milkfafa@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Ricardo Ribalda <ribalda@chromium.org>, linux-media@vger.kernel.org
+Cc: openbmc@lists.ozlabs.org, Ricardo Ribalda <ribalda@chromium.org>, Marvin Lin <milkfafa@gmail.com>, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Make sure all the code paths call of_node_put().
+Instead of manually calling of_node_put, use the __free macros/helpers.
 
-Cc: stable@vger.kernel.org
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
 Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/nuvoton/npcm-video.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
-index 7b4c23dbe709..f6cba17a7924 100644
+index f6cba17a7924..8e69fa14433a 100644
 --- a/drivers/media/platform/nuvoton/npcm-video.c
 +++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1665,11 +1665,11 @@ static int npcm_video_ece_init(struct npcm_video *video)
+@@ -1648,8 +1648,8 @@ static int npcm_video_setup_video(struct npcm_video *video)
+ 
+ static int npcm_video_ece_init(struct npcm_video *video)
+ {
++	struct device_node *ece_node __free(device_node) = NULL;
+ 	struct device *dev = video->dev;
+-	struct device_node *ece_node;
+ 	struct platform_device *ece_pdev;
+ 	void __iomem *regs;
+ 
+@@ -1665,7 +1665,6 @@ static int npcm_video_ece_init(struct npcm_video *video)
  		dev_info(dev, "Support HEXTILE pixel format\n");
  
  		ece_pdev = of_find_device_by_node(ece_node);
-+		of_node_put(ece_node);
+-		of_node_put(ece_node);
  		if (!ece_pdev) {
  			dev_err(dev, "Failed to find ECE device\n");
  			return -ENODEV;
- 		}
--		of_node_put(ece_node);
- 
- 		regs = devm_platform_ioremap_resource(ece_pdev, 0);
- 		if (IS_ERR(regs)) {
-@@ -1692,6 +1692,8 @@ static int npcm_video_ece_init(struct npcm_video *video)
+@@ -1692,8 +1691,6 @@ static int npcm_video_ece_init(struct npcm_video *video)
  			dev_err(dev, "Failed to get ECE reset control in DTS\n");
  			return PTR_ERR(video->ece.reset);
  		}
-+	} else {
-+		of_node_put(ece_node);
+-	} else {
+-		of_node_put(ece_node);
  	}
  
  	return 0;
