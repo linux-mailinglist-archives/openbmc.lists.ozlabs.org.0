@@ -1,95 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF8C8A1A41A
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 13:21:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85E47A1B1CB
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2025 09:37:13 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yf0Qs60d1z3bcX
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2025 23:20:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YfWQ76Q5Bz3bhD
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2025 19:37:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737634850;
-	cv=none; b=XWC/UYNOrpcT3LYPg5d7E/z90dIIeKBIgn7HzxqZt6Y4cmYyWxXu9UwNlJtMbfp5uD2LvC+Bl176wAdPvVg30JBxZ67tZb3lT8O/fFs32oKZNnG2gTwC/h7+dkeMxbrXyM8h6tK/P0p4MC741h3XHfRTQLz/dGiZOq2dK6YOl/KffKSJigXBd95DDi/fej1Po2vO+zhLOPPqMJUUmll9TrWa1msPqEe1h+jmIg6bcdltZZjdlU0casM6KCXpUUJyQsdHqSpp1+4nSDr/FBXk1uMzyS+Svco6qNZNee9rFrOctrVWI3pCtdfqgPzHjW1p1jQZSbE+uUbkWCzBdAhmaA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1737707820;
+	cv=none; b=El/LboRn/n/J10rlAjB3xJRT1M9YYsUEVQHT3GP3rWOUSYdPFreCf4oLMOqBPfCaQfw3rOHmC1bMYAaBlA7fsXj4dxkI+/BDXZKWF7X6mGXQkqY1Vi9VS3uDVMv2xGple2YTJN/r0T2qQoWZzg/QJJIXlJi10VmXstcGesVDNasZlungcmzqewDPuXlbFnH7s6K9J+Z9JcsSE1c8VcU6T8p/IayesN3kRKzMY4yVjllIznVvaVBqQ6TFtky0GAar6rm5o9CST5dl9uDOSCoKRGM+n05av3wjGSRVm7z/HwWx2W4IGfiRmtpC1XC7G3Foe+CkTVD/JhZg5RlAA/twTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1737634850; c=relaxed/relaxed;
-	bh=4qYFQg17lPWWI/P3x77cxigTrSYOa7HHPOEIY0DqiMU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Me7PTbap3lzONg4lC9hu5DCcXEiSAEY/B/xv5+MQ7awhqqBFiQIErpz+dKmAZmcka1Ky5oCS21x6RgIbA7BkJ6p9cE/1kPcPzFOFKDznI9YTR0HhuSzeXsHIPwhZCVOTIQG/TKinfABjBl0P5Eoe/KFvzHSw4WbqzkOoSSMUcTNFuc8nCAW9zKyJ5V91L1NotTQzdxZVQilr4JWx8bwdW9AZtVh/NtaiQeAQBicOYAw6rK+N4+rGlf+Nbsj9M3Vth8Uue7glZzF7EgaNzbi0uy5mmqZZSWDM8VDt7jBu4cynkzhBf8IC8HBQU+cEk/mIyWdIcFIZZDOp9YNW4REMZA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPKFYIzT; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1737707820; c=relaxed/relaxed;
+	bh=IZegoU4yGkAb3LRr862Kj9381H4s3fRnUlcMUi01tig=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XPpvCQUZ4XZ9ubJyh2TiQNzToqxCGW7JWvs7JA84+RlipaDC+DaURzJE/COVzQpaxF8RNI4ZIqI8xAipfaAiRHYBuBsiYJlbJWOMlyvrnKp7Wx+Kwg9ekb6M1W5RbKkdVo3kRLz1krhv0NOLGdXynFylEdgMCAxPTY6SO907vM7nF/NfFuwVTK5QDx6R8s3oj/92H7A6WnH0eTsP5SxCVSA+WBOhdVLJCsCDvs8Zp6sZhLGUimmkVM8SoVFUp5X2ugokZRWnlTwomdeWdnJ8Tz+fKFlJkx0/J+Bn6lGQlzDvR7P1i1bWK31NUROrvzJsofe0CgZnl9HonK5rR2n/Bw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fuHkpp1X; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PPKFYIzT;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fuHkpp1X;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yf0Qn1SdSz305v
-	for <openbmc@lists.ozlabs.org>; Thu, 23 Jan 2025 23:20:48 +1100 (AEDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-5401be44b58so991159e87.0
-        for <openbmc@lists.ozlabs.org>; Thu, 23 Jan 2025 04:20:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737634843; x=1738239643; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4qYFQg17lPWWI/P3x77cxigTrSYOa7HHPOEIY0DqiMU=;
-        b=PPKFYIzTAhyvCLAEgM8FDLKceKQWANf9qi3PaLk38SmI/yVx6lzZ4rOLavBAr2vy8B
-         Pc3BgUWa+OXfQocmRIkQM9GMvLyGINMe1ba976stBhECG+rA2kPobcUt87RAgpGc15W2
-         tl8Pw/7iujvB2h1bBsXPWWPr6jNea3lY5m/1e9z6S/DMOD27+TIJFq6y8dpPogy2lVX/
-         Et4m7UtGH8Mx0dlaQ1qLfn920sxbJhuFp8iZpDftm2rAKV4+tEFbATz5VBKq/SJQgANH
-         izsFqiuVvoD9m0EfriKBF26XC+NZU0Ky9R00qP78rBmPLekBZOMPHQsWdlgv/bBoHtSd
-         Dj4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737634843; x=1738239643;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4qYFQg17lPWWI/P3x77cxigTrSYOa7HHPOEIY0DqiMU=;
-        b=q9ZwMXOdCoOUOO7YwAkmqeSi7Upk3UlntevR/oe4lQw66XUu4gQJzrbgWpi3CdB2xQ
-         eFA6Vr0/YCSZ2y9AUPhFi3GC//yQ+j7oUNoqfd3GycISV3ln8SaO5O52JKQ6Gn5ujRIc
-         kjZVpoAaIzAShgD3n83pgy1G6Mpe+s/nmHz1zMv1mKiz1QvYj15yM3MtdJwlkgkp56/P
-         qdyWKxpeqXfrGv3XPRhevjVfgdFCvQPA/avJJ8DdlOMS1xPQ3ERe1UYZvBfDjfwzYTa+
-         ORn7uRnm6vAn/TqDqptqQiwYFuqUmRgF9sbF/QgWURmy8f0yCiD/6/TtZymVUr85Tnc+
-         Myfg==
-X-Forwarded-Encrypted: i=1; AJvYcCXWEJ1jpMVAi2yRRScLD7Y0dk+VzPni5znjgoggVwH2Yp2rCjNKw+SGZy79pwGXpss1vC7kugAV@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yxt18brfgoGEH0ddbaISSvXx641crpHKWGY5AtwfQ8ygGT9Mjb8
-	Pmq2Tm/QkylEin0rHQfsnUoE4o+fyC8BsjkCosfvtRW7j1Kj4tgB
-X-Gm-Gg: ASbGncuMdse0TP5t5BxuxcmnbBE+xe6wQmMcCEy8W+naKIp3cA+Mr06WLKLY81lYCnR
-	/wp5oMWRBbQtRYqSsZl4GRPrSWwg5tYZOAd+DolwgizVW5oA5FLg7xDrCBFBiuFhnGofpMhmPuM
-	+pZmb9AsNTtlYd7H+QBVT5fqKNzx48sO21u0bLjLG8dgX2QNncEtoo83xAxE23PUjmznk5O29aY
-	RrGqM49HmnFJrO5IaXOyRLoas4gFFvl3YX6ABsoG9lNudrytdSCrX0AOwMHVSAVswpPvtWm+S1l
-	DEkkWq8DmR0UIGwAxvI=
-X-Google-Smtp-Source: AGHT+IFh/38xtOnDXSxnSHxS0Vf37RqJLjOETl12HDi2Hz14nXUfDH/FUeDLCk7E7rFbZ3IaOP/JsQ==
-X-Received: by 2002:ac2:4c56:0:b0:53e:fa8b:8227 with SMTP id 2adb3069b0e04-5439c27b239mr10309500e87.45.1737634842696;
-        Thu, 23 Jan 2025 04:20:42 -0800 (PST)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5439af78febsm2604588e87.248.2025.01.23.04.20.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 04:20:42 -0800 (PST)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 50NCKbA6006054;
-	Thu, 23 Jan 2025 15:20:38 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 50NCKYtm006053;
-	Thu, 23 Jan 2025 15:20:34 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Iwona Winiarska <iwona.winiarska@intel.com>,
-        Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
-        Patrick Rudolph <patrick.rudolph@9elements.com>,
-        Naresh Solanki <Naresh.Solanki@9elements.com>
-Subject: [PATCH] hwmon: (peci/dimmtemp) Do not provide fake thresholds data
-Date: Thu, 23 Jan 2025 15:20:02 +0300
-Message-Id: <20250123122003.6010-1-fercerpav@gmail.com>
-X-Mailer: git-send-email 2.30.2
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YfWQ309Npz2xX3;
+	Fri, 24 Jan 2025 19:36:58 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 411955C4A0C;
+	Fri, 24 Jan 2025 08:36:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40535C4CED2;
+	Fri, 24 Jan 2025 08:36:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1737707815;
+	bh=7PocYP06gYB5s4GBXtZIom2srut+GbONZRftd77UgHM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fuHkpp1Xtxj6zF6kglVoC/edfTVWsbpzIRUa/NELq+BZiJ/w9xKUZPLQbcrb4RXjH
+	 OU205SBskgjqrhK365LIEE6AIYj5fTdEzvILJVvlg9C4bfsLztpZY/rTp0EovTiN3x
+	 ze6udOlmcf9TlE38qVFQk3L9LlyB/AwSzgQO019DLZG7HWUNUT05mDLfaaKzX+pOhN
+	 z2t8ljaxzAK59++j/zFCsdUJZYpmwICHMS3W8FqhCdZIu/czuBKZOwVQAjGa8EWAuK
+	 eNFs2VvJ4wqWNWs0IeNsVMPM6SvTek0iOAf7X5x7sJKjXVrPgAGRc6/NnJYw0FgGtc
+	 ZV6XKqe7/dCkQ==
+Date: Fri, 24 Jan 2025 09:36:51 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Willie Thai <wthai@nvidia.com>
+Subject: Re: [PATCH] ARM: dts: aspeed: Add device tree for Nvidia's GB200NVL
+ BMC
+Message-ID: <20250124-rebel-stimulating-galago-bfa0e5@krzk-bin>
+References: <20250124051819.7714-1-wthai@nvidia.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250124051819.7714-1-wthai@nvidia.com>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -102,67 +70,347 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Paul Fertser <fercerpav@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Ivan Mikhaylov <fr0st61te@gmail.com>, Joel Stanley <joel@jms.id.au>
+Cc: robh@kernel.org, conor+dt@kernel.org, tony.luck@intel.com, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, kees@kernel.org, openbmc@lists.ozlabs.org, leohu@nvidia.com, linux-kernel@vger.kernel.org, dkodihalli@nvidia.com, gpiccoli@igalia.com, joel@jms.id.au, tingkaic@nvidia.com, krzk+dt@kernel.org, wthai <wthai@willie-obmc-builder.nvidia.com>, linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-When an Icelake or Sapphire Rapids CPU isn't providing the maximum and
-critical thresholds for particular DIMM the driver should return an
-error to the userspace instead of giving it stale (best case) or wrong
-(the structure contains all zeros after kzalloc() call) data.
+On Fri, Jan 24, 2025 at 05:18:19AM +0000, Willie Thai wrote:
+> From: wthai <wthai@willie-obmc-builder.nvidia.com>
 
-The issue can be reproduced by binding the peci driver while the host is
-fully booted and idle, this makes PECI interaction unreliable enough.
 
-Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
-Fixes: 621995b6d795 ("hwmon: (peci/dimmtemp) Add Sapphire Rapids support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
----
- drivers/hwmon/peci/dimmtemp.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+This does not match SoB.
 
-diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
-index d6762259dd69..fbe82d9852e0 100644
---- a/drivers/hwmon/peci/dimmtemp.c
-+++ b/drivers/hwmon/peci/dimmtemp.c
-@@ -127,8 +127,6 @@ static int update_thresholds(struct peci_dimmtemp *priv, int dimm_no)
- 		return 0;
- 
- 	ret = priv->gen_info->read_thresholds(priv, dimm_order, chan_rank, &data);
--	if (ret == -ENODATA) /* Use default or previous value */
--		return 0;
- 	if (ret)
- 		return ret;
- 
-@@ -509,11 +507,11 @@ read_thresholds_icx(struct peci_dimmtemp *priv, int dimm_order, int chan_rank, u
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd4, &reg_val);
- 	if (ret || !(reg_val & BIT(31)))
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 13, 0, 2, 0xd0, &reg_val);
- 	if (ret)
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	/*
- 	 * Device 26, Offset 224e0: IMC 0 channel 0 -> rank 0
-@@ -546,11 +544,11 @@ read_thresholds_spr(struct peci_dimmtemp *priv, int dimm_order, int chan_rank, u
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd4, &reg_val);
- 	if (ret || !(reg_val & BIT(31)))
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	ret = peci_ep_pci_local_read(priv->peci_dev, 0, 30, 0, 2, 0xd0, &reg_val);
- 	if (ret)
--		return -ENODATA; /* Use default or previous value */
-+		return -ENODATA;
- 
- 	/*
- 	 * Device 26, Offset 219a8: IMC 0 channel 0 -> rank 0
--- 
-2.34.1
+> 
+> The GB200NVL BMC is an Aspeed Ast2600 based BMC
+> for Nvidia Blackwell GB200NVL platform.
+> 
+> Signed-off-by: wthai <wthai@nvidia.com>
+
+Full name.
+
+
+
+> ---
+>  .../bindings/arm/aspeed/aspeed.yaml           |    1 +
+
+Please run scripts/checkpatch.pl and fix reported warnings. After that,
+run also 'scripts/checkpatch.pl --strict' and (probably) fix more
+warnings. Some warnings can be ignored, especially from --strict run,
+but the code here looks like it needs a fix. Feel free to get in touch
+if the warning is not clear.
+
+
+>  arch/arm/boot/dts/aspeed/Makefile             |    1 +
+>  .../aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts | 1352 +++++++++++++++++
+>  3 files changed, 1354 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+> index 2f92b8ab08fa..0a6f3654dcb5 100644
+> --- a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+> +++ b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+> @@ -96,6 +96,7 @@ properties:
+>                - inventec,starscream-bmc
+>                - inventec,transformer-bmc
+>                - jabil,rbp-bmc
+> +              - nvidia,gb200nvl-bmc
+>                - qcom,dc-scm-v1-bmc
+>                - quanta,s6q-bmc
+>                - ufispace,ncplite-bmc
+> diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
+> index c4f064e4b073..0dc5240866f3 100644
+> --- a/arch/arm/boot/dts/aspeed/Makefile
+> +++ b/arch/arm/boot/dts/aspeed/Makefile
+> @@ -48,6 +48,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>  	aspeed-bmc-lenovo-hr630.dtb \
+>  	aspeed-bmc-lenovo-hr855xg2.dtb \
+>  	aspeed-bmc-microsoft-olympus.dtb \
+> +	aspeed-bmc-nvidia-gb200nvl-bmc.dtb \
+>  	aspeed-bmc-opp-lanyang.dtb \
+>  	aspeed-bmc-opp-mowgli.dtb \
+>  	aspeed-bmc-opp-nicole.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts
+> new file mode 100644
+> index 000000000000..91d025229aba
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200nvl-bmc.dts
+> @@ -0,0 +1,1352 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/dts-v1/;
+> +
+> +#include "aspeed-g6.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +#include <dt-bindings/leds/common.h>
+> +
+> +&gpio0 {
+> +	gpio-line-names =
+> +
+> +	/* gpio-line-names are the combination of <signal>-<I/O> , "" is the placeholder for the unused pins
+> +	*/
+
+Odd wrapping and alignment. See DTS coding style.
+
+> +
+> +	/* 208 (26*8) 3.3V GPIOs */
+> +
+> +	/*A0-A7*/
+> +	"", "", "", "", "", "", "", "",
+
+All these are misaligned.
+
+...
+
+> +
+> +// EMMC group that excludes WP pin
+> +&pinctrl {
+> +	pinctrl_emmcg5_default: emmcg5_default {
+> +		function = "EMMC";
+> +		groups = "EMMCG5";
+> +	};
+> +};
+> +
+> +/ {
+
+No, look at other DTS. You never start with overrides, this is
+completely wrong coding style, completely odd and unacceptable code.
+
+
+> +	model = "AST2600 GB200NVL BMC";
+> +	compatible = "nvidia,gb200nvl-bmc", "aspeed,ast2600";
+> +
+> +	aliases {
+> +		serial2 = &uart3;
+> +		serial4 = &uart5;
+> +		i2c16   = &imux16;
+> +		i2c17   = &imux17;
+> +		i2c18   = &imux18;
+> +		i2c19   = &imux19;
+> +		i2c20   = &imux20;
+> +		i2c21   = &imux21;
+> +		i2c22   = &imux22;
+> +		i2c23   = &imux23;
+> +		i2c24   = &imux24;
+> +		i2c25   = &imux25;
+> +		i2c26   = &imux26;
+> +		i2c27   = &imux27;
+> +		i2c28   = &imux28;
+> +		i2c29   = &imux29;
+> +		i2c30   = &imux30;
+> +		i2c31   = &imux31;
+> +		i2c32   = &imux32;
+> +		i2c33   = &imux33;
+> +		i2c34   = &imux34;
+> +		i2c35   = &imux35;
+> +		i2c36   = &imux36;
+> +		i2c37   = &imux37;
+> +		i2c38   = &imux38;
+> +		i2c39   = &imux39;
+> +		i2c40	= &e1si2c0;
+> +		i2c41	= &e1si2c1;
+> +		i2c42	= &e1si2c2;
+> +		i2c43	= &e1si2c3;
+> +		i2c44	= &e1si2c4;
+> +		i2c45	= &e1si2c5;
+> +		i2c46	= &e1si2c6;
+> +		i2c47	= &e1si2c7;
+> +		i2c48	= &i2c5mux0;
+> +		i2c49   = &m2riser;
+> +		i2c50	= &i2c5mux2;
+> +		i2c51	= &i2c5mux3;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +		bootargs = "console=tty0 console=ttyS4,115200n8 earlyprintk";
+
+Drop entire bootargs. Use proper stdout-path instead. earlyprintk is
+debugging, not mainline-wide use.
+
+> +	};
+> +
+> +	memory@80000000 {
+> +		device_type = "memory";
+> +		reg = <0x80000000 0x80000000>;
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		vga_memory: framebuffer@9f000000 {
+> +			no-map;
+> +			reg = <0x9f000000 0x01000000>; /* 16M */
+> +		};
+> +
+> +		ramoops@a0000000 {
+> +			compatible = "ramoops";
+> +			reg = <0xa0000000 0x100000>; /* 1MB */
+> +			record-size = <0x10000>; /* 64KB */
+> +			max-reason = <2>; /* KMSG_DUMP_OOPS */
+> +		};
+> +
+> +		gfx_memory: framebuffer {
+> +			size = <0x01000000>;
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +
+> +		video_engine_memory: jpegbuffer {
+> +			size = <0x02000000>;	/* 32M */
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +	};
+> +
+> +	power-gpios{
+> +		n2-gpios = <&gpio0 ASPEED_GPIO(N, 2) (GPIO_ACTIVE_HIGH|GPIO_PULL_UP)>;
+> +		n3-gpios = <&gpio0 ASPEED_GPIO(N, 3) (GPIO_ACTIVE_HIGH|GPIO_PULL_UP)>;
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +		uid_led {
+
+
+No, sorry, you send us crappy downstream code asking us to comment on
+exactly the same issues we fixed long time ago.
+
+Drop your entire code and start from scratch from most recently reviewed
+upstream code, so you will not duplicate all of the known and fixed
+issues.
+
+The exact issue here: Follow DTS coding style for naming.
+
+> +			gpios = <&sgpiom0 27 GPIO_ACTIVE_LOW>;
+> +		};
+> +		fault_led {
+> +			gpios = <&sgpiom0 29 GPIO_ACTIVE_LOW>;
+> +		};
+> +		power_led {
+> +			gpios = <&sgpiom0 31 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		// Non-LEDs:
+> +		//   BMC_READY-O GPIO pin (not an LED) is being bound to the GPIO LED driver.
+> +		// Notes:
+> +		// * This is a workaround and leverages the GPIO LED driver to enable control of
+> +		//   reset tolerance and still allow the GPIO to be controlled from user space.
+> +		// * The standard Linux GPIO driver allows control of reset tolerance, however
+> +		//   does not expose user space APIs for user space control of the GPIO pin.
+> +		// * GPIO_TRANSITORY = reset tolerance is disabled
+> +		// * Any non-leds should be added below this line.
+> +		bmc_ready_noled {
+> +			gpios = <&gpio0 ASPEED_GPIO(Z, 0) (GPIO_ACTIVE_HIGH|GPIO_TRANSITORY)>;
+> +		};
+> +	};
+> +
+> +	buttons {
+> +		power-btn {
+> +			gpio = <&sgpiom0 156 GPIO_ACTIVE_LOW>;
+> +		};
+> +		uid-btn {
+> +			gpio = <&sgpiom0 154 GPIO_ACTIVE_LOW>;
+> +		};
+> +	};
+> +};
+> +
+> +// Enabled Primary flash on FMC for bring up activity
+> +&fmc {
+> +	status = "okay";
+> +	flash@0 {
+> +		status = "okay";
+> +		compatible = "jedec,spi-nor";
+> +		label = "bmc";
+> +		spi-max-frequency = <50000000>;
+> +		partitions {
+> +			compatible = "fixed-partitions";
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			u-boot@0 {
+> +				reg = <0x0 0xe0000>; // 896KB
+> +				label = "u-boot";
+> +			};
+> +
+> +			kernel@100000 {
+> +				reg = <0x100000 0x900000>; // 9MB
+> +				label = "kernel";
+> +			};
+> +
+> +			rofs@a00000 {
+> +				reg = <0xa00000 0x35FF000>; // 55292KB (extends to end of 64MB SPI - 4KB)
+> +				label = "rofs";
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&fmcraw {
+> +	status = "okay";
+> +	spidev@0 {
+> +		compatible = "hgx,glacier";
+> +		status = "okay";
+> +	};
+> +};
+> +
+> +&spi1raw {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default>;
+> +	spidev@0 {
+
+Node names should be generic. See also an explanation and list of
+examples (not exhaustive) in DT specification:
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+> +		spi-max-frequency = <25000000>;
+> +		compatible = "hgx,glacier";
+
+
+NAK, does not exist.
+
+> +		status = "okay";
+
+Where was it disabled?
+
+Please run scripts/checkpatch.pl and fix reported warnings. After that,
+run also 'scripts/checkpatch.pl --strict' and (probably) fix more
+warnings. Some warnings can be ignored, especially from --strict run,
+but the code here looks like it needs a fix. Feel free to get in touch
+if the warning is not clear.
+
+
+It does not look like you tested the DTS against bindings. Please run
+'make dtbs_check W=1' (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
+Maybe you need to update your dtschema and yamllint. Don't rely on
+distro packages for dtschema and be sure you are using the latest
+released dtschema.
+
+> +	};
+> +};
+> +
+> +&spi2 {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi2_default>;
+> +
+> +	// Data SPI is 64MB in size
+> +	flash@0 {
+> +		status = "okay";
+
+Where did you disabled it?
+
+I finished review here, because you have way too many trivial issues
+which would be pointed out by tools if you run them.
+
+And you are supposed to run the tools first, before you use community.
+
+Best regards,
+Krzysztof
 
