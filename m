@@ -1,98 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 108A0A1DC7C
-	for <lists+openbmc@lfdr.de>; Mon, 27 Jan 2025 20:10:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A98AA1DD7E
+	for <lists+openbmc@lfdr.de>; Mon, 27 Jan 2025 21:43:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YhdKS1tQDz3bZN
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2025 06:10:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YhgNq02tBz3bZK
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2025 07:43:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::232"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738005017;
-	cv=none; b=ke2vYCLyDb30DerketDw8kVcqXu9VbNq6nMQBoMP9AIZimzXxn/ERrExPdotqvuASZohE2nE+a4madVPiSUTECguzm6JZXzoVnGR+lGBELTOoGPz/Q+UWy+RLdrbPfxXYAcjnkif6ddQ7B4ZECVQm6dycp17ooAhBANxYa4PPEsqbsCcDAmJcN034m0YL0abynZA4Vp+tuNFzpdZ3AkhdAjMc0vnH8wjKDtlsdz3cdle/a7L5xXBO/7VhvpTCSKLe94+UMURCFoP73464Lu2S8nzisCFAklyZsHYCXME2D+4ODeIuHWi92mZ3ad0p+XejO974ZabSqWhZPegxyASyw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738010600;
+	cv=none; b=mvTpp+/4MA75AFhgbBCAzuFVT8wrx/vBiDVxz2R9uWe+Wb46t9i9if0DUznMxTRiqBJ0lUiZ18hQ4Ap3RfMOtRmrD5whFbAQciwGvfJoOLu7jtyeH4wLgGjzxzFGmNvnShl0jAY2g+N7Pf4vpjd+zL5/G12lcSzhuxCCXSwogNoFn0zhGXkQUUGvbdmLXcJRpW+BKwGyDpJllyKXoN6LaRabJuMAAS1r+5a9aEpGhztM1KcS0GN5Q+TIGle2ZtlbQizRRyynLXzy3zcOWTfJsyztY3R2Y3QmNp0v4uVD91DcowPMBzPlDuhWtuKuZZ21dv3Yt3TO5MV4vKvWPNbzkA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738005017; c=relaxed/relaxed;
-	bh=bGwrXPOvo05x7dKLdltIQ3oHgnPqyjh5wBEm2GWPthM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mWYASxEPgYpZeNkFmprHCc3kzXA7NcAWBlaU1UWUUVM3rF3TTrYjCzxRhFlKgQ1FlmCdnMlpnXTC5Os2BATfPykVXziUE7bD1K482exKvCOPBZKmP00ZzNu3hGoddG1JL9GmEF4B4ojmuDHkwV8Wiw2EkTwfp2IbdAhUHsBTwf2XmYFbKibiCObExbfwQaBIB3iqCapdhQ3QhC7hl5LInpxibK2vlWkDigh194/MVViaRtRUdNP0fc+ULZ1DyNDjiluVN+AP9YCdPAO5UbSDZboFHYAmx9gKnuT/Bn2IMybfHhYffuWzqdbEooS31UNWr1dEMJBSsGpmnq8CWLWBmQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cNGd84s8; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::232; helo=mail-lj1-x232.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1738010600; c=relaxed/relaxed;
+	bh=bVpYogY0TLUVz100Ef2PIk8u5qqrjoawZ6XH+1SalfI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KHYPrvkKbsNAJgzE0d9gLAylOXjS7fa7LyTurE+q+BPjsFYHpU4Fax6UAzS0ZfjIpWVi/CwC4JfX1ZnH5xCFT5cfx7aFCWUlMlPqNSUEAkMM+gCBANhWzyJI1HWSx1Mm19BdlAdWn0VwyITpzmixu0n3BmRpuxC5miVwGk8Grr3XcMi9lGPkb6BE7V9sCe0l6o1hXBcgwSaYG19j/wQRgAL4caNCpzCcN1ECZMq4g+l44Tq1P4fE1rBtTxjBggg6nkg1iuoESGSwPi8lkqOD1nGG3OemZqynixGivDjsmSXM2wRA6HuBp85xBc/lUfKdx6ReJxa/94Y06mb+j8anpw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=bF+LFs0l; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=woodwardm@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cNGd84s8;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=bF+LFs0l;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::232; helo=mail-lj1-x232.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=woodwardm@google.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YhdKM0clSz2yDS
-	for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2025 06:10:13 +1100 (AEDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-303548a9361so39582731fa.0
-        for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2025 11:10:13 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YhgNl1hkxz2yk7
+	for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2025 07:43:18 +1100 (AEDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-219f6ca9a81so2955ad.1
+        for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2025 12:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738005010; x=1738609810; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bGwrXPOvo05x7dKLdltIQ3oHgnPqyjh5wBEm2GWPthM=;
-        b=cNGd84s8jI3u59VTMfchGGDHaQXMRStepDMekJhfGRfamxolJB9qxUJyVNAcauC60Q
-         lEk81ISPoVAdQMqtycsy/dM16FxXoPBPSZLzxCt40T3ZxcljgiuRnLU/l8qNkGTy6ang
-         oRjAoG80nDYjZNWKUFKgjIRszGIlVgr8gDLUd2CnBJC7vcG47+H0TfU4B9VfFvW6+YX1
-         ioZZF0hOWYApRyTcMb/mjHzc7hBdWzpXlQAWf1B02Uv+2mliWg5WlWDoY/+xY87Vnj+p
-         yuggS+TKTdby2PykggZeRUin1Xkf1sT+n9/9JAAORpuOAHAmQdEmInEf/AnXY9xsv2Z2
-         VrAg==
+        d=google.com; s=20230601; t=1738010595; x=1738615395; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bVpYogY0TLUVz100Ef2PIk8u5qqrjoawZ6XH+1SalfI=;
+        b=bF+LFs0l5jaaJoNLdola6L9JqrtIGxEGKm6gYK1BejeIx88Bsg+hUxGBo1+jdP8P4Q
+         J+98WJyqyYCStk04HCKJ5qO72MBlSwp3r8Ceeuoyv0LfgqYFnR86/QcyJbb3zbmWlgf3
+         J4QK1lLSj5xEg36099MrbABYWXdugVP2T0TKWZyKsTKPW3LD2zhx696GqiqkzBanGiMi
+         gj9frrRm71My6bSJtp9dIvMr9JNI2ICcm+QnfqcmhVzB9LrwDyKOYvqbdfJKThPXXWVc
+         4/GkNlBHFzZmYNQl1Ig4RpznWVZA5BK0TaRtIzqNR9qlG0OFQwiqmPKUAKZP6QSZ9iG/
+         cmZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738005010; x=1738609810;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bGwrXPOvo05x7dKLdltIQ3oHgnPqyjh5wBEm2GWPthM=;
-        b=Id1/yKUTWqvO6LW3gxls1cOIu2InNxNmg6Y01kBj205NBqjhYoD36JPkTUPzSdZn5D
-         QsGg9zaIGErqMI1vsKCOLap9wF7sxtLdlgGGEvVFOmu/rzeSv0n/5Z7EXwtjspVxyual
-         oBfT5DvM9OHeXPSRE+Sj6hT468JWSjDNcHC1d9NsJ0ZG566GMCZx4bDXDBck+FfdHv4t
-         oquwM0gr/H98V9uKgFSnu/ypkoq3xMs7qiwULJrJ/q5qoV4EH2VxkFC5hnumyWD280Gl
-         6Z7ZgG/pWmGBSRCI05udwp5cE1W4D1HEtuUopwqKqOUDHz1iACoxwUfHIZotdbRUy7yw
-         pHvg==
-X-Forwarded-Encrypted: i=1; AJvYcCVDHob9mUD/ExrG/Vacxt985AAOxpcRtpuI/2TYsLkvPDMK2LfAapMGVhSbChkpJa+HAXYfaFoa@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yzws3H/rw8EjZ8PE1rGAY/Js+0SY50yPiTHbeex7rlgJZiBGkZc
-	Wqob4khRvYaoN1SuPgWB21GzMbDOj9S9kRyFJ6+cCez4loN1QgPK7yxWG8dY
-X-Gm-Gg: ASbGncskl8kITbUgALh4EuJRqc7v4KC9iakp9/zgcHlc6On8JFYCb4WOJEJTWnDguPL
-	1uLmmqnP/6gb8/LNkiWcbsBTGa6/sT/Y/8kiXSM17I9xpIgEGMmqpIMGkiiuEOwQEy1+dDncCiC
-	MKbtmfitbq82l+MFmMgUb1aDfD7HBBjn+kASWbkYAvPwPPJCZ06CyEZ2nH40fPb1sRiZ/JBfkWc
-	uYIQ6XFEdwz25/OFIjMLpq4IkH4p+yq/SoRmNQ7a+I5V6QA0eVeUEAanoCYU0HD/Cmp7f0oCFfl
-	hBq7zuVHPV7p8GvXqQY=
-X-Google-Smtp-Source: AGHT+IGcyGJAafbq2BnEAcDVUomhfJ6yZ8JXnr9Oo1BWvohJt8PKPBt3ZNFrQEx4CVCXKFZ8BeCIuQ==
-X-Received: by 2002:a2e:b555:0:b0:302:22e6:5f8 with SMTP id 38308e7fff4ca-3072ca9a6f7mr122102721fa.22.1738005010251;
-        Mon, 27 Jan 2025 11:10:10 -0800 (PST)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3076bc49806sm15422331fa.91.2025.01.27.11.10.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 11:10:09 -0800 (PST)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 50RJA5QR002808;
-	Mon, 27 Jan 2025 22:10:06 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 50RJA3D2002807;
-	Mon, 27 Jan 2025 22:10:03 +0300
-Date: Mon, 27 Jan 2025 22:10:03 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH] hwmon: (peci/dimmtemp) Do not provide fake thresholds
- data
-Message-ID: <Z5faC6M2MUj8KYoB@home.paul.comp>
-References: <20250123122003.6010-1-fercerpav@gmail.com>
- <71b63aa1646af4ae30b59f6d70f3daaeb983b6f8.camel@intel.com>
- <7ee2f237-2c41-4857-838b-12152bc226a9@roeck-us.net>
- <Z5fQqxmlr09M8wr8@home.paul.comp>
- <1dc793cd-d11d-441a-a734-465eb4872b2a@roeck-us.net>
+        d=1e100.net; s=20230601; t=1738010595; x=1738615395;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bVpYogY0TLUVz100Ef2PIk8u5qqrjoawZ6XH+1SalfI=;
+        b=mY1pcEk0jadSWHzJk+jlpgOm6ZhjNhrOqjv9pL6vaO6cmZ2/XW0RjznMJeJBALO9Du
+         BB6eOyLGhJQL2dUu67jP4XYzeY+GN3a2F2pGqtX9+GVcob3jbLkJPw6eS3Mtv7Y7Efjy
+         31zxCzhPFR0WyA9DtvHeoa2+/DjO0aJcpRCSQx23mx2oelURKOwmH2TriiWDNaYDXsHb
+         +0WpCqBaCxsZbUdJrEzmfNOG1rNIuxix5DbKI9fYm3pLip3qQh6sO/jUirgyeJGnj5Hv
+         KQHDLcIUPxAMvnUiPLBLoJl+HF0OcCt9fN8As0Sn2Td/uldFzVWdalWP/AwhmUN3HuY2
+         HfjA==
+X-Gm-Message-State: AOJu0YwkyuQOlSIOgfxbgdDuc7IMhhBnaLwDOfSXYO0aDEqW9iadpb9f
+	q9103CqnSa3pTIKtvA0K1yO79Vtr5agqCtax/zFAWmQNoYiX+StxN7taS2L+bi1XKhrFCTyasyi
+	ceTE+HqjBRjO8Fe5/qUmXU84UjNlBMWkj4Bf+hugUvrBs8EVwhdVl
+X-Gm-Gg: ASbGncudSegLTUdDkBuVY842TsMlCw8zi+N6xiR6oNjkiF3tE4cdwSFQ+1d3Ey6XVQ+
+	3TlQvdd6jpCEXPb3GImvR+Q0ZLmvIy2VIDxVmVcyT+RAsefVI/dZfLBb9Yt21r2Uf/ysHKMwAwp
+	nz+qbjU//lWWTM8uXhEJWk
+X-Google-Smtp-Source: AGHT+IG3gt7fbOCCfn5toaq+RKKIv4u3EMaBvAfLd2dresG9nEfBxPeEhtZPJnYl8bhNXyPscOgP3qSPkhdz43QeWtE=
+X-Received: by 2002:a17:902:d592:b0:20c:f40e:6ec3 with SMTP id
+ d9443c01a7336-21dcd4f8c5amr219565ad.22.1738010594749; Mon, 27 Jan 2025
+ 12:43:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1dc793cd-d11d-441a-a734-465eb4872b2a@roeck-us.net>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+From: Mark Woodward <woodwardm@google.com>
+Date: Mon, 27 Jan 2025 15:43:01 -0500
+X-Gm-Features: AWEUYZlZ8lXnrx9inL6WMLSKIuf-oMgxN_sKvFeaRmv9IABZwssJnAqWODuYoe0
+Message-ID: <CAE0x3M=FXi+KWuMXjRH38zSeE3==0ALtCHemn4DCxdwU-S=jCg@mail.gmail.com>
+Subject: PSUSensor.cpp - Removed PSU
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000001e7682062cb620cb"
+X-Spam-Status: No, score=-15.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -105,75 +86,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>, "jdelvare@suse.com" <jdelvare@suse.com>, "Winiarska, Iwona" <iwona.winiarska@intel.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "stable@vger.kernel.org" <stable@vger.kernel.org>, "Solanki, Naresh" <naresh.solanki@9elements.com>, "joel@jms.id.au" <joel@jms.id.au>, "pierre-louis.bossart@linux.dev" <pierre-louis.bossart@linux.dev>, "Rudolph, Patrick" <patrick.rudolph@9elements.com>, "fr0st61te@gmail.com" <fr0st61te@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jan 27, 2025 at 10:39:44AM -0800, Guenter Roeck wrote:
-> On 1/27/25 10:30, Paul Fertser wrote:
-> > Hi Guenter,
-> > 
-> > On Mon, Jan 27, 2025 at 09:29:39AM -0800, Guenter Roeck wrote:
-> > > On 1/27/25 08:40, Winiarska, Iwona wrote:
-> > > > On Thu, 2025-01-23 at 15:20 +0300, Paul Fertser wrote:
-> > > > > When an Icelake or Sapphire Rapids CPU isn't providing the maximum and
-> > > > > critical thresholds for particular DIMM the driver should return an
-> > > > > error to the userspace instead of giving it stale (best case) or wrong
-> > > > > (the structure contains all zeros after kzalloc() call) data.
-> > > > > 
-> > > > > The issue can be reproduced by binding the peci driver while the host is
-> > > > > fully booted and idle, this makes PECI interaction unreliable enough.
-> > > > > 
-> > > > > Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
-> > > > > Fixes: 621995b6d795 ("hwmon: (peci/dimmtemp) Add Sapphire Rapids support")
-> > > > > Cc: stable@vger.kernel.org
-> > > > > Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-> > > > 
-> > > > Hi!
-> > > > 
-> > > > Thank you for the patch.
-> > > > Did you have a chance to test it with OpenBMC dbus-sensors?
-> > > > In general, the change looks okay to me, but since it modifies the behavior
-> > > > (applications will need to handle this, and returning an error will happen more
-> > > > often) we need to confirm that it does not cause any regressions for userspace.
-> > > > 
-> > > 
-> > > I would also like to understand if the error is temporary or permanent.
-> > > If it is permanent, the attributes should not be created in the first
-> > > place. It does not make sense to have limit attributes which always report
-> > > -ENODATA.
-> > 
-> > The error is temporary. The underlying reason is that when host CPUs
-> > go to deep enough idle sleep state (probably C6) they stop responding
-> > to PECI requests from BMC. Once something starts running the CPU
-> > leaves C6 and starts responding and all the temperature data
-> > (including the thresholds) becomes available again.
-> > 
-> 
-> Thanks.
-> 
-> Next question: Is there evidence that the thresholds change while the CPU
-> is in a deep sleep state (or, in other words, that they are indeed stale) ?
-> Because if not it would be (much) better to only report -ENODATA if the
-> thresholds are uninitialized, and it would be even better than that if the
-> limits are read during initialization (and not updated at all) if they do
-> not change dynamically.
+--0000000000001e7682062cb620cb
+Content-Type: text/plain; charset="UTF-8"
 
-From BMC point of view when getting a timeout there is little
-difference between the host not answering being in idle deep sleep
-state and between host being completely powered off. Now I can imagine
-a server system where BMC keeps running and the server has its DIMMs
-physically changed to a different model with different threshold.
+We are having an issue with psusensor in that when it is functioning with
+or without power, psusensor can read the status of the PSU. If the PSU is
+removed, the status of the PSU is never updated.
 
-Whether it's realistic scenario and whether it's worth caching the
-thresholds in the kernel I hope Iwona can clarify. In my current
-opinion the added complexity isn't worth it, the PECI operation needs
-to be reliable enough anyway for BMC to monitor at least the CPU
-temperatures once a second to feed this essential data to the cooling
-fans control loop. And if we can read CPU temperatures we can also
-read DIMM thresholds when we need them and worse case retry a few
-times while starting up the daemon.
+It looks like in void PSUSensor::handleResponse() when there is a read
+error an error log string is output, restartRead () is called, but there is
+nothing done to the sensor data. This means that when a PSU is removed,
+aside from the log entry, there is no change to the sensor readings. It
+will just continue to report the last readings.
 
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+Is a PoC, I added "updateValue(0 + sensorOffset);" in the error stanza, so
+that when the PSU is removed, the values are cleared.
+
+Is this expected behavior?
+
+--0000000000001e7682062cb620cb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">We are having an issue with psusensor in that when it is f=
+unctioning with or without power, psusensor can read the status of the PSU.=
+ If the PSU is removed, the status of the PSU is never updated.=C2=A0<div><=
+br></div><div>It looks like in=C2=A0void PSUSensor::handleResponse() when t=
+here is a read error an error log string is output, restartRead () is calle=
+d, but there is nothing done to the sensor data. This means that when a PSU=
+ is removed, aside from the log entry, there is no change to the sensor rea=
+dings. It will just continue to report the last readings.=C2=A0</div><div><=
+br></div><div>Is a PoC, I added &quot;updateValue(0 + sensorOffset);&quot; =
+in the error stanza, so that when the PSU is removed, the values are cleare=
+d.</div><div><br></div><div>Is this expected behavior?</div></div>
+
+--0000000000001e7682062cb620cb--
