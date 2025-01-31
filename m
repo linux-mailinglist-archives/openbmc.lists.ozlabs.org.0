@@ -1,82 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6DC8A212D1
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2025 21:02:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F1E7A24549
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2025 23:30:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YjGRF2DN2z3bcX
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2025 07:02:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yl9ZF4zjwz3c86
+	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2025 09:30:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::632"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738094550;
-	cv=none; b=GW64d1SA2245LCFTjVDM3D3j9PcHTG/PG+xw9OrhfRzn6Gz6sMoi5/imAoubi0/Ay21k6hRHbBot1u0hEyiS3LmdIv77XgZLTMfGX4qQ1OSbdktnFvEu4VOXSyhw1yGzvF2pnc4gbbiG41VwwLzC/Rrdzz9rcroM0g80avgNJ0momZlidB0wFFvBpNa0VuUKA83B0tXvrrY5Pg2znU24HnM0Ov6PsTQGGqvxHjB25xoZi/nENuZgHD50e3CryNRKHaUrcMkCfSSG0IiErR/doJBdDHUJLq8+/pdD2uci9ihCvnKHJQ56uO9dJaOJZDTIIjTZkgLzmAa30B59n+Diow==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738362610;
+	cv=none; b=nuJ3mS7MfApyhlQ3yXRTA0FLsL6QeLNmmvNzkTirL23wgRvftzt75ypMPvPAfrztr7mMcg2gtXeYAJMhpB7RaKsZMiwZFC3aIzMy4zj+l2LhZtW4F1xXdr/Mvuq9KVflnbOr1P4M3XNAh35ZE8kyT+vFV6NfiB2WAA2NmqHcIQlDH17HGcJFWjP2/AvaEdFc7nxu6bbwVXw0Q1gyLuaG4azP4LKNMiA+1NsEJGPISg8V0qmK7LqqxKURteR6+oERvqxswXjV37AAGSl4236kTtv9hNUGqJMlaeNyP6KX1sY4wH/Z1EdB02nDCFI5RJDpAjJxUohx9i5uW8wX+Bfdvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738094550; c=relaxed/relaxed;
-	bh=v99EarhVsIPWH/Kg5o7A8TgYVBbVCeOnuVlqxf35RTQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=CJm/mnoUgjAmwUZgJfeLxZSHfgYUhh8Jvlsg8Emwld2Ei7LqR52aFdi17u+dkoeWCi29PI/Zxhfn5iwLUTNP/8owJugDZP2zaLzv/hkbrgSyY/buTonjihgX+EPKpfogTBk9npZht31/UknYn4pzhK4ZLa1j0sPPeGxJ8D2YehPbAsjJzzEYmUfFVXvuSwvmTZig+wy4VdztnNnZuckDBWJxVx+Ez5RN2c1I03hnl1wi9YW/2DchhfRNnQGrMo3Fb/VnF/USIbK5yw5xqQ7mh/4eHASbrHSZgcflhrM7z81KUQVNm+HEh/giFJvCpxzbdNRdT+dWiS7bhLGAt7ZYwQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=Wmz947Ym; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=woodwardm@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
+	t=1738362610; c=relaxed/relaxed;
+	bh=DgI7GlxH7+Sz5jA0ziTbEE95oSEknuwMDw3S+7gHiIg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aR88BmrLVncBKGy+oORdKONOsd9f3znML2xmysVW+YXg9Nv50boMm/zcI+g3L8XwVqID3zg9E864X5iiYr/Ey94MlX1uAe/gXS6EkRw8CfJ1kwnkyRlJSXAwQjMLRYRggZO1BuGrrFjzL1szHCUhXWUWL9PZ5f3yFHiajDhW52qMN/gM9uQ1UJXRqLjJe5g4SsVjRUVweFyUTzSez/GH0Wxv99+NEwqfdh0gkvX0gtzUhYKLIRQu4DgpMDmiTXOMJthFVk5ucgx9alUoCiicitXHsaSdW7rLWV4VbeiBa1uiJVyd6EzIQpmx6oH8gLD9y7c/RVPIQsIYv5lQCQfxtg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UaDE9W/1; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=Wmz947Ym;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UaDE9W/1;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=woodwardm@google.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YjGR94pxqz30K6
-	for <openbmc@lists.ozlabs.org>; Wed, 29 Jan 2025 07:02:29 +1100 (AEDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-21625b4f978so181025ad.0
-        for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2025 12:02:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738094546; x=1738699346; darn=lists.ozlabs.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v99EarhVsIPWH/Kg5o7A8TgYVBbVCeOnuVlqxf35RTQ=;
-        b=Wmz947YmLCDMQcLQakB6oZm0UFkbUbyhd4/ItT5ZKVtSD1P7oN8QlgVcDkKMK6NGYP
-         56CkBsJll3pJgBF/Rj2MhFBOtSNnJK2FxCe2m4uOwfHVQEGx6WKmTllmq9+oYRfBAFfa
-         b3kCVGpPFUvKTrUuXCeghEnQKjDLjVRy8kYIUAEfppfuaepH/X+gFw+qiXjDoBsJSt+O
-         jJED0yEtH++X0ZfNV7wy2Y8+RdLXfC6Y6NvccNed0JWUWSNWrtXMDoqDdgvQ3qcASDU/
-         D1h5P3XM2M9Z9cvn/w3QV8Ci/cqWV2z4xQ0sd0B6WIxZnBP1jyBvNuBMBwfPPU+sqzVF
-         Jwkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738094546; x=1738699346;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v99EarhVsIPWH/Kg5o7A8TgYVBbVCeOnuVlqxf35RTQ=;
-        b=oJEaDly5keAXghhXz+alsxb40yvqR0L7oLHpx3FM8wARxIzdYS6g3lHvOYhg0hsUve
-         KoPCtiTHVi8KoJ//LRYok4+uqEHfA6UGP/0XPeqqtAgEzwJ3Wb0BPY7DLuQhf5IbVCg5
-         HUN1tafVfZgUUun4E6X427mxWumrYKXZmyO2nBN+waCFdLY3FPhFcfe5Kfd+aYkM32Ol
-         eYr66+81tlCeekutg53v2GNGp6zQVPj6CgYo8COLyGuLZW8GLbAHfnB+kWnte3w27AWe
-         VtsWF0+mdMR8rcW0Pg3YT/dHPCgauoJervLJixq3oe1YKehJX7vGpx+WMzYtN1My6VKp
-         UdpQ==
-X-Gm-Message-State: AOJu0YxeHv263UmPFj1CMJ8wpf86yzKBrg23dT9sQXrXtjzm7MWm/0vw
-	jnsc7RZIKf7zBxr/ee9TzsxsBBqClIKtCWHnkqsZdk86Iwv+POz16qqelN1rfQLFF8FC5vgpWOX
-	Gf+YkYsFMY61mSf4XPEVCHM3GG7M8iw5iRCjidGi4veisZzK7TJwe
-X-Gm-Gg: ASbGncs/RvmMStgi4Fn0XtrtGWoWCvV215/PwW0eH65zoG7KbFD3eHHJLqSOpk8AWzX
-	cuhxMzCd+mHMk1LGP2dKGwnhBEGb7ySa5OkFzE3pfIyT4dnYm7PjnDuAA1hDjGgQjJSQztc6jNW
-	ri/gKJte6RBJDqc8svwcbNeDs1hA==
-X-Google-Smtp-Source: AGHT+IGzWAOWuqulYFhvx6YXtsotz6gbuAYio5s457UZQmtFHPuwkiKSIP1PZGhM7P4kTAgFXrmKcCIgNFKvB+sINwE=
-X-Received: by 2002:a17:903:40c9:b0:21b:b2a4:9476 with SMTP id
- d9443c01a7336-21dd80915ecmr303815ad.20.1738094544087; Tue, 28 Jan 2025
- 12:02:24 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yl9Z95Bl9z2yVV
+	for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2025 09:30:09 +1100 (AEDT)
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50VFdOH3018692;
+	Fri, 31 Jan 2025 22:29:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=DgI7GlxH7+Sz5jA0ziTbEE95oSEknuwMDw3S+7gHi
+	Ig=; b=UaDE9W/1lCjr4JCphmBi0zOvSYtCPgursHuKmTf4fR8jMsQrria4Hy4dU
+	yCv8eM7vgEpU6nNonECkfMMSfH7Xg9+SJLlwI/HrFB8Sx3P3bqkYJvB2Yu/hHGeB
+	HFr+KhnFnFuw3LTuxMGDOHRZZFOb61eTW1rA5doDbYW6pfbSpm2XkYXciPAyPmmb
+	q+gepJdop9qWk+Q7vjdgyuLdLP1NfGBkmTOWtzhqg9eew2sk+OyTj2Y4moYQxcmL
+	vwiBPBnKzKDq8hpOoRbwv95XeRtQeeT66uHS8UNB0BChGx4GfOLy0CAQCbx22/gJ
+	IFJnLBFdwbQE0FbFV4AajzaJ10VNg==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44h1bt1q6p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Jan 2025 22:29:47 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50VK9XfM017212;
+	Fri, 31 Jan 2025 22:29:46 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44gfaydtug-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 31 Jan 2025 22:29:46 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 50VMTj005374482
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 31 Jan 2025 22:29:46 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E399C58053;
+	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6B90A58043;
+	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.92.209])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: linux-i2c@vger.kernel.org
+Subject: [PATCH] i2c: aspeed: Nullify bus messages after timeout
+Date: Fri, 31 Jan 2025 16:29:41 -0600
+Message-ID: <20250131222941.798065-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
 MIME-Version: 1.0
-References: <CAE0x3M=FXi+KWuMXjRH38zSeE3==0ALtCHemn4DCxdwU-S=jCg@mail.gmail.com>
-In-Reply-To: <CAE0x3M=FXi+KWuMXjRH38zSeE3==0ALtCHemn4DCxdwU-S=jCg@mail.gmail.com>
-From: Mark Woodward <woodwardm@google.com>
-Date: Tue, 28 Jan 2025 15:02:11 -0500
-X-Gm-Features: AWEUYZmTXSxOg2-SrdQeduH-5HnNhmpK5yPB43AxwkOIK4LI4PUDhdcce7SXPbs
-Message-ID: <CAE0x3M=AMwffqL07xeK+jLv8n49PnPkMFeLDfvAy5EbeNmFXSA@mail.gmail.com>
-Subject: Re: PSUSensor.cpp - Removed PSU
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000e3f31c062cc9abbb"
-X-Spam-Status: No, score=-15.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 8k4kg-yy7iDnFfAV3vEbhkiM_5xjyyaa
+X-Proofpoint-GUID: 8k4kg-yy7iDnFfAV3vEbhkiM_5xjyyaa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-01-31_08,2025-01-31_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=749 priorityscore=1501
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2501170000 definitions=main-2501310172
+X-Spam-Status: No, score=-0.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -89,187 +97,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: ryan_chen@aspeedtech.com, andi.shyti@kernel.org, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e3f31c062cc9abbb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+For multimaster case, it's conceivable that an interrupt comes
+in after the transfer times out and attempts to use bus messages
+that have already been freed by the i2c core.
 
-Here is a diff
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/i2c/busses/i2c-aspeed.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/src/PSUSensor.cpp b/src/PSUSensor.cpp
-index e454c74..4072e07 100644
---- a/src/PSUSensor.cpp
-+++ b/src/PSUSensor.cpp
-@@ -133,6 +133,31 @@ void PSUSensor::deactivate()
-     i2cDevice =3D nullptr;
-     path =3D "";
- }
-+bool PSUSensor::readStatusClearValue(bool success)
-+{
-+    bool result =3D false;
-+    if(success)
-+    {
-+        lastClear =3D 0;
-+    }
-+    else
-+    {
-+        unsigned int now =3D (unsigned int) time(0);
-+        if(lastClear =3D=3D 0)
-+        {
-+            lastClear =3D now;
-+        }
-+        else
-+        {
-+            if((now - lastClear) > timeout_before_clear)
-+            {
-+                result =3D true;
-+                lastClear =3D 0;
-+            }
-+        }
-+    }
-+    return result;
-+}
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 1550d3d552aed..e344dcc2233fe 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -731,6 +731,7 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
+ 		 * master command.
+ 		 */
+ 		spin_lock_irqsave(&bus->lock, flags);
++		bus->msgs = NULL;
+ 		if (bus->master_state == ASPEED_I2C_MASTER_PENDING)
+ 			bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
+ 		spin_unlock_irqrestore(&bus->lock, flags);
+-- 
+2.43.5
 
- void PSUSensor::setupRead(void)
- {
-@@ -214,12 +239,19 @@ void PSUSensor::handleResponse(const
-boost::system::error_code& err,
-     {
-         if (readingStateGood())
-         {
--            std::cerr << name << " read failed\n";
-+            std::cerr << name << " read failed:" << err << "\n";
-+            if(readStatusClearValue(false))
-+            {
-+                std::cerr << name << " clearing value" << "\n";
-+                updateValue(0 + sensorOffset);
-+            }
-         }
-         restartRead();
-         return;
-     }
-
-+    readStatusClearValue(true);
-+
-     // null terminate the string so we don't walk off the end
-     std::array<char, 128>& bufferRef =3D *buffer;
-     bufferRef[bytesRead] =3D '\0';
-diff --git a/src/PSUSensor.hpp b/src/PSUSensor.hpp
-index b49235f..a7ee95d 100644
---- a/src/PSUSensor.hpp
-+++ b/src/PSUSensor.hpp
-@@ -61,6 +61,16 @@ class PSUSensor : public Sensor, public
-std::enable_shared_from_this<PSUSensor>
-
-     static constexpr size_t warnAfterErrorCount =3D 10;
-
-+    // Wait timeout_before_clear (5 minutes)
-+    static constexpr unsigned int timeout_before_clear =3D 300;
-+
-+    // Time of last clear
-+    unsigned int lastClear;
-+
-+    // Pass true if read was successful, else pass false
-+    // If the value returned is true, clear the value
-+    bool readStatusClearValue(bool success);
-+
-   public:
-     static constexpr double defaultSensorPoll =3D 1.0;
-     static constexpr unsigned int defaultSensorPollMs =3D
-
-On Mon, Jan 27, 2025 at 3:43=E2=80=AFPM Mark Woodward <woodwardm@google.com=
-> wrote:
-
-> We are having an issue with psusensor in that when it is functioning with
-> or without power, psusensor can read the status of the PSU. If the PSU is
-> removed, the status of the PSU is never updated.
->
-> It looks like in void PSUSensor::handleResponse() when there is a read
-> error an error log string is output, restartRead () is called, but there =
-is
-> nothing done to the sensor data. This means that when a PSU is removed,
-> aside from the log entry, there is no change to the sensor readings. It
-> will just continue to report the last readings.
->
-> Is a PoC, I added "updateValue(0 + sensorOffset);" in the error stanza, s=
-o
-> that when the PSU is removed, the values are cleared.
->
-> Is this expected behavior?
->
-
---000000000000e3f31c062cc9abbb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Here is a diff<div><br><div>diff --git a/src/PSUSensor.cpp=
- b/src/PSUSensor.cpp<br>index e454c74..4072e07 100644<br>--- a/src/PSUSenso=
-r.cpp<br>+++ b/src/PSUSensor.cpp<br>@@ -133,6 +133,31 @@ void PSUSensor::de=
-activate()<br>=C2=A0 =C2=A0 =C2=A0i2cDevice =3D nullptr;<br>=C2=A0 =C2=A0 =
-=C2=A0path =3D &quot;&quot;;<br>=C2=A0}<br>+bool PSUSensor::readStatusClear=
-Value(bool success)<br>+{<br>+ =C2=A0 =C2=A0bool result =3D false;<br>+ =C2=
-=A0 =C2=A0if(success)<br>+ =C2=A0 =C2=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0l=
-astClear =3D 0;<br>+ =C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0else<br>+ =C2=A0 =C2=
-=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned int now =3D (unsigned int) ti=
-me(0);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0if(lastClear =3D=3D 0)<br>+ =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0lastCle=
-ar =3D now;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0else<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0if((now - lastClear) &gt; timeout_before_clear)<br>+ =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0result =3D true;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0lastClear =3D 0;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0}<br>+ =
-=C2=A0 =C2=A0return result;<br>+}<br>=C2=A0<br>=C2=A0void PSUSensor::setupR=
-ead(void)<br>=C2=A0{<br>@@ -214,12 +239,19 @@ void PSUSensor::handleRespons=
-e(const boost::system::error_code&amp; err,<br>=C2=A0 =C2=A0 =C2=A0{<br>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (readingStateGood())<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0{<br>- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0std::cerr =
-&lt;&lt; name &lt;&lt; &quot; read failed\n&quot;;<br>+ =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0std::cerr &lt;&lt; name &lt;&lt; &quot; read failed=
-:&quot; &lt;&lt; err &lt;&lt; &quot;\n&quot;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0if(readStatusClearValue(false))<br>+ =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0{<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0std::cerr &lt;&lt; name &lt;&lt; &quot; clearing value&quot; &lt;&lt=
-; &quot;\n&quot;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0updateValue(0 + sensorOffset);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0}<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0restartRead();<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>=
-=C2=A0 =C2=A0 =C2=A0}<br>=C2=A0<br>+ =C2=A0 =C2=A0readStatusClearValue(true=
-);<br>+<br>=C2=A0 =C2=A0 =C2=A0// null terminate the string so we don&#39;t=
- walk off the end<br>=C2=A0 =C2=A0 =C2=A0std::array&lt;char, 128&gt;&amp; b=
-ufferRef =3D *buffer;<br>=C2=A0 =C2=A0 =C2=A0bufferRef[bytesRead] =3D &#39;=
-\0&#39;;<br>diff --git a/src/PSUSensor.hpp b/src/PSUSensor.hpp<br>index b49=
-235f..a7ee95d 100644<br>--- a/src/PSUSensor.hpp<br>+++ b/src/PSUSensor.hpp<=
-br>@@ -61,6 +61,16 @@ class PSUSensor : public Sensor, public std::enable_s=
-hared_from_this&lt;PSUSensor&gt;<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0static co=
-nstexpr size_t warnAfterErrorCount =3D 10;<br>=C2=A0<br>+ =C2=A0 =C2=A0// W=
-ait timeout_before_clear (5 minutes)<br>+ =C2=A0 =C2=A0static constexpr uns=
-igned int timeout_before_clear =3D 300; <br>+<br>+ =C2=A0 =C2=A0// Time of =
-last clear<br>+ =C2=A0 =C2=A0unsigned int lastClear;<br>+<br>+ =C2=A0 =C2=
-=A0// Pass true if read was successful, else pass false<br>+ =C2=A0 =C2=A0/=
-/ If the value returned is true, clear the value<br>+ =C2=A0 =C2=A0bool rea=
-dStatusClearValue(bool success);<br>+<br>=C2=A0 =C2=A0public:<br>=C2=A0 =C2=
-=A0 =C2=A0static constexpr double defaultSensorPoll =3D 1.0;<br>=C2=A0 =C2=
-=A0 =C2=A0static constexpr unsigned int defaultSensorPollMs =3D<br></div></=
-div></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"=
-ltr" class=3D"gmail_attr">On Mon, Jan 27, 2025 at 3:43=E2=80=AFPM Mark Wood=
-ward &lt;<a href=3D"mailto:woodwardm@google.com">woodwardm@google.com</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div d=
-ir=3D"ltr">We are having an issue with psusensor in that when it is functio=
-ning with or without power, psusensor can read the status of the PSU. If th=
-e PSU is removed, the status of the PSU is never updated.=C2=A0<div><br></d=
-iv><div>It looks like in=C2=A0void PSUSensor::handleResponse() when there i=
-s a read error an error log string is output, restartRead () is called, but=
- there is nothing done to the sensor data. This means that when a PSU is re=
-moved, aside from the log entry, there is no change to the sensor readings.=
- It will just continue to report the last readings.=C2=A0</div><div><br></d=
-iv><div>Is a PoC, I added &quot;updateValue(0 + sensorOffset);&quot; in the=
- error stanza, so that when the PSU is removed, the values are cleared.</di=
-v><div><br></div><div>Is this expected behavior?</div></div>
-</blockquote></div>
-
---000000000000e3f31c062cc9abbb--
