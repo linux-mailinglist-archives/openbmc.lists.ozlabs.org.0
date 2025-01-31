@@ -1,89 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F1E7A24549
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2025 23:30:22 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F86A2456A
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2025 23:56:13 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yl9ZF4zjwz3c86
-	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2025 09:30:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YlB840dvLz3c86
+	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2025 09:56:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738362610;
-	cv=none; b=nuJ3mS7MfApyhlQ3yXRTA0FLsL6QeLNmmvNzkTirL23wgRvftzt75ypMPvPAfrztr7mMcg2gtXeYAJMhpB7RaKsZMiwZFC3aIzMy4zj+l2LhZtW4F1xXdr/Mvuq9KVflnbOr1P4M3XNAh35ZE8kyT+vFV6NfiB2WAA2NmqHcIQlDH17HGcJFWjP2/AvaEdFc7nxu6bbwVXw0Q1gyLuaG4azP4LKNMiA+1NsEJGPISg8V0qmK7LqqxKURteR6+oERvqxswXjV37AAGSl4236kTtv9hNUGqJMlaeNyP6KX1sY4wH/Z1EdB02nDCFI5RJDpAjJxUohx9i5uW8wX+Bfdvg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::b34"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738364161;
+	cv=none; b=PGvBO1SEabq4N24W7+Wip51DvHuniMU+HzPBi2Uo1CDkmlzi+4hcga8qcHEGQN0Naqox8J3H4QxExGqfWPo2FGoGvW+ySiK+yXdkApsD5yG0LZPzzEgGsfdePcTt9HUXkTEYyexeW8tymSSZQHLbIp5Ai3wAZdbQjrlf4/ElnKoOEmgVpTta7SO59wAGrVe2BxkHcBQsHp+7KeRrD8/h/koez1J97GAIt/W7AaZYj8CNpgt2icUBljcZOH67Rz4n27klwOGrt3ovDbQNkgPjSgYD7IXRrAvkRybopQ/PwJSVGRB3kt32QKwwitRpdbkpRm4zFQUpVpNeFXIey2SXcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738362610; c=relaxed/relaxed;
-	bh=DgI7GlxH7+Sz5jA0ziTbEE95oSEknuwMDw3S+7gHiIg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=aR88BmrLVncBKGy+oORdKONOsd9f3znML2xmysVW+YXg9Nv50boMm/zcI+g3L8XwVqID3zg9E864X5iiYr/Ey94MlX1uAe/gXS6EkRw8CfJ1kwnkyRlJSXAwQjMLRYRggZO1BuGrrFjzL1szHCUhXWUWL9PZ5f3yFHiajDhW52qMN/gM9uQ1UJXRqLjJe5g4SsVjRUVweFyUTzSez/GH0Wxv99+NEwqfdh0gkvX0gtzUhYKLIRQu4DgpMDmiTXOMJthFVk5ucgx9alUoCiicitXHsaSdW7rLWV4VbeiBa1uiJVyd6EzIQpmx6oH8gLD9y7c/RVPIQsIYv5lQCQfxtg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UaDE9W/1; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+	t=1738364161; c=relaxed/relaxed;
+	bh=DNH+dcpOk3NNREXIMj9oFLujMTahnuE+440gR1UD7G4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Yxf0Ko9Nhk/NgbtuPLmOsmknxQajuEAW0f6N/Adh7kl3SC6lvjCF0hOJTtjExYZqGLZBt0M2l1MWH5tPXQrWel21GeXnQFosnK2wv3F2ph2RgSXnQxTiYfCbbb+NrLFK5xolU1/cnMtpiGfwqBjKuZlGwtjNViSQdcS0WlVCxeUP26XkRb/ZoCXcTwsFhXXWDglfNknFjmO1cjdf/cX7PUGCStaJDGyBnxS2y2/YrKo3QWvhpbrjtSuU1G0vXXA1tHY1l6bcQvqIr/M3xqkxxoIXmElqG0k4vHn5ZREjyNyKUiSWGs/8HJp4Yyz3zkuE/WMTX38tLm47veAgJ4GyOQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=aeoncomputing.com; dkim=pass (2048-bit key; unprotected) header.d=aeoncomputing-com.20230601.gappssmtp.com header.i=@aeoncomputing-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Svhp9u2J; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::b34; helo=mail-yb1-xb34.google.com; envelope-from=jeff.johnson@aeoncomputing.com; receiver=lists.ozlabs.org) smtp.mailfrom=aeoncomputing.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=aeoncomputing.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UaDE9W/1;
+	dkim=pass (2048-bit key; unprotected) header.d=aeoncomputing-com.20230601.gappssmtp.com header.i=@aeoncomputing-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Svhp9u2J;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=aeoncomputing.com (client-ip=2607:f8b0:4864:20::b34; helo=mail-yb1-xb34.google.com; envelope-from=jeff.johnson@aeoncomputing.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yl9Z95Bl9z2yVV
-	for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2025 09:30:09 +1100 (AEDT)
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 50VFdOH3018692;
-	Fri, 31 Jan 2025 22:29:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=pp1; bh=DgI7GlxH7+Sz5jA0ziTbEE95oSEknuwMDw3S+7gHi
-	Ig=; b=UaDE9W/1lCjr4JCphmBi0zOvSYtCPgursHuKmTf4fR8jMsQrria4Hy4dU
-	yCv8eM7vgEpU6nNonECkfMMSfH7Xg9+SJLlwI/HrFB8Sx3P3bqkYJvB2Yu/hHGeB
-	HFr+KhnFnFuw3LTuxMGDOHRZZFOb61eTW1rA5doDbYW6pfbSpm2XkYXciPAyPmmb
-	q+gepJdop9qWk+Q7vjdgyuLdLP1NfGBkmTOWtzhqg9eew2sk+OyTj2Y4moYQxcmL
-	vwiBPBnKzKDq8hpOoRbwv95XeRtQeeT66uHS8UNB0BChGx4GfOLy0CAQCbx22/gJ
-	IFJnLBFdwbQE0FbFV4AajzaJ10VNg==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 44h1bt1q6p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jan 2025 22:29:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 50VK9XfM017212;
-	Fri, 31 Jan 2025 22:29:46 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 44gfaydtug-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 31 Jan 2025 22:29:46 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
-	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 50VMTj005374482
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 31 Jan 2025 22:29:46 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E399C58053;
-	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6B90A58043;
-	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.92.209])
-	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 31 Jan 2025 22:29:45 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: linux-i2c@vger.kernel.org
-Subject: [PATCH] i2c: aspeed: Nullify bus messages after timeout
-Date: Fri, 31 Jan 2025 16:29:41 -0600
-Message-ID: <20250131222941.798065-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YlB7z5xZSz2yFB
+	for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2025 09:55:59 +1100 (AEDT)
+Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-e58a6c467d8so421724276.3
+        for <openbmc@lists.ozlabs.org>; Fri, 31 Jan 2025 14:55:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aeoncomputing-com.20230601.gappssmtp.com; s=20230601; t=1738364156; x=1738968956; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DNH+dcpOk3NNREXIMj9oFLujMTahnuE+440gR1UD7G4=;
+        b=Svhp9u2JGphyty+IPNFdFuKIpF3EaUNkXkiNhIh+1DoY/XkTXEAIl23YmTAJ6q+kE+
+         MbvQCrU150xd4TgjTBw1hkjxfWOqMtwNnOgqXTiRRmNA8Rfheeb44fwa5f70LggkQ4z/
+         32rvTZxWWtM14ycB/G9EgdwKBTr0ToVj19PC5FDYmFofCR948myGSuBm4Os/noM4aaHG
+         Ogcs/OdifXJwjPd/rE/PEEPwZmhn+YQe8EpYvPOSS42f9yuV8CCgNd+uIuHiloOoJ/Qx
+         HVa5z97n1s0vEKQf1Bfq4ieDAuTNOC3BXTsPQj99PC8vos/tATbg203bwmKsvHOCkhQ8
+         iAwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738364156; x=1738968956;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DNH+dcpOk3NNREXIMj9oFLujMTahnuE+440gR1UD7G4=;
+        b=BBlmgB/nsIppbsDvl/+egKXOslNOkOSJ8rnIiHgmkzJcMfR2Xh5EhnQcntePa5TlVM
+         QAZiAbm4gnl06CcNaLb3w6g70E7OjDS4Gd13avaTzJPKTYbyrbdDwMJC+kz6vFnON8r/
+         Keb3287hca8FAYZNw6t6tEJP5tGVrYB99PCJtdVCjRIeOaGsyQ3VCjxZ62vJJ9m2sFm/
+         8Vrgq4mBC5K/1ysItA1ZLlO5mDGa7HGYTSwltf9XBXUuZs68zj37RnrrdMzIj/9F8tfJ
+         Zenc4JQl0TFaHl2+BOaf71PLsdZ2297fl8RGY4EVejPB49r7WsOsbUCaWscf1miXegHB
+         oSCg==
+X-Gm-Message-State: AOJu0Yw/9l18gw4n9c9MaFy1pTFsDHs8pwnrerrDu+7kqzTzObfrX11y
+	AFjPAEUqFem552QLWkvr+QWOubgT3fI93FY6g4O+HTY0NRXKxZ5bR3P2G4jEh2rKS8hQ08YxiHE
+	aknv0DR64Io0V96/ueIc+jBg2BGF0/gFKYZ2Aiy2vKYb6u/TyFGtDHA==
+X-Gm-Gg: ASbGnct8bruKWIqXtsLhO7KrwTR0tUtc0nZT7820TznbuhjDX5wVdzJCibut6AU5qQ4
+	vPgTVH43s36l6fW7sA+S3UAQmI0OfD4nFXYWVFEAkCVsO9X+umI7gbqH6lLIPinwmwRfrqhYo
+X-Google-Smtp-Source: AGHT+IEXxcC8s1jKszCkP9mR8qHGPODLsa+lJ7boQbRkmfUD/79GhwYrGpcpoLj5VlDKIHwU7bpimxKX2604CEWoYe4=
+X-Received: by 2002:a05:690c:39a:b0:6ef:9c5e:5c7c with SMTP id
+ 00721157ae682-6f8c1ae9bc9mr28353967b3.0.1738364156224; Fri, 31 Jan 2025
+ 14:55:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8k4kg-yy7iDnFfAV3vEbhkiM_5xjyyaa
-X-Proofpoint-GUID: 8k4kg-yy7iDnFfAV3vEbhkiM_5xjyyaa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-31_08,2025-01-31_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- mlxscore=0 suspectscore=0 mlxlogscore=749 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2501170000 definitions=main-2501310172
-X-Spam-Status: No, score=-0.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS
+From: Jeff Johnson <jeff.johnson@aeoncomputing.com>
+Date: Fri, 31 Jan 2025 14:55:45 -0800
+X-Gm-Features: AWEUYZmtsxIGtMhn-IF2FYzGmwhrEspJxfjMJQPTgjerNKx26PK_E6SeUGSfjGU
+Message-ID: <CAFCYAsdBV+j-7quHMMrRSmghFJL_MfeuDO5ufLMbbcQgpO45AQ@mail.gmail.com>
+Subject: Question regarding OpenBMC crashing and messages of U-Boot SPL
+ Already initialized
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000005c3bb062d0872ee"
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE
 	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -97,31 +85,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: ryan_chen@aspeedtech.com, andi.shyti@kernel.org, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-For multimaster case, it's conceivable that an interrupt comes
-in after the transfer times out and attempts to use bus messages
-that have already been freed by the i2c core.
+--00000000000005c3bb062d0872ee
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/i2c/busses/i2c-aspeed.c | 1 +
- 1 file changed, 1 insertion(+)
+Greetings,
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 1550d3d552aed..e344dcc2233fe 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -731,6 +731,7 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
- 		 * master command.
- 		 */
- 		spin_lock_irqsave(&bus->lock, flags);
-+		bus->msgs = NULL;
- 		if (bus->master_state == ASPEED_I2C_MASTER_PENDING)
- 			bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
- 		spin_unlock_irqrestore(&bus->lock, flags);
--- 
-2.43.5
+I'm seeing random crashing of openbmc 2.16.0-dev on an ASpeed AST2600. I am
+trying to make sense of what I am seeing. Most of my experience is in the
+x86 arch world, not Arm.
 
+OpenBMC is running on ASpeed AST2600 devices, not QEMU. If I log console,
+when a device crashes I see the below in the console log. Why would the SPL
+be repeated trying to load when the system (BMC) is already up at init
+level 3?
+
+Thanks in advance for any feedback.
+
+--Jeff
+
+#--start console output--
+[  OK  ] Started Phosphor Inband IPMI.
+[  OK  ] Started Phosphor Time Manager daemon.
+         Starting Phosphor IPMI KCS DBus Bridge...
+[  OK  ] Started Network IPMI daemon.
+         Starting VES Ethernet over USB gadget device...
+[  OK  ] Started Phosphor IPMI KCS DBus Bridge.
+[   32.252854] configfs-gadget.usbnet gadget.0: HOST MAC 4e:96:48:66:73:d7
+[   32.260416] configfs-gadget.usbnet gadget.0: MAC d6:a8:1f:95:d9:0a
+
+Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) nodistro.0
+localhost ttyS4
+
+localhost login: root
+Password:
+root@localhost:~# BP0c00
+
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0000)
+already initialized,
+
+--00000000000005c3bb062d0872ee
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Greetings,</div><div><br></div><div>I&#39;m seeing ra=
+ndom crashing of openbmc 2.16.0-dev on an ASpeed AST2600. I am trying=C2=A0=
+to make sense of what I am seeing. Most of my experience is in the x86 arch=
+ world, not Arm.</div><div><br></div><div>OpenBMC is running on ASpeed AST2=
+600 devices, not QEMU. If I log console, when a device crashes I see the be=
+low in the console log. Why would the SPL be repeated trying to load when t=
+he system (BMC) is already up at init level 3?</div><div><br></div><div>Tha=
+nks in advance=C2=A0for any feedback.</div><div><br></div><div>--Jeff</div>=
+<div><br></div><div>#--start console output--</div><div>[ =C2=A0OK =C2=A0] =
+Started Phosphor Inband IPMI.<br>[ =C2=A0OK =C2=A0] Started Phosphor Time M=
+anager daemon.<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Starting Phosphor IPMI =
+KCS DBus Bridge...<br>[ =C2=A0OK =C2=A0] Started Network IPMI daemon.<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Starting VES Ethernet over USB gadget dev=
+ice...<br>[ =C2=A0OK =C2=A0] Started Phosphor IPMI KCS DBus Bridge.<br>[ =
+=C2=A0 32.252854] configfs-gadget.usbnet gadget.0: HOST MAC 4e:96:48:66:73:=
+d7<br>[ =C2=A0 32.260416] configfs-gadget.usbnet gadget.0: MAC d6:a8:1f:95:=
+d9:0a<br><br>Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) n=
+odistro.0 localhost ttyS4<br><br>localhost login: root<br>Password:<br>root=
+@localhost:~# BP0c00<br><br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +000=
+0)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 +0=
+000)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:50 =
++0000)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:31:5=
+0 +0000)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:31=
+:50 +0000)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 00:=
+31:50 +0000)<br>already initialized,<br>U-Boot SPL 2019.04 (Oct 08 2021 - 0=
+0:31:50 +0000)<br>already initialized,</div><div><br></div></div>
+
+--00000000000005c3bb062d0872ee--
