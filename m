@@ -2,74 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A4C3A26898
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 01:32:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 443CBA26899
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 01:32:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yn47Z6cp9z3cj7
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 11:32:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yn47f0KnRz3dVC
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 11:32:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::102c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738561431;
-	cv=none; b=UavQDO07sfxuxrFBrGJb6P3CBL36KI23Fc5WJUViXzgCXhROzNzehFcalZ5ekcUgSvuxQendt9N+HEMEIehcpwVodlWyISQrEeBkGDzMMbbUVAPdH3nqO938tkPJVpO5wwpkNx7cWFoVH/8j6d5SnkrcJ+FKfDPET+f7R8Si/Qq8fI4+CtrRTNxJWJSoGfN4uVe4XjUOckN6XTwDN9wsYEnbsLmrNaGMbkLlMuRdfAixvhcd+LVc6i/XWjU7344BUsXyK0mvTvOEGM6O4JZLpUxFZRYIYGz0qCNRBp7tIRZkP/n7blrCp+uDDjzi4vbPmtjRSbUv+50QjNUja2FAbQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1032"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738561435;
+	cv=none; b=KVf3epSGuEpnAeq/8IfY2xG74B8JkGmirGMnuq0sOOLpuJ3zCHw4BjTzkJCwJFvQAlntU8+CH6a3Rc6u0xw+4SZmBWaqI00+q0Qzkd2jYGnX3Rgh6CgEcOOHiS3VV0lOECUN6wDu/uLAIqy/0CbCo8d50TKyUHgW2n8Jh1KcZN6LXgxrdKE78UOc9jCvYxeAAzGE460+XUNWL25Zo6nVEWuinsoQUYKOKumxedJufRmcQfsBLdro/n21Jy2/1rHWLpdQ4s9000m3TsV5c5BijTlW3zqFVi83asdQ5rGzKpy2UJhSfQyrLBaFjN44ViP7KagMaXItke/pCukG5/fm4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738561431; c=relaxed/relaxed;
-	bh=8Ruy9T8+YCMNFZIu2fnBUkNd/IXv0Vs9qPj53hJ7nck=;
+	t=1738561435; c=relaxed/relaxed;
+	bh=31XzgfEM+1LFHGxho2u9u4JYE7XQW6zgDynf3Dbgkps=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YNUCBu0ejMIAr6KFXwH4CCW2Ofb4Z8s/7uDsYlvaTG2s7TWGem3hRfIH2X/XZN83WzI8d0TEbQaJ88gGyoSFasbKFe7X58EcjDIpqNeg5umAeBijvYCOHJ97H2J33JLn11/FTld7rSaRlqW11x0e3uM232UAIZbsJUK5mnR0PFhW5c11TkKV2AeyIoIhWep7NfRdrKwW6XZH2q9CDBpeSBdsFoTWmJbIj9hg4/EZQdyHnwcPLIxWBz4CtAgQhAz0ej9wZn8cQkk2puiu0Grujzs61AOHf9s/BRt9mcrEy25oNjZh73tZb34i106W9gGhfpKs9yMPoqyQojOL2UueXg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HuDoxktD; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::102c; helo=mail-pj1-x102c.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 MIME-Version; b=VcuoUMYn9itV7/X3q067plihkqHBpMXfDzYCUiiXyZHqK8JJ0FiSOOGwW+wjLbCV9CQkBaFc1JSrmmnyzvnOd5EwE+4xL9DHEc3aXZPlxvH90+KP9f5Ffuh4n6jLtAcZOzK1GBWlIb3HqLX9ibqMHnVJJBi2NDSHJF7JPrBf0M8+ggJPMVAQqDah1lh7b0Eh07f16mznR7IEdpGcX0BVu2DP5/xOw3Dtei0nSLgH1RlnF/kRNUT21g/45+kcF3agmuOW/7cY6xkQeC5zAoJ+AGyqFTrLVaIw2fNK4L/vZ+jKvRl8DfSCdS5D9yQtdi9eJjRwwjo45RtkSfGPikt6OQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WAzap+1d; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HuDoxktD;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WAzap+1d;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c; helo=mail-pj1-x102c.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ymb5f2tTNz2xZj
-	for <openbmc@lists.ozlabs.org>; Mon,  3 Feb 2025 16:43:50 +1100 (AEDT)
-Received: by mail-pj1-x102c.google.com with SMTP id 98e67ed59e1d1-2ee8aa26415so6940580a91.1
-        for <openbmc@lists.ozlabs.org>; Sun, 02 Feb 2025 21:43:50 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ymb5k3ZQJz2xVq
+	for <openbmc@lists.ozlabs.org>; Mon,  3 Feb 2025 16:43:54 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-2f44353649aso5047014a91.0
+        for <openbmc@lists.ozlabs.org>; Sun, 02 Feb 2025 21:43:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738561428; x=1739166228; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1738561432; x=1739166232; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8Ruy9T8+YCMNFZIu2fnBUkNd/IXv0Vs9qPj53hJ7nck=;
-        b=HuDoxktD0TKTnBRI+WlRKa1JqB41kW1zEBCTOkK35QOPGYLRCKU/ZeJci6IXyqtPIM
-         X5OI/Z8X6E9pKQdAEdB9Ha+bsu3Rhpf2pqnkRs9dZCD8uQE6WaHgmsi0d4itN57JhqWM
-         6yzGoO8z9lTcPxHtuluUNddQWhgPLQvfl1id2eSYh6wofxLMGbB9awFskyfEmGFa84cO
-         WjVZzkMhiGnwQSoOcVxA+EPKwb8eO5xAZxZLxInvuyuKFThL9C8d84RMqypumCy9pPFv
-         SNiDdcuhREvXnf8hQ6+xCNsD3nh/bmfwyrJ+A7qB8Wl202vN/9S0D3CNsvqNyuuMpwG9
-         /OTg==
+        bh=31XzgfEM+1LFHGxho2u9u4JYE7XQW6zgDynf3Dbgkps=;
+        b=WAzap+1dbvb9NJzvm56XAKg9oy2PqMF7NTRbXH0eby3Ur67FGRzb6lO6Z4u956GpNH
+         X+wFqlOgTO16H9OILLpeCbL7gstB73wqUnoYDhyEuggZrPNbDcO4DLRp1AnPtsuMCDd6
+         9dTvlbCWOK4US4GfMa75TOQ6+9QLR1eMm2BaSO7jyYtmfGRa9tFghQeZxi4c/UTLv1cd
+         lghT1ioPTmspFqNyolYxmLpKaGUMScx5ha+xFeuqQZ/xzzwT29dNBM9cpmJEU/FwF2aL
+         aX8GWZpv5sq1LDaZllhVas9Ml0WRLRwG2my4F6+XbcsRSHncC7v2mekhxD4ekVU6lO/v
+         IrYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738561428; x=1739166228;
+        d=1e100.net; s=20230601; t=1738561432; x=1739166232;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8Ruy9T8+YCMNFZIu2fnBUkNd/IXv0Vs9qPj53hJ7nck=;
-        b=hoJfEioc5IFivZQ78PbNjemA1Jh50Flx+O2G47jgsFNLBTyb7GCQ4YrYRJIbJZMtzm
-         snMH6x4Jqh1n2V108ZImhkNLGqv0ZwD3udEJY8+LjLKY8Ey37XgtVh+PsuMxXVkrypLh
-         4PpvbMpmqi6P6gOAGt6TE918bz6uBC/OBrdt0kimSmjnQoK39+cwJXesx3JLt4pijMKX
-         uQeAkj4IuBfTIZHseq+Ccgw+2lNVG1/hd1CbZ3qABicgvWZVVzQlbKMk5JHCowj75SLx
-         G9Y69PlLvojvls2n+q6NkgD9OvEtMa4kVqdUlUkfnMI6VALOw6yTBgAOFWu8tR3UVXZ8
-         L23Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVJzbNQfGhVeeQ7ldKoETr2jzwWPPgdvv3WIVUS6It7HRdQG5sh/S+nrRDQwSTYQRRtMt3ikpd/@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzupqvHohHl/rgNJ0iaLSZg8D5cDzLtpgktWEJvsooVqkhv9s6F
-	tU+lgfTWhuskJbFJOITAjDmWI4RWVuRBts5ZC/NIF/34z1AAO9Yh
-X-Gm-Gg: ASbGnctkAFIPZqFtArdlA49aZpc4B5niY++9GEsMadxsDnoW81IDED3n5vO498fi2ds
-	UWQQ7bdjVUleBuxj5Mub7xPFC1gmBJT4Ac48GNEw9hgL/jVjxGjSTV0K3VLWPc5e5ujduV5Gww5
-	omZEiySVsyvjs899YthssP2rTRsTsXJ4mO3xfGwn1R4oHthCurTITuga38x3EIRoBOcZYn6a4yK
-	Tq66Hwc0tH29hQgOk9D8NKZtvyjZWgezBaWBRC0/wzL7JsCiwVo9jchC8SDKFmszAJfc9nlH00r
-	NK1asuNFtZjy5D3Myg3kYLzzZXmePdJ3kVu+poMuxUHsBAlgAEMiUMFE
-X-Google-Smtp-Source: AGHT+IFgxTohM+aTPsUswT4Bo8XmTsTW2WTDB9DTwTUXt0vxuR95dvrKJqCuVM8BYlZj72Q46ZHtyw==
-X-Received: by 2002:a17:90a:c888:b0:2f6:f32e:90ac with SMTP id 98e67ed59e1d1-2f83abdf0f2mr32127614a91.11.1738561428296;
-        Sun, 02 Feb 2025 21:43:48 -0800 (PST)
+        bh=31XzgfEM+1LFHGxho2u9u4JYE7XQW6zgDynf3Dbgkps=;
+        b=E1GzieSms04WDYIoGkFv72JkJWNIwTIfVkG2RgNycvQPo9kTDQn2z6QK4//VhIvenH
+         c4KCr2UtORfSBru/0CAtu1Dnz6oseLVzFoiKKje0xiUJ552grR6HXNWcgnpPz6Is/FQa
+         z3FX7DpIuPd1Nl3qvle6CvvdakBRt0H6iZ+U5KIl0NXS4jphUnK/cSlgkSunSoAOwjK5
+         LcMaH+3/bVp7SemAWJBTL+oXel+Vnwdv1rNY89xVZi+8ymdZMwmko8C8pmn4qwa4qHOz
+         Ok/qVjghAzoyH9jBwch2x8gGJZE7YaBIMT31w9y3OAdBgzEZ9Y9pcNYcPf9Hj5Qz0Pn7
+         y+/A==
+X-Forwarded-Encrypted: i=1; AJvYcCUUuuuOLvB7Q26CJ2urNOGPfbLACmj+cotBEm/n3oUnF5e5+KVatjsNFpo9G0I/ih0vL6lz1Z51@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyCeXEBLvhJyIhMJtUWX9CnD+lEDQ0OA14bpe73uJf7JzWgopaL
+	t/SJea+oZKM7RalPofqvbP5WOXXSGnjbiUgoQk8Ass7odwA+m2y8
+X-Gm-Gg: ASbGncueV49Py+ylzyajEUHrj+bvUOeQSU0hStbR9CDj0J5tXr04fLc1nuA6ckIHpl6
+	lyY3lq02nBQYQICZENy3uDbQN9Vxjii7M7SJRkQORRJ88sEXZoQ6yhmNtPRfGoGeY4Zs2M1lyHG
+	tCClCjwdZHbQkkxBW7kMqEtTCQL17A9lJ5dbM5iEDsjdOuVJmKDKePd7uOeymkoYSCnYbsO3hOx
+	NSFjMfIILDk32TPhx4yCpW2y+fhMD/5M+u8YCY9nolYJ40I1XoQapIA03sKjEe/oKBAwhs3/nIv
+	geAwaF1s29n/kw1e8cwRx3ZFwTInnFI/+pCdTsL+8ATSbLySXGHEqe6b
+X-Google-Smtp-Source: AGHT+IEebl6qnAhUV7DcuC2+Gaci6mLgBlvTtBDmEY8dNeLsOpTRgjxFkU8HCj/XYZqe5f2xfVUW6w==
+X-Received: by 2002:a17:90b:3a4b:b0:2ee:bbd8:2b9d with SMTP id 98e67ed59e1d1-2f83ac87b59mr25632915a91.34.1738561432261;
+        Sun, 02 Feb 2025 21:43:52 -0800 (PST)
 Received: from yclu-ubuntu.. (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de32ea5fesm66894555ad.132.2025.02.02.21.43.44
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de32ea5fesm66894555ad.132.2025.02.02.21.43.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Feb 2025 21:43:48 -0800 (PST)
+        Sun, 02 Feb 2025 21:43:52 -0800 (PST)
 From: Joey Lu <a0987203069@gmail.com>
 To: andrew+netdev@lunn.ch,
 	davem@davemloft.net,
@@ -81,9 +81,9 @@ To: andrew+netdev@lunn.ch,
 	conor+dt@kernel.org,
 	mcoquelin.stm32@gmail.com,
 	richardcochran@gmail.com
-Subject: [PATCH net-next v8 1/3] dt-bindings: net: nuvoton: Add schema for Nuvoton MA35 family GMAC
-Date: Mon,  3 Feb 2025 13:41:58 +0800
-Message-Id: <20250203054200.21977-2-a0987203069@gmail.com>
+Subject: [PATCH net-next v8 2/3] arm64: dts: nuvoton: Add Ethernet nodes
+Date: Mon,  3 Feb 2025 13:41:59 +0800
+Message-Id: <20250203054200.21977-3-a0987203069@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250203054200.21977-1-a0987203069@gmail.com>
 References: <20250203054200.21977-1-a0987203069@gmail.com>
@@ -110,160 +110,133 @@ Cc: devicetree@vger.kernel.org, ychuang3@nuvoton.com, Joey Lu <a0987203069@gmail
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Create initial schema for Nuvoton MA35 family Gigabit MAC.
+Add GMAC nodes for our MA35D1 development boards:
+two RGMII interfaces for SOM board, and one RGMII
+and one RMII interface for IoT board.
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Joey Lu <a0987203069@gmail.com>
 ---
- .../bindings/net/nuvoton,ma35d1-dwmac.yaml    | 126 ++++++++++++++++++
- .../devicetree/bindings/net/snps,dwmac.yaml   |   1 +
- 2 files changed, 127 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/net/nuvoton,ma35d1-dwmac.yaml
+ .../boot/dts/nuvoton/ma35d1-iot-512m.dts      | 12 +++++
+ .../boot/dts/nuvoton/ma35d1-som-256m.dts      | 10 ++++
+ arch/arm64/boot/dts/nuvoton/ma35d1.dtsi       | 54 +++++++++++++++++++
+ 3 files changed, 76 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/nuvoton,ma35d1-dwmac.yaml b/Documentation/devicetree/bindings/net/nuvoton,ma35d1-dwmac.yaml
-new file mode 100644
-index 000000000000..c3f2ad423cc0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/nuvoton,ma35d1-dwmac.yaml
-@@ -0,0 +1,126 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/nuvoton,ma35d1-dwmac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1-iot-512m.dts b/arch/arm64/boot/dts/nuvoton/ma35d1-iot-512m.dts
+index 9482bec1aa57..5cc712ae92d8 100644
+--- a/arch/arm64/boot/dts/nuvoton/ma35d1-iot-512m.dts
++++ b/arch/arm64/boot/dts/nuvoton/ma35d1-iot-512m.dts
+@@ -18,6 +18,8 @@ aliases {
+ 		serial12 = &uart12;
+ 		serial13 = &uart13;
+ 		serial14 = &uart14;
++		ethernet0 = &gmac0;
++		ethernet1 = &gmac1;
+ 	};
+ 
+ 	chosen {
+@@ -126,3 +128,13 @@ &uart14 {
+ 	pinctrl-0 = <&pinctrl_uart14>;
+ 	status = "okay";
+ };
 +
-+title: Nuvoton DWMAC glue layer controller
++&gmac0 {
++	phy-mode = "rgmii-id";
++	status = "okay";
++};
 +
-+maintainers:
-+  - Joey Lu <yclu4@nuvoton.com>
++&gmac1 {
++	phy-mode = "rmii";
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1-som-256m.dts b/arch/arm64/boot/dts/nuvoton/ma35d1-som-256m.dts
+index f6f20a17e501..1d9ac350a1f1 100644
+--- a/arch/arm64/boot/dts/nuvoton/ma35d1-som-256m.dts
++++ b/arch/arm64/boot/dts/nuvoton/ma35d1-som-256m.dts
+@@ -18,6 +18,8 @@ aliases {
+ 		serial12 = &uart12;
+ 		serial14 = &uart14;
+ 		serial16 = &uart16;
++		ethernet0 = &gmac0;
++		ethernet1 = &gmac1;
+ 	};
+ 
+ 	chosen {
+@@ -129,3 +131,11 @@ &uart16 {
+ 	pinctrl-0 = <&pinctrl_uart16>;
+ 	status = "okay";
+ };
 +
-+description:
-+  Nuvoton 10/100/1000Mbps Gigabit Ethernet MAC Controller is based on
-+  Synopsys DesignWare MAC (version 3.73a).
++&gmac0 {
++	status = "okay";
++};
 +
-+allOf:
-+  - $ref: snps,dwmac.yaml#
++&gmac1 {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+index e51b98f5bdce..89712e262ee6 100644
+--- a/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
++++ b/arch/arm64/boot/dts/nuvoton/ma35d1.dtsi
+@@ -379,5 +379,59 @@ uart16: serial@40880000 {
+ 			clocks = <&clk UART16_GATE>;
+ 			status = "disabled";
+ 		};
 +
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - nuvoton,ma35d1-dwmac
++		gmac0: ethernet@40120000 {
++			compatible = "nuvoton,ma35d1-dwmac";
++			reg = <0x0 0x40120000 0x0 0x10000>;
++			interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++			clocks = <&clk EMAC0_GATE>, <&clk EPLL_DIV8>;
++			clock-names = "stmmaceth", "ptp_ref";
 +
-+  reg:
-+    maxItems: 1
-+    description:
-+      Register range should be one of the GMAC interface.
++			nuvoton,sys = <&sys 0>;
++			resets = <&sys MA35D1_RESET_GMAC0>;
++			reset-names = "stmmaceth";
 +
-+  interrupts:
-+    maxItems: 1
++			phy-mode = "rgmii-id";
++			phy-handle = <&eth_phy0>;
++			status = "disabled";
 +
-+  clocks:
-+    items:
-+      - description: MAC clock
-+      - description: PTP clock
++			mdio0: mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
 +
-+  clock-names:
-+    items:
-+      - const: stmmaceth
-+      - const: ptp_ref
++				eth_phy0: ethernet-phy@0 {
++					reg = <0>;
++				};
++			};
++		};
 +
-+  nuvoton,sys:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    items:
-+      - items:
-+          - description: phandle to access syscon registers.
-+          - description: GMAC interface ID.
-+            enum:
-+              - 0
-+              - 1
-+    description:
-+      A phandle to the syscon with one argument that configures system registers
-+      for MA35D1's two GMACs. The argument specifies the GMAC interface ID.
++		gmac1: ethernet@40130000 {
++			compatible = "nuvoton,ma35d1-dwmac";
++			reg = <0x0 0x40130000 0x0 0x10000>;
++			interrupts = <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++			clocks = <&clk EMAC1_GATE>, <&clk EPLL_DIV8>;
++			clock-names = "stmmaceth", "ptp_ref";
 +
-+  resets:
-+    maxItems: 1
++			nuvoton,sys = <&sys 1>;
++			resets = <&sys MA35D1_RESET_GMAC1>;
++			reset-names = "stmmaceth";
 +
-+  reset-names:
-+    items:
-+      - const: stmmaceth
++			phy-mode = "rgmii-id";
++			phy-handle = <&eth_phy1>;
++			status = "disabled";
 +
-+  phy-mode:
-+    enum:
-+      - rmii
-+      - rgmii
-+      - rgmii-id
-+      - rgmii-txid
-+      - rgmii-rxid
++			mdio1: mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
 +
-+  tx-internal-delay-ps:
-+    default: 0
-+    minimum: 0
-+    maximum: 2000
-+    description:
-+      RGMII TX path delay used only when PHY operates in RGMII mode with
-+      internal delay (phy-mode is 'rgmii-id' or 'rgmii-txid') in pico-seconds.
-+      Allowed values are from 0 to 2000.
-+
-+  rx-internal-delay-ps:
-+    default: 0
-+    minimum: 0
-+    maximum: 2000
-+    description:
-+      RGMII RX path delay used only when PHY operates in RGMII mode with
-+      internal delay (phy-mode is 'rgmii-id' or 'rgmii-rxid') in pico-seconds.
-+      Allowed values are from 0 to 2000.
-+
-+required:
-+  - clocks
-+  - clock-names
-+  - nuvoton,sys
-+  - resets
-+  - reset-names
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/nuvoton,ma35d1-clk.h>
-+    #include <dt-bindings/reset/nuvoton,ma35d1-reset.h>
-+    ethernet@40120000 {
-+        compatible = "nuvoton,ma35d1-dwmac";
-+        reg = <0x40120000 0x10000>;
-+        interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names = "macirq";
-+        clocks = <&clk EMAC0_GATE>, <&clk EPLL_DIV8>;
-+        clock-names = "stmmaceth", "ptp_ref";
-+
-+        nuvoton,sys = <&sys 0>;
-+        resets = <&sys MA35D1_RESET_GMAC0>;
-+        reset-names = "stmmaceth";
-+
-+        phy-mode = "rgmii-id";
-+        phy-handle = <&eth_phy0>;
-+        mdio {
-+            compatible = "snps,dwmac-mdio";
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            ethernet-phy@0 {
-+                reg = <0>;
-+            };
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-index 91e75eb3f329..c43dcae74495 100644
---- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-@@ -67,6 +67,7 @@ properties:
-         - ingenic,x2000-mac
-         - loongson,ls2k-dwmac
-         - loongson,ls7a-dwmac
-+        - nuvoton,ma35d1-dwmac
-         - nxp,s32g2-dwmac
-         - qcom,qcs404-ethqos
-         - qcom,sa8775p-ethqos
++				eth_phy1: ethernet-phy@1 {
++					reg = <1>;
++				};
++			};
++		};
+ 	};
+ };
 -- 
 2.34.1
 
