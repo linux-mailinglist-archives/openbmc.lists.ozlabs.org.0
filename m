@@ -1,63 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAE5EA26AF1
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 05:13:28 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 358A4A26C1D
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 07:28:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yn92l1vr9z3bNh
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 15:13:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YnD2z702dz3bPM
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 17:28:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738642396;
-	cv=none; b=ApqdGSPfRTAadiKFDhi6wpJyHFVj1w2iSX3/aPHHCDmGWvwGurkeeLgrjZVpi4noR3rqSrcD4XjiFn2ODZLpGE1JkSZ2rQBdvR8NS48V+Ly5upIMhkpfZERWgh/Uqee2yzamfm5FJy3DjKKG16hx2OWtv/kFcs4RMPhKX5YmnuPjTYquz43Xn4TOnEg1hipNJAMkKTsDz+8M6atWk2VNoo6fEpLGofn4cuFcK2NetXJHh5nG1BlB+wjtuXYnfQfPdMfunA8ad4eqfhLbvh/c7JmwW8hDR1uGH59Pp0uHszZUsUIwXUBuSNtY2W1MpX0oaV9RrRFItgc5/1MX5alX0Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738650521;
+	cv=none; b=GOQ0ZM6B+dDXhSRrdUX9IgnY5PTVY5D8HI7CjFAjllEYQDeMAs0bgi0NrHBRpAR3NADeaPWwLy8yYGx4awKvSUIReH8rrGNloudlrn67kXz2rXsACC6P7hxA/LX1fy76v0m8z/4dJIoCUcrjdfKwZxttBoHTFX7s/QBJtEnQKh9sutBYcwy2K04XdoQ3k9I8Weh4KX6QWd6ZvM3ggYupTkPkeYj5BwFo80GpLVIQ89kZmM2XhiCdqXr4GSCwHNlsKIHIIwZS1uzfBcrJnCkc8UMxCb6HV3iXVuQtE4Sc9Ek39qCLkXWMcbDK2vbm+ND0XBDzLSLvXrCSwSfSfxuluQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738642396; c=relaxed/relaxed;
-	bh=RExAYE+eg3+DqD0aIdg6MvAYfgTf4PN07K9zMtWgBAY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=XwrcnO9aWzG8G8ULAWjOfHlWY7HA/WS9l42peZgtuE6QidR2WCE/XJ7pifQQ3L7pYUeoHKLaS3/FGKP1/0Zdo7rzbPOY0Ye6qL7TQSgZMPoePrLL6Nu7rSWjsAmqt1kN4v8SzYWAqkJFXBf21oHZga++lXFPd3lieBkjU2D4cyfG1uEoWvRjrY5hcV25jrnxRmAo6oTs7hF/lcwOGO7omlOF9Pv5wDaJ0E7DuyF5C+OsISyHc+TtBBk+kwq5s3O/6WtpbHmDaTSWOcSOUY0FFNOVkbmzD+A+vs/c7RQb9mj2CSe5qsJJHHwDH6XELT2+DmuIEnZiG+rn0g3AYo0Ysg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jOSBxYDT; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jOSBxYDT;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1738650521; c=relaxed/relaxed;
+	bh=sLeKCpvWbLRRhn78P7ZyuNIR+hiA0anbyVa8GMbdMgY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OwKqxQaPooRZ9kWTgJtgIWwFL8g42HU2IcOiw2nmj2p1Ddqsj+k5ml3GjmVz3tqAvmDGHLPBkPsgG/28DabqkqF3Zoo1XyRS4xc7YQy3J7OPlFnymnGH2RVI1lkhZjGDpFPB33OcWFNzgvv/ac+y0xrNtb4Qgewz1MiA9op+4pC5SjqnmgYCbfR6VGk0PgGXl2xljUNKOyPyklnjN/b9y0GNkww3S4EjCzMPMnAoor6vt7LFJw4boGAhMcmsb9HzYcaqx1MwJ5kX5RZCJWdhbBf/YYMoqqo0Ses8b8MTDWqIHLMeqkPuVpYrzNzSSw7MsRNNN/VWN59ECxeRUuX00g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yn92g0Z7qz2yDT
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Feb 2025 15:13:14 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1738642391;
-	bh=RExAYE+eg3+DqD0aIdg6MvAYfgTf4PN07K9zMtWgBAY=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=jOSBxYDTc82cZ0EYD5pVAKqHHryvcacd/mHlBdRPSwerUw6+8ums9QlQaQkNIcajB
-	 6sFBcgF708q3xkMkipQjabZqJgeGrjc2kK0y1k7U1sF8aOra4a26tBaqzwY9lp/e/I
-	 X4jq+0Ch7xnpCTLAl2bIVobPfN1b3MvV+wh9JANA5fZ+2rHuMmMpNDkMaEHzLU1cEV
-	 2Im2nA45kMPZ1fwD6cWrRERtCACkCEbNUyWkcsGXB87WG/CS2TzpmXo8IjG2ERHLka
-	 3WVGuGUerfGX6Bymgqy1ofdxZ4aoYCYuMyEdLoZdkJuw5GrTYmdaUWKL0Z5I4/qZy1
-	 /PAithJv8ayjg==
-Received: from [192.168.68.112] (58-7-156-140.dyn.iinet.net.au [58.7.156.140])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 005A7735E6;
-	Tue,  4 Feb 2025 12:13:08 +0800 (AWST)
-Message-ID: <c35202743a7c63414e19766a54c4b9f055d59d97.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] i2c: aspeed: Nullify bus messages after timeout
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Eddie James <eajames@linux.ibm.com>, linux-i2c@vger.kernel.org
-Date: Tue, 04 Feb 2025 14:43:07 +1030
-In-Reply-To: <e68a787b-f442-4509-bd3b-b407a6075130@linux.ibm.com>
-References: <20250131222941.798065-1-eajames@linux.ibm.com>
-	 <8f51f0852317a28fc5cf1ba213902be838c9545e.camel@codeconstruct.com.au>
-	 <e68a787b-f442-4509-bd3b-b407a6075130@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YnD2x0Cbwz2xs7;
+	Tue,  4 Feb 2025 17:28:40 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 4 Feb
+ 2025 14:28:22 +0800
+Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Tue, 4 Feb 2025 14:28:22 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <joel@jms.id.au>,
+	<andrew@aj.id.au>, <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] dt-bindings: media: convert aspeed-video.txt to dt-schema
+Date: Tue, 4 Feb 2025 14:28:22 +0800
+Message-ID: <20250204062822.3738037-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,91 +58,165 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, ryan_chen@aspeedtech.com, joel@jms.id.au, andi.shyti@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2025-02-03 at 14:29 -0600, Eddie James wrote:
->=20
-> On 2/2/25 21:31, Andrew Jeffery wrote:
-> > On Fri, 2025-01-31 at 16:29 -0600, Eddie James wrote:
-> > > For multimaster case, it's conceivable that an interrupt comes
-> > > in after the transfer times out and attempts to use bus messages
-> > > that have already been freed by the i2c core.
-> > This description seems a little vague. Did you hit this case in
-> > practice?
->=20
->=20
-> Yes. I no longer have the back trace but it's a null pointer access in=
-=20
-> the interrupt handler. We had a certain system that would hit this under=
-=20
-> certain conditions and this patch fixed it.
->=20
->=20
-> I can update the commit message with some more detail.
+Convert aspeed-video.txt to yaml format.
+Update aspeed-video.txt to aspeed,video-engine.yaml in MAINTAINER file.
 
-Thanks.
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+---
+ .../bindings/media/aspeed,video-engine.yaml   | 84 +++++++++++++++++++
+ .../bindings/media/aspeed-video.txt           | 33 --------
+ MAINTAINERS                                   |  2 +-
+ 3 files changed, 85 insertions(+), 34 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
+ delete mode 100644 Documentation/devicetree/bindings/media/aspeed-video.txt
 
->=20
->=20
-> >=20
-> > > Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> > > ---
-> > > =C2=A0=C2=A0drivers/i2c/busses/i2c-aspeed.c | 1 +
-> > > =C2=A0=C2=A01 file changed, 1 insertion(+)
-> > >=20
-> > > diff --git a/drivers/i2c/busses/i2c-aspeed.c
-> > > b/drivers/i2c/busses/i2c-aspeed.c
-> > > index 1550d3d552aed..e344dcc2233fe 100644
-> > > --- a/drivers/i2c/busses/i2c-aspeed.c
-> > > +++ b/drivers/i2c/busses/i2c-aspeed.c
-> > > @@ -731,6 +731,7 @@ static int aspeed_i2c_master_xfer(struct
-> > > i2c_adapter *adap,
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * master command.
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0spin_lock_irqsave(&bus->lock, flags);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0bus->msgs =3D NULL;
-> > It feels like there's buggy code elsewhere in the driver that this is
-> > protecting (broken state machine)? I've had a look at the
-> > aspeed_i2c_master_irq() implementation and can't see what though, as we
-> > take an early-exit (before indexing into bus->msgs) if bus-
-> > > master_state is INACTIVE or PENDING.
-> > Can you be a bit more specific about where the issue lies?
->=20
->=20
-> I'm sure the state machine isn't perfect, yea.
->=20
+diff --git a/Documentation/devicetree/bindings/media/aspeed,video-engine.yaml b/Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
+new file mode 100644
+index 000000000000..c66ae6b53cbb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
+@@ -0,0 +1,84 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/aspeed,video-engine.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: ASPEED Video Engine
++
++maintainers:
++  - Eddie James <eajames@linux.ibm.com>
++
++description:
++  The Video Engine (VE) embedded in the ASPEED SOCs can be configured to
++  capture and compress video data from digital or analog sources.
++
++properties:
++  compatible:
++    enum:
++      - aspeed,ast2400-video-engine
++      - aspeed,ast2500-video-engine
++      - aspeed,ast2600-video-engine
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 2
++
++  clock-names:
++    items:
++      - const: vclk
++      - const: eclk
++
++  resets:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  memory-region:
++    maxItems: 1
++    description: |
++      Phandle to the reserved memory nodes to be associated with the
++      VE. VE will acquires memory space for 3 purposes:
++        1. JPEG header
++        2. Compressed result
++        3. Temporary transformed image data
++
++  aspeed,scu:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: |
++      Specifies the scu node that is needed if video wants to capture
++      from sources other than Host VGA.
++
++  aspeed,gfx:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: |
++      Specifies the Soc Display(gfx) node that needs to be queried to get
++      related information if video wants to use gfx as capture source.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/ast2600-clock.h>
++
++    video@1e700000 {
++      compatible = "aspeed,ast2600-video-engine";
++      reg = <0x1e700000 0x1000>;
++      clocks = <&syscon ASPEED_CLK_GATE_VCLK>,
++               <&syscon ASPEED_CLK_GATE_ECLK>;
++      clock-names = "vclk", "eclk";
++      interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
++      aspeed,scu = <&syscon>;
++      aspeed,gfx = <&gfx>;
++    };
+diff --git a/Documentation/devicetree/bindings/media/aspeed-video.txt b/Documentation/devicetree/bindings/media/aspeed-video.txt
+deleted file mode 100644
+index d2ca32512272..000000000000
+--- a/Documentation/devicetree/bindings/media/aspeed-video.txt
++++ /dev/null
+@@ -1,33 +0,0 @@
+-* Device tree bindings for Aspeed Video Engine
+-
+-The Video Engine (VE) embedded in the Aspeed AST2400/2500/2600 SOCs can
+-capture and compress video data from digital or analog sources.
+-
+-Required properties:
+- - compatible:		"aspeed,ast2400-video-engine" or
+-			"aspeed,ast2500-video-engine" or
+-			"aspeed,ast2600-video-engine"
+- - reg:			contains the offset and length of the VE memory region
+- - clocks:		clock specifiers for the syscon clocks associated with
+-			the VE (ordering must match the clock-names property)
+- - clock-names:		"vclk" and "eclk"
+- - resets:		reset specifier for the syscon reset associated with
+-			the VE
+- - interrupts:		the interrupt associated with the VE on this platform
+-
+-Optional properties:
+- - memory-region:
+-	phandle to a memory region to allocate from, as defined in
+-	Documentation/devicetree/bindings/reserved-memory/reserved-memory.txt
+-
+-Example:
+-
+-video-engine@1e700000 {
+-    compatible = "aspeed,ast2500-video-engine";
+-    reg = <0x1e700000 0x20000>;
+-    clocks = <&syscon ASPEED_CLK_GATE_VCLK>, <&syscon ASPEED_CLK_GATE_ECLK>;
+-    clock-names = "vclk", "eclk";
+-    resets = <&syscon ASPEED_RESET_VIDEO>;
+-    interrupts = <7>;
+-    memory-region = <&video_engine_memory>;
+-};
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 896a307fa065..7e59daa1e89d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3549,7 +3549,7 @@ M:	Eddie James <eajames@linux.ibm.com>
+ L:	linux-media@vger.kernel.org
+ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Maintained
+-F:	Documentation/devicetree/bindings/media/aspeed-video.txt
++F:	Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
+ F:	drivers/media/platform/aspeed/
+ 
+ ASUS EC HARDWARE MONITOR DRIVER
 
-Right, so I think that's what should be fixed; the explicit states
-define possible invariants in the implementation. We shouldn't need to
-test `msgs` to know its value (whether its value is correct should be
-defined by the current state).
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+-- 
+2.25.1
 
-> The bad access can happen=20
-> like this: if a transfer times out while waiting for an interrupt, the=
-=20
-> aspeed_i2c_master_xfer function will either reset the engine or recover=
-=20
-> the bus, and exit ETIMEDOUT. Resetting the engine will turn off=20
-> interrupts, so we're safe. But recovering the bus doesn't turn off=20
-> interrupts, so after the function exits ETIMEDOUT, I assume what happens=
-=20
-> is we get the interrupt for the previous transfer and try and access the=
-=20
-> messages pointer, which the i2c core has already freed.
-
-So what immediately concerns me is there's no RECOVER state in `enum
-aspeed_i2c_master_state` or the rest of the implementation. We do have
-the PENDING state, which we don't have in hardware, so there's no
-reason for RECOVER to be missing, especially since we have the RECOVER
-state in hardware (I2CD14[22:19] =3D 0b0011).
-
-What do you think of adding that, and testing for it in the interrupt
-handler?
-
-Andrew
