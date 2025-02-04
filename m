@@ -2,44 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 358A4A26C1D
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 07:28:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9F86A26DAB
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 09:51:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YnD2z702dz3bPM
-	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 17:28:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YnHCG4klkz3bSL
+	for <lists+openbmc@lfdr.de>; Tue,  4 Feb 2025 19:51:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738650521;
-	cv=none; b=GOQ0ZM6B+dDXhSRrdUX9IgnY5PTVY5D8HI7CjFAjllEYQDeMAs0bgi0NrHBRpAR3NADeaPWwLy8yYGx4awKvSUIReH8rrGNloudlrn67kXz2rXsACC6P7hxA/LX1fy76v0m8z/4dJIoCUcrjdfKwZxttBoHTFX7s/QBJtEnQKh9sutBYcwy2K04XdoQ3k9I8Weh4KX6QWd6ZvM3ggYupTkPkeYj5BwFo80GpLVIQ89kZmM2XhiCdqXr4GSCwHNlsKIHIIwZS1uzfBcrJnCkc8UMxCb6HV3iXVuQtE4Sc9Ek39qCLkXWMcbDK2vbm+ND0XBDzLSLvXrCSwSfSfxuluQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1738659063;
+	cv=none; b=iKMP0V9dopCZN0MIQEs8aW5VYVrPttoXGgmW6m6Crg29tq5n1nGcVUvC9qGmSKktrMs9rxrJvb7jpfYQggYZCgyDBM8ZlptcbjrFuxfivIimDLkfsofO4oLzoM/JPi3gYbBG5NW02H3Rup9NCEAjS9qw5KzbmDZHQDKVwrHS21uUt1GWMgVc7aTu57BDZtm5Cs5xknbtfbeFl9ObRl1PT36iWqsoRCDYAHevnavCWUKc8aKPBB9HO+VsvjMza26HYxhktcsee14hmYdg/ixUFJzzzGa1eKy2e7IPgYGeFxrY9z0GcBSzNlGGIKX/c05MRHsBSATwULwHpRmSlGJLyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1738650521; c=relaxed/relaxed;
-	bh=sLeKCpvWbLRRhn78P7ZyuNIR+hiA0anbyVa8GMbdMgY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OwKqxQaPooRZ9kWTgJtgIWwFL8g42HU2IcOiw2nmj2p1Ddqsj+k5ml3GjmVz3tqAvmDGHLPBkPsgG/28DabqkqF3Zoo1XyRS4xc7YQy3J7OPlFnymnGH2RVI1lkhZjGDpFPB33OcWFNzgvv/ac+y0xrNtb4Qgewz1MiA9op+4pC5SjqnmgYCbfR6VGk0PgGXl2xljUNKOyPyklnjN/b9y0GNkww3S4EjCzMPMnAoor6vt7LFJw4boGAhMcmsb9HzYcaqx1MwJ5kX5RZCJWdhbBf/YYMoqqo0Ses8b8MTDWqIHLMeqkPuVpYrzNzSSw7MsRNNN/VWN59ECxeRUuX00g==
+	t=1738659063; c=relaxed/relaxed;
+	bh=AzkCA7nOou0qoIvf36Zhtu1VGxQofuIEmIOpJfhq8bY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KYi3c3TudETv9AqbZCQi4M/ydRfKHtJo0l8sFGvUPy842E+AABSGDieYl/cJlvBVraZrlZc63GQ1vi+GkPftqJX6o6k8POaSq9HS/c2vcKEKzGZJZn+EpMhoDHHJ73t0ZAuyDQBG2EAJli7vxLqjwolI5IHZAhWNc9hC/Si+TuRTMWpaLEAX+GMhj58tg0K+cGfbofQYb5PsyARiCVXJ1A13pbnF91iAqYBWAytypE/gd5oBiz4SUrLCg81I/yeNoVcwQJKUceONykop0evJh+sjzaLE7Jq9086T7AsSn9/3YBslmjaF5C8B3cnlBWErtmL2LXacZOJTxnYOUaICJA==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YnD2x0Cbwz2xs7;
-	Tue,  4 Feb 2025 17:28:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YnHC930LDz2xGT;
+	Tue,  4 Feb 2025 19:51:00 +1100 (AEDT)
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 4 Feb
- 2025 14:28:22 +0800
+ 2025 16:50:41 +0800
 Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 4 Feb 2025 14:28:22 +0800
+ Transport; Tue, 4 Feb 2025 16:50:41 +0800
 From: Jammy Huang <jammy_huang@aspeedtech.com>
 To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <robh@kernel.org>,
 	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <joel@jms.id.au>,
 	<andrew@aj.id.au>, <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
 	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
 	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] dt-bindings: media: convert aspeed-video.txt to dt-schema
-Date: Tue, 4 Feb 2025 14:28:22 +0800
-Message-ID: <20250204062822.3738037-1-jammy_huang@aspeedtech.com>
+Subject: [PATCH v2] media: dt-bindings: aspeed,video-engine: Convert to json schema
+Date: Tue, 4 Feb 2025 16:50:41 +0800
+Message-ID: <20250204085041.3724290-1-jammy_huang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -64,7 +64,15 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 Convert aspeed-video.txt to yaml format.
 Update aspeed-video.txt to aspeed,video-engine.yaml in MAINTAINER file.
 
+NOTE: The following checkpatch warning is generated since we do include
+the header in the example, but this is a false positive warning.
+WARNING: DT binding docs and includes should be a separate patch. See: Documentation/devicetree/bindings/submitting-patches.rst
+
 Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+---
+ v2:
+  - Update commit subject
+  - Add NOTE for false positive warning
 ---
  .../bindings/media/aspeed,video-engine.yaml   | 84 +++++++++++++++++++
  .../bindings/media/aspeed-video.txt           | 33 --------
