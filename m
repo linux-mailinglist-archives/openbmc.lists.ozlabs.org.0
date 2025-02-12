@@ -2,166 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3F46A31B41
-	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2025 02:39:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26E96A31B8C
+	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2025 02:51:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yt1FB2kJwz3cXD
-	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2025 12:39:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yt1WC1Nfsz3cYb
+	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2025 12:51:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c40f::7" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739324347;
-	cv=pass; b=YnmpU1NOneu+htdTsrkxeCWCkQ5vIlRwEq11tBal+XIkUy0tHXjxNLY2S7RrREeBsOXzHhupcsg61OzHwaCe7LXUZDYzm2p0hktyh1MaO7VO9dQesNcoWTbSUNv9S9cVGqU+iEH+NjCL1v9bmLHHStomR1LXR3PHm3OQCSH4GZlYXNcjMUM+0gjc+dv9uUl81V1tQ0xYpnPvm7oawDqV5caTzarlnKde4xTBG7eoiSSTATVJuYgrhBmWL8p1/+FsxdsStAK1+9uvsT2Yc4Z2IindbIZCeqhK8fY0EvpqqYRdcTW5ETir0T7LFEpR61m4fus9LbFnoqeLIqBi/13DZg==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1739324347; c=relaxed/relaxed;
-	bh=BtbwtkMlTiUXwmTKGBlosNkfhKuXFyFFFsrSxFEZq3M=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=lJPCd99cNOEPxeuMsGyagEQQCV4od19b98lRjEEsUiMy8Njbd8hhtSMZh4wWtfj1DWbQkSs6yOolFRq9SNxdAnndaTW7mNQ7bYAKS3DFT6cGzKKyOPpXDFcU68s4VgUramS+pbjugGMNZmQ2XVAPIgz/BvAf27hm44qoVv0NUjzfTATJS8LgDnCPQp7YmRJUb9okBcVaWyStH/RzdROibIgQQzLswFWtJpXbV9YfcDHxH+AhTNnMHgM/9GilOOr71OlCV0+eRrx1u3K7lud4XMgKrYPFHz92GHxv/yOtMXQGS7Dm924DnscJPeKmvPIEPGMtpIbpIGwlSEsqSZgDmQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=aspeedtech.com; spf=temperror (client-ip=2a01:111:f403:c40f::7; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=temperror (SPF Temporary Error: DNS Timeout) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c40f::7; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazlp170130007.outbound.protection.outlook.com [IPv6:2a01:111:f403:c40f::7])
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.146
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739325075;
+	cv=none; b=lc03E/6iHaw66qGgW+XEI3LhZ0MN+NeFYcGHHN6s69A2zPrBm/Ci9KnrT7as0e4l2ZlyYws+waiPXGPhBDPfFqxqMx8PZJElkKqxYZwpxlR9u7AubtXpi1TCI1gyCeqGYp6Qh1BRpY8ooS0ol9bQToucxKf6yN9S+QrigouwFWS5/EXCdbJ248cYqvNgyY3c94Sqf7aDQ0zaeLMpiAnPn8bYbfsBp6RcUqTboEvQRnc1A9ZN4Ixho5ZwvP686lDMNdNXMPC32EQzakpiSjnQb7updUEFXJh26BkymaWZ+i3Ar0eQEsk2ZZukKM+iB4cJk8dOeWvsmqM1b52EYzt6Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1739325075; c=relaxed/relaxed;
+	bh=jbPamGD9nDKoVBUqNXCjCxmKuJFwyCuQVIUT9oREops=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gsqObyGfidMLDVf/40MQYASKzjcJOjpGVxhzTOsORCbVxBTLxkXNiQw8kwGUc0D/vnoBuxsicXnsh6flJxcX0Hf43dUcY3O0DbZuCfmjdRVEfhHnylOPjfLSlwVLur6G+5057bWmb7LyPHExKGYEcNvCw4N7R7B3qRHTryNkZUL+adFFNtzIQ/xX+axecR+qttZ92kb0w55MDyOWgXAmcjaqABQ/vPW2C+zUuJaJ7ZkFbEV8eFYPLFsgrHxMdi5dCUJz9cEIYwmV4r7y3ZcOgGt/PXPIJIq3sOy+LxLmB+9I29TgyWUxay5Z55fYVrbwzW+pZMITZvOpy0Uk9GKulQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=SSp0Ckjs; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0Mv2cndS; dkim-atps=neutral; spf=pass (client-ip=103.168.172.146; helo=fout-a3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=SSp0Ckjs;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0Mv2cndS;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.146; helo=fout-a3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+X-Greylist: delayed 513 seconds by postgrey-1.37 at boromir; Wed, 12 Feb 2025 12:51:12 AEDT
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yt1Db6zBFz2y8p;
-	Wed, 12 Feb 2025 12:38:19 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qCEJZJ1FXdRnWwNUccALXT+81OOBWlwhI3srufezNboqhLJZ5XsPWMM90wwAW83bNcZ2czQiRmTooCPa3qVR/uUhKdRWy2EmstD/+kAbai+ygA+luwSPEchaz5X117F8ppdOFYJc0HKZdaZBgKK3pplqRI3ljO2+DGCCyBasN4l20U2hx5MfoW74vXVLjz7/OxwrSvToWw0TsOecsKmrK0o5k/B7w+Us+XaaEjk/zE6UWpIo2U1TWlFQuN5wN8zI5jjP2Ursu+u5Bs3WbgPSAIPq//TAiBWYo0mOFfC54zHZ7hcU/0COpeknCvJh5ZzVX/ZUsq1jPuOLEGW6Ua5sPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BtbwtkMlTiUXwmTKGBlosNkfhKuXFyFFFsrSxFEZq3M=;
- b=EOrAiMXZmNpLvmdnl8VBjDolnJg0g+89cQYa2bg8x91JOpUqCzqlF+yY98D1dKe99HPYioEZQBd8bfdwFPBAG14kq8JtReOWN6oiDefSEziTLw+9uCDJDtzdU6y4jy+ZGX+m01AmnmHNYvhVyaXjALP+CwvkVYH88HIDj7HRJxOFBRi0jJhDa0VsoGSo8iNytAVvmf65AgWDyWGG05YdSlrk00wN9PoIM6IM7KsGS/aSXVVH5EUI8YTfv8d0od05qlebUGmG3mtzRJenu7yuK95aPcsRp+nhddFSQ9XLBmXFx0z03tbu9W10Lg0pPBaDbqbtmeubZWfJThboxKcZ6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BtbwtkMlTiUXwmTKGBlosNkfhKuXFyFFFsrSxFEZq3M=;
- b=UgormYURHDXcm+kKEgUaO4GB4KQgNsc9cBGA2E12Q9pw1dfLX/fiRUwqM9pLirMB1B686ZSmBDlrDimFUIrYLtynydMpqt427qJh5lsSfHu6x8XReMWhmMe21i8sszucysl7+O02ukLFgWIAxBAU6TGhcxvYTB5Yjz1/3PP8Nki95/ZASfwgkFkBvniEf017LpewUMk2Nn9sY5PyLnpprqWUn7O760l1uHyb4ydrPFSXW8tXM0yGyt/QW3pHoMycuoaOGQUZjwpaIXhA5Jae9W5rFAnCqi8wlXhYCgbg3FxqxRa7AToOSKvIYZHVt+vytDPyFWGQIXAhikVzWEHu+g==
-Received: from TYZPR06MB6568.apcprd06.prod.outlook.com (2603:1096:400:45f::6)
- by SEYPR06MB6279.apcprd06.prod.outlook.com (2603:1096:101:139::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8445.11; Wed, 12 Feb
- 2025 01:37:51 +0000
-Received: from TYZPR06MB6568.apcprd06.prod.outlook.com
- ([fe80::72b8:dce5:355b:e84b]) by TYZPR06MB6568.apcprd06.prod.outlook.com
- ([fe80::72b8:dce5:355b:e84b%7]) with mapi id 15.20.8445.008; Wed, 12 Feb 2025
- 01:37:51 +0000
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: RE: [PATCH v4] media: dt-bindings: aspeed,video-engine: Convert to
- json schema
-Thread-Topic: [PATCH v4] media: dt-bindings: aspeed,video-engine: Convert to
- json schema
-Thread-Index: AQHbe6ayI47ZWP8RUkq40RulR4uWLLNC5fOA
-Date: Wed, 12 Feb 2025 01:37:51 +0000
-Message-ID:  <TYZPR06MB6568FD90F6A416262C02FC02F1FC2@TYZPR06MB6568.apcprd06.prod.outlook.com>
-References: <20250207101458.3757723-1-jammy_huang@aspeedtech.com>
- <20250210-crow-of-famous-drizzle-a4bb03@krzk-bin>
-In-Reply-To: <20250210-crow-of-famous-drizzle-a4bb03@krzk-bin>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB6568:EE_|SEYPR06MB6279:EE_
-x-ms-office365-filtering-correlation-id: 3f64f15c-c2bf-4389-49d2-08dd4b05dd03
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|7416014|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info:  =?utf-8?B?WjVxZStDZHhmcHdWR1Juekl6bjRsV3kyajZkMGVvdkJuTGdJSjE0QUZJUlZD?=
- =?utf-8?B?eGNYMy9SS2t3OFlMdEtYWVhBTUF0bWNjNzhoNndwWVE1TEpkcEVWMmoxTHp5?=
- =?utf-8?B?YnM1bTI5Unh3RXlocWFXbXd4UHNxbkgwY2VJc3RQOXk1Q20zNUVHYWpMYXh6?=
- =?utf-8?B?MkEwR1pQYmF4TUY3K09ibGFYeVVQZEVpakdHdGFuZ0U4emtZajMwYmVuUkFX?=
- =?utf-8?B?VWxyYmdSWnFaNUo0WmkxaU10WVZ4azhJL1hUbzlNcWdqcXBPSVhNTGdoTit2?=
- =?utf-8?B?OFNCVjB4T0Q4dTFDem1XRXozc0lpbTg3cmxFQ283N3IycHorUzJycDQrOFh2?=
- =?utf-8?B?VGlpQjhDeGhSWEVlQk9xRGZ3MGRNVlN1RDlyZzZIaDJKWVlqd0ZjSm85Y0Qx?=
- =?utf-8?B?cnB2SFlrTGR0bEZaeFNIdVZSZng5R3lTajNKMXdIa0ZnMWFxWUh1eXpaaUZk?=
- =?utf-8?B?SWc3b3B3UU8wRk5uUFhOTHJJYzFWWmxHOVh5dDFXYlNNTDNDRGZLdjljWEE5?=
- =?utf-8?B?VkpCRGl5K0ZsYXlndkQySmJLRzhDTkxnR1Ewc0Q0SFUrM2V4ZmtCQ1RmTXJW?=
- =?utf-8?B?Tnp0RGFRb3NDZ1RyUlNJOGRLQ3dnUkljcVROaVp0cjdhckNVOWFpMytnck4w?=
- =?utf-8?B?cXZMUi84cVk4aXZCRFJTUXoxc0FwaEh4Tnk3QklkZ2VlVWNOWHhodnYyVkZy?=
- =?utf-8?B?RUhRWDlpOVRKMFltYy9CaG1vZTZHUEFaSWVsQk5EZ0JHbHpaRHVaK1UycEhL?=
- =?utf-8?B?YXd0azI4aUFCWDZXT09BOE9EYlpzMDZpMTRBVmtGQ2dmcEVVWVZFZDhEejZR?=
- =?utf-8?B?eGVnSW9OM2FkOWxBNERCMUQzcWI3Ykl2UFRjdmFxc28ydEM5eHpPa25TdTZK?=
- =?utf-8?B?ZkNTM3dFRkFoRENFWlh2Znc1ajR6Mi8xQXdRb3JNcHJSN0VRNmxyRVlrV0VS?=
- =?utf-8?B?U0VsUzhSb1lJVWQwbmxLWlVCTy9KcFdtQW96ZW5PWVU3YVczeGhvdHF5aVhw?=
- =?utf-8?B?b3huSCtTVmZ0MEhOdmhLUHpOc1I1Vm9LRytqbXZIOXFPUGFrbWx6YjRLeUZ6?=
- =?utf-8?B?QXRSdStXdEhPRkgra0ptd0I0azBUcTR0bVpteUN4TVJrQnp2VTloSVFKNTBM?=
- =?utf-8?B?cGRNK0h0RHdMS014MWU3Wk52SXVudzdTL0gwNlBJZFQrUXhvVVhxeWFPZGsz?=
- =?utf-8?B?MzdxSTJXMVpoM0xvSUw1ZFovUmxNS3Z2dmpvdEorcFZHK09oYTg0L1dRZ0M3?=
- =?utf-8?B?dXQyRENLdWp2bjJ3djZiL1RCeW80VTRaYkFPMkFZUUplZ1lXOUg4RXV0Y0pS?=
- =?utf-8?B?cE9aZDd2bCtrM2pmaFMreElwNGp1QUJJWnR2b1Q3cXBxbmpHNmNGL0FhRHFx?=
- =?utf-8?B?K05pdFZ6ZzYxS1BHOERjYnlwVWJYa2pMMndNMDY1YWNNaG5USHhDQUwzTEF0?=
- =?utf-8?B?Z3NkU21SenJVdnZxSU9XN2pMVjFaenhJK2RLcUY4VXlHRlp2NEpWVFU1dXFi?=
- =?utf-8?B?WmJIOEo2RTZLdEdXSGdIWDlGYkRmcG4zK1o5QlE1L0h0OFVTZm1oRERQNEor?=
- =?utf-8?B?V1lyZkNiU2FmYXFzY1dFQUFmOUVaVnpuWGRZMDZDL1hvcEFyYUk5ajFGeTNZ?=
- =?utf-8?B?SjkycjFxTWtYYWhVV3lPZGtabzBxUGJaUExuc3ljOGs5b055M0VqMUVCRlRB?=
- =?utf-8?B?LzM5c3N5enBsa0EyRjVrMEhUMFJXWlUweXk3ZXMyc05uL0RQMC9heml3dDRi?=
- =?utf-8?B?Tk9jS1pxOUc0czJCL3dDK0R6aFBSeHlDK1BjOEN2THlDSm90eWpBRnJTdHB3?=
- =?utf-8?B?MldrRFJ5TnJxVDcreTBEUTdFR3hJTXhtTjdUNFpnM1JhZllNWlRoRmhNclZW?=
- =?utf-8?B?TjNXVGE0ekQ1akhtZzNzdUtvU3NadERUNDUyWHBGNS9YMzNwbkpGRFVqV2U0?=
- =?utf-8?Q?zOzBhpAD6if7XotFQY2iw8dPW/PKbFJH?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB6568.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?cnJpR1d1UFF6c2ROVzhXK1Rady85QXg2RWhsVERSb1pPZ3ZXbldXc085TElu?=
- =?utf-8?B?S0hRZlNjR2NsdXdGNmRuWGZZbUFqSVJlMWtKNHpWamhJOGxGdVlhbFlPaXI1?=
- =?utf-8?B?S3QwUWFYYWlKRElMYlI3K0Yzem5sNXBQSEk2SE40YmswTExOYVZRUDhJSDRC?=
- =?utf-8?B?M0pyT3Y0Wll0bmQybGJlZzNBMnJvMTJ6K3Y4M1VwWU8vRUIzdU1QZm52QkI3?=
- =?utf-8?B?aXRHRFg5ODFsdXNFMUdzUE1CMWE4UkJEOTBZYlAxT3d4NmllTnlEL2JpdnRh?=
- =?utf-8?B?ZGw4ZjJHY3VMWFZWK2huNUlTcksxMzY3Q3J4TWFmZzBNYXBxYjRsMVkzTzdy?=
- =?utf-8?B?ZTQrM0ZNMkFiM05BcFVVK2QwRkhvVEE0d0RTMnlTWTh0Wi8rQThocTJDelhT?=
- =?utf-8?B?TTY1dGI4RXFGUXl2Kys0VU50MmI4NW9xSngwdjYybGx0MENmeEdpcTMwVGx3?=
- =?utf-8?B?Tmd3WTJld0NJdU5NMnZrWWZUK2xNdmRweWFmaW8vN25vbU1vbVRDbFRFYnMx?=
- =?utf-8?B?a2ZlZjBRUktORzZNSDJkcHR2UW9pMzhUUFl3T1JyUG9qK1hOR1FDNDkzZUtK?=
- =?utf-8?B?c3o5WVQxbkYrdjJBM3Q2a2F3UDUzWHkyWGRoQzlJVFBQMXAxRmlCaHhJREpY?=
- =?utf-8?B?dUJLQnVCR3NscktGVkRocWEvOXoreXVNa3JMMjY1OWtXWitvWjVPQ0VTdmk3?=
- =?utf-8?B?b3hpUnZKMGlMT2c0OGRkWitWdzFFNzRNQ28yTkZFelZkc0Fsem1FYXlLT2xM?=
- =?utf-8?B?SFZSbnNlUnVOMFZpaXBjQkE0cGlPZWlabEl3VFpZQXhSbStGQlZxeENjbFpO?=
- =?utf-8?B?OFY0bVdqNnk2ZzZRbGNDQWhQUGd6eVJaMXVLRE93ajdEK1AxNm1qaFR2bTlu?=
- =?utf-8?B?VlRvRSthZk54QUw1UmtmVGRwRk9STEtTN3I4VFhIbjcvZTJaR3U3WXVhN0d2?=
- =?utf-8?B?MERSazVOeFJ0MDhtaXdMb0k1cGtrZDRJRExUemJmMW0rODRqejFOc1VrOVMw?=
- =?utf-8?B?V3hkOTlTaEhaSUFFUjViaXpBSlpnbXhGZWw4Z3cvU0dua2hwemFPeEJnZ3px?=
- =?utf-8?B?aG5oZUd5MTF2Y2JXZkJRZlpPVEwvVHdWeUpYaEtoUVIyUjdwSTRnbHVQVE9h?=
- =?utf-8?B?Z3hmNjJ1WnJFR2RaSHRDdnFORlArRGxTYXZoc3cxV01WSEdGemtmdktJcCtP?=
- =?utf-8?B?RU1xL3ZKZDVtOGhOcTgxSzE0UXBXUnlCamdWMmtWVTYzd3ZscUNEc1lkVHdl?=
- =?utf-8?B?cGpLMnNDd2RvYmJCZ2UxV1dyc2I1d1ZaZ0JYdERrbzNBN1Z1M1MvbDBVNnhQ?=
- =?utf-8?B?ZGZpZWZET1FaZklGazRnNVRkZmRpcjRVRm1UbXNZeDZIbmwxcFZXN3dnbjBx?=
- =?utf-8?B?RVI2VlhaZmhkeVlrbDFFOU9COU10eE1pYmpGU1pOR0hWcDhUN1EvaHNvdWN0?=
- =?utf-8?B?cG8vMDJhZkNnSldOdHA4bHM4K2pvY1c1bk9aejdhdU9KQ25IdDF4djlsL2hD?=
- =?utf-8?B?c0VpS3ZzS0syejFWaGU5RUxpTDQxWi9mSEllK1J5bnpQR0NpQ3ZXODhkdHdV?=
- =?utf-8?B?cFJJR2I1citoTGw0RVdiTGhXbnltY3VjS1FvKzFlQ1cvMFVocTUwM0tSNXcx?=
- =?utf-8?B?VDhuZEliaEFXeFFlNHBUeUM4VzZqOWFucm55WXIrdGdUTjZVTHlxUERid0s5?=
- =?utf-8?B?L3ZnTGNKanJFcUxzMjNGa2Z5bFNkVGxNUWdjbG4vZGxmWU5oRTNYQ25Ua0h3?=
- =?utf-8?B?NXN5NlUrbmRLSmcrbkwxY2p4eVo4Ny84Rmo3UjhYNFlaaDdycEVYekxCaVJj?=
- =?utf-8?B?Qjg1VTg0RVdpQ3JXT3BTdUR2RFpZUEkrVC9GVWpRakZRclJKdVdGRm5DNGtT?=
- =?utf-8?B?M2pTOFJnYVBIYlV1eVJpWnI0TGl0OWhOZTJmUVA0Mlg2VkZiUDFHOTY4WmJT?=
- =?utf-8?B?eEsvclgzWkJqOW83T3AzTnRTQ21ZeUlMcDY2WktneTRxNUw4RWtRbFgrKyt0?=
- =?utf-8?B?RGx1bXFKSXhnRE1ZMUFRcUhtNC8zSER4RWRKRjlPcEdpeHBwbG5VV0FWRUR0?=
- =?utf-8?B?TEdYNDhudUUvRWFtWlBuSEloNVNOS1lqYURDU0hWeExRSldjTFFmMlEyWU1Z?=
- =?utf-8?B?dUdxZzdzT3g4VzBZRktOR2NzV3hieUd3VjBVZHhEME12eTVEQ0NSUVVyVTli?=
- =?utf-8?B?M3c9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yt1W40cmlz2xmk
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2025 12:51:12 +1100 (AEDT)
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id CAFF6138098F;
+	Tue, 11 Feb 2025 20:42:36 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 11 Feb 2025 20:42:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739324556; x=1739410956; bh=jbPamGD9nD
+	KoVBUqNXCjCxmKuJFwyCuQVIUT9oREops=; b=SSp0CkjspyhkA2cl/zZyqD4jpz
+	B/3SUYDaZwWKFAMrRgM1KLd132O/sfmlpyokSRyVYSYsSsDpkSfeO6ZbxtyTrZRU
+	JoCgl88uYbYpI/XWGwmc+o7vpZp/vL5HELp4Ws+RuGOkKyg7ZxRPFaL7I7XpByh7
+	1H8ywVHmVWQsO7Wvj4RkEzVkL68DvDTVyL6nx7NuhehKU53pyS/aZp2n8YeT6z4g
+	JKnZoPvHB4kC+ZalIIB1CqEsX6b3vwZbkd6Qov0WVYcX57NVnbTmA03sEtzK6gib
+	ET2vLcstqWmSx/WdS46XZMiUTaG4lHzQIDP8zwciddYe1vn7ufHX2Oi59iiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739324556; x=1739410956; bh=jbPamGD9nDKoVBUqNXCjCxmKuJFwyCuQVIU
+	T9oREops=; b=0Mv2cndSTT/2O/0G2048n9np/woff44RVsYZjaFHvKKVd6gkhwW
+	cueHP9CoN0bp3bW+gzeVRw+BKsAF5HSeeB+2LoIN/gPGzpqRRa9ogJxkYe3upKGc
+	KHcYKxX7pFERJacOBdV3AYNGFQ5gcVzDIiLm6GaMQZb4m6HmrmxaY2EDAwhGQMHG
+	5KmLW7PG/nGKf27omLoTZwNFjEqWNeumIeTPACRSoVMY6xcOPl7cVYuBSJsxjbgg
+	X9XC2g3vhUKEiur/7Z4F42GRQDnC51lgQP9NKdmxm9KwmbWDc7TPP3DhrJODThOG
+	KA+WbjasUhgpr0TXmKwJFmoqzDvtR+MY2YA==
+X-ME-Sender: <xms:i_yrZ3POi5T6ULprH4KXhZgPaWVY4zCD7xD-SXsagccvC-zUuAkJnA>
+    <xme:i_yrZx9V_C6UmQhGOucz9rMnyeDNGP_RMoXruEPu4TnE_rLiNbzaAMZEZo02qwua_
+    ygEPUwxvtytSn5EShE>
+X-ME-Received: <xmr:i_yrZ2Rw3gcoMww810CcFAWp5gAyCJ1DVZtPNqm7RQ2o4aLhpW-2zrc6QKo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegvdehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculd
+    dvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhep
+    rfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihii
+    eqnecuggftrfgrthhtvghrnhepkeeifeeggfevvdduudehveegvdegtdegffehjeejkeek
+    gfeifefhkeeuueejgeetnecuffhomhgrihhnpehophgvnhgsmhgtrdhorhhgpdhgihhthh
+    husgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehprghtrhhitghksehsthiftgigrdighiiipdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopeihuhhlvghirdhshhessgihthgvuggrnhgt
+    vgdrtghomhdprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdroh
+    hrgh
+X-ME-Proxy: <xmx:i_yrZ7sew8vZWiNqDBh8OSM0k0RoyVgSURqdZF28eNnfZV2jMU7NOA>
+    <xmx:i_yrZ_fbV8qQuR_4JNqU-IGKx5GaNOPHy222I1GKnP7E-bpEnQ5JnQ>
+    <xmx:i_yrZ30uo5ETBq08j8juO7_LAyuiQj13BPcLauoAMA-YfSzDu7PG_w>
+    <xmx:i_yrZ7-qGFKxOTGUMxTkKG_5Fsh5G-jPDcxTnKsHqk2jZ4hz9OoZ1Q>
+    <xmx:jPyrZwrRb5fnSgOVpJoSHn7h7hAwfWTibuPSzBSYEMVgxTzAEaSrpCPO>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Feb 2025 20:42:34 -0500 (EST)
+Date: Tue, 11 Feb 2025 20:42:34 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Lei Yu <yulei.sh@bytedance.com>
+Subject: Re: About meson clang-tidy issue on some repos
+Message-ID: <Z6v8ivnGwbt1QCDk@heinlein>
+References: <CAGm54UHxNhSkzC84hS7fh_s-DpdOuii0g2O=GU4Z1aPQ6YMgKw@mail.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6568.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f64f15c-c2bf-4389-49d2-08dd4b05dd03
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Feb 2025 01:37:51.1094
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Z6Qx2JB2bfVonH+gC4iUX+TdHeidFC/cax90ITHgfn8QgwQVIgAuqSYaN0l/3ykyYgN8NdzppCG5RbVTbZm5IxkTqSAq6JiE+y8C484Y/XE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6279
-X-Spam-Status: No, score=0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_INVALID,DKIM_SIGNED,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="bcNFpnwLEqK6OjLX"
+Content-Disposition: inline
+In-Reply-To: <CAGm54UHxNhSkzC84hS7fh_s-DpdOuii0g2O=GU4Z1aPQ6YMgKw@mail.gmail.com>
+X-Spam-Status: No, score=0.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -175,24 +109,115 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "andrew@aj.id.au" <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "eajames@linux.ibm.com" <eajames@linux.ibm.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "mchehab@kernel.org" <mchehab@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgS3J6eXN6dG9mLA0KDQo+IE9uIEZyaSwgRmViIDA3LCAyMDI1IGF0IDA2OjE0OjU4UE0gKzA4
-MDAsIEphbW15IEh1YW5nIHdyb3RlOg0KPiA+IENvbnZlcnQgYXNwZWVkLXZpZGVvLnR4dCB0byB5
-YW1sIGZvcm1hdC4NCj4gPiBVcGRhdGUgYXNwZWVkLXZpZGVvLnR4dCB0byBhc3BlZWQsdmlkZW8t
-ZW5naW5lLnlhbWwgaW4gTUFJTlRBSU5FUiBmaWxlLg0KPiA+DQo+ID4gQWRkaXRpb25hbCBjaGFu
-Z2VzOg0KPiA+IC0gVHdvIHBoYW5kbGUgcHJvcGVydGllcywgJ2FzcGVlZCxzY3UnIGFuZCAnYXNw
-ZWVkLGdmeCcsIGFyZSBhZGRlZCBmb3INCj4gPiAgIHZpZGVvIGVuZ2luZSB0byBjYXB0dXJlIHZp
-ZGVvIGZyb20gc291cmNlcyBvdGhlciB0aGFuIFZHQS4NCj4gDQo+IFdoZXJlIGlzIHRoZSBqdXN0
-aWZpY2F0aW9uIEkgYXNrZWQgZm9yPyBJIG1hZGUgaXQgZXZlbiB3aXRoIGJvbGQgZm9udCBzbyB5
-b3Ugd2lsbA0KPiBub3RpY2UgdGhhdCB0aGlzIGp1c3RpZmljYXRpb24gaXMgcmVxdWlyZWQuIEFy
-ZSB5b3UgYWRkaW5nIHRoZXNlIHByb3BlcnRpZXMNCj4gYmVjYXVzZSB5b3Ugd2FudCBuZXcgZmVh
-dHVyZXM/IElmIHNvLCB0aGF0J3Mgc2VwYXJhdGUgY29tbWl0LiBJZiBub3QsIHRoZW4NCj4gd2hh
-dCBpcyB0aGUgcmVhbCByZWFzb24gb2YgYWRkaW5nIHRoZW0/DQpHb3QgaXQhIFRoYW5rcyBhIGxv
-dC4NCg0KPiANCj4gPiAtIFVwZGF0ZSBleGFtcGxlcyBhbmQgaW5jbHVkZSBhcHByb3ByaWF0ZSBm
-aWxlIGRpcmVjdGl2ZXMgdG8gcmVzb2x2ZQ0KPiA+ICAgZXJyb3JzIGlkZW50aWZpZWQgYnkgYGR0
-X2JpbmRpbmdfY2hlY2tgIGFuZCBgZHRic19jaGVja2AuDQo+IA0KPiBFeGFtcGxlcyBhcmUgbm90
-IGJpbmRpbmcsIHNvIHRoYXQncyBub3QgcmVhbGx5IG5lZWRlZCB0byBtZW50aW9uLg0KPiANCj4g
-QmVzdCByZWdhcmRzLA0KPiBLcnp5c3p0b2YNCg0KUmVnYXJkcywNCkphbW15IEh1YW5nDQo=
+
+--bcNFpnwLEqK6OjLX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Feb 11, 2025 at 04:58:40PM +0800, Lei Yu wrote:
+> This email describes a repo-ci issue on some repos related to
+> clang-tidy and requests for comments to fix this issue.
+> An example of such an issue is
+> https://jenkins.openbmc.org/job/ci-repository/100565/console
+>=20
+> # Background
+>=20
+> 1. At first, openbmc-build-scripts uses `run-clang-tidy` to run and
+> fix the clang-tidy issues. This works ok.
+>    `run-clang-tidy` will parse the `compile_commands.json` and
+> **only** run clang-tidy on the specific files to be built.
+> 2. Later, build-scripts changes it to run `ninja clang-tidy` [1]
+>     This effectively changes the files to run clang-tidy, that in
+> meson, it will use `git ls-files` and a suffix filter to filter all
+> the c/c++ like files to run clang-tidy.
+>     The benefit of this change is that it will run header files as
+> well, and potentially find more issues.
+>     However, it does not call "fix" and thus does not automatically
+> fix the issues found by clang-tidy.
+> 3. Then meson introduces `clang-tidy-fix`, that does call
+> `run-clang-tidy -fix` internally, and thus it could "fix" the code.
+> build-scrtips is changed to call `clang-tidy-fix. [2]
+>     At this point, it introduces a side-effect that `run-clang-tidy`
+> will filter the files from the `compile_commands.json`, and the hpp
+> files will be filtered out.
+> 4. Now with meson 1.7.0, it changes the internal `clang-tidy-fix`
+> behaviors, and it will check all the c/c++ like files again, with
+> `-fix` support.
+>=20
+> # The issue
+>=20
+> With the current meson calling "clang-tidy-fix", it introduces another
+> issue in that it runs **all** the c/c++ like files of the repo, even
+> if it's not configured to be compiled.
+>=20
+> For example, `phosphor-debug-collector` has the
+> `openpower-dumps-extension` feature disabled by default, and its
+> `dump-extensions.cpp` includes `openpower_dumps_config.h` that is
+> generated when the feature is enabled. By default, it's missing, and
+> it gets a clang-tidy failure on checking this file.
+
+Can we just fix the issues?  We merged the fix for the phosphor-debug-colle=
+ctor
+one already today.
+
+>=20
+> # How to fix
+>=20
+> I would like to ask how to fix such issues from OpenBMC's perspective.
+>=20
+> Several potential options to discuss:
+> 1. To fix meson's clang-tidy to run only files from `compile_commands.jso=
+n`.
+>     Drawback: this way, it will not run clang-tidy on hpp files anymore.
+
+I think we/you should discuss this issue upstream with Meson.  I'm also
+surprised they made this change, not because of the hpp, but because of
+dependency issues like the one I fixed in phosphor-debug-collector.
+
+> 2. Change back build-scripts to call `run-clang-tidy`. This is
+> effectively the same as option 1.
+> 3. Keep current behavior, and avoid any repo that has a similar case
+> as `phosphor-debug-collector`.
+> (https://gerrit.openbmc.org/c/openbmc/phosphor-debug-collector/+/78065
+> does fix this from the repo)
+
+How about we just fix them?  This should be a one-time effort, right?
+>=20
+> [1]: https://github.com/openbmc/openbmc-build-scripts/commit/1eb1994bbcce=
+b70d575458dc7a968c0f26b5b6e7
+> [2]: https://github.com/openbmc/openbmc-build-scripts/commit/ac9c9c7
+>=20
+>=20
+> --
+> BRs,
+> Lei YU
+
+--=20
+Patrick Williams
+
+--bcNFpnwLEqK6OjLX
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmer/IgACgkQqwNHzC0A
+wRkoIg//QY+CYM/kGPTc/9Lq7jTy8154WIgCQ1FKoWhq4Tbd/lR/eIltGoXDsI5n
+LEdjx1lFrT+OMwnCpEWdJM+U6WLmrLavrGLUxtHb8yoosaHzP+SVbLZoOZfGeFWu
+OP16AmgyHEk0GlDYUpjLeO9gc/6RcKA7MGOKbhPw0pBOrURv8bm2msxRWvUX0t5e
+RJGPjJjol1fDjs3UrnYki0+L9cLNXZtaySXh4zUww/JH38qqGK+Y9AYWwBPyjC+6
+404nWLgaIxNE9Ugr/w3AyjXwyWkMOEMRPYvkxOV69RBVqPJPeMLI5f884F20CMxB
+zmfmWO38AHIZ/O7w41F9NgGOtX1+o3XYFvBethNTghKeHPZbCzrOl/ub/5Za1yvQ
+QIS0c29GKv4QbuYWHgs24vzmn2pahEKZNiOsasSENXpYyRq0EhGr1PtIabsLGNhv
+11OYzNrL1pSqTOaMpM10p7l6a0Qxp8ifmDHrOJ/nE1XpE/9A+wMMAvQNvTKYzG0R
+2b9S6aKa9Lr5hHO7WQ1CvLwoUH+GOjgr5IoK750TigMvcI2qEInpmJymj6PJBBUC
+yEZTWn/2aUrYbCY8bibEgsbDO+FaxQvxwuSM9O1+/HWeRmC1UxUfcSUOhwqND3dB
+7CTf1ZxVA4jcfw8AnXsAC9YxroQEk924RgcF3152g1Q2GD+Fwa4=
+=Sp5X
+-----END PGP SIGNATURE-----
+
+--bcNFpnwLEqK6OjLX--
