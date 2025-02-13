@@ -1,79 +1,101 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B3D9A34EE2
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2025 20:59:19 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E277A34F07
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2025 21:08:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yv5bv04j9z3cVc
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 06:59:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yv5pL0fl3z3cVc
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 07:08:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.15
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739476744;
-	cv=none; b=mCtJdxd2Ke58XPaEnqX1R/vs7uGPnMPvzLzfBj+b6+T1DZn3PhoS9VTrYn1l0xZ4P5J0FxMMamMsv5oT+i+e0vnwmLrIaV4ydyMLNRPfKFSjNgORAs3bpiH9kQSR32/pVnNUG5Dy96Y4GajVSTE+1Be0yNFs8umfLuyOTK8LplNf2eNkJCKATk9O0NPQj7HntBsLM2fGdyXb6vxJJ8wUDo2xkYLj2TInQ9L9zsgUfhiwP+RRM8gemxCuuWdHhjJVpSgP7m9GvDOWAi75WCaOdOJwPpU8XF3t74LyNUvsIzbx/7M3TbN0eTUbwq7RKBg1L/avpIqKMA1rdwegW8OApw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=202.12.124.151
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739477287;
+	cv=none; b=YF4uLoxFDyzEwT3aGoHL79GcHLx4/TmZZfBHQ9N56Sf8TPUzxc92UMgBQln2dxEM8z8cdfzhYRQNv8qVF+uDsmdhCP+RDtwv9A0T1+D1nOtmDQng1TxBxd3Grli43qdCNO7uQyIAV9jEE8Cu3aS38y43NoUm1Yqle49IaJ0iaoIORHn3EqKpl1innpygRue61+D9PNddYTCGuYGXNB97KW6UHr31gvqKYiOKqrz+5hTiJ9NN0t858EIdv51wc4mQvS+w0L/U3ZomQjhbFkodDxPVdXA0JKUyIiDYAzqpZvikcdzDfDfs61TpOXZ6IFfXCuE5bOj+EFRfEjaBvPC1+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1739476744; c=relaxed/relaxed;
-	bh=yNTBJbXq6XQDQXwdcOEMdp7c8k98TPmJyNZQVeGAGec=;
+	t=1739477287; c=relaxed/relaxed;
+	bh=MNFWum91DhmHRg6b6DQC9WJ3iYneYnHqPeq3pG3Wbgk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yg5v5+sWTSDoGy6OVks2DpYCoNWwpW2ZcH93VtzgreHUlD+2BnGH9StmKEx3XvL/rSgdU2vWl+Z6Xlo5SUA+2x2t5yE3TuZl77LmoHkUa3ELqKzRH9xkBtJr48y1paGY/crUjB8m52ZdARh2a8TDHt5XQkZPzL5I4yt4NWee0seeCIzJvg70kmC41vflf/012RQmfuB9sJVkiBqngHlv5UOiUQpSSQwkvgif53pkXFuD7qB2eu8Ahhlr3MFjfGlu84hurgXlBZpR8xaZFEW0IvSX+D5rk4g8s4Ccp/OnWEGoBN+/vY5saTC58JuO4uaRdHvvZd6gM3ULGdq76NDapA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JdBcgSKD; dkim-atps=neutral; spf=none (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VvORnF+MLb5y0R9346qMFq3FKfTJMrwlz8hC4hEN0XQkJ1LkAUHlaEp75b7gk/DrK1vetZBZgwei66uqmSAWH4au8OPBFS+Ho1Ny0XhpfpRTqIQL5MCybq0QPHcyrPAc6P4RsVHMBuF7feyt2HKCPvstj60MrWxsbSz6xqfIPax3M7bpYPnaFnAPRhK/qrupVvAZRiImDw73uuCCnvLV+l4syAAc1tTFhDl1mxdGidnaN62+97T5coxFJYCGHtdcDDTDY4lS6GEltNGp9zEn+6tT6OXxa347EUX/90uUQ8q5Ca+fuWsTvO3HAUvXlGUNKjklyWoGo0hehDvH/hdS5Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=CJb5Lv0J; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0/SHxB9W; dkim-atps=neutral; spf=pass (client-ip=202.12.124.151; helo=fout-b8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=JdBcgSKD;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=CJb5Lv0J;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=0/SHxB9W;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=202.12.124.151; helo=fout-b8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yv5bp1PTCz2yGC
-	for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 06:59:00 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739476742; x=1771012742;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=RyreHDxBizlFiBJyVrYaLJTxuTc8Y9j30c42u9G6/UU=;
-  b=JdBcgSKDHLFbq0Cc1fnQolSGbmP7IhyUf7+i9prg56gdDSwwIaaw/Ky+
-   Wk44O6UOOgOu3ARw7m1oH560GPThNWLd0oNJk1mfjWFsOG/GBoMeEEB2X
-   QyNQB/2vOZusk3C+kAsHUEGfkkKUQgtbsIdIFpr2nghP0iKWy68Ivccs5
-   XpmF3k7UnIv58l2O7TaoEO8hbNapaGhXkETD0Cg1Jp2aih5jif6cZWipH
-   TiJij35KCGCobdeZ6v3DhUmBtccJ62xQUtEicJclPLNgHb38G/oOk8pxW
-   hM2q4azaFUE5+8dHEVt92rFPZFsq8sPSxteh5nxNCegLeEXkBCGDgtgSI
-   A==;
-X-CSE-ConnectionGUID: i3D/5XlnT9+iJ7IXxFDA5Q==
-X-CSE-MsgGUID: 89ZOIb6lRaueyw5/Dmd2pQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11344"; a="40355411"
-X-IronPort-AV: E=Sophos;i="6.13,282,1732608000"; 
-   d="scan'208";a="40355411"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 11:58:58 -0800
-X-CSE-ConnectionGUID: RZOTy1WsQEiPhZdbmarpAQ==
-X-CSE-MsgGUID: zdlZnutgQw+nzLEJWQLRWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="117373760"
-Received: from smile.fi.intel.com ([10.237.72.58])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 11:58:56 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1tifML-0000000BGwD-3DSN;
-	Thu, 13 Feb 2025 21:58:53 +0200
-Date: Thu, 13 Feb 2025 21:58:53 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] pinctrl: : Switch to use for_each_gpiochip_node()
- helper
-Message-ID: <Z65O_SaoSUcAY-rt@smile.fi.intel.com>
-References: <20250213193152.3120396-1-andriy.shevchenko@linux.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yv5pD2b7Hz2ypW
+	for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 07:08:03 +1100 (AEDT)
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id B62EB11401BB;
+	Thu, 13 Feb 2025 15:08:01 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 13 Feb 2025 15:08:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739477281; x=1739563681; bh=MNFWum91Dh
+	mHRg6b6DQC9WJ3iYneYnHqPeq3pG3Wbgk=; b=CJb5Lv0JaPvLMJ39WzSLV+D847
+	Ie/BudbwgY+efbJGvkzp9vwBWVHqixUw3Dd3TcHxKc5t0czc86MZ8cc1j6A5z/3v
+	qZCmG11ce29jF6uoaaW2RvQG6z7C1dX5Za+RF0jrcwBELJvH9WfJybx7UuUpx4C/
+	s0IybDD5oo82xDxIlpifPlcRlYa7etHf7I12zzAAUKI6ahYa5KfZal3owtvxTNfZ
+	p2vAKlEOSJxhwIyc6++c9PFD8bbDt8kuTIP3b2kcCG6oZ4T3bv+cwnNw2umsdAqO
+	NDxhAstL/JcDg+11LgO9UeT+fL5PGo/ryCU/clODKRodvkBhZmr7QpAzPk0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739477281; x=1739563681; bh=MNFWum91DhmHRg6b6DQC9WJ3iYneYnHqPeq
+	3pG3Wbgk=; b=0/SHxB9W//JJtoaLZkEvWj3wIAzx9X8xQ2Ecr2+Whj3tQb15Asd
+	TGjlj3a2J2lPl9Wenogd4chTDxcf4f9R2e/qYfnkYgZGASTdJfCMo1X8nVblePYJ
+	C8e/Lf7DSWifuXzV4wq8Q9uDutF7nzCBtmyAQkca5UpyFwI8lIyN0M9FoEFJb30n
+	LRiJynkbQUDRjAzQOBLR86jf9XzGE5JWC2/TDQJHWpHiE9SuRCW0hVgtG2hHuMZ6
+	Eu0sBl73xSL1FSuQgNgS0Aa54OKNYXmPVojdaDaPksQa9mAdljjd2F9TVWBq4+nE
+	rLA8FzD1Nb2aR+TO8EaN/TTTLKynDtpntFA==
+X-ME-Sender: <xms:IFGuZ0HzIbLcVN13aKeqoQO774OoyVESFK2qrxoBuO2NooxxbaKXNw>
+    <xme:IFGuZ9UU4z5oj7G8oVXMQ7wcrBfu4__H_iY3NIPUnimxr_fqrXZATWApANByfcgk1
+    GZqu3kYlL-kd4vDBTI>
+X-ME-Received: <xmr:IFGuZ-KUI63YxwwMlFbkGQH27Iq59HWxcxBG28AMfM7Mv4qLZ4wRoriGMR8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculd
+    ejtddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhep
+    rfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihii
+    eqnecuggftrfgrthhtvghrnhepteetiefgfeegtefftdetueeltdduveegleegkedvkeeg
+    udekudefhffhtedtuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihiidpnhgspghrtghpthhtohep
+    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephihulhgvihdrshhhsegshihtvg
+    gurghntggvrdgtohhmpdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgr
+    sghsrdhorhhg
+X-ME-Proxy: <xmx:IFGuZ2HcJDEfw4xqoYb7ILTSECo-ZruRLm9IxjdtfPDjx9g5KkGSeg>
+    <xmx:IFGuZ6W_YI5hjsZuVg7F3ZSvgQ6m6fj1AEuQj8VbfNCqrflKteikQg>
+    <xmx:IFGuZ5NzYs6SawPVCbzyaFO-AYld4DPH43fn7kmb2v3rm35BjRfRZg>
+    <xmx:IFGuZx3Z4svulSoAU1I1pQ-_GpJeixXdO5sO4qST8G74ol-AgKjs7Q>
+    <xmx:IVGuZ3g8JFyuPHkcjBsY1UYJU9s5g9pHZGEOYjJhf6Tt6deLQawAQ05W>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Feb 2025 15:08:00 -0500 (EST)
+Date: Thu, 13 Feb 2025 15:07:59 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Lei Yu <yulei.sh@bytedance.com>
+Subject: Re: About meson clang-tidy issue on some repos
+Message-ID: <Z65RH3gxf7x1QYKF@heinlein>
+References: <CAGm54UHxNhSkzC84hS7fh_s-DpdOuii0g2O=GU4Z1aPQ6YMgKw@mail.gmail.com>
+ <Z6v8ivnGwbt1QCDk@heinlein>
+ <CAGm54UG-6wUB7LfC=GR2bJorD9wV-nNYaU5se5+FOL-w17kDyw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="3upQtSNq5zTA5lJ+"
 Content-Disposition: inline
-In-Reply-To: <20250213193152.3120396-1-andriy.shevchenko@linux.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+In-Reply-To: <CAGm54UG-6wUB7LfC=GR2bJorD9wV-nNYaU5se5+FOL-w17kDyw@mail.gmail.com>
+X-Spam-Status: No, score=0.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -87,21 +109,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 13, 2025 at 09:31:52PM +0200, Andy Shevchenko wrote:
-> Switch the code to use for_each_gpiochip_node() helper.
-> 
-> While at it, correct header inclusion as device property APIs
-> are provided in property.h.
 
-Linus, I forgot to update prefix. So, I will wait for other comments, etc.
-If no problems appear, can you fix that when applying, please?
+--3upQtSNq5zTA5lJ+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-With Best Regards,
-Andy Shevchenko
+On Wed, Feb 12, 2025 at 02:23:28PM +0800, Lei Yu wrote:
+> On Wed, Feb 12, 2025 at 9:42=E2=80=AFAM Patrick Williams <patrick@stwcx.x=
+yz> wrote:
 
+> It's not a "fix" but a "workaround". It's always possible for a repo
+> to have a disabled-by-default config.
+> Instead, it's more like a bug in meson clang-tidy, that it is not
+> expected to check the code that is not configured to be built.
 
+No disagreement.  I also see this as a bug in meson, but don't really
+care enough to debate that with them.  If we can fix all our code to
+still be successful, we might as well do that.
+
+> Agreed. It's a meson clang-tidy issue.
+> What is your comment on this? Which files are expected to be checked
+> by clang-tidy?
+> a. **all** the c-like files in a repo
+> b. or just the files to be built
+> c. or ideally, the c-like files (including .h/hpp) configured to be built.
+
+(b), just the files to be built.  I don't understand how you run clang-tidy
+on code that doesn't have compile_commands.json entries.  The whole
+point of that compile_commands.json is to pass all the same -D
+directives, etc. to clang-tidy as you would to the compiler.  There is
+no compile_commands.json entries for header files.
+
+--=20
+Patrick Williams
+
+--3upQtSNq5zTA5lJ+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmeuUR0ACgkQqwNHzC0A
+wRmCQg/+JYmaiI6F842tpau+wGgsyBaF7EDHcEUNhTBi18gEIt3R+09+kTLqoe6x
+8KIA+BP/3C2UaNkNffiDgME8/dkmMUxe4PU8BDwBrbgeQkCPnRTuveF2/gJcTBOw
+8uukZgiLAiBva5XKYrtcG9tLt08r7jLv1l9r6ScHa4HgDy8gm2QFWH9FjooNJt4k
+rfuOHGRp+znSV6OA3Rs5cZX5p+PsDMlG6M0llvvWlASUasakAK4gECEY5YnDpnDv
+qRCJ4GTgUf+U2Lld3BKhKmLYYncHPTVyeCSaUqDzxXFvWShNX71UhVFw7hI8jR1m
+SnJkgkqyp833fOfVbnSus4Dj2MMY3lD6464ji2JmmPIMtHC/SwtXXxCJ2ErKYuHG
+ZN0PdtapQNFozxYCfAYsiKq3M/vkqedgnmYjZTI0inTONCrtVn60yGK1We5EmNQ0
+WyI1BG+x+y6mNfuKlE1AfWF9poMd1eMY+WcqwDfS06Nst6jxv0Svq72HG7JK6t52
+9Xg3/AvqgEuQ00hWV7nIBzDNnC7TY7g0Y7P7LlK9BCYZ+sosDi74q8NbgZFat+na
+rdolIInkh5QVXLlRrQ1FFo0TQrHgKNjW/fnXSFfZH4XoVGPs10aymo9J/N0g9F9H
+TRO/7RfPPWgXmYLdDyOFuoKuYft0ySWHczSzkb8rBwuUTHZ049U=
+=wBof
+-----END PGP SIGNATURE-----
+
+--3upQtSNq5zTA5lJ+--
