@@ -2,62 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75410A33934
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2025 08:49:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D09F9A34E82
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2025 20:33:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YtnQ4608Qz3cVc
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2025 18:49:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yv51x3BZwz3cVc
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 06:33:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739432970;
-	cv=none; b=YvokozIRTOcSq28D2NArsxudiHPLR2B9XmI0vljVs+/vz5TO8renT4eAbUeryYRaVR6OILdOOUDLrvjKW0/jzSa3eup81ab6xzfEtaXj/ded6xtwfQRMV+KfdYTKYUNWsjQkachQhBaD1fbGZaFKRjn/yzqb24nvwrhudSZkA1UC5nTnSn3uFrcarnia38ICo1NzdyHzw/RCwEV164X/v6WWH+ArVxnpZGgI0DBogP7TkCe9NYq9Gnd+jg1gqxYmsTvd30u1LnBEk81HInesVBbzEAjv4DXRPncAT+d+dnaNHA+6UhI6QyUrw8/AkHr/Im6vE4dkfZ2QDxwfCwsXEw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.19
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739475187;
+	cv=none; b=bQNTo4UfHC0t84JZitMP92YOr1MOE+EN+Ny1Yzf/YJiPkcoEObDzsYM1xLWjaE5qWy/LL+hqFa0skAtzqd5wu8Ex2sAS9mJMLQGTn7m6cYgFvSigrJwGxiJphKDW6hKAGZj6eg4pgP4F4YsMgdFjkHl4i3e6+WrQrEUnHLJmSPiq3f+DBEQhKVGN3QXH7XyWnmFuP+wIA12YIHUGPLGejBIwQN9wAsT0AmDZDMDqrxeOM7MEFyIbfpMv7gCRLKl7b+DdNO0Co6jouYQ2oL/vmuW4M495f+LSSWR0GfbhlVQQfF8qH077h1Cep2M+01PpH40EKmL/wvGKkTbNaa4Fyg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1739432970; c=relaxed/relaxed;
-	bh=t5SBHujVb6RtmGbKK+7MgKn+iTLkRwv9ntIAACittIU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lu6FqzylKS89xth2PUIvbPXTHXxfDt12f4eVJS2RSIwPeGk6qp20qbMRzJjUcbmUt/VgGT1bb0akQvVmMx11opINAJirsR7ptL80RKT+R8RM6lsLSG4VCuh0kUP0lBD+HTEyvfXQj/uBv3yiPbNmMCmovouWViuk/W54a7ifHXXgJsjKTwQ1xiv2FK4H+Kbiz87IL9kORuj0ObC4FCAzjcCoS4pjcbP8XyhMi75y4JWZqJtGgi5+/jQu+B7WZZaRpttrPLXnnxnVxgrcTeNSGPmeFqJSopQmSaFiMNDOUinImYNDtikQxDtldU0IZhFn7AQ5wHqtQY30PFa5geLXJg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qMluKzxm; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1739475187; c=relaxed/relaxed;
+	bh=A/sI7wZhr2bQ8gXmYipV8Oec4YgZ/Mzd1qYwyRCPHT8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BON9ZSTzA33K0ziveQt+0MAkJ3bcOt6zl0P2f+o/2ZBaccEbzz6wQmBMdBR2VpswfKO7AsKVcTWrSSKSFumPs/XIGCPnB5HRgT4b73eItci/4lRvPso6m2StewCM/+4+IJoe2Nd9pTx+2T7tmZmApYuxK0G1P5DfB4Yd8LtsLXN0YTwbb/quATHTqXxG5HGnORydALGZ4hdJJWRMGpYaI+xpHXzd8ufavltbWDJPtoQyRfo2wwomCyHlJuX9Vc6NMu0OvqQYAFlUE3FOK6BK2dP7tlwPsv5RIy1+w+5U2fXzVSWENMWb1Mwm7mLxzghWCDblQLAqJCVIdgCILOanZQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Gps/7zpH; dkim-atps=neutral; spf=none (client-ip=192.198.163.19; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=qMluKzxm;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Gps/7zpH;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.19; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Fri, 14 Feb 2025 06:33:04 AEDT
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YtnQ06WLkz305G;
-	Thu, 13 Feb 2025 18:49:28 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id AE923A41E97;
-	Thu, 13 Feb 2025 07:47:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7596C4CED1;
-	Thu, 13 Feb 2025 07:49:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1739432965;
-	bh=2r+iftouz+KNmWMr3hXVKgACN/Hfjh0z0QlWbmjE1h4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qMluKzxmo91HgIN1XqkBR3AF7NgltciJKCmluuhvjfPw7PanUY4Ka5mozmeVyD5kb
-	 XhASNZQV3PF7zlpU4/W9nXn5/2hUbc0y8/yPTLKFbGPWRZe604hrBuY9RSRXb42L4w
-	 tATww9srWEdEo/s3xQL0FdCoaUHGzZJBYR58r/eaBEZhz6HohlAuddG5xQR2vUr1+E
-	 kMB4mFf0DYXi1IORBjBN1ysHl+A50TxsBym5CV7mYQujhqHGg71oN4/b/8cC3j0b3u
-	 ki0MR2Oxvb+rgyz0IFScFso0vcPnscvYFgF/xV9AjcdxZTRTKilye+wBn2K1WIdbzm
-	 dchmsnZ2sqvVg==
-Date: Thu, 13 Feb 2025 08:49:22 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-Subject: Re: [PATCH v6] media: dt-bindings: aspeed,video-engine: Convert to
- json schema
-Message-ID: <20250213-loose-positive-moth-be16ab@krzk-bin>
-References: <20250213015338.3243171-1-jammy_huang@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yv51r2ffZz2yGs
+	for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 06:33:04 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739475185; x=1771011185;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=3isR7VFoqzfVxZrvhDXXIeUYz1Uzy8aLfsgglxXjle0=;
+  b=Gps/7zpHNZ4xVe+CcnRFR9XE1abImWMRGIWCMoyHrIeHQafeFTnARDMu
+   u4jIWcahQDaNoeRVqxb4cGLrHSzSAMNDC0pZbCE2ahi3xhEV75Kur+asx
+   HdbcmDTn5GmwbxbbJSpPppRCfpFpDcIGQhH1ioWneyUvn1YSzjBQhctm3
+   0AfELYpCiSe66CCwT1MSng9knzT/EhNKPDE2YFZh/cPzuc6VXbr6Nc/Cz
+   p3rK4WyTx6TfVyTO7OHArYZuPz6hbHxSLqFrRucdueH7TKcTPlBuNagLc
+   /s92u3zakxp1Udc2L/Df4Vp/8VHTQS2fjLEgyqU4fmAlDNqW9xfTGMV/P
+   Q==;
+X-CSE-ConnectionGUID: xEKI09dZSECWkxoADk9y8g==
+X-CSE-MsgGUID: wUG9jm6RR4uSG7Hrh/SbUg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11344"; a="39386876"
+X-IronPort-AV: E=Sophos;i="6.13,282,1732608000"; 
+   d="scan'208";a="39386876"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 11:31:56 -0800
+X-CSE-ConnectionGUID: ilCaPk/2Qx+K/0Rtci5tTQ==
+X-CSE-MsgGUID: ltjIHdYaRPem+FF+Ox2RJg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="136472326"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmviesa002.fm.intel.com with ESMTP; 13 Feb 2025 11:31:54 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id 6A1B91FD; Thu, 13 Feb 2025 21:31:53 +0200 (EET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1 1/1] pinctrl: : Switch to use for_each_gpiochip_node() helper
+Date: Thu, 13 Feb 2025 21:31:52 +0200
+Message-ID: <20250213193152.3120396-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.45.1.3035.g276e886db78b
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250213015338.3243171-1-jammy_huang@aspeedtech.com>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,19 +83,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: robh@kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, joel@jms.id.au, krzk+dt@kernel.org, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 13, 2025 at 09:53:38AM +0800, Jammy Huang wrote:
-> Convert aspeed-video.txt to yaml format.
-> Update aspeed-video.txt to aspeed,video-engine.yaml in MAINTAINER file.
-> 
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
+Switch the code to use for_each_gpiochip_node() helper.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+While at it, correct header inclusion as device property APIs
+are provided in property.h.
 
-Best regards,
-Krzysztof
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+index cdad4ef11a2f..2f97accef837 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+@@ -10,7 +10,6 @@
+ //   block, shared between all GPIO banks
+ 
+ #include <linux/device.h>
+-#include <linux/fwnode.h>
+ #include <linux/gpio/driver.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+@@ -18,6 +17,7 @@
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
++#include <linux/property.h>
+ #include <linux/regmap.h>
+ 
+ #include <linux/pinctrl/pinconf.h>
+@@ -1033,7 +1033,7 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
+ 		return dev_err_probe(dev, PTR_ERR(pctrl->gpio_base),
+ 				     "Resource fail for GPIO controller\n");
+ 
+-	device_for_each_child_node(dev, child)  {
++	for_each_gpiochip_node(dev, child) {
+ 		void __iomem *dat = NULL;
+ 		void __iomem *set = NULL;
+ 		void __iomem *dirout = NULL;
+@@ -1044,9 +1044,6 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
+ 		u32 reg;
+ 		int i;
+ 
+-		if (!fwnode_property_read_bool(child, "gpio-controller"))
+-			continue;
+-
+ 		ret = fwnode_property_read_u32(child, "reg", &reg);
+ 		if (ret < 0)
+ 			return ret;
+-- 
+2.45.1.3035.g276e886db78b
 
