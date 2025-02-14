@@ -1,153 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F8B8A3574E
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 07:41:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 012FCA35B83
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 11:25:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YvMsC0FS1z3cW5
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 17:41:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YvSqk43ZWz3cXK
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2025 21:25:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c112::3" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739515292;
-	cv=pass; b=Dep5wzJNJF+q48ZpyB4nyn86qUKgrpQlgaUay4LMt24bjSwqUI1YtYo29UdOqauUZr/q5eSAeZHxZvWTkXpUFapW+rJODQq+V/EIXQedfCcSfWSGv6dM+FCP1DcTXDToCav34p8UL3h/bY1Kt79sPhKawZhV1lOUzKdU5P8ToeUlOzMFd5dLzFbN7O6gEthHYC1rifOwPmTN5qmt4QcKmkImXT7p7HO6SIC0uaMvxn1gOXJ+hIdP/T/lEhlTNDe2HmO2ZiwddmASH1vgVwnoj0qU5eU2t4QjFw3JNRBPM6ixDzC9jsiLIu1q9xDRTBznsH1UNfV1jbSBbPw9Hk/xrQ==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1739515292; c=relaxed/relaxed;
-	bh=SacLeXQIFUO8ejyuQ8SWf7GdGAr3T2epfyHPKI5v0Eo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=a2eARDG+SvV9DLMQdc3biWz40ghZs0sVRZRZpGfV1GQ92sZ23mq9IxDga0/Ly+erIRU6Z91WvK9JcWjjRDuoT9FVTeq8qgspcC9uVlApHuwFDnxKMlkXU8Cl2Nnw3r/QSNDky4XZL5RovtSs5PnIUB2vRgk5WyYYHmOv9On17CTc9OwSkmq1iZA/QxK/JjsCJh4Ku97iySwuWlznX60Gim7klulePiasfSp5aEuCH+RJyTlgYXMT+kRGiB4XNK1DuMrr8ueZCJFIMwcg67UpXUb1phtmceWv8kvJ4S3TTIisA6BVpFR1VewPrM2F6i1rmjrVb/3SidwjUOUvVtRTsw==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com; dkim=fail header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=MI5hkqSF reason="key not found in DNS"; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c112::3; helo=cy4pr02cu008.outbound.protection.outlook.com; envelope-from=thang@amperemail.onmicrosoft.com; receiver=lists.ozlabs.org) smtp.mailfrom=amperemail.onmicrosoft.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=amperemail.onmicrosoft.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::231"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739528735;
+	cv=none; b=Ay11sZdnUfRdhBrCr9lXv6baYVBNj+Djx2CDLJ+nYOVpIlI7UX5bOocwqcSCnGdD8nS+NdoxMfSyTs6ATkMdd1CmYscdurjCExgnW0Yjg0v2Q34F3fZoRcT1mncp/EqmzVE6iarj8j6Y5cIwLeLaV8epzZsH2Lay74Sz1gOO+Sx0piETVZsQX/py1jjqRXia24yFU4WPHh0Eg3d5cw5Q8Gtp5MZ/1S5fWuaqomypNv4iA4meU3R+sopgTHtb4Jo8hhdpdOJHewuWCnleCYSFIZh8HjlHJI5lW8sEp5BtrVdmvgO4nn7LjUDkM3pdox9XA+GSJJbAE9Qppv1AwpN2AA==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1739528735; c=relaxed/relaxed;
+	bh=k0ZA9ZOZTnv0fajLPHLG7bzzy2Bw8GSC45UzvaKQ3pM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jut1RSeA/PJZtVsvl34/A44lcKyyUmVzB3tPbr31m1bxMP99Uo0+OgS2f2W4Nm0QlxZTP1GqRAs1t3WsXrGzYVViwfdLL93/sdMcvFAohg/GCkMm8o2JzxqOODlGnBFGbnMQakly38yKMuI6t6GjZm9n9vaQ4GdTx4p3KFrW3cd030FpSgQ2VlYnRAiGoAzGeiqNoeONU6L/VDyPULA6hnBulewI+RlurpTDvHCsVzi8FujPy4jJT9gnzZkZm79ULuRrtP/EilMTUNtqnNvamZWQr4dcoZqPYMKAaahYDIqH28U5IO7RnNpa0DJjiNJoBG5KYBkx1JTO6AWBbMsILw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BJBrMDAc; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::231; helo=mail-lj1-x231.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=MI5hkqSF;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BJBrMDAc;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=amperemail.onmicrosoft.com (client-ip=2a01:111:f403:c112::3; helo=cy4pr02cu008.outbound.protection.outlook.com; envelope-from=thang@amperemail.onmicrosoft.com; receiver=lists.ozlabs.org)
-Received: from CY4PR02CU008.outbound.protection.outlook.com (mail-westcentralusazlp170110003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c112::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::231; helo=mail-lj1-x231.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YvMs73qsjz30Vk
-	for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 17:41:31 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nJRECsISIePgI2Wfv5cRsPo8woapTzX/7pjfX1Ep9C0MVMJpFVTvd+DSrwtXSmvcjBlxnd7tgXMaXSCYFJ2+bQUxDY2MdfYIlK7SYFGlUnUCu7CKoXoDtg1YhcZfek+MbaluLKlHeaKgLoP4QTjo4pYM0CDltICaIaNhiir5tq4QdRlo6d685UqqGK/YWi4kO1BCFc8s8KXeoAVJwY9xKNTZXApTCrU8wqgZFbwxMIfMS0D6/qKec6efQnRxlB1L3nIshIjg2J0THEsotLZ8E+ouk9g1fo6dW5HdKQiQ85/vfExu844R2Bu9nPZBs1Cghy+46BjhgNPeE06SjHfsbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SacLeXQIFUO8ejyuQ8SWf7GdGAr3T2epfyHPKI5v0Eo=;
- b=jqE3a4rov2lqcohc8piNEpc//ky5tAcN9abfUyaJ22sIuWuItgtr19S31oiQodKqQjL6+iDH+Gko8b29LVD8Vo9/rSLpjBhbCI1cnDR9Foa8wzFU6+a0BaGd+T2FE/cuipLFMb1jZXaf8a0qFQJ8FutLt/YlOQrTvFdomPGxMa8KzFkYsHIyz682qjGp2wCeNJHrAdUqYOWWYbMBiahACcijMKPWPX4KADPm2BmXo0sD0kt3IHLKo2dj3IRphN3osZ9x423hDulx8t4zZqienv1keTW7rVwMBaPJAFDv0kJ6Wuelz5754Fc26IYIm3ZMFbU478jMIy/1ywLiJ8wwdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amperemail.onmicrosoft.com; dmarc=pass action=none
- header.from=amperemail.onmicrosoft.com; dkim=pass
- header.d=amperemail.onmicrosoft.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YvSqf2vcsz2y92
+	for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 21:25:33 +1100 (AEDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-30795988ebeso20173761fa.3
+        for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2025 02:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SacLeXQIFUO8ejyuQ8SWf7GdGAr3T2epfyHPKI5v0Eo=;
- b=MI5hkqSFkfhQfbp9a74d968hUMNZs9gnYlrcYrMeKBOf0YkC9IYi/fc4WrgF9xhieuIk1kumo5t4ulW62Bp3pe58htGNzntXG48LQz/zlI+LtN/mmSy/kS2I4QwzciiCQckhwDfShB/rZ92IY4wXxUwQvS1hH/7DeA6X9XwxPEY=
-Received: from SA3PR01MB7906.prod.exchangelabs.com (2603:10b6:806:311::12) by
- MN0PR01MB7658.prod.exchangelabs.com (2603:10b6:208:379::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8445.10; Fri, 14 Feb 2025 06:41:06 +0000
-Received: from SA3PR01MB7906.prod.exchangelabs.com
- ([fe80::3524:4d65:8610:45ef]) by SA3PR01MB7906.prod.exchangelabs.com
- ([fe80::3524:4d65:8610:45ef%6]) with mapi id 15.20.8466.007; Fri, 14 Feb 2025
- 06:41:03 +0000
-From: Thang Nguyen OS <thang@amperemail.onmicrosoft.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: Re: Ampere's CCLA Schedule A update 2025-02-10
-Thread-Topic: Ampere's CCLA Schedule A update 2025-02-10
-Thread-Index: AQHbfc4/hP/I+Zb3SkeiOJIyPqL33bNGRYQAgAAVqIA=
-Date: Fri, 14 Feb 2025 06:41:03 +0000
-Message-ID: <D5524156-6A3D-4AC2-85F2-6BE5719937FF@amperemail.onmicrosoft.com>
-References: <077812E1-6D53-4F66-86D5-57DD5B8A8779@amperemail.onmicrosoft.com>
- <99a6795fac93ed52f2b2546026dd2cb4032dd8e0.camel@codeconstruct.com.au>
-In-Reply-To:  <99a6795fac93ed52f2b2546026dd2cb4032dd8e0.camel@codeconstruct.com.au>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3826.300.87.4.3)
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA3PR01MB7906:EE_|MN0PR01MB7658:EE_
-x-ms-office365-filtering-correlation-id: eb221466-7a6b-492c-291f-08dd4cc28d86
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|376014|366016|1800799024|13003099007|38070700018;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?9mk5DV+jeteCEl3aJouTdWsQoZcsaOlvNy99t0Rgg20PQ4k9HpdcB0eoh2xA?=
- =?us-ascii?Q?YJjU2U6F96SSfsSOb8rPoR3zm8wkmp/8U1d6szXSl7IvxLQZBJPK5uQ8ZoA5?=
- =?us-ascii?Q?oAIpQarXM3Aruseicx+sgv/zt2x2TwRO3oVf/acb4gs9nRXGOb1fCAIuaaPo?=
- =?us-ascii?Q?yJb/cr86rOKpb8mKujQMbM7vjWXFsj1AVCWjoHqX8NcNR/4vqIZHUr9HN7nM?=
- =?us-ascii?Q?N4ZYc2wkJdTPa98EoiXZf533y5RWUTWqg3R9EmHO5ohq9VewFBUGhZ2d0Lm8?=
- =?us-ascii?Q?Qm1OFl6id4H8spCpuJ2Nq/onG+1UCsu/Icfddi6s+v8HwtAT7JdMzmUHneJI?=
- =?us-ascii?Q?zKhiNnQKXnT6LpfbzXKfj01EErZ73HxcNIMSvDyHKQpPtoALkO10i8qMxanc?=
- =?us-ascii?Q?uGPa9W7Rn/mwQ6G3FFjmiP1HBaITNpcpczAqdw/7S/2ccyKVxLWQP1+eBf8B?=
- =?us-ascii?Q?ffMlZcF5NER/w4e6vBOw6d6IkjaDIWlGDgWLB68xrEcfLmBajgsNZw/hyvqe?=
- =?us-ascii?Q?zKvl1kbV6DxoWLw9S0J4Ry+P9RLICcBbvk+aeIZ0OJo80dkgjfJOJPqOYtZp?=
- =?us-ascii?Q?AExUvpGMC7laZchOoDPXI9MjPrUatNW+mpMI3KsDwR1DmuefeFY2ep+txP4H?=
- =?us-ascii?Q?15tFN2jHi+AHisjjgcRpnQ+/p4zRUWZINeMWsbLMg3Nid8fVn109V9mEY0kb?=
- =?us-ascii?Q?JHjmmEa71g0/pNv1ugUYPuCE4WVLb4POlOvw9FyCEY/nekVfgxHImSoJTz81?=
- =?us-ascii?Q?r0R7Hgowik9hgLpY7YxEji0OH3FOtp4RMhVA0D4wuedJSRiKh6lTkKpKVH71?=
- =?us-ascii?Q?Lnya+gr0rdft+xfnihCV0nXTr7ExfpiWmTxQzPgCSHuQmoR7FmXhWQQiLBCy?=
- =?us-ascii?Q?oI/76BhEVw75Rxcyi6OgHomf07M7QX9pAmCp2Zy3AXBzFRn9U5kYBxeQVHhj?=
- =?us-ascii?Q?zkUw+zlbubMiJwgiY6fIIkDkWw+wEdmidjDRmkib6UKeTHRpsT5ZGRG+5uCB?=
- =?us-ascii?Q?/5S555mdUj2jG8mxDH/zOQlPKz2eSIv6G8lQzaBkOs38KePAdCQ6X7fVDdqj?=
- =?us-ascii?Q?YFCT6nvyDLgYp90ufbNtfkkzoMg5OFLru/jTlItwYoS+DqBMEOT/W+43GRz/?=
- =?us-ascii?Q?uE1Kicb3AkFbFbCNAqiIQ0QV7vEJQNC4/N7Ec5TCAW7UBO2/7FudmndkCwdY?=
- =?us-ascii?Q?xe+/+h27lJjPgyEJJp+nvXo7xteizJa62BwZFC50dHshb+rwbbbqhlavYM9D?=
- =?us-ascii?Q?Hg8ZZOWCPCUBwc2ekyYgYvu+y3ltBMia0dULsHhNgo3zHd47LC+dVwBRLHTT?=
- =?us-ascii?Q?WoRFq/DW7rvb/dUuNf8wbrLPCPVUmcIjjyM6U2vXslvVg4Yarp8zwfCO/3IP?=
- =?us-ascii?Q?m0skeo9fY2inocgnUN2YEocQSxBdLufPW/qHKgo7aqgBLbjAIFYG9HJdso4X?=
- =?us-ascii?Q?sjWZE7MgIVB9xeyyqo+It7GhKf2Pje3KzEyCx/uAeO5hF7fuRacJZw=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA3PR01MB7906.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(13003099007)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?qnLnIxq3+Mbi2+EETqp/tfWuwu7763mKuz9fg3VOKr801qvyAOjcNNcuLZp7?=
- =?us-ascii?Q?wEx7L+azFDH90s5nAvnT75nXfRiG1L4vbEjRn3ccYJ1KMLaZKTYf+hkwa3Pj?=
- =?us-ascii?Q?Rc01b+e5Hu/rZCRQMAuBDye88buuK/jxnEn/6OxDr71/RKpz3Qp2s3kmywVD?=
- =?us-ascii?Q?M2ZNIRuSYekS07t3xPr4K5NStMfIpLPi2lH96+uEj+sB/IBcv21015vVwskr?=
- =?us-ascii?Q?GUY74vw0l6MpNdN5K9Qs8a+r3QfKsNjvdq7qme7HhsFIaf1clLnlyJvhLFlv?=
- =?us-ascii?Q?es+iER4bt0OoIcYtOVKK7Ilm4TRkl6BhCE7QXy2ruwj+ROEcvXvYn9Q8YGxA?=
- =?us-ascii?Q?8fsZgkh6bfpHgGxOWVMuAsw3qAFUx3TGdBXpjxJotzJsxb45hoF8CTymkIpV?=
- =?us-ascii?Q?1ReLb/oFpjJraqLCPaX+q6+hu+VF+KHvyn8+mvUsghXBlJ47ZRE/rE20AHoS?=
- =?us-ascii?Q?FaDi0t/SQhBGsffpz1mYy+V4A+2LD2bNlYPpKK0Kk2OzVFM1v5+mSpa6WhLe?=
- =?us-ascii?Q?4Q7ti4eFuhhs1b3UtKFjiap2Lrv55xqbYrlzSQU8rf9FXmKMptQWPk3frKLs?=
- =?us-ascii?Q?MOwpbHnzcQErQzNbDB1cNFqW2EFIQjvEE94Kq6ap4wgUo9M0cOLn2dEEZ4Aq?=
- =?us-ascii?Q?ucUITetRgRUo2dtwxcQkmYk4Z8niH8Edmn7riv1BQxM2T1oFnPVFE0Z9X1Kx?=
- =?us-ascii?Q?to39oow+/29wPBgjkBHg7HRwGfGKpIf1tvTj4LZp06jfqxUAWFkiQ6NeiPsi?=
- =?us-ascii?Q?FI3SGPpb87/RqzKYPp6ZSVQVlNx4ukTFW6zXpagChW5rHT08JbjXwcdR4SLz?=
- =?us-ascii?Q?5KGkHuHIXCLILhCg99gwE+ZsdsaSbSBP1gIZIqSmr9AS5kErMTCEjiEfDEuP?=
- =?us-ascii?Q?7ulCotgLSD54BqjYfeVmkOwXbyyGCCF0xdUqEF6S2eGBBrbMYVL6B5aeb4+k?=
- =?us-ascii?Q?6rNcHAuXE3RYrGxrU8s8H58IRtjyY8a+sXZ6C16iKBsJb8qQRZK7JFmcDjsp?=
- =?us-ascii?Q?xiwnbMUos1qtdSY0bdHOemeb9f5Ra/zvdL8Bv09rbzR5h0VmTGudNR/UBrUq?=
- =?us-ascii?Q?Im1UXm7NsMc3gDl3Rx0O7F4mdcvaYeDqbsI3eVYrHXird6wf5yjaKPtWSI4l?=
- =?us-ascii?Q?i66XDdwDCwZQbGeXVnyEWBMd4yMp9cctWRtHmfv4vqpDsBGhByPJPixQc0Wx?=
- =?us-ascii?Q?/ZKIS7htKFHN+GBX98jSPiWWnC8ku5l3vUBDD4AynqxuuhttHrW9pqXyXLJA?=
- =?us-ascii?Q?dnFyGi8huHHNMuayI6Xi0CmjAEiVGMKFQcwW7astNpZXrK/GX6huMntRTHQs?=
- =?us-ascii?Q?2OtnApwO2KNCgsHyRrwCUg83YJGq1ImAVVheFNGIoArp/gotA8xLxlCwtF9y?=
- =?us-ascii?Q?j0V3742QjVfWgjF2R36+OSG63teJwbZJtbMHAb2rGwHVVsQLzC/IiHqjKhfr?=
- =?us-ascii?Q?bzSPtO2Y6e8f0q26QUjJmof/bPdvG2OOx7LWaQC17gjpBLrXD3JYafDXn3lb?=
- =?us-ascii?Q?qIzTf3Oto1Ro5eN/GIgxWPHTMwGTP4WL6lMm0ql7/XIPPK3ozPHpgCsuvriE?=
- =?us-ascii?Q?WptwLxWrRamdJVEGv2XVn1JNNWZC6uTp8qZvMeldmsssMkaa0TiFfFNgKIuI?=
- =?us-ascii?Q?Jl5al6nhB5Ti+baMtOCpfJk=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <E169A8AC52D69548873AF603C3E46124@prod.exchangelabs.com>
-Content-Transfer-Encoding: quoted-printable
+        d=linaro.org; s=google; t=1739528729; x=1740133529; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k0ZA9ZOZTnv0fajLPHLG7bzzy2Bw8GSC45UzvaKQ3pM=;
+        b=BJBrMDAcWeTV7l0986p+9w2F1Jv396FnlbQXlpmL2lfDAn1NdMa9I0b7EubPMk5zrc
+         ohBOkGrVsMKbDox4TgwpLRlnUPBfd0O0QxOWLp234KoA8aSvBEXkU3wj549EH8XYxloc
+         0kElubLKNgueHBKRa/YrX+ORXOX8gHoWcV1oMeEoSJdnsaoFXM+KNWLZa/v5G8LyLZOm
+         UKm7GdaZeSkc2+MnzX/FTOhQG7HGgU5932JwyF6JHskcLKzc8gzE93L33dyaI9ygsXxN
+         dQBpiIoOyHpFr4vkm0TZrM4Vwb0FlV+eJtgpS8opyQ5ePuoXLAUuDHmR3/nRwcEQoVep
+         G4Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739528729; x=1740133529;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k0ZA9ZOZTnv0fajLPHLG7bzzy2Bw8GSC45UzvaKQ3pM=;
+        b=g736P1OAeLA5FlnuvsZRavkdaCFc224Ouh6HaEvWE89gLJkyG+weSTfImYLquIxViP
+         1lWbE8pGTgsidWEQ1P2iqCRjtbfQaHNTHHN7t5rsJB/VgQXGcCmOdxuZsG4w0/EYuc/9
+         bEfIqP5pDYekOq+fMFXFn0I5gBheTDgKapCCRZanLVbbWHq8uEd/h+nD5SW7fsbhFDFf
+         g3hB9E43xJpCz6G2GEtE2nToxP2dlidnix1qjLVI5+w/MpRe9g42mkRu8lqtlEonoaHA
+         2CS40Xn+EQ6vfEtjwpODNUA/VONg642NXC8AY1y6abPDrW5Jk8njcRB9611jCifklG00
+         i7iA==
+X-Forwarded-Encrypted: i=1; AJvYcCXhmhMdPHcpO/B5Smad8cAcpphHmKs6CdPjTU9mamWhW2mLV7giB4j/HTbzl+T2IeQFfPVNCtf3@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Ywfq/Qox+sxpQAh/2f4pVB4SGQ13BPV6S7zLkLGUBPK+y+AWuQl
+	voeJ46GM7mXTyFX0d4/ojgeNusJ6FX06X+GFQdEpfr98mJ+y6G5sSQ7c1Iv98DzdvPcprKymedI
+	S07DwY6NVktJM+J52vAywOTVUvLctbk6jtc7Ixg==
+X-Gm-Gg: ASbGncs0A08LU/UsykKwAtDOXkYz72zLH9LqFV0cQnio8qsvFP28ZCKF1Q4dDXUoCob
+	2SXO+pyQHKADY6usurF6US34yiSUtsxMe5J08fAkQpl/VAYlL0Is2kXjTxFmFNGg5aledcoF4
+X-Google-Smtp-Source: AGHT+IE9Hh8FY7yC6rWfR8h5HiUv5X+JqNPHfu9DuGImiZxAFDUtqBx67po7/8F/mivoIIRcv6W3Us9lZpgR3fWcZMk=
+X-Received: by 2002:a2e:a595:0:b0:308:f580:72a4 with SMTP id
+ 38308e7fff4ca-3090dcb712cmr21363841fa.1.1739528729288; Fri, 14 Feb 2025
+ 02:25:29 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA3PR01MB7906.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb221466-7a6b-492c-291f-08dd4cc28d86
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Feb 2025 06:41:03.8182
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xPzqzHENqucgB0cIJRLbRfcp4HnSzCRKZVE37aYJ/OKmTkW0XB+1ndQEFTGxBGNEIYU1QYneS5o8dENw9G9tsbrYVd94y+11XDVQ0st01Txiyh7Ov1TAD8U8oEqL3VKc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR01MB7658
-X-Spam-Status: No, score=0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FROM,SPF_HELO_PASS,SPF_PASS
+References: <20250212100532.4317-1-hanchunchao@inspur.com>
+In-Reply-To: <20250212100532.4317-1-hanchunchao@inspur.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 14 Feb 2025 11:25:15 +0100
+X-Gm-Features: AWEUYZm3QlH_GBZnkUEfNjfulhzgaPXWxFksRd157QzemkZUnJaOAOo2a3cEisA
+Message-ID: <CACRpkdbiNg66sToZ2X+G7J_qJSTpkRj1BgWbYX1_YmbGKdCmGQ@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: nuvoton: npcm8xx: Add NULL check in npcm8xx_gpio_fw
+To: Charles Han <hanchunchao@inspur.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -161,54 +91,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Hieu Le OS <lhieu@os.amperecomputing.com>
+Cc: benjaminfair@google.com, linux-gpio@vger.kernel.org, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Andrew for your feedback. Please see my comment inline
+On Wed, Feb 12, 2025 at 11:05=E2=80=AFAM Charles Han <hanchunchao@inspur.co=
+m> wrote:
 
-> On 14 Feb 2025, at 12:23, Andrew Jeffery <andrew@codeconstruct.com.au> wr=
-ote:
->=20
-> On Thu, 2025-02-13 at 04:17 +0000, Thang Nguyen OS wrote:
->> Hi Andrew Geissler,
->> Attachment is the updated schedule A of CCLA from Ampere.
->>=20
->> Please help review.
->>=20
->> Note that Hieu Le will replace me as Ampere CLA Manager. I will check
->> with you in Discord to change maintainer access from me to Hieu for
->> what I am handling (openbmc/meta-ampere and ampere-ipmi-oem,
->> ssifbridge).
->=20
-> I don't have concerns with Hieu replacing you as CLA manager, however
-> the expectations are different for maintenance roles. Background here:
->=20
-> https://github.com/openbmc/docs/blob/master/community-membership.md
->=20
-> Specifically:
->=20
-> * https://github.com/openbmc/docs/blob/master/community-
->   membership.md#platform-maintainer
-> * https://github.com/openbmc/docs/blob/master/community-
->   membership.md#subproject-owner
->=20
-> openbmc/meta-ampere still has Thu as maintainer, ampere-ipmi-oem has
-> Dung, and ssifbridge still has Chuong. These won't become unmaintained.
-Actually, Chuong changed to another role in Ampere before so I am the one w=
-ho reviewed and merged changes in ssifbridge so far.
-Dung is inactive in ampere-ipmi-oem also.
->=20
-> Hieu should be subject to the expectations outlined in the community
-> membership document, as everyone else is. Currently Hieu has few
-> changes pushed to Gerrit.
-Do you think I should update the Ampere CCLA to add me as member again so t=
-hat I will continue to maintain these repos until Hieu satisfies requiremen=
-ts?
-> Working through the process is an important demonstration of alignment
-> with community norms and values. It takes time. It protects the project
-> and community. It is what provides social and technical stability.
->=20
-> Andrew
->=20
+> devm_kasprintf() calls can return null pointers on failure.
+> But the return values were not checked in npcm8xx_gpio_fw().
+> Add NULL check in npcm8xx_gpio_fw(), to handle kernel NULL
+> pointer dereference error.
+>
+> Fixes: acf4884a5717 ("pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driv=
+er")
+> Signed-off-by: Charles Han <hanchunchao@inspur.com>
 
+Patch applied.
+
+Yours,
+Linus Walleij
