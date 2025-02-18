@@ -2,86 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF47FA38336
-	for <lists+openbmc@lfdr.de>; Mon, 17 Feb 2025 13:42:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3725A39024
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2025 02:08:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YxMjT6YG1z3cVn
-	for <lists+openbmc@lfdr.de>; Mon, 17 Feb 2025 23:41:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YxhGJ5ydMz3cC6
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2025 12:07:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739796107;
-	cv=none; b=NuD7XcKW55Ncffz7HXkju11MioqFGe40lJO+tJ6eBdOwGYMB3DNld6p1DBTBkn/2dCXyfl8MXOnVhdYZmhA034bFpp2r3iO8hOHp+lwpSvE1nJ0oBMV23mrGwE/CYCGqkC10h3+/ic0M9G3yOeL/yp4KMWTB40COWHJruXmJVfMaMMY7d9mXVb2Xxdn1zBOxcIx6bMtMwiAEo9juHuH2B0eqczIvohH+SfvnYCY6VMMVAAiJS2c/S6JHOYn1Xfhekt5a1pa42uWsDGRAPt2Q7A8woG67OU56wo1+ioNAtBejQivKZIROOFWxXN4FkQrAF6gc4edNae72BeKQhKLHSw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1739840869;
+	cv=none; b=mxDfKTCDERqfC/y/UFcWi2qi/oOatGzhp1p6LVR1IoQ8i5EuR/tBrSkWWMazdtQspOKEV7PweWF+NSqWsE/ObLFFXzM97r9KimZQGeEKdBQyXRCzSFu6gU9yYnAj4LIPet5jmocOxqgGrsBjNqHqJ/t8d6492kePl8w5gwcxHH6JUGktiDK2JmkyllscaOLBPxig+JgcUxA+hMqOWID3yI/GVcPE8lVxLFAIeHHHPe1FKK+L4M2PDT1qzpokHksfXtxhjBPhDMDLunxXR922Anu2NKcB7O9ErJIntfPeEcSwZ+HfD40kTBY6kcSBhBLvhUIre2dqDVVWFP5Niz6gzA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1739796107; c=relaxed/relaxed;
-	bh=iLBhUsNy9o3GsZzaI8he2S2i8RgQxCMCzXaDo1b/E60=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=dXz0COYRboJnSnqVAlQ3fWz5TJo5eOuoAFSdlieeM3B0JeJo/qBStw/es4QAnkDMQpnFodVvnclcBvpBfsnrIABoihG3/OjYLmdydz2X6j1zxTVLUD/T6fDVRlFj0NEtBdUsSpIREjib/NstyIpotKcG0WpcuQ7Zjn/IIQ+XTMzKhj+mGnc0gGm+hJyo7FDZvZTRJgoAWJ/EnsIDWV0inZH0ryz6t0YenDDsBSK7rIvOp9+N3amcoCCICUHqupQjCrO1iteZVsPEdWvgZEgkNP07fMKw2vejp6kpbnYoS89243FDr2J5YKnp6XLDT6S2bwfCctTF284+fj5jIvd1PQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dmejL9yr; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=manojkiran.eda@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1739840869; c=relaxed/relaxed;
+	bh=uj40kfo5LTXmVRg+URNHrrqgZztW7N+flpz//iXaH54=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=jEorb/s0q1grMSbFrdgLc6QIuozPzL2wX1DzgML8iQGZoDfDYWStQLQKw/xBxy19p5Ps+22nSlJba4TiIrkeaVbTA8Z6YYUgYdJw+lYWbRnkt2b22orKVS4HrAz2k6u5718BpXj/sZWteoJa80D/AQGu5GeybOjODLEzda0luAfwD2owzNYgck3fpRQutW/OSJp6BpBnhsKhZNN9lGsnD+PSShX7shm7awn/9aR33uYKz0EFh0AIgZlGZ38fpJe77eVlkbPCMnYanT+2M/B0COlhbt2omlnPKGm3JyVR/xgK+mNE4in0yDU6f9+I8eTrzYY3QyoOS769aHfVSmhpgA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=I6aW0j/Q; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dmejL9yr;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=I6aW0j/Q;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=manojkiran.eda@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YxMjP3V7Tz2yvv
-	for <openbmc@lists.ozlabs.org>; Mon, 17 Feb 2025 23:41:43 +1100 (AEDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-220c4159f87so56380505ad.0
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Feb 2025 04:41:43 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YxhGD5hXHz2xPL;
+	Tue, 18 Feb 2025 12:07:48 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739796101; x=1740400901; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iLBhUsNy9o3GsZzaI8he2S2i8RgQxCMCzXaDo1b/E60=;
-        b=dmejL9yr2rKQ9vEdssbCBn5jDecZ3yEn5GEurAagSduMuy1DoQl9hdEMdoDPB6AOWM
-         OHpjRG1SCLKH9UYdVScu2hPOEJYFbBS0Ime4fBt2Z2rxnIb6fchss1w9KKN2p8Xfm9C/
-         FW2dbGz99uT8Q7q07e16iR5kTGNkbrrWFFro4Nkr19EAd/39MSqFoPDr1NZ1bkznQqNK
-         +GABf5t9PD2sAEyTJsMznZiMQuM7iItwaHISeeYfc5OAgHx6f8YV9pII2509iAH3w6V6
-         iKHLYxTz4nmci1MTktP+dcLT0WFIOGaV/Lxse2ZoBz9CqOzpjmNiuScaY+s9uqrVF3Qj
-         zmbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739796101; x=1740400901;
-        h=content-transfer-encoding:subject:from:cc:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iLBhUsNy9o3GsZzaI8he2S2i8RgQxCMCzXaDo1b/E60=;
-        b=uVx62zlQ1jMsLa/IxZetL/y9ZC19TibM/5lXJx7OBSVTfeAS6hFCK9sZ1FJSq4gchY
-         +KDh+94o8OdLlDgAzP5hg3m1o+O7+qTp8F9q8lxTY8koWlz2w0/cJh4IsIO51m7q5tPv
-         uQ/vGXhZ5Rjg/fWggXYObry52z4sp/LK5otb664v9LdCv0BHvdLbkkK3wmATJQZKzlGl
-         NgVSI0L4fKJWpkMZNBbNJUiCcexIB5h+IM+hm+JJrITjwUPU9cwobCCtRtx+y+cgkfog
-         Fu+i5ppdeqY44A+31Ag+7de8BndGfMi2wGBiJ+N9h7tXixaQmxR7LsafnQvMBIcHLYeE
-         QR3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXk2rw13dIAr4Aj9635XETR0y9SI34E1jMqEUpoBBGwLQ4ERx1n2+GzidsaAwIYW+er5xzA22ZF@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxfIlxJ3KxOZDZ1B3GeFQZB5dRnsgyiMqeWjwTmTGUSjpwvGk8N
-	xSQf/aVfDbIUKUTNpvplLgQiCOIMczU0JYUgDlG5BP7a+TMx+TzrqO02lcetJsU=
-X-Gm-Gg: ASbGncvntwoxCLd/lO7lN9lkbLOwTzc3h0XweFbIOXvIZxu432ci15zD0Ec2zlrWIwo
-	455J1Gq8heaLGQdrdzgTSeXCjtzSMq2N+7ezaTkBl+mUaASdKPKEX544OV3HkXR1HXjp+lVlC4q
-	yiNuvqvv8xvgV9So+jgPlfh4psL2Vu1t75bFIYFvtQNokD0c8IXQlqimJfK7FULoJBn6qR0G228
-	fZbog9o0FCe6v12d65FliIaAw8kaKM1T+wXCloyvB2INwIwN+AAjGEigZlJU22wZR9SRXfwvI2n
-	PBSl8GtCMe/rEK8deo6IL7+yDqwxqJwuBw==
-X-Google-Smtp-Source: AGHT+IHY0klzsmyEvTdlRpU3mgqZuacOGGcSvrbhzz3oT35Rhf0eCq/ZwJVj9rUJvg5cFnDSOcCkJg==
-X-Received: by 2002:a05:6a00:198c:b0:732:2484:e0ce with SMTP id d2e1a72fcca58-732618c1cf1mr13832383b3a.17.1739796100757;
-        Mon, 17 Feb 2025 04:41:40 -0800 (PST)
-Received: from [9.113.201.245] ([129.41.58.5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73269fa358dsm4075814b3a.91.2025.02.17.04.41.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Feb 2025 04:41:40 -0800 (PST)
-Message-ID: <e674332a-6956-4184-b077-39a0cc0e624d@gmail.com>
-Date: Mon, 17 Feb 2025 18:11:37 +0530
+	d=codeconstruct.com.au; s=2022a; t=1739840868;
+	bh=uj40kfo5LTXmVRg+URNHrrqgZztW7N+flpz//iXaH54=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=I6aW0j/Q7wosLhgwWVgS2ECPPxJu0Jz5eA+x22jBTYj9oIDxRj0FBplmhlWK8By0V
+	 cs53Kda7flynNbNsRNveiFnXSyouKwqp6kKuUiYHNkxHMQtJQOppXaT41G5fbUhGvF
+	 nqP9xFALQGgh4jMBFpedK0oE4DYmcS/nghS32kdsni7oVy2DYHgNj6bVuRC8czWgef
+	 Qok189hdfmtVLn3cIH+ytCjNyMt81Zeht6hDfg02nqyLLi8/2NbRTIstrGNChAVJpy
+	 FCpsFwNlmLu9sJ4dqQCdUcbO3tU/o+hn2NutXREhRWOzEHi+2oymvBxf4ppsW5CdXS
+	 W2pCgR5F49Nmg==
+Received: from [192.168.68.112] (ppp118-210-165-49.adl-adc-lon-bras34.tpg.internode.on.net [118.210.165.49])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id DA66B759DD;
+	Tue, 18 Feb 2025 09:07:46 +0800 (AWST)
+Message-ID: <a8ff6545da9dceb2b745e6301e1f997ba97776fe.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v6] media: dt-bindings: aspeed,video-engine: Convert to
+ json schema
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Jammy Huang <jammy_huang@aspeedtech.com>, "eajames@linux.ibm.com"
+ <eajames@linux.ibm.com>, "mchehab@kernel.org" <mchehab@kernel.org>, 
+ "robh@kernel.org" <robh@kernel.org>, "krzk+dt@kernel.org"
+ <krzk+dt@kernel.org>,  "conor+dt@kernel.org" <conor+dt@kernel.org>,
+ "joel@jms.id.au" <joel@jms.id.au>, "andrew@aj.id.au" <andrew@aj.id.au>,
+ "linux-media@vger.kernel.org" <linux-media@vger.kernel.org>, 
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
+ <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>
+Date: Tue, 18 Feb 2025 11:37:46 +1030
+In-Reply-To: <TYZPR06MB656841B1071626B0B684B49AF1FB2@TYZPR06MB6568.apcprd06.prod.outlook.com>
+References: <20250213015338.3243171-1-jammy_huang@aspeedtech.com>
+	 <31c7189bc04ed8c5cce463951b717bed6a2ccf9a.camel@codeconstruct.com.au>
+	 <TYZPR06MB656841B1071626B0B684B49AF1FB2@TYZPR06MB6568.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: zhichuang@google.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-From: Manojkiran Eda <manojkiran.eda@gmail.com>
-Subject: SPDM Daemon status & Collaboration
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -94,41 +82,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Zhichuang,
+On Mon, 2025-02-17 at 02:11 +0000, Jammy Huang wrote:
+> Hi Andrew,
+>=20
+> Thanks for your feedback, please find my explanation below.
+>=20
+> >=20
+> > On Thu, 2025-02-13 at 09:53 +0800, Jammy Huang wrote:
+> > > Convert aspeed-video.txt to yaml format.
+> > > Update aspeed-video.txt to aspeed,video-engine.yaml in MAINTAINER fil=
+e.
+> > >=20
+> > > Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> > >=20
+...
+> > > +
+> > > +required:
+> > > +=C2=A0 - compatible
+> > > +=C2=A0 - reg
+> > > +=C2=A0 - clocks
+> > > +=C2=A0 - clock-names
+> > > +=C2=A0 - interrupts
+> >=20
+> > This should list `resets` as well, as that wasn't optional in the text =
+binding.
+> >=20
+> 'resets' is not listed as required here is because ASPEED handle reset in=
+ the clock driver
+> in ast2600/ast2500/..., etc. So I keep this part identical as previous as=
+peed-video.txt.
 
-I hope you are doing well.
+It's not identical though. The text binding listed the _optional_
+properties, while the yaml binding lists the _required_ properties. The
+reset property appears in neither list across two binding definitions,
+but it has to be in one or the other for consistency.
 
-I noticed that the SPDM daemon design document where you were the 
-primary contributor was merged around Feb 2023 [1]; however, I have not 
-seen any corresponding repository creation or code contributions since 
-then. At IBM, we are keen on leveraging the recently released SPDM over 
-TCP specification from DMTF [2] and extending the existing design to 
-support attestation over TCP [3].
+However, it sounds like the text binding was not accurate, and this is
+reflected in the video nodes in the SoC DTSIs. The yaml binding
+definition at least matches that reality.
 
-I wanted to check whether you are still interested in up-streaming the 
-implementation. If so, I would be delighted to collaborate and 
-contribute the necessary enhancements to accommodate TCP-based use 
-cases. If you don’t intend to upstream, I am happy to 
-contribute/maintain code & develop a solution that ensures the stack is 
-architected to seamlessly scale for both TCP and MCTP transport mechanisms.
-
-I look forward to your thoughts and the opportunity to collaborate.
-
-
-**References:**
-1. 
-https://github.com/openbmc/docs/blob/master/designs/redfish-spdm-attestation.md 
-
-2. https://gerrit.openbmc.org/c/openbmc/docs/+/78257
-3. 
-https://www.dmtf.org/sites/default/files/standards/documents/DSP0287_1.0.0.pdf 
-
-
-
-Best regards,
-Manoj
-
+Andrew
