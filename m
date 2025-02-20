@@ -1,82 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85C77A3DF4D
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2025 16:51:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D268FA3E7FC
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 00:01:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YzHmd5SJHz3cVL
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 02:51:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YzTJR61cDz3cTs
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 10:00:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.15
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740066671;
-	cv=none; b=n5GuxArVz1G4g/1ca503bBSW94/BT7O+4u/4pLZd6QZm1+QKP+VmU4l+ViF8+51GZyyqWsLg/Xk18RXDvonD+1w2J4EZwj/BaQkRHMUZFW0gmsWpy4WJ5M9TTIuR3u6iMwxuZcLboEgUlez/btSZCLsQZuag4mmxHPQmVw071x2aDxLhcXUci8MYhYfZhlq/LjhyqtoE0l65u1RhYseJu1uNBwF2gd0EAjUUbffkUCOTWQOJmSJ0QYQ8v7Zunf3sJltoFjlq6v1VWeoHTH660k4xwQXmDMDVIzdJ+nyO3w0AXm9+0w1/Ub36UBvXhnxmOn4xnEyjKTnxOwygdrYH+g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::22c"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740057025;
+	cv=none; b=o3FXZl1ZVg3Z3ArVM1ooiMiKPEUQPqQSAJFzOCBT9sBkeIYtDiHY8muGg0BWAmcywahefuRxCEaMNGw90/R18KV6s2lEAUR7cQNykp3lMr3Ev+ZaVTz3M/sAA8h6UULgG6XZih9Jf4QC2cCcVIfQmmXXxhTUOcAi0mV0mGsuxWQmMAqnJ7mm0nIiTve3pHgRSb8iPPc+C6I2M4/hV7PYGnO6zufw05/SzoczAFIVVOpAvEGzMmacfy/mjn3FtY0Y5hFxunkH7fXEEND97hSqM06GNnE4Tbs/Yx2QAIEovKivVLoAN4rUbttDnKwxJFEKYYRxpu3MEp2L6rVUpWyA4g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740066671; c=relaxed/relaxed;
-	bh=mJdLGpjCZShdeLEWGiEmXtnN8K8Vh3HU8y/zq7y2ux8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pd4CVLBmisUdk+maSc7FfcX//TMrK0FRb364KQ3AmpFIg+n17Qfrm/Ek8syyl/jqvtb7z8yYkKoNEeEpaI0sCRFYYab1kb3N+QllyGDP0eBOthMU/Lchsqa2llium14Em7v5ZoGQ/W/tfe8pzjcRyQMbZpfQzJnsL+OYFRupIJF8KtSjolcfIkSAjTDK7j+ezodJvKAN5/447CpLLQpdhG6woq1e3mPyN0MQGTlZ5hUdVQlIlELxj0tV2PeSqWmrwIlVkEFSmzS022b7luotp+m4bLj8wJWu/utFHSMibtOHplSQ0iJCAALPVDDT4v5Zqk6SdFQDlrr2k2G6FN+EaA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EF/3VP3y; dkim-atps=neutral; spf=none (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1740057025; c=relaxed/relaxed;
+	bh=OBrsLbe0HjWHCcrKDPeKya7+7XKKh92mbuJq2Vmq+RI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=di2YyXKjqTHvEqgFlEaVVI1AxJbLm4nd+OFADIb7pbfqb+w72BndzBAU/8wXQTSqQJ10uCRjxIVf2rbtJklv4mTENY/ZyD3jZLWTXDATWsiK9b3yc5sENCZS306P8IIerGjatDwA1JIMusJJiEnXrOa/V6yGi1Ug1VD2FnOltBjZ1K7smEy+yE7e1GYN2JlV20ifPv1fbyvbZadF7MemeERmAQTmQINQWAOVsYBaO/RI0hZeTVvCEfyixvZrcOuZTn/+06m4Ieo5H7CuEVxrsRBUU1OIgs5CsyNDRO4wlepVA1RShgvikfkjURlTdBv/y+zDyOaXWIbfgZXpL3r1Bw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZRY9pjzZ; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::22c; helo=mail-oi1-x22c.google.com; envelope-from=jishnunambiarcm@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EF/3VP3y;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZRY9pjzZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22c; helo=mail-oi1-x22c.google.com; envelope-from=jishnunambiarcm@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzHmZ2Ctzz30Tp
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 02:51:09 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740066670; x=1771602670;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+2MUjbCa+6/uP+xBk14uglQoYufUxL/uj8e1kmFQ0D4=;
-  b=EF/3VP3ylJN3Q9PVLd4wuNffrfgA5UOMf7+xB5vqakyjjwlcIpub0XjN
-   NcFyLwfyQ9qLk+Zd927aVTBvpIETfn2YDUvpEHg1HARwloI1VXEm3KknX
-   2lOgsTaMqE8r19ylmA7/rhmlBZYM9Yk/5Khs3E2vZt/WtMXl/9Kep00f/
-   CYYliLaSjzSOkQaDCPPE2Mn69yFQMa5MQjsvKkU3FsdA10K7s9HnZIdwN
-   6xlU4ANhRfebMVSZRKurj4yG+LvISZ6QSZV6sr1e7OGXlacg20Z4dRTHV
-   c6eJlWxComgSz73ndV91091NoMe/d3zaKceTdk1soRgctjCboTfh7+WBi
-   w==;
-X-CSE-ConnectionGUID: R/XNQQL8SxiKfMh85hjfWw==
-X-CSE-MsgGUID: sqFOsDwJT9eqfuuF1TMyQw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11351"; a="40988500"
-X-IronPort-AV: E=Sophos;i="6.13,302,1732608000"; 
-   d="scan'208";a="40988500"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2025 07:51:08 -0800
-X-CSE-ConnectionGUID: ppWrqNqSQwCOThS6X1+cQw==
-X-CSE-MsgGUID: Q+75E4/ASASw5LvrslftUw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,302,1732608000"; 
-   d="scan'208";a="115745550"
-Received: from smile.fi.intel.com ([10.237.72.58])
-  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2025 07:51:07 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1tl8pM-0000000DNdi-25Xo;
-	Thu, 20 Feb 2025 17:51:04 +0200
-Date: Thu, 20 Feb 2025 17:51:04 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] pinctrl: : Switch to use for_each_gpiochip_node()
- helper
-Message-ID: <Z7dPaDdM6wSY9U4a@smile.fi.intel.com>
-References: <20250213193152.3120396-1-andriy.shevchenko@linux.intel.com>
- <Z65O_SaoSUcAY-rt@smile.fi.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzDC42lZ4z2ygY
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 00:10:23 +1100 (AEDT)
+Received: by mail-oi1-x22c.google.com with SMTP id 5614622812f47-3f40b8358dcso508077b6e.3
+        for <openbmc@lists.ozlabs.org>; Thu, 20 Feb 2025 05:10:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740057020; x=1740661820; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OBrsLbe0HjWHCcrKDPeKya7+7XKKh92mbuJq2Vmq+RI=;
+        b=ZRY9pjzZS1+uj81bh37bmH5BpX10g+GCerBfgeDAqH3Sp16i52R5rzLJtigqSYIC7g
+         3d3iE3dxBFRMd1H3CtZbmgftFSGIvCJCycEFdJN8506hWQjnG2Ytjg9c1LXnYbMlhnmV
+         v+kvzRY/cEd7IlVMBYZ8nZC4CgC+Xp4CcgGjyJWTCjFrCXlPDF0eFjqt2cg5rq2h0TvN
+         JdcqtMQWbsDut1u9H7081jKrYpKvqG+nwWD53sGKQ+LyPuSnYwdi/fUBbZfpS0Z9+04h
+         1so9w1eLNY6pJn3GkPUNsRKAQKMCKW59T20dVVK8qf6nEfZFoOvOgeHaP84GSqmPsQmG
+         7GRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740057020; x=1740661820;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OBrsLbe0HjWHCcrKDPeKya7+7XKKh92mbuJq2Vmq+RI=;
+        b=uPMHz1uF5Iqn7geKzH3BGnyqfAC9WDfkcnQztC5PXW6k2RnbG7mxFoNUymU3Io+qSx
+         do8kUH9pf/yhgDibkywv1iQ/zl41fWFKIRYnMQ7jhmW1IlxABxQ0sVPw+0EKcPnDaMIH
+         95fDqO62p5pX7Qj2N+tWyt+hEvcrVXCdF6Qc03+I/o0/nOSMh8AAYvrvOmxBwgUBGZXJ
+         BSqQ9sUok2w5ZCFZGQHE3AlYcljXwC6p4qyhjgBiO/AEmIWgFTfPn7AV6+uzpNz2gLWH
+         wrF2rmnRVaU/PR2FB58tQdiLwxRL1zMsef5sK5N7qjlx1jfMNt7rCDYx8ZEA9mYT3l45
+         HpDw==
+X-Gm-Message-State: AOJu0YwlYiomX77lFeIhMSdeckXxTBp8Btg5dYbL9UCSjbDHKOAvh0c+
+	vMWea1W+3xS3sI0cGrwXugs4BK/zMbyK9GoPtDfCEyb6w9tdfa/9mcLN4AWTCB2JsTHRxwwVu5Z
+	5WahC98ntYh/g2a+//NsGDeGVekx7FYMO
+X-Gm-Gg: ASbGnctdsOle9/NHkZH2uiV0UiCEEd5JpjCZ5EAVhuAzIyEx+eLQuWXyc4/Z7N9Secj
+	H6GOMCqnAwSnY+B0eWiyCElGm0QhstI2rmfunfrWKY9LSFexaXlOrC1v3JiQLqCTws3G6VBwAvM
+	QbYN+kX8afl87uZG0js76RSKSdgOzb
+X-Google-Smtp-Source: AGHT+IFSsWNfzflKLcWR+g81ccafwCxN7y7LeIbH2gyL838po6/bNOa5A9h7wkSJ6lqoiQqyL4gwDctUi89G2iNa6H8=
+X-Received: by 2002:a05:6808:4495:b0:3f4:1ce1:69b5 with SMTP id
+ 5614622812f47-3f41ce16a8emr1594855b6e.29.1740057020533; Thu, 20 Feb 2025
+ 05:10:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z65O_SaoSUcAY-rt@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+From: Jishnu Nambiar <jishnunambiarcm@gmail.com>
+Date: Thu, 20 Feb 2025 18:40:09 +0530
+X-Gm-Features: AWEUYZmqYKXX3NJ5Wi6b4TKqjYPW8jT_R-C5Vjt44RHiI5YnNYNZ47MK1WUb9ko
+Message-ID: <CAG=JMOXU-Z1zfCSHepgFLSNogoGcgKjrpoEaESkP4_PEOBzscQ@mail.gmail.com>
+Subject: Proposal: Adopting FIPS 204 (ML-DSA) Post-Quantum Encryption
+ Standards in BMC Tar Image
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000991488062e92980d"
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
+X-Mailman-Approved-At: Fri, 21 Feb 2025 10:00:52 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,25 +88,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 13, 2025 at 09:58:53PM +0200, Andy Shevchenko wrote:
-> On Thu, Feb 13, 2025 at 09:31:52PM +0200, Andy Shevchenko wrote:
-> > Switch the code to use for_each_gpiochip_node() helper.
-> > 
-> > While at it, correct header inclusion as device property APIs
-> > are provided in property.h.
-> 
-> Linus, I forgot to update prefix. So, I will wait for other comments, etc.
-> If no problems appear, can you fix that when applying, please?
+--000000000000991488062e92980d
+Content-Type: text/plain; charset="UTF-8"
 
-Nevermind, I just sent a v2:
-20250220155036.2734838-1-andriy.shevchenko@linux.intel.com
+Hello Community,
 
--- 
-With Best Regards,
-Andy Shevchenko
+I'm proposing an update to the BMC tar image to adopt the FIPS 204 (ML-DSA)
+Post-Quantum Encryption Standards, finalized by NIST
+<https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards>
+in August 2024. This update will enhance the security and integrity of the
+image by incorporating a post-quantum resistant signing method using
+ML-DSA, in addition to the existing RSA signing method. The proposed design
+includes the following aspects:
 
+   - Generating a new set of private and public key pairs for ML-DSA
+   - Updating the directory structure to include MLDSA signature files,
+   with a proposed structure as follows:
+      - image-rofs.sig
+      - image-kernel.sig
+      - MANIFEST.sig
+      - publickey
+      - MLDSA/
+         - public_key_MLDSA
+         - image-bmc_MLDSA.sig
+         - image-hostfw_MLDSA.sig
+         - image-kernel_MLDSA.sig
+         - image-rofs_MLDSA.sig
+         - image-rwfs_MLDSA.sig
+         - image-u-boot_MLDSA.sig
+         - MANIFEST_MLDSA.sig
+      - Modifying the image generation process to support the new signing
+   method, including updates to generate and include MLDSA signature files in
+   the tar archive
+   - Updating the manifest to include MLDSA-related information
+   - Ensuring backward compatibility with existing RSA signing methods to
+   allow for a smooth transition to the new ML-DSA signing method. The code
+   update will perform ML-DSA verification only if a valid ML-DSA key is found
+   on the BMC flash; otherwise, it will skip this check and only perform RSA
+   verification. Additionally, if an ML-DSA key is present on the BMC flash,
+   an ML-DSA signature is expected to be present in the incoming image; if
+   not, the image will be rejected to prevent reverting to RSA-only
+   verification by removing ML-DSA signatures from newer images.
+   - Modifying the signature verification process to support both RSA and
+   ML-DSA signature validation.
 
+Please share any feedback or suggestions you may have.
+
+Thanks & Regards,
+Jishnu.
+
+--000000000000991488062e92980d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p style=3D"color:rgb(0,0,0)">Hello Community,=C2=A0</p><p=
+ style=3D"color:rgb(0,0,0)">I&#39;m proposing an update to the BMC tar imag=
+e to adopt the FIPS 204 (ML-DSA) Post-Quantum Encryption Standards, <a href=
+=3D"https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-fin=
+alized-post-quantum-encryption-standards">finalized by NIST</a> in August 2=
+024. This update will enhance the security and integrity of the image by in=
+corporating a post-quantum resistant signing method using ML-DSA, in additi=
+on to the existing RSA signing method. The proposed design includes the fol=
+lowing aspects:</p><ul style=3D"color:rgb(0,0,0)"><li>Generating a new set =
+of private and public key pairs for ML-DSA</li><li>Updating the directory s=
+tructure to include MLDSA signature files, with a proposed structure as fol=
+lows:=C2=A0</li><ul><li>image-rofs.sig=C2=A0</li><li>image-kernel.sig</li><=
+li>MANIFEST.sig=C2=A0</li><li>publickey=C2=A0</li><li>MLDSA/=C2=A0</li><ul>=
+<li>public_key_MLDSA=C2=A0</li><li>image-bmc_MLDSA.sig</li><li>image-hostfw=
+_MLDSA.sig</li><li>image-kernel_MLDSA.sig</li><li>image-rofs_MLDSA.sig</li>=
+<li>image-rwfs_MLDSA.sig</li><li>image-u-boot_MLDSA.sig</li><li>MANIFEST_ML=
+DSA.sig</li></ul></ul><li>Modifying the image generation process to support=
+ the new signing method, including updates to generate and include MLDSA si=
+gnature files in the tar archive</li><li>Updating the manifest to include M=
+LDSA-related information</li><li>Ensuring backward compatibility with exist=
+ing RSA signing methods to allow for a smooth transition to the new ML-DSA =
+signing method. The code update will perform ML-DSA verification only if a =
+valid ML-DSA key is found on the BMC flash; otherwise, it will skip this ch=
+eck and only perform RSA verification. Additionally, if an ML-DSA key is pr=
+esent on the BMC flash, an ML-DSA signature is expected to be present in th=
+e incoming image; if not, the image will be rejected to prevent reverting t=
+o RSA-only verification by removing ML-DSA signatures from newer images.</l=
+i><li>Modifying the signature verification process to support both RSA and =
+ML-DSA signature validation.</li></ul><div><span style=3D"color:rgb(0,0,0)"=
+><font face=3D"arial, sans-serif">Please share any feedback or suggestions =
+you may have.</font></span><font color=3D"#000000"><span style=3D"caret-col=
+or: rgb(0, 0, 0);"><br></span></font></div><div><span style=3D"color:rgb(0,=
+0,0)"><font face=3D"arial, sans-serif"><br></font></span></div><div><span s=
+tyle=3D"color:rgb(0,0,0)"><font face=3D"arial, sans-serif">Thanks &amp; Reg=
+ards,</font></span></div><div><span style=3D"color:rgb(0,0,0)"><font face=
+=3D"arial, sans-serif">Jishnu.</font></span></div><div><span style=3D"color=
+:rgb(0,0,0)"><font face=3D"arial, sans-serif"><br></font></span></div><div>=
+<font color=3D"#000000"><span style=3D"caret-color: rgb(0, 0, 0);"><br></sp=
+an></font></div></div>
+
+--000000000000991488062e92980d--
