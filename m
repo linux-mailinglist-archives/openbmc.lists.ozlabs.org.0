@@ -2,73 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 591BCA3DF45
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2025 16:50:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85C77A3DF4D
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2025 16:51:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4YzHmB2Mp0z3cVH
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 02:50:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4YzHmd5SJHz3cVL
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 02:51:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.15
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740066647;
-	cv=none; b=S7qUYk1TzEzyD5MxNkt9Rk3mELw97S0Ac4iVgqwo7FEUSYmtE3TLhGt4/O90UBEH4jl2hH61xThvkccVkuSp4xrseQ1ZOo8M2xytNuXMo9ZIQa54ho5UkWllG66tIibrzNPvAQDtX9U7QPlAsVgFMklcFnwSbUq2O47SLKsdOcIxnix57f8qP7s1hBQ0Qd0Fzl48Ug4aB6tdlArGjCh5pRaTW38on1P3+1Gh5wxHGSD3kuvF13weEPaD0Y+Dj2Ts73CkRlUKuzzfzk1a4b6RYOy5Os5f88yHkHxq0XYMgeUFuYVaFtphVih/fEiJnFl9RDYTX7sXhJxszM++9V8/cA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740066671;
+	cv=none; b=n5GuxArVz1G4g/1ca503bBSW94/BT7O+4u/4pLZd6QZm1+QKP+VmU4l+ViF8+51GZyyqWsLg/Xk18RXDvonD+1w2J4EZwj/BaQkRHMUZFW0gmsWpy4WJ5M9TTIuR3u6iMwxuZcLboEgUlez/btSZCLsQZuag4mmxHPQmVw071x2aDxLhcXUci8MYhYfZhlq/LjhyqtoE0l65u1RhYseJu1uNBwF2gd0EAjUUbffkUCOTWQOJmSJ0QYQ8v7Zunf3sJltoFjlq6v1VWeoHTH660k4xwQXmDMDVIzdJ+nyO3w0AXm9+0w1/Ub36UBvXhnxmOn4xnEyjKTnxOwygdrYH+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740066647; c=relaxed/relaxed;
-	bh=P5wX0ekbRGVUURKYhqnLB5dp1SglRKRUKFFhjTqpOCI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XGPot/RqrpzOBaLZyYvpyRfXjmPqjxFTbc7vuxWIRRdHASRNoZXdq0uiKaiHX7KI28pnNeUwW0NJqKi0O02fsFwF30shtN9RbN3S9h1VzsrVR4oIv2NpXsH++XZfq9gzUVbMsiZu9h6obIafoEAsPz+QHR654whYIyRFSnQThq+ZDgYEQtS/kOaYgpDsmGMIg/rspJX1sTcGISLNmvz/DbeFeg6OTo5gcyRpIkhAjHMUp3lxi0FNTIKlOs3UBcxzIuN8gCE5y5Ulcopnf16Opqt1Wy6IQCnhNOgYFkyZ2bBLn3opE7PbilwqKXMVdsSPDM7biF99ZCWBMIzV6haGAw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=e4Zl2jtn; dkim-atps=neutral; spf=none (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+	t=1740066671; c=relaxed/relaxed;
+	bh=mJdLGpjCZShdeLEWGiEmXtnN8K8Vh3HU8y/zq7y2ux8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pd4CVLBmisUdk+maSc7FfcX//TMrK0FRb364KQ3AmpFIg+n17Qfrm/Ek8syyl/jqvtb7z8yYkKoNEeEpaI0sCRFYYab1kb3N+QllyGDP0eBOthMU/Lchsqa2llium14Em7v5ZoGQ/W/tfe8pzjcRyQMbZpfQzJnsL+OYFRupIJF8KtSjolcfIkSAjTDK7j+ezodJvKAN5/447CpLLQpdhG6woq1e3mPyN0MQGTlZ5hUdVQlIlELxj0tV2PeSqWmrwIlVkEFSmzS022b7luotp+m4bLj8wJWu/utFHSMibtOHplSQ0iJCAALPVDDT4v5Zqk6SdFQDlrr2k2G6FN+EaA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EF/3VP3y; dkim-atps=neutral; spf=none (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=e4Zl2jtn;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EF/3VP3y;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.15; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzHm54YkWz3028
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 02:50:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzHmZ2Ctzz30Tp
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 02:51:09 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740066646; x=1771602646;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=vzatA26r+R++ycxiPiSLdTkUwvefNCuHV3tAWddTjKA=;
-  b=e4Zl2jtn2jkqXCsYCGSZGBAmgPT4ecUxZkadDlyF+MflIVOhBXzntQEF
-   FTRmiLpdQVO1esXpZMhNs+SYe+sY0ZEZ+hVHdUHsb8fjafcYF3GzkvayZ
-   oE952UwXRxYgFhrSYuy1BMM2SHigSfFSwT9rPhjZEaiUu0erab4cbYXmR
-   eL0NZKClwicRZi889mHhSv27DZsO4Xgd+8h5E44TmfTHLXHAInSohy7o8
-   qyTSGh8XRpnnoDgZ6bjetWD0XAC0+TzsQTpy7p308Q9lktnjgjLvW6j9F
-   n4vYZSNsYwG6wNAEdpNt3Byk+620RGl5GJrYx+iZ/3JmEnj3m2GCtSfxl
-   Q==;
-X-CSE-ConnectionGUID: ksWNrB/QTICbJd3Vb6bDRQ==
-X-CSE-MsgGUID: Pm2iBy4OTqyC2sRRD2ESjg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11351"; a="40988442"
+  t=1740066670; x=1771602670;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=+2MUjbCa+6/uP+xBk14uglQoYufUxL/uj8e1kmFQ0D4=;
+  b=EF/3VP3ylJN3Q9PVLd4wuNffrfgA5UOMf7+xB5vqakyjjwlcIpub0XjN
+   NcFyLwfyQ9qLk+Zd927aVTBvpIETfn2YDUvpEHg1HARwloI1VXEm3KknX
+   2lOgsTaMqE8r19ylmA7/rhmlBZYM9Yk/5Khs3E2vZt/WtMXl/9Kep00f/
+   CYYliLaSjzSOkQaDCPPE2Mn69yFQMa5MQjsvKkU3FsdA10K7s9HnZIdwN
+   6xlU4ANhRfebMVSZRKurj4yG+LvISZ6QSZV6sr1e7OGXlacg20Z4dRTHV
+   c6eJlWxComgSz73ndV91091NoMe/d3zaKceTdk1soRgctjCboTfh7+WBi
+   w==;
+X-CSE-ConnectionGUID: R/XNQQL8SxiKfMh85hjfWw==
+X-CSE-MsgGUID: sqFOsDwJT9eqfuuF1TMyQw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11351"; a="40988500"
 X-IronPort-AV: E=Sophos;i="6.13,302,1732608000"; 
-   d="scan'208";a="40988442"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2025 07:50:41 -0800
-X-CSE-ConnectionGUID: LqBONMYDR1CntdZcKgPp2g==
-X-CSE-MsgGUID: IsN/WvdSRACAcjkGJV+A9g==
+   d="scan'208";a="40988500"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2025 07:51:08 -0800
+X-CSE-ConnectionGUID: ppWrqNqSQwCOThS6X1+cQw==
+X-CSE-MsgGUID: Q+75E4/ASASw5LvrslftUw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.13,302,1732608000"; 
-   d="scan'208";a="115291368"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmviesa008.fm.intel.com with ESMTP; 20 Feb 2025 07:50:40 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id C609A2D0; Thu, 20 Feb 2025 17:50:38 +0200 (EET)
+   d="scan'208";a="115745550"
+Received: from smile.fi.intel.com ([10.237.72.58])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2025 07:51:07 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1tl8pM-0000000DNdi-25Xo;
+	Thu, 20 Feb 2025 17:51:04 +0200
+Date: Thu, 20 Feb 2025 17:51:04 +0200
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?J=2E=20Neusch=C3=A4fer?= <j.ne@posteo.net>,
-	openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org,
+To: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/1] pinctrl: wpcm450: Switch to use for_each_gpiochip_node() helper
-Date: Thu, 20 Feb 2025 17:50:11 +0200
-Message-ID: <20250220155036.2734838-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.45.1.3035.g276e886db78b
+Subject: Re: [PATCH v1 1/1] pinctrl: : Switch to use for_each_gpiochip_node()
+ helper
+Message-ID: <Z7dPaDdM6wSY9U4a@smile.fi.intel.com>
+References: <20250213193152.3120396-1-andriy.shevchenko@linux.intel.com>
+ <Z65O_SaoSUcAY-rt@smile.fi.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z65O_SaoSUcAY-rt@smile.fi.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
 	version=4.0.0
@@ -84,63 +88,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Switch the code to use for_each_gpiochip_node() helper.
+On Thu, Feb 13, 2025 at 09:58:53PM +0200, Andy Shevchenko wrote:
+> On Thu, Feb 13, 2025 at 09:31:52PM +0200, Andy Shevchenko wrote:
+> > Switch the code to use for_each_gpiochip_node() helper.
+> > 
+> > While at it, correct header inclusion as device property APIs
+> > are provided in property.h.
+> 
+> Linus, I forgot to update prefix. So, I will wait for other comments, etc.
+> If no problems appear, can you fix that when applying, please?
 
-While at it, correct header inclusion as device property APIs
-are provided in property.h.
+Nevermind, I just sent a v2:
+20250220155036.2734838-1-andriy.shevchenko@linux.intel.com
 
-Reviewed-by: J. Neuschäfer <j.ne@posteo.net>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
-
-v2: fixed Subject, added tag (J. Neuschäfer)
-
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index cdad4ef11a2f..2f97accef837 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -10,7 +10,6 @@
- //   block, shared between all GPIO banks
- 
- #include <linux/device.h>
--#include <linux/fwnode.h>
- #include <linux/gpio/driver.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-@@ -18,6 +17,7 @@
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- 
- #include <linux/pinctrl/pinconf.h>
-@@ -1033,7 +1033,7 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
- 		return dev_err_probe(dev, PTR_ERR(pctrl->gpio_base),
- 				     "Resource fail for GPIO controller\n");
- 
--	device_for_each_child_node(dev, child)  {
-+	for_each_gpiochip_node(dev, child) {
- 		void __iomem *dat = NULL;
- 		void __iomem *set = NULL;
- 		void __iomem *dirout = NULL;
-@@ -1044,9 +1044,6 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
- 		u32 reg;
- 		int i;
- 
--		if (!fwnode_property_read_bool(child, "gpio-controller"))
--			continue;
--
- 		ret = fwnode_property_read_u32(child, "reg", &reg);
- 		if (ret < 0)
- 			return ret;
 -- 
-2.45.1.3035.g276e886db78b
+With Best Regards,
+Andy Shevchenko
+
 
