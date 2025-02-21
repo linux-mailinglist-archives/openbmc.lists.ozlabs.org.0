@@ -1,164 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F9DA3EEA4
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 09:27:12 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4D8AA3EFBD
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 10:14:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Yzjsg5ZwCz3cG5
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 19:27:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Yzkwf06dPz3cVH
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2025 20:14:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:200f::724" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740126414;
-	cv=pass; b=Xv9uvOJCJNDIEVIbEgpIKDSTMq3IORJavw41Fj7IAhtUSoONtMbDqfOXvNsbVWISaTKyrbWmuE/D1DQrUtNbKTLAf+1z+ILg4wA126GKh+JthGV13SMeogkDewe29aKu1pIe674RvYvJ/BdtKxxUPsaEZhNmWLFaJp1Ic4WQpI+GSs7XOWqsLXkcwdlApRuL/h5a4sk+yo85XsmyT+NKPug4MXoYociir1q/Zsqp2Yi+pvI2hdlK+VuCXHeUZLYK2NKSqKKdKkybfBtT3YlgREaWHG+iKCD4xXAk9UuFEykDSwWrIj7eetX5sIXrjhY/0E4UWTAMxqq+L05TAoKKuA==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740126414; c=relaxed/relaxed;
-	bh=jj3BFtIdCXh8sF/NFp9G4sqf9ccFvga3/sZLML2tnU0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=i/uEyljFv3ReiF9ZVumQIF6kzVXJrU2X0m8TZLocMeWlwzqq8pVMeP4NNepPOsUJjT07SkD4dW/iijyDeIyL4hBrBEWPMrm5TjMOGwT/H4cuN8PAsyJk4Zfjbs9iun3A6Kf48AEFr+GDFXQypgg8zMWWSNYC2RAd2tEq88txvs6uqN9aJmvHtecVTaiESueyjC5IOo/kiCep5QcrJosX4LisnsT6B1npEV7I9ItLkFPGmLpt54U6714rgNLgHyXa4fixxFqEzUrsT/G2zkjyLgzyfCKijzfGtDtQ7qieJLMC6GWjSbkzkNr3UAPefw9FaAEs4tvbA7ZJ3IxiCZ3nfA==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=aspeedtech.com; spf=temperror (client-ip=2a01:111:f403:200f::724; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=temperror (SPF Temporary Error: DNS Timeout) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:200f::724; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sg2apc01on20724.outbound.protection.outlook.com [IPv6:2a01:111:f403:200f::724])
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740129278;
+	cv=none; b=TB1JKc5CRHWkZGESC8awip1uKtAmjTjJmf4ZvXawe11VHDEQelpec7FSIQSNdR3rSOJiARN6Wqs4ZMdJ8Z4m88mWx7ioGYdvxg77OZNfhTbkJ2zfHOyFIWI3OUu5aHfFc8G1+rLy75fa0mepV71V0mjejMdquYM/y/SoZcCdZYav/8IiLiclfmwoSombtKgTsWW9K++Q82z37o/Yv/n0WgX/QQNytjIKb5abtZ01tXdGBWGrgSrLGFIVjoyQQ4HlJ1meaxMhthWHpafSwaFU1/Q7YaZ1ZXvIwXvZvDHUJhYplXXwPFu66kedM/XzHnXrPNmm1WvA5Od8ONlgxQdnSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1740129278; c=relaxed/relaxed;
+	bh=8ergkmeV26OLMFC7QmPw1ybKomZ46fz+ymkHu2Of1t0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Nd9znuQHt3AauW7pikack9OzJWGGv9BQ6kM8adrF8oqyz6MkTc0jBXhzCSnSqNiVmkriqT9ANle2uR1Lgz+lcJPO6EwnGN8LMgdKFEeRLLfKIpHALdpLwfPaq+OiZoDZ2qkI024sir1d6zx8Xm0c7CwkJWLHwyMUNRgWxN4PbP35UatXRcv7NMSGTLCZQZUeZR1/AI6gSsDpR7gIkuQsRJRNtx2CYGbZal3FzRck5uoNE04AJk5+M3cI3GqT/MUOEnyp7iL/jAOgY/N/82Fjh/vErrjTSKH3PFHqAGsi6XlJmwvpSjJ3EYuMAjNRRDeJVyZAgJbXKxo++rj1j6IDiw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=srs0=g8c/=vm=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=srs0=g8c/=vm=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org)
+X-Greylist: delayed 619 seconds by postgrey-1.37 at boromir; Fri, 21 Feb 2025 20:14:36 AEDT
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yzjs85d0Vz2xFm;
-	Fri, 21 Feb 2025 19:26:16 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DWgpS0csmm2m4lcb5a6wbE9rTtnUSwH3iFs0/3/NWgSpiKK8aMwEo5LjLTUAoZDyJ+Pn+A8DEr3nHbGsA1sRLBJylj0AJ9jM9gy8YY8N7QYyPJREJg4Q3e1TvX/lXOLbIGoE+xKpefiTxtOCGZzI+8sY+pcJUc77cVTSU0jYrrQ0m+Ivj6alsrQmOoiycpMTtzI143glL0RLZGg1+T0fu0GdDIBTse1d1s7SgbThsiINy0hwIACUhvdbOfeD6Kf8GANPSIilIv7aZcJPGa56NHyIScGh0yvUQLB6hGyIFvqIaMnwa4zDkixcbFpBi4uxTXgyimOzb2EI4+hzbb+qUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jj3BFtIdCXh8sF/NFp9G4sqf9ccFvga3/sZLML2tnU0=;
- b=lC2ZiOew6QyrmCo5LgVJNNnnh8XFwp5ntq8E3VT04o0j0V2+Z1twGRSYkLvkJFh+ywOELqQMI6WgqT2YxdwSkJWXaO+T1ACwHXN2bKisriSevYyxvX6OmEi1cAx1XXEEY4lWwe+rXg4RPFiU/Rx/lThiTzcOR2mkOXsDVcIgrCmhcSlhERiZlnU/iWYz0qB6XmEjhf8ai/DsoAHwBZOGLtMG8BQdyoutwSbGPIR39RindAQsdnif/jUXgj8+w1NKNEZQ+ZB0CrSFelIWQ/eC9SMRWC7ifyohrJqfqz5wUMBVWJmOEBTFigpzW6Lxbzlq8Fn6OGbEgVmr2S8o/8AkCA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jj3BFtIdCXh8sF/NFp9G4sqf9ccFvga3/sZLML2tnU0=;
- b=aSBpS+B3FJLIHfOXjfS4qgSv8NZsNl5EXJK3v0ela3wggSTzPbwSr3xwIY3ni34S2XQMGKF8EcyaXhkOpBfkJ3kYTAyxrER8i5MtL48/h3tpfNvPZ35mKUijlRG8rAqM8lv68QuswMZSAbyXUCx0wDEqeJOf174YnhGod7KIhAGjlRutHZoYVvHS+HZ0ulZhFpGHuVgbizux4KyZVTat20aHIC4Ivpjy82LvS6kO4wiy13Qp0v6F0eEBtbGS1rfWZlF4if52TX6NbGuL6beYMmVSiTrR0m5FV/IBdnKlprwCziEoXRuLfYcOMbiMSPmE4JQQu0bzrNCTC4U331OZNw==
-Received: from SI6PR06MB7535.apcprd06.prod.outlook.com (2603:1096:4:235::12)
- by TYZPR06MB5227.apcprd06.prod.outlook.com (2603:1096:400:1fc::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8466.17; Fri, 21 Feb
- 2025 08:25:53 +0000
-Received: from SI6PR06MB7535.apcprd06.prod.outlook.com
- ([fe80::8af2:b731:a5e5:169f]) by SI6PR06MB7535.apcprd06.prod.outlook.com
- ([fe80::8af2:b731:a5e5:169f%5]) with mapi id 15.20.8466.015; Fri, 21 Feb 2025
- 08:25:53 +0000
-From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>, "brendan.higgins@linux.dev"
-	<brendan.higgins@linux.dev>, "benh@kernel.crashing.org"
-	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
-	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "robh@kernel.org"
-	<robh@kernel.org>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
-	"conor+dt@kernel.org" <conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
-	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
-	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
-	<andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
-	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
-	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>
-Subject: RE: [PATCH v15 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-Thread-Topic: [PATCH v15 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-Thread-Index: AQHbGGxcg35U+p0xVUGbHH/SlZw4qLNSJngg
-Date: Fri, 21 Feb 2025 08:25:53 +0000
-Message-ID:  <SI6PR06MB7535BFD3377505F5191AED7FF2C72@SI6PR06MB7535.apcprd06.prod.outlook.com>
-References: <20241007035235.2254138-1-ryan_chen@aspeedtech.com>
- <20241007035235.2254138-2-ryan_chen@aspeedtech.com>
-In-Reply-To: <20241007035235.2254138-2-ryan_chen@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7535:EE_|TYZPR06MB5227:EE_
-x-ms-office365-filtering-correlation-id: fbf73d1a-e819-48fa-df17-08dd52515b45
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|376014|7416014|366016|1800799024|38070700018|7053199007|921020;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?8HXg+QfjUAoNKEQknxhR5oxXAhbAKGQCdPWjN6xO+LIYbmVwYyWyy29ElmPV?=
- =?us-ascii?Q?w34fj88zrWUh1y33T5VlQjpnAk/lorsk21m/uoyHwC698RQvhKiKZXl2hHF2?=
- =?us-ascii?Q?8ipKTxtnOoOuWC07Mxh0tXAkqy11TondyFcO2xb6QUgC5QJ8+DcQYNcPNF1d?=
- =?us-ascii?Q?lxjDhZAaE5WPwFbhmDRmRUhK475tuyx09FDon30L5KqhhbB1eRuz/GQrRulp?=
- =?us-ascii?Q?/u5vAJvdnCe6vlW0VV5SdyLyKQRCG2U0K7NIwbcymyn3Rfn2tjC5YJ355grj?=
- =?us-ascii?Q?9OI4IVGjIjKu4NEI33+WweXHMM1GIZD3qXQfj8oS1D6AWQxwuUGoeoh+eEYS?=
- =?us-ascii?Q?WGOZij4r7JBqr+FeXohV1p8njkGyylvoQ9/X4SAojj1kP2Yz2lPZPtQLiM5l?=
- =?us-ascii?Q?Y+ekHDtWsqv+FBnFOr0MV559z8mpE8lhu/191VUJCcmvbERZ3PMUniX07W2h?=
- =?us-ascii?Q?HjIMuH+1Ohkm5/JwxCNqzBWbrYvjYAi7p198lGie2StozD5sIumjDfPcEUTu?=
- =?us-ascii?Q?Vu+goSVSDuGAJVtLVfjTo72qc3kFTRuzWi3V/jH2Z2CU+dyewfo4sZ/9OrYA?=
- =?us-ascii?Q?zhVgJIQT8sQD8sIaseyCANXSpeXQ/tG01FBZeqOP/FYPexmY/GhU1FAjDxFd?=
- =?us-ascii?Q?ASj6tc3xdcAM+saATXLyuwFfzgM3WaqC15O9MY0DAsECo6ZEiDe6xRao1gWd?=
- =?us-ascii?Q?jkAOOKr3iYakSGOktRRwad81/suCJw5c+mBzsdYAVT5MBkjxk4+0/dn11ejO?=
- =?us-ascii?Q?yH3YlSb8DDMel13HVcrx5G96y6HRhDke/l2n8lf8KZSpQ48kgFX9nXwPIqcD?=
- =?us-ascii?Q?05nWrAM5oiNZDs0+4ToJPFdWgRr7QpG3c7WWKBEmLkFdECmPT7fjRzckYOgL?=
- =?us-ascii?Q?n28OzC0iBlcPq1BiFFo/yRgD02Y4hdzIyxOBqMp/ld+NcJGGKGgMxF7waRKK?=
- =?us-ascii?Q?7M64cr6FZs5TC/3PTZgUn5i/tPzL/qMaaQkdweiGLg5nLtgUtJmi3vpwtZNy?=
- =?us-ascii?Q?7GCvntQWV75bvok0rK5ybUbQ59FwnVTNcJ73xxp9qcwMm/IThTXiDd0F8bMk?=
- =?us-ascii?Q?IPflGyF4S5bDXo1dRpqErGS4sCJBOPx/MOdF03MZPkKeAq/qIDwpsbHrltnI?=
- =?us-ascii?Q?GXf1gARLN0yLX8hGIwfZckzDX+sX8388uE1+gUNh2wJIxe+KAWOqXq7AZpOD?=
- =?us-ascii?Q?DzaxQ/kbVV3Dsdt/iAxgK3/nhihQLa8mWC3ShFhYO3Ia36G9SjTHDx46Cdhj?=
- =?us-ascii?Q?BAtZ1cnDJgSL/kC1NUZD0yP+ICtPFaqqM3YJzgoaDWOrtVcZ43PBFQ7xgQiT?=
- =?us-ascii?Q?dr6WgGbAUTGryK8U/t3G3hH1b4Gq5j8Nrj/eq/NLNtZQElOI23KK9XHTYsGz?=
- =?us-ascii?Q?pKvxJbtsmClcuOnf0fRM35vqEywuR3VUnTd1wJwF2TFxelLb3EBujJ8U+Z/U?=
- =?us-ascii?Q?aZMYT2j8nIC6NGMZe0mUPK7T8Pa8G5faLQSGgRjsWomGARqF1/GLAQ=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI6PR06MB7535.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700018)(7053199007)(921020);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?0T7k6XRbGxxRghJVO9krtBBTOKx4EKdJqPf2hmCIx8IS70zaTkqPiUMXEDhj?=
- =?us-ascii?Q?JtLe4j9JZ1SEAkXGoMcmlAR3CNJ7SMml+cJnTh1X7dzFfVCJjil4PSGeJsNt?=
- =?us-ascii?Q?fTPk8YSa/G4/YUri+/4PCVWMAzxMr9jfE7Z5mqlBmy5dbtwqp6f3JeAq8C0m?=
- =?us-ascii?Q?btw3jj6pkh/JGThcLmARb/JXuRhpTgagGkwjuczv4201MOKHQFN+sIjAmgaY?=
- =?us-ascii?Q?ox36Y5oc6fKpTNa3Ay+FBEKqGis8UodpibL+8eAbpJpNJug21gZVQpSvUNeh?=
- =?us-ascii?Q?p7SWu+xM1fjNVdpsuKJOXi0Mvch+q3oFcN+9P8/TEeqE0iQXR3ikG3MFrOgq?=
- =?us-ascii?Q?QQKF6dFWbYLKqXL8TQ5YlKDlA3LtBAYd8g1/0zXfcUz6Xh4tkXhV2/KLW1Rp?=
- =?us-ascii?Q?8N7i9r+RKjXFlTRzMucGUHjyVaWw9ZZsA4SMKw4QMxCXtI/u/NpxL3OWNXN+?=
- =?us-ascii?Q?2ye2eVLFd3xUhJbt2GEXvano9P/Enj/fKyuA48Ac32hxVlDYGj8bOxHfdLD6?=
- =?us-ascii?Q?xhp6zBy3jW+8lnE1slmIfrn5sBRpZ/v+ytZG78xoWLW9qK+FKsE0VoygxRK9?=
- =?us-ascii?Q?RsaYh7OqFqlmAPK5fxoXlg403rJeydlNHaQIfKku8nalhWDc5t39FhBX5kRt?=
- =?us-ascii?Q?RofrVkb9PkAxeG+FJtQlefl/r1buQklQR7P30b/6pj8mP8PFJ+rO3IOTpz+n?=
- =?us-ascii?Q?0g/FE07kEqxCTdTSugJ3OZaHkGz2np0XP52JpX8HgqbKkrVReQld8Y1fISHD?=
- =?us-ascii?Q?jDJBKffTrzzQV5NyWii0h0qPtwGq2b/POPZ9CfIOSOvAA9ANlHNMRLpOMGxi?=
- =?us-ascii?Q?sm94thQwZ7YsKguB4oy16bpsuSjhrtuE5d/PIzlN1UT6doagxl4q52Bd47WA?=
- =?us-ascii?Q?LOczYNFeDEdYZRnjIO73sqkWy4E7i49rwuV1xIQM5kdIDoNsVXsXjNl87BnL?=
- =?us-ascii?Q?nQe2aF4NeGCxpIpKZ8Z8qmTvco5x5r+uCGtPVqmsC80SUDdsHuTxoMN3RvkI?=
- =?us-ascii?Q?oqOWM6MkYlzzbXE0AFUDCKs9w4xIzFaNfmFDEddvZu7WtVwFkLknuXVDscPq?=
- =?us-ascii?Q?iV477H0ZSlhgwfuiNqL1mA2LMh/TZxam9bJLEmEab7rViTU/nIYT2dYehszF?=
- =?us-ascii?Q?UTFHY+raAHtAWL16ZQUNK7/+A4VcrO2qud/F2E8AYx0TV7BbTwSOF5WpFXpK?=
- =?us-ascii?Q?mCG+ToBTBtIMVilEHE/mwwK0L/gOgWEh/FFwAdxWRgarHBuMaU7x0PqnA464?=
- =?us-ascii?Q?rWy9uY/3EDi9DrNdt3vB9vz44ts0lzkbbi+9JTMyRJcDVXTkM6ksMOJIVplT?=
- =?us-ascii?Q?Daa4w7JzVrAgrND38BUvcgU+lOJ5IiVxAd2VkwBtGIakdt9io/2ZAgpFJVcB?=
- =?us-ascii?Q?7SalwqPwAOhpVfdW2sXSHmDJWWhRL3Gto+TQykYzKloxB+tI/o+vDpBGrv0p?=
- =?us-ascii?Q?S+o3xfK1H5qbtXRg/pyaz3cKqCItWim8b8GPABj6hVZuiYm4Mp+7JSvhmVwJ?=
- =?us-ascii?Q?a9ycO/yBBmfGnnpglVRlyGmCtD3VYa22njB7LKkuB/OLej7EvNAAJAXvPES+?=
- =?us-ascii?Q?cwu8N0cEgyLOpxL/76yXYqkUBwmi7L7ggxkrC9Xt?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzkwX0pmgz30T7
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 20:14:35 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 7933C61158;
+	Fri, 21 Feb 2025 09:04:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33018C4CED6;
+	Fri, 21 Feb 2025 09:04:12 +0000 (UTC)
+Message-ID: <df5693d0-7747-4423-809e-ae081c9aae92@xs4all.nl>
+Date: Fri, 21 Feb 2025 10:04:10 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7535.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fbf73d1a-e819-48fa-df17-08dd52515b45
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Feb 2025 08:25:53.3121
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qeex+Lm5yoIlgARvi2uBl8ymH1k+9LRvDKe0EEt8L+8y5ZfxETTZOv7z61dl0pzsskOsoyCXZVjuvAKQgsyeDJI3noS0OamDEY2/Phgp0bA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5227
-X-Spam-Status: No, score=0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_INVALID,DKIM_SIGNED,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] media: nuvoton: Fix reference handling of ece_pdev
+To: Ricardo Ribalda <ribalda@chromium.org>, Joseph Liu <kwliu@nuvoton.com>,
+ Marvin Lin <kflin@nuvoton.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>
+References: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
+ <20250121-nuvoton-v1-1-1ea4f0cdbda2@chromium.org>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ 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
+In-Reply-To: <20250121-nuvoton-v1-1-1ea4f0cdbda2@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -171,129 +104,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: openbmc@lists.ozlabs.org, Marvin Lin <milkfafa@gmail.com>, linux-kernel@vger.kernel.org, stable@vger.kernel.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Krzysztof,
-	I am going to submit v16, and will update the yaml file, in my this versio=
-n will add aspeed,enable-byte.
-	So, we should I do about this patch about " Reviewed-by: Krzysztof Kozlows=
-ki <krzysztof.kozlowski@linaro.org>"=20
-	Should I remove it ? or I should keep this Reviewed-by?
+Hi Ricardo,
 
+On 21/01/2025 22:14, Ricardo Ribalda wrote:
+> When we obtain a reference to of a platform_device, we need to release
+> it via put_device.
+> 
+> Found by cocci:
+> ./platform/nuvoton/npcm-video.c:1677:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> ./platform/nuvoton/npcm-video.c:1684:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> ./platform/nuvoton/npcm-video.c:1690:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> ./platform/nuvoton/npcm-video.c:1694:1-7: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
 
-> -----Original Message-----
-> From: Ryan Chen <ryan_chen@aspeedtech.com>
-> Sent: Monday, October 7, 2024 11:53 AM
-> To: brendan.higgins@linux.dev; benh@kernel.crashing.org; joel@jms.id.au;
-> andi.shyti@kernel.org; robh@kernel.org; krzk+dt@kernel.org;
-> conor+dt@kernel.org; andrew@codeconstruct.com.au;
-> p.zabel@pengutronix.de; andriy.shevchenko@linux.intel.com;
-> linux-i2c@vger.kernel.org; openbmc@lists.ozlabs.org;
-> devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
-> linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org; Ryan Chen
-> <ryan_chen@aspeedtech.com>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Subject: [PATCH v15 1/3] dt-bindings: i2c: aspeed: support for AST2600-i2=
-cv2
->=20
-> Add ast2600-i2cv2 compatible and aspeed,global-regs, aspeed,enable-dma
-> and description for ast2600-i2cv2.
->=20
-> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This driver uses this construct:
+
+                struct device *ece_dev __free(put_device) = &ece_pdev->dev;
+
+to automatically call put_device. So this patch would 'put' the device twice.
+
+Does cocci understand constructs like this? If I hadn't looked closely at the
+code first, I would just have merged it.
+
+Regards,
+
+	Hans
+
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 > ---
->  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 51 +++++++++++++++++--
->  1 file changed, 48 insertions(+), 3 deletions(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-> b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-> index 6df27b47b922..6c16fc76c978 100644
-> --- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-> +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-> @@ -9,9 +9,6 @@ title: ASPEED I2C on the AST24XX, AST25XX, and AST26XX
-> SoCs
->  maintainers:
->    - Rayn Chen <rayn_chen@aspeedtech.com>
->=20
-> -allOf:
-> -  - $ref: /schemas/i2c/i2c-controller.yaml#
-> -
->  properties:
->    compatible:
->      enum:
-> @@ -49,12 +46,50 @@ properties:
->      description:
->        states that there is another master active on this bus
->=20
-> +  aspeed,enable-dma:
-> +    type: boolean
-> +    description: |
-> +      I2C bus enable dma mode transfer.
-> +
-> +      ASPEED ast2600 platform equipped with 16 I2C controllers that shar=
-e
-> a
-> +      single DMA engine. DTS files can specify the data transfer mode
-> to/from
-> +      the device, either DMA or programmed I/O. However, hardware
-> limitations
-> +      may require a DTS to manually allocate which controller can use DM=
-A
-> mode.
-> +      The "aspeed,enable-dma" property allows control of this.
-> +
-> +      In cases where one the hardware design results in a specific
-> +      controller handling a larger amount of data, a DTS would likely
-> +      enable DMA mode for that one controller.
-> +
-> +  aspeed,global-regs:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: The phandle of i2c global register node.
-> +
->  required:
->    - reg
->    - compatible
->    - clocks
->    - resets
->=20
-> +allOf:
-> +  - $ref: /schemas/i2c/i2c-controller.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: aspeed,ast2600-i2cv2
-> +
-> +    then:
-> +      properties:
-> +        reg:
-> +          minItems: 2
-> +      required:
-> +        - aspeed,global-regs
-> +    else:
-> +      properties:
-> +        aspeed,global-regs: false
-> +        aspeed,enable-dma: false
-> +
->  unevaluatedProperties: false
->=20
->  examples:
-> @@ -71,3 +106,13 @@ examples:
->        interrupts =3D <0>;
->        interrupt-parent =3D <&i2c_ic>;
->      };
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    i2c1: i2c@80 {
-> +      compatible =3D "aspeed,ast2600-i2cv2";
-> +      reg =3D <0x80 0x80>, <0xc00 0x20>;
-> +      aspeed,global-regs =3D <&i2c_global>;
-> +      clocks =3D <&syscon ASPEED_CLK_APB>;
-> +      resets =3D <&syscon ASPEED_RESET_I2C>;
-> +      interrupts =3D <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
-> +    };
-> --
-> 2.34.1
+>  drivers/media/platform/nuvoton/npcm-video.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+> index 024cd8ee1709..7b4c23dbe709 100644
+> --- a/drivers/media/platform/nuvoton/npcm-video.c
+> +++ b/drivers/media/platform/nuvoton/npcm-video.c
+> @@ -1673,6 +1673,7 @@ static int npcm_video_ece_init(struct npcm_video *video)
+>  
+>  		regs = devm_platform_ioremap_resource(ece_pdev, 0);
+>  		if (IS_ERR(regs)) {
+> +			put_device(&ece_pdev->dev);
+>  			dev_err(dev, "Failed to parse ECE reg in DTS\n");
+>  			return PTR_ERR(regs);
+>  		}
+> @@ -1680,11 +1681,13 @@ static int npcm_video_ece_init(struct npcm_video *video)
+>  		video->ece.regmap = devm_regmap_init_mmio(dev, regs,
+>  							  &npcm_video_ece_regmap_cfg);
+>  		if (IS_ERR(video->ece.regmap)) {
+> +			put_device(&ece_pdev->dev);
+>  			dev_err(dev, "Failed to initialize ECE regmap\n");
+>  			return PTR_ERR(video->ece.regmap);
+>  		}
+>  
+>  		video->ece.reset = devm_reset_control_get(&ece_pdev->dev, NULL);
+> +		put_device(&ece_pdev->dev);
+>  		if (IS_ERR(video->ece.reset)) {
+>  			dev_err(dev, "Failed to get ECE reset control in DTS\n");
+>  			return PTR_ERR(video->ece.reset);
+> 
 
