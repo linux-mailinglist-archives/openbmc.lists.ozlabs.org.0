@@ -1,72 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABD3CA41232
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:19:07 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id EACA8A41234
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:19:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KYp6GRmz3c72
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:18:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KYw3MyMz3dHp
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740128979;
-	cv=none; b=TlgDBatS6o06iBqVEy7rjmefub3fllcWVuSNEiCCqs9XzR5uK7juj5HH2+RE5I6Y6xx/trLHmyCPKAc1eKZ2ReVACgCilHFq+/2t4TcLYtfiLIJFLkZE5zqyg0KsIIBzF9sVaH8Wdx2gPfiMk66obPr1YfDwpVcmwVePlGSjpfjk0EIeFxAmzBadoI2t2jHMRvZNCxOi1L/S2smhCf2QWIwloIu7EkSd2g0WEeJrYIuiYIm1czHHLMUkLMpH4T0Pq98F/UxUmwqW8ySE46fih0cAd5EDMTk2/qFDHoHEP7JEKNVB0f81x5aCdPCdzVKDxRdDNhhQcG+41C7cFEXG8g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740128987;
+	cv=none; b=ATZ2upXJDe1jLprS5UIo0wAjNVqDMPCEmSaQO+mrLAl0U8TfAyz2G47HfCUyhqmbXfYPcQv871xnK6ASFeVuZBzAj/V6ORG0ne8cWCtznvwxGlfk9ATftffBPskJSqbkDpr5xdXg/RelmkYDdYbV1kzoRVC+INDrqcKqIhXWFdoetFFpdzS1jST0bXClqfOllENiV9v8V1SS5VhgXSTR+2P7ln26DVWdh69crbVP3lwSUODWeGCkZDeQ7MRvBP82ZdhE4YvlNSJUyJQ+d2tEQoW1bsuL0SH1OGXyjabtDmzb5M+KO3uX0P67DM/HegDD3Y8R/PYNeoiPnZAafJFezQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740128979; c=relaxed/relaxed;
-	bh=OqGbA/0NwGgtEVAy7QTjo1baSDqwWc407TkYNX6+Pac=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oaIYMhQ88oWNbupxNMSzP/bVKaHIGsknorSqOAeONBZD6kKCri/uysJb9BVc4eJrG7/NOhXGBi9jsxVgf+/var8U+ELlAQixCqBfeZKC7iq6gQlf+La7Y3ZDWUyWVnbq8ysRq2Cuw2FDvAW8KgLUHnmS50CMzEzCRzwkoNHX2QQpTzwYSAvNvBirjJ85cBzdZ6UVPltu+vaf1Za0IVDHkqlo84OWOpLscWIDnwN4mNSlWdyU23qqpHWkC/Cb2q7r54LV6Qptl2NV7i3k/3d4tLNiWnpvZ/ggblDJrt9gSRuLa9wp++sQObJDCT6MjaplshsapErcla7QrFh2A6Tk6g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hBkBpdUZ; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1740128987; c=relaxed/relaxed;
+	bh=7Rl2b+0CyoddVI2sskryUayI+99HYF7eeBGTGtW0UpQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=kn/gftKg+jyt/ZKC0ZNdVus64h6SuL0ki/LnjrgnOhoO5y94FLm7oN9abphYXBAusCF+szQiaIIWLS6LZyBPpdKPmGOJXHEHCl4ahL2wl3TVl/e0ZDEEZEZI1gDIR5UbGuvlibiA8fHP8tfn0ospbrGQicbgajAIARstgIHP+HbQmWyVpvgwAFRjYs0HW1NQSUeUFp/TgYd0TZfpUQo8pRUxBcy3K2WbIartZI33DRc1ru1MovGMTAqVkj6PBHVMILGN8sYVFNQoNXVTmsV2FLGR9rUYEQW9wWNVEwwcK/SR80twdMNp0YcZRMpCo69HA0P0XphiJLv9p/LMCc6ZTQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=amDWE28o; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=hBkBpdUZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=amDWE28o;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=j2anfernee@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yzkpp05YHz2yVD
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 20:09:36 +1100 (AEDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-221206dbd7eso36358045ad.2
-        for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 01:09:36 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Yzkpy4h2Jz30T1
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 20:09:46 +1100 (AEDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-22185cddbffso44908975ad.1
+        for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2025 01:09:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740128974; x=1740733774; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OqGbA/0NwGgtEVAy7QTjo1baSDqwWc407TkYNX6+Pac=;
-        b=hBkBpdUZNNxIEy4Y2igyR8qcwc+aA7aZ6vN/f/do42wYBCNtoLIHVZzms0cT4hFaPA
-         qGny9wzryNtDku00v94rCgt9fEM1d+hIkBYVwtXUhaMfst7ehT7LVsU+UtLx40VvOyeU
-         hU2CQzZwvZrH0W2dSvcwvEUI9O99QZLGvjI42sSFmGqjsSAie6r0tXOVq8KjjOFYnRl2
-         ycaDxpsAeuy+zeFR1N78Xt0zoCs9x8Z0iewbMdGglOON8GFRH59i4hVuiaDqeAON9Vvc
-         TyRr1RVvuwsSU7rtmta00VZDgzpb/iBvNo6QU8c8jya8jVOllQ/EumVyGLymvz2l7+vR
-         AP2A==
+        d=gmail.com; s=20230601; t=1740128985; x=1740733785; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7Rl2b+0CyoddVI2sskryUayI+99HYF7eeBGTGtW0UpQ=;
+        b=amDWE28o+VBC+f1kqXgQFueGcw7D9k3YaTfPJfa8Exw+EDhSL03LlQl/jOcVnbOxmT
+         Ea8nUFKnLx+bB6mjytdVV0cVA6CkjQCDa9qpCPkJ4IqkhcqKwMyOMwsV0tL/cTsk/WIs
+         vf6JPXk034Zvmpz+3Ys/uUvHFJG2s8PRTGgPzqI92i8vCg7u5lAksjJpmpoOU7cG88Kz
+         kiggp9uo3yy44zH2QLQ1oGbX2NMkFFKtpb32f/1cfVw00GkS50/7SVCDeNFwdLNQwlix
+         s8p7PJM+TaFuh8aWWIGY/Ktegiyqi9Dpyjwi3i26MJux7xqmX2yhgexUZX545P1kHEG0
+         hRXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740128974; x=1740733774;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OqGbA/0NwGgtEVAy7QTjo1baSDqwWc407TkYNX6+Pac=;
-        b=aHXYIujUjD2LJxiRMhAeSdsDKWy8Ew6Y7FK2OEhs9DLTVrmH1RsS6hgz8TherU90NF
-         JGLByD7VPFM76lmdEdt7MsaMEQ6MMxBje6b/ZlSTY68YGLrmImey2ODEN54gCi02WLCs
-         TEQMeafL6liA4nAyrZdfB5fTuHoTZQOgTOAi4FjwyTElDsQMBixptrTFAUTAQ7nltbMF
-         tjphYdRO1kcX2OJL2vpVfNSULxgnOWg0J+fkg67QiK5UPPcPqQEUB328qEN45c1dgxfZ
-         kMNeHUsG0io4DoCsmp8OgiA29XLtnei4bm2J1sYMH2NyQHUGSXKsB5ojQByFY3a9/qAr
-         LuFA==
-X-Gm-Message-State: AOJu0YyPQSIyxelJ8DOu1EgY0OH56//zDWCL8ptcI4RwbHl0EUJzqECt
-	5yf1c1aDSX8VU+c8npzBnkQbv+LpXU4ZswzzY5ZbOqS72pDv4gua
-X-Gm-Gg: ASbGnct8AdEsPJuU07nA4VnlGB47D9hYgfIeriIBg9AnlCYc9jcgKxmvjpHfd9666xG
-	SpwF00HVGKW3DnhgWbOnE0SjOk9TJNP++QXEqwC8lAEPZeMkYuMXvqf1NVIPOgQJn4m5VQGN2XY
-	si10Tgp9ZDB2vQi3kWhfPiuQNB3noo9Top+YdOXZJEyMjxJdEqlAqQCReqDT1u5626N+ieIJpJh
-	sHgp6oLy8uRnW5TTn922ArZheXtFQRwiX9e60aOLo3w6NpKRr13DTzN/dt2Xzcjmc7k5w8R/C0C
-	CKCdI4p/4rf+GIdJw4sNDme/Uj6Ki/8ZXq+wJirHc++h0lWEx/a5dhN3xA==
-X-Google-Smtp-Source: AGHT+IHue6t9hMQwjssNM5DwX9cqnd0OR3VV+CKpdu46s9JYRLX9JgSKZHuMCZkMnCgJsmhoePwtPg==
-X-Received: by 2002:a17:903:32d0:b0:216:2bd7:1c2f with SMTP id d9443c01a7336-2219ff4e7f2mr33490245ad.18.1740128974428;
-        Fri, 21 Feb 2025 01:09:34 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740128985; x=1740733785;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7Rl2b+0CyoddVI2sskryUayI+99HYF7eeBGTGtW0UpQ=;
+        b=KS0rFkfFQo3w2H1Knh7DxELanA5Nqyy/lSL6p3uIdFXkMS9gCe3CCzzjcLN7gzXz4C
+         XH0LIY1p7j454rg0LJWsWgzYdxL4zs/M6/TVHTWXW7ue6cKitpZV+BjPMqiHK87iDaOq
+         +LcvYwT96pAlZ4duc+X4KQcu+HYeethUMMbDTR6lki/t54bBdVGcbOMHGQPUKYQD8PkJ
+         P6NQKUebPgNWHbC167tdgUOIYLUosB2tWt7rYu70xII8ExlN+VcYnfDEtc5iJ76T9x0J
+         K179wNnCqsgI2+HMRQ6NiVqvBH3+G5S8VtPjn9goWOT/ces0yUAlL8uRpQewAvcRxksl
+         ACJw==
+X-Gm-Message-State: AOJu0YxljUPvQo15uqD7706zvSSdHm7YPGWA7i6Jxn5Wos0/8gepHdgy
+	h9viyCGGQwmWuP/eeYRpyhPhIpksSitP4RR/k5Gb0aluzn1IgGhN
+X-Gm-Gg: ASbGnctNnS0SpsoftrgM7lOA/iQ16ulE9bbFuaawbJLz7i5YGOBiiZfZhz7hcLyO649
+	f6VxuCK61fTkv8M/MS+fDTD7XqRKmmWUUqGNpqwN1YFDALuD78WhwkP71Hso3DUGLV/CbtuLg7J
+	ZFLdfFSD2xepiwFXtPpXk/uu/K5sMVI6AnrvXPPpcv1DwT7yqshUwUoEFDygghVRr8iFoQlv9aB
+	rTU0Tx14rdSKTTXnBXXy+yVcnl3vx6JADO8UyvQato+0qy6NNZ5yP84pdhmBo8nNM6A4DgcFTLa
+	jFBwQkdkbQLjNGY6jmp2apU7HlCZVdCMnA/3nrbkJZUAWgoVJEA2FbsNRQ==
+X-Google-Smtp-Source: AGHT+IHDsW3Xj/DETZDc6NPh5e45wPtsrGpGMwUb/3q7UOPQpO42p7qg2sNikNlkW+FcjO3beSLwGw==
+X-Received: by 2002:a17:902:ea05:b0:215:9eac:1857 with SMTP id d9443c01a7336-2218c3d080amr103699315ad.5.1740128984756;
+        Fri, 21 Feb 2025 01:09:44 -0800 (PST)
 Received: from openbmc.. (211-23-34-211.hinet-ip.hinet.net. [211.23.34.211])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d5367e8csm133593115ad.67.2025.02.21.01.09.28
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d5367e8csm133593115ad.67.2025.02.21.01.09.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 01:09:33 -0800 (PST)
+        Fri, 21 Feb 2025 01:09:44 -0800 (PST)
 From: Eason Yang <j2anfernee@gmail.com>
 To: avifishman70@gmail.com,
 	tmaimon77@gmail.com,
@@ -97,10 +99,12 @@ To: avifishman70@gmail.com,
 	chanh@os.amperecomputing.com,
 	KWLIU@nuvoton.com,
 	yhyang2@nuvoton.com
-Subject: [PATCH v4 0/2] iio: adc: add Nuvoton NCT7201 ADC driver
-Date: Fri, 21 Feb 2025 17:09:16 +0800
-Message-Id: <20250221090918.1487689-1-j2anfernee@gmail.com>
+Subject: [PATCH v4 1/2] dt-bindings: iio: adc: add NCT7201 ADCs
+Date: Fri, 21 Feb 2025 17:09:17 +0800
+Message-Id: <20250221090918.1487689-2-j2anfernee@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250221090918.1487689-1-j2anfernee@gmail.com>
+References: <20250221090918.1487689-1-j2anfernee@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -123,49 +127,91 @@ Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Change since version 4:
- - Fix comments
- - Add interrupts and reset-gpios to the DT example
- - Use the FIELD_PREP and FIELD_GET
- - Add use_single_write in regmap_config
- - Use regmap_access_table
+Add a binding specification for the Nuvoton NCT7201/NCT7202 up to 12-bit
+ADCs with I2C interface.
 
-Change since version 3:
- - Fix comments
- - Don't put nct720"x" in the name, just call it nct7201
- - Remove differential inputs until conversions are finished
- - Add NCT7201_ prefix in all macros and avoid the tables
- - Correct event threshold values in raw units
- - Add with and without interrupt callback function to have the event
-   config part and one that doesn't
- - Remove print an error message if regmap_wirte failed case
-
-Change since version 2:
- - Remvoe read-vin-data-size property, default use read word vin data
- - Use regmap instead of i2c smbus API
- - IIO should be IIO_CHAN_INFO_RAW and _SCALE not _PROCESSED
- - Use dev_xxx_probe in probe function and dev_xxx in other functions
- - Use devm_iio_device_register replace of iio_device_register
- - Use guard(mutex) replace of mutex_lock
- - Use get_unaligned_le16 conversion API
-
-Changes since version 1:
- - Add new property in iio:adc binding document
- - Add new driver for Nuvoton NCT720x driver
-
-Eason Yang (2):
-  dt-bindings: iio: adc: add NCT7201 ADCs
-  iio: adc: add support for Nuvoton NCT7201
-
- .../bindings/iio/adc/nuvoton,nct7201.yaml     |  57 ++
- MAINTAINERS                                   |   2 +
- drivers/iio/adc/Kconfig                       |  11 +
- drivers/iio/adc/Makefile                      |   1 +
- drivers/iio/adc/nct7201.c                     | 487 ++++++++++++++++++
- 5 files changed, 558 insertions(+)
+Signed-off-by: Eason Yang <j2anfernee@gmail.com>
+---
+ .../bindings/iio/adc/nuvoton,nct7201.yaml     | 57 +++++++++++++++++++
+ MAINTAINERS                                   |  1 +
+ 2 files changed, 58 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
- create mode 100644 drivers/iio/adc/nct7201.c
 
+diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+new file mode 100644
+index 000000000000..830c37fd9f22
+--- /dev/null
++++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+@@ -0,0 +1,57 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/iio/adc/nuvoton,nct7201.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Nuvoton nct7201 and similar ADCs
++
++maintainers:
++  - Eason Yang <j2anfernee@gmail.com>
++
++description: |
++  The NCT7201/NCT7202 is a Nuvoton Hardware Monitor IC, contains up to 12 voltage
++  monitoring channels, with SMBus interface, and up to 4 sets SMBus address
++  selection by ADDR connection. It also provides ALERT# signal for event
++  notification and reset input RSTIN# to recover it from a fault condition.
++
++properties:
++  compatible:
++    enum:
++      - nuvoton,nct7201
++      - nuvoton,nct7202
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  reset-gpios:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++examples:
++  - |
++
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        adc@1d {
++            compatible = "nuvoton,nct7202";
++            reg = <0x1d>;
++            interrupt-parent = <&gpio3>;
++            interrupts = <30 IRQ_TYPE_LEVEL_LOW>;
++            reset-gpios = <&gpio3 28 GPIO_ACTIVE_LOW>;
++        };
++    };
++...
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3864d473f52f..fdc4aa5c7eff 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2831,6 +2831,7 @@ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Supported
+ F:	Documentation/devicetree/bindings/*/*/*npcm*
+ F:	Documentation/devicetree/bindings/*/*npcm*
++F:	Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
+ F:	Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+ F:	arch/arm/boot/dts/nuvoton/nuvoton-npcm*
+ F:	arch/arm/mach-npcm/
 -- 
 2.34.1
 
