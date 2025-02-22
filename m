@@ -2,61 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E7E7A41238
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66050A41239
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZN34Djz3g53
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZT4sxrz3gCm
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04::f03c:95ff:fe5e:7468"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740157476;
-	cv=none; b=Likkp7sUM89TUf1nfgB+jMgMLX0i6QEXnevazGbS/rtlUAnBIZUT8OI4qu4KBd8Hjku7yWE8sn5fLzaQ/0JJrpF5ieQiVIq2QmyqrcGs9igYAM61unQuyHKV9IbO90V/mXFSe4TLRvnmlVLnvQQnDWEG649fsIhGuofESzBrPjZt+nRJF8ev3H5jPwdY3iBYrUhD67NonTFEzXIeJndXM2nQ/SFH5l1sKfracvdKBGO7nu7f5kHinGC/8AmBt37S8uwJj6O65dJ1jcodYZrad0ytmo+4RN0B1S6+0cBgJKiJO6LhZpQZV7MH2MMkC3+DH/laaloQ91MKMbFvkKkE5w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740228614;
+	cv=none; b=VxJ+qO7VGkdTCOA6dp0bBz9pcRBFyjNYgEjg52NZQ2NaafO16lSrXXjSO3uhwxuFNKNQHWRQDpzTkVzUwwuBAfKPfFEZnP0d8FmfONEoH8WIZttJ6ERp8+hHoDD2QxiDeGqy9Jf++Gwy7t+TM7D7M57tmTX3t1r/ahTyq+kulmP+kpUwq3GKK19Cwq1hVEpOt29cdlzzxd3zhgCQgsOjf2uyirK82lYR4jhzbfrpZpQRxCJLslR2A7wxY6Q5RaQ37RHQ94JavUwGVhiQ/NCCpfyrf/PYTELkuVtvdqw/e9ezrRghCMtIQyMT2p6l9olnlpy0Y1krVkn2dsJfggnRmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740157476; c=relaxed/relaxed;
-	bh=PmF54Ejccm6H1BS21XLzObPH34mHtte2hx/2br9r+L4=;
+	t=1740228614; c=relaxed/relaxed;
+	bh=63OS4abyOkMAe/BTrxq0fnfu4Vv0/u3AEYAM6x8mVRs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cX75cJTl3E0jRvRs+O2iVOVHdgJdVwjmuuqOxnKvurTeCh+KOQnujMQdXuQ0UOVk1nquY/VjgJa6tlaE5Dwygn5CzBMiwCMejRmq+vHZ12mkebujM2rOOVqvmo0FfTxVY+Vrdj4u0H/PLcZVvwGLYf0be8ItSM/PLYOYLi3Yai2nrRX+NRNGHmmvTWq9ykV8w5O1FHcKtU9H36kjq/loGTexz8z12b1dx1rlVpVFcrNgJ3TSrVZofoBjwbgOWVu2VNy+UO234Y1v6tsxw7FZpLMLIJfB4ct7DSu1EY05U+d0nKaSLI1YiyCEx4I1PM9WMZsr+CEQ90m6AUQ76FgXnA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rejCUcjj; dkim-atps=neutral; spf=pass (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=FGoNrMHdU6qJ36k+8TPwB4cOudgL+s0H3rR8tmC6ZZL+zU+yYhfYGbpgv53vFJsFt25xMDDMq5lH8GLvVUTm+yewgrewfPVbYNT9u0XBbbA5dBFX87CikQ+Hgcf4TP9HKua8DdoTjQVQsKz5mjKRRHMdAb1ZU12mqD6e92Oho04wNIoM8K2IV5GDMxKwkuTa5q+xJQPHmzEIdM0anTl/zbpWrkG5NzB/kKMqD7ne+5Bmf/QV25B6rif2Ur+dZVt4T0TsHI4P2ERyjTpKCwMK90RoOPOnkoyNYSFeNd6FJU0mCFRxZ29WadkSGvBZ/zGd/ADXQvfOL5h3ZsEL+pVREg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=jD8NTBIO; dkim-atps=neutral; spf=pass (client-ip=198.175.65.11; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rejCUcjj;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=jD8NTBIO;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
-X-Greylist: delayed 470 seconds by postgrey-1.37 at boromir; Sat, 22 Feb 2025 04:04:35 AEDT
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04::f03c:95ff:fe5e:7468])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.11; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 62 seconds by postgrey-1.37 at boromir; Sat, 22 Feb 2025 23:50:12 AEDT
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4YzxLq6Fxkz300C
-	for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2025 04:04:35 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 58EB861510;
-	Fri, 21 Feb 2025 16:56:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EC6C4CED6;
-	Fri, 21 Feb 2025 16:56:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740157000;
-	bh=4NYNCyUlBCcUiP2flqZ7vpZ04JrfY05TT3Q9of0jt1o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rejCUcjjFUhWfC4zPJeNa1HrBYGq2xsIqO0ZPaU8aMD1mp8MbDX81KHJKm8uC1N4G
-	 nZ1Uip6A11axdtE8FsNCFX7Aq9EnYmS46aoACenNEv0ma2HctX5SbNSwqAZRLyGMWC
-	 lyRKYCXrGs8JR1p66yMCStilgPUAaCcbaXQ27IRa0daLgmqXucCHpzWn1c9qzULyVJ
-	 bwWxE7Mf0fc1oE0RYZRole8xO6UtHf1xx1VmsUr2I9YVpWXkODSr265pUQVWcajUh/
-	 Fqo0kKew/oQiCo693InP0JB0KlhaxgZKb72mseLhCyftg1IVG/4hTFdDfhBQnUOejn
-	 40vGGHGGJiz4A==
-Date: Fri, 21 Feb 2025 16:56:32 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Eason Yang <j2anfernee@gmail.com>
-Subject: Re: [PATCH v4 1/2] dt-bindings: iio: adc: add NCT7201 ADCs
-Message-ID: <20250221-spinout-opt-7d9b5a529610@spud>
-References: <20250221090918.1487689-1-j2anfernee@gmail.com>
- <20250221090918.1487689-2-j2anfernee@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z0Rfr3wkQz2y8W
+	for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2025 23:50:12 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1740228613; x=1771764613;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=798NgMCLrORlrXdOiB4bVXReEEKYsrbFICshl3jALIE=;
+  b=jD8NTBIOB1ojrE5nMX0IvzLz7IgEpgex995PyIMH48fhimMwiQBrgF+1
+   8rF4tTSkYelnIROGBmQi6H0isGEN/jO0H6SSSqa+OKh/nDQ2kVI8oQZAK
+   x2ufwn4omi/T7l7KgmjaQ5mEaP1/S7mr8O0rJ0vTdPdTfY2ySX1rEpfvx
+   JsL6CwziGEsKFqXfIQAwKjkdGQOcmYTyRmlUaXyiS5oB0vsrf/gwchzVJ
+   ub2SVoQLiXVuEHusbrV9rVryGFChGjtFIGNkAPtRIszCAl1fdbj4mFl0U
+   L5lGW7pkyFbjDzpoMyBwj/xR7bhWTC396R/+/ExVMv8QgA0nKsL38aZzR
+   Q==;
+X-CSE-ConnectionGUID: odmH1cZGSKC1DPS5SOR2vw==
+X-CSE-MsgGUID: 14hQLtAUSLad2d28FsBMTQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11353"; a="51254647"
+X-IronPort-AV: E=Sophos;i="6.13,307,1732608000"; 
+   d="scan'208";a="51254647"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2025 04:49:04 -0800
+X-CSE-ConnectionGUID: S9BkAu39TJ2OLOmqvM+e3w==
+X-CSE-MsgGUID: 0SAy3QrSTqy9USmdsmE6Sg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,307,1732608000"; 
+   d="scan'208";a="116138775"
+Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
+  by fmviesa010.fm.intel.com with ESMTP; 22 Feb 2025 04:48:57 -0800
+Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1tlowB-0006ZP-06;
+	Sat, 22 Feb 2025 12:48:55 +0000
+Date: Sat, 22 Feb 2025 20:48:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Eason Yang <j2anfernee@gmail.com>, avifishman70@gmail.com,
+	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+	yuenn@google.com, benjaminfair@google.com, jic23@kernel.org,
+	lars@metafoo.de, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, nuno.sa@analog.com, dlechner@baylibre.com,
+	javier.carrasco.cruz@gmail.com, andriy.shevchenko@linux.intel.com,
+	gstols@baylibre.com, olivier.moysan@foss.st.com,
+	mitrutzceclan@gmail.com, tgamblin@baylibre.com,
+	matteomartelli3@gmail.com, marcelo.schmitt@analog.com,
+	alisadariana@gmail.com, joao.goncalves@toradex.com,
+	thomas.bonnefille@bootlin.com, ramona.nechita@analog.com,
+	herve.codina@bootlin.com, chanh@os.amperecomputing.com,
+	KWLIU@nuvoton.com, yhyang2@nuvoton.com
+Subject: Re: [PATCH v4 2/2] iio: adc: add support for Nuvoton NCT7201
+Message-ID: <202502222047.beX8h1H7-lkp@intel.com>
+References: <20250221090918.1487689-3-j2anfernee@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="JLz+NO4dK9qNL/Og"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250221090918.1487689-2-j2anfernee@gmail.com>
+In-Reply-To: <20250221090918.1487689-3-j2anfernee@gmail.com>
 X-Spam-Status: No, score=-0.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.0
@@ -73,128 +98,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, ramona.nechita@analog.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, gstols@baylibre.com, joao.goncalves@toradex.com, andriy.shevchenko@linux.intel.com, matteomartelli3@gmail.com, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, krzk+dt@kernel.org, jic23@kernel.org
+Cc: openbmc@lists.ozlabs.org, oe-kbuild-all@lists.linux.dev
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Eason,
 
---JLz+NO4dK9qNL/Og
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+kernel test robot noticed the following build errors:
 
-On Fri, Feb 21, 2025 at 05:09:17PM +0800, Eason Yang wrote:
-> Add a binding specification for the Nuvoton NCT7201/NCT7202 up to 12-bit
-> ADCs with I2C interface.
->=20
-> Signed-off-by: Eason Yang <j2anfernee@gmail.com>
-> ---
->  .../bindings/iio/adc/nuvoton,nct7201.yaml     | 57 +++++++++++++++++++
->  MAINTAINERS                                   |  1 +
->  2 files changed, 58 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/iio/adc/nuvoton,nct=
-7201.yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.ya=
-ml b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
-> new file mode 100644
-> index 000000000000..830c37fd9f22
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
-> @@ -0,0 +1,57 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/iio/adc/nuvoton,nct7201.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Nuvoton nct7201 and similar ADCs
-> +
-> +maintainers:
-> +  - Eason Yang <j2anfernee@gmail.com>
-> +
-> +description: |
-> +  The NCT7201/NCT7202 is a Nuvoton Hardware Monitor IC, contains up to 1=
-2 voltage
-> +  monitoring channels, with SMBus interface, and up to 4 sets SMBus addr=
-ess
-> +  selection by ADDR connection. It also provides ALERT# signal for event
-> +  notification and reset input RSTIN# to recover it from a fault conditi=
-on.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nuvoton,nct7201
-> +      - nuvoton,nct7202
+[auto build test ERROR on jic23-iio/togreg]
+[also build test ERROR on linus/master v6.14-rc3 next-20250221]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-When you respin, please add a note about what differs between these
-devices that requires different handling in the driver.
+url:    https://github.com/intel-lab-lkp/linux/commits/Eason-Yang/dt-bindings-iio-adc-add-NCT7201-ADCs/20250221-171244
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git togreg
+patch link:    https://lore.kernel.org/r/20250221090918.1487689-3-j2anfernee%40gmail.com
+patch subject: [PATCH v4 2/2] iio: adc: add support for Nuvoton NCT7201
+config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20250222/202502222047.beX8h1H7-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 14.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250222/202502222047.beX8h1H7-lkp@intel.com/reproduce)
 
-Cheers,
-Conor.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202502222047.beX8h1H7-lkp@intel.com/
 
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  reset-gpios:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    i2c {
-> +        #address-cells =3D <1>;
-> +        #size-cells =3D <0>;
-> +
-> +        adc@1d {
-> +            compatible =3D "nuvoton,nct7202";
-> +            reg =3D <0x1d>;
-> +            interrupt-parent =3D <&gpio3>;
-> +            interrupts =3D <30 IRQ_TYPE_LEVEL_LOW>;
-> +            reset-gpios =3D <&gpio3 28 GPIO_ACTIVE_LOW>;
-> +        };
-> +    };
-> +...
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 3864d473f52f..fdc4aa5c7eff 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2831,6 +2831,7 @@ L:	openbmc@lists.ozlabs.org (moderated for non-subs=
-cribers)
->  S:	Supported
->  F:	Documentation/devicetree/bindings/*/*/*npcm*
->  F:	Documentation/devicetree/bindings/*/*npcm*
-> +F:	Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
->  F:	Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
->  F:	arch/arm/boot/dts/nuvoton/nuvoton-npcm*
->  F:	arch/arm/mach-npcm/
-> --=20
-> 2.34.1
->=20
+All errors (new ones prefixed by >>):
 
---JLz+NO4dK9qNL/Og
-Content-Type: application/pgp-signature; name="signature.asc"
+   drivers/iio/adc/nct7201.c: In function 'nct7201_read_raw':
+>> drivers/iio/adc/nct7201.c:212:24: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
+     212 |                 *val = FIELD_GET(NCT7201_REG_VIN_MASK, volt);
+         |                        ^~~~~~~~~
+   drivers/iio/adc/nct7201.c: In function 'nct7201_write_event_value':
+>> drivers/iio/adc/nct7201.c:278:30: error: implicit declaration of function 'FIELD_PREP' [-Wimplicit-function-declaration]
+     278 |                              FIELD_PREP(NCT7201_REG_VIN_MASK, val));
+         |                              ^~~~~~~~~~
 
------BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ7iwQAAKCRB4tDGHoIJi
-0lg0AQDsCEVD4EkUP/fg7wjfm3Cmgy9UN51JuRZ9eaXp870WdQD6A/esC7erCxcf
-CxjVOVmPKf/shRAcubLnpnBnLq4xlQI=
-=Az49
------END PGP SIGNATURE-----
+vim +/FIELD_GET +212 drivers/iio/adc/nct7201.c
 
---JLz+NO4dK9qNL/Og--
+   192	
+   193	static int nct7201_read_raw(struct iio_dev *indio_dev,
+   194				    struct iio_chan_spec const *chan,
+   195				    int *val, int *val2, long mask)
+   196	{
+   197		u16 volt;
+   198		unsigned int value;
+   199		int err;
+   200		struct nct7201_chip_info *chip = iio_priv(indio_dev);
+   201	
+   202		if (chan->type != IIO_VOLTAGE)
+   203			return -EOPNOTSUPP;
+   204	
+   205		guard(mutex)(&chip->access_lock);
+   206		switch (mask) {
+   207		case IIO_CHAN_INFO_RAW:
+   208			err = regmap_read(chip->regmap16, NCT7201_REG_VIN(chan->address), &value);
+   209			if (err < 0)
+   210				return err;
+   211			volt = value;
+ > 212			*val = FIELD_GET(NCT7201_REG_VIN_MASK, volt);
+   213			return IIO_VAL_INT;
+   214		case IIO_CHAN_INFO_SCALE:
+   215			/* From the datasheet, we have to multiply by 0.0004995 */
+   216			*val = 0;
+   217			*val2 = 499500;
+   218			return IIO_VAL_INT_PLUS_NANO;
+   219		default:
+   220			return -EINVAL;
+   221		}
+   222	}
+   223	
+   224	static int nct7201_read_event_value(struct iio_dev *indio_dev,
+   225					    const struct iio_chan_spec *chan,
+   226					    enum iio_event_type type,
+   227					    enum iio_event_direction dir,
+   228					    enum iio_event_info info,
+   229					    int *val, int *val2)
+   230	{
+   231		struct nct7201_chip_info *chip = iio_priv(indio_dev);
+   232		u16 volt;
+   233		unsigned int value;
+   234		int err;
+   235	
+   236		if (chan->type != IIO_VOLTAGE)
+   237			return -EOPNOTSUPP;
+   238	
+   239		if (info != IIO_EV_INFO_VALUE)
+   240			return -EINVAL;
+   241	
+   242		if (dir == IIO_EV_DIR_FALLING) {
+   243			err = regmap_read(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
+   244					  &value);
+   245			if (err < 0)
+   246				return err;
+   247			volt = value;
+   248		} else {
+   249			err = regmap_read(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
+   250					  &value);
+   251			if (err < 0)
+   252				return err;
+   253			volt = value;
+   254		}
+   255	
+   256		*val = FIELD_GET(NCT7201_REG_VIN_MASK, volt);
+   257	
+   258		return IIO_VAL_INT;
+   259	}
+   260	
+   261	static int nct7201_write_event_value(struct iio_dev *indio_dev,
+   262					     const struct iio_chan_spec *chan,
+   263					     enum iio_event_type type,
+   264					     enum iio_event_direction dir,
+   265					     enum iio_event_info info,
+   266					     int val, int val2)
+   267	{
+   268		struct nct7201_chip_info *chip = iio_priv(indio_dev);
+   269	
+   270		if (chan->type != IIO_VOLTAGE)
+   271			return -EOPNOTSUPP;
+   272	
+   273		if (info != IIO_EV_INFO_VALUE)
+   274			return -EOPNOTSUPP;
+   275	
+   276		if (dir == IIO_EV_DIR_FALLING)
+   277			regmap_write(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
+ > 278				     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
+   279		else
+   280			regmap_write(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
+   281				     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
+   282	
+   283		return 0;
+   284	}
+   285	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
