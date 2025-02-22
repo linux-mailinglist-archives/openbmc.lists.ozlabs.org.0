@@ -1,57 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9FC8A4123A
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64031A4123B
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZb0J5Wz3gLC
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZh0gSFz3vc6
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04::f03c:95ff:fe5e:7468"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740238481;
-	cv=none; b=RtYg3SsP8a420Urix0lKrkhwk7XD2P9VBNrdHnErdtTv5Y10rF5ixQESSmDbDLeGdTjAto/jWfjuNV4bZEqt0bRTr47KFj3jxSbwJAjiyx/xXER0r9v1Uw7LoChV/dHMwpvUNntqsK09z1+yOVYEv10yzcAMo5LycQu/d31EU40SRIZYH4XIun8w3kVS5rCQo18I/1PAkhrQIm+6TNGPAeME2yGXCjAcwdxQjfl+ITUxS54U3JFnHYKa2HuSJyEacdVXTlqo+vKRi07wVfFcA1KBnxia01amqffYp843qWSWtBRg+8PBXsNynicK2e7IAHm4CdywRFCBN70gUNsMKg==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740239824;
+	cv=none; b=f6nzWH2IVLLR8J3QyGnXdI+bS0Q6oTft8qucbyPY7OZlq3JrRx0hEIld5vIndbc95RSfjXKxNjqtoWWVDXVNS87O8y/hK/cdZZM/qHHA20jl8fWebJDZxA+PA+0M9YhekwljdYFMM6rbLaJgllmB61vum/tb2GJXJw14GO6vk7GWQqYiPlSa1NhrK/LuCN7NshFVfyjwjojm/3jCdML7ohrp8pH/W3n+r5FFIyd5VidSr6J/l1l0T+iTNb5rQc8jleyJtzCd8zrmcRbKYBF7KUa86ikv2OVFnefskDl+L1yVszCK+vbC2vEcNh5Hh/h2GbY8fVBUTYNXZUQuh0dMSw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740238481; c=relaxed/relaxed;
-	bh=yxbAecXmLrwblOzW5YnC9ZyQogRSkmji2QUa5GmQpH8=;
+	t=1740239824; c=relaxed/relaxed;
+	bh=Onf1JCCwQDLDXSpCccnvdL2XzBq85F1Rht6DlDyYC0E=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gXsb1b6fGbmxsb00hNvUiFoFsHSokcLcf3+WmieU3FtdZFPCl+nqYDikyop3d4XrdFapP9aw0tiWvlATugEd8xB+to+i56rK1ki+3n7tBOTWuKj9Bp6rZ+j9dSfIxMdN5Ygmot1RS14+BcibYz4rzWrvBFbl7ryor81kWaBIkm0YQU2zibtoDECfjyg8JFp8v94XIbFwab7E7cOwWGAoPWPhLD/ArxckRuo3kTpqgz4BpMUUW+EbaVdUpOsqomVwoMZO/v7LwNbyd1veh1Cx4vOYTdPOy462AzYHPaxpXCMPUGG7WmsXkLQ6+ndPBXlSiGKA2fCQhwk6tpV/iY9xVQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AzvFCNgu; dkim-atps=neutral; spf=pass (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version:Content-Type; b=l3q8QWX55T6UA31pmiR2l1yCcLu7neudBCU5NQetp/S5eBXtY4dyhVHvc9PT7mF2vqBLTplKOPvra8eBFkc5JW79QWbY17Q+fAbg19pjAV4RUI2HCq8/qyigXBF7O+6MS0YX2uyyr1OILa0TtH3rQzExRAy4aTJQGDWh0AucRi8dfslCGDudXdJnT/FYeuGrcB+UYtpAHueUeimMzbqPmla3xFxtYair0LAL3G6rC0sSZSjv7ltXEvL+upg2yH3/3HUrNYE37+pccn4n6k7B+AEhk4K4203qPw4CIGbtCcJg7RH/0jC4BdvcSvyNeJz1ut02au/1m4CNTgu5Ps5FPg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NfE3D0ul; dkim-atps=neutral; spf=pass (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=AzvFCNgu;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NfE3D0ul;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org)
-X-Greylist: delayed 521 seconds by postgrey-1.37 at boromir; Sun, 23 Feb 2025 02:34:40 AEDT
 Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04::f03c:95ff:fe5e:7468])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z0WJc0JDVz2yVb
-	for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 02:34:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z0WpR6ZScz2ytQ
+	for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 02:57:03 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 8A28461143;
-	Sat, 22 Feb 2025 15:25:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE357C4CED1;
-	Sat, 22 Feb 2025 15:25:42 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 79CAF61132;
+	Sat, 22 Feb 2025 15:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658E4C4CEE4;
+	Sat, 22 Feb 2025 15:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740237953;
-	bh=5FoHX3Ihpq6uQwdHsZ//hL1s5P1FmjObacFMhwq+9No=;
+	s=k20201202; t=1740239820;
+	bh=X9W99eyKCCVl+jjs+X+HEG5aWdDTZJ6O9eeXlGZgHIo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=AzvFCNgussSYkj6AJHZmpkSgkVM8zJgCfcLakUXfA5ll4Khb1udMQ7pYeY5zipDIk
-	 IaUXihFP0TKgIsy9LBeMX2DMWl3DUxljiD7ZwTCBwopxXcgkRHAM2zhEzxCy6ifbJz
-	 SGKCNW7Go8Uv1fqxpS5bqE4SK5KG9qrdY0EQMIGN8PYL7T1mWL9btLQQzozRRiyI4U
-	 K/h8M6yLGNwzg1y0qzULTpgJJOAbNYlrStjsT+6rnriHdOUxSINve2fOHlWAWEgubY
-	 CsXhsSot3MyUsSolxbcGasAux1BHRWJUP81LkqYnvpWk+0sLeklkFdhILIQTchZSXs
-	 d8OfoyZOGyVVw==
-Date: Sat, 22 Feb 2025 15:25:37 +0000
+	b=NfE3D0ullPSwME2gEhJw0c44jhYZs5BBr7UUwuqFk2V40WucOM3O482iEfGDtes49
+	 a0C6QJFbP92YzLZYDav2t65AW34dqIT0nCD/48QXQXdbBnCLiyIl/OCUsx4Txsx231
+	 rWPSvr9wSpFjmK9fE0gFS6cXEY0D8vzIGPBX6FmVBGyaHVfwN7Mh4J5p9Xbtk6BRWl
+	 cJtxvxTBE6fdwX/+WTy4Fgg1jU3zCEZulclQ+Zr0Fzh6ihG95XM0hFEv9xuzNr7ug3
+	 DInfASsVVhOYEoMxt3NVuaxGWpi+ghgE2BRBbKXfYxYUeCf5m6SBvjjGBHZFBDqLF/
+	 qga1Nx127Iltw==
+Date: Sat, 22 Feb 2025 15:56:46 +0000
 From: Jonathan Cameron <jic23@kernel.org>
 To: Eason Yang <j2anfernee@gmail.com>
-Subject: Re: [PATCH v4 0/2] iio: adc: add Nuvoton NCT7201 ADC driver
-Message-ID: <20250222152537.2a24d80f@jic23-huawei>
-In-Reply-To: <20250221090918.1487689-1-j2anfernee@gmail.com>
+Subject: Re: [PATCH v4 2/2] iio: adc: add support for Nuvoton NCT7201
+Message-ID: <20250222155646.7fa6375a@jic23-huawei>
+In-Reply-To: <20250221090918.1487689-3-j2anfernee@gmail.com>
 References: <20250221090918.1487689-1-j2anfernee@gmail.com>
+	<20250221090918.1487689-3-j2anfernee@gmail.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -76,70 +76,299 @@ Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, device
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 21 Feb 2025 17:09:16 +0800
+On Fri, 21 Feb 2025 17:09:18 +0800
 Eason Yang <j2anfernee@gmail.com> wrote:
 
-Hi Eason,
+> Add Nuvoton NCT7201/NCT7202 system voltage monitor 12-bit ADC driver
+> 
+> NCT7201/NCT7202 supports up to 12 analog voltage monitor inputs and up to
+> 4 SMBus addresses by ADDR pin. Meanwhile, ALERT# hardware event pins for
+> independent alarm signals, and the all threshold values could be set for
+> system protection without any timing delay. It also supports reset input
+> RSTIN# to recover system from a fault condition.
+> 
+> Currently, only single-edge mode conversion and threshold events support.
+> 
+> Signed-off-by: Eason Yang <j2anfernee@gmail.com>
+Hi Eason
 
-Not sure if I asked this before, but this is a device that seems
-to be typically used for hardware monitoring and there are a number
-of similar sounding device in drivers/hwmon/  
-
-That raises a couple of questions:
-1) Is it compatible with any of those existing drivers?
-2) Why IIO rather than HWMON?
-
-There isn't normally a problem with having a hardware monitoring
-related device supported by IIO, it is just good to know if your
-usecase makes that a good idea.  We have the iio-hwmon bridge
-driver to solve the problem of a device than can be used either
-as a generic ADC or as a hwmon type monitoring device (which tends
-to have more alarms etc)
+A few comments from me. May well overlap in some places with other feedback.
 
 Jonathan
 
+> diff --git a/drivers/iio/adc/nct7201.c b/drivers/iio/adc/nct7201.c
+> new file mode 100644
+> index 000000000000..c5d1540bcc00
+> --- /dev/null
+> +++ b/drivers/iio/adc/nct7201.c
+> @@ -0,0 +1,487 @@
 
-> Change since version 4:
->  - Fix comments
->  - Add interrupts and reset-gpios to the DT example
->  - Use the FIELD_PREP and FIELD_GET
->  - Add use_single_write in regmap_config
->  - Use regmap_access_table
-> 
-> Change since version 3:
->  - Fix comments
->  - Don't put nct720"x" in the name, just call it nct7201
->  - Remove differential inputs until conversions are finished
->  - Add NCT7201_ prefix in all macros and avoid the tables
->  - Correct event threshold values in raw units
->  - Add with and without interrupt callback function to have the event
->    config part and one that doesn't
->  - Remove print an error message if regmap_wirte failed case
-> 
-> Change since version 2:
->  - Remvoe read-vin-data-size property, default use read word vin data
->  - Use regmap instead of i2c smbus API
->  - IIO should be IIO_CHAN_INFO_RAW and _SCALE not _PROCESSED
->  - Use dev_xxx_probe in probe function and dev_xxx in other functions
->  - Use devm_iio_device_register replace of iio_device_register
->  - Use guard(mutex) replace of mutex_lock
->  - Use get_unaligned_le16 conversion API
-> 
-> Changes since version 1:
->  - Add new property in iio:adc binding document
->  - Add new driver for Nuvoton NCT720x driver
-> 
-> Eason Yang (2):
->   dt-bindings: iio: adc: add NCT7201 ADCs
->   iio: adc: add support for Nuvoton NCT7201
-> 
->  .../bindings/iio/adc/nuvoton,nct7201.yaml     |  57 ++
->  MAINTAINERS                                   |   2 +
->  drivers/iio/adc/Kconfig                       |  11 +
->  drivers/iio/adc/Makefile                      |   1 +
->  drivers/iio/adc/nct7201.c                     | 487 ++++++++++++++++++
->  5 files changed, 558 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/iio/adc/nuvoton,nct7201.yaml
->  create mode 100644 drivers/iio/adc/nct7201.c
-> 
+> +
+> +#define NCT7201_VOLTAGE_CHANNEL(chan, addr)				\
+> +	{								\
+> +		.type = IIO_VOLTAGE,					\
+> +		.indexed = 1,						\
+> +		.channel = chan,					\
+> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),		\
+> +		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),	\
+> +		.address = addr,					\
+> +		.event_spec = nct7201_events,				\
+> +		.num_event_specs = ARRAY_SIZE(nct7201_events),		\
+> +	}
+> +
+> +static const struct iio_chan_spec nct7201_channels[] = {
+> +	NCT7201_VOLTAGE_CHANNEL(1, 0),
+> +	NCT7201_VOLTAGE_CHANNEL(2, 1),
+> +	NCT7201_VOLTAGE_CHANNEL(3, 2),
+> +	NCT7201_VOLTAGE_CHANNEL(4, 3),
+> +	NCT7201_VOLTAGE_CHANNEL(5, 4),
+> +	NCT7201_VOLTAGE_CHANNEL(6, 5),
+> +	NCT7201_VOLTAGE_CHANNEL(7, 6),
+> +	NCT7201_VOLTAGE_CHANNEL(8, 7),
+> +};
+> +
+> +static const struct iio_chan_spec nct7202_channels[] = {
+> +	NCT7201_VOLTAGE_CHANNEL(1, 0),
+> +	NCT7201_VOLTAGE_CHANNEL(2, 1),
+> +	NCT7201_VOLTAGE_CHANNEL(3, 2),
+> +	NCT7201_VOLTAGE_CHANNEL(4, 3),
+> +	NCT7201_VOLTAGE_CHANNEL(5, 4),
+> +	NCT7201_VOLTAGE_CHANNEL(6, 5),
+> +	NCT7201_VOLTAGE_CHANNEL(7, 6),
+> +	NCT7201_VOLTAGE_CHANNEL(8, 7),
+> +	NCT7201_VOLTAGE_CHANNEL(9, 8),
+> +	NCT7201_VOLTAGE_CHANNEL(10, 9),
+> +	NCT7201_VOLTAGE_CHANNEL(11, 10),
+> +	NCT7201_VOLTAGE_CHANNEL(12, 11),
+We normally number channels from 0 which would simplify this but I don't really
+mind if you want to keep the offset of 1.  Maybe just have one macro
+parameter though and do the +1 in the macro.
+> +};
+
+> +static int nct7201_read_event_value(struct iio_dev *indio_dev,
+> +				    const struct iio_chan_spec *chan,
+> +				    enum iio_event_type type,
+> +				    enum iio_event_direction dir,
+> +				    enum iio_event_info info,
+> +				    int *val, int *val2)
+> +{
+> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
+> +	u16 volt;
+> +	unsigned int value;
+> +	int err;
+> +
+> +	if (chan->type != IIO_VOLTAGE)
+> +		return -EOPNOTSUPP;
+> +
+> +	if (info != IIO_EV_INFO_VALUE)
+> +		return -EINVAL;
+> +
+> +	if (dir == IIO_EV_DIR_FALLING) {
+> +		err = regmap_read(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
+> +				  &value);
+> +		if (err < 0)
+> +			return err;
+> +		volt = value;
+> +	} else {
+> +		err = regmap_read(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
+> +				  &value);
+> +		if (err < 0)
+> +			return err;
+> +		volt = value;
+No real point in assigning to volt here, 
+> +	}
+> +
+> +	*val = FIELD_GET(NCT7201_REG_VIN_MASK, volt);
+> +
+> +	return IIO_VAL_INT;
+> +}
+> +
+> +static int nct7201_write_event_value(struct iio_dev *indio_dev,
+> +				     const struct iio_chan_spec *chan,
+> +				     enum iio_event_type type,
+> +				     enum iio_event_direction dir,
+> +				     enum iio_event_info info,
+> +				     int val, int val2)
+> +{
+> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
+> +
+> +	if (chan->type != IIO_VOLTAGE)
+> +		return -EOPNOTSUPP;
+> +
+> +	if (info != IIO_EV_INFO_VALUE)
+> +		return -EOPNOTSUPP;
+> +
+> +	if (dir == IIO_EV_DIR_FALLING)
+> +		regmap_write(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
+> +			     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
+> +	else
+> +		regmap_write(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
+> +			     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
+Check for error returns.
+> +
+> +	return 0;
+> +}
+> +
+> +static int nct7201_read_event_config(struct iio_dev *indio_dev,
+> +				     const struct iio_chan_spec *chan,
+> +				     enum iio_event_type type,
+> +				     enum iio_event_direction dir)
+> +{
+> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
+> +
+> +	if (chan->type != IIO_VOLTAGE)
+> +		return -EOPNOTSUPP;
+> +
+> +	return !!(chip->vin_mask & BIT(chan->address));
+> +}
+> +
+> +static int nct7201_write_event_config(struct iio_dev *indio_dev,
+> +				      const struct iio_chan_spec *chan,
+> +				      enum iio_event_type type,
+> +				      enum iio_event_direction dir,
+> +				      bool state)
+> +{
+> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
+> +	unsigned int mask;
+> +
+> +	if (chan->type != IIO_VOLTAGE)
+> +		return -EOPNOTSUPP;
+> +
+> +	mask = BIT(chan->address);
+> +
+> +	if (!state && (chip->vin_mask & mask))
+> +		chip->vin_mask &= ~mask;
+> +	else if (state && !(chip->vin_mask & mask))
+> +		chip->vin_mask |= mask;
+> +
+> +	if (chip->num_vin_channels <= 8)
+> +		regmap_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1, chip->vin_mask);
+> +	else
+> +		regmap_bulk_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1,
+> +				  &chip->vin_mask, sizeof(chip->vin_mask));
+
+Check errors on these writes.
+
+> +
+> +	return 0;
+> +}
+
+> +static int nct7201_init_chip(struct nct7201_chip_info *chip)
+> +{
+> +	u8 data[2];
+> +	unsigned int value;
+> +	int err;
+> +
+> +	regmap_write(chip->regmap, NCT7201_REG_CONFIGURATION,
+> +		     NCT7201_BIT_CONFIGURATION_RESET);
+
+Check for errors on all accesses to the device.  It can get
+fiddly in paths where you are already handling an error but
+that's not the case here.
+
+> +
+> +	/*
+> +	 * After about 25 msecs, the device should be ready and then
+> +	 * the Power Up bit will be set to 1. If not, wait for it.
+
+Wrap to 80 chars.
+
+> +	 */
+> +	mdelay(25);
+> +	err = regmap_read(chip->regmap, NCT7201_REG_BUSY_STATUS, &value);
+> +	if (err < 0)
+> +		return err;
+> +	if (!(value & NCT7201_BIT_PWR_UP))
+> +		return dev_err_probe(&chip->client->dev, -EIO,
+> +				     "Failed to power up after reset\n");
+> +
+> +	/* Enable Channel */
+> +	if (chip->num_vin_channels <= 8) {
+> +		data[0] = NCT7201_REG_CHANNEL_ENABLE_1_MASK;
+> +		err = regmap_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1, data[0]);
+> +		if (err < 0)
+> +			return dev_err_probe(&chip->client->dev, -EIO,
+> +					     "Failed to write NCT7201_REG_CHANNEL_ENABLE_1\n");
+> +	} else {
+> +		data[0] = NCT7201_REG_CHANNEL_ENABLE_1_MASK;
+> +		data[1] = NCT7201_REG_CHANNEL_ENABLE_2_MASK;
+> +		err = regmap_bulk_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1,
+> +					data, ARRAY_SIZE(data));
+> +		if (err < 0)
+> +			return dev_err_probe(&chip->client->dev, -EIO,
+> +					    "Failed to write NCT7201_REG_CHANNEL_ENABLE_1 and NCT7201_REG_CHANNEL_ENABLE_2\n");
+> +	}
+> +
+> +	value = get_unaligned_le16(data);
+> +	chip->vin_mask = value;
+
+Local variable doesn't seem to add any benefits so just assign vin_mask directly.
+
+> +
+> +	/* Start monitoring if needed */
+> +	err = regmap_read(chip->regmap, NCT7201_REG_CONFIGURATION, &value);
+> +	if (err < 0)
+> +		return dev_err_probe(&chip->client->dev, -EIO,
+> +				     "Failed to read NCT7201_REG_CONFIGURATION\n");
+> +
+> +	regmap_set_bits(chip->regmap, NCT7201_REG_CONFIGURATION, NCT7201_BIT_CONFIGURATION_START);
+> +
+> +	return 0;
+> +}
+> +
+> +static int nct7201_probe(struct i2c_client *client)
+> +{
+> +	const struct nct7201_adc_model_data *model_data;
+> +	struct nct7201_chip_info *chip;
+> +	struct iio_dev *indio_dev;
+> +	int ret;
+> +
+> +	model_data = i2c_get_match_data(client);
+> +	if (!model_data)
+> +		return -EINVAL;
+> +
+> +	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*chip));
+> +	if (!indio_dev)
+> +		return -ENOMEM;
+> +	chip = iio_priv(indio_dev);
+> +
+> +	chip->regmap = devm_regmap_init_i2c(client, &nct7201_regmap8_config);
+> +	if (IS_ERR(chip->regmap))
+> +		return dev_err_probe(&client->dev, PTR_ERR(chip->regmap),
+> +			"Failed to init regmap\n");
+
+Where it doesn't lead to really long lines, align all parameters to just
+after the opening bracket.
+
+
+> +
+> +	chip->regmap16 = devm_regmap_init_i2c(client, &nct7201_regmap16_config);
+> +	if (IS_ERR(chip->regmap16))
+> +		return dev_err_probe(&client->dev, PTR_ERR(chip->regmap16),
+> +			"Failed to init regmap16\n");
+> +
+> +	chip->num_vin_channels = model_data->num_vin_channels;
+> +
+> +	ret = devm_mutex_init(&client->dev, &chip->access_lock);
+> +	if (ret)
+> +		return ret;
+> +
+> +	chip->client = client;
+> +
+> +	ret = nct7201_init_chip(chip);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	indio_dev->name = model_data->model_name;
+> +	indio_dev->channels = model_data->channels;
+> +	indio_dev->num_channels = model_data->num_channels;
+> +	if (client->irq)
+> +		indio_dev->info = &nct7201_info;
+> +	else
+> +		indio_dev->info = &nct7201_info_no_irq;
+> +	indio_dev->modes = INDIO_DIRECT_MODE;
+> +
+> +	return devm_iio_device_register(&client->dev, indio_dev);
+> +}
+
 
