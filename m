@@ -2,63 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64031A4123B
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 446A1A4123C
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 00:20:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZh0gSFz3vc6
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1KZn0gvQz3vmf
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 10:19:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04::f03c:95ff:fe5e:7468"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740239824;
-	cv=none; b=f6nzWH2IVLLR8J3QyGnXdI+bS0Q6oTft8qucbyPY7OZlq3JrRx0hEIld5vIndbc95RSfjXKxNjqtoWWVDXVNS87O8y/hK/cdZZM/qHHA20jl8fWebJDZxA+PA+0M9YhekwljdYFMM6rbLaJgllmB61vum/tb2GJXJw14GO6vk7GWQqYiPlSa1NhrK/LuCN7NshFVfyjwjojm/3jCdML7ohrp8pH/W3n+r5FFIyd5VidSr6J/l1l0T+iTNb5rQc8jleyJtzCd8zrmcRbKYBF7KUa86ikv2OVFnefskDl+L1yVszCK+vbC2vEcNh5Hh/h2GbY8fVBUTYNXZUQuh0dMSw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740335696;
+	cv=none; b=V2cV4TNy3BvqZzUdqene/HYw4vfEN41BJmKGoPBd4uplJ3orINx4IhCuMVOWiD5whbXepMR8iZvfgSJkD8PmJQtHTAXm/h6oyVoDH/AYI3TGjY3Z65jn2Gq9QirmPM+EfmCO58MoPwsfswjEGS0jv1rtR45i/nxUhruYo7mn7nLBSzn/XS5s8jlY+lhldpAkw+jal+pssbrDHtjPH+FFpWnAitaqa1SqHwJ9+nX6J7JOdXVEvxKvJGUd+TBualUHSF3dOuwHB3hKWSWKg6Bh11W+rQcTASyA//1WPru9AFG/PyTD9tnD4yMkTtu7mJTAHX5/YMsC8dghRRBCVIPYow==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740239824; c=relaxed/relaxed;
-	bh=Onf1JCCwQDLDXSpCccnvdL2XzBq85F1Rht6DlDyYC0E=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l3q8QWX55T6UA31pmiR2l1yCcLu7neudBCU5NQetp/S5eBXtY4dyhVHvc9PT7mF2vqBLTplKOPvra8eBFkc5JW79QWbY17Q+fAbg19pjAV4RUI2HCq8/qyigXBF7O+6MS0YX2uyyr1OILa0TtH3rQzExRAy4aTJQGDWh0AucRi8dfslCGDudXdJnT/FYeuGrcB+UYtpAHueUeimMzbqPmla3xFxtYair0LAL3G6rC0sSZSjv7ltXEvL+upg2yH3/3HUrNYE37+pccn4n6k7B+AEhk4K4203qPw4CIGbtCcJg7RH/0jC4BdvcSvyNeJz1ut02au/1m4CNTgu5Ps5FPg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NfE3D0ul; dkim-atps=neutral; spf=pass (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1740335696; c=relaxed/relaxed;
+	bh=U0C+iu1WeNs+zRFQEZ4WEKG2Hv7tO/tPX0DsKYx3e/U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mZlU7iiGHfq6F6042ZwLl1SxNR+hJwZB3J0kqe4N97La/X7Gv//0JJjR22zOmUrydiq3YCYWRgdC+KXsEAyHGrmgayKHL8JbObt4Lf/XykDpUYln7LJ1a2akocXq1y5gYGUlK8Nro5O9JRf+bWpKJxl/auGpe0UIJyzs5kXLWM57JBmKrTjroJMLWJ3K+cU0uBAt8txW1G8Kk1BO9X1FSWDgRunZBgLkCjs8rVvo5O0Q5DaJN3yqS4KS97Vl+JzKRg7cYUDimwMY6LE6dMOjgp9v/StrygSzJt6+nlLezl8iqoo4crOWroGoOUMmhJOSC6slSDp5j1/E5h9+iURd3A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org; dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BFghei21; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org) smtp.mailfrom=chromium.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NfE3D0ul;
+	dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=BFghei21;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04::f03c:95ff:fe5e:7468])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=chromium.org (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z0WpR6ZScz2ytQ
-	for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 02:57:03 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 79CAF61132;
-	Sat, 22 Feb 2025 15:56:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658E4C4CEE4;
-	Sat, 22 Feb 2025 15:56:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740239820;
-	bh=X9W99eyKCCVl+jjs+X+HEG5aWdDTZJ6O9eeXlGZgHIo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=NfE3D0ullPSwME2gEhJw0c44jhYZs5BBr7UUwuqFk2V40WucOM3O482iEfGDtes49
-	 a0C6QJFbP92YzLZYDav2t65AW34dqIT0nCD/48QXQXdbBnCLiyIl/OCUsx4Txsx231
-	 rWPSvr9wSpFjmK9fE0gFS6cXEY0D8vzIGPBX6FmVBGyaHVfwN7Mh4J5p9Xbtk6BRWl
-	 cJtxvxTBE6fdwX/+WTy4Fgg1jU3zCEZulclQ+Zr0Fzh6ihG95XM0hFEv9xuzNr7ug3
-	 DInfASsVVhOYEoMxt3NVuaxGWpi+ghgE2BRBbKXfYxYUeCf5m6SBvjjGBHZFBDqLF/
-	 qga1Nx127Iltw==
-Date: Sat, 22 Feb 2025 15:56:46 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Eason Yang <j2anfernee@gmail.com>
-Subject: Re: [PATCH v4 2/2] iio: adc: add support for Nuvoton NCT7201
-Message-ID: <20250222155646.7fa6375a@jic23-huawei>
-In-Reply-To: <20250221090918.1487689-3-j2anfernee@gmail.com>
-References: <20250221090918.1487689-1-j2anfernee@gmail.com>
-	<20250221090918.1487689-3-j2anfernee@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-pc-linux-gnu)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1CG63LNRz2yjb
+	for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2025 05:34:53 +1100 (AEDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-546267ed92fso4361692e87.2
+        for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 10:34:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1740335687; x=1740940487; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0C+iu1WeNs+zRFQEZ4WEKG2Hv7tO/tPX0DsKYx3e/U=;
+        b=BFghei21kx7Y88yDJ5RtG4MzZmByqQmzGP/tE6jg5CVNtyM+YQfVJ8dM3ZmwRtlVoR
+         8SX0UYSMMLY+qivZ4C8SHv10Vn0nye2MhZEJe6eiRe1+I4Jei2Y0zkbEsN51crH/O77f
+         z091K5AXYrS8jU3yDxwxCBj79jLU/u4EPpTfU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740335687; x=1740940487;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U0C+iu1WeNs+zRFQEZ4WEKG2Hv7tO/tPX0DsKYx3e/U=;
+        b=oCNJ6jTKKplU8+eE3VU/pZ2hM9au1L1nOLpoNN8YhdSB0wdgWFt8y2ItrLvpKw/oCL
+         /bY2O3EjC8WhWCoz9A0/Sx4g3QLg4edxr6nhvvSE/qRR03hgugzfmkLymzElpMm9G+qM
+         DhLSfbIcuRT9ayplPvQgXKZjj9YxpXJkw0wk48m3jyGqpRxd2Au0nWMJACLuCj6E9/Cy
+         cBWI8N4kHUH1mqUFtlr2fvmIAy2fOGHcSdvuWGwj784+bphdyLudqQ1w6NHgiXx6QQjM
+         0BpNUzefN4vuAc68fr7gWRk/Acr+cLhhF9llX74yaywYvZhJUIqrHha1ChVEA9rqS4zZ
+         NJQA==
+X-Forwarded-Encrypted: i=1; AJvYcCUX0Ud0HXfJKDauVosLztzgumYTEqYgOB+Ce2sHijhFCqTbkxY2dHS/5D86KruANChtKDX2IQv4@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzOedaMJefPVFB4sCfwQk+SLKa2EOAGpXuQq99+UJwHZ5Lhm7Jo
+	0O6GqYy6bI3mQhrf4G6o3LPSG/oo8cH23Z5YfjRojrxiZbYCXFl3uJ+nktIzUc35oXC2fXQdulk
+	=
+X-Gm-Gg: ASbGnctsEuNNkrvMKBCsGiPL/H0j0gsnelDGri0PWa8ABytYK6GB+oR9Rx7532woBU0
+	GRdio20xdhO0z4fUAi9Qp8W+vBEGoBvDkEy78vKkjOmSC7AkH44kuYpizKYbIVmDoCbPzkyDbf5
+	hVqJ5+BC6KbF5MT2NqVyuTA5AYdDi8RBqA6Gq9D+Fs2IOEW1S2972e8/GSkP5li0t3skdc4R1ub
+	3RYHBWv4igfRjYiw0W74bSFuF/OVIZQCPXLG1syJnSqn08SdoJoHYVW3+cnOWlRjYdRwhoScwrW
+	czZVNn99dzSt3DMG1ye4vbaPDZeAgEGkXZVsq6wFwp9enjSZTDQqw5VUofvu6LjzYlqt
+X-Google-Smtp-Source: AGHT+IGwPfi6/BRkG/yFY7nb0UgWeJwt/qHFF+tBBBg9eKm6qK+7R898CbbP8NMNywpgneqg5YXQbw==
+X-Received: by 2002:a05:6512:31d3:b0:545:2550:7d67 with SMTP id 2adb3069b0e04-54838f4e57amr4194662e87.36.1740335686673;
+        Sun, 23 Feb 2025 10:34:46 -0800 (PST)
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com. [209.85.208.173])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452f6efbf5sm2692079e87.18.2025.02.23.10.34.43
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Feb 2025 10:34:44 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-30795988ebeso37195861fa.3
+        for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 10:34:43 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVFllrQ2YrjOVch/T1ez0YYk1ZcdLBPqvCamEhEf0/AQ01SGso792R5Vv317oR7OsmrDd5bbkSA@lists.ozlabs.org
+X-Received: by 2002:a2e:b614:0:b0:308:f84b:6b34 with SMTP id
+ 38308e7fff4ca-30a5990b2ebmr35382051fa.20.1740335683340; Sun, 23 Feb 2025
+ 10:34:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_XBL,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.0
+References: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
+ <20250121-nuvoton-v1-1-1ea4f0cdbda2@chromium.org> <df5693d0-7747-4423-809e-ae081c9aae92@xs4all.nl>
+ <dffc8e0b-2603-4e7e-ba64-15691c11ff7e@xs4all.nl>
+In-Reply-To: <dffc8e0b-2603-4e7e-ba64-15691c11ff7e@xs4all.nl>
+From: Ricardo Ribalda <ribalda@chromium.org>
+Date: Sun, 23 Feb 2025 19:34:30 +0100
+X-Gmail-Original-Message-ID: <CANiDSCsMCSJMEsY3R=pnZ4XUTiEYuPz-N1kEX7y13yTzE6Dm5w@mail.gmail.com>
+X-Gm-Features: AWEUYZkxdyzd_jgZvmXlXPTuqCYemf2QEgvVhq5WasLvpB-Xk2V4c6RpmAx6ZOg
+Message-ID: <CANiDSCsMCSJMEsY3R=pnZ4XUTiEYuPz-N1kEX7y13yTzE6Dm5w@mail.gmail.com>
+Subject: Re: [PATCH 1/4] media: nuvoton: Fix reference handling of ece_pdev
+To: Hans Verkuil <hverkuil@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-0.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS,URIBL_SBL_A autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Mon, 24 Feb 2025 10:18:50 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -72,303 +103,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tgamblin@baylibre.com, herve.codina@bootlin.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, linux-iio@vger.kernel.org, tali.perry1@gmail.com, yhyang2@nuvoton.com, marcelo.schmitt@analog.com, robh@kernel.org, lars@metafoo.de, benjaminfair@google.com, javier.carrasco.cruz@gmail.com, openbmc@lists.ozlabs.org, ramona.nechita@analog.com, matteomartelli3@gmail.com, olivier.moysan@foss.st.com, thomas.bonnefille@bootlin.com, dlechner@baylibre.com, KWLIU@nuvoton.com, conor+dt@kernel.org, alisadariana@gmail.com, joao.goncalves@toradex.com, andriy.shevchenko@linux.intel.com, gstols@baylibre.com, chanh@os.amperecomputing.com, avifishman70@gmail.com, venture@google.com, mitrutzceclan@gmail.com, linux-kernel@vger.kernel.org, nuno.sa@analog.com, krzk+dt@kernel.org
+Cc: Joseph Liu <kwliu@nuvoton.com>, Marvin Lin <milkfafa@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 21 Feb 2025 17:09:18 +0800
-Eason Yang <j2anfernee@gmail.com> wrote:
+On Fri, 21 Feb 2025 at 10:18, Hans Verkuil <hverkuil@xs4all.nl> wrote:
+>
+> On 21/02/2025 10:04, Hans Verkuil wrote:
+> > Hi Ricardo,
+> >
+> > On 21/01/2025 22:14, Ricardo Ribalda wrote:
+> >> When we obtain a reference to of a platform_device, we need to release
+> >> it via put_device.
+> >>
+> >> Found by cocci:
+> >> ./platform/nuvoton/npcm-video.c:1677:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> >> ./platform/nuvoton/npcm-video.c:1684:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> >> ./platform/nuvoton/npcm-video.c:1690:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> >> ./platform/nuvoton/npcm-video.c:1694:1-7: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
+> >
+> > This driver uses this construct:
+> >
+> >                 struct device *ece_dev __free(put_device) = &ece_pdev->dev;
+> >
+> > to automatically call put_device. So this patch would 'put' the device twice.
+> >
+> > Does cocci understand constructs like this? If I hadn't looked closely at the
+> > code first, I would just have merged it.
+>
+> Oh wait, now that I am reading the following patches I see that it was those later
+> patches that add the __free code.
+>
+> This is far too confusing. Please post a v2 that just combines the 'fix references'
+> and 'use cleanup.h macros' in a single patch. It makes no sense to have this two-phase
+> approach.
 
-> Add Nuvoton NCT7201/NCT7202 system voltage monitor 12-bit ADC driver
-> 
-> NCT7201/NCT7202 supports up to 12 analog voltage monitor inputs and up to
-> 4 SMBus addresses by ADDR pin. Meanwhile, ALERT# hardware event pins for
-> independent alarm signals, and the all threshold values could be set for
-> system protection without any timing delay. It also supports reset input
-> RSTIN# to recover system from a fault condition.
-> 
-> Currently, only single-edge mode conversion and threshold events support.
-> 
-> Signed-off-by: Eason Yang <j2anfernee@gmail.com>
-Hi Eason
+I believe this is discouraged.
 
-A few comments from me. May well overlap in some places with other feedback.
+cleanup.h macros does not exist in old kernel versions, so makes it
+impossible to backport the fix to them.
 
-Jonathan
+This is an example of other series following this policy:
+https://lore.kernel.org/lkml/173608125422.1253657.3732758016133408588.stgit@devnote2/
 
-> diff --git a/drivers/iio/adc/nct7201.c b/drivers/iio/adc/nct7201.c
-> new file mode 100644
-> index 000000000000..c5d1540bcc00
-> --- /dev/null
-> +++ b/drivers/iio/adc/nct7201.c
-> @@ -0,0 +1,487 @@
-
-> +
-> +#define NCT7201_VOLTAGE_CHANNEL(chan, addr)				\
-> +	{								\
-> +		.type = IIO_VOLTAGE,					\
-> +		.indexed = 1,						\
-> +		.channel = chan,					\
-> +		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW),		\
-> +		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),	\
-> +		.address = addr,					\
-> +		.event_spec = nct7201_events,				\
-> +		.num_event_specs = ARRAY_SIZE(nct7201_events),		\
-> +	}
-> +
-> +static const struct iio_chan_spec nct7201_channels[] = {
-> +	NCT7201_VOLTAGE_CHANNEL(1, 0),
-> +	NCT7201_VOLTAGE_CHANNEL(2, 1),
-> +	NCT7201_VOLTAGE_CHANNEL(3, 2),
-> +	NCT7201_VOLTAGE_CHANNEL(4, 3),
-> +	NCT7201_VOLTAGE_CHANNEL(5, 4),
-> +	NCT7201_VOLTAGE_CHANNEL(6, 5),
-> +	NCT7201_VOLTAGE_CHANNEL(7, 6),
-> +	NCT7201_VOLTAGE_CHANNEL(8, 7),
-> +};
-> +
-> +static const struct iio_chan_spec nct7202_channels[] = {
-> +	NCT7201_VOLTAGE_CHANNEL(1, 0),
-> +	NCT7201_VOLTAGE_CHANNEL(2, 1),
-> +	NCT7201_VOLTAGE_CHANNEL(3, 2),
-> +	NCT7201_VOLTAGE_CHANNEL(4, 3),
-> +	NCT7201_VOLTAGE_CHANNEL(5, 4),
-> +	NCT7201_VOLTAGE_CHANNEL(6, 5),
-> +	NCT7201_VOLTAGE_CHANNEL(7, 6),
-> +	NCT7201_VOLTAGE_CHANNEL(8, 7),
-> +	NCT7201_VOLTAGE_CHANNEL(9, 8),
-> +	NCT7201_VOLTAGE_CHANNEL(10, 9),
-> +	NCT7201_VOLTAGE_CHANNEL(11, 10),
-> +	NCT7201_VOLTAGE_CHANNEL(12, 11),
-We normally number channels from 0 which would simplify this but I don't really
-mind if you want to keep the offset of 1.  Maybe just have one macro
-parameter though and do the +1 in the macro.
-> +};
-
-> +static int nct7201_read_event_value(struct iio_dev *indio_dev,
-> +				    const struct iio_chan_spec *chan,
-> +				    enum iio_event_type type,
-> +				    enum iio_event_direction dir,
-> +				    enum iio_event_info info,
-> +				    int *val, int *val2)
-> +{
-> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
-> +	u16 volt;
-> +	unsigned int value;
-> +	int err;
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (info != IIO_EV_INFO_VALUE)
-> +		return -EINVAL;
-> +
-> +	if (dir == IIO_EV_DIR_FALLING) {
-> +		err = regmap_read(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
-> +				  &value);
-> +		if (err < 0)
-> +			return err;
-> +		volt = value;
-> +	} else {
-> +		err = regmap_read(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
-> +				  &value);
-> +		if (err < 0)
-> +			return err;
-> +		volt = value;
-No real point in assigning to volt here, 
-> +	}
-> +
-> +	*val = FIELD_GET(NCT7201_REG_VIN_MASK, volt);
-> +
-> +	return IIO_VAL_INT;
-> +}
-> +
-> +static int nct7201_write_event_value(struct iio_dev *indio_dev,
-> +				     const struct iio_chan_spec *chan,
-> +				     enum iio_event_type type,
-> +				     enum iio_event_direction dir,
-> +				     enum iio_event_info info,
-> +				     int val, int val2)
-> +{
-> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (info != IIO_EV_INFO_VALUE)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (dir == IIO_EV_DIR_FALLING)
-> +		regmap_write(chip->regmap16, NCT7201_REG_VIN_LOW_LIMIT(chan->address),
-> +			     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
-> +	else
-> +		regmap_write(chip->regmap16, NCT7201_REG_VIN_HIGH_LIMIT(chan->address),
-> +			     FIELD_PREP(NCT7201_REG_VIN_MASK, val));
-Check for error returns.
-> +
-> +	return 0;
-> +}
-> +
-> +static int nct7201_read_event_config(struct iio_dev *indio_dev,
-> +				     const struct iio_chan_spec *chan,
-> +				     enum iio_event_type type,
-> +				     enum iio_event_direction dir)
-> +{
-> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	return !!(chip->vin_mask & BIT(chan->address));
-> +}
-> +
-> +static int nct7201_write_event_config(struct iio_dev *indio_dev,
-> +				      const struct iio_chan_spec *chan,
-> +				      enum iio_event_type type,
-> +				      enum iio_event_direction dir,
-> +				      bool state)
-> +{
-> +	struct nct7201_chip_info *chip = iio_priv(indio_dev);
-> +	unsigned int mask;
-> +
-> +	if (chan->type != IIO_VOLTAGE)
-> +		return -EOPNOTSUPP;
-> +
-> +	mask = BIT(chan->address);
-> +
-> +	if (!state && (chip->vin_mask & mask))
-> +		chip->vin_mask &= ~mask;
-> +	else if (state && !(chip->vin_mask & mask))
-> +		chip->vin_mask |= mask;
-> +
-> +	if (chip->num_vin_channels <= 8)
-> +		regmap_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1, chip->vin_mask);
-> +	else
-> +		regmap_bulk_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1,
-> +				  &chip->vin_mask, sizeof(chip->vin_mask));
-
-Check errors on these writes.
-
-> +
-> +	return 0;
-> +}
-
-> +static int nct7201_init_chip(struct nct7201_chip_info *chip)
-> +{
-> +	u8 data[2];
-> +	unsigned int value;
-> +	int err;
-> +
-> +	regmap_write(chip->regmap, NCT7201_REG_CONFIGURATION,
-> +		     NCT7201_BIT_CONFIGURATION_RESET);
-
-Check for errors on all accesses to the device.  It can get
-fiddly in paths where you are already handling an error but
-that's not the case here.
-
-> +
-> +	/*
-> +	 * After about 25 msecs, the device should be ready and then
-> +	 * the Power Up bit will be set to 1. If not, wait for it.
-
-Wrap to 80 chars.
-
-> +	 */
-> +	mdelay(25);
-> +	err = regmap_read(chip->regmap, NCT7201_REG_BUSY_STATUS, &value);
-> +	if (err < 0)
-> +		return err;
-> +	if (!(value & NCT7201_BIT_PWR_UP))
-> +		return dev_err_probe(&chip->client->dev, -EIO,
-> +				     "Failed to power up after reset\n");
-> +
-> +	/* Enable Channel */
-> +	if (chip->num_vin_channels <= 8) {
-> +		data[0] = NCT7201_REG_CHANNEL_ENABLE_1_MASK;
-> +		err = regmap_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1, data[0]);
-> +		if (err < 0)
-> +			return dev_err_probe(&chip->client->dev, -EIO,
-> +					     "Failed to write NCT7201_REG_CHANNEL_ENABLE_1\n");
-> +	} else {
-> +		data[0] = NCT7201_REG_CHANNEL_ENABLE_1_MASK;
-> +		data[1] = NCT7201_REG_CHANNEL_ENABLE_2_MASK;
-> +		err = regmap_bulk_write(chip->regmap, NCT7201_REG_CHANNEL_ENABLE_1,
-> +					data, ARRAY_SIZE(data));
-> +		if (err < 0)
-> +			return dev_err_probe(&chip->client->dev, -EIO,
-> +					    "Failed to write NCT7201_REG_CHANNEL_ENABLE_1 and NCT7201_REG_CHANNEL_ENABLE_2\n");
-> +	}
-> +
-> +	value = get_unaligned_le16(data);
-> +	chip->vin_mask = value;
-
-Local variable doesn't seem to add any benefits so just assign vin_mask directly.
-
-> +
-> +	/* Start monitoring if needed */
-> +	err = regmap_read(chip->regmap, NCT7201_REG_CONFIGURATION, &value);
-> +	if (err < 0)
-> +		return dev_err_probe(&chip->client->dev, -EIO,
-> +				     "Failed to read NCT7201_REG_CONFIGURATION\n");
-> +
-> +	regmap_set_bits(chip->regmap, NCT7201_REG_CONFIGURATION, NCT7201_BIT_CONFIGURATION_START);
-> +
-> +	return 0;
-> +}
-> +
-> +static int nct7201_probe(struct i2c_client *client)
-> +{
-> +	const struct nct7201_adc_model_data *model_data;
-> +	struct nct7201_chip_info *chip;
-> +	struct iio_dev *indio_dev;
-> +	int ret;
-> +
-> +	model_data = i2c_get_match_data(client);
-> +	if (!model_data)
-> +		return -EINVAL;
-> +
-> +	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*chip));
-> +	if (!indio_dev)
-> +		return -ENOMEM;
-> +	chip = iio_priv(indio_dev);
-> +
-> +	chip->regmap = devm_regmap_init_i2c(client, &nct7201_regmap8_config);
-> +	if (IS_ERR(chip->regmap))
-> +		return dev_err_probe(&client->dev, PTR_ERR(chip->regmap),
-> +			"Failed to init regmap\n");
-
-Where it doesn't lead to really long lines, align all parameters to just
-after the opening bracket.
+They also mention the same here:
+https://hackerbikepacker.com/kernel-auto-cleanup-1 .... I am pretty
+sure that I read the policy in a more official location... but I
+cannot find it right now :)
 
 
-> +
-> +	chip->regmap16 = devm_regmap_init_i2c(client, &nct7201_regmap16_config);
-> +	if (IS_ERR(chip->regmap16))
-> +		return dev_err_probe(&client->dev, PTR_ERR(chip->regmap16),
-> +			"Failed to init regmap16\n");
-> +
-> +	chip->num_vin_channels = model_data->num_vin_channels;
-> +
-> +	ret = devm_mutex_init(&client->dev, &chip->access_lock);
-> +	if (ret)
-> +		return ret;
-> +
-> +	chip->client = client;
-> +
-> +	ret = nct7201_init_chip(chip);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	indio_dev->name = model_data->model_name;
-> +	indio_dev->channels = model_data->channels;
-> +	indio_dev->num_channels = model_data->num_channels;
-> +	if (client->irq)
-> +		indio_dev->info = &nct7201_info;
-> +	else
-> +		indio_dev->info = &nct7201_info_no_irq;
-> +	indio_dev->modes = INDIO_DIRECT_MODE;
-> +
-> +	return devm_iio_device_register(&client->dev, indio_dev);
-> +}
+>
+> Regards,
+>
+>         Hans
+>
+> >
+> > Regards,
+> >
+> >       Hans
+> >
+> >>
+> >> Cc: stable@vger.kernel.org
+> >> Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+> >> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+> >> ---
+> >>  drivers/media/platform/nuvoton/npcm-video.c | 3 +++
+> >>  1 file changed, 3 insertions(+)
+> >>
+> >> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+> >> index 024cd8ee1709..7b4c23dbe709 100644
+> >> --- a/drivers/media/platform/nuvoton/npcm-video.c
+> >> +++ b/drivers/media/platform/nuvoton/npcm-video.c
+> >> @@ -1673,6 +1673,7 @@ static int npcm_video_ece_init(struct npcm_video *video)
+> >>
+> >>              regs = devm_platform_ioremap_resource(ece_pdev, 0);
+> >>              if (IS_ERR(regs)) {
+> >> +                    put_device(&ece_pdev->dev);
+> >>                      dev_err(dev, "Failed to parse ECE reg in DTS\n");
+> >>                      return PTR_ERR(regs);
+> >>              }
+> >> @@ -1680,11 +1681,13 @@ static int npcm_video_ece_init(struct npcm_video *video)
+> >>              video->ece.regmap = devm_regmap_init_mmio(dev, regs,
+> >>                                                        &npcm_video_ece_regmap_cfg);
+> >>              if (IS_ERR(video->ece.regmap)) {
+> >> +                    put_device(&ece_pdev->dev);
+> >>                      dev_err(dev, "Failed to initialize ECE regmap\n");
+> >>                      return PTR_ERR(video->ece.regmap);
+> >>              }
+> >>
+> >>              video->ece.reset = devm_reset_control_get(&ece_pdev->dev, NULL);
+> >> +            put_device(&ece_pdev->dev);
+> >>              if (IS_ERR(video->ece.reset)) {
+> >>                      dev_err(dev, "Failed to get ECE reset control in DTS\n");
+> >>                      return PTR_ERR(video->ece.reset);
+> >>
+> >
+> >
+>
 
 
+-- 
+Ricardo Ribalda
