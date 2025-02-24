@@ -1,98 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAC0BA4324D
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2025 02:12:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82373A4324E
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2025 02:12:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z201z6Jv3z3cNs
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2025 12:12:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z20234Rhzz3dRK
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2025 12:12:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::236"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740378877;
-	cv=none; b=Wa7Aj5HTNm03O9lXsWhF8NdilnEVZoBlQ+kviPIY0vCroWav2r5bz/y7kBIbt6jLFfFFwJMXX5OoJu/6M/lHvxaADmRytmhFSAkvIAz6NNdivIkL7IpnWfl71zpiBkR/lmECDYIFSIHMVhuKwzTHaGjtEamn/9cEtX50bVCmfykyCA7S+hLqqo51T5eSkBLci2peS8hhYvOXsoltOPaA6GDkGQHlkmwBV5/ylCCucfigAmKuE9wLdqpT6TWa8csTlrwJudan9Qs2xhlOM8jG6pkEoW/MHHF+NS2aP63Viq4Mu2E1mngSVbHlpMmFBtCeyP2SH/NOpXk3fm1K3exZuw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::734"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740380644;
+	cv=none; b=DzzyMuEPe3uclEyKWP3lgqfTRxgxZlmX4NbPwHhF+5XTl1V0+JkE/m05W5NMJUugulFQ0367cIAe3HSYGD8FEZs+Oq1YSN8OEkP5zmHUyhrxMxGrOyohv4x+QPT38wasqRVBEu6l2C1Q0dzU0yH+OnmCaiJwoGbl95+q4JGVA6V/Xyi0UYz214qFFCueao0uH9vx7ZCqOV6eHSP7X2ye305h81IH3Mb4ctxtldkHi/lP0Op7qxCYI6EM/mp4DFQ67IwSocv4tToZK+qFXRjcJY4L2yX7mHMK7IDtz/mRV7n6n4XZkvAsrN8hYf3agoyHK/B6w0bMhCRGQ338l2q/7Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740378877; c=relaxed/relaxed;
-	bh=UDmIbBVBrmOqaPqtm3OIVdTs+1YkPggGmmD9ociAVJQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RilUBdWsjzRssdLXlPZ3x3tcNXp5VwlcHff+nLyiJd/WEjr9D20KsmHDNsUS3ov6q5tI6FARyQ46a8M1wtc7iqIW0otrI2v6mECjRqW2kZ3VNEf0GreLM5Z8I+UQE8pRkn7IJBXihPxoeZaQv6ae+omJXJVJT6BJiGTc4l7iDUzXGW1RaCLPK8TPhPXevtgR4SZSw+2MSrchqltW/fhNziujGtUOIA1PvCnz7WlEde9S6AXa3UnI/NmLJ3+3J/imqAHr/MyG5VDJAAmEgt9EZtFZQpCYUzgkFpPWRp+/4TaXBRM/5ZJU+bRnGMt43+7VApewn3WhIESdaY/0P2tSYA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org; dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bVql4ssR; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::236; helo=mail-lj1-x236.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org) smtp.mailfrom=chromium.org
+	t=1740380644; c=relaxed/relaxed;
+	bh=HHRUOB722SP2pT9GOeb3cvEiqmLTG17HzDuBznymqOc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AZ1qnQdc7op1K8GuGpDSx8MhJuTN2BSi0BHBF1+eiYtPerRDN2aKZMEl8JkLzPDwZUk7XKaKZquftOq1sW5NIEUQ4vFWqx0LF708+kJS0ODx1E3h+fAb+E7hCZAOxRYz8xwHp2MK7iOmLI3IJ1Q5JzdOqsTeqGjBe/hQc5vOQuKOpQqhpZg4jdY7HWF4vURF753bkJyrg1gNYOAKzm+OhBJB+USyN1cAj12eh5JHRoftwFvRp+Qb1SuMsqf6KyULZ51kSvNIODekNVY3eOvkFQFYtgZ1OiuNoWtxs+QAWI7VPRvwHTt74zOxVxv/6d57OqNPcaqfSFOlanV4pWyS3g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org; dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=NMu3VFBE; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::734; helo=mail-qk1-x734.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org) smtp.mailfrom=chromium.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bVql4ssR;
+	dkim=pass (1024-bit key; unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=NMu3VFBE;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=chromium.org (client-ip=2a00:1450:4864:20::236; helo=mail-lj1-x236.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=chromium.org (client-ip=2607:f8b0:4864:20::734; helo=mail-qk1-x734.google.com; envelope-from=ribalda@chromium.org; receiver=lists.ozlabs.org)
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1WDW6W83z2yVV
-	for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2025 17:34:34 +1100 (AEDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-30a69c1a8d3so12198841fa.3
-        for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 22:34:34 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1WtW0KRDz2yGs
+	for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2025 18:04:01 +1100 (AEDT)
+Received: by mail-qk1-x734.google.com with SMTP id af79cd13be357-7c0a1677aebso392421485a.0
+        for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 23:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1740378869; x=1740983669; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UDmIbBVBrmOqaPqtm3OIVdTs+1YkPggGmmD9ociAVJQ=;
-        b=bVql4ssRGDNa8jCHtLCpHCZhZcaekMqAqA45V7OR89Lruo1a2BlL9/DjGszOuim4yp
-         NlXJUWP0Ks1N806RGlBQ3GJna8OyQ/OXSXEoMEW8pwHAcalwEbeMyY2m2Pch7e8hv6Bn
-         Q9Dxy/tgtXPhbFQpazanxs4h6crKv3U9KZb9Q=
+        d=chromium.org; s=google; t=1740380638; x=1740985438; darn=lists.ozlabs.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HHRUOB722SP2pT9GOeb3cvEiqmLTG17HzDuBznymqOc=;
+        b=NMu3VFBEr5WDl8MmNNmksleyhA01WndokLobPUPVXZVr65/hXn8CNznBW9AAApIoj3
+         2n33odl3Wune1A5U7JLRJ6nPcXHD77VFpXFx/y138iPpHDbQe7T9boeu2TzHX6/D3tP/
+         hbk+ae3twQYLQ4K86BoNeCttt4EMnx+tyFhtw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740378869; x=1740983669;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1740380638; x=1740985438;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UDmIbBVBrmOqaPqtm3OIVdTs+1YkPggGmmD9ociAVJQ=;
-        b=Y/KNwVTdIbI5hMpFDPRjy/GMZwLozdwgfGun+Kg3via2+6NipwjvYJUkgvr1ZTJA5v
-         v/rpk+tLUnxH24wKO/M68+PX9rIP2j9DQJkgaYuL16qR5VuLcajdPxLq9KaQWBg17vtO
-         EPcwnm0HevZRnFBjIracAv3N0Ai4+PMehw6J3uloZrxc88odlUDEELnDyu0h//1hQcWx
-         wD6pQlQnaBAH2N9HgkD9/E0O0wKZOodhDYz9HtXZ7aid4AJS9kfdZFfUor51r0/mzfD6
-         xKUIYDC/O/Yb1oimm+4saN5vlj5TBoerY1aUltO+khKGvcgC5gT9/rV2UfWh/9hQaqg5
-         ROxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVdD7tBurmKUy7aQ+HdKfg+hhwhk6yQVxfHJJCM3sVrMzawWa2HQjED/6YgfgH8/nu3g+2vsVyU@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwwFmYHw/+jxy0+2U4deBJpWfKl++ZU2496MmmLKTZ6lwtaFypJ
-	jQCwKT5yGxMxBRsf5q6Bn+hbOFoTsN6SR4RsuSSszYz0q/QfWJQaVi7hwVyKrZuhXqgRgug8hAP
-	WOQ==
-X-Gm-Gg: ASbGncvBaXkhK8qXOvTvE2KuEAVkEHB8UY6ni3+AY3F/Ta/aIgTocOBYXQaRgcFUarh
-	tFcdwyuzdQYr++8xhwrVfLrAR/7L4ViGO4KoXTBdp3TINwkVzK5HPcyvHjVDdND9p3Zb1Ald+z3
-	iFQw0TOJB+Z0xcfsgAMWspr5NfhGeDjO3ch+TkcAlStzBMI2jw1tQ2tUCpccfRitGCexFu7+GcK
-	fMl6UGprdt4096TIqoq8c+8+U2sIsSZVGLc9ebY9Ep9xEAeNLIJeN516jDZp/hvK91OGWqu0f8k
-	LsP4tLD0d3Y1gTVMZodW0x/Hz2KfGwOd0UXwDqgGItoP0Js4i1vnUvItQr8slsdh
-X-Google-Smtp-Source: AGHT+IFTQ4dgUhV+CeG2vdb0CeWSGX7M3YMlUH2KlJF52KWJ4MMabmOuayhUt2LsgOs0IyXSvbju1A==
-X-Received: by 2002:a05:6512:2354:b0:544:ee5:87b0 with SMTP id 2adb3069b0e04-54838edda59mr5561120e87.3.1740378869161;
-        Sun, 23 Feb 2025 22:34:29 -0800 (PST)
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5452e5932cdsm2896338e87.124.2025.02.23.22.34.22
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Feb 2025 22:34:22 -0800 (PST)
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-547bcef2f96so4006133e87.1
-        for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2025 22:34:22 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX8VD17HmXVSf/qkE5raEyc/pUpGNzT3fU1mprLBAxTNx321/XpQ8OVb9gNJ1pfwOVQY+797Lz7@lists.ozlabs.org
-X-Received: by 2002:a05:6512:3ca5:b0:545:2ee6:84a8 with SMTP id
- 2adb3069b0e04-54838ee76c0mr4652920e87.14.1740378861858; Sun, 23 Feb 2025
- 22:34:21 -0800 (PST)
-MIME-Version: 1.0
-References: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
- <20250121-nuvoton-v1-1-1ea4f0cdbda2@chromium.org> <df5693d0-7747-4423-809e-ae081c9aae92@xs4all.nl>
- <dffc8e0b-2603-4e7e-ba64-15691c11ff7e@xs4all.nl> <CANiDSCsMCSJMEsY3R=pnZ4XUTiEYuPz-N1kEX7y13yTzE6Dm5w@mail.gmail.com>
- <2025022426-lilly-next-72e0@gregkh>
-In-Reply-To: <2025022426-lilly-next-72e0@gregkh>
+        bh=HHRUOB722SP2pT9GOeb3cvEiqmLTG17HzDuBznymqOc=;
+        b=uuYLBLhFoSaPC+mA05/mCnxBqkH63W33cfdpVwzHALW+Ynrks4o/eSQEdQL8OM/9OB
+         hmc/16F7ZbeupvtQDANn8TjvYGq633jhJvOsPRcbCbkqGaaCLHWmIFApa+TC85Iznu43
+         WtUWkvh86ulhKYUB7qL0oN3y61JSaXd+6aTElTJYGUK8lLCgR5I1LA4wSvLdxSAI3me9
+         Lk+jj7fVAC78WAIWq3W6oSYRhpyObeJRM0bCzx35Y/WBR/voQxNiZLJ3b89OspY5d/M2
+         erhJbHofnRDV6NzrS0ajxrQw19gakKD8PIF4/oRgf2pTMp82WDbbnMzo2SUOLZ6M/SIm
+         gwbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWRnUpKfvNDhO1eVKxLBq7rt+0ds8XS3nwTTio4xkcEn57Zwy7TaBbDoWFBzSg2IjVapQSf48mY@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzDu32WdsO4sA1bKm7PtqazgyroNAzkZJXwDGeI9Qx6fXrD+D9p
+	1JuXCPGWEg0e/f3bYmMEZmfsGgXMDxGMFyg24do67yhgrhj5kpJfnMm8iMtNqRRvPTZ87RRvWvn
+	2Rw==
+X-Gm-Gg: ASbGncsPK4tOhhlNndr8W+rd3TfS1s+qWoxH7WnwZaRICs1yOyfuntz9GcXoQow5iwu
+	irivBxHnkTvd1boaqVHdBE9AKtb70kzrousK9C/UN5w7/5qsTWxYhD7CXFP7726o84ydIUvWxRz
+	jj00Pmdm5RooLMkv2OuvTMbcZvKKEV+8XlD9FKbK93LD/X7rG3IhG5y34I2CGphE27vF6/gG2YZ
+	q/w7FXgQZY6k3bY7nL0h1hwCriySr9Tv6a80J+o8jMd28Z8k+PhacKL2Q5Isli37wGG5TlYzRwT
+	ZMsIEr7U1uHtuUMN0wlPGG7i3WVADzCKypoMKcsuMeau3cR9GstKdl3bmq0FHfGOEGg/s107kJn
+	5t64=
+X-Google-Smtp-Source: AGHT+IFkIZyKy46tv3pPOrC7t02hlkGCHtN8wPMQx/td4toBFnJF7+sLcSy9HQrjuNm68CaBgRk5CA==
+X-Received: by 2002:a05:620a:450c:b0:7c0:abe0:ce64 with SMTP id af79cd13be357-7c0cf8aec7emr1654304985a.9.1740380637686;
+        Sun, 23 Feb 2025 23:03:57 -0800 (PST)
+Received: from denia.c.googlers.com (15.237.245.35.bc.googleusercontent.com. [35.245.237.15])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c09bf81253sm977920485a.47.2025.02.23.23.03.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Feb 2025 23:03:56 -0800 (PST)
 From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 24 Feb 2025 07:34:09 +0100
-X-Gmail-Original-Message-ID: <CANiDSCvr5Fz2CE7Vx5gk_r=JFHwpT-w=7GGgZ-MN8FkjQyp+yA@mail.gmail.com>
-X-Gm-Features: AWEUYZneujeUqRzowTHsCuBd_481VOXalvBfDTLy1Zv-JKeySU-2ECz97LHUiDc
-Message-ID: <CANiDSCvr5Fz2CE7Vx5gk_r=JFHwpT-w=7GGgZ-MN8FkjQyp+yA@mail.gmail.com>
-Subject: Re: [PATCH 1/4] media: nuvoton: Fix reference handling of ece_pdev
-To: Greg KH <gregkh@linuxfoundation.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=1.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+Subject: [PATCH v2 0/2] media: nuvoton: Fix some reference handling issues
+Date: Mon, 24 Feb 2025 07:03:53 +0000
+Message-Id: <20250224-nuvoton-v2-0-8faaa606be01@chromium.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANkZvGcC/2XMyw7CIBCF4VdpZi0GiLe48j1MF1yGMosyBlqia
+ Xh3sVuX/8nJt0HBTFjgPmyQsVIhTj30YQAXTZpQkO8NWuqzVFqJtFZeOImAt6t0FkOwF+jvV8Z
+ A7116jr0jlYXzZ4er+q3/RlVCCoXmFKTz1hv9cDHzTOt85DzB2Fr7AoP7C4ehAAAA
+To: Joseph Liu <kwliu@nuvoton.com>, Marvin Lin <kflin@nuvoton.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Hans Verkuil <hverkuil@xs4all.nl>, Philipp Zabel <p.zabel@pengutronix.de>
+X-Mailer: b4 0.14.1
+X-Spam-Status: No, score=-0.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLACK,URIBL_SBL_A autolearn=disabled
-	version=4.0.0
-X-Spam-Level: *
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-Mailman-Approved-At: Tue, 25 Feb 2025 12:12:04 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -106,96 +97,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Joseph Liu <kwliu@nuvoton.com>, sashal@kernel.or, Marvin Lin <milkfafa@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Hans Verkuil <hverkuil@xs4all.nl>, Philipp Zabel <p.zabel@pengutronix.de>, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
+Cc: Marvin Lin <milkfafa@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Ricardo Ribalda <ribalda@chromium.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 24 Feb 2025 at 06:52, Greg KH <gregkh@linuxfoundation.org> wrote:
->
-> On Sun, Feb 23, 2025 at 07:34:30PM +0100, Ricardo Ribalda wrote:
-> > On Fri, 21 Feb 2025 at 10:18, Hans Verkuil <hverkuil@xs4all.nl> wrote:
-> > >
-> > > On 21/02/2025 10:04, Hans Verkuil wrote:
-> > > > Hi Ricardo,
-> > > >
-> > > > On 21/01/2025 22:14, Ricardo Ribalda wrote:
-> > > >> When we obtain a reference to of a platform_device, we need to release
-> > > >> it via put_device.
-> > > >>
-> > > >> Found by cocci:
-> > > >> ./platform/nuvoton/npcm-video.c:1677:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > > >> ./platform/nuvoton/npcm-video.c:1684:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > > >> ./platform/nuvoton/npcm-video.c:1690:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > > >> ./platform/nuvoton/npcm-video.c:1694:1-7: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > > >
-> > > > This driver uses this construct:
-> > > >
-> > > >                 struct device *ece_dev __free(put_device) = &ece_pdev->dev;
-> > > >
-> > > > to automatically call put_device. So this patch would 'put' the device twice.
-> > > >
-> > > > Does cocci understand constructs like this? If I hadn't looked closely at the
-> > > > code first, I would just have merged it.
-> > >
-> > > Oh wait, now that I am reading the following patches I see that it was those later
-> > > patches that add the __free code.
-> > >
-> > > This is far too confusing. Please post a v2 that just combines the 'fix references'
-> > > and 'use cleanup.h macros' in a single patch. It makes no sense to have this two-phase
-> > > approach.
-> >
-> > I believe this is discouraged.
-> >
-> > cleanup.h macros does not exist in old kernel versions, so makes it
-> > impossible to backport the fix to them.
->
-> That's not a problem, fix things properly in the main tree and let the
-> stable/lts kernels work it out on their own.
->
-> > This is an example of other series following this policy:
-> > https://lore.kernel.org/lkml/173608125422.1253657.3732758016133408588.stgit@devnote2/
-> >
-> > They also mention the same here:
-> > https://hackerbikepacker.com/kernel-auto-cleanup-1 .... I am pretty
-> > sure that I read the policy in a more official location... but I
-> > cannot find it right now :)
->
-> No, it is NOT official policy at all.  Otherwise you would be saying
-> that no one could use these new functions for 6 years just because of
-> really old kernels still living around somewhere.  That's not how kernel
-> development works, thankfully.
+When trying out 6.13 cocci, some bugs were found.
 
-No, I am not saying that we cannot use cleanup.h for 6 years.
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+Changes in v2:
+- Squash fixes and port to cleanup.h.
+- Link to v1: https://lore.kernel.org/r/20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org
 
-What I am saying is that first we fix the errors without it, and then
-we move to cleanup.h. All in the same series:
-1/2 Fix reference handling (cc: stable)
-2/2 Use cleanup.h
+---
+Ricardo Ribalda (2):
+      media: nuvoton: Fix reference handling of ece_node
+      media: nuvoton: Fix reference handling of ece_pdev
 
-That way the fix (1/2) can be applied without changes to all the
-stable trees, and 2/2 can be ignored by them.
+ drivers/media/platform/nuvoton/npcm-video.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+---
+base-commit: c2b96a6818159fba8a3bcc38262da9e77f9b3ec7
+change-id: 20250121-nuvoton-fe870cbeffb6
 
-The alternative is a patch that cannot be applied to stable and either
-you, the author or the maintainer have to backport to stable
-(basically implementing 1/2).  So no, we do not save work by just
-posting a cleanup.h version of the fix to the mailing list.
-
-The even better alternative is that cleanup.h is backported to all the
-stable trees.
-
-
-Anyway, it is up to you and Sasha to decide. I will repost the series
-only using cleanup.h
-
-Best regards!
-
-
->
-> thanks,
->
-> greg k-h
-
-
-
+Best regards,
 -- 
-Ricardo Ribalda
+Ricardo Ribalda <ribalda@chromium.org>
+
