@@ -2,63 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A65C3A4161A
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 08:16:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 909ECA417E0
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 09:55:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1X952yrdz3c3n
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 18:16:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1ZLp0nWZz3c1Q
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 19:55:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740381397;
-	cv=none; b=dxbCffSgEnDvKRCB7R6DypieVWxvyWlG7vxIEnW9m5BBkUqZxR/TfNGkBYNFSrjkglCRyUV+7u/rbCBCi2wF5amwKsl02xdu4VBdKVAWtERPiCGY3mMH87o6rmCeI4fc06DbrsnAq1LJZfmgFC2gRyInA40KH6k7tiDsnIAJ83N9osCIHrV/R25RqUhyzVfk+m5t5uKTRZIX5/9XgWOpmqPIp18FFO+kgHtkup4x3OcSVnyZsuqQvKAwRxyQM/uQCfpCn3vUCZC1tBI+/btO5ea+mPtceAiAVYpUORV9x+4DRenV3F+x04HgA5qxjQVCa3393E1+gpdfRrzEb7HYpg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a0a:edc0:2:b01:1d::104"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740387310;
+	cv=none; b=IIx4OzE6Soi1Al3lvWsvA/8vAm3Iywklz56GNvIp1tDts+ZKUojH93JCqM2z8ygWjSGRTvFMZoGMgFRVSfuFc/SWbV9o7t5ln1K8TNhDmvjNbXeXV9S/L18gDA49yd5P3tP2NyVwz2VAdp2LUVhpVPDkPU+qEViH8ri6QjTCaDpbYtcIo9/0NbOTE5xWp20VeiWp8/sAOF7XzdAbRF/qVh7mRJeLxOn6xj+5neTk1MUAMuu5w8lhaisnYNVqXCrGS3BXE1jpo22F35mTM6GUZ/gthH06DmBhmSluYml3qL7dV0VR7BtcVjO2ToNLcUahxovmNeJY4mChYkc9YIZzqg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740381397; c=relaxed/relaxed;
-	bh=8F627ALJhleDf0joQLUIY5WzrQ4sqzAfgG0V7XR4JzM=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=N3sbzazBKpodoeNmA9WpHaXk+FsSx02P/IZN2P4S16BHaKYctXn+ZADwk9HgljkAIeoLQ9U6UlI4WRVqHjIixGxrsIcssiz6Z3cdVL6x1kSE0DS66xum1R/4gsgju4QLykfDsxpORRn8ycKP9ZZU5F+IIKHlWPvOObAJLmi2bYHZUZ7c29TOoO7MT21Q335ppI/Y6qOTUkVXY0UR9OPU4BCa4PWgCkgsXo/Cf6IV1L60enXi8uYz/88GCKTJMZJNLBoYe9hdZH1+yBfCTNdwcLjyXE0DvoebISktrS5vBO75M77iArF4k/x5EItgcuqR5ybvDAu77+lZNvTwR50Nlw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dCsrvMjQ; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dCsrvMjQ;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+	t=1740387310; c=relaxed/relaxed;
+	bh=coQpN1nKHgGKkMTUN+sI75uFyqPjk4mGdjVG4PGQWys=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=AKrJvj0BCfAls1DcXTzP3s73ZgOqoh3pL+FyCI4X3P/xYfn1jT8ITdVETa7gs7RO12zMh3O5n72c1r1uGt09B3/wIyr1v09sGSvx9W8qb0bdyj8Ico4MIPfWrF05DDao8ePArp3GwfVZXfNC5BtcN+eUqxJidrQ1uiNRD7ufRqL0cj3d3qCGWBdaAUfHiLpO0DxPh3v1hapLrPaDPzhfC/zGOtcRqazDk4R3zjCo0wohduVOSKTfz7d5N9hjhgUtVJKgM+0l5U/+YQQVEB/USYOYDyAGH5CQ8Jt9uzDNTh4bvw/pcN9ipkI3dh/JMhetSX33ajAfo8sQVPllwqOBoQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org) smtp.mailfrom=pengutronix.de
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1X911Rbvz2yXs;
-	Mon, 24 Feb 2025 18:16:37 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 41E766117D;
-	Mon, 24 Feb 2025 07:16:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48827C4CED6;
-	Mon, 24 Feb 2025 07:16:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740381394;
-	bh=2pBGmTogQCkZU/xIxkV1ntJSYG2JD2YqKohqWLQmXu4=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=dCsrvMjQLCzpbeyKIBH+s0BVDBGeHCz9RrZkebic83ktfM4vw0gqL8fje2cJ5ce7e
-	 BaDVvtxsrgzSHK+16pwIQsUc5y3vkghLu8MY96zCwSEVhw6Pb2HYEDKE2jfCqmE8TC
-	 Vtdc5FOmfpVaPd4TNIxN73EtlG0TwoJae/v9IRjHuOfHYL/Evaz+dIDXafrvMlZZ/J
-	 x+Y92P5h6+h+F+IN6f9lZ1QOhhC7uTYvI4FhKjz+E3qEX8Gp8GA69GF2iSD31NXE/o
-	 NspuiHPWB2/ZlbdGfFFJssj9Nrdvt5VtS5f0Ym8k/mHGz0Ssto5wY6vU7rc6qO1fmw
-	 YE8PdOQ2jmDNQ==
-Date: Mon, 24 Feb 2025 01:16:32 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-In-Reply-To: <20250224055936.1804279-2-ryan_chen@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1ZLj4S4Bz300g
+	for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2025 19:55:08 +1100 (AEDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tmUEV-00031V-Cf; Mon, 24 Feb 2025 09:54:35 +0100
+Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tmUES-002Yzx-16;
+	Mon, 24 Feb 2025 09:54:32 +0100
+Received: from pza by lupine with local (Exim 4.96)
+	(envelope-from <p.zabel@pengutronix.de>)
+	id 1tmUEN-000201-0o;
+	Mon, 24 Feb 2025 09:54:27 +0100
+Message-ID: <ee0f5b583aadb42e7557e1afc49c5b9af594d2c3.camel@pengutronix.de>
+Subject: Re: [PATCH v16 2/3] i2c: aspeed: support AST2600 i2c new register
+ mode driver
+From: Philipp Zabel <p.zabel@pengutronix.de>
+To: Ryan Chen <ryan_chen@aspeedtech.com>, benh@kernel.crashing.org, 
+ joel@jms.id.au, andi.shyti@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+  conor+dt@kernel.org, andrew@codeconstruct.com.au, 
+ andriy.shevchenko@linux.intel.com, linux-i2c@vger.kernel.org, 
+ openbmc@lists.ozlabs.org, devicetree@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
+ linux-kernel@vger.kernel.org
+Date: Mon, 24 Feb 2025 09:54:27 +0100
+In-Reply-To: <20250224055936.1804279-3-ryan_chen@aspeedtech.com>
 References: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
- <20250224055936.1804279-2-ryan_chen@aspeedtech.com>
-Message-Id: <174038139252.1126908.7016492425946254564.robh@kernel.org>
-Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-X-Spam-Status: No, score=-0.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+	 <20250224055936.1804279-3-ryan_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: p.zabel@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,50 +78,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, andriy.shevchenko@linux.intel.com, andi.shyti@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, p.zabel@pengutronix.de, krzk+dt@kernel.org, linux-arm-kernel@lists.infradead.org, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On Mon, 24 Feb 2025 13:59:34 +0800, Ryan Chen wrote:
-> Add ast2600-i2cv2 compatible and aspeed,global-regs, aspeed,enable-dma
-> and description for ast2600-i2cv2.
-> 
+On Mo, 2025-02-24 at 13:59 +0800, Ryan Chen wrote:
+> Add i2c new register mode driver to support AST2600 i2c
+> new register mode. AST2600 i2c controller have legacy and
+> new register mode. The new register mode have global register
+> support 4 base clock for scl clock selection, and new clock
+> divider mode. The new register mode have separate register
+> set to control i2c controller and target. This patch is for i2c
+> controller mode driver.
+>=20
 > Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
 > ---
->  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 58 +++++++++++++++++++
->  1 file changed, 58 insertions(+)
-> 
+>  drivers/i2c/busses/Kconfig       |   11 +
+>  drivers/i2c/busses/Makefile      |    1 +
+>  drivers/i2c/busses/i2c-ast2600.c | 1036 ++++++++++++++++++++++++++++++
+>  3 files changed, 1048 insertions(+)
+>  create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+>=20
+[...]
+> diff --git a/drivers/i2c/busses/i2c-ast2600.c b/drivers/i2c/busses/i2c-as=
+t2600.c
+> new file mode 100644
+> index 000000000000..bfac507693dd
+> --- /dev/null
+> +++ b/drivers/i2c/busses/i2c-ast2600.c
+> @@ -0,0 +1,1036 @@
+[...]
+> +static int ast2600_i2c_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev =3D &pdev->dev;
+> +	struct ast2600_i2c_bus *i2c_bus;
+> +	struct resource *res;
+> +	u32 global_ctrl;
+> +	int ret;
+> +
+> +	i2c_bus =3D devm_kzalloc(dev, sizeof(*i2c_bus), GFP_KERNEL);
+> +	if (!i2c_bus)
+> +		return -ENOMEM;
+> +
+> +	i2c_bus->reg_base =3D devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(i2c_bus->reg_base))
+> +		return PTR_ERR(i2c_bus->reg_base);
+> +
+> +	i2c_bus->rst =3D devm_reset_control_get_shared(dev, NULL);
+> +	if (IS_ERR(i2c_bus->rst))
+> +		return dev_err_probe(dev, PTR_ERR(i2c_bus->rst), "Missing reset ctrl\n=
+");
+> +
+> +	reset_control_deassert(i2c_bus->rst);
 
-My bot found errors running 'make dt_binding_check' on your patch:
+No reset_control_assert() in the error paths below? You could get that
+and simplify this by using devm_reset_control_get_shared_deasserted().
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml:82:1: [error] duplication of key "allOf" in mapping (key-duplicates)
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml: ignoring, error parsing file
-./Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml:82:1: found duplicate key "allOf" with value "[]" (original value: "[]")
-make[2]: *** Deleting file 'Documentation/devicetree/bindings/i2c/aspeed,i2c.example.dts'
-Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml:82:1: found duplicate key "allOf" with value "[]" (original value: "[]")
-make[2]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/i2c/aspeed,i2c.example.dts] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1511: dt_binding_check] Error 2
-make: *** [Makefile:251: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250224055936.1804279-2-ryan_chen@aspeedtech.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+regards
+Philipp
