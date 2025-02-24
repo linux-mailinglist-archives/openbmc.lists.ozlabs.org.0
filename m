@@ -1,65 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01C6FA414F9
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 07:00:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C49B6A414FE
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 07:00:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1VSR6WdLz3c1Q
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 16:59:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z1VSf3xj1z3cVW
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2025 17:00:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740376789;
-	cv=none; b=PhDKesD3RZJhoC79ub4XOb4abobcXTYp+Nq15TaAgI4VTtJFMtfv5b2WCAXFv92SIzUZvJFRIVL2NLjsauARdAAj97zux5EilmVqZqCCZsHp8cC0cT/5p6F4FcM0XbeRD0cOGNoslZRSfT4Nh6G917HFo6kRkdnKrPSFv7ubqJWY0dZgzv1MZy5rHNIjWLiE7syr1GkIRvSKEX5yJnMEyzuTax8gqmmOSv8pdz/zmDUkGeQ2XZ+TJe1Eab+yUBJxYRwK8A8eCXBxJ1yBdj7HPkj5ddCtFDXg0PCykntsVkUWhQHO0lsQEUI5JdMfgCugNnwymYORfXaAD30gq5ZR5Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740376796;
+	cv=none; b=ibH7nyaB5ywVANYkvCnpQYsckghlCGrPxVebY1P055l4ihq6fyXdU3ub4iKgCSUVJnWcUhaWesaOJGf312zUNZDDIq8aXkZWC8UEQsMs9NybheQIEAXrNJNp3Jus+BINnqgkZ23BIlo7IsaWr/wKg/t6udiJy5QlCSjwH9RqgmV32bieYBV4iQECbHmlmQ9WUB//XJcw2oi4JqoEkNTrOhc7nD8kTJLR3FppOhH2vRhHEG7zMiWrDhesFvMgds875ZeJdj3ez3Sq5G+yTGQJxmgBpiqbT+siiHqcJmADzUD387yv6tPzpAo05jGgOLalUGVU7w4KLBReZWOOfAcFFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740376789; c=relaxed/relaxed;
-	bh=uFvXOi+LUJMKwvGI3qUG435UWhEpNqevyHNPflNad3I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dqr99dnXP+Qng8bnoewecbM8FKDsWK3jjLChX0KgaURAXEOxwAUgFi/SaGEk8Hpxl5lVoqnmxMjeIS6kFtcX7Vbs5iDGk8PyLbfqIu6sGb+5DuQyTtF2beYgPmtvOv2O56mTq+32bp6oGFrg8Zjt1CaCOfhdqFktqwFF/AH0Ye92pujMDIz4JViz8MkEyQTSd1m3u44z8y3EhMH+1T0shBqpSkhOLXukrL4JpYMZUloz/MbM/vgxKn0LZGOCQNgjRho+yO33XPbAhopisbBBNqGZkYj53rfgYHFFvz3ULt6Ue9sYbZkoqvxmOf5sTgZjNmCobbcrX1xCd7LALhQEBg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFhfYlTh; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=lists.ozlabs.org) smtp.mailfrom=linuxfoundation.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFhfYlTh;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=lists.ozlabs.org)
-X-Greylist: delayed 447 seconds by postgrey-1.37 at boromir; Mon, 24 Feb 2025 16:59:47 AEDT
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	t=1740376796; c=relaxed/relaxed;
+	bh=fZMl6LX3RoBQXZasqQSRGJNkMkjT8mvTOpVMtltXWkk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AtnmV9tc708rvOJqnzvozxyDmeP3C2H2RyKilIgVILs65164nQ6SZ7oWeVNbcMkCQ5hsrEzPS2RcTHur8e2aXHIy5J+fPaDImWbiQliHKs2fhJM0e/uFaXxvOVoXyd4DW53WdzYJpc40wqGNafVA9LkpKxzY22mrO353zJJApBDkVh9rG8IgFcPZvA4vvO2aKg4FbKVWF8SLsvWh8AGNlAhQ02CiuLxnHNZULegq2K/qVg+RS0egtFrM8aInV8H5Co8lZpqTOFct/JVRPX0oULlLJwkQqNXRDXNSXfJMYEiG97UeDdeXswMfgtLgzsXk6kWj8O26cJ2xVo1GhWGJ8w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1VSM380Mz2xgv
-	for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2025 16:59:46 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 12CEF61170;
-	Mon, 24 Feb 2025 05:52:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3EF5C4CED6;
-	Mon, 24 Feb 2025 05:52:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1740376336;
-	bh=53H9/x0j02AhPT7w+jFHCR4eR6p48BOhp4/DcjS/5+M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nFhfYlTh/vn6++4NrrfuzW63KF6xlniD4USCI+6lyNK0LkAXyU6nIDl5SFg1zC3CY
-	 8fULK3IP96tqdq8wj0IN9ERcTVWyWI3H3V9uAAtBXOlUWhDjNvrfCCJ7Iv899ih7hL
-	 3+mhMk9Xko2hwR2SeMve8H0FOP832WEiYxQKehyY=
-Date: Mon, 24 Feb 2025 06:52:13 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Subject: Re: [PATCH 1/4] media: nuvoton: Fix reference handling of ece_pdev
-Message-ID: <2025022426-lilly-next-72e0@gregkh>
-References: <20250121-nuvoton-v1-0-1ea4f0cdbda2@chromium.org>
- <20250121-nuvoton-v1-1-1ea4f0cdbda2@chromium.org>
- <df5693d0-7747-4423-809e-ae081c9aae92@xs4all.nl>
- <dffc8e0b-2603-4e7e-ba64-15691c11ff7e@xs4all.nl>
- <CANiDSCsMCSJMEsY3R=pnZ4XUTiEYuPz-N1kEX7y13yTzE6Dm5w@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z1VSW495Vz2yjb;
+	Mon, 24 Feb 2025 16:59:55 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 24 Feb
+ 2025 13:59:36 +0800
+Received: from twmbx02.aspeed.com (192.168.10.13) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Mon, 24 Feb 2025 13:59:36 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: <ryan_chen@aspeedtech.com>, <benh@kernel.crashing.org>, <joel@jms.id.au>,
+	<andi.shyti@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <andrew@codeconstruct.com.au>,
+	<p.zabel@pengutronix.de>, <andriy.shevchenko@linux.intel.com>,
+	<linux-i2c@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v16 0/3] Add ASPEED AST2600 I2Cv2 controller driver
+Date: Mon, 24 Feb 2025 13:59:33 +0800
+Message-ID: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANiDSCsMCSJMEsY3R=pnZ4XUTiEYuPz-N1kEX7y13yTzE6Dm5w@mail.gmail.com>
-X-Spam-Status: No, score=1.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLACK,URIBL_SBL_A autolearn=disabled version=4.0.0
-X-Spam-Level: *
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+	autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,63 +60,261 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Joseph Liu <kwliu@nuvoton.com>, Marvin Lin <milkfafa@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Hans Verkuil <hverkuil@xs4all.nl>, Philipp Zabel <p.zabel@pengutronix.de>, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Feb 23, 2025 at 07:34:30PM +0100, Ricardo Ribalda wrote:
-> On Fri, 21 Feb 2025 at 10:18, Hans Verkuil <hverkuil@xs4all.nl> wrote:
-> >
-> > On 21/02/2025 10:04, Hans Verkuil wrote:
-> > > Hi Ricardo,
-> > >
-> > > On 21/01/2025 22:14, Ricardo Ribalda wrote:
-> > >> When we obtain a reference to of a platform_device, we need to release
-> > >> it via put_device.
-> > >>
-> > >> Found by cocci:
-> > >> ./platform/nuvoton/npcm-video.c:1677:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > >> ./platform/nuvoton/npcm-video.c:1684:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > >> ./platform/nuvoton/npcm-video.c:1690:3-9: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > >> ./platform/nuvoton/npcm-video.c:1694:1-7: ERROR: missing put_device; call of_find_device_by_node on line 1667, but without a corresponding object release within this function.
-> > >
-> > > This driver uses this construct:
-> > >
-> > >                 struct device *ece_dev __free(put_device) = &ece_pdev->dev;
-> > >
-> > > to automatically call put_device. So this patch would 'put' the device twice.
-> > >
-> > > Does cocci understand constructs like this? If I hadn't looked closely at the
-> > > code first, I would just have merged it.
-> >
-> > Oh wait, now that I am reading the following patches I see that it was those later
-> > patches that add the __free code.
-> >
-> > This is far too confusing. Please post a v2 that just combines the 'fix references'
-> > and 'use cleanup.h macros' in a single patch. It makes no sense to have this two-phase
-> > approach.
-> 
-> I believe this is discouraged.
-> 
-> cleanup.h macros does not exist in old kernel versions, so makes it
-> impossible to backport the fix to them.
+This series add AST2600 i2cv2 new register set driver. The i2cv2 driver
+is new register set that have new clock divider option for more flexiable
+generation. And also have separate i2c controller and target register
+set for control, patch #2 is i2c controller driver only, patch #3 is add
+i2c target mode driver.
 
-That's not a problem, fix things properly in the main tree and let the
-stable/lts kernels work it out on their own.
+The legacy register layout is mix controller/target register control
+together. The following is add more detail description about new register
+layout. And new feature set add for register.
 
-> This is an example of other series following this policy:
-> https://lore.kernel.org/lkml/173608125422.1253657.3732758016133408588.stgit@devnote2/
-> 
-> They also mention the same here:
-> https://hackerbikepacker.com/kernel-auto-cleanup-1 .... I am pretty
-> sure that I read the policy in a more official location... but I
-> cannot find it right now :)
+-Add new clock divider option for more flexible and accurate clock rate
+generation -Add tCKHighMin timing to guarantee SCL high pulse width.
+-Add support dual pool buffer mode, split 32 bytes pool buffer of each
+device into 2 x 16 bytes for Tx and Rx individually.
+-Increase DMA buffer size to 4096 bytes and support byte alignment.
+-Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
+-Re-define registers for separating controller and target mode control.
+-Support 4 individual DMA buffers for controller Tx and Rx,
+target Tx and Rx.
 
-No, it is NOT official policy at all.  Otherwise you would be saying
-that no one could use these new functions for 6 years just because of
-really old kernels still living around somewhere.  That's not how kernel
-development works, thankfully.
+And following is new register set for package transfer sequence.
+-New Master operation mode:
+ S -> Aw -> P
+ S -> Aw -> TxD -> P
+ S -> Ar -> RxD -> P
+ S -> Aw -> RxD -> Sr -> Ar -> TxD -> P
+-Bus SDA lock auto-release capability for new controller DMA command mode.
+-Bus auto timeout for new controller/target DMA mode.
 
-thanks,
+The following is two versus register layout.
+Old:
+{I2CD00}: Function Control Register
+{I2CD04}: Clock and AC Timing Control Register
+{I2CD08}: Clock and AC Timing Control Register
+{I2CD0C}: Interrupt Control Register
+{I2CD10}: Interrupt Status Register
+{I2CD14}: Command/Status Register
+{I2CD18}: Slave Device Address Register
+{I2CD1C}: Pool Buffer Control Register
+{I2CD20}: Transmit/Receive Byte Buffer Register
+{I2CD24}: DMA Mode Buffer Address Register
+{I2CD28}: DMA Transfer Length Register
+{I2CD2C}: Original DMA Mode Buffer Address Setting
+{I2CD30}: Original DMA Transfer Length Setting and Final Status
 
-greg k-h
+New Register mode
+{I2CC00}: Master/Slave Function Control Register
+{I2CC04}: Master/Slave Clock and AC Timing Control Register
+{I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
+{I2CC0C}: Master/Slave Pool Buffer Control Register
+{I2CM10}: Master Interrupt Control Register
+{I2CM14}: Master Interrupt Status Register
+{I2CM18}: Master Command/Status Register
+{I2CM1C}: Master DMA Buffer Length Register
+{I2CS20}: Slave~ Interrupt Control Register
+{I2CS24}: Slave~ Interrupt Status Register
+{I2CS28}: Slave~ Command/Status Register
+{I2CS2C}: Slave~ DMA Buffer Length Register
+{I2CM30}: Master DMA Mode Tx Buffer Base Address
+{I2CM34}: Master DMA Mode Rx Buffer Base Address
+{I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
+{I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
+{I2CS40}: Slave Device Address Register
+{I2CM48}: Master DMA Length Status Register
+{I2CS4C}: Slave  DMA Length Status Register
+{I2CC50}: Current DMA Operating Address Status
+{I2CC54}: Current DMA Operating Length  Status
+
+aspeed,global-regs:
+This global register is needed, global register is setting for
+new clock divide control, and new register set control.
+
+ASPEED SOC chip is server product, i2c bus may have fingerprint
+connect to another board. And also support hotplug.
+The following is board-specific design example.
+Board A                                       Board B
+-------------------------                     ------------------------
+|i2c bus#1(controller/target)<=fingerprint=>i2c bus#x (controller/target)|
+|i2c bus#2(controller)-> tmp i2c device |     |                          |
+|i2c bus#3(controller)-> adc i2c device |     |                          |
+-------------------------                     ------------------------
+
+i2c-scl-clk-low-timeout-us:
+For example I2C controller as slave mode, and suddenly disconnected.
+Slave state machine will keep waiting for controller clock in for rx/tx
+transmit. So it need timeout setting to enable timeout unlock controller
+state. And in another side. In Master side also need avoid suddenly
+slave miss(un-plug), Master will timeout and release the SDA/SCL.
+
+aspeed,enable-dma:
+For example The bus#1 have trunk data needed for transfer,
+it can enable bus dma mode transfer, it can reduce cpu utilized.
+Others bus bus#2/3 use defautl buffer mode.
+
+aspeed,enable-byte:
+Force i2c controller use byte mode transfer. the byte mode transfer
+will send i2c data each byte by byte, inlcude address read/write.
+
+v16:
+-aspeed,i2c.yaml: add aspeed,enable-byte properties for force byte mode.
+-i2c-ast2600.c
+ -change include asm/unaligned.h to linux/unaligned.h.
+ -add reset timeout councter when slave active timeout.
+ -modify issue i2c_recovery_bus before slave re-enable.
+ -add aspeed,enable-byte properties.
+
+v15:
+-i2c-ast2600.c
+ -add include unaligned.h
+ -rename all master -> controller, slave -> target.
+ -keep multi-master to align property.
+ -remove no used element in ast2600_i2c_bus.
+v14:
+-aspeed,i2c.yaml
+ -v13 change people reviewed-by tag, v14 fixed to original people tag,
+modify to Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ -struct ast2600_i2c_bus layout optimal.
+ -ast2600_select_i2c_clock refine.
+ -ast2600_i2c_recover_bus overridden fix.
+ -dma_mapping_error() returned error code shadowed modify.
+ -buffer register in a 4-byte aligned simplified
+ -remove smbus alert
+
+v13:
+ -separate i2c master and slave driver to be two patchs.
+ -modify include header list, add bits.h include. remove of*.h
+ -modify (((x) >> 24) & GENMASK(5, 0)) to (((x) & GENMASK(29, 24)) >> 24)
+ -modify ast2600_select_i2c_clock function implement.
+ -modify ast2600_i2c_recover_bus function u32 claim to
+u32 state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+
+v12:
+-aspeed,i2c.yaml
+ -add Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+-i2c-ast2600.c
+ -update include by alphabetical order
+ -make just a one TAB and put the last two lines on the single one
+ -remove no used timing_table structre
+ -remove enum explicit assinment
+ -rewritten to avoid this and using loop in ast2600_select_i2c_clock
+ -use GENMASK for most 0xffff
+ -remove too many parentheses
+ -use str_read_write replace read write string
+ -remove redundant blank line after ast2600_i2c_bus_of_table
+ -fix wrong multi-line style of the comment
+ -use macro for i2c standard speeds
+ -remove useless noise dev_info
+
+v11:
+-aspeed,i2c.yaml
+ -no change, the same with v10.
+-i2c-ast2600.c
+ -modify alert_enable from int -> boolean.
+ -modify dbg string recovery -> recover.
+ -remove no need to init 0.
+ -remove new line after break.
+ -remove unneeded empty line.
+ -modify dma_alloc_coherent to dmam_alloc_coherent
+ -modify probe nomem return dev_err_probe
+ -modify i2c_add_adapter to devm_i2c_adapter
+ -modify checkpatch: Alignment should match open parenthesis
+ -modify checkpatch: braces {} should be used on all arms of this statement
+ -modify checkpatch: Unbalanced braces around else statement
+
+v10:
+-aspeed,i2c.yaml
+ -move unevaluatedProperties after allOf.
+ -remove extra one blank line.
+-i2c-ast2600.c
+ -no change, the same with v8.
+
+v9:
+-aspeed,i2c.yaml
+ -backoff to v7.
+  -no fix typo in maintainer's name and email. this would be another patch.
+  -no remove address-cells, size-cells, this would be another patch.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -no change, the same with v8
+
+v8:
+-aspeed,i2c.yaml
+ -modify commit message.
+  -Fix typo in maintainer's name and email.
+ -remove address-cells, size-cells.
+-i2c-ast2600.c
+ -move "i2c timeout counter" comment description before property_read.
+ -remove redundant code "return ret" in probe end.
+
+v7:
+-aspeed,i2c.yaml
+ -Update ASPEED I2C maintainers email.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -remove aspeed,xfer-mode instead of aspeed,enable-dma mode. buffer mode
+is default.
+ -remove aspeed,timeout instead of i2c-scl-clk-low-timeout-us for
+timeout setting.
+
+v6:
+-remove aspeed,i2cv2.yaml, merge to aspeed,i2c.yaml -add support for
+ i2cv2 properites.
+-i2c-ast2600.c
+ -fix ast2600_i2c_remove ordering.
+ -remove ast2600_i2c_probe goto labels, and add dev_err_probe -remove
+  redundant deb_dbg debug message.
+ -rename gr_regmap -> global_regs
+
+v5:
+-remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+-i2c-ast2600.c
+ -remove legacy clock divide, all go for new clock divide.
+ -remove duplicated read isr.
+ -remove no used driver match
+ -fix probe return for each labels return.
+ -global use mfd driver, driver use phandle to regmap read/write.
+-rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml -remove bus-frequency.
+-add required aspeed,gr
+-add timeout, byte-mode, buff-mode properites.
+
+v4:
+-fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+ master slave mode both enable.
+-fix kmemleak issue when use dma mode.
+-fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+-fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+-fix i2c global clock divide default value.
+-remove i2c slave no used dev_dbg info.
+
+v2:
+-add i2c global ymal file commit.
+-rename file name from new to ast2600.
+ aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+ aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+ i2c-new-aspeed.c -> i2c-ast2600.c
+-rename all driver function name to ast2600.
+Ryan Chen (3):
+  dt-bindings: i2c: aspeed: support for AST2600-i2cv2
+  i2c: aspeed: support AST2600 i2c new register mode driver
+  i2c: aspeed: support AST2600 i2c new register target mode driver
+
+ .../devicetree/bindings/i2c/aspeed,i2c.yaml   |   58 +
+ drivers/i2c/busses/Kconfig                    |   11 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-ast2600.c              | 1565 +++++++++++++++++
+ 4 files changed, 1635 insertions(+)
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+
+-- 
+2.34.1
+
