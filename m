@@ -2,81 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C063A4628E
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2025 15:24:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BD94A468B7
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2025 18:59:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z2xYX3FJhz3cZ9
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2025 01:24:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z32KM5WRpz3cZd
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2025 04:59:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.9
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740579853;
-	cv=none; b=idUVIa6Y+qsvqAOE1cHlP+bX903oGYYDg4GKxhJ3BGsxf0432CSJ4JXmKwpqeO/9fpKhU2OxyRXeUnZ+p3YMFZz1woHClcT2Zl7uZX5QanIqhPGf0s/oUvMBVPWKGwYlUkQ/1qFZDVI11l93Q1XE+h9KkJZL2lDDw8juyeM1pSD3hwk8eBhTU09re5beSRsg2ZOU3c8cVkHwMsqllQ+tZ3P/UO1Mv2BvdJrpENAErA+bqvNXsMjwU62xPWmZrk/XKlwAaEunwbT6DfJ2jdplyjiFMzFqz2Pssz0T2T+EF4uqQO7PbuRCotiC1cL4N1doo8Pd3FNVn5klGboKtxF+PA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::536"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740592738;
+	cv=none; b=Ao2Hu03a0gUy3mXzojFH7NWI12xpSKPJsoOJDFIyQoJvCl+wbQvq6cIopcCe8dEX6w8q+f+887iS5z8zshz9d+MJJidmtobb9wbVazsTp9le1EotuYIpmXl6/6b6oQV5HGOnnJiQB5YZbppxiZ7urzKlFBdm9Opk5p82zD1SoL7wgntlColdpY5vWmVmDxy4+VQUXuFNm2JKDJzM3JUa3j+cSz1iCO/DRabuhWHBByVDwzJr/XKop6Is2SYO8kUDZ9jOJVzGlLS911SqnuZ7fjjdpi/6sEcc5izfQmLKaCWAaGGp66GL/iBJEhNIf9YeuzNbgDWv3Ou5d+xuxiIJcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740579853; c=relaxed/relaxed;
-	bh=2FR6ycy1H4/gsHmbcznuRW4wzcRrOH4+lFuwTC+AvPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SNGuykqNkFSUMU4hmQSZkU3J+ayEl/3tu6A/x/3qgaZLjXpQu63xWWbt9RaKyhMBY170jNaGl5HVWnl/pUyIRZiaaY5g7oa8MqGhWzahCdOsUa6sVwVs5dHqqHDMP2bPEt8d+c+8UAyoNyjQtNVdLbJQA6383y8flkQZhxHQoB1SeJO1mNxeCfMG93y2ru1lCMD/R/vtqpw5iV9XTx/6b1fPZbRH2qH5MZJeYmRgpIGsQSSaVkSO4jjYCh4yo6kaCpYdwB5xayUlIY3rLVA0EUSCo4OlfURVevyZIeluOcgJwjeMDjHkDCBX3f2inCnJHnx/OB3JVyiXY5T1qUuYbg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LYEEFJ9S; dkim-atps=neutral; spf=none (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1740592738; c=relaxed/relaxed;
+	bh=CmkvS9UxDR5qE1R0qpi8xu0M47AOrXg9dt+J8qRSXRU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MQ1nlfA+vVVNg2c/pYGfsxe1rF3m2ZTkanHi03LGQhmGDo5lNFLuDxHgK3dY/gyKD0qwXzfdqW2taWE+DYqOK9DUoFDCIgewcJNsLJd2jIa+hkTq5GY+9nxvtigewXufWMN16hjQHhgzWU090XuS0q32z1XrnsJTpeVyy7MoFYi56C8tdLfb9eSYgUu+p7dezAOjCn3I7qD2PGsWAqdjyiQuidsVREr/PPxfsI0Li8XL1b439GETG0zk62KByJcr3Qw+YWlHKr8+l+h3M+iYrS3jls9Mqs+CzEqDC+GzPHxixJq24tgZo1/jQynfgpYgNh4w5sU0KJ0Mt4UAx33+3g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=CiRsee0I; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::536; helo=mail-ed1-x536.google.com; envelope-from=zhichuang@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LYEEFJ9S;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=CiRsee0I;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 63 seconds by postgrey-1.37 at boromir; Thu, 27 Feb 2025 01:24:10 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::536; helo=mail-ed1-x536.google.com; envelope-from=zhichuang@google.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z2xYQ6YH8z3blT
-	for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2025 01:24:10 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1740579852; x=1772115852;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=OrOB40cYbVLCfH0lnAsYoiZZ2zB91mfdMiAb0yEbrLQ=;
-  b=LYEEFJ9SCquZIXgjJCYkjiI/SQn52E5wAWDkMffe/7R7PCScmA+wup0l
-   BtEMZlbWO2eyl/MhCvVDJn0eUDlMnq98hc8CJHjUEKOXx8Xv85c9seVBf
-   K87+bqCF0zdZ99lc147wmFevLsZriAEKIWMixoO1TyEM6IdgDfPSqkSdE
-   O6qptNN0Je3box/F0Y1RU7IHXNFQ5Rez12mE7FIKfowgKY8CWiV6RQkug
-   Gd1WtO4zruHYfqJ/2WJR5ihGtfNuz7nIOmvRB1Cz+bWJxdL7mJHgWUgIr
-   fRnIf4pCwGqFtcNE8tsLpwGwbEHPh2x2hkPa76/zefy8NiFY0Oq+q50pD
-   w==;
-X-CSE-ConnectionGUID: fP9oaghjTJSHJgHCBLqUAw==
-X-CSE-MsgGUID: 7lzhb3FtSBWch0n2iDg6PA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="63890712"
-X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
-   d="scan'208";a="63890712"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 06:23:03 -0800
-X-CSE-ConnectionGUID: qRUPd3CBTbyC46Q47oFPzA==
-X-CSE-MsgGUID: WVf+wpDaR9a69sA3ZOCNwg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
-   d="scan'208";a="117202774"
-Received: from smile.fi.intel.com ([10.237.72.58])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 06:23:01 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.98)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1tnIJO-0000000FLVY-2saw;
-	Wed, 26 Feb 2025 16:22:58 +0200
-Date: Wed, 26 Feb 2025 16:22:58 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: =?iso-8859-1?Q?J=2E_Neusch=E4fer?= <j.ne@posteo.net>,
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] pinctrl: wpcm450: Switch to use
- for_each_gpiochip_node() helper
-Message-ID: <Z78jwi8s34t3H8fG@smile.fi.intel.com>
-References: <20250220155036.2734838-1-andriy.shevchenko@linux.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z32KD3WtQz3bjM
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2025 04:58:56 +1100 (AEDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5ded4a3bf0bso202a12.0
+        for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2025 09:58:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1740592730; x=1741197530; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CmkvS9UxDR5qE1R0qpi8xu0M47AOrXg9dt+J8qRSXRU=;
+        b=CiRsee0IyvhVyo3AsivZR0mn2UmyjDLE7cHDIPBWMWQicFBdtgaagU/5uBz29XgsPH
+         PIzHjhdO5iUdrsCzeCW2gKD0IecEYqpsnup/IXYodjbIEaIwDWURGTnk3tR1dLCm6zQ6
+         LqCu2jDyJ55LdKDPh/lQuNPO6TobD08WhBZitQwl/X3BCOXECP41fgYPt0kAif5UIFg3
+         WbrTB1Y9hQewGMsuSWBzBVMsradg/2fKz9XAE8For95ZsYeyN93sDCwdy8rZQLLQSCIQ
+         pYc5RNb08f0NpMyt1j0/bf1d7oqK1rfKnKfPprZPNnDR7nOyhMbySmn/ZBr654de6chO
+         HlIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740592730; x=1741197530;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CmkvS9UxDR5qE1R0qpi8xu0M47AOrXg9dt+J8qRSXRU=;
+        b=qQ2ee9XrJSErIdnSLFmhO3dF15UlQ0mH65UfbFytrN3vTQTmpaAZZEYTEEyR3P/HeA
+         1nLCWHEdHiG4hWERNIv+erRqmXJDrMZ3k69GlezMmCuaQi0rsdEPooNDStfsxJmfxO9b
+         XdCUCwbp1o/ZTprK6bLtVWHIVSLZB8cfy1S84ZyAejIZ1strs+65+NjId7ts45wzcWih
+         DquQqZt1JAw0m2F/uezusRHbZX4/pc3o/rmPWu2Pg8PMUFNmsHMbsUkmd1oaY53TviFX
+         upojK7M9OioJGUhTDhJq1Re+kKS9w50QSRK/kzMF+2ywSzVRDXFjLey3zuoWgAgsD9VB
+         bx+w==
+X-Gm-Message-State: AOJu0YzUw2w1wECqOT4InNyB4RXX7Roq0+5lk8RiMs0ejGUKrWlR2G1+
+	lnCvYigF6kRxTToqS7C6Fbtz0nPQbnw1FalGCiwoZitUTQQ3FajRx+w3F7nTII6lou4Plnmwt+Y
+	HKIsbesuWWUbGTIVjIMDaNoRyX+ZQC+6fB/7M
+X-Gm-Gg: ASbGncsGC6SZ8Cqpcbjf54MOq0Jkw6/JI2l/FejxLSsuKPvREipIpTb9GCE+A/ypyAI
+	Vsavo90g4mtXIg/9dZVBLbAlmpEcBxucbPHZBc5ztvpw8ecaw+BUkDkod3J8SWfpMFW748hdUHu
+	qehqZtQXXaUcFPD9loOrZLJ2eWoNL8uevw+qFicg==
+X-Google-Smtp-Source: AGHT+IHxvpzi+QLsAzuVWW6kW9sA7ibOQb8WsjXII3pM3KpB/NkBwEx/JJzKcD9m91L4Hxwl4wH6c/ZV5yQchBIEAuI=
+X-Received: by 2002:a50:cd5e:0:b0:5dc:ccb4:cb11 with SMTP id
+ 4fb4d7f45d1cf-5e407be4a1dmr280205a12.4.1740592729918; Wed, 26 Feb 2025
+ 09:58:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250220155036.2734838-1-andriy.shevchenko@linux.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
-	version=4.0.0
+References: <e674332a-6956-4184-b077-39a0cc0e624d@gmail.com>
+In-Reply-To: <e674332a-6956-4184-b077-39a0cc0e624d@gmail.com>
+From: Zhichuang Sun <zhichuang@google.com>
+Date: Wed, 26 Feb 2025 09:58:38 -0800
+X-Gm-Features: AQ5f1Jr99pgITo2yrg_ATXqCD-K7ZMh03zoV_Xbx2RMzSiIphl8mjeb7Qlsut_A
+Message-ID: <CA+g7whTWJsZaQvpDmTB7Ohjhy6sgGEH9WxPh007qKQyzjNzhJw@mail.gmail.com>
+Subject: Re: SPDM Daemon status & Collaboration
+To: Manojkiran Eda <manojkiran.eda@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000005e5b9b062f0f53a4"
+X-Spam-Status: No, score=-15.7 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -89,20 +90,129 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
+Cc: Kumar Anand <kumaranand@google.com>, Changming Liu <cmliu@google.com>, Justin York <jeyork@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Jerome Glisse <jglisse@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 20, 2025 at 05:50:11PM +0200, Andy Shevchenko wrote:
-> Switch the code to use for_each_gpiochip_node() helper.
-> 
-> While at it, correct header inclusion as device property APIs
-> are provided in property.h.
+--0000000000005e5b9b062f0f53a4
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Linus, Are you okay with the change?
+Hi Manoj,
 
--- 
-With Best Regards,
-Andy Shevchenko
+We have already upstreamed our spdmd to https://github.com/google/spdmd. We
+are looking forward to adding recipe files into openbmc so that it can be
+tested with it.
 
+Thank you,
+Zhichuang
 
+On Mon, Feb 17, 2025 at 4:41=E2=80=AFAM Manojkiran Eda <manojkiran.eda@gmai=
+l.com>
+wrote:
+
+> Hi Zhichuang,
+>
+> I hope you are doing well.
+>
+> I noticed that the SPDM daemon design document where you were the
+> primary contributor was merged around Feb 2023 [1]; however, I have not
+> seen any corresponding repository creation or code contributions since
+> then. At IBM, we are keen on leveraging the recently released SPDM over
+> TCP specification from DMTF [2] and extending the existing design to
+> support attestation over TCP [3].
+>
+> I wanted to check whether you are still interested in up-streaming the
+> implementation. If so, I would be delighted to collaborate and
+> contribute the necessary enhancements to accommodate TCP-based use
+> cases. If you don=E2=80=99t intend to upstream, I am happy to
+> contribute/maintain code & develop a solution that ensures the stack is
+> architected to seamlessly scale for both TCP and MCTP transport mechanism=
+s.
+>
+> I look forward to your thoughts and the opportunity to collaborate.
+>
+>
+> **References:**
+> 1.
+>
+> https://github.com/openbmc/docs/blob/master/designs/redfish-spdm-attestat=
+ion.md
+>
+> 2. https://gerrit.openbmc.org/c/openbmc/docs/+/78257
+> 3.
+>
+> https://www.dmtf.org/sites/default/files/standards/documents/DSP0287_1.0.=
+0.pdf
+>
+>
+>
+> Best regards,
+> Manoj
+>
+>
+
+--0000000000005e5b9b062f0f53a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-size:small">Hi =
+Manoj,</div><div class=3D"gmail_default" style=3D"font-size:small"><br></di=
+v><div class=3D"gmail_default" style=3D"font-size:small">We have already up=
+streamed our spdmd to=C2=A0<a href=3D"https://github.com/google/spdmd">http=
+s://github.com/google/spdmd</a>. We are looking forward to adding recipe fi=
+les into openbmc so that it can be tested with it.=C2=A0</div><div class=3D=
+"gmail_default" style=3D"font-size:small"><br></div><div class=3D"gmail_def=
+ault" style=3D"font-size:small">Thank you,</div><div class=3D"gmail_default=
+" style=3D"font-size:small">Zhichuang</div></div><br><div class=3D"gmail_qu=
+ote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Fe=
+b 17, 2025 at 4:41=E2=80=AFAM Manojkiran Eda &lt;<a href=3D"mailto:manojkir=
+an.eda@gmail.com">manojkiran.eda@gmail.com</a>&gt; wrote:<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">Hi Zhichuang,<br>
+<br>
+I hope you are doing well.<br>
+<br>
+I noticed that the SPDM daemon design document where you were the <br>
+primary contributor was merged around Feb 2023 [1]; however, I have not <br=
+>
+seen any corresponding repository creation or code contributions since <br>
+then. At IBM, we are keen on leveraging the recently released SPDM over <br=
+>
+TCP specification from DMTF [2] and extending the existing design to <br>
+support attestation over TCP [3].<br>
+<br>
+I wanted to check whether you are still interested in up-streaming the <br>
+implementation. If so, I would be delighted to collaborate and <br>
+contribute the necessary enhancements to accommodate TCP-based use <br>
+cases. If you don=E2=80=99t intend to upstream, I am happy to <br>
+contribute/maintain code &amp; develop a solution that ensures the stack is=
+ <br>
+architected to seamlessly scale for both TCP and MCTP transport mechanisms.=
+<br>
+<br>
+I look forward to your thoughts and the opportunity to collaborate.<br>
+<br>
+<br>
+**References:**<br>
+1. <br>
+<a href=3D"https://github.com/openbmc/docs/blob/master/designs/redfish-spdm=
+-attestation.md" rel=3D"noreferrer" target=3D"_blank">https://github.com/op=
+enbmc/docs/blob/master/designs/redfish-spdm-attestation.md</a> <br>
+<br>
+2. <a href=3D"https://gerrit.openbmc.org/c/openbmc/docs/+/78257" rel=3D"nor=
+eferrer" target=3D"_blank">https://gerrit.openbmc.org/c/openbmc/docs/+/7825=
+7</a><br>
+3. <br>
+<a href=3D"https://www.dmtf.org/sites/default/files/standards/documents/DSP=
+0287_1.0.0.pdf" rel=3D"noreferrer" target=3D"_blank">https://www.dmtf.org/s=
+ites/default/files/standards/documents/DSP0287_1.0.0.pdf</a> <br>
+<br>
+<br>
+<br>
+Best regards,<br>
+Manoj<br>
+<br>
+</blockquote></div>
+
+--0000000000005e5b9b062f0f53a4--
