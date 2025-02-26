@@ -2,110 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 771DCA45ADF
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2025 10:56:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C063A4628E
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2025 15:24:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z2qcb05ngz3cYY
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2025 20:56:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z2xYX3FJhz3cZ9
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2025 01:24:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04::f03c:95ff:fe5e:7468"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740563787;
-	cv=none; b=aiY+1SwWxk3Uxc3FUOS86WQu5UekK2FVF7jCaQS2FMtoaVNZtDAjDdPqelpw6+4Uq8A0nXDZfsww38TmdBaDA5t6H3mF9aRzjzGBbu40Z/211D4DWhydyQMjYdPYkbR8NHCV1oUCUIFyfE5sBGfbaiPq2G6RVv/MXpc6J75MZLBBP9qGkPmI/B2vtdFFs/1uWPNyasLx1iCQFjcsjkMJjly0koHh9UXheynqd2bycQvFVsiJcuLtaAdYf8YhkvKeefQRal3eXuSLOpfUsrO7I9NZKiKwzyiKQSEptWDRR9RKsXTCca2f2TCCFe0mFGi2pj/bp8ZnybmpfG2DMezzHg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.9
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1740579853;
+	cv=none; b=idUVIa6Y+qsvqAOE1cHlP+bX903oGYYDg4GKxhJ3BGsxf0432CSJ4JXmKwpqeO/9fpKhU2OxyRXeUnZ+p3YMFZz1woHClcT2Zl7uZX5QanIqhPGf0s/oUvMBVPWKGwYlUkQ/1qFZDVI11l93Q1XE+h9KkJZL2lDDw8juyeM1pSD3hwk8eBhTU09re5beSRsg2ZOU3c8cVkHwMsqllQ+tZ3P/UO1Mv2BvdJrpENAErA+bqvNXsMjwU62xPWmZrk/XKlwAaEunwbT6DfJ2jdplyjiFMzFqz2Pssz0T2T+EF4uqQO7PbuRCotiC1cL4N1doo8Pd3FNVn5klGboKtxF+PA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1740563787; c=relaxed/relaxed;
-	bh=Y+pxVerkfoS1avWErqPTUCwq3rjsaYZehyf3vYLR4ZE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hhBmCf2VMRJDyhnm8KKSOTrBu1kneFETJvDiIuRU7GWA//c9J7GfOFLgaWG5iaGxAAsPP1LZY0Gc3y/EzaZhvAlhDZH7JVzT9Hf0T9SM4VXy9KqTMxec6B/lNsvQ3pZywMSx0P3pUjDuB9oFoTmYA6vmTXuO2zHJU51weVFExzGgPZkbUvf0vVAuY1C222aAuh6I9DIdTE6jwaUmPEpHUtv4a42LsFsf8kWp+ZA/j8ap+K3B7vd/H7cKl0PX4KlRwR0HFMhaLCdmAdoFDTBpS7Ur2sgkpdTeY6gJ0XeAmppJFilWyUJUReiELVKRgrMU3oQhNDCKZBkAF6GoPMxfAQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nDIsy8iO; dkim-atps=neutral; spf=pass (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1740579853; c=relaxed/relaxed;
+	bh=2FR6ycy1H4/gsHmbcznuRW4wzcRrOH4+lFuwTC+AvPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SNGuykqNkFSUMU4hmQSZkU3J+ayEl/3tu6A/x/3qgaZLjXpQu63xWWbt9RaKyhMBY170jNaGl5HVWnl/pUyIRZiaaY5g7oa8MqGhWzahCdOsUa6sVwVs5dHqqHDMP2bPEt8d+c+8UAyoNyjQtNVdLbJQA6383y8flkQZhxHQoB1SeJO1mNxeCfMG93y2ru1lCMD/R/vtqpw5iV9XTx/6b1fPZbRH2qH5MZJeYmRgpIGsQSSaVkSO4jjYCh4yo6kaCpYdwB5xayUlIY3rLVA0EUSCo4OlfURVevyZIeluOcgJwjeMDjHkDCBX3f2inCnJHnx/OB3JVyiXY5T1qUuYbg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LYEEFJ9S; dkim-atps=neutral; spf=none (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nDIsy8iO;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LYEEFJ9S;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04::f03c:95ff:fe5e:7468; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04::f03c:95ff:fe5e:7468])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 63 seconds by postgrey-1.37 at boromir; Thu, 27 Feb 2025 01:24:10 AEDT
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z2qcV2GNSz2yvl;
-	Wed, 26 Feb 2025 20:56:26 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 3141061137;
-	Wed, 26 Feb 2025 09:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B313C4CED6;
-	Wed, 26 Feb 2025 09:56:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740563783;
-	bh=1Quf7/c1ehY7FhlfL5b4CSIvNDLhWomMOOrwdf5C1bc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nDIsy8iONaUkV3zCR4j24aHleHJTprg4Ra22sC6KXhc8VhmIPceVBmDcFBURrhIje
-	 cu7kCS/JqDVLynQAq47qWpSXY+sx1LXQCf5NthVCR4cz70GDprSdoMxNf44f1F0s7f
-	 lkEttvPtA4icjYlN+6PjUfTSuiI9sIE6I9xCe9ofUGVGLmM7CL4DSqrjZD3A4feDS7
-	 AslZqbM90UNfJmjSBXyskmUlDyJs3dBrwl+snCUs4gQK8ctVFdz/qce6nP2MR416XY
-	 BGHC2WMTKEKN3BV+K4HMnG4jWxihC9Yt8F6DDtUxVnTebz0sPKInn95MHwTb0TxxJI
-	 5vrkFmbgouSTw==
-Message-ID: <50327725-f3b8-4a8b-94a2-85afccd2868a@kernel.org>
-Date: Wed, 26 Feb 2025 10:56:17 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z2xYQ6YH8z3blT
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2025 01:24:10 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1740579852; x=1772115852;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=OrOB40cYbVLCfH0lnAsYoiZZ2zB91mfdMiAb0yEbrLQ=;
+  b=LYEEFJ9SCquZIXgjJCYkjiI/SQn52E5wAWDkMffe/7R7PCScmA+wup0l
+   BtEMZlbWO2eyl/MhCvVDJn0eUDlMnq98hc8CJHjUEKOXx8Xv85c9seVBf
+   K87+bqCF0zdZ99lc147wmFevLsZriAEKIWMixoO1TyEM6IdgDfPSqkSdE
+   O6qptNN0Je3box/F0Y1RU7IHXNFQ5Rez12mE7FIKfowgKY8CWiV6RQkug
+   Gd1WtO4zruHYfqJ/2WJR5ihGtfNuz7nIOmvRB1Cz+bWJxdL7mJHgWUgIr
+   fRnIf4pCwGqFtcNE8tsLpwGwbEHPh2x2hkPa76/zefy8NiFY0Oq+q50pD
+   w==;
+X-CSE-ConnectionGUID: fP9oaghjTJSHJgHCBLqUAw==
+X-CSE-MsgGUID: 7lzhb3FtSBWch0n2iDg6PA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11357"; a="63890712"
+X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
+   d="scan'208";a="63890712"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 06:23:03 -0800
+X-CSE-ConnectionGUID: qRUPd3CBTbyC46Q47oFPzA==
+X-CSE-MsgGUID: WVf+wpDaR9a69sA3ZOCNwg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,317,1732608000"; 
+   d="scan'208";a="117202774"
+Received: from smile.fi.intel.com ([10.237.72.58])
+  by fmviesa010.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Feb 2025 06:23:01 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.98)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1tnIJO-0000000FLVY-2saw;
+	Wed, 26 Feb 2025 16:22:58 +0200
+Date: Wed, 26 Feb 2025 16:22:58 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: =?iso-8859-1?Q?J=2E_Neusch=E4fer?= <j.ne@posteo.net>,
+	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] pinctrl: wpcm450: Switch to use
+ for_each_gpiochip_node() helper
+Message-ID: <Z78jwi8s34t3H8fG@smile.fi.intel.com>
+References: <20250220155036.2734838-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-References: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
- <20250224055936.1804279-2-ryan_chen@aspeedtech.com>
- <20250224-arrogant-adventurous-mackerel-0dc18a@krzk-bin>
- <OS8PR06MB75415E95342F26F576B5CF8AF2C22@OS8PR06MB7541.apcprd06.prod.outlook.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <OS8PR06MB75415E95342F26F576B5CF8AF2C22@OS8PR06MB7541.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250220155036.2734838-1-andriy.shevchenko@linux.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -118,143 +89,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>, "andi.shyti@kernel.org" <andi.shyti@kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, "krzk+dt@kernel.org" <krzk+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 26/02/2025 10:28, Ryan Chen wrote:
->> Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
->> AST2600-i2cv2
->>
->> On Mon, Feb 24, 2025 at 01:59:34PM +0800, Ryan Chen wrote:
->>> Add ast2600-i2cv2 compatible and aspeed,global-regs, aspeed,enable-dma
->>> and description for ast2600-i2cv2.
->>>
->>> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
->>> ---
->>>  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 58 +++++++++++++++++++
->>>  1 file changed, 58 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> index 5b9bd2feda3b..356033d18f90 100644
->>> --- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> @@ -44,12 +44,60 @@ properties:
->>>      description: frequency of the bus clock in Hz defaults to 100 kHz when
->> not
->>>        specified
->>>
->>> +  multi-master:
->>> +    type: boolean
->>> +    description:
->>> +      states that there is another master active on this bus
->>
->> Except that this wasn't ever tested...
->>
->> Don't duplicate properties. i2c-controller schema has it already.
+On Thu, Feb 20, 2025 at 05:50:11PM +0200, Andy Shevchenko wrote:
+> Switch the code to use for_each_gpiochip_node() helper.
 > 
-> I will remove it to avoid duplication.
->>
->>> +
->>> +  aspeed,enable-dma:
->>> +    type: boolean
->>> +    description: |
->>> +      I2C bus enable dma mode transfer.
->>> +
->>> +      ASPEED ast2600 platform equipped with 16 I2C controllers that
->> share a
->>> +      single DMA engine. DTS files can specify the data transfer mode
->> to/from
->>> +      the device, either DMA or programmed I/O. However, hardware
->>> + limitations
->>
->> so what is byte mode?
-> I explain in cover, I will add here also. 
+> While at it, correct header inclusion as device property APIs
+> are provided in property.h.
 
-Cover letters do not get merged and we do not read them, except when
-looking for dependencies and explanations of process (like RFC). Your
-hardware description must be fully contained in commits, not cover letter.
+Linus, Are you okay with the change?
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-> aspeed,enable-byte:
-> Force i2c controller use byte mode transfer. the byte mode transfer
-> will send i2c data each byte by byte, inlcude address read/write.
-
-Isn't this standard FIFO mode?
-
-Why anyone would need to enable byte mode for given board?
-
-> 
->>
->>> +      may require a DTS to manually allocate which controller can use
->> DMA mode.
->>> +      The "aspeed,enable-dma" property allows control of this.
->>> +
->>> +      In cases where one the hardware design results in a specific
->>> +      controller handling a larger amount of data, a DTS would likely
->>> +      enable DMA mode for that one controller.
->>> +
->>> +  aspeed,enable-byte:
->>> +    type: boolean
->>> +    description: |
->>> +      I2C bus enable byte mode transfer.
->>
->> No, either this is expressed as lack of dma mode property or if you have three
->> modes, then rather some enum (aspeed,transfer-mode ?)
-> 
-> Thanks suggestion, I will using an enum property like aspeed,transfer-mode instead.
->>
->>
->>
->>> +
->>> +  aspeed,global-regs:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>> +    description: The phandle of i2c global register node.
->>
->> For what? Same question as usual: do not repeat property name, but say what
->> is this used for and what exactly it points to.
->>
->> s/i2c/I2C/ but then what is "I2C global register node"? This is how you call your
->> device in datasheet?
->>
-> I do descript in cover, should add into the yaml file ?
-
-
-Again, cover letter does not matter. Your hardware must be explained here.
-
-> 
-> aspeed,global-regs: 
-> This global register is needed, global register is setting for
-> new clock divide control, and new register set control.
-
-So this means you implement clock controller via syscon?
-
-> 
->>
->>> +
->>>  required:
->>>    - reg
->>>    - compatible
->>>    - clocks
->>>    - resets
->>>
->>> +allOf:
->>> +  - $ref: /schemas/i2c/i2c-controller.yaml#
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: aspeed,ast2600-i2cv2
->>
->> NAK, undocumented compatible.
-> 
-> Sorry, I should add what kind of document about this compatible?
-
-You cannot add new compatibles without documenting them. Documentation
-is in the form of DT schema and each compatible must be listed (in some
-way) in compatible property description.
-
-
-Best regards,
-Krzysztof
