@@ -2,96 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3579DA55A02
-	for <lists+openbmc@lfdr.de>; Thu,  6 Mar 2025 23:43:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 165D8A55A03
+	for <lists+openbmc@lfdr.de>; Thu,  6 Mar 2025 23:43:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z84Fk3R40z3d3W
-	for <lists+openbmc@lfdr.de>; Fri,  7 Mar 2025 09:43:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z84Fq68v2z3fKh
+	for <lists+openbmc@lfdr.de>; Fri,  7 Mar 2025 09:43:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741215844;
-	cv=none; b=QUDwQmtdWsXI5//AAbCut3Z/WLj8jTyAF6Orh8agjPRCZYbEq26wpKp6BqvSH1Qx1I3mBj/K96/IxK6xW6SSC7VKW0I7XB1BSayvGeSgmtZvr1PwNmQQqKdJnp+wbQlLne0R4ZQpgAqfykoEckjdglKaMUrWJCDjqXZsnSvQ/rQDb0nirT1yQ0O9PqaTmO/oCjs+x46lBJ2hAXbDrF+5put7X5UthRg9+Nj8jPcG2y6ht84MY+qnvINxvLvFnYzZ4aWJXoyx/PNjadoY5wtNpoHo+Z7yr8PuvXGmwNq1Kusb5HbLpuL8N3ZL/leV7Lna20oKBlDQ/XZZYEn/bGT2Lg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62d"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741219130;
+	cv=none; b=Ez1K7atFmjiOylEVc/yR+UceFmxkamCoYF4BUqRTxov0FGOAFtp61HtBF8er2k/6m/HhksaydY1M8H7i7L+URHw3PJ8EbMWKzNlwOjGCuhhlLWCl5kcTNGOnA48Pc7Cq2uuuZHXMTzaNW+vxYqK+q5J3eRVAYquMKQxQzEelWFvoQ9AWV4pN4vqFGD4MCXULn6VLTg4VGim1jHEN4h2pmsfST2ZRPjhwEvnZtC/TfboAmRAZVJBZPwxLBu5bK4eYuuP1WKu1xQsG5+vD1kucEttA3mxWAFy0iG/iLM7jexjvs9QKjR6vy8/g3JD3GhSRIsK+nCYmVSu5cpuI+Xk/tw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1741215844; c=relaxed/relaxed;
-	bh=Z790mvGquNClk9am635QsUgs00BtBeIllezzp9bIdnk=;
+	t=1741219130; c=relaxed/relaxed;
+	bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fBl7DgRb+T1xz6OjbJtueWoA7uFTNA/JmWYakBwHqUDEJpzBnTewJaZ9mk5F1Znutw7voPBMYKsOAN9HxHoBUqzKJG2gnrpS9qkyZWr3ADnfIEjmfQWqayYRs/0tnIdoAjsUdX8sjKwrGcl5KzIAJeRXXQ2YoBNGYTgBBGm655xl+LEDW3iJ+m4Nz2xnfUxZ1XgZpy2HRyp/EF2j+JDOjsDHvgjo8kGRdPtO9G/GWvJMVaHLhdP4Ac8LSseHbRiuHS5c8zI1IJuZIBTMY5WZEpDUE3QxIYLFnENZlKWNuWIpWFKmRM4953EvkBVAn22rSm1fQLhrlHz52nznbG0JQg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b3dzNx0b; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=hx94ayW+nmbTLsVeL2QL9jXA03aIQmAxXUGOkJn8hDPFEJrxO1ljegP/9YYQR4fEk5DqeW3Ba+UdfIRFiJYpFc1QlJ5+Tl1PAvzPcU0uMfoDhNnR281Q3dCWktbLi4NlyVhnI5repV7sJ0E2Lo7g6uvsYifyrP8f6zSzfGU8d7wNhZUYb243RdunPmAyzdMF1dHeh8lFsZxZL21xJnZ4n9KOVP0I4NPkNMsMfql3Ss6oK3q5Sv1roJtkFsW98/JOdkz10KUt8E0gYdchoMhU8QMydmpuvcRFDkm8zQHjuzcZxdD7WeDJjl9LD0hjriN0hokT1GxOQdU+hMbtEXTDrQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T1Kv/lj8; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b3dzNx0b;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T1Kv/lj8;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z7Sm26H0fz2xKN;
-	Thu,  6 Mar 2025 10:04:02 +1100 (AEDT)
-Received: by mail-pl1-x62c.google.com with SMTP id d9443c01a7336-2234e5347e2so3445ad.1;
-        Wed, 05 Mar 2025 15:04:02 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z7TzD6LPpz2yVb;
+	Thu,  6 Mar 2025 10:58:47 +1100 (AEDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-223a7065ff8so842585ad.0;
+        Wed, 05 Mar 2025 15:58:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741215841; x=1741820641; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1741219126; x=1741823926; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z790mvGquNClk9am635QsUgs00BtBeIllezzp9bIdnk=;
-        b=b3dzNx0bJgFeHjTDI8IKFXMYDn8mY1Ed5VxMg4U6864lIe4BQzWKI5bOGWxD4p/yab
-         sXTEYhn8hliLutZe+bJSYK0xjmY/BvtTo+V8R5c0POr8T/+6kklam30nKEMgCKDqysrl
-         ReXXuzObe0ooSRstuiCEkTvwgn1PeZUUu/DNDHI+11KtnEDPA0pimxTWs3uMhxV5ziW3
-         BMrmCrjDIEUSnM0uCXV+V1VfAt/f+xqFpFruMrxoRA7BKhFV+MZr4ERBu2xSJmUX60z6
-         StrHjLmxFsehxyyXA6H4RmbIa7mFA9JWN/qoktwpfIVPzAkHVUHFq1vDpZcTGoJ3EEym
-         nOaQ==
+        bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
+        b=T1Kv/lj8Y8vzOytnbOVCXfB/tADDs4pr4iTiO6k77fL3oWRfD08BZd6nAenffgNtxg
+         tp3euy/aAXkyPug4m3SkxSlBkyrY0iZpudXzsBxnHnQrr3RhDzzUlqE2rqfKDTUEq1HS
+         +r1krweCNC7+DwcIctySEIJBL+31JbRiVh4SMREvuVsu2qf5JUvn9isB6UdCYFykgbNn
+         57vxKyo0mKfVadm6RlfOzKZ7o3yytBp7vh33DEoJHYWhY7Ej2+uLA4+J35YXxg/zWf8+
+         pOD4veyGXJIjqZTBEkCVxyoti7fqss5Ai00qQbAHW8lbMpSEOp9QvuOWNlI7ZwTQXXQU
+         TvUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741215841; x=1741820641;
+        d=1e100.net; s=20230601; t=1741219126; x=1741823926;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z790mvGquNClk9am635QsUgs00BtBeIllezzp9bIdnk=;
-        b=kkASa/kksF2RY7H09BQx6DiCNkvQmHcfjMRBIjHmLCAMcFrDHLK4GMaLcveH0aGvJN
-         1vv2d0vpwWc0dyrpb3wNy0JVk91ZX9NbL4a1jv4NZPJOJICzTHU/qOxi0i7p6NF8o2Py
-         vDZ0eqOfQMSb0alMhcASczEkFIxdUKVZqxDvywW38vqX/1szJfeoFBk/90Q7Q38l54si
-         u9Jj8hXiQUMUWmz5mqVLKMaMKpC6FyRYceKHH3Mi9coaaNaL3t/yRohe7qZiChRbursB
-         hRDGMWjG89PLdHhQBaydr+l1CAlOt4LKK6HSYv8x2/mhFeY6PGZfGqsHH+JFAf6Rwiu0
-         d26Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUUt91FTtAMuzRYKGhzbS/lLGkb7tM13FE2x8p95uMPRMmw+9u9m4qgDiijHim6xJpiaDzj9HQ61MKJUlA=@lists.ozlabs.org, AJvYcCXwMXr7Ejcfdrkd48eC9N/X9ikKRKvNzWAgafSvS1Qb72OrkZPiI676oZu1AyC5bLb+zHBgjCOQCg==@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Ywhegys9DBX1Gvw4menZIh2hNHlDrxVloFQz0i+/kofFUNjxkSh
-	bDEEM4AQDIu0iuI/b3RZQyhFm5LNlKwKjc1iP7m0yC6hH1ugm4pA
-X-Gm-Gg: ASbGnctKAizU7duUugPaYnfSycpjKWPe5eJHCSdqjHTXF9gSGmDOpO4uBLkihzq/67w
-	EeWDhIpsfGeH8nCXLSOL5ciI1qBAx3sj558jaIPCbidKVYWuCla3A5wp5P3nFBnIWuQ3l6W1L6T
-	OrzXnvjinUuSIKs+fsyU0WfB7GW7IXk7HuGSuRHcRtU2Mc4fPoI5UheOglvIq/TAEEnb5KBxixP
-	O8ciaJJ8SBN8sdzMJR6jV4LEX7BwEOgHb8t2BvZBMur0obSK41ocJeV6sVoVEVqxg0h3k/3K2xV
-	9e585M0y9jMuhskTKru3ObQy8YwJLErVQYGLp1sOSycYjdrOCwtKNLqZm/gdqGP5k4NumYTD26W
-	Ky6bOokFUfGKoHicclA==
-X-Google-Smtp-Source: AGHT+IGJ8wMSqYZlSJ4sp1Cb8aQxAnqhxcIrS7MZKZh23f2DOaW2c7kOg1mKVHzfXB47vtWWZXhcIQ==
-X-Received: by 2002:a05:6a00:1397:b0:732:5164:3cc with SMTP id d2e1a72fcca58-73682c8bebamr6106502b3a.19.1741215840704;
-        Wed, 05 Mar 2025 15:04:00 -0800 (PST)
+        bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
+        b=b6X3EHveSv6sVAWAq02uas/9x52uKK24jl1m+DKCKPPrHeH6uxqEu8iFLTD2+/ixWS
+         +Z2NtI30TP/UXYHY0jx1ANRhDprFdnde0nj5nWIRuIlUQsD98KSangusZ/jdWDylO/JI
+         lytlDvRvKyREqcsF2B9q8HkPNkZS9unuj8m3otGpQ/m+eLhG47RRB6Zj2qgs8uOhuLoa
+         ul6zSHvWUTvuSeFIshs9WtRaNCVPRZb4qFu7C8yrDzQh4WCLmAzKMdOyduTRJpbBsHF4
+         AS6n+eX14lTSX1LU0RyLVurncAv2zJXwyelVUIEjUXdRoQPRYf8IUDp1eczVMajrmi2v
+         cIzg==
+X-Forwarded-Encrypted: i=1; AJvYcCVorTUXrpc4i011CKM27lvac+yzpMFO/6wjLIdXWVhno9N8UkxxwMJrFoJjgYLTzeB4SeDWiZZjo75+0jo=@lists.ozlabs.org, AJvYcCW5IZlL6qC+3Sp6YEDfLH99qWzZkJpfAS/6vpW6ux+Yz5rZHEUpTw55REuykzhmjRsGbJAYaZbqjw==@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yw25SzoYlqjw2hGzbkq+2k4/NuGWq9DXWCXo93COZnrTK1Yj3Ra
+	NIrqtXDWXIvM1cR8E1Cv7BvJ+vt9CtTPDUGuxw9J2mCjuvLn3yIx
+X-Gm-Gg: ASbGncuzBGLWg3adyqmrJzHLrIUqlbAIxciiDZKll1QEvmA7qhcZ/a2ntFFP8FX4/L1
+	akFs9s2VlSixEBW23ZP/ORStcUYyjSoyWF8PJnl59UjcfMvqhgeTfW/EbIH687rUt7P2r3twhde
+	31jqLWHtxXX3Mj9wILHnGmqgvafQfG0uqq8bHcMOC+U/Ejj1cq9nvo0Fdv9foYSIFs52UvxgHzn
+	an09YvE3OBvrrmdBQCqXViJm1fKBbNRrXxHduokBbJafPFSY56Rr0/m+kTfckCw5vblG8zehORh
+	nrqGRiVXTojdM9vG7jCKxhMYYlhcCmzC9IAaTR0g3ImL9vtiT/+WoLiFnTpklYL7/HduKr/l7BI
+	L6neZjjATwYVZ6CRwBw==
+X-Google-Smtp-Source: AGHT+IFfm7H7nJs7aTJzjddZ42tdexmQKPWdcSPX9vN1nE9dL8KTlJ94ovJcHC3Iz8/npiXYs/Z0Pg==
+X-Received: by 2002:a05:6a00:2d8a:b0:736:546c:eb69 with SMTP id d2e1a72fcca58-73682b85400mr7181751b3a.9.1741219125493;
+        Wed, 05 Mar 2025 15:58:45 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7364b4eff66sm7432847b3a.83.2025.03.05.15.03.57
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736984f8666sm20220b3a.113.2025.03.05.15.58.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Mar 2025 15:04:00 -0800 (PST)
-Message-ID: <35c97316-1e40-45ed-93b0-7e4f7dbce56d@roeck-us.net>
-Date: Wed, 5 Mar 2025 15:03:56 -0800
+        Wed, 05 Mar 2025 15:58:44 -0800 (PST)
+Message-ID: <28a711e5-b2cb-4d5f-bb78-259a01cd4bcc@roeck-us.net>
+Date: Wed, 5 Mar 2025 15:58:40 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 1/2] watchdog: Add a new flag WDIOF_STOP_MAYSLEEP
-To: George Cherian <george.cherian@marvell.com>, wim@linux-watchdog.org,
- jwerner@chromium.org, evanbenn@chromium.org, kabel@kernel.org,
- krzk@kernel.org, mazziesaccount@gmail.com, thomas.richard@bootlin.com,
- lma@chromium.org, bleung@chromium.org, support.opensource@diasemi.com,
- shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
- festevam@gmail.com, andy@kernel.org, paul@crapouillou.net,
- alexander.usyskin@intel.com, andreas.werner@men.de, daniel@thingy.jp,
- romain.perier@gmail.com, avifishman70@gmail.com, tmaimon77@gmail.com,
- tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
- benjaminfair@google.com, maddy@linux.ibm.com, mpe@ellerman.id.au,
- npiggin@gmail.com, christophe.leroy@csgroup.eu, naveen@kernel.org,
- mwalle@kernel.org, xingyu.wu@starfivetech.com, ziv.xu@starfivetech.com,
- hayashi.kunihiko@socionext.com, mhiramat@kernel.org
+To: Ahmad Fatoum <a.fatoum@pengutronix.de>,
+ George Cherian <gcherian@marvell.com>
 References: <20250305101025.2279951-1-george.cherian@marvell.com>
  <20250305101025.2279951-2-george.cherian@marvell.com>
+ <irmewriceyzxr6jvbiao5vqrvelpftbjalmheodx5w63zi6k2y@dg3wlvs6zryd>
+ <PH8PR18MB538122CE6706872B8A836A94C5CB2@PH8PR18MB5381.namprd18.prod.outlook.com>
+ <7ac2b8db-22c7-4168-b1b7-4f9f0ab10531@pengutronix.de>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -137,7 +129,7 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20250305101025.2279951-2-george.cherian@marvell.com>
+In-Reply-To: <7ac2b8db-22c7-4168-b1b7-4f9f0ab10531@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -157,36 +149,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: chrome-platform@lists.linux.dev, linux-watchdog@vger.kernel.org, imx@lists.linux.dev, patches@opensource.cirrus.com, openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org, linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: "imx@lists.linux.dev" <imx@lists.linux.dev>, "mwalle@kernel.org" <mwalle@kernel.org>, "tmaimon77@gmail.com" <tmaimon77@gmail.com>, "hayashi.kunihiko@socionext.com" <hayashi.kunihiko@socionext.com>, "alexander.usyskin@intel.com" <alexander.usyskin@intel.com>, "tali.perry1@gmail.com" <tali.perry1@gmail.com>, "paul@crapouillou.net" <paul@crapouillou.net>, "daniel@thingy.jp" <daniel@thingy.jp>, "patches@opensource.cirrus.com" <patches@opensource.cirrus.com>, "christophe.leroy@csgroup.eu" <christophe.leroy@csgroup.eu>, "festevam@gmail.com" <festevam@gmail.com>, =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>, "chrome-platform@lists.linux.dev" <chrome-platform@lists.linux.dev>, "maddy@linux.ibm.com" <maddy@linux.ibm.com>, "benjaminfair@google.com" <benjaminfair@google.com>, "lma@chromium.org" <lma@chromium.org>, "mpe@ellerman.id.au" <mpe@ellerman.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "krzk@kernel.org" <krzk@kernel.org>, "evanbenn@chromium.org" <evanbenn@chromium.org>, "linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>, "linux-watchdog@vger.kernel.org" <linux-watchdog@vger.kernel.org>, "mazziesaccount@gmail.com" <mazziesaccount@gmail.com>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "naveen@kernel.org" <naveen@kernel.org>, "npiggin@gmail.com" <npiggin@gmail.com>, "xingyu.wu@starfivetech.com" <xingyu.wu@starfivetech.com>, "ziv.xu@starfivetech.com" <ziv.xu@starfivetech.com>, "wim@linux-watchdog.org" <wim@linux-watchdog.org>, "bleung@chromium.org" <bleung@chromium.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "andy@kernel.org" <andy@kernel.org>, "support.opensource@diasemi.com" <support.opensource@diasemi.com>, "andreas.werner@men.de" <andreas.werner@men.de>, "avifishman70@gmail.com" <avifishman70@gmail.com>, "thomas.richard@bootlin.com" <thomas.richard@bootlin.com>, "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "mhiramat@kernel.org" <mhiramat@kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "venture@google.com" <venture@google.com>, "jwerner@chromium.org" <jwerner@chromium.org>, "romain.perier@gmail.com" <romain.perier@gmail.com>, "shawnguo@kernel.org" <shawnguo@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/5/25 02:10, George Cherian wrote:
-> A new option flag is added to watchdog_info. This helps the watchdog
-> core to check whether stop functions would sleep or not.
-> The option flags of individual drivers are also updated accordingly.
+On 3/5/25 03:01, Ahmad Fatoum wrote:
+> Hi George,
+> Hi Guenter,
 > 
-> Signed-off-by: George Cherian <george.cherian@marvell.com>
-> ---
->   drivers/watchdog/advantech_ec_wdt.c | 3 ++-
->   drivers/watchdog/arm_smc_wdt.c      | 3 ++-
->   drivers/watchdog/armada_37xx_wdt.c  | 2 +-
+> On 05.03.25 11:34, George Cherian wrote:
+>>> why is armada_37xx_wdt also here?
+>>> The stop function in that driver may not sleep.
+>> Marek,
+>>
+>> Thanks for reviewing.
+>> Since the stop function has a regmap_write(), I thought it might sleep.
+>> Now that you pointed it out, I assume that it is an MMIO based regmap being used for armada.
+>> I will update the same in the next version
+> 
+> Failure to add WDIOF_STOP_MAYSLEEP when it's needed can lead to
+> kernel hanging. Failure to add an alternative WDIOF_STOP_ATOMIC
+> would lead to the kernel option being a no-op.
+> 
+> I think a no-op stop_on_panic (or reset_on_panic) is a saner default.
+> 
 
-
-... and many more. Sorry, I didn't expect that this would touch
-that many drivers. My bad.
-
-Let's do the opposite instead: Introduce WDIOF_STOP_NOSLEEP,
-and let drivers opt in instead of opting out.
-
-I still have to look into the other feedback. I think someone
-suggested to introduce a callback instead, which would stop the
-watchdog at runtime if needed (especially during kdump).
-That may be a better solution than having a module parameter.
-
-Either case, please separate driver patches from the patches
-introducing the new flag. Since the flag is opt-in, that should
-be ok - drivers supporting it can be modified over time.
+Agreed. Also, I like WDIOF_STOP_ATOMIC more than the WDIOF_STOP_NOSLEEP
+I had suggested in my other response.
 
 Thanks,
 Guenter
