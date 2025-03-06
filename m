@@ -1,89 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 165D8A55A03
-	for <lists+openbmc@lfdr.de>; Thu,  6 Mar 2025 23:43:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35C1A55A07
+	for <lists+openbmc@lfdr.de>; Thu,  6 Mar 2025 23:43:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Z84Fq68v2z3fKh
-	for <lists+openbmc@lfdr.de>; Fri,  7 Mar 2025 09:43:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Z84Fx2tThz3fpV
+	for <lists+openbmc@lfdr.de>; Fri,  7 Mar 2025 09:43:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62d"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741219130;
-	cv=none; b=Ez1K7atFmjiOylEVc/yR+UceFmxkamCoYF4BUqRTxov0FGOAFtp61HtBF8er2k/6m/HhksaydY1M8H7i7L+URHw3PJ8EbMWKzNlwOjGCuhhlLWCl5kcTNGOnA48Pc7Cq2uuuZHXMTzaNW+vxYqK+q5J3eRVAYquMKQxQzEelWFvoQ9AWV4pN4vqFGD4MCXULn6VLTg4VGim1jHEN4h2pmsfST2ZRPjhwEvnZtC/TfboAmRAZVJBZPwxLBu5bK4eYuuP1WKu1xQsG5+vD1kucEttA3mxWAFy0iG/iLM7jexjvs9QKjR6vy8/g3JD3GhSRIsK+nCYmVSu5cpuI+Xk/tw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1032"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741219258;
+	cv=none; b=VLgGrt6/qYdldazrwk3IlM5pSuHlCBYEaLOkVyyeLCEI/HdtbPGZPHGnOzF6zGQLL7Ty4Cr+VqHhD+OpxMyaHKcQTjL+wZ0z32pzICi1nmK5zwJUz1Ado/U20D6t4OvZprgrQDOHEzua8vJy6Ap94WK8kAGGbGMPRakfbixuc/8axq0gT0Z/Jb9MFDS7aDZNFfoJica+P2eIR5ozIAcQLHgYfCCzwTTUnAWyJTqe7boyDTndxG7SGyS+Aa1iFb8DNMlaif4jEYZz7cKxD05kDbcXDegoIqn6xQ9GkvWj6GrmBiwNuq2k8Jass0yGCuSGDgR3fYa61e4j1YrPJ+1fUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1741219130; c=relaxed/relaxed;
-	bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
+	t=1741219258; c=relaxed/relaxed;
+	bh=GhVW9oe2cjj3Hs7+7j3GMXcu7eiEDWbnxpNS4pNrjzA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hx94ayW+nmbTLsVeL2QL9jXA03aIQmAxXUGOkJn8hDPFEJrxO1ljegP/9YYQR4fEk5DqeW3Ba+UdfIRFiJYpFc1QlJ5+Tl1PAvzPcU0uMfoDhNnR281Q3dCWktbLi4NlyVhnI5repV7sJ0E2Lo7g6uvsYifyrP8f6zSzfGU8d7wNhZUYb243RdunPmAyzdMF1dHeh8lFsZxZL21xJnZ4n9KOVP0I4NPkNMsMfql3Ss6oK3q5Sv1roJtkFsW98/JOdkz10KUt8E0gYdchoMhU8QMydmpuvcRFDkm8zQHjuzcZxdD7WeDJjl9LD0hjriN0hokT1GxOQdU+hMbtEXTDrQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T1Kv/lj8; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=aVwNK83XSyZ6+GjKkakiLhwvcXtCfw8M1fk/GnAq7gv78zReKVjYsjZyTQVe0CHaqtK1IUNrpBFDBvGmgPOPymtF+Y1VenMMABWV0hsyJe9HwY7Etsgig5g7/+snoneyndw02kcmV/6QLLHWav+DMnaqWlekitTqVPMmNw3NkmaLo9vHLo2I0jeeCoQiJ9gODH60JIWYOD6pVB7wFQi0b9l2IJdkluxjYVq2rTz9LG0KR/K51F6rtrmhogYPkb69+ShoAgttiEBHW/DDLa1k+a5klHJTiKLwyrQ/E5fBOjoC+4pe0BplU8JYy3d6ZEMw8WMSvtA/wRfGq/XLVq7Bsw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Zq67lUM5; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T1Kv/lj8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Zq67lUM5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z7TzD6LPpz2yVb;
-	Thu,  6 Mar 2025 10:58:47 +1100 (AEDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-223a7065ff8so842585ad.0;
-        Wed, 05 Mar 2025 15:58:47 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z7V1j5Mtwz2ymg;
+	Thu,  6 Mar 2025 11:00:57 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-2f9b91dff71so156039a91.2;
+        Wed, 05 Mar 2025 16:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741219126; x=1741823926; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1741219255; x=1741824055; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
-        b=T1Kv/lj8Y8vzOytnbOVCXfB/tADDs4pr4iTiO6k77fL3oWRfD08BZd6nAenffgNtxg
-         tp3euy/aAXkyPug4m3SkxSlBkyrY0iZpudXzsBxnHnQrr3RhDzzUlqE2rqfKDTUEq1HS
-         +r1krweCNC7+DwcIctySEIJBL+31JbRiVh4SMREvuVsu2qf5JUvn9isB6UdCYFykgbNn
-         57vxKyo0mKfVadm6RlfOzKZ7o3yytBp7vh33DEoJHYWhY7Ej2+uLA4+J35YXxg/zWf8+
-         pOD4veyGXJIjqZTBEkCVxyoti7fqss5Ai00qQbAHW8lbMpSEOp9QvuOWNlI7ZwTQXXQU
-         TvUg==
+        bh=GhVW9oe2cjj3Hs7+7j3GMXcu7eiEDWbnxpNS4pNrjzA=;
+        b=Zq67lUM50y63O0jy4DHs8O0TQroxSxumJqWWT3GQb9oQTEk365UnPGygNo2xvCbWk1
+         ZrKmVVuLTNII8KaCcdw1+mnoAdTGeDfFQr4BgAYsOOQXsuQkbH84NlH2+k2zOkYuHI80
+         ZIbshnmOP5M8tfX1NqiOz5o9zgXjSO15+wZU8pChOBA1gxwoMmJt697XrYV/KzXZhz5H
+         ZOO4r9YJTIMyJ1ofFWqV4huTwTr9m+syDqLNPS4MBdLMS+uYtrsNq42go7xj6+QtM6MF
+         bJljgSR0U9DBfcQnsIqdoiS8MUixvKjnKLSwfOirMSZZqZGNq8SFIqWCCPtmpZBkEJha
+         HZzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741219126; x=1741823926;
+        d=1e100.net; s=20230601; t=1741219255; x=1741824055;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2C3t9OHZV16KbvS+eOTMIJqI95FVIw2G7lcCbFYFJZs=;
-        b=b6X3EHveSv6sVAWAq02uas/9x52uKK24jl1m+DKCKPPrHeH6uxqEu8iFLTD2+/ixWS
-         +Z2NtI30TP/UXYHY0jx1ANRhDprFdnde0nj5nWIRuIlUQsD98KSangusZ/jdWDylO/JI
-         lytlDvRvKyREqcsF2B9q8HkPNkZS9unuj8m3otGpQ/m+eLhG47RRB6Zj2qgs8uOhuLoa
-         ul6zSHvWUTvuSeFIshs9WtRaNCVPRZb4qFu7C8yrDzQh4WCLmAzKMdOyduTRJpbBsHF4
-         AS6n+eX14lTSX1LU0RyLVurncAv2zJXwyelVUIEjUXdRoQPRYf8IUDp1eczVMajrmi2v
-         cIzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVorTUXrpc4i011CKM27lvac+yzpMFO/6wjLIdXWVhno9N8UkxxwMJrFoJjgYLTzeB4SeDWiZZjo75+0jo=@lists.ozlabs.org, AJvYcCW5IZlL6qC+3Sp6YEDfLH99qWzZkJpfAS/6vpW6ux+Yz5rZHEUpTw55REuykzhmjRsGbJAYaZbqjw==@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yw25SzoYlqjw2hGzbkq+2k4/NuGWq9DXWCXo93COZnrTK1Yj3Ra
-	NIrqtXDWXIvM1cR8E1Cv7BvJ+vt9CtTPDUGuxw9J2mCjuvLn3yIx
-X-Gm-Gg: ASbGncuzBGLWg3adyqmrJzHLrIUqlbAIxciiDZKll1QEvmA7qhcZ/a2ntFFP8FX4/L1
-	akFs9s2VlSixEBW23ZP/ORStcUYyjSoyWF8PJnl59UjcfMvqhgeTfW/EbIH687rUt7P2r3twhde
-	31jqLWHtxXX3Mj9wILHnGmqgvafQfG0uqq8bHcMOC+U/Ejj1cq9nvo0Fdv9foYSIFs52UvxgHzn
-	an09YvE3OBvrrmdBQCqXViJm1fKBbNRrXxHduokBbJafPFSY56Rr0/m+kTfckCw5vblG8zehORh
-	nrqGRiVXTojdM9vG7jCKxhMYYlhcCmzC9IAaTR0g3ImL9vtiT/+WoLiFnTpklYL7/HduKr/l7BI
-	L6neZjjATwYVZ6CRwBw==
-X-Google-Smtp-Source: AGHT+IFfm7H7nJs7aTJzjddZ42tdexmQKPWdcSPX9vN1nE9dL8KTlJ94ovJcHC3Iz8/npiXYs/Z0Pg==
-X-Received: by 2002:a05:6a00:2d8a:b0:736:546c:eb69 with SMTP id d2e1a72fcca58-73682b85400mr7181751b3a.9.1741219125493;
-        Wed, 05 Mar 2025 15:58:45 -0800 (PST)
+        bh=GhVW9oe2cjj3Hs7+7j3GMXcu7eiEDWbnxpNS4pNrjzA=;
+        b=vT6yZVDiMBjoM49Cw6hdWXJC5N9GfSKdn3qsVjjCpT8HPy/VssHGbqsjG4Ej9qe6L5
+         GoGvyTIqmoVmZ6cm/b86VMDky4v3PY7LyFiL/llPoMYl02AmqLYFMXyorllhMYQL1Dgb
+         tztF+zMyvHiQl7PT/FgQ7V1Ta9HnJsEbuegiYuO187KMPyoqiupM+SJ3arM4ZSFHJ1Ng
+         C/IiC+UsSO4nFHDd6ukHHPcSIDtyxFmho/ZOWCzlXzvvRgH7ygSdqlXiOT4HXYOn7hTu
+         LRlFezAGGxtAzn2t/odp1G8izRr4jSMRu3ARupBinqaw9XL6rg8jXhCip0guglTpbPuA
+         +PUg==
+X-Forwarded-Encrypted: i=1; AJvYcCU1EnD/c+9v82eqRc0whzcqVsEWG+pjhJKvU5wzbeTPxsUhHKwXw8AJYGfXwrhn/XTv2LoKkL2nd++IVoM=@lists.ozlabs.org, AJvYcCWSWZkXfI5hpq3dHkbFEJSI5ShSei5QJCutDcHI/U6i3U8wybg3MHu6cq0PRzOFU9U/aufJ3rVDQw==@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxTP4KWNyP/Zwyy+JRM1qVVp595RAEeOrsJTZEnca3cdYPZVtbJ
+	AzYWVdk5so4H+ixtALfmXDObz80FwqnZ40nh2riP30B3r9UVdgsb
+X-Gm-Gg: ASbGncvJ+NKjcTJ8EmzgdfCLe64HI59jnp03Bw5IFdoepsuYjNNh/wcmLLFTtDWm/AJ
+	3qnHbb/dJoWqTOw87NqdcHGmqtm0PWddqx+awrqlZ6cX43O70yodlfpyHlMJ4Tm5ZyTeKWfZCP8
+	qJJ+SDKdKRgtIX8tha7qu76rtM+R4ErkhmfpXHHQaiBEnBssqpTzgNW6OdvpZ1KoG/zB01CxKqQ
+	DnOMMd46SieXQVdx2H4EoXu0POIJtA6EsUKz2hTjEGSGnB8eQGGYaALY9AYoEKq8Z5sYmnitbF7
+	x5KeMNGALNEtIsG/nsL65tWy/3f4mjEIsaktFW4Adr2EElorCPLlovNRRhMo2wlu7zdQ4ezde5t
+	LuarOT3C+ijL15zEyHA==
+X-Google-Smtp-Source: AGHT+IG0o6NZDwL/ouuTSHVqdZU+QbHNr6bhBHpEI+HHBxP5E469uK+cbJOr5aaDszmuflfUD3yKfQ==
+X-Received: by 2002:a17:90b:2750:b0:2ee:741c:e9f4 with SMTP id 98e67ed59e1d1-2ff4972ad4amr8472496a91.11.1741219252909;
+        Wed, 05 Mar 2025 16:00:52 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-736984f8666sm20220b3a.113.2025.03.05.15.58.41
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ff6935335asm30567a91.13.2025.03.05.16.00.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Mar 2025 15:58:44 -0800 (PST)
-Message-ID: <28a711e5-b2cb-4d5f-bb78-259a01cd4bcc@roeck-us.net>
-Date: Wed, 5 Mar 2025 15:58:40 -0800
+        Wed, 05 Mar 2025 16:00:52 -0800 (PST)
+Message-ID: <5ca55233-b370-4176-9632-8e5df8d4c4ce@roeck-us.net>
+Date: Wed, 5 Mar 2025 16:00:48 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] watchdog: Add a new flag WDIOF_STOP_MAYSLEEP
-To: Ahmad Fatoum <a.fatoum@pengutronix.de>,
- George Cherian <gcherian@marvell.com>
+Subject: Re: [PATCH v4 2/2] drivers: watchdog: Add support for panic notifier
+ callback
+To: Andy Shevchenko <andy@kernel.org>,
+ George Cherian <george.cherian@marvell.com>
 References: <20250305101025.2279951-1-george.cherian@marvell.com>
- <20250305101025.2279951-2-george.cherian@marvell.com>
- <irmewriceyzxr6jvbiao5vqrvelpftbjalmheodx5w63zi6k2y@dg3wlvs6zryd>
- <PH8PR18MB538122CE6706872B8A836A94C5CB2@PH8PR18MB5381.namprd18.prod.outlook.com>
- <7ac2b8db-22c7-4168-b1b7-4f9f0ab10531@pengutronix.de>
+ <20250305101025.2279951-3-george.cherian@marvell.com>
+ <Z8gohVIQqlA6QquZ@smile.fi.intel.com>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -129,7 +128,7 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <7ac2b8db-22c7-4168-b1b7-4f9f0ab10531@pengutronix.de>
+In-Reply-To: <Z8gohVIQqlA6QquZ@smile.fi.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -149,34 +148,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "imx@lists.linux.dev" <imx@lists.linux.dev>, "mwalle@kernel.org" <mwalle@kernel.org>, "tmaimon77@gmail.com" <tmaimon77@gmail.com>, "hayashi.kunihiko@socionext.com" <hayashi.kunihiko@socionext.com>, "alexander.usyskin@intel.com" <alexander.usyskin@intel.com>, "tali.perry1@gmail.com" <tali.perry1@gmail.com>, "paul@crapouillou.net" <paul@crapouillou.net>, "daniel@thingy.jp" <daniel@thingy.jp>, "patches@opensource.cirrus.com" <patches@opensource.cirrus.com>, "christophe.leroy@csgroup.eu" <christophe.leroy@csgroup.eu>, "festevam@gmail.com" <festevam@gmail.com>, =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>, "chrome-platform@lists.linux.dev" <chrome-platform@lists.linux.dev>, "maddy@linux.ibm.com" <maddy@linux.ibm.com>, "benjaminfair@google.com" <benjaminfair@google.com>, "lma@chromium.org" <lma@chromium.org>, "mpe@ellerman.id.au" <mpe@ellerman.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "krzk@kernel.org" <krzk@kernel.org>, "evanbenn@chromium.org" <evanbenn@chromium.org>, "linux-mips@vger.kernel.org" <linux-mips@vger.kernel.org>, "linux-watchdog@vger.kernel.org" <linux-watchdog@vger.kernel.org>, "mazziesaccount@gmail.com" <mazziesaccount@gmail.com>, "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>, "naveen@kernel.org" <naveen@kernel.org>, "npiggin@gmail.com" <npiggin@gmail.com>, "xingyu.wu@starfivetech.com" <xingyu.wu@starfivetech.com>, "ziv.xu@starfivetech.com" <ziv.xu@starfivetech.com>, "wim@linux-watchdog.org" <wim@linux-watchdog.org>, "bleung@chromium.org" <bleung@chromium.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "andy@kernel.org" <andy@kernel.org>, "support.opensource@diasemi.com" <support.opensource@diasemi.com>, "andreas.werner@men.de" <andreas.werner@men.de>, "avifishman70@gmail.com" <avifishman70@gmail.com>, "thomas.richard@bootlin.com" <thomas.richard@bootlin.com>, "linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "mhiramat@kernel.org" <mhiramat@kernel.org>, "kernel@pengutronix.de" <kernel@pengutronix.de>, "venture@google.com" <venture@google.com>, "jwerner@chromium.org" <jwerner@chromium.org>, "romain.perier@gmail.com" <romain.perier@gmail.com>, "shawnguo@kernel.org" <shawnguo@kernel.org>
+Cc: imx@lists.linux.dev, mwalle@kernel.org, tmaimon77@gmail.com, hayashi.kunihiko@socionext.com, alexander.usyskin@intel.com, tali.perry1@gmail.com, paul@crapouillou.net, daniel@thingy.jp, patches@opensource.cirrus.com, christophe.leroy@csgroup.eu, festevam@gmail.com, kabel@kernel.org, chrome-platform@lists.linux.dev, maddy@linux.ibm.com, benjaminfair@google.com, lma@chromium.org, mpe@ellerman.id.au, openbmc@lists.ozlabs.org, krzk@kernel.org, evanbenn@chromium.org, linux-mips@vger.kernel.org, linux-watchdog@vger.kernel.org, mazziesaccount@gmail.com, s.hauer@pengutronix.de, naveen@kernel.org, npiggin@gmail.com, xingyu.wu@starfivetech.com, ziv.xu@starfivetech.com, wim@linux-watchdog.org, bleung@chromium.org, linux-arm-kernel@lists.infradead.org, support.opensource@diasemi.com, andreas.werner@men.de, avifishman70@gmail.com, thomas.richard@bootlin.com, linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, mhiramat@kernel.org, kernel@pengutronix.de, venture@google.com, jwerner@chromium.org, romain.perier@gmail.com, shawnguo@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/5/25 03:01, Ahmad Fatoum wrote:
-> Hi George,
-> Hi Guenter,
-> 
-> On 05.03.25 11:34, George Cherian wrote:
->>> why is armada_37xx_wdt also here?
->>> The stop function in that driver may not sleep.
->> Marek,
+On 3/5/25 02:33, Andy Shevchenko wrote:
+> On Wed, Mar 05, 2025 at 10:10:25AM +0000, George Cherian wrote:
+>> Watchdog is not turned off in kernel panic situation.
+>> In certain systems this might prevent the successful loading
+>> of kdump kernel. The kdump kernel might hit a watchdog reset
+>> while it is booting.
 >>
->> Thanks for reviewing.
->> Since the stop function has a regmap_write(), I thought it might sleep.
->> Now that you pointed it out, I assume that it is an MMIO based regmap being used for armada.
->> I will update the same in the next version
+>> To avoid such scenarios add a panic notifier call back function
+>> which can stop the watchdog. This provision can be enabled by
+>> passing watchdog.stop_on_panic=1 via kernel command-line parameter.
 > 
-> Failure to add WDIOF_STOP_MAYSLEEP when it's needed can lead to
-> kernel hanging. Failure to add an alternative WDIOF_STOP_ATOMIC
-> would lead to the kernel option being a no-op.
+> ...
 > 
-> I think a no-op stop_on_panic (or reset_on_panic) is a saner default.
+> First of all, do we really need a new module parameter for that? Why can't it
+> be done automatically if kdump is expected?
 > 
 
-Agreed. Also, I like WDIOF_STOP_ATOMIC more than the WDIOF_STOP_NOSLEEP
-I had suggested in my other response.
+Sounds like a good idea to me.
 
-Thanks,
 Guenter
 
