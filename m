@@ -2,80 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2670CA5A883
-	for <lists+openbmc@lfdr.de>; Mon, 10 Mar 2025 23:42:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66A43A5A9E1
+	for <lists+openbmc@lfdr.de>; Mon, 10 Mar 2025 23:56:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZBX2d2v0Nz3cjX
-	for <lists+openbmc@lfdr.de>; Tue, 11 Mar 2025 09:42:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZBXM84d6lz3cjr
+	for <lists+openbmc@lfdr.de>; Tue, 11 Mar 2025 09:56:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::102e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741342811;
-	cv=none; b=ML7gBEXTlVMpTZcY+AvDxa41oiVKedLXFdmuC8jhmjzsMLINigjULkBQFPj63ZL1VvX3FZQeqMfd5BuBjQztX9yQp8Up78lzgkxY2m4NM3JynVrw/ZeKlk+IyVva4CWXKJ4s+YYUm9TdopTgtTteu4+lb2hfB7vnlLubqkcRQ+IfLE4eZO8KpY0IK5UX+ZjHZteuz4RTg2YEcA5OOV30tl4GOk2rjetKcPLzazVh8Lh4JUEzXVLwKT2Hfn+EyyFJaD2dNsK3INCMSo17mFzIyes7SxnsfXWjquMyc3IAi/kcHDpp2YxU8kixE4zMPv3W4EY4tO3xW74agXeQHwlj6A==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.12
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1741647392;
+	cv=none; b=gAZBFaRtG4TWICksvKa4gUryK2zV6pZ/6Z5jAkVef204ZEZimR9ex/Obc85Rx9Y3sRGstjslJFWmXLD2ZhV/Rk4E/lnMTaChtIiHa2sttZWh9a4GMFS8u1spXCU/GTXRIigaueC28USIZwqQy4cNdhHmAhVW6ucZFJXAREguMv9gJSUisC3Ywk+MaQDARgvw+twMZTDkWcCtYOOd68tZN2lBQeYU2Jgxi+zpXV/fcA4BmfLTuCUCL+fjRuviyiAO1MXlzQ8pQvveHP01QHtNZrTTQeIefCv3xHX97aEx0IKhHcU7tT4uuICT8XVBJ2CwiSrSNazOQ0Saf9GvZDvkag==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1741342811; c=relaxed/relaxed;
-	bh=/OGwSVTIyEeCeFtTcunoCij0GhR2d85eeOTrBM98k2o=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jQmKX1kRvIQmYtoZF14HVRy695XdONLjY7YQb+G5a/HbnukKIJzrRLYWIAcsRhjGv2iVYpKtfOJUwDHXGZyh2P6a+kt0NbpQeCsm5JitSDyZeqnInAv4RFrM642z7KIzaIZIKMlnzR8pTO43TQBhpo+L0n9wEGEl6G+vNNxCmrKYKgQeGgZEDIA65JPJiqRXWyVO7zPaF13YLVT0EgNOsbNBe3BuqFE7YqBTsn+Uu8auy715VFiQO39G3le0kNcsvyRpJ6jTsgZfxy1WkURchypu5pFZuhjcxkKhPRNaO3RHFJN7get+f9lqcYzfLAUHMYFfejmf/CfcZG4sdDA2bQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jWHRUciR; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::102e; helo=mail-pj1-x102e.google.com; envelope-from=dhlee0414@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1741647392; c=relaxed/relaxed;
+	bh=CVedBpuLG25Z3jADPUPfXvHH+tXvCIeFrRLb9vuRk1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=FSaA14VYHkK7wmte0aZdn9UoeNugifiVtiN7Y0XBluUQY27+GaAWOj4VvdBSYNGXF+1R9eeAOYX68K7w3w72pPXqL8is8jPqWmtmb0Uz4V9MBKcT3FgvNkU7himK42/iOkLhCpQNTZHeuXIRKSqXwF65Sz46N1XLUpRM/JxtoDbXTsu9bZfaiUvTcXCgl681WWEgXhS3fReTJvhuDog0/VbeEyT/Hvarrj1y9D47fbyTQ1cXI5MZUu3iurFPDofQPZ0pgZTtePZwvCb8qYVhH5ffpsNou6aEPbY6tv1xJzn9P1z8430ukeLYESrcDwaQC1HadPRUskJ1YvO8k9MRsg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Eufu+4Sz; dkim-atps=neutral; spf=none (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jWHRUciR;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Eufu+4Sz;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102e; helo=mail-pj1-x102e.google.com; envelope-from=dhlee0414@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Tue, 11 Mar 2025 09:56:30 AEDT
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Z8Mjj1y1Fz3c9R
-	for <openbmc@lists.ozlabs.org>; Fri,  7 Mar 2025 21:20:09 +1100 (AEDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-2fe9759e5c1so2573263a91.0
-        for <openbmc@lists.ozlabs.org>; Fri, 07 Mar 2025 02:20:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741342806; x=1741947606; darn=lists.ozlabs.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/OGwSVTIyEeCeFtTcunoCij0GhR2d85eeOTrBM98k2o=;
-        b=jWHRUciRiL83XU1joP/Mm3VsqaEf+jEVT3gEv9HlTD3vyLm9kEcc4tqA+eAk0otJoR
-         vxTUB5+wkm53UuVjRsK4nxC0xCCdUwcjNQXb7Eqb+6Yf1aopMxuSqHcHtDB4PbhICUgR
-         GPkD726idqu0mClVAv4jWpcwRMvKcy3i2rtPZQ5wbcyOSr9IwMfw0Ac+kbu5UXVCk1RE
-         kQV4kS/SqQLUSwORVXVV2yxuS2gb6QrZDPJAfxoNzbLRaIZhb/3gW7KJ97mgNeKmg8XF
-         4GU7RVYDJ6JU6UrLEZ3xjZs0c0aW/2go36b1+2GDNw7VqTBcPJSBlFAjLVh2bGt3VpdW
-         VnaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741342806; x=1741947606;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/OGwSVTIyEeCeFtTcunoCij0GhR2d85eeOTrBM98k2o=;
-        b=k56V6kbWy5f54vpZtA5vKtq6ltL6R65ro0uZBbeguTEUmL3zwF5wnQO2PRNnRy8AHL
-         sBTCyKjt5sai7WmRTlsPaz+g3r/M1n44PFk33HKO6Hg6KCoWocPBI5MlllMgPnDDx4wG
-         CYmHVUQ498+Nn+FydaNUd0ryopAajsvvXPncvfZT6gujmGF3sw+0pwYJmCimyQz9qQhc
-         xvnYsMH+uFCt4gxroZoC3C3JXj5UNQoIjaX4J6hR7q8gpOZmsdDHBzxyfflWEhN/tMvo
-         y19AOFsDwhApFqoF6j4QW65poQBY2/8EphhpYUmS0EVf98hArZOojr8i5C/O43CzqJMW
-         +s6A==
-X-Gm-Message-State: AOJu0Yy6/0N5S31rDcJwv33LCg9ksxsnq3EbqCmOqp7TiItAZvH0txf9
-	50EmG7fOZlneK9jGHw5JQvDXyo5QLoR+cz6/fsZKtaJWcJkjK4FasA4zPAo22L7uwXlHLYH1bhd
-	KdSWo6R7N3vXBextRyTgTCKcFhbdaVvER
-X-Gm-Gg: ASbGnct4GC1+jAVp9KCaP4L7yruBmg117JXChMVBwCuxpCfyjzNQUeDlE7QsIVLuAJt
-	6fKPNYSCtNKALgp/wVqAbT3vKKSJNcyjoImp/4gC/tvRgFmH0A2qMBGdD8PkTuCwRP0+UD9D310
-	YbRVI2BGbsOD/OUVAiNzh8mEuRYw==
-X-Google-Smtp-Source: AGHT+IGW9QkKVmjwepEK3Gekl3k8m7sDFLeeKk87jjLrOcXNFAupS/oAOazeHBX2XSlJ5Xk0PJw9Gt//u9qVvEO6oe8=
-X-Received: by 2002:a17:90b:1dca:b0:2fc:a3b7:108e with SMTP id
- 98e67ed59e1d1-2ff7ce63264mr4342429a91.4.1741342806348; Fri, 07 Mar 2025
- 02:20:06 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZBXM21phjz2yjV
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Mar 2025 09:56:29 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1741647391; x=1773183391;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=E7nXpeLnhL9Ur5T6u1bZx50+x9A9C4SuKRBytLQrg5U=;
+  b=Eufu+4SzDAMncVdLV4Myk2NWW9IGJ+8I4bKt1sI7d5l/v/xG327MkdL7
+   xZrPnGFQ4qTv7RqDpRrlRqVJMvb6seDr3Q1E+NuUGAr+7nD9j8MrGsJAg
+   Ed9/2c/cQ9k9jFyFpzmcx6xolm9QEkbGZvBv3510NGYSlILf4dS2b5oJ1
+   9gOqpFLtNgXHQqSm2j/8KGjDncBOMOko6o8r3ijCzx9yBBeDRLWo82E+B
+   uN4TbhPCYGz8fM2Ha4LO2H3Eqjghyk5kgPBD0m6vkoeykXe90YBqJzV0n
+   t0KAidw9FVQTBtnXlWGjLCuegsXxA4deyToMW62hVfeN4xHsGmRhlm47o
+   Q==;
+X-CSE-ConnectionGUID: 3dryZLb+TqGKjnbQT8OZUQ==
+X-CSE-MsgGUID: 8gNqwkngQyuH4tyQaHoVug==
+X-IronPort-AV: E=McAfee;i="6700,10204,11369"; a="54041377"
+X-IronPort-AV: E=Sophos;i="6.14,237,1736841600"; 
+   d="scan'208";a="54041377"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2025 15:55:24 -0700
+X-CSE-ConnectionGUID: /f3WomvGR4SrFlq6uVjO/Q==
+X-CSE-MsgGUID: 3XnzFz8OSi62ZfZdQDE80w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,237,1736841600"; 
+   d="scan'208";a="120823257"
+Received: from linux.intel.com ([10.54.29.200])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Mar 2025 15:55:23 -0700
+Received: from [10.124.48.118] (jmbills-mobl1.amr.corp.intel.com [10.124.48.118])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by linux.intel.com (Postfix) with ESMTPS id A413C20B5736
+	for <openbmc@lists.ozlabs.org>; Mon, 10 Mar 2025 15:55:22 -0700 (PDT)
+Message-ID: <9759ef8b-d4ef-4642-a4a4-7f800f6aad30@linux.intel.com>
+Date: Mon, 10 Mar 2025 16:55:21 -0600
 MIME-Version: 1.0
-From: Hobbyist Search <dhlee0414@gmail.com>
-Date: Fri, 7 Mar 2025 19:19:55 +0900
-X-Gm-Features: AQ5f1JrHASyDUddL25xeYzU0XBfYDYyRILHRNeL53Z9JtaKQAIYGMBlyVZzj4aM
-Message-ID: <CALp7_LO4UfiCesmue=fJ9CBLv8cY2ZaO8cSys9W5MpyRUEtC_A@mail.gmail.com>
-Subject: Some AMD modules fail to build on meta-amd in master branch OpenBMC
+User-Agent: Mozilla Thunderbird
+Subject: Re: TOF elections for 2025H1
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000679ff0062fbdf7db"
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.0
+References: <Z8ec-DOTlSM8FMhC@heinlein>
+Content-Language: en-US
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <Z8ec-DOTlSM8FMhC@heinlein>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.0
 X-Spam-Checker-Version: SpamAssassin 4.0.0 (2022-12-13) on lists.ozlabs.org
-X-Mailman-Approved-At: Tue, 11 Mar 2025 09:42:13 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,152 +92,35 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000679ff0062fbdf7db
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi. I got a build failure while doing bitbake.
-
-These are bmc-retimer-update.bb and library-retimer.bb files.
-
-I got an error when I built the files in the master branch, and I also got
-an error when I built them by referencing the SRC_URI and SRCREV of the
-sp7-a0 branch.
-
-I looked for the bmc-retimer-update repository in the git repository, but I
-couldn't find it.
-
-How can I build it?
-Can you tell me the exact repository address or SRC_URI and SRCREV?
-
-Please.
-
-Here are the bitbake instructions and the failures
-
-ERROR: libaries-retimer-1.0-r0 do_fetch: Fetcher failure: Fetch command
-export PSEUDO_DISABLED=3D1; export
-DBUS_SESSION_BUS_ADDRESS=3D"unix:path=3D/run/user/1000/bus"; export
-SSH_AGENT_PID=3D"1638"; export SSH_AUTH_SOCK=3D"/run/user/1000/keyring/ssh"=
-;
-export
-PATH=3D"/home/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-o=
-penbmc-linux-gnueabi/libaries-retimer/1.0-r0/recipe-sysroot-native/usr/bin/=
-python3-native:/home/dhlee/openBMC/master_b/scripts:/home/dhlee/openBMC/mas=
-ter_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/libaries-r=
-etimer/1.0-r0/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi:/home=
-/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-=
-gnueabi/libaries-retimer/1.0-r0/recipe-sysroot/usr/bin/crossscripts:/home/d=
-hlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gn=
-ueabi/libaries-retimer/1.0-r0/recipe-sysroot-native/usr/sbin:/home/dhlee/op=
-enBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/l=
-ibaries-retimer/1.0-r0/recipe-sysroot-native/usr/bin:/home/dhlee/openBMC/ma=
-ster_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/libaries-=
-retimer/1.0-r0/recipe-sysroot-native/sbin:/home/dhlee/openBMC/master_b/buil=
-d/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/libaries-retimer/1.0=
--r0/recipe-sysroot-native/bin:/home/dhlee/openBMC/master_b/poky/bitbake/bin=
-:/home/dhlee/openBMC/master_b/build/sp5/tmp/hosttools";
-export HOME=3D"/home/dhlee"; LANG=3DC git -c core.fsyncobjectfiles=3D0 clon=
-e
---bare --mirror ssh://git@github.com/AMDESE/bmc-retimer-update.git
-/home/dhlee/openBMC/master_b/build/sp5/downloads/git2/github.com.AMDESE.bmc=
--retimer-update.git
---progress failed with exit code 128, output:
-Cloning into bare repository
-'/home/dhlee/openBMC/master_b/build/sp5/downloads/git2/github.com.AMDESE.bm=
-c-retimer-update.git'...
-ERROR: Repository not found.
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-
-ERROR: libaries-retimer-1.0-r0 do_fetch: Fetcher failure for URL: 'git://
-git@github.com/AMDESE/bmc-retimer-update.git;branch=3Dinteg_sp7;protocol=3D=
-ssh'.
-Unable to fetch URL from any source.
-ERROR: Logfile of failure stored in:
-/home/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-l=
-inux-gnueabi/libaries-retimer/1.0-r0/temp/log.do_fetch.22235
-ERROR: Task
-(/home/dhlee/openBMC/master_b/meta-amd/meta-common/recipes-amd/bmc-retimer-=
-update/libaries-retimer.bb:do_fetch)
-failed with exit code '1'
 
 
-Please tell me the answer.
-Thanks.
+On 3/4/2025 5:38 PM, Patrick Williams wrote:
+> Hello,
+> 
+> It is time again for TOF elections.  The current roll-call is available
+> at:
+>      https://github.com/openbmc/tof-election/tree/main/2025H1
+> 
+> For this half, we have 4 seats up for election.  Currently those are
+> held by Andrew J., Jason, Patrick, and William.  Due to slipping from
+> the developer membership, Jason is not eligible for re-election.
+> 
+> Nominations for those 4 seats may be sent to the mailing list by
+> replying to this email.  Only those eligible to vote may be nominated.
+> 
+> Nominations are due by Sunday March 16th, 2024.  The election, if
+> required, will be held immediately after with more details to follow.
+> 
+> As usual, disagreements with the rollcall results can be raised to the
+> TOF.
+> 
 
---000000000000679ff0062fbdf7db
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thank you all for allowing me to serve on the TOF for the last couple of 
+years!  I hope that I have helped the community and provided meaningful 
+support during my tenure.
 
-<div dir=3D"ltr"><div class=3D"gmail-markdown-body"><div class=3D"gmail-Box=
--sc-g0xbh4-0 gmail-markdown-body gmail-NewMarkdownViewer-module__safe-html-=
-box--cRsz0"><p dir=3D"auto">Hi. I got a build failure while doing bitbake.<=
-/p>
-<p dir=3D"auto">These are <a href=3D"http://bmc-retimer-update.bb">bmc-reti=
-mer-update.bb</a> and <a href=3D"http://library-retimer.bb">library-retimer=
-.bb</a> files.</p>
-<p dir=3D"auto">I got an error when I built the files in the master=20
-branch, and I also got an error when I built them by referencing the=20
-SRC_URI and SRCREV of the sp7-a0 branch.</p>
-<p dir=3D"auto">I looked for the bmc-retimer-update repository in the git r=
-epository, but I couldn&#39;t find it.</p>
-<p dir=3D"auto">How can I build it?<br>
-Can you tell me the exact repository address or SRC_URI and SRCREV?</p><p d=
-ir=3D"auto"></p><p dir=3D"auto">
-Please.</p><p dir=3D"auto"></p><p dir=3D"auto">Here are the bitbake instruc=
-tions and the failures</p><p dir=3D"auto">ERROR: libaries-retimer-1.0-r0 do=
-_fetch: Fetcher failure:=20
-Fetch command export PSEUDO_DISABLED=3D1; export=20
-DBUS_SESSION_BUS_ADDRESS=3D&quot;unix:path=3D/run/user/1000/bus&quot;; expo=
-rt=20
-SSH_AGENT_PID=3D&quot;1638&quot;; export SSH_AUTH_SOCK=3D&quot;/run/user/10=
-00/keyring/ssh&quot;;
- export=20
-PATH=3D&quot;/home/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4=
-d16-openbmc-linux-gnueabi/libaries-retimer/1.0-r0/recipe-sysroot-native/usr=
-/bin/python3-native:/home/dhlee/openBMC/master_b/scripts:/home/dhlee/openBM=
-C/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/libar=
-ies-retimer/1.0-r0/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi:=
-/home/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-l=
-inux-gnueabi/libaries-retimer/1.0-r0/recipe-sysroot/usr/bin/crossscripts:/h=
-ome/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-lin=
-ux-gnueabi/libaries-retimer/1.0-r0/recipe-sysroot-native/usr/sbin:/home/dhl=
-ee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnue=
-abi/libaries-retimer/1.0-r0/recipe-sysroot-native/usr/bin:/home/dhlee/openB=
-MC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/liba=
-ries-retimer/1.0-r0/recipe-sysroot-native/sbin:/home/dhlee/openBMC/master_b=
-/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-linux-gnueabi/libaries-retime=
-r/1.0-r0/recipe-sysroot-native/bin:/home/dhlee/openBMC/master_b/poky/bitbak=
-e/bin:/home/dhlee/openBMC/master_b/build/sp5/tmp/hosttools&quot;;
- export HOME=3D&quot;/home/dhlee&quot;; LANG=3DC git -c core.fsyncobjectfil=
-es=3D0 clone=20
---bare --mirror ssh://<a href=3D"mailto:git@github.com">git@github.com</a>/=
-AMDESE/bmc-retimer-update.git
-=20
-/home/dhlee/openBMC/master_b/build/sp5/downloads/git2/github.com.AMDESE.bmc=
--retimer-update.git
- --progress failed with exit code 128, output:<br>
-Cloning into bare repository &#39;/home/dhlee/openBMC/master_b/build/sp5/do=
-wnloads/git2/github.com.AMDESE.bmc-retimer-update.git&#39;...<br>
-ERROR: Repository not found.<br>
-fatal: Could not read from remote repository.</p>
-<p dir=3D"auto">Please make sure you have the correct access rights<br>
-and the repository exists.</p>
-<p dir=3D"auto">ERROR: libaries-retimer-1.0-r0 do_fetch: Fetcher failure fo=
-r URL: &#39;git://<a href=3D"mailto:git@github.com">git@github.com</a>/AMDE=
-SE/bmc-retimer-update.git;branch=3Dinteg_sp7;protocol=3Dssh&#39;. Unable to=
- fetch URL from any source.<br>
-ERROR: Logfile of failure stored in:=20
-/home/dhlee/openBMC/master_b/build/sp5/tmp/work/armv7ahf-vfpv4d16-openbmc-l=
-inux-gnueabi/libaries-retimer/1.0-r0/temp/log.do_fetch.22235<br>
-ERROR: Task=20
-(/home/dhlee/openBMC/master_b/meta-amd/meta-common/recipes-amd/bmc-retimer-=
-update/libaries-retimer.bb:do_fetch)
- failed with exit code &#39;1&#39;</p><p dir=3D"auto"><br></p><p dir=3D"aut=
-o">Please tell me the answer.<br>
-Thanks.</p><p dir=3D"auto"><br></p><p dir=3D"auto"><br></p><p dir=3D"auto">=
-<br></p><p dir=3D"auto"></p></div></div></div>
+If you are eligible, please consider putting your name up for election 
+to help support a our OpenBMC community!
 
---000000000000679ff0062fbdf7db--
+Thanks,
+-Jason
