@@ -1,91 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ADBBA64799
-	for <lists+openbmc@lfdr.de>; Mon, 17 Mar 2025 10:36:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30083A64A50
+	for <lists+openbmc@lfdr.de>; Mon, 17 Mar 2025 11:39:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZGVGY3Z9tz3brm
-	for <lists+openbmc@lfdr.de>; Mon, 17 Mar 2025 20:36:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZGWgb65Zyz3btY
+	for <lists+openbmc@lfdr.de>; Mon, 17 Mar 2025 21:39:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::22a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742204178;
-	cv=none; b=CH9wA4gUw3p4pWQfXXgM38zSfHz8SHv4DOk6te48uMucims4Y323zAEI5cAkQVd1POiFn6OT0cFsQ2O4xRSzwThQWRoFt4YLr+OWsB2GvLKugFxf1PfhF/pxn9ngkDwAw4R3zHScTQr6gU9n2jFquH5jwx3KWVsQI+Qqny76c4/c5nGdvNdeEvpIWj1BzO+j3HFRZRnKUP4veF6KIZ54liGIE92BSt9r/fiObCJX4Be/oAIFYg0KPsutzEwEfqJYlKIqQoH66GcaXCrJJ6RLTcIYPfqRw2DxmGAkLI65WP4ivxLJSqz0aJugqqEHznFZoNHxD8dEMLTmWVeKim7edw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::b31"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742207977;
+	cv=none; b=dSd0iGAlCH4foGpyiEc/qR2UNqMhYzyLSC6UGfsNDMQD9Gx3NAEm+SkGr5N/2bfWedUzOk6s0vv0tK2PVbdS9pWjQT9WkHxt7Ms2KvVfFCraLJ9yc2RAEQ4as+O0lXnERml3tqQruPS3YI+W7dR8g/Csz3iRRN/uCNSo9O8RhzRAro6HOLF2hk7Qhy7o+ABv3Ra/9nYewbnLcVE9Xzu5bZkYIvsuGyz5SjsHXfLsZfeucrn2Y3C+a8hRppdYLpM2SA5fqRK8fvjeCcBDeboYqphcoT6e2Iq8W9ZCuekTYrllXk+Ko10PBbJCAmXk1A8bhL0TN12Pl61xg9V1KqNj5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742204178; c=relaxed/relaxed;
-	bh=WCavYjFk06W9vGfj8QfgH6N6sZjQBYCL+2wXRSk1N0E=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=NW6CZmW2dC9GkVMo5nhKitNbDn1B5t38A1yrY3LCyjC4TqjV+9fqK4WxEsRiiH4MQv2FC+2OQGaOIGrs/j9IfGANulI2Ly1X2O/pAPAW619RKuWW79kcQyT0JoSWIk99ZrRai8YJG7tIdlv8h/10sTweD3lS6MzuveOaTtzsQ+uXbrrzn9Sc6sSiuljCwcAMj/1UbGDWlBhNSvArt+if6eRlIjbRFUdazodAd+Dkrw0xRbf1mMIgLy1BeAtO+oL+QVh48oIb2aUhAwL5ZBZe/YyC3PdbWanx9tC+APfw13RjDV7LYYCCUefmZzpdcmAABikIQzezJ4qvZl+lQkgCIg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h/6Nr4KK; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1742207977; c=relaxed/relaxed;
+	bh=IoGBlbe9Czmc/JKLBj0F16RNsymqq1dJ1tqyI1v1Ytg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Qu06VGW+72BkbS7sLh3QNFzXYzrjCMaE+BrUxoFgyNx9eHYBHv+hmNXkUcU63eDv8mXcEjtx3iNSOVi+Lo+adeqPCh9sS86aL3BJRFcxa86nKhZ7WsVBfCB3TfDffFjnapGkwPj2slwgujVdLhlWQBEneSgAr3ynx6PVmkRKTeY3628Wxo2+78GIuM4CMbI7kDjTQjLtzkilD00CRqnTriITOpGMkywN+wQDUqP3qRsMtOF0oAd5274jbu5NI707/UKJ9OBYvOa6Hoo79BwuuqH+lq0D7u7AXcWA1K+NIdRPJ9/+5BYr3DXLMEWblPVIEASq/dc4dEWDKyQI2ePJEA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WN4ZAwvs; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h/6Nr4KK;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WN4ZAwvs;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZGVGR1gCqz2yfP
-	for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 20:36:13 +1100 (AEDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-30bf7d0c15eso46748621fa.0
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 02:36:13 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZGWgW2h35z2yFP
+	for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 21:39:34 +1100 (AEDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-e5dc299dee9so3872349276.3
+        for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 03:39:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742204169; x=1742808969; darn=lists.ozlabs.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WCavYjFk06W9vGfj8QfgH6N6sZjQBYCL+2wXRSk1N0E=;
-        b=h/6Nr4KKzX9jBQ08Ax4WknVBjT3ffGVJ0LY8j/UCiwZGGH58QJ1/nPVo5PgNlT+CD3
-         oo5IxtAWp+I8JhPoPiknJHtl/5JRFi3GtF0MH+jYw/mlUQQCUymqzRSiew27O8e+spy5
-         u06OXx3MhOKknsJ/kC2NtiwkxIrk3Rj3kvwM9/Yqa9MNiv7hW5oVZTKMpKhe9C5SgNdl
-         +xYM+SybY6BM3jqiIwCBBQDj2v8y0+HXl+aaZ9RugitHmRc4WDuBRl+yqXF3r6iuH+9C
-         knHVhBMX/jQ8dhA5x2zjplfURfpYLVxn5L2XtZVY60H2UNSs0Y76+QgKTB48fSO3P4vF
-         bHkQ==
+        d=gmail.com; s=20230601; t=1742207972; x=1742812772; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IoGBlbe9Czmc/JKLBj0F16RNsymqq1dJ1tqyI1v1Ytg=;
+        b=WN4ZAwvs5T8cGYhGrnYzetMqlxANJpjpCGennv3u93w06f3bB3fdNODkvV1B8UJyKZ
+         7AE3nP5/31wNyms0LupfRyneJS6PmUY2h1V/j/n2LPnIfXDM3HHCO6FJds07neCcgQAi
+         EoHqcheMB1lnp9fGoIivb1+49OawzopTAozWK3YlLW2Q4J/8gS2t4+VeHqk1AHRXF5Nr
+         FakIRqmLaZB5z4sj4y4ioKMGA4PnppXFOO86D33K1G/HMYfWWvViaDGl385IvHqzBXA7
+         nKF6PkY15GO65FB5ImsFhfRImFK/2yxNeW5dRtpGc1rfZ1VNW2nliisdv7hJbhcw9abN
+         36AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742204169; x=1742808969;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WCavYjFk06W9vGfj8QfgH6N6sZjQBYCL+2wXRSk1N0E=;
-        b=LqGLcjEQ1b5bzzt6Qvm69huqkpHRSNiIcbREsDqV+xIMwNXs4+lHx9wwVg7Da6y9TO
-         xpcIh/tDCrdcn2T0vkWL0t71Lxawm9kmULU//JBmRSEsC8wC8/B29RgXGI7PwCb7BCcj
-         /FLnOTPVOWZkTx5oF+IMN0KSudN39++2S4ZVGx8y9v2GWhqQoJzkXsvIDa7B4fG7YRuV
-         5iUeDa7VZDM9YtyNSwJrQ8DDrfmDiQW1dFpi4WjlevdCxGemQdy2aqIUp5lt695dOvMa
-         6n/gSrMN8G1Z+fKTOPFeADU333y5sbI1iAT3TTCiGymyaINnivfRWMw4UQw/DdRZFTKj
-         JGNA==
-X-Gm-Message-State: AOJu0YwliKsnxuzBC/R1q5zLfp6MM0M5yuty3F7/40I1n0msttuDG3zn
-	RRgv8HFMvUE4XGm48r4W35W915S9p2Xwrjty2Ca+9AzjFUs1noAEPvnh4w==
-X-Gm-Gg: ASbGncsCDXoLr7ySSwEIcd0ij8l2WevpvgEtMed3IZJYbHqrCOXLgvMv0HyaHhKHBsy
-	EpE0Ijna9rp/RP4K7XPlvIFjsA4SlYVlBdu/bYI5aOvVQ2vOSrralMNCPYwFzQ8tVFOaL5zezt9
-	Sek2fIKFy1F1CRAgLSwHa+kvUxbI0uqojnq/siUjoMh4xXlzj5nby7HB3FcXcStGUczoJGfESYO
-	DtNhbmKOGZMuDmAznOSVSmkBfeWpBk8Al7N+CWyELM/m83JZY9fSDvA373opXKy1leCqKW5czUm
-	G1YrbvcpB0MiDlUMdJyf+7u0vp5K7rIuQZ02fhYnr8GU3Ti5r/kRg2o5VgA=
-X-Google-Smtp-Source: AGHT+IEjURjscvz14yC7HXCMBdNDbPFF/S8GrVsyujwFBvsClubly0UB1d08hdKUZpIurbTtbOxUYw==
-X-Received: by 2002:a05:651c:19a9:b0:30b:9813:b010 with SMTP id 38308e7fff4ca-30c4a8e4055mr65655561fa.31.1742204168616;
-        Mon, 17 Mar 2025 02:36:08 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30c3f0ea448sm14467191fa.43.2025.03.17.02.36.07
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Mar 2025 02:36:08 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 52H9a4CK028646
-	for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 12:36:05 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 52H9a4pi028645
-	for openbmc@lists.ozlabs.org; Mon, 17 Mar 2025 12:36:04 +0300
-Date: Mon, 17 Mar 2025 12:36:03 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: openbmc@lists.ozlabs.org
-Subject: Settings backup and restore tool prototype using Ansible -- RFC on a
- published project
-Message-ID: <Z9ftA+zMr2ljEbZg@home.paul.comp>
+        d=1e100.net; s=20230601; t=1742207972; x=1742812772;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IoGBlbe9Czmc/JKLBj0F16RNsymqq1dJ1tqyI1v1Ytg=;
+        b=kBzSU2kwFBSKiLP1++a4qLDSyOBUjiaIGrvwfJdktB59SoipzLtMQgyhTqGDM22jLQ
+         cu9QE0tZCKf4DWr4ec+4SQSl8w0vP1yqd/rg3DPv17zmWWwosFL8aMCy2aSZlktopKzs
+         QYcBHedt5SKZi/fY70gRrSzuSMy6z1iTJFT/pIOAte8n5D9NYxWf8X0YY3zn4fvMPfCW
+         HWXxRRFUoQ7K7mt4hRG5E2RUjRSWOLZHoADlhNmGYqZMOKTrtNyBWk/MdPkF+FoKYWNh
+         LesQ14t0Bvi0vpYiZFdBGwO8CouiRO+b4gcbK1yp1v8o8FEOow5M0Y6SeP6Gg5MbBBDm
+         OEOg==
+X-Forwarded-Encrypted: i=1; AJvYcCWLVhZZYaevAdwvzVxWcpwqfPwUE77OUqqNweu5NHazgFNo5cwWpqDuq4VLM00D96AT6pGsla9S@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwgQLHo4jH2NKr5FJy4C75GUziX+8xMxHQyq6J33OurpvR2KuTY
+	McSlBGVNj7d0GJPfYPg9A9ZQJLo7XoUJvLxty6fUv8ehUQA6nUNIlWfdX6YArsLek50BKNB0T79
+	0/Fwv8xaYYt6bfpTW3hcAlYMqm0w=
+X-Gm-Gg: ASbGncsJFM/m1I9N7LfhYTwUgDid+0pl05LdyfWsbx5evWhsIvSj0xp0U6vXpv/3xzt
+	u84eNpX+hEfIr4HwdzeCGkvp5OvuVKSIanfSg3cuOOcFLMzNv7AOnJeK5fVlQBhmwXOG9Vxbp8a
+	f43JbwF29i2OPQG6T/vvJFw4KHnRU=
+X-Google-Smtp-Source: AGHT+IHy+RO89nDi9FmYtvf/yESHna7TilFKwweegOO/mX3S8jWkfc8ZcfeV/QYwVZlEKxwfn3Yq7ZH5aj8lCxwN4uE=
+X-Received: by 2002:a05:6902:2191:b0:e61:1c18:3f36 with SMTP id
+ 3f1490d57ef6-e63f65e5ea6mr14903162276.44.1742207971658; Mon, 17 Mar 2025
+ 03:39:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+References: <20240912191038.981105-1-tmaimon77@gmail.com> <20240912191038.981105-3-tmaimon77@gmail.com>
+ <536f5393-478c-4a50-b25f-180e221ef7a3@roeck-us.net>
+In-Reply-To: <536f5393-478c-4a50-b25f-180e221ef7a3@roeck-us.net>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 17 Mar 2025 12:39:20 +0200
+X-Gm-Features: AQ5f1Jq_X-0lZX7kkWxOU1PNLphKdtirYmAhXmqFll0JeXRXfeWOSuOpsLz0fxM
+Message-ID: <CAP6Zq1ioebnqgJB1B8AqD9UtMZRy5CDT8+_dXF_aBZEjjj_B-A@mail.gmail.com>
+Subject: Re: [PATCH v28 2/3] reset: npcm: register npcm8xx clock auxiliary bus device
+To: Guenter Roeck <linux@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -98,123 +92,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, p.zabel@pengutronix.de, sboyd@kernel.org, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Hi Guenter,
 
-I was thinking about an "ideal" way to allow backing up and restoring
-the BMC configuration in production and came up with this set of
-goals:
+Yes, of course, it works in real hardware.
+The modification was made since the reset and clock share the same
+register memory region.
 
-1. The saved config should be easy to inspect and change;
+To enable the clock change needs to be done in the device tree as
+follows (we are planning to send these change patches soon):
 
-2. It should not require any additional changes on the BMC side, so
-   should be usable not only with OpenBMC but also with other
-   implementations;
+diff -Naur a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+2025-02-26 16:20:39.000000000 +0200
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+2025-03-17 12:29:17.876551537 +0200
+@@ -47,19 +47,16 @@
+                interrupt-parent = <&gic>;
+                ranges;
 
-3. The tool usage should be easy to automate;
+-               rstc: reset-controller@f0801000 {
++               clk: rstc: reset-controller@f0801000 {
+                        compatible = "nuvoton,npcm845-reset";
+-                       reg = <0x0 0xf0801000 0x0 0x78>;
+-                       #reset-cells = <2>;
++                       reg = <0x0 0xf0801000 0x0 0xC4>;
+                        nuvoton,sysgcr = <&gcr>;
+-               };
+-
+-               clk: clock-controller@f0801000 {
+-                       compatible = "nuvoton,npcm845-clk";
++                       #reset-cells = <2>;
++                       clocks = <&refclk>;
+                        #clock-cells = <1>;
+-                       reg = <0x0 0xf0801000 0x0 0x1000>;
+                };
 
-4. The tool should be easy to integrate into larger management
-   systems and it should scale to arbitrary amount of BMCs;
++
+                apb {
+                        #address-cells = <1>;
+                        #size-cells = <1>;
+diff -Naur a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+2025-02-26 16:20:39.000000000 +0200
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+2025-03-17 12:24:52.293171764 +0200
+@@ -19,6 +19,13 @@
+        memory@0 {
+                reg = <0x0 0x0 0x0 0x40000000>;
+        };
++
++       refclk: refclk-25mhz {
++               compatible = "fixed-clock";
++               clock-output-names = "ref";
++               clock-frequency = <25000000>;
++               #clock-cells = <0>;
++       };
+ };
 
-5. It should be as beneficial as possible to the communities using
-   Free Software.
+ &serial0 {
 
+Is it better to modify the reset driver with your suggestion or change
+the device tree?
 
-To my surprise I couldn't find any existing solution so following
-these ideas I prepared a prototype and published at
-https://github.com/paulfertser/ansible_redfish_settings .
+Thanks,
 
-Please feel free to comment on approach and the implementation, and of
-course to provide patches. I have to note I'm not personally herding a
-bunch of servers so my notions can be quite off, do not hesitate to
-point out when it doesn't match real life usecases.
-
-
-Point 1 is followed by saving config in YAML format, that's nice to
-edit both manually and automatically if needed. Point 2 is fulfilled
-by doing only Redfish interactions, optional Oem settings can be added
-conditionally. Points 3 and 4 come naturally from using Ansible which
-seems to be the most popular system for reproducible mass
-configuration (and much more), so should be familiar to most BMC
-operators. Point 5 is helped by repository organisation which makes it
-natural to submit patches upstream to community.general Ansible
-collection.
-
-
-While working on this prototype I contributed few changes for missing
-functionality in community.general collection, the experience was
-highly positive as the upstream is welcoming and helpful. So extending
-the project to handle the settings you care about shouldn't be
-problematic, see my changes for example:
-
-https://github.com/ansible-collections/community.general/commit/e853bdf6f907872fdd39e8c507061269399942e9
-https://github.com/ansible-collections/community.general/commit/129f51cf9d284d107cf197a1805481c2e4645efe
-https://github.com/ansible-collections/community.general/commit/abe4e5ce95e6cae4a42629640345e0769c3724a1
-
-
-Here follows the copy of the project README.md with some more details.
-
-# Description #
-
-This project aims at providing an easy to use mechanism for creating a
-human-readable and editable BMC settings configuration bundle and for
-reliable idempotent application of them to an arbitrary number of
-machines. It should be possible to use it directly or to seamlessly
-integrate into larger Ansible playbooks as desired. The tasks files
-are provided under MIT licence terms.
-
-Added as a submodule is a fork of community.general Ansible
-collection. The changes are minimal: extending backwards compatibility
-and renaming to not clash with system-wide installation. The idea is
-to provide fast, easy and straightforward mechanism to prepare and
-test patches for submitting Github pull requests to upstream
-repository: https://github.com/ansible-collections/community.general .
-After the PRs are merged it's trivial to rebase to get the
-latest-and-greatest code. Please note this collection is published
-under GPL-3.0.
-
-The testing was performed against OpenBMC hosts but it should be
-working reasonably with any other Redfish compliant server.
+Tomer
 
 
-# System requirements #
-
-Ansible version 2.10.0 (released in 2020) or later.
-
-
-# Installation instructions #
-
-```
-# apt install ansible
-$ git clone --recursive https://github.com/paulfertser/ansible_redfish_settings
-```
-
-If you really need a fully "standalone" solution, consider packaging with
-Nuitka as described here: https://github.com/HexmosTech/Ansika .
-
-
-# Usage examples #
-
-Example command to retrieve all the settings from a single host:
-```
-$ ansible-playbook get_settings.yaml --extra-vars "baseuri=172.41.1.38 username=root password=0penBmc"
-```
-
-The data will be saved to `settings_172.41.1.38.yaml` file.
-
-Example command to set settings for a single host:
-```
-$ ansible-playbook set_settings.yaml --extra-vars "baseuri=172.41.1.38 username=root password=0penBmc"  --extra-vars @settings_172.41.1.38.yaml
-```
-
-The repository includes sample `inventory.ini` which allows to retrieve and set
-settings en masse:
-```
-$ ansible-playbook get_settings.yaml -i inventory.ini
-```
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+On Sun, 16 Mar 2025 at 17:22, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> Hi,
+>
+> On Thu, Sep 12, 2024 at 10:10:37PM +0300, Tomer Maimon wrote:
+> > Add NPCM8xx clock controller auxiliary bus device registration.
+> >
+> > The NPCM8xx clock controller is registered as an aux device because the
+> > reset and the clock controller share the same register region.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > Tested-by: Benjamin Fair <benjaminfair@google.com>
+> > Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+>
+> Does this work with real hardware ? I tried with the new qemu emulation,
+> but that gets stuck in the serial driver initialization. I found that the clock
+> device instantiates but does not register as clock provider because it does
+> not have a device node. I needed something like the patch below to get beyond
+> that point.
+>
+> Thanks,
+> Guenter
+>
+> ---
+> From: Guenter Roeck <linux@roeck-us.net>
+> Subject: [PATCH] reset: npcm: Provide device node to clock driver
+>
+> Without device node, the clock driver can not register itself as clock
+> provider. With debugging enabled, this manifests itself with
+>
+>  of_serial f0000000.serial: error -EPROBE_DEFER: failed to get clock
+>  of_serial f0000000.serial: Driver of_serial requests probe deferral
+>  platform f0000000.serial: Added to deferred list
+> ...
+>  Warning: unable to open an initial console.
+>
+> Look up the device node and attach it to the clock device to solve the
+> problem.
+>
+> Fixes: 22823157d90c ("reset: npcm: register npcm8xx clock auxiliary bus device")
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> ---
+>  drivers/reset/reset-npcm.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
+> index e5b6127783a7..43bc46755e82 100644
+> --- a/drivers/reset/reset-npcm.c
+> +++ b/drivers/reset/reset-npcm.c
+> @@ -409,6 +409,8 @@ static struct auxiliary_device *npcm_clock_adev_alloc(struct npcm_rc_data *rst_d
+>         adev->name = clk_name;
+>         adev->dev.parent = rst_data->dev;
+>         adev->dev.release = npcm_clock_adev_release;
+> +       adev->dev.of_node = of_find_compatible_node(rst_data->dev->parent->of_node,
+> +                                                   NULL, "nuvoton,npcm845-clk");
+>         adev->id = 555u;
+>
+>         ret = auxiliary_device_init(adev);
+> --
+> 2.45.2
+>
