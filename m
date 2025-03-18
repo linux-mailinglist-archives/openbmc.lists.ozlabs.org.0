@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7646DA671F0
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 12:00:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC49DA671F8
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 12:01:13 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH84X0qnQz3fSr
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 21:59:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH84z4rYcz3gFj
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 22:00:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.8
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742295586;
-	cv=none; b=eWGW+N5Cin7hNws5ReKE/EVx/aA32uyH/iA/WYOst9htAVy7NGB1+IJiB6VDd4dIvoanm31ihNcHZHhqOjWXlPaLueAsA3xUcRannCuXxHR536uvtRHfpCItnKvJLc+yE/S5rL/K/pozvmQMrVQ2EQwhJqnayIPyWILvEDLUfYo+RNgIMVBDAiyjaFrgA8Q6jhJNxPY6o+wCN0GOS2Q04uZSrM9Hvf6wi65OQgYXfxIgf3pEESyMS5M488xckKrlIV7IQyi1uZ733dLIe3UxRo8+6RIn2uh5TrdnvWCIZC+Eu+sDQiWnL2bx5rk7EDPzloKnXJLugK+2q7/fnqYqpA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.7
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742295592;
+	cv=none; b=YizxRQkxxGkfjgy/3eZNvCZ6IRczvXqDQG978hHxtYrtJJYNgf7IJphk3ixMebvmWTwVoLuu7BcaODt8NrnHJwK0w12cYHHIqKpph4Aghj/alutRiJ3HfAk7ZOhZDaKxRIAvOv42ppO1YqTCoQlyitywJfLOjRMpizfLF5ONmvvvmBGmJW0EC2Cm0gKU2tgUc2XB2ZmXHlrLFQEu+BGoxhaft250+4NjCM4rFO16nRJYOVvBlsGzxPlgSNOTC0bSfN+7DP1O4jeuTjPkm5XAOmrvCJ8rU/4ghSOkTVpvm91WI9NHZ+TQmOBEX4q77SaMsVA6KhojZxFdAxqXdgnyQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742295586; c=relaxed/relaxed;
-	bh=1pfUlvb5zhw99ZWb0RJphObm/FvmLmvLrCf2wM6zAkw=;
+	t=1742295592; c=relaxed/relaxed;
+	bh=7qSUr+pm3pdnbRsIh3hdQcHybpcWSk9Cg64DpmHfrRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eWt2IjnRjnsz7shqf5nzNieahe+BDL9MdeUjRNIBfd5ocR0TSIWE6+6qtWxwkHMRVyiIwnDbcipEEmcEjD8ABeI2yJj5KILSI/AJ9sYkP8hDY2yclEZS36t/QEuMKwgvxMh0yiILbIKgTjrqlfVBYNCs0Ds2pbFl6O11SKyp9FlLu0k0kCrRf0VShkJ1LKCSe8WiKkIQ74rBBuQ7CInKq7scIsicfYK78EtxUzvwr1F15HEHcmuOlamxW/ke3/GTQD/69r4L6aazqO8tr2s2dB18GJVZS6V2JUWvbTFcxigO3NuWeSl2+Gs1LSSK+VCNQKA+VLD3pgABihTb4/FG9Q==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NdACpVG7; dkim-atps=neutral; spf=none (client-ip=192.198.163.8; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+	 MIME-Version; b=Qle6EK3p9oKC8EzDc66UGPdoNuivRKQQw9vD5TTHdzlO6m22aG9JnLforU7Ab75IPDmWR03ZSlQkiqEFSr0vTA+wJC9S3B5t39Bjb/Sj1ilsxBQSXlDFyPb0qXhHIQxfp7H49Jpdsuczas0qpHwdmjXkrPVmTOB6oLFD9xJbyBRV9xEU8Aqp28dSD4LncIV6eLYKAJYqwW79CDIoorLxT8zBI3GBYLfL0xBZy6ScB3KHAZNYcLYgigIpRfxk5A0muD3GLk1AJndkHTXigHJz7/unwRraNDwtRDSZ2jQSvAvVLuJb0deBJcoq191lduqy9k2xlcruvvHMzwYDEvrPFg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Bq8T2Lv1; dkim-atps=neutral; spf=none (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NdACpVG7;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Bq8T2Lv1;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.8; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH84H1kv2z2ySd
-	for <openbmc@lists.ozlabs.org>; Tue, 18 Mar 2025 21:59:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH84N4PG1z2yMF
+	for <openbmc@lists.ozlabs.org>; Tue, 18 Mar 2025 21:59:48 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1742295583; x=1773831583;
+  t=1742295589; x=1773831589;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=aXsahCvO2KYQIW3IfJ3vGR9arA9mwP0c7xLGGryhCno=;
-  b=NdACpVG7RybsYMppUeyyeLORw2rMHOhI1dsWmG+Do/0uQpNKpClLXNlT
-   A+29CrTduMdt/6sikwwtLDCQ59wIR84q2oG7PZDu1L+ociHQU4ZhBWqML
-   qJeBYqqgOdxmue8a3+UxlL3vOXQ1O1Tvlgk+C7HGLKX0eiW47ajNgHB8P
-   vzxYD1gjD36jn2lRWtXdSZ/V8lUHBnV2BoSOfqKuo1gcgPAwa+G9Un/cO
-   dAugSqN/ba9rqSfQDImJlXY7tXEHg2v0DHPyfh7U2tIdkrJqmAoB4wceX
-   F5Gu/P2TtO0iqJkWwaq5weCqbfpIK4a9A4hNdfMJDYbymdLnTetqGXbIW
-   Q==;
-X-CSE-ConnectionGUID: 4cyAQepDSrWBdbgMBS/a8g==
-X-CSE-MsgGUID: HmfP+TqkTAGc8Y5yhAafrw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="60959398"
+  bh=K4Qh71+6FN2E5vhhDAN+lN9a5M2tg0WGTdBTyy5owTw=;
+  b=Bq8T2Lv1AE2pDegR7G0P1CnNG8uIPEo6PyOCIMw8juKp0+PIgxyRaxCt
+   KLWA4+Tq3SSLs0TgsuT6JTk2febx2kg3RzNZ203S9r28qfC5KN2dvZUF2
+   HvHaZv4qbkO24NsudW2XikCMGp2fFRAbzpHgSjOowKmFGVKDlIzcb85KP
+   d8+Ku8vjJ2/YitOVHctjPMZsBA1jv8PdFrFChCaoxQRKPKjGekzVVjqiI
+   8NHQdTiFHvCy0muwRR1wtPGm7a/rsmNYntDNxQCOuvADfd6vW5Xt8eOXc
+   Yn2dFJ4OOFGbLTvqXHpkyT70TndKNRmrp+SmUd2kvD9O7ii3TbBOWfQi1
+   g==;
+X-CSE-ConnectionGUID: LTVTrT6AReSgUaSPOQsBsA==
+X-CSE-MsgGUID: CEBU72pOQXGih2dkUk+pYA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="68781750"
 X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; 
-   d="scan'208";a="60959398"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2025 03:59:39 -0700
-X-CSE-ConnectionGUID: 7sgIk1i0SGCfXDhHYH+nLg==
-X-CSE-MsgGUID: ATtY5SUDR1+3aksE20WR8A==
+   d="scan'208";a="68781750"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2025 03:59:38 -0700
+X-CSE-ConnectionGUID: 9KcpTX+ET7aels/yNDL6uw==
+X-CSE-MsgGUID: TcQmfDf+TDiUMxf/WRhAPQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; 
-   d="scan'208";a="127322155"
+   d="scan'208";a="153215699"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmviesa004.fm.intel.com with ESMTP; 18 Mar 2025 03:59:35 -0700
+  by fmviesa001.fm.intel.com with ESMTP; 18 Mar 2025 03:59:35 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 03AB32FC; Tue, 18 Mar 2025 12:59:33 +0200 (EET)
+	id 1026A5DC; Tue, 18 Mar 2025 12:59:34 +0200 (EET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Jacky Huang <ychuang3@nuvoton.com>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
@@ -65,14 +65,13 @@ To: Jacky Huang <ychuang3@nuvoton.com>,
 	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 3/5] pinctrl: nuvoton: Make use of struct pinfunction and PINCTRL_PINFUNCTION()
-Date: Tue, 18 Mar 2025 12:57:16 +0200
-Message-ID: <20250318105932.2090926-4-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 4/5] pinctrl: nuvoton: Convert to use struct group_desc
+Date: Tue, 18 Mar 2025 12:57:17 +0200
+Message-ID: <20250318105932.2090926-5-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
 References: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
@@ -93,189 +92,208 @@ Cc: Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Since pin control provides a generic data type and a macro for
-the pin function definition, use them in the driver.
+The pin control core header provides struct group_desc.
+Utilize it instead of open coded variants in the driver.
 
-Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/pinctrl/nuvoton/pinctrl-ma35.c    | 19 ++++++++-----------
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 11 +++--------
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 11 +++--------
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 11 +++--------
- 4 files changed, 17 insertions(+), 35 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-ma35.c | 70 ++++++++++++--------------
+ 1 file changed, 33 insertions(+), 37 deletions(-)
 
 diff --git a/drivers/pinctrl/nuvoton/pinctrl-ma35.c b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
-index 59c4e7c6cdde..ad4f9ca414c8 100644
+index ad4f9ca414c8..da3c8d8e3eb3 100644
 --- a/drivers/pinctrl/nuvoton/pinctrl-ma35.c
 +++ b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
-@@ -98,12 +98,6 @@ static const u32 ds_3300mv_tbl[] = {
- 	17100, 25600, 34100, 42800, 48000, 56000, 77000, 82000,
+@@ -106,13 +106,6 @@ struct ma35_pin_setting {
+ 	unsigned int		nconfigs;
  };
  
--struct ma35_pin_func {
+-struct ma35_pin_group {
 -	const char		*name;
--	const char		**groups;
--	u32			ngroups;
+-	unsigned int		npins;
+-	unsigned int		*pins;
+-	struct ma35_pin_setting	*settings;
 -};
 -
- struct ma35_pin_setting {
- 	u32			offset;
- 	u32			shift;
-@@ -149,7 +143,7 @@ struct ma35_pinctrl {
+ struct ma35_pin_bank {
+ 	void __iomem		*reg_base;
+ 	struct clk		*clk;
+@@ -141,7 +134,7 @@ struct ma35_pinctrl {
+ 	struct pinctrl_dev	*pctl;
+ 	const struct ma35_pinctrl_soc_info *info;
  	struct regmap		*regmap;
- 	struct ma35_pin_group	*groups;
+-	struct ma35_pin_group	*groups;
++	struct group_desc	*groups;
  	unsigned int		ngroups;
--	struct ma35_pin_func	*functions;
-+	struct pinfunction	*functions;
+ 	struct pinfunction	*functions;
  	unsigned int		nfunctions;
- };
- 
-@@ -1041,9 +1035,10 @@ static int ma35_pinctrl_parse_functions(struct device_node *np, struct ma35_pinc
- 					u32 index)
+@@ -160,7 +153,7 @@ static const char *ma35_get_group_name(struct pinctrl_dev *pctldev, unsigned int
  {
- 	struct device_node *child;
--	struct ma35_pin_func *func;
-+	struct pinfunction *func;
- 	struct ma35_pin_group *grp;
- 	static u32 grp_index;
-+	const char **groups;
- 	u32 ret, i = 0;
+ 	struct ma35_pinctrl *npctl = pinctrl_dev_get_drvdata(pctldev);
  
- 	dev_dbg(npctl->dev, "parse function(%d): %s\n", index, np->name);
-@@ -1055,12 +1050,12 @@ static int ma35_pinctrl_parse_functions(struct device_node *np, struct ma35_pinc
- 	if (func->ngroups <= 0)
- 		return 0;
+-	return npctl->groups[selector].name;
++	return npctl->groups[selector].grp.name;
+ }
  
--	func->groups = devm_kcalloc(npctl->dev, func->ngroups, sizeof(char *), GFP_KERNEL);
--	if (!func->groups)
-+	groups = devm_kcalloc(npctl->dev, func->ngroups, sizeof(*groups), GFP_KERNEL);
-+	if (!groups)
- 		return -ENOMEM;
+ static int ma35_get_group_pins(struct pinctrl_dev *pctldev, unsigned int selector,
+@@ -171,19 +164,19 @@ static int ma35_get_group_pins(struct pinctrl_dev *pctldev, unsigned int selecto
+ 	if (selector >= npctl->ngroups)
+ 		return -EINVAL;
  
- 	for_each_child_of_node(np, child) {
--		func->groups[i] = child->name;
-+		groups[i] = child->name;
- 		grp = &npctl->groups[grp_index++];
- 		ret = ma35_pinctrl_parse_groups(child, grp, npctl, i++);
- 		if (ret) {
-@@ -1068,6 +1063,8 @@ static int ma35_pinctrl_parse_functions(struct device_node *np, struct ma35_pinc
- 			return ret;
- 		}
- 	}
-+
-+	func->groups = groups;
+-	*pins = npctl->groups[selector].pins;
+-	*npins = npctl->groups[selector].npins;
++	*pins = npctl->groups[selector].grp.pins;
++	*npins = npctl->groups[selector].grp.npins;
+ 
  	return 0;
  }
  
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index 2601aacfb976..c6b11a198c76 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -639,13 +639,6 @@ static struct pingroup npcm7xx_groups[] = {
+-static struct ma35_pin_group *ma35_pinctrl_find_group_by_name(
+-			      const struct ma35_pinctrl *npctl, const char *name)
++static struct group_desc *
++ma35_pinctrl_find_group_by_name(const struct ma35_pinctrl *npctl, const char *name)
+ {
+ 	int i;
  
- #define NPCM7XX_SFUNC(a) NPCM7XX_FUNC(a, #a)
- #define NPCM7XX_FUNC(a, b...) static const char *a ## _grp[] = { b }
--#define NPCM7XX_MKFUNC(nm) { .name = #nm, .ngroups = ARRAY_SIZE(nm ## _grp), \
--			.groups = nm ## _grp }
--struct npcm7xx_func {
--	const char *name;
--	const unsigned int ngroups;
--	const char *const *groups;
--};
+ 	for (i = 0; i < npctl->ngroups; i++) {
+-		if (!strcmp(npctl->groups[i].name, name))
++		if (!strcmp(npctl->groups[i].grp.name, name))
+ 			return &npctl->groups[i];
+ 	}
+ 	return NULL;
+@@ -195,9 +188,10 @@ static int ma35_pinctrl_dt_node_to_map_func(struct pinctrl_dev *pctldev,
+ 					    unsigned int *num_maps)
+ {
+ 	struct ma35_pinctrl *npctl = pinctrl_dev_get_drvdata(pctldev);
+-	struct ma35_pin_group *grp;
++	struct ma35_pin_setting *setting;
+ 	struct pinctrl_map *new_map;
+ 	struct device_node *parent;
++	struct group_desc *grp;
+ 	int map_num = 1;
+ 	int i;
  
- NPCM7XX_SFUNC(smb0);
- NPCM7XX_SFUNC(smb0b);
-@@ -764,7 +757,8 @@ NPCM7XX_SFUNC(lkgpo2);
- NPCM7XX_SFUNC(nprd_smi);
+@@ -211,7 +205,7 @@ static int ma35_pinctrl_dt_node_to_map_func(struct pinctrl_dev *pctldev,
+ 		return -EINVAL;
+ 	}
  
- /* Function names */
--static struct npcm7xx_func npcm7xx_funcs[] = {
-+static struct pinfunction npcm7xx_funcs[] = {
-+#define NPCM7XX_MKFUNC(nm) PINCTRL_PINFUNCTION(#nm, nm ## _grp, ARRAY_SIZE(nm ## _grp))
- 	NPCM7XX_MKFUNC(smb0),
- 	NPCM7XX_MKFUNC(smb0b),
- 	NPCM7XX_MKFUNC(smb0c),
-@@ -880,6 +874,7 @@ static struct npcm7xx_func npcm7xx_funcs[] = {
- 	NPCM7XX_MKFUNC(lkgpo1),
- 	NPCM7XX_MKFUNC(lkgpo2),
- 	NPCM7XX_MKFUNC(nprd_smi),
-+#undef NPCM7XX_MKFUNC
+-	map_num += grp->npins;
++	map_num += grp->grp.npins;
+ 	new_map = kcalloc(map_num, sizeof(*new_map), GFP_KERNEL);
+ 	if (!new_map)
+ 		return -ENOMEM;
+@@ -223,17 +217,19 @@ static int ma35_pinctrl_dt_node_to_map_func(struct pinctrl_dev *pctldev,
+ 	if (!parent)
+ 		return -EINVAL;
+ 
++	setting = grp->data;
++
+ 	new_map[0].type = PIN_MAP_TYPE_MUX_GROUP;
+ 	new_map[0].data.mux.function = parent->name;
+ 	new_map[0].data.mux.group = np->name;
+ 	of_node_put(parent);
+ 
+ 	new_map++;
+-	for (i = 0; i < grp->npins; i++) {
++	for (i = 0; i < grp->grp.npins; i++) {
+ 		new_map[i].type = PIN_MAP_TYPE_CONFIGS_PIN;
+-		new_map[i].data.configs.group_or_pin = pin_get_name(pctldev, grp->pins[i]);
+-		new_map[i].data.configs.configs = grp->settings[i].configs;
+-		new_map[i].data.configs.num_configs = grp->settings[i].nconfigs;
++		new_map[i].data.configs.group_or_pin = pin_get_name(pctldev, grp->grp.pins[i]);
++		new_map[i].data.configs.configs = setting[i].configs;
++		new_map[i].data.configs.num_configs = setting[i].nconfigs;
+ 	}
+ 	dev_dbg(pctldev->dev, "maps: function %s group %s num %d\n",
+ 		(*map)->data.mux.function, (*map)->data.mux.group, map_num);
+@@ -281,14 +277,14 @@ static int ma35_pinmux_set_mux(struct pinctrl_dev *pctldev, unsigned int selecto
+ 			       unsigned int group)
+ {
+ 	struct ma35_pinctrl *npctl = pinctrl_dev_get_drvdata(pctldev);
+-	struct ma35_pin_group *grp = &npctl->groups[group];
+-	struct ma35_pin_setting *setting = grp->settings;
++	struct group_desc *grp = &npctl->groups[group];
++	struct ma35_pin_setting *setting = grp->data;
+ 	u32 i, regval;
+ 
+ 	dev_dbg(npctl->dev, "enable function %s group %s\n",
+-		npctl->functions[selector].name, npctl->groups[group].name);
++		npctl->functions[selector].name, grp->grp.name);
+ 
+-	for (i = 0; i < grp->npins; i++) {
++	for (i = 0; i < grp->grp.npins; i++) {
+ 		regmap_read(npctl->regmap, setting->offset, &regval);
+ 		regval &= ~GENMASK(setting->shift + MA35_MFP_BITS_PER_PORT - 1,
+ 				   setting->shift);
+@@ -980,17 +976,16 @@ static const struct pinconf_ops ma35_pinconf_ops = {
+ 	.is_generic = true,
  };
  
- #define NPCM7XX_PINCFG(a, b, c, d, e, f, g, h, i, j, k) \
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index eac43315a360..62347a82282d 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -826,13 +826,6 @@ static struct pingroup npcm8xx_pingroups[] = {
+-static int ma35_pinctrl_parse_groups(struct device_node *np, struct ma35_pin_group *grp,
++static int ma35_pinctrl_parse_groups(struct device_node *np, struct group_desc *grp,
+ 				     struct ma35_pinctrl *npctl, u32 index)
+ {
+ 	struct ma35_pin_setting *pin;
+ 	unsigned long *configs;
+ 	unsigned int nconfigs;
++	unsigned int *pins;
+ 	int i, j, count, ret;
+ 	u32 *elems;
  
- #define NPCM8XX_SFUNC(a) NPCM8XX_FUNC(a, #a)
- #define NPCM8XX_FUNC(a, b...) static const char *a ## _grp[] = { b }
--#define NPCM8XX_MKFUNC(nm) { .name = #nm, .ngroups = ARRAY_SIZE(nm ## _grp), \
--			.groups = nm ## _grp }
--struct npcm8xx_func {
--	const char *name;
--	const unsigned int ngroups;
--	const char *const *groups;
--};
+-	grp->name = np->name;
+-
+ 	ret = pinconf_generic_parse_dt_config(np, NULL, &configs, &nconfigs);
+ 	if (ret)
+ 		return ret;
+@@ -1003,21 +998,22 @@ static int ma35_pinctrl_parse_groups(struct device_node *np, struct ma35_pin_gro
+ 	if (!elems)
+ 		return -ENOMEM;
  
- NPCM8XX_SFUNC(gpi36);
- NPCM8XX_SFUNC(gpi35);
-@@ -1055,7 +1048,8 @@ NPCM8XX_SFUNC(hgpio6);
- NPCM8XX_SFUNC(hgpio7);
++	grp->grp.name = np->name;
++
+ 	ret = of_property_read_u32_array(np, "nuvoton,pins", elems, count);
+ 	if (ret)
+ 		return -EINVAL;
++	grp->grp.npins = count / 3;
  
- /* Function names */
--static struct npcm8xx_func npcm8xx_funcs[] = {
-+static struct pinfunction npcm8xx_funcs[] = {
-+#define NPCM8XX_MKFUNC(nm) PINCTRL_PINFUNCTION(#nm, nm ## _grp, ARRAY_SIZE(nm ## _grp))
- 	NPCM8XX_MKFUNC(gpi36),
- 	NPCM8XX_MKFUNC(gpi35),
- 	NPCM8XX_MKFUNC(tp_jtag3),
-@@ -1275,6 +1269,7 @@ static struct npcm8xx_func npcm8xx_funcs[] = {
- 	NPCM8XX_MKFUNC(hgpio5),
- 	NPCM8XX_MKFUNC(hgpio6),
- 	NPCM8XX_MKFUNC(hgpio7),
-+#undef NPCM8XX_MKFUNC
- };
+-	grp->npins = count / 3;
+-
+-	grp->pins = devm_kcalloc(npctl->dev, grp->npins, sizeof(*grp->pins), GFP_KERNEL);
+-	if (!grp->pins)
++	pins = devm_kcalloc(npctl->dev, grp->grp.npins, sizeof(*pins), GFP_KERNEL);
++	if (!pins)
+ 		return -ENOMEM;
++	grp->grp.pins = pins;
  
- #define NPCM8XX_PINCFG(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) \
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index 2f97accef837..4264ca749175 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -482,13 +482,6 @@ static const struct pingroup wpcm450_groups[] = {
+-	grp->settings = devm_kcalloc(npctl->dev, grp->npins, sizeof(*grp->settings), GFP_KERNEL);
+-	if (!grp->settings)
++	pin = devm_kcalloc(npctl->dev, grp->grp.npins, sizeof(*pin), GFP_KERNEL);
++	if (!pin)
+ 		return -ENOMEM;
+-
+-	pin = grp->settings;
++	grp->data = pin;
  
- #define WPCM450_SFUNC(a) WPCM450_FUNC(a, #a)
- #define WPCM450_FUNC(a, b...) static const char *a ## _grp[] = { b }
--#define WPCM450_MKFUNC(nm) { .name = #nm, .ngroups = ARRAY_SIZE(nm ## _grp), \
--			.groups = nm ## _grp }
--struct wpcm450_func {
--	const char *name;
--	const unsigned int ngroups;
--	const char *const *groups;
--};
- 
- WPCM450_SFUNC(smb3);
- WPCM450_SFUNC(smb4);
-@@ -555,7 +548,8 @@ WPCM450_FUNC(gpio, WPCM450_GRPS);
- #undef WPCM450_GRP
- 
- /* Function names */
--static struct wpcm450_func wpcm450_funcs[] = {
-+static struct pinfunction wpcm450_funcs[] = {
-+#define WPCM450_MKFUNC(nm) PINCTRL_PINFUNCTION(#nm, nm ## _grp, ARRAY_SIZE(nm ## _grp))
- 	WPCM450_MKFUNC(smb3),
- 	WPCM450_MKFUNC(smb4),
- 	WPCM450_MKFUNC(smb5),
-@@ -616,6 +610,7 @@ static struct wpcm450_func wpcm450_funcs[] = {
- 	WPCM450_MKFUNC(hg6),
- 	WPCM450_MKFUNC(hg7),
- 	WPCM450_MKFUNC(gpio),
-+#undef WPCM450_MKFUNC
- };
- 
- #define WPCM450_PINCFG(a, b, c, d, e, f, g) \
+ 	for (i = 0, j = 0; i < count; i += 3, j++) {
+ 		pin->offset = elems[i] * MA35_MFP_REG_SZ_PER_BANK + MA35_MFP_REG_BASE;
+@@ -1025,7 +1021,7 @@ static int ma35_pinctrl_parse_groups(struct device_node *np, struct ma35_pin_gro
+ 		pin->muxval = elems[i + 2];
+ 		pin->configs = configs;
+ 		pin->nconfigs = nconfigs;
+-		grp->pins[j] = npctl->info->get_pin_num(pin->offset, pin->shift);
++		pins[j] = npctl->info->get_pin_num(pin->offset, pin->shift);
+ 		pin++;
+ 	}
+ 	return 0;
+@@ -1036,7 +1032,7 @@ static int ma35_pinctrl_parse_functions(struct device_node *np, struct ma35_pinc
+ {
+ 	struct device_node *child;
+ 	struct pinfunction *func;
+-	struct ma35_pin_group *grp;
++	struct group_desc *grp;
+ 	static u32 grp_index;
+ 	const char **groups;
+ 	u32 ret, i = 0;
 -- 
 2.47.2
 
