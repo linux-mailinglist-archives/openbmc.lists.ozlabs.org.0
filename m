@@ -1,86 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8284A66A83
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 07:34:12 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8019CA66EB1
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 09:44:53 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH29l49K9z3c8x
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 17:34:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH54X2fkZz3c9G
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 19:44:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::b35"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742279640;
-	cv=none; b=RzLG29cBsOlnGRH+jcAYIqbSuK0v854l76qzfKNA/1nWEB9fJkMbzhTDq/0Glp1ZaRpK+FfO80vpvF4VG5RlKo7LRFnvj/pbEefUJ4ahOCT+vpnX4ptD2XoVczi0kNT7pfXSW3nNyqS5Bmk9hYXrW4VIbz+YH+T0gKXpPSi74P/3be1paRZmeFBDaWGja4y2dNZz/XUNDmqBQwumPWo4EnXz0GyFVjnwWQZCwMEB0bLPjseamOsi8vjlVzJkuKIHUH7/0F3tLDXarxx9lYGIotN6hH1UmI2J9zzQO1MLScWewD5h4ANAYg0CiZKsxGbstbLnaAokmwRe06wwjHCT7A==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742287481;
+	cv=none; b=Ab2pNM+9BazpQgKJ7B+J2be/8i2LzvYoVgbwRRRf+H8IKF1uodIpDcLtBEgGaxmK7amO/djfTNmCMx2j3k4kxbgz+SCGhQ8y0mVqzHeKUq6IWaDDmwUKHDo/YotBVIPwBQVEXay+DDsFEDuoCsLjf0/2XmKyFV/kxLM6tEU5f5Xlpp9BIcmoIrzZjJLVMr9miMKfcI/BGI303k7tHEahNNIfJObwELibs+k/d5o0FDpnsDqA6TywML3AYzFEvESk1ImPoQ6JA0Rrqs6DCLOakeLP0Ciey9jW58oR6IG6BnQzeiOnY1r7D7El+YVesbZFc1ESfygwFQTTSsTxP842lg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742279640; c=relaxed/relaxed;
-	bh=Jh/c4R4dsLwT0KHsmAXe2nYKu7hkZRhQrjMuRdUu63o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GiNUzNc0AH4Sgxzxz8Ldypi8R6/OonoYvYms6PvKzJL9UfcTMDTBcV+z23pazhaRlRa2E88O4vUVH2kBrmov9SZZQJSB2/4H85Qhyo4ZAXe9Be+Vjz+3a+MhyCnOwPn4zYL/zMAJq+4NXyWMQRBVnL6GpFzq3K37FXJ4Gf/cWtLH6HiKAXHuDcYwfGEpOCxtD3PWSVz/iuvD1i0JIkU53JDG4dh1Tl+mwIIf1PKBXTC9JjDoxj4Whs3APwr19ldQC5Mz4gHQzSX/U6EsBmCSHzt6n4MmkknP8TpfdXO51DRHKbWRFRVrhfL/pBAUCL++jZ8itEkdl77zyQht454E9g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZYFGLqmK; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1742287481; c=relaxed/relaxed;
+	bh=1HBZdAOBDJbiT3troDQEduecEfz2C1FQBqQQFhxgGMw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DC0QqdYNCf7CzoOamJxGYPf4fT/kd5iBKItoMyUVe54pHrWK5ZyYTY8a/IJdMmpe04+Ay4a7EDS6YBrkuf3rjJl97PY2fqwNU1vFYi1Dlhkb6nX4gGfhVIss9xoNY6mHE/MgXYTXvtMu8YkQMRIAJUMiKZFBjRk2IONGi22B0Tw0Jo6GG5ss0FXT8aVA9ykSSdF1KOaKUi83I+/j5L1IcphppGZgvHAJecBgM0NtfqJdczW0D6VQ9qu30j48VnTSZP3d7SWRfFtapt0PNGcV56RnMnPcD02Ysn7oXGj2nkVuZeh5XA8v8HWpHE91InSHVeVKSLr5htAmW6G1/qX+eQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dcjy9VLp; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZYFGLqmK;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dcjy9VLp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH29f6wTkz2yfS
-	for <openbmc@lists.ozlabs.org>; Tue, 18 Mar 2025 17:33:57 +1100 (AEDT)
-Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-e637669ef11so4133447276.1
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Mar 2025 23:33:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742279634; x=1742884434; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jh/c4R4dsLwT0KHsmAXe2nYKu7hkZRhQrjMuRdUu63o=;
-        b=ZYFGLqmKNQnW3TMJa4hxn/eXSJtSpFRY00zYSpuchhsiRJtQOX02OJBmkyM01awq8T
-         0DyQIPcveGrxTwQc3xyYGmMvGUvESIu3j/spc+RAIJFqSYrTlcwSNsFJDPFf8qaaRmd8
-         l9Ilq0hfRDrwZ+UggT2PtVYimEWNxQsbONMCOII+siXXJzCz3cWbfk4qpB44+HmPc9LB
-         CjTC9jVehf/WDX3Plgf77bkvayCydN5hJ+2P35JryL0C3qX6hWFvE6A0mkWZWiDpkg/c
-         nO4EN0MyfAejQlQb5dmvGvq4zMVZrPTbauQHZ4sRH4O1DY15XzkzvlJIDXmxfzjAyMT5
-         qCwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742279634; x=1742884434;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Jh/c4R4dsLwT0KHsmAXe2nYKu7hkZRhQrjMuRdUu63o=;
-        b=pN0ztM9zkHUeIcMuyuCTQwMguGURyeUAxpbMPiZWemq3feY9g8zFNO0Nlgp/vypyG0
-         EnVrg/pZMHBd4hX/GSioRSBvsAoYIgwHMbTPCeTJ+BcVchrlmvVAnCaN+OKgrCSj5zuN
-         8IKsCNhqnI+cPp1im4O/rXKkyfdWBRtmmWDl1bpX5nvFJtMuiG1+NHnhaGdqyU14jV6v
-         tsQCVSmcL+pbLdS6u86mDjCUH31p28Gl+Ou3EnpiWp9zi2HmkHp6E1SqgX5zyi+q8Cri
-         T8v5TnLvk0IuxkDy8Vng8XIBD8eV+2uOx1Rrv/1QtwQVG6WYpUHluNuya1nksVDLcYTL
-         hIJw==
-X-Forwarded-Encrypted: i=1; AJvYcCWCM6HHO02sFlhFAPjMS2uvS3zFcBgrqTnVOwObKSNF2WVJUB4wmrquHTj72pMHppTP/UXSz0Ho@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwDduThkKvQLQaW8ikiMuniRmU4aYYQrLGZKkDVr6KicRysCdyx
-	xcxsZwV3VYtM3Een9JdWbEyboGKDHa6t4cF0Q2lT01jU+Pq10SFQ0VgMphHSkX3gfi7b2vMc0kw
-	oM5TxaMgwouAvE4iQVr3uvPfPT18=
-X-Gm-Gg: ASbGnct0A3tEg96mkMFDEEQSj3/NwMDbnVOXfpgLL/wN+lfUokpvZBhQy89r0I22a2/
-	UYt/kONJsaZ2+9fRB7kn3npWzgiqdPrHaY6djdZj3ZKsUIt30EJMSCslMNl/6bqtFfp9HNQ/kJM
-	jGNZOw6FoZ4zk+0Xx3AFmXAfCKzT4=
-X-Google-Smtp-Source: AGHT+IELSIn5/BuHvlZqcoULDSggaDltMS8PE14gaoXkQgvkbGeEGMS2YRahcu5an6hVdQQfVhHyYYKUOx5w2IzK28E=
-X-Received: by 2002:a05:6902:118f:b0:e5e:14d4:e63d with SMTP id
- 3f1490d57ef6-e64af0eb437mr3891751276.9.1742279634060; Mon, 17 Mar 2025
- 23:33:54 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH54T0Mw4z2ySj;
+	Tue, 18 Mar 2025 19:44:41 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 8EE7B5C4782;
+	Tue, 18 Mar 2025 08:42:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F26C4CEEE;
+	Tue, 18 Mar 2025 08:44:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742287478;
+	bh=NJJzNTRDknJXLfROOfBbxIWmcgwRhNCep316udiZ8FM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dcjy9VLpm33mUCfRhkjxGfHVKu2TRRnc0L7RRFbXPRNp3r7sRwU+SGolTYvRgxad/
+	 FwrYDkGR7UWaS6UxVNa7uaERBHjXdjuxmQRbP8c+eviscDzV3YuXIPRz8lPS6HTKG5
+	 j6uKWvegpcFbDrSRVS5iivttq4ClLUl1OeUkF4jHtJ8wYcXkudUmHyg8tyCc+M+2ak
+	 I7SCoHCE6aM6LTyiT6cMwfIybdESxIl5J1Q+8et1sTn+FcQm6+4tJAD163vJ6/STnD
+	 qs/mAVThJo6P11hvsFWOnyermYuC+S+XHG/WeBWA+DZogl5w6QMgR3i9K6Kt2tDO+W
+	 vm8+i7qKpm1kg==
+Date: Tue, 18 Mar 2025 09:44:34 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Rajaganesh Rathinasabapathi <Rajaganesh.Rathinasabapathi@amd.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: aspeed: Add AMD Onyx BMC
+ compatible
+Message-ID: <20250318-rapid-coot-of-tact-d779ad@krzk-bin>
+References: <20250318041224.1693323-1-Rajaganesh.Rathinasabapathi@amd.com>
 MIME-Version: 1.0
-References: <20240912191038.981105-1-tmaimon77@gmail.com> <20240912191038.981105-3-tmaimon77@gmail.com>
- <536f5393-478c-4a50-b25f-180e221ef7a3@roeck-us.net> <CAP6Zq1ioebnqgJB1B8AqD9UtMZRy5CDT8+_dXF_aBZEjjj_B-A@mail.gmail.com>
- <9a9de8bd-d864-4e29-89b2-91db8aea8ce5@roeck-us.net>
-In-Reply-To: <9a9de8bd-d864-4e29-89b2-91db8aea8ce5@roeck-us.net>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 18 Mar 2025 08:33:43 +0200
-X-Gm-Features: AQ5f1JoL-dTyRxBEx8xKcjtrgVDVRemqDFE0mk_w3MNt2XunFXr57UTJfuPgstA
-Message-ID: <CAP6Zq1h2bsODnSR6kiVmtueqbjOtEShu_=EYHtw65SPGaX+bgA@mail.gmail.com>
-Subject: Re: [PATCH v28 2/3] reset: npcm: register npcm8xx clock auxiliary bus device
-To: Guenter Roeck <linux@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250318041224.1693323-1-Rajaganesh.Rathinasabapathi@amd.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -93,102 +70,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, p.zabel@pengutronix.de, sboyd@kernel.org, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, benjaminfair@google.com
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, joel@jms.id.au, krzk+dt@kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Guenter,
+On Mon, Mar 17, 2025 at 11:12:23PM -0500, Rajaganesh Rathinasabapathi wrote:
+> Document new AMD Onyx BMC board compatibles
+> 
+> Signed-off-by: Rajaganesh Rathinasabapathi <Rajaganesh.Rathinasabapathi@amd.com>
+> ---
 
-Thanks a lot for your recommendations and sorry for the inconvenience.
-
-We will fix the device tree and send the patch soon.
+Where is the changelog? What happened with this patch between v1 and v3?
 
 Best regards,
+Krzysztof
 
-Tomer
-
-On Mon, 17 Mar 2025 at 16:09, Guenter Roeck <linux@roeck-us.net> wrote:
->
-> Hi Tomer,
->
-> On 3/17/25 03:39, Tomer Maimon wrote:
-> > Hi Guenter,
-> >
-> > Yes, of course, it works in real hardware.
-> > The modification was made since the reset and clock share the same
-> > register memory region.
-> >
-> > To enable the clock change needs to be done in the device tree as
-> > follows (we are planning to send these change patches soon):
-> >
-> > diff -Naur a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > 2025-02-26 16:20:39.000000000 +0200
-> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-> > 2025-03-17 12:29:17.876551537 +0200
-> > @@ -47,19 +47,16 @@
-> >                  interrupt-parent = <&gic>;
-> >                  ranges;
-> >
-> > -               rstc: reset-controller@f0801000 {
-> > +               clk: rstc: reset-controller@f0801000 {
-> >                          compatible = "nuvoton,npcm845-reset";
-> > -                       reg = <0x0 0xf0801000 0x0 0x78>;
-> > -                       #reset-cells = <2>;
-> > +                       reg = <0x0 0xf0801000 0x0 0xC4>;
-> >                          nuvoton,sysgcr = <&gcr>;
-> > -               };
-> > -
-> > -               clk: clock-controller@f0801000 {
-> > -                       compatible = "nuvoton,npcm845-clk";
-> > +                       #reset-cells = <2>;
-> > +                       clocks = <&refclk>;
-> >                          #clock-cells = <1>;
-> > -                       reg = <0x0 0xf0801000 0x0 0x1000>;
-> >                  };
-> >
-> > +
-> >                  apb {
-> >                          #address-cells = <1>;
-> >                          #size-cells = <1>;
-> > diff -Naur a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > --- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > 2025-02-26 16:20:39.000000000 +0200
-> > +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-> > 2025-03-17 12:24:52.293171764 +0200
-> > @@ -19,6 +19,13 @@
-> >          memory@0 {
-> >                  reg = <0x0 0x0 0x0 0x40000000>;
-> >          };
-> > +
-> > +       refclk: refclk-25mhz {
-> > +               compatible = "fixed-clock";
-> > +               clock-output-names = "ref";
-> > +               clock-frequency = <25000000>;
-> > +               #clock-cells = <0>;
-> > +       };
-> >   };
-> >
-> >   &serial0 {
-> >
-> > Is it better to modify the reset driver with your suggestion or change
-> > the device tree?
-> >
->
-> My assumption was that the devicetree file is correct, and that it would match
-> the devicetree file in the actual devices. I since noticed that the file is
-> widely incomplete when comparing it with the various downstream versions,
-> so that was obviously wrong. Also, my change seemed odd, but then I did
-> not know how such situations are supposed to be handled.
->
-> Also, it looks like the devicetree file needs to be changed anyway unless something
-> else is wrong, because booting Linux still stalls later. Presumably that is because
-> the reference clock is missing in the upstream devicetree file (the serial port clock
-> frequency is reported as 0). Given this, fixing the devicetree files seems to be the
-> way to go.
->
-> Thanks,
-> Guenter
->
