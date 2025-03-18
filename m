@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7B67A671F4
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 12:00:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90AE7A671EF
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 12:00:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH84m04wtz3g0M
-	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 22:00:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZH84Q6WPhz3c9x
+	for <lists+openbmc@lfdr.de>; Tue, 18 Mar 2025 21:59:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.7
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742295588;
-	cv=none; b=QbqQ4Mynj+sD4493dIfu642Dd2RUNhUVJI0uIrnhdw5VdS9gbozxOorvpFvf+UCv+bqfLmT87VMzJmoBkUUCa4m2OeHoyMthRDmjbNtA6bMOQiY6VdJnwPhkA4SNIR6/wRScXoFaTiSyzIRIdPqHL5cPYz6xYTY63wiaDNKik26Qz2Vb1ET81NRtcv0RLpaFbeCN7wVXMH9bhfNm2+0iG5b5z8kEiCpEyt3proOCePOdP6hLWSwduYhBzXLTj6bcdM52OiRXAND8/5D6rfjhdfNSeE6QfSQmP02lwZAadcReD9m07TZsIfTWxtUK7rK0mcYzP1rdQxsgpRAGLE4CyA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742295586;
+	cv=none; b=PzJFfALH/3xEYf4B/TK9O8ioo2zLiyHrl+xyezC4DHv/vaq/P/TJEvZxPj49B5/BpXrDAMuuUtQDO3VGNGGo48+N2Rx4mr0iYtVDmqeDYZNGg0eJEuLNUKvWH6V/YBwxMMbFOf1qYl78CG2uEaPGzhcEZK2W/KP7k8949WEVW6/a2ucQQAmFcv98UR+ZtEiSxhUP2VMzqNboxPWO1U9OnOj0sKtSEB6L63LvMkHyTH31ljq0Z32MoYxhHbD7MjCqH0J3/YD1AYUnMlNbgXDKEEGI/gLT+leAUujATGI5hYlDCCbF4R4GWF1IY84K0onfZohEwpi5C/QjOu49hRqVHw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742295588; c=relaxed/relaxed;
-	bh=EjWT0KIPG9aIQyy56GIy7I+HKIvMrUD3TmZSay3Fv0Y=;
+	t=1742295586; c=relaxed/relaxed;
+	bh=xhA20a1giyygMYB5F+ic7LpD6FeCXdJlQSf/S9lVgMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaOQMnspQLbObRFu+ZwOfzz3Kux2ZbHOuAUExnR7hhdP/h9d6aCY6RFHwRg+e8KGAlYf5DxNi+GoUQ8jOOH0cRdVNIFrIn0/u0jLfrS5QZCyCM/N9rEH6BY6owlRzvVge+9LCOZZzkiwEUrypTIBU92OsH8wtLQaHaThwQXdwRX1rVDp73RJhvNKDEa8LLzsAAYxQLUyDm2Yr/nf9cbqOYGDYYY/xeJeJYwvq26ptw+Dpfgb5q2MIChVmiWYnst7/sAGvYfYnPdqrhX+oQiSJ0izf4OVgWT8dbZ5PcSfZ8Xx5QDSIdViNha2u1Xv7zUWVTyqdbILctq4MxQS7RVKRw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WA2qWUGJ; dkim-atps=neutral; spf=none (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+	 MIME-Version; b=ecoYk0f0GdIhNUUaSdhGrQKONSQFIGW1jZIPGkpWrDxxfQyJcF6sRSj96mVZmPK/6QEnknfk/t9tV8qaqUROBO6mMnD/zzU/gUcOkU47G26cmZuvXU8Ld2RAiqiKqEM0Hn/948uBvD5UEwo9Xb5sBTBzA3Jch42q+Gi5bEw4MUlN1rCskB1FzKLpt9m5e9/oyk268RwlJATeciX458bAdc/NDbc822wUs69EJf82eRYBszxUlo6Kg7ymdc9KVrLuJffhipoWcnWDk9hSklqnwVnF875BKz1ohwOhvWBLdgSJm2MiPs0/vFYejeiNJbnzLD+9yXJDPCybhW+igIMylw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nQ12QItL; dkim-atps=neutral; spf=none (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WA2qWUGJ;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nQ12QItL;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH84M2GS1z2ySd
-	for <openbmc@lists.ozlabs.org>; Tue, 18 Mar 2025 21:59:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZH84H2xfCz2yrY
+	for <openbmc@lists.ozlabs.org>; Tue, 18 Mar 2025 21:59:42 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1742295587; x=1773831587;
+  t=1742295583; x=1773831583;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=g0km+zVxRqwRAs2RLk/084gII6D1iqm+5F4kXCBIEnY=;
-  b=WA2qWUGJfd15osEVp/Ur/Lj9l+ipZ8AgOEtrsuIK+UJRTEMLnN/OPtbr
-   b5BxOnlrPHMoOn5hMyA5+ETKCvxR2iYKnLulfuj223xbMCmOfS4doke9K
-   7JoU7rUAs2QVdglWiGCnFu1hPLHatdHfEiCOep4kiNRxEFcRtLcSTLJBv
-   julL113cZlOcdaLrpTBW2EYH6Pi03jcN3+tcO+R+zFYv64z/wZLiLy05K
-   y6QB+NDPOFCGmZYHAnsi0iDIrg+53PbhunSM33n75vI4zjgWs6RQFrn6t
-   3NblFkhz7hHToHnNDKfPWd0G2erAQABzR+ey4YaDYZEWOcIGeApybW0wR
-   g==;
-X-CSE-ConnectionGUID: q8lKar9jQAir3KGEkm19oQ==
-X-CSE-MsgGUID: npLlxOilQ3eEbHiY6MywJQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="68781763"
+  bh=QrndgZbN9z1XtoTGR06yFti0xSwFxjHct0FERYdF7BA=;
+  b=nQ12QItLtxX2/e9e5afO4La9C9+wfSFrOMIRtZUufVgwqwNuOC9aDog5
+   Q2NF20w4aGL0eDHVW2KIDsWAw8DYzoMqYPe+HYpU5lshV1eiKzJRWhIgG
+   MWXB/5i3iBGx/GMlEaCFKMB+2J9vKtBFhEoKTxNk2GNY5E7NOtqBkxzga
+   nRns4E4fWk6bBlxkHSvN1oRUePbK2y7iTrnSzpt5yddwnt4KagheUO4/C
+   yobOufDjiAH+zVuKShersTEZ9EWeCZ7yMgfjFRMIYBcefNZGA9BANK3Tg
+   oN186Nh6fLT4mY1nH3l03319c6TqScBjbSFAhQkI+5eDvUnR6ieVJvl6R
+   A==;
+X-CSE-ConnectionGUID: sw3AFcE0S1WzcfaTRO/Zvw==
+X-CSE-MsgGUID: 45/OOQrATN+cgPuz7YylxQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11376"; a="68781755"
 X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; 
-   d="scan'208";a="68781763"
+   d="scan'208";a="68781755"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
   by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Mar 2025 03:59:38 -0700
-X-CSE-ConnectionGUID: nhLIuPdfRqmK4abuoQlihw==
-X-CSE-MsgGUID: eQ4VFVtRTIqLSmNCiL8z3A==
+X-CSE-ConnectionGUID: epYLmD4nSv++05dKgL+RbQ==
+X-CSE-MsgGUID: oAb6QjutR1yMp+GHh+cTwA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.14,256,1736841600"; 
-   d="scan'208";a="153215697"
+   d="scan'208";a="153215696"
 Received: from black.fi.intel.com ([10.237.72.28])
   by fmviesa001.fm.intel.com with ESMTP; 18 Mar 2025 03:59:35 -0700
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id D00F3CC; Tue, 18 Mar 2025 12:59:33 +0200 (EET)
+	id E65112E2; Tue, 18 Mar 2025 12:59:33 +0200 (EET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Jacky Huang <ychuang3@nuvoton.com>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
@@ -65,9 +65,9 @@ To: Jacky Huang <ychuang3@nuvoton.com>,
 	linux-gpio@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 1/5] pinctrl: npcm8xx: Fix incorrect struct npcm8xx_pincfg assignment
-Date: Tue, 18 Mar 2025 12:57:14 +0200
-Message-ID: <20250318105932.2090926-2-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v2 2/5] pinctrl: nuvoton: Convert to use struct pingroup and PINCTRL_PINGROUP()
+Date: Tue, 18 Mar 2025 12:57:15 +0200
+Message-ID: <20250318105932.2090926-3-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
 References: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
@@ -92,48 +92,83 @@ Cc: Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Sparse is not happy about implementation of the NPCM8XX_PINCFG()
+The pin control header provides struct pingroup and PINCTRL_PINGROUP() macro.
+Utilize them instead of open coded variants in the driver.
 
- pinctrl-npcm8xx.c:1314:9: warning: obsolete array initializer, use C99 syntax
- pinctrl-npcm8xx.c:1315:9: warning: obsolete array initializer, use C99 syntax
- ...
- pinctrl-npcm8xx.c:1412:9: warning: obsolete array initializer, use C99 syntax
- pinctrl-npcm8xx.c:1413:9: warning: too many warnings
-
-which uses index-based assignment in a wrong way, i.e. it missed
-the equal sign and hence the index is simply ignored, while the
-entries are indexed naturally. This is not a problem as the pin
-numbering repeats the natural order, but it might be in case of
-shuffling the entries. Fix this by adding missed equal sign and
-reformat a bit for better readability.
-
-Fixes: acf4884a5717 ("pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver")
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 16 ++--------------
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 16 ++--------------
+ 2 files changed, 4 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index 17825bbe1421..f6a1e684a386 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -1290,12 +1290,14 @@ static struct npcm8xx_func npcm8xx_funcs[] = {
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+index 62a46d824b46..2601aacfb976 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+@@ -504,17 +504,6 @@ static const int lkgpo2_pins[] = { 9 };
+ 
+ static const int nprd_smi_pins[] = { 190 };
+ 
+-/*
+- * pin:	     name, number
+- * group:    name, npins,   pins
+- * function: name, ngroups, groups
+- */
+-struct npcm7xx_group {
+-	const char *name;
+-	const unsigned int *pins;
+-	int npins;
+-};
+-
+ #define NPCM7XX_GRPS \
+ 	NPCM7XX_GRP(smb0), \
+ 	NPCM7XX_GRP(smb0b), \
+@@ -642,9 +631,8 @@ enum {
+ #undef NPCM7XX_GRP
  };
  
- #define NPCM8XX_PINCFG(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) \
--	[a] { .fn0 = fn_ ## b, .reg0 = NPCM8XX_GCR_ ## c, .bit0 = d, \
-+	[a] = {								  \
-+			.flag = q,					  \
-+			.fn0 = fn_ ## b, .reg0 = NPCM8XX_GCR_ ## c, .bit0 = d, \
- 			.fn1 = fn_ ## e, .reg1 = NPCM8XX_GCR_ ## f, .bit1 = g, \
- 			.fn2 = fn_ ## h, .reg2 = NPCM8XX_GCR_ ## i, .bit2 = j, \
- 			.fn3 = fn_ ## k, .reg3 = NPCM8XX_GCR_ ## l, .bit3 = m, \
- 			.fn4 = fn_ ## n, .reg4 = NPCM8XX_GCR_ ## o, .bit4 = p, \
--			.flag = q }
-+	}
+-static struct npcm7xx_group npcm7xx_groups[] = {
+-#define NPCM7XX_GRP(x) { .name = #x, .pins = x ## _pins, \
+-			.npins = ARRAY_SIZE(x ## _pins) }
++static struct pingroup npcm7xx_groups[] = {
++#define NPCM7XX_GRP(x) PINCTRL_PINGROUP(#x, x ## _pins, ARRAY_SIZE(x ## _pins))
+ 	NPCM7XX_GRPS
+ #undef NPCM7XX_GRP
+ };
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+index f6a1e684a386..eac43315a360 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+@@ -587,17 +587,6 @@ static const int hgpio5_pins[] = { 25 };
+ static const int hgpio6_pins[] = { 59 };
+ static const int hgpio7_pins[] = { 60 };
  
- /* Drive strength controlled by NPCM8XX_GP_N_ODSC */
- #define DRIVE_STRENGTH_LO_SHIFT		8
+-/*
+- * pin:	     name, number
+- * group:    name, npins,   pins
+- * function: name, ngroups, groups
+- */
+-struct npcm8xx_pingroup {
+-	const char *name;
+-	const unsigned int *pins;
+-	int npins;
+-};
+-
+ #define NPCM8XX_GRPS \
+ 	NPCM8XX_GRP(gpi36), \
+ 	NPCM8XX_GRP(gpi35), \
+@@ -829,9 +818,8 @@ enum {
+ #undef NPCM8XX_GRP
+ };
+ 
+-static struct npcm8xx_pingroup npcm8xx_pingroups[] = {
+-#define NPCM8XX_GRP(x) { .name = #x, .pins = x ## _pins, \
+-			.npins = ARRAY_SIZE(x ## _pins) }
++static struct pingroup npcm8xx_pingroups[] = {
++#define NPCM8XX_GRP(x) PINCTRL_PINGROUP(#x, x ## _pins, ARRAY_SIZE(x ## _pins))
+ 	NPCM8XX_GRPS
+ #undef NPCM8XX_GRP
+ };
 -- 
 2.47.2
 
