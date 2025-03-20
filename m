@@ -2,107 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0DAEA6994A
-	for <lists+openbmc@lfdr.de>; Wed, 19 Mar 2025 20:29:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C7D9A6A0FF
+	for <lists+openbmc@lfdr.de>; Thu, 20 Mar 2025 09:15:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZHzKj0jYkz3c9G
-	for <lists+openbmc@lfdr.de>; Thu, 20 Mar 2025 06:29:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZJJKy52Rsz3c8n
+	for <lists+openbmc@lfdr.de>; Thu, 20 Mar 2025 19:15:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742412549;
-	cv=none; b=b0urDSPgx+yeqpCBBn/6CrIvYeuFOlq4qWq2/NDrmZrcvp+GSNfeqWTxe/jPJVqSTeMw2uCOGmkm2yl9Dh5gSJGZMHw2RlCFk4xKaQMNupHBu8jF3+69jY0xgk5LRrW0QBk1d7qdwqQVkkvsSzlgfhlny34rHWVJXr2fh1frQvfWsUAFVyUQs8KSDUm190T6QxL1xFA6voQdSgN6x7NvlF4/2J9z0VHigSJaIsAQI9CE91LLiWxzJQBuCderEi3JBSDBPNTRerV5w2r700gfHiOVC0+3lyH3iMM03d1aTobZ0wcGxLaRbOEO2HDQxHI98g2GmOPBa+4BmDRI0AyThQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::130"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742458531;
+	cv=none; b=QMYGelY7wVSRniW2vjNDiifJriihwiC0DBmSIdiaBYQGwUtq0aBB8w05RlY3PRXS3fy+9Om77yOclKkCWfwys1YatYx37B6ZrbqbKk+50TvKw1jh1MqA3jujoICVyp6lVqxx/08Ykj9tcN0UJFzBMfNuw4gAmYPjP4CnfMP7buQaQOjWL21p9+Ee/p+yAM+uSrGLRta0nwePaxLXM670f1WwN7sa9iJkIOrJhFYUo3YPzQE9bJn3S1nPSWaL5GS2GddD/lCWPvO3HeOb6NADTBgcbbSKntZ8g8Tu/7P7evjNI9yorIeAGoifnaXHFppJyAfUw2qeL93CDfumMiHUPA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742412549; c=relaxed/relaxed;
-	bh=zbmHU6yoDwVXekz4tTQKe7pROirEewngkxi6bRGCAYU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ShLM0aCIs29LDmAwgKhgO0Gf1QI5V1gSthsDYndaWfAss7X9rqftBgrLm7xPi4Zdeu7tSmdoNew0JAJ2kGgBz2Sb6Rv96juBmvT9MBsqiToFD8z2j9gjCew6Xo1dZG07oy+wGu4s4ngIwVSLieLfS+f9o0sMz6y2J3lE4MmjUuVY1Utd9zcKegBBbWIl8jcwBpa/vuq8QWeKrA2b8nS3VQutQ/vkcpgj/3+SBO6KjwSMKNJV9BfDa2fvIGMc9M4y64w2mN1ZszzYHD2A2pplcqJnowFL0q7I8gzJqA8sIyCdh3DcAEcQdC6Ilnhk6H9nFVMzbC6hWkQA3/YxdzRw3Q==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=pzO/WD9d; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1742458531; c=relaxed/relaxed;
+	bh=5ApO/4Mq6/c/yyrAg2ZeBEOh7YyHDdK7eqqrHOKWL5U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AW/kyQrJT7uooAC557a4uwR3DOKFx/YNgzLkAQKYm+CAynO/OTJu4e3VVdq8NzhGdQinz4e+kEPPQhJFNGRPhDh/oory6Z1n7jPHXu3CfgmCdlDoCj63vnfinne4lLIr+VW+KHtUqFepopxORisSfysxs4czjwV6jnULsU+2ojB3IuW5f/SFbi07h8BeKLcqn7LAHApyIXE4g4aw66ldaCZknWJbnd1FLyxdEvQ2jDyy3s7XQp/OG73TzKSxdFCKIbyzG6txGvLMnpZi1mjrS0nYu3o9m1WbViC3Qg5Efl3vp0iODwX7VaTwTuH7OnpmAeJq7Gulk92ToRCekRkdDw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=l3dnEu2j; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=pzO/WD9d;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=l3dnEu2j;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZHzKc4p6Yz2yys;
-	Thu, 20 Mar 2025 06:29:08 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 6C1A8682F4;
-	Wed, 19 Mar 2025 19:29:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0A4C4CEE9;
-	Wed, 19 Mar 2025 19:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742412545;
-	bh=ZzMX55IjDIprWqceWohngFCM6EBQHJSx4FKfnv2T0Ac=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pzO/WD9dL5W+fwp7FqW8OjOYtwusOt0EiiKi7IrOJ8q9ngMf6Kq3cwcm/WCzb3xDq
-	 bxseUheWXp5G01aDdO3IfNGmWpaN/Sg7jRw2UBA1ezdzcVPY3kz+1z7iD9IQ2iIWkt
-	 utGAd7YoEcVwmy+kyqB2rC5u3tHkX1MtT3ZpxSay1C2Ut9wFA4A+ZIRcuLUOMdJhpo
-	 cx8xbmJNjvJtufT9nODAFx2t0a4VmeYnSgcg3tAXO9up2Pquh7OadHBtgMk5SL08Il
-	 4g85Qv9OOygkFUK0cu5vUrThgvQI3hPFrdbe0xMOOj90pw7ueY7lK4Tzc0iW4iOpgs
-	 Uryed/e1F8ksg==
-Message-ID: <44f2387b-0a86-46cc-a5d2-950dd688b207@kernel.org>
-Date: Wed, 19 Mar 2025 20:28:56 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZJJKt1jDkz2yfT
+	for <openbmc@lists.ozlabs.org>; Thu, 20 Mar 2025 19:15:28 +1100 (AEDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-549644ae382so709516e87.1
+        for <openbmc@lists.ozlabs.org>; Thu, 20 Mar 2025 01:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1742458525; x=1743063325; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5ApO/4Mq6/c/yyrAg2ZeBEOh7YyHDdK7eqqrHOKWL5U=;
+        b=l3dnEu2jnR3GlKl8ZAppDo9BNXzd7kMIHkCp9P1VExeeA1KpcNugGg/fMNwraXzXQR
+         v67jg2tp+I0hyOGMFIdmkquaEmBL2OjU5QbX9/EB5cgrcTTstSKetFfHKW6Hx7BeWhUB
+         x3aHVLg4kXDliujuwQSFiBhtC7MjYKBp5k2FHYlL3IuzXa46IGYgAopMlvkAg0uo8Hnr
+         ibbF2nXd/BmGBrwDrQw378T5K6T+dqkTfXZJnwCw43L5JwWE62pbfEBuVRYLJa7koKX1
+         uxc6J+LK5B7fgUmAEaG4H5Y/8XAp9zGfX8FYeCLii1lMkLUz7XoXWOTBHmul/PmfjpR1
+         V4Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742458525; x=1743063325;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5ApO/4Mq6/c/yyrAg2ZeBEOh7YyHDdK7eqqrHOKWL5U=;
+        b=lQt0dgGecd4y/e4ZqKLF9ItRqrGBVNQFAAP6OvEcNxcf2L7Dy4b+vpVZodBNePY7YN
+         u1MJy0MF5yGZg7/tLthCM2k2RsJI0mjzHtDYWQtU87E/i9/Ks1ocJnGvs/6WWifYzoVC
+         nzGBywgOHBKpXe67bTCwXzkotO93K4AQkFrbMSKH2bpku6/QHmXItHDaAnAynQVAMNDs
+         5vfDqxQM9zv/lGNYYwoeUu1M9SvfVlRxHfRZ1eODMvxuwGN1oH464OYl08ExIWpPKHFe
+         WcKmpLb3gIAxqABrzDbh/DbZnZlfjUlkiBFJu/l48Q1mIF2fTHg0Cwx2pN1GAXcAYPbx
+         VrYg==
+X-Forwarded-Encrypted: i=1; AJvYcCVG2jmLpCa1aUcsIrRp1NSdxD1R7o5wnKgbaCMqz+2KdvRgVf4zqCzpJ9TK5YbC0fj+gRiA4M3o@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Ywtil21pPj+I84hfcVsiZfQtL/4KZ42sYxI2kJXq26zzvGPDLwr
+	fuc894xDoExO9uf23Kk5bCbNt9MKXvt5QYnUn9qD3eUO8X28iz+6opql/40fa8wx8IXrNAwgliH
+	VLXuMBbg+7aw3yor+tpUCvz8i5Pza15DuabFtUg==
+X-Gm-Gg: ASbGncuJmjp408uS17Yj3s/hr4lHmqOFyhquzIuRWdTw9D7uSPWzIkHMYXXdwaP51vE
+	FBY3dUVHW9gAXQzVLTMmGFCvStr7zQGGmLmBE45GWT6F9Wkkm0Oa2YS5LTzinuOqHxgl5nbqruC
+	RL6NGHLEUsADHDFlfXzzicJbpwvSQeqOhMoQ==
+X-Google-Smtp-Source: AGHT+IFt36qrZTs3jVigV6s3o6UseGY3Us8oFZFiBf9nDZO8WAVJKTGbrIYvbTde8JRkHb4C+HxFUH8jfnNdOZIUwPY=
+X-Received: by 2002:a05:6512:39c7:b0:549:b13a:5d7f with SMTP id
+ 2adb3069b0e04-54ad067f248mr760711e87.41.1742458524964; Thu, 20 Mar 2025
+ 01:15:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ARM: dts: aspeed: Add device tree for Nvidia's
- GB200NVL BMC
-To: Willie Thai <wthai@nvidia.com>
-References: <93bb3092-7f49-4a7f-ac97-3cf1a62ac39d@kernel.org>
- <20250319112451.4171471-1-wthai@nvidia.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20250319112451.4171471-1-wthai@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-1.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+References: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20250318105932.2090926-1-andriy.shevchenko@linux.intel.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Thu, 20 Mar 2025 09:15:34 +0100
+X-Gm-Features: AQ5f1Jq4MkD-TA_HtM3sgjv-P_RV51WIW1wiOeKXspOTGRepAHST2Ro8gvkc5rQ
+Message-ID: <CACRpkdbTKytFgdqyDajpcfENagSXPZhG5hbpQiGF23VHqLd9_A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] pinctrl: nuvoton: A few cleanups and a fix
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -116,27 +92,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tony.luck@intel.com, andrew@lunn.ch, conor+dt@kernel.org, tingkaic@nvidia.com, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, kees@kernel.org, openbmc@lists.ozlabs.org, leohu@nvidia.com, linux-kernel@vger.kernel.org, pmenzel@molgen.mpg.de, gpiccoli@igalia.com, maryang@nvidia.com, joel@jms.id.au, dkodihalli@nvidia.com, krzk+dt@kernel.org, robh@kernel.org, linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org
+Cc: Jacky Huang <ychuang3@nuvoton.com>, Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, linux-gpio@vger.kernel.org, Andy Shevchenko <andy.shevchenko@gmail.com>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Shan-Chun Hung <schung@nuvoton.com>, linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 19/03/2025 12:24, Willie Thai wrote:
->>> +
->>> +// Enable Primary flash on FMC for bring up activity
->>> +&fmc {
->>> +	status = "okay";
->>> +	flash@0 {
->>> +		status = "okay";
->>
->> Nothing improved.
->>
->> Respond to comment instead of ignoring it.
->>
-> 
-> The property was disabled here: https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi#L172
+On Tue, Mar 18, 2025 at 11:59=E2=80=AFAM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 
-I see, thanks.
+> Convert Nuvoton drivers to use pin control provided data types
+> and more of device property APIs.
+>
+> While doing that, fix one non-critical issue that sparse complains about.
+>
+> Compile tested only.
 
+Patches LGTM and we are close to the merge window so I have
+just applied them.
 
-Best regards,
-Krzysztof
+If there are any issues we can surely fix it up in -next.
+
+Thanks Andy!
+
+Yours,
+Linus Walleij
