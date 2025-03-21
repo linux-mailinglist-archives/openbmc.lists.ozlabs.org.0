@@ -2,68 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D040A6C00B
-	for <lists+openbmc@lfdr.de>; Fri, 21 Mar 2025 17:37:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E84AAA6C007
+	for <lists+openbmc@lfdr.de>; Fri, 21 Mar 2025 17:37:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZK7Ps6gKlz3fqX
-	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 03:36:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZK7Pp0Yyhz3fQq
+	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 03:36:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=23.155.224.40
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742574999;
-	cv=none; b=KI/9xoo1LVAeqwJSzvMLCYG7ocIQiwwoUjxCi1Iu/fRIm7XAN69YUZgtxm9aGxF+8ogwKqNikzuHPFmh8JrG7OCZUMzTMfXbHG3mpOsU2LkUUqVpz2cKB1kuGEL2njs8Y5nhPkbNvnbR6a57ftzLZ/vlGq/jAgTVNCkyroxusRpDAFIKD0s01RxyQVrf4nLcIG+6eCqZCWzU2S6OrGVHNlGbpqoLtGCwnpLceJAkYuUBCcHoObd6X+aIcmBY2VTS0V8mlTrOioWYtjF95IurCCPy1alD/UGDKZr2bKbZJbM0zcqXqFXesufCIT0l+/UfMS8Fa8U1HM1kRKJVPU9BIw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742574998;
+	cv=none; b=SjynM4R2mediXrTrZcUQcZzBpI9bTish/Sv23vGYz1Nt4iHf/BIadOs1H+MQe96xVRXpZwpmApmzQ9KmsNrmINrc9S1ePx7O2EwTjwHhChDoK5OsrIYpxZ2gv+AJWoe1nHCZLevsojf1TMJmM7THGfbLQwVLjDLmjbqJztHAqfdGNq1Wsa2dbJavbk9N68cYJwq/RJ3WxlyK5XS4DvaipT1bvwvvaP5bsBZZ82wfd1jkNx3y6GQ15+b+CXBu9H87Ek+XAB8reJm4KA3S48n2YFm1zTBh/Y3zonb8XAfbAhHLXBl4m3L7oIjBLuIbf0NShhiKKo0XlsUd68Ymn944/g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742574999; c=relaxed/relaxed;
-	bh=BIa7ziTcm+ScnKVuzLb1vH2l+WPIEbFiu4cxIBCxw5A=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=b9IrdOLhHEpsMPyLop6c0E2UfY4rOQHWRffZXnWWdW/HiWVo+uDprBcNLSZyGqReWmj2ztoNw5nRbuIu7t5s4ouT5tTKPikXFrkD4dpq6sPiV6+W/3BmsD2ZtdA8UmX1o8fmX1ijh2XcIB7l6qv1De4ROGqAS4u7BslQ/BSni0IHXf5oPFWTuvCoqaQ2yP9Q5yBNJyDecYemu9BhiGaYWetbj/KV3TXvN1HtGogeJDAEsGH3C+UvdRHsNS2fpBcYhG/IvGJdkSt6d8eezaxxHjb1SGrg1Hn8AooWRYxQr1SLQDx++4Bxul8oQLlp4DiQnXetULo2fKPz/qEsUkzq8A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com; dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=RHGtXYRX; dkim-atps=neutral; spf=pass (client-ip=23.155.224.40; helo=raptorengineering.com; envelope-from=tpearson@raptorengineering.com; receiver=lists.ozlabs.org) smtp.mailfrom=raptorengineering.com
+	t=1742574998; c=relaxed/relaxed;
+	bh=b0rJIz8mWF0HYH/Y6kJCCRP68Q4SGM9+5wuvq5kctzI=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=GPGhvyRur6pWBqOtfqu3XnAfpPiJvHil5y93MzElCIOQzcSqgMMSuDRir7c+9NUDIoFeYUNt0nm+Q+DOvFL7Y3Dx00GIX/WZXaWotBNci6H7QAnR6YKyA2u1KovGiixa+brv4gn/L+PW7lkW5nhDT0Cznuxpx3QWrFhasscOucpUhBKNUGwa7LbMHS8pTmB4FucPP0u4z0mmgICmhRnAjFp46xdJfYHzuMoNAppuU/bDiIOCA2gxtdm7PWn+8miRsnQcvxT+BtKNwEUBCiZaxsLajbZfAPSH6iW3VLjVAvVRypSOd0dY0OKvpK2yiaxhJPtfhIM0ZqKowCmuhwQPCA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com; dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=CNQ4Pt5H; dkim-atps=neutral; spf=pass (client-ip=23.155.224.40; helo=raptorengineering.com; envelope-from=tpearson@raptorengineering.com; receiver=lists.ozlabs.org) smtp.mailfrom=raptorengineering.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=RHGtXYRX;
+	dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=CNQ4Pt5H;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=raptorengineering.com (client-ip=23.155.224.40; helo=raptorengineering.com; envelope-from=tpearson@raptorengineering.com; receiver=lists.ozlabs.org)
 Received: from raptorengineering.com (mail.raptorengineering.com [23.155.224.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZK7Pf1yhLz2yft
-	for <openbmc@lists.ozlabs.org>; Sat, 22 Mar 2025 03:36:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZK7Pf190Wz3093
+	for <openbmc@lists.ozlabs.org>; Sat, 22 Mar 2025 03:36:37 +1100 (AEDT)
 Received: from localhost (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id A20258287B1A
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:29:42 -0500 (CDT)
+	by mail.rptsys.com (Postfix) with ESMTP id E2E5282888F7
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:30:05 -0500 (CDT)
 Received: from mail.rptsys.com ([127.0.0.1])
 	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 4R9MFG_fUwXB for <openbmc@lists.ozlabs.org>;
-	Fri, 21 Mar 2025 11:29:41 -0500 (CDT)
+	with ESMTP id lWve2xJVQyd5 for <openbmc@lists.ozlabs.org>;
+	Fri, 21 Mar 2025 11:30:05 -0500 (CDT)
 Received: from localhost (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id C926A8287CB8
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:29:41 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com C926A8287CB8
+	by mail.rptsys.com (Postfix) with ESMTP id 53A6982888FE
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:30:05 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com 53A6982888FE
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
-	t=1742574581; bh=BIa7ziTcm+ScnKVuzLb1vH2l+WPIEbFiu4cxIBCxw5A=;
+	t=1742574605; bh=b0rJIz8mWF0HYH/Y6kJCCRP68Q4SGM9+5wuvq5kctzI=;
 	h=Date:From:To:Message-ID:MIME-Version;
-	b=RHGtXYRXM49xdjfQohcm7OJLsju4qGJJCa1k5J+vNmTnATPa3CWOwVOlcVY4S1DFT
-	 m/wO+jSJfCVHifkR6Hbu6OGevMnzoiX33VhUcFwHH/B4t8uEBiuRmNSYMo9PADJUcQ
-	 nN6JdMYDQLpnu5KR+u8lyLKtvs94lUPOHYiEBOzo=
+	b=CNQ4Pt5HxNLhkfoS9U4hgcKynzIT6WAbWhN0f2kByXGoSq+8qRaR2A0DGUO4ViZdz
+	 h2f74IBb5ZNPxulzFYxh3uXJGhjiiDHvbX5RM0CZmY+FegQs7UWZHMlPFWSOaKjRMl
+	 Hcw5yj2I5M170sDuqesxdy7NTLc+OXj4JaIn6EQw=
 X-Virus-Scanned: amavisd-new at rptsys.com
 Received: from mail.rptsys.com ([127.0.0.1])
 	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Uqhwsolk7M_K for <openbmc@lists.ozlabs.org>;
-	Fri, 21 Mar 2025 11:29:41 -0500 (CDT)
+	with ESMTP id FG4eqU-NW23W for <openbmc@lists.ozlabs.org>;
+	Fri, 21 Mar 2025 11:30:05 -0500 (CDT)
 Received: from vali.starlink.edu (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id A200B8287B1A
-	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:29:41 -0500 (CDT)
-Date: Fri, 21 Mar 2025 11:29:41 -0500 (CDT)
+	by mail.rptsys.com (Postfix) with ESMTP id 795A682888F7
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 11:30:04 -0500 (CDT)
+Date: Fri, 21 Mar 2025 11:30:04 -0500 (CDT)
 From: Timothy Pearson <tpearson@raptorengineering.com>
 To: openbmc <openbmc@lists.ozlabs.org>
-Message-ID: <10646965.19586515.1742574581480.JavaMail.zimbra@raptorengineeringinc.com>
-Subject: [PATCH 1/4] ftgmac100: Allow target board to override MAC address
+Message-ID: <1982610042.19586749.1742574604453.JavaMail.zimbra@raptorengineeringinc.com>
+Subject: [PATCH 2/4] net: phy: marvell: Allow targets to skip MII RX/TX
+ errata
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC134 (Linux)/8.5.0_GA_3042)
-Thread-Index: tz2lTKVt19HZh2wYUFt13y/f3K0y6w==
-Thread-Topic: ftgmac100: Allow target board to override MAC address
+Thread-Index: lb4WNfqyAgIo6yiBXDgErDA7glxcHA==
+Thread-Topic: marvell: Allow targets to skip MII RX/TX errata
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.1
@@ -82,58 +83,62 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
- read function
+ application
 
 Upstream-Status: Pending
 Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
 ---
- drivers/net/ftgmac100.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/phy/Kconfig   |  8 ++++++++
+ drivers/net/phy/marvell.c | 10 ++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
-index 5595f48bbfa..e5373053e58 100644
---- a/drivers/net/ftgmac100.c
-+++ b/drivers/net/ftgmac100.c
-@@ -257,6 +257,11 @@ static void ftgmac100_reset(struct ftgmac100_data *priv)
- 		;
- }
+diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
+index f6dde8af1ce..c79883e4172 100644
+--- a/drivers/net/phy/Kconfig
++++ b/drivers/net/phy/Kconfig
+@@ -112,6 +112,14 @@ config PHY_LXT
+ config PHY_MARVELL
+ 	bool "Marvell Ethernet PHYs support"
  
-+int __weak ftgmac100_target_fetch_mac(unsigned char *enetaddr)
-+{
-+	return -1;
-+}
++if PHY_MARVELL
 +
- /*
-  * Set MAC address
-  */
-@@ -642,6 +647,20 @@ static int ftgmac100_remove(struct udevice *dev)
- 	return 0;
- }
++config PHY_MARVELL_APPLY_MII_RXTX_ERRATA
++	bool
++	default n
++
++endif # PHY_MARVELL
++
+ config PHY_MESON_GXL
+ 	bool "Amlogic Meson GXL Internal PHY support"
  
-+static int ftgmac100_read_rom_mac(struct udevice *dev)
-+{
-+	struct eth_pdata *pdata = dev_get_platdata(dev);
-+	int ret;
-+
-+	if (!pdata)
-+		return -ENOSYS;
-+
-+	/* Attempt to read the MAC using a target specific access method */
-+	ret = ftgmac100_target_fetch_mac(pdata->enetaddr);
-+
-+	return ret;
-+}
-+
- static const struct eth_ops ftgmac100_ops = {
- 	.start	= ftgmac100_start,
- 	.send	= ftgmac100_send,
-@@ -649,6 +668,7 @@ static const struct eth_ops ftgmac100_ops = {
- 	.stop	= ftgmac100_stop,
- 	.free_pkt = ftgmac100_free_pkt,
- 	.write_hwaddr = ftgmac100_write_hwaddr,
-+	.read_rom_hwaddr    = ftgmac100_read_rom_mac,
- };
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index efbbd31ff71..345d3a65104 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -379,7 +379,15 @@ static int m88e1518_config(struct phy_device *phydev)
+ 		phy_write(phydev, MDIO_DEVAD_NONE, MII_MARVELL_PHY_PAGE, 2);
  
- static const struct udevice_id ftgmac100_ids[] = {
+ 		reg = phy_read(phydev, MDIO_DEVAD_NONE, MIIM_88E151x_PHY_MSCR);
++
+ 		reg &= ~MIIM_88E151x_RGMII_RXTX_DELAY;
++
++		/* Per the vendor, certain Marvell devices will not function if
++		 * the RGMII TX/RX delay registers are modified.  If an
++		 * affected design has been selected, do not write the
++		 * RX/TX delay registers.
++		 */
++#if !defined(CONFIG_PHY_MARVELL_APPLY_MII_RXTX_ERRATA)
+ 		if (phydev->interface == PHY_INTERFACE_MODE_RGMII ||
+ 		    phydev->interface == PHY_INTERFACE_MODE_RGMII_ID)
+ 			reg |= MIIM_88E151x_RGMII_RXTX_DELAY;
+@@ -387,6 +395,8 @@ static int m88e1518_config(struct phy_device *phydev)
+ 			reg |= MIIM_88E151x_RGMII_RX_DELAY;
+ 		else if (phydev->interface == PHY_INTERFACE_MODE_RGMII_TXID)
+ 			reg |= MIIM_88E151x_RGMII_TX_DELAY;
++#endif
++
+ 		phy_write(phydev, MDIO_DEVAD_NONE, MIIM_88E151x_PHY_MSCR, reg);
+ 
+ 		phy_write(phydev, MDIO_DEVAD_NONE, MII_MARVELL_PHY_PAGE, 0);
 -- 
 2.39.5
