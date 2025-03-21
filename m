@@ -1,89 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB6BFA6C195
-	for <lists+openbmc@lfdr.de>; Fri, 21 Mar 2025 18:33:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0876CA6C1C7
+	for <lists+openbmc@lfdr.de>; Fri, 21 Mar 2025 18:43:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZK8fk5zTqz3cF6
-	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 04:33:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZK8tk4Skzz3cFf
+	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 04:43:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::129"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742578379;
-	cv=none; b=dyoqTw2X/VWhlSTfF6M0iSgAAW090iF08oMgO9US1bfV3qmIs4V4PaKjCTcBIQFkHflPBa/E3zGcanOZ+sX9ocZq88yF1dJzMoQhaYQBcEx0dZ/ZClLKEgHWHjSBBsj7ZyXs01Si5cTMz8w7eB5Q9ikLsZnBw7C/zDV/Mh5/0ulnNmVJojHBflQU29fTjgkcc4Jl2RBSHuxiAVRbuqE+HkKWPB9DaMfgo2SliUjrld9mxXPaWy9Ms/ODAFKKPN+vTIUFWScn+/poufXm3NG7fqDVM64pBeCdGwWh7hUsYPC0vNkuEVejIhcIYCmMv5mo0cTj3yUr9NlflveZeUg9KQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::231"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742579003;
+	cv=none; b=O0Je7AEhwVOv8ZzHLyIq8yEwPIS8ELu13C+gzRkb7f3rCnziTaKF8nWJm4ngnSPpH3otDwlwl6uEZ5QkK8VeQNtl22t/jLMvG7/4/aDQX+eDDHBME566jiDu7e3O4ZL9ocsDug0i8RXTZLpfr0XBIN0+sNEWHTVl6ZFd/MpaXI8AM+2MXjtUywswmWY5LhqPUmJyw8CoOVMu+YBL8ok/wQO4DRBXYT6YoVSacUuK/5W7Wf980RpfP77lTRO3vU7FFrlOwULhznTA6WmTr+HAadPLQhwrfZBHIqtLMJwwVdA/0V8VUINni7INJYU0KMRwy8fVe6C9pj6lnGF7EN4tSw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742578379; c=relaxed/relaxed;
-	bh=cl5whmx2Jk5UpFPK8Wy/p9k54QuBOv1OCFMMlxLfZ7k=;
+	t=1742579003; c=relaxed/relaxed;
+	bh=URcWnsBxK6BbxfCAMR5jNM24hJOGCcOuiZnZOijNk5w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cux2UjuOxdseyDGRTDdaPN0TtZPw4W0GTBhmLtNziMgORB2ZRLanx48xKyXqLE06VyG3/SYK/pnCBWEPbcSrdX/FRclN7wbYhugU45fOkDnJp2uKv9OGFgqqj3Zfri4+6ls6IC4my5+oueaxNqkpiW5YZeUyh2g4HaeNmuI4Cyy9CQCUkH8Ir4n7Ar44ZyN8nKB0ziXSAIft4JiuibA1RbR6+e/ZisxTFkMM5xk1JEVoMaQBt3ub5qHMYiP+F0FCxouXR6JvbpPJSSW7ErEArA1kkks2r062BPMQiM7J4kl+b9rTz1OeBhMPFqy9ChaqXdLfDj7bMYn5cX9P6lc6/w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GqosaEDa; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=o1fenwHcm61C71riznvdqAgzNUyAu3RtSXI01J+p821SJQuPxKiog1Uw6aJ0zzIQxyy5CWLqriT1aRzqOR7XKhsO6U9L3kfhE7hy6duYGvZc/koWJOy08xvEYFqLSEPzxSsRlzjn+FV2ItZP5XuYl7w+RTu0TXD5IZr2pyCC6eDcB3RiUsZjEXDC5Y7BRS9d7NtYHCe+oYeaMb1V9uIuXAUE63mnQ8ucNTJKY1h7lrztDIn4Qj9/2Y/wyZmygSjXiORS7EZwbhNlllaV1xmhm4EGrInbUIsp73LpWGUZCk3VPlC8qVn27weSuq7WBc0LlYvhENZMqce8hFO5mPj02g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=atU+Hk2J; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::231; helo=mail-lj1-x231.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GqosaEDa;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=atU+Hk2J;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::231; helo=mail-lj1-x231.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZK8fd6rydz30T0
-	for <openbmc@lists.ozlabs.org>; Sat, 22 Mar 2025 04:32:56 +1100 (AEDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-54298ec925bso3382762e87.3
-        for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 10:32:56 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZK8tf0Lz8z30Ql
+	for <openbmc@lists.ozlabs.org>; Sat, 22 Mar 2025 04:43:21 +1100 (AEDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-30bfca745c7so22344911fa.0
+        for <openbmc@lists.ozlabs.org>; Fri, 21 Mar 2025 10:43:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742578374; x=1743183174; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1742578998; x=1743183798; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cl5whmx2Jk5UpFPK8Wy/p9k54QuBOv1OCFMMlxLfZ7k=;
-        b=GqosaEDacMf6kdPBI1RqQ0gAnCjg2Up2yCKgSh3qr6cMKBElkOyS0qQo5BKr+5zLKI
-         Jh6qCDqgbUqLiADJuVEwDz7BK3eawOddADzBEegLCp5JrcnK6FOKRWavahQti7Fh2m/a
-         vi0uX6a8oShxTLUGM1EaDgcl8Cq4FCNboF9G5JpEG5vGKXaFgY1B7SiNpO6E9zef5pBV
-         sszzpygNXhuVL1HECDQHCiDWlwW/zM0RPJ//Q7EyyRHoHjbaZRS8jd7fAMXnYN5u4eca
-         0H4bTonCWkt9hzYdwv1f+H1Pran6zna7zBcb9xuy7OYndv4S4lw3eWASRoFjlKWxQxpJ
-         UA2w==
+        bh=URcWnsBxK6BbxfCAMR5jNM24hJOGCcOuiZnZOijNk5w=;
+        b=atU+Hk2JYpf/LzQe1qZrOdH87S5mJaELt+NKCU9yhyMM9Q+v/YzFM90EeVoDCPbY+p
+         7PPSVXJ49iActnpxcYMI2L8hZVtAGhtM2+j/48qXAw15etDVZ2DqCqDbgP6HzgtUAhpX
+         JIYLq3QKVLKK8JAWnYWbJPfsyc6o72yIgHY23Kd0bZdSGL4a6vy6AdLWPn0lM+KOaj1M
+         MGsdSxo1iozxtDZZD4/G9dB89p6n7L5r4PaKwTxmzc3/IjvnaGy4wVApIrw5y6sqJu2H
+         e5g0PSQ8zfwQAMLovlYyfriNHCS9W0iMU2LIN//fDzkaxPzVhX0r6AAjIRpZ2+TUYQGX
+         0xzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742578374; x=1743183174;
+        d=1e100.net; s=20230601; t=1742578998; x=1743183798;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cl5whmx2Jk5UpFPK8Wy/p9k54QuBOv1OCFMMlxLfZ7k=;
-        b=hYne+uoz+H3tH6DcDGGJGpl6Xj529oFiz6r4CaparKVIaOKFQ7dMeL6s1mcdDPIKau
-         Jd3b1sgJldu+6dX5vkRYfsQej7RKZXlmAsuG4RgFMrEy2E0hrGSWxbvgg32+r8OnX0Hu
-         Mj87vLjhcDK+43Et1dn6NKCfEgBBo047qSdbY/Lvy7XBkcDkLYEOUP/YIK3xTVNwTyFS
-         +63vhzlS3GziA+mSxzvJU5H0fO7OztxT1SYnAA3rb3qIpnXIU3ihN/vmruLHx5Q9S/xb
-         Jd1ryZdA+58At1y++gOEKEfQY8QuVtdX6ACIUj3DUQxyBAGDJTGwZHY6X4tkVJIgESB/
-         2Vhg==
-X-Gm-Message-State: AOJu0Yyj/3jDYJF7MOzPZrvPtgx6Hi6i4mnOAx234jkeXKd+JX9JNWD1
-	lFuiHUmEX7n8GLW0JBo6OIEiCfzX9sHhSHhkDAY3oZspD23mGjGXScH5Nw==
-X-Gm-Gg: ASbGncvj6mdPvZGK40sevdxMy9zqYMhPQEKZY7cRsMPYc568xn05AE4Es1Nil+/g3MP
-	YwY91ibgR8L9ETgZOeE6ET7RL5CywL6oDhXMPQhLzw3pD9rM11ZdSIEXn709LIuTHFIjXIaTs3g
-	MsOLNdIXR5ltSdh2e3jVpzVG2US+PBfcn//UfSZZsAm06NNCsiz9dlZipLPYI/BctRf5i0m+MLs
-	ZC+GQ7IzzbjOJtaPaTmc0+7Uekc3hZwssWTxvP2GhmhoRDQs/Vb3KMa/oiMNrb4UIU602vScPKb
-	LAYneT2Cw/N1sVwB8O1REFpHQe74wvkdPAgVSoiGKRPjccoEshcqu6UNKbc=
-X-Google-Smtp-Source: AGHT+IE4E5eWj7xpk6hiIZT7JX/QizOzgICxQw675EtFl8OaD/kdbBwQmhZ+FklJ/6etYoGsR3v48g==
-X-Received: by 2002:a05:6512:3085:b0:549:74a7:12de with SMTP id 2adb3069b0e04-54ad650d588mr1643670e87.48.1742578373219;
-        Fri, 21 Mar 2025 10:32:53 -0700 (PDT)
+        bh=URcWnsBxK6BbxfCAMR5jNM24hJOGCcOuiZnZOijNk5w=;
+        b=jbaOTWD0rMy5RqyNEEzN0eUxAy02yUt+Z3v9kT3zFpu41Uw2HYLIC5ydTgcVPWQA4t
+         sR6ir6iCO3duN0HARL/ipptqxH5tQXatc7vQcy53qr4WzKRWX526OeM46Moo1BE2MCNG
+         MNtiULQ6vlJZbsrKZyaeu9DPdVqOi5oK94sZkC2W9I6NbnJvEOl0Jdpr9N3+3yR+FA3l
+         ELt6u8BXFcj0U8XMqmGKvk2E7ErXUwHDzq/YSm7DnjI/J8Qgik6LERS9cxpWxtBD2Ia1
+         vg7VCnB3RDSfi/kZ5vrVXURsHEXQ1vPGyodj6Zx8JKKUJflA+aF4y6XMPNe0WR0nd+Rk
+         ckHA==
+X-Gm-Message-State: AOJu0YxJI1lj78gwQ4YNInsosCj6dWkCBPb1VJaFNaveBKxdg/z8ZTj9
+	uZGcaq+bVKVlbeH3NjtebMkqhtHFtSzORQdeRgmvdltQxWWsz568PCz1yQ==
+X-Gm-Gg: ASbGncsoGEedJcdibo0fJyZWFnuBGSQwi31+uDjZDfFWFx+e3h+DKxo2KMxQPJIFnCU
+	W1/P9XIQk/Ixly+3WJQreL08rcK4iLXwZBhTMO9/738EGwXO5EP5BbnZA1XX0zRZByAaLrEcjwM
+	zdWDfmAXdU1QUB1QUg4BoSKu0YdCvlvCpjHLvjVAbORw9wsj8wcBfCaTjuFSkhkz9CoIPtdm1rk
+	e7qyN7hPIQpzT+uwuRass1zdqN4n00hlW2hqVOnDua+ewKztpZ6VbVzPytGwCZcb335NpwmGtBX
+	7bALLxsMZbR7k/N5b0qsh9U0wEO1We+8cI5E/kEqhufi393mnpV0QzxQuos=
+X-Google-Smtp-Source: AGHT+IHgJ/B5GNIWEvnnuJH1d0zkxfGiAd6ftaRlMTvIVoKB6JoU6E2fiNKd08yixX1MTnUKd1hSww==
+X-Received: by 2002:a2e:be8b:0:b0:308:ec50:e841 with SMTP id 38308e7fff4ca-30d7e313eedmr22225661fa.25.1742578998214;
+        Fri, 21 Mar 2025 10:43:18 -0700 (PDT)
 Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-54ad651237fsm228901e87.242.2025.03.21.10.32.51
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d910dbbsm2937531fa.95.2025.03.21.10.43.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Mar 2025 10:32:52 -0700 (PDT)
+        Fri, 21 Mar 2025 10:43:17 -0700 (PDT)
 Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 52LHWmDP005625;
-	Fri, 21 Mar 2025 20:32:50 +0300
+	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 52LHhDTv005646;
+	Fri, 21 Mar 2025 20:43:14 +0300
 Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 52LHWmWs005624;
-	Fri, 21 Mar 2025 20:32:48 +0300
-Date: Fri, 21 Mar 2025 20:32:47 +0300
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 52LHhDLP005645;
+	Fri, 21 Mar 2025 20:43:13 +0300
+Date: Fri, 21 Mar 2025 20:43:12 +0300
 From: Paul Fertser <fercerpav@gmail.com>
 To: Timothy Pearson <tpearson@raptorengineering.com>
-Subject: Re: [PATCH 1/4] ftgmac100: Allow target board to override MAC address
-Message-ID: <Z92iv6GvAqIsv5hg@home.paul.comp>
-References: <10646965.19586515.1742574581480.JavaMail.zimbra@raptorengineeringinc.com>
+Subject: Re: [PATCH 2/4] net: phy: marvell: Allow targets to skip MII RX/TX
+ errata
+Message-ID: <Z92lMNqRcWrdmMrS@home.paul.comp>
+References: <1982610042.19586749.1742574604453.JavaMail.zimbra@raptorengineeringinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <10646965.19586515.1742574581480.JavaMail.zimbra@raptorengineeringinc.com>
+In-Reply-To: <1982610042.19586749.1742574604453.JavaMail.zimbra@raptorengineeringinc.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
@@ -103,15 +104,39 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+On Fri, Mar 21, 2025 at 11:30:04AM -0500, Timothy Pearson wrote:
+>  application
 
-On Fri, Mar 21, 2025 at 11:29:41AM -0500, Timothy Pearson wrote:
->  read function
+A rather uninformative commit message again.
 
-That's some incomplete commit message.
+> Upstream-Status: Pending
 
-What kind of function do you envision here and for what kind of
-overriding and with what rationale?
+Pending what exactly and why? I guess you're supposed to send your
+series upstream (to Linux devs) first, then after they're accepted you
+can ask for backporting them to OpenBMC tree. There're exceptions but
+you need to provide a rather convincing reason for that I guess. I'm
+not saying that in any official capacity, just as a sidenote, Joel
+will clarify if I'm wrong.
 
-Please explain why you need that instead of using e.g. NVMEM subsystem
-or having the bootloader set it in DT.
+> +if PHY_MARVELL
+> +
+> +config PHY_MARVELL_APPLY_MII_RXTX_ERRATA
+> +	bool
+> +	default n
+> +
+> +endif # PHY_MARVELL
+
+This doesn't seem to be the right approach at all. If it needs to be
+specified per board, you need to add it to Device Tree schema and
+those Device Tree board files that are affected.
+
+> +		/* Per the vendor, certain Marvell devices will not function if
+> +		 * the RGMII TX/RX delay registers are modified.  If an
+> +		 * affected design has been selected, do not write the
+> +		 * RX/TX delay registers.
+> +		 */
+
+This doesn't say much. Please reference the actual errata document
+number or cite its text or find some other way to explain which
+devices are affected how. Proper implementation depends a lot on those
+details.
