@@ -1,74 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 472A3A6CBA0
-	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 18:24:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05EB8A6CC2C
+	for <lists+openbmc@lfdr.de>; Sat, 22 Mar 2025 21:20:36 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZKmQX3Plpz3c91
-	for <lists+openbmc@lfdr.de>; Sun, 23 Mar 2025 04:24:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZKrKP1Bsfz3c8G
+	for <lists+openbmc@lfdr.de>; Sun, 23 Mar 2025 07:20:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=23.155.224.40
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742664273;
-	cv=none; b=D9t4t7VOIjwZJoooc9lMBt0muSVuNJf5/3Vf0Yte8k++1HmQUpuDDfKaXbnCGDWTiOSIbhjlytiuTwuqhGlb+OjxD6TiMPrEjB9CAppSKgETzATQFl29LL4qc2wVOawJ/Kk+fh9eDMP6nfz6wjJZnBd98VTbSGl4yZMMeBuAFrv2HFEBycQtWLxqD5a6iovlepR4nb3aF1rhu7ZZb91/6DwPJZKdHYJMqhh/bYccv6UH3dja2NKq4qBPheHLMqmpwUzMtH3Ry9lNMpf8mkzwer5YX1e9+7ytjXsTQzsYI38e5bUBYIf5nlDTcIQfGXIfQ3XcSXNrWlqlZ532mc7Ofw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::22e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742674820;
+	cv=none; b=hm7pmFtkdRBTypk8pfdx7SSQS5yl0TyVtMCzsNuCSpkoCh1X+3OlttXgcsBGzAwnbFrLEsZ0oo+PY0VTdR4pN1uSaHVis3Hf7UDzSMNn93Re8i1zhdgZev6LxBkaPwGFvtRYNx8EDwy1oUpJLXYDvW26xgNHXDfxMxWeVcLV/zAIFjpqwKm6tl1J3lOjISI6PWiYU+deP2s8JCFpsjYPSpEEOvrGyfLXqlr7JHOjzKrfP6Yjp9cPwHNu4p+2TXYDjhZRJyiJBfgadABwnmsbDp7pkxbjvMYoSznMgzXogPOcnQMHOpYZkjNEhyGf9PFdBNJOaMOlJ4KJYGjCQ5gdEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742664273; c=relaxed/relaxed;
-	bh=lMB21tvVMtr6UjvjYcijOBcTxx8pLLAcgEmgq0f+PTE=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=QIHpRGSDCo4Za5F48qd/7idNlrG39VfPvPScuPqU5zOjAAuc8WOVbce8eKJw+inFHiTiI0ng/gIBEO4tJduAklvT5UZAp5YhfmCSjWLLwWZHiYGs2jdkUhbRzEq5Y0qoXWw5Ls0QqdzZmSU73eh1Gvgj57X1+jgxsZwJIOgfQZBxlKLrbEhGyytoZ1+UnH7wvs5JJVNHxbIoVX5kVCD5fJkXqXkiKJE64KFx0I0A0SCW/GBj01ryMJbBDOh6EF/M9Vx5YoQuc5EXfwrryBM670oNCF4+d5zd3dyUnYE64i4dzk6Ccs2Uen01g9e13MEY9dJaCd46VH1MqDjY+x3boA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com; dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=OXOb4LEH; dkim-atps=neutral; spf=pass (client-ip=23.155.224.40; helo=raptorengineering.com; envelope-from=tpearson@raptorengineering.com; receiver=lists.ozlabs.org) smtp.mailfrom=raptorengineering.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=raptorengineering.com
+	t=1742674820; c=relaxed/relaxed;
+	bh=7rg21qd0V+z87/c4Aa0HxHj8O+jTAJZ+zQx5fPHSH7k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h0/O/oKZGZLmtCgrZYhjSoa8zmRvOCJPr3fYrfnee/S6I0ZsWttqXJLupMgjYfRcSsRoz/VAECELNaq/xw2QRu/ZouD+TWx2ruC5iyZss0vmUTruifj/5Lf/vHZs+iBp3j5JUFSJq3J+Gm8cOgrnD7eVhwOH4X5luFLdYgSMGEIzy4FWBWoAJr1j7/N0fCUIsX3ZARjt8W6cU0vD6nPvzfPBA57xFjF4v6Of0wr0zn5GBRN9C/l3CjUC6PpqYro4hqOw1/LeCu3su5fmHS/Km6QGGe3V0SNWd4fDoUScxU8EbfebywnbVbNs5RQ5PYrbWrzNOBuMyPUd4FtdlNKqlQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nbB2f760; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::22e; helo=mail-lj1-x22e.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=raptorengineering.com header.i=@raptorengineering.com header.a=rsa-sha256 header.s=B8E824E6-0BE2-11E6-931D-288C65937AAD header.b=OXOb4LEH;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nbB2f760;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=raptorengineering.com (client-ip=23.155.224.40; helo=raptorengineering.com; envelope-from=tpearson@raptorengineering.com; receiver=lists.ozlabs.org)
-Received: from raptorengineering.com (mail.raptorengineering.com [23.155.224.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22e; helo=mail-lj1-x22e.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZKmQR35j7z2ySZ
-	for <openbmc@lists.ozlabs.org>; Sun, 23 Mar 2025 04:24:30 +1100 (AEDT)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id 131E482882C2;
-	Sat, 22 Mar 2025 12:24:27 -0500 (CDT)
-Received: from mail.rptsys.com ([127.0.0.1])
-	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id PrsfiOaWNGxf; Sat, 22 Mar 2025 12:24:26 -0500 (CDT)
-Received: from localhost (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id 346D482888F6;
-	Sat, 22 Mar 2025 12:24:26 -0500 (CDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com 346D482888F6
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZKrKH0GBGz2ySJ
+	for <openbmc@lists.ozlabs.org>; Sun, 23 Mar 2025 07:20:18 +1100 (AEDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-30bf5d7d107so25693951fa.2
+        for <openbmc@lists.ozlabs.org>; Sat, 22 Mar 2025 13:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
-	t=1742664266; bh=lMB21tvVMtr6UjvjYcijOBcTxx8pLLAcgEmgq0f+PTE=;
-	h=Date:From:To:Message-ID:MIME-Version;
-	b=OXOb4LEHweP3vzU3shc9oIXWNdGccGcfqr8xrf7FCxqX2wioXVouE0d5nHYTIV/v9
-	 X9WHSmxtNIc2ltVODByGyKohl9VjXLls2OFIjYgyB/dNU2uHqgAOecGjTqiZQrU1hF
-	 Dl6Fekto6UGqx2Yx2RL72mV5Mvy4/ozR65cOdwew=
-X-Virus-Scanned: amavisd-new at rptsys.com
-Received: from mail.rptsys.com ([127.0.0.1])
-	by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id hogkCqsM1wjL; Sat, 22 Mar 2025 12:24:26 -0500 (CDT)
-Received: from vali.starlink.edu (localhost [127.0.0.1])
-	by mail.rptsys.com (Postfix) with ESMTP id 0822882882C2;
-	Sat, 22 Mar 2025 12:24:26 -0500 (CDT)
-Date: Sat, 22 Mar 2025 12:24:23 -0500 (CDT)
-From: Timothy Pearson <tpearson@raptorengineering.com>
-To: Paul Fertser <fercerpav@gmail.com>
-Message-ID: <709373445.19801813.1742664263471.JavaMail.zimbra@raptorengineeringinc.com>
-In-Reply-To: <Z930epdwnOw+9DkR@home.paul.comp>
-References: <1982610042.19586749.1742574604453.JavaMail.zimbra@raptorengineeringinc.com> <Z92lMNqRcWrdmMrS@home.paul.comp> <Z930epdwnOw+9DkR@home.paul.comp>
+        d=gmail.com; s=20230601; t=1742674812; x=1743279612; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7rg21qd0V+z87/c4Aa0HxHj8O+jTAJZ+zQx5fPHSH7k=;
+        b=nbB2f760WwN2TVFfVRVajVAGRXaa1QBFZWmluKFOa+d8WXrewKlu3foVTXIvu0ziWD
+         M5o+z2FnY8XvGC+mmoXO8g52y6lDQhWUH+3EwXzRTAW0O6aMZxvcxQ2L9mgG3xuQD94b
+         R9eTSggk93vDuLj+syK3ruycAuK5s/6UI4zchldujdkKyO0yvx1X4k8EGNsLsQAUFavA
+         8FWjneGoEGRDB9ceNhovX3FhG4Oz46MBaYrKlEkHGrOXGRfu7GmJcpgsgEgCxXmqGo0T
+         UK47Q8KYiFtRkQXGynX8Oj/uZoZop8YGUehqNMLIVx+qWo8PNhmO/UTk8Q4HIa1leR9I
+         p7DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742674812; x=1743279612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7rg21qd0V+z87/c4Aa0HxHj8O+jTAJZ+zQx5fPHSH7k=;
+        b=ZEF5uMrQnfZvNa5Oi90BignXNlu+pArmy+iK7s00mV5b7YClAaaJq5tyIhO3xLz15k
+         x83oC3ouQKYIQG1M7VC/sDN72Pm8eFhawF8eqA2m3iMZI668/UeRuO0YLYyCrboIlClE
+         diLbaIdOSynF6RNzSm7TCSU8DHpMKdLM8dt0hgZDk/jAQSXNUgyKqjHrbaG0t8BE5ZoA
+         Elfhz7TQgpjbZnIlJzpZPJXrlpTLjo0bOvn1PaWtWHgyM0G/CRvg/6IfJSBtiZggtnDB
+         9/wNv4JmXFZp5/D6pFLV0QRzCa076YMyEdMvu8LGxkjjC7pmTExmcRTUeTf2RuyJTPJi
+         48cQ==
+X-Gm-Message-State: AOJu0Yyp55F0KKKKeYZXcYR2RJtSy5h5yYLluChal7kXJ67Qk8tQGIgH
+	5DUo2Vouz+qEzJs3OY2FvY1zKQ+3SVSUsygHIqssDxuFyOvPyXNAXLsIJA==
+X-Gm-Gg: ASbGncsxNJ/CVwlpB+qpj9MpvSl1KOr4CJdUAokK1envRYW7rmhUpgivf7H1KDCCtHI
+	KKk/udZZkBukI5B1V5K++icj7hcZgNmrOVfDlvVX+i88SoJjPk/s0o1aoCBzRIivLR46NgESj/6
+	NOm2pFcrKxjXPWQbXKaOMFDGPohpOhJo2w3Am452jn0E7Fozu+EWan12FLWI57obFl3YQV/Mljo
+	PsIrY61cSKe5gINCjYp6ZxpMAVbMBuIwI7Rf3XrSWKKa5MkG8Vcl6zAFHH0MDycAqgGsgJCNpA9
+	Ym/1PWR5YWUVE+Nb95kGidS6e9u9Ep32R1zaxMksBRdqhw+xJyIVWyKZQAk=
+X-Google-Smtp-Source: AGHT+IER+bqMPhJEk33eLqTfu0gEsgyc1JM3umvVgwLbRvDW1xvQIB7KJaLwytHRc+L0qvWd2nx5dg==
+X-Received: by 2002:a05:651c:1544:b0:30b:c96a:750 with SMTP id 38308e7fff4ca-30d7e20310fmr29079151fa.1.1742674811791;
+        Sat, 22 Mar 2025 13:20:11 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-30d7d7e1615sm6718121fa.45.2025.03.22.13.20.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Mar 2025 13:20:11 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTP id 52MKK6ZU007817;
+	Sat, 22 Mar 2025 23:20:07 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 52MKK6X8007816;
+	Sat, 22 Mar 2025 23:20:06 +0300
+Date: Sat, 22 Mar 2025 23:20:05 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Timothy Pearson <tpearson@raptorengineering.com>
 Subject: Re: [PATCH 2/4] net: phy: marvell: Allow targets to skip MII RX/TX
  errata
+Message-ID: <Z98bdd2GIxONrPpm@home.paul.comp>
+References: <1982610042.19586749.1742574604453.JavaMail.zimbra@raptorengineeringinc.com>
+ <Z92lMNqRcWrdmMrS@home.paul.comp>
+ <Z930epdwnOw+9DkR@home.paul.comp>
+ <709373445.19801813.1742664263471.JavaMail.zimbra@raptorengineeringinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC134 (Linux)/8.5.0_GA_3042)
-Thread-Topic: marvell: Allow targets to skip MII RX/TX errata
-Thread-Index: p8vFhyN3ujK67cZ9vFXJDWhj9xbuEA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <709373445.19801813.1742664263471.JavaMail.zimbra@raptorengineeringinc.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -85,36 +107,47 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
------ Original Message -----
-> From: "Paul Fertser" <fercerpav@gmail.com>
-> To: "Timothy Pearson" <tpearson@raptorengineering.com>
-> Cc: "openbmc" <openbmc@lists.ozlabs.org>
-> Sent: Friday, March 21, 2025 6:21:30 PM
-> Subject: Re: [PATCH 2/4] net: phy: marvell: Allow targets to skip MII RX/TX errata
-
-> On Fri, Mar 21, 2025 at 08:43:12PM +0300, Paul Fertser wrote:
->> On Fri, Mar 21, 2025 at 11:30:04AM -0500, Timothy Pearson wrote:
->> > Upstream-Status: Pending
->> 
->> Pending what exactly and why? I guess you're supposed to send your
->> series upstream (to Linux devs) first, then after they're accepted you
->> can ask for backporting them to OpenBMC tree. There're exceptions but
->> you need to provide a rather convincing reason for that I guess. I'm
->> not saying that in any official capacity, just as a sidenote, Joel
->> will clarify if I'm wrong.
+On Sat, Mar 22, 2025 at 12:24:23PM -0500, Timothy Pearson wrote:
+> > On Fri, Mar 21, 2025 at 08:43:12PM +0300, Paul Fertser wrote:
+> >> On Fri, Mar 21, 2025 at 11:30:04AM -0500, Timothy Pearson wrote:
+> >> > Upstream-Status: Pending
+> >> 
+> >> Pending what exactly and why? I guess you're supposed to send your
+> >> series upstream (to Linux devs) first, then after they're accepted you
+> >> can ask for backporting them to OpenBMC tree. There're exceptions but
+> >> you need to provide a rather convincing reason for that I guess. I'm
+> >> not saying that in any official capacity, just as a sidenote, Joel
+> >> will clarify if I'm wrong.
+> > 
+> > Huh, it wasn't at all obvious to me that your patches were meant for
+> > U-boot, not Linux, sorry (and you didn't specify that in the
+> > subject). There slightly different rules apply, but in general my
+> > comments should all be still relevant. Overall impression I got is
+> > that you're adding a bunch of hacks and that most things about them
+> > would need to be heavily reworked to become digestible for upstream. I
+> > hope more experienced developers will correct me if I'm wrong here.
+...
 > 
-> Huh, it wasn't at all obvious to me that your patches were meant for
-> U-boot, not Linux, sorry (and you didn't specify that in the
-> subject). There slightly different rules apply, but in general my
-> comments should all be still relevant. Overall impression I got is
-> that you're adding a bunch of hacks and that most things about them
-> would need to be heavily reworked to become digestible for upstream. I
-> hope more experienced developers will correct me if I'm wrong here.
+> I am assuming that new OpenBMC platforms can be merged into the
+> U-boot tree here vs. upstream U-boot, as upstream doesn't fully
+> support the ASpeed device?  When I attempted to apply and test to
+> upstream, there was a lot of missing code and it wasn't clear at all
+> that the result would ever be bootable on typical OpenBMC hardware
+> designs.
 
-No problem, I understand.  We're working with the customer to get to a point where these three patches will be dropped from the series, and only a v2 of the final Cronos board addition patch will be retained.  This platform was not designed by us, and that is where some of the constraints are coming from, but I will make sure the future patch set doesn't touch common U-boot code.
+It looks like like the current state is that people send patches like
+[0] and [1] (notice the subject line, recepients, informative commit
+messages etc), then it gets synced to OpenBMC by changes like [2],
+then probably it used to propogate to Aspeed [3] (interesting how they
+have a much newer branch but everybody is still stuck at v2019 one).
 
-I am assuming that new OpenBMC platforms can be merged into the U-boot tree here vs. upstream U-boot, as upstream doesn't fully support the ASpeed device?  When I attempted to apply and test to upstream, there was a lot of missing code and it wasn't clear at all that the result would ever be bootable on typical OpenBMC hardware designs.
+To get a general feel how U-Boot is dealt with in OpenBMC community
+you can check [4].
 
-Thanks!
+[0] https://lore.kernel.org/all/20250117094434.16641-1-tan.siewert@hetzner.com/
+[1] https://lore.kernel.org/all/20240718152853.1291804-1-potin.lai.pt@gmail.com/
+[2] https://gerrit.openbmc.org/c/openbmc/openbmc/+/73075
+[3] https://github.com/AspeedTech-BMC/u-boot/pulls?q=is%3Aopen+is%3Apr
+[4] https://gerrit.openbmc.org/q/message:u-boot
+
+HTH
