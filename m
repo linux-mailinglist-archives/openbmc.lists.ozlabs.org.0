@@ -1,85 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7713A6E6CF
-	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 23:49:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16260A6E6D1
+	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 23:50:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZM7Wx2J5dz3g0P
-	for <lists+openbmc@lfdr.de>; Tue, 25 Mar 2025 09:49:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZM7X52mCjz3gHp
+	for <lists+openbmc@lfdr.de>; Tue, 25 Mar 2025 09:49:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::630"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742848362;
-	cv=none; b=NNlHZ0G9OsBygvO0GmMFiNkavmHsK6P/DokftBZ986oDR88FT5GSBaMC4Z9VpPiC+K+y/DGnok2cdheYI6uAdY9XbIj9os661dw1IFzWKFaGJHoYI3LnNOXCNeBP6eioHj9BLxeTT9EoXsnOh04o1B5wh8o/hFmdZaYKraC3ZIFxEUvu0+DhoDhorI1dhmK+JQRWWzHULeKpVcBZLQz7pAqeuXJKYxbf6T81WbbVvgFqo9cYwWM5Wzf/ZRq6spQ6eQUbMFhQq5IcYZwyKdf4cFOzXWtMd3foxg/64a1Vug3MvUVn6jo3SFpIRLdgsdYC+gLqHGxS7IJzylmmLlI+YQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742849955;
+	cv=none; b=fC9PnnPmsIa/E9BXM8exix04l7Mne88VXfJiSH94mrA8xnwHcY/pErm07PED0n8o5Raq9yBxT5GUhF5stVaoj43JTTfS0qM29iD62NAsmJZIEJkC+Tm1NJk5zzXphZBR7MDd1o2aLsjStkv6okjr1GICwn4G0Emvwk+gGyL5iKneDlA2Q4jYnWtVdqZdOcx8oFWQaLtglJDQgu/oonsfNbw0fPbHC8pAHR2ASRAseytMwuxmwPhDEpT9Ux3GwnrPjp6/t016syaDOLUTzVBuceS9Ui/l/Orl1bNbHA3kLkCapb44ravre4r0STk8KRZ8DRj6w8L5yRex0x3qFyShYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742848362; c=relaxed/relaxed;
-	bh=jj5y725C6U/JdWVBPtUFbjlsM0gGbVGWPvReveqEWoM=;
+	t=1742849955; c=relaxed/relaxed;
+	bh=002VYXfVkW5llc3Dj8Pb1vA7Q/1HSuDmTY1op4WgSSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlAGce4GSpadypSERkV3bNGwNI6SbmkwCv/K0gv8KUNxcIbcrRne1KdbqEeC5h2C4quXU4rMWnNwrpMFkny4ZxG304X3W7gvbST4ISXnipFvDYPH+2ulq4kUosD7nXEC1Lyi4pJhEVGIbahElx0Xii6wGkhytEVZa1xpo56VhN+YrymHKRU2Y1CF9ADXKMkHcA2pL0Qo4kmLcsph6j8PWIXOhdgdJIXeakim2SRGmUAaUM/WhT/hh2AxWCinvHczP9sdoJP0yR9KWSXUwQi8MBSP0WmeET/PjP8wCtajCzPgiGrdTGG8MheHQPZYx5QQvfUG65v3iTQoytfy8NVwLg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gSAGLoid; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 MIME-Version; b=n0s0z61PFA3sEXHYwUkFJAyi98DfaoR+B1rzO0Z0IkiPaZQcWMCecZSReKQvaUHaDSjSlDc1Ewx/7Z58tF+uXnGBlHrIbF3vWSADenHOeRrty2FxNEqE/3rPyQvkUCn5jt6gMy4a7zBObj0pi2v5JCtPG+dT1nkQz7eUOxJ9KBJn1oIaJjzLSJRzOvJUSDtKfqmVPMPNbaEDWjqPXdxiej9Km74hrdkLGMmHu2mf5cTIrt8BbM4jIpbUNvElzMt/PyAi2wqhGz59a9J6McqoD/To/xLzEQiXPDimRcVody1Kaw/ed/SkmCArooBp98JMPQri2xwzGz+Bq6FFqShr8w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VxQ1I26o; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62a; helo=mail-pl1-x62a.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gSAGLoid;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VxQ1I26o;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62a; helo=mail-pl1-x62a.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZM4Vd5mBgz2ydv
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 07:32:41 +1100 (AEDT)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-223f4c06e9fso79970015ad.1
-        for <openbmc@lists.ozlabs.org>; Mon, 24 Mar 2025 13:32:41 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZM55G6h5Hz2ynR
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 07:59:14 +1100 (AEDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-22401f4d35aso101354675ad.2
+        for <openbmc@lists.ozlabs.org>; Mon, 24 Mar 2025 13:59:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1742848360; x=1743453160; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1742849952; x=1743454752; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jj5y725C6U/JdWVBPtUFbjlsM0gGbVGWPvReveqEWoM=;
-        b=gSAGLoidtwmn39J8c3KgAMKza/wLVqlXAijqOy5A3XBbXTzK8PaWG6aVVehzPHeDf8
-         96tg9zfj6dO1LETWWTkFgKn9vHbsZ1CsBWZGK72dqGM3VktHt2HrhHnO3HUxFW30Xycl
-         SJNKvxUwwp2mPBcKjdoyiIvwijJCTWyLbECixoMj8KfoN3aCyf9TdnxXqJpbmIzmZWig
-         gcE3efHTZafH+rKOd5EJOX3RmKo6rFepCnlhUmOpzoh4pA4VwMQu2D4+847XM6fP22xY
-         mpv1Q39l9VK6pNkhrCC423LtryMWNDaYDD1F8ZTfiNtnnLlOXYKfO+73tENIq5kUJxdl
-         Z5/Q==
+        bh=002VYXfVkW5llc3Dj8Pb1vA7Q/1HSuDmTY1op4WgSSw=;
+        b=VxQ1I26obTqAz7m1lCUtLJwRdCnVEiUncmCOUXHg9k+9Op17EitFwDybsV2rr2wcx3
+         zZ/GVDGY+grGIOa29x6h/+Zmg+HmXHrWSIK4bDzYJFNjPpMKDZd5Bf4ruwr5bYUUm5Dz
+         n/4xr4V+guLPq2+kaHGizvnBSvTzJae0QIZqhy2OpcD4QKBw71gG2WBnrxcZsPEsBqJp
+         pb1DC8cgICxrni9dIgFopCAugZaRT8q3Q2WO+UJjf3QNMN+Xx/52xfGwGGakFEPcQArz
+         KHmz5TFsLUupmw8sFtOCUnrGEc9cQs0sTRL9pYR9ale3mo1X3k6c83OV2vbZI71cRjVt
+         YWGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1742848360; x=1743453160;
+        d=1e100.net; s=20230601; t=1742849952; x=1743454752;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jj5y725C6U/JdWVBPtUFbjlsM0gGbVGWPvReveqEWoM=;
-        b=WZtrDvosRpOJnPoEVhXjWhow5EDgfMABDM0uyXN+5Ddvy8SSZLqxLpU0PxXMWCHAuD
-         S5TUOQg/wwU9eRWf4Vs4b1KFfMRubvn1zkxGvIXu1nhcK6YwgoC2SpKNBoeGXyk9YZAd
-         a2Zrsmig0PTHHiZkdO8OG2wzNU36IAJqiQo4UWXFWBgMvNs9ErPrbqRadY2QYMPLTTtb
-         GXBGOTpM7xzJv81qa7IIV0KvSagpScXOlaBwc3st9EPI+WsK0vy5NW5dwe4yBLZhLPum
-         FvbIJ4rYQzeAYyDosETRRH+wwFZs8Gayk/qUkW9RkyiBWuiYuIftUyB6AYzhb/NXB+/s
-         S2Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCXXOcEqkN3A327u48OzZ9kmPJDqPJ46V/ELIO0I1URehiwF2qkzarKTBtNrTLl+/TstfBdeE33c@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yywz/4YducT0YMXZpHlhTDsupy7xTm8Z2XlhOmNgtQu2vSgqBRX
-	y6ak5t0lrWLXeWbE8/YjNKPA5yeI6RbQdJ1dHrDnojKQAiWj74E8
-X-Gm-Gg: ASbGncvB+GY7ZNCvqFQ39nWhx52Vu1kmFGO8tTYX3ze0IaZ/KfF6JLxkH8LJLaTxu+2
-	rV7N0EFt+Ytxfeq7F8NG6llMqiMN9BIQuZDX4bsLK3cpaDn2FrSD+vIMuAZgcleIJ9mD54Grzfl
-	b2y9eMBj3PCMhgwEXxjjgX+eewd3qiNZo4Ajs4eL1iYk7CTLpVhu1IUJbu4mBfrHPrQhvV/ethL
-	8fL2XKeWyfnMi5lrRChA4ZVi6kOD89pMguYSJlnxjnOS49xadLDzf+XqU77hIxvHSgLfCnS7Fjr
-	RqLPa36FcHfbLHNH6U9XwZ2JEJUg43utQbKHpfiOXTyY7D+9eWPoJHtNiKOQpc80VoA2217+vXp
-	tOYzrOik90koeCS3RxY4i06kOo7Vjc+ltSrdGIB7Hhw==
-X-Google-Smtp-Source: AGHT+IEkkZwglT7x6V0AyhOCINFRmYgH5G77Wb4O3lcI2Jw9QeTNeTSW9Kfa9CP4TsKw2I2S1Lo4Xg==
-X-Received: by 2002:a17:902:da8c:b0:21f:6dcf:fd2b with SMTP id d9443c01a7336-2265e67f76dmr240914285ad.1.1742848359660;
-        Mon, 24 Mar 2025 13:32:39 -0700 (PDT)
+        bh=002VYXfVkW5llc3Dj8Pb1vA7Q/1HSuDmTY1op4WgSSw=;
+        b=nVTcCqiGo8uUC/6cyVTMnyTPkzPYEAzYJD6+kI3914mwmO3DEMkqb56YnsOlcHlMup
+         XP2nkTbXHnz5uojvRPiyzMoTzspdmScQDfuFsgjA8pQL7aDtXzxPKVDYa71Ks+gL5gjO
+         ZbwG7c1j3qJdCV7WSOBJq2WK8ISJ0I9wPG1AWnH+elgMfZvFvsMlbzrTaSan+PH2Rtbk
+         EdbYVT1OMG8lLYuFmqVzSyDomEG+pf1iQuAv4ZG77z9YK2HhFdvx19+uN79rSr1BhwEQ
+         z9mhrDBoaf0Me8orumW13DxTzaLcQBR7XfCZiScYnSzCoYESmhWULr+b4Dde+gnHaVta
+         zPqw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqkMkePKUrPntGx2c8FC4FI3ke5gSXIXKd7MsVwd/QvSJIK3esT2g3olt7umiwJTHJDbnmmG5u@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyC13gLLwHniuFbQLSPmKufYe1RCIHqQ3FIJ02jXn4BkslSwUoM
+	gOKzDO8J+XMap+GVOq8jMy6wVWs2ndrUj/AEUe++Ai0JH7Gqw0rD
+X-Gm-Gg: ASbGncuYXhCe8vAZ3JPL18GcSw6o2czfgsxlFm0LDjNe60/QcHKcO6W9J7viDioISZN
+	SJnw+uuyqdiaBg156wBT8pwpOaXj+Lw474RTui6lWyEswdFS/cmWArTrgPQ0k94/SYVWKCSdmDc
+	qpxzCs36tE50qrMu6jq41uKxYLOUd4kGt5FE3DA0jQRoHvYRF1CfVsc10xsM2gnEudcq1GbAbVd
+	5X+JT2d1kgs7uXGAObExYhGEKBWDy+gHQKamfmkpjSXmU4NDO2+CiNFySIoQxPo7YbFmRcdEmB+
+	BYO7iTeSpQslxIXs/XJ0d9EHcakFE8UR35px/Y0+nSSJ8LTSD8MvclbLrYazifk2cAVmLi7n6wA
+	oVWI0N5Rx+5xQv75bH/mt1BQlD7ej+iKJns3E6JJvKw==
+X-Google-Smtp-Source: AGHT+IE/dFczWKVDfiwOTzNgF3uoibJmZJvpWRK1MoiTaUj4WDZC/8QOwCx9QQK2w2qtr1oI3lzDtw==
+X-Received: by 2002:a05:6a21:68e:b0:1f3:32c1:cc5d with SMTP id adf61e73a8af0-1fe42f77d7bmr25182031637.21.1742849952415;
+        Mon, 24 Mar 2025 13:59:12 -0700 (PDT)
 Received: from elbadrym.c.googlers.com.com (34.125.168.34.bc.googleusercontent.com. [34.168.125.34])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a2a23c31sm7593981a12.54.2025.03.24.13.32.39
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-af8a2a4e8d7sm6537479a12.72.2025.03.24.13.59.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Mar 2025 13:32:39 -0700 (PDT)
+        Mon, 24 Mar 2025 13:59:12 -0700 (PDT)
 From: mohammed.0.elbadry@gmail.com
 To: 
-Subject: [PATCH v1 1/1] i2c: npcm: Add clock toggle in case of stuck bus during init in npcm_i2c_init_module
-Date: Mon, 24 Mar 2025 20:32:03 +0000
-Message-ID: <20250324203233.1266772-2-mohammed.0.elbadry@gmail.com>
+Subject: [PATCH v2 0/1] i2c: npcm: Add clock toggle recovery
+Date: Mon, 24 Mar 2025 20:58:58 +0000
+Message-ID: <20250324205901.1274708-1-mohammed.0.elbadry@gmail.com>
 X-Mailer: git-send-email 2.49.0.395.g12beb8f557-goog
-In-Reply-To: <20250324203233.1266772-1-mohammed.0.elbadry@gmail.com>
-References: <mohammed.0.elbadry@gmail.com>
- <20250324203233.1266772-1-mohammed.0.elbadry@gmail.com>
+In-Reply-To: <20250324203233.1266772-2-mohammed.0.elbadry@gmail.com>
+References: <20250324203233.1266772-2-mohammed.0.elbadry@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -104,37 +103,22 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tali Perry <tali.perry1@gmail.com>
 
+Hi,
+
+During init of the bus, the module checks that the bus is idle.
+If one of the lines are stuck try to toggle them first.
+
+Fixes: 76487532f797 (i2c: npcm: Add slave enable/disable function)
 Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
 ---
+
+Tali Perry (1):
+  i2c: npcm: Add clock toggle recovery
+
  drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
  1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 3ad6124be80f..78c85015d955 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2043,10 +2043,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
- 
- 	/* Check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempt recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-+			dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
-+			dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return -ENXIO;
-+		}
- 	}
- 
- 	npcm_i2c_int_enable(bus, true);
 -- 
 2.34.1
 
-**Reported-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>**
-**Tested-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>**
