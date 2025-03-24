@@ -2,66 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CBE5A6D62C
-	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 09:30:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 390EBA6D6E6
+	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 10:07:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZLmTh4l9wz3c5q
-	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 19:30:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZLnJC4gYTz3c5m
+	for <lists+openbmc@lfdr.de>; Mon, 24 Mar 2025 20:07:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:200e::70a" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742805044;
-	cv=pass; b=JbOONuR+Yk6cuGaCZ16FTUDpx1p9GmZcpwd76tiSN8nMy0I8UmT4CB48+zLa/g2an1fU7A46lAjHRyQgur9ERHRmEEJsxAKCMttAi/Ncr6RGFdHsiaNhTh6xEFgoka2JxCF9UlbY7tNhBa+XNq/F7w1vklIVSMrGNcsvokXhN+vEESAP5deqxH2N028XJ4qrLc8efFoS3lKCkxqZuTAMMKIV8TMOVk60UpYPFaEnF6FaBBzS5L2WnRyi09I/2o76Ungmf+RC28ECLDG8BnCYIDOaOtIp68j7KJZUfJo0Djdmzmi5zsQqEJKxEtoJk0DSxnzCQqX2k2ZDeS1qHc/csA==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742805044; c=relaxed/relaxed;
-	bh=zew1zA2b5Qc900FH4v419XyVgG+i7rAjOXnVIGm6ZLw=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KzqP0pneae/s4PIye+5SXk+PRVPnuqW+d8SMuoBHz5350VuQKVWuIyYxrq8mbP9y5FftdOC00Y0yDZEercZ9YK8LCabtP0x9qqltoA1hTyTN1DEdNUff14vC/LL67gikxm8IIyTb8eYf2ff/HnPcSVFh+iODdiy6VvkS6yim5iksxsIoKk7autX170wtoOM90Ntwx8rqFxghuYOtLPKbsyt6q4cUxC2mcPQjJGdmio4IOKrkUphIdcOKpiviNcr0XbfnUFjKIZ7jVZk4FyWZlSSbySIPUB3SzZGVrUnUeZU0HyEsezuSGiukEJRHrGntshTkKiRmHRXzTLfkbk0sOQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=BtMnmjA0; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:200e::70a; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742807255;
+	cv=none; b=BEa+jaqF0qi0zG6XYxNQDKV4r32M0J5Q66eottwfnbzLOVE+qloX3XwGmF9FU/iGKY1PuteFt/tF18rYSs9gcS6fXru/bWdoT+vrHn4isb8wluFCAm9vYmtBYIdtO41STLMmHVCewUDEcHra7B1yjMHXKBzA2uDjjrHDxf74zz++pYG4WYwRRNNSIKulmtvjYPBGaxWzvin4FIAD/sMbC42XlVl5PmcTqIeQcyDewELtnNERTnwFBP2lIEGX/5p9ERieJpnEeGPNCyNIi9QhgRlbMxvM7K3caHofI0FzFo7I+VclGXu8ONxK5y7D14mLBr4fDAqXOQgPMP/hFTe0JQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1742807255; c=relaxed/relaxed;
+	bh=BTpr/xKyMbID/mfk2G3kaCpevUKnRtaW+ey2UsAOI6E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WmjQlPsn2bvWdmB89VspBIPgrjAqvaBDVQqml2Xwe8BLKDjRTvIto7W/8TAZ2+8XHpZAzxF+DGXvrMT+YUdfwY4sLtL+J1ganjD22hR9CnuyHyzxD+9CWgRvNJjNt/FKCr18tYtNH1o9PLErM62L5XqhR5H1C9FcIDwUpMIe4QcjCI6hu+wHJZK7SK9XHw9jEVK2vhplL+XNEjdKXcHPYO0r2qaUu3fkZ6AgM74CqZbvcEWk2ZODDBA3iiCdLFNDf/tgIRpyxRUuzLAVkoGXwMX9yD2932cV5dx9Aaw2or9vCB5KFseHU8Zw/XvV99xp0CYDDtE6Cm4e42U3vLwvLw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=f0OB4Pb3; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=BtMnmjA0;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=f0OB4Pb3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:200e::70a; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2070a.outbound.protection.outlook.com [IPv6:2a01:111:f403:200e::70a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZLmTZ5Fkyz2ykX;
-	Mon, 24 Mar 2025 19:30:39 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g5YxCgNHkmCRS6Nw71y3ssbLW6bl3hvMrxEkLIb34sMxsK/t+CJ30nGNtEdPiBFUY38RKUMLFS5X4/9AUBxmf/ZxjqW+FN/gIGJvzRQDILJOOEtOKeqO9db5ZzRNU1RYSv/uPb0RTsCJW+ddNNm0rczsQO5f+wlRQZ12JAVpMUVQTZWWgWUlvl53ai3RjhGReXOPPccMQxFeFe6/4MgrwiQWeqbh7xtCht2XR8AruNE1MWr8tIyz7KNuhEpY59ApX3dZbRrJi1Qujcxjhn9OXJ//h7Os4hRwAPEg/ZWZftJBw++a1/vTlPlREGVMqASJtnKhLYY1SeLSRFEQcvtASA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zew1zA2b5Qc900FH4v419XyVgG+i7rAjOXnVIGm6ZLw=;
- b=Tv/BfBLXtMjVpnk6cLxdKtZcTEh9Z//7G3QN/xbM/t4ErlTawNV9afXwjY/N08w7DlvtUT/q90mLbq4gQdto2XYodTKoBnjgPmdAFSlwoYUY/xAWYjFD74lDEBWGc1YR00I6aakVyo8phOwQydz5B/3aaEY0EwoxvFydnLcRVTAOKWkz92iu+a52XTIcIwdPOHJn/XkwXOqJ+bQqLImp21CoWSyw1TMyx3bJImZw6HLD6d1EJDn81yeYQY/BkrM6hLBSPlGLZPV47jwThIkX2U1qDGHx82hpbKd17kvlQD1983M/TWCDYP+AAkdgtzs1wEqCp29IEFBGg+jBDwvRng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zew1zA2b5Qc900FH4v419XyVgG+i7rAjOXnVIGm6ZLw=;
- b=BtMnmjA0K914vluJKLny8XHCbW0aCCbFulQNkIwFjzEw9NAnuP9pIdLI+qbXdWGwoSGNtAnpkBOwaA6MdTT5S+IwZVgEkm2Dpa/xnDzLcDoqDXCoghH8gC+WGi18WzZvs9jVI5YsIj01sAeG0jK7cc92WS92uyuoOCdeWy43sTfTr75nr8faob3el/bNluOq3xOC8UCZbI7BhlvkuhPF6xdsCA3bwyZP9YvtzOUCvvLYh2YyN3JXw+vZgrnG2MgxEm//UaAHMlVCGHn08Q+kLw/GxJEPvG/GNANNV9q4ncPGu5RLmLDYkWurcRqqSUGshq8cS+gPf18Q1v8J+/eyOw==
-Received: from SI6PR06MB7535.apcprd06.prod.outlook.com (2603:1096:4:235::12)
- by SG2PR06MB5360.apcprd06.prod.outlook.com (2603:1096:4:1db::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Mon, 24 Mar
- 2025 08:30:16 +0000
-Received: from SI6PR06MB7535.apcprd06.prod.outlook.com
- ([fe80::8af2:b731:a5e5:169f]) by SI6PR06MB7535.apcprd06.prod.outlook.com
- ([fe80::8af2:b731:a5e5:169f%6]) with mapi id 15.20.8534.036; Mon, 24 Mar 2025
- 08:30:16 +0000
-From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Subject: RE: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZLnJ64gfzz2yb9;
+	Mon, 24 Mar 2025 20:07:34 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id EF3A45C58DB;
+	Mon, 24 Mar 2025 09:05:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBA4C4CEDD;
+	Mon, 24 Mar 2025 09:07:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1742807250;
+	bh=BTpr/xKyMbID/mfk2G3kaCpevUKnRtaW+ey2UsAOI6E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=f0OB4Pb35nUhcXZhCBCSRewAqNK2Xhvrgmdwb/9fVpgDIdnh0125n1W4E86MdNuMb
+	 ZBXHQkB4GDy2fOQQ6FA14iRWHAA+pQMvKqM5K/r7MKt58z3k+GcL4K13VI2h1n9kPZ
+	 XXu/MPKHJXdGg12NcHSPzjHa5KOvHLujIg1BVSFTdEN61Tmjg9gYLuiMxRblRpxRhP
+	 KkQ6pCBpk3raDNs6lgBuS3w3hq4vUJGq4aO9ueIJN24l5aAq/YqxB6Jk+HJh25Nj+H
+	 LqtPJj6gH01xJSybftNaqwKHdmeLBWVVA20wH0RInTb6d+yVGfKKVi2rSYDBIZkbqm
+	 L76iINlYXna2g==
+Message-ID: <4523caea-3406-4de0-9ab5-424fb7a0a474@kernel.org>
+Date: Mon, 24 Mar 2025 10:07:21 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
  AST2600-i2cv2
-Thread-Topic: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
- AST2600-i2cv2
-Thread-Index:  AQHbhoFMYr1F1iCu706pUdZbmBz0BrNWKwmAgAMnDQCAAApCgIABc/fggADIQoCACD7TUIATPNAAgAAVK0CAAw8fAIAAONYggAecSoCAABKwMA==
-Date: Mon, 24 Mar 2025 08:30:16 +0000
-Message-ID:  <SI6PR06MB753542037E1D6BBF5CE8D2E7F2A42@SI6PR06MB7535.apcprd06.prod.outlook.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
 References: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
  <20250224055936.1804279-2-ryan_chen@aspeedtech.com>
  <20250224-arrogant-adventurous-mackerel-0dc18a@krzk-bin>
@@ -75,106 +64,57 @@ References: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
  <677cb075-24ae-45d8-bfb4-9b23fbacc5df@kernel.org>
  <OS8PR06MB7541C3B70B15F45F4824772BF2D92@OS8PR06MB7541.apcprd06.prod.outlook.com>
  <994cb954-f3c4-4a44-800e-9303787c1be9@kernel.org>
-In-Reply-To: <994cb954-f3c4-4a44-800e-9303787c1be9@kernel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7535:EE_|SG2PR06MB5360:EE_
-x-ms-office365-filtering-correlation-id: eb7b60f4-cad5-47a6-d440-08dd6aae1b1e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700018;
-x-microsoft-antispam-message-info:  =?utf-8?B?Rll6R3hyalpSa0pOOXgzNlpyOW1DSHB2T3lWQWtRd0VDZ0w1ckNBUjQxdGl1?=
- =?utf-8?B?Z0p0Y0tIdVVwNGtzM2s2ZHpHNVBTNGViQjRLZDVYbEE5c1pSM3htV2pLa2JX?=
- =?utf-8?B?M09YUXQrWkxVaEhOSGlTRTdSSnQrNSsyN1dHMlJUekNhU1ZsZ0tycHVqdGxi?=
- =?utf-8?B?Y3Y2QTJCNE1tM2xyMUp3Wmxucmg5N2d4SitNd3p3c2k2NTlaSFplbDE2RVJC?=
- =?utf-8?B?TVpZY1RSaVJydmFiblVQMVkySWdHelFNUmRzSU1ZNlUwRkh4ekl5bWlxUDRO?=
- =?utf-8?B?VTFINXBEQytTNkxGdGkrTldzaHpNczNkTWJhZnhTczcxelFnckRVa0RjMlU1?=
- =?utf-8?B?K3RSTVRGTjIxUk45TW9FVGpiYnFnUGFneGNid1BVV01VekhFS0hoc2VCaXdK?=
- =?utf-8?B?bFoxNEdMbEpmVTA1MFVVWi9scElkNXdORU9id0lHdlNQTzhXQ01MZ1VZZWda?=
- =?utf-8?B?a09HWGlZc0FPWnY3N0RXOTBMMExKS1g0SVZxbE42QmJWdW1hYXY3bllUaVJF?=
- =?utf-8?B?ZC9WZjlaQXJRVGJzLzFNcGFLd3RkaWN6RTRZQWdETVVuRkhhWUp4bWVhaDJv?=
- =?utf-8?B?MUV4eVNXMXAraUx1ZkRrTWxTSVhFbXl5K1JDaWdhbGVRdHoxNFlhZ3dpR3dJ?=
- =?utf-8?B?Nk0yMFlYTWlSdWxBWXBDamFCc0lVeVdxM1ljSnd5OTJsKzlBeFdjTHhIUFBx?=
- =?utf-8?B?ZWJ4WkNSM0FSckZ2U0VrWFBrZ1FHZzlqdzJueTkwQjRXSlByVGFiQThMam5M?=
- =?utf-8?B?a0ZBUU0vTDFVejFWdWE1dDNadU9EM2tFeC81aUdLK1psRE9QbG5pcWdrSyta?=
- =?utf-8?B?S3ZnYjN0SHF6a1I2YnJCTkFHS2c5WFhrV1BlemNXR3k3NzFrTlRHRnNjWVpu?=
- =?utf-8?B?OVVyS1lwRnUyN3IwRVR6bnFKQmNvand6SGRVcGw1QTcwWk1yRVB1SHRoNEc0?=
- =?utf-8?B?Y2p6N3o3T1gwU2tzeUtXYUJFUjdXbXV1d0tvOWQ2a3pTSkkvVTdES2ZsNnpX?=
- =?utf-8?B?Y1RhZmIwTzlmNzRyMUNlRmY2NUpvR3huK2ZjaUw3Vm8zL20xSC94UjMwdlc0?=
- =?utf-8?B?K28wekFGdUxDbjhFTDBId2IyV3pJMGNKQmZmM0xjcEVrZ2ZkK0Z3M2FuYnNL?=
- =?utf-8?B?SzdQUWFxY3VhbGVvS1Z3RmZJdTdTV0FGSytuQS94N2lkR2Rpa2hPaUtQajla?=
- =?utf-8?B?R0xMRnhQRkVnYXpRTmR6NURkNklsbWtvVCtjVzZ4RTc2OUl1Y3E4eUI1c0M5?=
- =?utf-8?B?eTJuVDY5N0s2dGtTbTZaa3BVa3dMWWNrdVY1czYySk1HdEJLb25lZjA3WEdS?=
- =?utf-8?B?QUs2MmpuVUN1N0FFMlQxNmtkc1NUUTViNnFweVZYR0NoR1JrcUNvMnVQOThn?=
- =?utf-8?B?UXNWNGllUkhNK0F6UmJ3Y0JNcXVBVFNMWjZVcHlnZGtZVW10Q3dBejNtNEF0?=
- =?utf-8?B?RkJHdmVKZ0toWmlWcmFMS1pWSXdFU01FR0VrSXZ2T1AySjhHSGNSZ1BPTjNy?=
- =?utf-8?B?WE5KSll6eU9JVTVSUHJRQWFMYTRVN0QwQ0NHTEgxbktpZzJXUWlXeVZNanlL?=
- =?utf-8?B?ZEdLSncxd01RcE9INXE4UWl5Q1RmZGRHRFVsdndodk52R1JuYnJsTCsxT2J5?=
- =?utf-8?B?eUhSTlRFTjl3Z3UyTDdFUU41VlhXYnVWeVMyT0hKdGJzazd2eTNQdUhNM2tO?=
- =?utf-8?B?WVhheUFrSUJpaWUvNWFqcFBXRGJ4NjRCRFlQWTM3NWtMTTFaM0hpMnJMN3Uw?=
- =?utf-8?B?MzdydlViY1JDUTVNVmhTcElkYkNFSGRmd0tGTG90RmUyd21Id2VVeFJXcThM?=
- =?utf-8?B?SncyL0FMQjNoaStCa1dxcm1RQTAwTk1NVmY4MXRUWHlyQ3g4NEFIVW9OTDY2?=
- =?utf-8?B?L2k5N05RSkNiVXhzNndaT0VPNEtITWNCbmViZlU3Rmc3YWhMTHZZTnFJY0k3?=
- =?utf-8?Q?7ES/Joc5xjG4nzIGgDaTUZyGlc+LrgMf?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI6PR06MB7535.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?OWJ0QS9PalI3bEtPZmRvbG9CTGJrRjIxbWw1dldKOXp0UnR0ZXpSVFdTTTJi?=
- =?utf-8?B?TjBma2VWSWhqVnhUYWJ4MmZOQmJrVTl1QW4rektoTlgvdjZsaVNYRGZnaStS?=
- =?utf-8?B?SCsyNDFvWTN5SWlOb2w0ejVPbk5YTkxOU0lRRllJL2E4TlNaWUo1Y2Z1c1Nu?=
- =?utf-8?B?RWc1dFBwZXl1dG9aUk5tU2gvY0IyS2l2bHhpaG15RGpQSy9rUnhTNFJuQkp2?=
- =?utf-8?B?YXhGV1ZiOGlDNGpackh3M0NqdDN0T29RcUFEY1BJTllNa1BzamhCeVRUcThr?=
- =?utf-8?B?ajV4VTVwbjlveFZnZlhGR05EU0l3Tk5TMDZDWTF3SE1MQVRjeGR1eWN3cGZh?=
- =?utf-8?B?MmQ2clpsNFlNTHVTU2l4MkZsaHJocHcrQ1JmL2MxUlNXUlp1V0IwRkY5by9w?=
- =?utf-8?B?TlFPSWxRTE51cUFPMzFzYVFETVdteFBBUEZvSGxJVHEyNSsycThHUnlIMUMy?=
- =?utf-8?B?cGJucG9EczFLeXZ0U0F3cWRrTHkvVUoveGl2ZytBbEpicm1JRFhPeHYzWmtr?=
- =?utf-8?B?OW5lZjI2Q01OUFlYcVNGMnp1Y3dBVUxvZVRaTVdGajAybjcvTnNzaDdSK0ZT?=
- =?utf-8?B?MTM0U1NVRUErRTFWNUhTdEtSM3EwL3RiREMrSkYwcjFPL2pwUWdiaXhUYm0v?=
- =?utf-8?B?S1czak9tZTRaRXpHWkV2Y1VMQjJQRHIzY1dnR0JwSnBycXpDZkN2ZC8zaVdz?=
- =?utf-8?B?QnNtT2x1U3lWcDJicVYvNkhRaUs2bGJneURBT2VnSm9IN1g5V2lKTG5DOG83?=
- =?utf-8?B?NjdlN2FrZnlSeXZvbm1qMzI1NUZHY2wyUkJqaHpCNU5LZjQ0U1BYaWQwbVk5?=
- =?utf-8?B?K3g0M2RBNEFMMG9aYytYOTZqWHdvZDVISGs1WFc5SVlzRkNhOVEvSmxrcUE1?=
- =?utf-8?B?Tlk0SElMWUNMOVQxNUt3WnBLWWM2eDFnZFpLVDF3elJ0dWNsTmVDMUVqV0tU?=
- =?utf-8?B?eWN4UFhZT1lDK05rRkEzL0xidnU4RWdXVi90K2VKUVcyajIrQ0N2T1lKYUdt?=
- =?utf-8?B?QkhlMkpMZm50U1kzeWVXcHNJUjM3a1ZaTERhT2VhNllWekJEMmU4ZjR3STZr?=
- =?utf-8?B?M0JsY2NYTGh4d1k4TzBGQ2dPdk1yclI2VjV1STNQTmE2M2U2Q01UQUpkTFlU?=
- =?utf-8?B?TS9icFBCeGMyaUlQKzVERGF6VkJVazhMMVBlN2RaRkp4TW54SzQ3R09xbjdI?=
- =?utf-8?B?WW9vNExWNXFZYkpBWHZvb1lodmVzdTB5UXhIZ3ZNSmdRRVJUcWhxLzMrYjM2?=
- =?utf-8?B?eHJmY1d5a2RLekhqSWJqYllIQTBFSDk3aU5yZGdhS3F6UUFLMFRTQ3BJQWRm?=
- =?utf-8?B?VnUydVNKUDBGcDNKU3NCK0NqSHJoTlpWaFFTWEZFTEJWZHpOR2NDNk5tR3VZ?=
- =?utf-8?B?T2U2bHJ3RGtxdVpVc0wyZ0cxbWJnWHEzdk1UdEVnRzhja2Q5TUhESEl2NkNU?=
- =?utf-8?B?bEJJSCtNNDh4Q0JITGVLZHVyYms2c0JhRW5zc0JzWVdDbkNyd0ZMV0NoUG80?=
- =?utf-8?B?TG53UDdjUFlMZ2wrWktrdzNKRnF3T1RuYkcvRzcxRGY1RHJKR2FvK3k3S1JW?=
- =?utf-8?B?WWRNWFVlY25FL1lteFRIaGJWNmxWdzZIK3VMT3Bnazk5M1U3U015V2VGTE80?=
- =?utf-8?B?ZmloSWh2M2JjakI0OWVLNysxaWdWaEkycVljbmNESGRBcEhyeGV1aFV5YU1v?=
- =?utf-8?B?bXJKc05YajhSc0NrY1doeEZWakNNalVvak9OdktqZm9yTjRvUjNqUXNpd01K?=
- =?utf-8?B?MmVDdW5aYXRwY1BHNW1PWlNIYkJBTjdXb25kbWIwM1pwOStJMUlYYjdWRHJn?=
- =?utf-8?B?WnhoVlZBcGlHSUZCZ3hzbzZhaVcxVE1XUmJZSTBLRFhmQWJzZll1WmhaR2Ry?=
- =?utf-8?B?bG9qdVIrM1BiTnRTM1lFRmIzNWdzamJPUEM2MlJidWZtZzk2QktlYS8zb1lM?=
- =?utf-8?B?UUlhdjhHOFp2Vys5YkM4ajZBTGp2Tmt4NVFBNkx1NHRpWVJXNEFkZjR6eXlB?=
- =?utf-8?B?TzY5dnBrRmhsdzQremZBUmo0cyszS1ZUSGRXV0o2cTNOT3loRDErKzlrR0hR?=
- =?utf-8?B?dFBQY2N6bHg1VzgzaURzeVo1K3VBZDl4UmxCLzNzWG14b0dPeldXaEQ3OVpK?=
- =?utf-8?Q?4uGXAmJSDZM+0Jfa3CkBBBVPz?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7535.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb7b60f4-cad5-47a6-d440-08dd6aae1b1e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2025 08:30:16.7972
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Vw130QbZvWdSPLH+HRifcdyWHq4sk3CwBakUCYSX75jKFz5pvrA1SpTsz9u42WarqogRxJYN1IyxX/5eVFMP+uwsa4qY66w4F+IdnyZZdbA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5360
-X-Spam-Status: No, score=-0.3 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
+ <SI6PR06MB753542037E1D6BBF5CE8D2E7F2A42@SI6PR06MB7535.apcprd06.prod.outlook.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <SI6PR06MB753542037E1D6BBF5CE8D2E7F2A42@SI6PR06MB7535.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
 	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -192,40 +132,58 @@ Cc: "robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxNiAxLzNdIGR0LWJpbmRpbmdzOiBpMmM6IGFzcGVlZDog
-c3VwcG9ydCBmb3INCj4gQVNUMjYwMC1pMmN2Mg0KPiANCj4gT24gMTkvMDMvMjAyNSAxMjoxMiwg
-UnlhbiBDaGVuIHdyb3RlOg0KPiA+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxNiAxLzNdIGR0LWJp
-bmRpbmdzOiBpMmM6IGFzcGVlZDogc3VwcG9ydCBmb3INCj4gPj4gQVNUMjYwMC1pMmN2Mg0KPiA+
-Pg0KPiA+PiBPbiAxNy8wMy8yMDI1IDEwOjIxLCBSeWFuIENoZW4gd3JvdGU6DQo+ID4+Pj4gTmVp
-dGhlciB0aGlzLg0KPiA+Pj4+DQo+ID4+Pj4gU28gaXQgc2VlbXMgeW91IGRlc2NyaWJlIGFscmVh
-ZHkgZXhpc3RpbmcgYW5kIGRvY3VtZW50ZWQgSTJDLCBidXQNCj4gPj4+PiBmb3Igc29tZSByZWFz
-b24geW91IHdhbnQgc2Vjb25kIGNvbXBhdGlibGUuIFRoZSBwcm9ibGVtIGlzIHRoYXQgeW91DQo+
-ID4+Pj4gZG8gbm90IHByb3ZpZGUgcmVhc29uIGZyb20gdGhlIHBvaW50IG9mIHZpZXcgb2YgYmlu
-ZGluZ3MuDQo+ID4+Pj4NCj4gPj4+PiBUbyBzdW1tYXJpemU6IHdoYXQgeW91ciB1c2VycyB3YW50
-IC0gZG9uJ3QgY2FyZS4gU3RhcnQgcHJvcGVybHkNCj4gPj4+PiBkZXNjcmliaW5nIGhhcmR3YXJl
-IGFuZCB5b3VyIFNvQy4NCj4gPj4+DQo+ID4+PiBPSywgZm9yIGFzdDI2MDAgaTJjIGNvbnRyb2xs
-ZXIgaGF2ZSB0d28gcmVnaXN0ZXIgbW9kZSBzZXR0aW5nLg0KPiA+Pj4gT25lLCBJIGNhbGwgaXQg
-aXMgb2xkIHJlZ2lzdGVyIHNldHRpbmcsIHRoYXQgaXMgcmlnaHQgbm93DQo+ID4+PiBpMmMtYXNw
-ZWVkLmMgLmNvbXBhdGlibGUgPSAiYXNwZWVkLGFzdDI2MDAtaTJjLWJ1cyIsIEFuZCB0aGVyZSBo
-YXZlDQo+ID4+PiBhIGdsb2JhbCByZWdpc3Rlcg0KPiA+PiB0aGF0IGNhbiBzZXQgaTJjIGNvbnRy
-b2xsZXIgYXMgbmV3IG1vZGUgcmVnaXN0ZXIgc2V0Lg0KPiA+Pj4gVGhhdCBJIGFtIGdvaW5nIHRv
-IGRyaXZlLiBUaGF0IEkgcG9zdCBpcyBhbGwgcmVnaXN0ZXIgaW4gbmV3IGFuIG9sZCByZWdpc3Rl
-cg0KPiBsaXN0Lg0KPiA+Pj4NCj4gPj4+IEZvciBleGFtcGxlLA0KPiA+Pj4gR2xvYmFsIHJlZ2lz
-dGVyIFsyXSA9IDAgPT4gaTJjIHByZXNlbnQgYXMgb2xkIHJlZ2lzdGVyIHNldCBHbG9iYWwNCj4g
-Pj4+IHJlZ2lzdGVyIFsyXSA9IDEgPT4gaTJjIHByZXNlbnQgYXMgbmV3IHJlZ2lzdGVyIHNldA0K
-PiA+PiBJdCdzIHRoZSBzYW1lIGRldmljZSB0aG91Z2gsIHNvIHRoZSBzYW1lIGNvbXBhdGlibGUu
-DQo+ID4NCj4gPiBTb3JyeSwgaXQgaXMgZGlmZmVyZW50IGRlc2lnbiwgYW5kIGl0IHNoYXJlIHRo
-ZSBzYW1lIHJlZ2lzdGVyIHNwYWNlLg0KPiA+IFNvIHRoYXQgdGhlIHJlYXNvbiBhZGQgbmV3IGNv
-bXBhdGlibGUgImFzcGVlZCxhc3QyNjAwLWkyY3YyIiBmb3IgdGhpcw0KPiBkcml2ZXIuDQo+ID4g
-SXQgaXMgZGlmZmVyZW50IHJlZ2lzdGVyIGxheW91dC4NCj4gDQo+IFdoaWNoIGRldmljZSBpcyBk
-ZXNjcmliZWQgYnkgdGhlIGV4aXN0aW5nICJhc3BlZWQsYXN0MjYwMC1pMmMtYnVzIg0KPiBjb21w
-YXRpYmxlPyBBbmQgd2hpY2ggZGV2aWNlIGlzIGRlc2NyaWJlZCBieSBuZXcgY29tcGF0aWJsZT8N
-Cj4gDQpPbiB0aGUgQVNUMjYwMCBTb0MsIHRoZXJlIGFyZSB1cCB0byAxNiBJMkMgY29udHJvbGxl
-ciBpbnN0YW5jZXMgKEkyQzEgfiBJMkMxNikuDQpFYWNoIG9mIHRoZXNlIGNvbnRyb2xsZXJzIGlz
-IGhhcmR3aXJlZCBhdCB0aGUgU29DIGxldmVsIHRvIHVzZSBlaXRoZXIgdGhlIGxlZ2FjeSByZWdp
-c3RlciBsYXlvdXQgb3IgdGhlIG5ldyB2MiByZWdpc3RlciBsYXlvdXQuDQpUaGUgbW9kZSBpcyBz
-ZWxlY3RlZCBieSBhIGJpdCBpbiB0aGUgZ2xvYmFsIHJlZ2lzdGVyLCB0aGVzZSByZXByZXNlbnQg
-dHdvIGRpZmZlcmVudCBoYXJkd2FyZSBibG9ja3M6DQoiYXNwZWVkLGFzdDI2MDAtaTJjLWJ1cyIg
-ZGVzY3JpYmVzIGNvbnRyb2xsZXJzIHVzaW5nIHRoZSBsZWdhY3kgcmVnaXN0ZXIgbGF5b3V0Lg0K
-ImFzcGVlZCxhc3QyNjAwLWkyY3YyIiBkZXNjcmliZXMgY29udHJvbGxlcnMgdXNpbmcgdGhlIG5l
-dyByZWdpc3RlciBsYXlvdXQNCj4gDQo+IA0KPiBCZXN0IHJlZ2FyZHMsDQo+IEtyenlzenRvZg0K
+On 24/03/2025 09:30, Ryan Chen wrote:
+>> Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
+>> AST2600-i2cv2
+>>
+>> On 19/03/2025 12:12, Ryan Chen wrote:
+>>>> Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
+>>>> AST2600-i2cv2
+>>>>
+>>>> On 17/03/2025 10:21, Ryan Chen wrote:
+>>>>>> Neither this.
+>>>>>>
+>>>>>> So it seems you describe already existing and documented I2C, but
+>>>>>> for some reason you want second compatible. The problem is that you
+>>>>>> do not provide reason from the point of view of bindings.
+>>>>>>
+>>>>>> To summarize: what your users want - don't care. Start properly
+>>>>>> describing hardware and your SoC.
+>>>>>
+>>>>> OK, for ast2600 i2c controller have two register mode setting.
+>>>>> One, I call it is old register setting, that is right now
+>>>>> i2c-aspeed.c .compatible = "aspeed,ast2600-i2c-bus", And there have
+>>>>> a global register
+>>>> that can set i2c controller as new mode register set.
+>>>>> That I am going to drive. That I post is all register in new an old register
+>> list.
+>>>>>
+>>>>> For example,
+>>>>> Global register [2] = 0 => i2c present as old register set Global
+>>>>> register [2] = 1 => i2c present as new register set
+>>>> It's the same device though, so the same compatible.
+>>>
+>>> Sorry, it is different design, and it share the same register space.
+>>> So that the reason add new compatible "aspeed,ast2600-i2cv2" for this
+>> driver.
+>>> It is different register layout.
+>>
+>> Which device is described by the existing "aspeed,ast2600-i2c-bus"
+>> compatible? And which device is described by new compatible?
+>>
+> On the AST2600 SoC, there are up to 16 I2C controller instances (I2C1 ~ I2C16).
+
+So you have 16 same devices.
+
+> Each of these controllers is hardwired at the SoC level to use either the legacy register layout or the new v2 register layout.
+> The mode is selected by a bit in the global register, these represent two different hardware blocks:
+> "aspeed,ast2600-i2c-bus" describes controllers using the legacy register layout.
+> "aspeed,ast2600-i2cv2" describes controllers using the new register layout
+
+Which part of "same device" is not clear? You have one device, one
+compatible. Whatever you do with register layout, is already defined by
+that compatible. It does not matter that you forgot to implement it in
+the Linux kernel.
+
+Best regards,
+Krzysztof
