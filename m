@@ -2,169 +2,101 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D992A7060D
-	for <lists+openbmc@lfdr.de>; Tue, 25 Mar 2025 17:08:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08EFDA70A85
+	for <lists+openbmc@lfdr.de>; Tue, 25 Mar 2025 20:32:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZMZbF0Xw3z3c5N
-	for <lists+openbmc@lfdr.de>; Wed, 26 Mar 2025 03:08:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZMg64525Mz3c3x
+	for <lists+openbmc@lfdr.de>; Wed, 26 Mar 2025 06:31:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=148.163.156.1 arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742918900;
-	cv=pass; b=lkQMTfm6KaeZT/9vc/ZsafVTDG6vAgDNvCgB3X78eJDjES/RegErQ2yq/BqTF0eTq1p3UkgItPX2TwkiFc0OUB98mr8UvBc3NSIqo5cawMhfdFPxhyCA+14ziXQZqT3HJjrp9WH17ctYxuVtpcAmDjyVPw+JrHoOChj5OXUdnqnID6lWRm/95bvJcJGnFFLjVchOnjLw6ClrnH9xH4K0ExlwFWtPK8hX/o8w4q2HelHU2NMmZLKC61BfwB70HnaCZBuSEdTCrJ7qIKJfl0ykfAX7FST3LyyLU0D4Q/+LTiyjAZTKCrgslawKeCao2osdj9FjmxJkXu8ML0gIJCJMYw==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1742918900; c=relaxed/relaxed;
-	bh=tW7s2df+5GZvG4H5E9AMMzsYFQ89P67NoG2DDe8QV3g=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=KSZfUi968TkiOlaIBJDnW7iowz2fIm9Y7xbtAKrw0ot4l3BhS3D5bfNHcY28GPd6URi0gqugchjKxuHy8trY7ExX0mxAGBwmpCvyqjpfjCkUsUGrUATzxXLV+VwzOyoYdbBcbUN4IsWDVRqySuxDaRRpu/86IzwB+pixqkqB46j6bHcna3fPUYu34lcOiUF0HSK4QmnTd+iTJby7/njCLIlUyaD9Mq++NTQFnmCWQ8R4PedBsfbr6gEkgIe1Hq7Zw6n+9cc8iqRi8Dfee8ZtDgIOYWE+LDQOy5//GtZfijGso+1Ffyh915gd1Qx7ZK/tnjh0HbOz0tkNXUNMwnExIA==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=in.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JI1g7irr; dkim-atps=neutral; spf=pass (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=gkeishin@in.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=in.ibm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=in.ibm.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1742931113;
+	cv=none; b=jMG3sS98n5jm6CM2sLWlvMt43pbrhot1E0U6fhkYxwXTPZOQiL55rcdxIrM7TXmGLqrGU+QhprVjdHkdj6RbYGqqKFBoPpqws0rEzIT9Gd/OXEz7Us0Q/9aShQdK9eWUwe5uEhGHAQT1LfaJpIMYVUHCgQyrvI6V6nX5+nkSxN7tFHiq8WpIuvySD+Z7C9lmn+fTYIPODig0i+VjV8Wf0ik5ZY6lVxe1ZX0wATJYfQsbY5PaBR0VoKbumWq0bl3ezTIoFEvwM6GhL1CqhIDdaziL1LA8W85QDhLQJbwIJVjltl3W5e31GcAlAHRDHz/EhSHP+oLhGZEmRcPVFxpz9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1742931113; c=relaxed/relaxed;
+	bh=yuMuyPAIiLTd1HmHV//Vpc/92R0ei/V2lAFNinMD5Co=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=NMnteIeHhEoXUbDmueRIkr+QdZawgSOjpbMEbQp4wvjX91mAxss34EKHkoWiYqs+WWqNyif0UjjBCSApoVTKFqgZ9oxn0956dRg0eNE3FG/EoRb8IaNEICYYtcmXDbJHTO80w/7gdTIrMfbIm5kmdno0YtK/2zCfrGLPfVTTPWJ6b+DgeXpMbLS7tq57zyv6k9vqQB6L/7/GZ9gJUC3VAVur3dQyAlaIggYMXHlvnbmvfrDyRRgXzLuPjFvH5I15LrVk9ZC+/+jhcvc7NQ2ghgueoLB5lNVZbDnGQ4jHse4TTzm18ddZlM+1hA3CXMBqkU7xfonoeeddh4K2/xwu1g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZeX+8Fzy; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JI1g7irr;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZeX+8Fzy;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=in.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=gkeishin@in.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZMZb80J4Cz2yFP
-	for <openbmc@lists.ozlabs.org>; Wed, 26 Mar 2025 03:08:19 +1100 (AEDT)
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PE3Ujn026930
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 16:08:17 GMT
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZMg5y0qf7z2yRZ
+	for <openbmc@lists.ozlabs.org>; Wed, 26 Mar 2025 06:31:49 +1100 (AEDT)
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52PGvlRE023763
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 19:31:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=tW7s2df+5GZvG4H5E9AMMzsYFQ89P6
-	7NoG2DDe8QV3g=; b=JI1g7irrCvOq9Nph03+WEhfwpNtPBx0ufVspFmXsNsR2/4
-	RH6qxXfPHfXJc6+oV2P1etX27L+0YVhL7R1sCcShgp6pHsu/7+SdUquRNqFAcsf+
-	UxRtFDjxxa3Ra6Sn3r5lxk3/cwWflR3u0EooMYX3H4ggtidOAh/uUzhgDYLOSLB2
-	wGFJNcOc7kbMBRwwDRVXYgIQOlnLC9szVjSrBrCmkHNa8KrOThMx6WyVrffV7yZk
-	D3UKufQng14oEG0OA846k0NYWqvRYMJwPtWmrBVnC9ntIYmHASdiEW8zdt2/O0ca
-	bR+WYe36K+B+tDkbWJYtm9M+3AaB5e9KER2wP6hg==
-Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12lp2171.outbound.protection.outlook.com [104.47.55.171])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kwwq8pse-1
+	:references:subject:to; s=pp1; bh=yuMuyPAIiLTd1HmHV//Vpc/92R0ei/
+	V2lAFNinMD5Co=; b=ZeX+8FzymJrJFRGazTL7wV7HO5shT5Kb591cAmCU5FCCzG
+	StdLh1DbGpNYYB9uJREEZKPFWmS9z+pue9+yS0YSerHng+ov3sYndfkq8rdBa0CS
+	Lk8l39Z2PL1cEo+YBz5hJ+iwn8OcEu2giVEA7DF/861woeAk66KbGbcDBueEKlSW
+	ucEEXwy2nyzRfC8i/BN7VWFT5brZFhsZceFjLBMVjeFDe17E7BH1T04nvyOlk3M1
+	+A5D3Tes5FgvYqd+0M3+Nk72DooJzylBMgNg9pfev/2+Cld8qDE4sCP8MjffT0wI
+	n3lzVMJhQYDhrqt6y8V39tQnJIX80eYGP85b57dw==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kekywsyb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 16:08:17 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ots4uKW6i92orQy7QIX8HmcMDiiA7Lc6WoODspwYhIR+90EKNLEGsea8c0irFRps9yqZDlKu/NjyuNfZKXpWTppRjNVXtqY2UV+k5egFV0hKqrN/TA/eq0vl6HxLepi+1B+C20bFfWodX4z4AgEfeeXnp025o7A+Ix8G8tkC4h2iPkEzz4LUNKqzi6GLalyPWcEDWiszvfss8XX/Q9tM87YCHXrBLSXeQDVioYzux82yzlKplnwjEQ9r50EtVKvAc6qm8aGqis6vRqAFrS0sgccbkNS1ngf4MqS9sq6s0cuigRb9NXksgMHTd51jcR+g5wvd7pLSJJuLR6Q9EUFq4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tW7s2df+5GZvG4H5E9AMMzsYFQ89P67NoG2DDe8QV3g=;
- b=L5P7eAzIU/wgW2qp0mdCx/EZW1/AF/iqTMn5DgqlQ7s0rRjjO5ZUWKSuv+GS3VQRHO8ehbhGlDzdbs8qxO3d2i7u3koVF9XysFw5xr+43ucTWpDKqQfKtq8JQUVTKAfSIlC0q1cUEmoJ4wH1MiV9KLG4Z7ue0Qn0kHl5jcdNa/MNWIB8oTxM2aygdk7PgyBl2jIfSV7DNt017Pb453gtMOUy2I901AzpBRuZ79V/Uepn0SNE4nx24Xi97GUGtC9+GlF6JfVLdg7lP1lcV273AV+w5iQ9gtWQE/GEgQ3AEl/oe2w9CVHY8LzSU6mraCNbFHF3oRLOIdBMl3HrJ4DU6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=in.ibm.com; dmarc=pass action=none header.from=in.ibm.com;
- dkim=pass header.d=in.ibm.com; arc=none
-Received: from CO1PR15MB4970.namprd15.prod.outlook.com (2603:10b6:303:e5::10)
- by PH0PR15MB5734.namprd15.prod.outlook.com (2603:10b6:510:288::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Tue, 25 Mar
- 2025 16:08:14 +0000
-Received: from CO1PR15MB4970.namprd15.prod.outlook.com
- ([fe80::87bc:869b:7c0f:2e75]) by CO1PR15MB4970.namprd15.prod.outlook.com
- ([fe80::87bc:869b:7c0f:2e75%7]) with mapi id 15.20.8534.042; Tue, 25 Mar 2025
- 16:08:13 +0000
-From: GEORGE KEISHING <gkeishin@in.ibm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: OpenBMC Test Repository: Pre-work for Python 3.12 changes and
- packages update
-Thread-Topic: OpenBMC Test Repository: Pre-work for Python 3.12 changes and
- packages update
-Thread-Index: AduU3mYPGJCtyewpQUaiVbzWiZWfrgIvz5OQ
-Date: Tue, 25 Mar 2025 16:08:13 +0000
-Message-ID:  <CO1PR15MB4970E5EAC73E79186DC552E4E6A72@CO1PR15MB4970.namprd15.prod.outlook.com>
-References:  <BY3PR15MB49621C07BEFD1BC4E0EB63AEE6DF2@BY3PR15MB4962.namprd15.prod.outlook.com>
-In-Reply-To:  <BY3PR15MB49621C07BEFD1BC4E0EB63AEE6DF2@BY3PR15MB4962.namprd15.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CO1PR15MB4970:EE_|PH0PR15MB5734:EE_
-x-ms-office365-filtering-correlation-id: 3263073a-5dad-42ca-4b8a-08dd6bb73ef6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|366016|1800799024|376014|13003099007|38070700018|8096899003|7053199007;
-x-microsoft-antispam-message-info:  =?us-ascii?Q?bkmus5zWdC+4Ti5Z9yMaDnrYMSIadUuw4xEszYJme+OeoQA1zrVMlvW2OJvN?=
- =?us-ascii?Q?3vG2IeMngRMdHJhWUiejqWKrbXho/EOTvJRAdF1rhKjfv5jvFtGpuoRU1C8W?=
- =?us-ascii?Q?ihnikGrKHVDcfxh1uM0LC+KMhLpGtkDzxkLbd9APAetbbNJRGwzOrYZrcGS+?=
- =?us-ascii?Q?GIQz8cc/1Xl2SyoboPX9yioDYMACc4x/QsnO9vEpYJjPjf1Z1zo/ojvdwZ4D?=
- =?us-ascii?Q?2mZO/NU+YC9YnVlxCoK2sqqFDFA3nkwqbf5wkYBgmpvYw/TWcoLFVKqBGstu?=
- =?us-ascii?Q?jcV3CETtvig5jZKQbnZ/8eRLB5hiB1aOW4U4KB0Ut0boRTHQFgJIC7bcLw7X?=
- =?us-ascii?Q?1NN0DQ0Ma/n75rfX9AjwlpqZOSEB4evNtX0QX7ga94fur7AIKBHEGOLDEcUb?=
- =?us-ascii?Q?VcrFQVARf7YK+isbuYLY3c8YRWP/lXRNyP9FFsiHbkF7HfRq83H7IPpG/ZQ4?=
- =?us-ascii?Q?sFYG48gPj0dRE9Z5BXyUjgq9x3q+ZhJEdh/tYT6x1SrLP2hLmcKzoGBGfCxg?=
- =?us-ascii?Q?xfGOWP7l3VZgz6JSjxEenYrYy4DTQ7TZznYNpN6MhKIAUs2j+GJKDA67eVQZ?=
- =?us-ascii?Q?WrHKeeHauI3ckAD3NhQNTBBXejJ5Rw5bHJ9nzcmZFZTNsuPgkex9RXfeRrxX?=
- =?us-ascii?Q?SFF9AdWSpcmEBU2nwJniRDWjoLRuu3oZHuAdPSheqyub5qnhqhXd6cBPQdzs?=
- =?us-ascii?Q?vLJMUyy2TmGbbMsg35qAaq3Dqil/1P6vo0JJg0eIH5uszl5i8hw9NXIM/PVy?=
- =?us-ascii?Q?iLdrxdIgzlpEOFmGtQhTiy5jBy0ZzxgdFDj9YusOgplJNBcL698FiKIZ2upV?=
- =?us-ascii?Q?1HTap+xN8V/1rqhAI88sipWcmixMjvH7SKju4OgzcacWQH60oGWsc7ge2Uq5?=
- =?us-ascii?Q?h0TStZ2mPyXn5z07xK4qwbnZKox1VirwMBRMOIPLDTcTv2MW3c54MvMQn9UJ?=
- =?us-ascii?Q?jiUEVwsPYxF7PGY7x6sQDi1rHMH75OXNR3+q5sMwLhpurVbwETNw3bXIviqA?=
- =?us-ascii?Q?OVQFmGXxw9Q7SlGa1pf3VY4cqSQJfxdAd9yziBLVqq8Hf9cqE6uoMNB8+PCZ?=
- =?us-ascii?Q?ablHYb4pzETx5L83NxUyLpGc9CFmW/zvP24KkKDRdg2ZHv5vGwqjQZVcReVM?=
- =?us-ascii?Q?6/G6jKq6UpptE2jSW/ghK+CRwT6/N7lb2tRjfEv1wZDFa8WX24YJNkIKn/40?=
- =?us-ascii?Q?VAzM2UovRMdjKwYJw8TQqZZ+jStCPN8F9Ul5vsyFi/zeWeY5uZH9uGm4QhFs?=
- =?us-ascii?Q?QMCZ+Ebau3tBWTRijzI9fn2GogmLHZNUCRCFcXriacyXcH3SL8hEzXZK+cVK?=
- =?us-ascii?Q?b5ghY9Mvmkc+U984kd0gmBhD7DWNU76DgiwaHcG1LoadCpT3UThxB/kEaxzV?=
- =?us-ascii?Q?40vF2hpSKxnEH/4z38n/55U6Nrn6DP/Q/rKdbd/QtXT4t17bMg=3D=3D?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR15MB4970.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(13003099007)(38070700018)(8096899003)(7053199007);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?4pQGk453w16n5zBHIorormQlmgwlbnwPYxRGokTwhosgWZPMGkqfkGGw9eqL?=
- =?us-ascii?Q?YtYIsCv8xFdlEwDR/U1ts5IX9HruXkvGqwPHEmlHJ+HzjHWMjQu1VBP5a1XA?=
- =?us-ascii?Q?it1qIuqHW/GZdmRBEyKaz6dOcH5oAQvcGgkweQEBrA14UPeZhX/MVbUo4/co?=
- =?us-ascii?Q?7u5KSV/LD32TUqo9biH4WgQRnnFk1o/t7QqWcu2nmeYYkcw5sZFgubfvbkOU?=
- =?us-ascii?Q?cqMgnBzsxYQ+v4Dr4LE8/N0V7SPmqrEeKVmZHMCFvdrYIotqe6LU340dqeRd?=
- =?us-ascii?Q?+Qy0OfZ2H4YbjSqfAM6KA5BXLYaBNU14bq90Pd4hrFpULgMP83KUvGDwCNc9?=
- =?us-ascii?Q?0XBKZ/beH1eBKEhm2XPTIiP84JU/uy2bWAWeZn6F1pGnobSNE09o5cVGACHg?=
- =?us-ascii?Q?Mzb3hcTOTE0ZvYPYjqItt1MCaL6k80HRUM9JaFkdNAb3JcwMd9nxKQ8jwulD?=
- =?us-ascii?Q?WEQxBgP4zPCVotjXMSZiy9ZzS4sLxR0vcX5qzo872e1hrg6bVzrOPYeR/UvZ?=
- =?us-ascii?Q?rCCYhjqk5FvjHcmpx0xJNNLONQ/RAi3ojjzsUM5OXug1gqzfBdro4oq+YZiG?=
- =?us-ascii?Q?yW+OqctUdqkiIIS2moY2jbPrL+N71rLcJMvjErpz+vatpIiARUkI/mDKdpCJ?=
- =?us-ascii?Q?JXRs1uXxNIq13KTbk1rTcgfNPZ/Ek76KfdU4XDVvdcUxd1fme3a5/f2fzoZv?=
- =?us-ascii?Q?YKhXXwWPnG9R/g9J/G3Gth/8E7vV6/1UMR7cQ/pvNGwtRE3uBh3LE0q9Qt69?=
- =?us-ascii?Q?eAd8+eiK7LWarJr4ydp4RgYKAlS7IE9+a5jh3BVerBudELymOjhzpdL+9NCJ?=
- =?us-ascii?Q?kThVGcOuX4rtYR4zpwuYtzMjcG272NtUyybwUBvORxHVAJdv3peFLhlzWI6C?=
- =?us-ascii?Q?a0VCJYwaJeJ8x+8Vx9ZtycPR1mn4/U9kapLKoGJzK9D4e4RzxDgN//LTEUt6?=
- =?us-ascii?Q?griuY21fKNrFSBYs/HMLW+jwgsjV2Ldx+j7BrTSfjCe4tm16x6zTKLapTa4q?=
- =?us-ascii?Q?pYToFYdCYWKmQgz+7knCyl7Y9KvDP5nA/A79eq7/esvc/hQxDmDzD2Y+v+cs?=
- =?us-ascii?Q?vQoIezWWY6vGzcVAzp/FPXqCyyfP4gmRMFJNlg9+CYbrAL+MMrmAvdaty0NJ?=
- =?us-ascii?Q?/5XwDokEgeM0K938Z+4/P0nFeE8tVtfbaS/i4PhGSmbWOI/KoZUuMAcBH5Pd?=
- =?us-ascii?Q?3M3X77gHMQowZ1Oye1MO5ylvap5zn/ZTElJnZK5lY0bhBk0O3qejjSNXoSIz?=
- =?us-ascii?Q?p5pcOVqVvLfV0zUm//XAzSaXb8YhMkx0XNoIEQJdMXVoB9nfWPOkiXPyo+K6?=
- =?us-ascii?Q?U4fx9qN/jMVYm2xINAWhzcTgggJccBZSfgokf2uepAArymq1p8/BRxoPWZot?=
- =?us-ascii?Q?rw344f6t0z6IfV5NQ9xjGnJHWBWbEudLpHIaH7WTDFUNYaMVQ2iCIf49GFO+?=
- =?us-ascii?Q?03ZBc/bM1z+E14wgISN6jiVIZcteucLLgjyngxfZy5AyIlNj2AYDCPKyTdyV?=
- =?us-ascii?Q?31HerJOtzVRzemNuhjlxahBSbocXGTrUjiniQeh/N/aodQFiYoojCdWWDwZ+?=
- =?us-ascii?Q?40JfooxkRZGyNK3ZMWA=3D?=
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 19:31:46 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 52PJLiTj004480
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Mar 2025 19:31:45 GMT
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45kekywsy9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Mar 2025 19:31:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52PGdJUf020029;
+	Tue, 25 Mar 2025 19:31:45 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45j8hnw0ty-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 25 Mar 2025 19:31:45 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
+	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 52PJVi1k50594288
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 25 Mar 2025 19:31:44 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 08EDD58054;
+	Tue, 25 Mar 2025 19:31:44 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C1D3A58050;
+	Tue, 25 Mar 2025 19:31:43 +0000 (GMT)
+Received: from smtpclient.apple (unknown [9.41.97.51])
+	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 25 Mar 2025 19:31:43 +0000 (GMT)
 Content-Type: multipart/alternative;
-	boundary="_000_CO1PR15MB4970E5EAC73E79186DC552E4E6A72CO1PR15MB4970namp_"
-MIME-Version: 1.0
-X-OriginatorOrg: in.ibm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR15MB4970.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3263073a-5dad-42ca-4b8a-08dd6bb73ef6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2025 16:08:13.5622
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: N6fe6RYtlK/6ogcdIgdCNSWuGOwf2fDveRNPqgN9q+QRZkFkGkydo3cl3c7YZbe5p54r0LkB89iYcM8VtvKekQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR15MB5734
-X-Proofpoint-GUID: tx9Jgg7zf9jBL6fM1LOvnCe2lyVuIR6i
-X-Proofpoint-ORIG-GUID: tx9Jgg7zf9jBL6fM1LOvnCe2lyVuIR6i
+	boundary="Apple-Mail=_76D60E26-BF93-4765-AC8D-358C3B7B2640"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: Settings backup and restore tool prototype using Ansible -- RFC
+ on a published project
+From: Adriana Kobylak <anoo@linux.ibm.com>
+In-Reply-To: <Z9ftA+zMr2ljEbZg@home.paul.comp>
+Date: Tue, 25 Mar 2025 14:31:33 -0500
+Message-Id: <F4A34EF4-9572-4863-97BB-8ACA4B7FF1A5@linux.ibm.com>
+References: <Z9ftA+zMr2ljEbZg@home.paul.comp>
+To: Paul Fertser <fercerpav@gmail.com>
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: aMjkM_OlW02a9NsKVi1IuoXaY4nYb3Ej
+X-Proofpoint-GUID: yElD7O6R2G-nQQ_6_6Y_PRK49mq3CdLs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1093,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-03-25_06,2025-03-25_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 clxscore=1015 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2503250112
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,HTML_MESSAGE,RCVD_IN_DNSWL_LOW,
-	RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+ definitions=2025-03-25_08,2025-03-25_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503250131
+X-Spam-Status: No, score=-1.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HTML_MESSAGE,RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -177,257 +109,253 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dan Larklan <dlarson@us.ibm.com>, David Shaw <dlshaw@us.ibm.com>, Stephanie Swanson <swanman@us.ibm.com>, Sridevi Ramesh <sridevra@in.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_CO1PR15MB4970E5EAC73E79186DC552E4E6A72CO1PR15MB4970namp_
-Content-Type: text/plain; charset="us-ascii"
+
+--Apple-Mail=_76D60E26-BF93-4765-AC8D-358C3B7B2640
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Greeting,
+Some previous discussion on Backup and Restore for reference: =
+https://lore.kernel.org/all/YiEbhAQEdJzf706i@heinlein/T/#m50f639da25e073f9=
+73e18b5728c15cc1bf61d168
 
-                This is to notify that; the latest code supports Python 3.1=
-2 for the OpenBMC test repository.
-
-               We went ahead and updated the robot framework version as wel=
-l for testing and other dependent packages, and it is currently stable.
-               Robot Framework 7.2.2 (Python 3.12.9 on linux)
-
-               Expect changes around documentation, deprecating older code,=
- newer syntax for robot framework and python related changes for 3.12.
-
-               Refer previous notification if there are outages in your set=
-up for production with the latest OpenBMC test code.
-
-               Please reach us out on discord for any further queries: http=
-s://discord.gg/Uw9vhsJJ  or mailing list https://lists.ozlabs.org/listinfo/=
-openbmc/      openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>
-
-Regards
-George Keishing
+In summary, the DMTF is open to having a schema proposal submitted, =
+they're just looking for someone from the OpenBMC community to help =
+drive it.
 
 
-From: GEORGE KEISHING
-Sent: Monday, 17 March, 2025 05:50 PM
-To: openbmc@lists.ozlabs.org
-Cc: David Shaw <dlshaw@us.ibm.com>; Dan Larklan <dlarson@us.ibm.com>; Steph=
-anie Swanson <swanman@us.ibm.com>; Sridevi Ramesh <sridevra@in.ibm.com>
-Subject: OpenBMC Test Repository: Pre-work for Python 3.12 changes and pack=
-ages update
+> On Mar 17, 2025, at 4:36=E2=80=AFAM, Paul Fertser =
+<fercerpav@gmail.com> wrote:
+>=20
+> Hello,
+>=20
+> I was thinking about an "ideal" way to allow backing up and restoring
+> the BMC configuration in production and came up with this set of
+> goals:
+>=20
+> 1. The saved config should be easy to inspect and change;
+>=20
+> 2. It should not require any additional changes on the BMC side, so
+>   should be usable not only with OpenBMC but also with other
+>   implementations;
+>=20
+> 3. The tool usage should be easy to automate;
+>=20
+> 4. The tool should be easy to integrate into larger management
+>   systems and it should scale to arbitrary amount of BMCs;
+>=20
+> 5. It should be as beneficial as possible to the communities using
+>   Free Software.
+>=20
+>=20
+> To my surprise I couldn't find any existing solution so following
+> these ideas I prepared a prototype and published at
+> https://github.com/paulfertser/ansible_redfish_settings .
+>=20
+> Please feel free to comment on approach and the implementation, and of
+> course to provide patches. I have to note I'm not personally herding a
+> bunch of servers so my notions can be quite off, do not hesitate to
+> point out when it doesn't match real life usecases.
+>=20
+>=20
+> Point 1 is followed by saving config in YAML format, that's nice to
+> edit both manually and automatically if needed. Point 2 is fulfilled
+> by doing only Redfish interactions, optional Oem settings can be added
+> conditionally. Points 3 and 4 come naturally from using Ansible which
+> seems to be the most popular system for reproducible mass
+> configuration (and much more), so should be familiar to most BMC
+> operators. Point 5 is helped by repository organisation which makes it
+> natural to submit patches upstream to community.general Ansible
+> collection.
+>=20
+>=20
+> While working on this prototype I contributed few changes for missing
+> functionality in community.general collection, the experience was
+> highly positive as the upstream is welcoming and helpful. So extending
+> the project to handle the settings you care about shouldn't be
+> problematic, see my changes for example:
+>=20
+> =
+https://github.com/ansible-collections/community.general/commit/e853bdf6f9=
+07872fdd39e8c507061269399942e9
+> =
+https://github.com/ansible-collections/community.general/commit/129f51cf9d=
+284d107cf197a1805481c2e4645efe
+> =
+https://github.com/ansible-collections/community.general/commit/abe4e5ce95=
+e6cae4a42629640345e0769c3724a1
+>=20
+>=20
+> Here follows the copy of the project README.md with some more details.
+>=20
+> # Description #
+>=20
+> This project aims at providing an easy to use mechanism for creating a
+> human-readable and editable BMC settings configuration bundle and for
+> reliable idempotent application of them to an arbitrary number of
+> machines. It should be possible to use it directly or to seamlessly
+> integrate into larger Ansible playbooks as desired. The tasks files
+> are provided under MIT licence terms.
+>=20
+> Added as a submodule is a fork of community.general Ansible
+> collection. The changes are minimal: extending backwards compatibility
+> and renaming to not clash with system-wide installation. The idea is
+> to provide fast, easy and straightforward mechanism to prepare and
+> test patches for submitting Github pull requests to upstream
+> repository: https://github.com/ansible-collections/community.general .
+> After the PRs are merged it's trivial to rebase to get the
+> latest-and-greatest code. Please note this collection is published
+> under GPL-3.0.
+>=20
+> The testing was performed against OpenBMC hosts but it should be
+> working reasonably with any other Redfish compliant server.
+>=20
+>=20
+> # System requirements #
+>=20
+> Ansible version 2.10.0 (released in 2020) or later.
+>=20
+>=20
+> # Installation instructions #
+>=20
+> ```
+> # apt install ansible
+> $ git clone --recursive =
+https://github.com/paulfertser/ansible_redfish_settings
+> ```
+>=20
+> If you really need a fully "standalone" solution, consider packaging =
+with
+> Nuitka as described here: https://github.com/HexmosTech/Ansika .
+>=20
+>=20
+> # Usage examples #
+>=20
+> Example command to retrieve all the settings from a single host:
+> ```
+> $ ansible-playbook get_settings.yaml --extra-vars "baseuri=3D172.41.1.38=
+ username=3Droot password=3D0penBmc"
+> ```
+>=20
+> The data will be saved to `settings_172.41.1.38.yaml` file.
+>=20
+> Example command to set settings for a single host:
+> ```
+> $ ansible-playbook set_settings.yaml --extra-vars "baseuri=3D172.41.1.38=
+ username=3Droot password=3D0penBmc"  --extra-vars =
+@settings_172.41.1.38.yaml
+> ```
+>=20
+> The repository includes sample `inventory.ini` which allows to =
+retrieve and set
+> settings en masse:
+> ```
+> $ ansible-playbook get_settings.yaml -i inventory.ini
+> ```
+>=20
+> --=20
+> Be free, use free (http://www.gnu.org/philosophy/free-sw.html) =
+software!
+> mailto:fercerpav@gmail.com
 
-Greeting,
 
-                This is to notify that, due to Python 3.12 pre-work effort =
-coming up, we are testing changes which are ready to apply for the OpenBMC =
-test repository.
-
-                Release Notification:
-Branch: v6.0-stable   ( https://github.com/openbmc/openbmc-test-automation/=
-tree/v6.0-stable )
-Release note: https://github.com/openbmc/openbmc-test-automation/releases/t=
-ag/v6.0-stable
-Please point to this branch if you still want to continue using the older v=
-ersions of Python level < 3.12 and robot packages in your setup.
-
-Last tested version:
-Robot Framework 7.1.1 (Python 3.10.12 on linux)
-
-As part of major update changes which impacts the repository test infrastru=
-cture around Python and UI packages needed.
-Pre-work couple commit patch ( testing in progress & will be merging soon )
-Current testing Level:
-Robot Framework 7.2.2 (Python 3.12.9 on linux)
-https://gerrit.openbmc.org/q/topic:%22python3.12%22
-
-               Please reach us out on discord for any further queries: http=
-s://discord.gg/v4XJwnx2  or mailing list https://lists.ozlabs.org/listinfo/=
-openbmc/      openbmc@lists.ozlabs.org<mailto:openbmc@lists.ozlabs.org>
-
-Regards
-George Keishing
-
-
-
---_000_CO1PR15MB4970E5EAC73E79186DC552E4E6A72CO1PR15MB4970namp_
-Content-Type: text/html; charset="us-ascii"
+--Apple-Mail=_76D60E26-BF93-4765-AC8D-358C3B7B2640
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:Aptos;}
-@font-face
-	{font-family:"Segoe UI";
-	panose-1:2 11 5 2 4 2 4 2 2 3;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	font-size:11.0pt;
-	font-family:"Aptos",sans-serif;
-	mso-ligatures:standardcontextual;
-	mso-fareast-language:EN-US;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#467886;
-	text-decoration:underline;}
-span.EmailStyle19
-	{mso-style-type:personal-reply;
-	font-family:"Aptos",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;
-	mso-ligatures:none;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-IN" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Greeting,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This is to notify that; the latest code s=
-upports Python 3.12 for the OpenBMC test repository.<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We went ahead and updated the robot framew=
-ork version as well for testing and other dependent packages, and it is cur=
-rently stable.<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Robot Framework 7.2.2 (Python 3.12.9 on li=
-nux)<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Expect changes around documentation, depre=
-cating older code, newer syntax for robot framework and python related chan=
-ges for 3.12.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Refer previous notification if there are o=
-utages in your setup for production with the latest OpenBMC test code.<o:p>=
-</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please reach us out on discord for any fur=
-ther queries:
-<a href=3D"https://discord.gg/Uw9vhsJJ">https://discord.gg/Uw9vhsJJ</a>&nbs=
-p; or mailing list
-<a href=3D"https://lists.ozlabs.org/listinfo/openbmc/">https://lists.ozlabs=
-.org/listinfo/openbmc/</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><o:=
-p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards<o:p></o:p></p>
-<p class=3D"MsoNormal">George Keishing<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<div>
-<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm =
-0cm 0cm">
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-family:&quot;C=
-alibri&quot;,sans-serif;mso-ligatures:none;mso-fareast-language:EN-IN">From=
-:</span></b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,s=
-ans-serif;mso-ligatures:none;mso-fareast-language:EN-IN"> GEORGE
- KEISHING <br>
-<b>Sent:</b> Monday, 17 March, 2025 05:50 PM<br>
-<b>To:</b> openbmc@lists.ozlabs.org<br>
-<b>Cc:</b> David Shaw &lt;dlshaw@us.ibm.com&gt;; Dan Larklan &lt;dlarson@us=
-.ibm.com&gt;; Stephanie Swanson &lt;swanman@us.ibm.com&gt;; Sridevi Ramesh =
-&lt;sridevra@in.ibm.com&gt;<br>
-<b>Subject:</b> OpenBMC Test Repository: Pre-work for Python 3.12 changes a=
-nd packages update<o:p></o:p></span></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Greeting,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This is to notify that, due to Pytho=
-n 3.12 pre-work effort coming up, we are testing changes which are ready to=
- apply for the OpenBMC test repository.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<b>&nbsp;</b><b><span style=3D"font-family=
-:&quot;Segoe UI&quot;,sans-serif;color:#1F2328;background:white">Release No=
-tification:
-</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp; <o:p></o:p></b></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Branch: v6.0-stable&nbs=
-p;&nbsp; ( <a href=3D"https://github.com/openbmc/openbmc-test-automation/tr=
-ee/v6.0-stable">
-https://github.com/openbmc/openbmc-test-automation/tree/v6.0-stable</a> )<o=
-:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Release note: <a href=
-=3D"https://github.com/openbmc/openbmc-test-automation/releases/tag/v6.0-st=
-able">
-https://github.com/openbmc/openbmc-test-automation/releases/tag/v6.0-stable=
-</a><o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Please point to this br=
-anch if you still want to continue using the older versions of Python level=
- &lt; 3.12 and robot packages in your setup.<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><b>Last tested version:=
-<o:p></o:p></b></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Robot Framework 7.1.1 (=
-Python 3.10.12 on linux)<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt;text-indent:36.0pt">As=
- part of major update changes which impacts the repository test infrastruct=
-ure around Python and UI packages needed.<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Pre-work couple commit =
-patch ( testing in progress &amp; will be merging soon )<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><b>Current testing Leve=
-l:<o:p></o:p></b></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt">Robot Framework 7.2.2 (=
-Python 3.12.9 on linux)<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><a href=3D"https://gerr=
-it.openbmc.org/q/topic:%22python3.12%22">https://gerrit.openbmc.org/q/topic=
-:%22python3.12%22</a><o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please reach us out on discord for any fur=
-ther queries:
-<a href=3D"https://discord.gg/v4XJwnx2">https://discord.gg/v4XJwnx2</a>&nbs=
-p; or mailing list
-<a href=3D"https://lists.ozlabs.org/listinfo/openbmc/">https://lists.ozlabs=
-.org/listinfo/openbmc/</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a> <o=
-:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards<o:p></o:p></p>
-<p class=3D"MsoNormal">George Keishing<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:36.0pt"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;">Some previous =
+discussion on Backup and Restore for reference:&nbsp;<a =
+href=3D"https://lore.kernel.org/all/YiEbhAQEdJzf706i@heinlein/T/#m50f639da=
+25e073f973e18b5728c15cc1bf61d168">https://lore.kernel.org/all/YiEbhAQEdJzf=
+706i@heinlein/T/#m50f639da25e073f973e18b5728c15cc1bf61d168</a><div><br></d=
+iv><div>In summary, the DMTF is open to having a schema proposal =
+submitted, they're just looking for someone from the OpenBMC community =
+to help drive it.</div><div><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On Mar 17, 2025, at 4:36=E2=80=AFAM, Paul Fertser =
+&lt;fercerpav@gmail.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><div>Hello,<br><br>I was =
+thinking about an "ideal" way to allow backing up and restoring<br>the =
+BMC configuration in production and came up with this set =
+of<br>goals:<br><br>1. The saved config should be easy to inspect and =
+change;<br><br>2. It should not require any additional changes on the =
+BMC side, so<br> &nbsp;&nbsp;should be usable not only with OpenBMC but =
+also with other<br> &nbsp;&nbsp;implementations;<br><br>3. The tool =
+usage should be easy to automate;<br><br>4. The tool should be easy to =
+integrate into larger management<br> &nbsp;&nbsp;systems and it should =
+scale to arbitrary amount of BMCs;<br><br>5. It should be as beneficial =
+as possible to the communities using<br> &nbsp;&nbsp;Free =
+Software.<br><br><br>To my surprise I couldn't find any existing =
+solution so following<br>these ideas I prepared a prototype and =
+published at<br>https://github.com/paulfertser/ansible_redfish_settings =
+.<br><br>Please feel free to comment on approach and the implementation, =
+and of<br>course to provide patches. I have to note I'm not personally =
+herding a<br>bunch of servers so my notions can be quite off, do not =
+hesitate to<br>point out when it doesn't match real life =
+usecases.<br><br><br>Point 1 is followed by saving config in YAML =
+format, that's nice to<br>edit both manually and automatically if =
+needed. Point 2 is fulfilled<br>by doing only Redfish interactions, =
+optional Oem settings can be added<br>conditionally. Points 3 and 4 come =
+naturally from using Ansible which<br>seems to be the most popular =
+system for reproducible mass<br>configuration (and much more), so should =
+be familiar to most BMC<br>operators. Point 5 is helped by repository =
+organisation which makes it<br>natural to submit patches upstream to =
+community.general Ansible<br>collection.<br><br><br>While working on =
+this prototype I contributed few changes for missing<br>functionality in =
+community.general collection, the experience was<br>highly positive as =
+the upstream is welcoming and helpful. So extending<br>the project to =
+handle the settings you care about shouldn't be<br>problematic, see my =
+changes for =
+example:<br><br>https://github.com/ansible-collections/community.general/c=
+ommit/e853bdf6f907872fdd39e8c507061269399942e9<br>https://github.com/ansib=
+le-collections/community.general/commit/129f51cf9d284d107cf197a1805481c2e4=
+645efe<br>https://github.com/ansible-collections/community.general/commit/=
+abe4e5ce95e6cae4a42629640345e0769c3724a1<br><br><br>Here follows the =
+copy of the project README.md with some more details.<br><br># =
+Description #<br><br>This project aims at providing an easy to use =
+mechanism for creating a<br>human-readable and editable BMC settings =
+configuration bundle and for<br>reliable idempotent application of them =
+to an arbitrary number of<br>machines. It should be possible to use it =
+directly or to seamlessly<br>integrate into larger Ansible playbooks as =
+desired. The tasks files<br>are provided under MIT licence =
+terms.<br><br>Added as a submodule is a fork of community.general =
+Ansible<br>collection. The changes are minimal: extending backwards =
+compatibility<br>and renaming to not clash with system-wide =
+installation. The idea is<br>to provide fast, easy and straightforward =
+mechanism to prepare and<br>test patches for submitting Github pull =
+requests to upstream<br>repository: =
+https://github.com/ansible-collections/community.general .<br>After the =
+PRs are merged it's trivial to rebase to get the<br>latest-and-greatest =
+code. Please note this collection is published<br>under =
+GPL-3.0.<br><br>The testing was performed against OpenBMC hosts but it =
+should be<br>working reasonably with any other Redfish compliant =
+server.<br><br><br># System requirements #<br><br>Ansible version 2.10.0 =
+(released in 2020) or later.<br><br><br># Installation instructions =
+#<br><br>```<br># apt install ansible<br>$ git clone --recursive =
+https://github.com/paulfertser/ansible_redfish_settings<br>```<br><br>If =
+you really need a fully "standalone" solution, consider packaging =
+with<br>Nuitka as described here: https://github.com/HexmosTech/Ansika =
+.<br><br><br># Usage examples #<br><br>Example command to retrieve all =
+the settings from a single host:<br>```<br>$ ansible-playbook =
+get_settings.yaml --extra-vars "baseuri=3D172.41.1.38 username=3Droot =
+password=3D0penBmc"<br>```<br><br>The data will be saved to =
+`settings_172.41.1.38.yaml` file.<br><br>Example command to set settings =
+for a single host:<br>```<br>$ ansible-playbook set_settings.yaml =
+--extra-vars "baseuri=3D172.41.1.38 username=3Droot password=3D0penBmc" =
+&nbsp;--extra-vars @settings_172.41.1.38.yaml<br>```<br><br>The =
+repository includes sample `inventory.ini` which allows to retrieve and =
+set<br>settings en masse:<br>```<br>$ ansible-playbook get_settings.yaml =
+-i inventory.ini<br>```<br><br>-- <br>Be free, use free =
+(http://www.gnu.org/philosophy/free-sw.html) =
+software!<br>mailto:fercerpav@gmail.com<br></div></div></blockquote></div>=
+<br></div></body></html>=
 
---_000_CO1PR15MB4970E5EAC73E79186DC552E4E6A72CO1PR15MB4970namp_--
+--Apple-Mail=_76D60E26-BF93-4765-AC8D-358C3B7B2640--
+
