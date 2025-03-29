@@ -2,81 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7434A75D4F
-	for <lists+openbmc@lfdr.de>; Mon, 31 Mar 2025 01:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04FDBA75D52
+	for <lists+openbmc@lfdr.de>; Mon, 31 Mar 2025 01:25:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZQr272hMtz3dXS
-	for <lists+openbmc@lfdr.de>; Mon, 31 Mar 2025 10:24:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZQr2C2gFcz3fpp
+	for <lists+openbmc@lfdr.de>; Mon, 31 Mar 2025 10:24:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::f2f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743190455;
-	cv=none; b=jwET/MKffIzl6Y0yOn9fyZ25DG/PlJ8VpHRphenJVdASFQETIxXfEI50kJGkKeeo84adDWIkhuZK0Dt7gAuAp+7gpAWQrUYKBsu3o22uhm90W1Zg6itmWiY/pHVErVD3fRSN9GFOCDPP6Io2e+kWW3FjfqGbuXJpyT39ZYEMgV6bygvoqZGZPlZCtVHaWmP1O5OFh2O+2cBDJKN/RE49uBWaiTpsjtEkKI9SiHjslKQTWuio4Abp3lWjcvmU7szOFHqg4WfkjWeYDkbwuYrwbrGC0ly/ccZKebkn4KY2FCVZiwq7b0Osk1rO9HfjI/jRBosIITSpI78HP6BScjFLaA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=205.220.168.131
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743242973;
+	cv=none; b=jm3uSY8kqKj6pttxqGi5E9RCrG6YSpIfVf+NYWQPSIgg5vFSszoR9Ct89kSYHp/MiSO8XiPwSdMrvrcubc/IcVnwgN3W/V5p7MGOK7TiOd/4655uhVQPrFxcTaswWL79kJaGtdK3zVJ0ugvsn+JOpWhqSf/kzdRE//yOhq0EwDn8tgaRnw50UAdPfiSqt2MuLaH/moYudy3PRX2ntX43cBPF/PpbUlHgLMBUQe+Va8aD1GjvmDCuf2brIdobaOGhfvtaILzxuVuFH/oU49wLnkmSbsy2tThaCWMA6y1b7/Rf6pI2ChIKWtf6qtaW+ROKAFLxRGdYD4XJvMmQH6MIZQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1743190455; c=relaxed/relaxed;
-	bh=jEsZeKkCSJE/RqF1NfH3Pi2anuv0fHcdv6E6yVQATWM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 Cc:Content-Type; b=BRD0y1kCI/euY6AYXHO+1OfNsfVcstoh8bP/URZKMvnrJ2pJgXUHVEKTLbKh+gpGbfayXP1ih3/NphP5sU0GsI65UDa6eqCao4iMpfbJOZz96KCaXGNcnl+E5jbZJFyWnCU71sSTbRW0jZPVivYGnEAv5hVqRQgRI0vDdkzQKey7tPPB/myDj2LuEjv8/N2b/OOlSOlTYsLQF0LN/EjvGqNROfYDnUmCRGDLys0ijrcRqpIaViZeQCD8d05gAXByeQQnCtLisQqn6zJmIHR22fWjxFfAMPBmcU711iZK//GseeMhvtCezFoy8BCZvEJjjG4XRFo7rQFL7d4lvfxwIQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IWx4XlXO; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::f2f; helo=mail-qv1-xf2f.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1743242973; c=relaxed/relaxed;
+	bh=ZctcELcPbgMeBUILORibRhO1veAYoqsegMxTqB8eDys=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fKv1il4g+ve2VWiZGkpEX2iSsbFQx6Z16Vod4qMLLu0g3vummqWb4CeIWS2irNkSzYSov34a6h4+Kagln9wsCaVLJhpLR0+aklOSCus9xCpHRPN6pO06erzeqsQ5w+MFo5zZ2zD/Uj5btvT5RLtIwSsnsCBFX+pJix0oE36lKat7OL1UYiJkN6JCL6jHXOO+1vb9niQcXALWTiff/G/fxFqV5f9aiL54OZMrqhB5udX5IHVy9ZMDYJiOOxBYPodnnrXCVJ/yTts8pGRCyr7jvR3x01TIqhPsnsZT+hWN5JFfCZ6tjKtHBuzyH6AoF3kHv7EMJ3k0QopstVLk9d+WaQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; dkim=pass (2048-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ouvRbnBK; dkim-atps=neutral; spf=pass (client-ip=205.220.168.131; helo=mx0a-0031df01.pphosted.com; envelope-from=quic_msavaliy@quicinc.com; receiver=lists.ozlabs.org) smtp.mailfrom=quicinc.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IWx4XlXO;
+	dkim=pass (2048-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ouvRbnBK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2f; helo=mail-qv1-xf2f.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=quicinc.com (client-ip=205.220.168.131; helo=mx0a-0031df01.pphosted.com; envelope-from=quic_msavaliy@quicinc.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 3203 seconds by postgrey-1.37 at boromir; Sat, 29 Mar 2025 21:09:32 AEDT
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZPW1L1m8Xz2ygH
-	for <openbmc@lists.ozlabs.org>; Sat, 29 Mar 2025 06:34:14 +1100 (AEDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-6ecfa716ec1so23782496d6.2
-        for <openbmc@lists.ozlabs.org>; Fri, 28 Mar 2025 12:34:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743190449; x=1743795249; darn=lists.ozlabs.org;
-        h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jEsZeKkCSJE/RqF1NfH3Pi2anuv0fHcdv6E6yVQATWM=;
-        b=IWx4XlXOvbPZC2qDYz8/Hd6DkZmpbvuHdMl3uTZVcjFDKD5mvtLD4O9q+WAvd0V7zq
-         vJJ+IOFYHc37XimOKtEEYHs58jfTmf0d7shj5DicAe2gE1rs4ngKJFzcd6mQNOMRI7Uc
-         IkPkG6FAWjb+6YkD9zBgO9fCOqmFiyWA57Kl5nDkSuvXPnIAr23Klq8p1T+7DfgjkYnv
-         MIVBvncxQVdHCnsH0ucVKhqmtphoFSQezKFKi3UvIC+nImsqGu4vTBrDpKcLOWpwo1NP
-         ZTPhtg2wnkEqiT+TFm4H9sKmAXDc88QLu/UAi5VI/qZTPvNb8l2JW/UoeOvQ/YsqeqQN
-         0dyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743190449; x=1743795249;
-        h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jEsZeKkCSJE/RqF1NfH3Pi2anuv0fHcdv6E6yVQATWM=;
-        b=NpuxCelQNyUyysigTpOxIXq6s9uZkO7zqonrFJyxeA8XIW1GJzDyT9GCE9Z2jykPII
-         ni7rBUxM4KbdzQpNwPD66u7nKDWzLddanPXOxIVUqeAMzX07pBruyw5UG1nFcEbESjuQ
-         kDtjaC2k+Ov+F3FhJg4dOWB7nxQH/I33bz87+bU6CZrnxCSw0PfnQNBEPBWc4OryKQfK
-         Dtg5VvwwrFQny/fQFLrmwh/W5fcLWb2XTCSgXZU26yaXwMUtByX1hwsB85XU50tCgGnK
-         2pKsDTSwWJyBiISBbt1fdqpAs2af4nFysQXLqGGZeuUvRUVV1rFM445GW4XDzbO1HCCh
-         YCxQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUXz/56DFed8S3EpMh6c0ByDbE3JFq9z1CCthUy3MErC8yExe75CyInsFct1xEYOW+m5M6XFHWB@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YypCwbMX2jDTGKZdxv6iEwNQfefo9oHWoWrJDRT8jGylohCPDfb
-	GjV1eG/2TPraXeDUUn98o7G9zf+UBhopEPRqPHq0QF2iYoIdEFnbDf0N8shSHB6dAiZPP4Oq1W9
-	GmpZrOOHaZoc8Qu/jy/nvLDeTLTo=
-X-Gm-Gg: ASbGnct0/rpnfbqcqWFfwUyc8l8a0pDknUpQvjNih7BvYUfoHbQDKiexYg3vMDtN9d2
-	fC+X71JK6BU/j3/JIEGDbGfD71oo/1Nki3JR6KFHgh5LLV5m4Kt53EHBPzc9CVRbsgy1VOd/C0s
-	HDD7JbxzGecbwdtaigsEJ5+68iuxEsMe/TULY2NvrGkXq0OqU4je+a92LU
-X-Received: by 2002:a05:6214:e67:b0:6ed:14cd:d179 with SMTP id
- 6a1803df08f44-6eed5f9d392mt5080256d6.3.1743190449509; Fri, 28 Mar 2025
- 12:34:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZPtRJ0WcGz2ySl
+	for <openbmc@lists.ozlabs.org>; Sat, 29 Mar 2025 21:09:31 +1100 (AEDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52T7jw1u005966;
+	Sat, 29 Mar 2025 09:16:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZctcELcPbgMeBUILORibRhO1veAYoqsegMxTqB8eDys=; b=ouvRbnBK4ZUEElK3
+	MlAD7AqG5EZTqa75fF0DvbDWjXVgk2bb1feBrNmmoeJ4SkFcESnl5Brrq/rPgAnK
+	F9jPj7MPVN2O7ow/IvJiZxLoRGTogG4ghB3Ib3qlDNt/p7yVVOE33vtLlIrJVKlC
+	PlCc4SuQV1SU7odfghoFUpr5pWR0XZZuO156ahumVVmZNCck4fbOih1o8RRUGdXo
+	IENYQ0v1Dn+47DWIVOFD78Rqkzyi7Guy2e8A9LuDD5EB0ASe6v4uMTmX1Jg3pr+b
+	eW69ZxYbnfRZRdSwbDjM/P0A+tPhG9g8vz04hOAZZrYRc3jbjuvdYu0NB35iYPUe
+	3GdZVQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p935rdew-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 29 Mar 2025 09:16:01 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 52T9FiKa031640
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 29 Mar 2025 09:15:44 GMT
+Received: from [10.216.2.59] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 29 Mar
+ 2025 02:15:41 -0700
+Message-ID: <e09c0d10-60f3-480b-a3f9-654ee2f14978@quicinc.com>
+Date: Sat, 29 Mar 2025 14:45:38 +0530
 MIME-Version: 1.0
-References: <20250327193816.670658-1-mohammed.0.elbadry@gmail.com> <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
-In-Reply-To: <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
-From: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Date: Fri, 28 Mar 2025 12:33:58 -0700
-X-Gm-Features: AQ5f1JpGcPCFUP62kC2WxdgIHi_knzjN_TYXQvNQR5Hthy1ecISD1sdfQKEPUOU
-Message-ID: <CAHdq5QGXAhswyYrKOaZEArENJGit1uxsn0WA4hafYVscK-MbRg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4] i2c: npcm: Add clock toggle recovery
-Content-Type: multipart/alternative; boundary="00000000000085fbd306316c2718"
-X-Spam-Status: No, score=2.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
-	MALFORMED_FREEMAIL,MISSING_HEADERS,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
-X-Spam-Level: **
+To: <mohammed.0.elbadry@gmail.com>
+References: <20250327193816.670658-1-mohammed.0.elbadry@gmail.com>
+ <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QJ1FZTKbAJbJEPaabUI_orjrK2185UbJ
+X-Authority-Analysis: v=2.4 cv=KOFaDEFo c=1 sm=1 tr=0 ts=67e7ba51 cx=c_pps a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17 a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Vs1iUdzkB0EA:10 a=pGLkceISAAAA:8 a=COk6AnOGAAAA:8 a=XycGwPUB66WHHuA_nGUA:9
+ a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: QJ1FZTKbAJbJEPaabUI_orjrK2185UbJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-29_01,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0 spamscore=0
+ phishscore=0 mlxlogscore=999 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503290065
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Mailman-Approved-At: Mon, 31 Mar 2025 10:24:24 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -94,136 +105,43 @@ Cc: Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000085fbd306316c2718
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Looks good to me.
 
-Thank you, Mukesh. Updated patch uploaded.
-
-Mo
-
-On Fri, Mar 28, 2025 at 12:33=E2=80=AFPM <mohammed.0.elbadry@gmail.com> wro=
-te:
-
+On 3/29/2025 1:02 AM, mohammed.0.elbadry@gmail.com wrote:
 > From: Tali Perry <tali.perry1@gmail.com>
->
+> 
 > During init of the bus, the module checks that the bus is idle.
 > If one of the lines are stuck try to recover them first before failing.
 > Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
->
+> 
 > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
+Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 > ---
->  drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c
-> b/drivers/i2c/busses/i2c-npcm7xx.c
+>   drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
+>   1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
 > index 2fe68615942e..caf9aa1e6319 100644
 > --- a/drivers/i2c/busses/i2c-npcm7xx.c
 > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> @@ -1967,10 +1967,14 @@ static int npcm_i2c_init_module(struct npcm_i2c
-> *bus, enum i2c_mode mode,
->
->         /* Check HW is OK: SDA and SCL should be high at this point. */
->         if ((npcm_i2c_get_SDA(&bus->adap) =3D=3D 0) ||
-> (npcm_i2c_get_SCL(&bus->adap) =3D=3D 0)) {
-> -               dev_err(bus->dev, "I2C%d init fail: lines are low\n",
-> bus->num);
-> -               dev_err(bus->dev, "SDA=3D%d SCL=3D%d\n",
-> npcm_i2c_get_SDA(&bus->adap),
-> -                       npcm_i2c_get_SCL(&bus->adap));
-> -               return -ENXIO;
-> +               dev_warn(bus->dev, " I2C%d SDA=3D%d SCL=3D%d, attempting =
-to
-> recover\n", bus->num,
-> +                                npcm_i2c_get_SDA(&bus->adap),
-> npcm_i2c_get_SCL(&bus->adap));
-> +               if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-> +                       dev_err(bus->dev, "I2C%d init fail: SDA=3D%d
-> SCL=3D%d\n",
-> +                               bus->num, npcm_i2c_get_SDA(&bus->adap),
-> +                               npcm_i2c_get_SCL(&bus->adap));
-> +                       return -ENXIO;
-> +               }
->         }
->
->         npcm_i2c_int_enable(bus, true);
-> --
-> 2.49.0.472.ge94155a9ec-goog
->
->
+> @@ -1967,10 +1967,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
+>   
+>   	/* Check HW is OK: SDA and SCL should be high at this point. */
+>   	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
+> -		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
+> -		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
+> -			npcm_i2c_get_SCL(&bus->adap));
+> -		return -ENXIO;
+> +		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
+> +				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
+> +		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
+> +			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
+> +				bus->num, npcm_i2c_get_SDA(&bus->adap),
+> +				npcm_i2c_get_SCL(&bus->adap));
+> +			return -ENXIO;
+> +		}
+>   	}
+>   
+>   	npcm_i2c_int_enable(bus, true);
 
---00000000000085fbd306316c2718
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you,=C2=A0Mukesh. Updated patch uploaded.<div><br></=
-div><div>Mo</div></div><br><div class=3D"gmail_quote gmail_quote_container"=
-><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 28, 2025 at 12:33=E2=80=
-=AFPM &lt;<a href=3D"mailto:mohammed.0.elbadry@gmail.com">mohammed.0.elbadr=
-y@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">From: Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" ta=
-rget=3D"_blank">tali.perry1@gmail.com</a>&gt;<br>
-<br>
-During init of the bus, the module checks that the bus is idle.<br>
-If one of the lines are stuck try to recover them first before failing.<br>
-Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).<br>
-<br>
-Signed-off-by: Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" targ=
-et=3D"_blank">tali.perry1@gmail.com</a>&gt;<br>
-Signed-off-by: Mohammed Elbadry &lt;<a href=3D"mailto:mohammed.0.elbadry@gm=
-ail.com" target=3D"_blank">mohammed.0.elbadry@gmail.com</a>&gt;<br>
----<br>
-=C2=A0drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----<br>
-=C2=A01 file changed, 8 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm=
-7xx.c<br>
-index 2fe68615942e..caf9aa1e6319 100644<br>
---- a/drivers/i2c/busses/i2c-npcm7xx.c<br>
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c<br>
-@@ -1967,10 +1967,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bu=
-s, enum i2c_mode mode,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Check HW is OK: SDA and SCL should be high a=
-t this point. */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((npcm_i2c_get_SDA(&amp;bus-&gt;adap) =3D=3D=
- 0) || (npcm_i2c_get_SCL(&amp;bus-&gt;adap) =3D=3D 0)) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_err(bus-&gt;dev=
-, &quot;I2C%d init fail: lines are low\n&quot;, bus-&gt;num);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_err(bus-&gt;dev=
-, &quot;SDA=3D%d SCL=3D%d\n&quot;, npcm_i2c_get_SDA(&amp;bus-&gt;adap),<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0npcm_i2c_get_SCL(&amp;bus-&gt;adap));<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENXIO;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_warn(bus-&gt;de=
-v, &quot; I2C%d SDA=3D%d SCL=3D%d, attempting to recover\n&quot;, bus-&gt;n=
-um,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 npcm_i2c_get_SDA(&amp;bus-&gt;adap),=
- npcm_i2c_get_SCL(&amp;bus-&gt;adap));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (npcm_i2c_recove=
-ry_tgclk(&amp;bus-&gt;adap)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0dev_err(bus-&gt;dev, &quot;I2C%d init fail: SDA=3D%d SCL=3D%d\n&q=
-uot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bus-&gt;num, npcm_i2c_get_SDA(&amp;bu=
-s-&gt;adap),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0npcm_i2c_get_SCL(&amp;bus-&gt;adap));=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0return -ENXIO;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 npcm_i2c_int_enable(bus, true);<br>
--- <br>
-2.49.0.472.ge94155a9ec-goog<br>
-<br>
-</blockquote></div>
-
---00000000000085fbd306316c2718--
