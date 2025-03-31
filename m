@@ -1,161 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C96E1A77104
-	for <lists+openbmc@lfdr.de>; Tue,  1 Apr 2025 00:47:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C425A77106
+	for <lists+openbmc@lfdr.de>; Tue,  1 Apr 2025 00:47:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZRR8P5M2Mz3brx
-	for <lists+openbmc@lfdr.de>; Tue,  1 Apr 2025 09:47:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZRR8j6STMz3bxR
+	for <lists+openbmc@lfdr.de>; Tue,  1 Apr 2025 09:47:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c400::3" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743419914;
-	cv=pass; b=BnyrZAogUT33kjKqJhoTTGKWYFkgfmAiS33JdbJUZkW5zHZrPF1sgPzT8Tp3gbqAmcyFN/jDQ3sLcc5387K2XqwNHO1f+IG9JT+zl75EhaM/ZdwWsEshuKbmqh0x78gz1mnHQ38qvX4AUe9/l/hJQyaTHVYAUfFYfm9ApEfo044GqVXDyMV4ttzuT2PGSQnPmGcSBPsYPVInRpfqtXrCDJxmw46h99MFUDWWBIZe4vdriLXRF5hWqoTm3Bet+xUuUMhWxzrvSUcombkxNVXC0mu84Y/e4XeTitVAIbE5JsyaQzK+LB46kJ6LrdtmNKS8vmqNZQK2R7YcyYGf2Lc51Q==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1743419914; c=relaxed/relaxed;
-	bh=rJ5f+tSG6w4cmP5g4PYJhXuFxfsFbZUHwMK/d/LL/U8=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=cROz6Qn9PrTLQkuNLKR/NyG7h6wt0uSzuiZpb9PO342gDAabnecFUVN5nnJ2JGpCFYyAKScXvSe1sCK2Q4qvRtJM8+fCptfMDEzsWvo2Qml7Nqulfv1LcxxvpHbe3/cSQTXlwZGhptL5INIJkLgBfGTbJ0rbA4TkQxluoM9EDifgF9moE7Z91i//Mtl2rXd6BqvYQzAyZ7bAGZ2gMdB2jFqb3x7MakXZupjipd+WaOVnRPeVh0hBEhfliTFLecZLp3OpgY+oBK2r/5NanHAdoed8Xkl5uX6v+3Oyo4rWs1eR9JO8IcME9luBXTT6Sh59Y8HkP3MIcYqexi0sAJOpyw==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ingrasys.com; dkim=pass (2048-bit key; unprotected) header.d=ingrasys.com header.i=@ingrasys.com header.a=rsa-sha256 header.s=selector1 header.b=UtQeDxNE; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c400::3; helo=hk3pr03cu002.outbound.protection.outlook.com; envelope-from=alexwu@ingrasys.com; receiver=lists.ozlabs.org) smtp.mailfrom=ingrasys.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ingrasys.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::112a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743431907;
+	cv=none; b=euHpTsoLelgXD25hYvPbr+s1/goOh3ylUo9LvWFyX+3ENJSthzAUke3W18FXtr6un8+WOP3B0MmL+ZM7o0y2pSTFmTjKNK7bHOl6H7dJjjcVOPAPT1MFRScaOTL5+EtUiNPlq2EQReibv50bzBUDphBf9+CWr3EyR8/u/pGWWwum4kc2kVaqklQRDIWjEiRoA/a07eKdn67UfOW/fah/gN4zPP5gqygmqtxmbnw++4pLgnjI/3b8b8mktCIEU5xESe3pzkastfMQAh5/UZ9jfqsBVqhV+gZU7lg2W53y5wJz6Sw6Z0YLMYSGkUl3NhOcUjg98iV9EJpcKig0qxOfxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1743431907; c=relaxed/relaxed;
+	bh=Gh7uHnLOYUMINhjDyB+Cz7o7LROZONIUwRgDFygbvtY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EvpTfjFMk8DRCDx1/XasfLSBsRgHFOuh3F7UBihkbn7Hp4mayTTenyPCnBPhIhJJo8jGDIp4FbpH/y23kX8hveK+oWB+KYzWfC/zgwzW3v+suA52gSUOAm8PfdtqTmTq8mpL3rBwaYo3ieZV8FWPy+wJjOPfZjq+jMF/jmlDyiwYR6R7gFEpKeQWbTV3SkFQpzVaVMFJngg26o3BCFYnDOglXmoG8rYep1heCiUaZ4syjYbEwEAfx4uGDwCaYHmD+7W7DhkT8d2RDv5xI9ojhcWWXLO4L967l0bS5zistP6RY6RFZT61W3jrmWF+9CTYvJmPYQh2AWzZEbPqgdWZVQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=lfprojects.org; dkim=pass (2048-bit key; unprotected) header.d=lfprojects-org.20230601.gappssmtp.com header.i=@lfprojects-org.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=N33dI+tm; dkim-atps=neutral; spf=softfail (client-ip=2607:f8b0:4864:20::112a; helo=mail-yw1-x112a.google.com; envelope-from=manager@lfprojects.org; receiver=lists.ozlabs.org) smtp.mailfrom=lfprojects.org
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=lfprojects.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ingrasys.com header.i=@ingrasys.com header.a=rsa-sha256 header.s=selector1 header.b=UtQeDxNE;
+	dkim=pass (2048-bit key; unprotected) header.d=lfprojects-org.20230601.gappssmtp.com header.i=@lfprojects-org.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=N33dI+tm;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ingrasys.com (client-ip=2a01:111:f403:c400::3; helo=hk3pr03cu002.outbound.protection.outlook.com; envelope-from=alexwu@ingrasys.com; receiver=lists.ozlabs.org)
-Received: from HK3PR03CU002.outbound.protection.outlook.com (mail-eastasiaazlp170110003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c400::3])
+Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=lfprojects.org (client-ip=2607:f8b0:4864:20::112a; helo=mail-yw1-x112a.google.com; envelope-from=manager@lfprojects.org; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZR7sz3HRzz2ygk
-	for <openbmc@lists.ozlabs.org>; Mon, 31 Mar 2025 22:18:30 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ipd7xkpB3/+Ll/oJwt30cIr8UlyhF0AL0XlVrIXAz2Hld2nVtyVO8ulH1tnFeGBWEIGhcfVT/We4mCKX56VGctGuoc22pzqoEhj7WEBHrh71a90l5kiVfQ4p2VUiGYTQDvhb9qLref+HBFex3uQOXefzbWsz9CHo8hkGS0bIiG4Cti+C6wsiMqIltfb01tSIKBRZE4ERECBrA+x4NCkezyBC6I1GycjRaqjXhiqdbIENuLjQBesKk80vH52a+8TUXszd4Kya3Nsa4r8Z4JJS7maNJy7Nv81GMi2Pyh5iUbni4khUZ2kHAK9GyHYO8Df2mXoDqng01yoUIpAqs72nVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rJ5f+tSG6w4cmP5g4PYJhXuFxfsFbZUHwMK/d/LL/U8=;
- b=wMVo5u8ezHpV2il/AEMT0PnnFkeeSP4iRPpL4k0OgmM5DaGG6BHHpwLSOtosaeot4w31DcxzsOnPun21LsnKZYX20jUCi76JqS/l6Jl0uf7pRqpYgm3olH+aLLrhwiYnuRflwzRrArJB5xVSRQDSjKCNCA75qEh2amY70LE24L8uaD8P2d231TNEE6pOx7GhwLDqvHUft62Njp3ls2KnnUizjXmB/enaZ9LgJaCwrJ0DfBHRh37amdiEyCSJLZLEDfKHk/wFi9GaIH3dwuPCHf4A1yD3kRPUcW2miwRwKsFqJomOIt49Qn0nabePrAY16IujxRm1H6BUul5Nqcx1mA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ingrasys.com; dmarc=pass action=none header.from=ingrasys.com;
- dkim=pass header.d=ingrasys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ingrasys.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rJ5f+tSG6w4cmP5g4PYJhXuFxfsFbZUHwMK/d/LL/U8=;
- b=UtQeDxNEI6akkddQgwn7HVFNbY7HtpIHhG81Xn2KF2Vvyw9CEKlgr6ztbIZDBgC/cxe7mdIXIfI7ddqRJ3kFoWamzifL1UfTla29ZiS1wC8O9hKVOEvLkjyQUma1YsDgnHgE2uNzr0Nq21VoNYwsoOH9Cw7P711ICWWFvGJsqyB7JU2a8Vh806kDrGBJcfcv0ERydx9HtxP9i+LrT+TtlcGstOBUpDcy/6G9485NNKkPbAjO8ot3PEWfA+7qQZf+tOCULpe9oeOhbDn+niXDzIkLuZM+AKYVm2Xlaip7mG825DCZYm3Fh8otfw1Vmpe6rYQVuYlGRtffOflZAFnuxw==
-Received: from SEZPR04MB8045.apcprd04.prod.outlook.com (2603:1096:101:22d::5)
- by JH0PR04MB7251.apcprd04.prod.outlook.com (2603:1096:990:35::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.28; Mon, 31 Mar
- 2025 11:18:06 +0000
-Received: from SEZPR04MB8045.apcprd04.prod.outlook.com
- ([fe80::d0e:8fdf:a515:8b8a]) by SEZPR04MB8045.apcprd04.prod.outlook.com
- ([fe80::d0e:8fdf:a515:8b8a%5]) with mapi id 15.20.8534.043; Mon, 31 Mar 2025
- 11:18:05 +0000
-From: =?big5?B?QWxleCBXdSinZKxGv/gp?= <alexwu@ingrasys.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: CCLA for Meta Clemente project 
-Thread-Topic: CCLA for Meta Clemente project 
-Thread-Index: AQHboi1y213JRnwtg0Co+fwBJv/yrw==
-Date: Mon, 31 Mar 2025 11:18:05 +0000
-Message-ID:  <SEZPR04MB80456EE06D62AF894C92D7ECADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
-Accept-Language: en-US, zh-TW
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ingrasys.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR04MB8045:EE_|JH0PR04MB7251:EE_
-x-ms-office365-filtering-correlation-id: 20ff0e42-723c-4de9-b183-08dd7045b58e
-x-ld-processed: 606190be-ff89-439c-b3a7-504fcdff4ffa,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:  BCL:0;ARA:13230040|366016|1800799024|376014|38070700018|4053099003|8096899003;
-x-microsoft-antispam-message-info:  =?big5?B?WE11VVp3bEhwWnZxeE84eUI3eWNEOFBYdGpSZG1RZW1mNmJmV2Rzdm80VUt4TnJF?=
- =?big5?B?dDlMdGRILzArYjB4THQyUE4rTkhYTTJCODhnZmlVWERENWNla3U2MERwRzhkNkxP?=
- =?big5?B?WkYwbFhCd2tvckRlQ1hqOWhXZENLKy9sSnBkNytqWEplZ01DQ3J1VVYrNVdLNldT?=
- =?big5?B?UERkUWxQb0JveURFRGtsdm9DZjQveFd2eWN4WFVRQjFXTGFvMmkvMFoybkRMRnFw?=
- =?big5?B?a05BVzBHVDRRcm9yb1BacGZvNVM2TU9OTUlnc05NN0UyVHRXUkthZlBFZEtMWGw4?=
- =?big5?B?cVNkMEVKemkvcm1jaGRtU0RRdXhPRnA4T0pQOTd2T3dDYTNySVdCd0tEQ0dTU2ZJ?=
- =?big5?B?OWYrVEZpeE9paUcrdE1QUjFHTHJxalVIQXZvclBQMEFqYmZZazJxbmUwN2t3MWhU?=
- =?big5?B?Mzh6VGp4akFockduWWRkanNhWkZOSlQwWTNnS3lrVGxIcWd0Y2lvZzVRcEk5emg3?=
- =?big5?B?S0xrL1dIUHhrY2JMb0hJUE5mMGJEOVIxTUdsNXY2ZWRIRkh0SVJ6TFZrY2dNZHJk?=
- =?big5?B?eFNHWEZ0Wk8xbGZjem10UVZSUE85MXRLT0ZJM25DU1VDR1h4bDRpdUdWRGFjR1Fm?=
- =?big5?B?c3pBYURBL21zbmRZc2FMQ1B5dDE1TGFiZU00bmhvcy9EaG1wcG5mTFl2L0lSRHRE?=
- =?big5?B?SmNKVGVpYThYU0pJRW9yYzdiRFFLc0gzSytOdTI4MmcrRkFtUmZZeXl3ZGZEL01Z?=
- =?big5?B?RWYvc3llNXBGWEhMcENkTjFvV2trYU1MZWxnU3JaZEV0c0o4N2RxRE9BU2orWWU2?=
- =?big5?B?R2QwRTI0TlBDK2JQTTR5aC8rc0JRZmUvRHRjejludG0zUXhsR1dZTTFPWVlSVUxZ?=
- =?big5?B?TVVqSlVqOERQNnJHaEpUd0xHVEFyczdrL2JZcnNSYkZFbDNWT1BwbVd0enFkR29y?=
- =?big5?B?cmlVeTJaTTRNRyt2eW45L1NPNk9vc0ZYRDF3RHllM1VrWnR1d0tFWEx5T1VLaU9Q?=
- =?big5?B?TFVlZXdRSGVNZ2VuWUIySFZjNFJEbkQ3YUxuN2hKd0M4WnpGVUt5N3dtNXFiV3BS?=
- =?big5?B?dURFRDVSV25hdjdNdDZHQTF1VHJRS08rYVZXZXpmVEE2Smp5WUkrZDEwTTY3cHVB?=
- =?big5?B?OGhZNXlSdzJlSWZlRTFTKzBDeUlQQXovRHhVVUxXM3YwU2ZJbVNtUGlhOXpWOVMy?=
- =?big5?B?NjJKeEl5Wmpjamw4Qjg2dVBhT3l3KzZMcEs5S0VWc0FIWlB2L3RBZzVVczZuUVdo?=
- =?big5?B?N1RNTHJHeDFZWkwwNlNLajNxN1BMazd0TGNKcVFCWmdhQ0RHNVZVdFNxbXRQUFBY?=
- =?big5?B?OG1kQllveHVjQ1JoSHF1R3Y5ekoyc3o5MUhIUXRrN1dEVldkMHY1QVlFN0F4V2ND?=
- =?big5?B?VVAzd3d3QnZVM0hLdGtDaWNZTElyQ045Y3Z6R0ZmT2JWNmU0NlVBSlFNUjJIVlVU?=
- =?big5?B?U0tFc3NPa29rbjVmMUZFVDVIb1dsakNCejc2TEs1NVZLTHBaaHM1VWVBbHRoS081?=
- =?big5?B?ZmhKN3FiYW0wemFhREw4N3p0ZHFYNWRsbEJsSHd0dTArYWVlRGI5WmJ0c2hXZFRJ?=
- =?big5?B?OGZkd2crTGYrTEpobE04c3YzM3ZwY1VtdDJpNXE0SmVod2lXSlVpbWxCMSsrSllC?=
- =?big5?B?N09ESjl0cW9iMWdGS2lEMzVNWXROSUpNM29iemhZdHdrcHRhbElJSTBMcUFucy9R?=
- =?big5?B?ZXRwdGJseWRkK1VXb0g3UXdUdFlzV2F0M0prMFhvVlBFUThXM1RHZnRwLzhoN2dX?=
- =?big5?B?elpjRWtKckY1R0h2UnlnUDlMRmlqSVFHVWtQbk1UVTNUVXBRbDdUUy9aRHJZdGQ3?=
- =?big5?Q?2Kdu3dHIsuouhqit?=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:ja;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR04MB8045.apcprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(38070700018)(4053099003)(8096899003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?big5?B?WE45TTJpTFFmOXE5RUloZ01ORDRxc0psbnl6Y3FEcXV1ZDlIam1ONHNtdFFTZkpN?=
- =?big5?B?c1hEenBwYVJhQlByY3Fod0Q2UVljR0RIRTA0S2tzTWE1ME9GNkppRVVoMFhaaWF3?=
- =?big5?B?UUhlTGZPYUFjVnZiTEtBbWgwY0Y1WTQ1ZEdobm94QkVGRTVZSHpuby9WK3BwdkFq?=
- =?big5?B?WVBuVmlzZUhsN2xrSEVZVGNtWXlnTlJpdzBYUnJieVNrcjhBTGx0REFacVN5OVM1?=
- =?big5?B?bldQbDR2YmZYcm05ZE9IcVFWOFZDQ1hOMEVqdHJBQzFMUlN3VjR1Z0pNY3F4Vkth?=
- =?big5?B?cEpCa1ExYzNkY0twQnhLZ3cxdkFxbkVIaGxCbTJHWklxSC82MEdicVVRZ0NDUk1n?=
- =?big5?B?ekhBS2hsSGZtdXkrdGJhZ2p1YStBYWpnUEZ0NEdmVnpXL0VrQWdUcFRXZVlYWUZt?=
- =?big5?B?ckhKUTh0czRrQjhmVU9tOEdSdERlSjhpUmh0eEJMSFNGcWd5KzVCRFZ4clNlZUc5?=
- =?big5?B?TTU4ZWpYOURIOVFuM0JrUkxlNE5ZMXhKOFluYlcrZ29DMkpQNURnTWhzZFVMM3pD?=
- =?big5?B?T3p5cHQzT0FvWVNlR1MvZzMzOUpWZUw0bW5UMW8xQlBnejc4emZGVUFML09MdXAr?=
- =?big5?B?cmhFK3g5S0JuelJDbkJYMkJCb0Q3VmVVYzJLR2xtWEY0QmcydENvUnZlQldINHNO?=
- =?big5?B?VjFnNGZBT3BVcXNlUHVZN0JVUUhndlNDTmFrQ2RoODNOWHU5T1BqMVdZT2UxSG9w?=
- =?big5?B?MHl3NXBQc2FyaDJrNUJOY3FWMklrZ25HcWE5NVZRTEppY1hOMkRKL3lnUnVidEtQ?=
- =?big5?B?Y0VqK2tRTnYzdEhHdzBwQ1JueWgzZzVvWGlLdGtiZzVadzhUOUlRTDFOKzRLNEIx?=
- =?big5?B?MTJib2VodzlpaWFmS2wyMXJmZ0M0aXpoVW91YUdJM09mZkxGMnozbk8ySGRPYktn?=
- =?big5?B?aWxuckJ6V0RISThFcndBMktTZDBBZ2JsbkRTSXhsQnE1bHhKS0JreHpvQWMxUHFi?=
- =?big5?B?aUI0d0JYMS8wK040SEtTaHlyRExXTEZRM2JidnpZSE42VXFLNTkrQ2hCZGxYOXk5?=
- =?big5?B?NTNjQUI5YnkwdVhXeEc2QjU1bkdha2lLR3hWODU1MW96aHVBa3FReVBPZVhBdEd0?=
- =?big5?B?N3lOVjVKMzloWkJ1aDRMaGlzYUUzaDJkNHJ4MkUrWVBLdzZoenRyK1lDMFQ0NzYx?=
- =?big5?B?d3RrRzR6Wml0ZnF0dmtCWEdIMmsrTTZqb09sdzNBZVhzejFBdkVCS2VqOEJnZGlu?=
- =?big5?B?b2ZPVnhJVzBnZVlCRllrR3NWOWdyQVcxRU1SazQydldRdXM2MEROd3o1NDg3ckxm?=
- =?big5?B?cDA2SGxpeXhNSnNJOTF6L1E3MWN2ZVM1c1NadktMaU1sQjNBWGI1TTBMYkViVzNX?=
- =?big5?B?dFRoWUpHUHYvWUdaRDczS2UzUjhveDgrY0dpaUo1eTdnU2dQU1ZZRDJzTHk2Z1FP?=
- =?big5?B?bFl4RDJncysySmxQM2RsVVg4QVNMdlJuSzdVcEQ5YS9jZ0tPR01OK1dSNFR1WDdN?=
- =?big5?B?YWN4YklyR2RUWWM2UytodDg5MTUzTGlkbUtURHUyZlJFcjBqemZvTDN0K2NiTksy?=
- =?big5?B?RC9ac2xnSW96aTUyUmdwb2xZRkRLTlZOeFdEU3BHZmtmTit0VmgwM0k4K2VxeFZN?=
- =?big5?B?cXhub0FlU2h3OVNhREVqaXVJQXNuY0g4OU5IMjV0c3kwcTB0Tm1QQXgxckxDNnZ5?=
- =?big5?B?cHAzaDJqVmsreUxKeCtWeTJwbGx5bHJOc002aFBFY1lWR1R4R0d0NE9lSUI0cE9j?=
- =?big5?B?djFaZHVpRStxbUdxeW80Rk05UmpISmZrRFV1bU1MUDhJMmtjK2VZbWxocEp4WmMy?=
- =?big5?B?UmZjMjRRZDgzd3hRWDVCdklHV3gzdjFzSW1DYVo3RllpQmc3SG84S2Z2blVScnpW?=
- =?big5?B?Y1BaTURQSEsvS3FNOHJYUWMxbGZRV2xLbzVDaVUydUZhM3JYUjhPZG1xaUMxR1NK?=
- =?big5?B?aXlraXdmdkRzZmVNWldUMGhXREoxWkNpenFhd3p0c0QzMjlVSGduRzhwdkU2RUk5?=
- =?big5?B?NUdycHFrNlJEVEE4Y1EyQ0l5empQbEJrcnBIQWx1cHVkeGVtN290L2RzWmI4TUFC?=
- =?big5?Q?I0/nPDong2cXJBaX?=
-Content-Type: multipart/mixed;
-	boundary="_004_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZRDJc2gG3z2xpn
+	for <openbmc@lists.ozlabs.org>; Tue,  1 Apr 2025 01:38:23 +1100 (AEDT)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-6ff0c9d1761so35399897b3.1
+        for <openbmc@lists.ozlabs.org>; Mon, 31 Mar 2025 07:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lfprojects-org.20230601.gappssmtp.com; s=20230601; t=1743431900; x=1744036700; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gh7uHnLOYUMINhjDyB+Cz7o7LROZONIUwRgDFygbvtY=;
+        b=N33dI+tmBVZbjO95vyNZTRa/9oZcPIG0NYZcm//raGz2Q7MKD2dxc4/+cE7ptMeINh
+         qyHls0coZPg1ZgkheuuvlxKGi3GVbPVYJzHKkx7+8tH4A6ELKvSaIgCyH24qtQswixif
+         8766GL6uuGZrxkNZQHARQYKCtHofRjqnNdHMHR4evMAtVVmTse4Bfp53ZdkoAzk06/UK
+         mh663APUptySCSJu7/MwJv+kM6l3htbgTKX4zhlXIxgOLpzo7rj44esgKztaQ9HKRUCa
+         zNAH0BbMDw9mQGrhotsmlJsGiHziQ9deOdM8uvOemhIgFs4Xakm+BZc8EBeXe6wVx0ok
+         CvlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1743431900; x=1744036700;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gh7uHnLOYUMINhjDyB+Cz7o7LROZONIUwRgDFygbvtY=;
+        b=gC8F0wPXRu0jxWSnO/sO0LVN9qJvRYceNcWA0ksupgheDrJVQ6PbJ237tpFGETfGYk
+         r/Z78qFygix/sdmD/DsEzrfHwvpvA18VEsaXOg5amDnV3gu2ww36H2yDlVW4IqNOgxq4
+         Q7ua85xHkPJSDM70CF0zkuF46XNy5yDfM7EI5OdAkR1F9vMsJ4ph2coWwwXGZg3PEPGr
+         OW/hOXWz1VW5SvQmrkXungmvnDAxE2Z1tHWRgQ3qEBXwGQcXEBbf4aY+1FSy0sUhtyts
+         /uE8j1NpBfKJWwtwljyW9+2YzkcOdiH0NU+GTxmRlG42wvfsy3h0V1V6Rk5c+u/TO09C
+         2GSw==
+X-Gm-Message-State: AOJu0YxHk3gnuNNNRid11rfOttPHHad6QPwhFNS4Ka16dwdMgyfGanW+
+	vN1bk02FTWTS5e/5MmHJN2zYC9MqlJbS4qs5vtCQdCszhxCvpNFiAA2PsAw+KyEan58E40KLP/G
+	w6GkWT7h5zC9dbvNtMCblOJXnEX52KIe4pby0uw==
+X-Gm-Gg: ASbGnctpiiI0ojj/krH1o7TGuUqAJyn3VIltxNcIk+f6vHANPhh7krdjf8vaPUmrejH
+	Mk5Daf1Xr5tMTFkZVveYBZJTuPgu08XfKnvYb+ZfOOtw66dyUE5H/3xCsyhBGz59xTDf4uqba1V
+	6u1bKSISlpfljKvMmT3eqfgqgezQ==
+X-Google-Smtp-Source: AGHT+IHwrchc9kg36RJlU59cdIAhmGZSpcIgwIYMyM52VHAdru+Or7b6E6V6HWPcwE6ShGNN7NG9o6OKpa4zDTzd3oM=
+X-Received: by 2002:a05:690c:488a:b0:6fd:3d37:99ce with SMTP id
+ 00721157ae682-70257139e6amr121559277b3.17.1743431900253; Mon, 31 Mar 2025
+ 07:38:20 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: ingrasys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR04MB8045.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20ff0e42-723c-4de9-b183-08dd7045b58e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2025 11:18:05.7526
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 606190be-ff89-439c-b3a7-504fcdff4ffa
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nt/I2Pjm5Dp4SNw3ltRqvGu1vSn1tn8n6yuG4laroqUupXIpbP6b825CWYJHIJ5wW8lWDzWe+tyZFTJutpMj2w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR04MB7251
-X-Spam-Status: No, score=-0.3 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,HTML_MESSAGE,
-	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
+References: <SEZPR04MB80456EE06D62AF894C92D7ECADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
+In-Reply-To: <SEZPR04MB80456EE06D62AF894C92D7ECADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
+From: Mike Dolan <manager@lfprojects.org>
+Date: Mon, 31 Mar 2025 10:38:09 -0400
+X-Gm-Features: AQ5f1JpqFwtHVTkh69kQ9cNCjUd-hPEzFmeYGG1dQyz9XAI_IjCuOl34iwx6L7k
+Message-ID: <CALVHhec+VRqf7zHvfr3AP-qCbfs_4QyH_aQXHd05f9DGg9Z6Tw@mail.gmail.com>
+Subject: Re: CCLA for Meta Clemente project
+To: =?UTF-8?B?QWxleCBXdSjlkLPmlL/pjLMp?= <alexwu@ingrasys.com>, 
+	Andrew Geissler <andrewg@us.ibm.com>
+Content-Type: multipart/mixed; boundary="0000000000001b2c290631a45fa7"
+X-Spam-Status: No, score=1.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_SOFTFAIL
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Mailman-Approved-At: Tue, 01 Apr 2025 09:46:50 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -169,95 +91,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "manager@lfprojects.org" <manager@lfprojects.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_004_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_
-Content-Type: multipart/alternative;
-	boundary="_000_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_"
+--0000000000001b2c290631a45fa7
+Content-Type: multipart/alternative; boundary="0000000000001b2c280631a45fa5"
 
---_000_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
-
-SGksDQoNCkhlcmUgaXMgdGhlIENDTEEgcGFwZXIgZm9yIE1ldGEgQ2xlbWVudGUgcHJvamVjdC4N
-Cg0KUmVnYXJkcywNCkFsZXggV3UNCg0KU2VuaW9yIERpcmVjdG9yDQpJbmdyYXN5cyBUZWNobm9s
-b2d5IEluYy4NCkZveGNvbm4gfCBDbG91ZCBFbnRlcnByaXNlIFNvbHV0aW9uIEJ1c2luZXNzIEdy
-b3VwDQpPZmZpY2U6ICAgKzg4Ni0yLTIyNjgtMzQ2NiBleHQuIDUwMTAtMTU2MTANCk1vYmlsZTog
-Kzg4NiA5NzIgNzgxIDgyNQ0K
-
---_000_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_
-Content-Type: text/html; charset="big5"
+--0000000000001b2c280631a45fa5
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+Hi Alex, we don't have a Meta Clemente project but this CCLA is for
+OpenBMC. Did you intend to submit this for OpenBMC?
+
+On Mon, Mar 31, 2025 at 7:18=E2=80=AFAM Alex Wu(=E5=90=B3=E6=94=BF=E9=8C=B3=
+) <alexwu@ingrasys.com> wrote:
+
+> Hi,
+>
+> Here is the CCLA paper for Meta Clemente project.
+>
+> Regards,
+> Alex Wu
+>
+> Senior Director
+> Ingrasys Technology Inc.
+> Foxconn | Cloud Enterprise Solution Business Group
+> Office:   +886-2-2268-3466 ext. 5010-15610
+> Mobile: +886 972 781 825
+>
+
+--0000000000001b2c280631a45fa5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Alex, we don&#39;t have a Meta Clemente project but thi=
+s CCLA is for OpenBMC. Did you intend to submit this for OpenBMC?</div><br>=
+<div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"=
+gmail_attr">On Mon, Mar 31, 2025 at 7:18=E2=80=AFAM Alex Wu(=E5=90=B3=E6=94=
+=BF=E9=8C=B3) &lt;<a href=3D"mailto:alexwu@ingrasys.com">alexwu@ingrasys.co=
+m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+><div class=3D"msg3473787994477234070">
+
+
+
+
+<div dir=3D"ltr">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Hi,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 <br>
 </div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Here is the CCLA paper for Meta Clemente project.</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 <br>
 </div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Regards,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Alex Wu</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 <br>
 </div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Senior Director</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
+<div style=3D"font-family:Aptos,Aptos_EmbeddedFont,Aptos_MSFontService,Cali=
+bri,Helvetica,sans-serif;font-size:12pt;color:rgb(0,0,0)">
 Ingrasys Technology Inc.</div>
-<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif, se=
-rif, EmojiFont; font-size: 11pt; color: black;">
+<div style=3D"font-family:Calibri,sans-serif,serif,EmojiFont;font-size:11pt=
+;color:black">
 Foxconn | Cloud Enterprise Solution Business Group</div>
-<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif, se=
-rif, EmojiFont; font-size: 11pt; color: black;">
-Office:&nbsp; &nbsp;+886-2-2268-3466 ext. 5010-15610</div>
-<div class=3D"elementToProof" style=3D"font-family: Calibri, sans-serif, se=
-rif, EmojiFont; font-size: 11pt; color: black;">
+<div style=3D"font-family:Calibri,sans-serif,serif,EmojiFont;font-size:11pt=
+;color:black">
+Office:=C2=A0 =C2=A0+886-2-2268-3466 ext. 5010-15610</div>
+<div style=3D"font-family:Calibri,sans-serif,serif,EmojiFont;font-size:11pt=
+;color:black">
 Mobile: +886 972 781 825</div>
-</body>
-</html>
+</div>
 
---_000_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_--
+</div></blockquote></div>
 
---_004_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_
+--0000000000001b2c280631a45fa5--
+
+--0000000000001b2c290631a45fa7
 Content-Type: application/pdf; name="OpenBMC.CCLA.alexwu0331.pdf"
-Content-Description: OpenBMC.CCLA.alexwu0331.pdf
-Content-Disposition: attachment; filename="OpenBMC.CCLA.alexwu0331.pdf";
-	size=335722; creation-date="Mon, 31 Mar 2025 11:16:20 GMT";
-	modification-date="Mon, 31 Mar 2025 11:18:05 GMT"
+Content-Disposition: attachment; filename="OpenBMC.CCLA.alexwu0331.pdf"
 Content-Transfer-Encoding: base64
+Content-ID: <195eca35beecc86c89a2>
+X-Attachment-Id: 195eca35beecc86c89a2
 
 JVBERi0xLjYNJeLjz9MNCjQ0IDAgb2JqDTw8L0xpbmVhcml6ZWQgMS9MIDMzNTcyMi9PIDQ2L0Ug
 MTYyMzM2L04gNS9UIDMzNTMyNS9IIFsgNTI5IDIzOV0+Pg1lbmRvYmoNICAgICAgICAgICAgICAg
@@ -6149,5 +6081,4 @@ Ui9TaXplIDQ0L1R5cGUvWFJlZi9XWzEgMyAxXT4+c3RyZWFtDQpo3mJiAAEmRqYqBQYmIOsiiBQp
 B5GMV0EkqzOIDFUBkUw3gSRj7BUw+yWI9N8EZl8DiTeB1QT5gfU2gMWzwGxJMHsfmH0dRDJHg9R3
 FoPZvWBxXTCpDFaZDmZfBssuBJO3QSRPMlh8DtidQHsZfz82ArMZGPGR7L8RbOb/6LJM/0AkIwNA
 gAEAzzEYeA0KZW5kc3RyZWFtDWVuZG9iag1zdGFydHhyZWYNCjExNg0KJSVFT0YNCg==
-
---_004_SEZPR04MB80456EE06D62AF894C92D7ECADAD2SEZPR04MB8045apcp_--
+--0000000000001b2c290631a45fa7--
