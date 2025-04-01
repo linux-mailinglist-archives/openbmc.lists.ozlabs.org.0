@@ -2,85 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9825A782DA
-	for <lists+openbmc@lfdr.de>; Tue,  1 Apr 2025 21:42:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D4FA7846E
+	for <lists+openbmc@lfdr.de>; Wed,  2 Apr 2025 00:09:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZRz0m4Gr4z3c8H
-	for <lists+openbmc@lfdr.de>; Wed,  2 Apr 2025 06:42:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZS2GF5wS9z3c8D
+	for <lists+openbmc@lfdr.de>; Wed,  2 Apr 2025 09:09:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::933"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743536533;
-	cv=none; b=Ldom3EMqo/iIPNRXgXY5HhUuyhqy4NvGv2yLRAYTS/m916vZOgNwVOVWvZLQINL7cl1ymPSpHeYyMwD+9aJTXGPqikgW25SlyfKbVA2LlkTRbHEMZOsxvblqRXkD6sWsak8FRwlbAsPTSma28o/IwKSjwMsMYJaoB2gqRmqmDlXunvBHkbUQQv02QQ/gFY8Zcn1LCV2FCvCsBUZY9IwFB4xkg+rKwVpgx1RtAa/5z9BA87tgxHlfBt6FYixy9619Tj9GiaxPXj4pstOHGuu9hcp/MC/AIQ9JtEEIOH/d4M1P1CNRdbt69kIMYRwgHC+SLO8FHpOvpXghIFTB9cew/g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::634"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1743545346;
+	cv=none; b=iNyhkfpnt/BtR90F1STiRffQvKH8IQqPrt8b+V2bblzrzxeriVWt9UHEayZ5wLFnQ6WnaBjrUaD5EjGXRZ6JZ7okZKGWy1shdL47VTOo1RtMSCOyGb1KWm258BPBXmfvgtvK1GQuJ4OkFCEtkYnE0Mxz8FRDkbUd9MpyibXZfmYE7ovpE9W32mwTSfrX1KnNEGO97+VduAuA9f+kvDReTn3FCo4Cb3RcAO2wF7R2MjikK50aYkiW1WO/IiHNBFrXhDoQTx4qYcKvNq7JleMZNwdNfwnNCw4J5g3sBgsU1vykACWQ73MNOpnCXxqeMdS78u89j/5i5nK8nhw0i+LZZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1743536533; c=relaxed/relaxed;
-	bh=RpM+GG4P+kguxWWf/7o5ex08Ll25TCulCSpT0rTsqj0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RvU6mUcveHnnmwOM4irAsubR4FhGZ971av5c2d16hgRjMKZhFTaVz4hLHHYFYkk/lkcVemfA3h3EODtdh14S5Div390D6LwgPtm8i6IXh69yOKDh7/xqrOWCyo45MFkbwKGCv8uPeDwNTInnUTCbYZGmn3loUyjxXTbDZZ8fSzzkLjl8Jdm574Abw7AXJLsMfc1hdqpP+XdhNBkHrMgFXCaPHOxVUiIuJ01SutPCLF7QH4wigm/AWqfIBesuGwkgbQMV571ez53ckKOrsJEp9WiFJK9CJznwCA8uvHXEZBhGs+cG9fMq/qu0jwpUQGSr+p3oeyZAETktDhY97DEqlA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YnZOb1P/; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::933; helo=mail-ua1-x933.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1743545346; c=relaxed/relaxed;
+	bh=IC5zcpvAJCNs+Bt0DZadLm9NNkS1wOhanMDfhuUEzNc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GnOYR/f+pQnsYkmUti+x3BqllsifDKvmhtROIwDQ7NO3AGmSRQDeJDySq9b2wNZ4WKtK56ZqWjBgoN541onNVd/DE4JmVhmplEl3Y1BRNqySmeNE91n9QarlPsJWUAsDRGQaZcOU+I62G9yAXk1PgySwl+uAzl7wPVrSRD0NTPZNgNq6Oan322AYgaJp0Xc9htDUAeEkIxofRdRmKCcb9i8es8gFWbV4T5Um5Y0y+7gg6ebkVrh7kYBloJ6qtf/r9S8qVvEEG2cFO7iW7EBihUKGe44fm2K1KU/OKY+SjpeguB4QH1EOZEKKeoFI/W4injPWT6tqnB/89HXqLFjgRg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com; dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=xvLyIPP/; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org) smtp.mailfrom=wkennington.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YnZOb1P/;
+	dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=xvLyIPP/;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::933; helo=mail-ua1-x933.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=wkennington.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZRz0h0N8Fz2yqp
-	for <openbmc@lists.ozlabs.org>; Wed,  2 Apr 2025 06:42:11 +1100 (AEDT)
-Received: by mail-ua1-x933.google.com with SMTP id a1e0cc1a2514c-86d6ac4d5a9so2728748241.1
-        for <openbmc@lists.ozlabs.org>; Tue, 01 Apr 2025 12:42:11 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZS2G84xMXz2yRx
+	for <openbmc@lists.ozlabs.org>; Wed,  2 Apr 2025 09:09:03 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-2243803b776so50618055ad.0
+        for <openbmc@lists.ozlabs.org>; Tue, 01 Apr 2025 15:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743536529; x=1744141329; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RpM+GG4P+kguxWWf/7o5ex08Ll25TCulCSpT0rTsqj0=;
-        b=YnZOb1P/C2sSRIOsW76YKhVuTshHBGbqmHEPNuQTvT8cKp2N8ve6WI0U2pQQBzibDY
-         wL3AZ0SKzsXEWTjOi4Sz4fbElaqcmBDcFMdbdWveogqHTd3A6prrrd+ZBT4dMkd/UHt3
-         Afu8rkZqxxcqmGp2t7u3HuL+5G+bfzG5r5CFuRBvaqO6D0pmgUOXebqz7LDmAhnnZxsF
-         MC42cYIIVLgMcL0a4jfJF0Hktop/ehOBqgD5aOg54V4qbRB3kdwcToXPFaxwyuoJJrR+
-         r2mOG41ftUmYEjTdufpKqqM0DL6970+HPjwx6FAlAbx10dAlZU2u3F6z6OJdnC/VCU0m
-         ap0w==
+        d=wkennington-com.20230601.gappssmtp.com; s=20230601; t=1743545340; x=1744150140; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IC5zcpvAJCNs+Bt0DZadLm9NNkS1wOhanMDfhuUEzNc=;
+        b=xvLyIPP/ry+RpJhFzdl6ifZeZoILK6EMYCfOt2pNgLCxenbEodzHcJaKjzP1Qmfnza
+         UvrHNACuPAKwsJSRI2QOcfRiX3Gs+C9+ZuEcEhz6XQCExV7lrvbZ3kxsg6V0LA/q2DeD
+         BAlaKk6W/pVlOqWDhzvKnZRehFwGcI8riMQKojIOqnrBkfLUQllerZ5rz550B65RuhT7
+         SmMRRgsiiaN0vSznQkOjZHc70/wTSyo5akMdqyhPCBvCXrN+/+qMEdt6JHYvYYvph7fK
+         SmY2vrpbKJfX1Vnx3z57WQ81vj+4ohXj6OoY4s7G2p1PZgtNwH2wIbVqyyfGiNlS3fNl
+         FTGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743536529; x=1744141329;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RpM+GG4P+kguxWWf/7o5ex08Ll25TCulCSpT0rTsqj0=;
-        b=MlGZzrUU9d2SK6iykpqxfgq4SMhmXGSu2FoovN5uGpy+39eyxQdNsi4sC5NmQjqd+m
-         rq4WV4FFTEEehfNQeAOzgVhd6BfsONrygMc/zmHkIJttag5ocouV12/JT6dx2+vne6sM
-         GK1SXP8v7xDwdwMmKOq0jihNmTs2qYCXCrvHoTm+KmdLcA6QuJvidYfWXDtf0gwPRscd
-         ReCp09kAQCk+ZDfi5XWtsxgrUrPvvxU9um92Vvrli6iFb8JjtuAR14NeV699pIzRGIFY
-         e5P5DTrdRZ719d0pf1rDuVAqSA4tGD0btqD9xUx5asF2604pjBrcW0E8DhVV8MTE+CwD
-         v/jw==
-X-Forwarded-Encrypted: i=1; AJvYcCXQOQRqQNIiAS9L0tdhceJkxSR/F4sRu0Iot6TKNYFl9Gogdbg6WDQ1di4t8Rn8gU7dUjZ5qmi3@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyvZgkzuHCctX8kmujkq4IEKG3HqwHKaq+01CBRYDUOcDd1gEnS
-	uOHqTjPhOzQszC91v4LOU3y4AUVFJp0v+jAAY2vhu7xElCeIie6Cqw7iPLdLq4twNZUC6j9gfc9
-	AOmDbRrObTIQ57Z13jsXc2fhpa2Q=
-X-Gm-Gg: ASbGncvZ+u54q3xB/ZbDwpiB/WIynqaI55vmKc05NdnGSZRFifmMU6mDj05T6oQuO8h
-	4Idzux4ESauc27CoYWrg9EiNFxLeBc3j/n83ycrPApU3rZNZdag56Uf4kzqK9vxx6ruHRar1oqf
-	hb62RIyvjoCjX2MP9BaaSgR0Aa4A==
-X-Google-Smtp-Source: AGHT+IEmHBHltgmNo/k+UMP1ebzsGbORcQFj4JyNhIfhxpgIy2NF6O6welHouzNf8xsJCPTOTUShabH+E8j4cfuVL/w=
-X-Received: by 2002:a05:6102:149a:b0:4bb:e8c5:b164 with SMTP id
- ada2fe7eead31-4c6d3847bb8mr10976056137.7.1743536528842; Tue, 01 Apr 2025
- 12:42:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743545340; x=1744150140;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IC5zcpvAJCNs+Bt0DZadLm9NNkS1wOhanMDfhuUEzNc=;
+        b=VWRh8YLvxNWhDJRhGh8sKRVpiMjg78gatw9j5JMhdXQhByh2dr7tWCsRy84SKAkRzB
+         L5w68ynUU/Z9aZz6hMFH1phTl5GEybfylA+moE1DW+fodnIGMsvJ/0TXlqekSWrk/3Zn
+         SdIfnxAiutzOYTnttcmquZjTxgAZSoO9bp5H12gZDanWAqYKWB5Lbq283Z+VFQ+gnvf3
+         U3Oh0rbba5FduZOVw9gHpBL3/OCaUI34xD6INaGG9BfA0zh513NQ2KzdUK1KjrFMlae1
+         MTO85m9axC5j/CbA9cGlYaEvzBgFxK/ewfHLA2iFVYyQ2USIuXfbe6Y0DwdTl+DzHVSp
+         XoDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU3ekxEosfB1EorKPo9uiLBYPf2W0dew8VAc+gyiB6om04YAwm6c2lSOyhzbNDwHi+pvNYboq2s@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YziY/P40Hb9DMHmxLisNfx8NB+FJ+WrEd/SDZRFyxmI+5XavW53
+	oHi9H1vJ0RfkWn0P8WmrAecf/Bn/LN403HaN8QeFO+KPWNSzADjZwU4DSjDk68A=
+X-Gm-Gg: ASbGncs06ZlfYOGQuAuGkoIoZRlI7QO6ENeSBQU10ah41RJfT8aTcGcEbMgL1vcudee
+	P9rZVxUR9wqH5mBwfL8OxFe4xcOnBfyixspWzGbDWFl6EVsstKA/9Go6hdkye2SOp0kpcQSYXtp
+	IZqNW+oz+qJ3yyV4FUj27B+bkemzuNV98UK+j9AZJL2hcyCzpzYGbcow3GDyvECtLdwlHM6KHX0
+	0wUQlbDGYqwVZylcJDNqfFVoShRDaU08oV2NWKSs3Bkb9NGX0CZzqdYEQM0LfGYClZK9xQdExfE
+	yqqR4mTuWCyGUyd1TJggsoRqVbdxzKU5pNlMVFw5N4FjqdIfPS6bG47570V8ecwWM9DsAQdX14K
+	L3J03XsoG6dl9PrBqFcoZLYb9GTFyuEE=
+X-Google-Smtp-Source: AGHT+IEsKGFq8XosoR42ePJJZp885KNvK/OZl4LnVRUa6xNPORGUuQA4QQaQDHkKMxhvZjroNhQaFQ==
+X-Received: by 2002:a17:902:ce8e:b0:224:1074:63a0 with SMTP id d9443c01a7336-2296c85f3c5mr1434595ad.34.1743545340470;
+        Tue, 01 Apr 2025 15:09:00 -0700 (PDT)
+Received: from wak-linux.svl.corp.google.com ([2a00:79e0:2e5b:9:895:611e:1a61:85c1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2291f1cfec1sm94080475ad.118.2025.04.01.15.08.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Apr 2025 15:09:00 -0700 (PDT)
+From: "William A. Kennington III" <william@wkennington.com>
+To: Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH] hwmon: max34451: Workaround for lost page
+Date: Tue,  1 Apr 2025 15:08:50 -0700
+Message-ID: <20250401220850.3189582-1-william@wkennington.com>
+X-Mailer: git-send-email 2.49.0.472.ge94155a9ec-goog
 MIME-Version: 1.0
-References: <SEZPR04MB80456EE06D62AF894C92D7ECADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
- <CALVHhec+VRqf7zHvfr3AP-qCbfs_4QyH_aQXHd05f9DGg9Z6Tw@mail.gmail.com> <SEZPR04MB80455B0E70D9399F4971DB00ADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
-In-Reply-To: <SEZPR04MB80455B0E70D9399F4971DB00ADAD2@SEZPR04MB8045.apcprd04.prod.outlook.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Tue, 1 Apr 2025 14:41:53 -0500
-X-Gm-Features: AQ5f1JpRLTaL4ivUzsFQFusYucwKyGvoC0HYfJX2PuYJXlRFonM1ET7wYL-3MAk
-Message-ID: <CALLMt=qiwd+hASR7gpuViPgVacFEys5_61P-DDNSRPKmHn1-+A@mail.gmail.com>
-Subject: Re: CCLA for Meta Clemente project
-To: =?UTF-8?B?QWxleCBXdSjlkLPmlL/pjLMp?= <alexwu@ingrasys.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -93,57 +93,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mike Dolan <manager@lfprojects.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Andrew Geissler <andrewg@us.ibm.com>
+Cc: linux-hwmon@vger.kernel.org, "William A. Kennington III" <william@wkennington.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 31, 2025 at 5:48=E2=80=AFPM Alex Wu(=E5=90=B3=E6=94=BF=E9=8C=B3=
-) <alexwu@ingrasys.com> wrote:
->
-> Hi Mike,
->
-> Yes.
-> It is our target to keep in front with Open BMC.
+When requesting new pages from the max34451 we sometimes see that the
+firmware doesn't update the page on the max34451 side fast enough. This
+results in the kernel receiving data for a different page than what it
+expects.
 
-Welcome to the OpenBMC project.
+To remedy this, the manufacturer recommends we wait 50-100us until
+the firmware should be ready with the new page.
 
-I've uploaded your CLA to the project google drive.
-I've submitted a commit to add Ingrasys to the approved CI group via
-https://gerrit.openbmc.org/c/openbmc/openbmc-build-scripts/+/79343
-I've added Mark to the ingrasys/ci-authorized group so he can add
-members from the CLA to
-https://gerrit.openbmc.org/admin/groups/1fa089880a512848dd3f430cd315df4c7b1=
-38d1c,members
+Signed-off-by: William A. Kennington III <william@wkennington.com>
+---
+ drivers/hwmon/pmbus/max34440.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Andrew
+diff --git a/drivers/hwmon/pmbus/max34440.c b/drivers/hwmon/pmbus/max34440.c
+index c9dda33831ff..ac3a26f7cff3 100644
+--- a/drivers/hwmon/pmbus/max34440.c
++++ b/drivers/hwmon/pmbus/max34440.c
+@@ -12,6 +12,7 @@
+ #include <linux/init.h>
+ #include <linux/err.h>
+ #include <linux/i2c.h>
++#include <linux/delay.h>
+ #include "pmbus.h"
+ 
+ enum chips { max34440, max34441, max34446, max34451, max34460, max34461 };
+@@ -241,6 +242,12 @@ static int max34451_set_supported_funcs(struct i2c_client *client,
+ 		if (rv < 0)
+ 			return rv;
+ 
++		/* Firmware is sometimes not ready if we try and read the
++		 * data from the page immediately after setting. Maxim
++		 * recommends 50-100us delay.
++		 */
++		fsleep(50);
++
+ 		rv = i2c_smbus_read_word_data(client,
+ 					      MAX34451_MFR_CHANNEL_CONFIG);
+ 		if (rv < 0)
+-- 
+2.49.0.472.ge94155a9ec-goog
 
->
-> Thanks,
-> Alex Wu
->
-> ________________________________
-> From: Mike Dolan <manager@lfprojects.org>
-> Sent: Monday, March 31, 2025 10:38 PM
-> To: Alex Wu(=E5=90=B3=E6=94=BF=E9=8C=B3) <alexwu@ingrasys.com>; Andrew Ge=
-issler <andrewg@us.ibm.com>
-> Cc: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
-> Subject: Re: CCLA for Meta Clemente project
->
-> Hi Alex, we don't have a Meta Clemente project but this CCLA is for OpenB=
-MC. Did you intend to submit this for OpenBMC?
->
-> On Mon, Mar 31, 2025 at 7:18=E2=80=AFAM Alex Wu(=E5=90=B3=E6=94=BF=E9=8C=
-=B3) <alexwu@ingrasys.com> wrote:
->
-> Hi,
->
-> Here is the CCLA paper for Meta Clemente project.
->
-> Regards,
-> Alex Wu
->
-> Senior Director
-> Ingrasys Technology Inc.
-> Foxconn | Cloud Enterprise Solution Business Group
-> Office:   +886-2-2268-3466 ext. 5010-15610
-> Mobile: +886 972 781 825
