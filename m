@@ -1,82 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07F6AA8191B
-	for <lists+openbmc@lfdr.de>; Wed,  9 Apr 2025 01:04:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8FBDA8191D
+	for <lists+openbmc@lfdr.de>; Wed,  9 Apr 2025 01:04:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZXM8h0dLMz3cDV
-	for <lists+openbmc@lfdr.de>; Wed,  9 Apr 2025 09:04:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZXM8l4KWfz3fRj
+	for <lists+openbmc@lfdr.de>; Wed,  9 Apr 2025 09:04:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744091344;
-	cv=none; b=ZFQDcHRxgRU2Dga7g9ICCN1wwfW9fREYwsjmq7CM9CxViTiMxyidd0ukirwLDvbpto3W9eo1hrc6z+/eY4+Y0UC/ZUSoiCnj0eh+rNMc+q0UyKW040GOusygDFiiMuQ35io3Z3eWzLXaPwgdTtkydP7E9vGpiDSb9BpszY5qbgIPNP/SA7vl/wskjKiNBqI0bbJ+rg2SU6o3xqMhbKNpnahSRs8PvH1nRF9MWbEzRyLYdQG43D3hOw16GKImwO39owVaci3wmApCSVf4oY1fvEaO5BadUDFepG6BoTQnEEzw/BeP0+jC8qUW7YJVUMPTkiGt/GGykI4bk8gJyQsXkA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::630"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744091779;
+	cv=none; b=CkjJvDktOa71lgSvOzwpdp7aosH3F8MVLKHUBqFhJutc9cilrmmiCZWM+GkdsV9h+Pl8IXzsPw0KZ2pxQuzQLLIWDzCYlAZo7yOSFgg5/zm0nargFeDIXbBLfBZQYrOk1DzHU4ZhpSCIWIN+jvVny0xI2EW8bOG7mNNOk0EnffNLg0s58PSfYMGE30ooWZYW5AvajPyBcrdOUljYxKVmVYrAnojeIeBo5XrpxOpux6BEzTxI+13bRjUAsDdipUVCIBfLhkn9j+Ogm16JcHrWc5pNRywSl5pYpKvN43TkPadPvQ9CB9rxHnHR83sWLbON8F5/aIbDAuiNC36W/cIdzA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744091344; c=relaxed/relaxed;
-	bh=nMh/1IYC1/u6DKKOw2ms/3tpOZM3Bu58eEc2wmPyXZA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=eqC+UD/Kdnzn56WwEQRDiMVNt2tLN5/4NxYCmYD5Q11hrqzYnqaXeUCj/WX93MOzU2OqdHepicyvrYi8dTq3LNyP+V8ucE8Oq1OyjW9ISvRzhNtz89hvf+sluibWTT41JRdQCYjYzLxqLQn4qd+WOGbf1YPP6hzZimQQECU5U102p9V8Keqkh61iorWhJLk7PFWyT/zBuQddtHWDyuIiXQMqwPGzliVGwjrPJBFlPR8xeIFBWsh+hAt+FBTikGBZfQ+sH7x9GJfseSbWCbVfxXQgekcnIh/HQGKfU4OBMi9WLGSQg/NIp/KR8VWKJ7EfRWQO+KmtO6iBIXwcG9hIPQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZAUaPpdv; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhang971090220@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1744091779; c=relaxed/relaxed;
+	bh=Rqpz8NuFEKxlJYYhCortmvxtTD3Iriop0nreRrYWvRM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=EJNMeLOaV/PywwyAddy7IT6VNNAQSU6zM1eHRIWzUN+UFkUW093dxo8Uu5jHAgYU4m8URKTRS7I6XYxtVWSJoysJYHn/JX57vAQVolVpjCjovFVWYTu/Utw40g7kWoK1LNeLdRs3q2ElhJL0QMx09L3iWWtaqFp6XjPZLpAmFzUVDeVweSScQgKnkky/PQsfOXCgv4sxrxNAeoxLyWnlaqC0p37tj89gUEs2xwE/antDdVhkjiXZVk0SFsSbu0QtuhPnOglgU2U9mWJ1F3qdFVrJGiT7IAa+W46xl8ayKAlqdOVzoJFP8YDVj+c1HXEMlJeFGpwKewI7/Ds5CKBy2Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SW3aUT6p; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=zhang971090220@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZAUaPpdv;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=SW3aUT6p;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhang971090220@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=zhang971090220@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZWwB55clhz2ySS
-	for <openbmc@lists.ozlabs.org>; Tue,  8 Apr 2025 15:49:01 +1000 (AEST)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-224341bbc1dso45039275ad.3
-        for <openbmc@lists.ozlabs.org>; Mon, 07 Apr 2025 22:49:01 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZWwLW0zrFz2yST
+	for <openbmc@lists.ozlabs.org>; Tue,  8 Apr 2025 15:56:18 +1000 (AEST)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-22409077c06so63083675ad.1
+        for <openbmc@lists.ozlabs.org>; Mon, 07 Apr 2025 22:56:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744091339; x=1744696139; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1744091776; x=1744696576; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nMh/1IYC1/u6DKKOw2ms/3tpOZM3Bu58eEc2wmPyXZA=;
-        b=ZAUaPpdvbtocgyNTVFHlyOTaUurOAqywRCYjShyuTqMKrGLLmln6aVtAOLvp+XiScu
-         /DjOr4VidlSejGNIdvhuj3X0AfDTxKzsYgqVYH+mghCC8NP2nSK24O3kKNwq6tdi6kam
-         c/BlO2J37PIIGMcq62GRlTrD2S7a8D5fXZd0v9bFpELHV2Srafr0smIU8/0hBSRBnNVX
-         +PK9AcCXXpB0dSnbNME/rGLwSR5mv5GyJz4HbSZX20lUuVoYxVc572MhmnhzOu+QCpyQ
-         8uX2NVfjzq0SuDYLVmC2LuP10TPiTpM/3sFeQIiWyfrZvopjjc6QYhAIOoaemGXH26NG
-         PkZQ==
+        bh=Rqpz8NuFEKxlJYYhCortmvxtTD3Iriop0nreRrYWvRM=;
+        b=SW3aUT6pv4GkD1FNYqaLUTlPxeHU3DFab3G9xnO2SUZMP6RCa1SELh+sxVTNpMrWsx
+         r6MW2h3JSa22lCg6WJPd2ijGr7frAZSs/ArDFSEeQOjTBRmDf5z5/sBikqbagSAq1j6H
+         I/V3xQyd3cYt4SfW9DmrDBjAC6eFsqefqddsy6np9a2drCneuvK0e1XsDMKV7Q7KXNto
+         xVFecMUNeiER8GRVn7dRJQL3Y5vBe3K1+LDjJ+ehFXwrHU2pR+Pd30b20GmELIzinMRZ
+         XdRHdLZ9huUUUHzu4qIE3+B7eDY3s8hiAR/tso1cIYenDR7e/httowBywrc4XWIwQIm3
+         WTgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744091339; x=1744696139;
+        d=1e100.net; s=20230601; t=1744091776; x=1744696576;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nMh/1IYC1/u6DKKOw2ms/3tpOZM3Bu58eEc2wmPyXZA=;
-        b=qjmqLJV+k5gj/f0d7LxT8ALG9gW5luXbqG1jtFtQ2O2BiF9hgWspzBYs4aYpIYhu/4
-         quaZGfIGKH8b8PoEXbD6sYLZptmW7ukamIgDIAjzx5gPKtwkkOhDHbjR2WirdB+mk8yF
-         t4Hz8Vwv+6Ys26s0bllQX6HJim6L0gAzaQCVrX8M7EPx0aqt71ZNdPWGxvsGlXr/N+hn
-         jOmPmPZz8df+8Ocxqql3u0fxYO9BfqclCYGTop8QEXhiou9nvuJPhgJzbbFqAKkrB9Q+
-         q1GjWqEu84aQiwVMZTkjEmQSR3aBx47c0qDS3Xr7c5uZjiN/aBSlYoXxVbw5XkH3LHEK
-         LPfg==
-X-Forwarded-Encrypted: i=1; AJvYcCVt1lP8asyQptXIb0KI0lgG0cD16i8NlwMXw+E3LanUKXhWLWkgDuSqhygHAzoP32dVyGUnAelC@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yw7MVrPqjyojNDRwPQwCO/n3O9sz0OuPlMXp65jedlEvf62scPB
-	BLh8126s/JRUcX75dxRhlBk3OsSq/T7JtnJrvXy+xn1wd3C1NK9u
-X-Gm-Gg: ASbGnctO0tGeQgexzkDYfP190hDWqMBL/OVzn1Pz9/nuAHfjZR1rhasOzN2qUw9mTzx
-	QyHzu5qNMwX9rVFpsBh22BMvJ5tVbz+1D6pJ3OrGcvpgqVJ6+FbkPD8U7gu6yZ/ltyscg0lGmTc
-	x/fEzFTVzP3qS/QuzJQ0FFc7DU/Q4cW8W6n11GjzlBQUc+FqsCm7H0kL5jjaTj5sRYCohHyT3Gq
-	PfNdt8vt0QeGKtfoeLV0LZXR1bSQ3QcmMF2uIhsXyDtxOjuKIq+tArOtYBLMfprJtNgqX8lr9US
-	CZ7EKVf7ioXNCH914EW30BYjlcbGDTlfXw9HyeQs2ecLv9xcT9hbTS4VzrCCWmcgD4Jsha0Naht
-	IIAs7We9ro2qwl9YJ
-X-Google-Smtp-Source: AGHT+IEHFO5C7dTJpKvZbOu72CFtYS1ry7Pw+NiDt85wQoNOEA4vc4Tej0qtHWHx8Lq2UnSIkPjYpQ==
-X-Received: by 2002:a17:903:2310:b0:215:bc30:c952 with SMTP id d9443c01a7336-22a955166d3mr144831445ad.6.1744091338760;
-        Mon, 07 Apr 2025 22:48:58 -0700 (PDT)
+        bh=Rqpz8NuFEKxlJYYhCortmvxtTD3Iriop0nreRrYWvRM=;
+        b=MWI6MTagMgtHmolxm8DY6kxBQjOoyuaBrweWc3+xnGH4nxsHmeUyzigYL+vHH0EmSr
+         VyBLUj0X2LfIxSRYOHmygrmLGQCnK2j7la8/5cMpl2BuOO69VxheoYfON5QlANMpm64G
+         Gqp3noDIJTu/gY3QNd1+mauX1MtHVgNDovDlxpDp9Oo8e3lJ2IKJLRzRDmQ2EsCI2Miu
+         uh4tRjAhZJrum2EJKArz+v2DY/723s4V3REtHcH8rrlauEjwNEkgWyKt9JZUgYpmLOhk
+         C2U2+QzM9+t+jGrxiMopXdWkLa0kB1vl/xv+TAGCqqDlYz8Hz3PhQBOq1azMXex2Hu6Z
+         53nw==
+X-Forwarded-Encrypted: i=1; AJvYcCXGoYX+4OVdP1N3I8eGvyDZMyeqoIVz/kmL/qs7UUmVVoY4QWvGwlcO9VOz1W6Ib+dKD/H1HCpd@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxIuDaWMWoPbLTgEsjId51de0W81bNEH5Xx7DV7Zui+UTio1ajQ
+	xVItTWenP3SfTF02C/dAQouyuzD1MBlkNt0W9imNfAVidiiIckY8
+X-Gm-Gg: ASbGncszDB9M1gOdm8pF1qX/MTiuIFD0UqH1Vl/XT3p2SQqeBiIkhMdoXK70prfwtNu
+	RAAT4z10cU5RtREYUUtSDXIo7m36pfGh7C33IMhfkmU+3DsMG+yy0x8vBdmq6lqIui8EJ+RtBGH
+	9DM0fW1iDSsUQJx0qLmfBJEOm7FtD6ZTfHoBNsaagoyRfCdpvcgS4sb4d0YQpbwE9kLKt+Fq5XT
+	avyD6VGfcILd1lbQCpp/d4V267sBDOlML0twDAQrLyyaYm3YqnPgRlTxJV5DgdLNeWpXX9E+sdJ
+	HOZQP9Wf4WW/iZQKrAgkoJLgz53Oyt5VgKNuWrkgWAjEGYefIZfBPHOSAYvADHteJ8UZJZmq7kX
+	0E5DAwfY9w46nHgWP
+X-Google-Smtp-Source: AGHT+IE05u9t9NFEBw+rXVTuN3JQshXllOgy7pnk00Je9nTx82e8AXGF/YtAVc4GIGc7M22Lq5mp8A==
+X-Received: by 2002:a17:903:1b0c:b0:223:5a6e:b16 with SMTP id d9443c01a7336-22a8a84ae50mr231161415ad.5.1744091775946;
+        Mon, 07 Apr 2025 22:56:15 -0700 (PDT)
 Received: from hcdev-d520mt2.. (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-229785c27b3sm92124515ad.97.2025.04.07.22.48.57
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2297877656bsm91127335ad.246.2025.04.07.22.56.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 22:48:58 -0700 (PDT)
+        Mon, 07 Apr 2025 22:56:15 -0700 (PDT)
 From: Michael Chang <zhang971090220@gmail.com>
 To: kwliu@nuvoton.com,
 	kflin@nuvoton.com,
 	mchehab@kernel.org,
 	zhang971090220@gmail.com
-Subject: [RESEND] media: nuvoton: npcm-video: Fix stuck due to no video signal error
-Date: Tue,  8 Apr 2025 13:48:39 +0800
-Message-Id: <20250408054839.3420989-1-zhang971090220@gmail.com>
+Subject: [RESEND] media: nuvoton: npcm-video: Prevent returning unsupported resolutions
+Date: Tue,  8 Apr 2025 13:54:54 +0800
+Message-Id: <20250408055454.3421083-1-zhang971090220@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -101,49 +101,36 @@ Cc: openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-media@vger.ker
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Fix the issue when start_frame and detect_resolution
-functions are executed at the same time, which may cause driver
-stops capturing due to status of no video signal error.
+To restrict the returned resolution due to Nuvoton SoC hardware
+limitations.
 
 Signed-off-by: Michael Chang <zhang971090220@gmail.com>
 ---
- drivers/media/platform/nuvoton/npcm-video.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/media/platform/nuvoton/npcm-video.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
-index 024cd8ee1709..234fdec04f74 100644
+index 234fdec04f74..8d6d51a674a3 100644
 --- a/drivers/media/platform/nuvoton/npcm-video.c
 +++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -863,7 +863,6 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
- 	struct regmap *gfxi = video->gfx_regmap;
- 	unsigned int dispst;
+@@ -578,7 +578,7 @@ static unsigned int npcm_video_hres(struct npcm_video *video)
+ 	regmap_read(gfxi, HVCNTL, &hvcntl);
+ 	apb_hor_res = (((hvcnth & HVCNTH_MASK) << 8) + (hvcntl & HVCNTL_MASK) + 1);
  
--	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
- 	det->width = npcm_video_hres(video);
- 	det->height = npcm_video_vres(video);
- 
-@@ -892,12 +891,16 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
- 		clear_bit(VIDEO_RES_CHANGING, &video->flags);
- 	}
- 
--	if (det->width && det->height)
-+	if (det->width && det->height) {
- 		video->v4l2_input_status = 0;
--
--	dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
--		act->width, act->height, det->width, det->height,
--		video->v4l2_input_status);
-+		dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
-+			act->width, act->height, det->width, det->height,
-+			video->v4l2_input_status);
-+	} else {
-+		video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-+		dev_err(video->dev, "Got invalid resolution[%dx%d]\n", det->width,
-+			det->height);
-+	}
+-	return apb_hor_res;
++	return (apb_hor_res > MAX_WIDTH) ? MAX_WIDTH : apb_hor_res;
  }
  
- static int npcm_video_set_resolution(struct npcm_video *video,
+ static unsigned int npcm_video_vres(struct npcm_video *video)
+@@ -591,7 +591,7 @@ static unsigned int npcm_video_vres(struct npcm_video *video)
+ 
+ 	apb_ver_res = (((vvcnth & VVCNTH_MASK) << 8) + (vvcntl & VVCNTL_MASK));
+ 
+-	return apb_ver_res;
++	return (apb_ver_res > MAX_HEIGHT) ? MAX_HEIGHT : apb_ver_res;
+ }
+ 
+ static int npcm_video_capres(struct npcm_video *video, unsigned int hor_res,
 -- 
 2.34.1
 
