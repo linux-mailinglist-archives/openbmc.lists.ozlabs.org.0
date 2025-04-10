@@ -1,81 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D05F0A83A4F
-	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 09:08:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04F83A83C24
+	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 10:11:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZY9rR3BjVz3cZ6
-	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 17:08:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZYCFM00Vqz3cVj
+	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 18:11:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.20
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744268874;
-	cv=none; b=BGXCLG71WLq+MUk6rNwm5+RJF6pz+61bNqWESBVwniHflfFBH1Ylv+uZKpqW6gY+9FHDbvUCOf5momPF1ka88CUWIISHXdWA18SZrxwVH6FL1bngrFWstEn75DUlkee/BFFEXDWgN8lTzQ/wVvywkpTzSGXDs9lY9GmCyC95pzvZbaF0rXWKxUSrRh53S5V5QyOwgHHQ3t/oE3O7UOiyxsfAc4vjXpxRJSPhSJRWyN5ECS4ECPzys5o3CU2vEZLa9NFFXEfIXTCRWrqBjnEYBqQPak2j1ams6ZPKG6xyFUaLGdCkLmLaqnlVbjt4FmX77dHJQeIiVSPCJDUqAEXjKQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=144.6.53.87
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744272675;
+	cv=none; b=KRvfDo+ggYRNAIq1UO6jZonzKMGlKcH7WSV0Yb9VqsGpMTs3dDZBRDT+uZFN8dZ0IG9RSbZF1CaYRujDSPWqww35MQY0SOgUc61r91ow0N8y5uRGEQF1oEXNqSkoTaVumVh4SjuAf0VT1SeNz2ji/Smb1DI4Car4cDvenY/PVEq26nbvPLFv5SuTYHZBvzdHM8DkNx2HbZur3NltX0Otx/bOEf3ON3khWnKUL/oxqbp/SFagpC5nc/KBy7CB5cPndiHIj6f+Wf8GlF0OKrxcsCopwGYycDe0adrXsR20cLqZ9vfC0PRNUxbHqPNPDgSRxWOQFkkQ+bCpxqjAMVOYPA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744268874; c=relaxed/relaxed;
-	bh=6DooyLKKYj3wKO7vJaSrsdZC2t9Wx01KgJ5YQqX5GS4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JTIOpXVQluPyMUac/mzywnQlxirAdkoNqNZFnnPfwiG2N8KfszzeEQ7BKuJsW1AFJSwUsjdYAt0S5WkDvgAqm35DQHX/jFweMx4J7okX1baGEOJWSpOjP9LNgoDtoEpevcy88/v7nRBeczSiNsXGz7vdW49uwI99+kK5aPKZMhulfOOacL59wddL9uSFoJ6Cb1TYRi2sxiT3347fOrmHB9NbNodjHnR53qSqbAx1w5uP6pr6uHYRdpDRkpXfI5HidG79bGe7HpBLx7TndIrp+y4zC8XKJWuIwy5xfzduwX3OF3ImBCRsLZRbyZbgkDYxbdQtSeMtqjN4QFUxbSH49w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YLMxFZul; dkim-atps=neutral; spf=none (client-ip=198.175.65.20; helo=mgamail.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1744272675; c=relaxed/relaxed;
+	bh=+PIpMAWLwgP8XaU0st9wLlONfCFrdoYGt6FMJeS8v+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lCFhYt/M0+VNkJcuResgXrRjuVbtgGJ8/mnRo1+x4aujE68NzzNCfDz5BZKi3cwDIj7SNoSK1mZ+7yr1+926zy310PF7+EP9JzsYPeWKAC7tQovn/i9GrppRqsffd+n6RvnBKbzKxnvKI318QO6B4cg6krSR3y5zCbi34NnKRuwbkq8xnfxwfCSACGLf54ZRyrTEy/vrV4ta0y+vvUvAr+elDDviY/PxsrHC7LP8hpZ16u4RHOCRWXRrBNL8oVlIUqxILSQ7YxI0N6BxvQZvfnl7NsFktKpSc0wO7cG8h0/rURme8BsnxK36Il3vdnkP0sEb/9EtnpUh5+P33ai0Tw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; dkim=pass (2048-bit key; unprotected) header.d=hmeau.com header.i=@hmeau.com header.a=rsa-sha256 header.s=formenos header.b=gCiNLKM6; dkim-atps=neutral; spf=pass (client-ip=144.6.53.87; helo=abb.hmeau.com; envelope-from=herbert@gondor.apana.org.au; receiver=lists.ozlabs.org) smtp.mailfrom=gondor.apana.org.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YLMxFZul;
+	dkim=pass (2048-bit key; unprotected) header.d=hmeau.com header.i=@hmeau.com header.a=rsa-sha256 header.s=formenos header.b=gCiNLKM6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.20; helo=mgamail.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gondor.apana.org.au (client-ip=144.6.53.87; helo=abb.hmeau.com; envelope-from=herbert@gondor.apana.org.au; receiver=lists.ozlabs.org)
+X-Greylist: delayed 1668 seconds by postgrey-1.37 at boromir; Thu, 10 Apr 2025 18:11:12 AEST
+Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZY9r73Bygz3bm3
-	for <openbmc@lists.ozlabs.org>; Thu, 10 Apr 2025 17:07:51 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744268872; x=1775804872;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=eTuV2CyB5vjAJ0CZ1BcbW4eb89Fsn/ZCIyYBD5yo6Ow=;
-  b=YLMxFZulE4v7EyfIi2Lh92KKQPdi82z1l9MASIJlyz5GFMkm79xFjhso
-   hMZnHEC7zBSENmJI824k6ACMo/PjmtnJMKQYZv0S+u7U8Pao1owLo/b5o
-   pf1hyS/LaV2HSH/BPYfIOGi9HffNDFLey5IG082RoRq3H5NkkRfuks9UD
-   TNLTOgLCRNZtg1F3EmEuh5o2eW8w7XC+jk+Y1xncNTInuKlMJ0dDA7Zcj
-   exSpiAHVPLP/xr2M5OAxpXpbGzD9kd8W1g+rsFaEdZPm/GTpnyhoeMuTH
-   +kkiU1dvOlKNow4g11MBL0ZMQGxSBM/i3+LjllBF/X4EjtS/t6KPB8IsI
-   A==;
-X-CSE-ConnectionGUID: 0P8iX+5DR7637zrAvu+kAw==
-X-CSE-MsgGUID: 2BSxPrD+Rrae0wgyaROMmA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11399"; a="45484818"
-X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; 
-   d="scan'208";a="45484818"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 00:06:40 -0700
-X-CSE-ConnectionGUID: /9qgZoukRT2V3k+E473utg==
-X-CSE-MsgGUID: eCd3L+qyRjqOTOU2EOJUdg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; 
-   d="scan'208";a="128791505"
-Received: from turnipsi.fi.intel.com (HELO kekkonen.fi.intel.com) ([10.237.72.44])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 00:06:36 -0700
-Received: from punajuuri.localdomain (punajuuri.localdomain [192.168.240.130])
-	by kekkonen.fi.intel.com (Postfix) with ESMTP id B0BBE1203B9;
-	Thu, 10 Apr 2025 10:06:33 +0300 (EEST)
-Received: from sailus by punajuuri.localdomain with local (Exim 4.96)
-	(envelope-from <sakari.ailus@linux.intel.com>)
-	id 1u2lzd-00FQTF-2I;
-	Thu, 10 Apr 2025 10:06:33 +0300
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: linux-crypto@vger.kernel.org
-Subject: [PATCH 3/3] hwrng: npcm - Add a local variable for struct device pointer
-Date: Thu, 10 Apr 2025 10:06:23 +0300
-Message-Id: <20250410070623.3676647-4-sakari.ailus@linux.intel.com>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250410070623.3676647-1-sakari.ailus@linux.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZYCFD4cphz2ydx
+	for <openbmc@lists.ozlabs.org>; Thu, 10 Apr 2025 18:11:12 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
+	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=+PIpMAWLwgP8XaU0st9wLlONfCFrdoYGt6FMJeS8v+4=; b=gCiNLKM6JXpltYkDzBoePum/5Q
+	NNGKz53YHexTDwmBP3666sm6fjXb7mODxZKmzdrXB7rh3fCSavsI0pYGHqhPqY7xXthP+3K8YonYC
+	nP2x0M+dr3sZkvrOaThucm4eTUHWdSJbqslO6Z2WHKonn/LetaCUfBQ3hL8du9vCbW8xrhd37nzQ6
+	cUo18LZ4GB00oKVkNcsYAdmHICRPYg2AVp2lP/J7OjC7u80aIkbByWMGvTfTt1QlLSlHficnm+5uq
+	KL+PWNnO6m/C5QI+XL969S3tSXhMTbuMNEQGLbeQTVMoJKlS7O8X0Dhby3k+py86iKTYR3YgFhrVE
+	gczaKq4g==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
+	id 1u2mYn-00ESnF-35;
+	Thu, 10 Apr 2025 15:42:55 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Thu, 10 Apr 2025 15:42:53 +0800
+Date: Thu, 10 Apr 2025 15:42:53 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: Re: [PATCH 1/3] hwrng: atmel - Add a local variable for struct
+ device pointer
+Message-ID: <Z_d2fcuWPiel_OnT@gondor.apana.org.au>
 References: <20250410070623.3676647-1-sakari.ailus@linux.intel.com>
+ <20250410070623.3676647-2-sakari.ailus@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
-	version=4.0.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250410070623.3676647-2-sakari.ailus@linux.intel.com>
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -88,47 +73,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>, Avi Fishman <avifishman70@gmail.com>, openbmc@lists.ozlabs.org, Sean Wang <sean.wang@mediatek.com>, Tomer Maimon <tmaimon77@gmail.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Tali Perry <tali.perry1@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, Olivia Mackall <olivia@selenic.com>, linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, openbmc@lists.ozlabs.org, Sean Wang <sean.wang@mediatek.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Tali Perry <tali.perry1@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>, linux-crypto@vger.kernel.org, Olivia Mackall <olivia@selenic.com>, linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a local variable for a struct device pointer instead of obtaining the
-hwrng priv field and casting it as a struct device pointer whenever it's
-needed.
+On Thu, Apr 10, 2025 at 10:06:21AM +0300, Sakari Ailus wrote:
+> Add a local variable for a struct device pointer instead of obtaining the
+> hwrng priv field and casting it as a struct device pointer whenever it's
+> needed.
+> 
+> Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+> ---
+>  drivers/char/hw_random/atmel-rng.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/char/hw_random/atmel-rng.c b/drivers/char/hw_random/atmel-rng.c
+> index 143406bc6939..5192c39ebaeb 100644
+> --- a/drivers/char/hw_random/atmel-rng.c
+> +++ b/drivers/char/hw_random/atmel-rng.c
+> @@ -56,12 +56,13 @@ static int atmel_trng_read(struct hwrng *rng, void *buf, size_t max,
+>  			   bool wait)
+>  {
+>  	struct atmel_trng *trng = container_of(rng, struct atmel_trng, rng);
+> +	struct device *dev = (struct device *)trng->rng.priv;
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
----
- drivers/char/hw_random/npcm-rng.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Please stop using the priv field and instead add a struct device
+pointer to struct atmel_trng.
 
-diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
-index 9ff00f096f38..beec96391af7 100644
---- a/drivers/char/hw_random/npcm-rng.c
-+++ b/drivers/char/hw_random/npcm-rng.c
-@@ -54,10 +54,11 @@ static void npcm_rng_cleanup(struct hwrng *rng)
- static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
- {
- 	struct npcm_rng *priv = to_npcm_rng(rng);
-+	struct device *dev = (struct device *)priv->rng.priv
- 	int retval = 0;
- 	int ready;
- 
--	pm_runtime_get_sync((struct device *)priv->rng.priv);
-+	pm_runtime_get_sync(dev);
- 
- 	while (max) {
- 		if (wait) {
-@@ -79,8 +80,8 @@ static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
- 		max--;
- 	}
- 
--	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
--	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_sync_autosuspend(dev);
- 
- 	return retval || !wait ? retval : -EIO;
- }
+Thanks,
 -- 
-2.39.5
-
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
