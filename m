@@ -2,73 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBFF3A847B1
-	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 17:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCEAA847B4
+	for <lists+openbmc@lfdr.de>; Thu, 10 Apr 2025 17:24:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZYNrm5XKnz3cXD
-	for <lists+openbmc@lfdr.de>; Fri, 11 Apr 2025 01:24:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZYNrz4rD9z3frs
+	for <lists+openbmc@lfdr.de>; Fri, 11 Apr 2025 01:24:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.17
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744298645;
-	cv=none; b=gNRqwjEWtdvSEnnGMbR3+cSg8FnIc6uGP7rsJRIgabVgo2yUZQrhPC7ZLJefaVdEDef4kzFeLyE3SR8k1s07XCxw26p8NAwNdnW9tQMmeh55VzPDLKEEx/YIlehXS1XazEtYA9rs5QyhN36NTNw0IFMJONbbL9+NH3mOZogEMwygWI+NnCefGt6sRpQ8UWvAxWk9PgwebzCcPqRNSlPy5hT1ke123cdkiRByrPJbMlgQmXoFmy0IJrm0dIb0YLX6CWE4hFh42ayfxUHb+vSivLd9SIwQmtK53c36ipcKTD1mDU/fRFGrjIoUlNW/GEqkhQkPk7OuhlZWLrRT+3eoGw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744298649;
+	cv=none; b=brvnNyeShBEAQerZyAM4GjdzrprJG3QlF1nGoNXbnsGPmuqMMOIjvTzNsF7jzedjWrJHcLxSbcaAp6E72+aKOGarjTMC7CIrdLPIPlxFtBnlwsdrzDr6kHUnQPadYfRXupYu8EhKlzur8p4mAuOwAEN35rQ9wsxgwMfKjLECbIej9mLSZvUHhDimEL45EY5l+1efatPb/9cukRjJqqJNMIr1LBCeqdNxGKQTPXW1Cmm4Od9JiLWUbQF/hGoogvozd09HdtCg94rbkoQaqC6V1ymafF2yaZJO4eL4oU9YiyCjsOeKgzNqmcn16TSkvbsWnIgfkx7iWeG1Dx5uCqoRjw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744298645; c=relaxed/relaxed;
-	bh=1aD3H5SmNlfRhw7KUYgaAyaJqkhSNgnVmYp8u5QpgpQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jiCg582iOUkPsBM5y0CyQtnmojaiLSyn+JWyTBjmIyQKvg4S7+89CqrvDY09JjpiHiPxSmPWqUfLhVzUi8HtBCgsXV1TBt8UZKP/viU9yOMXbpAnNsPQg5+N9w6I+WqnwYMK20+3rtIByPCV1ybcEmTMLxs9j7EuUMncomHrluplZdHoqHBgoxY9QqJqo8jsmEtfotLN1jF1Zv9ItQhSj5RJ01NKZO/WG33baRwD+bpjGCmUtpN5GSc7BcFVen32x4fSoStRG6wCkbiig7s5VG5qz5Ktfi1SDKORgT9koE2v9VtSOtWT1/ps6UE7cseLpismrjBY6xhHDTaz4sQ3vQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cmx5S10A; dkim-atps=neutral; spf=none (client-ip=192.198.163.17; helo=mgamail.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
+	t=1744298649; c=relaxed/relaxed;
+	bh=5hfVBN0wzaSeUQg5uDnoDTlQwoorDCBq715xUx2HVbo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VA4/HtJA3bnLUZjKFw0mvSFgSR6OOrPm2ycfkO8sfJYh6nBl/yotMsggk9UfXu3iqh9I7K9VfiF/dj8a5664yJjw7SfegscdR525hbtIlnhCYBlQbr3bRi3X8jpW9jBvm6LkGLHfa8VGoBathpiYzdH4HohGhW6ea7wixZ5wOkxV/YAgKjjv6BzMcjmGS/Q7MtG2k33bfLt6L1AFMx3sA4rSqXMD2XVrVbe2J0zfGYEZi/xcIB0/cEWHpiOkXVoI8H/Us6d9JVszmYdZaeMSi9k92cHkMysO1tLhJgP11dJyKieltNJ+JU4wGveTbZvtQiqCPDDA4TJnsaMeRuN3fg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LxgbJyBf; dkim-atps=neutral; spf=none (client-ip=192.198.163.17; helo=mgamail.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cmx5S10A;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LxgbJyBf;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.17; helo=mgamail.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Fri, 11 Apr 2025 01:24:02 AEST
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZYNrf3ysRz3bm7
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Apr 2025 01:24:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZYNrj6SVRz3bp7
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Apr 2025 01:24:05 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1744298644; x=1775834644;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=kVA5MpLBMU4IYqfLgN92o9IEr4g+jq3spidVJHcMb6o=;
-  b=cmx5S10AnTrVFKvixTa+4/ApPZhHKIoZr/IKyeaWCALnhZevZXSRKKTV
-   dJeJ5pbhOJqGaXrwaiC87smweSn4XUNIrQRLvPxh7qM1Y55lTggBj3u1t
-   Je7HYgLQbP025mAvqlY7klroQPv5oJSG1GVPOAC052E+YrAVRUDHyfIA7
-   Tk6x3XBJ+/Fhlo3hb8IJkwsAeHSM0P0+UyTktm2qZXtIe/ke3JHElgf1e
-   981gvbSmG1nT8seIsGtgNPk5ANx/iGTkoOdDOku+TU8YvLhVeSCZ4ht/i
-   7Ir61alWRlsxH2jbZj4YS8iyzDTtTdaOdiKEDLrFwIXP8lsFrSYAh4NVm
+  t=1744298646; x=1775834646;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=2nEmXOWj61EFby8lltYJVgmKKKLIgiCDNpDNWcMK21o=;
+  b=LxgbJyBfKKZ0gsYKO4sVeFvc8aaELbMLvBu4EKE/1e8GgQa2PpH06pza
+   R3a05rbgXkB/5f+IhU8Xpye8+DQAAE9Bz8e0l4KLLHt5AfgjO5hPfQtvV
+   cST13yCn7zQhBUglXyd/ADSonZWyoKyUVpMzWjnn4gMUnexd57Xw81Ksw
+   ORMejFWeAVY5Tsqf2BWSFea4Y+hWpFoy9LgH0vb99eQ4oK4XFR2vq/08t
+   dWTUKbt+HIFxVXL2Aupy74bjNfKX33PwVgwvl35USHbLTw7sxcvCDCRCD
+   qJ2KdGIGztYJwFYKOAhKmdOeW+mEsEp4QBdrbg9BYPW8onv+yUwGV6q9v
    g==;
-X-CSE-ConnectionGUID: lYNPYL+9RVGs5XpjIvbqzA==
-X-CSE-MsgGUID: KNDRHnlpRNeV3pjsqiZSkw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11400"; a="45716266"
+X-CSE-ConnectionGUID: vqYSdlQmTGe3LgqGLBO2Uw==
+X-CSE-MsgGUID: H5HIRUesRQKKQzN7Fx4krg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11400"; a="45716287"
 X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; 
-   d="scan'208";a="45716266"
+   d="scan'208";a="45716287"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 08:22:55 -0700
-X-CSE-ConnectionGUID: 3j6bmGJiRKOZWNowD2NzRA==
-X-CSE-MsgGUID: ew/RyzT9RNy/1OP0CZJiGQ==
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 08:22:56 -0700
+X-CSE-ConnectionGUID: xwrGhn4bQV2XQcBYOS31NQ==
+X-CSE-MsgGUID: 7SLwaDhESOSRn2bA8q196Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; 
-   d="scan'208";a="134108194"
+   d="scan'208";a="134108201"
 Received: from turnipsi.fi.intel.com (HELO kekkonen.fi.intel.com) ([10.237.72.44])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 08:22:52 -0700
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Apr 2025 08:22:53 -0700
 Received: from punajuuri.localdomain (punajuuri.localdomain [192.168.240.130])
-	by kekkonen.fi.intel.com (Postfix) with ESMTP id DEA3A11F74E;
+	by kekkonen.fi.intel.com (Postfix) with ESMTP id E27B411FA2F;
 	Thu, 10 Apr 2025 18:22:49 +0300 (EEST)
 Received: from sailus by punajuuri.localdomain with local (Exim 4.96)
 	(envelope-from <sakari.ailus@linux.intel.com>)
-	id 1u2tjt-00HObw-2j;
+	id 1u2tjt-00HObz-2s;
 	Thu, 10 Apr 2025 18:22:49 +0300
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 From: Sakari Ailus <sakari.ailus@linux.intel.com>
 To: linux-crypto@vger.kernel.org
-Subject: [PATCH v2 0/3] Use a local device pointer for hwrng drivers instead of casting constantly
-Date: Thu, 10 Apr 2025 18:22:36 +0300
-Message-Id: <20250410152239.4146166-1-sakari.ailus@linux.intel.com>
+Subject: [PATCH v2 1/3] hwrng: atmel - Add struct device pointer to device context struct
+Date: Thu, 10 Apr 2025 18:22:37 +0300
+Message-Id: <20250410152239.4146166-2-sakari.ailus@linux.intel.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250410152239.4146166-1-sakari.ailus@linux.intel.com>
+References: <20250410152239.4146166-1-sakari.ailus@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -90,26 +92,61 @@ Cc: Herbert Xu <herbert@gondor.apana.org.au>, Avi Fishman <avifishman70@gmail.co
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi folks,
+Add a struct device pointer field to the device's context struct. This
+makes using the unsigned long priv pointer in struct hwrng unnecessary, so
+remove that one as well.
 
-Clean up random number reading by storing struct device pointer to device
-context struct. The changes are very similar in all three drivers.
-
-since v2:
-
-- Add a struct device pointer field to device context structs, don't use
-  struct hwrgn priv field for the purpose anymore.
-
-Sakari Ailus (3):
-  hwrng: atmel - Add struct device pointer to device context struct
-  hwrng: mtk - Add struct device pointer to device context struct
-  hwrng: npcm - Add struct device pointer to device context struct
-
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+---
  drivers/char/hw_random/atmel-rng.c | 11 ++++++-----
- drivers/char/hw_random/mtk-rng.c   |  9 +++++----
- drivers/char/hw_random/npcm-rng.c  |  9 +++++----
- 3 files changed, 16 insertions(+), 13 deletions(-)
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/char/hw_random/atmel-rng.c b/drivers/char/hw_random/atmel-rng.c
+index 143406bc6939..d2b00458761e 100644
+--- a/drivers/char/hw_random/atmel-rng.c
++++ b/drivers/char/hw_random/atmel-rng.c
+@@ -37,6 +37,7 @@ struct atmel_trng {
+ 	struct clk *clk;
+ 	void __iomem *base;
+ 	struct hwrng rng;
++	struct device *dev;
+ 	bool has_half_rate;
+ };
+ 
+@@ -59,9 +60,9 @@ static int atmel_trng_read(struct hwrng *rng, void *buf, size_t max,
+ 	u32 *data = buf;
+ 	int ret;
+ 
+-	ret = pm_runtime_get_sync((struct device *)trng->rng.priv);
++	ret = pm_runtime_get_sync(trng->dev);
+ 	if (ret < 0) {
+-		pm_runtime_put_sync((struct device *)trng->rng.priv);
++		pm_runtime_put_sync(trng->dev);
+ 		return ret;
+ 	}
+ 
+@@ -79,8 +80,8 @@ static int atmel_trng_read(struct hwrng *rng, void *buf, size_t max,
+ 	ret = 4;
+ 
+ out:
+-	pm_runtime_mark_last_busy((struct device *)trng->rng.priv);
+-	pm_runtime_put_sync_autosuspend((struct device *)trng->rng.priv);
++	pm_runtime_mark_last_busy(trng->dev);
++	pm_runtime_put_sync_autosuspend(trng->dev);
+ 	return ret;
+ }
+ 
+@@ -134,9 +135,9 @@ static int atmel_trng_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 
+ 	trng->has_half_rate = data->has_half_rate;
++	trng->dev = &pdev->dev;
+ 	trng->rng.name = pdev->name;
+ 	trng->rng.read = atmel_trng_read;
+-	trng->rng.priv = (unsigned long)&pdev->dev;
+ 	platform_set_drvdata(pdev, trng);
+ 
+ #ifndef CONFIG_PM
 -- 
 2.39.5
 
