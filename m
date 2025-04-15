@@ -1,88 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BE29A87527
-	for <lists+openbmc@lfdr.de>; Mon, 14 Apr 2025 03:06:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10F1AA8AC0C
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 01:25:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZbTdY54cxz3cNP
-	for <lists+openbmc@lfdr.de>; Mon, 14 Apr 2025 11:06:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZcgJ25vCbz3cPm
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 09:25:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::f34"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744589292;
-	cv=none; b=QBd7Q04X5Cn9OfKj3EWRsOM7KxbsAa6JC3XP+um4CGH9uD6p62sbVVilvz31WIyEbGyGbBtqaP86L20ZkudS6pioglJ9H/ZoiEVCgqw1EzJuI9t4+MRIqouBNxZ/qSZeqJDjqQbMbr0qtzMuPTyZ+2Uns4cca7zwUxl2UotpE0J1IBHfpsqamhmjMkfvmzwVk2RGNM+m0X7b75tGrKgQ5SFmeG9YpFPwy1co0JikFpUGnmyLWjyedMj1HM15lGyxnx1BPUFXRugRBjVFNKWI0Vtu/7pxqRI3PEDYqFyRFJgYDFGFOcXtNF0WdgVEsgMJxi+/pJmxy7VqJT7FqNPHeg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::42b"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744759536;
+	cv=none; b=Vqdjc/9FEjfGsuIwK95Hd6GFVVCmAlTKIXxrPfMX0jDTKVN/GQ0L0nTygK7LVZ6T4hCyZTBWhYFWczjHgBCC5GeczbSes2ihsROCJTebK3uzEE0f/EoBv+9haFFZLNITWNKRRIncDWqjuGIRZogIFBt576aYPfhVfNmWawKt2wHgx/OVqxUnXwEh21k9TKpPeDeo1n5jMBd00cYEG43uqUkENHlFaagbHyZMeMJ12iU5W1+IO9Bf1QB+oBBupf//odK8RznFXpDTzqBYYEKMD7n1tsXRxOVrj1lCf4f2nuDdLpee6MR8Ii0rmtTutI4MZH1LuSdSgvOK27NR1wfcUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744589292; c=relaxed/relaxed;
-	bh=rreFZDTz2uBZn6ChgxZqj3cVrha2t3QZe1eg5gMrOew=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nPSAbOw4+Bf7FIdyyFQmaOjoxdIsSm5CkR1p9SHMhBAH1/2/XJp5SLAKVDVr+6rtRljIAeJWG6EjfUqxv1W6JPv4FB8wx8rDXKBT9Jql9xN8ibsD3UfaRk6FMUExaJ3XI4lCq+lky35BRRwgb4JAS7nTUzc28Bg9dLMnP3b+wEta0VtC2Z0Euip8M9Kv5bSXp/Rz9kpggUgQE91ltnnQpmUuO+OOVJl7qMIZNFW+DH8yLzDfRo1jbBvdLre4G/xKmuPkEdbKFj5OLmPkDGy6WTlXtKgubpxggBpA4+lZFdWREmdRl1C49yFrUxhgPeSkLvnhOS5WJpgZslARiW2TLg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fhr/VDNL; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::f34; helo=mail-qv1-xf34.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1744759536; c=relaxed/relaxed;
+	bh=Typi1g6KX7Ehfn4YypTfJOkSrzPqdsOWJwM5fjFePI0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YholevbT0CvbYGSCOkesHWMsHg9kK1EOsAFaeYawqDMrxZG6CHrJiLhpFFP/l3ruRKauiLlSHfbWOXkzegLNPW0JqDnnueimfc+PdStZ6kyNyM/ryEMPu5vPA/HeDv5bfyem/o+jdzA87cvshZvrQwdukhfd3eH5SxTuPGI0aFbS70Py6KVTrYhQKbqugnozpD4CVOdvAp/5NbhuKDsR9F6jOpYsb84V791TajmuCPNZleo3JQaOtZ3mAjjTbq1BWPrOZ9W9+cuImssmURD5pYT/lQ26/dlLvL1C32Ywb/lnLXSFoAghhgh9YlxAS1yJeGzelZ+/RStAcJa/w7iEEA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com; dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=I0a7MH7j; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::42b; helo=mail-pf1-x42b.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org) smtp.mailfrom=wkennington.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fhr/VDNL;
+	dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=I0a7MH7j;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f34; helo=mail-qv1-xf34.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=wkennington.com (client-ip=2607:f8b0:4864:20::42b; helo=mail-pf1-x42b.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZbSL23Ryfz2yHj
-	for <openbmc@lists.ozlabs.org>; Mon, 14 Apr 2025 10:08:09 +1000 (AEST)
-Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-6f0cfbe2042so40594666d6.1
-        for <openbmc@lists.ozlabs.org>; Sun, 13 Apr 2025 17:08:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZcgHy0T8fz2xjK
+	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 09:25:32 +1000 (AEST)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-7370a2d1981so4826108b3a.2
+        for <openbmc@lists.ozlabs.org>; Tue, 15 Apr 2025 16:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744589286; x=1745194086; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rreFZDTz2uBZn6ChgxZqj3cVrha2t3QZe1eg5gMrOew=;
-        b=fhr/VDNLhcVmnT3jhBfK1P/2jatAawWvhellmCuixG1FGog1F5sPht0tvkzlOPaUxi
-         5WzRobCawKKVu7IKiCPc3ROyrJbZls6czX0/fTRJ53wehOxpRncogOSk1nSo/5NMmYyJ
-         7D4nn7EBxi2ENCCon8cvZniEnydBJ5j487xurZky212uRaZ8CjdbO/+SlSsd6y6unsKN
-         V3nvZyknkz2BH6vncyDIZEfP6l59F0q1/LQOIVnlWZivYo9B/npgsq5PY9rKYRm0Id9U
-         P6O9uTwssZx5cabqsmAq+N6S8sx+EtAKdclCB16iLq19b0PnAtmen9DWOEUF7gEwVLI7
-         B8Tg==
+        d=wkennington-com.20230601.gappssmtp.com; s=20230601; t=1744759529; x=1745364329; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Typi1g6KX7Ehfn4YypTfJOkSrzPqdsOWJwM5fjFePI0=;
+        b=I0a7MH7jaZhKqEmnxgPbt1UDJeQ39olod1L3qjsObxxesxN4KyTvkWKVy7blXUJGQ/
+         fvfE/Gd4lsonvKEHvI7j6YP3WJAn52IUNrY/Z+sLIbXfWT5+UdoU9nb1OOm6BnJFW9MP
+         KY2vRrAY9X3xEIGtclIYJ5kFzypA89229y57f2SYZA/L308GwzK97ig+/pP7j0DDcfxI
+         hXlb8i70I2DCDXZ+Lu8VrQtce5aK3A1Thw2wE9QX3p13uk9dj5aAy+5kPP/G/bO2tQ1t
+         0Z8qRQArnWRwyK6s8S6QI/GbLdPkmbSue1LC35SFnroveOBGLIZ9MeM/xM0cnRxZHSDc
+         Izeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744589286; x=1745194086;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rreFZDTz2uBZn6ChgxZqj3cVrha2t3QZe1eg5gMrOew=;
-        b=eaZOEZxRggjBWAvJWF3fNyZxpT5VU8PAJAmEmO1Ha3POrE1UFRKivS7ppEz4FzS2eM
-         amTC8rNs1vY94G+YEmrr2gJMF6nniTCRds7fY8nX5593iRfnEYtVIL6Ud2I3whPujfoe
-         CmnEDVKTEpXyIM0FQ5tVT5nKklAxhRBWFysBi84yT9Cy+lKVjEsNYcQR69dyzKNMdGtP
-         E9QvdzePAYzHRLyoAWjyFH0wgeJhOXxr9/yDLQ00SZB2zsf4X8eaR+ezl2qactKSMz0i
-         nKpL6VE4BfSU3bbF2YKZNopp31tz/g5vBO2qVjqM3T9cG5jshwdzsV1Xn01Ol/VUHj/T
-         HhFg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9MfwbvPCcItLgnzCW93dQt8QqwCjtL9abe64HX0ilyFjXztRVwgaLGPW7YjouL3lNlcjCF9z2@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzpIQjf5iw23BSsKy6DoEeaW3cDeZ0IU3APrFMDVN4TNyxLY5v/
-	JhtYJtpeA7HPvXJXdVEWvwrYMOqtsamqZCdAqj4NWNHaNzLoajT8oTzksqZ4Udyy5Ne32i1SS+c
-	9zQCUaNzORnDYwXkCC5YMtvehe+Q=
-X-Gm-Gg: ASbGncuM+gitXHqiRBP5FmcG2RNdqOAiPnJJBheSG5iqk9QDtr48d82uToq55ZbEP+E
-	vcGh8RinsXA/oEZLYLK2RQlUli6XXbaBey57oMTDe+29NU5uGeBT/pjnOl7qmiGPt62fbMgjqfS
-	vs33Yrl/+ofnCqf2SBtmLvgEmB64FPJws=
-X-Google-Smtp-Source: AGHT+IFqMErkq/Yib4S882Q+l8wRVUIb3fb4K3HsLkmozQNX59ADuTQ1zrW0m4HCV4FsO/QnMwo9UG4tVKr7BoftpyA=
-X-Received: by 2002:ad4:5f46:0:b0:6e6:5b8e:7604 with SMTP id
- 6a1803df08f44-6f214188d12mr175624006d6.12.1744589286021; Sun, 13 Apr 2025
- 17:08:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744759529; x=1745364329;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Typi1g6KX7Ehfn4YypTfJOkSrzPqdsOWJwM5fjFePI0=;
+        b=IOuupUte6+LXi6soJ1R1kmz/6tktkPnsYKEqNZmWyKKT+BvJBLzNb9LR3UtX77W+bb
+         Ek1oTnFdw8bOhmjfegPUS5yesgmucoSmGtuWY3b6H5O9m9tQxvA3MBFX7Pz/H92P7EFH
+         Pko/pMxWfngmY2Jc6LzeR9ONDZozGrU99IhoMrpC8JwK/Ns+Sgv5mGlG6ZgFFxgTf580
+         jAWYLuK01Y0KttiTKfXLv1iAymZrYmZDpBeZuFfHDlL1mCQqvLjZ3TyXA8ZwMYXVqesO
+         YFL6vSYXS8dEB4a7PRbeP/wFnlENf1uYYuCSUFpHuBX5buZ38xYphW7UgTuuXuToz07A
+         Ym0A==
+X-Gm-Message-State: AOJu0Ywfp+fenyq/fOqu948PQdXcJd0SFZwM5Ld6uUHDunJXiWTSQ9Yh
+	GcGdbPzAMbBsWApQfHAxWi0j+HUDkjI8XbniweCoXJKtAyInaZ16QHR0g1X5vWA=
+X-Gm-Gg: ASbGncuhIvu1V5jY3RXv84UGJouDx5H14RTVX/gm2sLx69qdUJzv0sUBz1inubUotZI
+	80/Am1dZy1+x+Lg9P4l4tvweY/cfknEh5KlifAtIIoxNrSddAGOJj+kvAOEC2pYQ/rm+FT8Ccqf
+	/Tx7kg27qa7G4dir5i0P/64F7n0o6ZFvnORm1iyaZfXfaeMsBJJfWDoQb2ahg2vKnSJ40mL0qcn
+	/kFYpy9sSxc/YYTnDz/94q/6i61dFvwr42cHOPGqgmduoyW18FYzJdLAyjQCJLibHmpOcjUYvWX
+	b3TDQnPJ/rcLFnx9dv1FbPDFsjzogEo06ZuAronjdnV2HIaf6QnG67+Uub6DqmpoSxn2l+Bpziu
+	fNbIXrn5Es3MCAHoMP/lUQujIvD4=
+X-Google-Smtp-Source: AGHT+IEzphQP3s7FZ5e4GcCAa2R4BFsGamVOHIKYq0Z6d5ikKqoVlCyBOojccFabDl5OP2cE0NKWaA==
+X-Received: by 2002:a05:6a00:a2a:b0:736:9f20:a175 with SMTP id d2e1a72fcca58-73c1f8d3744mr1737009b3a.2.1744759529366;
+        Tue, 15 Apr 2025 16:25:29 -0700 (PDT)
+Received: from wak-linux.svl.corp.google.com ([2a00:79e0:2e5b:9:ef0:9d76:c8a5:f522])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73bd21c5e98sm9443850b3a.57.2025.04.15.16.25.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Apr 2025 16:25:28 -0700 (PDT)
+From: "William A. Kennington III" <william@wkennington.com>
+To: Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: [PATCH] arm64: dts: Fix nuvoton 8xx clock properties
+Date: Tue, 15 Apr 2025 16:25:21 -0700
+Message-ID: <20250415232521.2049906-1-william@wkennington.com>
+X-Mailer: git-send-email 2.49.0.604.gff1f9ca942-goog
 MIME-Version: 1.0
-References: <20250327193816.670658-1-mohammed.0.elbadry@gmail.com>
- <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com> <4wbq7yepeqg6lhu34giqlz7fwamtuv4o5r5slm6ggj5ut7omvd@archqknzat3u>
-In-Reply-To: <4wbq7yepeqg6lhu34giqlz7fwamtuv4o5r5slm6ggj5ut7omvd@archqknzat3u>
-From: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Date: Sun, 13 Apr 2025 17:07:55 -0700
-X-Gm-Features: ATxdqUHCKdMZs_LEePD-OxZDub-K8K9UCKSTdv8KH_BZ7jlSxZSZ8fITrJH2Lwg
-Message-ID: <CAHdq5QHUeMk4WLf8uGz78KagN3WSvS_skhvKFMqUD5YkwJOOkg@mail.gmail.com>
-Subject: Re: [PATCH v4] i2c: npcm: Add clock toggle recovery
-To: Andi Shyti <andi.shyti@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Mailman-Approved-At: Mon, 14 Apr 2025 11:06:39 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,97 +96,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, linux-i2c@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, "William A. Kennington III" <william@wkennington.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andi,
+The latest iteration of the clock driver got rid of the separate clock
+compatible node, merging clock and reset devices.
 
-On Sun, Apr 13, 2025 at 4:06=E2=80=AFPM Andi Shyti <andi.shyti@kernel.org> =
-wrote:
->
-> Hi Mohammed,
->
-> On Fri, Mar 28, 2025 at 07:32:50PM +0000, mohammed.0.elbadry@gmail.com wr=
-ote:
-> > From: Tali Perry <tali.perry1@gmail.com>
-> >
-> > During init of the bus, the module checks that the bus is idle.
-> > If one of the lines are stuck try to recover them first before failing.
-> > Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
-> >
-> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> > Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-> > ---
->
-> we are missing the changelog here. You are at v4 and I need to
-> see the changes between the versions. For now it's OK, please,
-> next time don't forget to add the changelog.
-I understand, I will do that, thank you.
+Signed-off-by: William A. Kennington III <william@wkennington.com>
+---
+ .../boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi | 16 ++++++----------
+ .../boot/dts/nuvoton/nuvoton-npcm845-evb.dts     |  8 ++++++++
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
->
-> One more thing, no need to send patches as --in-reply-to your
-> previous patch.
->
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
-> >  1 file changed, 8 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-=
-npcm7xx.c
-> > index 2fe68615942e..caf9aa1e6319 100644
-> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -1967,10 +1967,14 @@ static int npcm_i2c_init_module(struct npcm_i2c=
- *bus, enum i2c_mode mode,
-> >
-> >       /* Check HW is OK: SDA and SCL should be high at this point. */
-> >       if ((npcm_i2c_get_SDA(&bus->adap) =3D=3D 0) || (npcm_i2c_get_SCL(=
-&bus->adap) =3D=3D 0)) {
-> > -             dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus=
-->num);
-> > -             dev_err(bus->dev, "SDA=3D%d SCL=3D%d\n", npcm_i2c_get_SDA=
-(&bus->adap),
-> > -                     npcm_i2c_get_SCL(&bus->adap));
-> > -             return -ENXIO;
-> > +             dev_warn(bus->dev, " I2C%d SDA=3D%d SCL=3D%d, attempting =
-to recover\n", bus->num,
->
-> the space at the beginning of the line should be removed. I will
-> take care of it if you won't be asked to send a new version.
->
-Got it, thank you.
-> > +                              npcm_i2c_get_SDA(&bus->adap), npcm_i2c_g=
-et_SCL(&bus->adap));
-> > +             if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-> > +                     dev_err(bus->dev, "I2C%d init fail: SDA=3D%d SCL=
-=3D%d\n",
-> > +                             bus->num, npcm_i2c_get_SDA(&bus->adap),
-> > +                             npcm_i2c_get_SCL(&bus->adap));
-> > +                     return -ENXIO;
->
-> why don't we return the error coming from
-> npcm_i2c_recovery_tgclk() instead of forcing it to ENXIO?
+diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+index ecd171b2feba..4da62308b274 100644
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+@@ -47,17 +47,13 @@ ahb {
+ 		interrupt-parent = <&gic>;
+ 		ranges;
+ 
+-		rstc: reset-controller@f0801000 {
++		clk: rstc: reset-controller@f0801000 {
+ 			compatible = "nuvoton,npcm845-reset";
+ 			reg = <0x0 0xf0801000 0x0 0x78>;
+ 			#reset-cells = <2>;
+ 			nuvoton,sysgcr = <&gcr>;
+-		};
+-
+-		clk: clock-controller@f0801000 {
+-			compatible = "nuvoton,npcm845-clk";
++			clocks = <&refclk>;
+ 			#clock-cells = <1>;
+-			reg = <0x0 0xf0801000 0x0 0x1000>;
+ 		};
+ 
+ 		apb {
+@@ -81,7 +77,7 @@ timer0: timer@8000 {
+ 				compatible = "nuvoton,npcm845-timer";
+ 				interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+ 				reg = <0x8000 0x1C>;
+-				clocks = <&clk NPCM8XX_CLK_REFCLK>;
++				clocks = <&refclk>;
+ 				clock-names = "refclk";
+ 			};
+ 
+@@ -153,7 +149,7 @@ watchdog0: watchdog@801c {
+ 				interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+ 				reg = <0x801c 0x4>;
+ 				status = "disabled";
+-				clocks = <&clk NPCM8XX_CLK_REFCLK>;
++				clocks = <&refclk>;
+ 				syscon = <&gcr>;
+ 			};
+ 
+@@ -162,7 +158,7 @@ watchdog1: watchdog@901c {
+ 				interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+ 				reg = <0x901c 0x4>;
+ 				status = "disabled";
+-				clocks = <&clk NPCM8XX_CLK_REFCLK>;
++				clocks = <&refclk>;
+ 				syscon = <&gcr>;
+ 			};
+ 
+@@ -171,7 +167,7 @@ watchdog2: watchdog@a01c {
+ 				interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
+ 				reg = <0xa01c 0x4>;
+ 				status = "disabled";
+-				clocks = <&clk NPCM8XX_CLK_REFCLK>;
++				clocks = <&refclk>;
+ 				syscon = <&gcr>;
+ 			};
+ 		};
+diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+index eeceb5b292a8..a20f95c60a62 100644
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
+@@ -19,6 +19,14 @@ chosen {
+ 	memory@0 {
+ 		reg = <0x0 0x0 0x0 0x40000000>;
+ 	};
++
++	refclk: refclk-25mhz {
++		compatible = "fixed-clock";
++		clock-output-names = "ref";
++		clock-frequency = <25000000>;
++		#clock-cells = <0>;
++	};
++
+ };
+ 
+ &serial0 {
+-- 
+2.49.0.604.gff1f9ca942-goog
 
-The error that comes from the current driver is only -ENOTRECOVERABLE.
-I do not see why we cannot return that error instead. I understand the
-difference between both states; however, from the driver's
-perspective, on initialization, ENXIO and ENOTRECOVERABLE behavior is
-identical in that state.
-
-ENXIO was what the driver returned by default without trying to
-recover. Do you recommend changing it? Let me know. I am happy to send
-the v5 patch with the change and address the above comments, too.
-
-Thank you,
-Mo
->
-> Thanks,
-> Andi
->
-> > +             }
-> >       }
-> >
-> >       npcm_i2c_int_enable(bus, true);
-> > --
-> > 2.49.0.472.ge94155a9ec-goog
-> >
