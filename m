@@ -1,64 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1BF4A8B2D5
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 09:59:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21E6AA8B2FD
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 10:10:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZcthH3mRdz3cPp
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 17:58:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Zcty20S3yz3cQ4
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 18:10:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=144.6.53.87
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744790332;
-	cv=none; b=irzXjhWZq95jG9LucS4o+yeHUqaIzvFgAo7v2koxHK1+0UK90HGMxujZLMm6jRVBwDHKl27hN4zciyyCMxbUGJW0T7apsfMB48WZDidM9xXHogeu+wETW2gGcfpxDrdgsLYwsDWoueBQwUhHeW5xNG9RlCwKUHcHdn2T90vPCmy6S7JmM/+cfl65KVVY35nAjrMmaQv1+04mEbv+K6CSF7p8el4vz56uvJaN3CfVK3Z79jXORRU2zdJMpzbn5ZBDPM4QAE1E+R5PaHsLDXlRO1qnobFPD63cWSWn/gnwkiwkna9zh47KFAWhesbw51oZgetprEsQcDVVa/+FSRwhng==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::b2e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744791046;
+	cv=none; b=R8N8XlW+2cLY/Toik5aPWkUb+LJwdbr64q2uwVZz5DUl/hzB18jcqox880YEKxhfkedodLY9RWVf0wQo6P6m390ileGfJbFTx2T+es1Fqd3lTuO2u2hdydyXCSWD+bpc/e37Urb9MPm1NpkIgmqIuOroz25tBx9LUibts4p91SVGUYbFgwh7UZOnDLrS6Mju8F7q32gVWDcv7H4GYmn2JmBQhQdoDwFCVbYTC9CUqnZdiXpRSBCgwNRPmSl+CmqVDNJlW+UMeoHLQ6AbeX8RJtvlYnV191W8D+/NtZRw7vvTGN0cP3btqQl3tlg3mZ/4hhyWj09BelTEEC/APH3zzA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744790332; c=relaxed/relaxed;
-	bh=xoWHXtften/lUbiJBml2hBCsuMZ21wIlk4QxBfXkS3s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lmz8tvsL5n9PBP3cSbL4i5oFSqI58DGNYUQqpDQqZ3cYigk7M5MHhpMeiM92zrjcPotj6FzCMWDjnrDeXZ75jrI2ZyIvsAnsrC/NQFkqjy4JmhXqFlZ5QHrkFpAYgJC1nypF2Eyw7cxLdE3HSTTIJKBmMfi0EkAfIwQ40l/d8znq6vXFoPFelbU6Tu5CsQLnyWPe/4YmTbskITOUyeinn8mgb/oxzozPj70dsBwzmMNTxM+Mg6qcMwTocVQznX3ceV8K0//E2bnSkoIgs87YO6Y9cI6D+ms/vMvEeS0oBf0iUsvnCeGez00F4/DqmwrOiKPGt68yRHcOJK+04/9Whw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; dkim=pass (2048-bit key; unprotected) header.d=hmeau.com header.i=@hmeau.com header.a=rsa-sha256 header.s=formenos header.b=JbKawVCg; dkim-atps=neutral; spf=pass (client-ip=144.6.53.87; helo=abb.hmeau.com; envelope-from=herbert@gondor.apana.org.au; receiver=lists.ozlabs.org) smtp.mailfrom=gondor.apana.org.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+	t=1744791046; c=relaxed/relaxed;
+	bh=DZyqpE9X4wd/22zjOlPfUmaMFF9uMRXc0xTpLR2rnoY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dZMqCU8RzSkhLNIh3rWG6udnMjTKVwbH8r6xKhgJB3Pffv2pQq1R2ndMIx9wOBNrz/9FaDDUGA1fZOJCjuoxywUUKVKoinBn8CMIe9zijqZYTyX7mDvH5jNxVGXeH/Cbs+hCB2UOjmoUTQ5hxHFwhOWtvBOLVyOpgG2q4GBNOeEoCtwLv8AgCelYt7MVxmHLJKFxSsiBTgwGVQ+yUSr7TEWjnjjWVTQgUpqsgvqByu2avhLOO7v+Dkb60fh0rp2rqANtezvk+r/P0FvLdscQNHbZrD4vqZ9MI9Hukej12I2XqstzZ2rgeT30RGdv9Ooeqg/Y0g0Runx8QfzVXBp2ww==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DbpdxHHo; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::b2e; helo=mail-yb1-xb2e.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hmeau.com header.i=@hmeau.com header.a=rsa-sha256 header.s=formenos header.b=JbKawVCg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=DbpdxHHo;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gondor.apana.org.au (client-ip=144.6.53.87; helo=abb.hmeau.com; envelope-from=herbert@gondor.apana.org.au; receiver=lists.ozlabs.org)
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2e; helo=mail-yb1-xb2e.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZcthB3m1xz2xqG
-	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 17:58:49 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
-	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=xoWHXtften/lUbiJBml2hBCsuMZ21wIlk4QxBfXkS3s=; b=JbKawVCgPm2re7jfhUtUt73G74
-	tXPzSu7vBAi/lpfKvoTqvBuTnY76PG1u0KigAwwwYbd0M6m7/KecLK1/21GlLJOIbiBP3Y2IYTMoI
-	qoV94/bRmruE7Y9qoSbJ7VELrIIWWknHuIITaWnzbEqI34drIGV7sk0QkU8FDF3gHKGkQ/DGPcD51
-	YGNqiadPiGl73aueuB3ZJiIVR+TUxW1iYKDc125n1OjsVhX305RI6P3fVsh3Y9dUbPdNNIurCtSIV
-	LhMHUTzGtVur/QSSCecJSnC0ENsWkqHZ9z3cPrhtjqATW0tv5gc+QPampD0aZ0jY6O3uFqeZ3tqIU
-	rnJC7fzw==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1u4xf2-00G7tZ-2s;
-	Wed, 16 Apr 2025 15:58:21 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Wed, 16 Apr 2025 15:58:20 +0800
-Date: Wed, 16 Apr 2025 15:58:20 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: Re: [PATCH v2 0/3] Use a local device pointer for hwrng drivers
- instead of casting constantly
-Message-ID: <Z_9jHLmgaG7wjAhT@gondor.apana.org.au>
-References: <20250410152239.4146166-1-sakari.ailus@linux.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zctxx4r2Qz2xqG
+	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 18:10:45 +1000 (AEST)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-e3978c00a5aso5141092276.1
+        for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 01:10:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1744791043; x=1745395843; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DZyqpE9X4wd/22zjOlPfUmaMFF9uMRXc0xTpLR2rnoY=;
+        b=DbpdxHHoq2kR+S0SwG9IVo5uIqBTONDA0cp4cBjfY6FIOvV94K1HRNG6pdi1xVgwGm
+         1YEGbVqZ9Obe0XVvKJKYbuliR7kjSGmBfkEJceUok5QhRwUMAxWUyNvqPNi1uipx9atU
+         L4slaxyFFmaT470RlWaTTmL/km9NkrzyHFUax34AS24ntVZ3P7fWOuUmY+5GFvFgbVdC
+         zwItHIEcrTU2g/FLlEJpqL8j2ZDwGJdkR7WBotfsd0LZC8YovAoLFX2IqL6BgtaXCYqo
+         /BfTJtL8UM1rEug/mNg51ACt6poSgchxYkonbbTTQEeuykswZhettwD4bB6QLcbWIhGg
+         mMjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1744791043; x=1745395843;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DZyqpE9X4wd/22zjOlPfUmaMFF9uMRXc0xTpLR2rnoY=;
+        b=cSpM80PowboiOqX3awYjQnm2PTBp0BN0y1hvukll5eM3K+UzUvEJEsQuFinx4J45Gb
+         G4PZzX6G+Td/5GW2aQqPgXx5yxHFMxPM8d0kqH1NFRI02QpxFsGSX4RwhtZcHGWn4IPZ
+         cQ3Y8kCIaevKtFtLu5Lb9vuBv8KgXUruHryAMO1jfisQQnfzdltm9AuU1i5SjTFIgcDc
+         O05+4yjCDIANh4AwbzTWf11E1xNUHkECIJ/0zBn3HhmCEMG3nJxsfroSPS+DZFL94pvt
+         Lk3QhI+vw0Qy+kHv31ATJ14sfVEKC6qHqwU7e39bhZ5KAUoiZesvAkeSEzwuexUFXwcI
+         qJ1g==
+X-Forwarded-Encrypted: i=1; AJvYcCVrzUIeYWv2mzjbfcb69lNcQLbudVpvK1YtEEkYMej8pcrk/WQaxswJoYEVeY/wuXX+OE+TX+TW@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyjwduvWxj7NOim4mdltzV+ejoZsQ4VD3L3nYPqZWm9EXXwT7aH
+	AwaE5UrM4LmJ7aNHlYFBaPsZfJp3qUCL7lKKYB1rycFHK/iGByS+0Oi4WI37tyNK1yXl/8f+IZ0
+	xdINajx16IipGkJ/qVfH3b8y0+8o=
+X-Gm-Gg: ASbGncvZxxwkllLq8u5TE9zowVd7bUVA7Fzns27zN5QUmrs+IrHbj1I5QALXuuoEKtA
+	u/kQ2omoLQARDQRaLA060n8KjEXwl0H3GHhen5zOaEfIg/+2A0xX46s57i7v37o0w5tl1wxfERM
+	+tMJbupzDrRCFmNmQnNqOBIfU=
+X-Google-Smtp-Source: AGHT+IERtVAn7G4y4UbpvpqL8S24+SOdCyTdCfzaf2Z6DYy23J0VPJjeu/lO0dtLZZUkOahWYWdUR/bt4CV1jcqAR3E=
+X-Received: by 2002:a05:6902:2510:b0:e6d:e9b1:3f0 with SMTP id
+ 3f1490d57ef6-e7275f057admr1041947276.31.1744791042046; Wed, 16 Apr 2025
+ 01:10:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250410152239.4146166-1-sakari.ailus@linux.intel.com>
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+References: <20250416001818.2067486-1-william@wkennington.com> <2d3d4240-65ab-4fd1-a86a-503bb40f34a6@kernel.org>
+In-Reply-To: <2d3d4240-65ab-4fd1-a86a-503bb40f34a6@kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 16 Apr 2025 11:10:31 +0300
+X-Gm-Features: ATxdqUFzBhTkR5fO7-JutV7OU1OIYCLydgKtsG_teNYEMHlsAIQ9RZ1odpqCxNw
+Message-ID: <CAP6Zq1hg+cjZnz68YvtDLjWOHRfUBWc_e98g3LtBMqNpA+sG2w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: nuvoton: Add USB Hosts
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,36 +91,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, openbmc@lists.ozlabs.org, Sean Wang <sean.wang@mediatek.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Tali Perry <tali.perry1@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>, linux-crypto@vger.kernel.org, Olivia Mackall <olivia@selenic.com>, linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, "William A. Kennington III" <william@wkennington.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 10, 2025 at 06:22:36PM +0300, Sakari Ailus wrote:
-> Hi folks,
-> 
-> Clean up random number reading by storing struct device pointer to device
-> context struct. The changes are very similar in all three drivers.
-> 
-> since v2:
-> 
-> - Add a struct device pointer field to device context structs, don't use
->   struct hwrgn priv field for the purpose anymore.
-> 
-> Sakari Ailus (3):
->   hwrng: atmel - Add struct device pointer to device context struct
->   hwrng: mtk - Add struct device pointer to device context struct
->   hwrng: npcm - Add struct device pointer to device context struct
-> 
->  drivers/char/hw_random/atmel-rng.c | 11 ++++++-----
->  drivers/char/hw_random/mtk-rng.c   |  9 +++++----
->  drivers/char/hw_random/npcm-rng.c  |  9 +++++----
->  3 files changed, 16 insertions(+), 13 deletions(-)
-> 
-> -- 
-> 2.39.5
+Hi Krzysztof,
 
-All applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Thanks a lot for your review.
+
+Can we send one patch that includes all nodes that are existing
+NPCM8xx drivers in the kernel, or do you prefer a patchset that
+contains patches for each NPCM8xx driver?
+
+Thanks,
+
+Tomer
+
+On Wed, 16 Apr 2025 at 09:52, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 16/04/2025 02:18, William A. Kennington III wrote:
+> > The npcm 8xx chip has 2 EHCI and 2 OHCI hosts with driver support
+> > already existing in the kernel.
+> >
+> > Signed-off-by: William A. Kennington III <william@wkennington.com>
+> > ---
+> >  .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   | 28 +++++++++++++++++++
+>
+> Please do not send 10 separate patches, but one patchset for given
+> subsystem.
+>
+> >  1 file changed, 28 insertions(+)
+>
+>
+>
+> Best regards,
+> Krzysztof
