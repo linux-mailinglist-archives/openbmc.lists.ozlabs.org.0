@@ -1,89 +1,110 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8066A8ADBB
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 03:59:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B83ADA8B122
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 08:52:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZckjJ2DhCz3cQX
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 11:59:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZcsCN0Fy1z3cQ4
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 16:52:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::631"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744768753;
-	cv=none; b=QZcSUtlc/A6e8LS0wVyW0fHkiRjZD0z0xSjkrZJcHTBfmvto9vcjSEP9+PfzUllQocn+S9zOP+3MCt9D2Akj0rC1I1e0DAFQNcSwXSy+gS2tkjEDrQ+khCxxnYYb1963IvrE0qCfaH08i88pTr0hNIEdQdsx4Ln/vXxPkM3V3AAMy7NpSVUNGgQ3gNFF3wMSEL2dmCAEOWWjq5UXLW1Eiea6xWPNkEirzfT8c79th/y+X8LMWKfyuzbvXHGhy/ubmqmL/WT2ddWZqaQK1WMZGBR+DPab6LMpFZjGzoQfARQ1oXe0Ezy0IoHNI6wNPvQTRosVYot1dnnXeL4AqKm0Bg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744786332;
+	cv=none; b=iiXsQgrNrb7FqxEaZFdIGPdOTyzLrtGViud6F2DarO3mdBJ2S/2HnEY9UnmsX0QshQ1nWSDyuYW+TDLaexVlAdKPL1Jc5hHfcdOXcvDtcx6gNgLymIoF0Dn8lTMD3lAKeYnTryMKhpO2X0Py4osGIdctEzqYF2/J0WhfOHniy3/Rl/wvBwJbW5OXXO/VVw55/PkyHHJ1rr7JdUw3wTF9U2YEoV8sptfzCpzfQ+0dMyZ/jVx8PTl3MMnaQvTd+iY4zLS273wGHOGt/hqV54sJZ2cMUQU+Cu28VletYKhUBWrDpHjC31uh1RJNSpjtSkGtkVYpC+1aaq33LjFRnsTA+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744768753; c=relaxed/relaxed;
-	bh=e82Zj2e4FwI3zvSpsxcQPHmRy7+tI4Kl1Q4Ap45I6sg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T5S7c/tJnbtrMXL8BLgbrhEQFlg1j/e3Vr96AZKG5L6GwytW+HmHIVP3KYtOp3sq6bltu9Ku5Ld6/DoHJSLv9Pwf9n0bFVcu/bBv6/NEotrWILNgPVYHwZA3dLB90V0T4RcPWSNfctgGUnXri04Su0S+Y/CHPUB1pgbk6x59S/VFc1Jx5j5oZG1jG8z++Pk8zyiEZt2OIA9plVmV176pEyiM/n1zidYie5XRlyU8XsJpG+s50Mo+k11K87Fw2BIYltdfxZxzfLe3Gmh5ffheqww0rjaH1vGOtLdAMLBEkUQRm2qxQ4j0yHkBWRCYBKMof0tIAvHjuVjDBokJ0TsGGg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com; dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=kvN/xrwy; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org) smtp.mailfrom=wkennington.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=wkennington.com
+	t=1744786332; c=relaxed/relaxed;
+	bh=wAgNOmUO0K2gLDSX/MXA3oUN/ySsAf1fnxoO/65xUYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FKcTiaHKbhu7ilXkQCm53VFO+6hbPyawqhC95l1U4w5pBGHq5npQCI7Ru97eZjt5nsmTOmQITzfYfOvOzs1bPqNNskysf1FqSvtT2GCOEWufxUkdDm78s8Y0tVlQE32MZC1j8pAZGBCMTPoTCb1rqFDPzN14HjXaHK4nympK43n3mwCKZqVyGCNWO4/q1E/fWYSkPyunxL3wgdNjb0soly1j67M9qTCnwHy7gf5Yl3CkHjV7iXG1k1ZMTt60lYWtmp2va5oZ7c8mJEqjV0RP8AVOBRVowFtmQ9yagpBnzIa/A+j7epj9QCQE8T+DUzsOejIMxVLhbGRUw2V4JVEb8w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=bBAmxhYU; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wkennington-com.20230601.gappssmtp.com header.i=@wkennington-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=kvN/xrwy;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=bBAmxhYU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=wkennington.com (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com; envelope-from=william@wkennington.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZckjC551Pz3blT
-	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 11:59:10 +1000 (AEST)
-Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-2264aefc45dso93004445ad.0
-        for <openbmc@lists.ozlabs.org>; Tue, 15 Apr 2025 18:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wkennington-com.20230601.gappssmtp.com; s=20230601; t=1744768748; x=1745373548; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=e82Zj2e4FwI3zvSpsxcQPHmRy7+tI4Kl1Q4Ap45I6sg=;
-        b=kvN/xrwy39zaK9vUtGwt0QTt8e/hsA9NF8iYKiBoCOERa3dYysUs8nFHPzzqHRLnZi
-         mgrCzsJCysSKDfiyti2aGdnx9LbBA+/764v2GOUxBQdqcXrSyrsVHeJBY5TNLS7Hxl09
-         GrV8QNVNu+BieRe+v8Sj6eN+5U1Jxt4fvdWCQ9OqMuCHzWZzA1ojN2ZXu2fYgA98NSTE
-         4hQTyCusIpKkSw+PpPuneKS6rV0meTWPiIZykM9LAF30gqAwyxQUs5AwZFJQnghn/KZm
-         iACAEp7swbyXL5vW+9rdltuss81D5vJnjZVs3sAHJooILYhIiw9CO36jP/Yf9mNtm2wZ
-         XApQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744768748; x=1745373548;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e82Zj2e4FwI3zvSpsxcQPHmRy7+tI4Kl1Q4Ap45I6sg=;
-        b=gBjxgNTxBuf1FjPU+FbsIHTokEUfXv5dtC7eKpat/r8CR5CTkm3/51AsvWRjKjr3Aw
-         15em7dpuQqAM0+K82gC5GqapIQ40nzyQZqc1VxFTAkNECxO3ywJdlK6Q5W0ufQh6fSP0
-         3bzvu3SJkpSSaWCif7lP8Zhv05ky2mJFQKEIyWvrczDP2aVtX2XqDma1NcAXGuw3hD1f
-         1I01Kkdj/dNKNuzKxpRglO3aQpWxETBSwp+todEwFvVvQFh6lO6Rai/vZNwmRbtG7nib
-         4GcQNkhokF4WZ3a06c2voak0XLa0jUj8ggjx0DvIkMtOoeyJ5HDNHFTZJ3d01UIKOU2C
-         +ZnA==
-X-Gm-Message-State: AOJu0YyPcWLKic/dAC9wKcKajxbK08W1JOv/K7/zQfMTHprg63IhG3I1
-	jL/x8m4rF43wGIfmRcTKzsyc3qjWzaKNYJvYLfZMR4ibWw8umaonsvXjH9JNPZ8=
-X-Gm-Gg: ASbGncsv3iWU8+Q5isr16DRSxNHYz5jM7xLffLhSyy9VwBcMUx/qSaUqusTUPIQ+SU0
-	+x/307EexTIEQTsC/vXM5ZUMInuKsfxTEC2srfEk8qCTHTJ3QHDwzCrvQUVaN9tx3YP6HzKQmE2
-	prWXcQNXCOUqVcKeqs3k7wejpF2DfNuE7AccyZRstdIp6uayVaq/nqX17hS44n2jLS+gguQQRgp
-	2SEgXXNxrUz1hdErHkaTsqvuuXhoOUmCer05NoMp+JeOljjYSceiywv9s719IajWjbLFgWmOvRh
-	yr+qhyp/Tf8SB7FiAq4UFLiigmnoJEtbP3oFAUAcIOXQgSAULoNYRV40iUP0ruT8BWDfWg2hGVr
-	zlUWtn/q07PYnVKiddO/CuUgcpHE=
-X-Google-Smtp-Source: AGHT+IEbUxLXqkmN9eB9Y2TwjT0iKR4gtJC2qNjvOo3KGkymZjh0chvXTjMdxbdfvQ9cGDKgkpZyGA==
-X-Received: by 2002:a17:903:2c9:b0:224:194c:6942 with SMTP id d9443c01a7336-22c35973f06mr387275ad.34.1744768748194;
-        Tue, 15 Apr 2025 18:59:08 -0700 (PDT)
-Received: from wak-linux.svl.corp.google.com ([2a00:79e0:2e5b:9:ef0:9d76:c8a5:f522])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c33feb116sm2279845ad.253.2025.04.15.18.59.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Apr 2025 18:59:07 -0700 (PDT)
-From: "William A. Kennington III" <william@wkennington.com>
-To: Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: [PATCH] arm64: dts: nuvoton: Add pinctrl
-Date: Tue, 15 Apr 2025 18:59:02 -0700
-Message-ID: <20250416015902.2091251-1-william@wkennington.com>
-X-Mailer: git-send-email 2.49.0.604.gff1f9ca942-goog
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZcsCH5NQ5z2ySB
+	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 16:52:11 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 7CA754A17E;
+	Wed, 16 Apr 2025 06:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482A9C4CEE2;
+	Wed, 16 Apr 2025 06:52:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744786327;
+	bh=8D9c+befnHt33zm3mTibHfIF8FewIfXRrEv4gm5R/8Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bBAmxhYUlraviI3yi0IxzVz01ee11wH6ZyQ14I806Z4xGXYV2xFhYMoCW54mr9BsD
+	 Ir9SA8O6dqryZLZwVl4j2KDLOd8ePCnmU3UU55P+VXg7LYeBnKL54K2cjMz85ynz53
+	 AJTp8CumZNCtqkYGoJkiz8L8nBSkU7a8mRMH4ZyYvbNd/5AZTF//OxQvxOjUgjJLZl
+	 o44YQQ7Zp1jedXP+gM+/MDy+4dWSWdOfTFrU6n2YtwLSrZFNW0+p24g4fOj5OdOpwY
+	 x94hJAEe/IUbtLC7MBAjSMLRUNkZflSLFy5kX/OIvIIiix3UF7TVUp6Kt8/gzUeRPN
+	 MxrgEsVvrGdUw==
+Message-ID: <2d3d4240-65ab-4fd1-a86a-503bb40f34a6@kernel.org>
+Date: Wed, 16 Apr 2025 08:52:01 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
-	version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: nuvoton: Add USB Hosts
+To: "William A. Kennington III" <william@wkennington.com>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+References: <20250416001818.2067486-1-william@wkennington.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20250416001818.2067486-1-william@wkennington.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -96,92 +117,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, "William A. Kennington III" <william@wkennington.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is critical to support multifunction pins shared between devices as
-well as generic GPIOs.
+On 16/04/2025 02:18, William A. Kennington III wrote:
+> The npcm 8xx chip has 2 EHCI and 2 OHCI hosts with driver support
+> already existing in the kernel.
+> 
+> Signed-off-by: William A. Kennington III <william@wkennington.com>
+> ---
+>  .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   | 28 +++++++++++++++++++
 
-Signed-off-by: William A. Kennington III <william@wkennington.com>
----
- .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   | 65 +++++++++++++++++++
- 1 file changed, 65 insertions(+)
+Please do not send 10 separate patches, but one patchset for given
+subsystem.
 
-diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-index b2595f5c146b..dd1351698e77 100644
---- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-+++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
-@@ -207,4 +207,69 @@ watchdog2: watchdog@a01c {
- 			};
- 		};
- 	};
-+
-+	pinctrl: pinctrl@f0010000 {
-+		compatible = "nuvoton,npcm845-pinctrl";
-+		ranges = <0x0 0x0 0xf0010000 0x8000>;
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		nuvoton,sysgcr = <&gcr>;
-+		status = "okay";
-+		gpio0: gpio@f0010000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x0 0xB0>;
-+			interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 0 32>;
-+		};
-+		gpio1: gpio@f0011000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x1000 0xB0>;
-+			interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 32 32>;
-+		};
-+		gpio2: gpio@f0012000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x2000 0xB0>;
-+			interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 64 32>;
-+		};
-+		gpio3: gpio@f0013000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x3000 0xB0>;
-+			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 96 32>;
-+		};
-+		gpio4: gpio@f0014000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x4000 0xB0>;
-+			interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 128 32>;
-+		};
-+		gpio5: gpio@f0015000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x5000 0xB0>;
-+			interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 160 32>;
-+		};
-+		gpio6: gpio@f0016000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x6000 0xB0>;
-+			interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 192 32>;
-+		};
-+		gpio7: gpio@f0017000 {
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			reg = <0x7000 0xB0>;
-+			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-ranges = <&pinctrl 0 224 32>;
-+		};
-+	};
- };
--- 
-2.49.0.604.gff1f9ca942-goog
+>  1 file changed, 28 insertions(+)
 
+
+
+Best regards,
+Krzysztof
