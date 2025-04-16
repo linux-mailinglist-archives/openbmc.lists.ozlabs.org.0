@@ -2,58 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B83ADA8B122
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 08:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F4FDA8B128
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 08:53:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZcsCN0Fy1z3cQ4
-	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 16:52:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZcsDP70WLz3cPl
+	for <lists+openbmc@lfdr.de>; Wed, 16 Apr 2025 16:53:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744786332;
-	cv=none; b=iiXsQgrNrb7FqxEaZFdIGPdOTyzLrtGViud6F2DarO3mdBJ2S/2HnEY9UnmsX0QshQ1nWSDyuYW+TDLaexVlAdKPL1Jc5hHfcdOXcvDtcx6gNgLymIoF0Dn8lTMD3lAKeYnTryMKhpO2X0Py4osGIdctEzqYF2/J0WhfOHniy3/Rl/wvBwJbW5OXXO/VVw55/PkyHHJ1rr7JdUw3wTF9U2YEoV8sptfzCpzfQ+0dMyZ/jVx8PTl3MMnaQvTd+iY4zLS273wGHOGt/hqV54sJZ2cMUQU+Cu28VletYKhUBWrDpHjC31uh1RJNSpjtSkGtkVYpC+1aaq33LjFRnsTA+g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1744786387;
+	cv=none; b=N2RYR0xyd5Ujy5OHJaSqbMEL1FFAieIfEIlfvPIJuZb1XN4ofp6djzagmXz1axhfMBPr9E7x2+g7JfMcEsv/k5GWG6y/Kl4YjSp6BFc/cBFJbqUlS8UyGnMKLA5GJVtOOeFlgkCIvh6YF6Xfj8B/FimtgBA44CMtR8Q8l/R/7M2YDhA8vAkrY9nKh92fILpGBKndy+79z9wybKOJ2GuX3zmb8SdTLJ1ZU3wAa4wCb//TtNeP5WDIAKBTjEa/M/lI/wd22s3l21zwQsJ9XwaDzEpbh1D/YhJH3/Dxrf6k6ikDOdhRJ9vUVRcerv3X9CdAgkKdU95vByXd3Sp9ymIQpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1744786332; c=relaxed/relaxed;
-	bh=wAgNOmUO0K2gLDSX/MXA3oUN/ySsAf1fnxoO/65xUYg=;
+	t=1744786387; c=relaxed/relaxed;
+	bh=kPFjM0t3gDDEr6l+lw+wiOMPZwVzTxwsWj0Ffa8OU1M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FKcTiaHKbhu7ilXkQCm53VFO+6hbPyawqhC95l1U4w5pBGHq5npQCI7Ru97eZjt5nsmTOmQITzfYfOvOzs1bPqNNskysf1FqSvtT2GCOEWufxUkdDm78s8Y0tVlQE32MZC1j8pAZGBCMTPoTCb1rqFDPzN14HjXaHK4nympK43n3mwCKZqVyGCNWO4/q1E/fWYSkPyunxL3wgdNjb0soly1j67M9qTCnwHy7gf5Yl3CkHjV7iXG1k1ZMTt60lYWtmp2va5oZ7c8mJEqjV0RP8AVOBRVowFtmQ9yagpBnzIa/A+j7epj9QCQE8T+DUzsOejIMxVLhbGRUw2V4JVEb8w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=bBAmxhYU; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=RcKdKTJR2cQyYWI0vtUPg6B3zoXFrNRJoFriNJd56+ME5gnc2zRKf2HXtAO7vjlC84gzVgI8UOha3+5RNMdOiWKbRq1Og3tToHwBpaS1o2cuDaQdvt23cJxhd8KSBwrYv9p1CnQ8XiZ0Lp+/6f/Tt/L9csMSLKJKiMZn53OdsnoCAtqSicaNoPri430sNLpBz5rqYS5Ws+GJbdM3ahag5ADCmXRVP1W/6eP09Fo4Wzqp0Nk3qYveTBuU/7ydbcu3v33S9r7Ud3bzQST2E8ztMEqyrqKpkTlTEyeOUZHn0GkDmI1KaZ5m8Y8YRY8AVYjqPaoVfOTiGBIg2d4oxWNivw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=u5rwQqXm; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=bBAmxhYU;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=u5rwQqXm;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZcsCH5NQ5z2ySB
-	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 16:52:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZcsDL1qkZz2yf9
+	for <openbmc@lists.ozlabs.org>; Wed, 16 Apr 2025 16:53:06 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 7CA754A17E;
-	Wed, 16 Apr 2025 06:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482A9C4CEE2;
-	Wed, 16 Apr 2025 06:52:05 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 5BF1E61567;
+	Wed, 16 Apr 2025 06:52:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D62CC4CEE2;
+	Wed, 16 Apr 2025 06:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744786327;
-	bh=8D9c+befnHt33zm3mTibHfIF8FewIfXRrEv4gm5R/8Q=;
+	s=k20201202; t=1744786383;
+	bh=iVYHRxj1f8y7enOtECpv94Pgs7ZKuFXOWWBhsKmjyoI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bBAmxhYUlraviI3yi0IxzVz01ee11wH6ZyQ14I806Z4xGXYV2xFhYMoCW54mr9BsD
-	 Ir9SA8O6dqryZLZwVl4j2KDLOd8ePCnmU3UU55P+VXg7LYeBnKL54K2cjMz85ynz53
-	 AJTp8CumZNCtqkYGoJkiz8L8nBSkU7a8mRMH4ZyYvbNd/5AZTF//OxQvxOjUgjJLZl
-	 o44YQQ7Zp1jedXP+gM+/MDy+4dWSWdOfTFrU6n2YtwLSrZFNW0+p24g4fOj5OdOpwY
-	 x94hJAEe/IUbtLC7MBAjSMLRUNkZflSLFy5kX/OIvIIiix3UF7TVUp6Kt8/gzUeRPN
-	 MxrgEsVvrGdUw==
-Message-ID: <2d3d4240-65ab-4fd1-a86a-503bb40f34a6@kernel.org>
-Date: Wed, 16 Apr 2025 08:52:01 +0200
+	b=u5rwQqXmh6X4aX6LttpfDVNeuuBMmNm4OkuQySLdmXmDMhVhjJMPa3Lidm5La3yES
+	 GJND4DuNbUklZpvMI2tb4ZOaAPXsBmM9I79oVKhdB0VedzSySE5/P0aRyJgyPGuSC2
+	 kbJBmIshoqlnQScF62UnTYrk0jJMRx5aDq7UbwJ0hGUwlWWiUAeWA0uwnNOvTlc3az
+	 jgikWz2cB1TUlsonKFs4HEHWiJILaNdBhbY3RWjFEvFBtnWPQYPd1bciRONkGhIYr8
+	 a8fxc5Ba90O+C8Mk470WvpKPzVi1ZmaxmLrYnx6TTR12r0piyckyBAb1z18/UYacP6
+	 nx7cwk9WMef5w==
+Message-ID: <9dc96af3-239f-4cb6-b095-875b862be493@kernel.org>
+Date: Wed, 16 Apr 2025 08:52:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: nuvoton: Add USB Hosts
+Subject: Re: [PATCH] arm64: dts: nuvoton: Add EDAC controller
 To: "William A. Kennington III" <william@wkennington.com>,
  Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
  Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-References: <20250416001818.2067486-1-william@wkennington.com>
+References: <20250416001350.2066008-1-william@wkennington.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -99,7 +99,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250416001818.2067486-1-william@wkennington.com>
+In-Reply-To: <20250416001350.2066008-1-william@wkennington.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-1.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -121,19 +121,34 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kern
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 16/04/2025 02:18, William A. Kennington III wrote:
-> The npcm 8xx chip has 2 EHCI and 2 OHCI hosts with driver support
-> already existing in the kernel.
+On 16/04/2025 02:13, William A. Kennington III wrote:
+> We have the driver support but need a common node for all the 8xx
+> platforms that contain this device.
 > 
 > Signed-off-by: William A. Kennington III <william@wkennington.com>
 > ---
->  .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   | 28 +++++++++++++++++++
 
-Please do not send 10 separate patches, but one patchset for given
-subsystem.
+You just sent it, so this is v2? If so, then use v2 in subject (see
+other patches) and provide changelog under ---.
 
->  1 file changed, 28 insertions(+)
+>  arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> index 4da62308b274..ccebcb11c05e 100644
+> --- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> +++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+> @@ -56,6 +56,13 @@ clk: rstc: reset-controller@f0801000 {
+>  			#clock-cells = <1>;
+>  		};
+>  
+> +		mc: memory-controller@f0824000 {
+> +			compatible = "nuvoton,npcm845-memory-controller";
+> +			reg = <0x0 0xf0824000 0x0 0x2000>;
+> +			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+> +			status = "disabled";
 
+Why is this disabled? What resources are missing?
 
 
 Best regards,
