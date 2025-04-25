@@ -1,94 +1,37 @@
-Return-Path: <openbmc+bounces-4-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-5-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DA94A9501B
-	for <lists+openbmc@lfdr.de>; Mon, 21 Apr 2025 13:21:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A108A9C2D5
+	for <lists+openbmc@lfdr.de>; Fri, 25 Apr 2025 11:08:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Zh2xX0g3Yz3c86;
-	Mon, 21 Apr 2025 21:21:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZkRnv67Ytz2yrN;
+	Fri, 25 Apr 2025 19:08:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=43.251.62.79
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1745234480;
-	cv=none; b=IZNql5tVbJC7GnfpuUvQdqdbwwjvvcoCfZlOEllQnWus/rC2w3o2wp62gFrrGXf70iblpbihfAqMAIHLRFloENtjHl4vteYCvD9+7byKvWlGu2H2rpMxbhZRj4ciEwy3bhntVBgnKK+1ST7nf8R1JAjZb/+qAZgVUXBAh9VJz0zXqqXD0oompYU0ljlBFjQwG/NoDNafsEPst+EY1aFuJSm+yWAoYCocsps+7m9ClWVhOfWqCYfCYTE6uKJaQ3j6htL6YnmrZ+rtKm2NJtjcMaLFwOhWRLDMVXxPF5qRngHsnMHcuFKwYthGDwuAOzZJHHLfyf2nNBIkZFsf4C+fBg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1745572083;
+	cv=none; b=GeFWgFD9+5kr2zZuWMT31TJzLcLywKlBFMvrC1mYwX96yB0SV4suTyzu7rPZX2aUsPjHi3UO6hQoFrNqj290dFxFUGZ3aSxGEUOS9UBJ1ZQF0S5C9oyQGiPpywBP+hSxbNnAfZnVEj429vterDi6vTuBV0R//5olvReVL8vJbnslkDYPlvg+08gjPX2KpPmHvzWnffB+ljoIAF2pQToKxa/bhsYIggP4s1RDXcIa+Noq0BcTSvKGNVmJ5/6yxImc3vjtDPAOckyLpKLM6EPyBncB3euzLyPtZFe0KsNHT0aws2Mv04ZlFJ7Sf17omU6B++ObWum6wTc2EpgAQd++rA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1745234480; c=relaxed/relaxed;
-	bh=KjvQ+Smg4Cy6/51S0tGqTbpDUCZ0q8n72zIHccMBomw=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Bms3/ptF3Soezo4b36E6K2rSrNApOoFfTWzLq4ZjgHu29aE8lF9saevcst9z12Hse/bnGwVUokMDCevph/lYR+sg3G6+fQ0Lt691aq8FyV7uvNV2rPb1fpUj+9LzD5yJX7IRyoWntYnjBB4j9AxPGA/ChhzteYPvjE1V452UPFLwxEHMBCWBwgOeF9lmP8PD0o0ACKEqaJ8Ojh4JC9XfWlriNvqGqgryYQe5Ylfd/anrbgjcHWD7ZeOBRwEs+PUtLw197m9U5to/KNRCOWhFKYPqOuQLF+dfbP2rG9ctwSylAa/FaJq5s2MJLU5HzODngYOMS5bxotsP6YErTg0YbQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=asrockrack.com; dkim=pass (2048-bit key; unprotected) header.d=asrockrack.com header.i=@asrockrack.com header.a=rsa-sha256 header.s=asrockrack header.b=hWpNwhtH; dkim-atps=neutral; spf=pass (client-ip=43.251.62.79; helo=ms.pegatroncorp.com; envelope-from=prvs=199a3d6cf=jeff9_chan@asrockrack.com; receiver=lists.ozlabs.org) smtp.mailfrom=asrockrack.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=asrockrack.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=asrockrack.com header.i=@asrockrack.com header.a=rsa-sha256 header.s=asrockrack header.b=hWpNwhtH;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=asrockrack.com (client-ip=43.251.62.79; helo=ms.pegatroncorp.com; envelope-from=prvs=199a3d6cf=jeff9_chan@asrockrack.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Mon, 21 Apr 2025 21:21:18 AEST
-Received: from ms.pegatroncorp.com (ms9.pegatroncorp.com [43.251.62.79])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1745572083; c=relaxed/relaxed;
+	bh=VLrEmBjamkV8phnYodZ0IrAUzzg1G013IvFFtEhzbQo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ajMjXzio0HiUTYokXujiqV9UWmgNDrObgunuVQuDjpmcofiNFruI3+DSeyg3Z33FyhRyOCzrKxXGJlZseGISnq59CevVZV00Coh6o3JKKGRa69HuIRWxVQAVxqLPWUrhE3zIwE9MUNh9M4klKZb//2fV30YDALJUh7/3N8a2qV81bPKm37xGleEqMi6xYwNeWoqN7rKC9VKR2rg53G6VnC1rrnD99Mcd1FpVcWCid3eLlZoxi5Uy1B2W2Om00VMc/QxEfUjegJbKQPPc8X7Z2KhaFylmQEAV0VVJxNHl3DdeE3nE70J4/1PRIUeTScMoeuAKrG8nyJIO7nVcGUKi/Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=srs0=iuki=xl=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=xs4all.nl
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=srs0=iuki=xl=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zh2xV15hkz3c85
-	for <openbmc@lists.ozlabs.org>; Mon, 21 Apr 2025 21:21:17 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=asrockrack.com; i=@asrockrack.com; q=dns/txt;
-  s=asrockrack; t=1745234479; x=1776770479;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=jSfSWvXkH/njWqlUGLHA/YTZHpRpAfcboNbdS7ZzXZE=;
-  b=hWpNwhtH3lh9WORO3FyGrtdIIXiRqPUwM6e7MqwdmFt22gwtf/4X1iI8
-   06aMhaUEfe4zQzo758pUXjU9EE+vFsRTCqlV6hzYgx/0td/xNe3lrAtVs
-   /VVrwsvd+IVVP9vgpNmoa6FLwDmkEA+LwXW6Tnua1SA+diPIPXHPWpIKs
-   pGCdTA1cQa4kNAYaC1KxYzlT6l9q+M8yQuMREItWPih8pO6UwmXIZv1Yv
-   yZr9ZgOJWKDxvN2YpnTLxuuvlpGLoBqEqCInKn1qpJxRN30YZcCqVe56z
-   rWEnEib8YAhp1QRC8t6IW7GbETg3D0ZOBBL5SpdrJeffCH+OY3dDSaapq
-   g==;
-Authentication-Results: ms.pegatroncorp.com; spf=SoftFail smtp.mailfrom=Jeff9_Chan@asrockrack.com; spf=None smtp.helo=postmaster@PTW-MSE-DB02.pegatroncorp.com
-Received-SPF: SoftFail (ms.pegatroncorp.com: domain of
-  Jeff9_Chan@asrockrack.com is inclined to not designate
-  172.18.192.77 as permitted sender) identity=mailfrom;
-  client-ip=172.18.192.77; receiver=ms.pegatroncorp.com;
-  envelope-from="Jeff9_Chan@asrockrack.com";
-  x-sender="Jeff9_Chan@asrockrack.com"; x-conformance=spf_only;
-  x-record-type="v=spf1"; x-record-text="v=spf1
-  include:sendersrv.com ip4:58.240.231.120/30 ip4:124.9.5.0/26
-  ip4:43.251.60.0/22 ip4:192.72.126.0/24 ip4:58.211.157.0/30
-  ip4:221.224.25.136/30 ip4:210.80.80.195 ~all"
-Received-SPF: None (ms.pegatroncorp.com: no sender authenticity
-  information available from domain of
-  postmaster@PTW-MSE-DB02.pegatroncorp.com) identity=helo;
-  client-ip=172.18.192.77; receiver=ms.pegatroncorp.com;
-  envelope-from="Jeff9_Chan@asrockrack.com";
-  x-sender="postmaster@PTW-MSE-DB02.pegatroncorp.com";
-  x-conformance=spf_only
-Received: from unknown (HELO PTW-MSE-DB02.pegatroncorp.com) ([172.18.192.77])
-  by ms.pegatroncorp.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Apr 2025 19:20:10 +0800
-Received: from ASR-EX-MBSC02.asrock.corpnet ([172.18.50.39])
-	by PTW-MSE-DB02.pegatroncorp.com with ESMTP id 53LBK4rJ036149
-	for <openbmc@lists.ozlabs.org>; Mon, 21 Apr 2025 19:20:04 +0800 (+08)
-	(envelope-from Jeff9_Chan@asrockrack.com)
-Received: from ASR-EX-MBS02.asrock.corpnet (172.18.50.35) by
- ASR-EX-MBSC02.asrock.corpnet (172.18.50.39) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Mon, 21 Apr 2025 19:20:04 +0800
-Received: from ASR-EX-MBS02.asrock.corpnet (172.18.50.35) by
- ASR-EX-MBS02.asrock.corpnet (172.18.50.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Mon, 21 Apr 2025 19:20:04 +0800
-Received: from ASR-EX-MBS02.asrock.corpnet ([fe80::c978:ac77:f37f:d797]) by
- ASR-EX-MBS02.asrock.corpnet ([fe80::c978:ac77:f37f:d797%5]) with mapi id
- 15.01.2507.039; Mon, 21 Apr 2025 19:20:04 +0800
-From: =?big5?B?SmVmZjkgQ2hhbiizr6pRu/xfQVNSb2NrUmFjayk=?=
-	<Jeff9_Chan@asrockrack.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: firmware update from webui
-Thread-Topic: firmware update from webui
-Thread-Index: Aduyriod5KZi7No4Qtmt2F5qRi2Pdg==
-Date: Mon, 21 Apr 2025 11:20:04 +0000
-Message-ID: <eade5f77d869481f9a2992f593f92e94@asrockrack.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.194.46.159]
-Content-Type: multipart/alternative;
-	boundary="_000_eade5f77d869481f9a2992f593f92e94asrockrackcom_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZkRns6rCCz2xqG
+	for <openbmc@lists.ozlabs.org>; Fri, 25 Apr 2025 19:08:01 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id C850B5C3F2C;
+	Fri, 25 Apr 2025 09:05:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D773C4CEE4;
+	Fri, 25 Apr 2025 09:07:58 +0000 (UTC)
+Message-ID: <99e4aff6-9ad2-4cea-9e78-a238eb349709@xs4all.nl>
+Date: Fri, 25 Apr 2025 11:07:56 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -99,111 +42,105 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
   <mailto:openbmc+subscribe-nomail@lists.ozlabs.org>
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 MIME-Version: 1.0
-X-MAIL:PTW-MSE-DB02.pegatroncorp.com 53LBK4rJ036149
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,HTML_MESSAGE,RCVD_IN_DNSWL_MED,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND] media: nuvoton: npcm-video: Prevent returning
+ unsupported resolutions
+To: Michael Chang <zhang971090220@gmail.com>, kwliu@nuvoton.com,
+ kflin@nuvoton.com, mchehab@kernel.org
+Cc: linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+References: <20250408055454.3421083-1-zhang971090220@gmail.com>
+Content-Language: en-US, nl
+From: Hans Verkuil <hverkuil@xs4all.nl>
+Autocrypt: addr=hverkuil@xs4all.nl; keydata=
+ xsFNBFQ84W0BEAC7EF1iL4s3tY8cRTVkJT/297h0Hz0ypA+ByVM4CdU9sN6ua/YoFlr9k0K4
+ BFUlg7JzJoUuRbKxkYb8mmqOe722j7N3HO8+ofnio5cAP5W0WwDpM0kM84BeHU0aPSTsWiGR
+ yw55SOK2JBSq7hueotWLfJLobMWhQii0Zd83hGT9SIt9uHaHjgwmtTH7MSTIiaY6N14nw2Ud
+ C6Uykc1va0Wqqc2ov5ihgk/2k2SKa02ookQI3e79laOrbZl5BOXNKR9LguuOZdX4XYR3Zi6/
+ BsJ7pVCK9xkiVf8svlEl94IHb+sa1KrlgGv3fn5xgzDw8Z222TfFceDL/2EzUyTdWc4GaPMC
+ E/c1B4UOle6ZHg02+I8tZicjzj5+yffv1lB5A1btG+AmoZrgf0X2O1B96fqgHx8w9PIpVERN
+ YsmkfxvhfP3MO3oHh8UY1OLKdlKamMneCLk2up1Zlli347KMjHAVjBAiy8qOguKF9k7HOjif
+ JCLYTkggrRiEiE1xg4tblBNj8WGyKH+u/hwwwBqCd/Px2HvhAsJQ7DwuuB3vBAp845BJYUU3
+ 06kRihFqbO0vEt4QmcQDcbWINeZ2zX5TK7QQ91ldHdqJn6MhXulPKcM8tCkdD8YNXXKyKqNl
+ UVqXnarz8m2JCbHgjEkUlAJCNd6m3pfESLZwSWsLYL49R5yxIwARAQABzSFIYW5zIFZlcmt1
+ aWwgPGh2ZXJrdWlsQHhzNGFsbC5ubD7CwZUEEwEKAD8CGwMGCwkIBwMCBhUIAgkKCwQWAgMB
+ Ah4BAheAFiEEBSzee8IVBTtonxvKvS1hSGYUO0wFAmaU3GkFCRf7lXsACgkQvS1hSGYUO0wZ
+ cw//cLMiaV+p2rCyzdpDjWon2XD6M646THYvqXLb9eVWicFlVG78kNtHrHyEWKPhN3OdWWjn
+ kOzXseVR/nS6vZvqCaT3rwgh3ZMb0GvOQk1/7V8UbcIERy036AjQoZmKo5tEDIv48MSvqxjj
+ H6wbKXbCyvnIwpGICLyb0xAwvvpTaJkwZjvGqeo5EL0Z+cQ8fCelfKNO5CFFP3FNd3dH8wU6
+ CHRtdZE03iIVEWpgCTjsG2zwsX/CKfPx0EKcrQajW3Tc50Jm0uuRUEKCVphlYORAPtFAF1dj
+ Ly8zpN1bEXH+0FDXe/SHhzbvgS4sL0J4KQCCZ/GcbKh/vsDC1VLsGS5C7fKOhAtOkUPWRjF+
+ kOEEcTOROMMvSUVokO+gCdb9nA/e3WMgiTwWRumWy5eCEnCpM9+rfI2HzTeACrVgGEDkOTHW
+ eaGHEy8nS9a25ejQzsBhi+T7MW53ZTIjklR7dFl/uuK+EJ6DLbDpVbwyYo2oeiwP+sf8/Rgv
+ WfJv4wzfUo/JABwrsbfWfycVZwFWBzqq+TaKFkMPm017dkLdg4MzxvvTMP7nKfJxU1bQ2OOr
+ xkPk5KDcz+aRYBvTqEXgYZ6OZtnOUFKD+uPlbWf68vuz/1iFbQYnNJkTxwWhiIMN7BULK74d
+ Ek89MU7JlbYNSv0v21lRF+uDo0J6zyoTt0ZxSPzOwU0EVDzhbQEQANzLiI6gHkIhBQKeQaYs
+ p2SSqF9c++9LOy5x6nbQ4s0X3oTKaMGfBZuiKkkU6NnHCSa0Az5ScRWLaRGu1PzjgcVwzl5O
+ sDawR1BtOG/XoPRNB2351PRp++W8TWo2viYYY0uJHKFHML+ku9q0P+NkdTzFGJLP+hn7x0RT
+ DMbhKTHO3H2xJz5TXNE9zTJuIfGAz3ShDpijvzYieY330BzZYfpgvCllDVM5E4XgfF4F/N90
+ wWKu50fMA01ufwu+99GEwTFVG2az5T9SXd7vfSgRSkzXy7hcnxj4IhOfM6Ts85/BjMeIpeqy
+ TDdsuetBgX9DMMWxMWl7BLeiMzMGrfkJ4tvlof0sVjurXibTibZyfyGR2ricg8iTbHyFaAzX
+ 2uFVoZaPxrp7udDfQ96sfz0hesF9Zi8d7NnNnMYbUmUtaS083L/l2EDKvCIkhSjd48XF+aO8
+ VhrCfbXWpGRaLcY/gxi2TXRYG9xCa7PINgz9SyO34sL6TeFPSZn4bPQV5O1j85Dj4jBecB1k
+ z2arzwlWWKMZUbR04HTeAuuvYvCKEMnfW3ABzdonh70QdqJbpQGfAF2p4/iCETKWuqefiOYn
+ pR8PqoQA1DYv3t7y9DIN5Jw/8Oj5wOeEybw6vTMB0rrnx+JaXvxeHSlFzHiD6il/ChDDkJ9J
+ /ejCHUQIl40wLSDRABEBAAHCwXwEGAEKACYCGwwWIQQFLN57whUFO2ifG8q9LWFIZhQ7TAUC
+ ZpTcxwUJF/uV2gAKCRC9LWFIZhQ7TMlPD/9ppgrN4Z9gXta9IdS8a+0E7lj/dc0LnF9T6MMq
+ aUC+CFffTiOoNDnfXh8sfsqTjAT50TsVpdlH6YyPlbU5FR8bC8wntrJ6ZRWDdHJiCDLqNA/l
+ GVtIKP1YW8fA01thMcVUyQCdVUqnByMJiJQDzZYrX+E/YKUTh2RL5Ye0foAGE7SGzfZagI0D
+ OZN92w59e1Jg3zBhYXQIjzBbhGIy7usBfvE882GdUbP29bKfTpcOKkJIgO6K+w82D/1d5TON
+ SD146+UySmEnjYxHI8kBYaZJ4ubyYrDGgXT3jIBPq8i9iZP3JSeZ/0F9UIlX4KeMSG8ymgCR
+ SqL1y9pl9R2ewCepCahEkTT7IieGUzJZz7fGUaxrSyexPE1+qNosfrUIu3yhRA6AIjhwPisl
+ aSwDxLI6qWDEQeeWNQaYUSEIFQ5XkZxd/VN8JeMwGIAq17Hlym+JzjBkgkm1LV9LXw9D8MQL
+ e8tSeEXX8BZIen6y/y+U2CedzEsMKGjy5WNmufiPOzB3q2JwFQCw8AoNic7soPN9CVCEgd2r
+ XS+OUZb8VvEDVRSK5Yf79RveqHvmhAdNOVh70f5CvwR/bfX/Ei2Szxz47KhZXpn1lxmcds6b
+ LYjTAZF0anym44vsvOEuQg3rqxj/7Hiz4A3HIkrpTWclV6ru1tuGp/ZJ7aY8bdvztP2KTw==
+In-Reply-To: <20250408055454.3421083-1-zhang971090220@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.0 required=5.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
---_000_eade5f77d869481f9a2992f593f92e94asrockrackcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+On 08/04/2025 07:54, Michael Chang wrote:
+> To restrict the returned resolution due to Nuvoton SoC hardware
+> limitations.
+> 
+> Signed-off-by: Michael Chang <zhang971090220@gmail.com>
 
-SGksDQogICAgICAgIFdpdGggbGF0ZXN0IG9wZW5ibWMgZnJvbSByZXBvLCB0aGUgZmlybXdhcmUg
-dXBkYXRlIGZ1bmN0aW9uIGluIHdlYnVpIGZhaWxlZCB3aXRoIKGnRXJyb3Igc3RhcnRpbmcgZmly
-bXdhcmUgdXBkYXRloagsIGJ1dCB3aXRoIGN1cmwgdG8gL3JlZGZpc2gvdjEvVXBkYXRlU2Vydmlj
-ZSBhY3R1YWxseSB3b3JrcywgaXMgaXQgYSBrbm93biBpc3N1ZT8NCg0KYmVzdCByZWdhcmRzDQoN
-CkplZmYgQ2hhbg0KQVNSb2NrIEluYy4NClRlbDogKzg4Ni0yLTU1NTk5NjAwIGV4dC4zODY3MA0K
-DQo=
+Just for future reference: please don't resend. If it is in
+https://patchwork.linuxtv.org/ then it will be picked up eventually.
 
---_000_eade5f77d869481f9a2992f593f92e94asrockrackcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
+Regards,
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; With latest openbmc from repo, the firmware update function in =
-webui failed with =A1=A7Error starting firmware update=A1=A8, but with curl=
- to /redfish/v1/UpdateService actually works, is it a known issue?<o:p></o:=
-p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.0pt;font-=
-family:&quot;Arial&quot;,sans-serif;color:black">best regards<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:10.0pt;fo=
-nt-family:&quot;Arial&quot;,sans-serif;color:black"><o:p>&nbsp;</o:p></span=
-></b></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:10.0pt;fo=
-nt-family:&quot;Arial&quot;,sans-serif;color:black">Jeff Chan<o:p></o:p></s=
-pan></b></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:10.0pt;fo=
-nt-family:&quot;Arial&quot;,sans-serif;color:black">ASRock Inc.
-<o:p></o:p></span></b></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:10.0pt;fo=
-nt-family:&quot;Arial&quot;,sans-serif;color:black">Tel: &#43;886-2-5559960=
-0 ext.38670<o:p></o:p></span></b></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+	Hans
 
---_000_eade5f77d869481f9a2992f593f92e94asrockrackcom_--
+> ---
+>  drivers/media/platform/nuvoton/npcm-video.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+> index 234fdec04f74..8d6d51a674a3 100644
+> --- a/drivers/media/platform/nuvoton/npcm-video.c
+> +++ b/drivers/media/platform/nuvoton/npcm-video.c
+> @@ -578,7 +578,7 @@ static unsigned int npcm_video_hres(struct npcm_video *video)
+>  	regmap_read(gfxi, HVCNTL, &hvcntl);
+>  	apb_hor_res = (((hvcnth & HVCNTH_MASK) << 8) + (hvcntl & HVCNTL_MASK) + 1);
+>  
+> -	return apb_hor_res;
+> +	return (apb_hor_res > MAX_WIDTH) ? MAX_WIDTH : apb_hor_res;
+>  }
+>  
+>  static unsigned int npcm_video_vres(struct npcm_video *video)
+> @@ -591,7 +591,7 @@ static unsigned int npcm_video_vres(struct npcm_video *video)
+>  
+>  	apb_ver_res = (((vvcnth & VVCNTH_MASK) << 8) + (vvcntl & VVCNTL_MASK));
+>  
+> -	return apb_ver_res;
+> +	return (apb_ver_res > MAX_HEIGHT) ? MAX_HEIGHT : apb_ver_res;
+>  }
+>  
+>  static int npcm_video_capres(struct npcm_video *video, unsigned int hor_res,
+
 
