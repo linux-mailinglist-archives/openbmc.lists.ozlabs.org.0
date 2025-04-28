@@ -1,76 +1,77 @@
-Return-Path: <openbmc+bounces-18-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-19-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44F23A9F296
-	for <lists+openbmc@lfdr.de>; Mon, 28 Apr 2025 15:43:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2859A9F298
+	for <lists+openbmc@lfdr.de>; Mon, 28 Apr 2025 15:45:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZmPmD54bDz3055;
-	Mon, 28 Apr 2025 23:43:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZmPpg4KwHz3064;
+	Mon, 28 Apr 2025 23:45:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::633"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1745847804;
-	cv=none; b=CGowznpLj/g4a1N9V93X+LQfWadVo9D6lXPShVhjYx31VzvEAlvvmA2GsbIGqKIL32UnHzrmeZ5sSTlRQ+KenB9jAjP0VDXaT42KNvALochhQwGo7cF9uYD1JHE5biXuodEgpW2HYWnpYE1DxKMwZ6WFMYudMv2uTI9OsZn0OtEVE60EGCpO90qJhQgGv5c6nTTS0338Cyldo4G+KG1utmqqA9N02tQqQkg8oCH9VE3ud/WjZ3MC1yZ0ywDLcHT1etXqJlm7JzSRjQnDxtNQp1rJSqkro4rAhfsjC41q7vk5oy61lr2z+4nzNxFj1CGd3oDyMVgsLnuwAts8nTz8jA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::630"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1745847931;
+	cv=none; b=axzbytf/drKZuOpEcRuP86DEgHDSl+3D//PhkhILAn4MD7ohOlJlZ/Ff/TJoxr29oQY1a7bNAPHyue5joP3AOFjUM6HjqCy2y4XhCPntgAb/wWxrk7trDCXbvVhS7WKbkdZvEjBq3fTCaSOBjXs/Yzc+O++ivLhLFQArFs8oEsbANZgD9K0hfT3AiKbjlZ9Ds2lM1cKKriFhsyy7OEt5ZX+Y8OykxyTiU7NU/s9PbUYPGXClVdRGImGzYO27EP8cd3l064BRWODwA0y1il0bhSspSXdvKQK/770x37PqfmFNnjysf05XwoJCh2cadpkWMyNIfEsr2+HhznehYyhT5Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1745847804; c=relaxed/relaxed;
-	bh=0jn0b9bgsWybkPDuryOtL1m/UMfpTpoxuyM1S/oMSP4=;
+	t=1745847931; c=relaxed/relaxed;
+	bh=NSMks7WqtUMJwxjTc0mFYCwrC5Gf23E5U7PL9M6Zw6Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=T57xXBk8MAo/ZUo98qgmZ5bXFv9dui21xYXVcEm53osnAyWMaltJEaYIGymd7OlgVv2cdBCRgI9QAR9phOv3loSATShftEYleR87Fpl806PSxnEAj4cnHYPRi3ofWGmuk2TwIB2fUm5jNPKDGm8r86eBymti+USfML9i9f12GHezBuKYuyI8I1XuWvhPmGec+o40b+yeGQ8kvtPsTxsNQBiCDzwzC98eMDR55wTjAEKGx7pT59Xs9SySazpOGQd2lAVQMRvzuD7wT+HkOgvSADj+nYDkTD4AAk9HXHqBBy2htI4/nbdDCpsZvH0ae1SzxHRY8xt2CVDxBsSjgydumg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=LtLR6j7y; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=P1o2LmpqzOOHq06JH6Qt07DL8h5CJzdQViq8rfW+vWeYok6vCjCoU+OP+yja9St/91gdpeZP/3coAAAVW7J4kHHEgdThhNzetLXSHZ1zK5MOLnh5Pu/OupN+YEFfZYbLZu9Z7JQDzELarVi+m8iHQAg2mfA7qPdtq3QK5002uHM0WGFxh8cCCtx1E8wYCrKv8pBaIatAZBJ/pKJYrHJeEb6rYzuq7mWD4j4x4AXOr+urLpVn0wutlWJVPi9rV0OW1IFnw1fCHJd5kGE5R3NKwabYpTjnjt1NTv9c5Zhbq8Yy/kyIIlhcuQAzYBMV9+xbLYwuzUWurd6mP1W0ccGTTA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T+ZSjrWY; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=LtLR6j7y;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T+ZSjrWY;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZmPmC4QlCz3050
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Apr 2025 23:43:22 +1000 (AEST)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-2243803b776so79762545ad.0
-        for <openbmc@lists.ozlabs.org>; Mon, 28 Apr 2025 06:43:22 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZmPpf6NVlz3050
+	for <openbmc@lists.ozlabs.org>; Mon, 28 Apr 2025 23:45:30 +1000 (AEST)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-2243803b776so79815805ad.0
+        for <openbmc@lists.ozlabs.org>; Mon, 28 Apr 2025 06:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745847800; x=1746452600; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1745847929; x=1746452729; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=0jn0b9bgsWybkPDuryOtL1m/UMfpTpoxuyM1S/oMSP4=;
-        b=LtLR6j7ytt256KY95YikxoYxNcWC/VzrfGg+HCqNS9lkyPi0ZfzjoB++zheYvKPFvp
-         UEZSg/LzlGAG1W2CNVKdDhFJ66jpj7k6ikvlHHKLWwmYDSu711l6nTh+1PQHmnfmhnR6
-         Nuy9DLXzfEDd1pFkESMc+YtsVKhbSPMCoQ3GC7cRaWga87/xDuDuARHCHeUUkNu/06fP
-         tfPK08wHnq70ogxmPx3EOyMNVibrD3vqPRi5OgoD1ct0i22n/RWUv3PTe9+L5xdLyK59
-         p8cErw6ZxHQ5EWbMamK+/IZ8/+InhMLL5xBeaTjQF8UnmZm0ptxsyAj431jmmDnDMqYO
-         /jgw==
+        bh=NSMks7WqtUMJwxjTc0mFYCwrC5Gf23E5U7PL9M6Zw6Q=;
+        b=T+ZSjrWY2R/DdXn36iqhpCCsCzefhbYfK9/kdWXOu8GbuqIqoVff0Ntw2XM7PMYRay
+         H3+cCMzwaXryAbEECBk8tUtsu7saVbweyjQeC8Af+kgSbLecGO3ekPeZUZ33x0eCfuPO
+         THL70YPlwG6VzBFRjxpGu67NEzuStD1FL0Bh6zx+t9kzdqkgnIpbMfe7X2P/n6uoaZku
+         FI8kXDKfrPR9WBZpTM5B3p+E23MBFzM8lREpxt49Ac8WzeaTObGrO9JdLmvCU4gRpKIt
+         pmDp+Hrt0KERdDqZ/6ldWRkaXWFxB5cqX+xSVGpH59SFqWM22lnm8N5wnfZ4Lwg/4RPe
+         463A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745847800; x=1746452600;
+        d=1e100.net; s=20230601; t=1745847929; x=1746452729;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0jn0b9bgsWybkPDuryOtL1m/UMfpTpoxuyM1S/oMSP4=;
-        b=vQ7clNIXBtXe9zLNHdvHr1LNf8/1ER54INzasZefCW/R7hEkNZ2jP3c1IMRDo3jUxq
-         BIzybVg85B53A3S4SQsayFWYenkOn5tkb9tqyThtQsKE9TsAiTw8aSJosKSweTVn6Mog
-         qHbOYNWRhNKGAoDjGJ2dsR+f4y6nmQYeoHwUeAfq07qZ7kHNgc8WoQz4uIQ2rBdUMLdC
-         RkGKYhlXtWJ3BPxy7FTyh30CsdQLRb3ZhOFVrmDUyQEJhGsl+scQUJDLNu/xTMcOq7PD
-         pd8EflAq7au6c7Slmgrv1vg5fqmGzDQwAiO801mt3CD0z6ahtM08LVRSorB2Q4pH2ONT
-         /EIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWuNBsW5+rZwAWVVxXbQ81rE99bUE+ozvhYts3T6PPqOy26UIv/BX/8jaiEWl45NlF24wrxvAFU@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yy/624i0aBUPE347nvjZfYGe8m2Y6iMpvEV8B7LE1jBLuYV/KTb
-	6zV8sKfZadTPFrIv0M6CVllIiNPjkgLEg4hiobqt86BDGluBe9dTu/w+hfBF
-X-Gm-Gg: ASbGncveozSuDumYdCMSwfB9ap+LnWZ0WcqC7zIoxNeDrbhkqsi/e0ehsHSntN79TtW
-	LVhJ+CEl3lALIAKRnV0esnF/IxQxxYiE4gm5yRenMbjr/GZdE2RAqIUTyl1d873NdcFHOnZOyoU
-	6VsHeNZkHtiIFkPBRiBDXO+u5cJnPgZVufemsTXCZjlXi68HAHeA4g44FbPln28DhxQib3XQq1X
-	pfxVrSjOztiBI5+mJ/v4O8V6UMI1Xi2X6MDnrmBqXRBYxmKaM0lNpvxtFFIdgfyjyA0KiA6/WOr
-	ghuolB2xk14MoXLxwP50aIxWcJ20jE5CMS/FZBY3qBkwqy33hImDQYMxOWAhJmVX/Q==
-X-Google-Smtp-Source: AGHT+IFaIQnXonBUGOIa6qistv4vCiwKzVKRbn7ZPLcywRLxYnOBhY9tx9LpYh0bCnp32g7k16VqYQ==
-X-Received: by 2002:a17:903:1a10:b0:224:1ec0:8a1a with SMTP id d9443c01a7336-22dbf632902mr169623015ad.51.1745847800154;
-        Mon, 28 Apr 2025 06:43:20 -0700 (PDT)
+        bh=NSMks7WqtUMJwxjTc0mFYCwrC5Gf23E5U7PL9M6Zw6Q=;
+        b=ASvIJcW3d/6V2OaFt2S0rg741uxm7J/sEfrIJ7noOV4XRHLAEorZS6RcSt/MtJ4Vl7
+         WFN2rgMDM7Bd1ygdwUoXDym3iIwayHTV+iRzQFEp8h0MxTPuyMX9dCWhdX3wn0FnoNG5
+         lBV0ZEPgaeoo3v97MSjvmCLMbE9pexKGbEtU/G2rM6kZp3SHVHh9wBROLpbmrFhIOYEG
+         9J3V3jIM0hltgfsO1EeUf7huCR2w006ItTfiC5tGOU4O3ZEl+vEW7R4AtkC4KSxCoP5v
+         OfmswsDIWlltmo+uxFPtxb3Ac413aSwQY9y7Y6W+kydEaH7PlZ2SLSEnS9AB+K/wSJuE
+         5x2g==
+X-Forwarded-Encrypted: i=1; AJvYcCV8YQCRetPwU4vf+NkDOcqsqYnYv+pEIS4Pq37Wk+i5QzqCkl1NfVv9ZBBkfkkZ7Ut9W3idUBhp@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwMokQnPIt5e6jNnLzWI4st0L9kQOTFKHackjUbfqQ+PA2VW0Og
+	togkpDvU3sBrz08amLK7cffuBvFmrhw0YPTC88BleOne0OmAoKKn
+X-Gm-Gg: ASbGnctd7BvAPLym5Vh3UXMCFkiUDyUbEZxXYEUOWSVfud8s/fGYqQLbXSauqsOAM5+
+	f1cOlbFUPra22fSNAWmJ/AbKIxB+OByrFloaX45CrcWF8hTl1wRERMo/kIdqIGAELiL6tywBiiI
+	4IZiL820SHtPfKes/ffZqQgL/FJqQeQlveyWkPbpjQRcc0YGnps54rQv25ieBySA1aOE5qtMOjf
+	n8OWtHCOhLhwkbRcz+57eVdsX8O4CZ39UxGd5eudpJ7doOiMGzjtIP4P9aAFWrGulQ2jWcwnGMP
+	yY5vvWhX20XjONOoQBgM7uC2lRUy2SoISJcIa/H+6eTWhX42ALKZwnWDBxVduCldYthvRUaRr4o
+	x
+X-Google-Smtp-Source: AGHT+IGYa67J84u8isg3eXOP3PSOKvl4yxqjPcUf8cb4juMSSgvbGsNzD1GNqts3wdrkfU7aMWWY5Q==
+X-Received: by 2002:a17:902:dac6:b0:224:a79:5fe9 with SMTP id d9443c01a7336-22dbf5f121cmr157243865ad.30.1745847928904;
+        Mon, 28 Apr 2025 06:45:28 -0700 (PDT)
 Received: from [10.25.72.229] ([202.164.25.5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db51025aesm82274855ad.188.2025.04.28.06.43.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22db51025aesm82313625ad.188.2025.04.28.06.45.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Apr 2025 06:43:19 -0700 (PDT)
-Message-ID: <9435ce2e-b7a2-415a-a67b-596ddfd7bf61@gmail.com>
-Date: Mon, 28 Apr 2025 19:13:15 +0530
+        Mon, 28 Apr 2025 06:45:28 -0700 (PDT)
+Message-ID: <e2e5c19b-3464-4e3b-b096-e519f6c88a20@gmail.com>
+Date: Mon, 28 Apr 2025 19:15:25 +0530
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -83,17 +84,16 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH linux dev-6.6 3/3] net: mctp: usb: Port for kernel 6.6
+Subject: Re: [PATCH linux dev-6.6 0/3] Backport MCTP Over USB Binding
 To: Jeremy Kerr <jk@codeconstruct.com.au>, openbmc@lists.ozlabs.org,
  joel@jms.id.au, andrew@codeconstruct.com.au
 References: <20250427153008.3166922-1-santosh.puranik.ibm@gmail.com>
- <20250427153008.3166922-4-santosh.puranik.ibm@gmail.com>
- <b8064801a2f4c50edaf1f69f414751794df87817.camel@codeconstruct.com.au>
+ <d91c2e0617d97c79a31ac0b4d9db9d20506736eb.camel@codeconstruct.com.au>
 Content-Language: en-US
 From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
-In-Reply-To: <b8064801a2f4c50edaf1f69f414751794df87817.camel@codeconstruct.com.au>
+In-Reply-To: <d91c2e0617d97c79a31ac0b4d9db9d20506736eb.camel@codeconstruct.com.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
@@ -101,63 +101,32 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 Hi Jeremy,
 
-Thank you for the review.
-
 On 28/04/25 7:13 AM, Jeremy Kerr wrote:
 > Hi Santosh,
 > 
->> --- a/drivers/net/mctp/mctp-usb.c
->> +++ b/drivers/net/mctp/mctp-usb.c
->> @@ -48,16 +48,17 @@ static void mctp_usb_out_complete(struct urb *urb)
->>          case -ECONNRESET:
->>          case -ESHUTDOWN:
->>          case -EPROTO:
->> -               dev_dstats_tx_dropped(netdev);
->> +        netdev->stats.tx_dropped++;
+>> This series backports the MCTP over USB binding driver and associated
+>> definitions.
+>>
+>> Patches 1 and 2 were cherry-picked from upstream linux master and
+>> patch 3 includes fixes needed to backport the binding to 6.6.
 > 
-> Some weird indenting happening here (and with most of the other
-> additions too).
-
-Will fix in v2. Thanks.
-
+> We'll want to have f5d83cf0eeb9 ("net: mctp: unshare packets when
+> reassembling") included too:
 > 
-> If we don't want to use dstats, we should also remove
+>    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/mctp?id=f5d83cf0eeb90fade4d5c4d17d24b8bee9ceeecc
 > 
->      dev->pcpu_stat_type = NETDEV_PCPU_STAT_DSTATS;
+> - that should come from the 6.6 stable updates, but doesn't look like it
+> has hit the openbmc tree yet. Could just be a matter of sequencing vs.
+> that update, or you could include explicitly.
 > 
-> Have you checked that the stats look correct in your backport?
+> (Andrew or Joel may have opinions one way or the other)
 
-Yes, they did, for ex:
-
-```
-mctpusb0  Link encap:UNSPEC  HWaddr 
-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
-           UP RUNNING NOARP  MTU:68  Metric:1
-           RX packets:1 errors:0 dropped:0 overruns:0 frame:0
-           TX packets:1 errors:0 dropped:0 overruns:0 carrier:0
-           collisions:0 txqueuelen:1000
-           RX bytes:11 (11.0 B)  TX bytes:13 (13.0 B)
-```
-I will remove the stat_type assignment and re-run the test before 
-submitting v2.
+OK, will wait to hear before cherry-picking that commit.
 
 > 
->> @@ -340,7 +342,7 @@ static int mctp_usb_probe(struct usb_interface *intf,
->>   
->>          INIT_DELAYED_WORK(&dev->rx_retry_work, mctp_usb_rx_retry_work);
->>   
->> -       rc = mctp_register_netdev(netdev, NULL, MCTP_PHYS_BINDING_USB);
->> +       rc = mctp_register_netdev(netdev, NULL);
->>          if (rc)
->>                  goto err_free_urbs;
-> 
-> Alternatively, we could consider backporting 580db513b4a9 ("net: mctp:
-> Expose transport binding identifier via IFLA attribute") too. This would
-> be user-visible, as we would now have an new IFLA_MCTP_PHYS_BINDING
-> attribute on netlink update messages, but that should be entirely
-> backward-compatible for applications.
+> A couple of comments on 3/3 too.
 
-Ack. Please Let me know if you have a preference.
+Ack, thanks.
 
 > 
 > Cheers,
