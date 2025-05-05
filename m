@@ -1,79 +1,65 @@
-Return-Path: <openbmc+bounces-24-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-25-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 189ABAA594A
-	for <lists+openbmc@lfdr.de>; Thu,  1 May 2025 03:18:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5506BAA9622
+	for <lists+openbmc@lfdr.de>; Mon,  5 May 2025 16:46:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Znx5k0fCtz2ygK;
-	Thu,  1 May 2025 11:18:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZrkqX07Rmz2xWc;
+	Tue,  6 May 2025 00:46:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::236"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746062330;
-	cv=none; b=MdI48bLB66RM285F3gCF2D/uiYirpYaQATd8iWZNeLZqbj3hA1pxI8chmNX7zq584a3zJ0qjcCP+41QFxSTuD0mCElggNOuYv+EmF1CFCnni3LJUwQP+wKHDVa3+if4Ev5Wl+FWGGifo+I2LDm5sIZxnemnLDvFKIjoMeWORJ25ZFwxRZJmIEulbOuWz+oeerUu1cRhSIUJCaYQZ1MxUVBVlNsmPerx3eAnct1mTuLz6DRMpAwxAUlXNTjp4I02ghJ5Sa/k8ixcCDe/UXUt06OXXVPYOrZ3jl8Dsk+kD+e/pdC6VaAyL7RQgwcwLv62Fb3jX7CF0tRUlsg53vyWHTw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746456375;
+	cv=none; b=L5zbuZsk1TVe2dEUt3HLAxZnDbzH5U+7ISVrPiB+ecgezxifUrmc8GZZKTwGzvRmxdp8y89rqIhajEbreICDmzyZKsuEGBbKYYGdBVMuozELVxtoZvB1VJjT/2f7xBMtwAN8vFQzu7jl9OJVyFLMLvut5EgBz/TWOM2dN/925mJD1j8Fh0/ModJyFvFexD8fwHj62BUtF3YMab4TmhVoKQ0zRV9RTBdZBpEvvZVsXOehs5PL3Ys5OsmDw4sYi6abOyFmuI/cAwiaifmtXLn1UDOcxuLTl+tfxPZTIXotZH8mDPJikQ9jFq2Eb/J2NIi1SS5xVk98O91Li1ljH1zhzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1746062330; c=relaxed/relaxed;
-	bh=DWSJXR0wFOKyp8hj1diIrz/6tDDyj0fRhs5OVJFZJ9I=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=SLQ626Cb69J76mVueHr67iF8IPDvlbbH36qluGutD5/xWufmm2VP3kYkq8duuxjCoJEDrBa+HO2rrO9VuH8RAVwFmZBhWBr4Ku+4ml9Z+gDAzoU5KrMBQ6gN5jkVDijVksVkSfkhRG/LEp7kvVGTNHkVysHdmRhnfj77Fu1swm5HKlZ0eIo6J/TTiVs9f9+DrXsw3tGGvehxXB1FR3zzeXbwvqU/g9LMGpsIOBjRlfxExanOM7Nis3H/oUNCHHGsgSnmRKcUvhZ89tvV03bRl+XoiwHvoSAh/0hp/eqoc9/xBbKaivCj71CcstN4F9Ela+UEHywmvZjLKwMtyqcFKQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JHTNvVAX; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::236; helo=mail-oi1-x236.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1746456375; c=relaxed/relaxed;
+	bh=JlsKhkoz828MEtVy2v5Fu7Luz+EY3Qo135bmujvMVE8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kXOZotE1c2rg4xZNHQfAybE/6P8N5SUIsQyv5muUFJlM8KyxAa1DUoGJfGrUvUHCbu7BHZueisGWbkUuFv3JSOWZ+dyNBnsS+uZ9Afiii7iPbABxhRIwzeuXt4lNA5S9j6MQ14drGdYQKk462+IFYunQXZKlZIofPUDUvTzg5EpOm2LFYz9RWnSdX3LSzxXXM9b58GPA0tyms/nYkaPKoi+e661xRyuInc25lGkIzWBUpSrPh6xDX1ea1c0jQxzGR4vYJvfphGLyZMKsBBhlKLgf4Za1xWAWBFBDcyUVEU146FJgWleTNuVVD1ZDp/20QXhLOW64P0RoRRG2kdCjPA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=g2L9k+WP; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JHTNvVAX;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=g2L9k+WP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236; helo=mail-oi1-x236.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Znx5d1HGsz2yYy
-	for <openbmc@lists.ozlabs.org>; Thu,  1 May 2025 11:18:44 +1000 (AEST)
-Received: by mail-oi1-x236.google.com with SMTP id 5614622812f47-3f6eaa017d0so452801b6e.0
-        for <openbmc@lists.ozlabs.org>; Wed, 30 Apr 2025 18:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746062319; x=1746667119; darn=lists.ozlabs.org;
-        h=in-reply-to:from:content-language:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DWSJXR0wFOKyp8hj1diIrz/6tDDyj0fRhs5OVJFZJ9I=;
-        b=JHTNvVAXh0esMGaisEPU4KGHVE5FzKaUa2EQm12cIm5eCseqKxlgkpH19fq4EZc6ur
-         GUEfR4F5lWimLXdDFyJqRhBB1e+jAw/DDqfSh46BPsHnAfGKp0+vhPadCoLc7CwWLSEu
-         tTxj9Eb375RbjhyNecIDAf7q6VnGyIMNrKQRGKjzWPDIitjROrfheTKRSKYr4Fd0FICd
-         4L/cEJm+3MdVBCIDqtIPTM0OGeEOAC9BjPdwY3G9Oh55LL6C9/4SRXXjGy70FjZlIC0i
-         GZNehZbFiu5LC4nQkl6hvNo3kxZ90DwyQpNyzEcCqm05dxmH4tzsdyahlmSxhnXWiwWu
-         vSiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746062319; x=1746667119;
-        h=in-reply-to:from:content-language:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DWSJXR0wFOKyp8hj1diIrz/6tDDyj0fRhs5OVJFZJ9I=;
-        b=S1h+szAI75STFRh0MwgTBoxDEp9FunmKhssLUCgHqh3B9pJAcdgUOcyhm2xTyolyxv
-         UPmebVsYgIeRalmNCsh4w7m/Pshg+6TGi3kDdNyJ/eXQHLNV5xGNaeo1O0DzkBSVTSUs
-         yzVOa3Eaf4kctimF/NH3HoaWl2bCB7Qq6pwh3GImrXQSub5ZdzqhK4EFENY6YJ7lNqTw
-         ZbMq354pba3fC7M33ecXiAZ11RYXDN7MMVYvETHdvFQsAxGLa1dw5oGZySvVbdOWl2Uc
-         c7CfdU8TiZH8gw+Un4d/I7wWQV0jn88P6cSpI2cVndNzubL0mg28+oyzxevQqoCqrhii
-         jyGA==
-X-Forwarded-Encrypted: i=1; AJvYcCXSWZv/2yQ8eJXlh6OjOlRWZgfSlsgtlbKHhe/xctUJboGQkxgEtZCgo6AHb8RPtaZgZylnyuKO@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwCCy7MvtnDYyvj+vn1L5WY64ttu4kMPiKGg0cBGFnv5mNaeHs/
-	ixCNqf2VrTF7Btuy0LjBAyH9kuZMr6LIZMyzSISDHNlGvmGJ0GId
-X-Gm-Gg: ASbGnct/Y5RfS7cI+Qc/I6or6nMwXBKbo7aaju0+lWY8sbF4Hea7TLAWVC0quziLxjN
-	dNFJ4l606RXNxdJxO56Iz1uXCtjhQ/f8kmPL3XC+YkRVrulf9ZdGiCbXQz8bJIAZUVbNRUJT2WY
-	KfRXz8GVmD6o+OZNa98imihFh/t3Lv6Mks/4mF3TzLYDAPcUaVnZkzDMYLarCbeAeL+imMMjXgo
-	X+DhDE4cUQVgPCkOoBeLTi42pSKoLwvOd/aqBiqxP1pY+p5QlVnr+QeQry/eLZLG7eR3XQY+nTF
-	tS2Widym0JdwCgOZf1sQ49Fh1eIFZO8a4XH6/K7NhcmFJRVkTCKux2kKcUDh8eiFOo+IZicKK0K
-	LIx1W9V7FQsJYnR+MTe0K4So=
-X-Google-Smtp-Source: AGHT+IH51/3Inz6uEJLQrQOC5vymI+28YNxnS5NSR86cWqZZRSZ9m1itPgNJE2E0TycZa1XZLogn3Q==
-X-Received: by 2002:a05:6808:6906:b0:400:b3a8:2cb8 with SMTP id 5614622812f47-40335d526camr344293b6e.25.1746062319414;
-        Wed, 30 Apr 2025 18:18:39 -0700 (PDT)
-Received: from ?IPV6:2605:a601:aaf4:7400:ac70:33be:ac3a:3c99? ([2605:a601:aaf4:7400:ac70:33be:ac3a:3c99])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-60686e96d33sm1001670eaf.7.2025.04.30.18.18.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Apr 2025 18:18:39 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------FhxDSQIUoLuyeyxajdE8cIwl"
-Message-ID: <04bc51b1-d676-44a1-a784-b92d3ee82113@gmail.com>
-Date: Wed, 30 Apr 2025 20:18:38 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZrkqV2brKz2xVq;
+	Tue,  6 May 2025 00:46:14 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 0C8E561155;
+	Mon,  5 May 2025 14:45:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC7CC4CEEF;
+	Mon,  5 May 2025 14:46:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746456371;
+	bh=x7tnnriKWWyb+OOuz9Jm2Bv/3oa5SNZPvGNweMUWMIU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=g2L9k+WPZ+3OvN9rVu72Dcp1LHEzvAtWshioq4cwfDRz5dhPuLGkql2COEPoTeti1
+	 r6Wyz8I2gy/Rd76okDAVba4h1+yPlgChYIS6+VhXkhkZXfgMHuGPS740zXIoI1k7qG
+	 +AJLi/QkoKqnk/f4Ew/DXA7Iv96yQIS/dp7Gk2oKzEE1dJhsDNThHTJL0wjBIwYGv2
+	 JLPSd7yrxNnr+OXhYtLrOCstGa1Y+kIanVT5Zoh6sBPFEz8wBYu6u7JyFan7cAcc9A
+	 BSJhVVLA1p6xCZZ1q5EiDISbBzSQaJU1Oamejd/CNuc4ACSFN8p/AA7NrXwPdcIZPY
+	 xo9hqlVu8qB8g==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Ryan Chen <ryan_chen@aspeedtech.com>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	linux-i2c@vger.kernel.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH] dt-bindings: interrupt-controller: Convert aspeed,ast2400-i2c-ic to DT schema
+Date: Mon,  5 May 2025 09:46:04 -0500
+Message-ID: <20250505144605.1287121-1-robh@kernel.org>
+X-Mailer: git-send-email 2.47.2
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -85,181 +71,123 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Quantas CCLA Schedule A update 20250430
-To: =?UTF-8?B?TGl0enVuZyBDaGVuICjpmbPliKnnkK4p?= <Litzung.Chen@quantatw.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Cc: =?UTF-8?B?Q29zbW8gQ2hvdSAo5ZGo5qW35Z+5KQ==?= <Cosmo.Chou@quantatw.com>
-References: <SEYPR04MB77552DD941E8BE0C886E8083F1832@SEYPR04MB7755.apcprd04.prod.outlook.com>
-Content-Language: en-US
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <SEYPR04MB77552DD941E8BE0C886E8083F1832@SEYPR04MB7755.apcprd04.prod.outlook.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-This is a multi-part message in MIME format.
---------------FhxDSQIUoLuyeyxajdE8cIwl
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Convert the Aspeed I2C interrupt controller binding to schema format.
 
+Drop the "#address-cells" and "#size-cells" as they are unused and
+incorrect anyways.
 
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ .../aspeed,ast2400-i2c-ic.txt                 | 25 ----------
+ .../aspeed,ast2400-i2c-ic.yaml                | 46 +++++++++++++++++++
+ MAINTAINERS                                   |  2 +-
+ 3 files changed, 47 insertions(+), 26 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.txt
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.yaml
 
-On 4/30/2025 5:12 AM, Litzung Chen (陳利琮) wrote:
->
-> Hiteam,
->
-> Please find the attached file for updated Schedule A of CCLA from Quant
->
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.txt b/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.txt
+deleted file mode 100644
+index 033cc82e5684..000000000000
+--- a/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.txt
++++ /dev/null
+@@ -1,25 +0,0 @@
+-Device tree configuration for the I2C Interrupt Controller on the AST24XX and
+-AST25XX SoCs.
+-
+-Required Properties:
+-- #address-cells	: should be 1
+-- #size-cells 		: should be 1
+-- #interrupt-cells 	: should be 1
+-- compatible 		: should be "aspeed,ast2400-i2c-ic"
+-			  or "aspeed,ast2500-i2c-ic"
+-- reg			: address start and range of controller
+-- interrupts		: interrupt number
+-- interrupt-controller	: denotes that the controller receives and fires
+-			  new interrupts for child busses
+-
+-Example:
+-
+-i2c_ic: interrupt-controller@0 {
+-	#address-cells = <1>;
+-	#size-cells = <1>;
+-	#interrupt-cells = <1>;
+-	compatible = "aspeed,ast2400-i2c-ic";
+-	reg = <0x0 0x40>;
+-	interrupts = <12>;
+-	interrupt-controller;
+-};
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.yaml b/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.yaml
+new file mode 100644
+index 000000000000..6cff6a7231bb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.yaml
+@@ -0,0 +1,46 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/interrupt-controller/aspeed,ast2400-i2c-ic.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Aspeed I2C Interrupt Controller (AST24XX/AST25XX)
++
++maintainers:
++  - Ryan Chen <ryan_chen@aspeedtech.com>
++
++properties:
++  compatible:
++    enum:
++      - aspeed,ast2400-i2c-ic
++      - aspeed,ast2500-i2c-ic
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-controller: true
++
++  '#interrupt-cells':
++    const: 1
++
++required:
++  - compatible
++  - reg
++  - '#interrupt-cells'
++  - interrupts
++  - interrupt-controller
++
++additionalProperties: false
++
++examples:
++  - |
++    interrupt-controller@0 {
++        compatible = "aspeed,ast2400-i2c-ic";
++        reg = <0x0 0x40>;
++        #interrupt-cells = <1>;
++        interrupts = <12>;
++        interrupt-controller;
++    };
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b830dfeaa05f..9e37f0c14496 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2328,7 +2328,7 @@ L:	linux-i2c@vger.kernel.org
+ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+-F:	Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.txt
++F:	Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2400-i2c-ic.yaml
+ F:	drivers/i2c/busses/i2c-aspeed.c
+ F:	drivers/irqchip/irq-aspeed-i2c-ic.c
+ 
+-- 
+2.47.2
 
-Thanks for keeping it up to date. I've updated the projects google drive 
-folder with this update.
-
-Andrew
-
-> .
->
-> Best Regards,
->
-> Litzung
->
-> Software Advanced R&D Division
->
-> Business Headquarters
->
-> Quanta Computer Inc.
->
-
---------------FhxDSQIUoLuyeyxajdE8cIwl
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <br>
-    <br>
-    <div class="moz-cite-prefix">On 4/30/2025 5:12 AM, Litzung Chen
-      (陳利琮) wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:SEYPR04MB77552DD941E8BE0C886E8083F1832@SEYPR04MB7755.apcprd04.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator"
-        content="Microsoft Word 15 (filtered medium)">
-      <style>@font-face
-	{font-family:新細明體;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
-	{font-family:Verdana;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
-	{font-family:微軟正黑體;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
-	{font-family:"\@微軟正黑體";}@font-face
-	{font-family:"\@新細明體";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"新細明體",serif;}span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Verdana",sans-serif;
-	color:blue;}span.apple-converted-space
-	{mso-style-name:apple-converted-space;}span.EmailStyle20
-	{mso-style-type:personal;
-	font-family:"Verdana",sans-serif;
-	color:blue;}span.EmailStyle21
-	{mso-style-type:personal-compose;
-	font-family:"Verdana",sans-serif;
-	color:blue;}.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}div.WordSection1
-	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Hi</span><span
-            class="apple-converted-space"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">
-            </span></span><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">team</span><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">,</span><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">Please
-            find the attached file for updated Schedule A of CCLA from
-            Quant</span></p>
-      </div>
-    </blockquote>
-    <br>
-    Thanks for keeping it up to date. I've updated the projects google
-    drive folder with this update.<br>
-    <br>
-    Andrew<br>
-    <br>
-    <blockquote type="cite"
-cite="mid:SEYPR04MB77552DD941E8BE0C886E8083F1832@SEYPR04MB7755.apcprd04.prod.outlook.com">
-      <div class="WordSection1">
-        <p class="MsoNormal"
-          style="text-align:justify;text-justify:inter-ideograph"><span
-            lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:#0033CC">.</span><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Best
-            Regards,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:blue">Litzung<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Software
-            Advanced R&amp;D Division<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Business
-            Headquarters<o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"
-style="font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;color:silver">Quanta
-            Computer Inc.</span><span lang="EN-US" style="color:blue"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
-      </div>
-    </blockquote>
-    <br>
-  </body>
-</html>
-
---------------FhxDSQIUoLuyeyxajdE8cIwl--
 
