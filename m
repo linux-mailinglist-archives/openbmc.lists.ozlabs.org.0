@@ -1,58 +1,61 @@
-Return-Path: <openbmc+bounces-30-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-31-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEF86AAD3A7
-	for <lists+openbmc@lfdr.de>; Wed,  7 May 2025 04:58:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98A0AAD405
+	for <lists+openbmc@lfdr.de>; Wed,  7 May 2025 05:22:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Zsg2J1Zzbz305D;
-	Wed,  7 May 2025 12:58:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZsgYK4P16z305D;
+	Wed,  7 May 2025 13:22:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746586728;
-	cv=none; b=HONCJO2DaJhmC1yWF/Tq3ZYjX6yczazfJ5vjbH1/yRuliCKFjTFPgLHmaiO1u6eJY9ziEVQfAa19sIXjKjcQ3zVflG912GfNjE1LixXp8bnoAn3mVRcryHH3D5GY6qgvLnkCo4GO1/6rxRrT+DU3/UOAvBTm00L7Z2Iu/W0+iETep2pRt30zPpZJlnxtUSqjDgUT8Pb/ZkxAaQ4fMyWUxsK1mUsafym6Wye2a5dK2J4kTZVu2GH59igw7uODE/B8jecFzLrQRKRaSMZqO4wgvMe3tmRC9tkJCsK4Z4E3aBDA6x23f/ajxS30ezlTMBJj9z6zDb2sq2BIMzMb03tAwA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746588133;
+	cv=none; b=kSpZMPf8oqYiVsOAhyy/b2+5J0Qg9mE1Z5ygLgAp4QLPyhsluN9Iss7a4O3fEjccnjznBSzno9ii41qKT/BuviXL+5xj9FxQ+zWe0amaF/OeMryGZuAs8hzyMIb4KBI4fKGO1madahMeXWvm9SkuIhUuxwIeq+q3v0AnLDTBF3h34FjLk3Bco0AuKf1y7g3sGZo4UpnV5a5O6eab1YW8706bXUOioaJUAScoCuGFHmRC2JN5wch+5+lstcVMbhTOZLpoKKCSqnbYvvl4rUv059oeaMFAo9Txt9KaCp1nbqWbM9edX/UfLKFoMjVkYMmcnBP5NX0Kig+9+cuRaunHwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1746586728; c=relaxed/relaxed;
-	bh=nXlSMWZFp/UNpyJGN+JfAGIB2yLICPFXWZ3dy64EAHY=;
+	t=1746588133; c=relaxed/relaxed;
+	bh=WxnIZWGjyW8z4p9AhSnJJsn8ZjAdBNM5VL2W6LDw1c0=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CJxaHHTl7THIlIZgy9MdyPuMpWc6MR6BlT3h6i2pP/Rb+qLP6ZHEe6VQugxs9IGJosfh/lST9AgSZebP6PQcoo8cfXxt1pBZ52b42gAlsp4k7zRmYJduZqaSLi0aW8w++ep7ZiOAfABU36wpcn6n7/R0c1TTeyGSet4OfxfLGwqTz3sFlf3aFAIMlY21G9DVX5G8nysyF9p5NIj2Q9JrhrX1Ag/84lnlsBFTeCCvYAZAroZgtVxUsjMRXd5cncHOsJzGrTfnKG1/zX4APPNAhR2h5RhuPHSJnxWC2v4vwUH8AOqbgJI6tzgcNIkyH1AoLxBAakXEnMdQ+hnSc49QkQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Tvdw5ZaD; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=DGYkDxp2vkU1wEIyRTFxEiMpEyFSzOB0BNNyMJiX2t5txZafBOqlq9ab/5xD+3SeujDIjaOKPpbUxeYJvEEdYdDK2maGmWiF5q9dc+Utz+isBKbMnN0FRaGSEET6lnoWzfN0ySi51Teer1tOMAQ1OVLGfBKYdnMEGiPoquFEoL5YvAu0r/EE5O+jDAOtRLWjNmg3hZyTzDve/GIJBp7TYqNCXd9qUqT/qn3ljrhlnFFY7hX0ys+AqDCn33WkBGfLSPkdOWQuN0MqPJSO+b1p/yph952aCiWAAHQ/S2bikSqm8oVQ2YFcueLLjhqgulomeYz0oVLFY7HHtgaCHmMfSQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bCR+8fc3; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Tvdw5ZaD;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bCR+8fc3;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zsg2H40mVz2yGx
-	for <openbmc@lists.ozlabs.org>; Wed,  7 May 2025 12:58:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZsgYK0nQsz2yGx;
+	Wed,  7 May 2025 13:22:13 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1746586726;
-	bh=nXlSMWZFp/UNpyJGN+JfAGIB2yLICPFXWZ3dy64EAHY=;
+	d=codeconstruct.com.au; s=2022a; t=1746588132;
+	bh=WxnIZWGjyW8z4p9AhSnJJsn8ZjAdBNM5VL2W6LDw1c0=;
 	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=Tvdw5ZaDRfSlNK/cGmHOf7usOW3+sTa/3HirQ9VXE1cQefBjeB3YYi9ersBmWyG/H
-	 vwFdvoHzh1Lwlitl4rsZbpgE9QHj9F1wG2DeGzkNTECwZSkNCZQ70IT9SIL+dxNAS5
-	 7hZJNiZQySufSsP1Z6UDBwvL1BTjePJCwSuKBIFgfnk4+DIFdLkZpTGd9Nk/opLDNv
-	 SGEN4MwMagyXK/PmelwtAJ1hZrxgDqEJSzwfnr5Wh07y1s8XlLMEH2vqGJulBsDtwl
-	 3mhOSLlr3DIJaMHm6ka1SJZW7wN9t025Yhvwur9R1bww+9pR0zxSiLa2k+m7R0QB5d
-	 Ho3XXZMybvWEw==
+	b=bCR+8fc3LtDcSawxO4X6KapprEaFUHlDopKZmFaplYY0hg9qY2ZHxxAV725dw6TZI
+	 vMDQ4I5qCYW6aZB4ClA6mBPGWTAzsDb1q1Thuz7JM2NEN/d3IuDPcTQLqgOX/JwN49
+	 KHoX9w693tqIC2Wx8pBJhr+8PskzFyOU7AHb//tDxrGce2vfyWslb8hUjjTgbuA7VR
+	 Q5OEngX/ctCaryV+qVyYxXLfGBO3HzAYro10sfoquGFdPUUuZPvdQI5ai05jbgyxJM
+	 fT8bxI8lm3R4gU+9Se9xj6dc4oLjeMt/vfVhuQ2ToHwniIaYo/sUJ108EIsmeyRJEA
+	 xje1L/94ngvGg==
 Received: from [192.168.68.112] (unknown [180.150.112.225])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 5CD5764473;
-	Wed,  7 May 2025 10:58:46 +0800 (AWST)
-Message-ID: <59c5351d701e9dd5d8ea7d274c6362aadd22ddae.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] arm64: dts: nuvoton: Add USB Hosts
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 324D864473;
+	Wed,  7 May 2025 11:22:10 +0800 (AWST)
+Message-ID: <5acf9c0afc764931f3e9e70c4085beeb95b9652d.camel@codeconstruct.com.au>
+Subject: Re: [PATCH] dt-bindings: interrupt-controller: Convert
+ aspeed,ast2400-i2c-ic to DT schema
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: "William A. Kennington III" <william@wkennington.com>, Avi Fishman
- <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry
- <tali.perry1@gmail.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, 
-	linux-kernel@vger.kernel.org
-Date: Wed, 07 May 2025 12:28:45 +0930
-In-Reply-To: <20250416001818.2067486-1-william@wkennington.com>
-References: <20250416001818.2067486-1-william@wkennington.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>, Thomas Gleixner
+ <tglx@linutronix.de>,  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
+ Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Ryan Chen
+ <ryan_chen@aspeedtech.com>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
+	linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org
+Date: Wed, 07 May 2025 12:52:09 +0930
+In-Reply-To: <20250505144605.1287121-1-robh@kernel.org>
+References: <20250505144605.1287121-1-robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -72,16 +75,13 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Tue, 2025-04-15 at 17:18 -0700, William A. Kennington III wrote:
-> The npcm 8xx chip has 2 EHCI and 2 OHCI hosts with driver support
-> already existing in the kernel.
+On Mon, 2025-05-05 at 09:46 -0500, Rob Herring (Arm) wrote:
+> Convert the Aspeed I2C interrupt controller binding to schema format.
 >=20
-> Signed-off-by: William A. Kennington III <william@wkennington.com>
+> Drop the "#address-cells" and "#size-cells" as they are unused and
+> incorrect anyways.
+>=20
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-Please rebase to address fuzz as noted here:
-
-https://lore.kernel.org/all/2ed50b1463f62a829f863b889ab818f492b73946.camel@=
-codeconstruct.com.au/
-
-Andrew
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
