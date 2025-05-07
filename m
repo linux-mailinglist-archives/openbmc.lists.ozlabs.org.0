@@ -1,79 +1,85 @@
-Return-Path: <openbmc+bounces-32-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-33-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0962AAE803
-	for <lists+openbmc@lfdr.de>; Wed,  7 May 2025 19:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB339AAE805
+	for <lists+openbmc@lfdr.de>; Wed,  7 May 2025 19:39:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Zt2ZF62Phz30Qk;
-	Thu,  8 May 2025 03:39:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Zt2ZG5Ybfz30QJ;
+	Thu,  8 May 2025 03:39:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::634"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746639557;
-	cv=none; b=PHGXZHcRItj0+liKRfhMcjQMIfsYhS0pDLrDlq4V/VhKZwL126C3boCHwB6uIBPEn7dOvY6n/+ZiQ7ocQBCDXjmzYkxzsMEcAU5TbGaGoZeDj9wkxMENv2Vy9dmMI46w+UOC9RIH/5JGvij8MfmKPQQg/fUaAXXxK6/mqJxi9tSbx38Wlv9YRIFvJsAkfQCy8IZ00s0fQT+75qmxAMd8EzJGYLe+Y/U5tvpfZCOE4ViCXZDfFZP/jOFiQs7+KWccGbg2+3TcP7VUbitucb6FYbj2KhOJnkGZMmDpuhDaM6uMFXIVmNsEvMbL8ukDyqBVtkFjGFxQ+yTOSKTV0Nhkqw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::635"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746639558;
+	cv=none; b=Eb2qEE8XgQ75HxZwFsSnONHez0QgRTdWp0fNOvxXKfZuyLCTLDsqNWWXRlzUGmVUJ5nhqtTqIbIGumKt2BY2MMetU+U6zWacChK3ABfbCotOCcibii8JfuwaG5zlNGEQyNMQdpBI52VOFiEG7YR6ElKKEWj0M4WWnU4Sv8/8ACjnTYQUj0cXRcwE8qOI7tpC8TQwCGN71Hi6dPOq8P8qknrqlfhwlM57d+gwC3VDSuRPwIOSm4l60MhRGQL9rFpN7TCKQPFelOx2hLlF/Alc4MxTXZifWB48KcpAuaC+J+bNH70/bPgczyenLynYnxc/0sT3ErgzXDNjGYLepkUXCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1746639557; c=relaxed/relaxed;
-	bh=ofjtqY2/c0divF87ZgcGnYVu2lTXK1fJg8KGoIM1ST0=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version; b=KJQ+QKy0ESA21ICJWWYmyF/0/0f3C/dFONvuwWI93rKH0NEJSW8am/3R0xxjWtuOIZiBrwi7aGPi+GFjC1bwCq4zgnV1DFpJPtuFAN538ZxBOvBUQfYmUU3sGuUBGwbU9Aaj0aQ1H9dWJMC8FrduaGszRHeNqIOmu6pPNzhp0F+g/KDJg96qpw+jj1iYVhIjRW/BS5nxcjYv9JuknTzV3IyUtCV+OAugQxrAig9vXBcNovQ/HER70Hx6fmw/odBKxBIXsJaa0Urwx1lt1g0a0CrqTNtVkSQyR5vW0w5mmEapsqXrCkRKFJOo6yJA0Y3mBKWO+hTAPdd+4dPHGs/1oA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dLzgws6w; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1746639558; c=relaxed/relaxed;
+	bh=VSqaGOuaIptSAG/ZlfQ+oMHns3r9nWI7LvY58OhjhhA=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=XDBxsREzIm4d0D+6m0vjWlYKaWy6kbZEs3uyyp6uwPq5x2/L2m/DGwak18Y+X7fmFS2WwohEgXB9TOEgW3Yf2tEJ1fkoxtnOMY2sHRyGmSSf4PXpi8k89Y+xa2Zs4BTSXnmASdr7UE74wVpfabMBlIaa6zan9RGQC+V+EkftNVo81V9KeMaR+4W4fioYBDLmk1+O+aJdgaA55/oNhrvJkhyRPd9d2sck1V5olASMc/TaIsUBqlj5OuXPbkKBJ/AFfOKSZCQkM/PeWmefRAQSyA+ezkq7YkBpU/++y+oxBV1/c5oZSTA90uQc1GMFHcnzj2ZXUW0B9aZvIqNuh22U8Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q9Vi2JLk; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::635; helo=mail-pl1-x635.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dLzgws6w;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q9Vi2JLk;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635; helo=mail-pl1-x635.google.com; envelope-from=santosh.puranik.ibm@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zt2ZD24Jxz30QJ
-	for <openbmc@lists.ozlabs.org>; Thu,  8 May 2025 03:39:15 +1000 (AEST)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-22e8e4423ecso884925ad.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zt2ZD1jv6z2xRt
+	for <openbmc@lists.ozlabs.org>; Thu,  8 May 2025 03:39:16 +1000 (AEST)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-22d95f0dda4so1915905ad.2
         for <openbmc@lists.ozlabs.org>; Wed, 07 May 2025 10:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746639550; x=1747244350; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ofjtqY2/c0divF87ZgcGnYVu2lTXK1fJg8KGoIM1ST0=;
-        b=dLzgws6w5yobFfFYW0meScpInEx3G5jlnltIt8zXB+3q/Tj+5dc7GtX8wm0iyfa5Pi
-         kslTYdN30IyKv98bWXaZxq8ZEa4artGItRx3Iy4Ofpa76BzvZh04GO4MH8fvr19Izy3/
-         dlxPxhz+1I3KVxVfDEHCqQeGW3yNoR83GaD8i9QAgsdfn9b4WrZF7L08jRUrijjpMEDz
-         fkyto3kU4TtfPqHu7Uz1ZOwoIko4H9xB0ktR9x+236mEzeknMhmlFkFvEI54NK1k7/Vx
-         yB0nPo6zvaIiZdY7ZMqazY0D28ajfzxa7DR67GdugGgFEYaFwgg19naaf+yGxhDNs+ey
-         usuA==
+        d=gmail.com; s=20230601; t=1746639552; x=1747244352; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VSqaGOuaIptSAG/ZlfQ+oMHns3r9nWI7LvY58OhjhhA=;
+        b=Q9Vi2JLkH9B5HgVL+xvuKGATBOvDB1xPLti+TRYBCX3iwYw2BHTSnxM3lGye/Da5lw
+         n9Np+zC3QhxdJpTB7BnpJ8zQ91QxcJDgn7uhGc7wI1/GHOykntU6oAeRNhUMhrD0g1RL
+         gbcDb3odP8OzKyO2997GeDsxzlEo3gYmP7FMzAJWjabOdahDHNRnmKkhIYpfSpMb9UR/
+         LpjiNsq+b1LygW0B8XBpqVwXkXI9LeVHzuFG3sUiABDco/CG88kqni1St+IkK4ikyJ34
+         VRX6xhs+QaTM6CycsjP220FOfTS4wQuhZ5x7aMMXPoXuiqVUPHHyMFHEWnlEkBzd4VGs
+         lU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746639550; x=1747244350;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ofjtqY2/c0divF87ZgcGnYVu2lTXK1fJg8KGoIM1ST0=;
-        b=vLcmlwQBtQ+3Qc9WRXSfnynDqdkNdvLt4KWAP/rqAzetqqn94qYZLLWqPcsrt1+0WP
-         n2smPFMkkRlqL4ErHAQmaHYmAVF8X6zsUtqfwtR1vU8NChQeEwVIULIusSNUlB5BL4r/
-         I7lmvi6hd9p2i5bfikvHRgnpvtEsKhsJPhNQ67syBKpIFw9X4RS/U7+nnCYWb7/TluBN
-         gfFxaVtuYDiccb/ehxtaSQ2LCr+C7zUnMm+IHsxaVS3OW1rdFL+i7jIwdEwlWj95tS55
-         LD3wspvnux9prnP9K3RKUGwHZux2FKrF05BsYLRneX6ZqmxFDxiFCXfZg12KtGKR62US
-         KHMA==
-X-Gm-Message-State: AOJu0YxUEygEHaPUKGraGBK4c0zb1KCiT5ZOGc92Bxqit10wi+RHjlYY
-	eKQZh9rxnoqW6Eo+u+sQJK5hiPV7t/PFA+DncacEVH+Y9Wgi4UcZiJFIHw==
-X-Gm-Gg: ASbGnctXlW7YYiXLMryN3g/sXP5CPi1ZqdfESGuXB7VuXIeiGvXnQd4x1DTQTDJAE7p
-	9rORBrkyUPAHZ62lk8dbRjzGXaRtnc51JqceaV+/zxvNqXFXQznrsOwsO5ONNzpAC1EqjVpedvF
-	29y5LN5OdqdjP2a+/ZJPiJn1ADNvA9w6Ge4fogdzyTV2bxke+48BVXrgYi4HVruckdY0WaahuYU
-	1Eaa9RQGkG7+4S46uxZ9yeCuproYhOFTqa93ONZ9OiDrJNUvgneFG9pVvk7fARBBdRi0up853Ty
-	rvDz9qNooJt1oTAFFoh7IMc36FxG6OMaBJi6i8Q0OPZUUJIJEqVG56+1n6wlwwyEoQ==
-X-Google-Smtp-Source: AGHT+IFIvJ76PF4S2t2akpRD9MwrRsQ/ZR09rDiCUYzKtCZA0zt3470kDe2nKYbJAZMwdmwe/XV7mA==
-X-Received: by 2002:a17:903:8c4:b0:22d:b243:2fee with SMTP id d9443c01a7336-22e85bda177mr3080225ad.13.1746639550156;
-        Wed, 07 May 2025 10:39:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746639552; x=1747244352;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VSqaGOuaIptSAG/ZlfQ+oMHns3r9nWI7LvY58OhjhhA=;
+        b=J8tjK8Fgge9qrYmDA5ruPLxj9wd5d4FrmeCuQkrPY3T3hGXCgHZowYhkvkLhC42yHB
+         JsAcDqPPtYAuddQg0QZwgEDSnCHcdiLj7mDjFUVoMmtKytUxbaffxMRCd5HUVADsx2N/
+         9xkVbjl7xhAbIf70gzGp0rhSUo5RAekrLB2IZQVLt5ttRdiaZ1jCRMiwPrGBPKbKeBrq
+         FiRqEH5fF45VC3qZZtLWxt7xm5POIdt9ZCklySlB8RTeQJz7+NBq7zmd1HjbsNkY7c68
+         FfTWgmx9mttcNZCelW+0cg6qyahGLyiOlAQp25/MZw5VqSMSoGMi4O0K/mSdQFfyER1g
+         8fSQ==
+X-Gm-Message-State: AOJu0Yyfd2cxh7TaIysKQOZLi3oCmx/y9Smslrlzbwq+8vqFGQvuDqdH
+	0d/AsArbYEoSF+lwT4/V2r8j/dS/Gyn1bCX1C5LtekEnJo5QN/U/Di04XA==
+X-Gm-Gg: ASbGnctyAMGi6nC8kOnKd1L+1ZuQBzviUoQ8kXBP3cojj6qaS4kYRNZ/z79utBT3Sow
+	LpBhRwFRnezUiRwgyZ4auv/UrIoewHQ0BpQkKTZ4DrUvbymcFpxPP7LwtsDVYxR38OAOT7m7YbN
+	eq19iNBkxWTV3I38JZwknU/NVBcH09cUyjlsyCs8UbV0uZ6b4Q8XqDJPzQwsbYuihGv3LLL6AWk
+	V4xeBv6zg2jlQeUiPCUHLEzH/YBle3RXqNTVCw+QE4l1ACvNAX2nd517rn1P2Qpq0Y8NmX8pcgI
+	792LYwvzNm1mhbTrqBdyHwBV4R3Sss6++uyVNEUy5Mo8dQMu73MzSHIePb6y8uxrJiPciPaCg4e
+	X
+X-Google-Smtp-Source: AGHT+IGWEBpHpkE6Wk268Fl8XbDa7afVNlmfDq0EEizDgmqlvdIi8LIQGYP3FXzpbEIno/EQtnakwg==
+X-Received: by 2002:a17:902:e80d:b0:220:ff3f:6cba with SMTP id d9443c01a7336-22e5eccc469mr65562095ad.38.1746639552379;
+        Wed, 07 May 2025 10:39:12 -0700 (PDT)
 Received: from localhost.localdomain ([49.207.193.52])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-22e15232797sm97751415ad.240.2025.05.07.10.39.08
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-22e15232797sm97751415ad.240.2025.05.07.10.39.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 10:39:09 -0700 (PDT)
+        Wed, 07 May 2025 10:39:11 -0700 (PDT)
 From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au,
 	andrew@codeconstruct.com.au,
 	jk@codeconstruct.com.au
-Subject: [PATCH linux dev-6.6 v2 0/3] Backport MCTP Over USB Binding 
-Date: Wed,  7 May 2025 23:08:03 +0530
-Message-Id: <20250507173806.5371-1-santosh.puranik.ibm@gmail.com>
+Subject: [PATCH linux dev-6.6 v2 1/3] usb: Add base USB MCTP definitions
+Date: Wed,  7 May 2025 23:08:04 +0530
+Message-Id: <20250507173806.5371-2-santosh.puranik.ibm@gmail.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250507173806.5371-1-santosh.puranik.ibm@gmail.com>
+References: <20250507173806.5371-1-santosh.puranik.ibm@gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -91,28 +97,87 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Changes in v2:
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-Rebased to dev-6.6.
-Handled comments from Jeremy.
+Upcoming changes will add a USB host (and later gadget) driver for the
+MCTP-over-USB protocol. Add a header that provides common definitions
+for protocol support: the packet header format and a few framing
+definitions. Add a define for the MCTP class code, as per
+https://usb.org/defined-class-codes.
 
-Jeremy Kerr (2):
-  usb: Add base USB MCTP definitions
-  net: mctp: Add MCTP USB transport driver
-
-Santosh Puranik (1):
-  net: mctp: usb: Port for kernel 6.6
-
- MAINTAINERS                  |   1 +
- drivers/net/mctp/Kconfig     |  10 +
- drivers/net/mctp/Makefile    |   1 +
- drivers/net/mctp/mctp-usb.c  | 386 +++++++++++++++++++++++++++++++++++
- include/linux/usb/mctp-usb.h |  30 +++
- include/uapi/linux/usb/ch9.h |   1 +
- 6 files changed, 429 insertions(+)
- create mode 100644 drivers/net/mctp/mctp-usb.c
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20250221-dev-mctp-usb-v3-1-3353030fe9cc@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+(cherry picked from commit dcc35baae732b9079b2c6595cfd86da02b34a4e6)
+Signed-off-by: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+---
+ MAINTAINERS                  |  1 +
+ include/linux/usb/mctp-usb.h | 30 ++++++++++++++++++++++++++++++
+ include/uapi/linux/usb/ch9.h |  1 +
+ 3 files changed, 32 insertions(+)
  create mode 100644 include/linux/usb/mctp-usb.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 8722a4a851f1..d3e42e21ef65 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -12648,6 +12648,7 @@ L:	netdev@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/networking/mctp.rst
+ F:	drivers/net/mctp/
++F:	include/linux/usb/mctp-usb.h
+ F:	include/net/mctp.h
+ F:	include/net/mctpdevice.h
+ F:	include/net/netns/mctp.h
+diff --git a/include/linux/usb/mctp-usb.h b/include/linux/usb/mctp-usb.h
+new file mode 100644
+index 000000000000..a2f6f1e04efb
+--- /dev/null
++++ b/include/linux/usb/mctp-usb.h
+@@ -0,0 +1,30 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * mctp-usb.h - MCTP USB transport binding: common definitions,
++ * based on DMTF0283 specification:
++ * https://www.dmtf.org/sites/default/files/standards/documents/DSP0283_1.0.1.pdf
++ *
++ * These are protocol-level definitions, that may be shared between host
++ * and gadget drivers.
++ *
++ * Copyright (C) 2024-2025 Code Construct Pty Ltd
++ */
++
++#ifndef __LINUX_USB_MCTP_USB_H
++#define __LINUX_USB_MCTP_USB_H
++
++#include <linux/types.h>
++
++struct mctp_usb_hdr {
++	__be16	id;
++	u8	rsvd;
++	u8	len;
++} __packed;
++
++#define MCTP_USB_XFER_SIZE	512
++#define MCTP_USB_BTU		68
++#define MCTP_USB_MTU_MIN	MCTP_USB_BTU
++#define MCTP_USB_MTU_MAX	(U8_MAX - sizeof(struct mctp_usb_hdr))
++#define MCTP_USB_DMTF_ID	0x1ab4
++
++#endif /*  __LINUX_USB_MCTP_USB_H */
+diff --git a/include/uapi/linux/usb/ch9.h b/include/uapi/linux/usb/ch9.h
+index 8a147abfc680..dce954da45ac 100644
+--- a/include/uapi/linux/usb/ch9.h
++++ b/include/uapi/linux/usb/ch9.h
+@@ -327,6 +327,7 @@ struct usb_device_descriptor {
+ #define USB_CLASS_AUDIO_VIDEO		0x10
+ #define USB_CLASS_BILLBOARD		0x11
+ #define USB_CLASS_USB_TYPE_C_BRIDGE	0x12
++#define USB_CLASS_MCTP			0x14
+ #define USB_CLASS_MISC			0xef
+ #define USB_CLASS_APP_SPEC		0xfe
+ #define USB_CLASS_VENDOR_SPEC		0xff
 -- 
 2.39.5
 
