@@ -1,58 +1,62 @@
-Return-Path: <openbmc+bounces-37-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-38-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ED56AAF471
-	for <lists+openbmc@lfdr.de>; Thu,  8 May 2025 09:12:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D78CBAB1946
+	for <lists+openbmc@lfdr.de>; Fri,  9 May 2025 17:50:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZtNd52CNYz2ygh;
-	Thu,  8 May 2025 17:12:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ZvD3w00y6z3bgn;
+	Sat, 10 May 2025 01:50:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746688377;
-	cv=none; b=T/7K2yQ7HIGMERWX6uEgu7ZQyeAV0iNCuk3zgwRNgNEsL5e+ScodCmL4E0gg4NfUR7j8TeheO2a69p5CDWl/vm6WhZ6a0SdRepcxRYF/R9eD/bpQFBgC9eLP25XkkAAoID/HTeFJZcaLwJlsF44ORZtHX8//4WUvtradQve/zmHyjJJCx++Mx81T7aeJGUKW5768c8sXAHTrm3Vkx7+sBVQLVG8V2aEgLPYOSVAF1gqrcqme9lf/hhpxl7uPFHsnGB3eM+UWdrRxFirBE9paQzsWC//uGfsFz0q3oIBr2m9RbEseJFXGW2jVlPWzuRTVg2dhYUvWhqiiyIZL9yp/ww==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746805835;
+	cv=none; b=KQCm/Ajo2IzzgKS0Itu0aJK7qul4puc1Rmuqt8lcKLWEU7GD6uJEsQBJt7cKdBM/CDqSzcbVFcL9mcEQUpythqk5cAL1dOCq1rz/NsrYYC2061/jWYbPoBPSy9MIl64slxXNpHQ7+XPNcpzFN3InKDdJOjGO0fu/2Be/3S1siN173j2NYwvHnxovrJ15mdhUth9MsVR3PexUAS49KgBwci8EDWeOfuf/BCqMHfJOacssVcyPLlRCtGIGEnkjLJBda4nbjJ1/yik8wB0JrdlQwnxAFdUh0sQZrKlUxfi2TTuGBOh0B/6fCi+B1xDOIEUnn79PNYTD0N4aNbiR44YIzg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1746688377; c=relaxed/relaxed;
-	bh=xP8431J740+lycfocE6wILMGJQqVTjbgXFMsRTBLxFE=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=cVwvOS7D+WA+GvoGiXmVbAx7Xb9P2AjVZk53vZPA3XqI2Nm0YjYCaSDl+DXQo5OBMxdl626OcNThrtccAJ66v7n4wFxxBfO8BqTCd4EbHelFxS63R5GLn0keBfb6j5BDY4P9IVlVmqUd0c2yGvkBUDe5YlbHWJnQJTWI8SjcAJEfEjqrQiOaLJFEeSPkkyFPmb4uelRAg5FlgH3AinbU64NrTDD4aRi2DuJ0Fm2VvHjVu57cOS1yUOkNt8Lzrs7s/WQUh1FBGtZg+eFuUPMWtuDOhfIV3li4zqBi4m3c6K25s1fa9ek2jylHiMDenFUX5DbO1AzbgPBpsQCLSKLORA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=JOEe2G5q; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+	t=1746805835; c=relaxed/relaxed;
+	bh=MWAkGidqBX5HBclIK0w8IRw+9+HbrMS7tiBfUakCTeQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NZKL3vgPnJOPRYNS9sumgT5JFPhXbL6Jh8c4UP8asjSZg8HftHX95uhiR5g/B705w5rW0iNpkAVaNcmWwmERSqYpK1XYRDxXkJNt9RbAUmj96+4Nm+uRb/kxLyfT4RfYUBlI4vi8SP9d8grWs2p2LL7M4EW6X0ewvz0ewphlkW94wlPJbcGiey5fJ+seoP5KshhlA9eJysW2ASnr948b7vq2v4ZG9tq0QUkAeJayzqQ2JySRVppyyKqTcnqTxmCMmEvS4jhkC0mvAZbS0M5i7n4XeFRPPHt614NR+yx6j57hDG6CN+FTLWCK0YHbqAIDVja+DcLi8YGHyhodnXjS7w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=agPE/e38; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=JOEe2G5q;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=agPE/e38;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZtNd430ltz2xHY
-	for <openbmc@lists.ozlabs.org>; Thu,  8 May 2025 17:12:56 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1746688373;
-	bh=xP8431J740+lycfocE6wILMGJQqVTjbgXFMsRTBLxFE=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=JOEe2G5q1XPHNvMjNTrZHRqgmxP4hzkWafeRSmprpi28UEdjgrEhAjnEr1uKwv/og
-	 J4OKoE8jn+YRqWHTwyqeUVJk6Ivdhbw/FQOIpBGlim8fiByB8FZACo+3/kcKxdnITi
-	 WWqaLoFwFPVDL2AMWy/NOT7sakbd3RY2ukCwSi0nDIFIdWvH5inMEiKcb1IuiP04kb
-	 7bNEV0hq0tIB+LkVb/yXZPu2bxyuk0TGkEQANqeFgrO0eGPdL3m+i1Am+z7Tv63uKu
-	 qenx3hhkZPOShC4w7OBz3XzNntbw1AwygDKt6rFUGzB8zY7p4kA5ALNcWNG0OFIwE8
-	 mAs+/KGEdAoeQ==
-Received: from [192.168.68.112] (unknown [180.150.112.225])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 378426449A;
-	Thu,  8 May 2025 15:12:52 +0800 (AWST)
-Message-ID: <8fac6e31411b6879bcc325813cc6bca8744e8c2c.camel@codeconstruct.com.au>
-Subject: Re: [PATCH linux dev-6.6 v2 3/3] net: mctp: usb: Port for kernel 6.6
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Santosh Puranik <santosh.puranik.ibm@gmail.com>,
- openbmc@lists.ozlabs.org,  joel@jms.id.au, jk@codeconstruct.com.au
-Date: Thu, 08 May 2025 16:42:51 +0930
-In-Reply-To: <20250507173806.5371-4-santosh.puranik.ibm@gmail.com>
-References: <20250507173806.5371-1-santosh.puranik.ibm@gmail.com>
-	 <20250507173806.5371-4-santosh.puranik.ibm@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZvD3t22yMz2xpg
+	for <openbmc@lists.ozlabs.org>; Sat, 10 May 2025 01:50:34 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id A689E5C5433;
+	Fri,  9 May 2025 15:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25259C4CEE4;
+	Fri,  9 May 2025 15:50:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1746805830;
+	bh=MWAkGidqBX5HBclIK0w8IRw+9+HbrMS7tiBfUakCTeQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=agPE/e38PsyLDYEY7NP19Kk/S3Aki2UA+OUsmF/Ur0wiu8MwfK13WMkYRpSoktZ3x
+	 qYhMlflMGek/F7qJiDASfOQAKDQ6iFuoBSsknUIWyjckHs6AZdS7ZrXCECZMGA31zE
+	 henLbXb4ceM4pH+zqlVlSM4xAyb55uw08vNs1Ym1d//KHxWGl/adzIG9kTipPnwVAy
+	 0sSfriM3YS2b34KI8jzLtNhpKru+SAeetkxbzMyHW02ewuvB/G71gm9lu/RiCOtc2S
+	 KJMndkwXkLJqRZDKcI8jvOv2pjcUAvQI6J0KaWcVHwUSz8qPEQmE7ZNFXzpw9z/G/u
+	 irnqM44abmMJA==
+Date: Fri, 9 May 2025 16:50:25 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Vladimir Oltean <olteanv@gmail.com>, Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+	Frank Li <Frank.Li@nxp.com>, linux-spi@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH 1/2] spi: dt-bindings: fsl,dspi: Fix example indentation
+Message-ID: <20250509-anew-slept-032f64ac6034@spud>
+References: <20250509112130.123462-3-krzysztof.kozlowski@linaro.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -64,21 +68,42 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="JLtz9K+e58T54EQF"
+Content-Disposition: inline
+In-Reply-To: <20250509112130.123462-3-krzysztof.kozlowski@linaro.org>
+X-Spam-Status: No, score=-0.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Wed, 2025-05-07 at 23:08 +0530, Santosh Puranik wrote:
-> From: Santosh Puranik <spuranik@nvidia.com>
+
+--JLtz9K+e58T54EQF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, May 09, 2025 at 01:21:31PM +0200, Krzysztof Kozlowski wrote:
+> DTS example in the bindings should be indented with 2- or 4-spaces, so
+> correct a mixture of different styles to keep consistent 4-spaces.
 >=20
-> Fix the way the mctp usb binding driver records netdev stats.
->=20
-> Signed-off-by: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I've squashed this into the previous patch with a note in the trailer.
+For both
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
-Cheers,
+(idc about both appearing in tree with an ack Mark)
 
-Andrew
+--JLtz9K+e58T54EQF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaB4kQQAKCRB4tDGHoIJi
+0qShAQCd9ufBaxXRPbap/bGPVseVhTYkT+wTdHHy2pa1ltrV8QD+Jy6vOTleDf2K
+GCgM3WPo4O3ActnatJPM376WaePb7AE=
+=7huX
+-----END PGP SIGNATURE-----
+
+--JLtz9K+e58T54EQF--
 
