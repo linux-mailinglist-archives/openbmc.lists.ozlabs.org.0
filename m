@@ -1,62 +1,63 @@
-Return-Path: <openbmc+bounces-38-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-39-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D78CBAB1946
-	for <lists+openbmc@lfdr.de>; Fri,  9 May 2025 17:50:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 092ECAB260E
+	for <lists+openbmc@lfdr.de>; Sun, 11 May 2025 03:55:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZvD3w00y6z3bgn;
-	Sat, 10 May 2025 01:50:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Zw5Qy1SYzz2yFJ;
+	Sun, 11 May 2025 11:55:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746805835;
-	cv=none; b=KQCm/Ajo2IzzgKS0Itu0aJK7qul4puc1Rmuqt8lcKLWEU7GD6uJEsQBJt7cKdBM/CDqSzcbVFcL9mcEQUpythqk5cAL1dOCq1rz/NsrYYC2061/jWYbPoBPSy9MIl64slxXNpHQ7+XPNcpzFN3InKDdJOjGO0fu/2Be/3S1siN173j2NYwvHnxovrJ15mdhUth9MsVR3PexUAS49KgBwci8EDWeOfuf/BCqMHfJOacssVcyPLlRCtGIGEnkjLJBda4nbjJ1/yik8wB0JrdlQwnxAFdUh0sQZrKlUxfi2TTuGBOh0B/6fCi+B1xDOIEUnn79PNYTD0N4aNbiR44YIzg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1746928506;
+	cv=none; b=UYf/OcYERPtak+A5+FcAsud02Hw6+0GUfJkWsqHCA0281db3OGAHDs3Gas1vBj0a37Fe7GdcEeOSCVeWcCyC6ZgzSRMDCLiB0VeW1enz/iKZLBmqpyXTLbi5YbYmfW+XeMjcj7JINapHF8uYp49zQovlnLu75j2nPdqq6HQG2/mJOWCkpveH46/WC9ZAIrv4+I5MS8zXel9kRuPQEtHKfPWqWCTzTPibapg4hRylXvJXjf3aLwLiu8A8tzLzsHb7x3zYC88do+fCjaLktaAmv+QlUgRHW7Fwec43jZBXYUjokoI5hAlt6CKxBb+WV+C5p5WWcLabs7rsWuk6uvNl+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1746805835; c=relaxed/relaxed;
-	bh=MWAkGidqBX5HBclIK0w8IRw+9+HbrMS7tiBfUakCTeQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NZKL3vgPnJOPRYNS9sumgT5JFPhXbL6Jh8c4UP8asjSZg8HftHX95uhiR5g/B705w5rW0iNpkAVaNcmWwmERSqYpK1XYRDxXkJNt9RbAUmj96+4Nm+uRb/kxLyfT4RfYUBlI4vi8SP9d8grWs2p2LL7M4EW6X0ewvz0ewphlkW94wlPJbcGiey5fJ+seoP5KshhlA9eJysW2ASnr948b7vq2v4ZG9tq0QUkAeJayzqQ2JySRVppyyKqTcnqTxmCMmEvS4jhkC0mvAZbS0M5i7n4XeFRPPHt614NR+yx6j57hDG6CN+FTLWCK0YHbqAIDVja+DcLi8YGHyhodnXjS7w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=agPE/e38; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1746928506; c=relaxed/relaxed;
+	bh=DPJaUVF3ktatP0WgwPhdhHKGsbmthC5RlrEgc3XybLI=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=ZSOIyUSVsxt5F9WXmOvl7QNnCXgckp0kd+RuOpx6U8k18OdQtjIXqhquQwlPZOiw+/j+rkZCEQep0BBGe96qxcHHwDeGrZF3ThVa1sB2KJXl7nmwkSKj+c9vVr4mrWvJJCz8AiZ4ebk3GkBFTd2Vs7NES0T4s7hef2v28VLvVj77erb874LYBgcWOOEPi4JoZnITx5H7sGPDfbYF7B7keFRlLD6Lr7gofb1IbbENuozwdarOGbampz7nFOjPOxKO5DbKfgdeAMoNiK4HC5vyl1RuJh6FL7KGFuPmmmltUERdmcM+Okub1nQxLJxfc08qZkaNQrAf3PdjDvHt5aY6mw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O7dVw8nG; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=agPE/e38;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O7dVw8nG;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=conor@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZvD3t22yMz2xpg
-	for <openbmc@lists.ozlabs.org>; Sat, 10 May 2025 01:50:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zw5Qx3ZVbz2yDr
+	for <openbmc@lists.ozlabs.org>; Sun, 11 May 2025 11:55:05 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id A689E5C5433;
-	Fri,  9 May 2025 15:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25259C4CEE4;
-	Fri,  9 May 2025 15:50:27 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id F04ABA417FC;
+	Sun, 11 May 2025 01:55:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B011C4CEE2;
+	Sun, 11 May 2025 01:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746805830;
-	bh=MWAkGidqBX5HBclIK0w8IRw+9+HbrMS7tiBfUakCTeQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=agPE/e38PsyLDYEY7NP19Kk/S3Aki2UA+OUsmF/Ur0wiu8MwfK13WMkYRpSoktZ3x
-	 qYhMlflMGek/F7qJiDASfOQAKDQ6iFuoBSsknUIWyjckHs6AZdS7ZrXCECZMGA31zE
-	 henLbXb4ceM4pH+zqlVlSM4xAyb55uw08vNs1Ym1d//KHxWGl/adzIG9kTipPnwVAy
-	 0sSfriM3YS2b34KI8jzLtNhpKru+SAeetkxbzMyHW02ewuvB/G71gm9lu/RiCOtc2S
-	 KJMndkwXkLJqRZDKcI8jvOv2pjcUAvQI6J0KaWcVHwUSz8qPEQmE7ZNFXzpw9z/G/u
-	 irnqM44abmMJA==
-Date: Fri, 9 May 2025 16:50:25 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Vladimir Oltean <olteanv@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	Frank Li <Frank.Li@nxp.com>, linux-spi@vger.kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH 1/2] spi: dt-bindings: fsl,dspi: Fix example indentation
-Message-ID: <20250509-anew-slept-032f64ac6034@spud>
+	s=k20201202; t=1746928501;
+	bh=ig4DYJ3RXrVpEeq3aerEl+Ap4/cbUODtqNdrvm1zJko=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=O7dVw8nGOAjKUBvvPSiCXB25ADmuwKNiprixu+5FFh04GZ2ucVCvxN8jFlQtEHjeY
+	 ImxJlGApNuSuCtgpPcorxA+7CoZbJo6J8RF9JzivuA2wstZQ9u/gngjZH0/JR9OQni
+	 NuIbGRShNPb/deGAzgu8zTrvA06yHiAAZVwOCwmQ8/4wL3Ui2RFpJEXanFKDkQ6nK/
+	 XP1e12gz8+AdtJghb/wfFNlryapmHqAQbBA8DRyscCRk7coru9UYkZ0GTLlfpLAsd5
+	 iX2LV4Vf/e9o4wyclhxLzZ+c93b5lWOALqlCUcfAlxmJymj60l6ewr87wcT8kXrma+
+	 yNbTpHKoV8yEA==
+From: Mark Brown <broonie@kernel.org>
+To: Vladimir Oltean <olteanv@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+ Frank Li <Frank.Li@nxp.com>, linux-spi@vger.kernel.org, imx@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ openbmc@lists.ozlabs.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250509112130.123462-3-krzysztof.kozlowski@linaro.org>
 References: <20250509112130.123462-3-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/2] spi: dt-bindings: fsl,dspi: Fix example
+ indentation
+Message-Id: <174692849876.61256.337596049686049621.b4-ty@kernel.org>
+Date: Sun, 11 May 2025 10:54:58 +0900
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -68,42 +69,48 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="JLtz9K+e58T54EQF"
-Content-Disposition: inline
-In-Reply-To: <20250509112130.123462-3-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-0.8 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-c25d1
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-
---JLtz9K+e58T54EQF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, May 09, 2025 at 01:21:31PM +0200, Krzysztof Kozlowski wrote:
+On Fri, 09 May 2025 13:21:31 +0200, Krzysztof Kozlowski wrote:
 > DTS example in the bindings should be indented with 2- or 4-spaces, so
 > correct a mixture of different styles to keep consistent 4-spaces.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> 
 
-For both
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Applied to
 
-(idc about both appearing in tree with an ack Mark)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
---JLtz9K+e58T54EQF
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks!
 
------BEGIN PGP SIGNATURE-----
+[1/2] spi: dt-bindings: fsl,dspi: Fix example indentation
+      commit: 846656f278e803cb60161f0cba4ee90a058440cc
+[2/2] spi: dt-bindings: nuvoton,wpcm450-fiu: Drop unrelated nodes from DTS example
+      commit: a4ca02454821cbc411e0bf16e527d392f188c218
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaB4kQQAKCRB4tDGHoIJi
-0qShAQCd9ufBaxXRPbap/bGPVseVhTYkT+wTdHHy2pa1ltrV8QD+Jy6vOTleDf2K
-GCgM3WPo4O3ActnatJPM376WaePb7AE=
-=7huX
------END PGP SIGNATURE-----
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
---JLtz9K+e58T54EQF--
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
