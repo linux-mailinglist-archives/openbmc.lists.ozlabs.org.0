@@ -1,83 +1,87 @@
-Return-Path: <openbmc+bounces-48-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-49-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC7A5AB9A90
-	for <lists+openbmc@lfdr.de>; Fri, 16 May 2025 12:53:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A031ABA31D
+	for <lists+openbmc@lfdr.de>; Fri, 16 May 2025 20:47:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ZzP7L1xR8z2y3b;
-	Fri, 16 May 2025 20:53:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Zzbg266njz30Vf;
+	Sat, 17 May 2025 04:47:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1747392782;
-	cv=none; b=gBVWcGL2xQOI3jCpC4Ohe8pjO2XnIgVvc3j0CoXj4cvksfPkDobnjqbr/B/lIUYeerSDntcvmx2PAJTXGOMO+6esNd9oA4FQXb2LPMFJTfncFB8utACnhEaVqM2oR5inLT7RS0NPb/fnFzN8JQRvpkkM8HgWAGULOh1TEl5jQz7y7ajWbtvzM9YQh4P5gs2KsYe0QnnYvP7s5AoPT+780ey4Vx7G88NSCmNzs+wq3BziUjQo9hzGg6xg5HZoKrpXmVbz9yn7jqG5BaHG67LV2ywrtES8X+9+M5qrGoiI+yYu0nq4WkAsCWWFf0rGkYMZyRnLJ25PP2JFqqL3UFsjpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1747392782; c=relaxed/relaxed;
-	bh=RkY4qsdVBiY/6iFY1K8IbuLCpjqJAbyozvHL3ufa7ts=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EP2Re5Wgh+Rqeuy38tlFfvX32ifGPuIn69lbpejzLu9FPoCPiEfLYIZpzmT3C+YY9p00PiLIm18c8SwLvKHhtUE7tO/9vEU8LeU7DLUr2dJvukOrcej5NZQcHKrfA6IbZbXuKLxmpB93etqWZzdO6i+dCn7cjGX/8W783Gm8PTbFnQdDEvl8zaYhR9iRcZ0VG7K8uJHWmxFJoOCqcLJ9KXwoS/fuio0Uw+PavWi9OSVHHu/MFE0HbrcslOaC7WBvZ+yC5T75zdu6yfWYn8tt52EyzPPYhRxcPto7RHNmm9cSP7QqcC7qzBUYVu+8eyKQAVvvz7cTN+jqBPx8HeRUiw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Y1TA+5TY; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:2406::605" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1747421262;
+	cv=pass; b=cdUZttj5uSYQvNLETv0GWWm83Czh5wn93pZ6RWsRWmoiao2ztasQiyLEK6Tm+6pKiDS5zpKCpuyLtpJ3ZpnZREk5nGlNWAmb7QdA0Qhf/8oZvNknTJ4ZQnn0GItby9xKs45/T8aJBpmARaFjO5EkkoV+tPMTnJBOQatbkiWHdF99OSUv+QsJTlycubLtYD/u1Tve747JnxeBUk5baRXIwDJZQ0xA5GU1xXg87Lf2tA3jaxyoVQLLcUGmmtX3xg4k8dmRRkLAkeyov0SMGKWpm9p620VR/dhsa1p2f+Ysdf9S7fnmnzwIlK6eDVWRUe5mR0uOcqa+PHsi+zjjLoIdAw==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1747421262; c=relaxed/relaxed;
+	bh=EvIhpRKI28V36m0x34k6avnjEdaobWFysClTNqKwRYY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=exbif60gNqA+URxDfacHQuAfkG26XD8p1ezgp4H4QwrlOxnhtUoJFZpA1+x1i1gcVwFRa5n9TByYdV+4sKDFX3EaP3mcdiEEu1Ka+eZij74PU/TioLFaen4ZPARlqB12emGkNEesicrTh+CS+/6XCQopVdfZwhqlbWGWpmF5394FPcXiO9BxVqjKjQwLceVqXBI0BAigUfBX9L58crg9hsJqwO93Ilxg3xSZ31CmuUdTEhVyRZElwTktyIk2vlQOZ0GQPDtX/IhzjX5csBwIGvmxa++bvDmbW41yeSGtdxJw4bVe2SXnczMXDW5CTN00O1ooYWPVCsQ772Vmvvkumg==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=ifRcyjs0; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:2406::605; helo=nam02-sn1-obe.outbound.protection.outlook.com; envelope-from=wthai@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Y1TA+5TY;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=ifRcyjs0;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f403:2406::605; helo=nam02-sn1-obe.outbound.protection.outlook.com; envelope-from=wthai@nvidia.com; receiver=lists.ozlabs.org)
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on20605.outbound.protection.outlook.com [IPv6:2a01:111:f403:2406::605])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ZzP7F1Gz2z2xyD
-	for <openbmc@lists.ozlabs.org>; Fri, 16 May 2025 20:52:55 +1000 (AEST)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-2301ac32320so21402135ad.1
-        for <openbmc@lists.ozlabs.org>; Fri, 16 May 2025 03:52:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747392772; x=1747997572; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RkY4qsdVBiY/6iFY1K8IbuLCpjqJAbyozvHL3ufa7ts=;
-        b=Y1TA+5TYWGH6dY11487ixueGfAwhjz1lgh+3584TY48ZvnqcHM9UOq+MevH8+MtVdq
-         dNQKzf9N+2/nnuQtG2DELYIdqlkJSifvS2NCkDX/mpP/+uZLZBkjs7qsK2uM0JM+FnRu
-         GiVbDCfcxS3yNreG1dLFVSWy9eMZImerVGTPLtQr7kr3zZNhzY19JplMT1Q5M9SkULur
-         HrJNn8PvqxfV8tylp6BcWDvSYbmQN3oGapUYQjkk/w9lQpXwjFOM4rT90Nq/tNrxSMwE
-         t34o8N2zTo71IqoE1Nl0+KHlD+G+QNgF1RpLeC/Al01JYTxENY9Rm4HFw0RNZlb856Oj
-         0QwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747392772; x=1747997572;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RkY4qsdVBiY/6iFY1K8IbuLCpjqJAbyozvHL3ufa7ts=;
-        b=vf30Cnh2C+V3e/j15WBD+GQ4VzewdU7kBftfIkyPlhhtFyTP81CGwVjd6MhtzQvw1u
-         0ruVcHXcwVfyx0x7cE2p7xBM8JqQtw8YWSUfYlFwGM1gR7NQOxfyMKRBJT+RCTdliC73
-         557TjOPDYniXWxB40Zc14M2Py1VjnhyKh9lna/O6m4f5WLsrGiOJbLkXfbFG4mho6Sdi
-         xJW0rcUQ9/7xMbonfsIXxjFadjZ67KIcVlSD+WIPJEsu+sfC2YeEKlONTh6n9Mdt8ueh
-         TNo4iYElrhUGSFys/lUF7q79lsGg+gjKUt9r5YOXFFaYHuO7cAS0i0Uw+XGZ6EzdVd0S
-         Hlug==
-X-Forwarded-Encrypted: i=1; AJvYcCWDcwP7eiWpjymroqqm7nvZ4owGsIgvUqxDokBmVWLxPsUhCWB9UkuW1BHRs69li9Nig9h/qj97@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzldkUPujPTEn1G/YCdzp2RJKKxpfvti2RAh6UltmZgXhlUTPz3
-	RIY3Lze3pU4Iqj3IgrRtAjNAMmCKcLca2vWlSEayTBB22TD4CjBgnQ5X
-X-Gm-Gg: ASbGncuXzvyf15sCsHxlZB1EzVHU4VaoeBBnh28lWT7SlvnCmVSCC/W/663RUEVM83a
-	lT3COdsubHgEJRwIyaHQPpE9S8uFw14tj4zUGn3ADQePp3JqolKhUQr3TUwioPtHYUyHGRLnRYq
-	vdtRggPsr+rK+IdK2q2LGq876wTa9oP1Ds5Qg1uMAerkYdORtkSyz/9IXvU+KDjv6Nwc59FP3x7
-	AQII+RATdxxAIr85gltZMA0QXDcSJ4zpzBjDKPiyyDF4hKZSExSsksL8NFGXVeY4jGCh2bMuxff
-	bS2w/NN9Xhyakh2u3k62bLpUglRlakF6oDy8GzeMqAItfY7NNZl5O4Gk3l7u+QyC/hwmKznfzzI
-	+r7vTC6zLiYcKj3TfugdaW4QwPsB31e4CRs2QfSfl6Ma9y40Ar7/S
-X-Google-Smtp-Source: AGHT+IHg4UB9iifJ1/Fx3FInL71y/Eaakinjh5OvNrNhXnAgH9A5Ev4Vb5sYq6NodcDMrQpIUYPXtg==
-X-Received: by 2002:a17:902:e842:b0:227:e980:919d with SMTP id d9443c01a7336-231d45afcccmr34271995ad.47.1747392772541;
-        Fri, 16 May 2025 03:52:52 -0700 (PDT)
-Received: from cosmo-ubuntu-2404.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4e97defsm11737785ad.118.2025.05.16.03.52.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 03:52:52 -0700 (PDT)
-From: Cosmo Chou <chou.cosmo@gmail.com>
-To: andrew@codeconstruct.com.au,
-	openbmc@lists.ozlabs.org
-Cc: chou.cosmo@gmail.com,
-	cosmo.chou@quantatw.com,
-	Amit Sunil Dhamne <amitsd@google.com>
-Subject: [PATCH linux dev-6.6 v2] usb: typec: tcpm: Add support for parsing pd-revision DT property
-Date: Fri, 16 May 2025 18:52:22 +0800
-Message-ID: <20250516105223.1804718-1-chou.cosmo@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Zzbg14tQ8z30Ql
+	for <openbmc@lists.ozlabs.org>; Sat, 17 May 2025 04:47:41 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=K98IwAbjCwa+imfex8iWGcwkJLvMcaNHE3wGbB1OpDlRyv/GSanK8au6d3JCEgMTWCT7x0ZihxSrRyJqzCU8wr4ms0XKx7nhG/Wd9bSeKrQ5kYFR/olOle+zjpN6Me1N4mho1FYhpw1uKgyEWH1cYKDeZPOQhaIomo+Y59YXyXUSItWspGbwL419SJJVBz4vntZznJyMYp/zMv7jAkE/4nwl/aKepuGgVgcF2KDg704hngRDLGuhzh39U20WC/vrXP8RpMStwZ/4kHK4PxLxQoFwKAcig1hP5EAny3yKJSZyKsFLd0liRE+52LPB0C66UH4HvEzeKB62nTuFshdOHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EvIhpRKI28V36m0x34k6avnjEdaobWFysClTNqKwRYY=;
+ b=IENk7sWqlq1kxPZBv+gCKXiDFRQWligt1ZmZ7SwOp95mWJ4ew4trruGGEo/6BR2Id92YcPjl+GypHKW9j9hE6KYrzSqkNOnRT4+Dt01JY0ne7l2vlxb7fGvrS9GTom54SMd3tCc/7w1bzrq5v1LWqtf0vSpACQcXpzrAkfEthUp5wFMF0h/gpcTUJigBeY6CjWQB6x3RGi/dyKxZcu+S6+n+etbjRW7oz8wjeTayq1UlTr/0nM7vSFnwtei+I+MnXZiGLU6Ct6CUvpeq4D+PyVJqBpadgHk3Mn/pSuVOltyTUy5MO+riT+hKnKxXxQP+Z1lQidEzTqCNOx0zoYZ+rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=jms.id.au smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EvIhpRKI28V36m0x34k6avnjEdaobWFysClTNqKwRYY=;
+ b=ifRcyjs00JTmqmNZ0EZcqojx6pRDwqLYKvE6AwpY/r+IuIcQ2piq3AcoceK8ixDNGtH4QqmRp+sy8de/NF67/y4Wx/MRSAZT2K7Mcjv+Ltwt9Mu2raJCDVlaZARx5ZR+Jx8prD63voV59fCbVLEL9zgN5BYtmCI6rX0d0PizShqT7Rr7gV4DFHRTgMaMOUAG/YJIr8O+i7GRwhQ0RkCGQhG6kPhFPhLqM8VaY4d7o+89hnJ32bVgvlSjkQKmD7te17ZIyVoUGgsdFlddnAjYHJzLMHlCqEiyMs5pfKnGCB6LY7at/8wMbrFZttWcGS3J+s5RyLiZTrK608rTL8q8sQ==
+Received: from DM6PR05CA0049.namprd05.prod.outlook.com (2603:10b6:5:335::18)
+ by CY3PR12MB9579.namprd12.prod.outlook.com (2603:10b6:930:10a::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.31; Fri, 16 May
+ 2025 18:47:20 +0000
+Received: from DS1PEPF00017095.namprd03.prod.outlook.com
+ (2603:10b6:5:335:cafe::87) by DM6PR05CA0049.outlook.office365.com
+ (2603:10b6:5:335::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8769.12 via Frontend Transport; Fri,
+ 16 May 2025 18:47:20 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS1PEPF00017095.mail.protection.outlook.com (10.167.17.138) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8746.27 via Frontend Transport; Fri, 16 May 2025 18:47:20 +0000
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Fri, 16 May
+ 2025 11:47:09 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail202.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 16 May
+ 2025 11:47:08 -0700
+Received: from willie-obmc-builder.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Fri, 16 May 2025 11:47:08 -0700
+From: Willie Thai <wthai@nvidia.com>
+To: <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
+	<openbmc@lists.ozlabs.org>
+CC: <wthai@nvidia.com>, <leohu@nvidia.com>, <tingkaic@nvidia.com>,
+	<dkodihalli@nvidia.com>, Ed Tanous <etanous@nvidia.com>
+Subject: [PATCH u-boot v2 0/3] ARM: dts: aspeed: nvidia: Update the DTS file for GB200nvl BMC
+Date: Fri, 16 May 2025 18:47:00 +0000
+Message-ID: <20250516184703.726599-1-wthai@nvidia.com>
+X-Mailer: git-send-email 2.25.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -90,123 +94,80 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Type: text/plain
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS1PEPF00017095:EE_|CY3PR12MB9579:EE_
+X-MS-Office365-Filtering-Correlation-Id: f4b75e28-0337-484c-c726-08dd94aa16ba
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|82310400026|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?KZJMJX9IfldGG87XyZPAyxbHOf7CbVrjMHMv54uaogaasydXIN3iczcp5g1L?=
+ =?us-ascii?Q?L9KDyo8OyrKnZcdSpFvEOXi133oIXoHh+hWphoCrG9ai/WbKB0IreV58Bc8F?=
+ =?us-ascii?Q?5GHsVj8h+LTon0G5kcOw8+9WiWM/K6uz9P7MkJtlqABqo/4VrSl5nrqyCo2P?=
+ =?us-ascii?Q?tBbwzJd6+zEJqn4F3803ZaX7l/aANmWmYSizJjNJVrMe4maNX5J35M96UgbO?=
+ =?us-ascii?Q?wNKymOqp1OrBtRWAhU3XT2tWp5x3m/ZDdWuZHS6aEhqCU7Kh6uovMiQzXCJE?=
+ =?us-ascii?Q?38aOSu++DQ1tLy/mEM5dUGCsmxGzvXIcr2kOOfF40zM7/Io8lhSv2dl1Hb3w?=
+ =?us-ascii?Q?IrJTXyK2QqPRSTWA1ZJ4s3zJlqUu7BmR+neCxKHR/OQ8ViL/jqrnkV5wI2MG?=
+ =?us-ascii?Q?ATgQehC3rnTfZQ9+0ADz/iPYtcG6xiMfTeAULdFibtx4A82pWRNZJl48U9fo?=
+ =?us-ascii?Q?NExBQZrImIQto8cX7wVMpx/3KoAbry4OLps4oIhhsWzXbC4p9rYIWxODpfoQ?=
+ =?us-ascii?Q?AXn9CpSygXYq0js/RUex1LQjSo0Wk1cNNF3xawxoxoVFsX4KE2CpWQc6INbf?=
+ =?us-ascii?Q?dOYmOquB2kY688YIZL55sqrVyKfUN5vOF+z0FXI2EZ/vVAsLoAIVvt7hQmn/?=
+ =?us-ascii?Q?7FjIK7BWMHBKSxiwDOgWthtYdROgRPsVvFGO7nGimZbEe5M61ksWQBVdc0Om?=
+ =?us-ascii?Q?IGEMx38FUlMNus+gYUMnlO3eal1mib51g4Yp5Nunfoj1Nqj3EknW+2XElass?=
+ =?us-ascii?Q?CYGLSW7Iid1KWxtbeJWa6xHHSPJKx+N1I0rueLQS8vuzxUI3AMvde8mqrXOT?=
+ =?us-ascii?Q?+GnyaLfD7Dt8VMn7meGE0sXE9PNnZHd5dudTtXggHf/7jSbbYm60Kh9ihwkt?=
+ =?us-ascii?Q?vSK+7cEDkS9UYk5q3ie9q3L+ABJxe8YIHm+PSFdsqo/YETdL/+HvabwNAfas?=
+ =?us-ascii?Q?jX40xrfl3h+ipTIzL7U5yTXop5cRZNzt44Wi/Gu7KM1TMux8objDMhjqQ3lG?=
+ =?us-ascii?Q?JWE9WbWzwaaWlFZ4jh731/TCX+39N9V/9Cgw3CkLGYcUXLrVZjdZwO3m039K?=
+ =?us-ascii?Q?4MUbU/XquyT/pDrOVVy+vV3QNLxwel6V1vIPQQuRQ0O75gQsKS8DVraYol7A?=
+ =?us-ascii?Q?c2xL+//WmqZImlkoRuhNqJWRMMh6o7rFt01+Yytz7KueNmR+lPW/xCEdyS40?=
+ =?us-ascii?Q?PqSWy61Emv9wEVbVnCwx8SQ2075HsAWSt9C+hURykvIVCoH7Vf2K0tih9Ydu?=
+ =?us-ascii?Q?5bkZ0/o3KWuDizbQi9l+f83RlgJkq5saasDuJppQYOq7KoMzxgW/j81sc7KD?=
+ =?us-ascii?Q?jMPKy89FSZb6czGKH4D0ShBgJH+nounqnjutK8oyqYr6TpKrEPnvvlW0HRw0?=
+ =?us-ascii?Q?oqeFGBZ3Nx3lIKagkPm3eN7WYxDCLbGhdhdoLJhJj5N9ezDnbUi5F8Gthzn+?=
+ =?us-ascii?Q?HVX2oukWD2vrMzdd9c+dZ4skAheTjDnC0q0AzILw/fohZOGeKjblSJ7TBRsG?=
+ =?us-ascii?Q?gdKyJ0zPBEvHeCcGWipHz0WM4bxFCpM98an5?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2025 18:47:20.1621
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4b75e28-0337-484c-c726-08dd94aa16ba
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS1PEPF00017095.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9579
+X-Spam-Status: No, score=-0.8 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+Adjust some property nodes and removing unnecessary devices.
 
-Add support for parsing "pd-revision" DT property in TCPM and store PD
-revision and version supported by the Type-C connnector.
-
-It should be noted that the PD revision is the maximum possible revision
-supported by the port. This is different from the 2 bit revision set in
-PD msg headers. The purpose of the 2 bit revision value is to negotiate
-between Rev 2.X & 3.X spec rev as part of contract negotiation, while
-this is used for Get_Revision AMS after a contract is in place.
-
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20241210-get_rev_upstream-v2-2-d0094e52d48f@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Cosmo: Resolved merge conflicts for backport]
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Signed-off-by: Deepak Kodihalli <dkodihalli@nvidia.com>
+Signed-off-by: Ed Tanous <etanous@nvidia.com>
+Signed-off-by: Willie Thai <wthai@nvidia.com>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 47 +++++++++++++++++++++++++++++++++--
- 1 file changed, 45 insertions(+), 2 deletions(-)
+Changes v1 -> v2:
+   - Separate the change to multiple patches [Andrew Jeffery]
+---
 
-diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 790aadab72a3..bad2f002dfc8 100644
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -296,6 +296,13 @@ struct pd_pps_data {
- 	bool active;
- };
- 
-+struct pd_revision_info {
-+	u8 rev_major;
-+	u8 rev_minor;
-+	u8 ver_major;
-+	u8 ver_minor;
-+};
-+
- struct tcpm_port {
- 	struct device *dev;
- 
-@@ -492,6 +499,9 @@ struct tcpm_port {
- 	 * transitions.
- 	 */
- 	bool potential_contaminant;
-+
-+	/* Indicates maximum (revision, version) supported */
-+	struct pd_revision_info pd_rev;
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dentry;
- 	struct mutex logbuffer_lock;	/* log buffer access lock */
-@@ -6098,7 +6108,9 @@ static void tcpm_port_unregister_pd(struct tcpm_port *port)
- 
- static int tcpm_port_register_pd(struct tcpm_port *port)
- {
--	struct usb_power_delivery_desc desc = { port->typec_caps.pd_revision };
-+	u16 pd_revision = port->typec_caps.pd_revision;
-+	u16 pd_version = port->pd_rev.ver_major << 8 | port->pd_rev.ver_minor;
-+	struct usb_power_delivery_desc desc = { pd_revision, pd_version };
- 	struct usb_power_delivery_capabilities_desc caps = { };
- 	struct usb_power_delivery_capabilities *cap;
- 	int ret;
-@@ -6270,6 +6282,29 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
- 	return 0;
- }
- 
-+static void tcpm_fw_get_pd_revision(struct tcpm_port *port, struct fwnode_handle *fwnode)
-+{
-+	int ret;
-+	u8 val[4];
-+
-+	ret = fwnode_property_count_u8(fwnode, "pd-revision");
-+	if (!ret || ret != 4) {
-+		tcpm_log(port, "Unable to find pd-revision property or incorrect array size");
-+		return;
-+	}
-+
-+	ret = fwnode_property_read_u8_array(fwnode, "pd-revision", val, 4);
-+	if (ret) {
-+		tcpm_log(port, "Failed to parse pd-revision, ret:(%d)", ret);
-+		return;
-+	}
-+
-+	port->pd_rev.rev_major = val[0];
-+	port->pd_rev.rev_minor = val[1];
-+	port->pd_rev.ver_major = val[2];
-+	port->pd_rev.ver_minor = val[3];
-+}
-+
- /* Power Supply access to expose source power information */
- enum tcpm_psy_online_states {
- 	TCPM_PSY_OFFLINE = 0,
-@@ -6609,11 +6644,19 @@ struct tcpm_port *tcpm_register_port(struct device *dev, struct tcpc_dev *tcpc)
- 	if (err < 0)
- 		goto out_destroy_wq;
- 
-+	tcpm_fw_get_pd_revision(port, tcpc->fwnode);
-+
- 	port->try_role = port->typec_caps.prefer_role;
- 
- 	port->typec_caps.fwnode = tcpc->fwnode;
- 	port->typec_caps.revision = 0x0120;	/* Type-C spec release 1.2 */
--	port->typec_caps.pd_revision = 0x0300;	/* USB-PD spec release 3.0 */
-+
-+	if (port->pd_rev.rev_major)
-+		port->typec_caps.pd_revision = port->pd_rev.rev_major << 8 |
-+					       port->pd_rev.rev_minor;
-+	else
-+		port->typec_caps.pd_revision = 0x0300;	/* USB-PD spec release 3.0 */
-+
- 	port->typec_caps.svdm_version = SVDM_VER_2_0;
- 	port->typec_caps.driver_data = port;
- 	port->typec_caps.ops = &tcpm_ops;
+Willie Thai (3):
+  ARM: dts: aspeed: nvidia: Remove ECC
+  ARM: dts: aspeed: nvidia: Remove mdio and mac0
+  ARM: dts: aspeed: nvidia: Enable HACE and ACRY engine
+
+ arch/arm/dts/ast2600-gb200nvl-bmc-nvidia.dts | 32 ++++++--------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
+
 -- 
-2.43.0
+2.25.1
 
 
