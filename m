@@ -1,151 +1,180 @@
-Return-Path: <openbmc+bounces-53-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-54-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5510CABB289
-	for <lists+openbmc@lfdr.de>; Mon, 19 May 2025 01:56:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10267ABB2B3
+	for <lists+openbmc@lfdr.de>; Mon, 19 May 2025 02:41:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4b0yQ56rTNz2yMh;
-	Mon, 19 May 2025 09:56:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4b0zPy4xz1z2yMh;
+	Mon, 19 May 2025 10:41:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c405::5" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1747575279;
-	cv=pass; b=LzXNsH8rgdf5a/GSkRlWTH9SUbHvSl0leprLuUU10g26HOcllU2fj1GbVOAsuc9sN/J05EQ9+cfHt8pSHoIg89G6NowDxmU4iqGGJBFK+xtc45ZtkyGESvdsX4isPQC4xk/v0BVqqVw6Q1Onphoy33sDSmek4hiETfLhJSfDhTGCH9Wtl/PJILPqH/l9GnAJqpjYGuIMYXPk/JIESZXhElN7duoLD8LxUze+5vPuWGbvjZeZqscTfWSCd+jYXvLHkRiAHQpkrmJqm+SJpwE9PQw6lpQgrZhFl9y9bUbNMnNPQc6aAvmZXRZCEtTueFzb0Hpz/jBe14vPRSoT3Ng+Jg==
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c400::3" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1747612274;
+	cv=pass; b=MrkSEhkpSx1gDlg2ziG0TsRnQPcVC7RSODdxOGqTaGhkFPkqfUry+uC2NfoaxNTv29v2kOFf0gJ+fp0UPFpKOB1UUw4foDP4+jx34IwLSjUSNknzMKNnA8H8ylrrXMKFDWPaIfJXni/650JORtJE2v8gP4coiM0Aoi0EzENSn8ZQQhQdM6BWWjAS1BX8jQ612wCf85jOPCCdnaltH9nri/sRRZUyrJoEpDz0kaiiTSZdgjfieF9LV9wPqLnMCXloq9ybfNY3iyHfbFuxhnXlenxg81zZyP10WTVFrJsMiSNrb4v0kWYFNvnwCTsxXtAb0a4m+HWmWa36zB0ZWUfPPg==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1747575279; c=relaxed/relaxed;
-	bh=SI4STM+6NNbVMGRUXiMVAufTTU2aTbgnnGUm2Nj7N9c=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Vn3HzQJH7sxf6x6DwK6onluLtZgdt6/EowwdgWRc32ppKvolrsrXy14dSWqwf7UylUAnSTdH/+b28fPrhEuNwFhTvXvwKPXyfCgfgufFTjcRbCXdgV7B9HEOMpW+EBUFyuorb5jY/fOYxumim9TIKsR6soErQ84kw5XF0ai8plJu/ogHzX3vsOfohnvZB/eofr4L3+vx3DExi0hb/xNOQ41nENDRQXvdRZ+4PSDR5TASpaBFBs5dmcITlAlARhiJmKc4pYNcvX5VkKM7ccRxtCv81QcoRbbkeUMu1s4MFBEC1wOjcMVNqxTL2/8JINB2ERXGA7GZ1atqJUXQdpvMiQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ingrasys.com; dkim=pass (2048-bit key; unprotected) header.d=ingrasys.com header.i=@ingrasys.com header.a=rsa-sha256 header.s=selector1 header.b=EpnqOnzj; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c405::5; helo=typpr03cu001.outbound.protection.outlook.com; envelope-from=marklin@ingrasys.com; receiver=lists.ozlabs.org) smtp.mailfrom=ingrasys.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=ingrasys.com
+	t=1747612274; c=relaxed/relaxed;
+	bh=AYyuTj3iCHV3hPnnOkTF8+rE3KEfnv8odyXyTwJJF3U=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=h5m8xHEHoAbRN0JXPiU0ItL84us8o1pVnJUAtyXQbx7utKxP73gsH1qKEeUNz+TgspWyUyQDNuRX3cBUWpEeHTJ624Ji5979X3NRNdvdnfN8xBs6yH/IYsohSWL/RMJlAG8C8T+7+auOHinCg35keW2uM7hxvsh70JYusEt66iQoh8JwGMB3WxsWDfGspe5P5jUMoeIAT9kXjVWev4pcSV51jl5SEzcPIeMJ9p6etmvtPxeoMvuP/0Jc+iQ8Qnkyvou+WbkvwiHW0TKDI2Al8qK7PeC3e+e8ggTvVPdwjxT1ibDHVjdWhvvDc+QDEcXCdvWcu5rgOr1qdEcCRNkdUQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=fii-foxconn.com; dkim=pass (2048-bit key; unprotected) header.d=fii-foxconn.com header.i=@fii-foxconn.com header.a=rsa-sha256 header.s=selector2 header.b=BvTxJ9gQ; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c400::3; helo=hk3pr03cu002.outbound.protection.outlook.com; envelope-from=george.kw.lee@fii-foxconn.com; receiver=lists.ozlabs.org) smtp.mailfrom=fii-foxconn.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=fii-foxconn.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ingrasys.com header.i=@ingrasys.com header.a=rsa-sha256 header.s=selector1 header.b=EpnqOnzj;
+	dkim=pass (2048-bit key; unprotected) header.d=fii-foxconn.com header.i=@fii-foxconn.com header.a=rsa-sha256 header.s=selector2 header.b=BvTxJ9gQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ingrasys.com (client-ip=2a01:111:f403:c405::5; helo=typpr03cu001.outbound.protection.outlook.com; envelope-from=marklin@ingrasys.com; receiver=lists.ozlabs.org)
-Received: from TYPPR03CU001.outbound.protection.outlook.com (mail-japaneastazlp170120005.outbound.protection.outlook.com [IPv6:2a01:111:f403:c405::5])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fii-foxconn.com (client-ip=2a01:111:f403:c400::3; helo=hk3pr03cu002.outbound.protection.outlook.com; envelope-from=george.kw.lee@fii-foxconn.com; receiver=lists.ozlabs.org)
+Received: from HK3PR03CU002.outbound.protection.outlook.com (mail-eastasiaazlp170110003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c400::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4b0hcq4yQLz2xjv
-	for <openbmc@lists.ozlabs.org>; Sun, 18 May 2025 23:34:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4b0yJF3ZWHz2yMh
+	for <openbmc@lists.ozlabs.org>; Mon, 19 May 2025 09:51:06 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=INOskWGF6uhR2el2QpD+xQdHbfsEiotm9BLwfYUWtVEFYgYBrqcwKmrlsAm9WtDq/B/6AupOtpjnjquWhvxw+KE32WgZw7yh3VTCSE8HUFDM4zOoTqYDjPuQI+ZBiApJcNYV992Ov3ae9sgz8k+O30+X1dXE2jGL4t8sYITvR5KP5s84yP3g6g6mJdaqNO89b3U6GhbmWw+lWdj4AzPxmaGqk9gkOV5uXtp6p5jgYYx4bid0rOq9jPgY08o6jW13FhnoxlhSoHFYnCAgufpt3kBI8gnuSnaQztURs3npnOc9lFsq3uJHtwez/3oL9rwrrZXG2o5FGrhI9skwvADsOw==
+ b=DqNh6usU+D8icIplR7ery6l6H0y+ETVUicNQ06BB4NGZZcsce0DD4kl0ckaOACi/50pHuFihek+I9kpUmU2XH8RQZhGmCneiyR7f6fjbauk7VXxstWz7DqHAkmPxGRHYfOcR/fVXKnszfOkHAHB6tAMD4YHcDxQD/IHLjHjsLvb/Y99xg0tYuM6/hRTRiKUmjmcnoliFXiLpaHEKlfCSb4tK9Dy5NuS86MdmU5OHm6lLFEMFMCn5QQNiCTtitpsgbL3ReyQJXo1m+OVslkfdYg+K0LKmBdp0YYc7VU2Dp3lFI0W6OFhCq5/p6J7GlmvapGozlQRoivQQ7feg3mtEUA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SI4STM+6NNbVMGRUXiMVAufTTU2aTbgnnGUm2Nj7N9c=;
- b=J7LP9sEWQV1zikf9r4e7Hj4MJj0FkF35jCSAvoh+U8uG6BRFqlZGnqRrkbOMykLz3hurw21+oWl/HB7LQOYPiueI7fn6w/jPyoc0LbcznGBxqdz3DljagWxWlD94PMaLDj8bFd0cfJAArzQLb7Hk6kkZBAex9jU2pcQwuIWDMnCCYr4VZhc6t97aosylQvGSJ3240Y2FrjSmPwSBbJGJG05aOWFoa81HISBZGd+XUYfZUaGS/I0b9wsyXodnu1DM4m0tTyEeCl7dWg4dpHcUzfy0vc20n+FIbqoqugJmWHPx9lyY3rfhEtZcMaxd8qp4eSQ8jI56TJ34x4eK5mulCQ==
+ bh=AYyuTj3iCHV3hPnnOkTF8+rE3KEfnv8odyXyTwJJF3U=;
+ b=IYSL/pUxTBlJ258a6P9Qn0LCWrkILNydmOhEQdOH+scWF15kHQ9fH3h1JjHUtSJzPQE3YbbnUrHByvchHg3IAGqX4bMKLpTiBpJSib6GfV+9X46LbPE71Pzc0W/95ZlpXuP5wtSvTOP7YYdG9I5v5g4iUp4WSvp/VLT4Ofuoq7la4FHi4ECangTbfTvI2qwsNjmuysWm6bB+548bGAIOfksZs66KHorqdeM+hpF5R3WQjnUlFrvkv77tI8tio7ZueqSoTgYXgg5+hmFczXSPF111R6S94z84PlurOigBVnKE47+uPP9iFsnCU/4/zSZYAo3+PhTlc31aXZEMDoWGHg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ingrasys.com; dmarc=pass action=none header.from=ingrasys.com;
- dkim=pass header.d=ingrasys.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ingrasys.com;
- s=selector1;
+ smtp.mailfrom=fii-foxconn.com; dmarc=pass action=none
+ header.from=fii-foxconn.com; dkim=pass header.d=fii-foxconn.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fii-foxconn.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SI4STM+6NNbVMGRUXiMVAufTTU2aTbgnnGUm2Nj7N9c=;
- b=EpnqOnzjvp1GDCLID64yCGA7P4qQ6LQMKmCZsqXKpqXDWm35OpCQ3VrxTNZxIRho4tnDQctSHIg/XTptueUq+3Ini6xPpZ2OC2clQPlxleozUPtSRKedCJJ20T4XZo7FN9lRN3kbskc7KXhImCLNmsY0PKfShj24GGsITi12SWppvJVS+hh6hgCBmxaLCuu/v52pdGLXu//hfGHbn2+miqbu0wBeTVelW1LIBtN+mvVfNbzJRVA4lgMhf2Zn9UDSeWCwDUcXDiEUC3vwFIJEd24RscwkfPVKirQ2z6017mjunvP0uoH0oK2e6vae0JR5jKSu6wchSCmNdt23w4piNg==
-Received: from SG2PR04MB5793.apcprd04.prod.outlook.com (2603:1096:4:1d8::12)
- by SEZPR04MB5922.apcprd04.prod.outlook.com (2603:1096:101:65::5) with
+ bh=AYyuTj3iCHV3hPnnOkTF8+rE3KEfnv8odyXyTwJJF3U=;
+ b=BvTxJ9gQaMtr50E7SEa2tPNxFfZ4OZbwHc6ISUWmaDuVP7PHcwvraQhI7pZuyuqHHIhI88IMLwyiucYrbVegoh5op6cVHS/pZom0LuuqnttSgaW3HcKYdI3xf/8xbXBi5++bA85YAY5qdu119FnlpuAxIV887GVJzoyUsDj6xTibeXyo09acPCWDZtn9o5khJuccUe5gBaSWdIjdfyT3tGsr7qJ5b8vwrkOmL83NAbNADulsTUkMAB15ZxA/74YxoP3IlVkSpMdrNf4PSTQwSqSp3MPp5f5V4dBa76qbon3OKW8FWVsPjnfRkwOacloYFO1ld1rXQ4a//68UIZanlg==
+Received: from TYZPR03MB7458.apcprd03.prod.outlook.com (2603:1096:400:421::7)
+ by SE2PPF0592CC626.apcprd03.prod.outlook.com (2603:1096:108:1::485) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Sun, 18 May
- 2025 13:34:08 +0000
-Received: from SG2PR04MB5793.apcprd04.prod.outlook.com
- ([fe80::9179:5dd6:b72e:7228]) by SG2PR04MB5793.apcprd04.prod.outlook.com
- ([fe80::9179:5dd6:b72e:7228%3]) with mapi id 15.20.8722.031; Sun, 18 May 2025
- 13:34:07 +0000
-From: =?big5?B?TWFyayBMaW4oqkykbK5wKQ==?= <marklin@ingrasys.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-CC: "manager@lfprojects.org" <manager@lfprojects.org>
-Subject: CCLA for Meta Clemente project
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.33; Sun, 18 May
+ 2025 23:50:38 +0000
+Received: from TYZPR03MB7458.apcprd03.prod.outlook.com
+ ([fe80::f42:ac5:a995:b93e]) by TYZPR03MB7458.apcprd03.prod.outlook.com
+ ([fe80::f42:ac5:a995:b93e%7]) with mapi id 15.20.8746.030; Sun, 18 May 2025
+ 23:50:37 +0000
+From: =?iso-2022-jp?B?R2VvcmdlIExlZSAbJEJNe1QiMF0bKEI=?=
+	<george.kw.lee@fii-foxconn.com>
+To: Patrick Williams <patrickw3@meta.com>, Ray Park <kyung@meta.com>
+CC: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Cc:
+ manager@lfprojects.org" <manager@lfprojects.org>
+Subject: Fw: CCLA for Meta Clemente project
 Thread-Topic: CCLA for Meta Clemente project
-Thread-Index: AQHbx/jVaMFixcUOjUeagifFsX3yDg==
-Date: Sun, 18 May 2025 13:34:07 +0000
+Thread-Index: AQHbx/jVaMFixcUOjUeagifFsX3yDrPZDvEa
+Date: Sun, 18 May 2025 23:50:37 +0000
 Message-ID:
+ <TYZPR03MB745828035BEF6F95B4477B3EEE9DA@TYZPR03MB7458.apcprd03.prod.outlook.com>
+References:
+ <SG2PR04MB57932563DE9B5A5042008545C19DA@SG2PR04MB5793.apcprd04.prod.outlook.com>
+In-Reply-To:
  <SG2PR04MB57932563DE9B5A5042008545C19DA@SG2PR04MB5793.apcprd04.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
+X-Mentions: patrickw3@meta.com
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator:
 msip_labels:
+ =?iso-2022-jp?B?TVNJUF9MYWJlbF80NGNjZjA1OS1hZjVkLTRiOTItOTMyZC0zNjkwYTEy?=
+ =?iso-2022-jp?B?MzFjNTVfRW5hYmxlZD1UcnVlO01TSVBfTGFiZWxfNDRjY2YwNTktYWY1?=
+ =?iso-2022-jp?B?ZC00YjkyLTkzMmQtMzY5MGExMjMxYzU1X1NpdGVJZD1jYjNkOGRjZC0y?=
+ =?iso-2022-jp?B?ZWQyLTRiYWQtODlhNS1lMGE3MTk1ZmI2NDM7TVNJUF9MYWJlbF80NGNj?=
+ =?iso-2022-jp?B?ZjA1OS1hZjVkLTRiOTItOTMyZC0zNjkwYTEyMzFjNTVfU2V0RGF0ZT0y?=
+ =?iso-2022-jp?B?MDI1LTA1LTE4VDIzOjUwOjM3LjI5OVo7TVNJUF9MYWJlbF80NGNjZjA1?=
+ =?iso-2022-jp?B?OS1hZjVkLTRiOTItOTMyZC0zNjkwYTEyMzFjNTVfTmFtZT0=?=
+ =?iso-2022-jp?B?GyRCOHhNURsoQihHZW5lcmFsKTtNU0lQX0xhYmVsXzQ0Y2NmMDU5LWFm?=
+ =?iso-2022-jp?B?NWQtNGI5Mi05MzJkLTM2OTBhMTIzMWM1NV9Db250ZW50Qml0cz0wO01T?=
+ =?iso-2022-jp?B?SVBfTGFiZWxfNDRjY2YwNTktYWY1ZC00YjkyLTkzMmQtMzY5MGExMjMx?=
+ =?iso-2022-jp?B?YzU1X01ldGhvZD1TdGFuZGFyZDs=?=
 authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ingrasys.com;
+ header.d=none;dmarc=none action=none header.from=fii-foxconn.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SG2PR04MB5793:EE_|SEZPR04MB5922:EE_
-x-ms-office365-filtering-correlation-id: 13f4d4b4-9f34-42b8-62a9-08dd9610aa1b
-x-ld-processed: 606190be-ff89-439c-b3a7-504fcdff4ffa,ExtAddr
+x-ms-traffictypediagnostic: TYZPR03MB7458:EE_|SE2PPF0592CC626:EE_
+x-ms-office365-filtering-correlation-id: 83c905af-dcdc-4da0-0ce1-08dd9666c9a8
+x-ms-exchange-atpmessageproperties: SA
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|366016|38070700018|4053099003|8096899003;
+ BCL:0;ARA:13230040|376014|366016|31052699007|39142699007|1800799024|8096899003|4053099003|38070700018;
 x-microsoft-antispam-message-info:
- =?big5?B?MDJVdGxHdHJxWEgyVnMwbTZCWmJxYlk0TmFhNlBsVDREZzN4NjlxdlpPR2Q3UkNC?=
- =?big5?B?eDRVRXdpUVNRVkxGN2o1UmwxV1Q2Rlhod0FGamdpSGpva1RCZXdhOGRKV0xmMXFr?=
- =?big5?B?OExza0kyWHM1RmZXbk9McENzYmxHeHUvMjRTRjQwcFNWZGZkQlRIaHBFSnIxQWlL?=
- =?big5?B?WnZtdzUwdTd0Qkw4NndkbXhVb1BuTmNDVEhFZFJNV0UxMGJydlBtSDU5dGpPdklY?=
- =?big5?B?UExyUXg3NVczSERrL0RiTVFPYUZwYWorL0d1UnB6dXI5azBWMUxFbWJBSlB1aXhV?=
- =?big5?B?K056UlhEcVg0NXdCMTBjZGpPQmx0WUdxbngrZmk1YWg0b2lsZG9ScVBaZzJpRGpZ?=
- =?big5?B?ZkNkOG1GcnlwdkpEUkl3dHBPZ2c2MjloN1VHMk83cllQT3RJQ1lrMUVJTjAxS1FE?=
- =?big5?B?blNmckFia3hEdThENzBtbEpGRW1PODFLb2MyNXN5RXE2NFVMMUtVajMyUi81VG5N?=
- =?big5?B?VStKektLZTVpYk4weXBPQjVQYWtDSjRXWGdjeHBXaFpWVEFyZzR1azdhNDRGWXBa?=
- =?big5?B?ZGVBalhpV3Q2aDN6QVBIRHI3YlE1MzE2d043NzAxUzFsWjN6K3FrakpDN3hUa2hP?=
- =?big5?B?aEJmaUlhemhpQjRhOHdWWjNVQXJUa1Vpek5jdWFnRlk4WllaOGtsSjI0Z0pzTzRY?=
- =?big5?B?dmlkYnlQRnZRbFhWQ2x0ckEzekVSV0xCb2VvZHVzWW9TNXhvUG8zaTY2bFFiTDZU?=
- =?big5?B?cWlueThJUXJzSHZkMFNMY0E4MGFEY1hFeEJnWG9pNXhNajhWMy9JN1lzVzhla1hw?=
- =?big5?B?eXlldmZGOUpmR3RPSVAvYTJobFh2SVNINEpzdXgrSXUrWDhPVGRNcUZHWENVcTBI?=
- =?big5?B?c3AzeW1lSUkzRjFLV1pZMXFnNVU1UkRGZnR0U1RNY0Rrak9JQitZMndGb2NIY2tp?=
- =?big5?B?SjZuUEdTMnY5TmRNbjRsVDdtY1RoSXEvKzZHUmxIb0dldkxHZnB6cWVSTkhUcTJ5?=
- =?big5?B?Y2tKTDBtcnVtbTU5N3NwdVZ5WkQ3anhuOHZTYjVrQU9FaTJsQk9KWmFjSWdiNmQ3?=
- =?big5?B?MVREbDU0ZS9WQ3lVZmpJSUFQUXlUcnlZQjZWOWpBRFA5TGZDWmVWVkVxcS82L2E0?=
- =?big5?B?d1A2Q2xseHgrbERNcy9md3kxWGNtUFB4dm90TXhJV3VxL09UUVBnTE9naGVXVTU0?=
- =?big5?B?bVhZNmJlTjBRKzlhNHkzbXl5ZGVZc2lJcFJTNEpESTdWVU1Cbm4ycGIrWnNrVFFi?=
- =?big5?B?bW1BSXhIaytKelBybXlCTjJvNzZob0Fid2FNS29uVE1SYnMvMmxkU213b2YxTyt0?=
- =?big5?B?VXVsdjQ2VWhleHlWUlZobUJKWmp3QXZQS0JyWUVFRWovTHhsQmx0YXEvWHBwNC9W?=
- =?big5?B?MUpFUzZkbm5Hb0s0aUpoMmR6YlBhOXlxVDhNVXhZL2k4QUYzYVdMMlNtWGdFbXFL?=
- =?big5?B?NGhNQ3EwTlYvcExGK0tVMDRGUWozdytUVFkrQTd3VHhWd0hRYWNBR2NvZ001ZGNT?=
- =?big5?B?VHhsMU41UnhFWDJnY1dxK1NUTFdCRzBHV0pvK0VvcWFOQ1RwVFJjV3VTT0xnelhi?=
- =?big5?B?dmNtS3lhS3Vpd050UEhERlR1L04yWTgwakhPdUY2MmxlQ05VakpLVWF2OXVSSDZj?=
- =?big5?B?MVBlV2w0ZG41NEJuRVhDU2N5WGdVYW9jUjl1NnAvRnQ1MjdQNWpKVFhydGdNZDh1?=
- =?big5?B?WjFuamRtNUI2emJHcHdPeWx4UVNRYy9RYkZIUDBUaWt5clo0bEtDYWpxM3dZOXkw?=
- =?big5?B?Mko1Z2x1WitEVGRjZm9MWjdpZTU2SGpKUDg2cXk5d0tzNG9kU0twSWVtUVJrMFls?=
- =?big5?B?bldYeVdMMXI1QWk3bEFKajJFSk9JM1BzWm03Z3g4WHBMRjFBd210VlFHRjdBNWEz?=
- =?big5?Q?HEriH4IiFMA=3D?=
+ =?iso-2022-jp?B?RGs1OTBHT1YzajdwQ3pTUTdLK3p2MEVrMUcwendsR21ubkJNRjRjd3pw?=
+ =?iso-2022-jp?B?ZTNhYlVrenlCTTl3ei9yRkFWdWFoZTZJY2QrQ2hVOFJxUjd5cThWeU9p?=
+ =?iso-2022-jp?B?NDlYd2NLTkp0eVRjRysrU2lYbTg2eW9BMHdGaTBMQWthR2VOelRYMHhB?=
+ =?iso-2022-jp?B?dGFOTjNXREFQLzlmT3pkSVVZMW8yUXRqV3dXZEpxVnpxVVdoNVdFOFZG?=
+ =?iso-2022-jp?B?aDdEVHY2U1VjVU5PcXFla0pWZVZldWI3ckUzVkRDNCt0K3NsT3J6Mk1O?=
+ =?iso-2022-jp?B?Y25DWVF0Qk0zRm1GdTR5UFYvT2RNd29idnB2TUtLZWJaaVB3SUFyODRL?=
+ =?iso-2022-jp?B?TTdwTGYvRkZRWWt0b0I4Y3VqS1BzTTdhN3ZWc1lKbnhtSU16Z3F2R2U3?=
+ =?iso-2022-jp?B?MGgwY3BsN1Z2NFJlUlYvZE96OGpuOUM2cHZvREZNdWxROExqWDErMEtV?=
+ =?iso-2022-jp?B?alJ6WDFJL095cGg1eTlxc0V1Qk9iTGtFcnUvbmp1RmNBM3FmSzlpcmpv?=
+ =?iso-2022-jp?B?dHc0dm05L0VHYkRrWXFpSHlGdm9OT3RtRVEwMjNFQVg3cmZCYUkwZHF0?=
+ =?iso-2022-jp?B?S3ZPYTBzbUpySDFDelJ5QkdmeVkvSmpmdlJQbDhJSUJvZU00UExzVXIx?=
+ =?iso-2022-jp?B?dkRkTXZWMGo2VkZhQUtBSmhCaFRqL3Ewa3VJdnR2Y0FXWGJmMTY4WGVk?=
+ =?iso-2022-jp?B?U1FUc1phVjJLdFlTenNBSnp4a2FaZ0lVSzRWNThnYUovTE5xMnVadzc3?=
+ =?iso-2022-jp?B?Q25COWkzY001azNCbytUaGxOYkhidVY3T0ZPbHMyWVFHMGhzMElCS204?=
+ =?iso-2022-jp?B?S0xNTHNsai9uY1VlYVA5WkZ5ZElidHpITzc1TG9XbHl4L3B5cU82ekZj?=
+ =?iso-2022-jp?B?UkUxc3FtL3dabk5KTmI4VmNlREtDdnVtaVNvelB5UHc3bTZtK3l2Um1w?=
+ =?iso-2022-jp?B?d3dBRVJJOW51Rm4ya2xnTWFLZzFMSXU0MlFjYjRlMnV4VXZjMitVclJZ?=
+ =?iso-2022-jp?B?MDBVVExQQ0lvL1NQOUpJVzRkc2I5ajJiWEFoSEEzejFwRWlQa1NYSnFT?=
+ =?iso-2022-jp?B?dGQ1b2twdkFISGJHRklYTGVpeTk4SVZCZkhIUzB4SUlrYnRha21tZXJi?=
+ =?iso-2022-jp?B?SWlDWllXSTBpNVJlZWVrRGZIUmkxQ25TckJGR2ZiMTQ0ZURYNWg0MjV6?=
+ =?iso-2022-jp?B?R3NqeE9nWHI4a2VaWFJJMVFyb2N1M2xDb3Nmc0MzTWhFelhxZC9yNEV0?=
+ =?iso-2022-jp?B?MzdCdGJTUnNvenZTUWwxZitYT2RJTWU2c090YVBPZklobTgzeEdyenln?=
+ =?iso-2022-jp?B?Vm1IbjFvdWg0RmttRno2aE4rM3lPZEx0UTNaZ0F4eGFtMXF1NDVZL3RK?=
+ =?iso-2022-jp?B?RmllV1BlUGtRZWpNOVRObk5aeGVpQ2xqRlJob05uSDlpMWR1dm5US3Ix?=
+ =?iso-2022-jp?B?VEp0R1h1WlpJcU9SRktqRExMNGR4S3Z1a05YZklNVVdkemxuY21ZVmhr?=
+ =?iso-2022-jp?B?a3hjUmk2b3ZOaHcvMnB1bUdoR0QzT2JCTzFiblowQlhna0YvT1dPSkZW?=
+ =?iso-2022-jp?B?emZOdk82YjJNbDRZWTRQVkFncjJlOVUrL3lZZUVGemxlYkZLMWpZL3Nn?=
+ =?iso-2022-jp?B?ZVM5YmlRbDMwTEdwLzZHd05yUE1wMVl0N3lwSDVzbjZsTUJmdW1kNlpG?=
+ =?iso-2022-jp?B?OC9UV1dETm95OFdMbnZiZWYvdlpBbTFzblVaZTJJdmgvMHZpRXA5UFg2?=
+ =?iso-2022-jp?B?cy9OZnhGVGtjcU5ERk1QamdFWEhUZDFKZlZRdW9yYVIrcWFNYUdVb0ll?=
+ =?iso-2022-jp?B?K253T0UwM0dsK3NaNE1DS2VWSjQvVEUreHUyNVRUUnUwbC9XOGZackUz?=
+ =?iso-2022-jp?B?Z3o3aHlWMXh3UjBtSFdIVkh6U0F2NncvckVaRzZPR1hpTWhQUGErNmli?=
+ =?iso-2022-jp?B?TXJERC9mb290QnFQeGh2R0NVR0g5N0NNaU8vVHFNdWFNZksyV2xjdS9u?=
+ =?iso-2022-jp?B?SjdUeVVUdno3VVJxdmVIdlpHa1VQSDJNZlNlSHJqNmZiQW9ILzh5YUVw?=
+ =?iso-2022-jp?B?VUxMeXgzd3ZSM1pVeVVQZFpQbkd3ekU9?=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SG2PR04MB5793.apcprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700018)(4053099003)(8096899003);DIR:OUT;SFP:1101;
+ CIP:255.255.255.255;CTRY:;LANG:ja;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB7458.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(31052699007)(39142699007)(1800799024)(8096899003)(4053099003)(38070700018);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?big5?B?MDZOUmpsSzA4Q1pjeXdwS1paczhyNHc4RlFFMEhkeW9aUVU2cHJSd3hQanc5dmE1?=
- =?big5?B?UEJUclRKNThDZ2FLTWc4dkVTV1UwbzhQa1IxNGR1a1VuWkJ4V3BUbThiZ3RheFZT?=
- =?big5?B?N1hXSzBXM1Zvd0lqbWhtd0Y5YkwwdXpGUVhUUWp4bnJIWk1MN0I0U0RFZThOZmpI?=
- =?big5?B?cmxiRFBxMmxCQ2k2SzRIYU1vbm5US3Uwc0xpaENsTEZhajJSNHU3Ulg3dTFyZVo0?=
- =?big5?B?U1FndUdQQmpFTTF2NklBV3pwSkRCTkd0aG9uZUtxUUpoYWVWc2xMQXpNdzE3Zzhm?=
- =?big5?B?WWtoVU9mQmVqL29mUEZzdkpqdXQ1Z2lDY0pkV29OTUtBNWJWNm1ZRmQ2dmtZdUVK?=
- =?big5?B?ek94UlBjdCtiWUdOaXZYYmNUdTd6Qlk1N3FBNzUxVzk2Rkl1QTJoK2xORW9QS1pH?=
- =?big5?B?TGpTRWdUR1BoQW9HeXAyYzhMR2h5TEdETWJranZoTU05dm5ISGpKeUowU3RkNXdr?=
- =?big5?B?R0tLbDVZek1iSWdIdEVaSVlhdWsxQjUrN3Bjc1ArZEJIREtDSGJZYmZRR0JJUDA5?=
- =?big5?B?MTBaa3BLRnNEZDNzTkMxSHF2dnlIMy8yQ25ScW9FNmthL1JFOFdoV0RWbUFVMVJh?=
- =?big5?B?REdnSUhOdWt2ejJ6L0t2TnFKTUI1RWhVV0s5NHJ2MnJrVjZVUXh0QmFPaUFEVnFR?=
- =?big5?B?T0x1N1l1SDNSOXNqS20zVUxMSE5RdU1OL01NZjVzUmRGdSs2NUxaZGxneUFjT2xH?=
- =?big5?B?WUdyejd2RjlyNGpGQTZld0w4TGNRWVVDaEY1dlVGcE5sZFUvaGVDYWZPKzZ2MG5E?=
- =?big5?B?YzJtUDBvMDZsVTJ1bkhJWjZEb1NHVm1DVFFicmpwQks3c0RvR2U1bldKSGIrcnE3?=
- =?big5?B?KzlzVVVNd05nUVVLYmxVN0RQbkNnMHNwTHB6WnhONkx1NDJFbnlCcyt2Sk0zT1JI?=
- =?big5?B?aGV2bjFKQmZKZTFhQnRMTGg4TlhLSlhDUlJHUi9ZS1NlQ3dvMGgwQjRPbzY2emp5?=
- =?big5?B?MDF4MXozU1g3ek9qT2pZdTV5eDhpWkFCVlQvT1VJNHVxcDJ6NXJzMHovZEo1Ym83?=
- =?big5?B?b21LbGJZdjZ5QTE4N1U0M0xqTTFxODQ0MmVWK1VISjlsbFhrVnIxK2t2SkVtQkVR?=
- =?big5?B?Q0Uvdll3TTNWbUtDQ2JUbHNxZnF1M2VFYUd0SC94blZHVGY1cVZlZFNCLys1Tjh5?=
- =?big5?B?MDZ6VU9SbytFdTRRUkFTbk0wWWxJRGpCUnBRZ1V2SmFwekpRUFdFS2x3aGovcnN1?=
- =?big5?B?QVhnUXRHVnhmZjVieU1wVDhRWXpoWXlYNXJMTTF2R2hPa3JWVTlZeEVCN2pPSG1z?=
- =?big5?B?bUNOdGJWTW1DTHlRWU5PTGZaNE1YYUVEeTI4VTlkYVQ2RHNzSVk5ZWhHY0g2NVBj?=
- =?big5?B?RXNSRHptWmhSOWFvbmJuUDczeFZ1cWhtMHhMS2VmKzBDdHBGWDNqcXk4V1FqVGNJ?=
- =?big5?B?YTM1SnQzR2E5QU1vbnRzZXhNbUNRdFM2WDBLSHZUbE5ZZWNqY09TSGdqUVhwTUx0?=
- =?big5?B?WENpcjZkTUNWVGhLM1ZiV1NMVFVmWm8rcFBaQWhVYnNJOWtudDNDd0JQL2lTc2Zj?=
- =?big5?B?KytyTmxjbmJka3RHdHN1VStTamdmcUpGMkxqSEZwMkZYWU5idWRZK2hWVCthc3dM?=
- =?big5?B?aHFQNkZtYktnT0pBaXJnUHJVYVcrKzhWbG5laGNieFIwWGFrNnczbkNNOC93a3dy?=
- =?big5?B?bUJzMWp4VkdXODUxc2pKY2hlM3pvNE5yK0ZiL0xpLzdNQjZGc2o3YnNFby9rdVQ3?=
- =?big5?B?L3lpNHdmS1dSRERldGluWGd5ei8vRXFwdmR6ZFBqTVlTOWxTbXFmZ1RiS3d3bWRL?=
- =?big5?B?K0FQaGtUY0FaYzFYcmltUXB5VWtwaG9sWGJTb01HTmlYWGhJdXRzc0tKWm8zNS9Z?=
- =?big5?B?OE1JQlUyc1RDTEQrR1RiYTRBZi9DN1kzT29IWU4xZ1g5YkJJWmxNU1Rrc1dzMjdX?=
- =?big5?B?OU1TMUcra0RzS0twa0R0NElYeTR0b1pOSUdyNzMxRDNIaFRTREo2cDdrbUdGLy9u?=
- =?big5?Q?mrKwtqgHXpSijELWqSjHgq32t6QD1No02S0/b+tK6Iw=3D?=
+ =?iso-2022-jp?B?ZmtHZm5uNFNLaXdoQlB6dHE0VUh4bDFNYWh5YTEwV1plTThuVjRwWmwz?=
+ =?iso-2022-jp?B?eWNyRDBQcmVNSlV4NTdySDloQ3dlbFFkYURDTk1QMTkwKzVPQ2JNM2Jv?=
+ =?iso-2022-jp?B?VTFwSG1IUDF1SlBheStRUlZ4anU4bGpibTRwU01yOTg4RCtYMTNIMnVZ?=
+ =?iso-2022-jp?B?Z2pXMkx5ZVhLdkhiNFJLQzZYM2JrREJzeGZpN2MvcEV2M29jdTRhc3BN?=
+ =?iso-2022-jp?B?bXpsemFQT3VRT1JaMkFUekVVK0RrR0hlL1E4OU8raHdFOGZVY0tJRmpa?=
+ =?iso-2022-jp?B?RmlBaHh5VzloZTcxZWcrQ21zU24zOGRVOTh5V05zTW51ekEwWnBjaUw1?=
+ =?iso-2022-jp?B?TkFjWDdTMkxpbmVTcnNmUmROcVlYOW5iUTcyeXBlcnpnYjF4aVFDUTZv?=
+ =?iso-2022-jp?B?K0YrSzZpb1AwZHp3L1NsWkNxMDJhMDFsOWMwcDVMbnhSSzZ6cWQ2VVkz?=
+ =?iso-2022-jp?B?REFZQ1IzaGQ4YmxKVVRFejczb2pwWW83S28yNDdvSjdGVXNxRC9iUDQ2?=
+ =?iso-2022-jp?B?a2syMDFNcWIxbXl4bkwxdkRCWHNRWDY4S3JOeldLV0doNnVxUzhqcUJM?=
+ =?iso-2022-jp?B?TmxBWTg1S3Y1M2RHbytGUTJJK3NIUzNsL3QyamRrV3hVRXA4bXFNS2FR?=
+ =?iso-2022-jp?B?dThjcTU1SmxLMDMvZUZ3eFUwbEFHMjlXdE5zbDNSZ01hTkdoQlhPZjRL?=
+ =?iso-2022-jp?B?TGRDTHJWaDNSdnFXNVdOelkyUDdDTlh6NWRFN1p2WGZhT0pXQi9rdG5y?=
+ =?iso-2022-jp?B?MkY4K3NaN0dSOGIxeDJwOFFESjNib2MvTkcrZjlMQTNhNUdVTjI0MUQ0?=
+ =?iso-2022-jp?B?Tmt2bnNoZDRTYVAyOVJwTG1kWjEvL3U5RXBUSzVHbkdzNnlBMy8wWk9F?=
+ =?iso-2022-jp?B?M08zRm5CU1BIQnZ3eXVScjZVR0lwS3F0aC9JYWp1S1dFSzROTGUxNlM4?=
+ =?iso-2022-jp?B?a1hDVytqbW0zbUVtUTRRQk1OeTMzYjhRaGtjZVNvN25yTXVtL1YwMHVB?=
+ =?iso-2022-jp?B?cy96N3I5OGUxTDhFcktjbUF0eFBKdnVpV1FnUnpwK1NmWEJMNjBxVkph?=
+ =?iso-2022-jp?B?eFJyMVFqWmorbDJmTCt3WlB0TkdNR1VScEZndnVmVmd0WG1FR2pIVkxy?=
+ =?iso-2022-jp?B?ZjZ3UE9UOWZ3SGJMN3ZpTWZGRGZTaDVoLy9EOEZPTldnaVZHQW1vUlVE?=
+ =?iso-2022-jp?B?OXJUbm42eVVVZ0MxeVppTkZrVmVDV3NhUlh6cmg5alNVVkFrNFhGRTJP?=
+ =?iso-2022-jp?B?TVp2QzZadFVSR2p0b3EydG81a3JNdjh4NWlvMWVaNzkvTXBlT0o0MTd4?=
+ =?iso-2022-jp?B?dFdOUEoxYnM1RUpvTFdnMktua3VpakJOUWV2ZlJBdXlnTVhFcGVoSnpN?=
+ =?iso-2022-jp?B?cVhvamhTRWtKWlNuallZK2wvRzkzdytKcnFJcVdncGhSYkdDY2tVMXFU?=
+ =?iso-2022-jp?B?MWxrRjZsTklOUURFZnVIbHhJbzgyTG85R0crOWFPMndURVNwU2REdzVo?=
+ =?iso-2022-jp?B?cHNmZk5wbmRSTFEraGlQQVVzSHUwSnJUUHJ4UTBKZUZZcWdBNTE1Sm5l?=
+ =?iso-2022-jp?B?WGJvd3pCV1FsY09PZmFDSEZzamlVWmdlVDROZkdQL2pMRFo3U1Z1a2pV?=
+ =?iso-2022-jp?B?bEVXV2MxQVhtVkNQcklteGVlU0lMMlB1ZW5FVU1Sb1U0U1FnU0IvM3JL?=
+ =?iso-2022-jp?B?TEt0OGJ4Y0R2bHV2Q0hYZ0U2dHlwbldBQzBrcm5qYWhYZjNqRS9hOW14?=
+ =?iso-2022-jp?B?djlFTFF6QkoxUjlMZHdSbUYrdXhZMlk1dDJiSmZocWhQZVpWM0NBRWds?=
+ =?iso-2022-jp?B?YXp4TWlXT013ZkxSQ1AwZXhOVW0rVXIwa0RybnZvMjJEdlgvS1lzYitz?=
+ =?iso-2022-jp?B?ZnhRakdpTHZSZUNmNmlDbk1IUlNQNE5ubjU5VGVMOEhKazJHUG4vcTV6?=
+ =?iso-2022-jp?B?SXBvM2xidVhXc1NsU21rVjdZR1k1MVc4SXkvVlFlNjk4S3pQc0NWbGpR?=
+ =?iso-2022-jp?B?YkxJZkYzWS9DUDB2WFovNmVmaG1VdHRDeGlZWll1Q3FQbDBONVg3NTZN?=
+ =?iso-2022-jp?B?QnMvMWdHa3RrTENDR3U1Z3VTamhJaVpHVTUrZ2dNVENVeE1IcVFjOWFq?=
+ =?iso-2022-jp?B?NWo0L1BQK0VibEFjTXREVDZsdjBLNE84ajhiYXJmMm4wOUcraDh0QTJD?=
+ =?iso-2022-jp?B?ek5OOGRoSWVqbjR6cURIQ2g3ZVNSeFJlYnQ3cDdzMTdSK3VwS3hDOHdZ?=
+ =?iso-2022-jp?B?c3lkMDFzc0RRcm1OQW8rTml1OXg4cVNpbnpZNFZiemZEODdXb0dzMDZI?=
+ =?iso-2022-jp?B?NlhCamF4Z2RKUVcveGppeUNnTVFPMVdTUEE9PQ==?=
 Content-Type: multipart/mixed;
-	boundary="_004_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_"
+	boundary="_004_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_"
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -157,102 +186,204 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: ingrasys.com
+X-OriginatorOrg: fii-foxconn.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SG2PR04MB5793.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 13f4d4b4-9f34-42b8-62a9-08dd9610aa1b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 May 2025 13:34:07.4008
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB7458.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 83c905af-dcdc-4da0-0ce1-08dd9666c9a8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 May 2025 23:50:37.0273
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 606190be-ff89-439c-b3a7-504fcdff4ffa
+X-MS-Exchange-CrossTenant-id: cb3d8dcd-2ed2-4bad-89a5-e0a7195fb643
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: gbDOPf1bCjjDCxF5LIv1jeDo3SbnLl5bZRK+b4ck1NNlHBBbxaVPjzQ4ukom4JXli+lQ1ysDg7n9KrRhe/KvoQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR04MB5922
+X-MS-Exchange-CrossTenant-userprincipalname: kijX7LT1Ea1rq3XlUpjFX60bLhvnbu3w9VDkdNI5ffcXfMBoEbnsxhsnEmzIxghmBn39s0ReVuH25rnjwYjMQWLrxuhzUPvOz7Z3D2qM9/A=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF0592CC626
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,HTML_MESSAGE,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
---_004_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_
+--_004_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_
 Content-Type: multipart/alternative;
-	boundary="_000_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_"
+	boundary="_000_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_"
 
---_000_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+--_000_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 
-SGksDQoNCkhlcmUgaXMgdGhlIENDTEEgcGFwZXIgZm9yIE1ldGEgQ2xlbWVudGUgcHJvamVjdA0K
-DQpUaGFuayB5b3Ugc28gbXVjaA0KTWFyayBMaW4NCg0KSW5ncmFzeXMgVGVjaG5vbG9neSBJbmMu
-DQpPZmZpY2U6ICs4ODYgMjI2ODM0NjYgLSA1MDEwLTE1ODE4DQpNb2JpbGU6ICs4ODYgOTUzIDgz
-MiAzNjANCg0K
+Loop Patrick and Ray
 
---_000_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_
-Content-Type: text/html; charset="big5"
+George Lee
+Foxconn/CES/EMB
+Office: +886-2-5569-7599 ext. 15809 (5010-15809)
+E-mail: george.kw.lee@fii-foxconn.com
+
+
+
+________________________________
+From: Mark Lin(=1B$BNS;RJv=1B(B) <marklin@ingrasys.com>
+Sent: Sunday, May 18, 2025 9:34 PM
+To: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
+Cc: manager@lfprojects.org <manager@lfprojects.org>
+Subject: CCLA for Meta Clemente project
+
+Hi,
+
+Here is the CCLA paper for Meta Clemente project
+
+Thank you so much
+Mark Lin
+
+Ingrasys Technology Inc.
+Office: +886 22683466 - 5010-15818
+Mobile: +886 953 832 360
+
+________________________________
+
+This email and any attachments to it may be confidential and are intended s=
+olely for the use of the individual to whom it is addressed. Any views or o=
+pinions expressed are solely those of the author and do not necessarily rep=
+resent those of FII-Foxconn Industrial Internet. If you have received it by=
+ mistake, please inform the sender by an email reply and then delete the me=
+ssage. It is forbidden to copy, forward, or in any way reveal the contents =
+of this message to anyone. The integrity and security of this email cannot =
+be guaranteed over the Internet. Therefore, it's advised for the receiver t=
+o verify the validity of this message with the sender.
+
+________________________________
+
+--_000_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_
+Content-Type: text/html; charset="iso-2022-jp"
 Content-Transfer-Encoding: quoted-printable
 
 <html>
 <head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-2022-=
+jp">
 <style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
 ttom:0;} </style>
 </head>
 <body dir=3D"ltr">
-<span style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService,=
- Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">Hi,=
-</span>
 <div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
 nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
 olor: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Here is the CCLA paper for Meta Clemente project</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Thank you so much</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Mark Lin</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-&nbsp;</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Ingrasys Technology Inc.</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Office: +886 22683466 - 5010-15818</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Mobile: +886 953 832 360</div>
+Loop Patrick and Ray</div>
 <div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
 nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
 olor: rgb(0, 0, 0);">
 <br>
 </div>
+<div id=3D"Signature" class=3D"elementToProof">
+<div style=3D"background-color: rgb(255, 255, 255);">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+George Lee</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Foxconn/CES/EMB</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Office: +886-2-5569-7599 ext. 15809 (5010-15809)</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+E-mail: george.kw.lee@fii-foxconn.com</div>
+</div>
+</div>
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div id=3D"appendonsend"></div>
+<div><br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div class=3D"elementToProof" style=3D"font-family: Calibri, Arial, Helveti=
+ca, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Mark Lin(=1B$BNS;RJv=1B(B) &lt;marklin@ingrasys.com&gt;<b=
+r>
+<b>Sent:</b>&nbsp;Sunday, May 18, 2025 9:34 PM<br>
+<b>To:</b>&nbsp;openbmc@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;<b=
+r>
+<b>Cc:</b>&nbsp;manager@lfprojects.org &lt;manager@lfprojects.org&gt;<br>
+<b>Subject:</b>&nbsp;CCLA for Meta Clemente project </div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Hi,</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+&nbsp;</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Here is the CCLA paper for Meta Clemente project</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+&nbsp;</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Thank you so much</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Mark Lin</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+&nbsp;</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Ingrasys Technology Inc.</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Office: +886 22683466 - 5010-15818</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+Mobile: +886 953 832 360</div>
+<div style=3D"direction: ltr; font-family: Aptos, Aptos_EmbeddedFont, Aptos=
+_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb=
+(0, 0, 0);">
+<br>
+</div>
+<hr>
+<p style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size: =
+10pt; color: rgb(0, 0, 0);">
+<small>This email and any attachments to it may be confidential and are int=
+ended solely for the use of the individual to whom it is addressed. Any vie=
+ws or opinions expressed are solely those of the author and do not necessar=
+ily represent those of FII-Foxconn
+ Industrial Internet. If you have received it by mistake, please inform the=
+ sender by an email reply and then delete the message. It is forbidden to c=
+opy, forward, or in any way reveal the contents of this message to anyone. =
+The integrity and security of this
+ email cannot be guaranteed over the Internet. Therefore, it's advised for =
+the receiver to verify the validity of this message with the sender.</small=
+></p>
+<hr>
 </body>
 </html>
 
---_000_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_--
+--_000_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_--
 
---_004_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_
+--_004_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_
 Content-Type: application/pdf; name="OpenBMC.CCLA_marklin_20250318.pdf"
 Content-Description: OpenBMC.CCLA_marklin_20250318.pdf
 Content-Disposition: attachment; filename="OpenBMC.CCLA_marklin_20250318.pdf";
 	size=127212; creation-date="Sun, 18 May 2025 13:30:24 GMT";
-	modification-date="Sun, 18 May 2025 13:30:38 GMT"
+	modification-date="Sun, 18 May 2025 23:49:07 GMT"
 Content-Transfer-Encoding: base64
 
 JVBERi0xLjcKJeLjz9MKOSAwIG9iago8PAovRmlsdGVyIC9GbGF0ZURlY29kZQovTGVuZ3RoIDI3
@@ -2488,5 +2619,5 @@ Ogt6xVcT1j9i46rjZ2wK7t9hYtOyR300ALzOWO+n1cDUiO6de2d9EHiTtxxyuWw5DKyndPLtD3Vh
 2foIsDhrOQosjVqOAcv9luPASl53rWYpv/n7OG1VP0Rpi7oWpGl1na/38436cYhve08th9WLcZH/
 BxFPaAplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgoxMjY1NzIKJSVFT0YK
 
---_004_SG2PR04MB57932563DE9B5A5042008545C19DASG2PR04MB5793apcp_--
+--_004_TYZPR03MB745828035BEF6F95B4477B3EEE9DATYZPR03MB7458apcp_--
 
