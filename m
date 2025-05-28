@@ -1,93 +1,63 @@
-Return-Path: <openbmc+bounces-67-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-68-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9268AC5DE1
-	for <lists+openbmc@lfdr.de>; Wed, 28 May 2025 01:52:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA443AC5E69
+	for <lists+openbmc@lfdr.de>; Wed, 28 May 2025 02:44:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4b6Ttr46Kxz2xHv;
-	Wed, 28 May 2025 09:51:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4b6W3B644nz2xGv;
+	Wed, 28 May 2025 10:44:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::435"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748315131;
-	cv=none; b=iNc2whVPeP7/OQuqKftD3awGSR+LGAG1/OCPIN0w7DISsEp86JY1FgFMHrP7MEkkh+Wf5PDG144hB1a0Url4dRohuvmOzsZcsZb/vEhrHaWRUjMwCMSCUy5emYXek2lpEo2cyfWHBRz95kgBH2XUHQKZWFj6byfxBAORI85dP8BN07s9ztsH+WGg/T/ok/UuZ3EIMIBWa9DZT/VPSZt7bmFrZW57YEKu45niZJBpWUHW1K3AYAnz0s96ND9ZIc9BGdmHNnHJ9jblEmWb7dLJX0eNj4TnzZZx75qcGBbMvp9WuD7ejUgXmPGSi0iISvt9gRevMsrSzFoPrZiZmi3z9A==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748393046;
+	cv=none; b=Yd8xrQNmjdrJQOrHGgcabrcI08cJDSQXZ3nG/qNbBfbXqt1jy+v7gcDFitY18YrFxz0cIES2sbbVjY+36NXSpQ6Vavl2AfTVm0pBy9oEBfWxe85+T03O1cZ+xqi6pNb/O2GN7YuT3HsuGXCgdCD5o8G2rmYdm3tdK7A3S2tiNtr7+s7Ye3Nw3aI9DretPxv0vGC93YlLAu0M1HiM8qkhr/tHlO6azlURvpy06HgoQIedka5hqO+2BR6kyRY+oKFtGzRSymn+z3hxQGAD3v3/3tKjTjEbeFUvPr45loJamu4mg60Tl8sIdtsQZ7xBhR1PzUOn4SIUZ/5Tusb856/WKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748315131; c=relaxed/relaxed;
-	bh=px18dyVutpW04jql0iY32hxuCKS/qRCICcni9mYoXKc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=F1b3GGkPORSFb6DhwWQZU5X+OItYZ4FVVsRX8u+ZnRotRhNjw4vpwZYksBltA65Giq813kmESYZO+/34dSXPHA8ep4mGG23X24x9lDHoctbPSCplgijTP5XDgVumE4Q9HFoe6Ly64UMaEBAcWIK+3ItEeTdZjszSTJMT3aJMK6IDL/BzKjHGSgZwXxcZXtBoJC27B6u5g3Oz+hg3TDWD8Lcsu2ufa3FYhROvuIqRjOl/WfJjpPYZi3ktPqfOpHWD6/GyAzaGeKw58MPWYiCXs6TvGZWx+c4eeU6Q5t1cLlhI9H66Uee3wco2oZ24igzVQZ7d2OCRpxNsxUUQbbS/lg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Y873sIt2; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::435; helo=mail-pf1-x435.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1748393046; c=relaxed/relaxed;
+	bh=bW4crBIy9PqA9JTflIEcujZLjdIxJW8V1rpT69gqPkM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=jkzOKNkIjYhhjEXOAWMl2xYgoPP9v4YmxqXYOFy4mWuQpBeFORFpSf9aUVXriHJIRLqMTS6Lf8aQkYyQxodosgHvh5nI6R0RlMkoLz8DUEjNem76+fqMxZA5kR61EqpagFSya1Ht2hG9U4g7AZ+84vipBDSyhReKqpUnZn3BsN6g/uaDnNQCjbJz5Hl/fthyEkOB6kJvtKlqZ4IAevNvRuhKTkF4evDQeA3degAJpyu4YbxUBvDTYic49EyAumEEIdnGVGOQ19R1SGJdvgLIbSvyiQPLB+nDmiSiy+69Hm/wwPDUVjqplQ+QwK6buAeC66A842VjfMhpo6MDme/A5w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=aDrfu7Ua; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Y873sIt2;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=aDrfu7Ua;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::435; helo=mail-pf1-x435.google.com; envelope-from=mohammed.0.elbadry@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4b5yDp175yz2xPc
-	for <openbmc@lists.ozlabs.org>; Tue, 27 May 2025 13:05:28 +1000 (AEST)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-742af84818cso1625592b3a.1
-        for <openbmc@lists.ozlabs.org>; Mon, 26 May 2025 20:05:28 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4b6W391RPQz2xGF;
+	Wed, 28 May 2025 10:44:05 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748315127; x=1748919927; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=px18dyVutpW04jql0iY32hxuCKS/qRCICcni9mYoXKc=;
-        b=Y873sIt2EUQxUa1O1BrzGS1ayu+U+xMajz4U3S65XbJBFt9E1uI88ZrIs7R21MiOUP
-         RWHRRZ+E5MJRHRY3inYoFmHJ2tcusArTJHS7R8FhvQMYewfn8OuWxScd45RR75QutRbW
-         ESDRFac2/lyh/78m8kvn3Qyh3lXvhXzycfgMnQx0G/mdC759j0IDavp4aoVRSbqTgqt/
-         4eiw2AYDMgH4Jw2XsDBYznxwD/+UfOV/v8Ipa9ei3ubSYJKUxM8/c8iUnKJiFjvhAlT8
-         tLLlLaSbF2mkE9banugavRbgr2dRYv0RYNi8ZVUkhUIcjYhTmhWWvkvQP5dHPKamxmSa
-         2DAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748315127; x=1748919927;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=px18dyVutpW04jql0iY32hxuCKS/qRCICcni9mYoXKc=;
-        b=W4xqla4TqgU9xDmfPkdjdADrc/qL0RB73qf+jnGy48/noK1lZrMo/Jjk4SzONm/RyD
-         cy1T7XdiSRo7Das5l6zIAJd4L4UAFZF3SzdX8myJIlIxVYipzoQgTcxLHjrLg1Rd2JEg
-         z05AS5jK4RrMuXZhhHwOWtmuqLDrnPG/lCU7bym7XkIeDV9doCkHWr7pbgQKUY5vBacl
-         VscNtZf1qFLpuiB1HKAkvs6uA2aRJ//vMMK32i6p1lXHWPMYqP82exw8j5oWYCbdyHZe
-         AJFJeG6BFioqdfkNHP7ypHTdh0emN1m726lvZezI6YP/Xv7If8DULt2Bognt4hPuRpGn
-         UN/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWMs/Xh30bgrr/gYti0SuSi5AHQ7B9ksEZhbBtxd8skL/fHQB9ChbN8rnZznpMOpoUxxRLzXQBL@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yy+IzHQk9PjH3Id7DS59dlonjnhughFoMYDPLF3mrCVoZfCGjO9
-	yRxH9Fkt/wkCl9byA/fYzdBPUv94gMJQH2boNE+U9PkZ40Ih+0yjJHJh
-X-Gm-Gg: ASbGncslgmlNUOBCaUI08kejL1F/obyWnuEYsphHy/TXYxKLOgr1u5+H/FHoO1hcd3m
-	dQxFIWlxDC+QM422Kin44qvND3bv17vPWJ+7iwkjYM0066HenepR4ZwCYB3SpfLvLh1N/Sqq2y2
-	PERR4Hn0HPcMqY6a2RA5qz4P4RMcRJt9Gt9KFXs+kiCCegmbQMsLv1Ia+3flgVSqmgXopJvB3Yd
-	li3fB8HuIlAsyw9uB8KQQXLGInblZ/wfT5xQctLXut2gCFW1xXsM4/PnIF1o7Fr60fnwUpVB1gD
-	Fy+66IZvzi0RgKk8CvTvSAPdILDenjTcKY94o/0QNNQq1wnAsXud0zajVxRZfjyjZdgbLY9uFTP
-	D1uEth7jHSzES54oUgWJGypIoH9p3lbAY/zaC2WiL13wF9w==
-X-Google-Smtp-Source: AGHT+IHmDWSNgOWD3RT3qzb5/6qFfdTgixyLmXH8JgP9ZhrNAHtazORpFUC9JcRw5L/IBtc0xjYmGw==
-X-Received: by 2002:a05:6a00:1383:b0:742:da7c:3f27 with SMTP id d2e1a72fcca58-745fdb4c492mr16827503b3a.0.1748315126741;
-        Mon, 26 May 2025 20:05:26 -0700 (PDT)
-Received: from localhost.localdomain (c-98-42-219-30.hsd1.ca.comcast.net. [98.42.219.30])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-746029d0b57sm4532201b3a.19.2025.05.26.20.05.25
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 26 May 2025 20:05:25 -0700 (PDT)
-From: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-To: andi.shyti@kernel.org
-Cc: avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	tali.perry1@gmail.com,
-	venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com,
-	openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v5] i2c: npcm: Add clock toggle recovery
-Date: Mon, 26 May 2025 20:05:06 -0700
-Message-Id: <20250527030506.79191-1-mohammed.0.elbadry@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
-References: <20250328193252.1570811-1-mohammed.0.elbadry@gmail.com>
+	d=codeconstruct.com.au; s=2022a; t=1748393043;
+	bh=bW4crBIy9PqA9JTflIEcujZLjdIxJW8V1rpT69gqPkM=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=aDrfu7UaYHEsGM5716KG0K+1v8ehAR+fHjDkTlTL9OlVwzHZqwZoUuqC8qfIs766z
+	 MBeP9oD7moryEudsoNWE4xMLYoa2TUmleQY0TtBxqcjlkS4tykuSS83O7fFUWZLxmj
+	 qLitCvUfZCcEvqpahC14pyyJs0TkKvdEw4vKDc8djXf+lRm7xb/w4zDLqDDYzCxIdO
+	 V9t0qvSktbdHf5lK67zwCYoL0Jar/hESdviRfPQZ/1X2HbkKJnnR6kLhLn9UyoEdXP
+	 I3ZjXhu/cDF2CeIfwTjbTOFWPlTI3aLJ/gb+eh2N4dNSqbvPtLjKg+nKI8lMcO+T3c
+	 geXWB+/rlA9MA==
+Received: from [192.168.68.112] (unknown [180.150.112.166])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 9BE6C832CD;
+	Wed, 28 May 2025 08:44:00 +0800 (AWST)
+Message-ID: <753cd65ebf659972c8a33e5f8e579b9fa8738682.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 18/34] mmc: sdhci-of-aspeed: Drop the use of
+ sdhci_pltfm_free()
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Binbin Zhou <zhoubinbin@loongson.cn>, Binbin Zhou
+ <zhoubb.aaron@gmail.com>,  Huacai Chen <chenhuacai@loongson.cn>, Ulf
+ Hansson <ulf.hansson@linaro.org>, Adrian Hunter <adrian.hunter@intel.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>, linux-mmc@vger.kernel.org, Joel
+ Stanley <joel@jms.id.au>, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org
+Date: Wed, 28 May 2025 10:13:59 +0930
+In-Reply-To: <dfc7e01a6134e421ae3aa8da3221f67d59706d0d.1747792905.git.zhoubinbin@loongson.cn>
+References: <cover.1747792905.git.zhoubinbin@loongson.cn>
+	 <dfc7e01a6134e421ae3aa8da3221f67d59706d0d.1747792905.git.zhoubinbin@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -99,50 +69,22 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-From: Tali Perry <tali.perry1@gmail.com>
+On Mon, 2025-05-26 at 14:06 +0800, Binbin Zhou wrote:
+> Since the devm_mmc_alloc_host() helper is already in
+> use,=C2=A0
 
-During init of the bus, the module checks that the bus is idle.
-If one of the lines are stuck try to recover them first before failing.
-Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
+This doesn't appear to be true? aspeed_sdhci_probe() calls
+sdhci_pltfm_init(), and following that through eventually we call
+mmc_alloc_host() (the non-devm_ variant).
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
----
- drivers/i2c/busses/i2c-npcm7xx.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+That said, there are some error paths in aspeed_sdhci_probe() where we
+leak the object. Improving the code would be helpful, but my
+understanding is this patch isn't right.
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index de713b5747fe..4738fc450a6b 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2178,10 +2178,15 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
- 
- 	/* Check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		ret = npcm_i2c_recovery_tgclk(&bus->adap);
-+		if (ret) {
-+			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
-+				bus->num, npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return ret;
-+		}
- 	}
- 
- 	npcm_i2c_int_enable(bus, true);
--- 
-2.39.5 (Apple Git-154)
-
+Andrew
 
