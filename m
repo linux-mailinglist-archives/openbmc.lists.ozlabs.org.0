@@ -1,48 +1,48 @@
-Return-Path: <openbmc+bounces-109-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-110-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07821ACA13C
-	for <lists+openbmc@lfdr.de>; Mon,  2 Jun 2025 01:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EED4DACA1C2
+	for <lists+openbmc@lfdr.de>; Mon,  2 Jun 2025 01:30:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4b9Y4M3f6Dz2xdg;
-	Mon,  2 Jun 2025 09:25:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4b9YB93H3bz2yFJ;
+	Mon,  2 Jun 2025 09:30:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748820339;
-	cv=none; b=XIAmiyieS1Hy8zpthlNIS7x4sFpVHF9EBfwMYmniGstZxvLx3lJezlOknKoq5pA0BPkLNGQ57uv5keThKgzo0S+rok+gwtBVXmNYNX4MWxY21N+tqSQ2SNyXkX14s2DyMGhk38jUo3nhsv9+gFOiDFFBejh13pM/dQBFLCW+VbHtYQoAC7oZxXvTyyKNGVcRCJ7cEV7hgRu/8+ONjLLDMOv1OMy1nIZwh9uv/VrHwyARMEYt7csKLynIuKCAeZH7KpjyB0Koy4X5pkTaN0COXvh+vvKUn/KmkXxMIaDb9nRZlpaBwN6qR5qGtDl/yQtVIZfl+WtharqXj1WLC/Snrg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748820641;
+	cv=none; b=K9K5EQWkvozrIDuGtEWfKDlwvmhAR3Tr/bD20FkInZ6PIbRG6klx3xQtNSa1wdjKmaY4JG+KzM/ka/pWRVcn5KiO2DKMYCf/cA7VAUjjZT1KFO90f7LLH2AZrQySxveoD5CNMmPZDjokilgwp8VSY9lSBxK8lxqtjRZ6BB4Shazvg5wrA03H4bDPwd99pRqNFbOFbnZsesrVx/7hy7URfSiYZUJYDp6uKLspkxwCFaxh6Wg/NWW6VtLapbM+d5dGuohD5IEOVd+OPrW6ARkUOEkspZ2AngX04HwNWMgFupabNDXE9h8FnEQWaEe2ppUJKg6QdgaWywHkLkeG+9rptQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748820339; c=relaxed/relaxed;
+	t=1748820641; c=relaxed/relaxed;
 	bh=qJP7hoEJC+TGTUJulrWqH+7wnbLVWth6RXrAMsJ8tkA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lV39wGXDAIRnufSDiI2PvcQGBAKCV6PrjN9vrTnj5KAS8I9eDjJNcZXEe0VcMzIAlbFqF3uDvTjlDrBxiXbSWPRO/pVQYw82fWPLlSGyhuPj/NryR2hQQlOYFp9vmN0wDTMOq5dM0mYMLpn0fJsno1zclfpquL2QjoaHRLCuq9KjS8POVePT00cz2qiRG+9uo42MANV/EwtonbvBGCUUmKjxpGBLMRBZYDdyD0uxoP7NNpm2f2doKtH03WItb3pNeIoeTkOcUIvyiJLeehKNji+vdUdTowK47jL1ribam4erH0jvmit1S8yTLMaTwKlyURV93yq5yt2DM3jcLhP6NA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rMiz7VGK; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version; b=AubmLyyaVgK3AaICQ7co8Fh3HxrjaBkt73oRf1Df+KNgwwbcMCZmFdCrJZGVjbOsvQbrbBUol3s9JFxMe3mrwKo8DPsgej3Fow8TjznGBCeNxWMR89+Cp7XkBWLR7uXqqMZ+pt9jLN3YZdSeXbGQDXzvSKTiXt8DV/OXXCuIc7oGD5NSs5GmO3YJaaQRjdmxJCjc/d5CVr9E5Mp3Dy4j0v7yU/GhjpX9q1O6gTbsMyToKJeI7J63cpWPF0twmtOAo79n4nsKV17k77++1REr/1DDMwTjLnS8iAfEaO02v3LSis6l3IQV02Jm6+/rpceD9XLGigLg1pRJqvkdLlR45Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iV58evyu; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rMiz7VGK;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iV58evyu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4b9Y4L3RKpz2xbX
-	for <openbmc@lists.ozlabs.org>; Mon,  2 Jun 2025 09:25:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4b9YB84PGMz2xlK
+	for <openbmc@lists.ozlabs.org>; Mon,  2 Jun 2025 09:30:40 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 7CC8E6116F;
-	Sun,  1 Jun 2025 23:25:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E5C4CEF3;
-	Sun,  1 Jun 2025 23:25:34 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id 18FBFA4F9E0;
+	Sun,  1 Jun 2025 23:30:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE35C4CEF3;
+	Sun,  1 Jun 2025 23:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748820336;
+	s=k20201202; t=1748820637;
 	bh=DIIbz0lEb7dnY47PJIaYKLyq8zk6dH2bQFA62F8ojNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMiz7VGKjBrTT6kvw8YwmTZfkVvoJz2kbI9sf7pLGuMbsI7IIadYCXeueg5lZZoAH
-	 JdSyFlteMMPVVTouK4Z1yk406op1yyosk2K1ZR+ldR6lHN/UpGmPW5mNS6CX3x1STK
-	 Jc+AfJ9341aNezrgk9xPOdGOxOa6BrLkVfh8vxVWxoO/tAmkIOxD7T9eeBMVsUGm6D
-	 Vt4DfkatGSnwKtgKtbbvwvv9xuw7Wfo75Q+1mZs85YrKZ6uPUMGgIAlTCqiUa3QQpj
-	 /pxumKnDbWMy9cW+xCjv5a5s8uBFfIK6j5JPDqWAS4cS/CERGMn7cKGiIjhoBFzD4i
-	 +8f7iGwf/HtoQ==
+	b=iV58evyuh2UCQg3VEZpFMKA2HSwMkgxK1UNPHz1Iiz+8i3d6rotKkjRZsH8UnIPWa
+	 3hcvj9zeXyDwj8i1yzgArDyQOt6McGLAd602nR0iX8XLgauIR7TPfKJgbVcTxKJ/SO
+	 xo0Bgdko5vktzAIMvK+cM+8vnFi//Dbz3UZRbMpp4OtP5aJ7t+o1aUzh051NAKUDId
+	 lKg/+KKZO9rH5AzFrfWroKm7MPcF3jLBR6qUyoW2ktug0AZ7HQlG4nkdVEX8bHNdee
+	 BElbUS00ZjyNV1HCjGdk0OT+PAHa1Ant527qMGgAVey8AeNgmZvC484M1Xr/HVlbEd
+	 ocknDmSO1uq+Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -55,12 +55,12 @@ Cc: Michael Chang <zhang971090220@gmail.com>,
 	linux-media@vger.kernel.org,
 	openbmc@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 022/110] media: nuvoton: npcm-video: Fix stuck due to no video signal error
-Date: Sun,  1 Jun 2025 19:23:04 -0400
-Message-Id: <20250601232435.3507697-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 022/102] media: nuvoton: npcm-video: Fix stuck due to no video signal error
+Date: Sun,  1 Jun 2025 19:28:14 -0400
+Message-Id: <20250601232937.3510379-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
-References: <20250601232435.3507697-1-sashal@kernel.org>
+In-Reply-To: <20250601232937.3510379-1-sashal@kernel.org>
+References: <20250601232937.3510379-1-sashal@kernel.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -74,7 +74,7 @@ Precedence: list
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.15
+X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
