@@ -1,97 +1,66 @@
-Return-Path: <openbmc+bounces-108-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-109-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 315D7AC9018
-	for <lists+openbmc@lfdr.de>; Fri, 30 May 2025 15:26:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07821ACA13C
+	for <lists+openbmc@lfdr.de>; Mon,  2 Jun 2025 01:25:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4b83sd5TnLz2xHv;
-	Fri, 30 May 2025 23:26:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4b9Y4M3f6Dz2xdg;
+	Mon,  2 Jun 2025 09:25:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=202.12.124.151
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748611573;
-	cv=none; b=gaK3D9OY/H49Y+gaBgDfcm5fJWP1WaJUlrHQoKAMdTYQDDX/Gxy40aiS5m6DgFdzY4Vxt7VPj1nMbpKUNn506kMKdJSfa1QdPoNhc191YjS/+RTKPTHQvfr3ll57PoFX9KaPuZVXz/JmXJPcb0W6BwXSZIig/XQ4kUl5YkpWGolizJ0ZjbsA1l0Xr+VAKu5b4TNxF4Bv7hnu2aPJyURza/IgbvEBL6B5yjxhL2Uqb3L2Qf8D/rbs6NUhCfoyk04DOFfBcQTSujnJgdjypnm575G9zsGekfdT2LiukCiDodDRbgs2qBM+pRyzB829fjZYG56A7PW76SIJO0csfaDEWQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748820339;
+	cv=none; b=XIAmiyieS1Hy8zpthlNIS7x4sFpVHF9EBfwMYmniGstZxvLx3lJezlOknKoq5pA0BPkLNGQ57uv5keThKgzo0S+rok+gwtBVXmNYNX4MWxY21N+tqSQ2SNyXkX14s2DyMGhk38jUo3nhsv9+gFOiDFFBejh13pM/dQBFLCW+VbHtYQoAC7oZxXvTyyKNGVcRCJ7cEV7hgRu/8+ONjLLDMOv1OMy1nIZwh9uv/VrHwyARMEYt7csKLynIuKCAeZH7KpjyB0Koy4X5pkTaN0COXvh+vvKUn/KmkXxMIaDb9nRZlpaBwN6qR5qGtDl/yQtVIZfl+WtharqXj1WLC/Snrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748611573; c=relaxed/relaxed;
-	bh=+uJ1AXheX/NmP3+qYSRnCX+DH7eTPCC9/8u5gpnguPI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MCclj8M7PW0Kv0y6XRGov1lN8svGN+YZkKA9I/kGXY6DIAy5/az+KnHv5dH5SnjMl8bH7hE14OgRfssYlva8ZczHgMtO8XyIPXDMRBxOHiIIaaO4Bw8rFLsy0/cqc7EXbiXsI90+DPU6goNqqVp6ChfPEd2UtuVAkIw6kuAANQhG3vyY7CyMYpZisoCK9sL0qheSYmqP7dYHwMMOChtbv0rgwS16/gf/7Jeijt1v6DIf6i3YYa85G3SiCPJvndKTcitx+IhiqVRDJ1GW2bgBVtKQ7BgRKbEYpdTt4d0OD2gCRVmFIUSPnDbOHu0ke6dPnh6eRcrbTc5HJVzTZPhHZQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Kp59rzIb; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=FdKf60HZ; dkim-atps=neutral; spf=pass (client-ip=202.12.124.151; helo=fout-b8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+	t=1748820339; c=relaxed/relaxed;
+	bh=qJP7hoEJC+TGTUJulrWqH+7wnbLVWth6RXrAMsJ8tkA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=lV39wGXDAIRnufSDiI2PvcQGBAKCV6PrjN9vrTnj5KAS8I9eDjJNcZXEe0VcMzIAlbFqF3uDvTjlDrBxiXbSWPRO/pVQYw82fWPLlSGyhuPj/NryR2hQQlOYFp9vmN0wDTMOq5dM0mYMLpn0fJsno1zclfpquL2QjoaHRLCuq9KjS8POVePT00cz2qiRG+9uo42MANV/EwtonbvBGCUUmKjxpGBLMRBZYDdyD0uxoP7NNpm2f2doKtH03WItb3pNeIoeTkOcUIvyiJLeehKNji+vdUdTowK47jL1ribam4erH0jvmit1S8yTLMaTwKlyURV93yq5yt2DM3jcLhP6NA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rMiz7VGK; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Kp59rzIb;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=FdKf60HZ;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rMiz7VGK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=202.12.124.151; helo=fout-b8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-X-Greylist: delayed 499 seconds by postgrey-1.37 at boromir; Fri, 30 May 2025 23:26:08 AEST
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4b83sX6cCcz2x9N
-	for <openbmc@lists.ozlabs.org>; Fri, 30 May 2025 23:26:08 +1000 (AEST)
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1DFB81140131;
-	Fri, 30 May 2025 09:17:46 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 30 May 2025 09:17:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748611065; x=1748697465; bh=+uJ1AXheX/
-	NmP3+qYSRnCX+DH7eTPCC9/8u5gpnguPI=; b=Kp59rzIbK1z/4Wba03XCp9Fr7m
-	lSdomNgvuTrIEpdHGcTM3AZyHnM0puqZJo0CqQACRnW4Ih8elEeWWUoLLh+oTmz2
-	DVmc5+g1dOjp+qdx5JM5Z6M2JZlhXqi1Lyr67fqd9OKBFoSLJSqv2ss3bWPtyJK3
-	30GF8FCv+eqKloVYZULfYKUjwa7T9vfjUNzVPfCpg6+MBitZxHIcVaEKgQaaLGMd
-	HeQSasIS1nHeHqh3k3J8pQkHurSDoWQKFiHSA2UK06qH5lcU2Srwf+1293Rqa+Bj
-	5k9fhgffEqjFtBnoh766kgF2dCA28eR8S7JpQ7u5oHk3X4FJfzfvsedbiQMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748611065; x=1748697465; bh=+uJ1AXheX/NmP3+qYSRnCX+DH7eTPCC9/8u
-	5gpnguPI=; b=FdKf60HZSxjCj/MGFArPUK5jDTK7RSOwKVue1ncse8snKDqC2fB
-	pB+jjd/5yIYEZ4gzkPbA1CKe2v6ZjB2G8S8sO++NJbSwKL/6+6Sh5tMmJWknn+AD
-	KHLzK4IQy9B0ZJj3ZH/Ve+BGaUnV4BM+MWeq+FSZVyx0XEoC1djfmklSOCWbubIT
-	jY8JpEGCuxt+Hekg4rZ11Kar7Sm/kbFNsqvjq09LTzMTfQ9KglQQRZatmjTwRmVb
-	i8ewwEJuOovJhRNyHkiflFNQd3efv18K4ZzySXoGJoHbWZ0OhbfukNo2cYvp0Ozd
-	3l3flbi3+vYK6B71GN36sejaYPN+vOlKFvQ==
-X-ME-Sender: <xms:-a85aHRBOQPL20P9zYXLUdU8k8wP7ob1McD3H3y6PERKaC8btLpJwg>
-    <xme:-a85aIwyFQdyGA-Cj9-Pp-aaavqKE0DJDVl8uhcgHgYxWUG8XxFXZGM7hm0ga-dv-
-    LBRU1Bu_3eA0L8d1Nk>
-X-ME-Received: <xmr:-a85aM2l4AdYQtloLfV-Z-4XDccY5XQtIRKMO1MKyKxYrpRxV52PmzJr0wM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvledutdculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlhcuvffnffculdefhedm
-    necujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrth
-    hrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecu
-    ggftrfgrthhtvghrnhepledvtdfgffdvgfdvhffhgfejtdettdduvefgjeehffelveejtd
-    fgfffguddvkefhnecuffhomhgrihhnpeifihhkihhpvgguihgrrdhorhhgnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
-    htfigtgidrgiihiidpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtoheprghmihhthhgrshhhsehmvghtrgdrtghomhdprhgtphhtthhopehophgvnh
-    gsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrghdprhgtphhtthhopeifrghnghhkuhhi
-    hihinhhgrdifkhihsegrlhhisggrsggrqdhinhgtrdgtohhmpdhrtghpthhtohepiihhih
-    hkuhhirdhrvghnsehinhhtvghlrdgtohhm
-X-ME-Proxy: <xmx:-a85aHAyfBPE9sMh_JhtpAAtGCkBf9DDLUuQqBtexp91wvQxM7u6CQ>
-    <xmx:-a85aAjetbxmZ_GXiUYAOX9kPw82d3bvl4fKH-kwNbMvleuVQBIzAQ>
-    <xmx:-a85aLpVMd-eIpDs1Nf18bI8IGfynT1t9eOGqaYXVCTT8YErdOrbLg>
-    <xmx:-a85aLgtHCGg_1EmTnhX0Qlu6fKaZVDWEzag0i8pxBl14mwACTWiGw>
-    <xmx:-a85aND6DiOnCtQLKq06oWZuy-0G3Y-lS0hJ9af9-vx3HhGHt02sjub4>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 09:17:45 -0400 (EDT)
-Date: Fri, 30 May 2025 09:17:44 -0400
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Amithash Prasad <amithash@meta.com>
-Cc: LF/OpenBMC Mailing List <openbmc@lists.ozlabs.org>,
-	"wangkuiying.wky@alibaba-inc.com" <wangkuiying.wky@alibaba-inc.com>,
-	"zhikui.ren@intel.com" <zhikui.ren@intel.com>
-Subject: Re: [RFC] Special handlers for post-codes
-Message-ID: <aDmv-MAXX2QFsLlp@heinlein>
-References: <SJ2PR15MB5801C8B07E960251A53DDF98AB61A@SJ2PR15MB5801.namprd15.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4b9Y4L3RKpz2xbX
+	for <openbmc@lists.ozlabs.org>; Mon,  2 Jun 2025 09:25:38 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 7CC8E6116F;
+	Sun,  1 Jun 2025 23:25:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7E5C4CEF3;
+	Sun,  1 Jun 2025 23:25:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748820336;
+	bh=DIIbz0lEb7dnY47PJIaYKLyq8zk6dH2bQFA62F8ojNo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=rMiz7VGKjBrTT6kvw8YwmTZfkVvoJz2kbI9sf7pLGuMbsI7IIadYCXeueg5lZZoAH
+	 JdSyFlteMMPVVTouK4Z1yk406op1yyosk2K1ZR+ldR6lHN/UpGmPW5mNS6CX3x1STK
+	 Jc+AfJ9341aNezrgk9xPOdGOxOa6BrLkVfh8vxVWxoO/tAmkIOxD7T9eeBMVsUGm6D
+	 Vt4DfkatGSnwKtgKtbbvwvv9xuw7Wfo75Q+1mZs85YrKZ6uPUMGgIAlTCqiUa3QQpj
+	 /pxumKnDbWMy9cW+xCjv5a5s8uBFfIK6j5JPDqWAS4cS/CERGMn7cKGiIjhoBFzD4i
+	 +8f7iGwf/HtoQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Michael Chang <zhang971090220@gmail.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>,
+	kwliu@nuvoton.com,
+	kflin@nuvoton.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	openbmc@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.15 022/110] media: nuvoton: npcm-video: Fix stuck due to no video signal error
+Date: Sun,  1 Jun 2025 19:23:04 -0400
+Message-Id: <20250601232435.3507697-22-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250601232435.3507697-1-sashal@kernel.org>
+References: <20250601232435.3507697-1-sashal@kernel.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -103,147 +72,99 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="OBrZzNgMCk3T7Com"
-Content-Disposition: inline
-In-Reply-To: <SJ2PR15MB5801C8B07E960251A53DDF98AB61A@SJ2PR15MB5801.namprd15.prod.outlook.com>
-X-Spam-Status: No, score=1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
-	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
-X-Spam-Level: *
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.15
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+From: Michael Chang <zhang971090220@gmail.com>
 
---OBrZzNgMCk3T7Com
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[ Upstream commit 497f1fb94759fa0c638f15c12b1ab3e586bccfcb ]
 
-On Fri, May 30, 2025 at 02:02:20AM +0000, Amithash Prasad wrote:
-> Hello,
->=20
-> There are many occasions when a post code from a server actually means so=
-mething is wrong =E2=80=94 especially crucial if a boot failure occurs befo=
-re the part of the system firmware capable of sending a SEL to the BMC is l=
-oaded. To support this, I am proposing enhancing phosphor-post-code-mfg to =
-support configurable special handling of post codes.
+Fix the issue when start_frame and detect_resolution
+functions are executed at the same time, which may cause driver
+stops capturing due to status of no video signal error.
 
-Thanks, this looks like interesting work.  I know some processors that
-have magic postcodes that mean things like memory training has failed.
+Signed-off-by: Michael Chang <zhang971090220@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-How do you anticipate these configurations are managed?  I see 3
-options:
+Now let me analyze this commit based on the provided information:
+**YES** This commit should be backported to stable kernel trees based on
+the following analysis: 1. **Bug Fix Nature**: The commit specifically
+addresses a driver stuck issue caused by a race condition between the
+`start_frame` and `detect_resolution` functions. This is a clear bugfix
+that affects the operational functionality of the driver. 2. **User
+Impact**: When this race condition occurs, the driver stops capturing
+completely due to a "no video signal error" - this directly impacts
+users who rely on the video capture functionality. 3. **Minimal and
+Contained Changes**: The fix makes only a small, targeted change to the
+`npcm_video_detect_resolution()` function in
+`drivers/media/platform/nuvoton/npcm-video.c`. Specifically: - Removes
+the premature setting of `video->v4l2_input_status =
+V4L2_IN_ST_NO_SIGNAL` at the beginning - Only sets this status flag when
+the resolution is actually invalid (width/height are 0) - Adds proper
+debugging messages for both valid and invalid resolution cases 4. **Low
+Risk**: The change is logical and safe - instead of immediately assuming
+"no signal" and then potentially overriding it later, the code now only
+sets the "no signal" status when there's actually an invalid resolution
+detected. This eliminates the race condition without introducing new
+complexity. 5. **Similar Pattern to Backported Commits**: Looking at the
+reference commits, this follows the same pattern as "Similar Commit #1"
+(marked YES) which also fixed reference handling issues in the same
+driver. Both commits: - Fix driver-specific bugs - Make small, contained
+changes - Address operational issues that affect users - Don't introduce
+new features or architectural changes 6. **Race Condition Fix**: Race
+condition fixes are typically good candidates for stable backporting as
+they address timing-dependent bugs that can be difficult to diagnose and
+significantly impact system reliability. The fix addresses a specific
+functional bug where the driver could get stuck due to improper status
+flag handling during concurrent operations, making it an appropriate
+candidate for stable tree inclusion.
 
-    1. People add them to their meta-layer for a particular machine
-       and/or processor.
+ drivers/media/platform/nuvoton/npcm-video.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-    2. The configuration files are part of phosphor-post-code-manager
-       (and enabled via CompatibleHardware matching from entity-manager?).
+diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+index 7a9d8928ae401..3022fdcf66ec7 100644
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -863,7 +863,6 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
+ 	struct regmap *gfxi = video->gfx_regmap;
+ 	unsigned int dispst;
+ 
+-	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
+ 	det->width = npcm_video_hres(video);
+ 	det->height = npcm_video_vres(video);
+ 
+@@ -892,12 +891,16 @@ static void npcm_video_detect_resolution(struct npcm_video *video)
+ 		clear_bit(VIDEO_RES_CHANGING, &video->flags);
+ 	}
+ 
+-	if (det->width && det->height)
++	if (det->width && det->height) {
+ 		video->v4l2_input_status = 0;
+-
+-	dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
+-		act->width, act->height, det->width, det->height,
+-		video->v4l2_input_status);
++		dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
++			act->width, act->height, det->width, det->height,
++			video->v4l2_input_status);
++	} else {
++		video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
++		dev_err(video->dev, "Got invalid resolution[%dx%d]\n", det->width,
++			det->height);
++	}
+ }
+ 
+ static int npcm_video_set_resolution(struct npcm_video *video,
+-- 
+2.39.5
 
-    3. The configuration is part of the entity-manager config instead.
-
-My initial impression is that we have two different kinds of configs:
-
-    - Configuration that is entirely processor dependent; any system
-      using a particular processor version will have the same postcode
-      handling.
-
-    - Configuration that is vendor / BIOS / machine specific.
-
-For configuration that is processor dependent, install option (1) does
-not seem like a good direction, since it means we're going to be
-duplicating this work.  I would lean towards option (2) here, but you
-probably need a method to load multiple configs: "processor.json" and
-"system.json".
-
-I don't think this needs to be solved immediately but "which processor
-type is installed in a socket" is not necessarily fixed.  For example,
-AMD socket SP5[1] supports both "Genoa" and "Bergamo" processor variants,
-which could require different post code handling.  There is little
-reason why a system with an SP5 socket couldn't have a BMC that should
-be able to handle both Genoa and Bergamo chips.
-
->=20
-> Example configuration:
-> [
->   {
-
-Please add a name and/or description field.
-
->     "primary": [123],
->     "secondary": [234, 123],
-
-This is a bit awkward to me; you should probably look at what
-entity-manager does.  People tend to think of postcodes as hex and not
-decimal.  I don't think we should do conversion to decimal just to make
-it JSON-native; optimize for humans and (especially) reviewers.
-
->     "targets": ["my_special.service"]
-
-Why do we need to be able to trigger custom systemd services?  This
-isn't clear.  To me, this starts to cause the configs to be system
-specific, which is far less ideal.
-
-I'd rather see some well-defined "actions" like "catastrophic failure
-that requires a server reboot".
-
-You should also consider how multi-host systems, like yosemite4, might
-be handled here.  We will have multiple instances of phosphor-post-code-man=
-ager
-running, one for each host.  If you do have systemd targets, they have
-to be templated.
-
->   },
->   {
->     "primary": [999],
->     "targets": ["power_failure.service"],
->     "event": {
->       "name": "xyz.openbmc_project.State.Power.PowerRailFault",
->       "arguments": {
->           "POWER_RAIL": "MyDevice",
->           "FAILURE_DATA": ""
->       }
->     }
->   }
-> ]
->=20
-
-I'd like to see a jsonschema validation of whatever the config ends up
-being.  We do that in at least entity-manager and sdbusplus if you need
-examples (EM uses JSON for the schema, sdbusplus uses YAML).
-
-> I would love to get feedback before I continue down this path.
->=20
->=20
-> Thanks,
->=20
-> Amithash
-
-[1]: https://en.wikipedia.org/wiki/Socket_SP5
-
---=20
-Patrick Williams
-
---OBrZzNgMCk3T7Com
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmg5r/YACgkQqwNHzC0A
-wRkDzQ/9ETIVyoOa4UUJL8qIDLasATvpCCq8llQvpNeQsxrCYAENvD3ihla5I8p7
-e73lMnHHD27SWNP53gJUJ5+7OkfkToPmol6HRxES667DKc0pCxqIE2WrtUXT1Bbu
-EAH8sYF6OGAmPExq2ogLWaYiljMaOJrTdDDydXWoElzZ/F78aVYQINZveoazI0El
-QC4QGfMutTZIuYgflgOOFck4Ft9l91FF1cVH9+cdDLnJ1cSEUJC63ybknNKpipYJ
-0r7JX4fe+hTnmtIN6mG13NNmhdR2M8r7RgRUfR/y9ibPticwrzUgp3k1ZkHUgm/D
-k4lHsLUbwt0kDd4mfHtc5QXziRlRVYGhm0Mke05432qRjOSc5FDBj3wMVybggHtc
-RDOSghFlAWIhB7oyP2e2L2dE9GELWeI82xWyCuc7Sme7V95qxRFc8UgVd8NFR2OL
-mJE5O1nzki6xg4xXVVwZbB7JplSOzz5P5D4lXAz7eLdBbkY6t6GT6hbWawS+RcCq
-uOsHlFr1l4XH8BXo0A3B4Uh3CrByZOKxh+s0hz+3BJg4kSmYplSM69XOqKAJpU2I
-Qf5JU1DZvYnaKkkGPbGVhGAJy/OO4omUznOAAMQR4haZ6cdwhUoeYlTRMD89AGFW
-LE+ob0TqQOGG4tXfl0JiDV7+FmM9Po2zFuPV2TORJadu288Svi8=
-=q+tC
------END PGP SIGNATURE-----
-
---OBrZzNgMCk3T7Com--
 
