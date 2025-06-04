@@ -1,48 +1,48 @@
-Return-Path: <openbmc+bounces-119-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-120-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B9B1ACD11F
-	for <lists+openbmc@lfdr.de>; Wed,  4 Jun 2025 02:51:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC0B5ACD16F
+	for <lists+openbmc@lfdr.de>; Wed,  4 Jun 2025 02:56:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bBptp0Zkcz2xPc;
-	Wed,  4 Jun 2025 10:51:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bBq090YC1z2yPS;
+	Wed,  4 Jun 2025 10:56:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748998306;
-	cv=none; b=eKGHAkAp6k+7kVug3osdyMddlA1lLyXE/KMYR5qG3AjbGg9l5t0TeSBr2sGyYRI8SOBErdsO+EadkhTi9t1tHsw27i6cpaQ7+iRV1/FKhGQRCN2jJBO/20/z6Y5/moY+ldgT+sO1gzGfaPCOd9qZdGLO2sAkxAWCuA13y4orCZUJbykW7fjlttQaDih/ZaxSgDVFi6GP8FR+hTRO3RODRaIlGuwitmh/NlmFbufXqXcGCunisLmQL9U8J61Cmya1Hg6Im/VHYUzVs6x0vfegIeOZUHta2tMaegPScIROG9avlgnI9p/T5jrNFf4RCKt+7H56OTB4+t29MeEnqAAE8Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748998584;
+	cv=none; b=OMl0KOarBWATyPrvHZJlYZR95t9KbySMrhWblji/MIqGsI7zwuPE+q7B/YlYI4CCPtKsag/nolwwhAVAar+DBrWrYNOLJ4li9ychxmTUouW5RnT/nhJ2kpMrNphp5flezQFPKXnCp3EiqF9xbVdC31ru4HSahjttiIWL6qUULHGn+QOKa8rPJVM1AwfNrnvz4XBT41g9LwDT+4agxVFzdvxjxiED74sEWLVVDKTz5T0Mzi8c1PFvPGfV+nE+VurxV9/96/YfA8l8/A8UD7ttyR1HbNXZuztLwSXCkO+Me55YMzJSIzJlJfiMucKv+skzTpyFkcXmJfIEdLvr+G9cFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748998306; c=relaxed/relaxed;
+	t=1748998584; c=relaxed/relaxed;
 	bh=SG3Df6frd1qjDXFMRiFCS0UZqdbhRmT5lt0U8V1yMiU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=QfpWB/QJC0BcBpnLyi7/NQ25hu1VIF/Ceffe4L+nUasKpkmHSHUXY7EC/o2YGUMWx9S3aO5zQ2aIM2CZD7DyYMy+ksNa8mNK6eZFRMl+LzfiRMqj+fhvaTivXtq2IDPulVNWacU6b5xG1djiPc/fZtgxSNqduTB9rnxWboG4KrbNNYi++RPl9+3dYXswS3K15/PRbM9fbgmxxu8CVo79q2sFwjQOs4z+XaNDv94PClhBtZf5CH6vRcPIcrUh6u+gG4WgH9Z5jIpBQ0HoR+AACmijXwwvDPGFWJQJb5hOEn6oguPxwevbIzCJ3cnt98LcLrilktewbNWij1OWXmRokw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=H9HJeR34; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version; b=kmxboP4ltUwQt5dE3B+BiNE0lnBgFf6MIt+aHIkOKPsaPTGmeUvBeg3QEVKJhwVca2V7rSDOoIsSzTHs4k79YNiatmc3/YVJP8ryViPHuN2ujyC6eSI+EYH40+/rRw2wT3atguLM2jGIL+1VGD1fQRc4A3nYK8e/m7mMzIddKxqJkoLuEzBO1JlJbikH8a7CyLBVCyIdzwtKgm643ZsrLD3re+cfpsqLGdOyDlYvjCEy+YxEJYl8j1uNtjBFRE+nzb6wvOHiO/GqmcIGnMTa4gudgRIImQxGvNI3f+nXLSZD0sCPAO4mI0paO1JY01zk02lqo8ITfkzNU4I05v1dwg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KXiRKw6D; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=H9HJeR34;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KXiRKw6D;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bBptn0tGvz3069
-	for <openbmc@lists.ozlabs.org>; Wed,  4 Jun 2025 10:51:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bBq081J1hz2yKq
+	for <openbmc@lists.ozlabs.org>; Wed,  4 Jun 2025 10:56:24 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id A32AAA4FE5F;
-	Wed,  4 Jun 2025 00:51:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8CBC4CEED;
-	Wed,  4 Jun 2025 00:51:39 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 5DDEF61127;
+	Wed,  4 Jun 2025 00:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6369C4CEED;
+	Wed,  4 Jun 2025 00:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998301;
+	s=k20201202; t=1748998581;
 	bh=9WPYWmiSBnr+jGtw6/xQHEvbcKhqnrWWoaiSbiypaa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9HJeR3410jfM38GOWdz9hKjbNEeah/vhsngvC6CGgjYrOmwccB6EHvvxoZrOp6jM
-	 j1zWwz1A+HRkB1n2tIGLApPE5jccYK5oJpUmV6yYrFigiRW0T0LiwHBnvDoiirxpU0
-	 mu1BrI5V6wyAIwCB32QnmpkaEQO76wwby+oweD+xzQnYCK0jjDG5BKufUaOycl9J02
-	 Yd7i6I/LZ/5y9Y0kH1iVezo/dKCX9CJXgGOjxUhRZOGOmsBlIVhUPuk2USpYWvwn95
-	 t8DR/4JY80gMCROAunhcu9X4sfuwQSC57z6wGpPjgNHWravPjtr5O8FdHUjAtglcL1
-	 dKUHwJEE2Ef7Q==
+	b=KXiRKw6D0rLhJ+t8gTj3xChxp8D5u2L+dckA8B5zuxAlC/3DrMrQIA/bNdI85RQtq
+	 GSuKFTX5wEHKIKT2ili1hDNw12W00jHf86773PEt8yapKmdRMHbNy57/2Bb67J61+1
+	 YdKu9+1q5oexR9SuUl0WFlQrfmuD5gDChjiaKHHn2eS79iqxIIZzkS5fEcA6izxyms
+	 FqdmWjYjLzWylTEiArncyxjUj1KCP5j+BQ9laAkoK/wIHE5/UySlTZuWcHfosLG6ZJ
+	 ivtCey6bHFaN1EaCg4CIeUU34TruYcWnrA+eQKpnTFVIUCATvClXaijkva0akbpVSW
+	 7bDUPx0MGMGcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -55,12 +55,12 @@ Cc: Tali Perry <tali.perry1@gmail.com>,
 	tmaimon77@gmail.com,
 	openbmc@lists.ozlabs.org,
 	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.15 025/118] i2c: npcm: Add clock toggle recovery
-Date: Tue,  3 Jun 2025 20:49:16 -0400
-Message-Id: <20250604005049.4147522-25-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.14 023/108] i2c: npcm: Add clock toggle recovery
+Date: Tue,  3 Jun 2025 20:54:06 -0400
+Message-Id: <20250604005531.4178547-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250604005049.4147522-1-sashal@kernel.org>
-References: <20250604005049.4147522-1-sashal@kernel.org>
+In-Reply-To: <20250604005531.4178547-1-sashal@kernel.org>
+References: <20250604005531.4178547-1-sashal@kernel.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -74,11 +74,11 @@ Precedence: list
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.15
+X-stable-base: Linux 6.14.9
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 From: Tali Perry <tali.perry1@gmail.com>
