@@ -1,48 +1,48 @@
-Return-Path: <openbmc+bounces-121-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-122-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB56DACD1C8
-	for <lists+openbmc@lfdr.de>; Wed,  4 Jun 2025 03:00:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B44E8ACD20E
+	for <lists+openbmc@lfdr.de>; Wed,  4 Jun 2025 03:02:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bBq4N6DRYz308b;
-	Wed,  4 Jun 2025 11:00:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bBq7S2yt8z3069;
+	Wed,  4 Jun 2025 11:02:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748998804;
-	cv=none; b=Lh9DXvi9spVyTF/266yX04QZQWNU+csQ3kO+jLrI0pOTHXx0A0hTFrfmfB3cTVG6GLoS73EV/Wd+r0p5wRA9bxjHrboifaVJUY/XO7z/tm7bEs6+rKFUcv7g0VqSJW36Ivp4Wb7U3CdBiwnIov3e7ntp5vMe3CqMYWU7Og+SWPXx2bssVWVjruTSld9/8EWIg3v9baSr30cI58tN2v3gULuhqgtq1jqf4Z+WIjC4tyxPjq9VcwaGeaTBtTGKjhFkth8XvgE5Onc919PcCtCJ49o1z66vs+vmDE2BtEUB0JbCrEp4xTV5V2GDTlNk+Hx7adCCmy1CA/dXFHiMsWke7w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748998964;
+	cv=none; b=DsnIYy52+clgD5Mx8ZKUnn9tDyDGCGJIlW+JQrtYv87X0C0ujcarHntStpAxefHF+cUcNyFjEWmdC0qbb8fVT3YKOCkcgsKbPYS4RDCHbS4exjwO0hmIw9w2kmmEuH4C18zzbqM9cTts12pNAtzkROCWIztJ7RK/Q17RyC9j91txbAj549264d2jxEnySxlhv9A+mCBtZzyAA7Fxjf6OtCNepmTcXB2zcEqBYNAlTBeM/Mdjg7ceo4XpURKqZz7HEGGErjkRm6Pk82t6O1j7tt7F2ZZLiOi+pMcSNk4XvVpuUK3LvRM7fcwmegkt9XxEX0r6oeX8Og6CNFKNTS/IQg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748998804; c=relaxed/relaxed;
-	bh=vLlVHaMHY2niIgira+UDgC+95dx5lqRg3M6GZRBIkdU=;
+	t=1748998964; c=relaxed/relaxed;
+	bh=D5WAbI73NNqKzcCS4akZ1CO/CJqwSQL1Ez7hCfR94C4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=SBDk/ffAMPB81DFMrwqAmiunqhHE3hHtEX44ikvpSGJ7uPa+iY3zi2GZp9Y2OTYPL+8nMxvONG5qS00+bngQvNRGzLbXaR4jIHldHuOrprtPYKXvLJza8VWJmLvrjrs6Qj4lj246Vw18119LDahdKYRL9z7Sp49bBnCz3+zrse9IneYd26UZnSrwdxFvu+FyQ+j0DMCLhnPBiU8qY/+CBG7tglgZAKbEHkTfYQjswL8LoYXtrGUKXAeJKYB3F7YrWDzJ8qB8862HBxgMlSC4lLyu19UcHTXqf9umWbZzfm//huIL0eQTOuVia7dStu4GE/cuOgCKuNd2Fwb21r81xQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=BnjrjP7J; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version; b=nuzvDsLew06lF/0vQ7db4BVNBTBGXU2EdD/GwOnow1SJKruvj08GPmoXNfD6CGJmA5yqTk43JPxcKMd13Z/VC2TYLRwcgT/nNFB9tYtb5wSHRKY+JwOFsFzm3mZ7/AC3Q4FXv2bs+dTXhszQ5kkp7u0DdUHbCHa2lPrSkWby98TDnvcv3ytfEgLj9GtC8872bVK9E27B5jTakPWrkHJ+AgyZXd8GFsywTC8t9FERUgGl98gLkX1e4XUmy3F1qkkQh1+kjOvzOIOHu2w/DiKGSMvu3v1HLo4yycRlysr4ixbdX/+0dMRw9jKlEd8wCbRbq3qDrMxIjF9quqQQsPD3cw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Cnx70lf6; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=BnjrjP7J;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Cnx70lf6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bBq4M6ZBBz307V
-	for <openbmc@lists.ozlabs.org>; Wed,  4 Jun 2025 11:00:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bBq7R2xXrz2xlQ
+	for <openbmc@lists.ozlabs.org>; Wed,  4 Jun 2025 11:02:43 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 5B7A8A4FE49;
-	Wed,  4 Jun 2025 01:00:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A61C4CEF1;
-	Wed,  4 Jun 2025 00:59:59 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 4D674629D1;
+	Wed,  4 Jun 2025 01:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6382C4CEEF;
+	Wed,  4 Jun 2025 01:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748998801;
-	bh=YnWu7uKd8aeZ/8+8pP53vu+TpqRky+NdBXh3LNj7Kkk=;
+	s=k20201202; t=1748998961;
+	bh=3UlQ1uaKv1jVgcEcZWK5ng6OKVleb3uemsVJ7sxFYY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BnjrjP7JZjXpYVOwjnpNiloEn9xCcVRLgKyzFFdTUcAZqEMi9eBxd15ABwCbo5gp4
-	 YFF2+VYqRBBvRXSjHtm0qWG51jguJSjpJ4Ny+/X2/RjBoodaGRnjyTtc60FXOxLMxA
-	 VRz+1UUmVqXO5RZrWJQ6gftLFvKh3exyUikBgD0VHtjsBu8hJpj3bw9m1ydkSyqLAK
-	 4tf/v6bHFVQP/tYsqy8eMZPEbQoHVJS2zhlj1808hGHs+UySMzATgK93SgRxIAx5bC
-	 guLX4d6ibbPsZG6+8hy0WqstIRa0PUIszW61sj9ORrsnSNdZw3MrihbFwBVeAgjeBZ
-	 U3dpHp0J4PVUw==
+	b=Cnx70lf66vXyxoQvdELYxF9KsDN+LFGCXDbqx6jfJuzJNwlq0IIP7+7/KVdrfNWwE
+	 dBSeCS3JuuV33joIqKN0uo8AmoSUa+Ixt9xxXMy0hQ0b8iAiB+EJ7OkUIxRWFiY8TJ
+	 S0pqBQyJLTLswEAx7vaBPEIaXJgX2joKzFoyr/HAbuiIuPHP/SG4At3EOtOwmtTXS3
+	 Azg+84o+8l9QzwStXvWov1g93z1p0IEZ4W33z+sHhDFfYGKd6846ioglVGW41xeLOf
+	 WXkJDqpkZMGGXbojxibbyIjnKkd0hF/s+CURPOGHZ0A6VmO5kKB25f3Yx6S9SLYBzH
+	 K09V/UDf0Lccg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -55,12 +55,12 @@ Cc: Tali Perry <tali.perry1@gmail.com>,
 	tmaimon77@gmail.com,
 	openbmc@lists.ozlabs.org,
 	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.12 20/93] i2c: npcm: Add clock toggle recovery
-Date: Tue,  3 Jun 2025 20:58:06 -0400
-Message-Id: <20250604005919.4191884-20-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 14/62] i2c: npcm: Add clock toggle recovery
+Date: Tue,  3 Jun 2025 21:01:25 -0400
+Message-Id: <20250604010213.3462-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250604005919.4191884-1-sashal@kernel.org>
-References: <20250604005919.4191884-1-sashal@kernel.org>
+In-Reply-To: <20250604010213.3462-1-sashal@kernel.org>
+References: <20250604010213.3462-1-sashal@kernel.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -74,11 +74,11 @@ Precedence: list
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.31
+X-stable-base: Linux 6.6.92
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 From: Tali Perry <tali.perry1@gmail.com>
@@ -144,10 +144,10 @@ low regression risk.
  1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index a693ebb64edf4..7b6eb2bfb412e 100644
+index 91f508d50e7ab..5b3987460976e 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -1969,10 +1969,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
+@@ -1971,10 +1971,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
  
  	/* Check HW is OK: SDA and SCL should be high at this point. */
  	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
