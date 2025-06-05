@@ -1,66 +1,56 @@
-Return-Path: <openbmc+bounces-125-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-126-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6265ACD262
-	for <lists+openbmc@lfdr.de>; Wed,  4 Jun 2025 03:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 371A4ACECED
+	for <lists+openbmc@lfdr.de>; Thu,  5 Jun 2025 11:37:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bBqCw4F4pz30FR;
-	Wed,  4 Jun 2025 11:06:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bCfWD2Kl4z2yLB;
+	Thu,  5 Jun 2025 19:37:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1748999196;
-	cv=none; b=aDNjYuyj/mEVaY0prvaypwwKiTlaSC7j7gUc5a8id7vLBbMbQbqqp/VxbXbkB17TDhPoNXwNWFBlPrYazSl7vQP2oZb/Dc4BNvZMUues1+TpxMFhKgsRjFdVSdTVAQ5pTjQJ920jIOG94lF0MjMIQaUgE9Jc+tAGyMWt05tm8TjhjqxnF1RTcG8uFWqBvtk4sSqhvURglgebvdU4Qq+LsAKv2WbHwEhqIbjETKnNTSg7tCLvs8tPfaOMsaazNZKJZ30xYhkN/RbntLKlA7O+b5y+L6Iiwn2EkZcYCvV0DCDvezXgD6+VJB8oaK7Fpsby6d0tNDIfps0KhSSqAtuIwQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=78.41.115.137
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749116264;
+	cv=none; b=IfeidPP5CpOhdkUP9fz7SMJDzizjMJWLbNTe7/brrjtszz92VKFZikYFdrfXbGHnnq80L+nt4yB4VLZ2Y3xYQ88uUFP6gG1HhRbFrd4uFO2PMoDoD6JAr0QxyBGIW13JN8TETyYnvHQ5KqaJUHPRC5J4cp1mVdm27VUqIX/KicE6NuhfXIiW+6FA/KBxhktsqIjASXpco93xvx70QEXf5F/LGj0r7p5KPuUMjV2gI7PkgOghQgr1YL2z93nOWqyLnj7oFDyzxnt4blSKBQob6PHDWLrz/5okooER3RP0o7DxKeNcMg3RNRlhWtGUg3/3R7pgdEMJZcS0LuFUYvngcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1748999196; c=relaxed/relaxed;
-	bh=J6IO6CDxHfrNM5Ns+nSzjV0oB9Bb683gFjWHQaz6mbU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dw8Xx6hHCH/dVecM1Yby9JVpBBBrL6JigryRkc+Gl3oh2aYzAjAskCp9GpEUKPFhGdEtTnnNgUsJoGaPzDtMxO7g6PFgiTo906VTi9mCyICrCofciZOSQ0WpdlvcOU0B7bUDUp+N+G16aTBXqVs7VT9jwN4M3kEh8bY3VRJa6fen244JXLH7o55Y3W4eW7lEU035yJiGl2wscu50J2qGUgWoJThXegGMG1ytJOQRXMXC04Lqqa5Vy7zUWlU/n40t1m8IFqMNPvha89FA73iAx6u9qA1tkBZyx2ruOXgqV93emurTK3Tud1wOxXMNnGlr4eZQ2OALR3gg7x/0SMtGCw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Yaj3OD2C; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1749116264; c=relaxed/relaxed;
+	bh=tmg5V14BNdpmAb2knJ75xN/RnyvJ6xb7k6PmLvgCtJo=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nxm1+auCO06TL+/dIYnof1zhkBNLee26xcJBjC9egOE1ggOy8k1J/r61ym8sBSyJ/IrNeYp9I7x8IaKkbt3Zb625EB9cL3xphZIgBaRboGrh8Yvem63dAL+kSFvpNu4t3e8LgFmOS6XFQRC/GhqH6mNBCFRXFEHBcWowW0h9gReMlQQMoYyK0+Q4s4J2WHwdZMF3vJCZCrx2Acj8JzXHgsrIfUeuhtG90thQJUbPoC4gdtZK7MLd3tGKyi84Y0F3kjYk7DAe4DM7PP699ZsF4eBmMgW3otVFdEO/yRqYAz8uKms3aez2+0hW8tXvjKWXPi9mLZd4Q08TMxlg3kTe/A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=truschnigg.info; dkim=pass (2048-bit key; unprotected) header.d=truschnigg.info header.i=@truschnigg.info header.a=rsa-sha256 header.s=m22 header.b=rcJsFmH3; dkim-atps=neutral; spf=pass (client-ip=78.41.115.137; helo=truschnigg.info; envelope-from=johannes@truschnigg.info; receiver=lists.ozlabs.org) smtp.mailfrom=truschnigg.info
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=truschnigg.info
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Yaj3OD2C;
+	dkim=pass (2048-bit key; unprotected) header.d=truschnigg.info header.i=@truschnigg.info header.a=rsa-sha256 header.s=m22 header.b=rcJsFmH3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=truschnigg.info (client-ip=78.41.115.137; helo=truschnigg.info; envelope-from=johannes@truschnigg.info; receiver=lists.ozlabs.org)
+X-Greylist: delayed 549 seconds by postgrey-1.37 at boromir; Thu, 05 Jun 2025 19:37:42 AEST
+Received: from truschnigg.info (truschnigg.info [78.41.115.137])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bBqCv5PZFz30DL
-	for <openbmc@lists.ozlabs.org>; Wed,  4 Jun 2025 11:06:35 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 6CCA8A4E753;
-	Wed,  4 Jun 2025 01:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1D8C4CEF1;
-	Wed,  4 Jun 2025 01:06:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748999193;
-	bh=SA6HIY3yDC4xKt1COY2bbznzUxE8mwjPYmgofmI2pxg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yaj3OD2CnRVWQU43/02AXyAGsaac0n11yXDWpoyIioxiX4q9/dXNvBoHWu7B9TpxW
-	 O9NMZ2Tw0nE2v/G6WXdZ7tTzoPBD7JYJryjz8Wc8tCka+FgxhyRVpgDLSpl9BlgtDn
-	 Ntm7SJ3bUXkK6ZqA//6bK+s/1pb5xL3TFFOzJohJzmCGnaMyJXxBygM0i4vBcCRUkW
-	 0noyUJ+Z+1eP1kOUdIGi8qCytcG7/mjhrHLsQxHL8vmpNsrY1N9t2/5dwG0joBr9xD
-	 B7IWRHCzgUhULE1yKmpl5q61UB8pygJjGBaHyjK88VH7LzvVcYTZTOGKENqSKPo/D5
-	 JnwjuO/iFbm+g==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Tali Perry <tali.perry1@gmail.com>,
-	Mohammed Elbadry <mohammed.0.elbadry@gmail.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 07/27] i2c: npcm: Add clock toggle recovery
-Date: Tue,  3 Jun 2025 21:06:00 -0400
-Message-Id: <20250604010620.6819-7-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250604010620.6819-1-sashal@kernel.org>
-References: <20250604010620.6819-1-sashal@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bCfWB5Q5sz2xH9
+	for <openbmc@lists.ozlabs.org>; Thu,  5 Jun 2025 19:37:42 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=truschnigg.info;
+	s=m22; t=1749115709;
+	bh=/8t8I93FygPM/ep892GDnAJacuNo1FXIIJFIO2/Iy2E=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=rcJsFmH3N+jTcvht1wH692psQFkpLgns2VpwwC8ZSP+56BjCgNhMT3Kc99u6STByo
+	 37MmQ52DC61KJE9EJCeIs76jSfybPRR/Wha71sDfIlYOX0oUMEF9alkhpmfNAUkSgX
+	 c63ynRi96bz8spVV/FRneTnXz/c8Dp84MDF0aLuTCCG9B8i62JVZlv5CutSvGpd6SN
+	 PyAanI/JcPFSiugPFugLA4v1FJA6wAhRo1B0yhyx9aCPB083bdBSDjk5/gGiTI1kCw
+	 Uh+jjN4BDPtpiCGCDypkqnvwWw9AI5V5xWgt37DLK2X6J3vuek5MUZQdOMn43Qzpo0
+	 DKh+dWRNkMaIg==
+Received: from vault.lan (unknown [IPv6:2a02:1748:fafe:cf3f:1eb7:2cff:fe02:8261])
+	by truschnigg.info (Postfix) with ESMTPSA id 422A6402ED
+	for <openbmc@lists.ozlabs.org>; Thu,  5 Jun 2025 09:28:29 +0000 (UTC)
+Date: Thu, 5 Jun 2025 11:28:28 +0200
+From: Johannes Truschnigg <johannes@truschnigg.info>
+To: openbmc@lists.ozlabs.org
+Subject: Re: Settings backup and restore tool prototype using Ansible -- RFC
+ on a published project
+Message-ID: <aEFjPIgHlz4i5VG0@vault.lan>
+References: <Z9ftA+zMr2ljEbZg@home.paul.comp>
+ <F4A34EF4-9572-4863-97BB-8ACA4B7FF1A5@linux.ibm.com>
+ <Z+MP02Uckh6jt/3O@home.paul.comp>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -72,101 +62,61 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.237
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="01gL5qGfIjwBcsGw"
+Content-Disposition: inline
+In-Reply-To: <Z+MP02Uckh6jt/3O@home.paul.comp>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-From: Tali Perry <tali.perry1@gmail.com>
 
-[ Upstream commit 38010591a0fc3203f1cee45b01ab358b72dd9ab2 ]
+--01gL5qGfIjwBcsGw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-During init of the bus, the module checks that the bus is idle.
-If one of the lines are stuck try to recover them first before failing.
-Sometimes SDA and SCL are low if improper reset occurs (e.g., reboot).
+On Tue, Mar 25, 2025 at 11:19:31PM +0300, Paul Fertser wrote:
+> [...]
+> What do you think about my approach though? I would think it can work
+> right away with many different existing Redfish backends
+> implementations without going through standartisation process and
+> covers a wide range of actual usecases. [...]
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Signed-off-by: Mohammed Elbadry <mohammed.0.elbadry@gmail.com>
-Reviewed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Link: https://lore.kernel.org/r/20250328193252.1570811-1-mohammed.0.elbadry@gmail.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
+I just wanted to let the list know that `ansible_redfish_settings` helped m=
+e a
+great deal in getting a small fleet of ten new servers deployed the other
+week, even though their BMCs are not equipped with firmware based on OpenBMC
+at all. I highly recommend taking a close look at Paul's approach if you ha=
+ve
+to wrangle many BMC configs at once.
 
-**YES** This commit should be backported to stable kernel trees. Here's
-my detailed analysis: ## **Primary Reasons for Backporting:** ### **1.
-Fixes a Real Hardware Bug** The commit addresses a legitimate hardware
-initialization issue where the NPCM I2C controller can fail to
-initialize if SDA or SCL lines are stuck low after system reset. This is
-not a theoretical problem but a real-world scenario that occurs when: -
-External I2C devices (sensors, EEPROMs) hold SDA low after improper
-reset - Power cycling leaves slave devices in an inconsistent state -
-BMC systems reboot while I2C transactions are in progress ### **2.
-Small, Contained Fix** The code change is minimal and well-contained: -
-**Before**: Hard failure with `dev_err()` and `return -ENXIO` when lines
-are stuck - **After**: Attempts recovery first, only fails if recovery
-doesn't work - Uses existing `npcm_i2c_recovery_tgclk()` function that's
-already proven and in use for runtime recovery ### **3. Prevents System
-Boot Failures** Without this fix, systems can fail to boot completely
-when I2C controllers can't initialize due to stuck bus lines. The commit
-message specifically mentions "Sometimes SDA and SCL are low if improper
-reset occurs (e.g., reboot)" - this is a boot-critical issue. ### **4.
-Conservative Error Handling** The fix uses defensive programming: -
-First attempts recovery using hardware-specific TGCLK mechanism - Only
-fails initialization if recovery is unsuccessful - Downgrades the
-initial error from `dev_err` to `dev_warn` with recovery attempt -
-Maintains the same failure path if recovery doesn't work ### **5.
-Alignment with Similar Successful Backports** Looking at the reference
-commits, this follows the pattern of similar commit #4 (npcm timeout
-calculation fix) which was marked "YES" for backporting. Both: - Fix
-NPCM I2C driver issues - Address real hardware problems - Make small,
-targeted changes - Don't introduce new features ### **6. Hardware-
-Specific, Low Risk** The change only affects the NPCM I2C controller
-initialization path and uses existing recovery mechanisms. The risk of
-regression is minimal since: - It only adds a recovery attempt before an
-existing failure case - Uses proven recovery logic already in the driver
-- Specific to Nuvoton BMC hardware ## **Code Analysis:** The key change
-replaces immediate failure: ```c // OLD: Immediate failure
-dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num); return
--ENXIO; ``` With recovery attempt: ```c // NEW: Try recovery first
-dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n",
-...); if (npcm_i2c_recovery_tgclk(&bus->adap)) { dev_err(bus->dev,
-"I2C%d init fail: SDA=%d SCL=%d\n", ...); return -ENXIO; } ``` This is a
-textbook example of a good stable backport candidate: it fixes a real
-bug that prevents system functionality, uses minimal changes, and has
-low regression risk.
+--=20
+with best regards:
+- Johannes Truschnigg ( johannes@truschnigg.info )
 
- drivers/i2c/busses/i2c-npcm7xx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+www:   https://johannes.truschnigg.info/
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index d97694ac29ca9..3f30c3cff7201 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -1950,10 +1950,14 @@ static int npcm_i2c_init_module(struct npcm_i2c *bus, enum i2c_mode mode,
- 
- 	/* check HW is OK: SDA and SCL should be high at this point. */
- 	if ((npcm_i2c_get_SDA(&bus->adap) == 0) || (npcm_i2c_get_SCL(&bus->adap) == 0)) {
--		dev_err(bus->dev, "I2C%d init fail: lines are low\n", bus->num);
--		dev_err(bus->dev, "SDA=%d SCL=%d\n", npcm_i2c_get_SDA(&bus->adap),
--			npcm_i2c_get_SCL(&bus->adap));
--		return -ENXIO;
-+		dev_warn(bus->dev, " I2C%d SDA=%d SCL=%d, attempting to recover\n", bus->num,
-+				 npcm_i2c_get_SDA(&bus->adap), npcm_i2c_get_SCL(&bus->adap));
-+		if (npcm_i2c_recovery_tgclk(&bus->adap)) {
-+			dev_err(bus->dev, "I2C%d init fail: SDA=%d SCL=%d\n",
-+				bus->num, npcm_i2c_get_SDA(&bus->adap),
-+				npcm_i2c_get_SCL(&bus->adap));
-+			return -ENXIO;
-+		}
- 	}
- 
- 	npcm_i2c_int_enable(bus, true);
--- 
-2.39.5
+--01gL5qGfIjwBcsGw
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEGu9IhkI+7/aKLUWF95W3jMsYfLUFAmhBYzgACgkQ95W3jMsY
+fLXc2xAAkYbHfDGCm7vsLq9hB7cmOD4MMH3pCCLwC1C0knCws/UkRxMkwJ9yq6sL
+X8y8rBqyvZaqK+B1+Y7VqHvfVugkTfiAVNlHZZWVsL3TdeDLl89/GmJvnDSjWwzH
+Ff2Z0xpq/RQRFpYuMoNQjj5EbVYItK7jiSPfEZjLXQNXU36aeHIP+6ANG01ncuzt
+QWVg6KFAUI0p77PpVLs4MWpeoOE/RrfYYLlJ6638RKx1jSeWtih0zY6R8chAi6FO
+6TwIyLvNgc9qQJ5deUqTAgfE1nUDICY8JZM2ottyHNEtkjKFPYffNX2msTrfSoL9
+6FTZDvLm4NUlPOkyIrclQrLFOOfyZM43eHyHwFlw5lw15Pgm04cIb0noLza4eJUY
+d+MAHXi1ODgljq6MKFOhHowBcQ9yIfAoW/dSfoHHZ4/sofZMVlx/UtEsIZmu1CNo
+vAKHB0z0Jgydru+U87f6nYVFjpHnk0+KNIT9ALnUJVIMbPdS9bK7l3XodCdd7RPz
+ICv9EvjWueXrXunLkDJticFuiuaqJbbzHDil+PD6JEKXizR3gjaXCeSW/FfojWtR
+5ejj3zpEtMTPVtRlZFaBN7/1hZSLhn7bUlx8LgNTl/KS6uzlWRg7hhY96VbFEqlh
+ZNUELbZsW/eIXbTET2Du3oL52aDlvCiK3b/vwa/hRdxg8FdQiC0=
+=mV7Y
+-----END PGP SIGNATURE-----
+
+--01gL5qGfIjwBcsGw--
 
