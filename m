@@ -1,32 +1,33 @@
-Return-Path: <openbmc+bounces-131-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-130-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3D31AD10F6
-	for <lists+openbmc@lfdr.de>; Sun,  8 Jun 2025 06:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8036AD10F0
+	for <lists+openbmc@lfdr.de>; Sun,  8 Jun 2025 06:22:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bFMZ74nhlz307V;
-	Sun,  8 Jun 2025 14:31:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bFMND2GT5z307K;
+	Sun,  8 Jun 2025 14:22:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=114.242.206.163
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749281608;
-	cv=none; b=PN5y9RmQjMDaQ3BEt8zMAzH613WVJFmLSv6MiomfJ9rzrmz84/oe+WrvYRs0KBjQdCdTYKWbfokre1mkCpKD+MW8Q3ikhD/4PGy2doP14FLmudRj7XcFd0s0UeOrrk+C4cenUJgwKc85Sf9IAng2nR2mf46Tltiv++rpTKvt5K0i7AKeluGQk78Zhek16XHQkyULIJjirNmMzMWs+azWAIGhaWuClEJcvsAlnEe71bUTbcMVZV0cQX9bik8IKwSzdsL34QHSr/aVf2ctv9KEQn08eDWIRryGtQulGPp+/qgp9MtpK9sAhOo0j2ibcJZ1QX2fTFzeVg2nveudzJ6Law==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749281724;
+	cv=none; b=em5OmgO6+GOff5tb6HEahcqvreYunj4f8dXwjjHxqw2VveI22gymprX3LIQ4H/S1r3Zeox+6/xq/kfUDjM8gdw8Tu8CiDf2zQyW6MoUuKe9tAGrF5MXEM7NqVxLXr7Q1Xi7r7JoZFzYB6G6X4CSPS8CsDq5GEA5h2Chv9LyNDYnrgXxiDO+VLxwruYWi5+feZia/Ejf4ySQqt4+R3VGPBItGKKeLaJ1bsyP+90EBXRuRlpI0FHMUhOzWlNftF/7RUcik/FdRYEK6PhscUY0gERPPvUDq0nilr+wD7lU+ZSFamrw5XR+ixxdk1Q89MbkJScWNXEkZEy1dMCo1zavKBQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749281608; c=relaxed/relaxed;
-	bh=yzZ+FR4HzaCtTAYaQshj0u1B9QZKyH9oqhZpNyfvfBQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bo23zByY6JxudPases74oSmI0rzf+ElDqpKo0Id6vIJMRx63lIepCcPq+R1MnuzeIwx21+O6sijqKbtF8xx5ZZu++8k/vdjKzoT67ITgwQ6TxkgN1oHhGMCJcDrLicy6ovCVcaCJEBAbLhpb4IrDs4ETw0Hyc0QnK0HH7iF98IL07zLbDblMseqYbFLsbASpGuXOoVU8a7RWDZ0BzYe21mAD637tXZn6nOD+RFUA7K0y38b3QMOQrXBHr7XWaqluvdgA4SDGNCwskSftAlnLCIp7lK9uTs+kK4EJSY/AEMlH5EN+IjvXbUsiaSIr9MhF4WKa1IucaU52SsO0E81SGQ==
+	t=1749281724; c=relaxed/relaxed;
+	bh=Ierhon4KcMrAMKC+0VLyegdQ/a+05DUDqE2IN81rwnE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hjzRI/w0AMvedCIsriHQBK/wZHih8TqA3rGFpCcMcg7gi18fExVuG7ycpFLzUkUbhqCAmhJYcyLdhYlyh5owCMGyOAHjb2jKJs8TSKDamAiBhD3goZFYzzLY7s4HvmRts4o3gbyH7oBC7K1GqzwNt49mvD67DDHAgZZMN4TORVDERuI1aVRePW6MlfeO3AKftPdcT/SDTAV78Gj/nEpzMNAMzXKJVCIIow1CmC30mmbJgQpFPydbv1QRFqrsv162LvAHTGLP7RnsQEHbXDzxm5jFMrTw0GMZ3BwHPPwOI7rjeq8Sbs/KVytKF4LDjvX6U6MHXLJnejuf3P9YzCCt2w==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass (client-ip=114.242.206.163; helo=mail.loongson.cn; envelope-from=zhoubinbin@loongson.cn; receiver=lists.ozlabs.org) smtp.mailfrom=loongson.cn
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=loongson.cn
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=loongson.cn (client-ip=114.242.206.163; helo=mail.loongson.cn; envelope-from=zhoubinbin@loongson.cn; receiver=lists.ozlabs.org)
 Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bDqft4jjrz2xnM;
-	Sat,  7 Jun 2025 17:33:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bDqj7373Kz2xnM;
+	Sat,  7 Jun 2025 17:35:23 +1000 (AEST)
 Received: from loongson.cn (unknown [223.64.69.3])
-	by gateway (Coremail) with SMTP id _____8CxaWr66kNoARUPAQ--.43723S3;
-	Sat, 07 Jun 2025 15:32:10 +0800 (CST)
+	by gateway (Coremail) with SMTP id _____8AxHHJg60NoTRUPAQ--.40684S3;
+	Sat, 07 Jun 2025 15:33:52 +0800 (CST)
 Received: from localhost.localdomain (unknown [223.64.69.3])
-	by front1 (Coremail) with SMTP id qMiowMDxu8Tw6kNo4JwOAQ--.43155S2;
-	Sat, 07 Jun 2025 15:32:06 +0800 (CST)
+	by front1 (Coremail) with SMTP id qMiowMCx7MRZ60NoTZ0OAQ--.46078S2;
+	Sat, 07 Jun 2025 15:33:50 +0800 (CST)
 From: Binbin Zhou <zhoubinbin@loongson.cn>
 To: Binbin Zhou <zhoubb.aaron@gmail.com>,
 	Huacai Chen <chenhuacai@loongson.cn>,
@@ -78,10 +79,12 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
 	linux-tegra@vger.kernel.org,
 	Hu Ziji <huziji@marvell.com>,
 	Binbin Zhou <zhoubinbin@loongson.cn>
-Subject: [PATCH v3 00/35] mmc: Cleanup sdhci_pltfm_free()/sdhci_free_host() usage
-Date: Sat,  7 Jun 2025 15:31:50 +0800
-Message-ID: <cover.1749127796.git.zhoubinbin@loongson.cn>
+Subject: [PATCH v3 01/35] mmc: sdhci: Use devm_mmc_alloc_host() helper
+Date: Sat,  7 Jun 2025 15:33:34 +0800
+Message-ID: <dcfce3ddf980563c590f82c1b4e8840c29497887.1749127796.git.zhoubinbin@loongson.cn>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <cover.1749127796.git.zhoubinbin@loongson.cn>
+References: <cover.1749127796.git.zhoubinbin@loongson.cn>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -94,148 +97,61 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowMDxu8Tw6kNo4JwOAQ--.43155S2
+X-CM-TRANSID:qMiowMCx7MRZ60NoTZ0OAQ--.46078S2
 X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Xw4Utr1UGF4DGFW7Gr17Jwc_yoW7Ar1rpa
-	ySqrWa9r43Cr95WrZxJw1UZw15Xr4rX39Fgry5tw4FqFW3Ca4UKrsrAFy0qryDZ3yxJr48
-	t3WDJw1UGr95K3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUt529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUBIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
-	xVWxJr0_GcWln4kS14v26r1q6r43M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
-	xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q
-	6rW5McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
-	vIr41lc7CjxVAaw2AFwI0_GFv_Wryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1l4IxYO2xFxVAFwI0_Jw0_GFylx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8Gjc
-	xK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26rWY6r4UJwCIc40Y0x0EwIxGrwCI42IY6xII
-	jxv20xvE14v26r4j6ryUMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw2
+X-Coremail-Antispam: 1Uk129KBj9xXoWruw48ZFy8Xr1kCrW3XF4fJFc_yoWkArc_Cr
+	y3Xr1xWr1UArykXw1j934IqrWrKrs5Wr1vvFWrtrWay3ZrXw1kG3Wxur1DZryUur4jkFZ8
+	Cw1rJr1xZr42kosvyTuYvTs0mTUanT9S1TB71UUUU17qnTZGkaVYY2UrUUUUj1kv1TuYvT
+	s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+	cSsGvfJTRUUUbSkYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+	vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+	w2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+	WxJVW8Jr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6F4UJVW0owAaw2AFwI0_Jw0_GFyle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
+	Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Wrv_
+	ZF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwI
+	xGrwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
+	JVW8JwCFI7km07C267AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+	vE14v26r106r1rMI8E67AF67kF1VAFwI0_Wrv_Gr1UMIIYrxkI7VAKI48JMIIF0xvE2Ix0
+	cI8IcVAFwI0_Ar0_tr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26F4j6r4UJwCI42IY6xAIw2
 	0EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x02
-	67AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IUeVpB3UUUUU==
+	67AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5rUUUUUUUU==
 X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi all:
+Use new function devm_mmc_alloc_host() to simplify the code.
 
-After the first part of the cleanup[1], there are sdhci related
-drivers that need further cleanup.
+Although sdhci_free_host() is no longer needed, to avoid drivers that still
+use this function from failing to compile, sdhci_free_host() is temporarily
+set to empty. Finally, it will be removed when there are no more callers.
 
-This patchset is the second part of the cleanup series, and since sdhci has
-sdhci_alloc_host() as the general interface, our main job is to clean up
-sdhci_pltfm_free() and sdhci_free_host().
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+---
+ drivers/mmc/host/sdhci.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-[1]: https://lore.kernel.org/all/cover.1748933789.git.zhoubinbin@loongson.cn/
-
-Thanks.
-
------
-V3:
-- Collect Reviewed-by and Acked-by tags.
-Patch-19:
-  - Use dev_err_probe() to cleanup the code.
-Patch-32:
-  - Fix build warning by lkp:
-	https://lore.kernel.org/all/202505300815.tjQRQD6z-lkp@intel.com/
-
-Link to V2:
-https://lore.kernel.org/all/cover.1748515612.git.zhoubinbin@loongson.cn/
-
-V2:
-- Collect Reviewed-by and Acked-by tags.
-
-Patch-01:
- - Set sdhci_free_host() to empty, rather than dropping it.
-Patch-07:
- - Set sdhci_pltfm_free() to empty, rather than dropping it.
-Patch-22:
- - As requested by Yixun, retain the goto scheme.
-Patch-35:
- - New patch;
- - Since all calls have been cleaned up, sdhci_pltfm_free()/sdhci_free_host()
-   are now dropped directly;
-
-Link to V1:
-https://lore.kernel.org/all/cover.1747792905.git.zhoubinbin@loongson.cn/
-
-Binbin Zhou (35):
-  mmc: sdhci: Use devm_mmc_alloc_host() helper
-  mmc: sdhci-acpi: Drop the use of sdhci_free_host()
-  mmc: sdhci-milbeaut: Drop the use of sdhci_free_host()
-  mmc: sdhci-pci: Drop the use of sdhci_free_host()
-  mmc: sdhci-s3c: Drop the use of sdhci_free_host()
-  mmc: sdhci-spear: Drop the use of sdhci_free_host()
-  mmc: sdhci-pltfm: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-bcm-kona: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-brcmstb: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-cadence: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-dove: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-esdhc-imx: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-esdhc-mcf: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-iproc: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-msm: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-npcm: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-arasan: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-aspeed: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-at91: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-dwcmshc: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-esdhc: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-k1: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-ma35d1: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-of-sparx5: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-omap: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-pic32: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-pxav2: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-pxav3: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-sprd: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-st: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-tegra: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci-xenon: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci_am654: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci_f_sdh30: Drop the use of sdhci_pltfm_free()
-  mmc: sdhci: Drop sdhci_free_host()/sdhci_pltfm_free() interface
-
- drivers/mmc/host/sdhci-acpi.c       |  3 ---
- drivers/mmc/host/sdhci-bcm-kona.c   |  2 --
- drivers/mmc/host/sdhci-brcmstb.c    |  1 -
- drivers/mmc/host/sdhci-cadence.c    | 21 ++++++------------
- drivers/mmc/host/sdhci-dove.c       | 12 ++---------
- drivers/mmc/host/sdhci-esdhc-imx.c  |  3 ---
- drivers/mmc/host/sdhci-esdhc-mcf.c  | 25 ++++++----------------
- drivers/mmc/host/sdhci-iproc.c      | 18 ++++------------
- drivers/mmc/host/sdhci-milbeaut.c   | 19 ++++++-----------
- drivers/mmc/host/sdhci-msm.c        | 11 ++++------
- drivers/mmc/host/sdhci-npcm.c       | 15 +++----------
- drivers/mmc/host/sdhci-of-arasan.c  | 26 +++++++----------------
- drivers/mmc/host/sdhci-of-aspeed.c  | 10 ++-------
- drivers/mmc/host/sdhci-of-at91.c    | 30 ++++++++++----------------
- drivers/mmc/host/sdhci-of-dwcmshc.c | 14 +++++-------
- drivers/mmc/host/sdhci-of-esdhc.c   | 11 ++--------
- drivers/mmc/host/sdhci-of-k1.c      |  1 -
- drivers/mmc/host/sdhci-of-ma35d1.c  | 23 +++++++-------------
- drivers/mmc/host/sdhci-of-sparx5.c  | 24 +++++++--------------
- drivers/mmc/host/sdhci-omap.c       | 21 ++++++------------
- drivers/mmc/host/sdhci-pci-core.c   |  9 ++------
- drivers/mmc/host/sdhci-pic32.c      |  9 +++-----
- drivers/mmc/host/sdhci-pltfm.c      | 16 +-------------
- drivers/mmc/host/sdhci-pltfm.h      |  1 -
- drivers/mmc/host/sdhci-pxav2.c      | 26 ++++++-----------------
- drivers/mmc/host/sdhci-pxav3.c      |  7 +-----
- drivers/mmc/host/sdhci-s3c.c        | 16 ++++----------
- drivers/mmc/host/sdhci-spear.c      | 11 ++++------
- drivers/mmc/host/sdhci-sprd.c       | 33 +++++++++--------------------
- drivers/mmc/host/sdhci-st.c         |  6 ++----
- drivers/mmc/host/sdhci-tegra.c      |  9 +++-----
- drivers/mmc/host/sdhci-xenon.c      | 15 +++++--------
- drivers/mmc/host/sdhci.c            |  9 +-------
- drivers/mmc/host/sdhci.h            |  1 -
- drivers/mmc/host/sdhci_am654.c      | 20 ++++++-----------
- drivers/mmc/host/sdhci_f_sdh30.c    | 13 ++++--------
- 36 files changed, 135 insertions(+), 356 deletions(-)
-
-
-base-commit: d2c6acff6386f43ed307822454b970c831c48f1b
+diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
+index 32fa0b2bb912..ee5a5ae4db31 100644
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -4076,7 +4076,7 @@ struct sdhci_host *sdhci_alloc_host(struct device *dev,
+ 
+ 	WARN_ON(dev == NULL);
+ 
+-	mmc = mmc_alloc_host(sizeof(struct sdhci_host) + priv_size, dev);
++	mmc = devm_mmc_alloc_host(dev, sizeof(struct sdhci_host) + priv_size);
+ 	if (!mmc)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -5002,7 +5002,6 @@ EXPORT_SYMBOL_GPL(sdhci_remove_host);
+ 
+ void sdhci_free_host(struct sdhci_host *host)
+ {
+-	mmc_free_host(host->mmc);
+ }
+ 
+ EXPORT_SYMBOL_GPL(sdhci_free_host);
 -- 
 2.47.1
 
