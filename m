@@ -1,69 +1,63 @@
-Return-Path: <openbmc+bounces-133-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-134-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECDFAAD248E
-	for <lists+openbmc@lfdr.de>; Mon,  9 Jun 2025 19:02:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37D58AD27AC
+	for <lists+openbmc@lfdr.de>; Mon,  9 Jun 2025 22:37:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bGJBD1plLz2xHv;
-	Tue, 10 Jun 2025 03:02:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bGNyh3rbcz2xHv;
+	Tue, 10 Jun 2025 06:37:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::630"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749488532;
-	cv=none; b=Lk/qVMaKakwAhFOFJdg/OBszMwCQL9NRnrf0QnBALe5SaXfyYiLW0rpocM1hqqAfq7SyWY4PohnsLM/uZG3btfchcxUS6jBIFui3yIr9nTo0hcYT6om59c8JYWphsAYOZhT1nrtaANjibeKY1bKdOZn9Qtn6sEKQs72DHQKq/VkkaZfXw02tvftWKzy3rbzPX8f1sUZebjbAUUw1NVpKuZ1TB9nhTrGkKS42uxkfJSOX/QEAcGXNYbODTTOw0h3NV2hvygAoNPijpmtG6GqCi/TZsUKSNvyJ/WTKeoRUrN3mTEup5wjA6Fs37uUIQ/mZmbUkATZdbskUOTEXj3uVaQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=139.178.84.217
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749501452;
+	cv=none; b=Ys6Oee/wJCUFZm7fgpKLmmgmx177HlIfPNW9zQdzi9yThGpVhoan5DjPJ1Lgi8XZc5Sz7IwQCjldw/jR68AUFJrt9bvwUbHcim9D2gqLQLIC+otJlxKjzbLDhlDyyxuGVw3TSxBtNVP+iFyInnLqU/8DOV2djRz3JdHtME9tPHPnyANzr2U0whMZMk2Qpiawse/mPcs6GhS65lpjDZJ5ACUkoSsmCfl2rJiDC4LA1n2ftUBgFP4WOTahq3Kc2F1ddd6w7g57EDEqjtfMOsxZpzbO37lbY5cUfApFKWwmSy2HiFrt86bESzejIZsg+y8cUFez0jEQLFK8frO3Nlu2Xw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749488532; c=relaxed/relaxed;
-	bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nbS7kaUKYqe9VP722lPjeEMpaJ7law6CC+/jfkmSc9TBfTQ/RlJpIeQ86WixEALJvBB0J7HFcnUyVFRaiyekLXk+yolezUO6r+1vm150k7ma9KiJ/jH+p8KdVA08PCLMVjgrPoH8Mvy2xROwVz2vR0eINlGRbnRZgeGCEEiElFMKOK41Sbkel61102gGgVhHjqG3K/sFAx0701yG838qhwWY9CJAOwAJmYAhe12qzK8zBEZubX8Yi3MKX07sH12JUzBgyo2ylXkS2SsmfsUx6TW+e6l7zzvjNa42jzUXLXYg/I6eM2E6m3HD/kmuEkgdQQU/P6N3vl1vHiV5Bt+iwQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=tMPa0Yf7; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=brandonkim@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
+	t=1749501452; c=relaxed/relaxed;
+	bh=6iIkQWccj9AY8f68njIo1FEHDMkQuoyF4wKi3UqF6K4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IUskSgaPIQIc/HzNTHOk8cd+2eTdRNvbPTJVNdn1r7LQBplLAtP4nQt/gzbq7acVwJYlRhQGlw5OUsx3tzIiu9ENUy89xjNGASnptSj4MIRF44ye3YUzYGK601Zta7TAD8ZXtk8rkZSs9GWmqhfyJaHfzAMbmkBd6qwVRmkMhsWg+apvvvxQEJ8VAXfY3w80Wd3D86U79AGiokgQ14F7JJyQlVKYollNyIibJnuKtb1UrXIu5k75/mOuFCAbyxgPu4w0WCXyn+3JuMGtrEGln3pIf69/3ZIGZvbDU0phyoR4tJngyob89Fl570dD+GlG8x5pRgIEJlaYjW2RDYr1cw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jw23jC3n; dkim-atps=neutral; spf=pass (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=tMPa0Yf7;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jw23jC3n;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=brandonkim@google.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bGJBB39gJz2xCd
-	for <openbmc@lists.ozlabs.org>; Tue, 10 Jun 2025 03:02:09 +1000 (AEST)
-Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-2357c61cda7so6005ad.1
-        for <openbmc@lists.ozlabs.org>; Mon, 09 Jun 2025 10:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749488526; x=1750093326; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
-        b=tMPa0Yf7PLYrrIZ1BUmpDvtgagwKSTLvBP7thvu+SZ/IODIr/UxOwTXIkjgX/NJIin
-         dsf595kpzIlhpi70aL9/PzzS0nq7PAUNLL10PxYrglmxoX2yp12XIZeZPeJehZ+c7U3Z
-         eAjvOQQT8dY1hQhtMmuDJeNjHKG3ZGp0z4Fu92gtbQ1HUOjdrkh2kM8ghcItYovrT5Qx
-         JnPJ6qjJbijI4mgnh8DZtEWJHYmMFP/NqAGUydlXi8ioFS/2E9+7Mxvnv+ySIH8U4UJ9
-         QAKdL93MYMx2OQGTM57EeNDNBCDO8LFTtNmzArpThMpwWvS+U9K5dMpv32IcnAA2KNtE
-         4GeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749488526; x=1750093326;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
-        b=WXVyiYr9LH774wg/CYoIIpHstNoJld9OlMUp/0iW829WxH1xtCIhfcT5ZzjEfNhs2E
-         NhzwrkhVh4bqNZM2kCYglDSkvHOGZSAvhUftHYNQu0dVadN2Gdj4kDJU74s6jTPOrD79
-         oBYA1MeIGnvfao9X0EiKHoZcJvyWLqJsnNODGeV+82G1lEm6khviJGLY8ZbYQ/b0lIAj
-         D4o5U2i1vNptzAwRzmf648DEJSM3S7TE3kMx4TsrosRi6hyMBbYuXsTicsthmfmPUQlJ
-         IIKanxHvB6L2zwWqex5P5XxO6aM9isNPAUu6gR941RtFc4M3clucbOypjz/m9lmxfiv2
-         vhBw==
-X-Gm-Message-State: AOJu0Yy8AWyvMOyJZfXSGFTmcqK0jswnvrJJ+H88Oe5LfQOexQBaPrHN
-	LdLwVQ/9JB1m+Y3F1AjHPHDAvJxOKDy5JLkMiCrXdcNAmmRQDUzXk/VvgWSC9qXKokaJ9KaI6Lc
-	GZFAffz0wD52KttZ+iuhogmPleoJ7KkF/XRjSjTww
-X-Gm-Gg: ASbGncsuFM3PIsRyQC1C6H4Md0k3RKGH/Swy3krCIFEZxJTFeOFE5zVnh/v4ka8Q7wl
-	s8Aw1z9wuLt93EQAC+2gGuNJ+1gnnS23gL5qlO08X8GRz/bcSoJa9JQ2s2clv1LF9j7zu4r9pAy
-	mFda2zLxH8nv5JY+ALEkGtdEzAAAlosxyZnCP3HnYi5bM2oLE6poifPwIqlihGndm8aI7C5v6NR
-	uNUIFtTzfbS
-X-Google-Smtp-Source: AGHT+IFwMreF5gOXTwfnqxQw1fWGHc9qth0JIvSWOBqUcsRtVQbT37LVIfVzTFWLFOiOTFWyI2eRCxaRC5x/tg2D5j4=
-X-Received: by 2002:a17:902:f683:b0:235:e1d6:5339 with SMTP id
- d9443c01a7336-236120204a6mr5187255ad.26.1749488524380; Mon, 09 Jun 2025
- 10:02:04 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bGNyg65ZRz2xHX
+	for <openbmc@lists.ozlabs.org>; Tue, 10 Jun 2025 06:37:31 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id BFA5D5C4CFF;
+	Mon,  9 Jun 2025 20:35:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC63C4CEEB;
+	Mon,  9 Jun 2025 20:37:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1749501449;
+	bh=sMl+KyYXZN1gPkv5OuQg53B/7jDSHwN6BgQLgKD+IxA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=jw23jC3nhoKN0TYG+a57rDYpE/1cm/4nfOjPtoByAwZJBCNKcK+DQfbXC411IX0EI
+	 EIeV2q0pCjzJgN2D4387yn4EUFepGm0SgXBt7DA2rpg2BjN6VZpTSBf9oc2FaJhcFz
+	 vyW65ouc3e2yMA/tP1pqRPHGiIHJsaJsfnkqrvGIMJygXR5RQU8XFb6IAjFLZAaZY3
+	 Gl3nLXqFg9qCWj3X74nrQY4hwQaqV7dHF6lYS7ZtBDvAJRq8Zxy3QYqM99xyVmZotL
+	 SrEh/TMt3kOTnLGFtSjdc9M0aywBO3JfOTugkSbXTGQtMVjmA4GfdyoE6mzXu+M/aq
+	 77G0Hbi/3PQ/A==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: openbmc@lists.ozlabs.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: nuvoton: npcm8xx: Drop the GIC "ppi-partitions" node
+Date: Mon,  9 Jun 2025 15:37:20 -0500
+Message-ID: <20250609203721.2852879-1-robh@kernel.org>
+X-Mailer: git-send-email 2.47.2
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -75,60 +69,38 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAN+wxKK1vwqhCRQ56km1UH6Oi79DAcVeA7t45MWH=7P8nGbOBA@mail.gmail.com>
-In-Reply-To: <CAN+wxKK1vwqhCRQ56km1UH6Oi79DAcVeA7t45MWH=7P8nGbOBA@mail.gmail.com>
-From: Brandon Kim <brandonkim@google.com>
-Date: Mon, 9 Jun 2025 10:01:53 -0700
-X-Gm-Features: AX0GCFsW9JyMbBWs69SsCe4GKcGXbIGxTD-a7HdGuI6MszwOk4s9m1-JqR8YU2k
-Message-ID: <CALGRKGNKBxvdTwjz3X+EPNND2Swm-xjNOMe3B0G5eAT_kwQCKw@mail.gmail.com>
-Subject: Re: Query regarding libbej library
-To: Sneha Bansal <bsneha309@gmail.com>, Kasun Athukorala <kasunath@google.com>
-Cc: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000094e980637268aa7"
-X-Spam-Status: No, score=-16.2 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-8.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
---000000000000094e980637268aa7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The Arm GIC "ppi-partitions" node is only relevant to GICv3 and makes no
+sense for GICv2 implementations which the GIC-400 is. PPIs in GICv2 have
+no CPU affinity.
 
-@Kasun Athukorala <kasunath@google.com> worked on libbej - perhaps he'll be
-able to help out.
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi | 5 -----
+ 1 file changed, 5 deletions(-)
 
-On Fri, Jun 6, 2025 at 7:02=E2=80=AFPM Sneha Bansal <bsneha309@gmail.com> w=
-rote:
+diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+index fead4dde590d..acd3137d2464 100644
+--- a/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
++++ b/arch/arm64/boot/dts/nuvoton/nuvoton-common-npcm8xx.dtsi
+@@ -32,11 +32,6 @@ gic: interrupt-controller@dfff9000 {
+ 			#interrupt-cells = <3>;
+ 			interrupt-controller;
+ 			#address-cells = <0>;
+-			ppi-partitions {
+-				ppi_cluster0: interrupt-partition-0 {
+-					affinity = <&cpu0 &cpu1 &cpu2 &cpu3>;
+-				};
+-			};
+ 		};
+ 	};
+ 
+-- 
+2.47.2
 
-> Hi this is sneha here, I was  integrating libbej library in my codebase
-> but was facing some issues. I have few queries regarding the library. Can
-> you please help me out regarding this? So that i can clear my doubt and
-> perform the integration successfully.
->
-> Thanks and Regards
-> Sneha Bansal
->
-
---000000000000094e980637268aa7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" href=
-=3D"mailto:kasunath@google.com" tabindex=3D"-1">@Kasun Athukorala</a>=C2=A0=
-worked on libbej - perhaps he&#39;ll be able to help out.<br></div><br><div=
- class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmai=
-l_attr">On Fri, Jun 6, 2025 at 7:02=E2=80=AFPM Sneha Bansal &lt;<a href=3D"=
-mailto:bsneha309@gmail.com">bsneha309@gmail.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto">Hi this is=
- sneha here, I was=C2=A0 integrating libbej library in my codebase but was =
-facing some issues. I have few queries regarding the library. Can you pleas=
-e help me out regarding=C2=A0this? So that i can clear my doubt and perform=
- the integration successfully.=C2=A0<div dir=3D"auto"><br></div><div dir=3D=
-"auto">Thanks and Regards</div><div dir=3D"auto">Sneha Bansal=C2=A0</div></=
-div>
-</blockquote></div>
-
---000000000000094e980637268aa7--
 
