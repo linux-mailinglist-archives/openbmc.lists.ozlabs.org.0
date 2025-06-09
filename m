@@ -1,51 +1,69 @@
-Return-Path: <openbmc+bounces-132-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-133-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC239AD10F7
-	for <lists+openbmc@lfdr.de>; Sun,  8 Jun 2025 06:31:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECDFAAD248E
+	for <lists+openbmc@lfdr.de>; Mon,  9 Jun 2025 19:02:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bFMZ82366z30CB;
-	Sun,  8 Jun 2025 14:31:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bGJBD1plLz2xHv;
+	Tue, 10 Jun 2025 03:02:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=114.242.206.163
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749281909;
-	cv=none; b=EUd2EBcoAz5w0l+ZwoMJCUFAvuKpohoh21Tont80ZNucCwL9YtgAZwwBcm1Pw6XurbkhLfh3Nb53quzOrCZOcngoDw225jiG7ao9uoA4V+d2OSkp5txzqjNCaqpcNpOcB2bbh13zO+FyegZ9xxDBOW0GeyizRMwYPwxC+AsLOW2I+xqYfgI/B5HCDjczUVraEm/4fFWwSUFGGqUnYB8kNDJx36zlsbwe1B8sbkJAZ044dHMTOkBBbCwTXz18aADkFZMXWuj0FFXfHhPBRM1lcusVNoaaaW09VSNjvr9nw44ofmBGSu2yv1upMnVawgseGDXGOb9V3TIQeMrVWNWcEQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::630"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749488532;
+	cv=none; b=Lk/qVMaKakwAhFOFJdg/OBszMwCQL9NRnrf0QnBALe5SaXfyYiLW0rpocM1hqqAfq7SyWY4PohnsLM/uZG3btfchcxUS6jBIFui3yIr9nTo0hcYT6om59c8JYWphsAYOZhT1nrtaANjibeKY1bKdOZn9Qtn6sEKQs72DHQKq/VkkaZfXw02tvftWKzy3rbzPX8f1sUZebjbAUUw1NVpKuZ1TB9nhTrGkKS42uxkfJSOX/QEAcGXNYbODTTOw0h3NV2hvygAoNPijpmtG6GqCi/TZsUKSNvyJ/WTKeoRUrN3mTEup5wjA6Fs37uUIQ/mZmbUkATZdbskUOTEXj3uVaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749281909; c=relaxed/relaxed;
-	bh=WPE7h8SihYSwUvVGcaz3/AkA8wVnF35lGJPPT/a2nOE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaavkdrxkGsqa93P3pRDKOZpb2sLyrnmC83FqmHACD7k2GYv8x7xh37fN3uyUXdGFVrB0DyZA9lR5D03k6FR4/b2mQJ6QJsFdwjitaTyT5Gkc0oKt2ZqDOYAr4tjDGTPF70uqG51ShcsdP90dB/6FAZTTfFlFLRWE4cFJ7JpXX7I7wx/uIh7J3jy9g2wFql86jUQv35utjteq8m93s9MEq22S3qw0/ghEh9zYBtnlvc6qzruRoiFrOavwEcnvGHcBhLqZgDRkr2iuZ3DuCjxQfjL0nQSF0H52uyf3SUdOE2QpJ3pG9DS9xuMcasxJWP1WnlJN0j2PnPSi/1xGv4MoQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass (client-ip=114.242.206.163; helo=mail.loongson.cn; envelope-from=zhoubinbin@loongson.cn; receiver=lists.ozlabs.org) smtp.mailfrom=loongson.cn
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=loongson.cn (client-ip=114.242.206.163; helo=mail.loongson.cn; envelope-from=zhoubinbin@loongson.cn; receiver=lists.ozlabs.org)
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bDqmg4vHjz2xnM;
-	Sat,  7 Jun 2025 17:38:27 +1000 (AEST)
-Received: from loongson.cn (unknown [223.64.69.3])
-	by gateway (Coremail) with SMTP id _____8CxbWty7ENolhYPAQ--.40539S3;
-	Sat, 07 Jun 2025 15:38:26 +0800 (CST)
-Received: from localhost.localdomain (unknown [223.64.69.3])
-	by front1 (Coremail) with SMTP id qMiowMCxbsVu7ENowZ4OAQ--.49969S2;
-	Sat, 07 Jun 2025 15:38:24 +0800 (CST)
-From: Binbin Zhou <zhoubinbin@loongson.cn>
-To: Binbin Zhou <zhoubb.aaron@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>,
-	linux-mmc@vger.kernel.org,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Joel Stanley <joel@jms.id.au>,
-	linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH v3 18/35] mmc: sdhci-of-aspeed: Drop the use of sdhci_pltfm_free()
-Date: Sat,  7 Jun 2025 15:38:12 +0800
-Message-ID: <117c13ffd2d67a4c7cad980634591c4851f560b5.1749127796.git.zhoubinbin@loongson.cn>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <cover.1749127796.git.zhoubinbin@loongson.cn>
-References: <cover.1749127796.git.zhoubinbin@loongson.cn>
+	t=1749488532; c=relaxed/relaxed;
+	bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nbS7kaUKYqe9VP722lPjeEMpaJ7law6CC+/jfkmSc9TBfTQ/RlJpIeQ86WixEALJvBB0J7HFcnUyVFRaiyekLXk+yolezUO6r+1vm150k7ma9KiJ/jH+p8KdVA08PCLMVjgrPoH8Mvy2xROwVz2vR0eINlGRbnRZgeGCEEiElFMKOK41Sbkel61102gGgVhHjqG3K/sFAx0701yG838qhwWY9CJAOwAJmYAhe12qzK8zBEZubX8Yi3MKX07sH12JUzBgyo2ylXkS2SsmfsUx6TW+e6l7zzvjNa42jzUXLXYg/I6eM2E6m3HD/kmuEkgdQQU/P6N3vl1vHiV5Bt+iwQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=tMPa0Yf7; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=brandonkim@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=tMPa0Yf7;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=brandonkim@google.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bGJBB39gJz2xCd
+	for <openbmc@lists.ozlabs.org>; Tue, 10 Jun 2025 03:02:09 +1000 (AEST)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-2357c61cda7so6005ad.1
+        for <openbmc@lists.ozlabs.org>; Mon, 09 Jun 2025 10:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1749488526; x=1750093326; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
+        b=tMPa0Yf7PLYrrIZ1BUmpDvtgagwKSTLvBP7thvu+SZ/IODIr/UxOwTXIkjgX/NJIin
+         dsf595kpzIlhpi70aL9/PzzS0nq7PAUNLL10PxYrglmxoX2yp12XIZeZPeJehZ+c7U3Z
+         eAjvOQQT8dY1hQhtMmuDJeNjHKG3ZGp0z4Fu92gtbQ1HUOjdrkh2kM8ghcItYovrT5Qx
+         JnPJ6qjJbijI4mgnh8DZtEWJHYmMFP/NqAGUydlXi8ioFS/2E9+7Mxvnv+ySIH8U4UJ9
+         QAKdL93MYMx2OQGTM57EeNDNBCDO8LFTtNmzArpThMpwWvS+U9K5dMpv32IcnAA2KNtE
+         4GeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749488526; x=1750093326;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rn384Kanx3rnEjkE+Hne1J+1cAHFfRfQsUh6GjBJnv8=;
+        b=WXVyiYr9LH774wg/CYoIIpHstNoJld9OlMUp/0iW829WxH1xtCIhfcT5ZzjEfNhs2E
+         NhzwrkhVh4bqNZM2kCYglDSkvHOGZSAvhUftHYNQu0dVadN2Gdj4kDJU74s6jTPOrD79
+         oBYA1MeIGnvfao9X0EiKHoZcJvyWLqJsnNODGeV+82G1lEm6khviJGLY8ZbYQ/b0lIAj
+         D4o5U2i1vNptzAwRzmf648DEJSM3S7TE3kMx4TsrosRi6hyMBbYuXsTicsthmfmPUQlJ
+         IIKanxHvB6L2zwWqex5P5XxO6aM9isNPAUu6gR941RtFc4M3clucbOypjz/m9lmxfiv2
+         vhBw==
+X-Gm-Message-State: AOJu0Yy8AWyvMOyJZfXSGFTmcqK0jswnvrJJ+H88Oe5LfQOexQBaPrHN
+	LdLwVQ/9JB1m+Y3F1AjHPHDAvJxOKDy5JLkMiCrXdcNAmmRQDUzXk/VvgWSC9qXKokaJ9KaI6Lc
+	GZFAffz0wD52KttZ+iuhogmPleoJ7KkF/XRjSjTww
+X-Gm-Gg: ASbGncsuFM3PIsRyQC1C6H4Md0k3RKGH/Swy3krCIFEZxJTFeOFE5zVnh/v4ka8Q7wl
+	s8Aw1z9wuLt93EQAC+2gGuNJ+1gnnS23gL5qlO08X8GRz/bcSoJa9JQ2s2clv1LF9j7zu4r9pAy
+	mFda2zLxH8nv5JY+ALEkGtdEzAAAlosxyZnCP3HnYi5bM2oLE6poifPwIqlihGndm8aI7C5v6NR
+	uNUIFtTzfbS
+X-Google-Smtp-Source: AGHT+IFwMreF5gOXTwfnqxQw1fWGHc9qth0JIvSWOBqUcsRtVQbT37LVIfVzTFWLFOiOTFWyI2eRCxaRC5x/tg2D5j4=
+X-Received: by 2002:a17:902:f683:b0:235:e1d6:5339 with SMTP id
+ d9443c01a7336-236120204a6mr5187255ad.26.1749488524380; Mon, 09 Jun 2025
+ 10:02:04 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,79 +75,60 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowMCxbsVu7ENowZ4OAQ--.49969S2
-X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uw4Dtw13WF4kZry5tr1UArc_yoW8Xw4fpa
-	9xJrWrKr47GFWrKrZ8J3Wqv3WUJw4a9ayxKrWUGw1kW3y3KFyYqFsrCFW8tFs5XFy0gw45
-	XF17Jr48Ca98AabCm3ZEXasCq-sJn29KB7ZKAUJUUUUx529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUmFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAF
-	wI0_Cr1j6rxdM2kKe7AKxVWUAVWUtwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
-	AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVW8
-	Xw0E3s1lYx0Ex4A2jsIE14v26r4UJVWxJr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48Icx
-	kI7VAKI48JM4x0Y40E4IxF1VCIxcxG6Fyj6r4UJwCY1x0262kKe7AKxVWUAVWUtwCF04k2
-	0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUAVWUtwC20s
-	026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_
-	Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWDJVCq3wCI42IY6xIIjxv20x
-	vEc7CjxVAFwI0_Gr1j6F4UJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
-	aVAFwI0_Gr1j6F4UJwCI42IY6I8E87Iv6xkF7I0E14v26r4UJVWxJrUvcSsGvfC2KfnxnU
-	UI43ZEXa7IUYyMKtUUUUU==
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <CAN+wxKK1vwqhCRQ56km1UH6Oi79DAcVeA7t45MWH=7P8nGbOBA@mail.gmail.com>
+In-Reply-To: <CAN+wxKK1vwqhCRQ56km1UH6Oi79DAcVeA7t45MWH=7P8nGbOBA@mail.gmail.com>
+From: Brandon Kim <brandonkim@google.com>
+Date: Mon, 9 Jun 2025 10:01:53 -0700
+X-Gm-Features: AX0GCFsW9JyMbBWs69SsCe4GKcGXbIGxTD-a7HdGuI6MszwOk4s9m1-JqR8YU2k
+Message-ID: <CALGRKGNKBxvdTwjz3X+EPNND2Swm-xjNOMe3B0G5eAT_kwQCKw@mail.gmail.com>
+Subject: Re: Query regarding libbej library
+To: Sneha Bansal <bsneha309@gmail.com>, Kasun Athukorala <kasunath@google.com>
+Cc: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000094e980637268aa7"
+X-Spam-Status: No, score=-16.2 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Since the devm_mmc_alloc_host() helper is already in use,
-sdhci_pltfm_free() is no longer needed.
+--000000000000094e980637268aa7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: Joel Stanley <joel@jms.id.au>
-Cc: linux-aspeed@lists.ozlabs.org
-Cc: openbmc@lists.ozlabs.org
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
----
- drivers/mmc/host/sdhci-of-aspeed.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+@Kasun Athukorala <kasunath@google.com> worked on libbej - perhaps he'll be
+able to help out.
 
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index d6de010551b9..ca97b01996b1 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -425,10 +425,8 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
- 		return PTR_ERR(pltfm_host->clk);
- 
- 	ret = clk_prepare_enable(pltfm_host->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "Unable to enable SDIO clock\n");
--		goto err_pltfm_free;
--	}
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "Unable to enable SDIO clock\n");
- 
- 	ret = mmc_of_parse(host->mmc);
- 	if (ret)
-@@ -445,8 +443,6 @@ static int aspeed_sdhci_probe(struct platform_device *pdev)
- 
- err_sdhci_add:
- 	clk_disable_unprepare(pltfm_host->clk);
--err_pltfm_free:
--	sdhci_pltfm_free(pdev);
- 	return ret;
- }
- 
-@@ -461,8 +457,6 @@ static void aspeed_sdhci_remove(struct platform_device *pdev)
- 	sdhci_remove_host(host, 0);
- 
- 	clk_disable_unprepare(pltfm_host->clk);
--
--	sdhci_pltfm_free(pdev);
- }
- 
- static const struct aspeed_sdhci_pdata ast2400_sdhci_pdata = {
--- 
-2.47.1
+On Fri, Jun 6, 2025 at 7:02=E2=80=AFPM Sneha Bansal <bsneha309@gmail.com> w=
+rote:
 
+> Hi this is sneha here, I was  integrating libbej library in my codebase
+> but was facing some issues. I have few queries regarding the library. Can
+> you please help me out regarding this? So that i can clear my doubt and
+> perform the integration successfully.
+>
+> Thanks and Regards
+> Sneha Bansal
+>
+
+--000000000000094e980637268aa7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><a class=3D"gmail_plusreply" id=3D"plusReplyChip-0" href=
+=3D"mailto:kasunath@google.com" tabindex=3D"-1">@Kasun Athukorala</a>=C2=A0=
+worked on libbej - perhaps he&#39;ll be able to help out.<br></div><br><div=
+ class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmai=
+l_attr">On Fri, Jun 6, 2025 at 7:02=E2=80=AFPM Sneha Bansal &lt;<a href=3D"=
+mailto:bsneha309@gmail.com">bsneha309@gmail.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto">Hi this is=
+ sneha here, I was=C2=A0 integrating libbej library in my codebase but was =
+facing some issues. I have few queries regarding the library. Can you pleas=
+e help me out regarding=C2=A0this? So that i can clear my doubt and perform=
+ the integration successfully.=C2=A0<div dir=3D"auto"><br></div><div dir=3D=
+"auto">Thanks and Regards</div><div dir=3D"auto">Sneha Bansal=C2=A0</div></=
+div>
+</blockquote></div>
+
+--000000000000094e980637268aa7--
 
