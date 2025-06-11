@@ -1,94 +1,58 @@
-Return-Path: <openbmc+bounces-161-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-162-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6230FAD4D7A
-	for <lists+openbmc@lfdr.de>; Wed, 11 Jun 2025 09:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2DE5AD50CA
+	for <lists+openbmc@lfdr.de>; Wed, 11 Jun 2025 12:03:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bHHxH2Gxvz307q;
-	Wed, 11 Jun 2025 17:54:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bHLpP3BDYz30GV;
+	Wed, 11 Jun 2025 20:03:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4b98:dc4:8:216:3eff:fe9d:e7b4"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749628467;
-	cv=none; b=Nix8SrF7wTktFgu3AErzx/7KtNUP5iyTYqX6PERedbk5sDbXAjZb+TczTwKfFDuIs6IMWTzd0KIJe56xLNLa5VcbEh2AdfwJhrOT8OuBea7tg96xlGMgTGQcrc3InjsBS43gCEhKC52BMROt140YpEDHoh+G6juOf3C5C2kw2fds0eSCEroApMBfkYXgcwNIgIYRIIdt//Ilc2mq15WGQcNaYG+4pO8rIdzN52U9hEl1nVXZe76eN1Yid5QQodQ+MuKsBxcN0PHLUuyv4WxewGWer9aAyV9EPdzS1ZhXRgRJGp1U/1qx0EUgwa3GJXyceOEcpD6MHU7boyKzPhrVYA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=178.79.152.223
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749636221;
+	cv=none; b=EIGhdAythUk6qqCHS80UQv3wishEDtVgjjGJcpXtXJU6t3J/iMClNEcV52p6FLpTyBRHmsph1e/UCPQyoKax0knLPeu75dWgjXZKk6ViCVB8OMeBay1mc3qmOxkSNK/eKbiBS5CgQJ615j04bWnvRDd1EpUx+61SoBHbKL50UtjvXh0P5Ws0CDgP+c9ZsggGP/4rTiHtVFW2ZRzPNi2NVmayPEO1wuyfhdGeT9xWfZUIc+XRLLYB6M2V5JJAixpEm2vKV4G41j0RyfeEUkbGScOWsGo8YdZ1TcaJgynVDqKDMC3WX2rXFHS+6XF3q2+BSIXQm3ZX92F6yWkO7q9ffw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749628467; c=relaxed/relaxed;
-	bh=KiyDyclqecsk9BIhJPotcA86DvJLdYwDNphU2h/Syvs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ISmEbUP1snYNxLo4laVVVGZ2C6hd4HefMXQj9PenSrovLdk64p/XlI2d5kGD47JgfVZsfGxjpiLIeKkfgwsqULFb+T/qtq4t7b3v3zEG1sOWkN84dZ/mYXJB7dt3Cry5JzK3gO0LPhoQgwdqls6GpKZ6iKURwdRILS8rSgCXpeBNF0m0fC6b7D9iakdJvvyRn7pj2wIOPu+6Gi9OotIOWXvGY3NpdOX4MTcFHEA5S1YgrXEvHRs0GUjeu+/dbLBeq4YUcMX00wSW8HjcCkKodHCz00zxYitPxjCNxqj0VONPqEGMfvZBjGpKHsZ5LjIE7YO1XXnmX5L40Faz31qgIg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=ExHWWoEY; dkim-atps=neutral; spf=pass (client-ip=2001:4b98:dc4:8:216:3eff:fe9d:e7b4; helo=mslow3.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=lists.ozlabs.org) smtp.mailfrom=bootlin.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+	t=1749636221; c=relaxed/relaxed;
+	bh=dDt7ez3i6z0BSsshI76a7nThQr3BMVLTBBzfDYTA6pg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E/uawaYXpKMmepyl0S8lq1C2kQKK3TOtAuvtD7cAA1br26zHzjApD2hcqJQThTHt7Llsal/JlvUHegBF8IJocUMAFLPM0FIi8XVB198u1lt7uzsFil/X73EsUNWkGnn8D86d8XCUCA97WEoMHpruNYIO9trZkI7WVtMQu5qdrrqWO2dzbVqm82gN/q0hMAYHlX46+VcQrnephmC032wAiI9oCIjTNy2lG3ICgHaT/DpUjiCatgXFC55duxXH0WfCb/ZMb1YvU3t5bKBc0dh7kwEY/5feH90odXdk341yX0M5Iix6JKdVa9EAp2rElzAZedIRAQkyljyS7HzNLQk4Kg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=mleia.com; dkim=pass (2048-bit key; unprotected) header.d=mleia.com header.i=@mleia.com header.a=rsa-sha256 header.s=mail header.b=Jxt6xsAg; dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.a=rsa-sha256 header.s=mail header.b=Jxt6xsAg; dkim-atps=neutral; spf=none (client-ip=178.79.152.223; helo=mail.mleia.com; envelope-from=vz@mleia.com; receiver=lists.ozlabs.org) smtp.mailfrom=mleia.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=mleia.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=ExHWWoEY;
+	dkim=pass (2048-bit key; unprotected) header.d=mleia.com header.i=@mleia.com header.a=rsa-sha256 header.s=mail header.b=Jxt6xsAg;
+	dkim=pass (2048-bit key) header.d=mleia.com header.i=@mleia.com header.a=rsa-sha256 header.s=mail header.b=Jxt6xsAg;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=2001:4b98:dc4:8:216:3eff:fe9d:e7b4; helo=mslow3.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=lists.ozlabs.org)
-Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [IPv6:2001:4b98:dc4:8:216:3eff:fe9d:e7b4])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=mleia.com (client-ip=178.79.152.223; helo=mail.mleia.com; envelope-from=vz@mleia.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 550 seconds by postgrey-1.37 at boromir; Wed, 11 Jun 2025 20:03:39 AEST
+Received: from mail.mleia.com (mleia.com [178.79.152.223])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bHHxD5B80z2yMt;
-	Wed, 11 Jun 2025 17:54:24 +1000 (AEST)
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 927B7581411;
-	Wed, 11 Jun 2025 07:35:39 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E7773443D3;
-	Wed, 11 Jun 2025 07:35:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1749627326;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KiyDyclqecsk9BIhJPotcA86DvJLdYwDNphU2h/Syvs=;
-	b=ExHWWoEY7rGIzBH2hTP41+dRx7QD45h9+GCRlhMqsGjxIUva5rl/uu6M7C0UepYUk7Y9I4
-	y0QCs58j7ZYuyIoZCiOsT7vAdRmdkfa4EtnvTsBT1pAMdwtmXmYU7NRLjlgz/AogBmT9gq
-	2US+W4HBVTtpEw73AVkrR8bxCiZTAOQiYLy4Yt0KuNdklqu4q7Okv0y1OK+A26vcxX6zqf
-	6wsxpsI6vtrPBsIEOGd0J/N5QdPcZ5QjoQqEX5Kxy9Ra7Jwt2ZmzTwU5dJMbq7HNgHQQcr
-	ISRQwIoW5kmXWeccGDoDXEyzEJpJB9DPCj8MHSy8O/THILFtsRDHsDLiDWTTvg==
-Date: Wed, 11 Jun 2025 09:35:21 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Joel Stanley <joel@jms.id.au>, Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sean Wang <sean.wang@kernel.org>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Lars Persson <lars.persson@axis.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Jianlong Huang <jianlong.huang@starfivetech.com>,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Manivannan Sadhasivam <mani@kernel.org>, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org, linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
-	linux-arm-kernel@axis.com, linux-riscv@lists.infradead.org,
-	linux-rtc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH v2 17/17] rtc: stm32: Constify static 'pinctrl_desc'
-Message-ID: <20250611073521eaf70434@mail.local>
-References: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
- <20250611-pinctrl-const-desc-v2-17-b11c1d650384@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bHLpM3FCnz2xBb;
+	Wed, 11 Jun 2025 20:03:39 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mleia.com; s=mail;
+	t=1749635665; bh=ZELWje44IQXg+aqRqhMjZlzmAPP8bdbQVZYOFJq3M9g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Jxt6xsAgMAOUb4jl76i3Cw/ob+3g27CDrEJ11UaNWweARmh3pASKr9vGVkS92IFac
+	 YPXA6hqSgGV5dnyifiEPzFxSuWmHwqtnnBorcndP4VXu30erdJBfP8YrJ46WtqkT2C
+	 ZB5SXynEGjYF90uyMsBkLTP7/K9tKTjfvpNQc65M4ZFGcmOJyetoZJbQyfgMTcccnC
+	 ovv/hF2800vFjHZenrXZ9Ib3Cs3634CyeipOu5H15sVoNWHX/j8qicu106Z5ZeHvjj
+	 l5CXC3vkbBXv/RUgPw6tOFDOWz5MZGDnaCREKgxUUUqRvZgLkdcVlwdN1MIjOJGq3p
+	 fGRPXfFbZHprg==
+Received: from mail.mleia.com (localhost [127.0.0.1])
+	by mail.mleia.com (Postfix) with ESMTP id 964313C153A;
+	Wed, 11 Jun 2025 09:54:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mleia.com; s=mail;
+	t=1749635665; bh=ZELWje44IQXg+aqRqhMjZlzmAPP8bdbQVZYOFJq3M9g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Jxt6xsAgMAOUb4jl76i3Cw/ob+3g27CDrEJ11UaNWweARmh3pASKr9vGVkS92IFac
+	 YPXA6hqSgGV5dnyifiEPzFxSuWmHwqtnnBorcndP4VXu30erdJBfP8YrJ46WtqkT2C
+	 ZB5SXynEGjYF90uyMsBkLTP7/K9tKTjfvpNQc65M4ZFGcmOJyetoZJbQyfgMTcccnC
+	 ovv/hF2800vFjHZenrXZ9Ib3Cs3634CyeipOu5H15sVoNWHX/j8qicu106Z5ZeHvjj
+	 l5CXC3vkbBXv/RUgPw6tOFDOWz5MZGDnaCREKgxUUUqRvZgLkdcVlwdN1MIjOJGq3p
+	 fGRPXfFbZHprg==
+Message-ID: <2ae6aa29-ea42-4fdf-a0ae-8cd088c88786@mleia.com>
+Date: Wed, 11 Jun 2025 12:54:21 +0300
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -100,51 +64,87 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250611-pinctrl-const-desc-v2-17-b11c1d650384@linaro.org>
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudeklecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheptehlvgigrghnughrvgcuuegvlhhlohhnihcuoegrlhgvgigrnhgurhgvrdgsvghllhhonhhisegsohhothhlihhnrdgtohhmqeenucggtffrrghtthgvrhhnpeeiieevfeekgeevgfegudeuuedtfffgiefffedtudeftdehkeelieettdffhffftdenucfkphepvdgrtddumegtsgdugeemheehieemjegrtddtmedvugdutdemkeejugehmedvsgguieemvdehjeejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegtsgdugeemheehieemjegrtddtmedvugdutdemkeejugehmedvsgguieemvdehjeejpdhhvghloheplhhotggrlhhhohhsthdpmhgrihhlfhhrohhmpegrlhgvgigrnhgurhgvrdgsvghllhhonhhisegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeegledprhgtphhtthhopehkrhiihihsiihtohhfrdhkohiilhhofihskhhisehlihhnrghrohdrohhrghdprhgtphhtthhopehlihhnuhhsrdifrghllhgvihhjsehlihhnrghrohdrohhrghdprhgtphhtthhopeeurghsrghvrghrrghjrdfpr
- ghtihhkrghrsegrmhgurdgtohhmpdhrtghpthhtohepufhhhigrmhdqshhunhgurghrrdfuqdhksegrmhgurdgtohhmpdhrtghpthhtoheprghnughrvgifsegtohguvggtohhnshhtrhhutghtrdgtohhmrdgruhdprhgtphhtthhopehjohgvlhesjhhmshdrihgurdgruhdprhgtphhtthhopegrvhhifhhishhhmhgrnhejtdesghhmrghilhdrtghomhdprhgtphhtthhopehtmhgrihhmohhnjeejsehgmhgrihhlrdgtohhm
-X-GND-Sasl: alexandre.belloni@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/17] pinctrl: Constify static 'pinctrl_desc'
+Content-Language: ru-RU
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+ Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ David Rhodes <david.rhodes@cirrus.com>,
+ Richard Fitzgerald <rf@opensource.cirrus.com>,
+ Charles Keepax <ckeepax@opensource.cirrus.com>,
+ Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
+ Jesper Nilsson <jesper.nilsson@axis.com>,
+ Lars Persson <lars.persson@axis.com>, Damien Le Moal <dlemoal@kernel.org>,
+ Michal Simek <michal.simek@amd.com>, Emil Renner Berthing <kernel@esmil.dk>,
+ Jianlong Huang <jianlong.huang@starfivetech.com>,
+ Hal Feng <hal.feng@starfivetech.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ linux-sound@vger.kernel.org, patches@opensource.cirrus.com,
+ linux-mediatek@lists.infradead.org, linux-arm-kernel@axis.com,
+ linux-riscv@lists.infradead.org, linux-rtc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com
+References: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
+ <20250611-pinctrl-const-desc-v2-16-b11c1d650384@linaro.org>
+From: Vladimir Zapolskiy <vz@mleia.com>
+In-Reply-To: <20250611-pinctrl-const-desc-v2-16-b11c1d650384@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CRM114-Version: 20100106-BlameMichelson ( TRE 0.8.0 (BSD) ) MR-49551924 
+X-CRM114-CacheID: sfid-20250611_095425_660571_DE75DF41 
+X-CRM114-Status: UNSURE (   7.40  )
+X-CRM114-Notice: Please train this message. 
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 11/06/2025 08:13:49+0200, Krzysztof Kozlowski wrote:
+On 6/11/25 09:13, Krzysztof Kozlowski wrote:
 > The local static 'struct pinctrl_desc' is not modified, so can be made
 > const for code safety.
 > 
+> Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+> Acked-by: Jesper Nilsson <jesper.nilsson@axis.com>
+> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-
-> 
 > ---
+>   drivers/pinctrl/berlin/berlin.c                    | 2 +-
+>   drivers/pinctrl/cirrus/pinctrl-cs42l43.c           | 2 +-
+>   drivers/pinctrl/mediatek/pinctrl-airoha.c          | 2 +-
+>   drivers/pinctrl/pinctrl-artpec6.c                  | 2 +-
+>   drivers/pinctrl/pinctrl-bm1880.c                   | 2 +-
+>   drivers/pinctrl/pinctrl-k210.c                     | 2 +-
+>   drivers/pinctrl/pinctrl-lpc18xx.c                  | 2 +-
+
+Acked-by: Vladimir Zapolskiy <vz@mleia.com>
+
+>   drivers/pinctrl/pinctrl-mlxbf3.c                   | 2 +-
+>   drivers/pinctrl/pinctrl-tb10x.c                    | 2 +-
+>   drivers/pinctrl/pinctrl-zynq.c                     | 2 +-
+>   drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c | 2 +-
+>   11 files changed, 11 insertions(+), 11 deletions(-)
 > 
-> Patch depends on this series - const in pinctrl core. Please ack and
-> this should go via pinctrl tree.
-> ---
->  drivers/rtc/rtc-stm32.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/rtc/rtc-stm32.c b/drivers/rtc/rtc-stm32.c
-> index ef8fb88aab48a0edad19ae5872421815aa04fe46..d4ebf3eb54aa9e91c8e9f8254f571c53794192fd 100644
-> --- a/drivers/rtc/rtc-stm32.c
-> +++ b/drivers/rtc/rtc-stm32.c
-> @@ -393,7 +393,7 @@ static const struct pinmux_ops stm32_rtc_pinmux_ops = {
->  	.strict			= true,
->  };
->  
-> -static struct pinctrl_desc stm32_rtc_pdesc = {
-> +static const struct pinctrl_desc stm32_rtc_pdesc = {
->  	.name = DRIVER_NAME,
->  	.pins = stm32_rtc_pinctrl_pins,
->  	.npins = ARRAY_SIZE(stm32_rtc_pinctrl_pins),
-> 
-> -- 
-> 2.45.2
-> 
+
+--
+Best wishes,
+Vladimir
 
