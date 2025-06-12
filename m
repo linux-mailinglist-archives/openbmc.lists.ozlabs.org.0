@@ -1,67 +1,40 @@
-Return-Path: <openbmc+bounces-183-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-187-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D336AD6448
-	for <lists+openbmc@lfdr.de>; Thu, 12 Jun 2025 02:05:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57738AD7EB3
+	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 01:01:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bHjP84GW4z3brM;
-	Thu, 12 Jun 2025 10:01:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJJ195Ltwz2yMw;
+	Fri, 13 Jun 2025 09:01:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1031"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749680535;
-	cv=none; b=GErS6x8GQ3f6vkhL4kPvmnar6ULdLq5qCk7TMt2J9OZXseUcCIpxcqANwTxZIhmjmwKY6hCAf7NZXYrzI+z7SrSKkersrvTvqk2njbPnvW8qI8f07WHw3GETlt9PsyqsOXnOp3IIbpSPABuKoNHeG+JvpGiOretNvMKLsIeZy88xrxXJeIcPWwzy/0+fnPOVxjXSZyuWSj8+3Es3rPA6ciLO9CclFg4cgb++q+a+A+y3FqI2j9AWQYQuh1MKh/Xxtc/vjgOhsqPZL2qBg8b4KHWW0FY+ZmN7ZkvGCAXTbzAIF0UomASBE4jwBb1PX3qQ0kmQcmw49V7dFy0rx/wSEg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=43.154.197.177
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749697725;
+	cv=none; b=V+H0Sr1oP5jkvoxdVJpjrBcfHd5dsgMMfbBNOmk4gCXh5CcAOj3e2vfdPS80+M5mAIx16BRmLRUSGExjL2G12YnawOfSSnyzocec8joSrVTQzYGCD7GodpCpHgOo61eq/Ko4y/VnjyVTnwk1FMD+GCv7T9hl1Phvige0Rh6uQWkKo1hBcqtbdihPbix/E2HmVlAp1QxzxdBkM1T9AuLfUiSZmo1hh2zS3VOj39OxwKkkg5QE/sgceaJnUWY33al8xI8s4774abilLq4SNAwWW94WG776FeiU8iUW0ek7DxmA/p/KrH00G2RKyFMtVVI1ku+69WKuKEe1FCQOuvS2AA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749680535; c=relaxed/relaxed;
-	bh=hECvCp2144ISjYFuCPwHbO2eSKNwdlu+MMKqmQG6JC0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mSaagAcMHqF7nIowwdbSlhY63br3GGJaESW6q1mnRHZ2BL98q8K5sX124Cq1RCvJU1x69b04IfzgMrsc+YsV/vKsb7/sgSt9X8+1oQx3E+56My3ZXk6wG/Nek6mEuCLkifNeFUQgjTXxOeNh8NnrTIPkhTjc3sJiHKq+zcuKjoum/oVKNL/KVyiE/mD+bVPVMSLuI6LAxMoZE4zWHdtoe4XXo2PeDJXHAq+5ZYTYGVSqmpt8RMN6kog1s4lKBGytJ3VB8GUYtlQoKW+lllguslnbihfkCifLaqEVTCqkCCJLwxoDmht6fl0u68yLjLlInwwosXeA/y5O4PodTc20Xw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=thingy.jp; dkim=pass (1024-bit key; unprotected) header.d=thingy.jp header.i=@thingy.jp header.a=rsa-sha256 header.s=google header.b=HqJasczq; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=daniel@0x0f.com; receiver=lists.ozlabs.org) smtp.mailfrom=0x0f.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=thingy.jp
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=thingy.jp header.i=@thingy.jp header.a=rsa-sha256 header.s=google header.b=HqJasczq;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=0x0f.com (client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=daniel@0x0f.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1749697725; c=relaxed/relaxed;
+	bh=8wu8wKYmVXyp9b0/2rupkUxVhOmixYJXHEOoxsejcNE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SgW2/AMBidtdnYMbK/3AY5L5XwAuTLNMp+t2MY7wviElmKfznu3x8rZ5SSkqE0bbijyt/nW1w9cG2AMVjOGbe1B/U/jeNox4Um1xNkZUY6GFjcYySeKhVL1eZv0nV5nYrhlkxZKx28dTDpS1ATORSUYmpLXaYR4IeGwFhS6BwDaI6+nTrWp4oHxVi1uOYWQ33UolFAHssXVyMDhEHpNBDKHKPFsQiBJsEXEQ1LJUrWLJ+u0ouuiedCyHn7GLyvjuunhkXqrR/3OnMI6HDXKsvRVHRKqWQSja2y4nB/nOChvcX9l5em50AaSgKNLfw1Bo9ttQ/n7OYKPv1TpivtTZVg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=linux.starfivetech.com; spf=none (client-ip=43.154.197.177; helo=bg5.exmail.qq.com; envelope-from=hal.feng@linux.starfivetech.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.starfivetech.com
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=quarantine dis=none) header.from=linux.starfivetech.com
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.starfivetech.com (client-ip=43.154.197.177; helo=bg5.exmail.qq.com; envelope-from=hal.feng@linux.starfivetech.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 453 seconds by postgrey-1.37 at boromir; Thu, 12 Jun 2025 13:08:43 AEST
+Received: from bg5.exmail.qq.com (bg5.exmail.qq.com [43.154.197.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bHgBY4wxQz2xGw
-	for <openbmc@lists.ozlabs.org>; Thu, 12 Jun 2025 08:22:12 +1000 (AEST)
-Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-3139027b825so304825a91.0
-        for <openbmc@lists.ozlabs.org>; Wed, 11 Jun 2025 15:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thingy.jp; s=google; t=1749680530; x=1750285330; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hECvCp2144ISjYFuCPwHbO2eSKNwdlu+MMKqmQG6JC0=;
-        b=HqJasczqT6ELwAoRHLYY5SeO5J472Vm1IvV3PDHkWDwFX3BBWaRokmZfirk6QEQ5/E
-         x9SgesN3oWi48+7Y8t6IwiuapBzpK1boYVNKC+bKt/s6p5baJ6Sv6Xh66FdEYzcIm49H
-         a7b0jJ4KTMgCGCmsl+sFXKM/nZLjfxYjTgObc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749680530; x=1750285330;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hECvCp2144ISjYFuCPwHbO2eSKNwdlu+MMKqmQG6JC0=;
-        b=aT6MFG9LgAzKBGbdzYOD+hHafSs1W7OVcPOkwJSSzs+jSNPIXRc+NIDzm+5DJgS+ui
-         TX3zTbHHE0svkbcuwVpQDI8P6fToDv2qeJz30vxSU4ueE7gmZlfv4B/Y0t6ZsOFgWSkR
-         yg4eN2f+nbasOchjyhGcHQI42o3fl3EDIRcQMvOq4AcoC1TwRU0PI1SrLgNOah06v1jY
-         ioQKqAUkMOsPUt/WO/9T+YK6zW5IMDGwi1DGpVf8wcnQttD5Wo4uCxipIwY85OsL3aDY
-         vhBDYJnZO4Mo413JvwUjk/91lM3zhcTgySREFrXCe973muFWuvbBhcJFA5by+kY24eBN
-         EDdA==
-X-Forwarded-Encrypted: i=1; AJvYcCVS1lcsvzkddIchl/reDtguCeosHB2SXqnDk/9kFdLEBXhWQU0FzMFZ0eMZeffo2OxxNrn06vGa@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxxMrjcEoAn4wxQTRXDi7Fsdg4TI0ka67Bv1V3Q/pnQLJt4uweD
-	fqsouEgtAjtMsghaw2+VqCFMG9Kdz1MW+TE/AKKa2nu8Wy6LbgJ8A5HL5hoCTvTCeapmEB/AsYm
-	+d5owWg8iqblKTo7y5fx0UMpi5jVEsF0YE36yfcvRdA==
-X-Gm-Gg: ASbGncuyKY8pshOzky1Adl83bvvkI34oitVRrcVqbFOPWx/qLajE8MVPX0MNOvLKAd+
-	BRM1+QD5OFvM0Dnk0JXg29oTEgr5VGQaWqkc5kPW3BdGkWsIcD2tiDXmx+rczEAXfQH3XkMZVQW
-	YjwkRSIW6VaWbCvRDPUrzLvyQ37oY1CJ73e0QK6iIYUVXL8ADWoNrFY+mwplZ9FUIOMwmbuHslZ
-	fpr
-X-Google-Smtp-Source: AGHT+IE8FknUC40PscBGYY7OPNelZLLkTFE7qxHwumbpWqTQtgyRPt7nCSuQoA+6xvyngwoaYT3v2ByQ5TtYzKrW9d8=
-X-Received: by 2002:a17:90b:2892:b0:312:26d9:d5b6 with SMTP id
- 98e67ed59e1d1-313bfba12a1mr1389789a91.3.1749680529907; Wed, 11 Jun 2025
- 15:22:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bHnY74Hb4z2xGw;
+	Thu, 12 Jun 2025 13:08:43 +1000 (AEST)
+X-QQ-mid: esmtpgz14t1749697213t65c22161
+X-QQ-Originating-IP: IF1P/oCMu5+Z6gtoOhY0chVmlDO4Lfc/wt6ay8GGmZA=
+Received: from [192.168.125.115] ( [113.104.142.205])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 12 Jun 2025 11:00:10 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7120148681061884487
+Message-ID: <E9D57DC946595F4F+762b7c45-ba5f-4bba-86d3-4eeea7643157@linux.starfivetech.com>
+Date: Thu, 12 Jun 2025 11:00:09 +0800
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -73,85 +46,118 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20250610-gpiochip-set-rv-gpio-v1-0-3a9a3c1472ff@linaro.org> <20250610-gpiochip-set-rv-gpio-v1-7-3a9a3c1472ff@linaro.org>
-In-Reply-To: <20250610-gpiochip-set-rv-gpio-v1-7-3a9a3c1472ff@linaro.org>
-From: Daniel Palmer <daniel@thingy.jp>
-Date: Thu, 12 Jun 2025 07:21:56 +0900
-X-Gm-Features: AX0GCFuAPMzR2tj8IuIF1_MflSdk31p_mu_qD7qQzgmBFTWEvU6XX8YEN4mo1dI
-Message-ID: <CAFr9PXmeYETV5FSAnEacFCo7LiS3cYBpPqraexLC7=MTzshfNg@mail.gmail.com>
-Subject: Re: [PATCH 07/12] gpio: msc313: use new GPIO line value setter callbacks
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?B?TWFyZWsgQmVow7pu?= <kabel@kernel.org>, 
-	Conor Dooley <conor.dooley@microchip.com>, Daire McNamara <daire.mcnamara@microchip.com>, 
-	Romain Perier <romain.perier@gmail.com>, Avi Fishman <avifishman70@gmail.com>, 
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, 
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, 
-	Benjamin Fair <benjaminfair@google.com>, Grygorii Strashko <grygorii.strashko@ti.com>, 
-	Santosh Shilimkar <ssantosh@kernel.org>, Kevin Hilman <khilman@kernel.org>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org, 
-	linux-omap@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/17] pinctrl: Constify static 'pinctrl_desc'
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+ Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Ray Jui <rjui@broadcom.com>,
+ Scott Branden <sbranden@broadcom.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ David Rhodes <david.rhodes@cirrus.com>,
+ Richard Fitzgerald <rf@opensource.cirrus.com>,
+ Charles Keepax <ckeepax@opensource.cirrus.com>,
+ Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
+ Jesper Nilsson <jesper.nilsson@axis.com>,
+ Lars Persson <lars.persson@axis.com>, Damien Le Moal <dlemoal@kernel.org>,
+ Vladimir Zapolskiy <vz@mleia.com>, Michal Simek <michal.simek@amd.com>,
+ Emil Renner Berthing <kernel@esmil.dk>,
+ Jianlong Huang <jianlong.huang@starfivetech.com>,
+ Hal Feng <hal.feng@starfivetech.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-renesas-soc@vger.kernel.org,
+ linux-sound@vger.kernel.org, patches@opensource.cirrus.com,
+ linux-mediatek@lists.infradead.org, linux-arm-kernel@axis.com,
+ linux-riscv@lists.infradead.org, linux-rtc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com
+References: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
+ <20250611-pinctrl-const-desc-v2-16-b11c1d650384@linaro.org>
+Content-Language: en-US
+From: Hal Feng <hal.feng@linux.starfivetech.com>
+In-Reply-To: <20250611-pinctrl-const-desc-v2-16-b11c1d650384@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:linux.starfivetech.com:qybglogicsvrgz:qybglogicsvrgz5a-1
+X-QQ-XMAILINFO: NAeO0+xU6W76gNbKsV9iaUk/e76/x2UL0YNwMIWRA9ZI56qvKoC6m7wA
+	DvyIJPwt8pkIgpOx83pdDBBlQS5hn1RcZjcJv0+o+Rb6pV0ok6HnIsHTPLg0ADT9X98lXfR
+	KCNttai5JBlV5JWTUEtaeBKe1sfIi0uKnprfmr++Tm9+IPIKbruA1uoNR4icwJsXBeGepin
+	ZA4fexPiJI17BoTOY7c3aLF97iC9oS3MaPwDvT3DVLw1mofDbnIBPXBajO2RC/POyhV9I7/
+	gCzettuqfIv/yyPkeGJPopaFPPnGOZhkDjFUxGOHvG4CNs9tPaMgJI+xJGjoJKz9Mf9/cwq
+	28FudyKnQqqZL79EgaRQUR9qMXowH9N0dPb1DKobuNX/pL+JGtwxvsStaH3R1jNbWVKDR3M
+	/E64qz4wciar/7Q0fNKLfl+LnjCgtiQAswHymlu6kPOppWuX07TJOnjo2LoRFRkkrWYNQ1w
+	kGjJMcLoSoi/nhp5r9UMhuS6SwLd8yhnrW/dTg85geLDH4prgwx4NIB/v7BBob44xJ3UzUR
+	e7ZXxJTt+7DgX3MOKTm7hHmOwYIEVc8fqDn+rzPfircUVUB+nGQsTsR7eAWWVsZmmsQT6V0
+	T5ScBGH7MvuKGmTq3YiA4WLXOZfPcD3ApG2HLLQ/trfq2aa98tFdltP2ydEc5Xne/BPUjJN
+	7b8Vo9N/bDd/E0dLYXm+3XN9rzITDL3Svuw/96JbvZUm9AYcrXkJGTgvMUpDIwvuRjBKm8A
+	Exp4vW98QnSRycEiZ/8M8mVR0l8ROQgO3HHNlimR70QzPivh67GXwWzKqsPIKbfvqymavf5
+	WkcBdApEWEqKqQzGTMmfZg4SOutxdR0/YQLqwtzrgThqayTnUOleotatWdv3nhSmMAkyQQt
+	aJO63fNG1wHGysv+6iTjN6k1uWSDvYgW2H2Qx3kMRKRa85awKSiz1CrN+hGWCeWtS9G5wRv
+	eExuQNQPsEMbQ41+CZg+Inl40Kyc5r7B4cZOTjJguB7Y+Wpqj6nnFQrNy
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
+X-Spam-Status: No, score=1.6 required=5.0 tests=FORGED_MUA_MOZILLA,
+	RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+	SPF_NONE autolearn=disabled version=4.0.1
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Bartosz,
-
-On Tue, 10 Jun 2025 at 21:33, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> struct gpio_chip now has callbacks for setting line values that return
-> an integer, allowing to indicate failures. Convert the driver to using
-> them.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 6/11/2025 2:13 PM, Krzysztof Kozlowski wrote:
+> The local static 'struct pinctrl_desc' is not modified, so can be made
+> const for code safety.
+> 
+> Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+> Acked-by: Jesper Nilsson <jesper.nilsson@axis.com>
+> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  drivers/gpio/gpio-msc313.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpio/gpio-msc313.c b/drivers/gpio/gpio-msc313.c
-> index 6db9e469e0dc254e791d497b89a4c6d329d0add4..992339a89d19840fc03ccf849972a83cb86415ae 100644
-> --- a/drivers/gpio/gpio-msc313.c
-> +++ b/drivers/gpio/gpio-msc313.c
-> @@ -486,7 +486,7 @@ struct msc313_gpio {
->         u8 *saved;
+>  drivers/pinctrl/berlin/berlin.c                    | 2 +-
+>  drivers/pinctrl/cirrus/pinctrl-cs42l43.c           | 2 +-
+>  drivers/pinctrl/mediatek/pinctrl-airoha.c          | 2 +-
+>  drivers/pinctrl/pinctrl-artpec6.c                  | 2 +-
+>  drivers/pinctrl/pinctrl-bm1880.c                   | 2 +-
+>  drivers/pinctrl/pinctrl-k210.c                     | 2 +-
+>  drivers/pinctrl/pinctrl-lpc18xx.c                  | 2 +-
+>  drivers/pinctrl/pinctrl-mlxbf3.c                   | 2 +-
+>  drivers/pinctrl/pinctrl-tb10x.c                    | 2 +-
+>  drivers/pinctrl/pinctrl-zynq.c                     | 2 +-
+>  drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c | 2 +-
+>  11 files changed, 11 insertions(+), 11 deletions(-)
+> 
+...
+> diff --git a/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c b/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c
+> index 27f99183d994dccb92aac81ca42228bdb9225e87..aeaa0ded7c1e5ee7f9c5e4113bfd208fb844ba7d 100644
+> --- a/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c
+> +++ b/drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c
+> @@ -898,7 +898,7 @@ static const struct pinconf_ops starfive_pinconf_ops = {
+>  	.is_generic = true,
 >  };
->
-> -static void msc313_gpio_set(struct gpio_chip *chip, unsigned int offset, int value)
-> +static int msc313_gpio_set(struct gpio_chip *chip, unsigned int offset, int value)
->  {
->         struct msc313_gpio *gpio = gpiochip_get_data(chip);
->         u8 gpioreg = readb_relaxed(gpio->base + gpio->gpio_data->offsets[offset]);
-> @@ -497,6 +497,8 @@ static void msc313_gpio_set(struct gpio_chip *chip, unsigned int offset, int val
->                 gpioreg &= ~MSC313_GPIO_OUT;
->
->         writeb_relaxed(gpioreg, gpio->base + gpio->gpio_data->offsets[offset]);
-> +
-> +       return 0;
->  }
->
->  static int msc313_gpio_get(struct gpio_chip *chip, unsigned int offset)
-> @@ -656,7 +658,7 @@ static int msc313_gpio_probe(struct platform_device *pdev)
->         gpiochip->direction_input = msc313_gpio_direction_input;
->         gpiochip->direction_output = msc313_gpio_direction_output;
->         gpiochip->get = msc313_gpio_get;
-> -       gpiochip->set = msc313_gpio_set;
-> +       gpiochip->set_rv = msc313_gpio_set;
->         gpiochip->base = -1;
->         gpiochip->ngpio = gpio->gpio_data->num;
->         gpiochip->names = gpio->gpio_data->names;
->
-> --
-> 2.48.1
->
+>  
+> -static struct pinctrl_desc starfive_desc = {
+> +static const struct pinctrl_desc starfive_desc = {
+>  	.name = DRIVER_NAME,
+>  	.pins = starfive_pins,
+>  	.npins = ARRAY_SIZE(starfive_pins),
+> 
 
-Reviewed-by: Daniel Palmer <daniel@thingy.jp>
+Reviewed-by: Hal Feng <hal.feng@starfivetech.com>
 
-Cheers,
+Best regards,
+Hal
 
-Daniel
 
