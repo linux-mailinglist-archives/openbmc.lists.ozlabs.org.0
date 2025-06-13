@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-201-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-202-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2126CAD8846
-	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:46:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2E09AD8872
+	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:50:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZKL6dLcz30NP;
-	Fri, 13 Jun 2025 19:46:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZQT5xrtz30Qk;
+	Fri, 13 Jun 2025 19:50:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749807974;
-	cv=none; b=egjCr0nyR7gZu65wuhjz72Wzg41q/OgGD3iG4/Tqan1em8+vSy4pinMO7c2MTq2NeTw6trwygb+M+mQ0f1wrCnFGvebV6RJSYSVATxTMIzibeC8hqVfYcgsPLQTch0i8lhLW9cOEZjFvDdJvuUqGkkpBIqrypEBnUAE8PO3gDgbKklcqYXbuXxeOcSErPhRcwtSqjl1UfmGUlfoOtvKf+ivxjJggTt6kxerajoeILYBWbVJ2e9eFXWBWfQWFG/MtWEmttyk78Qh5HecusVEkr5nQwHA/Dc46I5Ew2wWsgWiqzYK2OBoN2/+zGV3UODdN914SY4KTkoZtxw/trDR6eA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749808241;
+	cv=none; b=NqP6mrjuh5NtcPGaInA8Y90Id/ymrQWqFCgwuMbytOJ4Vbg97jKMHKMg8/wasCEYVop4AoENvayUFInyO5/47Qx9y8EcjGmafU7/FZ1bCl+EVSHpyBOesTVt+9llOs0rHtMyd6K4c2pRnZzFByQ0TnwoyAdYJkkEhxkEcTR5iZazLhnIdhvqxkm0C1ZI5n3BAubvNaSYTHX+koDExM5qRWMIdo3BPXWvrU429MTtrmauOwaxVmieFHJez2JO8sxYYT2CY3r6k1YgvP69UIGfA1lW2N4fc+wmphGgYrnXqkwFMm9m0ismwjMlHIggehSxzvYgJOcoiJZMzrLsj2nD0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749807974; c=relaxed/relaxed;
-	bh=VC3uyx7XQrp1bKJ1F7dGGuSJWNhI/VpAgtY9+aI1yGY=;
+	t=1749808241; c=relaxed/relaxed;
+	bh=+Ix+SD8hPa/MVIuFsCMemGPyuyacErhJT3LRTUpCOMM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OpeE9iMep8sQmsgrmveYoo9102ll+7uVhfZY2BOrviWkyLHCttRGaEYDszw13wT7D1Jv0g8dHhsCZVyq0goyyl+3U5LDtLTK6J2Zbf01K3jgEjo6eFNMEwTTLEOsEOUoWoysretWM//N8gDWcwVP1b70FNllSKswof/v5Any3Nq8CAE/OwAWZOD2jVu6qgK6NE69vN9OCPk8CqwBQbiNvgmv1nNBVBL0kbdY766JpstCEy2ia+fnl/m3zDs1d1kHgNirdlILasTHhbrv8fYOYooxzm8IEcunWOnWuVMZclimJWhv9rUSB8Q6V8KX7hxjQ1YBj+5lxgi1fOf57DPlsQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LxOzqpTg; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=e1KU5L33LvQiXr/n5cwAODEuWo2jzYRw3PXbdXt9UgGvKlpP5l94j8QQdqWCu2/1igaRMmMz1nzK79a9qrQwfllMnS0occhDqh1aL6Q4Vq/+RCOu5w7u34LZOqmA6+Pjq36Tu5RWk+Lf+aBA8lTGmu2WNQ7blqeHd66TLyYLaw7V7PNFLjgKEOzEfkCggRgLaArDxxaEyvcgseUyzWGo6/5yHw0WytDIlxoc5U5uk9/IZ/4MgDyTp7P4lDOH8DdTcS894rEsCOVPXoxn5nO4/cYHkdBNjz7bYO/c4bZozNrGMwqnv9iqQn1Y8i6c/Q1x5CiMbRhvJQsirQwwm3qAbg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EguPdziN; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LxOzqpTg;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EguPdziN;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZKK6r1Sz2yMF;
-	Fri, 13 Jun 2025 19:46:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZQQ5LH6z2yfx;
+	Fri, 13 Jun 2025 19:50:38 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id A599743AB8;
-	Fri, 13 Jun 2025 09:46:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFA3C4CEE3;
-	Fri, 13 Jun 2025 09:46:05 +0000 (UTC)
+	by nyc.source.kernel.org (Postfix) with ESMTP id A48ADA50B0F;
+	Fri, 13 Jun 2025 09:50:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EF6C4CEE3;
+	Fri, 13 Jun 2025 09:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749807971;
-	bh=OIwbFNihb+LikVlp9wBsLvj8g2wYol3rhIQiQU23i8w=;
+	s=k20201202; t=1749808236;
+	bh=aoiu36vRWs+xCRQ4i7I5bZ9e+mpCxXx2jTYnOagqdHc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LxOzqpTgbOu+cOIwLwtebyN1rPySY6jpgaj2zgrIVp5cufvoPNUHjZUWPRWvfaBH0
-	 lz7WOZCM4k8U7Pib3MHuXrebbe3ECKgj2Yl0jXaaddNRD3fmMD2vdyBK/mIpE0hMBj
-	 9vQQgkKk30EDnUaGIprbGYn1KoGw1xc/cxaUFrql2OcOWaZquzW4HG4yYTpobrkQDk
-	 bIKbTLEwBjX1lQ+GwMdcIt3qUS/yjLSfnnhuNb6WKptv6SwavMke+cmxR5pp1VM+4W
-	 N29eDa1r7zYBdmutL5uclVD45xli3s8lz4p0stesHt0JGuKCrGaEpmSK7iVmvITdl7
-	 m1/Moc8gR7odw==
-Message-ID: <618978dd-943a-4e50-8aae-c6132559edad@kernel.org>
-Date: Fri, 13 Jun 2025 11:46:04 +0200
+	b=EguPdziNfQVFXhGugXO7CxVDI9hmhHEse2V8d9DfmaJLP2zPCWPiwDCqETugb6aqg
+	 EovPSvD8xMKL6QL2InygSOr54EKhGof73pM1Sw26ZxLwBJp0iDPCWzXQPBoy2735ny
+	 +CkixnfG+TpDATOVwDAuoRdDpyXsEBJ6g/aW0oasj+3Q6ssDs1OU2v+UKnJcc85AlP
+	 SAYD3d+JNmJs1aIND1eplli51ZAh6hEB6EcmkGRWqGOYKnrheIUj87KvByxUndUVau
+	 /j0KhctSzqmpk6Gt6djtxuf/+M9582WOduahXLRpD2hXHINaVWyijCpqgdrgPAEPNU
+	 q403k+tQENT6w==
+Message-ID: <b387a2ed-af47-45a9-871e-d43a66e41f21@kernel.org>
+Date: Fri, 13 Jun 2025 11:50:28 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] dt-bindings: pci: Add document for ASPEED PCIe Config
+Subject: Re: [PATCH 3/7] dt-bindings: pci: Add document for ASPEED PCIe RC
 To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
  lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
@@ -70,7 +70,7 @@ To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
 Cc: elbadrym@google.com, romlem@google.com, anhphan@google.com,
  wak@google.com, yuxiaozhang@google.com, BMC-SW@aspeedtech.com
 References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com>
- <20250613033001.3153637-3-jacky_chou@aspeedtech.com>
+ <20250613033001.3153637-4-jacky_chou@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,7 +116,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250613033001.3153637-3-jacky_chou@aspeedtech.com>
+In-Reply-To: <20250613033001.3153637-4-jacky_chou@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -125,80 +125,194 @@ X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 On 13/06/2025 05:29, Jacky Chou wrote:
-> Add device tree binding documentation for the ASPEED AST2600/AST2700 PCIe
-> configuration syscon block. This shared register space is used by multiple
-> PCIe-related devices to coordinate and manage common PCIe settings.
-> The binding describes the required compatible strings and register space
-> for the configuration node.
+> Add device tree binding documentation for the ASPEED PCIe Root Complex
+> controller. This binding describes the required and optional properties
+> for configuring the PCIe RC node, including support for syscon phandles,
+> MSI, clocks, resets, and interrupt mapping. The schema enforces strict
+> property validation and provides a comprehensive example for reference.
 > 
 > Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
 > ---
->  .../bindings/pci/aspeed-pcie-cfg.yaml         | 41 +++++++++++++++++++
->  1 file changed, 41 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
+>  .../devicetree/bindings/pci/aspeed-pcie.yaml  | 159 ++++++++++++++++++
+>  1 file changed, 159 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pci/aspeed-pcie.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml b/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
+> diff --git a/Documentation/devicetree/bindings/pci/aspeed-pcie.yaml b/Documentation/devicetree/bindings/pci/aspeed-pcie.yaml
 > new file mode 100644
-> index 000000000000..6b51eedf4c47
+> index 000000000000..5b50a9e2d472
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
-> @@ -0,0 +1,41 @@
+> +++ b/Documentation/devicetree/bindings/pci/aspeed-pcie.yaml
+
+Same comments.
+
+> @@ -0,0 +1,159 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/pci/aspeed-pcie-cfg.yaml#
+> +$id: http://devicetree.org/schemas/pci/aspeed-pcie.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: ASPEED PCIe Configuration
+> +title: ASPEED PCIe Root Complex Controller
 > +
 > +maintainers:
 > +  - Jacky Chou <jacky_chou@aspeedtech.com>
 > +
 > +description: |
-> +  The ASPEED PCIe configuration syscon block provides a set of registers shared
 
-How is this a pci device? You just described syscon, so this goes to soc.
+Do not need '|' unless you need to preserve formatting.
 
-All other comments apply as well.
 
-> +  by multiple PCIe-related devices within the SoC. This node represents the
-> +  common configuration space that allows these devices to coordinate and manage
-> +  shared PCIe settings, including address mapping, control, and status
-> +  registers. The syscon interface enables Linux drivers for various PCIe devices
+> +  Device tree binding for the ASPEED PCIe Root Complex controller.
 
-Do not describe OS. Describe the hardware and drop Linux drivers completely.
+No, describe the hardware. Your current description is 100% redundant.
+It is never useful to say in DT binding description that it is a DT
+binding. It cannot be anything else, can it?
 
-> +  to access  and modify these shared registers in a consistent and centralized
-> +  manner.
 > +
 > +properties:
 > +  compatible:
 > +    enum:
-> +      - aspeed,ast2600-pcie-cfg
-> +      - aspeed,ast2700-pcie-cfg
+> +      - aspeed,ast2600-pcie
+> +      - aspeed,ast2700-pcie
+> +
+> +  device_type:
+> +    const: pci
+
+You need to include proper pci schema and drop all redundant properties.
+
+Look at other schemas.
+
 > +
 > +  reg:
 > +    maxItems: 1
 > +
-> +required:
-> +  - compatible
-> +  - reg
+> +  ranges:
+> +    minItems: 2
+> +    maxItems: 2
 > +
-> +additionalProperties: false
+> +  interrupts:
+> +    description: IntX and MSI interrupt
+
+Need to list the items. Look at other schemas.
+
+> +
+> +  resets:
+> +    items:
+> +      - description: Module reset
+> +      - description: PCIe PERST
+> +
+> +  reset-names:
+> +    items:
+> +      - const: h2x
+> +      - const: perst
+> +
+> +  msi-parent: true
+> +
+> +  msi_address:
+
+Where is this property defined?  I do not see in kernel nor in dtschema.
+Drop and use existing properties. I am not even talking about coding
+style...
+
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: MSI address
+> +
+> +  aspeed,ahbc:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Phandle to ASPEED AHBC syscon.
+
+For what purpose?
+
+> +
+> +  aspeed,pciecfg:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Phandle to ASPEED PCIe configuration syscon.
+
+For what purpose?
+
+> +
+> +  aspeed,pciephy:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Phandle to ASPEED PCIe PHY syscon.
+
+For what purpose?
+
+> +
+> +  clocks:
+> +    description: PCIe BUS clock
+
+Missing constraints.
+
+Just open any other  binding and do not implement things diferently.
+
+> +
+> +  interrupt-controller:
+> +    description: Interrupt controller node for handling legacy PCI interrupts.
+> +    type: object
+> +    properties:
+> +      '#address-cells':
+> +        const: 0
+> +      '#interrupt-cells':
+> +        const: 1
+> +      interrupt-controller: true
+> +
+> +    required:
+> +      - '#address-cells'
+> +      - '#interrupt-cells'
+> +      - interrupt-controller
+> +
+> +    additionalProperties: false
+> +
+> +allOf:
+> +  - $ref: /schemas/pci/pci-bus.yaml#
+> +  - $ref: /schemas/interrupt-controller/msi-controller.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: aspeed,ast2600-pcie
+> +    then:
+> +      required:
+> +        - aspeed,ahbc
+
+else: make it false
+
+> +
+> +required:
+> +  - interrupts
+> +  - bus-range
+> +  - ranges
+> +  - resets
+> +  - reset-names
+> +  - msi-parent
+> +  - msi-controller
+> +  - aspeed,pciephy
+> +  - aspeed,pciecfg
+> +  - interrupt-map-mask
+> +  - interrupt-map
+> +  - interrupt-controller
+
+Messed order, missing properties. Open other bindings...
+
+> +
+> +unevaluatedProperties: false
 > +
 > +examples:
 > +  - |
-> +    pcie-cfg@1e770000 {
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/ast2600-clock.h>
+> +
+> +    apb {
+> +      #address-cells = <1>;
+> +      #size-cells = <1>;
+> +
+> +      pcie0: pcie@1e7700C0 {
+> +        compatible = "aspeed,ast2600-pcie";
+> +        device_type = "pci";
+> +        reg = <0x1e7700C0 0x40>;
 
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+Lower case hex. Please follow carefully DTS coding style.
 
-Look how syscons are called in other vendors.
-
-> +      compatible = "aspeed,ast2600-pcie-cfg";
-> +      reg = <0x1e770000 0x80>;
-> +    };
 
 
 Best regards,
