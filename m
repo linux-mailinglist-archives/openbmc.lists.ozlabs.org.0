@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-203-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-204-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F458AD8879
-	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:51:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42255AD8889
+	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:54:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZR80gMNz30T8;
-	Fri, 13 Jun 2025 19:51:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZWB1MDCz30MZ;
+	Fri, 13 Jun 2025 19:54:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=147.75.193.91
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749808276;
-	cv=none; b=ZhsFspZDB6cFzNvRnKqZroI0R1+u4EflQilFgLhwVRoTW799mTILNOahZfo+2S9b6hB2DdGkk6yjvun9yAhYUncRUK6IyOApn1bporLOmUhZVNu1tfAQf+XCfUJufVtkvFMJDXwPlHQAdButugnykIDBKgf8fVn9e8VuuLo3FlJapk94xKtz8paU7H4Vv+SXvjc03dMhOQCX5fYL6RwKvZu/tavs8XgDHNZiY85muQnCF4NXuSzi3PuFMQXk/A313zpISMMo+dFO4UKqR2vKeLcFKuo9AP+EDZtfAOicYJe/OkQG12bvGfgAWihoDzmaVu3KNtaXlpUGzMw05UNgFg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749808486;
+	cv=none; b=C1RSYhqvHf5d2Sr53okm/ue5UBxKhvklrDVPSoDIUU+AN09BUt9G+Vsyc8AU1fzdQuBdqcHDBhFDv60yp1/ISFaQFxHVN47YPiT7hInFg0Jp8scfKIVLccQKqSjmrmbvDhtKyChKj7FcY55Z97FGnUNIL8PzeJ25yajlKpWoAOEGXXONzbvgUDOh2ajod4D9SNL18YlQEdToWhCmrJRf7GTki8s7MJcNWs+MoXafJE9JVF6TgBMzRDC0KgWG48cnxVRQKnWvCIxMWsa7RPVk4DCsbhuYzmeKXDoF8g7AbrT/mrnA+Dcs3a9anmCthK7TwMOeMnA3m7dTxOuXI1ilkw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749808276; c=relaxed/relaxed;
-	bh=V2ZoMDz8BXPT+PWBYhz3bu1T4BmImTEIPCvfqf1KBKM=;
+	t=1749808486; c=relaxed/relaxed;
+	bh=+QE7uo3opxh9em17i8XHHo2wsfE9LEuRzwaUWPwJTNU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iDomqx1ORwzIRuu/nV7GXP2AcRCwFW4kj3OnBK6gCECzlKXFZrSrxpgNKclU4SgiflmKkrezlkxi0gTsAUaJdlRnfp44x3bSTJpJC5fInbbU7ECnDE+l+T5qhYDX3wMqjbpq01wenCwYC1XBmV3yQPUOuFe6fOn8O+N3xW4a61IyH8+FG+g/OoGHgp+qJhycjLDuLgK1dKlVawZj/TUQGbAJrWgJr607Ox8ISBNUUlIKrK3/d4icRXKnj7CMMGiaE78m9ezhaJ8ZLp4YJmxzfOeXB5QCpZ0BfGIozxyLEpL7V2QMb24MjfIW3Ma0rpt9F8yr4QJAKtb5tnAD7StP7w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=k9TsuvXO; dkim-atps=neutral; spf=pass (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=DNaUhdpywYkcFpFTU0RMZ2Ji+lIvakhT0LvmhJpB8rLdpI6vCfjP0WpTtfi6ZcsxM2jQSDzFL1wa+yoeioZZH2bgL/ITLTEFHyH5iTm9O/1fJHpjXa414+Zfqsi2KyOof7uHZQ3CnHfN+1hroDHL2cScnnw+eOBnL1mHTxQzojCWS0CtMQSQOXpggB8HhFy3bC+E9lluztnyg7zUnL6pmbGCjvlpq+oeOHn1C5OFKicVsW2Vt6Fpf1xj/IbKYu5fkxbuJ1IwVomtJzmqVEbwQVOrPCnzeNg/R28/mPM6Zx62EjtDV0A7wtKDdmOp77FD/p2HkEaFI7EF6VXrqhIxCw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IgwWZzCd; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=k9TsuvXO;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IgwWZzCd;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=147.75.193.91; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [147.75.193.91])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZR71n6zz30T0;
-	Fri, 13 Jun 2025 19:51:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZW92V6tz2yMF;
+	Fri, 13 Jun 2025 19:54:45 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 396BAA4F502;
-	Fri, 13 Jun 2025 09:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E083EC4CEE3;
-	Fri, 13 Jun 2025 09:51:06 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTP id 790415C47E8;
+	Fri, 13 Jun 2025 09:52:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14343C4CEE3;
+	Fri, 13 Jun 2025 09:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749808272;
-	bh=rYOisCnlWBaaGeYPQE6dgdjQ9PsJAUikQFuHw9C8lZ0=;
+	s=k20201202; t=1749808482;
+	bh=7S40Zuc2TNAecTyadpX90VMiKscvd9zWpUm96dO61pk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=k9TsuvXO2mwjb2Xjr45tABkcMnNJqse6zW4DjkKEHKk4QKDckpAzXFM6ZkhADQWEN
-	 gLwspUevhzKfyr1wr0oymLToBUpW+JrcLgr3J9hVufaa/s+BhwyPzxxu4dnLE5WRP+
-	 3AfiwA7FWojm2UqOo4ZA+0vwvoS2En6+qR9uIKkMC+WY4o/BCHfueHFxlfwzrElag0
-	 UiX1LwBxmmi/DYI/nM6Z73X/prRbXIQLhPULLBcC2JzZCuBUGOcJos7k2txfuu5Xuv
-	 W+A6Y+37EXEfIxHfa/XfUPNUj/5OBoLmWHzpkx1ThKbJU+E1OUs9ZFCJ4XpylDwqQ+
-	 I7zGAyfk5rZFQ==
-Message-ID: <9be50674-357d-45d8-9117-b66922b46d25@kernel.org>
-Date: Fri, 13 Jun 2025 11:51:05 +0200
+	b=IgwWZzCduhTWWVz0Ik0YoXpB8DwGFZHsTowAQDDHQVYhQv9QRP34IURI4Hl9yCc29
+	 4FlZxQ2xGoW39/quqB0hicrkzjFGe/Iim73kY7UdEr5popAOvhGPe+hej2bdOUGzzz
+	 NCFidSOWEI6m1Yy8pRAA5+KJ5oPRZ26qrLNWEhxBte0vywQJIcqitbBfmPICZeWUtf
+	 DBbBwNtxjtxEmoJ3kTn+WjaFCpezmZplSZdZK//Zrcetp8lu6MfuITyXXmwUJ/zkIe
+	 O1VLGw+kvQJANu1osi+nLeWlr0UQZ9okqtAaCaipvC9FcpoC8G9iFHKlozVAC5vzQK
+	 AZv9VAeaeADpg==
+Message-ID: <576ca6bb-291c-458e-9703-46e7d2f43bbe@kernel.org>
+Date: Fri, 13 Jun 2025 11:54:35 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,8 +57,7 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] ARM: dts: aspeed-g6: Add AST2600 PCIe RC PERST ctrl
- pin
+Subject: Re: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
 To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
  lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
@@ -71,7 +70,7 @@ To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
 Cc: elbadrym@google.com, romlem@google.com, anhphan@google.com,
  wak@google.com, yuxiaozhang@google.com, BMC-SW@aspeedtech.com
 References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com>
- <20250613033001.3153637-5-jacky_chou@aspeedtech.com>
+ <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,36 +116,278 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250613033001.3153637-5-jacky_chou@aspeedtech.com>
+In-Reply-To: <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 13/06/2025 05:29, Jacky Chou wrote:
-> Add pinctrl support for PCIe RC PERST pin.
+On 13/06/2025 05:30, Jacky Chou wrote:
+> Introduce PCIe Root Complex driver for ASPEED SoCs. Support RC
+> initialization, reset, clock, IRQ domain, and MSI domain setup.
+> Implement platform-specific setup and register configuration for
+> ASPEED. And provide PCI config space read/write and INTx/MSI
+> interrupt handling.
 > 
 > Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
 > ---
->  arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi | 5 +++++
->  1 file changed, 5 insertions(+)
+>  drivers/pci/controller/Kconfig       |   13 +
+>  drivers/pci/controller/Makefile      |    1 +
+>  drivers/pci/controller/pcie-aspeed.c | 1039 ++++++++++++++++++++++++++
+>  3 files changed, 1053 insertions(+)
+>  create mode 100644 drivers/pci/controller/pcie-aspeed.c
 > 
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
-> index 289668f051eb..a93e15c64a4b 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
-> @@ -2,6 +2,11 @@
->  // Copyright 2019 IBM Corp.
+> diff --git a/drivers/pci/controller/Kconfig b/drivers/pci/controller/Kconfig
+> index 886f6f43a895..f6b5eea3b570 100644
+> --- a/drivers/pci/controller/Kconfig
+> +++ b/drivers/pci/controller/Kconfig
+> @@ -216,6 +216,19 @@ config PCIE_MT7621
+>  	help
+>  	  This selects a driver for the MediaTek MT7621 PCIe Controller.
 >  
->  &pinctrl {
-> +	pinctrl_pcierc1_default: pcierc1_default {
+> +config PCIE_ASPEED
+> +	bool "ASPEED PCIe controller"
+> +	depends on PCI
+
+depends ARCH_ASPEED || COMPILE_TEST
+
+> +	depends on OF || COMPILE_TEST
+> +	select PCI_MSI_ARCH_FALLBACKS
+> +	help
+> +	  Enable this option to add support for the PCIe controller
+> +	  found on ASPEED SoCs.
+> +	  This driver provides initialization and management for PCIe
+> +	  Root Complex functionality, including interrupt and MSI support.
+> +	  Select Y if your platform uses an ASPEED SoC and requires PCIe
+> +	  connectivity.
+> +
+>  config PCI_HYPERV_INTERFACE
+>  	tristate "Microsoft Hyper-V PCI Interface"
+>  	depends on ((X86 && X86_64) || ARM64) && HYPERV && PCI_MSI
+> diff --git a/drivers/pci/controller/Makefile b/drivers/pci/controller/Makefile
+> index 038ccbd9e3ba..1339f88e153d 100644
+> --- a/drivers/pci/controller/Makefile
+> +++ b/drivers/pci/controller/Makefile
+> @@ -39,6 +39,7 @@ obj-$(CONFIG_PCI_LOONGSON) += pci-loongson.o
+>  obj-$(CONFIG_PCIE_HISI_ERR) += pcie-hisi-error.o
+>  obj-$(CONFIG_PCIE_APPLE) += pcie-apple.o
+>  obj-$(CONFIG_PCIE_MT7621) += pcie-mt7621.o
+> +obj-$(CONFIG_PCIE_ASPEED) += pcie-aspeed.o
+>  
+>  # pcie-hisi.o quirks are needed even without CONFIG_PCIE_DW
+>  obj-y				+= dwc/
+> diff --git a/drivers/pci/controller/pcie-aspeed.c b/drivers/pci/controller/pcie-aspeed.c
+> new file mode 100644
+> index 000000000000..c745684a7f9b
+> --- /dev/null
+> +++ b/drivers/pci/controller/pcie-aspeed.c
+> @@ -0,0 +1,1039 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright 2025 Aspeed Technology Inc.
+> + */
+> +#include <linux/irqchip/chained_irq.h>
+> +#include <linux/irqdomain.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/kernel.h>
+> +#include <linux/msi.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_platform.h>
+
+Where do you use it?
+
+> +#include <linux/of_address.h>
+
+Where do you use it?
 
 
-No underscores in node names. Follow finally DTS coding style. You have
-been told that in previous patchsets already.
+> +#include <linux/of_irq.h>
 
+Where do you use it?
+
+
+> +#include <linux/of_pci.h>
+
+Where do you use it?
+
+> +#include <linux/pci.h>
+> +#include <linux/regmap.h>
+> +#include <linux/reset.h>
+> +#include <linux/irq.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/workqueue.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/bitfield.h>
+> +#include <linux/clk.h>
+> +
+
+
+
+...
+
+> +
+> +static int aspeed_pcie_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct pci_host_bridge *host;
+> +	struct aspeed_pcie *pcie;
+> +	struct device_node *node = dev->of_node;
+> +	const void *md = of_device_get_match_data(dev);
+
+Not void, but specific type. This is not Javascript, we have here types.
+
+> +	int irq, ret;
+> +
+> +	if (!md)
+> +		return -ENODEV;
+> +
+> +	host = devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
+> +	if (!host)
+> +		return -ENOMEM;
+> +
+> +	pcie = pci_host_bridge_priv(host);
+> +	pcie->dev = dev;
+> +	pcie->tx_tag = 0;
+> +	platform_set_drvdata(pdev, pcie);
+> +
+> +	pcie->platform = md;
+> +	pcie->host = host;
+> +
+> +	pcie->reg = devm_platform_ioremap_resource(pdev, 0);
+> +
+> +	of_property_read_u32(node, "msi_address", &pcie->msi_address);
+> +	of_property_read_u32(node, "linux,pci-domain", &pcie->domain);
+> +
+> +	pcie->cfg = syscon_regmap_lookup_by_phandle(dev->of_node, "aspeed,pciecfg");
+> +	if (IS_ERR(pcie->cfg))
+> +		return dev_err_probe(dev, PTR_ERR(pcie->cfg), "Failed to map pciecfg base\n");
+> +
+> +	pcie->pciephy = syscon_regmap_lookup_by_phandle(node, "aspeed,pciephy");
+> +	if (IS_ERR(pcie->pciephy))
+> +		return dev_err_probe(dev, PTR_ERR(pcie->pciephy), "Failed to map pciephy base\n");
+> +
+> +	pcie->h2xrst = devm_reset_control_get_exclusive(dev, "h2x");
+> +	if (IS_ERR(pcie->h2xrst))
+> +		return dev_err_probe(dev, PTR_ERR(pcie->h2xrst), "Failed to get h2x reset\n");
+> +
+> +	pcie->perst = devm_reset_control_get_exclusive(dev, "perst");
+> +	if (IS_ERR(pcie->perst))
+> +		return dev_err_probe(dev, PTR_ERR(pcie->perst), "Failed to get perst reset\n");
+> +
+> +	ret = pcie->platform->setup(pdev);
+> +	if (ret)
+> +		goto err_setup;
+> +
+> +	host->sysdata = pcie;
+> +
+> +	ret = aspeed_pcie_init_irq_domain(pcie);
+> +	if (ret)
+> +		goto err_irq_init;
+> +
+> +	irq = platform_get_irq(pdev, 0);
+> +	if (irq < 0)
+> +		goto err_irq;
+> +
+> +	ret = devm_request_irq(dev, irq, aspeed_pcie_intr_handler, IRQF_SHARED, dev_name(dev),
+> +			       pcie);
+> +	if (ret)
+> +		goto err_irq;
+> +
+> +	pcie->clock = clk_get(dev, NULL);
+
+Huh...
+
+> +	if (IS_ERR(pcie->clock))
+> +		goto err_clk;
+> +	ret = clk_prepare_enable(pcie->clock);
+
+devm_clk_get_enabled.
+
+> +	if (ret)
+> +		goto err_clk_enable;
+> +
+> +	ret = pci_host_probe(host);
+> +	if (ret)
+> +		goto err_clk_enable;
+> +
+> +	return 0;
+> +
+> +err_clk_enable:
+> +	clk_put(pcie->clock);
+> +err_clk:
+> +err_irq:
+> +	aspeed_pcie_irq_domain_free(pcie);
+> +err_irq_init:
+> +err_setup:
+> +	return dev_err_probe(dev, ret, "Failed to setup PCIe RC\n");
+> +}
+> +
+> +static void aspeed_pcie_remove(struct platform_device *pdev)
+> +{
+> +	struct aspeed_pcie *pcie = platform_get_drvdata(pdev);
+> +
+> +	if (pcie->clock) {
+> +		clk_disable_unprepare(pcie->clock);
+> +		clk_put(pcie->clock);
+> +	}
+> +
+> +	pci_stop_root_bus(pcie->host->bus);
+> +	pci_remove_root_bus(pcie->host->bus);
+> +	aspeed_pcie_irq_domain_free(pcie);
+> +}
+> +
+> +static struct aspeed_pcie_rc_platform pcie_rc_ast2600 = {
+
+This should be const. Why it cannot?
+
+> +	.setup = aspeed_ast2600_setup,
+> +	.reg_intx_en = 0x04,
+> +	.reg_intx_sts = 0x08,
+> +	.reg_msi_en = 0x20,
+> +	.reg_msi_sts = 0x28,
+> +};
+> +
+> +static struct aspeed_pcie_rc_platform pcie_rc_ast2700 = {
+
+This should be const. Why it cannot?
+
+> +	.setup = aspeed_ast2700_setup,
+> +	.reg_intx_en = 0x40,
+> +	.reg_intx_sts = 0x48,
+> +	.reg_msi_en = 0x50,
+> +	.reg_msi_sts = 0x58,
+> +};
+> +
+> +static const struct of_device_id aspeed_pcie_of_match[] = {
+> +	{ .compatible = "aspeed,ast2600-pcie", .data = &pcie_rc_ast2600 },
+> +	{ .compatible = "aspeed,ast2700-pcie", .data = &pcie_rc_ast2700 },
+> +	{}
+> +};
+> +
+> +static struct platform_driver aspeed_pcie_driver = {
+> +	.driver = {
+> +		.name = "aspeed-pcie",
+> +		.suppress_bind_attrs = true,
+
+Why?
+
+> +		.of_match_table = aspeed_pcie_of_match,
+> +	},
+> +	.probe = aspeed_pcie_probe,
+> +	.remove = aspeed_pcie_remove,
+
+So how exactly remove can be triggered?
+
+> +};
+> +
+> +module_platform_driver(aspeed_pcie_driver);
+> +
+> +MODULE_AUTHOR("Jacky Chou <jacky_chou@aspeedtech.com>");
+> +MODULE_DESCRIPTION("ASPEED PCIe Root Complex");
+> +MODULE_LICENSE("GPL");
 
 
 Best regards,
