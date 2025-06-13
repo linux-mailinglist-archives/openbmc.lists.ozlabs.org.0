@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-200-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-201-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51E9BAD8838
-	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:45:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2126CAD8846
+	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:46:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZHx17PHz30MZ;
-	Fri, 13 Jun 2025 19:45:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZKL6dLcz30NP;
+	Fri, 13 Jun 2025 19:46:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749807901;
-	cv=none; b=SJszff9u62m6rEfXVkxoXqcUPRjtSvP8PxOMM92q8cAPEgXah6egoLxRTDSHSAFaxJzW9iKwrzNyvo+DX1iuo7yd224JDwPe9DHOomehMX+EsjIV+q/h0CIf8CW6gtqfGDf76rANzGeWtJXxLtGLWP1Q6zJABPp05dz4PYlqVUFIgUkVAhuvg0kJ/RiUT0/x4oWsa6tk04jJGYoYKALcvYTMPXFSdKIBLn0xYd7hFe0b50roPkCbceoms2t25qqwzB8L3nkRGfNDhD/ngh15iy+eOvRocKNKOe0ghW8i3UWBLsWtptJlDiG5pj9+ENdROMZOP7e3SKq4+ntIAkwToQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749807974;
+	cv=none; b=egjCr0nyR7gZu65wuhjz72Wzg41q/OgGD3iG4/Tqan1em8+vSy4pinMO7c2MTq2NeTw6trwygb+M+mQ0f1wrCnFGvebV6RJSYSVATxTMIzibeC8hqVfYcgsPLQTch0i8lhLW9cOEZjFvDdJvuUqGkkpBIqrypEBnUAE8PO3gDgbKklcqYXbuXxeOcSErPhRcwtSqjl1UfmGUlfoOtvKf+ivxjJggTt6kxerajoeILYBWbVJ2e9eFXWBWfQWFG/MtWEmttyk78Qh5HecusVEkr5nQwHA/Dc46I5Ew2wWsgWiqzYK2OBoN2/+zGV3UODdN914SY4KTkoZtxw/trDR6eA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749807901; c=relaxed/relaxed;
-	bh=PSI7jptZHY/4Sy+PfqbdO0ph97YahPFYMpetcy/CilE=;
+	t=1749807974; c=relaxed/relaxed;
+	bh=VC3uyx7XQrp1bKJ1F7dGGuSJWNhI/VpAgtY9+aI1yGY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J9Gu/U1XbUMRiA5jVkvMJCS1BjQyhkJ0gy7VVUHQ/CSHi/qdjf1kQsUnZKogUITGUOIuDIMLo8wLZqHHuvTwomIsKZid/bl4DZmuA7BFgTj6iKKSR80pkeSoFw83ehZ46vxZMfYYf6DmfTzn2nAKTPRu9rgZA3OPcFyTcpxTY6SLp5hxjSJODqX7FDvWl8TDx7xKOvzhdF3RRiz8ApYouGDPJO5G/xm89UcU/NGJyRv/AJKRj5/PHGu+mMVDP1E0w3vdAWHo4wj9HUCTZdjECfKIJ6P7TpMxKiBjZ5woZmDTZ4MaYc0TnPFQgjXO1jCO0ji8vdKhPl/wl0HocC1Wxw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IDCKOhif; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=OpeE9iMep8sQmsgrmveYoo9102ll+7uVhfZY2BOrviWkyLHCttRGaEYDszw13wT7D1Jv0g8dHhsCZVyq0goyyl+3U5LDtLTK6J2Zbf01K3jgEjo6eFNMEwTTLEOsEOUoWoysretWM//N8gDWcwVP1b70FNllSKswof/v5Any3Nq8CAE/OwAWZOD2jVu6qgK6NE69vN9OCPk8CqwBQbiNvgmv1nNBVBL0kbdY766JpstCEy2ia+fnl/m3zDs1d1kHgNirdlILasTHhbrv8fYOYooxzm8IEcunWOnWuVMZclimJWhv9rUSB8Q6V8KX7hxjQ1YBj+5lxgi1fOf57DPlsQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LxOzqpTg; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IDCKOhif;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LxOzqpTg;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZHv3S5Xz2yMF;
-	Fri, 13 Jun 2025 19:44:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZKK6r1Sz2yMF;
+	Fri, 13 Jun 2025 19:46:13 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 30875A50ADA;
-	Fri, 13 Jun 2025 09:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4209C4CEE3;
-	Fri, 13 Jun 2025 09:44:49 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id A599743AB8;
+	Fri, 13 Jun 2025 09:46:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFA3C4CEE3;
+	Fri, 13 Jun 2025 09:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749807895;
-	bh=856dxDS+Uf8WXPdeMuD0cTLl98kWJ40xrdivrBRQOok=;
+	s=k20201202; t=1749807971;
+	bh=OIwbFNihb+LikVlp9wBsLvj8g2wYol3rhIQiQU23i8w=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IDCKOhifcsK5rlivUrkhIrXEivpkcqJc7VPxFhAEAlYL4ZLDhBikU1vMyTRdBKW0h
-	 fIcG0hUICIwieAxhuvNNqwo2y228BZl4+ozJviwbofC7MQqSAor7xd2Xa8sAZ/6BC0
-	 oJIumLp/g5mwnDTf52oFvyyBuWS613l2sJOwdggvCXmvBSgvniHj6SE3G6KWoQ7sGu
-	 z9C7WHJNi1Wmo7JAkUofQKCoYPZHwbj7C7tptXcxpim1ohZAqSFqjWyt/wzK2sApT6
-	 Xx4l7ioJvnWArjgzD1EaO+hwmEZINJQUftaVAOAK06iMhGPNXmCOsLrf3kDgpxH/AH
-	 24wvSrAq/ZtZQ==
-Message-ID: <36cb3578-1efb-4d2e-b50a-47e6dfd3bdd0@kernel.org>
-Date: Fri, 13 Jun 2025 11:44:47 +0200
+	b=LxOzqpTgbOu+cOIwLwtebyN1rPySY6jpgaj2zgrIVp5cufvoPNUHjZUWPRWvfaBH0
+	 lz7WOZCM4k8U7Pib3MHuXrebbe3ECKgj2Yl0jXaaddNRD3fmMD2vdyBK/mIpE0hMBj
+	 9vQQgkKk30EDnUaGIprbGYn1KoGw1xc/cxaUFrql2OcOWaZquzW4HG4yYTpobrkQDk
+	 bIKbTLEwBjX1lQ+GwMdcIt3qUS/yjLSfnnhuNb6WKptv6SwavMke+cmxR5pp1VM+4W
+	 N29eDa1r7zYBdmutL5uclVD45xli3s8lz4p0stesHt0JGuKCrGaEpmSK7iVmvITdl7
+	 m1/Moc8gR7odw==
+Message-ID: <618978dd-943a-4e50-8aae-c6132559edad@kernel.org>
+Date: Fri, 13 Jun 2025 11:46:04 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] dt-bindings: phy: Add document for ASPEED PCIe PHY
+Subject: Re: [PATCH 2/7] dt-bindings: pci: Add document for ASPEED PCIe Config
 To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
  lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
@@ -70,7 +70,7 @@ To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
 Cc: elbadrym@google.com, romlem@google.com, anhphan@google.com,
  wak@google.com, yuxiaozhang@google.com, BMC-SW@aspeedtech.com
 References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com>
- <20250613033001.3153637-2-jacky_chou@aspeedtech.com>
+ <20250613033001.3153637-3-jacky_chou@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,7 +116,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250613033001.3153637-2-jacky_chou@aspeedtech.com>
+In-Reply-To: <20250613033001.3153637-3-jacky_chou@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -125,98 +125,80 @@ X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 On 13/06/2025 05:29, Jacky Chou wrote:
-> Add device tree binding YAML documentation for the ASPEED PCIe PHY.
-> This schema describes the required properties for the PCIe PHY node,
-> including compatible strings and register space, and provides an
-> example for reference.
+> Add device tree binding documentation for the ASPEED AST2600/AST2700 PCIe
+> configuration syscon block. This shared register space is used by multiple
+> PCIe-related devices to coordinate and manage common PCIe settings.
+> The binding describes the required compatible strings and register space
+> for the configuration node.
 > 
 > Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
 > ---
->  .../bindings/phy/aspeed-pcie-phy.yaml         | 38 +++++++++++++++++++
-
-Filename basedon compatible
-
-A nit, subject: drop second/last, redundant "document for". The
-"dt-bindings" prefix is already stating that these are documents.
-See also:
-https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-
->  MAINTAINERS                                   | 10 +++++
->  2 files changed, 48 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/aspeed-pcie-phy.yaml
+>  .../bindings/pci/aspeed-pcie-cfg.yaml         | 41 +++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/phy/aspeed-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/aspeed-pcie-phy.yaml
+> diff --git a/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml b/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
 > new file mode 100644
-> index 000000000000..762bf7b0aedc
+> index 000000000000..6b51eedf4c47
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/aspeed-pcie-phy.yaml
-> @@ -0,0 +1,38 @@
+> +++ b/Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
+> @@ -0,0 +1,41 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/phy/aspeed-pcie-phy.yaml#
+> +$id: http://devicetree.org/schemas/pci/aspeed-pcie-cfg.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: ASPEED PCIe PHY
+> +title: ASPEED PCIe Configuration
 > +
 > +maintainers:
 > +  - Jacky Chou <jacky_chou@aspeedtech.com>
 > +
 > +description: |
+> +  The ASPEED PCIe configuration syscon block provides a set of registers shared
 
-Do not need '|' unless you need to preserve formatting.
+How is this a pci device? You just described syscon, so this goes to soc.
 
-> +  The ASPEED PCIe PHY provides the physical layer interface for PCIe
-> +  controllers in the SoC. This node represents the register block for the PCIe
-> +  PHY, which is typically accessed by PCIe Root Complex or Endpoint drivers
-> +  via syscon.
+All other comments apply as well.
+
+> +  by multiple PCIe-related devices within the SoC. This node represents the
+> +  common configuration space that allows these devices to coordinate and manage
+> +  shared PCIe settings, including address mapping, control, and status
+> +  registers. The syscon interface enables Linux drivers for various PCIe devices
+
+Do not describe OS. Describe the hardware and drop Linux drivers completely.
+
+> +  to access  and modify these shared registers in a consistent and centralized
+> +  manner.
 > +
 > +properties:
 > +  compatible:
 > +    enum:
-> +      - aspeed,ast2600-pcie-phy
-> +      - aspeed,ast2700-pcie-phy
+> +      - aspeed,ast2600-pcie-cfg
+> +      - aspeed,ast2700-pcie-cfg
 > +
 > +  reg:
 > +    maxItems: 1
 > +
-
-No phy cells? How is this a phy exactly?
-
-No resources? This looks just incomplete.
-
 > +required:
 > +  - compatible
 > +  - reg
-
 > +
 > +additionalProperties: false
 > +
 > +examples:
 > +  - |
-> +    pcie-phy@1e6ed200 {
-> +      compatible = "aspeed,ast2600-pcie-phy";
-> +      reg = <0x1e6ed200 0x100>;
-> +    };
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a5a650812c16..68115443607d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3696,6 +3696,16 @@ S:	Maintained
->  F:	Documentation/devicetree/bindings/media/aspeed,video-engine.yaml
->  F:	drivers/media/platform/aspeed/
->  
-> +ASPEED PCIE CONTROLLER DRIVER
-> +M:	Jacky Chou <jacky_chou@aspeedtech.com>
-> +L:	linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
-> +L:	linux-pci@vger.kernel.org
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/pci/aspeed-pcie-cfg.yaml
-> +F:	Documentation/devicetree/bindings/pci/aspeed-pcie.yaml
-> +F:	Documentation/devicetree/bindings/phy/aspeed-pcie-phy.yaml
-> +F:	drivers/pci/controller/pcie-aspeed.c
+> +    pcie-cfg@1e770000 {
 
-There is no such file... actually many above do not exist.
+Node names should be generic. See also an explanation and list of
+examples (not exhaustive) in DT specification:
+https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
+
+Look how syscons are called in other vendors.
+
+> +      compatible = "aspeed,ast2600-pcie-cfg";
+> +      reg = <0x1e770000 0x80>;
+> +    };
 
 
 Best regards,
