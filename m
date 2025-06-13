@@ -1,50 +1,69 @@
-Return-Path: <openbmc+bounces-204-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-205-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42255AD8889
-	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 11:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 59BE5AD8960
+	for <lists+openbmc@lfdr.de>; Fri, 13 Jun 2025 12:22:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bJZWB1MDCz30MZ;
-	Fri, 13 Jun 2025 19:54:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJb6b4S2Fz2yfx;
+	Fri, 13 Jun 2025 20:21:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749808486;
-	cv=none; b=C1RSYhqvHf5d2Sr53okm/ue5UBxKhvklrDVPSoDIUU+AN09BUt9G+Vsyc8AU1fzdQuBdqcHDBhFDv60yp1/ISFaQFxHVN47YPiT7hInFg0Jp8scfKIVLccQKqSjmrmbvDhtKyChKj7FcY55Z97FGnUNIL8PzeJ25yajlKpWoAOEGXXONzbvgUDOh2ajod4D9SNL18YlQEdToWhCmrJRf7GTki8s7MJcNWs+MoXafJE9JVF6TgBMzRDC0KgWG48cnxVRQKnWvCIxMWsa7RPVk4DCsbhuYzmeKXDoF8g7AbrT/mrnA+Dcs3a9anmCthK7TwMOeMnA3m7dTxOuXI1ilkw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::92b"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749810119;
+	cv=none; b=KkSolFl+KQnKm6LRoRaTgQmE/vZ8f/BFZxsPWzqnT4Wx33UfIIo4acWOARHBiGdU/QxLEnwVYaHZ3NudyF29FTw/ZtXDPwrjZnmsog8QdGmXsvWqSIsXgvNM5fi81OTgaQ9k6HAtX6Ns2Jv0X71W5Zeo4Tix9YNwQ7E2Zuukw+ZjGAd8tWj/706KnNGthE4RCEzeyQZ+OhMIsXPcFRTNxVBjaQxExPWbU2gOoeTPabK6/PqdAI1EluljZtgy+rbz+Y5ja10mfpJVb6o2kRzT6oqv9O5GBevHkQlT/yXAU7kX54WEFJ5Y+eC/G3HY7vgcVIbm8cl3YXtteax9mfQqkA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749808486; c=relaxed/relaxed;
-	bh=+QE7uo3opxh9em17i8XHHo2wsfE9LEuRzwaUWPwJTNU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DNaUhdpywYkcFpFTU0RMZ2Ji+lIvakhT0LvmhJpB8rLdpI6vCfjP0WpTtfi6ZcsxM2jQSDzFL1wa+yoeioZZH2bgL/ITLTEFHyH5iTm9O/1fJHpjXa414+Zfqsi2KyOof7uHZQ3CnHfN+1hroDHL2cScnnw+eOBnL1mHTxQzojCWS0CtMQSQOXpggB8HhFy3bC+E9lluztnyg7zUnL6pmbGCjvlpq+oeOHn1C5OFKicVsW2Vt6Fpf1xj/IbKYu5fkxbuJ1IwVomtJzmqVEbwQVOrPCnzeNg/R28/mPM6Zx62EjtDV0A7wtKDdmOp77FD/p2HkEaFI7EF6VXrqhIxCw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IgwWZzCd; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1749810119; c=relaxed/relaxed;
+	bh=q97amkqbv8ZyEeF0YwMi9vkf9DpRMWevNWxGC3Gg4S8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Dg9jAGr41DPiWAZ8FRekbwoi5oJ6bMcXptg4uHVgRdbHt3AG4L70nfcX9tCljPPP+UgppduK49+IiSS0OHxf4RbV9fY1yUFdsOq8QJevZwX63o9/LyS+h01JouirLsa0EJkPLggGuiSu2JMeFOpZm/bH0GjbfdwYBUCMq+hOytXMAlbpjZ6yhT0FOaHVRH/ebKFJVtgT6623uWBYy/XrcufGAie2Np5Ts4b5x98LeM4puJq4eyuHkKrsEHCViID89kMkagon30oLzIHM+HZaWUikn+ym96WFb86ihIMOBGcD5mrDwkuR7RulANndyeW+JqyavOW5M1sxGOa20JM6Ag==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eQGbmPkM; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::92b; helo=mail-ua1-x92b.google.com; envelope-from=yang.zhang.wz@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IgwWZzCd;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eQGbmPkM;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92b; helo=mail-ua1-x92b.google.com; envelope-from=yang.zhang.wz@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJZW92V6tz2yMF;
-	Fri, 13 Jun 2025 19:54:45 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 790415C47E8;
-	Fri, 13 Jun 2025 09:52:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14343C4CEE3;
-	Fri, 13 Jun 2025 09:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749808482;
-	bh=7S40Zuc2TNAecTyadpX90VMiKscvd9zWpUm96dO61pk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IgwWZzCduhTWWVz0Ik0YoXpB8DwGFZHsTowAQDDHQVYhQv9QRP34IURI4Hl9yCc29
-	 4FlZxQ2xGoW39/quqB0hicrkzjFGe/Iim73kY7UdEr5popAOvhGPe+hej2bdOUGzzz
-	 NCFidSOWEI6m1Yy8pRAA5+KJ5oPRZ26qrLNWEhxBte0vywQJIcqitbBfmPICZeWUtf
-	 DBbBwNtxjtxEmoJ3kTn+WjaFCpezmZplSZdZK//Zrcetp8lu6MfuITyXXmwUJ/zkIe
-	 O1VLGw+kvQJANu1osi+nLeWlr0UQZ9okqtAaCaipvC9FcpoC8G9iFHKlozVAC5vzQK
-	 AZv9VAeaeADpg==
-Message-ID: <576ca6bb-291c-458e-9703-46e7d2f43bbe@kernel.org>
-Date: Fri, 13 Jun 2025 11:54:35 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJb6Z5tGGz2yMF
+	for <openbmc@lists.ozlabs.org>; Fri, 13 Jun 2025 20:21:58 +1000 (AEST)
+Received: by mail-ua1-x92b.google.com with SMTP id a1e0cc1a2514c-87ed98a23easo492839241.0
+        for <openbmc@lists.ozlabs.org>; Fri, 13 Jun 2025 03:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749810116; x=1750414916; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q97amkqbv8ZyEeF0YwMi9vkf9DpRMWevNWxGC3Gg4S8=;
+        b=eQGbmPkMjYrDdsBCS/Lo5G+jRHde2L9YR/J3O0BsAJh/kYwKKDYEqHggSdsNyV1b8s
+         2jxlMhQCKkvSud4Vdr7KGwne6JEMGvwnKOlMlRKyH0W8NkgFLVoUVYuDrOw3aZkXzFoO
+         CcLuK+jm5s9FKaK6gFZAYbQKmh2VtRRSzk13VZSGbkWsa/W3v5G8ekjSJZ9JHgmlzswk
+         WnqtBSilpd5mTrY/2eFStokyWAW0txSUwu3973x2kWq5c0j9lwEeVCzB3DrRY63dgbFb
+         WhXALVYJKmmRFScKf3Pas6v5rxCYOjoq+x6S0ReSif+HL/xsuiUYdpiQY2t0NSlKH8aE
+         1wMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749810116; x=1750414916;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q97amkqbv8ZyEeF0YwMi9vkf9DpRMWevNWxGC3Gg4S8=;
+        b=a/WZRk779UdommK9ViuMZid9OQbJaDUoE9pMhBf/CMH0kV/yv7rb66uzq/iQ2cRf1t
+         gipnLo3C/NC0VPCYfeYIzp/bLt5bbgl+ZxBcWInsJsQi6zYhUI6J0mPlEn94XP7G33Ab
+         N9kdVOeSsKTy0Xb6Xr5YfOx3TX5F7wfRakXCl0r4CesLbo/IuqJtJ6hP3FNzWG5muwAW
+         qelI9G6u2e+SCQpPNqieKluivn9os+hNwj/rxKUw6AhdkVdoTntz/ZQt7iI65fhz+POJ
+         iHkRE6RK4RzOxRMXEdjb33Ei1u0QofIosGUokY5/Bz59pC2KtXdeiiIItwLIJuh54gim
+         NDSQ==
+X-Gm-Message-State: AOJu0YweCE3/Dc4mlh67tAZ61xpEgE/TSLMbG11HV8tZMSBb/GmtrF+c
+	EJLDI7OkNqXcBp0v2Sl1BIBUGmi6a6g/KSIhRYrSOMH4GlAU/D1ExulLhZpWpOmGg7shedackof
+	lWgwYwAPqOPCvwZtrrVLrVJIhMBtPyTGAcYKW
+X-Gm-Gg: ASbGncubn4SFuqKfGGvgFfWSjvwWGMUkt1jfGdqsn+BRh+PLLY2QB7aMoVSYERmGm3A
+	zIB5Uy6b21VNDLbhcl8GbP+I3zWFOX4j3NsKLS88TjF2rMH8ijct3UzpGTaL+EbCpGYNRDOMzHE
+	oHIT997biLwsF1u8Z1mOEj5ALY3iV2QgLP2kB1Brs03aM=
+X-Google-Smtp-Source: AGHT+IH9egfv2SQdqWcJ4n4S/hCrJ8d8EwuaTpxG1voAkFE4lJ5JWMGQSToZCUNWD32R3LtxSQ6k5/zWKio3/vn22p4=
+X-Received: by 2002:a05:6102:5717:b0:4e7:bf03:cd6f with SMTP id
+ ada2fe7eead31-4e7e389207amr1737266137.2.1749810116025; Fri, 13 Jun 2025
+ 03:21:56 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -56,340 +75,97 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
-To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
- andrew@codeconstruct.com.au, vkoul@kernel.org, kishon@kernel.org,
- linus.walleij@linaro.org, p.zabel@pengutronix.de,
- linux-aspeed@lists.ozlabs.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org
-Cc: elbadrym@google.com, romlem@google.com, anhphan@google.com,
- wak@google.com, yuxiaozhang@google.com, BMC-SW@aspeedtech.com
-References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com>
- <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <CA+3C=r_DV5kLivbMY-5ALh55ySzdzm6Ss-5Eif9YU27Qn8-mxQ@mail.gmail.com>
+In-Reply-To: <CA+3C=r_DV5kLivbMY-5ALh55ySzdzm6Ss-5Eif9YU27Qn8-mxQ@mail.gmail.com>
+From: Yang Zhang <yang.zhang.wz@gmail.com>
+Date: Fri, 13 Jun 2025 18:21:45 +0800
+X-Gm-Features: AX0GCFtiRMKjVn8VmeowuJGh_iWg2tjL3S9EEowh_CRS-U9omsrlgMv4na0MhaI
+Message-ID: <CA+3C=r-JOhLJOKQtAFNrMapqwXd6VV13nBGMJ6hCwudOgish1Q@mail.gmail.com>
+Subject: Re: How to enable SOL
+To: openbmc@lists.ozlabs.org
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 13/06/2025 05:30, Jacky Chou wrote:
-> Introduce PCIe Root Complex driver for ASPEED SoCs. Support RC
-> initialization, reset, clock, IRQ domain, and MSI domain setup.
-> Implement platform-specific setup and register configuration for
-> ASPEED. And provide PCI config space read/write and INTx/MSI
-> interrupt handling.
-> 
-> Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-> ---
->  drivers/pci/controller/Kconfig       |   13 +
->  drivers/pci/controller/Makefile      |    1 +
->  drivers/pci/controller/pcie-aspeed.c | 1039 ++++++++++++++++++++++++++
->  3 files changed, 1053 insertions(+)
->  create mode 100644 drivers/pci/controller/pcie-aspeed.c
-> 
-> diff --git a/drivers/pci/controller/Kconfig b/drivers/pci/controller/Kconfig
-> index 886f6f43a895..f6b5eea3b570 100644
-> --- a/drivers/pci/controller/Kconfig
-> +++ b/drivers/pci/controller/Kconfig
-> @@ -216,6 +216,19 @@ config PCIE_MT7621
->  	help
->  	  This selects a driver for the MediaTek MT7621 PCIe Controller.
->  
-> +config PCIE_ASPEED
-> +	bool "ASPEED PCIe controller"
-> +	depends on PCI
+I found the reason. The default console ID used by sol activate is
+"default". After changing the ID in server.ttyS2.conf to "default", I
+can see the host's output via sol activate.
 
-depends ARCH_ASPEED || COMPILE_TEST
-
-> +	depends on OF || COMPILE_TEST
-> +	select PCI_MSI_ARCH_FALLBACKS
-> +	help
-> +	  Enable this option to add support for the PCIe controller
-> +	  found on ASPEED SoCs.
-> +	  This driver provides initialization and management for PCIe
-> +	  Root Complex functionality, including interrupt and MSI support.
-> +	  Select Y if your platform uses an ASPEED SoC and requires PCIe
-> +	  connectivity.
-> +
->  config PCI_HYPERV_INTERFACE
->  	tristate "Microsoft Hyper-V PCI Interface"
->  	depends on ((X86 && X86_64) || ARM64) && HYPERV && PCI_MSI
-> diff --git a/drivers/pci/controller/Makefile b/drivers/pci/controller/Makefile
-> index 038ccbd9e3ba..1339f88e153d 100644
-> --- a/drivers/pci/controller/Makefile
-> +++ b/drivers/pci/controller/Makefile
-> @@ -39,6 +39,7 @@ obj-$(CONFIG_PCI_LOONGSON) += pci-loongson.o
->  obj-$(CONFIG_PCIE_HISI_ERR) += pcie-hisi-error.o
->  obj-$(CONFIG_PCIE_APPLE) += pcie-apple.o
->  obj-$(CONFIG_PCIE_MT7621) += pcie-mt7621.o
-> +obj-$(CONFIG_PCIE_ASPEED) += pcie-aspeed.o
->  
->  # pcie-hisi.o quirks are needed even without CONFIG_PCIE_DW
->  obj-y				+= dwc/
-> diff --git a/drivers/pci/controller/pcie-aspeed.c b/drivers/pci/controller/pcie-aspeed.c
-> new file mode 100644
-> index 000000000000..c745684a7f9b
-> --- /dev/null
-> +++ b/drivers/pci/controller/pcie-aspeed.c
-> @@ -0,0 +1,1039 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright 2025 Aspeed Technology Inc.
-> + */
-> +#include <linux/irqchip/chained_irq.h>
-> +#include <linux/irqdomain.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/kernel.h>
-> +#include <linux/msi.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_platform.h>
-
-Where do you use it?
-
-> +#include <linux/of_address.h>
-
-Where do you use it?
-
-
-> +#include <linux/of_irq.h>
-
-Where do you use it?
-
-
-> +#include <linux/of_pci.h>
-
-Where do you use it?
-
-> +#include <linux/pci.h>
-> +#include <linux/regmap.h>
-> +#include <linux/reset.h>
-> +#include <linux/irq.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/workqueue.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +
+On Fri, Jun 13, 2025 at 4:36=E2=80=AFPM Yang Zhang <yang.zhang.wz@gmail.com=
+> wrote:
+>
+> Hi All,
+>
+> I am trying to set up SOL on my platform. On my platform, ttyS2 is
+> connected to the host.
+> I can use ssh -p 2202 localhost to see the output from the host, but
+> when I run ipmitool sol activate, it shows nothing except the
+> following:
+>
+> ipmitool -I lanplus -C 17 -H 192.168.10.178 -U root -P 0penBmc sol activa=
+te
+> [SOL Session operational.  Use ~? for help]
+>
+> I guess the reason is that I haven=E2=80=99t bound SOL to ttyS2, and I do=
+n=E2=80=99t
+> know how to do this. Are there any settings to bind SOL to ttyS2?
+>
+> Or maybe there are other configurations I need to add?
+>
+> Here is the config I used:
+> obmc-console_%.bbappend:
+> FILESEXTRAPATHS:append :=3D "${THISDIR}/${PN}:"
+> RDEPENDS:${PN} +=3D "bash"
+>
+> # Declare port specific config files
+> OBMC_CONSOLE_TTYS =3D "ttyS0 ttyS2"
+> CONSOLE_CLIENT =3D "2200 2202 "
+>
+> SRC_URI +=3D " \
+>              ${@compose_list(d, 'CONSOLE_SERVER_CONF_FMT',
+> 'OBMC_CONSOLE_TTYS')} \
+>              ${@compose_list(d, 'CONSOLE_CLIENT_CONF_FMT', 'CONSOLE_CLIEN=
+T')} \
+>            "
+>
+> SYSTEMD_SERVICE:${PN}:append =3D " \
+>                                 ${@compose_list(d,
+> 'CONSOLE_CLIENT_SERVICE_FMT', 'CONSOLE_CLIENT')} \
+>                                "
+>
+> do_install:append() {
+>     # Install the console client configurations
+>     install -m 0644 ${UNPACKDIR}/client.*.conf ${D}${sysconfdir}/${BPN}/
+> }
+>
+> $ cat server.ttyS0.conf
+> # console-id is default to obmc-console
+> local-tty =3D ttyS0
+> local-tty-baud =3D 115200
+>
+> $ cat client.2200.conf
+> # console-id is default to obmc-console
+>
+> $ cat server.ttyS2.conf
+> local-tty =3D ttyS2
+> local-tty-baud =3D 115200
+> console-id =3D ttyS2
+>
+> $ cat client.2202.conf
+> console-id =3D ttyS2
+>
+>
+> --
+> best regards
+> yang
 
 
 
-...
-
-> +
-> +static int aspeed_pcie_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct pci_host_bridge *host;
-> +	struct aspeed_pcie *pcie;
-> +	struct device_node *node = dev->of_node;
-> +	const void *md = of_device_get_match_data(dev);
-
-Not void, but specific type. This is not Javascript, we have here types.
-
-> +	int irq, ret;
-> +
-> +	if (!md)
-> +		return -ENODEV;
-> +
-> +	host = devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
-> +	if (!host)
-> +		return -ENOMEM;
-> +
-> +	pcie = pci_host_bridge_priv(host);
-> +	pcie->dev = dev;
-> +	pcie->tx_tag = 0;
-> +	platform_set_drvdata(pdev, pcie);
-> +
-> +	pcie->platform = md;
-> +	pcie->host = host;
-> +
-> +	pcie->reg = devm_platform_ioremap_resource(pdev, 0);
-> +
-> +	of_property_read_u32(node, "msi_address", &pcie->msi_address);
-> +	of_property_read_u32(node, "linux,pci-domain", &pcie->domain);
-> +
-> +	pcie->cfg = syscon_regmap_lookup_by_phandle(dev->of_node, "aspeed,pciecfg");
-> +	if (IS_ERR(pcie->cfg))
-> +		return dev_err_probe(dev, PTR_ERR(pcie->cfg), "Failed to map pciecfg base\n");
-> +
-> +	pcie->pciephy = syscon_regmap_lookup_by_phandle(node, "aspeed,pciephy");
-> +	if (IS_ERR(pcie->pciephy))
-> +		return dev_err_probe(dev, PTR_ERR(pcie->pciephy), "Failed to map pciephy base\n");
-> +
-> +	pcie->h2xrst = devm_reset_control_get_exclusive(dev, "h2x");
-> +	if (IS_ERR(pcie->h2xrst))
-> +		return dev_err_probe(dev, PTR_ERR(pcie->h2xrst), "Failed to get h2x reset\n");
-> +
-> +	pcie->perst = devm_reset_control_get_exclusive(dev, "perst");
-> +	if (IS_ERR(pcie->perst))
-> +		return dev_err_probe(dev, PTR_ERR(pcie->perst), "Failed to get perst reset\n");
-> +
-> +	ret = pcie->platform->setup(pdev);
-> +	if (ret)
-> +		goto err_setup;
-> +
-> +	host->sysdata = pcie;
-> +
-> +	ret = aspeed_pcie_init_irq_domain(pcie);
-> +	if (ret)
-> +		goto err_irq_init;
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0)
-> +		goto err_irq;
-> +
-> +	ret = devm_request_irq(dev, irq, aspeed_pcie_intr_handler, IRQF_SHARED, dev_name(dev),
-> +			       pcie);
-> +	if (ret)
-> +		goto err_irq;
-> +
-> +	pcie->clock = clk_get(dev, NULL);
-
-Huh...
-
-> +	if (IS_ERR(pcie->clock))
-> +		goto err_clk;
-> +	ret = clk_prepare_enable(pcie->clock);
-
-devm_clk_get_enabled.
-
-> +	if (ret)
-> +		goto err_clk_enable;
-> +
-> +	ret = pci_host_probe(host);
-> +	if (ret)
-> +		goto err_clk_enable;
-> +
-> +	return 0;
-> +
-> +err_clk_enable:
-> +	clk_put(pcie->clock);
-> +err_clk:
-> +err_irq:
-> +	aspeed_pcie_irq_domain_free(pcie);
-> +err_irq_init:
-> +err_setup:
-> +	return dev_err_probe(dev, ret, "Failed to setup PCIe RC\n");
-> +}
-> +
-> +static void aspeed_pcie_remove(struct platform_device *pdev)
-> +{
-> +	struct aspeed_pcie *pcie = platform_get_drvdata(pdev);
-> +
-> +	if (pcie->clock) {
-> +		clk_disable_unprepare(pcie->clock);
-> +		clk_put(pcie->clock);
-> +	}
-> +
-> +	pci_stop_root_bus(pcie->host->bus);
-> +	pci_remove_root_bus(pcie->host->bus);
-> +	aspeed_pcie_irq_domain_free(pcie);
-> +}
-> +
-> +static struct aspeed_pcie_rc_platform pcie_rc_ast2600 = {
-
-This should be const. Why it cannot?
-
-> +	.setup = aspeed_ast2600_setup,
-> +	.reg_intx_en = 0x04,
-> +	.reg_intx_sts = 0x08,
-> +	.reg_msi_en = 0x20,
-> +	.reg_msi_sts = 0x28,
-> +};
-> +
-> +static struct aspeed_pcie_rc_platform pcie_rc_ast2700 = {
-
-This should be const. Why it cannot?
-
-> +	.setup = aspeed_ast2700_setup,
-> +	.reg_intx_en = 0x40,
-> +	.reg_intx_sts = 0x48,
-> +	.reg_msi_en = 0x50,
-> +	.reg_msi_sts = 0x58,
-> +};
-> +
-> +static const struct of_device_id aspeed_pcie_of_match[] = {
-> +	{ .compatible = "aspeed,ast2600-pcie", .data = &pcie_rc_ast2600 },
-> +	{ .compatible = "aspeed,ast2700-pcie", .data = &pcie_rc_ast2700 },
-> +	{}
-> +};
-> +
-> +static struct platform_driver aspeed_pcie_driver = {
-> +	.driver = {
-> +		.name = "aspeed-pcie",
-> +		.suppress_bind_attrs = true,
-
-Why?
-
-> +		.of_match_table = aspeed_pcie_of_match,
-> +	},
-> +	.probe = aspeed_pcie_probe,
-> +	.remove = aspeed_pcie_remove,
-
-So how exactly remove can be triggered?
-
-> +};
-> +
-> +module_platform_driver(aspeed_pcie_driver);
-> +
-> +MODULE_AUTHOR("Jacky Chou <jacky_chou@aspeedtech.com>");
-> +MODULE_DESCRIPTION("ASPEED PCIe Root Complex");
-> +MODULE_LICENSE("GPL");
-
-
-Best regards,
-Krzysztof
+--=20
+best regards
+yang
 
