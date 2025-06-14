@@ -1,81 +1,99 @@
-Return-Path: <openbmc+bounces-219-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-221-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A29ADAD9999
-	for <lists+openbmc@lfdr.de>; Sat, 14 Jun 2025 04:10:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF996ADA495
+	for <lists+openbmc@lfdr.de>; Mon, 16 Jun 2025 01:21:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bK08l1mTPz2xd3;
-	Sat, 14 Jun 2025 12:10:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bL8Jn3ZDjz30GV;
+	Mon, 16 Jun 2025 09:21:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.8
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749867014;
-	cv=none; b=InyPH3qfhMF0VulvxWWsPx3gPZ+1Ae1aGIxAp+QLLw5TRnMItarzS87LNlCQKmiohgL3f00R27uNiQTWyCQUYy5uTCpT4eOxhXkLTZgxSnd/c+CBSWF2agWrblhIL+i5CE0uueSLWPmIpv+KPuTRiyfTZoZu+r9Amc14JHkxbEqYEwzKZGx2pG24CuX37TnIbS6UNJ/ENqDOKxi8RPnMActrDmwFE+1NjiAsK90J4OzkAdPs4QBF5STKPzssjJQ1SUIw2BaQpMS1J8grvHI8g58gNKJro3E1HKbv6cyfkGeD9Rj+5W28GMVJmcJgz1WB0E3DqLcVN/oMSNTbaxyQsA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=185.67.36.66
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749900305;
+	cv=none; b=aHKcl+gQhO3V4ebv2ldM653JdQPAMU6MWwcG/YFyvUECOKsr9hoz1L4QwM0Qt4N3sf+Sb4TuYemnvyzXdB47p3cvjw4mu30DaPubeW1Zcl4SI6AfoCDzB179v0EjjB/fOBFL1AdQjxENSB9JIiqYNw61MoEtZ+CVpjhrpgj0ZJYOsZFtQ5czlMW/8I7JwhNPg3zs6+JIzXU5g6rOZ4mFzIMjgOiDEu+Vyph3IYW/S030vts+nb0mBbBlXohbMooEV3mMhWBUSN8MSLuIg+8D/2sofpKOKDLv9ajIdn9v4fOah1SKDYh7C/J+C6uWL2hiuyIotNE8ZXAhvSBLgO3thA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749867014; c=relaxed/relaxed;
-	bh=+dscW/dvb3RIpT4gh7qXnsS5297WNQKrqUPPCMPmLA8=;
+	t=1749900305; c=relaxed/relaxed;
+	bh=RPZ3RlrueAMYij2NSwOGonjmf8MVh3if82AjaQDL10Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bHynHuKzi+jWZ0ky6jX+235d/NAriLeGtMWHq77zwfGzaa+RMC8u2VAk6Bm7bF/K6mRhWq1BmwwU2Oh9KpUa/YltFih9K3aCuHUW06J06EkYYnF7vaioQk9sNaB8AtCDgEIatDi52EBfdhZdGIDuq56aU34ERiiUxRe0hgAL9aTkaxrC8RnY+6v5yu+Swtw6fWyYgX7FGNvGD/VXAq03OX8tM9OG03OnoqbebA7iD4qFF8hDLxW0HD9MpVrEx5m0dPPPtfpHoRYhlWzxKfQtj4FAe7KOjiQcnIxQ7sdjjGFQJYoGjCSeU7eaaD51YQ651+Wu9hmfeLBjHXikGWuyBw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kwtEfrVT; dkim-atps=neutral; spf=pass (client-ip=192.198.163.8; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3Zvu/tt30euY+QWTbhtcflK+PD3/EdbBxZ5a+KyDmbO294alzQ7536oW0p0x+Ky3zfObscHv3NI3llq7v0il8Cb2mBr1bPviAYbUvuSyn6hL2UenFnLEYDNxpmnBqPVsUGXiLBry8/eFDa17lHOnlWBu8Bz3c/52rwIvC5TM5cRpVnCZnTgNtp19UtjVAaKpEMYYRRESY3YM29gWPNWxRwfJ7kfwM8GrcePYrtepvc7cpGwODFtuhiruCuPc9fLkklx0EZJMs39R2Is+o+ADM3t3Y+SIzceFNRcs9TZmrC7vW0cozXm8/EXeZcsSrGY5gM1YY9p+VAuNbCoj1zYaQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=posteo.net; dkim=pass (3072-bit key; secure) header.d=posteo.net header.i=@posteo.net header.a=rsa-sha256 header.s=1984.ea087b header.b=Lca7QKh6; dkim-atps=neutral; spf=pass (client-ip=185.67.36.66; helo=mout02.posteo.de; envelope-from=j.ne@posteo.net; receiver=lists.ozlabs.org) smtp.mailfrom=posteo.net
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=posteo.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kwtEfrVT;
+	dkim=pass (3072-bit key; secure) header.d=posteo.net header.i=@posteo.net header.a=rsa-sha256 header.s=1984.ea087b header.b=Lca7QKh6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.8; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Sat, 14 Jun 2025 12:10:12 AEST
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=posteo.net (client-ip=185.67.36.66; helo=mout02.posteo.de; envelope-from=j.ne@posteo.net; receiver=lists.ozlabs.org)
+X-Greylist: delayed 463 seconds by postgrey-1.37 at boromir; Sat, 14 Jun 2025 21:25:04 AEST
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bK08h0lJLz2xKh;
-	Sat, 14 Jun 2025 12:10:11 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749867012; x=1781403012;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=T7F5BTPkmIJqijZcvCaJDzeehyOgLhWobs1d8ZTzUB8=;
-  b=kwtEfrVThfE8heePGwEWKre1n+fzY/odcH3BibuEVW7kWDumkiRgXP3g
-   eh0W3yBAWcW6OSKmTtcxdzv9JOGEkTwgCkMGylJ4SnltpmSYqiDiqkMxm
-   2kiS2uGXa1GADFWT0kxo5s6hdxNkYnrDbcpAanKZrEHrUXXQDVKBdy6hr
-   UfyC38mv8hxZ1fKoiDpiKwLpNSImw6zmtgnuMEste13GaWK0inLNXurk3
-   ObisDD6g2wpmIRagnmG0BgwZO3IVZYuD1gaOURnRj2KVrvNm07CySPg/u
-   nTvzGBGT//7c0KeH4sjaWjTE0mmxHtwdS3pQkRTyzfKRIxRLd9h5TH9Jc
-   w==;
-X-CSE-ConnectionGUID: rCGbPiMlRy2EIDmlY0UkXg==
-X-CSE-MsgGUID: /f2Co/+qRZizyJ88anhvrw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11463"; a="69668264"
-X-IronPort-AV: E=Sophos;i="6.16,235,1744095600"; 
-   d="scan'208";a="69668264"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2025 19:09:02 -0700
-X-CSE-ConnectionGUID: dYhVJh5yTR6s0T8b+3tZig==
-X-CSE-MsgGUID: NmfKjhUOQ6mo1Nvl5ddlFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,235,1744095600"; 
-   d="scan'208";a="148347803"
-Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 13 Jun 2025 19:08:53 -0700
-Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uQGJz-000DAM-2X;
-	Sat, 14 Jun 2025 02:08:39 +0000
-Date: Sat, 14 Jun 2025 10:07:51 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	joel@jms.id.au, andrew@codeconstruct.com.au, vkoul@kernel.org,
-	kishon@kernel.org, linus.walleij@linaro.org, p.zabel@pengutronix.de,
-	linux-aspeed@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	elbadrym@google.com, romlem@google.com, anhphan@google.com,
-	wak@google.com, yuxiaozhang@google.com, BMC-SW@aspeedtech.com
-Subject: Re: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
-Message-ID: <202506140931.MWdyPxX1-lkp@intel.com>
-References: <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bKDSw3PL9z2xHZ
+	for <openbmc@lists.ozlabs.org>; Sat, 14 Jun 2025 21:25:04 +1000 (AEST)
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id DCE58240101
+	for <openbmc@lists.ozlabs.org>; Sat, 14 Jun 2025 13:17:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net;
+	s=1984.ea087b; t=1749899832;
+	bh=d4gNp/0M9SMRUX5Vo9jyFaZjMh959oqzUg9NU3r341s=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:From;
+	b=Lca7QKh6j957WM9z2uGhxtJ0SvljdRqwb2jlCuWb67exWTonQombxmqnjTCtYsFh5
+	 6wowc8OD7y1uR6Sw0DHc7nc4rp52t+Rbn3jb8JHD0rUjXbYpYuHB6gfPsHghCVQg1k
+	 eoJ2CP6AwhUzFU59QB2uLKmOd0CwOSpJvr0YtHsIyquoZKeJuhyOZNpWCPA4H4ipdP
+	 KEYfc6osVgjdgmG7N53P3rDmLbHF3QmOvxWttVVH1aYepo6ts9ge+t/1ITkpW3xiIE
+	 OHDYljxwR+Lhl8ZCW+tPbDXSFrQr2DSLCWhJX3lyb+i+/pdDQS+Ax41Ro/PF3TLz9K
+	 y2dTiXxYmjplrVYGQDEaSFRCtGqFFCT9vExXL/7K/c1Y2Z6bK2+IJ6VSkVp5GvKZjh
+	 Bn/uUwVyKxJfvKsYREBojzFDxPlooV9wHrXo+vNfSvVFZ3+IvmSSjjFfG6mUDw76eY
+	 lsDFOq2AlyLTUZ+oeOO8HjF1lzN2TVUesC7UWC4oFZB9vL+7jLv
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4bKDHh1hfPz6tsf;
+	Sat, 14 Jun 2025 13:17:04 +0200 (CEST)
+Date: Sat, 14 Jun 2025 11:17:03 +0000
+From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Joel Stanley <joel@jms.id.au>, Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.ne@posteo.net>,
+	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Jesper Nilsson <jesper.nilsson@axis.com>,
+	Lars Persson <lars.persson@axis.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Jianlong Huang <jianlong.huang@starfivetech.com>,
+	Hal Feng <hal.feng@starfivetech.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Manivannan Sadhasivam <mani@kernel.org>, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+	linux-renesas-soc@vger.kernel.org, linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com, linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@axis.com, linux-riscv@lists.infradead.org,
+	linux-rtc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v2 06/17] pinctrl: nuvoton: Constify static 'pinctrl_desc'
+Message-ID: <aE1aL_ff1230w2DL@probook>
+References: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
+ <20250611-pinctrl-const-desc-v2-6-b11c1d650384@linaro.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -87,171 +105,74 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250611-pinctrl-const-desc-v2-6-b11c1d650384@linaro.org>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,RCVD_IN_MSPIKE_H5,
+	RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Jacky,
+On Wed, Jun 11, 2025 at 08:13:38AM +0200, Krzysztof Kozlowski wrote:
+> The local static 'struct pinctrl_desc' is not modified, so can be made
+> const for code safety.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-kernel test robot noticed the following build warnings:
+Reviewed-by: J. Neuschäfer <j.ne@posteo.net>
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus robh/for-next linusw-pinctrl/devel linusw-pinctrl/for-next linus/master v6.16-rc1 next-20250613]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Jacky-Chou/dt-bindings-phy-Add-document-for-ASPEED-PCIe-PHY/20250613-113331
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20250613033001.3153637-8-jacky_chou%40aspeedtech.com
-patch subject: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
-config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20250614/202506140931.MWdyPxX1-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250614/202506140931.MWdyPxX1-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202506140931.MWdyPxX1-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/pci/controller/pcie-aspeed.c:481:6: warning: variable 'status' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-     481 |         if (bus->number == 0) {
-         |             ^~~~~~~~~~~~~~~~
-   drivers/pci/controller/pcie-aspeed.c:541:9: note: uninitialized use occurs here
-     541 |         writel(status, pcie->reg + H2X_CFGE_INT_STS);
-         |                ^~~~~~
-   drivers/pci/controller/pcie-aspeed.c:481:2: note: remove the 'if' if its condition is always false
-     481 |         if (bus->number == 0) {
-         |         ^~~~~~~~~~~~~~~~~~~~~~~
-     482 |                 /* Internal access to bridge */
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     483 |                 writel(TLP_BYTE_EN(0xf) << 16 | (where & ~3), pcie->reg + H2X_CFGI_TLP);
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     484 |                 writel(CFGI_TLP_FIRE, pcie->reg + H2X_CFGI_CTRL);
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     485 |                 *val = readl(pcie->reg + H2X_CFGI_RET_DATA);
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     486 |         } else {
-         |         ~~~~~~
-   drivers/pci/controller/pcie-aspeed.c:474:24: note: initialize the variable 'status' to silence this warning
-     474 |         u32 bdf_offset, status;
-         |                               ^
-         |                                = 0
-   drivers/pci/controller/pcie-aspeed.c:573:6: warning: variable 'status' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-     573 |         if (bus->number == 0) {
-         |             ^~~~~~~~~~~~~~~~
-   drivers/pci/controller/pcie-aspeed.c:622:9: note: uninitialized use occurs here
-     622 |         writel(status, pcie->reg + H2X_CFGE_INT_STS);
-         |                ^~~~~~
-   drivers/pci/controller/pcie-aspeed.c:573:2: note: remove the 'if' if its condition is always false
-     573 |         if (bus->number == 0) {
-         |         ^~~~~~~~~~~~~~~~~~~~~~~
-     574 |                 /* Internal access to bridge */
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     575 |                 writel(CFGI_WRITE | TLP_BYTE_EN(byte_en) << 16 | (where & ~3),
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     576 |                        pcie->reg + H2X_CFGI_TLP);
-         |                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
-     577 |                 writel(val, pcie->reg + H2X_CFGI_WR_DATA);
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     578 |                 writel(CFGI_TLP_FIRE, pcie->reg + H2X_CFGI_CTRL);
-         |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     579 |         } else {
-         |         ~~~~~~
-   drivers/pci/controller/pcie-aspeed.c:552:24: note: initialize the variable 'status' to silence this warning
-     552 |         u32 bdf_offset, status, type;
-         |                               ^
-         |                                = 0
-   2 warnings generated.
+Thanks!
 
 
-vim +481 drivers/pci/controller/pcie-aspeed.c
-
-   469	
-   470	static int aspeed_ast2700_rd_conf(struct pci_bus *bus, unsigned int devfn,
-   471					  int where, int size, u32 *val)
-   472	{
-   473		struct aspeed_pcie *pcie = bus->sysdata;
-   474		u32 bdf_offset, status;
-   475		u8 type;
-   476		int ret;
-   477	
-   478		if ((bus->number == 0 && devfn != 0))
-   479			return PCIBIOS_DEVICE_NOT_FOUND;
-   480	
- > 481		if (bus->number == 0) {
-   482			/* Internal access to bridge */
-   483			writel(TLP_BYTE_EN(0xf) << 16 | (where & ~3), pcie->reg + H2X_CFGI_TLP);
-   484			writel(CFGI_TLP_FIRE, pcie->reg + H2X_CFGI_CTRL);
-   485			*val = readl(pcie->reg + H2X_CFGI_RET_DATA);
-   486		} else {
-   487			if (!aspeed_ast2700_get_link(pcie))
-   488				return PCIBIOS_DEVICE_NOT_FOUND;
-   489	
-   490			bdf_offset = aspeed_pcie_get_bdf_offset(bus, devfn, where);
-   491	
-   492			type = (bus->number == 1) ? PCI_HEADER_TYPE_NORMAL : PCI_HEADER_TYPE_BRIDGE;
-   493	
-   494			writel(CRG_READ_FMTTYPE(type) | CRG_PAYLOAD_SIZE, pcie->reg + H2X_CFGE_TLP_1ST);
-   495			writel(AST2700_TX_DESC1_VALUE | (pcie->tx_tag << 8) | TLP_BYTE_EN(0xf),
-   496			       pcie->reg + H2X_CFGE_TLP_NEXT);
-   497			writel(bdf_offset, pcie->reg + H2X_CFGE_TLP_NEXT);
-   498			writel(CFGE_TX_IDLE | CFGE_RX_BUSY, pcie->reg + H2X_CFGE_INT_STS);
-   499			writel(CFGE_TLP_FIRE, pcie->reg + H2X_CFGE_CTRL);
-   500	
-   501			ret = readl_poll_timeout(pcie->reg + H2X_CFGE_INT_STS, status,
-   502						 (status & CFGE_TX_IDLE), 0, 50);
-   503			if (ret) {
-   504				dev_err(pcie->dev,
-   505					"[%X:%02X:%02X.%02X]CR tx timeout sts: 0x%08x\n",
-   506					pcie->domain, bus->number, PCI_SLOT(devfn),
-   507					PCI_FUNC(devfn), status);
-   508				ret = PCIBIOS_SET_FAILED;
-   509				*val = ~0;
-   510				goto out;
-   511			}
-   512	
-   513			ret = readl_poll_timeout(pcie->reg + H2X_CFGE_INT_STS, status,
-   514						 (status & CFGE_RX_BUSY), 0, 50000);
-   515			if (ret) {
-   516				dev_err(pcie->dev,
-   517					"[%X:%02X:%02X.%02X]CR rx timeoutsts: 0x%08x\n",
-   518					pcie->domain, bus->number, PCI_SLOT(devfn),
-   519					PCI_FUNC(devfn), status);
-   520				ret = PCIBIOS_SET_FAILED;
-   521				*val = ~0;
-   522				goto out;
-   523			}
-   524			*val = readl(pcie->reg + H2X_CFGE_RET_DATA);
-   525		}
-   526	
-   527		switch (size) {
-   528		case 1:
-   529			*val = (*val >> ((where & 3) * 8)) & 0xff;
-   530			break;
-   531		case 2:
-   532			*val = (*val >> ((where & 2) * 8)) & 0xffff;
-   533			break;
-   534		case 4:
-   535		default:
-   536			break;
-   537		}
-   538	
-   539		ret = PCIBIOS_SUCCESSFUL;
-   540	out:
-   541		writel(status, pcie->reg + H2X_CFGE_INT_STS);
-   542		pcie->tx_tag = (pcie->tx_tag + 1) % 0xF;
-   543		return ret;
-   544	}
-   545	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> ---
+>  drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 2 +-
+>  drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 2 +-
+>  drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> index dfd32feb34286b7a4d807e9033a11f507e277dce..b8872d8f5930ad931dad208afec4e08a23c3d653 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> @@ -1817,7 +1817,7 @@ static const struct pinconf_ops npcm7xx_pinconf_ops = {
+>  };
+>  
+>  /* pinctrl_desc */
+> -static struct pinctrl_desc npcm7xx_pinctrl_desc = {
+> +static const struct pinctrl_desc npcm7xx_pinctrl_desc = {
+>  	.name = "npcm7xx-pinctrl",
+>  	.pins = npcm7xx_pins,
+>  	.npins = ARRAY_SIZE(npcm7xx_pins),
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+> index be3db8ab406c416f0709d06eb864e33e3208541a..3c3b9d8d3681c64c21927615e1bb49f157f156b5 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
+> @@ -2299,7 +2299,7 @@ static const struct pinconf_ops npcm8xx_pinconf_ops = {
+>  };
+>  
+>  /* pinctrl_desc */
+> -static struct pinctrl_desc npcm8xx_pinctrl_desc = {
+> +static const struct pinctrl_desc npcm8xx_pinctrl_desc = {
+>  	.name = "npcm8xx-pinctrl",
+>  	.pins = npcm8xx_pins,
+>  	.npins = ARRAY_SIZE(npcm8xx_pins),
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+> index 4264ca749175a2ce0f3603c1d7aa271d98e6cd89..8d8314ba0e4cb55db2b1d3adf2de07e6fb93c279 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+> @@ -989,7 +989,7 @@ static const struct pinconf_ops wpcm450_pinconf_ops = {
+>  	.pin_config_set = wpcm450_config_set,
+>  };
+>  
+> -static struct pinctrl_desc wpcm450_pinctrl_desc = {
+> +static const struct pinctrl_desc wpcm450_pinctrl_desc = {
+>  	.name = "wpcm450-pinctrl",
+>  	.pins = wpcm450_pins,
+>  	.npins = ARRAY_SIZE(wpcm450_pins),
+> 
+> -- 
+> 2.45.2
+> 
 
