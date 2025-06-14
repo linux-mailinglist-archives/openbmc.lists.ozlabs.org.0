@@ -1,70 +1,83 @@
-Return-Path: <openbmc+bounces-213-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-207-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63428AD9923
-	for <lists+openbmc@lfdr.de>; Sat, 14 Jun 2025 02:42:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B2FBAD9908
+	for <lists+openbmc@lfdr.de>; Sat, 14 Jun 2025 02:21:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bJyB307vcz30Tf;
-	Sat, 14 Jun 2025 10:41:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bJxlF1FByz2xS2;
+	Sat, 14 Jun 2025 10:21:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::32d"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749833521;
-	cv=none; b=Osj2E0DmvGrsFgC5NZMcwyEPM5izV6a98pVXV1zwMTEsT9LH9h8d96hS6Mo5E5vFxq8/oqzdBPo77nQjWS+B58ICQy+4QgJjO7HNdaBK/lLUXL6/5X6EFuGz046YLqW4A2mvKBTEATO1ZW0oYQhDm4Re6RL6SsQg1ylpoFje1f0RpeB+7VDyBumomQUT+J7vRiOKpiVppIWafobzzzjVNOZjERaP6SILO7sAfnTRJ/bnjBKEhMNdBj5AiKuX21RbQ1aj/7MZWhy9aDxxGMNYXKzeu3XV+Sj/ds6Bh/X91566WB9D5N5RFKtlCzff2AlVljLhO4gNhAMahlItihwUxA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::52c"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749860489;
+	cv=none; b=b+DP7lwUomRdmb5/zYjB1FaIF65MvPdrhwgxbjrh8NQ4jBc6oopjvBqL2yE1OKCXJjJ9ArBruA2q3OuhYO1sajtbBmLLpBxtQKuvTXX31jdwgI3GRM7PO8CsKgCj7TOl14vMl150RYZVu1SdbIO2i0+Vy+SaMBUzDPTsA1YLLr4eGxErX3qgVMzihUjWu8cgPGBsNB+3+qYXbDva+CUCSZppyQoQ9cOQGz6RkYWtdQc2RPxvuVjch7iGp0jVRwDPEPGXSTAgg8cT4T/Oiaty5patHEGS6S2j4GXvhT1rlFFvDwiGcjJiTnTEHUmt3uLVLcNP9CMryNbCTtB2C73DDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749833521; c=relaxed/relaxed;
-	bh=UOl7Gl38FugZBnNlkUXiA3CUTrFhIqj6NSPsNIe/ATQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BUXcvGH+es4NwCz1MiBIEUnNVZBfXOcsNKiJgl7jgWEfVbBq+oS/tobFUtqJn1vDYRKtgmuTK0Oh0NUIREvFfe6P35z5GxMrN++bG7Vpjr7X7HQ/aE+glZ8eEyHUP7TtiMgipOaij3MD9OlPJzQENWzOkpv8vj4zGv29dx/U0ZWleR0HAhnoVxAzid463wyADJ66oPfpBH74ysTOfMVJ9BNBiXGUcmKMkVe18EqrBmcg5+uF4ME+1JCg1NsUmI1LX8Tq1y/c7s1/4swolLADIKFjqInjM1uuoug8X4QN95yC8bDhQ3G3mM7h5hfhkpl/lgtLceHMzjVnMRvXdUCLyQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com; dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=Qi3vQDs6; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::32d; helo=mail-wm1-x32d.google.com; envelope-from=kasunath@google.com; receiver=lists.ozlabs.org) smtp.mailfrom=google.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=google.com
+	t=1749860489; c=relaxed/relaxed;
+	bh=4KpE7mqX01OQ4tTEGKDRySNN18UfM8sK7vL7/fO0KAg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T/AfQWJ/EBZO1oxZUmvjHAoEKKYT+FUBzowakn6DeyJuvkKVMWiY3EWg2MA038sm7kN39nTvMXwWAEOF40pA1bTCGGwn+BcApS5VvQZ48u0N+FmxT9vwf3CWvm+Wurd2Fy/1/7QVNqc2qIdCX0rJoW/EcHrIoWWt1Zwp+vdNZAgDvJT2CK+yR9I6O5X4FJ4qESLspV+k0fFgDU9hlMiNdyVEyfg3bNo+4DICEAfHFU8cBpxnAMz/cRU96jKtSPw70pkcQvphkhQUC+E2lWBY67mnadoVbEHh2rkDNWLth8CZGtl9UYj85Lyv0J3W3DKC7ZDtUg80eQmVxRX8re6g/w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=G6EEaul2; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::52c; helo=mail-pg1-x52c.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20230601 header.b=Qi3vQDs6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=G6EEaul2;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32d; helo=mail-wm1-x32d.google.com; envelope-from=kasunath@google.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52c; helo=mail-pg1-x52c.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJlmZ6Dhzz2xKN
-	for <openbmc@lists.ozlabs.org>; Sat, 14 Jun 2025 02:51:57 +1000 (AEST)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-453200cd31cso975e9.1
-        for <openbmc@lists.ozlabs.org>; Fri, 13 Jun 2025 09:51:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bJxl75dTGz2xHp
+	for <openbmc@lists.ozlabs.org>; Sat, 14 Jun 2025 10:21:22 +1000 (AEST)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-b2c2c762a89so2235167a12.0
+        for <openbmc@lists.ozlabs.org>; Fri, 13 Jun 2025 17:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1749833513; x=1750438313; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UOl7Gl38FugZBnNlkUXiA3CUTrFhIqj6NSPsNIe/ATQ=;
-        b=Qi3vQDs6d5CICq6//UQPAl3saqzk+0LVBaHoq3AiBKDObz6lZmQPpJaMlaKYMsBeK3
-         N1Z5+ZtDc97TFpNaS2VRJrGqKzELA5+WgNlUm1sDrqNHAUQ23VzZVojarlH7auoXEtCv
-         Jx5ag4ksLyq4A4+DcAnt8FGeF6wQxqYOV9hHKKrMW53KPbexfwK2ozWSy4l0KWJ25u/l
-         t0y2IO2ZKE/4t229+Q8tikGPe9IPoq1UsSoGPgLyU9R9XUAvgsUY/eV6Qn7Jx40VT1K9
-         WZsp7dTgY+XAyg+ri9AeSgyih1HQ+8RAM05K4ZCvqwtqDwdU+N7+3mR4nD5ay46YuT75
-         7IHw==
+        d=gmail.com; s=20230601; t=1749860480; x=1750465280; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4KpE7mqX01OQ4tTEGKDRySNN18UfM8sK7vL7/fO0KAg=;
+        b=G6EEaul2+X73KOHf8JWkibIdcEFXa6Ina2tqeZIehGh1J18f90gOaGTaF22rNeFlJ4
+         JApaFUplzfh/+OZp0voAA/Fpa9IRxfqrJKPnsEznLQx3fi6z61UdRsrzytRWCqP4PYp1
+         BINbjmWR+0A0rnITq+/p1nn4S0WIfVY6Biu7kPi0bQ+T/eypQV1bQ13CjMe66F0xP3Ta
+         5gy3DMbBojXt4xVwPsoAHj2ja0Q+X+H/sHLPC3dqEzEf/hsPxteyxzopOclaHR/N0JzQ
+         4lDzGMW4DBhb+ntjT5lrdmRe+OP6hiegJjy4C5Xjjg/CUvKOXC/X2ICtk9ZDSJM3n9ei
+         nJ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749833513; x=1750438313;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1749860480; x=1750465280;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UOl7Gl38FugZBnNlkUXiA3CUTrFhIqj6NSPsNIe/ATQ=;
-        b=FncFasI8npiRJOgnHXwBJPLmbOvfaT73GyLdNRcvsN2r1q2yPBXrshS1SGu2fI7GXn
-         4Ba9euuGeC1VZ4vRmZd3YE3NhfdtWKVjbT9BOzMBhho4rK1BTBD1jHssFuJc5RxrdYwp
-         maRnwGjU2IVlnTUuIQ/vCuwK2arY17mLg8HpMrk7WwfCsyKZJm6armbXmanUCoHNhzsD
-         iPyVu2cXY9/+3dRW5fHTTvWzaf/CoLdl8r242oeFMg2g1xS/n1f1ePSYVo3Cj+oDfJSH
-         9mVHoQ1cWweI5YHZbTHtLu7FEGPpqd9VHR3i59R+aAepRJCqffmThWW6S9PnDYPk+VBU
-         6U7w==
-X-Forwarded-Encrypted: i=1; AJvYcCXWd19WN5yZomVGeQ5r3emA6OEkrlg0SSlP3EZO6w/HQ6fv3h+yFWJ5BQkMQnsqswTgq9L9O9gw@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxNqtiRskLoA38U/ZLjcuIIKDZWA7RInBqW0bSNjF+6rv6sL3BT
-	5TIIkM2Rlhw9uv5J66CsYR2gIahgQ3+dtP64bSQ60zmphjXWZW05Z2klfWJU8nY88HXxdcNwHK+
-	1Hrk7CRkTgR2e4mV7mLm8aStx8uYk3kPUqgI4CO/6
-X-Gm-Gg: ASbGncuJHBDhQ/w8mWtJfbRs595YKqWYY95jr4O3xUKC0TdP7NWQq2m462fuJ4KP2aS
-	VZcseVQZ9dYXOvrE/fWx3eCMfL8laRV1mWdMdpkAovLNJO6iAJZ5Bf5f4XaZXWI+YtB16P4zvJz
-	ygP1Kntd52glY8n1Kg8FsXIrsY4QWGVm4/6Q5n9yCQSLb8dVEKRzVTmP/ryabz/tSSSTf++k0e0
-	7wq
-X-Google-Smtp-Source: AGHT+IGoK998D7fmDQo+oAtUUPx9Oulbz+TXFM33qAKzG3/zkQ+ILqBbOsos/3QCwa4Uo/bqEg4JqN+ko1zD70rSi+Y=
-X-Received: by 2002:a05:600c:358b:b0:439:8f59:2c56 with SMTP id
- 5b1f17b1804b1-45334f120abmr2393365e9.2.1749833510468; Fri, 13 Jun 2025
- 09:51:50 -0700 (PDT)
+        bh=4KpE7mqX01OQ4tTEGKDRySNN18UfM8sK7vL7/fO0KAg=;
+        b=WGEmCFK8LZaeKNzk3p9qPJbDhUGG7ok8UDc1CbE5GnwikJE3UcBGPROaoyGyRfk14J
+         xjYzzMkhX2xCRYOqXXdVzUANDTiC9ATijPQZCv2TKb9VMEfyYdk4C8AwoQYQqFBVEnut
+         yA6lp+XHACkfR7Ia3fs+rhJCAUR++52zUj2hqYbprDFuSd96tEtCEym/3O0q0ZfwEv3Z
+         ScTZ4tlhvzMmzMV66FvHbnBUzDF4qJJOw4NvWgDWaTwYoO8+bKIeb93fskP4H/X8NBkf
+         iJ9PcUTrULOAtVIKAOnLWPj8aA9E0jUVuPLoOdhMGj7WyfGq4hOay6s2ntiVWikEpdQZ
+         yxGw==
+X-Forwarded-Encrypted: i=1; AJvYcCVOzZs/+70gR4U6sS/ae3eA3IqX1hUUqNEXFJQhGNwUy04sCCePEFTT5tzjDj/l6uGE7ag8ov6n@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzBR7A8QV2fT24pN7SjfiSA9RSqrkAIzl5a8mkbnjB4OwBf10Aa
+	xOV57hqpub+QzKbe9Ye6F2IN8nQlRJGyshiH5B8pT3mRg/Hl5PGF5R1G+r469qWV
+X-Gm-Gg: ASbGnct+1ulBFstU1t2A/nLmYcc6uwkU2NzeMU+G0gEppGfT6fdQhtdQij8DJOschSB
+	zCgfrT3jYZ7hQaLpRdhlgqtrf8GB4O9g/rq6iaK0/bnQ2+sFUh25FZdKpX6RyNtCrKN/RKJSkYL
+	NEZCKc8KXTjWfb9dTWIhabB05nDzd8qRPWaq6F11a5RPXewXIS3BPDTA478fqmq784Ozi9+TnoU
+	YXA418s2bB/ife6THQqcXfM4wxhrH0dDJwzQP1whM3z9Urp85sWyKP7seMFLmQ8Prb+pX2KhpXM
+	arJIUjBtsFgekU+l8LK0bLehfOeD5XgCiZrFjy06ztwlmu0Vd1HkSByCzS4gxwQvEihDb5ctMCz
+	ymzooxME9uwCnb4dcVOnchj8CfUwnBDjxbJPewW+GdHEVd75nEOW4u4jwFQGwCdPRy9+dHwRNKw
+	==
+X-Google-Smtp-Source: AGHT+IGp4/z/BwS4nM8dhRJXQnccY9Uhx+qdXJXD+is5olC2SGI6UEyGfu5vrUYi4iW9IHbYsvLhzA==
+X-Received: by 2002:a05:6a20:7343:b0:21c:faa4:9ab8 with SMTP id adf61e73a8af0-21fbd4c7e63mr1693850637.10.1749860480156;
+        Fri, 13 Jun 2025 17:21:20 -0700 (PDT)
+Received: from cosmo-ubuntu-2404.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74890005f55sm2345646b3a.56.2025.06.13.17.21.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jun 2025 17:21:19 -0700 (PDT)
+From: Cosmo Chou <chou.cosmo@gmail.com>
+To: andrew@codeconstruct.com.au,
+	openbmc@lists.ozlabs.org
+Cc: chou.cosmo@gmail.com,
+	cosmo.chou@quantatw.com
+Subject: [PATCH linux dev-6.6] usb: typec: tcpm: Use configured PD revision for negotiation
+Date: Sat, 14 Jun 2025 08:21:09 +0800
+Message-ID: <20250614002109.444901-1-chou.cosmo@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -76,76 +89,92 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAN+wxKJMxxnm2egxVFpxhe2Z96ZTdZ2ADCbVOc-_iq-5u77V5Q@mail.gmail.com>
-In-Reply-To: <CAN+wxKJMxxnm2egxVFpxhe2Z96ZTdZ2ADCbVOc-_iq-5u77V5Q@mail.gmail.com>
-From: Kasun Athukorala <kasunath@google.com>
-Date: Fri, 13 Jun 2025 09:51:27 -0700
-X-Gm-Features: AX0GCFs42Zdujij0pYvVDLTwR9NccVn2bQye_gFzXrqTwaqwl8HgLodJzZkUVj4
-Message-ID: <CAHK_2H134KsAsZZYw+QiyH=eCXV=_fiQTi-MOrGKW4+aRsVy-g@mail.gmail.com>
-Subject: Re: Query regarding Libbej openbmc Library
-To: Sneha Bansal <bsneha309@gmail.com>
-Cc: Brandon Kim <brandonkim@google.com>, openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000d34b40063776dcc6"
-X-Spam-Status: No, score=-16.2 required=5.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,ENV_AND_HDR_SPF_MATCH,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
---000000000000d34b40063776dcc6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Initialize negotiated_rev and negotiated_rev_prime based on the port's
+configured PD revision (rev_major) rather than always defaulting to
+PD_MAX_REV. This ensures ports start PD communication using their
+appropriate revision level.
 
-Hi Sneha,
+This allows proper communication with devices that require specific
+PD revision levels, especially for the hardware designed for PD 1.0
+or 2.0 specifications.
 
-Sure, happy to help. Let me know the issues you are facing and the
-corresponding code you are using.
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20250513130834.1612602-1-chou.cosmo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Cosmo: Resolved merge conflicts for backport:
+  - Removed references to negotiated_rev_prime (not present in 6.6)]
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+---
+ drivers/usb/typec/tcpm/tcpm.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-Thank you,
-Kasun.
+diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
+index 08a0844f3055..4261a6caf5ce 100644
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -296,6 +296,10 @@ struct pd_pps_data {
+ 	bool active;
+ };
+ 
++#define PD_CAP_REV10	0x1
++#define PD_CAP_REV20	0x2
++#define PD_CAP_REV30	0x3
++
+ struct pd_revision_info {
+ 	u8 rev_major;
+ 	u8 rev_minor;
+@@ -3925,6 +3929,24 @@ static void tcpm_set_initial_svdm_version(struct tcpm_port *port)
+ 	}
+ }
+ 
++static void tcpm_set_initial_negotiated_rev(struct tcpm_port *port)
++{
++	switch (port->pd_rev.rev_major) {
++	case PD_CAP_REV10:
++		port->negotiated_rev = PD_REV10;
++		break;
++	case PD_CAP_REV20:
++		port->negotiated_rev = PD_REV20;
++		break;
++	case PD_CAP_REV30:
++		port->negotiated_rev = PD_REV30;
++		break;
++	default:
++		port->negotiated_rev = PD_MAX_REV;
++		break;
++	}
++}
++
+ static void run_state_machine(struct tcpm_port *port)
+ {
+ 	int ret;
+@@ -4042,7 +4064,7 @@ static void run_state_machine(struct tcpm_port *port)
+ 		typec_set_pwr_opmode(port->typec_port, opmode);
+ 		port->pwr_opmode = TYPEC_PWR_MODE_USB;
+ 		port->caps_count = 0;
+-		port->negotiated_rev = PD_MAX_REV;
++		tcpm_set_initial_negotiated_rev(port);
+ 		port->message_id = 0;
+ 		port->rx_msgid = -1;
+ 		port->explicit_contract = false;
+@@ -4283,7 +4305,7 @@ static void run_state_machine(struct tcpm_port *port)
+ 					      port->cc2 : port->cc1);
+ 		typec_set_pwr_opmode(port->typec_port, opmode);
+ 		port->pwr_opmode = TYPEC_PWR_MODE_USB;
+-		port->negotiated_rev = PD_MAX_REV;
++		tcpm_set_initial_negotiated_rev(port);
+ 		port->message_id = 0;
+ 		port->rx_msgid = -1;
+ 		port->explicit_contract = false;
+-- 
+2.43.0
 
-
-On Fri, Jun 13, 2025 at 8:22=E2=80=AFAM Sneha Bansal <bsneha309@gmail.com> =
-wrote:
-
-> Hi kasunath,
-> This is sneha here, i have some queries regarding libbej library and i
-> will be highly obliged to you if you can help me out with it. I was passi=
-ng
-> the transfer handles got from GetSchemaDictionary to RDEMulitipartRecieve
-> and then using the bej data as schema dictionary which i further passed i=
-t
-> on to the libbej library for decoding and encoding. But when i passed on
-> the RDEOperationInit data as encodedPLDMBlock, i was facing some issues.
-> Can we connect so that i can resolve few of my queries?
->
-> Thanks and regards
-> Sneha
->
-
---000000000000d34b40063776dcc6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi=C2=A0Sneha,<div><br></div><div>Sure, happy to help. Let=
- me know the=C2=A0issues you are facing and the corresponding=C2=A0code you=
- are using.</div><div><br></div><div>Thank you,</div><div>Kasun.</div><div>=
-<br></div></div><br><div class=3D"gmail_quote gmail_quote_container"><div d=
-ir=3D"ltr" class=3D"gmail_attr">On Fri, Jun 13, 2025 at 8:22=E2=80=AFAM Sne=
-ha Bansal &lt;<a href=3D"mailto:bsneha309@gmail.com">bsneha309@gmail.com</a=
->&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
-v dir=3D"auto">Hi kasunath,<div dir=3D"auto">This is sneha here, i have som=
-e queries regarding libbej library and i will be highly obliged to you if y=
-ou can help me out with it. I was passing the transfer handles got from Get=
-SchemaDictionary to RDEMulitipartRecieve and then using the bej data as sch=
-ema dictionary which i further passed it on to the libbej library for decod=
-ing and encoding. But when i passed on the RDEOperationInit data as encoded=
-PLDMBlock, i was facing some issues.</div><div dir=3D"auto">Can we connect =
-so that i can resolve few of my queries?</div><div dir=3D"auto"><br></div><=
-div dir=3D"auto">Thanks and regards=C2=A0</div><div dir=3D"auto">Sneha</div=
-></div>
-</blockquote></div>
-
---000000000000d34b40063776dcc6--
 
