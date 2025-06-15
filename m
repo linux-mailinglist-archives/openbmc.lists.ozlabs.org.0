@@ -1,28 +1,28 @@
-Return-Path: <openbmc+bounces-220-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-227-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5E8DADA492
-	for <lists+openbmc@lfdr.de>; Mon, 16 Jun 2025 01:21:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 87AAEADA4A0
+	for <lists+openbmc@lfdr.de>; Mon, 16 Jun 2025 01:23:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bL8Jl6d95z30Lt;
-	Mon, 16 Jun 2025 09:21:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bL8Jt0qg8z30T3;
+	Mon, 16 Jun 2025 09:21:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749960222;
-	cv=none; b=kDlSy+qq/M7yYViU3e8MuceV8Yx0QvwoRinxpFN6L24PI+kUd+26Af88LLi6Y/RNwWcGTP+bom46poHpOVZEX/2LJJNZpSdB5fPUBL3bAeD64zH9k2W0JRjne5F3oMz4y13imh9SxuTtEBJVn3bAXR8cguuPsYCKt+auKjZ1WdDQGXHelOb3ao9HIL84PFbNTogTB+Md29GF5yEsuhb+TDosto7QI098M7rAUhi1+Fh4aNKwLu32ThFoWHCYG6T7KhlHwmy2DXls7LpFCNkjlvMbNZbQ4sXVeHK80kcgDcEphGgvM5nz7jXh/eIFqHc70EXkp51r6kZ7bzHDNjkUPg==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1749960223;
+	cv=none; b=JDhn/2AmaPotqeYXQcUy8WZ7dCTZFItuYneJ1x+apv4AUWj5mj5xMVbF6zq6YL4UqQy+B56b+u28sdPS5pXkuGTrI/VR45ReeANK2zzOmu5aN9/Gd2Q0v9oSlNP1x2Be+0gerzXjP5wKF+JFG3hhpS6lg81b4a4lOqOb+hlWTeSw4HvE0veMvTA2/O3b+d6j+qG017eslXiZT00B4An8pKl6WNmbsa0jbSwtRog/LdFxEUVTv/OMXN8q09Ym+OPijf4q93veXvhGEbwuqCQpZagl+QDLJnuUEOCgXaBeUyM/iK+6d4diNiHnIf1yS4Pa6HoTeoDBOY+HuSv3k+VmmA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1749960222; c=relaxed/relaxed;
-	bh=WadW5Q5MaJQ9UA0d2WImQMezQ1r1N9kma4ilsq3MF3M=;
+	t=1749960223; c=relaxed/relaxed;
+	bh=re+5s6sOgkPP794UUBeAX30NWnufkF6mDghKiC7da5w=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EahvhUNdDzyixkJzdsmiQXaXkmLWITZJh0XSB1J7xO01V7VdLAD9KGSBOirC60e9Q6BuvaFVJEFLuik5qQjkiUx1YciiRg+ejcFqhuOxjd5QBj0LL8kQel9vCo+3gokLf4u1Nwyd1BpmSHbaHeLpGWkbX/SDUx9h152GFXzEOGg16njTypDIoeD6cHTwTmCc9XSyNtF46PoabjGaOvdVIzWCnTVFHQFQJjpNyjntxo8bcpFmbGuNG9Q0L1lFZuebKIIJc/LVKF0gLieymua8Rz8VYiu3b0eHzIU4kc/K3POwbagV+VQUrI0h4jlmMVB6BzakQDOihl4imwU0MI28Iw==
+	 MIME-Version:Content-Type; b=lHsOF+ruetqq/ZNVH16f7mg685oMOj3Ys6e9Y5tJx0BeTVUCh60/Bh2VmjILEsYaEbNUSxBQvfMkxMOKlpyerd132h3uwSWrQl63MXqP6vCysM50hs6zc/RD7wULt68SwHGwq2vkSBbN3f3v/v/OmKpLnSRx45FW3kro3yCnZrZtxWNfACYHZUeS5G5kmnRQy6lnPqf6nNiuwpl8mFdG22uKS8Cjlbhhjv568niZv/J9388IaX3yJxpGs+EJ+DSdsFzZwEMMSsYsSDVfWmP5qdN7HM6WkrNDQTxJZu83k817MsyiOaBCYS3g9B+zf2xH5PoXrOS9y/y35vZ0H/mgow==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=cool_lee@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=cool_lee@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bKfdB1hPZz30Sx;
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bKfdB6Nq5z30TY;
 	Sun, 15 Jun 2025 14:03:42 +1000 (AEST)
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
@@ -37,9 +37,9 @@ To: <andrew@codeconstruct.com.au>, <adrian.hunter@intel.com>,
 	<linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
 	<linux-mmc@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
 	<linux-kernel@vger.kernel.org>
-Subject: [PATCH 1/8] mmc: sdhci-of-aspeed: Fix sdhci software reset can't be cleared issue.
-Date: Sun, 15 Jun 2025 11:57:56 +0800
-Message-ID: <20250615035803.3752235-2-cool_lee@aspeedtech.com>
+Subject: [PATCH 2/8] mmc: sdhci-of-aspeed: Add runtime tuning
+Date: Sun, 15 Jun 2025 11:57:57 +0800
+Message-ID: <20250615035803.3752235-3-cool_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250615035803.3752235-1-cool_lee@aspeedtech.com>
 References: <20250615035803.3752235-1-cool_lee@aspeedtech.com>
@@ -60,106 +60,108 @@ X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Replace sdhci software reset by scu reset from top.
+Add support for runtime tuning in the Aspeed SDHCI driver.
+Using the timing phase register to adjust the clock phase with mmc
+tuning command to find the left and right boundary.
 
 Signed-off-by: Cool Lee <cool_lee@aspeedtech.com>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c | 55 +++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-of-aspeed.c | 68 ++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
 diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index d6de010551b9..01bc574272eb 100644
+index 01bc574272eb..5e5ae1894456 100644
 --- a/drivers/mmc/host/sdhci-of-aspeed.c
 +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -13,6 +13,7 @@
- #include <linux/of.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-+#include <linux/reset.h>
- #include <linux/spinlock.h>
- 
- #include "sdhci-pltfm.h"
-@@ -39,6 +40,7 @@
- struct aspeed_sdc {
- 	struct clk *clk;
- 	struct resource *res;
-+	struct reset_control *rst;
- 
- 	spinlock_t lock;
- 	void __iomem *regs;
-@@ -328,13 +330,58 @@ static u32 aspeed_sdhci_readl(struct sdhci_host *host, int reg)
- 	return val;
+@@ -24,6 +24,7 @@
+ #define ASPEED_SDC_PHASE		0xf4
+ #define   ASPEED_SDC_S1_PHASE_IN	GENMASK(25, 21)
+ #define   ASPEED_SDC_S0_PHASE_IN	GENMASK(20, 16)
++#define   ASPEED_SDC_S0_PHASE_IN_SHIFT  16
+ #define   ASPEED_SDC_S1_PHASE_OUT	GENMASK(15, 11)
+ #define   ASPEED_SDC_S1_PHASE_IN_EN	BIT(10)
+ #define   ASPEED_SDC_S1_PHASE_OUT_EN	GENMASK(9, 8)
+@@ -375,6 +376,72 @@ static void aspeed_sdhci_reset(struct sdhci_host *host, u8 mask)
+ 	sdhci_reset(host, mask);
  }
  
-+static void aspeed_sdhci_reset(struct sdhci_host *host, u8 mask)
++static int aspeed_sdhci_execute_tuning(struct sdhci_host *host, u32 opcode)
 +{
 +	struct sdhci_pltfm_host *pltfm_priv;
-+	struct aspeed_sdhci *aspeed_sdhci;
-+	struct aspeed_sdc *aspeed_sdc;
-+	u32 save_array[7];
-+	u32 reg_array[] = {SDHCI_DMA_ADDRESS,
-+			SDHCI_BLOCK_SIZE,
-+			SDHCI_ARGUMENT,
-+			SDHCI_HOST_CONTROL,
-+			SDHCI_CLOCK_CONTROL,
-+			SDHCI_INT_ENABLE,
-+			SDHCI_SIGNAL_ENABLE};
-+	int i;
-+	u16 tran_mode;
-+	u32 mmc8_mode;
++	struct aspeed_sdhci *sdhci;
++	struct aspeed_sdc *sdc;
++	struct device *dev;
 +
++	u32 val, left, right, edge;
++	u32 window, oldwindow = 0, center;
++	u32 in_phase, out_phase, enable_mask, inverted = 0;
++
++	dev = mmc_dev(host->mmc);
 +	pltfm_priv = sdhci_priv(host);
-+	aspeed_sdhci = sdhci_pltfm_priv(pltfm_priv);
-+	aspeed_sdc = aspeed_sdhci->parent;
++	sdhci = sdhci_pltfm_priv(pltfm_priv);
++	sdc = sdhci->parent;
 +
-+	if (!IS_ERR(aspeed_sdc->rst)) {
-+		for (i = 0; i < ARRAY_SIZE(reg_array); i++)
-+			save_array[i] = sdhci_readl(host, reg_array[i]);
++	out_phase = readl(sdc->regs + ASPEED_SDC_PHASE) & ASPEED_SDC_S0_PHASE_OUT;
 +
-+		tran_mode = sdhci_readw(host, SDHCI_TRANSFER_MODE);
-+		mmc8_mode = readl(aspeed_sdc->regs);
++	enable_mask = ASPEED_SDC_S0_PHASE_OUT_EN | ASPEED_SDC_S0_PHASE_IN_EN;
 +
-+		reset_control_assert(aspeed_sdc->rst);
-+		mdelay(1);
-+		reset_control_deassert(aspeed_sdc->rst);
-+		mdelay(1);
++	/*
++	 * There are two window upon clock rising and falling edge.
++	 * Iterate each tap delay to find the valid window and choose the
++	 * bigger one, set the tap delay at the middle of window.
++	 */
++	for (edge = 0; edge < 2; edge++) {
++		if (edge == 1)
++			inverted = ASPEED_SDHCI_TAP_PARAM_INVERT_CLK;
 +
-+		for (i = 0; i < ARRAY_SIZE(reg_array); i++)
-+			sdhci_writel(host, save_array[i], reg_array[i]);
++		val = (out_phase | enable_mask | (inverted << ASPEED_SDC_S0_PHASE_IN_SHIFT));
 +
-+		sdhci_writew(host, tran_mode, SDHCI_TRANSFER_MODE);
-+		writel(mmc8_mode, aspeed_sdc->regs);
++		/* find the left boundary */
++		for (left = 0; left < ASPEED_SDHCI_NR_TAPS + 1; left++) {
++			in_phase = val | (left << ASPEED_SDC_S0_PHASE_IN_SHIFT);
++			writel(in_phase, sdc->regs + ASPEED_SDC_PHASE);
 +
-+		aspeed_sdhci_set_clock(host, host->clock);
++			if (!mmc_send_tuning(host->mmc, opcode, NULL))
++				break;
++		}
++
++		/* find the right boundary */
++		for (right = left + 1; right < ASPEED_SDHCI_NR_TAPS + 1; right++) {
++			in_phase = val | (right << ASPEED_SDC_S0_PHASE_IN_SHIFT);
++			writel(in_phase, sdc->regs + ASPEED_SDC_PHASE);
++
++			if (mmc_send_tuning(host->mmc, opcode, NULL))
++				break;
++		}
++
++		window = right - left;
++		dev_info(dev, "tuning window = %d\n", window);
++
++		if (window > oldwindow) {
++			oldwindow = window;
++			center = (((right - 1) + left) / 2) | inverted;
++		}
 +	}
 +
-+	sdhci_reset(host, mask);
++	val = (out_phase | enable_mask | (center << ASPEED_SDC_S0_PHASE_IN_SHIFT));
++	writel(val, sdc->regs + ASPEED_SDC_PHASE);
++
++	dev_info(dev, "tuning result=%x\n", val);
++
++	return mmc_send_tuning(host->mmc, opcode, NULL);
 +}
 +
  static const struct sdhci_ops aspeed_sdhci_ops = {
  	.read_l = aspeed_sdhci_readl,
  	.set_clock = aspeed_sdhci_set_clock,
- 	.get_max_clock = aspeed_sdhci_get_max_clock,
- 	.set_bus_width = aspeed_sdhci_set_bus_width,
+@@ -383,6 +450,7 @@ static const struct sdhci_ops aspeed_sdhci_ops = {
  	.get_timeout_clock = sdhci_pltfm_clk_get_max_clock,
--	.reset = sdhci_reset,
-+	.reset = aspeed_sdhci_reset,
+ 	.reset = aspeed_sdhci_reset,
  	.set_uhs_signaling = sdhci_set_uhs_signaling,
++	.platform_execute_tuning = aspeed_sdhci_execute_tuning,
  };
  
-@@ -535,6 +582,12 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&sdc->lock);
- 
-+	sdc->rst = devm_reset_control_get(&pdev->dev, NULL);
-+	if (!IS_ERR(sdc->rst)) {
-+		reset_control_assert(sdc->rst);
-+		reset_control_deassert(sdc->rst);
-+	}
-+
- 	sdc->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(sdc->clk))
- 		return PTR_ERR(sdc->clk);
+ static const struct sdhci_pltfm_data aspeed_sdhci_pdata = {
 -- 
 2.34.1
 
