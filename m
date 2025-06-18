@@ -1,54 +1,64 @@
-Return-Path: <openbmc+bounces-251-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-252-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8BFCADF30A
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 18:53:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 049F8ADF30B
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 18:53:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bMqYg16t1z2yKq;
-	Thu, 19 Jun 2025 02:53:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bMqZ94RQFz2ym2;
+	Thu, 19 Jun 2025 02:53:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=210.118.77.11
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750265591;
-	cv=none; b=CfXwqqe517CFmPfKvG7Em0XrMlNPiQDCmsM0dcf6qW9Q0ZB1XXflQ/9f2zK/92jH/VZDnOmxJC6ewPvVQnfVrL5nN7h9gZejDDP7T1cyRn7LSneQ/Y0ADMaF7N2OVOCDKDWjVn5XvAXdvUydb2HqgCzV9ikR6MT8iiDl2k3qRU1CkaNraS2rLfhBH8f+dGMHhdm7mAgFLRYkT5UJIyOfRfrDxZUoP9j8yftvQse9nKrRksCk4OPcOesku0mGh1wwwJkjvYvSJVrKwOntcv+VlVLpIGo6OqYrFxNv1J3FJQM9pSYRg+T/4SZ9mT1VsGqvyOhY9CoOiPLG20MA/uzOLg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750265616;
+	cv=none; b=gRd0ue3wwtkzvaflfadq8xmrxyBsIRfG1M/05Ifl4caV47fGZKkp6Lqj6mg/Pq1jFLl0VWPSdwyQuw72C2axEMD00bVRRYYOyhgjj7b06wsaffrBN/XqS/qGvz0H76bK7Rjed3MSNqy2tNrkSmyS7WSqpjfs8e91TRMJA9dLuHOCiXzATd0VX5Q7cQMgKzelFbhRKercKGZW9W0mxu3XII3OPMWZHFD27Yo2c7cvRzBvFJQoLDaCgQDTJFE2A5XcTgu7XYsuX8sLMn10Fw+jg+iMrUy76qad7YwXbxS14lpibccY48lhXzJcWd5VRuOS9VTGmZjPOy+bI8DhYFeY8g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750265591; c=relaxed/relaxed;
-	bh=UDfJotcIpWIKY+QmO8fvKHc439D+osARVOJJ3r+0Ufg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=l5eJr0ERHpKXHwixg7lOfxk/K72UAU4jfmUWfY/TR7ruwcpkILB4sfntGPBpYXiH3mVN3HHTbsBgCJuTuVEi1Sp7yPv+hicLFKbNkvkfyXAvPuUPCIENlKdmuDl2Mj0tERzlX9S2/7omvHc+0GuKK2j3YwueV2Xv8AR4bKlPEWtcWpaJpRRnz0T6aBq+e4Y1WywmTj8QBZeRB4FnDvV+7s2tbT9A+r+VD8WVj16NJvd7GucSPrv466jJ8cEC80w85InXrrNlQOPIXWVBdjKG2xUQP7zbVoHZnBZGrEJYHa7WawOPG7VDn6myXnvz65PamrRQCQMlso2PMkbokIOtHg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=samsung.com; dkim=pass (1024-bit key; unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=kcLgfZXM; dkim-atps=neutral; spf=pass (client-ip=210.118.77.11; helo=mailout1.w1.samsung.com; envelope-from=m.szyprowski@samsung.com; receiver=lists.ozlabs.org) smtp.mailfrom=samsung.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+	t=1750265616; c=relaxed/relaxed;
+	bh=SP4SQ1xNIDbuYUWBIIW0U84YRwPWknCvP4bl8nJ+Io0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e5HXO9d15SeBQJp5L56q5l1n9ofXULTpTZ6pyWhfUEZx/cY/LgBhZsZgOQi9VVL5E/jQ07xZN6oo9WVjVR1u0tLe83dMAINulDhXaIxbVBzJRW6fHhIUKyjzlcaxUEHuVLpRO7xMLYOwjUbvLP1jCa0F6QA7mRsYHvACr5O1PWhxvYtdBTLQifubzoPmjR5M09WTq574rYP8loCXs0fYz8g2BKSiLAND/+XChiiPrz6+9/g/KvWOJVA3P7GwW6l1Xbiyhsfp4X+kKRN2BGgNpK2xo2z8joONJJxSsdaz1ol7iCkn1vVgtOkt4N/P/RWeeLMsE/oGjMC9mbspUIOEag==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Kt0pW+ZI; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=kcLgfZXM;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Kt0pW+ZI;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=samsung.com (client-ip=210.118.77.11; helo=mailout1.w1.samsung.com; envelope-from=m.szyprowski@samsung.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 572 seconds by postgrey-1.37 at boromir; Thu, 19 Jun 2025 02:53:09 AEST
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMqYd0G3Dz2xBb
-	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 02:53:06 +1000 (AEST)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20250618164321euoutp0177f052970be6b887ce3dccd5cab659bb~KML7KtYNB2853828538euoutp01U
-	for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 16:43:21 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20250618164321euoutp0177f052970be6b887ce3dccd5cab659bb~KML7KtYNB2853828538euoutp01U
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1750265001;
-	bh=UDfJotcIpWIKY+QmO8fvKHc439D+osARVOJJ3r+0Ufg=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=kcLgfZXMu1OXO6rHUKWk2PHT23diE2bNM4j1nIuztL7CaqFYiQ1QkO/Aq5mDaIRcO
-	 JeeosfjgQckCFrDTgHoz2/5cdHPLn91Dt39chRhRFJ3m6+uXqJ0MDxmpKYEyMBy9w9
-	 JBNPgknEHprdanrVY06pMchfWLL7pJTnS51eMFbk=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250618164320eucas1p28174732f38fd279fbba72f07887e5da5~KML6PRps61894318943eucas1p2H;
-	Wed, 18 Jun 2025 16:43:20 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250618164318eusmtip29415a14e64deb8a38a5078dfd40afd78~KML45IQjO0062800628eusmtip2E;
-	Wed, 18 Jun 2025 16:43:18 +0000 (GMT)
-Message-ID: <06e7a1dc-e58f-4cff-b962-5eb087dc4c1a@samsung.com>
-Date: Wed, 18 Jun 2025 18:43:17 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMqZ74fRkz30TG
+	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 02:53:35 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id E3C945C3E0A;
+	Wed, 18 Jun 2025 16:51:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91339C4CEE7;
+	Wed, 18 Jun 2025 16:53:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1750265613;
+	bh=7JHZ1JIYEO3EYdgf5LTaJMuvW/itgVgyH9exl2xZ5/o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Kt0pW+ZIraWY4kEMPTrowAUeaLRYIHw+wU3miwExFs8QJypayKj6KItziYfLvAZCK
+	 9e/miOrm6AXanTp0urZP4zz3UdAQ4bGPVWxZEj4bf8rGoyW5uTEtvxYc9G5+Evs7Ke
+	 /NvuzM5QGxdKosf/Zk/vf90IuIQ8hEaVreo/Nr4q6hWVXzk52DE3uKJZ/hYSIubc2u
+	 WHWe7nXfnVvrGsOwc7iF7MEVfYnmhdAjQmBFIM0qiFL8Tm8ldrQHt6SjpKhjEeZr6S
+	 iGTEjNkn/xCWkKWH1AApJPcS43KZx/Iv1YngoHG6MeMwRUweuTfFP0Hy0jpXlg5jX4
+	 Mpmloj0ADFbtw==
+Date: Wed, 18 Jun 2025 17:53:27 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Klara Modin <klarasmodin@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>, openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 2/2] gpio: mmio: don't use legacy GPIO chip setters
+Message-ID: <b522222d-f16d-4093-8a63-fc8195ae4c4c@sirena.org.uk>
+References: <20250618-gpio-mmio-fix-setter-v1-0-2578ffb77019@linaro.org>
+ <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -60,233 +70,52 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] gpio: mmio: use new GPIO line value setter
- callbacks
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Linus Walleij
-	<linus.walleij@linaro.org>, =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>, Daire McNamara
-	<daire.mcnamara@microchip.com>, Daniel Palmer <daniel@thingy.jp>, Romain
-	Perier <romain.perier@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>, Grygorii Strashko
-	<grygorii.strashko@ti.com>, Santosh Shilimkar <ssantosh@kernel.org>, Kevin
-	Hilman <khilman@kernel.org>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
-	openbmc@lists.ozlabs.org, linux-omap@vger.kernel.org, Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20250610-gpiochip-set-rv-gpio-v1-1-3a9a3c1472ff@linaro.org>
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250618164320eucas1p28174732f38fd279fbba72f07887e5da5
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250618164320eucas1p28174732f38fd279fbba72f07887e5da5
-X-EPHeader: CA
-X-CMS-RootMailID: 20250618164320eucas1p28174732f38fd279fbba72f07887e5da5
-References: <20250610-gpiochip-set-rv-gpio-v1-0-3a9a3c1472ff@linaro.org>
-	<20250610-gpiochip-set-rv-gpio-v1-1-3a9a3c1472ff@linaro.org>
-	<CGME20250618164320eucas1p28174732f38fd279fbba72f07887e5da5@eucas1p2.samsung.com>
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="IS6dHsJOPgUCFXvr"
+Content-Disposition: inline
+In-Reply-To: <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
+X-Cookie: Is it clean in other dimensions?
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 10.06.2025 14:33, Bartosz Golaszewski wrote:
+
+--IS6dHsJOPgUCFXvr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 18, 2025 at 03:02:07PM +0200, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> struct gpio_chip now has callbacks for setting line values that return
-> an integer, allowing to indicate failures. Convert the driver to using
-> them.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->   drivers/gpio/gpio-mmio.c | 53 ++++++++++++++++++++++++++++++------------------
->   1 file changed, 33 insertions(+), 20 deletions(-)
->
-> diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
-> index 4841e4ebe7a67d0f954e9a6f995ec5758f124edd..9169eccadb238efe944d494054b1e009f16eee7f 100644
-> --- a/drivers/gpio/gpio-mmio.c
-> +++ b/drivers/gpio/gpio-mmio.c
-> @@ -211,11 +211,12 @@ static int bgpio_get_multiple_be(struct gpio_chip *gc, unsigned long *mask,
->   	return 0;
->   }
->   
-> -static void bgpio_set_none(struct gpio_chip *gc, unsigned int gpio, int val)
-> +static int bgpio_set_none(struct gpio_chip *gc, unsigned int gpio, int val)
->   {
-> +	return 0;
->   }
->   
-> -static void bgpio_set(struct gpio_chip *gc, unsigned int gpio, int val)
-> +static int bgpio_set(struct gpio_chip *gc, unsigned int gpio, int val)
->   {
->   	unsigned long mask = bgpio_line2mask(gc, gpio);
->   	unsigned long flags;
-> @@ -230,10 +231,12 @@ static void bgpio_set(struct gpio_chip *gc, unsigned int gpio, int val)
->   	gc->write_reg(gc->reg_dat, gc->bgpio_data);
->   
->   	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
-> +
-> +	return 0;
->   }
->   
-> -static void bgpio_set_with_clear(struct gpio_chip *gc, unsigned int gpio,
-> -				 int val)
-> +static int bgpio_set_with_clear(struct gpio_chip *gc, unsigned int gpio,
-> +				int val)
->   {
->   	unsigned long mask = bgpio_line2mask(gc, gpio);
->   
-> @@ -241,9 +244,11 @@ static void bgpio_set_with_clear(struct gpio_chip *gc, unsigned int gpio,
->   		gc->write_reg(gc->reg_set, mask);
->   	else
->   		gc->write_reg(gc->reg_clr, mask);
-> +
-> +	return 0;
->   }
->   
-> -static void bgpio_set_set(struct gpio_chip *gc, unsigned int gpio, int val)
-> +static int bgpio_set_set(struct gpio_chip *gc, unsigned int gpio, int val)
->   {
->   	unsigned long mask = bgpio_line2mask(gc, gpio);
->   	unsigned long flags;
-> @@ -258,6 +263,8 @@ static void bgpio_set_set(struct gpio_chip *gc, unsigned int gpio, int val)
->   	gc->write_reg(gc->reg_set, gc->bgpio_data);
->   
->   	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
-> +
-> +	return 0;
->   }
->   
->   static void bgpio_multiple_get_masks(struct gpio_chip *gc,
-> @@ -298,21 +305,25 @@ static void bgpio_set_multiple_single_reg(struct gpio_chip *gc,
->   	raw_spin_unlock_irqrestore(&gc->bgpio_lock, flags);
->   }
->   
-> -static void bgpio_set_multiple(struct gpio_chip *gc, unsigned long *mask,
-> +static int bgpio_set_multiple(struct gpio_chip *gc, unsigned long *mask,
->   			       unsigned long *bits)
->   {
->   	bgpio_set_multiple_single_reg(gc, mask, bits, gc->reg_dat);
-> +
-> +	return 0;
->   }
->   
-> -static void bgpio_set_multiple_set(struct gpio_chip *gc, unsigned long *mask,
-> -				   unsigned long *bits)
-> +static int bgpio_set_multiple_set(struct gpio_chip *gc, unsigned long *mask,
-> +				  unsigned long *bits)
->   {
->   	bgpio_set_multiple_single_reg(gc, mask, bits, gc->reg_set);
-> +
-> +	return 0;
->   }
->   
-> -static void bgpio_set_multiple_with_clear(struct gpio_chip *gc,
-> -					  unsigned long *mask,
-> -					  unsigned long *bits)
-> +static int bgpio_set_multiple_with_clear(struct gpio_chip *gc,
-> +					 unsigned long *mask,
-> +					 unsigned long *bits)
->   {
->   	unsigned long set_mask, clear_mask;
->   
-> @@ -322,6 +333,8 @@ static void bgpio_set_multiple_with_clear(struct gpio_chip *gc,
->   		gc->write_reg(gc->reg_set, set_mask);
->   	if (clear_mask)
->   		gc->write_reg(gc->reg_clr, clear_mask);
-> +
-> +	return 0;
->   }
->   
->   static int bgpio_dir_return(struct gpio_chip *gc, unsigned int gpio, bool dir_out)
-> @@ -510,18 +523,18 @@ static int bgpio_setup_io(struct gpio_chip *gc,
->   	if (set && clr) {
->   		gc->reg_set = set;
->   		gc->reg_clr = clr;
-> -		gc->set = bgpio_set_with_clear;
-> -		gc->set_multiple = bgpio_set_multiple_with_clear;
-> +		gc->set_rv = bgpio_set_with_clear;
-> +		gc->set_multiple_rv = bgpio_set_multiple_with_clear;
->   	} else if (set && !clr) {
->   		gc->reg_set = set;
-> -		gc->set = bgpio_set_set;
-> -		gc->set_multiple = bgpio_set_multiple_set;
-> +		gc->set_rv = bgpio_set_set;
-> +		gc->set_multiple_rv = bgpio_set_multiple_set;
->   	} else if (flags & BGPIOF_NO_OUTPUT) {
-> -		gc->set = bgpio_set_none;
-> -		gc->set_multiple = NULL;
-> +		gc->set_rv = bgpio_set_none;
-> +		gc->set_multiple_rv = NULL;
->   	} else {
-> -		gc->set = bgpio_set;
-> -		gc->set_multiple = bgpio_set_multiple;
-> +		gc->set_rv = bgpio_set;
-> +		gc->set_multiple_rv = bgpio_set_multiple;
->   	}
->   
->   	if (!(flags & BGPIOF_UNREADABLE_REG_SET) &&
-> @@ -654,7 +667,7 @@ int bgpio_init(struct gpio_chip *gc, struct device *dev,
->   	}
->   
->   	gc->bgpio_data = gc->read_reg(gc->reg_dat);
-> -	if (gc->set == bgpio_set_set &&
-> +	if (gc->set_rv == bgpio_set_set &&
->   			!(flags & BGPIOF_UNREADABLE_REG_SET))
->   		gc->bgpio_data = gc->read_reg(gc->reg_set);
->   
+>=20
+> We've converted this driver to using the new GPIO line value setters but
+> missed the instances where the legacy callback is accessed directly using
+> the function pointer. This will lead to a NULL-pointer dereference as
+> this pointer is no longer populated. The issue needs fixing locally as
+> well as in the already converted previously users of gpio-mmio.
 
+Tested-by: Mark Brown <broonie@kernel.org>
 
-A few more changes are needed to avoid NULL pointer dereference 
-(observed on RasbperrryPi5), because this driver calls ->set method 
-internally:
+This fixes boot breakage in -next on at least the i.MX6 platforms I
+have, I'm also seeing similar issues on a bunch of i.MX8 systems which
+look to be due to the same issue but didn't verify them yet.  I'll let
+you know if it looks like something else.
 
-diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
-index 9169eccadb23..57622f45d33e 100644
---- a/drivers/gpio/gpio-mmio.c
-+++ b/drivers/gpio/gpio-mmio.c
-@@ -362,7 +362,7 @@ static int bgpio_dir_out_err(struct gpio_chip *gc, 
-unsigned int gpio,
-  static int bgpio_simple_dir_out(struct gpio_chip *gc, unsigned int gpio,
-                                 int val)
-  {
--       gc->set(gc, gpio, val);
-+       gc->set_rv(gc, gpio, val);
+--IS6dHsJOPgUCFXvr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-         return bgpio_dir_return(gc, gpio, true);
-  }
-@@ -427,14 +427,14 @@ static int bgpio_dir_out_dir_first(struct 
-gpio_chip *gc, unsigned int gpio,
-                                    int val)
-  {
-         bgpio_dir_out(gc, gpio, val);
--       gc->set(gc, gpio, val);
-+       gc->set_rv(gc, gpio, val);
-         return bgpio_dir_return(gc, gpio, true);
-  }
+-----BEGIN PGP SIGNATURE-----
 
-  static int bgpio_dir_out_val_first(struct gpio_chip *gc, unsigned int 
-gpio,
-                                    int val)
-  {
--       gc->set(gc, gpio, val);
-+       gc->set_rv(gc, gpio, val);
-         bgpio_dir_out(gc, gpio, val);
-         return bgpio_dir_return(gc, gpio, true);
-  }
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhS7wYACgkQJNaLcl1U
+h9CkHgf9F8X5HfrdZ8GChs5katxlr+IuyIyHqXJyzBuGdWPO0kPD55IqBkEyfiL7
+2KCYhj39ITpMfYx/NwxdO1GJwYijguVODtZGCYSLtzuUmUxian6otd+9+k9Mf3M2
+S0HB8OWIQDlrSwr+FwGq097E82gEIqgt0VUgZuVSS3rtE4yy3dOw87S3xnKxzP2y
+UFxe4DY0YInzgfFKLCykCHHoaEKlEtSTqeJVZE0fgt4DCUu/j8NTjltdTOLA40ab
+4W9cghu4Kmxjc+766PeFMujQgPV1Ys2hH3HM8p3jhmParbnnnNKQ9QeMmL8nVmty
+zcS9ws8g45ZC06c8SLDIdVQ5qGeGxA==
+=Y9BN
+-----END PGP SIGNATURE-----
 
-Do You want a formal patch with the above changes, or will You just 
-amend them to the updated patch?
-
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+--IS6dHsJOPgUCFXvr--
 
