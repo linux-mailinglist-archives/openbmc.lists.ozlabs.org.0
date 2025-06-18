@@ -1,53 +1,40 @@
-Return-Path: <openbmc+bounces-254-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-255-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EEA6ADF3CB
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 19:30:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6006ADF9C0
+	for <lists+openbmc@lfdr.de>; Thu, 19 Jun 2025 01:25:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bMrNH6yTtz2yFJ;
-	Thu, 19 Jun 2025 03:30:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bN0G50yPPz30T9;
+	Thu, 19 Jun 2025 09:25:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=210.118.77.11
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750267807;
-	cv=none; b=ECFeTOQJVh6ucbx4GpKjVx5oDSqUsZOOOVFzAtpi+3jFOCB8P6a2kGSC7zouWzv5BKd7DRXsn7UP999fbKo++Qv3jdUwxSf1hXULMeYo3EYWIXyMc5h2hezMDUY2KKs8GQpyoOt8Cnwgyr2X3nigvSomGl2lbbuMxP7EieeDEksOz0Dl4/mFbEqHxK7RURj8UDCJhrSBNoHsM7Iuxeo5ROjUEaix8vLvJt1SlUCXOxv0z2Yjx/SAvG4q/yVMHwHM6w+9ecSJKWqAJLG94gQlH5jfHT1cAVl+zQTuIr3JST75ITfg7G89LKpze9aVQlh0q0ZaOXH4EUfk6qVBNtmzaw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=141.14.17.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750289117;
+	cv=none; b=FW/sx6rBsR6PBtcHUHzBKyes6ZHmawVtQd35o66dRe9N70z1lu1dzCiQ64Zmx6ujW7+M09GJDNnA+Mjb2VoXpwq3CH8MEc+iP19oL59aoECbIJBLJ+oIP01JB55s1g+9I83Fl/QPKZhqoMqkDsTvTAm80wxvXnHOgCV6BUASZk3J4YdI8FvO3wrztgvyjjqtywOjmaBomW+iUUSl46MdCkw5UHZo5XMwjw+uX7jhskhHaTuxiLm8YsEtXkj7pRKoxFxQWLcM8jGZnOVJntpfBPbXR/CYnjWE75ObgG9C8qIZEXyK7Li3PnsVFERRmtZvxS/7IcONC6533Zk4ZT//xg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750267807; c=relaxed/relaxed;
-	bh=K97FTbMt5JoIwDvHOKNiKQwGHF/yxquenFxIqJsaQGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=bWeQMmIW7RaI/bxP6QhIgly7jHQUPyVHMWGrugOIRYJ44Fr0UO3nJarbBjvZnSikick6XLXQqa8YqH/nSR46WcWWYLcLnd+9n1SykJ65kRo2bD5x93dHNi/AEGTHUbu7hyHnD3Y3PO3zwO/gBs/F8DQ2nOOZHGSN0i3lp8s9jR/t2qMPnFvT0MEhVPc2ytsbez0HlSU3UhOvdsjSZEjQ+WIaOGx305TNEnTNfBkmssWVTWZlwjLiUAHmasrOjVmlNj3BW6CWUeZPnagKNacccezPTWQPiY1cRQAWkv4cwOAfdd3Cog45PHeXG7TvcmXQIaDEuDblTb4rH10/KuHxDw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=samsung.com; dkim=pass (1024-bit key; unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=Z1Ho4Wbo; dkim-atps=neutral; spf=pass (client-ip=210.118.77.11; helo=mailout1.w1.samsung.com; envelope-from=m.szyprowski@samsung.com; receiver=lists.ozlabs.org) smtp.mailfrom=samsung.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=Z1Ho4Wbo;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=samsung.com (client-ip=210.118.77.11; helo=mailout1.w1.samsung.com; envelope-from=m.szyprowski@samsung.com; receiver=lists.ozlabs.org)
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1750289117; c=relaxed/relaxed;
+	bh=GhFeZnoQ2V9lodOI5Au4oU4mRV0Gp+UopakMmZW6ARw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=QPHnkqV/5ZIU8o9AGzER5C2Tc1RcnV2s7Wu9qngb0GKOsemZxgNmk+lRgl2zdaA9BajetxWWvtvTdh7z+pgkHD70DR1/+sGegBq2HoNOY9QHVgLwsnWgsNTwamq4YqI0WZ5JmmY4yI2xq4Q/pQJ2plQ1yMH80oGoPzojOa4a6KChJMQN00+/PeP3OGFMq+sLr3BP2VuruP8ElyqUEZQQvzayd2RRCD0TaI3u/nGovW6mYQZo1fza3ffyqlW6dO619W/FzthImTNoY0uOPcD1R/R0a0iWDDD5Xbht/K0RxxmuZOtjMmt8o+T4c4ayyFjirji49sRyMs4K825w2QTSuQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org) smtp.mailfrom=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
+X-Greylist: delayed 322 seconds by postgrey-1.37 at boromir; Thu, 19 Jun 2025 09:25:11 AEST
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMrND3pHtz2xS2
-	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 03:30:02 +1000 (AEST)
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20250618172953euoutp01eabf51490330334d0c915f9ae85d3fb9~KM0jlUoHi0518405184euoutp01_
-	for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 17:29:53 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20250618172953euoutp01eabf51490330334d0c915f9ae85d3fb9~KM0jlUoHi0518405184euoutp01_
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1750267793;
-	bh=K97FTbMt5JoIwDvHOKNiKQwGHF/yxquenFxIqJsaQGA=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=Z1Ho4WboWTzD6ZKXkHwmx6aqguEFBqCE8rmMzauc4t7wvDVMxgWxgDywg2Lcx+02U
-	 WEaAKOBULRs8ErBhtDM9n9EOQaHsa/n/+3paOFFzk9utbBdLi7jBcm5eqPWkkOUC0J
-	 hvD4X4zn6Pabypumk5w/5Ln0eBhdu3LE4icUIXvk=
-Received: from eusmtip2.samsung.com (unknown [203.254.199.222]) by
-	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20250618172953eucas1p17c764efad555d61bb2ae720a39fba98a~KM0jT4eL62797627976eucas1p1S;
-	Wed, 18 Jun 2025 17:29:53 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20250618172951eusmtip2483250b17c457f30b81134e00802b6af~KM0iD8APO2341123411eusmtip2j;
-	Wed, 18 Jun 2025 17:29:51 +0000 (GMT)
-Message-ID: <3771a2ba-84a4-4cd5-a9ad-913130f19c27@samsung.com>
-Date: Wed, 18 Jun 2025 19:29:50 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bN0Fz3lPTz2xQ6;
+	Thu, 19 Jun 2025 09:25:11 +1000 (AEST)
+Received: from [192.168.0.5] (ip5f5af305.dynamic.kabel-deutschland.de [95.90.243.5])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id EB61D60288261;
+	Thu, 19 Jun 2025 01:18:33 +0200 (CEST)
+Message-ID: <63e740bf-cd0c-4671-9254-6846048b0366@molgen.mpg.de>
+Date: Thu, 19 Jun 2025 01:18:33 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -60,119 +47,152 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] gpio: mmio: don't use legacy GPIO chip setters
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Klara Modin
-	<klarasmodin@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Tomer Maimon
-	<tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture
-	<venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair
-	<benjaminfair@google.com>, Linus Walleij <linus.walleij@linaro.org>
-Cc: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH] i2c: aspeed: change debug level in irq handler
+To: Jian Zhang <zhangjian.3032@bytedance.com>
+References: <20250618102148.3085214-1-zhangjian.3032@bytedance.com>
 Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-CMS-MailID: 20250618172953eucas1p17c764efad555d61bb2ae720a39fba98a
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250618172953eucas1p17c764efad555d61bb2ae720a39fba98a
-X-EPHeader: CA
-X-CMS-RootMailID: 20250618172953eucas1p17c764efad555d61bb2ae720a39fba98a
-References: <20250618-gpio-mmio-fix-setter-v1-0-2578ffb77019@linaro.org>
-	<20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
-	<CGME20250618172953eucas1p17c764efad555d61bb2ae720a39fba98a@eucas1p1.samsung.com>
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-	autolearn=disabled version=4.0.1
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20250618102148.3085214-1-zhangjian.3032@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 18.06.2025 15:02, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> We've converted this driver to using the new GPIO line value setters but
-> missed the instances where the legacy callback is accessed directly using
-> the function pointer. This will lead to a NULL-pointer dereference as
-> this pointer is no longer populated. The issue needs fixing locally as
-> well as in the already converted previously users of gpio-mmio.
->
-> Fixes: b908d35d0003 ("gpio: mmio: use new GPIO line value setter callbacks")
-> Reported-by: Klara Modin <klarasmodin@gmail.com>
-> Closes: https://lore.kernel.org/all/2rw2sncevdiyirpdovotztlg77apcq2btzytuv5jnm55aqhlne@swtts3hl53tw/
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Dear Jian,
 
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
 
-This fixes the NULL pointer dereference issue observed on RaspberryPi5 
-and BananaPiF3 boards with today's linux-next.
+Thank you for the patch.
 
+Am 18.06.25 um 12:21 schrieb Jian Zhang:
+> In interrupt context, using dev_err() can potentially cause latency
+> or affect system responsiveness due to printing to console.
+> 
+> In our scenario, under certain conditions, i2c1 repeatedly printed
+> "irq handled != irq. expected ..." around 20 times within 1 second.
+
+Any idea, why you hit this error at all?
+
+> Each dev_err() log introduced approximately 10ms of blocking time,
+> which delayed the handling of other interrupts — for example, i2c2.
+> 
+> At the time, i2c2 was performing a PMBus firmware upgrade. The
+> target device on i2c2 was time-sensitive, and the upgrade protocol
+> was non-retryable. As a result, the delay caused by frequent error
+> logging led to a timeout and ultimately a failed firmware upgrade.
+> 
+> Frequent error printing in interrupt context can be dangerous,
+> as it introduces latency and interferes with time-critical tasks.
+> This patch changes the log level from dev_err() to dev_dbg() to
+> reduce potential impact.
+
+Thank you for the patch and the problem description. Hiding an error 
+condition behind debug level is also not good, as administrators might 
+miss hardware issues. I do not have a solution. Is there something 
+similar to WARN_ONCE? Maybe the level should be a warning instead of 
+error, because the system is often able to cope with this?
+
+The code is from 2017, so should be well tested actually, shouldn’t it?
+
+> Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
 > ---
->   drivers/gpio/gpio-74xx-mmio.c | 2 +-
->   drivers/gpio/gpio-en7523.c    | 2 +-
->   drivers/gpio/gpio-mmio.c      | 6 +++---
->   3 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpio/gpio-74xx-mmio.c b/drivers/gpio/gpio-74xx-mmio.c
-> index c7ac5a9ffb1fd1cc9439e3320d54574bf0cebbf6..3ba21add3a1c669171578ceaf9cc1728c060d401 100644
-> --- a/drivers/gpio/gpio-74xx-mmio.c
-> +++ b/drivers/gpio/gpio-74xx-mmio.c
-> @@ -100,7 +100,7 @@ static int mmio_74xx_dir_out(struct gpio_chip *gc, unsigned int gpio, int val)
->   	struct mmio_74xx_gpio_priv *priv = gpiochip_get_data(gc);
+>   drivers/i2c/busses/i2c-aspeed.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+> index 1550d3d552ae..38e23c826f39 100644
+> --- a/drivers/i2c/busses/i2c-aspeed.c
+> +++ b/drivers/i2c/busses/i2c-aspeed.c
+> @@ -317,7 +317,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   	switch (bus->slave_state) {
+>   	case ASPEED_I2C_SLAVE_READ_REQUESTED:
+>   		if (unlikely(irq_status & ASPEED_I2CD_INTR_TX_ACK))
+> -			dev_err(bus->dev, "Unexpected ACK on read request.\n");
+> +			dev_dbg(bus->dev, "Unexpected ACK on read request.\n");
+>   		bus->slave_state = ASPEED_I2C_SLAVE_READ_PROCESSED;
+>   		i2c_slave_event(slave, I2C_SLAVE_READ_REQUESTED, &value);
+>   		writel(value, bus->base + ASPEED_I2C_BYTE_BUF_REG);
+> @@ -325,7 +325,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   		break;
+>   	case ASPEED_I2C_SLAVE_READ_PROCESSED:
+>   		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_TX_ACK))) {
+> -			dev_err(bus->dev,
+> +			dev_dbg(bus->dev,
+>   				"Expected ACK after processed read.\n");
+>   			break;
+>   		}
+> @@ -354,7 +354,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   		/* Slave was just started. Waiting for the next event. */;
+>   		break;
+>   	default:
+> -		dev_err(bus->dev, "unknown slave_state: %d\n",
+> +		dev_dbg(bus->dev, "unknown slave_state: %d\n",
+>   			bus->slave_state);
+>   		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
+>   		break;
+> @@ -459,7 +459,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
 >   
->   	if (priv->flags & MMIO_74XX_DIR_OUT) {
-> -		gc->set(gc, gpio, val);
-> +		gc->set_rv(gc, gpio, val);
->   		return 0;
->   	}
+>   	/* We are in an invalid state; reset bus to a known state. */
+>   	if (!bus->msgs) {
+> -		dev_err(bus->dev, "bus in unknown state. irq_status: 0x%x\n",
+> +		dev_dbg(bus->dev, "bus in unknown state. irq_status: 0x%x\n",
+>   			irq_status);
+>   		bus->cmd_err = -EIO;
+>   		if (bus->master_state != ASPEED_I2C_MASTER_STOP &&
+> @@ -523,7 +523,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   			irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
+>   			goto error_and_stop;
+>   		} else if (unlikely(!(irq_status & ASPEED_I2CD_INTR_TX_ACK))) {
+> -			dev_err(bus->dev, "slave failed to ACK TX\n");
+> +			dev_dbg(bus->dev, "slave failed to ACK TX\n");
+>   			goto error_and_stop;
+>   		}
+>   		irq_handled |= ASPEED_I2CD_INTR_TX_ACK;
+> @@ -546,7 +546,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   		fallthrough;
+>   	case ASPEED_I2C_MASTER_RX:
+>   		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_RX_DONE))) {
+> -			dev_err(bus->dev, "master failed to RX\n");
+> +			dev_dbg(bus->dev, "master failed to RX\n");
+>   			goto error_and_stop;
+>   		}
+>   		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
+> @@ -577,7 +577,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   		goto out_no_complete;
+>   	case ASPEED_I2C_MASTER_STOP:
+>   		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))) {
+> -			dev_err(bus->dev,
+> +			dev_dbg(bus->dev,
+>   				"master failed to STOP. irq_status:0x%x\n",
+>   				irq_status);
+>   			bus->cmd_err = -EIO;
+> @@ -589,7 +589,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>   		bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
+>   		goto out_complete;
+>   	case ASPEED_I2C_MASTER_INACTIVE:
+> -		dev_err(bus->dev,
+> +		dev_dbg(bus->dev,
+>   			"master received interrupt 0x%08x, but is inactive\n",
+>   			irq_status);
+>   		bus->cmd_err = -EIO;
+> @@ -665,7 +665,7 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
 >   
-> diff --git a/drivers/gpio/gpio-en7523.c b/drivers/gpio/gpio-en7523.c
-> index 69834db2c1cf26be379c0deca38dda889202f706..c08069d0d1045e9df4a76cad4600bf25d4e3a7c5 100644
-> --- a/drivers/gpio/gpio-en7523.c
-> +++ b/drivers/gpio/gpio-en7523.c
-> @@ -50,7 +50,7 @@ static int airoha_dir_set(struct gpio_chip *gc, unsigned int gpio,
->   	iowrite32(dir, ctrl->dir[gpio / 16]);
+>   	irq_remaining &= ~irq_handled;
+>   	if (irq_remaining)
+> -		dev_err(bus->dev,
+> +		dev_dbg(bus->dev,
+>   			"irq handled != irq. expected 0x%08x, but was 0x%08x\n",
+>   			irq_received, irq_handled);
 >   
->   	if (out)
-> -		gc->set(gc, gpio, val);
-> +		gc->set_rv(gc, gpio, val);
->   
->   	iowrite32(output, ctrl->output);
->   
-> diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
-> index 9169eccadb238efe944d494054b1e009f16eee7f..57622f45d33e0695f97c7e0fa40e64f9fd5df1e0 100644
-> --- a/drivers/gpio/gpio-mmio.c
-> +++ b/drivers/gpio/gpio-mmio.c
-> @@ -362,7 +362,7 @@ static int bgpio_dir_out_err(struct gpio_chip *gc, unsigned int gpio,
->   static int bgpio_simple_dir_out(struct gpio_chip *gc, unsigned int gpio,
->   				int val)
->   {
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->   
->   	return bgpio_dir_return(gc, gpio, true);
->   }
-> @@ -427,14 +427,14 @@ static int bgpio_dir_out_dir_first(struct gpio_chip *gc, unsigned int gpio,
->   				   int val)
->   {
->   	bgpio_dir_out(gc, gpio, val);
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->   	return bgpio_dir_return(gc, gpio, true);
->   }
->   
->   static int bgpio_dir_out_val_first(struct gpio_chip *gc, unsigned int gpio,
->   				   int val)
->   {
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->   	bgpio_dir_out(gc, gpio, val);
->   	return bgpio_dir_return(gc, gpio, true);
->   }
->
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
 
+
+Kind regards,
+
+Paul
 
