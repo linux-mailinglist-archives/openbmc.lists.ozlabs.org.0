@@ -1,64 +1,71 @@
-Return-Path: <openbmc+bounces-252-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-253-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 049F8ADF30B
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 18:53:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB36BADF34A
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 19:00:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bMqZ94RQFz2ym2;
-	Thu, 19 Jun 2025 02:53:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bMqkB0jFxz30Vn;
+	Thu, 19 Jun 2025 03:00:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750265616;
-	cv=none; b=gRd0ue3wwtkzvaflfadq8xmrxyBsIRfG1M/05Ifl4caV47fGZKkp6Lqj6mg/Pq1jFLl0VWPSdwyQuw72C2axEMD00bVRRYYOyhgjj7b06wsaffrBN/XqS/qGvz0H76bK7Rjed3MSNqy2tNrkSmyS7WSqpjfs8e91TRMJA9dLuHOCiXzATd0VX5Q7cQMgKzelFbhRKercKGZW9W0mxu3XII3OPMWZHFD27Yo2c7cvRzBvFJQoLDaCgQDTJFE2A5XcTgu7XYsuX8sLMn10Fw+jg+iMrUy76qad7YwXbxS14lpibccY48lhXzJcWd5VRuOS9VTGmZjPOy+bI8DhYFeY8g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::136"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750266034;
+	cv=none; b=bAiX78mI7FsOCV8GBUyBs5RrR2ZRAv8fvRhap1mpX4DIc1YpKxvSliXEspiD4+5t/Nt1VkoJZy4eb+mLJNDVHowqtcfYRSX2AMwBVuqjvTxYYGssLKLzgj0iI22M6VD235l5qZVqvP2nnV1SwN0VHkc/TvMOmzvIAvdCGMn+yUBNkJFu0rvMI54sFuAW6ZL4T/VlbyNIbiBUx44/IhJJSl6J8fW2+JmBTCdEdVSmX3Ca7DO+EDth3T3M1ziPabOlmdPHAlcYZmlJM2lwATFonM7IUsv4ha6QGLxBajei1TwNrjh9EZa+ekTr//QbFOf6QDPMH839Kn/y1NgMSnLPLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750265616; c=relaxed/relaxed;
-	bh=SP4SQ1xNIDbuYUWBIIW0U84YRwPWknCvP4bl8nJ+Io0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e5HXO9d15SeBQJp5L56q5l1n9ofXULTpTZ6pyWhfUEZx/cY/LgBhZsZgOQi9VVL5E/jQ07xZN6oo9WVjVR1u0tLe83dMAINulDhXaIxbVBzJRW6fHhIUKyjzlcaxUEHuVLpRO7xMLYOwjUbvLP1jCa0F6QA7mRsYHvACr5O1PWhxvYtdBTLQifubzoPmjR5M09WTq574rYP8loCXs0fYz8g2BKSiLAND/+XChiiPrz6+9/g/KvWOJVA3P7GwW6l1Xbiyhsfp4X+kKRN2BGgNpK2xo2z8joONJJxSsdaz1ol7iCkn1vVgtOkt4N/P/RWeeLMsE/oGjMC9mbspUIOEag==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Kt0pW+ZI; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1750266034; c=relaxed/relaxed;
+	bh=OxTtuzusVWGqXpGsGysxbx2Frn0OYva/hDBE1FUWIBE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hwORF1KCzcvn0LQxkljeZBngOvQuC4CFEP+aXISafRESQxBmv1we9Dsbt2MDutAfcnJTU2oBHHaC/KUGx12ybfQTcxewGCoeJd48YJQZxpLj8SIcGwx/EiwSg7CQHTHkgVwyrxLCLVeJVUmfnQNaktMUwwfoOgWnx7vWXwkxiN4Br30jMPrkGFuMmDT5Q8iwbAmvI4rmbCgABzdxwBKVo7TvMXZPJZPGnoaaMrZJT0BmWHHCg+Rp9oPnfxJXwG7Yr6/8APb1Ju3YU+4XBqckdmLQ0GI5e0ny3lZefP+XBe3WrJTOBVggf44Q4d+svehY1SI+qjlV3hZz2p8YZuGikQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=P46jWfUD; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Kt0pW+ZI;
+	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=P46jWfUD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMqZ74fRkz30TG
-	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 02:53:35 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id E3C945C3E0A;
-	Wed, 18 Jun 2025 16:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91339C4CEE7;
-	Wed, 18 Jun 2025 16:53:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750265613;
-	bh=7JHZ1JIYEO3EYdgf5LTaJMuvW/itgVgyH9exl2xZ5/o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Kt0pW+ZIraWY4kEMPTrowAUeaLRYIHw+wU3miwExFs8QJypayKj6KItziYfLvAZCK
-	 9e/miOrm6AXanTp0urZP4zz3UdAQ4bGPVWxZEj4bf8rGoyW5uTEtvxYc9G5+Evs7Ke
-	 /NvuzM5QGxdKosf/Zk/vf90IuIQ8hEaVreo/Nr4q6hWVXzk52DE3uKJZ/hYSIubc2u
-	 WHWe7nXfnVvrGsOwc7iF7MEVfYnmhdAjQmBFIM0qiFL8Tm8ldrQHt6SjpKhjEeZr6S
-	 iGTEjNkn/xCWkKWH1AApJPcS43KZx/Iv1YngoHG6MeMwRUweuTfFP0Hy0jpXlg5jX4
-	 Mpmloj0ADFbtw==
-Date: Wed, 18 Jun 2025 17:53:27 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Klara Modin <klarasmodin@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Linus Walleij <linus.walleij@linaro.org>, openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 2/2] gpio: mmio: don't use legacy GPIO chip setters
-Message-ID: <b522222d-f16d-4093-8a63-fc8195ae4c4c@sirena.org.uk>
-References: <20250618-gpio-mmio-fix-setter-v1-0-2578ffb77019@linaro.org>
- <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMqk90KdMz30Vf
+	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 03:00:33 +1000 (AEST)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-553241d30b3so6333636e87.3
+        for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 10:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750266029; x=1750870829; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OxTtuzusVWGqXpGsGysxbx2Frn0OYva/hDBE1FUWIBE=;
+        b=P46jWfUDg9rN+5BxyNdPTgpGqkFjG3gy5qkb8RNS6CimNNWd/6bTSRplpDhzJ558dB
+         GtfBB/Ri0sUy1Q6XQ6DxxxiI7yfr1mke9ZYku0Y5FD45JxL+a03FjYsUbe3o9U7Jrw7L
+         hto4rkbAG+aofNtMQLoaWLLrz29/zR+PLMuCZz8Q5lQryjYRRJij27AWqjRHwCpQdMnI
+         EnuxZ130JEnATAWAe2xT6+hxVwWgMrtqrUlEncYrm6zUF34XzgBJtoF4SPyLD3sXKJnZ
+         bu6ksTOcVGxl2aulFPY1HXbjMW5RffkTNZVSB9IrY6Ly9qUFT/q+pqzIxA9GykRaMW1v
+         G15Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750266029; x=1750870829;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OxTtuzusVWGqXpGsGysxbx2Frn0OYva/hDBE1FUWIBE=;
+        b=uXKE/i5Do3cfVI/fkGH2oc+GTQ7IIrpYnc7fKQwAt0UW665JqYWzNFXWu3KzWgU1k3
+         R9bQLoED4ZoyOXpnkR53zD6xrsXBFqKQ9HfjxNa5D6lpNGrEKBOhh/p9oN+0kYcZbxDv
+         FjoZ/k0U8fJ/Cc7O+ihs0jdTlZokA2m/Lu91Wed7+8cGmzblqBAkQFLDscWUEdgM+kEY
+         G9aXHL8XWOHY0Wq5tLq08uf1/JROY6ntixmVt1Julvbc/ZYN1whLgwb13/w0b+WgttFM
+         t3EoULO9GsLTlbXi9u95YrhtY0W8dnk9yYuOu+2/ak/N+PSMb/0nfHSna9BapOlnYXXg
+         4Iew==
+X-Forwarded-Encrypted: i=1; AJvYcCVTV9p9HQqr4/QQtS6lK05FTod7mBWf80FBH8nZlGtm1yaP7FEY9ifISv2O2/fCzHFzv319Hcns@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxkUYGYo4apw1XPPCm3CAUsHbsl+lg0tdGUjno3UD9N+BJPBGFy
+	UYq15OjSxYWThguS3NeY7CcEvYmYC1lKLwfUyzWbCTTDX6SAu4gPVYYWajSvLUefgsWTBhRdyDD
+	t0lnGwWAkWcsbmQU73wTN7JMcHUYm3AwuuuMN4Qo5Yw==
+X-Gm-Gg: ASbGncvQQXZF6rSbyLXGtqe9PIklIPpRsWdgIg+RICRsa9sldN5DJYa+gDvT2PzxzdB
+	/w91315cnZIlA40PXG/8sA6Qw5oNQ/E8EdjHq/yFqOCaQuDVB1xkl+ndZOhy277bUbF2OoDLmw6
+	uj6cOVsJ+dT2poi+Ux77rlYEnyakqcGDaSEs41L7gnwcNqdU8F2acqRgTjl+Kt9thE0q4sSnz8B
+	w==
+X-Google-Smtp-Source: AGHT+IFrk7wjLo0FScAaHSeULurkvYIZ6q3poIqbDoop4mdMvyFf4GdTA027YlkMWkLw9hocI1+ULYkfCsJCJgw5Ht4=
+X-Received: by 2002:a05:6512:6ca:b0:553:25b2:fd2d with SMTP id
+ 2adb3069b0e04-553b6f16e9cmr4855031e87.30.1750266029272; Wed, 18 Jun 2025
+ 10:00:29 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -70,52 +77,86 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IS6dHsJOPgUCFXvr"
-Content-Disposition: inline
-In-Reply-To: <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
-X-Cookie: Is it clean in other dimensions?
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <20250610-gpiochip-set-rv-gpio-v1-0-3a9a3c1472ff@linaro.org>
+ <CGME20250618164320eucas1p28174732f38fd279fbba72f07887e5da5@eucas1p2.samsung.com>
+ <20250610-gpiochip-set-rv-gpio-v1-1-3a9a3c1472ff@linaro.org> <06e7a1dc-e58f-4cff-b962-5eb087dc4c1a@samsung.com>
+In-Reply-To: <06e7a1dc-e58f-4cff-b962-5eb087dc4c1a@samsung.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 18 Jun 2025 19:00:17 +0200
+X-Gm-Features: AX0GCFsZ9BzqvDbhrAHxtqvk55yr6p1JWPmW5O8GtAIoAiziZFdZwWCX10LDhDU
+Message-ID: <CAMRc=MfWD7XGuuiLd5_Sh1vODfE-v6suM3w=qdufxXPtkW+HVg@mail.gmail.com>
+Subject: Re: [PATCH 01/12] gpio: mmio: use new GPIO line value setter callbacks
+To: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?B?TWFyZWsgQmVow7pu?= <kabel@kernel.org>, 
+	Conor Dooley <conor.dooley@microchip.com>, Daire McNamara <daire.mcnamara@microchip.com>, 
+	Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>, 
+	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
+	Grygorii Strashko <grygorii.strashko@ti.com>, Santosh Shilimkar <ssantosh@kernel.org>, 
+	Kevin Hilman <khilman@kernel.org>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, openbmc@lists.ozlabs.org, 
+	linux-omap@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+On Wed, Jun 18, 2025 at 6:43=E2=80=AFPM Marek Szyprowski
+<m.szyprowski@samsung.com> wrote:
+>
+> A few more changes are needed to avoid NULL pointer dereference
+> (observed on RasbperrryPi5), because this driver calls ->set method
+> internally:
+>
+> diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
+> index 9169eccadb23..57622f45d33e 100644
+> --- a/drivers/gpio/gpio-mmio.c
+> +++ b/drivers/gpio/gpio-mmio.c
+> @@ -362,7 +362,7 @@ static int bgpio_dir_out_err(struct gpio_chip *gc,
+> unsigned int gpio,
+>   static int bgpio_simple_dir_out(struct gpio_chip *gc, unsigned int gpio=
+,
+>                                  int val)
+>   {
+> -       gc->set(gc, gpio, val);
+> +       gc->set_rv(gc, gpio, val);
+>
+>          return bgpio_dir_return(gc, gpio, true);
+>   }
+> @@ -427,14 +427,14 @@ static int bgpio_dir_out_dir_first(struct
+> gpio_chip *gc, unsigned int gpio,
+>                                     int val)
+>   {
+>          bgpio_dir_out(gc, gpio, val);
+> -       gc->set(gc, gpio, val);
+> +       gc->set_rv(gc, gpio, val);
+>          return bgpio_dir_return(gc, gpio, true);
+>   }
+>
+>   static int bgpio_dir_out_val_first(struct gpio_chip *gc, unsigned int
+> gpio,
+>                                     int val)
+>   {
+> -       gc->set(gc, gpio, val);
+> +       gc->set_rv(gc, gpio, val);
+>          bgpio_dir_out(gc, gpio, val);
+>          return bgpio_dir_return(gc, gpio, true);
+>   }
+>
+> Do You want a formal patch with the above changes, or will You just
+> amend them to the updated patch?
+>
 
---IS6dHsJOPgUCFXvr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks, a patch[1] is already up for review. Please give it a try and
+leave your Tested-by: if you can.
 
-On Wed, Jun 18, 2025 at 03:02:07PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->=20
-> We've converted this driver to using the new GPIO line value setters but
-> missed the instances where the legacy callback is accessed directly using
-> the function pointer. This will lead to a NULL-pointer dereference as
-> this pointer is no longer populated. The issue needs fixing locally as
-> well as in the already converted previously users of gpio-mmio.
+Bartosz
 
-Tested-by: Mark Brown <broonie@kernel.org>
-
-This fixes boot breakage in -next on at least the i.MX6 platforms I
-have, I'm also seeing similar issues on a bunch of i.MX8 systems which
-look to be due to the same issue but didn't verify them yet.  I'll let
-you know if it looks like something else.
-
---IS6dHsJOPgUCFXvr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmhS7wYACgkQJNaLcl1U
-h9CkHgf9F8X5HfrdZ8GChs5katxlr+IuyIyHqXJyzBuGdWPO0kPD55IqBkEyfiL7
-2KCYhj39ITpMfYx/NwxdO1GJwYijguVODtZGCYSLtzuUmUxian6otd+9+k9Mf3M2
-S0HB8OWIQDlrSwr+FwGq097E82gEIqgt0VUgZuVSS3rtE4yy3dOw87S3xnKxzP2y
-UFxe4DY0YInzgfFKLCykCHHoaEKlEtSTqeJVZE0fgt4DCUu/j8NTjltdTOLA40ab
-4W9cghu4Kmxjc+766PeFMujQgPV1Ys2hH3HM8p3jhmParbnnnNKQ9QeMmL8nVmty
-zcS9ws8g45ZC06c8SLDIdVQ5qGeGxA==
-=Y9BN
------END PGP SIGNATURE-----
-
---IS6dHsJOPgUCFXvr--
+[1] https://lore.kernel.org/all/20250618-gpio-mmio-fix-setter-v1-2-2578ffb7=
+7019@linaro.org/
 
