@@ -1,61 +1,60 @@
-Return-Path: <openbmc+bounces-236-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-237-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BFA0ADE12B
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 04:39:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F71EADE14C
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 04:50:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bMScJ4Bcrz30T0;
-	Wed, 18 Jun 2025 12:39:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bMSrk0B9Yz30RN;
+	Wed, 18 Jun 2025 12:49:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750214352;
-	cv=none; b=hRXpVEqxdHowks87+OdA4aufpuYvET17sOznQvFwZA9nJuL65EFlmUVpmwm7GrDoayV9EWl8s5+0KSs/TnBAS2XEQ1gK16EZSm6Mp1MKKYqXeE/FwmnQgawlOzQ+NFTZaojYyoFpSkLZh0fmidFtONcAc5DfyAk7F8FaE0g6eAsAtvgiuBeCs4pXX/gunVuyxuKfcdWdZOTHy1Ty1OCCgV7H8DIZL+J96B4PZ7w/Uz3rkpt4kE/bSuyD+yaFAOgDnuNbaEH+u0LjkJ2zAKIkzEK83zjf9EgEDl6Ppi3JQJJmV3wFHnbXutX8aGVy960QLLyp02gpekmgw+pO/1j2lQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750214997;
+	cv=none; b=TET0R3svsmw21QdQ3mroY4gFR2hSFXiPXFTECXK2eW63Gde6EaLmG/66DkQgR1vyafX+NIGWHNF3mLRMZFIZOHY6nO0ghSDYfz4438SfDGXM7RYlwwW4850EMswAiGZLDRsKXa9wLWCbOa4NZL72wV9zZ3yN4YC0b8MnHxr6PQ/lbQw6P2wc7989GEWKsZG/5X7HN45y7Cu49h7CGAxGijE1DvajxFHUBJG9zc7F/iP+XR1wzhb1WYp8bRoqzgAn0ENGC3ZCZVQD71FFsk5uo9/tfaC9VuN20k6llJSQN2Ecj3TYgEtfXBmqyhr18xBt6Vat78JMyQEPoSbEcCzJrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750214352; c=relaxed/relaxed;
-	bh=ItE5LTzozOsAetn4WQ1Ta5UuaFaBQiatwV/mVr7BE8o=;
+	t=1750214997; c=relaxed/relaxed;
+	bh=ak6kVTFoArwDV/4ozE74qsjM9VnnJ3y5qUizMDA0RPU=;
 	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GMiA0WIHkT4GKbwb5BPDUEKZ4YiHMYMZWqHc0Ry4kJAG29sIe55VUbzxcf9kQmiFUTYpbZi8rz7JR2DPKh+ZmZpLG+md0AziCGTFUHPLTNUL+YJoDcfkWHcWhZDUsf38LhnmArZjyxbeIGGPgH8P0mpjrzalW8Pe8PJhqedED48FFtIeT5xusIdOuahj9WNAr0zW4TynH+En1UqDXkSMJ4ECUpVDRCwKXrAhfpSA0H9rIOiQslqomHkll1R4vGIG8fuXNweaXqCDFD8UhkagjWvI6kFKKKkdKkwimr23Los/BJXRDUzSIv8tPbRwr7yx0Kzhcd2VrMttZPNUmP6uIw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=ZtGpREki; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=Ib1Jp2Xkw/YjsvYxfUwvTQsui7SoLHooWrG0aO2RYOiFatjLExLWmvK/RwRbEDiBJJLW9jf5SKmKov0e4Q8tV0pu08+nJfcJL7fh4h4ST998gEThxedhAhSjZ9iR61sIZrlw4z/d+2LLDlmrci8DV9Kh5rpyu4+cmPSGM6Nyk6vXA3GShbO6pHuDVvBzqAuSaIOLgjmYcRkaPE4NE7AvUzN8g1iUrXy64wPUQDjX+Yx95B2wmGtqHx69/abd6Rsr4h+IE6imnllVMhYtv/ZZk5CRyO8Sy/BT5cUiM1Ks8EK0/bBjJFezIPWZAN/i7JhmwyHIHnpj5TUFfTJlc6O1yw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=V9brWjey; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=ZtGpREki;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=V9brWjey;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMScH6Hk7z30RJ;
-	Wed, 18 Jun 2025 12:39:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMSrg425jz309v;
+	Wed, 18 Jun 2025 12:49:55 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1750214351;
-	bh=ItE5LTzozOsAetn4WQ1Ta5UuaFaBQiatwV/mVr7BE8o=;
+	d=codeconstruct.com.au; s=2022a; t=1750214994;
+	bh=ak6kVTFoArwDV/4ozE74qsjM9VnnJ3y5qUizMDA0RPU=;
 	h=Subject:From:To:Date:In-Reply-To:References;
-	b=ZtGpREkifDbhmwhg2Hx21YfFGNN5FATZloYBSy9QAEOF99qh6fJHo5f403fiT+n8U
-	 4FcnEVWY4wrFYt4YRuXe4l7+I7Oo7d+iuOq97XWwkZr/Lfv+Q3sx7PN29en12bv49m
-	 ml9ZlQb6WjoHcN7TCUEWWgOcnXNL30c+yLDptTUitxnR54Wq3kI3My3AaVwrsnNC2I
-	 nAiIn88vAoz0vjz+LXr27bBzSN5cjwx7OwPUwlB9K8/grSYrQfLCNEmjQ1huFZWa2X
-	 dIRzLWpYPaUfcrMMgMHCRq4v79zAPpt5zfGqJ2H3Bf/ICByT3TyLUmE0RP0RqaCLfV
-	 YV5lLooh72UKA==
+	b=V9brWjey/MQ5R9FzjHwP+8hFRC5Mdjc/FSFzXPmZ4bW3XdyAi3jeUYRsYyelmm8Oz
+	 ay2Q8J3o0HY7OkQZ3nLmavnSPmqHsYUfVYTM3DjuLDHiyDbB8/EBsu14iI1Glum0zG
+	 qccbl7kenLfdTpkU4AftytDU3lh2KeEuA+pk+hVyGYFQtgK2u+oJmGv7EWTs7xXNv1
+	 MhL5N5AdesyHk0KhzFAKr030S/HIvLMlUk4AQYqylDX5d2Tgh4+km5byPtslY6XR6J
+	 nOfUaYl0bbKXxQBF3RXA1yOxOxnYCaPYmnSQCgjePQTmHe2AtkStmf50nANOBhCZV6
+	 M8q8+sIn2pvYg==
 Received: from [192.168.68.112] (unknown [180.150.112.166])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 86EA0640A0;
-	Wed, 18 Jun 2025 10:39:09 +0800 (AWST)
-Message-ID: <4c380a2936fc5c1f37750f231eb48edc17aefa68.camel@codeconstruct.com.au>
-Subject: Re: [PATCH 4/8] mmc: sdhci-of-aspeed: Get max clockk by using
- default api
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 00565640A0;
+	Wed, 18 Jun 2025 10:49:53 +0800 (AWST)
+Message-ID: <4e6fd85cc8ed6c4261844842bc2e5e54e5db04e6.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 5/8] mmc: sdhci-of-aspeed: Fix null pointer
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: Cool Lee <cool_lee@aspeedtech.com>, adrian.hunter@intel.com, 
 	ulf.hansson@linaro.org, joel@jms.id.au, p.zabel@pengutronix.de, 
 	linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
 	linux-mmc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
 	linux-kernel@vger.kernel.org
-Date: Wed, 18 Jun 2025 12:09:09 +0930
-In-Reply-To: <20250615035803.3752235-5-cool_lee@aspeedtech.com>
+Date: Wed, 18 Jun 2025 12:19:53 +0930
+In-Reply-To: <20250615035803.3752235-6-cool_lee@aspeedtech.com>
 References: <20250615035803.3752235-1-cool_lee@aspeedtech.com>
-	 <20250615035803.3752235-5-cool_lee@aspeedtech.com>
+	 <20250615035803.3752235-6-cool_lee@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -73,59 +72,45 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Sun, 2025-06-15 at 11:57 +0800, Cool Lee wrote:
-> Don't limit clock frequency by f_max.
->=20
-> Signed-off-by: Cool Lee <cool_lee@aspeedtech.com>
-> ---
-> =C2=A0drivers/mmc/host/sdhci-of-aspeed.c | 10 +---------
-> =C2=A01 file changed, 1 insertion(+), 9 deletions(-)
->=20
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-=
-of-aspeed.c
-> index 10160a706334..2bdd93a3f91f 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -288,14 +288,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host=
- *host, unsigned int clock)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0sdhci_enable_clk(host, cl=
-k);
-> =C2=A0}
-> =C2=A0
-> -static unsigned int aspeed_sdhci_get_max_clock(struct sdhci_host *host)
-> -{
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0if (host->mmc->f_max)
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0return host->mmc->f_max;
-> -
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return sdhci_pltfm_clk_get_max=
-_clock(host);
-> -}
-> -
-> =C2=A0static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int=
- width)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0struct sdhci_pltfm_host *=
-pltfm_priv;
-> @@ -446,7 +438,7 @@ static int aspeed_sdhci_execute_tuning(struct sdhci_h=
-ost *host, u32 opcode)
-> =C2=A0static const struct sdhci_ops aspeed_sdhci_ops =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.read_l =3D aspeed_sdhci_=
-readl,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.set_clock =3D aspeed_sdh=
-ci_set_clock,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.get_max_clock =3D aspeed_sdhc=
-i_get_max_clock,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.get_max_clock =3D sdhci_pltfm=
-_clk_get_max_clock,
+T24gU3VuLCAyMDI1LTA2LTE1IGF0IDExOjU4ICswODAwLCBDb29sIExlZSB3cm90ZToKPiBQbGF0
+Zm9ybSBkYXRhIG1pZ2h0IGJlIG51bGwuCgpDdXJyZW50bHkgaXQgY2FuJ3QgYmU6CgpodHRwczov
+L2dpdC5rZXJuZWwub3JnL3B1Yi9zY20vbGludXgva2VybmVsL2dpdC90b3J2YWxkcy9saW51eC5n
+aXQvdHJlZS9kcml2ZXJzL21tYy9ob3N0L3NkaGNpLW9mLWFzcGVlZC5jP2g9djYuMTYtcmMyI24z
+NzUKCkFyZSB0aGVyZSBmdXR1cmUgY2lyY3Vtc3RhbmNlcyB3aGVyZSBpdCBtYXkgYmUgTlVMTD8K
+CkknbSBhbGwgZm9yIHJlZHVjaW5nIHRoZSByZWFzb25pbmcgZnJvbSBnbG9iYWwgdG8gbG9jYWws
+IGJ1dCBJIHRoaW5rCnNvbWUgZGlzY3Vzc2lvbiBpbiB0aGUgY29tbWl0IG1lc3NhZ2Ugd291bGQg
+YmUgZ29vZC4KCj4gCj4gU2lnbmVkLW9mZi1ieTogQ29vbCBMZWUgPGNvb2xfbGVlQGFzcGVlZHRl
+Y2guY29tPgo+IC0tLQo+IMKgZHJpdmVycy9tbWMvaG9zdC9zZGhjaS1vZi1hc3BlZWQuYyB8IDcg
+KysrKystLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMo
+LSkKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tbWMvaG9zdC9zZGhjaS1vZi1hc3BlZWQuYwo+
+IGIvZHJpdmVycy9tbWMvaG9zdC9zZGhjaS1vZi1hc3BlZWQuYwo+IGluZGV4IDJiZGQ5M2EzZjkx
+Zi4uMjJkZGU5MTVlNTFiIDEwMDY0NAo+IC0tLSBhL2RyaXZlcnMvbW1jL2hvc3Qvc2RoY2ktb2Yt
+YXNwZWVkLmMKPiArKysgYi9kcml2ZXJzL21tYy9ob3N0L3NkaGNpLW9mLWFzcGVlZC5jCj4gQEAg
+LTI0MSw3ICsyNDEsNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfc2RoY2lfc2V0X2Nsb2NrKHN0cnVj
+dAo+IHNkaGNpX2hvc3QgKmhvc3QsIHVuc2lnbmVkIGludCBjbG9jaykKPiDCoMKgwqDCoMKgwqDC
+oMKgc3RydWN0IHNkaGNpX3BsdGZtX2hvc3QgKnBsdGZtX2hvc3Q7Cj4gwqDCoMKgwqDCoMKgwqDC
+oHVuc2lnbmVkIGxvbmcgcGFyZW50LCBidXM7Cj4gwqDCoMKgwqDCoMKgwqDCoHN0cnVjdCBhc3Bl
+ZWRfc2RoY2kgKnNkaGNpOwo+IC3CoMKgwqDCoMKgwqDCoGludCBkaXY7Cj4gK8KgwqDCoMKgwqDC
+oMKgaW50IGRpdiA9IDE7Cj4gwqDCoMKgwqDCoMKgwqDCoHUxNiBjbGs7Cj4gwqAKPiDCoMKgwqDC
+oMKgwqDCoMKgcGx0Zm1faG9zdCA9IHNkaGNpX3ByaXYoaG9zdCk7Cj4gQEAgLTI1Nyw2ICsyNTcs
+OSBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfc2RoY2lfc2V0X2Nsb2NrKHN0cnVjdAo+IHNkaGNpX2hv
+c3QgKmhvc3QsIHVuc2lnbmVkIGludCBjbG9jaykKPiDCoMKgwqDCoMKgwqDCoMKgaWYgKFdBUk5f
+T04oY2xvY2sgPiBob3N0LT5tYXhfY2xrKSkKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoGNsb2NrID0gaG9zdC0+bWF4X2NsazsKPiDCoAo+ICvCoMKgwqDCoMKgwqDCoGlmIChzZGhj
+aS0+cGRhdGEpCgpHaXZlbiB0aGlzIHNob3VsZG4ndCBiZSB0aGUgY2FzZSwgcGVyaGFwcyBwcmVj
+ZWRlIGl0IHdpdGggYQpXQVJOX09OQ0UoIXNkaGNpLT5wZGF0YSk/CgpBbmRyZXcKCj4gK8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGRpdiA9IHNkaGNpLT5wZGF0YS0+Y2xrX2Rpdl9zdGFy
+dDsKPiArCj4gwqDCoMKgwqDCoMKgwqDCoC8qCj4gwqDCoMKgwqDCoMKgwqDCoCAqIFJlZ2FyZGlu
+ZyB0aGUgQVNUMjYwMDoKPiDCoMKgwqDCoMKgwqDCoMKgICoKPiBAQCAtMjczLDcgKzI3Niw3IEBA
+IHN0YXRpYyB2b2lkIGFzcGVlZF9zZGhjaV9zZXRfY2xvY2soc3RydWN0Cj4gc2RoY2lfaG9zdCAq
+aG9zdCwgdW5zaWduZWQgaW50IGNsb2NrKQo+IMKgwqDCoMKgwqDCoMKgwqAgKiBzdXBwb3J0aW5n
+IHRoZSB2YWx1ZSAwIGluIChFTU1DMTJDWzc6Nl0sIEVNTUMxMkNbMTU6OF0pLAo+IGFuZCBjYXB0
+dXJlCj4gwqDCoMKgwqDCoMKgwqDCoCAqIHRoZSAwLXZhbHVlIGNhcGFiaWxpdHkgaW4gY2xrX2Rp
+dl9zdGFydC4KPiDCoMKgwqDCoMKgwqDCoMKgICovCj4gLcKgwqDCoMKgwqDCoMKgZm9yIChkaXYg
+PSBzZGhjaS0+cGRhdGEtPmNsa19kaXZfc3RhcnQ7IGRpdiA8IDI1NjsgZGl2ICo9IDIpCj4gewo+
+ICvCoMKgwqDCoMKgwqDCoGZvciAoOyBkaXYgPCAyNTY7IGRpdiAqPSAyKSB7Cj4gwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBidXMgPSBwYXJlbnQgLyBkaXY7Cj4gwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAoYnVzIDw9IGNsb2NrKQo+IMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGJyZWFrOwoK
 
-This was used to limit the maximum bus speed via the devicetree. See:
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
-h=3Dv6.16-rc2&id=3D0a0e8d7501cda79c9b20f6011814e2ec9b473ade
-
-Why remove it? There's no discussion of the motivation in the commit
-message.
-
-Andrew
 
