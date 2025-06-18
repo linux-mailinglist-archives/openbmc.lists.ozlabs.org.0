@@ -1,87 +1,70 @@
-Return-Path: <openbmc+bounces-242-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-243-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0CBAADE882
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 12:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E7E9ADE9E7
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jun 2025 13:27:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bMftF4Rq8z2xS2;
-	Wed, 18 Jun 2025 20:21:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bMhKp5Fjhz2xS2;
+	Wed, 18 Jun 2025 21:27:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62e"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750242117;
-	cv=none; b=WDkNX79zej/IfqvTwSI+AFvuizWfetdOghWlziqoXyu5MwmNO3tMlMw/lhuMEXuovzdLYekHz7LUWyHY+Fx0sRfTxZ7gdATY0F0GsthdKpLRL5uT4L1oWL/G9Rxz4X093RoQB99jQuOKVVFsrgnzu+5xYZrGsxEi0Gg5Kk/4tFnOVg70ym2K+HdHKdfK9EzxeOkvIeGOVKR9qUEZwrEAaQoWNyNsyil45qwqVlCKJpCe7GmR1pNr5dfJ7J49BrnkRFogP4Y7goUwnFGl/E9zKm/VDcR/1UHYIsekn84E6oqmXYIZud0krGgxROJfRIX2YuYdRCfFp74ucx7Gcs6eSw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750246046;
+	cv=none; b=E/OA0TkoPaF4rW33JiGjRiN9ugT0rNzYedqKxQQS0PVFPkGaoOT5cWtqOkCLXMUp9ojAPm/JzqY6D5UVveboxvUUcyq3uX20z0WvQ9RAuhFH130ftGoaZAq4VK0d0akyr7Y5K+2RgF7BwscUHCF+0Vr/lJ07qIxznpFnZqp07zjDvlHepyBC7ucVKPFiFp8180sp6p+k4n7j+TFMIBoHtjnKVyA4n9W0fR/rCYRA7MwQjfK0yI3Zio1D3qicor0AHp5CrY5mso4Af37uovA6NF88xh8p9YEP16qUuX7Djc4J7jafwSf/xspDFFVnpT6p7MBbi+8KtyKXt+vSR5DP4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750242117; c=relaxed/relaxed;
-	bh=GjmzlSMJGThF/X6xEUPvfYdLDsdkYToZuOGOEJIFwyo=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=meNtFJgMlSAauHMlzLJgC6ESa3V0voeXS91gRomvwDlcHAEy5UaEjDlsHldecb8t4Wv9nxjwYaxr+VzUbpTJN/8xO9vB49118IeUncFf58gjn00RKv03sSIs60cDJVDgP14bxGaz9he8acUUGDSYnaETjD0sQwVmIypSjXufok8KhJQyqOGLRPL89j7PorB8aqkqY/cMblH7aeWjdrBVsWk+6q07DY3r9/mj/VjHWd5VZvYVsEydODn/Uh3H5EEDgoOOY0EL+VDMtUfDVT2gritg97ApzkWs/d4mDXUxrNSXRAAIVMJzK3U3L2c/aWCUN3v9yKL4Ngx5oyDXimun2Q==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=B5jQV495; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org) smtp.mailfrom=bytedance.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+	t=1750246046; c=relaxed/relaxed;
+	bh=hC/rxmNEx7lBs7LXqlf7wlayqnKtYiiYbKP9iLo7bEA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cDnvzzSo5kKfF81AJyIpWedqaHoeaRB6opnaEglthNgzwGrbYG7TNVsqPtJSW1Zg0qqxXdVWnNGuTyvarW72q2DYHYPdF4xSv1IcdaOUhvc0SdwE+jrGD3vDZwBQlOH0BU6gJzzDYdZD/uow4LeGElnOk7iev9EiPhtnehKW8wuPGJcaIzBYqAk/UcbYEioKZec6qj6FzEmin41kAYFnrolVh3ReK8bdsbQT2V6YPy4LluOtg9ugK5nq1Nkp3+WdBtuN6gzXTMMHWobGKeYtBo2c4RgMH3JA2gk9ktbR9fgWLnB5hzMAa7rxSU5KdR8kduRO0wEQ9PfsZjBgTQf6Uw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=u47ObV8P; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=B5jQV495;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=u47ObV8P;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMftC5JQPz2xRt
-	for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 20:21:54 +1000 (AEST)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-23508d30142so79966315ad.0
-        for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 03:21:54 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMhKn2w4Vz2xS0
+	for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 21:27:24 +1000 (AEST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-54b10594812so7023443e87.1
+        for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 04:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1750242113; x=1750846913; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GjmzlSMJGThF/X6xEUPvfYdLDsdkYToZuOGOEJIFwyo=;
-        b=B5jQV495vSLYqruHkuVMAVk0AWBdQylNh8bPns1Rm/+jBPAsnttSBn5Rp4fRLXGzE+
-         xXSKXOEuEk/cZAcw8JapI8KueRVCEYZ7ijBl3+qHqj6yBrC1FltkVkiWhuBtTqTY+ZpR
-         zPa8Sa/sZa3SFO3Q8v1lZxt91Cya2WXWl7n/T27In6+NsvWcPzrrVUvzPJqttqdjk5P1
-         bGd57P6+qdGj3RyGfrqBADvO7qDf1f0A1XtE584HNmeOazTxehk7QuM431p2eaiS9o6y
-         Q+Kf29Aj1Gr++y4NbI/C4/kQfJgl4LU66BLLSqJMBXFsGYXR+DhntKhGZdeA9e9H6t4u
-         7YTA==
+        d=linaro.org; s=google; t=1750246040; x=1750850840; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hC/rxmNEx7lBs7LXqlf7wlayqnKtYiiYbKP9iLo7bEA=;
+        b=u47ObV8Pj7Blj3fgiensixnPrk1fe5wOS8VXef+bBSb8h5gr9/dFmOETXq8sxChAqG
+         GYaRp/T672lmKFJIM2QMhkkcmuoOw7HThu+4BBtxYzUwhoZa00D/pyn/RONuYd+23bb8
+         Tpn4BCyPTgZV/CRgPUZTrkFf0JEr4otCHXBE4zR418n4uzutYrtaEFtRyEvMlp+Pxdco
+         U7jxPU/+ldV0FPCNrErvrHc1rdryJrnxV/9mqNRvXyjDnXkYRmKw20dukaCbU0fT79rZ
+         FTDe2eSpSGGjme93qm/QAMTtcDOQbVQce1EqKoydNWYQWCPWdn57E1Jr15d/0D6bkVh0
+         orwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750242113; x=1750846913;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GjmzlSMJGThF/X6xEUPvfYdLDsdkYToZuOGOEJIFwyo=;
-        b=o12c7f6v1SgfHlSEGYp0s5Q3EPFmACqFzHBtWKANmj3A1XubmuVqKaSDv45bEm0XJ4
-         fmaoB2s5vtKP4J8ny6ei+BLka99zNWrXxqd1iPw3OtcOybCvWwh5Ru/IT8RzVnOq7HI2
-         Wo3U4wZN2FO4tQT/OJhZd6bhMbTGX93mRjz4kY9rWMZQ22A7UiP5LCfIwgeIvjTaipvq
-         FVh+tFfHwhdLt/KES+JsMgW753+xHn6hh5PDdgmuGB5XGHzbhegVafDeGwfeMY2MOmrj
-         QwSgh7zMu1znw+uWFTeO572veVZlfwBVvY9G/DHtRvwfj+cA5G27Dpm0nXi+zVwkLxO/
-         dcTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXlrgjhHo5zpwrTkrq9iX3/qlqSk7cW4oOK9gh/s5GzyTJuJr9LQ8CY0ruROx06Uyip0za5cMgT@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yy4NgNcDlqS7qz3LK5UUW+SZxMS8QkLSy+CikFo+csf5dF1EXFu
-	A2CLq65drnYHGYr5aNSlVtb09AGzOY0ElXt1d9zXWgRdJgOi5ad44oeMHrwvtPg5Cx8=
-X-Gm-Gg: ASbGncvMtzq7z81LeJiyOX4LuummCCgv/jyB65wQ+7x2LEaPkx8GBPQKFoSKap7Y9lv
-	TufwPiHHtgbD8NcX+JQqK6bAnU6JlTKcyCNeQ/mjIZsnphMxm3FZh2iZz+0v+nVI2PFDka6Pt7n
-	xeaJ9aHrakNEWNx2kBt4vhg9dJsIrUNYCfN51Rw3x+PeI9I9k0nedviJ5daUEksxdsTBbXNzAyw
-	y9BZu3eDFEZu39Naj+aYY5YTIrPAGXRkmBYL/4ZI8LywwGMdR1rFzkZEKT8RmfUKZH4RFmZTt+e
-	7wi8UsRtZt1ksY0hMnN8ap2k614XpmnvCAjNH57LObOxWMf8EYyCsyxT4bth+pi58cBNMCQbaeV
-	vEgy3sbo=
-X-Google-Smtp-Source: AGHT+IFazvSPNlbUxR4VYiAlmcTE9A4W+7BMiVTRCRXWqUGSyQF3kdAvM4//0ZOLw44KbimyVMMUYw==
-X-Received: by 2002:a17:902:c946:b0:234:d292:be95 with SMTP id d9443c01a7336-2366b149f20mr223382045ad.42.1750242112586;
-        Wed, 18 Jun 2025 03:21:52 -0700 (PDT)
-Received: from localhost ([106.38.221.150])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365de781dfsm96547735ad.131.2025.06.18.03.21.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 03:21:52 -0700 (PDT)
-From: Jian Zhang <zhangjian.3032@bytedance.com>
-To: Ryan Chen <ryan_chen@aspeedtech.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	linux-i2c@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] i2c: aspeed: change debug level in irq handler
-Date: Wed, 18 Jun 2025 18:21:48 +0800
-Message-ID: <20250618102148.3085214-1-zhangjian.3032@bytedance.com>
-X-Mailer: git-send-email 2.47.0
+        d=1e100.net; s=20230601; t=1750246040; x=1750850840;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hC/rxmNEx7lBs7LXqlf7wlayqnKtYiiYbKP9iLo7bEA=;
+        b=qx0g1g+BArMecDGnu7m24HRgZu88VTtpVqcKAFgkTef47omqNcHa5akK5vQhrm9x5s
+         FjUlW6xRV2F8EXUlaWl7Mdc7Llpa2Lj2qXlivjrG8tQ/y6AJxduatknWm1Z3y1l5FzD3
+         vf+1eYkjMzSW0Yf0+z0iKO1jVajdTQT+f6ORm1JefYDbKBoaJjInE9X9Vq6+Yq/2Q6Rs
+         AupzY1y7G3jpv5oRek2u0TZGfgB7LPAQGPQInXu9/9kkDcgbSPU44SGF8I54st1T4RMo
+         TMYuAS3YyQFhvxnaoaqvMV1DXQIDplIYPhLaaE5gWNHRijTZtDL8Elh+9t/FSHgU7C5n
+         GKFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVtsZ8betaPPY8xRN4PeccxzDu56zymVEUs2dWfzyUXn61lVDltQs8M/cbnAjq7PNwWyJmY81HD@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwUFMiiKFVl4wP0BD5Iv+kCGZTfX9Dqi81lHLqsnH3wfffbBIpa
+	CWPmvvknVbd/ixlHe4SENHMbJZAM7VQMDxiqTUZVMPPi5sT/C7LnAoHHsZ5/BSNh9pMZ9Rgee0k
+	GLoyT2Tej6LEPnsBmT+mUt7sRNb1HKH4gYIj96t/ZFw==
+X-Gm-Gg: ASbGncuufq3Gj9XL6TGqiN/9OJvm20a03S25oczIEYCH0ZzYYGqTcQUgq4tGqkPRuky
+	t3hnjPZVEb3LvGmx1ueFHSUzWvIUXu44kz6Bk9V1jQe79gLqKi9INMe9w2jwg+Oxl1MFSJ8MhQn
+	n2xcoQ/3QMRJJ+ogUDMnNDJxtiGCcrlfSrNvxURv7OMU0=
+X-Google-Smtp-Source: AGHT+IH9N3s8eV4QAoWcV3ZISC8T6rNpJ4leRaY7YHuJFlZ4bPXaxx7Hzh/4jfbIVAzp1tapzbe+4WLXZFpaeF/7BEk=
+X-Received: by 2002:a05:6512:39c8:b0:553:2bf7:77ac with SMTP id
+ 2adb3069b0e04-553b6f15af6mr5016567e87.41.1750246040209; Wed, 18 Jun 2025
+ 04:27:20 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -93,122 +76,71 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
+In-Reply-To: <20250611-pinctrl-const-desc-v2-0-b11c1d650384@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 18 Jun 2025 13:27:09 +0200
+X-Gm-Features: AX0GCFuhKOslIDouO5PgG3-FBiOJa3cs6VfF8AgbesblIRkK52-2f8uLA9uvwos
+Message-ID: <CACRpkdb1YqS00tEeyAUTjjJ-EQQbH5wfE8QzZt-UFwQYCfNHRg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/17] pinctrl: Constify pointers to 'pinctrl_desc' and more
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>, Shyam Sundar S K <Shyam-sundar.S-k@amd.com>, 
+	Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
+	=?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+	=?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	David Rhodes <david.rhodes@cirrus.com>, Richard Fitzgerald <rf@opensource.cirrus.com>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Sean Wang <sean.wang@kernel.org>, Jesper Nilsson <jesper.nilsson@axis.com>, 
+	Lars Persson <lars.persson@axis.com>, Damien Le Moal <dlemoal@kernel.org>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Michal Simek <michal.simek@amd.com>, 
+	Emil Renner Berthing <kernel@esmil.dk>, Jianlong Huang <jianlong.huang@starfivetech.com>, 
+	Hal Feng <hal.feng@starfivetech.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
+	linux-arm-kernel@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	linux-sound@vger.kernel.org, patches@opensource.cirrus.com, 
+	linux-mediatek@lists.infradead.org, linux-arm-kernel@axis.com, 
+	linux-riscv@lists.infradead.org, linux-rtc@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-In interrupt context, using dev_err() can potentially cause latency
-or affect system responsiveness due to printing to console.
+On Wed, Jun 11, 2025 at 8:14=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-In our scenario, under certain conditions, i2c1 repeatedly printed
-"irq handled != irq. expected ..." around 20 times within 1 second.
-Each dev_err() log introduced approximately 10ms of blocking time,
-which delayed the handling of other interrupts — for example, i2c2.
+> Changes in v2:
+> - Add Rb tags
+> - Patch #1: rephrase commit msg (Geert)
+> - Patch #2: fix/require dependency on OF
+> - Link to v1: https://lore.kernel.org/r/20250528-pinctrl-const-desc-v1-0-=
+76fe97899945@linaro.org
+>
+> Description:
+> ------------
+> In several drivers pointers to 'struct pinctrl_desc' is not modified, so
+> since core does not modify it, it can be made as const.
+>
+> Dependencies/merging:
+> ---------------------
+> Patch #4 "pinctrl: Constify pointers to 'pinctrl_desc'" is a
+> prerequisite for all further patches, including RTC patch, therefore
+> probably everything should be via main pinctrl tree.
 
-At the time, i2c2 was performing a PMBus firmware upgrade. The
-target device on i2c2 was time-sensitive, and the upgrade protocol
-was non-retryable. As a result, the delay caused by frequent error
-logging led to a timeout and ultimately a failed firmware upgrade.
+Patches applied!
 
-Frequent error printing in interrupt context can be dangerous,
-as it introduces latency and interferes with time-critical tasks.
-This patch changes the log level from dev_err() to dev_dbg() to
-reduce potential impact.
-
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
----
- drivers/i2c/busses/i2c-aspeed.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 1550d3d552ae..38e23c826f39 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -317,7 +317,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	switch (bus->slave_state) {
- 	case ASPEED_I2C_SLAVE_READ_REQUESTED:
- 		if (unlikely(irq_status & ASPEED_I2CD_INTR_TX_ACK))
--			dev_err(bus->dev, "Unexpected ACK on read request.\n");
-+			dev_dbg(bus->dev, "Unexpected ACK on read request.\n");
- 		bus->slave_state = ASPEED_I2C_SLAVE_READ_PROCESSED;
- 		i2c_slave_event(slave, I2C_SLAVE_READ_REQUESTED, &value);
- 		writel(value, bus->base + ASPEED_I2C_BYTE_BUF_REG);
-@@ -325,7 +325,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		break;
- 	case ASPEED_I2C_SLAVE_READ_PROCESSED:
- 		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_TX_ACK))) {
--			dev_err(bus->dev,
-+			dev_dbg(bus->dev,
- 				"Expected ACK after processed read.\n");
- 			break;
- 		}
-@@ -354,7 +354,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		/* Slave was just started. Waiting for the next event. */;
- 		break;
- 	default:
--		dev_err(bus->dev, "unknown slave_state: %d\n",
-+		dev_dbg(bus->dev, "unknown slave_state: %d\n",
- 			bus->slave_state);
- 		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
- 		break;
-@@ -459,7 +459,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 
- 	/* We are in an invalid state; reset bus to a known state. */
- 	if (!bus->msgs) {
--		dev_err(bus->dev, "bus in unknown state. irq_status: 0x%x\n",
-+		dev_dbg(bus->dev, "bus in unknown state. irq_status: 0x%x\n",
- 			irq_status);
- 		bus->cmd_err = -EIO;
- 		if (bus->master_state != ASPEED_I2C_MASTER_STOP &&
-@@ -523,7 +523,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 			irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
- 			goto error_and_stop;
- 		} else if (unlikely(!(irq_status & ASPEED_I2CD_INTR_TX_ACK))) {
--			dev_err(bus->dev, "slave failed to ACK TX\n");
-+			dev_dbg(bus->dev, "slave failed to ACK TX\n");
- 			goto error_and_stop;
- 		}
- 		irq_handled |= ASPEED_I2CD_INTR_TX_ACK;
-@@ -546,7 +546,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		fallthrough;
- 	case ASPEED_I2C_MASTER_RX:
- 		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_RX_DONE))) {
--			dev_err(bus->dev, "master failed to RX\n");
-+			dev_dbg(bus->dev, "master failed to RX\n");
- 			goto error_and_stop;
- 		}
- 		irq_handled |= ASPEED_I2CD_INTR_RX_DONE;
-@@ -577,7 +577,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		goto out_no_complete;
- 	case ASPEED_I2C_MASTER_STOP:
- 		if (unlikely(!(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))) {
--			dev_err(bus->dev,
-+			dev_dbg(bus->dev,
- 				"master failed to STOP. irq_status:0x%x\n",
- 				irq_status);
- 			bus->cmd_err = -EIO;
-@@ -589,7 +589,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
- 		goto out_complete;
- 	case ASPEED_I2C_MASTER_INACTIVE:
--		dev_err(bus->dev,
-+		dev_dbg(bus->dev,
- 			"master received interrupt 0x%08x, but is inactive\n",
- 			irq_status);
- 		bus->cmd_err = -EIO;
-@@ -665,7 +665,7 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
- 
- 	irq_remaining &= ~irq_handled;
- 	if (irq_remaining)
--		dev_err(bus->dev,
-+		dev_dbg(bus->dev,
- 			"irq handled != irq. expected 0x%08x, but was 0x%08x\n",
- 			irq_received, irq_handled);
- 
--- 
-2.47.0
-
+Yours,
+Linus Walleij
 
