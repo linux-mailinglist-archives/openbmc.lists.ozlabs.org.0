@@ -1,87 +1,95 @@
-Return-Path: <openbmc+bounces-257-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-258-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5F14ADFA00
-	for <lists+openbmc@lfdr.de>; Thu, 19 Jun 2025 02:06:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8271EADFE74
+	for <lists+openbmc@lfdr.de>; Thu, 19 Jun 2025 09:14:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bN19L5QG2z30Vq;
-	Thu, 19 Jun 2025 10:06:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bNBg64Xxgz2xck;
+	Thu, 19 Jun 2025 17:14:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750269234;
-	cv=none; b=H+sEusPM/GUHwe5tzdMA90+THp6MoKuBV7GskwiuAQ1GtrMLWVYGsshYtOLxYAzDzAYXzpr5QuBiO9X+koeqhyPtvDFIcRGxWHO0CU2dnUMrVWXWufIm/LM71+gK47DrlmeTalCzqY2BWJcv1u0DX1122dyPIJO4J9XXHNnDdTqdZaZxoF35Eaw1StjcFdGBtMIXNneudoIt2dyHKkfsTael9TzxnaMFhcgc94Ox4tr88XYfTZ3n3ay33TXLLUJNOpTB6JNEsnuysV5AHGbO9n9MW3nepbu7YeUh67BiYMLjkpN8w+JzflVZR0N8mWK6y17twf+hiUzbVcEFtxRQug==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::32f"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750317250;
+	cv=none; b=Gmc+jCTqU+r+6LyJNz3MrR5KXtJByHokD0BlLVwMJ9sHMV3CUWiWBXH2TbVlItt8r5mWlKhYWURB7F3k4b4mJaX5KpLh3gcAfF0wD1NAbzKP5WQSYJauXNxMeLAzC8rLARjcQQRPQXxxuAdFn7/PxhHlMFYnReslfLdiRy5IIncGz6NrG1fCwIxrBz7YKZywZfToEKI2Fs7tPnr0JYP6uyUVe6wP4IwnjnYi0M47YpYJJIWkcUz7SIiiJsOaW1OVk5wEmczShxl12krMn2nfngB3sa/Gyx2Y6ss4Gtnj8OMXIvlEbr26Yb2prB7jWxYl88zy3JGdSGZGSP9BbeqIxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750269234; c=relaxed/relaxed;
-	bh=p84+wxDg4u34Lm55oq6WOvopLTPICI6s2ti0ZOixglA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EgZpO5ZIRTPkZNQ9cORrANKCB7aKbq+zz7QbArL9m28HPK3wi+9Qu3JFy/enZEcP71uH/NeeIPNwRGa6vjfff/Wxl2EAb5uP8y2bJmi7eaV2xjvXVEaeaDG/wnVXPOMipIK/6M0TZCIjFELGr24TcVohJOpZHh6DC+sfmR7nDtNL9SXqkwNTDkRFL5wvry++2WZDJcSJ91kQcm20c7jwjZPeYLsQ9Xu9nBkNC1ZtB4JwanyWpFhRMuC1QeUj6QvjNL1V4+wCsFsKj8bP3Yq1zwKqh4OfTOBgRd+89kvsvNJn5v/aiWHORAqozgh6gy+2cPUrAMaL6xMH8PoKVqqQew==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HoJCdx2J; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=klarasmodin@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1750317250; c=relaxed/relaxed;
+	bh=cq44AhL1m8zmm2BXeTzju6Z4jxLaMdXtrDcTCP3h0bM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=etGtm47jA9dMB5+pQtL6I6+1QUAlP3yn1bIz0d8BE2e7tz9PB20MeXoTRmAHYX5a6UiT2vmFfGmzfc++k9COaSsZRcpIdNdncKe5vK1D2cPimzzkYreVQzsDBufeJ9E+/5rG4J6Lu7gF4IellzxZcuAkFBom0vXKAlsqJfb++kEuX0U7gwNRaP7X0jMcfAw4sPb7L9D55OXDvdhCrOBRiCwA8MjQzKPGQIgjWKmEkx6MmiL+bUMtgc5K6T2LeAfyt1ShIEkzxCiWNItuSXn7Qn2DPU27JTV0RXMhewSsSDelNgyaUXNlr36Ht8mRFg91oLyH3KaA7mjZaSrAYh7/4w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=HcJAojWW; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::32f; helo=mail-wm1-x32f.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HoJCdx2J;
+	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=HcJAojWW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=klarasmodin@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::32f; helo=mail-wm1-x32f.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bMrvj0cMVz3bmC
-	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 03:53:52 +1000 (AEST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-55220699ba8so9018709e87.2
-        for <openbmc@lists.ozlabs.org>; Wed, 18 Jun 2025 10:53:52 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bNBg45yD7z2xS2
+	for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 17:14:07 +1000 (AEST)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-4530921461aso3427305e9.0
+        for <openbmc@lists.ozlabs.org>; Thu, 19 Jun 2025 00:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750269227; x=1750874027; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p84+wxDg4u34Lm55oq6WOvopLTPICI6s2ti0ZOixglA=;
-        b=HoJCdx2JCJ2FgcrxblCMjqdDlJlVG2SewB/7XhSZYz9iG4MfK95ld8HMLpzixCbtKQ
-         Yvvkn7H0id3qmTjvhAajTEnGZnZRZvb51BCuJo34/sENt6k0XrFsll9GYN9LBrhkyFXj
-         F2mN7sXBzPRL4HWt5MWvW9zs1wRXktYlF2lFcHdjHz6y3JRSzI3f1kNC8kE9KI7/xZ3m
-         rmseD3OeRAgSiagF58hkH3jWoo0EGmHluXtRLJpKQZmgY99kZrKloeyEhmXYMoeHWbrw
-         MknEW5GFlFu/9hGirLVbUqZU/aG2aMcpBpeFuVBRghIsTTyzGnnA1QKdXU7Kd39hDudG
-         JLgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750269227; x=1750874027;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1750317242; x=1750922042; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p84+wxDg4u34Lm55oq6WOvopLTPICI6s2ti0ZOixglA=;
-        b=eSSgQ8v37Qz1GWtGLgIIFMMGGPYVa6G1mc+Uhh51bVuGYB5yZNaFsXU4nkMp6ivDkk
-         Z4vdK93/nItQKS/7kJDSKp2+XrD1svh534BxTGqe1UjbYLhXLsUCzfn73cdQbUml51wm
-         1eUW3grtUuzFGxBWX1mXGuNtCw+IES5VUzoJQLTkKyN/RQ+OuQ7pE8Gzo6/lGCm2SgMY
-         zykX3MShNUmN0oYEJK7Rri8iJS0xFKweAMDNSaBb4hfJK5IsJk6mPKWhWF1T8FRfevod
-         jWLrLjs8Tv5fBk1OUrW40RdB/8O9MEjzav9x8ev6qnGstjHxfo7iEADzO4PrKiwm1XSm
-         eZ6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUudszKGMOHIiTCHxqU39Btym8UKBhsRZag+wgHY35XZQlaZzus81bLpphDErhYDSNDzv/H1rAt@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxDSfFyW9ooKIRdfyk0AHXV5z5X4EI689gLtdaH9v5gvVm1jXpf
-	ymSTyk5pgaruUtX0xcGEIk/WZTF+rj/zFO4kVU4E07SfQNOnPFlhR/zu
-X-Gm-Gg: ASbGncvcL/Cx94bEdZEJkTlMG9Ai7+me2pbkXfe31EAlbrFjlPwlZ63OxklLoPsO98X
-	GjyMiaUn2fU66C4Pwq4L8KlJSDj7nyCJ8ZE98VsiPr94IxnOoBirRn/Fqlun9wqdb9BXDKpTmBa
-	lDQA4uwcoxM5BW9RxjurfyZxpxSxw9qNFGwBRo4XL5/zq8W5QWvU+hx6VItLr+WzKFIHrOEUdaK
-	Ii6Za6cXlunGOeSQOW58ftH5I1ytZt8b5YDdd3oOYU5iCEpyLqrAUjwlMBa0jVuIxX4SGOo+z+a
-	exd7EgFkUEphP+IK3Gp4eyikAOW8H6S2RZFc0Ou56hQnFUqcGQo7BviV3VOLLSi4pDl3K3hdk1C
-	77A==
-X-Google-Smtp-Source: AGHT+IEw2MUxlg+9z0zOxwI2HIbA//xXYjnaeyhIQ0EYOe7raQRMF7DADSBZ+e1Qc+mzPINdbbw/jg==
-X-Received: by 2002:a05:6512:1193:b0:553:a272:4d18 with SMTP id 2adb3069b0e04-553b6ee2b8cmr5915844e87.20.1750269227022;
-        Wed, 18 Jun 2025 10:53:47 -0700 (PDT)
-Received: from localhost (soda.int.kasm.eu. [2001:678:a5c:1202:4fb5:f16a:579c:6dcb])
-        by smtp.gmail.com with UTF8SMTPSA id 2adb3069b0e04-553ac11ff75sm2315299e87.26.2025.06.18.10.53.46
+        bh=cq44AhL1m8zmm2BXeTzju6Z4jxLaMdXtrDcTCP3h0bM=;
+        b=HcJAojWWMEVCg/IETup+Y/AAGPWMB5qeyziXTbhRdcoXUZmro6Ky/OMAXnDz2qZqFo
+         AwspxmaYNGXkxpj8zTK1lLMVM0B+k5cOMS9gHc+iAgHJ+QCW2RLzYx+6VXaau2t25X9R
+         MqGIkOnWvsHFveQ99iFbccR/wb8LGMXhXp3zG6UP8MmIhUIUo3uwziKo2DsxWmyVgqeJ
+         /iwgSdXT1saBsNZGNlpU9f/AwtIfhwg9AKISkwPRDfBaTbYdFvUxli/zfHs6vxnfqRwy
+         9Ujpb1xOK0kWR8w7W1tlAJ+45Ofxuxbaj+XcnlzY7dykE3cB+nhKAV9vB2DYzA7gwTeX
+         gYCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750317242; x=1750922042;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cq44AhL1m8zmm2BXeTzju6Z4jxLaMdXtrDcTCP3h0bM=;
+        b=YhQPZQ6qPO/+A5l3dXN51kQwddJ7cqEbGSRfEzEB9sHcJpssvenYDNvWehjsJpSY3m
+         84Xwu90b8mDBtwRfwc3V1RiIScsBzmjmxv1WmQ3V5jwNSai4k3V4klOCQktGiqKk5qqQ
+         CoxLKhzgx/fI8LFUFQxGA4tHAbND32pmF+Z+DrAJH8ewNxfe/jcw1Y9lmK/PqaTojn+k
+         RNrsOiPp2GFULGg0MEmXwmHbVhmdPiNrOvm6E/tapgDZGIWt1UaGoCf2NIQny6j47TDF
+         csQ8ecDaVTU94enZLqGsSUWW9ZS5vupfrE8aDDs2xAJhizFxJxRmy3HED01r81I1UF3L
+         oP8g==
+X-Forwarded-Encrypted: i=1; AJvYcCU3k6g20b3sWh7uR4eKbUeeYtzQ/iF54KBqAl8IS3DgKteCphlrqJlwWWNZYFxMsAyJgtaY3pZ5@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyGEcj508IbCvmLgumamzTqiVtMwJSDPcVRhggGN0EiC2gX+a+z
+	Mhlarqh8Fn8MTl/vQsNogaOlgr96xsJVMdVUpKnyYIqxwJYiwo7Et/iGBarfxvPLAoU=
+X-Gm-Gg: ASbGnctBrgNhK6QT4A00etj8A7eEgZi9bMotsrqP+PkU+Enx/N8c7Ul1nGa1CZ6M+G/
+	u0k1ZzkzAQtwwR6w/RpNBE/XtcGIVSsmnwY2vXLW77u2n6Sz1MXYorKXNkGqJcUXvhhXvHf4Jdg
+	ZgBnYomzgOV/XFbPSBtzDqe7g5RgyGQMm9/ef4bfxmopOuEwJiXm3T6wR3aS0xHReqEaYDxWQwX
+	mivyCkvPF3vclZpGya2xdyNCPH+VmOuxfb5VlU+N3FEy0HKe9pO7xlHsCkpzg/VQC6PAD6RxfnC
+	CEEJZDHvZxgyXPBBxWq2q1ouUIawkhQQw1PJ1Tpjep60PQuj1GLY3q5O4dS3tleHfNabO9tB/Q=
+	=
+X-Google-Smtp-Source: AGHT+IGlNantl4wJm6RCvWBimekXrYP8rB5NeN1SXtm5TjP6e7AZBjb9h39LOn+KDLomqiXHR+OvRQ==
+X-Received: by 2002:a05:6000:71c:b0:3a4:dc80:b932 with SMTP id ffacd0b85a97d-3a572367dd8mr13904267f8f.8.1750317241916;
+        Thu, 19 Jun 2025 00:14:01 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:c485:fe15:c9ab:c72f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568b087b4sm19153422f8f.51.2025.06.19.00.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 10:53:46 -0700 (PDT)
-Date: Wed, 18 Jun 2025 19:53:46 +0200
-From: Klara Modin <klarasmodin@gmail.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Avi Fishman <avifishman70@gmail.com>, 
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, 
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, 
-	Benjamin Fair <benjaminfair@google.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 2/2] gpio: mmio: don't use legacy GPIO chip setters
-Message-ID: <twqaezumdhalpivd46xkevzbfkwouwfrpr7wbw7yjeqcxberzv@sp36opkfttne>
+        Thu, 19 Jun 2025 00:14:01 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Klara Modin <klarasmodin@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] gpio: fix NULL-pointer dereferences introduced in GPIO chip setter conversion
+Date: Thu, 19 Jun 2025 09:14:00 +0200
+Message-ID: <175031723753.8751.12135495432904618963.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250618-gpio-mmio-fix-setter-v1-0-2578ffb77019@linaro.org>
 References: <20250618-gpio-mmio-fix-setter-v1-0-2578ffb77019@linaro.org>
- <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -93,97 +101,36 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250618-gpio-mmio-fix-setter-v1-2-2578ffb77019@linaro.org>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 2025-06-18 15:02:07 +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> We've converted this driver to using the new GPIO line value setters but
-> missed the instances where the legacy callback is accessed directly using
-> the function pointer. This will lead to a NULL-pointer dereference as
-> this pointer is no longer populated. The issue needs fixing locally as
-> well as in the already converted previously users of gpio-mmio.
-> 
-> Fixes: b908d35d0003 ("gpio: mmio: use new GPIO line value setter callbacks")
-> Reported-by: Klara Modin <klarasmodin@gmail.com>
-> Closes: https://lore.kernel.org/all/2rw2sncevdiyirpdovotztlg77apcq2btzytuv5jnm55aqhlne@swtts3hl53tw/
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  drivers/gpio/gpio-74xx-mmio.c | 2 +-
->  drivers/gpio/gpio-en7523.c    | 2 +-
->  drivers/gpio/gpio-mmio.c      | 6 +++---
->  3 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/gpio/gpio-74xx-mmio.c b/drivers/gpio/gpio-74xx-mmio.c
-> index c7ac5a9ffb1fd1cc9439e3320d54574bf0cebbf6..3ba21add3a1c669171578ceaf9cc1728c060d401 100644
-> --- a/drivers/gpio/gpio-74xx-mmio.c
-> +++ b/drivers/gpio/gpio-74xx-mmio.c
-> @@ -100,7 +100,7 @@ static int mmio_74xx_dir_out(struct gpio_chip *gc, unsigned int gpio, int val)
->  	struct mmio_74xx_gpio_priv *priv = gpiochip_get_data(gc);
->  
->  	if (priv->flags & MMIO_74XX_DIR_OUT) {
-> -		gc->set(gc, gpio, val);
-> +		gc->set_rv(gc, gpio, val);
->  		return 0;
->  	}
->  
-> diff --git a/drivers/gpio/gpio-en7523.c b/drivers/gpio/gpio-en7523.c
-> index 69834db2c1cf26be379c0deca38dda889202f706..c08069d0d1045e9df4a76cad4600bf25d4e3a7c5 100644
-> --- a/drivers/gpio/gpio-en7523.c
-> +++ b/drivers/gpio/gpio-en7523.c
-> @@ -50,7 +50,7 @@ static int airoha_dir_set(struct gpio_chip *gc, unsigned int gpio,
->  	iowrite32(dir, ctrl->dir[gpio / 16]);
->  
->  	if (out)
-> -		gc->set(gc, gpio, val);
-> +		gc->set_rv(gc, gpio, val);
->  
->  	iowrite32(output, ctrl->output);
->  
-> diff --git a/drivers/gpio/gpio-mmio.c b/drivers/gpio/gpio-mmio.c
-> index 9169eccadb238efe944d494054b1e009f16eee7f..57622f45d33e0695f97c7e0fa40e64f9fd5df1e0 100644
-> --- a/drivers/gpio/gpio-mmio.c
-> +++ b/drivers/gpio/gpio-mmio.c
-> @@ -362,7 +362,7 @@ static int bgpio_dir_out_err(struct gpio_chip *gc, unsigned int gpio,
->  static int bgpio_simple_dir_out(struct gpio_chip *gc, unsigned int gpio,
->  				int val)
->  {
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->  
->  	return bgpio_dir_return(gc, gpio, true);
->  }
-> @@ -427,14 +427,14 @@ static int bgpio_dir_out_dir_first(struct gpio_chip *gc, unsigned int gpio,
->  				   int val)
->  {
->  	bgpio_dir_out(gc, gpio, val);
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->  	return bgpio_dir_return(gc, gpio, true);
->  }
->  
->  static int bgpio_dir_out_val_first(struct gpio_chip *gc, unsigned int gpio,
->  				   int val)
->  {
-> -	gc->set(gc, gpio, val);
-> +	gc->set_rv(gc, gpio, val);
->  	bgpio_dir_out(gc, gpio, val);
->  	return bgpio_dir_return(gc, gpio, true);
->  }
-> 
-> -- 
-> 2.48.1
-> 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-This also fixes the null pointer dereference for me on the Banana Pi
-BPI-F3 from my report.
 
-Thanks,
-Tested-by: Klara Modin <klarasmodin@gmail.com>
+On Wed, 18 Jun 2025 15:02:05 +0200, Bartosz Golaszewski wrote:
+> I should have paid more attention when doing the GPIO chip setter
+> conversions that there are instances where the setters are accessed
+> directly using the function pointers in struct gpio_chip.
+> 
+> This is not optimal and I am making a mental note to track all such
+> use-cases and use the appropriate wrapper instead. For now: let's just
+> fix the issue in gpio-mmio and its users as well as one other converted
+> driver that suffers from it.
+> 
+> [...]
+
+Applied, thanks!
+
+[1/2] gpio: npcm-sgpio: don't use legacy GPIO chip setters
+      https://git.kernel.org/brgl/linux/c/1fd7d210952938e8ef6d87287e056e25a2fc0547
+[2/2] gpio: mmio: don't use legacy GPIO chip setters
+      https://git.kernel.org/brgl/linux/c/cbb887a76b788d8e9646fdd785f43745a3a662bb
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
