@@ -1,92 +1,90 @@
-Return-Path: <openbmc+bounces-280-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-281-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83F7CAE58E6
-	for <lists+openbmc@lfdr.de>; Tue, 24 Jun 2025 03:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B1B5AE58E8
+	for <lists+openbmc@lfdr.de>; Tue, 24 Jun 2025 03:01:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bR68W2w1Pz2yf3;
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bR68W3sCvz2yhX;
 	Tue, 24 Jun 2025 11:01:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c406::3" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750646552;
-	cv=pass; b=BiVFGF1DWXy4+Z8l5qvN4fNncgYexjbXBHKuwfbDIJGKGgWVhhD2zG4Rb2xSwowucsQNy1qV6RCzhpw0eK0dG8OnbyGOzCrp/61wUjXRoKu9RMsUGYgytoY+btbq6Xw7M6YPwwt2VXejdz6ZUV0S8MJxrFyNBC/a0qwzg63G8PEHUNX9WP41DDd3cs3BATdT+i6iVdxB7HES2wpeSMWEw+uMHtz9D+XK9kgav7vnIJ2ri32i8O45255kOxFSY9kPUOxcVghFuwBOgLBl8J9ZDaOOvhVFqhHUnHl6WoaQcePL46NpZxUCuv43aon20VouQ4I5BU/zVHzJutJbM/Wi8Q==
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750657306;
+	cv=pass; b=GvujNmCx8ReZ5byt26IXutQZTCr95XF04srP8bSequbRtvyMjT6QhL5O08HA7tsacNleGSUuAuFRAXcRiRozSBTEzLya+GM86LSMs6lK3qnMIVkDsyWRcHW0PNgyT0G3+MYxtaYi+fzAoubRlSBlLi0rLPBBGeWvnyvC9cvDXDC0iDk07c20OyElF9GG0CC33IfxAspcbQa6DcRqkCnL0QjPqCXB3O/F/ft6HijCARE4m+GTAzHbsUhuYKiCzIY76Gosv6LrzJo6cUP4+B1J3nPwoYFDfsAT17ze7gX9UxfkjLwdxh2+CFOBZE3+plnVyzut7E/YXwhM7IJ7H3uJxg==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750646552; c=relaxed/relaxed;
-	bh=JLMb7eJjr7XkcjcZ8BY9s2O7UkP9trFycXwFrhrEgfI=;
+	t=1750657306; c=relaxed/relaxed;
+	bh=5HedHH9h42IiBcKalGfW+9YAocfvxB+i4VHm3KNqhvg=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ajguEJd2m70RRs1qtH8kXhq9Uia9jQKOjKBLyl8qWhdUUvdCGcMzAQiZG9zsFDs7YnAAPNMkimGrSaGP47w/5DTKlg3uBsIpcT8NZkyjlfm6/Nz7b//3dFuKFp0MLOQ7jArOyGtKgjGsc7tbOaOsu4vAlxbbruglpyp9Zwgy4wbCCxFg8FhtVAWOF3qztrmWzgJivabPiYwaklGYUkam6kWBlHhE+JW3zNWK6fdetZDIz4Rj7dPWF4tHD3XN4eo7nq9r4JX9eloNJwZRRUtNLQDo5iGAz8Uxr7D9cRK/WF471ACoJQrbgmgeVZzxS8mqyZdbS6HhtwZuVI1lH6gEMQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=YiEqq14O; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c406::3; helo=os8pr02cu002.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+	 Content-Type:MIME-Version; b=iDvWYQ28aOksd1ZCF7OgVrcKVnZODR6rIu9z3WDDovIUM/j8XVC+UKvNeWpDeS5Ykjh8K70WFi+ZBCTEu4X8eJUJkIuW9J891YjnJhYEByu7mNWbEm8+g0o+bEEqTapNNPVbP+mnsSpOhvVKTajMl9V+47vkH4VacIKm2pdKX5Vszj8sx6w0zC8GtOo9uMCrDaN9KHRQw2fa5lXeXpCZj7goDhf7U7ngZrxzIV8msmzVhCCobWJk+t2+E7rv5tMUM/DV37ineAIODlLivWc1Rz+LNuxiWy1SLCfr59RCnUXB8sWoTgSd/prgI2ju5EtO/1nydsNIR8boNd1UvTmm+A==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=ZDBqMlYz; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c406::3; helo=os8pr02cu002.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=YiEqq14O;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=ZDBqMlYz;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c406::3; helo=os8pr02cu002.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazlp170120003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c406::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bQXRq59lLz2xRq;
-	Mon, 23 Jun 2025 12:42:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bQcQZ1WFHz2xRq;
+	Mon, 23 Jun 2025 15:41:39 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=INx45uJRlL9nV+w1WjkD4TywSInnFmv8Ao3gwy8qjX0uwSXTBhg/vm5kLyNtEyCTRfQplDhjFNGr2/u6Hjvbb+FYvlsQJi79MwYzJa92OYNj9+9H89eE6goMKDN5EYLaEteNf/+m0bgwr5jF5/n+WEC54vmcVhFjJ5wpj83WRQGZEBAUd0CUfYOmDVks2eq602Ugx8/hkYlOpN4xwBQyuE1CDtylG10hUePXaoLUw6199ubTu8nM8Rf9CVRTtf2m/TFPcwtQbcJbc77ecEhmRFJXjaVfsiDrPuUtdWiWSipbNwcs+4n8GE28VkOJZKJ1hkaybPikgK8N6D0IiCmIIA==
+ b=EieQb2I//I+rooxfBb6WKG//zwmiqI29zk2Af+MrawX3pxucmr2CLrNaX1Nh2r4pPl76S9z5HhQF67CxMdScEKNEXNdqhlXiORTaEC3YUHJskrzCKKNbI+/hUKOH0KQCQD94/id/4epqKg3kONbPCCLQpPELEQ45iGjV9ea8OO0Eklc6N2gRg2WMREGDXo1xXb91CbelabUdLHugs/boK1kyIMjcnoZPy+a8a2IuecxLSWNUVCzaUWM5dAZXoQmAytQS9cCTplY8UznfK+KWwLiuyQWf8zNt2wMHvf0D0aW8j6p7j9P7lsixFSgY8eIc9WaoLMZdsPnZPRdnz4z79w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JLMb7eJjr7XkcjcZ8BY9s2O7UkP9trFycXwFrhrEgfI=;
- b=rSSfHq5FSg1kOaVj7JDJoMzCVDKNMg7PLITZEjuybm8uPfe4+jN0E7EYL2ZsXJf0pdMgpvtd0SqNVXfUJ0tCtDxvlM1HCLSRxzwLFodSEZYqNFxpGVQ/yq3SL4tNdNHt3P6CQjmFrkz9Niir/ab3NPtC8DtEb0Dj+zNkbKpHfHTMPDQw1OzGkyS4ps3OCPWrc+2bTOFeOwMQzI32vYdF8QQZW6w6r4hjwwaQmn5EPU/ok5adFOzWUge1I1x2og8RAwDojcMLbrPeaZnyjvpu8qfFnqZ0lRA6XxcYMXV6hoKMfGBhhUVblVnSTwS/IEcqnKkTyGaVpPIk7Q3FwaPa/g==
+ bh=5HedHH9h42IiBcKalGfW+9YAocfvxB+i4VHm3KNqhvg=;
+ b=EFu6ZzhmwQb1mp27+qi8MbUwMa1GcIh7LfxYVvuzw2JEkbtzTtU79bw4cw5NdRsQ39Z/j4xMXZY/JbHV9yNi1RlIzYWYAGx84/591uJ/RoXfA1QTMRY6o0spB9Z7e94pjyeXZ61H121W8YcuVzHiRdR5VyR9zH3OfEedEQ1b9N377BNIhLZVzsbktWX6vl9hyM/L9FFvjxTs6Kt0N+XHEFERUJGKb80QZqzMCbDVyjCYhJVCsnvW4s2jo0dGJIpmm0d5O01JdvjiCxZ1NhTR4Uy/hUd0TFz1iESIMxZlVKJMdtBtA+hWdsAh0pbe8VYwmEZNXh7N1m0tD+XAaD9Vow==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JLMb7eJjr7XkcjcZ8BY9s2O7UkP9trFycXwFrhrEgfI=;
- b=YiEqq14O2lelZ46lAcXJ9/oAwSSOEqlfkih2tOiQC7xDLxmDHzblSiV56ZQbGIps14EVZHVkTtdP1nMgZCEDIUFtH6MrqRdQvCvAd3nLcIPrp+3JrZXqLfQf1KB9EJs3OnXlD1Cn3nES1VOYQYcgx0azsZIdxaYqagsNqJtjQe2dO1CB+XEI+Y7i0QXtOCtaMs1aGajsfvA8XzN6cu4Q6R93uLWm05UB3JPB/5kKTxz2mkX5e1ojTp9w7P6IeFBPsX+qvHq89zJAPj8176Bre8N6RxAAk9fjfXc6Yla5JShe0D1+MK5yU5Jy5Sppj1YR/A5v7UUftWOIQBXhTLLEbA==
+ bh=5HedHH9h42IiBcKalGfW+9YAocfvxB+i4VHm3KNqhvg=;
+ b=ZDBqMlYzjYr+54hbQk+Dim3FelVy2muG+GDgI6+RRcrJ03JChvV60t2Z0MEwoFx/UMseUAwLTUxZEqfeWhYaYe6l+cuIwUp5rt8PbSDCrFwWbn4C5fjdcSTtOD/yizlwJp+Of9EqQ38L5DiwH5WY7vt5dad26ER3pcOhdbiyB0Uu0pSndOtAONwQME6m4vK7/+nem2lFXH5JZAmrIgBf+xK5C0Y0aTzYJj8BxbkI6Cns24OITz9nLOEXzYqAUcCGjq9eDK7Ngjn8wdt08sf0VehVizQgiYqMCA4cQbepnMEn0W5jNKTqlFnoKA8XwntoTPksre7PxM6sZz4FfFns7g==
 Received: from SEYPR06MB5134.apcprd06.prod.outlook.com (2603:1096:101:5a::12)
- by JH0PR06MB7151.apcprd06.prod.outlook.com (2603:1096:990:8e::9) with
+ by JH0PR06MB6438.apcprd06.prod.outlook.com (2603:1096:990:2c::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.27; Mon, 23 Jun
- 2025 02:42:07 +0000
+ 2025 05:41:13 +0000
 Received: from SEYPR06MB5134.apcprd06.prod.outlook.com
  ([fe80::6b58:6014:be6e:2f28]) by SEYPR06MB5134.apcprd06.prod.outlook.com
  ([fe80::6b58:6014:be6e:2f28%5]) with mapi id 15.20.8857.025; Mon, 23 Jun 2025
- 02:42:07 +0000
+ 05:41:13 +0000
 From: Jacky Chou <jacky_chou@aspeedtech.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>, "bhelgaas@google.com"
-	<bhelgaas@google.com>, "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
-	"kwilczynski@kernel.org" <kwilczynski@kernel.org>, "mani@kernel.org"
-	<mani@kernel.org>, "robh@kernel.org" <robh@kernel.org>, "krzk+dt@kernel.org"
-	<krzk+dt@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"joel@jms.id.au" <joel@jms.id.au>, "andrew@codeconstruct.com.au"
-	<andrew@codeconstruct.com.au>, "vkoul@kernel.org" <vkoul@kernel.org>,
-	"kishon@kernel.org" <kishon@kernel.org>, "linus.walleij@linaro.org"
-	<linus.walleij@linaro.org>, "p.zabel@pengutronix.de"
-	<p.zabel@pengutronix.de>, "linux-aspeed@lists.ozlabs.org"
-	<linux-aspeed@lists.ozlabs.org>, "linux-pci@vger.kernel.org"
-	<linux-pci@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-phy@lists.infradead.org"
-	<linux-phy@lists.infradead.org>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>, "linux-gpio@vger.kernel.org"
-	<linux-gpio@vger.kernel.org>
-CC: "elbadrym@google.com" <elbadrym@google.com>, "romlem@google.com"
+To: =?iso-8859-1?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+CC: "bhelgaas@google.com" <bhelgaas@google.com>, "lpieralisi@kernel.org"
+	<lpieralisi@kernel.org>, "kwilczynski@kernel.org" <kwilczynski@kernel.org>,
+	"mani@kernel.org" <mani@kernel.org>, "robh@kernel.org" <robh@kernel.org>,
+	"krzk+dt@kernel.org" <krzk+dt@kernel.org>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>, "joel@jms.id.au" <joel@jms.id.au>,
+	"andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
+	"vkoul@kernel.org" <vkoul@kernel.org>, "kishon@kernel.org"
+	<kishon@kernel.org>, "linus.walleij@linaro.org" <linus.walleij@linaro.org>,
+	"p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+	"linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, LKML <linux-kernel@vger.kernel.org>,
+	"linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+	"elbadrym@google.com" <elbadrym@google.com>, "romlem@google.com"
 	<romlem@google.com>, "anhphan@google.com" <anhphan@google.com>,
 	"wak@google.com" <wak@google.com>, "yuxiaozhang@google.com"
 	<yuxiaozhang@google.com>, BMC-SW <BMC-SW@aspeedtech.com>
-Subject:
- =?utf-8?B?5Zue6KaGOiBbUEFUQ0ggNy83XSBwY2k6IGFzcGVlZDogQWRkIEFTUEVFRCBQ?=
- =?utf-8?Q?CIe_host_controller_driver?=
+Subject: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
 Thread-Topic: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller driver
-Thread-Index: AQHb3BN5QYkLFJ4SFk66wBBeIABUJbQA2i+AgArqpKA=
-Date: Mon, 23 Jun 2025 02:42:06 +0000
+Thread-Index: AQHb3BN5QYkLFJ4SFk66wBBeIABUJbQA/lGAgA8cdnA=
+Date: Mon, 23 Jun 2025 05:41:13 +0000
 Message-ID:
- <SEYPR06MB5134623F42A5B204C20E14A99D79A@SEYPR06MB5134.apcprd06.prod.outlook.com>
+ <SEYPR06MB5134973F678EB5B163DD50809D79A@SEYPR06MB5134.apcprd06.prod.outlook.com>
 References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com>
  <20250613033001.3153637-8-jacky_chou@aspeedtech.com>
- <576ca6bb-291c-458e-9703-46e7d2f43bbe@kernel.org>
-In-Reply-To: <576ca6bb-291c-458e-9703-46e7d2f43bbe@kernel.org>
+ <40d1c5bd-0457-55ea-2514-ba27e6a4c720@linux.intel.com>
+In-Reply-To: <40d1c5bd-0457-55ea-2514-ba27e6a4c720@linux.intel.com>
 Accept-Language: zh-TW, en-US
 Content-Language: zh-TW
 X-MS-Has-Attach:
@@ -94,89 +92,73 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEYPR06MB5134:EE_|JH0PR06MB7151:EE_
-x-ms-office365-filtering-correlation-id: 92d6b196-db1b-4640-a36c-08ddb1ff8b7c
+x-ms-traffictypediagnostic: SEYPR06MB5134:EE_|JH0PR06MB6438:EE_
+x-ms-office365-filtering-correlation-id: 0263232c-cb12-418a-7f99-08ddb21890ad
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|376014|7416014|1800799024|38070700018|921020;
+ BCL:0;ARA:13230040|7416014|376014|366016|1800799024|38070700018;
 x-microsoft-antispam-message-info:
- =?utf-8?B?elBSall4VC8wSFNXdlB3SkQzV2RhZmdWbjJlKzdCN1k1Nit1d2krSkJmYmR4?=
- =?utf-8?B?NlpucVplR2ZrRXBOMXR0RVV4QW1zeGhOSmplc3FGdjJLU0RxbWxFczdOTCtW?=
- =?utf-8?B?UWpCaElucUZ4dWlIdmFaR1ZBZkxMRHYxaVMxY3JHVkpzbm9UOVFvQ1pOWWhQ?=
- =?utf-8?B?b1psMVZ4UU1ETno2RWd6SFVCNFl0bzIvSmhDR3BYc3B3SDkzN0RTdnc5WTU1?=
- =?utf-8?B?RlFuZzc5SUpmeEg2MExrSFFLcFo4UmlxaTY2YXQzR2VGUWtIV3RaaU85Z3VM?=
- =?utf-8?B?NmM0Z3RMTDlIU3ZyRTdPQ3NlQlhsZnB3ZnJQNnlLeUx6bDhhVjJRZFEzOXJ1?=
- =?utf-8?B?MWxRY0VmZmNDaitkejFRZ2dBQXhyMHlhVGRXaTFEdzB0R3hDalY4VVM0Ty9F?=
- =?utf-8?B?ZGFyeURWeXp0Q2tYUzUvaW9JRlMzVmN3WENYZGtnKytYRFVBVDNkM0dHZXVC?=
- =?utf-8?B?bStrWlJKRDBoWjhkdDIxMnFsNGg1R3lBSi9iSzJUT2FHeHRRbE5JQjNqdDJt?=
- =?utf-8?B?N0NKUmJVT0djRVlicEcrN2x1TUVRdXdlWTBRclY5ZFI0NThNNXNQVFYxVVR4?=
- =?utf-8?B?cVhISVVCNjREYXpCdmowVEVJdkVLaWRBc0dFaWpDdXZ4dUMzaVRwQlQ0L01W?=
- =?utf-8?B?WkxNbUczZzdrSkluK0NnRzNqUGh5cjZleGVhZ2toQk5tV2taKzRyNjFSTlFi?=
- =?utf-8?B?Y3FiREtQTUdnaEIrWFMyZHEwaTdoajd2eVJHbmRtZGF0UjJhTSs0OFE3VXBo?=
- =?utf-8?B?QzlWb2p0YlZJMzM4RkJlWVFKVitHNEQvZFBqRXMyS1lLNEwzSS85MGk2b054?=
- =?utf-8?B?K0lWRVJBbjNLTjVNT0JZc1lZaGRvcDdTM0VxdkV3UXJCWkhjd1p2d29XemE4?=
- =?utf-8?B?VWgrQkR1Zis1bE0rbDlqY2w0RWp2VlA5eTNKWjhocVpqTU5Fam5HYXFVT3hu?=
- =?utf-8?B?elFiVVNYQ3lRVi94K25ma1pSQ045N0MxbXJqVDBPMDRBSlZ6ZGJsbW5RUWIv?=
- =?utf-8?B?TmNsYmNFNWNNQTF3MTllYWh6Tk15VnF1OGFwWWNoMFd2NXpvOUxMVExLREpz?=
- =?utf-8?B?cnozakluTWhnYitxb0hlTzdXV3ZyYzVEUXZmc0RYYnhCZkQ4dU9kaGxZY0ZS?=
- =?utf-8?B?anhNMC94YlhZSk9SQjUyeFZaVEpxWDVwWlIzVG5BazhoVkh0OHhBSWZjd090?=
- =?utf-8?B?OGlnZVlVY0RmUmFJK3E0RU42L01jaHNtUkdGa3NsVkxMWjRQSVVuNEpLaCt0?=
- =?utf-8?B?YTY4Qkt4dTc4dnZvTVB6cCs0cEYyTmF3WmVtTjlnRE9mMnZiRCs4dUdXbTVt?=
- =?utf-8?B?ckt6emtSNHE1dHdYT2k1RDlONEdwMzZNT3MySTJmOHFQSURRY3pPZ0kzNjlk?=
- =?utf-8?B?QlNMMUJBemVTaVBJTVBiaHNjRW0zT1BQUEM0OGU0clV5YXB1VDZQUHVlUVBo?=
- =?utf-8?B?VzdmNmtHM1M2elVVMjVOSDBDdVI0NVdHTWtUZkpkcS9FSTVPTldIS01QSlEw?=
- =?utf-8?B?Z2JIN2RvTDNoKytXQmVwQTNyV3dsZlk2bmJqTXFPYnVIbE0zMzRPYlVzVDEr?=
- =?utf-8?B?bUJSNThzZGt4d3RxT01wL2xzQWwzNzlOWjhzMEdRekUyZGdjTXVTMVBqZHIy?=
- =?utf-8?B?UlBQTVlSTFpPTFcwVTEvcVJGaWpDemJ3aHp1U0MwTExhVjlJQ1RMN2Zqc0N1?=
- =?utf-8?B?b0d0ZjFGM1RNNFh4UUN6Ykc0RFJlZ2YzM2RiMWg3MlBILzhwOHlxQzk2YUlj?=
- =?utf-8?B?MHUvY3ZHeUNLME9tWGVUTGpsd0RKS0Z5ZTRiZlRzUkV3c2c0elBwdG9mZDZo?=
- =?utf-8?B?aS9hVTB6R0xVYmhUOUxybm1GRDUzaXNka3EwZXU0Q2ZZZHlWdFIxb0ErMW1P?=
- =?utf-8?B?Q3d4YTJqOU4xNDhCL0FUN0NXQ0VvRVBjcUp3ZTRIOWpobkRHYWJuVmg0S3h1?=
- =?utf-8?B?Rlh5c1AzU1hxS3FzRU5iN2JyN1RFV0ZGYWRPc01sTDkzYjhxUHdiRVV5Smxq?=
- =?utf-8?Q?/ZMXBILUVZ1j9S7irkcfTn++GGItI8=3D?=
+ =?iso-8859-1?Q?o+mDl46opg9h0MuOsdzg0Gf65Il86VSbE+4Tt6PUBsiZpUTfR2pxdQlUze?=
+ =?iso-8859-1?Q?l7lhaa+xnq6RwLi/nSinCzDKLFB+4T51Vw6Y0hDTs8Opjgqo2WHfL3G7Ic?=
+ =?iso-8859-1?Q?yw87d2mtnJw58eA7efbo2Xge1gw3wEh6O3eDY6bagoTBhhUDSf28Dv1bRm?=
+ =?iso-8859-1?Q?sqwJIN6F1lf/41ZOJLHWNN+bLl0DURJrPoYFs8J06F5tpXp5VJ5WgiaJYP?=
+ =?iso-8859-1?Q?RsgpzckluxEFryd0JQsN62Banwvav3eweULVDHCnOUyAujC89643Jarwaq?=
+ =?iso-8859-1?Q?ohhTcL6fIECKyS2zs6RkMkOToyd+wHH0yHN9CMYfkfBNcJGNd0jTJdIvDg?=
+ =?iso-8859-1?Q?/+DHtbJ7YESypLR0i4rbVWwTjXxLQIekAeOxRxAV+eICYaenM4mgJDkIe/?=
+ =?iso-8859-1?Q?+1StvWz1KGahPnpkEicZan68HpTA+hkejE7ZHWMSuKsvCyZUyrZsEWGO10?=
+ =?iso-8859-1?Q?rWUYtzsH1lIByt36AAN4A76+ei+4GJRHkJ4voWfmXbkPYghM3xqUkFp6Bc?=
+ =?iso-8859-1?Q?H/EVYZZAsenIyFCPHyfwvICglZG1LDT686TXput4oibecgkMZKP0+yVD2V?=
+ =?iso-8859-1?Q?wgkx3jIIo/NSo5yCmDV6Y74jmYHqaJPX4vpCVPDEWIsJynYhZNU09B5YZX?=
+ =?iso-8859-1?Q?CDpKkELTeeHoob90p0yEFGU4h8G6SPp/KSmYd7dKZ4z9cfw5zLTlQCBzcL?=
+ =?iso-8859-1?Q?nk5JdNbMqaJYHF8QLmmXwuyYnPPdwUnNo12Up9E3VKkLeF8ztGzrEoS0/l?=
+ =?iso-8859-1?Q?8YLzeJZc4MfVBkjOE2LDkwfPUDX4cp1M60b3v0Y71v7tjSy8bLo7m6hkDq?=
+ =?iso-8859-1?Q?XXY1Oi5EGS+k8VIkCgzGJ82CeKBk1YbhaR4ubcUz8SCZkF/PG6z+Zvbd+l?=
+ =?iso-8859-1?Q?veVee0iMHoSDLSAnvxPp1vhaNDwQQU+2nT9vcNAwvjecY/CEisVAsVWs48?=
+ =?iso-8859-1?Q?w7FJ/OLQrpLmAgr+RIj7Ucucry6D4TjkqGVNDfsyCT0QzX9UrJrzwA7nTj?=
+ =?iso-8859-1?Q?Qa3wCtElbCSuFGBGtaVmRwB/XvV3CX9rdB9PmKsAqBd9dtzM4TGAUS47S6?=
+ =?iso-8859-1?Q?kU0rGJ1mwaXRf9nUuxWbidT5bhYj8XAzEaY0a0ikioIOrjEFpHb6YTwUw2?=
+ =?iso-8859-1?Q?8uOizV8ZFUv07nHF39dDAkf2ttbLSr7RYu4IGMU3aUoM0uv7m3fZ/URLgU?=
+ =?iso-8859-1?Q?Oes7E+nC3WTp/+Jmt5qCMruVeLk+thzaIoOOHpE7IaY2dC0jBXpTbQ3I+y?=
+ =?iso-8859-1?Q?gQmSf8xRU3As0c06DyeyUoWLNuYHJxdyD6G1vDvj8DoO3JZ1xQhMtKeztO?=
+ =?iso-8859-1?Q?6WNiPZ0JngqMn5HAuY9b2iAYT66isCk1nV6HPUtpwDf9bQkM/vGcS8Luah?=
+ =?iso-8859-1?Q?ahoQpSazshQFzlS7mCTg0Q5TPDNKbI/arSl7peAgwjAPooovLbx+h4hY6b?=
+ =?iso-8859-1?Q?ObuqA1uiHQj8IxNsglv+3d5tPj3nLx2zuluA+jrJsZ228tHQMtwYli3gnx?=
+ =?iso-8859-1?Q?ldTpYcgIyfgYLqc9xg7aAvagPnOslHyG95CvnpHXVbeg=3D=3D?=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEYPR06MB5134.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700018)(921020);DIR:OUT;SFP:1102;
+ CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEYPR06MB5134.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?dkE2clRjYkVvYXRBVm5KdVhKUkpkOEppNitEL0t5VkhOWlcreWUvdEV4QkFi?=
- =?utf-8?B?aU4xUDhaVzUrSjBzdFN6QjRVN1dLRmNtMHhNQ2ViZnBPbFFkZmQwZTV6dHU4?=
- =?utf-8?B?WkJYODkvRzgvMnVDSW8rSlZLeHV5eFBzNHgwOWdTQnJCcnVQVEJhNWllcURZ?=
- =?utf-8?B?ckE1bDNuRUpGbUh4Uzh6azlwLzJSdFczUkRXVFF1MS9odlN6YnZqQlBFV1BY?=
- =?utf-8?B?TFo2b0FpRmZJOStsaXJzTnZKcUtLeFpOZlM2RHU5aWVIZDYrMnIwRUtFa0t4?=
- =?utf-8?B?V29tRkRCeEh6blJqMmJuNHhLaDdxUTZVcnp0aUlmSTArcXJabmhQdG1INi9O?=
- =?utf-8?B?Q0p6bm1kQWZBTzVjTXplSXJzb3Q1QUR4L2RwYzZSWFNpTDh4MVBtSVlYL3d2?=
- =?utf-8?B?VXJCS012OUxQbmcwUGNmWGZwVSszWHc0WHhDY2hTWThwdStpcFEvOEZjVysy?=
- =?utf-8?B?ekxvNGJoOTF1S2xFU3hkSTRKU21iY1lkS2o1R241V1c1UWdUY1F0bi9Cc21U?=
- =?utf-8?B?YnB3VUJScm1tOWVxTE1QUlVjN0xMOFQ5MGZMQWJDOGpzbW5kSVhmRnpJS1BF?=
- =?utf-8?B?OWFZaEtoUlJUWmFjWG5VaTZrcjk3cDg1TXlBYk9VYVhoV3ZhbnVJVytlbC9X?=
- =?utf-8?B?RDAzVFBkQWtjOGtLdFhLRkw1WjNoSmRSMnppam4rWW5VcElxZzZLSWRCd3Q5?=
- =?utf-8?B?WXFhMG1odmVHemoya1Y5eVdVQ2I2Tkh5KzUyNXdraUd6NmRZUUdoR0JOTEJB?=
- =?utf-8?B?OGdhczNFYnFBUmJaVnFZMUNtanhnSHhBYjhzZGZpbGpBRkppVWRxSjBoT1F2?=
- =?utf-8?B?V1JXMXI5bGRHWUVlRExvbW1qZ1EyNWJ6dXVTQVNsUXdIN0tQVjM3Ty80UUFX?=
- =?utf-8?B?Tlk2VVdjNEJKWEdEN21qZVlhVlYzdlpNUWxucXRQOXBLb2NZNW1sUHF4RVp6?=
- =?utf-8?B?ME5UOFFMMVYxcXNjQW0zd0FTc2V5dDVFVjZaWWpHRjAzaXExbHBMOVpkSmJ0?=
- =?utf-8?B?djV4R2tMK082VG9yc2FieU1OL29oNWVyVkFIY000RG1WQzFDM2tldWIxQ0Vs?=
- =?utf-8?B?K1c5N3NROHhTTC9GK3YxdTFPRFFwYWZQeVNSSUUzdFlGSEU3RlM2OUpYeVNw?=
- =?utf-8?B?SHF6MXh0S3grVndZQVJsL09vMkkzamttRHRzMnk3eVNrVFd5VkFoYW9kU0FY?=
- =?utf-8?B?OXBlSmxpcG9yMm5CQkVjYnczUUZ6NVBGMFJKWjFFODVVVEc5Vi9GcVhLWnBT?=
- =?utf-8?B?Z3FrRkZDZUxiKzVSYjU1bTVCOVpQYUJ6SDhldjJTb2lkNkVPZUZnbTFqUG5G?=
- =?utf-8?B?NldBcjJRektYRTBzU0xWVmpDRld3d3k2LzdQSThnOSt6Vkw0eGZKNVNBOVRW?=
- =?utf-8?B?TzRjZno0ZnpvelBpK1UxMHhrbnU1NmtLRzA0RDNSVWpnUG1wMG5HaCtEcDJU?=
- =?utf-8?B?L3RBbFI2UFN1YVF3TnZ3UkJQWkwwNzVvM3grY2pmUGpOTEo2QWprVExkNkhl?=
- =?utf-8?B?MEljNTF4QW5LS2IzZFQyc0tKSnlTL05kYVNuZS9VUU1JVTgzQUdSeTR6MTlv?=
- =?utf-8?B?aVRwV0FtMVBjaXpQWml1RFRXMEI2ZjNVbzNNOC9uVGxRcTZjQkxVeVFUQUZp?=
- =?utf-8?B?YXRMWlFrZzMzYkEzdXhlbitGVU1DZjV0M2tHTGFSN3NuWnNpUEIrUmpDVnd2?=
- =?utf-8?B?VUlUcmYzWVdUbnM3T2FrWFhidDZtL0JtcHJFcjhXbUpOOEFabHA1RlEwMlho?=
- =?utf-8?B?TDhiQkMzT1daNjV5eGFaOFpVMWxUTC9EVy9VY0ZhbURVWWdneWpjaXk5RHpp?=
- =?utf-8?B?OHVsZmxOeXNKWGpuVDJCeFordmJhdit4U2p2dTV6K1pVbHRsUzBHYVRWYTEx?=
- =?utf-8?B?V3Y4eGMzUUo3a1dQU2VvRldiUFVtbWFqZjNaUVdDejd5OGY4elZseGc4YkJz?=
- =?utf-8?B?SThNYTdIQTh6OXF1T0MxSERzbHRBTnFQdXNFSlZxY21TVDVlYSthS2RBb3NE?=
- =?utf-8?B?dzczWDdkMjFFczBQZXFEaGpmeERpVjM3UENnUytEZENxNFI5K05tNENCdjF4?=
- =?utf-8?B?L01PV0JRb3ExYXJsWWRQT29PZFV6SVBCS0w4R29ENFM1WkwzbmduN09DSCsz?=
- =?utf-8?Q?Zh3Uhfnj1/C6qG7tbZ9GiglLi?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ =?iso-8859-1?Q?O/PC/Nn6hhytxk1JKaI7y7aKqUMNCwCvb9eX64WCj/t906a8sCFusKxXju?=
+ =?iso-8859-1?Q?9r1eA9zeNvHQ7wMFAm7LrrVCDL9OFBClaPOseXkC72j3BuZy4EkxX23cSX?=
+ =?iso-8859-1?Q?Pda6G4tuZR1ZFccEYrn4Q25GVvUY2AIuiXBLyhpsywvlDocHGt9rSTY8WQ?=
+ =?iso-8859-1?Q?EJJVvr73JCqioAs9y950ZkwAyCZWxq988YYzuU1kZtRnz5aV1gHG7VciDG?=
+ =?iso-8859-1?Q?cwcFfqVnA1+2f6YMS19c7/resT5cJWUMlk2h3pI+RNrwqMbqbaMNs2rLC9?=
+ =?iso-8859-1?Q?ERGkfCtSbuaf9WnuJRbM9I6wOXE1qF6PGKfbiNp/Z6b4TMIWPD6aMSuG7E?=
+ =?iso-8859-1?Q?xG2v0yRqy+QE1Hp5vVWsTq7UdKbMioJ+2N8HQNGuoNcYL5HI+2ZKR5IeXR?=
+ =?iso-8859-1?Q?LAPZQNzrdZloRZHm8xjyEl5qbyVZ3cyuOgPlRggUeI2KrBHvaV+1YxpSgN?=
+ =?iso-8859-1?Q?gCYeYHrxlEpN1LbWkgFPCa0gm9MmaXuQS8+C/dhLc0Qb4y/OBmHWEOd6EW?=
+ =?iso-8859-1?Q?kykB9QJ5CGJ1eLeg8Tm5CUW1psFS9Ex0BXON1uueoDr/rQwrvN0g7FP2pq?=
+ =?iso-8859-1?Q?DXDnsSR5U2cVx4NZC6BFgMpnHY8wehPULGd2oeIDjc2/QfpbouBEvpso4J?=
+ =?iso-8859-1?Q?Yo2go1B/EPKP727mU2cJId+MrWRIQRRCW516of+U9S2BUssd7K/A8a9Bqk?=
+ =?iso-8859-1?Q?TnqMnEmG/052eaobiVTAPxzLVH4147kEA0aL7uKlrHuoLV4ALwy03J7ERW?=
+ =?iso-8859-1?Q?mDC1kFR3UnyoJvxHhaOdirfKXgao6tdNHwf/8CD6uS0vQJBo6WNuaxpMbP?=
+ =?iso-8859-1?Q?9CkGowrKavvctP7C2aopIP1tyRzpOkPzcCuxZn4Ed9UZLrF/RNBCQszYO5?=
+ =?iso-8859-1?Q?oWIDO6K5+39IgDkPCJDdmHzlz/jp1q3TooflNopUvolghfpIy6diCyX33D?=
+ =?iso-8859-1?Q?OWaGFc6NU0mR7UzwwGXyVAK2aYkTLq+ohNvF3WRtASUElHFZ5654eeVm4w?=
+ =?iso-8859-1?Q?nASX4UYMSpHexPmNR52Bo3JuxqG/t10P0on17NR311YVHAHT2P0MVCYDtK?=
+ =?iso-8859-1?Q?H6VpaI3tFJCoKnxI7lNGfhmHNOgXzmEZBl/qs1MGcuA7xqlSmRtj/17E7n?=
+ =?iso-8859-1?Q?SESIajdKFpysIX8OTdyB3vEgRs931VaruSZthI0am/2kOYO1503i02GpR1?=
+ =?iso-8859-1?Q?Chlw8X5oK+BgGdWJZipDVPGMyeS1SLIwwkPcA+eE9CTATLa9OOAYEXHY6A?=
+ =?iso-8859-1?Q?1imOxJrPZUiio4Hoi7r9yQ/nHdd6cVyb52iDuFkaLtxx2k5FdJwNGJ+Cnw?=
+ =?iso-8859-1?Q?WnRH5ln9gr1Oq7tfMOlP7fS7LmWnYMBTzOezxg2BvufBaKa5NvmSP9SRZ9?=
+ =?iso-8859-1?Q?mT1Is041GsHWZiVVPEpowKXtMJ6n7lEAOhT4jIWuKYuiGvpHEHQtxjUThe?=
+ =?iso-8859-1?Q?8NMLpL90W6CcyMTurJhUUtLjJUjfBcI6rmf5koZbUZVgSnHtyLVrotmoSP?=
+ =?iso-8859-1?Q?WiTZYQF+gRQzneniGmLQMN2EJ5W8vWrPlmBmYs5fhNUPeQzrcuXf+J/bdz?=
+ =?iso-8859-1?Q?YDt5pQ3WLqt9juN2p2yMS9ogPikh0iV1Dw43iNWibV+evnSH0NIsjfAlOd?=
+ =?iso-8859-1?Q?7+mtGw0+x8ydMcIvKWWRNKcjATDcpzMyt6?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -191,120 +173,972 @@ MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB5134.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92d6b196-db1b-4640-a36c-08ddb1ff8b7c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2025 02:42:07.0867
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0263232c-cb12-418a-7f99-08ddb21890ad
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2025 05:41:13.2505
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5ekJbExjzwNFB9pWRL399kB9xS1pjMEOZtBfK6KleEyZJSC7PsX/50yEHSJZBJUJjma1BJDw5Jro25kxQDRvoEVVNb+NxBFJn7hWkJU2xa8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7151
+X-MS-Exchange-CrossTenant-userprincipalname: SFKUm0wo6xENsgU/zgYK94IvsQF0IzSPtEO+E2bRzrad1x6LnWXHuNrG09ZLr2Wxmjk97iOpdcWZdzvocwlCyBOsBvHmv4LWaoEC7nHHNgY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB6438
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
 	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-PiA+ICAJICBUaGlzIHNlbGVjdHMgYSBkcml2ZXIgZm9yIHRoZSBNZWRpYVRlayBNVDc2MjEgUENJ
-ZSBDb250cm9sbGVyLg0KPiA+DQo+ID4gK2NvbmZpZyBQQ0lFX0FTUEVFRA0KPiA+ICsJYm9vbCAi
-QVNQRUVEIFBDSWUgY29udHJvbGxlciINCj4gPiArCWRlcGVuZHMgb24gUENJDQo+IA0KPiBkZXBl
-bmRzIEFSQ0hfQVNQRUVEIHx8IENPTVBJTEVfVEVTVA0KPiANCg0KQWdyZWVkLg0KDQo+ID4gKwlk
-ZXBlbmRzIG9uIE9GIHx8IENPTVBJTEVfVEVTVA0KPiA+ICsJc2VsZWN0IFBDSV9NU0lfQVJDSF9G
-QUxMQkFDS1MNCj4gPiArCWhlbHANCj4gPiArCSAgRW5hYmxlIHRoaXMgb3B0aW9uIHRvIGFkZCBz
-dXBwb3J0IGZvciB0aGUgUENJZSBjb250cm9sbGVyDQo+ID4gKwkgIGZvdW5kIG9uIEFTUEVFRCBT
-b0NzLg0KPiA+ICsJICBUaGlzIGRyaXZlciBwcm92aWRlcyBpbml0aWFsaXphdGlvbiBhbmQgbWFu
-YWdlbWVudCBmb3IgUENJZQ0KPiA+ICsJICBSb290IENvbXBsZXggZnVuY3Rpb25hbGl0eSwgaW5j
-bHVkaW5nIGludGVycnVwdCBhbmQgTVNJIHN1cHBvcnQuDQo+ID4gKwkgIFNlbGVjdCBZIGlmIHlv
-dXIgcGxhdGZvcm0gdXNlcyBhbiBBU1BFRUQgU29DIGFuZCByZXF1aXJlcyBQQ0llDQo+ID4gKwkg
-IGNvbm5lY3Rpdml0eS4NCj4gPiArDQo+ID4gIGNvbmZpZyBQQ0lfSFlQRVJWX0lOVEVSRkFDRQ0K
-PiA+ICAJdHJpc3RhdGUgIk1pY3Jvc29mdCBIeXBlci1WIFBDSSBJbnRlcmZhY2UiDQo+ID4gIAlk
-ZXBlbmRzIG9uICgoWDg2ICYmIFg4Nl82NCkgfHwgQVJNNjQpICYmIEhZUEVSViAmJiBQQ0lfTVNJ
-IGRpZmYNCj4gPiAtLWdpdCBhL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvTWFrZWZpbGUNCj4gPiBi
-L2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvTWFrZWZpbGUgaW5kZXggMDM4Y2NiZDllM2JhLi4xMzM5
-Zjg4ZTE1M2QNCj4gPiAxMDA2NDQNCj4gPiAtLS0gYS9kcml2ZXJzL3BjaS9jb250cm9sbGVyL01h
-a2VmaWxlDQo+ID4gKysrIGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9NYWtlZmlsZQ0KPiA+IEBA
-IC0zOSw2ICszOSw3IEBAIG9iai0kKENPTkZJR19QQ0lfTE9PTkdTT04pICs9IHBjaS1sb29uZ3Nv
-bi5vDQo+ID4gIG9iai0kKENPTkZJR19QQ0lFX0hJU0lfRVJSKSArPSBwY2llLWhpc2ktZXJyb3Iu
-bw0KPiA+ICBvYmotJChDT05GSUdfUENJRV9BUFBMRSkgKz0gcGNpZS1hcHBsZS5vDQo+ID4gIG9i
-ai0kKENPTkZJR19QQ0lFX01UNzYyMSkgKz0gcGNpZS1tdDc2MjEubw0KPiA+ICtvYmotJChDT05G
-SUdfUENJRV9BU1BFRUQpICs9IHBjaWUtYXNwZWVkLm8NCj4gPg0KPiA+ICAjIHBjaWUtaGlzaS5v
-IHF1aXJrcyBhcmUgbmVlZGVkIGV2ZW4gd2l0aG91dCBDT05GSUdfUENJRV9EVw0KPiA+ICBvYmot
-eQkJCQkrPSBkd2MvDQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvcGNpL2NvbnRyb2xsZXIvcGNp
-ZS1hc3BlZWQuYw0KPiA+IGIvZHJpdmVycy9wY2kvY29udHJvbGxlci9wY2llLWFzcGVlZC5jDQo+
-ID4gbmV3IGZpbGUgbW9kZSAxMDA2NDQNCj4gPiBpbmRleCAwMDAwMDAwMDAwMDAuLmM3NDU2ODRh
-N2Y5Yg0KPiA+IC0tLSAvZGV2L251bGwNCj4gPiArKysgYi9kcml2ZXJzL3BjaS9jb250cm9sbGVy
-L3BjaWUtYXNwZWVkLmMNCj4gPiBAQCAtMCwwICsxLDEwMzkgQEANCj4gPiArLy8gU1BEWC1MaWNl
-bnNlLUlkZW50aWZpZXI6IEdQTC0yLjArDQo+ID4gKy8qDQo+ID4gKyAqIENvcHlyaWdodCAyMDI1
-IEFzcGVlZCBUZWNobm9sb2d5IEluYy4NCj4gPiArICovDQo+ID4gKyNpbmNsdWRlIDxsaW51eC9p
-cnFjaGlwL2NoYWluZWRfaXJxLmg+ICNpbmNsdWRlIDxsaW51eC9pcnFkb21haW4uaD4NCj4gPiAr
-I2luY2x1ZGUgPGxpbnV4L21mZC9zeXNjb24uaD4gI2luY2x1ZGUgPGxpbnV4L2tlcm5lbC5oPiAj
-aW5jbHVkZQ0KPiA+ICs8bGludXgvbXNpLmg+ICNpbmNsdWRlIDxsaW51eC9tb2R1bGUuaD4gI2lu
-Y2x1ZGUNCj4gPiArPGxpbnV4L3BsYXRmb3JtX2RldmljZS5oPiAjaW5jbHVkZSA8bGludXgvb2Zf
-cGxhdGZvcm0uaD4NCj4gDQo+IFdoZXJlIGRvIHlvdSB1c2UgaXQ/DQoNCk5vLCBJIHdpbGwgcmVt
-b3ZlIGl0IGluIG5leHQgdmVyc2lvbi4NCg0KPiANCj4gPiArI2luY2x1ZGUgPGxpbnV4L29mX2Fk
-ZHJlc3MuaD4NCj4gDQo+IFdoZXJlIGRvIHlvdSB1c2UgaXQ/DQo+IA0KDQpObywgSSB3aWxsIHJl
-bW92ZSBpdCBpbiBuZXh0IHZlcnNpb24uDQoNCj4gDQo+ID4gKyNpbmNsdWRlIDxsaW51eC9vZl9p
-cnEuaD4NCj4gDQo+IFdoZXJlIGRvIHlvdSB1c2UgaXQ/DQo+IA0KDQpObywgSSB3aWxsIHJlbW92
-ZSBpdCBpbiBuZXh0IHZlcnNpb24uDQoNCj4gDQo+ID4gKyNpbmNsdWRlIDxsaW51eC9vZl9wY2ku
-aD4NCj4gDQo+IFdoZXJlIGRvIHlvdSB1c2UgaXQ/DQo+IA0KDQpObywgSSB3aWxsIHJlbW92ZSBp
-dCBpbiBuZXh0IHZlcnNpb24uDQoNCj4gPiArI2luY2x1ZGUgPGxpbnV4L3BjaS5oPg0KPiA+ICsj
-aW5jbHVkZSA8bGludXgvcmVnbWFwLmg+DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9yZXNldC5oPg0K
-PiA+ICsjaW5jbHVkZSA8bGludXgvaXJxLmg+DQo+ID4gKyNpbmNsdWRlIDxsaW51eC9pbnRlcnJ1
-cHQuaD4NCj4gPiArI2luY2x1ZGUgPGxpbnV4L3dvcmtxdWV1ZS5oPg0KPiA+ICsjaW5jbHVkZSA8
-bGludXgvZ3Bpby9jb25zdW1lci5oPg0KPiA+ICsjaW5jbHVkZSA8bGludXgvYml0ZmllbGQuaD4N
-Cj4gPiArI2luY2x1ZGUgPGxpbnV4L2Nsay5oPg0KPiA+ICsNCj4gDQo+IA0KPiANCj4gLi4uDQo+
-IA0KPiA+ICsNCj4gPiArc3RhdGljIGludCBhc3BlZWRfcGNpZV9wcm9iZShzdHJ1Y3QgcGxhdGZv
-cm1fZGV2aWNlICpwZGV2KSB7DQo+ID4gKwlzdHJ1Y3QgZGV2aWNlICpkZXYgPSAmcGRldi0+ZGV2
-Ow0KPiA+ICsJc3RydWN0IHBjaV9ob3N0X2JyaWRnZSAqaG9zdDsNCj4gPiArCXN0cnVjdCBhc3Bl
-ZWRfcGNpZSAqcGNpZTsNCj4gPiArCXN0cnVjdCBkZXZpY2Vfbm9kZSAqbm9kZSA9IGRldi0+b2Zf
-bm9kZTsNCj4gPiArCWNvbnN0IHZvaWQgKm1kID0gb2ZfZGV2aWNlX2dldF9tYXRjaF9kYXRhKGRl
-dik7DQo+IA0KPiBOb3Qgdm9pZCwgYnV0IHNwZWNpZmljIHR5cGUuIFRoaXMgaXMgbm90IEphdmFz
-Y3JpcHQsIHdlIGhhdmUgaGVyZSB0eXBlcy4NCj4gDQoNCkFncmVlZC4NCkkgd2lsbCBhZGQgdGhp
-cyB0eXBlIGluIG5leHQgdmVyc2lvbi4NCg0KPiA+ICsJaW50IGlycSwgcmV0Ow0KPiA+ICsNCj4g
-PiArCWlmICghbWQpDQo+ID4gKwkJcmV0dXJuIC1FTk9ERVYNCg0KLi4uDQoNCj4gPiArDQo+ID4g
-KwlpcnEgPSBwbGF0Zm9ybV9nZXRfaXJxKHBkZXYsIDApOw0KPiA+ICsJaWYgKGlycSA8IDApDQo+
-ID4gKwkJZ290byBlcnJfaXJxOw0KPiA+ICsNCj4gPiArCXJldCA9IGRldm1fcmVxdWVzdF9pcnEo
-ZGV2LCBpcnEsIGFzcGVlZF9wY2llX2ludHJfaGFuZGxlciwgSVJRRl9TSEFSRUQsDQo+IGRldl9u
-YW1lKGRldiksDQo+ID4gKwkJCSAgICAgICBwY2llKTsNCj4gPiArCWlmIChyZXQpDQo+ID4gKwkJ
-Z290byBlcnJfaXJxOw0KPiA+ICsNCj4gPiArCXBjaWUtPmNsb2NrID0gY2xrX2dldChkZXYsIE5V
-TEwpOw0KPiANCj4gSHVoLi4uDQo+IA0KPiA+ICsJaWYgKElTX0VSUihwY2llLT5jbG9jaykpDQo+
-ID4gKwkJZ290byBlcnJfY2xrOw0KPiA+ICsJcmV0ID0gY2xrX3ByZXBhcmVfZW5hYmxlKHBjaWUt
-PmNsb2NrKTsNCj4gDQo+IGRldm1fY2xrX2dldF9lbmFibGVkLg0KPiANCg0KSSB3aWxsIGNoYW5n
-ZSBpdCBpbiBuZXh0IHZlcnNpb24uDQoNCj4gPiArCWlmIChyZXQpDQo+ID4gKwkJZ290byBlcnJf
-Y2xrX2VuYWJsZTsNCj4gPiArDQo+ID4gKwlyZXQgPSBwY2lfaG9zdF9wcm9iZShob3N0KTsNCj4g
-PiArCWlmIChyZXQpDQo+ID4gKwkJZ290byBlcnJfY2xrX2VuYWJsZTsNCj4gPiArDQo+ID4gKwly
-ZXR1cm4gMDsNCj4gPiArDQo+ID4gK2Vycl9jbGtfZW5hYmxlOg0KPiA+ICsJY2xrX3B1dChwY2ll
-LT5jbG9jayk7DQo+ID4gK2Vycl9jbGs6DQo+ID4gK2Vycl9pcnE6DQo+ID4gKwlhc3BlZWRfcGNp
-ZV9pcnFfZG9tYWluX2ZyZWUocGNpZSk7DQo+ID4gK2Vycl9pcnFfaW5pdDoNCj4gPiArZXJyX3Nl
-dHVwOg0KPiA+ICsJcmV0dXJuIGRldl9lcnJfcHJvYmUoZGV2LCByZXQsICJGYWlsZWQgdG8gc2V0
-dXAgUENJZSBSQ1xuIik7IH0NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIGFzcGVlZF9wY2llX3Jl
-bW92ZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KSB7DQo+ID4gKwlzdHJ1Y3QgYXNwZWVk
-X3BjaWUgKnBjaWUgPSBwbGF0Zm9ybV9nZXRfZHJ2ZGF0YShwZGV2KTsNCj4gPiArDQo+ID4gKwlp
-ZiAocGNpZS0+Y2xvY2spIHsNCj4gPiArCQljbGtfZGlzYWJsZV91bnByZXBhcmUocGNpZS0+Y2xv
-Y2spOw0KPiA+ICsJCWNsa19wdXQocGNpZS0+Y2xvY2spOw0KPiA+ICsJfQ0KPiA+ICsNCj4gPiAr
-CXBjaV9zdG9wX3Jvb3RfYnVzKHBjaWUtPmhvc3QtPmJ1cyk7DQo+ID4gKwlwY2lfcmVtb3ZlX3Jv
-b3RfYnVzKHBjaWUtPmhvc3QtPmJ1cyk7DQo+ID4gKwlhc3BlZWRfcGNpZV9pcnFfZG9tYWluX2Zy
-ZWUocGNpZSk7DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyBzdHJ1Y3QgYXNwZWVkX3BjaWVf
-cmNfcGxhdGZvcm0gcGNpZV9yY19hc3QyNjAwID0gew0KPiANCj4gVGhpcyBzaG91bGQgYmUgY29u
-c3QuIFdoeSBpdCBjYW5ub3Q/DQo+IA0KDQpBZ3JlZWQuDQoNCj4gPiArCS5zZXR1cCA9IGFzcGVl
-ZF9hc3QyNjAwX3NldHVwLA0KPiA+ICsJLnJlZ19pbnR4X2VuID0gMHgwNCwNCj4gPiArCS5yZWdf
-aW50eF9zdHMgPSAweDA4LA0KPiA+ICsJLnJlZ19tc2lfZW4gPSAweDIwLA0KPiA+ICsJLnJlZ19t
-c2lfc3RzID0gMHgyOCwNCj4gPiArfTsNCj4gPiArDQo+ID4gK3N0YXRpYyBzdHJ1Y3QgYXNwZWVk
-X3BjaWVfcmNfcGxhdGZvcm0gcGNpZV9yY19hc3QyNzAwID0gew0KPiANCj4gVGhpcyBzaG91bGQg
-YmUgY29uc3QuIFdoeSBpdCBjYW5ub3Q/DQo+IA0KDQpBZ3JlZWQuDQoNCj4gPiArCS5zZXR1cCA9
-IGFzcGVlZF9hc3QyNzAwX3NldHVwLA0KPiA+ICsJLnJlZ19pbnR4X2VuID0gMHg0MCwNCj4gPiAr
-CS5yZWdfaW50eF9zdHMgPSAweDQ4LA0KPiA+ICsJLnJlZ19tc2lfZW4gPSAweDUwLA0KPiA+ICsJ
-LnJlZ19tc2lfc3RzID0gMHg1OCwNCj4gPiArfTsNCj4gPiArDQo+ID4gK3N0YXRpYyBjb25zdCBz
-dHJ1Y3Qgb2ZfZGV2aWNlX2lkIGFzcGVlZF9wY2llX29mX21hdGNoW10gPSB7DQo+ID4gKwl7IC5j
-b21wYXRpYmxlID0gImFzcGVlZCxhc3QyNjAwLXBjaWUiLCAuZGF0YSA9ICZwY2llX3JjX2FzdDI2
-MDAgfSwNCj4gPiArCXsgLmNvbXBhdGlibGUgPSAiYXNwZWVkLGFzdDI3MDAtcGNpZSIsIC5kYXRh
-ID0gJnBjaWVfcmNfYXN0MjcwMCB9LA0KPiA+ICsJe30NCj4gPiArfTsNCj4gPiArDQo+ID4gK3N0
-YXRpYyBzdHJ1Y3QgcGxhdGZvcm1fZHJpdmVyIGFzcGVlZF9wY2llX2RyaXZlciA9IHsNCj4gPiAr
-CS5kcml2ZXIgPSB7DQo+ID4gKwkJLm5hbWUgPSAiYXNwZWVkLXBjaWUiLA0KPiA+ICsJCS5zdXBw
-cmVzc19iaW5kX2F0dHJzID0gdHJ1ZSwNCj4gDQo+IFdoeT8NCj4gDQoNCkkgd2lsbCByZW1vdmUg
-aXQgaW4gbmV4dCB2ZXJzaW9uLg0KDQo+ID4gKwkJLm9mX21hdGNoX3RhYmxlID0gYXNwZWVkX3Bj
-aWVfb2ZfbWF0Y2gsDQo+ID4gKwl9LA0KPiA+ICsJLnByb2JlID0gYXNwZWVkX3BjaWVfcHJvYmUs
-DQo+ID4gKwkucmVtb3ZlID0gYXNwZWVkX3BjaWVfcmVtb3ZlLA0KPiANCj4gU28gaG93IGV4YWN0
-bHkgcmVtb3ZlIGNhbiBiZSB0cmlnZ2VyZWQ/DQo+IA0KDQpBZ3JlZWQuDQpJIHRoaW5rIGl0IG1h
-eSBiZSB0cmlnZ2VyZWQgd2hlbiByZWJvb3RpbmcuDQpJIHdpbGwgcmVtb3ZlIGl0IGluIG5leHQg
-dmVyc2lvbi4NCg0KVGhhbmtzLA0KSmFja3kNCg0K
+> > +#include <linux/irqchip/chained_irq.h> #include <linux/irqdomain.h>
+> > +#include <linux/mfd/syscon.h> #include <linux/kernel.h> #include
+> > +<linux/msi.h> #include <linux/module.h> #include
+> > +<linux/platform_device.h> #include <linux/of_platform.h> #include
+> > +<linux/of_address.h> #include <linux/of_irq.h> #include
+> > +<linux/of_pci.h> #include <linux/pci.h> #include <linux/regmap.h>
+> > +#include <linux/reset.h> #include <linux/irq.h> #include
+> > +<linux/interrupt.h> #include <linux/workqueue.h> #include
+> > +<linux/gpio/consumer.h> #include <linux/bitfield.h> #include
+> > +<linux/clk.h>
+>=20
+> Please order alphabetically.
+>=20
+
+Agreed.
+
+> > +
+> > +#define MAX_MSI_HOST_IRQS	64
+> > +
+> > +/* AST2600 AHBC Registers */
+> > +#define AHBC_KEY		0x00
+> > +#define AHBC_UNLOCK_KEY			0xAEED1A03
+> > +#define AHBC_UNLOCK			0x01
+> > +#define AHBC_ADDR_MAPPING	0x8C
+> > +#define PCIE_RC_MEMORY_EN		BIT(5)
+>=20
+> Add include for BIT()
+>=20
+
+Agreed.
+
+> > +
+> > +/* AST2600 PCIe Host Controller Registers */
+> > +#define PEHR_MISC_10		0x10
+> > +#define DATALINK_REPORT_CAPABLE		BIT(4)
+> > +#define PEHR_GLOBAL		0x30
+> > +#define RC_SYNC_RESET_DISABLE		BIT(20)
+> > +#define PCIE_RC_SLOT_ENABLE		BIT(1)
+> > +#define ROOT_COMPLEX_ID(x)		((x) << 4)
+>=20
+> Add field define with GENMASK() and use FIELD_PREP() ?
+>=20
+
+Agreed.
+
+> > +#define PEHR_LOCK		0x7C
+> > +#define PCIE_UNLOCK			0xa8
+> > +#define PEHR_LINK		0xC0
+> > +#define PCIE_LINK_STS			BIT(5)
+> > +
+> > +/* AST2600 H2X Controller Registers */
+> > +/* Common Registers*/
+> > +#define H2X_INT_STS		0x08
+> > +#define PCIE_TX_IDLE_CLEAR		BIT(0)
+> > +#define H2X_TX_DESC0		0x10
+> > +#define H2X_TX_DESC1		0x14
+> > +#define H2X_TX_DESC2		0x18
+> > +#define H2X_TX_DESC3		0x1C
+> > +#define H2X_TX_DESC_DATA	0x20
+> > +#define H2X_STS			0x24
+> > +#define PCIE_TX_IDLE			BIT(31)
+> > +#define PCIE_STATUS_OF_TX		GENMASK(25, 24)
+> > +#define	PCIE_RC_L_TX_COMPLETE		BIT(24)
+> > +#define	PCIE_RC_H_TX_COMPLETE		BIT(25)
+> > +#define PCIE_TRIGGER_TX			BIT(0)
+> > +#define H2X_AHB_ADDR_CONFIG0	0x60
+> > +#define AHB_REMAP_ADDR_31_20(x)	FIELD_PREP(GENMASK(15, 4), x)
+> > +#define AHB_MASK_ADDR_31_20(x)	FIELD_PREP(GENMASK(31, 20), x)
+>=20
+> It might make more sense to name these fields with defines and use
+> FIELD_PREP at the calling site instead.
+>=20
+
+Agreed.
+
+> > +#define H2X_AHB_ADDR_CONFIG1	0x64
+> > +#define AHB_REMAP_ADDR_64_32(x)	(x)
+> > +#define H2X_AHB_ADDR_CONFIG2	0x68
+> > +#define AHB_MASK_ADDR_64_32(x)	(x)
+>=20
+> ADd empty line.
+>=20
+
+Agreed.
+
+> > +/* Device Registers */
+> > +#define H2X_DEV_CTRL		0x00
+> > +#define PCIE_RX_DMA_EN			BIT(9)
+> > +#define PCIE_RX_LINEAR			BIT(8)
+> > +#define PCIE_RX_MSI_SEL			BIT(7)
+> > +#define PCIE_RX_MSI_EN			BIT(6)
+> > +#define PCIE_UNLOCK_RX_BUFF		BIT(4)
+> > +#define PCIE_Wait_RX_TLP_CLR		BIT(2)
+>=20
+> WAIT
+>=20
+> > +#define PCIE_RC_RX_ENABLE		BIT(1)
+> > +#define PCIE_RC_ENABLE			BIT(0)
+> > +#define H2X_DEV_STS		0x08
+> > +#define PCIE_RC_RX_DONE_ISR		BIT(4)
+> > +#define H2X_DEV_RX_DESC_DATA	0x0C
+> > +#define H2X_DEV_RX_DESC1	0x14
+> > +#define H2X_DEV_TX_TAG		0x3C
+> > +
+> > +/* AST2700 H2X */
+> > +#define H2X_CTRL		0x00
+> > +#define H2X_BRIDGE_EN			BIT(0)
+> > +#define H2X_BRIDGE_DIRECT_EN		BIT(1)
+> > +#define H2X_CFGE_INT_STS	0x08
+> > +#define CFGE_TX_IDLE			BIT(0)
+> > +#define CFGE_RX_BUSY			BIT(1)
+> > +#define H2X_CFGI_TLP		0x20
+> > +#define H2X_CFGI_WR_DATA	0x24
+> > +#define CFGI_WRITE			BIT(20)
+> > +#define H2X_CFGI_CTRL		0x28
+> > +#define CFGI_TLP_FIRE			BIT(0)
+> > +#define H2X_CFGI_RET_DATA	0x2C
+> > +#define H2X_CFGE_TLP_1ST	0x30
+> > +#define H2X_CFGE_TLP_NEXT	0x34
+> > +#define H2X_CFGE_CTRL		0x38
+> > +#define CFGE_TLP_FIRE			BIT(0)
+> > +#define H2X_CFGE_RET_DATA	0x3C
+> > +#define H2X_REMAP_PREF_ADDR	0x70
+> > +#define REMAP_PREF_ADDR_63_32(x)	(x)
+> > +#define H2X_REMAP_DIRECT_ADDR	0x78
+> > +#define REMAP_BAR_BASE(x)		(x)
+> > +
+> > +/* AST2700 PEHR */
+> > +#define PEHR_VID_DID		0x00
+> > +#define PEHR_MISC_58		0x58
+> > +#define LOCAL_SCALE_SUP			BIT(0)
+> > +#define PEHR_MISC_5C		0x5C
+> > +#define CONFIG_RC_DEVICE		BIT(30)
+> > +#define PEHR_MISC_60		0x60
+> > +#define PORT_TPYE			GENMASK(7, 4)
+> > +#define PORT_TYPE_ROOT			BIT(2)
+> > +#define PEHR_MISC_70		0x70
+> > +#define POSTED_DATA_CREDITS(x)		FIELD_PREP(GENMASK(15, 0), x)
+> > +#define POSTED_HEADER_CREDITS(x)	FIELD_PREP(GENMASK(27, 16), x)
+> > +#define PEHR_MISC_78		0x78
+> > +#define COMPLETION_DATA_CREDITS(x)	FIELD_PREP(GENMASK(15, 0), x)
+> > +#define COMPLETION_HEADER_CREDITS(x)	FIELD_PREP(GENMASK(27,
+> 16), x)
+> > +#define PEHR_MISC_300		0x300
+> > +#define CAPABILITY_GEN2		BIT(0)
+> > +#define PEHR_MISC_344		0x344
+> > +#define LINK_STATUS_GEN2		BIT(18)
+> > +#define PEHR_MISC_358		0x358
+> > +#define LINK_STATUS_GEN4		BIT(8)
+> > +
+> > +/* AST2700 SCU */
+> > +#define SCU_60			0x60
+> > +#define RC_E2M_PATH_EN			BIT(0)
+> > +#define RC_H2XS_PATH_EN			BIT(16)
+> > +#define RC_H2XD_PATH_EN			BIT(17)
+> > +#define RC_H2XX_PATH_EN			BIT(18)
+> > +#define RC_UPSTREAM_MEM_EN		BIT(19)
+> > +#define SCU_64			0x64
+> > +#define RC0_DECODE_DMA_BASE(x)		FIELD_PREP(GENMASK(7, 0),
+> x)
+> > +#define RC0_DECODE_DMA_LIMIT(x)		FIELD_PREP(GENMASK(15, 8),
+> x)
+> > +#define RC1_DECODE_DMA_BASE(x)		FIELD_PREP(GENMASK(23,
+> 16), x)
+> > +#define RC1_DECODE_DMA_LIMIT(x)		FIELD_PREP(GENMASK(31,
+> 24), x)
+> > +#define SCU_70			0x70
+> > +#define DISABLE_EP_FUNC			0x0
+> > +
+> > +/* TLP configuration type 0 and type 1 */
+> > +#define CRG_READ_FMTTYPE(type)		(0x04000000 | (type << 24))
+> > +#define CRG_WRITE_FMTTYPE(type)		(0x44000000 | (type << 24))
+>=20
+> These are straight from PCIe spec, right?
+>=20
+> I think those should come from defines inside include/uapi/linux/pci_regs=
+.h,
+> there might not be one already, so you might have to add them.
+>=20
+> I also think you should actually use the type as boolean, and return one =
+of the
+> two defines based on it. A helper to do that might be generic PCI header
+> material as well.
+>=20
+
+Agreed.
+This definition is used on TLP header.
+Maybe I will try to add some definitions to pci_regs.h or pci.h
+
+> > +#define CRG_PAYLOAD_SIZE		0x01 /* 1 DWORD */
+> > +#define TLP_COMP_STATUS(s)		(((s) >> 13) & 7)
+>=20
+> Name the field if not yet done with a define and use FIELD_GET().
+>=20
+
+Agreed.
+
+> > +#define TLP_BYTE_EN(x)			(x)
+> > +#define AST2600_TX_DESC1_VALUE		0x00002000
+>=20
+> Is this some flag, which should be using a named define instead of the li=
+teral?
+>=20
+
+Agreed.
+
+> > +#define AST2700_TX_DESC1_VALUE		0x00401000
+>=20
+> Can this be constructed by ORing named defines together?
+>=20
+
+Agreed.
+
+> > +
+> > +struct aspeed_pcie_rc_platform {
+> > +	int (*setup)(struct platform_device *pdev);
+> > +	/* Interrupt Register Offset */
+> > +	int reg_intx_en;
+>=20
+> Really? The variable ends with _en which is a short for "Enable" AFAICT b=
+ut
+> your comment talks nothing about "Enable"??
+>=20
+
+These is for different platform to configure.
+They are used to enable or disable INTx or MSI of the corresponding registe=
+r.
+I will add more descriptions in next version.
+
+> > +	int reg_intx_sts;
+> > +	int reg_msi_en;
+> > +	int reg_msi_sts;
+> > +};
+> > +
+> > +struct aspeed_pcie {
+> > +	struct pci_host_bridge *host;
+> > +	struct device *dev;
+> > +	void __iomem *reg;
+> > +	struct regmap *ahbc;
+> > +	struct regmap *cfg;
+> > +	struct regmap *pciephy;
+> > +	struct clk *clock;
+> > +	const struct aspeed_pcie_rc_platform *platform;
+> > +
+> > +	int domain;
+> > +	u32 msi_address;
+> > +	u8 tx_tag;
+> > +
+> > +	struct reset_control *h2xrst;
+> > +	struct reset_control *perst;
+> > +
+> > +	struct irq_domain *irq_domain;
+> > +	struct irq_domain *dev_domain;
+> > +	struct irq_domain *msi_domain;
+> > +	/* Protect bitmap variable */
+>=20
+> Protects
+>=20
+> Can you group them visually together using empty line before and removing
+> the empty line in between them too.
+>=20
+
+Agreed.
+
+> > +	struct mutex lock;
+> > +
+> > +	DECLARE_BITMAP(msi_irq_in_use, MAX_MSI_HOST_IRQS); };
+> > +
+> > +static void aspeed_pcie_intx_ack_irq(struct irq_data *d) {
+> > +	struct aspeed_pcie *pcie =3D irq_data_get_irq_chip_data(d);
+> > +	int intx_en =3D pcie->platform->reg_intx_en;
+> > +
+> > +	writel(readl(pcie->reg + intx_en) | BIT(d->hwirq), pcie->reg +
+> > +intx_en);
+>=20
+> Please split this kind of operations on 3 (or more) lines (there seem to =
+be more
+> below too):
+>=20
+> 	val =3D readl(...);
+> 	val |=3D ...;
+> 	writel();
+>=20
+> It will be much easier to read that way. If you need more lines for logic=
+, e.g., to
+> clear the field first before ORing the new value in, don't hesitate to ad=
+d them
+> as needed.
+>=20
+> (val is just a placeholder, you can pick better name for the variable whe=
+re
+> appropriate.)
+>=20
+
+Agreed.
+
+> > +}
+> > +
+
+...
+
+> > +
+> > +static irqreturn_t aspeed_pcie_intr_handler(int irq, void *dev_id) {
+> > +	struct aspeed_pcie *pcie =3D dev_id;
+> > +	const struct aspeed_pcie_rc_platform *platform =3D pcie->platform;
+> > +	unsigned long status;
+> > +	unsigned long intx;
+> > +	u32 bit;
+> > +	int i;
+> > +
+> > +	intx =3D readl(pcie->reg + platform->reg_intx_sts) & 0xf;
+>=20
+> Use a named define for the field of interes instead of the literal.
+>=20
+
+Agreed.
+
+> > +	if (intx) {
+> > +		for_each_set_bit(bit, &intx, PCI_NUM_INTX)
+> > +			generic_handle_domain_irq(pcie->irq_domain, bit);
+> > +	}
+> > +
+> > +	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+> > +		for (i =3D 0; i < 2; i++) {
+> > +			status =3D readl(pcie->reg + platform->reg_msi_sts + (i * 4));
+> > +			writel(status, pcie->reg + platform->reg_msi_sts + (i * 4));
+> > +
+> > +			for_each_set_bit(bit, &status, 32) {
+> > +				bit +=3D (i * 32);
+> > +				generic_handle_domain_irq(pcie->dev_domain, bit);
+> > +			}
+> > +		}
+> > +	}
+> > +
+> > +	return IRQ_HANDLED;
+> > +}
+> > +
+> > +static u32 aspeed_pcie_get_bdf_offset(struct pci_bus *bus, unsigned in=
+t
+> devfn,
+> > +				      int where)
+> > +{
+> > +	return ((bus->number) << 24) | (PCI_SLOT(devfn) << 19) |
+> > +		(PCI_FUNC(devfn) << 16) | (where & ~3); }
+> > +
+> > +static int aspeed_ast2600_rd_conf(struct pci_bus *bus, unsigned int de=
+vfn,
+> > +				  int where, int size, u32 *val)
+> > +{
+> > +	struct aspeed_pcie *pcie =3D bus->sysdata;
+> > +	u32 bdf_offset;
+> > +	int rx_done_fail =3D 0, slot =3D PCI_SLOT(devfn);
+> > +	u32 cfg_val, isr, type =3D 0;
+> > +	u32 link_sts =3D 0;
+> > +	int ret;
+> > +
+> > +	/* Driver may set unlock RX buffere before triggering next TX config
+> > +*/
+>=20
+> buffer
+>=20
+> > +	writel(PCIE_UNLOCK_RX_BUFF | readl(pcie->reg + H2X_DEV_CTRL),
+> > +	       pcie->reg + H2X_DEV_CTRL);
+> > +
+> > +	if (bus->number =3D=3D 128 && slot !=3D 0 && slot !=3D 8)
+> > +		return PCIBIOS_DEVICE_NOT_FOUND;
+> > +	type =3D (bus->number > 128);
+> > +
+> > +	if (type) {
+> > +		regmap_read(pcie->pciephy, PEHR_LINK, &link_sts);
+> > +		if (!(link_sts & PCIE_LINK_STS))
+> > +			return PCIBIOS_DEVICE_NOT_FOUND;
+> > +	}
+> > +
+> > +	bdf_offset =3D aspeed_pcie_get_bdf_offset(bus, devfn, where);
+> > +
+> > +	regmap_write(pcie->cfg, H2X_TX_DESC0, CRG_READ_FMTTYPE(type) |
+> CRG_PAYLOAD_SIZE);
+> > +	regmap_write(pcie->cfg, H2X_TX_DESC1,
+> > +		     AST2600_TX_DESC1_VALUE | (pcie->tx_tag << 8) |
+> > +TLP_BYTE_EN(0xf));
+>=20
+> Use FIELD_PREP() instead of the custom shifting. I strongly suggest you r=
+eplace
+> also that TLP_BYTE_EN() with FIELD_PREP() done here. If you feel need mor=
+e
+> space, you can first calculate the value into a local variable using a mu=
+ltiline
+> construct:
+>=20
+> 	val =3D AST2600_TX_DESC1_VALUE | \
+> 	      FIELD_PREP(..., pcie->tx_tag) | \
+> 	      FIELD_PREP(...);
+>=20
+
+Agreed.
+
+> > +	regmap_write(pcie->cfg, H2X_TX_DESC2, bdf_offset);
+> > +	regmap_write(pcie->cfg, H2X_TX_DESC3, 0);
+> > +
+> > +	regmap_write_bits(pcie->cfg, H2X_STS, PCIE_TRIGGER_TX,
+> > +PCIE_TRIGGER_TX);
+> > +
+> > +	ret =3D regmap_read_poll_timeout(pcie->cfg, H2X_STS, cfg_val,
+> > +				       (cfg_val & PCIE_TX_IDLE), 0, 50);
+> > +	if (ret) {
+> > +		dev_err(pcie->dev,
+> > +			"[%X:%02X:%02X.%02X]CR tx timeout sts: 0x%08x\n",
+> > +			pcie->domain, bus->number, PCI_SLOT(devfn),
+> > +			PCI_FUNC(devfn), cfg_val);
+> > +		ret =3D PCIBIOS_SET_FAILED;
+> > +		*val =3D ~0;
+>=20
+> PCI_SET_ERROR_RESPONSE()
+>=20
+
+Agreed.
+
+> > +		goto out;
+> > +	}
+> > +
+> > +	regmap_write_bits(pcie->cfg, H2X_INT_STS, PCIE_TX_IDLE_CLEAR,
+> > +			  PCIE_TX_IDLE_CLEAR);
+> > +
+> > +	regmap_read(pcie->cfg, H2X_STS, &cfg_val);
+> > +	switch (cfg_val & PCIE_STATUS_OF_TX) {
+> > +	case PCIE_RC_L_TX_COMPLETE:
+> > +	case PCIE_RC_H_TX_COMPLETE:
+> > +		ret =3D readl_poll_timeout(pcie->reg + H2X_DEV_STS, isr,
+> > +					 (isr & PCIE_RC_RX_DONE_ISR), 0, 50);
+> > +		if (ret) {
+> > +			dev_err(pcie->dev,
+> > +				"[%X:%02X:%02X.%02X]CR rx timeoutsts: 0x%08x\n",
+>=20
+> Add space after ]
+>=20
+
+Agreed.
+
+> > +				pcie->domain, bus->number, PCI_SLOT(devfn),
+> > +				PCI_FUNC(devfn), isr);
+> > +			rx_done_fail =3D 1;
+> > +			*val =3D ~0;
+>=20
+> PCI_SET_ERROR_RESPONSE()
+>=20
+
+Agreed.
+
+> > +		}
+> > +		if (!rx_done_fail) {
+> > +			if (readl(pcie->reg + H2X_DEV_RX_DESC1) & BIT(13))
+>=20
+> Use a named define instead of BIT() literal.
+>=20
+
+Agreed.
+
+> > +				*val =3D ~0;
+>=20
+> PCI_SET_ERROR_RESPONSE()
+>=20
+
+Agreed.
+
+> > +			else
+> > +				*val =3D readl(pcie->reg + H2X_DEV_RX_DESC_DATA);
+> > +		}
+> > +
+> > +		writel(PCIE_UNLOCK_RX_BUFF | readl(pcie->reg + H2X_DEV_CTRL),
+> > +		       pcie->reg + H2X_DEV_CTRL);
+> > +		break;
+> > +	case PCIE_STATUS_OF_TX:
+> > +		*val =3D ~0;
+> > +		break;
+> > +	default:
+> > +		regmap_read(pcie->cfg, H2X_DEV_RX_DESC_DATA, &cfg_val);
+> > +		*val =3D cfg_val;
+> > +		break;
+> > +	}
+> > +
+> > +	switch (size) {
+> > +	case 1:
+> > +		*val =3D (*val >> ((where & 3) * 8)) & 0xff;
+> > +		break;
+> > +	case 2:
+> > +		*val =3D (*val >> ((where & 2) * 8)) & 0xffff;
+> > +		break;
+> > +	case 4:
+> > +	default:
+> > +		break;
+> > +	}
+> > +
+> > +	ret =3D PCIBIOS_SUCCESSFUL;
+> > +out:
+> > +	writel(readl(pcie->reg + H2X_DEV_STS), pcie->reg + H2X_DEV_STS);
+> > +	pcie->tx_tag =3D (pcie->tx_tag + 1) % 0x8;
+> > +	return ret;
+> > +}
+> > +
+> > +static int aspeed_ast2600_wr_conf(struct pci_bus *bus, unsigned int de=
+vfn,
+> > +				  int where, int size, u32 val)
+> > +{
+> > +	u32 type =3D 0;
+> > +	u32 shift =3D 8 * (where & 3);
+> > +	u32 bdf_offset;
+> > +	u8 byte_en =3D 0;
+> > +	struct aspeed_pcie *pcie =3D bus->sysdata;
+> > +	u32 isr, cfg_val;
+> > +	int ret;
+> > +
+> > +	/* Driver may set unlock RX buffere before triggering next TX config
+> > +*/
+>=20
+> buffer
+>=20
+> Many similar things in this function so please reflect my other comments =
+to
+> this.
+>=20
+
+Agreed.
+
+> > +	writel(PCIE_UNLOCK_RX_BUFF | readl(pcie->reg + H2X_DEV_CTRL),
+> > +	       pcie->reg + H2X_DEV_CTRL);
+
+...
+
+> > +out:
+> > +	writel(readl(pcie->reg + H2X_DEV_STS), pcie->reg + H2X_DEV_STS);
+> > +	pcie->tx_tag =3D (pcie->tx_tag + 1) % 0x8;
+> > +	return ret;
+> > +}
+> > +
+> > +static bool aspeed_ast2700_get_link(struct aspeed_pcie *pcie) {
+> > +	u32 reg;
+> > +	bool link;
+> > +
+> > +	regmap_read(pcie->pciephy, PEHR_MISC_300, &reg);
+> > +	if (reg & CAPABILITY_GEN2) {
+> > +		regmap_read(pcie->pciephy, PEHR_MISC_344, &reg);
+> > +		link =3D !!(reg & LINK_STATUS_GEN2);
+> > +	} else {
+> > +		regmap_read(pcie->pciephy, PEHR_MISC_358, &reg);
+> > +		link =3D !!(reg & LINK_STATUS_GEN4);
+>=20
+> While I don't entirely know the meaning of these bits, what if the link i=
+s not
+> using maximum speed it is capable of, does this check misbehave?
+>=20
+
+In our AST2700, there are gen4 RC and gen2 RC.
+Therefore, here will get capability to confirm it is gen2 or gen4.
+And the link status is in different register.
+
+> > +	}
+> > +
+> > +	return link;
+> > +}
+> > +
+> > +static int aspeed_ast2700_rd_conf(struct pci_bus *bus, unsigned int de=
+vfn,
+> > +				  int where, int size, u32 *val)
+> > +{
+> > +	struct aspeed_pcie *pcie =3D bus->sysdata;
+> > +	u32 bdf_offset, status;
+> > +	u8 type;
+> > +	int ret;
+> > +
+> > +	if ((bus->number =3D=3D 0 && devfn !=3D 0))
+> > +		return PCIBIOS_DEVICE_NOT_FOUND;
+> > +
+> > +	if (bus->number =3D=3D 0) {
+> > +		/* Internal access to bridge */
+> > +		writel(TLP_BYTE_EN(0xf) << 16 | (where & ~3), pcie->reg +
+> > +H2X_CFGI_TLP);
+>=20
+> FIELD_PREP()
+>=20
+
+Agreed.
+
+> > +		writel(CFGI_TLP_FIRE, pcie->reg + H2X_CFGI_CTRL);
+> > +		*val =3D readl(pcie->reg + H2X_CFGI_RET_DATA);
+> > +	} else {
+> > +		if (!aspeed_ast2700_get_link(pcie))
+> > +			return PCIBIOS_DEVICE_NOT_FOUND;
+> > +
+> > +		bdf_offset =3D aspeed_pcie_get_bdf_offset(bus, devfn, where);
+> > +
+> > +		type =3D (bus->number =3D=3D 1) ? PCI_HEADER_TYPE_NORMAL :
+> > +PCI_HEADER_TYPE_BRIDGE;
+> > +
+> > +		writel(CRG_READ_FMTTYPE(type) | CRG_PAYLOAD_SIZE, pcie->reg +
+> H2X_CFGE_TLP_1ST);
+> > +		writel(AST2700_TX_DESC1_VALUE | (pcie->tx_tag << 8) |
+> TLP_BYTE_EN(0xf),
+> > +		       pcie->reg + H2X_CFGE_TLP_NEXT);
+> > +		writel(bdf_offset, pcie->reg + H2X_CFGE_TLP_NEXT);
+> > +		writel(CFGE_TX_IDLE | CFGE_RX_BUSY, pcie->reg +
+> H2X_CFGE_INT_STS);
+> > +		writel(CFGE_TLP_FIRE, pcie->reg + H2X_CFGE_CTRL);
+> > +
+> > +		ret =3D readl_poll_timeout(pcie->reg + H2X_CFGE_INT_STS, status,
+> > +					 (status & CFGE_TX_IDLE), 0, 50);
+> > +		if (ret) {
+> > +			dev_err(pcie->dev,
+> > +				"[%X:%02X:%02X.%02X]CR tx timeout sts: 0x%08x\n",
+> > +				pcie->domain, bus->number, PCI_SLOT(devfn),
+> > +				PCI_FUNC(devfn), status);
+> > +			ret =3D PCIBIOS_SET_FAILED;
+> > +			*val =3D ~0;
+> > +			goto out;
+> > +		}
+> > +
+> > +		ret =3D readl_poll_timeout(pcie->reg + H2X_CFGE_INT_STS, status,
+> > +					 (status & CFGE_RX_BUSY), 0, 50000);
+> > +		if (ret) {
+> > +			dev_err(pcie->dev,
+> > +				"[%X:%02X:%02X.%02X]CR rx timeoutsts: 0x%08x\n",
+> > +				pcie->domain, bus->number, PCI_SLOT(devfn),
+> > +				PCI_FUNC(devfn), status);
+> > +			ret =3D PCIBIOS_SET_FAILED;
+> > +			*val =3D ~0;
+> > +			goto out;
+> > +		}
+> > +		*val =3D readl(pcie->reg + H2X_CFGE_RET_DATA);
+> > +	}
+> > +
+> > +	switch (size) {
+> > +	case 1:
+> > +		*val =3D (*val >> ((where & 3) * 8)) & 0xff;
+> > +		break;
+> > +	case 2:
+> > +		*val =3D (*val >> ((where & 2) * 8)) & 0xffff;
+> > +		break;
+> > +	case 4:
+> > +	default:
+> > +		break;
+> > +	}
+> > +
+> > +	ret =3D PCIBIOS_SUCCESSFUL;
+> > +out:
+> > +	writel(status, pcie->reg + H2X_CFGE_INT_STS);
+> > +	pcie->tx_tag =3D (pcie->tx_tag + 1) % 0xF;
+> > +	return ret;
+> > +}
+>=20
+> On a glance, this (& the wr func) looked very similar to the 2600 one on =
+a
+> glance, I didn't check it with diff how similar it really is.
+>=20
+> If you need minor variation e.g. in some register value, you could add th=
+at into
+> the struct pointed by .data. Then you can get it easily here using
+> pcie->info->tx_desc_val without duplicating lots of code.
+>
+
+Agreed.
+I will review these read and write configuration commands and put them toge=
+ther.
+
+> > +static int aspeed_ast2700_wr_conf(struct pci_bus *bus, unsigned int de=
+vfn,
+> > +				  int where, int size, u32 val)
+> > +{
+> > +	struct aspeed_pcie *pcie =3D bus->sysdata;
+> > +	u32 shift =3D 8 * (where & 3);
+
+...
+
+> > +static void aspeed_irq_msi_domain_free(struct irq_domain *domain,
+> > +				       unsigned int virq, unsigned int nr_irqs) {
+> > +	struct irq_data *data =3D irq_domain_get_irq_data(domain, virq);
+> > +	struct aspeed_pcie *pcie =3D irq_data_get_irq_chip_data(data);
+> > +
+> > +	mutex_lock(&pcie->lock);
+> > +
+> > +	bitmap_release_region(pcie->msi_irq_in_use, data->hwirq,
+> > +			      get_count_order(nr_irqs));
+> > +
+> > +	mutex_unlock(&pcie->lock);
+> > +}
+> > +
+> > +static const struct irq_domain_ops aspeed_msi_domain_ops =3D {
+> > +	.alloc =3D aspeed_irq_msi_domain_alloc,
+> > +	.free =3D aspeed_irq_msi_domain_free,
+> > +};
+> > +
+> > +static struct irq_chip aspeed_msi_irq_chip =3D {
+> > +	.name =3D "PCIe MSI",
+> > +	.irq_enable =3D pci_msi_unmask_irq,
+> > +	.irq_disable =3D pci_msi_mask_irq,
+> > +	.irq_mask =3D pci_msi_mask_irq,
+> > +	.irq_unmask =3D pci_msi_unmask_irq,
+> > +};
+> > +
+> > +static struct msi_domain_info aspeed_msi_domain_info =3D {
+> > +	.flags =3D (MSI_FLAG_USE_DEF_DOM_OPS |
+> MSI_FLAG_USE_DEF_CHIP_OPS |
+> > +		  MSI_FLAG_MULTI_PCI_MSI | MSI_FLAG_PCI_MSIX),
+> > +	.chip =3D &aspeed_msi_irq_chip,
+> > +};
+> > +#endif
+> > +
+> > +static void aspeed_pcie_irq_domain_free(struct aspeed_pcie *pcie) {
+> > +	if (pcie->irq_domain) {
+> > +		irq_domain_remove(pcie->irq_domain);
+> > +		pcie->irq_domain =3D NULL;
+> > +	}
+> > +#ifdef CONFIG_PCI_MSI
+> > +	if (pcie->msi_domain) {
+> > +		irq_domain_remove(pcie->msi_domain);
+> > +		pcie->msi_domain =3D NULL;
+> > +	}
+> > +
+> > +	if (pcie->dev_domain) {
+> > +		irq_domain_remove(pcie->dev_domain);
+> > +		pcie->dev_domain =3D NULL;
+> > +	}
+> > +#endif
+>=20
+> Add aspeed_msi_init() and aspeed_msi_free() helpers inside the large #ifd=
+ef
+> CONFIG_PCI_MSI block and make them empty on #else side so you don't need
+> ifdeffery here at all but can just make one call.
+>=20
+
+Agreed.
+
+> > +}
+> > +
+
+...
+
+> > +#ifdef CONFIG_PCI_MSI
+> > +	pcie->dev_domain =3D
+> > +		irq_domain_add_linear(NULL, MAX_MSI_HOST_IRQS,
+> &aspeed_msi_domain_ops, pcie);
+> > +	if (!pcie->dev_domain) {
+> > +		ret =3D dev_err_probe(pcie->dev, -ENOMEM, "failed to create IRQ
+> domain\n");
+> > +		goto err;
+> > +	}
+> > +
+> > +	pcie->msi_domain =3D pci_msi_create_irq_domain(dev_fwnode(pcie->dev),
+> &aspeed_msi_domain_info,
+> > +						     pcie->dev_domain);
+> > +	if (!pcie->msi_domain) {
+> > +		ret =3D dev_err_probe(pcie->dev, -ENOMEM, "failed to create MSI
+> domain\n");
+> > +		goto err;
+> > +	}
+> > +
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_en);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_en + 0x04);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_sts);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_sts + 0x04); #endif
+>=20
+> Ditto.
+>=20
+
+Agreed.
+
+> > +	return 0;
+> > +err:
+> > +	aspeed_pcie_irq_domain_free(pcie);
+> > +	return ret;
+> > +}
+> > +
+
+...
+
+> > +	reset_control_assert(pcie->h2xrst);
+> > +	mdelay(10);
+> > +	reset_control_deassert(pcie->h2xrst);
+> > +
+> > +	regmap_write(pcie->pciephy, PEHR_MISC_5C, CONFIG_RC_DEVICE);
+> > +	regmap_read(pcie->pciephy, PEHR_MISC_60, &cfg_val);
+> > +	regmap_write(pcie->pciephy, PEHR_MISC_60,
+> > +		     (cfg_val & ~PORT_TPYE) | FIELD_PREP(PORT_TPYE,
+> > +PORT_TYPE_ROOT));
+>=20
+> TYPE (typo)
+>=20
+>=20
+> Put the logic on separate lines before the write.
+>=20
+
+Agreed.
+
+> > +
+> > +	writel(0, pcie->reg + H2X_CTRL);
+> > +	writel(H2X_BRIDGE_EN | H2X_BRIDGE_DIRECT_EN, pcie->reg +
+> H2X_CTRL);
+> > +
+> > +	/* The BAR mapping:
+> > +	 * CPU Node0(domain 0): 0x60000000
+> > +	 * CPU Node1(domain 1): 0x80000000
+> > +	 * IO       (domain 2): 0xa0000000
+> > +	 */
+> > +	writel(REMAP_BAR_BASE(0x60000000 + (0x20000000 * pcie->domain)),
+>=20
+> Please name what is in the comment with defines and use the named defines
+> in the code instead of the literals. Also consider using SZ_* for that
+> size(?) (remember to add the include if using them).
+>=20
+
+Agreed.
+It is HW fixed. I will change to get from the ranges property from dtsi.
+
+> > +	       pcie->reg + H2X_REMAP_DIRECT_ADDR);
+> > +
+> > +	/* Prepare for 64-bit BAR pref */
+> > +	writel(REMAP_PREF_ADDR_63_32(0x3), pcie->reg +
+> H2X_REMAP_PREF_ADDR);
+> > +
+> > +	reset_control_deassert(pcie->perst);
+> > +	mdelay(1000);
+> > +
+> > +	pcie->host->ops =3D &aspeed_ast2700_pcie_ops;
+> > +
+> > +	if (aspeed_ast2700_get_link(pcie))
+> > +		dev_info(pcie->dev, "PCIe Link UP");
+> > +	else
+> > +		dev_info(pcie->dev, "PCIe Link DOWN");
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int aspeed_pcie_probe(struct platform_device *pdev) {
+> > +	struct device *dev =3D &pdev->dev;
+> > +	struct pci_host_bridge *host;
+> > +	struct aspeed_pcie *pcie;
+> > +	struct device_node *node =3D dev->of_node;
+> > +	const void *md =3D of_device_get_match_data(dev);
+> > +	int irq, ret;
+> > +
+> > +	if (!md)
+> > +		return -ENODEV;
+> > +
+> > +	host =3D devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
+> > +	if (!host)
+> > +		return -ENOMEM;
+> > +
+> > +	pcie =3D pci_host_bridge_priv(host);
+> > +	pcie->dev =3D dev;
+> > +	pcie->tx_tag =3D 0;
+> > +	platform_set_drvdata(pdev, pcie);
+> > +
+> > +	pcie->platform =3D md;
+> > +	pcie->host =3D host;
+> > +
+> > +	pcie->reg =3D devm_platform_ioremap_resource(pdev, 0);
+> > +
+> > +	of_property_read_u32(node, "msi_address", &pcie->msi_address);
+> > +	of_property_read_u32(node, "linux,pci-domain", &pcie->domain);
+> > +
+> > +	pcie->cfg =3D syscon_regmap_lookup_by_phandle(dev->of_node,
+> "aspeed,pciecfg");
+> > +	if (IS_ERR(pcie->cfg))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->cfg), "Failed to map
+> > +pciecfg base\n");
+> > +
+> > +	pcie->pciephy =3D syscon_regmap_lookup_by_phandle(node,
+> "aspeed,pciephy");
+> > +	if (IS_ERR(pcie->pciephy))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->pciephy), "Failed to map
+> > +pciephy base\n");
+> > +
+> > +	pcie->h2xrst =3D devm_reset_control_get_exclusive(dev, "h2x");
+> > +	if (IS_ERR(pcie->h2xrst))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->h2xrst), "Failed to get h2x
+> > +reset\n");
+> > +
+> > +	pcie->perst =3D devm_reset_control_get_exclusive(dev, "perst");
+> > +	if (IS_ERR(pcie->perst))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->perst), "Failed to get
+> > +perst reset\n");
+> > +
+> > +	ret =3D pcie->platform->setup(pdev);
+> > +	if (ret)
+> > +		goto err_setup;
+> > +
+> > +	host->sysdata =3D pcie;
+> > +
+> > +	ret =3D aspeed_pcie_init_irq_domain(pcie);
+> > +	if (ret)
+> > +		goto err_irq_init;
+> > +
+> > +	irq =3D platform_get_irq(pdev, 0);
+> > +	if (irq < 0)
+> > +		goto err_irq;
+> > +
+> > +	ret =3D devm_request_irq(dev, irq, aspeed_pcie_intr_handler, IRQF_SHA=
+RED,
+> dev_name(dev),
+> > +			       pcie);
+> > +	if (ret)
+> > +		goto err_irq;
+> > +
+> > +	pcie->clock =3D clk_get(dev, NULL);
+> > +	if (IS_ERR(pcie->clock))
+> > +		goto err_clk;
+> > +	ret =3D clk_prepare_enable(pcie->clock);
+> > +	if (ret)
+> > +		goto err_clk_enable;
+> > +
+> > +	ret =3D pci_host_probe(host);
+> > +	if (ret)
+> > +		goto err_clk_enable;
+> > +
+> > +	return 0;
+> > +
+> > +err_clk_enable:
+> > +	clk_put(pcie->clock);
+> > +err_clk:
+> > +err_irq:
+>=20
+> It would be better to name these on what is rolled back, not based on wha=
+t
+> failed.
+>=20
+> > +	aspeed_pcie_irq_domain_free(pcie);
+> > +err_irq_init:
+> > +err_setup:
+>=20
+> These should be removed and the goto replaced with direct return.
+>=20
+
+Agreed.
+
+> > +	return dev_err_probe(dev, ret, "Failed to setup PCIe RC\n");
+>=20
+> Common printing is not well suited for the rollback path. It's not much v=
+alue to
+> print a generic message like that, instead print the more specific error =
+before
+> gotos.
+>=20
+
+Agreed.
+
+> > +}
+>=20
+> Where's the mutex initialized??? Please use devm_mutex_init() and don't
+> forget to check errors because devm can fail.
+>=20
+
+Agreed.
+
+Thanks,
+Jacky
+
 
