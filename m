@@ -1,94 +1,39 @@
-Return-Path: <openbmc+bounces-283-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-284-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58ED3AE62E6
-	for <lists+openbmc@lfdr.de>; Tue, 24 Jun 2025 12:51:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1E74AE64E7
+	for <lists+openbmc@lfdr.de>; Tue, 24 Jun 2025 14:29:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bRMFc2b2vz2yft;
-	Tue, 24 Jun 2025 20:51:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bRPQG58R2z2xlK;
+	Tue, 24 Jun 2025 22:29:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.10
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750762292;
-	cv=none; b=h4g3Hx7ci8GjewCcIYZavjz/OizwqPEt8M+1F59vJDmhf1aYdgzlDpH9HPv2xNvxy7oI+5D/1DOvoB6EX/8PiwW5sGDjEJPtmi21caTKoMOjqwI9S1koaT4zaRhtPq4VXNFFU4+MrykfGAddeYRLetlRTte1ubMD05q5pOJhnBlBY1kMgM8anHG26g93cdTWbf+ZXcFN7uwWYUrap8f1sJMTE0YGnHY/D2SPEOAOf4S1fl1oxWbjHYtGr/n0jQrEu6d5ctJXch94RB/QpIKkTePc0uyhdUKzii2WeD8N7QOduuLKghjRD2rf6UBLcg/b7+ygY5zY85H5pbvpK8i4TA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=141.14.17.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1750768150;
+	cv=none; b=U5HKBjyk/ah8VKZAHr5/UWrshWsoZvKI/lMMA17lwRtj9TPNYTxXdA/1/Wxi9I62ymMJv/v4g4bOcTCaPyqUw91v66xu3hFbskXsK2xaZs2P8qKNSoArK0Lwh5FGDljlV7YW7W6LtTwXGXrzpmf/OcKjyiEk3mq7TbiBJYhlaXT7ouXpBC1GQwpA8lChFyqqLp4M90VYwmVnn7b4TUCgYU0mCAMRMPrZiahUfTOqxYDmQQnlcjEPPqZ2Skm5Xwt1Hw9FMJHt73PhM+617pKt6BRBLwQzrf3WzgR8Pg1vOuRPQ406xWNavoBzFsmRkz85ddo4xk2SE2UCeUJldKijvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1750762292; c=relaxed/relaxed;
-	bh=GwASaybr7tTBa/RnWzp5kiw4jn5j6IBVC/FDU+4fRf4=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=MKYIJCF9+Gykf6ohLLNxm5+jFa+qLmHblcAWVLi1xEHPYgZEC86kIdMF5NUNQlDTixki21pejYYPxtQBgBDpyz9M2LCksq1xlwXf0G5u+h7GUhKkAPP3tpIDhPEmbIDEHvS5x1TfqdweVHJ/i0ZTYkvwiyYgDrU8oYJJCZQ4P5coWwDVY/3ZVRYdYNImfqN90G76Ehrc2bTh+BpyYKa+qdOZBnryPXOwZdOyyonCFVpE+3cj5R3ycVX61/BLiJK+RSOklmygD/SBW6oQ4d4gaQFMLCvyEDnpUe06PnOBhCYMB3IkH6VdBr+XA4SMXIr9ORi0YNyLEdL4O1BYhc0xUA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D47wVn+b; dkim-atps=neutral; spf=none (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=ilpo.jarvinen@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D47wVn+b;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=ilpo.jarvinen@linux.intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Tue, 24 Jun 2025 20:51:28 AEST
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1750768150; c=relaxed/relaxed;
+	bh=bv1lKTHFFm3DfIi/TgcdlSfHSAO2gJzBqq986gjNAXc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ML/1wSU8JvqwPX/drNSgqaZaN2Kb/tElL/4hUHxKQe28uGiqBIjLfbDsInVxXzrP3mCP6NwqGSwSfpVTNZyYDy1yb3XqI/II7YsXslGIlyYN+bytbZcUqp6x2qOYvwQDeIGyKIzInRE6HZNm+iZrUAMLvDiS4EfBosLcXdr2lcybOe/zC3BTSfZfrLRgZRDoi4birpi3daXr7Ahdkx2Yne4RLLqNahEqMOh0F2B440r+e63Xzjhsvjkg1t7o1EpCi2euK0poeg0Mx+wyfgLAHU8dZHFxdliSu1J31s6zxPuGquEN5GmI1GmsJ01/YM27o1iBbMbkJST+ZhYG6W0ZmQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org) smtp.mailfrom=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bRMFX2Mblz2xk5;
-	Tue, 24 Jun 2025 20:51:27 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750762289; x=1782298289;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=dv6ZN9qLcc39VhlOnYfqWOhVKBnveT9waBSLrEElVx8=;
-  b=D47wVn+b4FJ06ELQgow8fh5btgHBxIaZJX+DruR/1BUJvkPXLQoLcpkZ
-   H7JC9MVt/t8Mu3zUw5/D+Ayj2lHhCltZK0QsFoxqQOFGzjpCJSexmMUAs
-   KJqiFdT2+JJSORvbReAC7XZnIhNlKzwqxfgGae0RuMMqGHHtlhlDrMxJJ
-   0Q+hkWUGaqCNw4027HtQXGfXf8DSl1ertSyZBwKtzNatylnSsyi1GaE84
-   KpR2YsrqGHFHWWzUHBZ7t1NBDb9/DxOivLU1VReMOj0kQntZy2CiLzh6M
-   wx7dEwJrjiLipgBT9dJu8tkIijGNkJfREeyZI69QCKVTeDafPPlD8C/cT
-   A==;
-X-CSE-ConnectionGUID: RHKapWU+Qwe8e/ZhmMhXWQ==
-X-CSE-MsgGUID: FPf+wqgFSAOn7/onE5SOfQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="64352257"
-X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="64352257"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 03:50:20 -0700
-X-CSE-ConnectionGUID: P3jobHMUQAe9pUeBJdc30Q==
-X-CSE-MsgGUID: JnGhA3LFT8aHV12Y11RQCw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,261,1744095600"; 
-   d="scan'208";a="151306478"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.16])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jun 2025 03:50:10 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Tue, 24 Jun 2025 13:50:06 +0300 (EEST)
-To: Jacky Chou <jacky_chou@aspeedtech.com>
-cc: "bhelgaas@google.com" <bhelgaas@google.com>, 
-    "lpieralisi@kernel.org" <lpieralisi@kernel.org>, 
-    "kwilczynski@kernel.org" <kwilczynski@kernel.org>, 
-    "mani@kernel.org" <mani@kernel.org>, "robh@kernel.org" <robh@kernel.org>, 
-    "krzk+dt@kernel.org" <krzk+dt@kernel.org>, 
-    "conor+dt@kernel.org" <conor+dt@kernel.org>, 
-    "joel@jms.id.au" <joel@jms.id.au>, 
-    "andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>, 
-    "vkoul@kernel.org" <vkoul@kernel.org>, 
-    "kishon@kernel.org" <kishon@kernel.org>, 
-    "linus.walleij@linaro.org" <linus.walleij@linaro.org>, 
-    "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>, 
-    "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, 
-    "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>, 
-    "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, 
-    "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, 
-    LKML <linux-kernel@vger.kernel.org>, 
-    "linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>, 
-    "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
-    "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>, 
-    "elbadrym@google.com" <elbadrym@google.com>, 
-    "romlem@google.com" <romlem@google.com>, 
-    "anhphan@google.com" <anhphan@google.com>, 
-    "wak@google.com" <wak@google.com>, 
-    "yuxiaozhang@google.com" <yuxiaozhang@google.com>, 
-    BMC-SW <BMC-SW@aspeedtech.com>
-Subject: Re: [PATCH 7/7] pci: aspeed: Add ASPEED PCIe host controller
- driver
-In-Reply-To: <SEYPR06MB5134973F678EB5B163DD50809D79A@SEYPR06MB5134.apcprd06.prod.outlook.com>
-Message-ID: <a618588d-54fe-69a9-27f7-7b19ba905a52@linux.intel.com>
-References: <20250613033001.3153637-1-jacky_chou@aspeedtech.com> <20250613033001.3153637-8-jacky_chou@aspeedtech.com> <40d1c5bd-0457-55ea-2514-ba27e6a4c720@linux.intel.com> <SEYPR06MB5134973F678EB5B163DD50809D79A@SEYPR06MB5134.apcprd06.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bRPQD74wpz2xHZ;
+	Tue, 24 Jun 2025 22:29:07 +1000 (AEST)
+Received: from [141.14.12.217] (g217.RadioFreeInternet.molgen.mpg.de [141.14.12.217])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id B1C1E61E647A8;
+	Tue, 24 Jun 2025 14:27:53 +0200 (CEST)
+Message-ID: <7b1f0f17-197d-4c57-b1d2-a9d8ec6ff398@molgen.mpg.de>
+Date: Tue, 24 Jun 2025 14:27:52 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -100,43 +45,62 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Status: No, score=-5.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE autolearn=disabled
-	version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [External] Re: [PATCH] i2c: aspeed: change debug level in irq
+ handler
+To: Zhang Jian <zhangjian.3032@bytedance.com>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+References: <20250618102148.3085214-1-zhangjian.3032@bytedance.com>
+ <63e740bf-cd0c-4671-9254-6846048b0366@molgen.mpg.de>
+ <CA+J-oUvm-3G9GRCzjOd+j8K6iNs1piCFAKBNfwih49iFwiB4pA@mail.gmail.com>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <CA+J-oUvm-3G9GRCzjOd+j8K6iNs1piCFAKBNfwih49iFwiB4pA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, 23 Jun 2025, Jacky Chou wrote:
+Dear Jian,
 
-> > > +static bool aspeed_ast2700_get_link(struct aspeed_pcie *pcie) {
-> > > +	u32 reg;
-> > > +	bool link;
-> > > +
-> > > +	regmap_read(pcie->pciephy, PEHR_MISC_300, &reg);
-> > > +	if (reg & CAPABILITY_GEN2) {
-> > > +		regmap_read(pcie->pciephy, PEHR_MISC_344, &reg);
-> > > +		link = !!(reg & LINK_STATUS_GEN2);
-> > > +	} else {
-> > > +		regmap_read(pcie->pciephy, PEHR_MISC_358, &reg);
-> > > +		link = !!(reg & LINK_STATUS_GEN4);
-> > 
-> > While I don't entirely know the meaning of these bits, what if the link is not
-> > using maximum speed it is capable of, does this check misbehave?
-> > 
+
+Am 24.06.25 um 12:32 schrieb Zhang Jian:
+
+> Thanks for your reply and sorry for the late reply, I was trying to
+> figure out why this log occurred, it's quite hard to reproduce.
+
+Thank you for your reply. So few days and over the weekend classifies as 
+instant reply. ;-)
+
+Were you able to find a reproducer, or just rebooting?
+
+> I traced all the master and slave states, and eventually found that 
+> the behavior matches the description in commit b4cc1cbba519. The
+> issue has already been fixed in that commit it was caused by a state
+> machine bug that led to the interrupt not being handled correctly.
 > 
-> In our AST2700, there are gen4 RC and gen2 RC.
-> Therefore, here will get capability to confirm it is gen2 or gen4.
-> And the link status is in different register.
+> see: https://github.com/torvalds/linux/commit/b4cc1cbba519
 
-Okay, but then I'm a bit worried the naming of the defines as "Link 
-Status" has a well-known meaning in PCIe Spec so it is confusing to call 
-something else LINK_STATUS_*. Does that name come from some AST spec? In 
-not, change the define naming. If yes, you should prefix it with so it is 
-clear this is not referring to a generic PCIe thing and I suggest also 
-adding a comment above those defines too so anyone looking them later 
-won't wonder if you're just duplicating something from the PCIe spec.
+The commit you found is present in Linux since v6.7-rc7.
 
--- 
- i.
+> (The state transitions between the master and slave here rely on
+> interrupts. When the signal waveform is incomplete (such as during
+> power off/on), it may cause state errors or brief unresponsiveness,
+> resulting in some log prints.)
 
+Thank you for getting to the bottom of this.
+
+Now that you ran into this, and have a suggestion, how the logging or 
+log messages could be improved, please share.
+
+
+Kind regards,
+
+Paul
 
