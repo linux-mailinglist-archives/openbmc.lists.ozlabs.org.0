@@ -1,59 +1,61 @@
-Return-Path: <openbmc+bounces-308-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-307-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DB21AF0844
-	for <lists+openbmc@lfdr.de>; Wed,  2 Jul 2025 04:06:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D5017AF0832
+	for <lists+openbmc@lfdr.de>; Wed,  2 Jul 2025 03:58:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bX3Ch4F6tz2xlQ;
-	Wed,  2 Jul 2025 12:06:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bX32S0cYcz305n;
+	Wed,  2 Jul 2025 11:58:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2404:9400:2221:ea00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1751420988;
-	cv=none; b=GLcSvDCAcny4+7LjX715m9ckuOdNSItrWBwaqGcZ7lQmJzR1rPhyghlXcQlxJu0XYkYqGOIu6WN1FavZJAcj24r0Fb/bWFBpeSiPtSgJ1O8vFAmj1gDe21Id/n0pMMiBbUJbjDph4LBWyQ0E/6Q0zFVCAicWCKgtLCWFHY5zNxYDVfzfoe1xUFDRVL1nEuxQBBC+S+737SJnrUNUKtfE+K1BWDmi1dF7Po/4URZncYzyEfwGjFCOBcHkAMraI5mCa6xYXMbh07qKnuU9j5ngG5Xv9cMmFbXiADY8gB/RSejxmMNWYfv033vDetYZ5FTvAQVNCp4xcZ8MhscGghbj+g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1751421487;
+	cv=none; b=h9WWD/ugAnXbyFx982iGtAgvmVfFiwELsD7fj8XUNte6BVjGRqFvJoFn/2OM70StAD851oBzAYVXlqVdXf9qj4Aty5uVoG3cim2/ItZ5nhi3QXCHLlIBOo2wuIAbBXBH6PAPrCX505h25Gajt8TBNK1q7EqrtdiuyKR39TxB8nXl9LKJAN325mc0xBMu6+DYpAcJYFFTa7+jsN/VtflVhw1mEqwJqQyscIklieLgwWRjPGsTdSzPMyIRWUaI7z7/oyYKxv5D0/x0I5x88iumoFXayEC5ENZxNOkeCBLjZQX+kD16hgEPEYfa8IarsrAIFI7OrNbQf087remR2iuB0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1751420988; c=relaxed/relaxed;
-	bh=VXy2MXucUAwAMgC5dNJmBFgEBpE/G+rOGr+3LXVk6aI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RAfqtnN32zNe4TimHCHZw9sTtI7v+3H6NO0nVKjFoVOcIbEw2T6XZ1vau5NsiSxR8gKHlT66hxVV4hJ94ifmgfaoUxKfyAWOSWUC/XYB2Tc4EqGQ4eclQhQb9PuX+9OwXXz+sPgc573bvdgujv+dY+eT4BrBBxiEcCaytltWKVRf+cLxSemEX5FI98Hk9Hqc/AqaqQYhXcb0NWTw6bc7bR0zwarQHwvfsS9zUVEZJI5ZvPmy84nOahHQfLjLqOMrnHLE/sgJCCepPNHci49thmPxfiOADek6u7o/jnoIeykOpdFBfxFh9r9AZbCLEgHxwKkWmIS+9cXmUoTDlfSfFw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au; dkim=pass (2048-bit key; secure) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.a=rsa-sha256 header.s=202503 header.b=iXCwWXhA; dkim-atps=neutral; spf=pass (client-ip=2404:9400:2221:ea00::3; helo=mail.ozlabs.org; envelope-from=sfr@canb.auug.org.au; receiver=lists.ozlabs.org) smtp.mailfrom=canb.auug.org.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au
+	t=1751421487; c=relaxed/relaxed;
+	bh=FikZ2tqBYmNhAVY3oqnGQ7MPas/t5KOAWI/+eYy3y0E=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=JM3wUULPQ91vY/yRgwQbK01Q9mcjAwDfCvlX36ceZxQbQsxCxoWj8N722kg5YqeDpWAncurBlxMaS0qPwFkMqKKHBRKqti5+n4UQvj1r8k60l8i1jNu/1r9bSjr2BkY1mIC3qTgxHNmNuDd0zaWZoqWtome/Uw5khMmuMKafYoepC/ep38cOSn5C6KP2W5Pj6NAvXhfMexvGMdVVOEVFWjdqZh6AI6GZD3hb5+YJNl+8wm7MKKID8w+5SpVb+4KY0RYhTNx/aZXrUIdZsaZi6urgcS2QNcc+4x9oK/G7rYevom+P0hL+vhOVZxKVEIIXOXg/TKserqgtZZJR5lLK1g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=RpUJV7H0; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.a=rsa-sha256 header.s=202503 header.b=iXCwWXhA;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=RpUJV7H0;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=canb.auug.org.au (client-ip=2404:9400:2221:ea00::3; helo=mail.ozlabs.org; envelope-from=sfr@canb.auug.org.au; receiver=lists.ozlabs.org)
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bX2rp4RBLz2ypV;
-	Wed,  2 Jul 2025 11:49:45 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
-	s=202503; t=1751420970;
-	bh=VXy2MXucUAwAMgC5dNJmBFgEBpE/G+rOGr+3LXVk6aI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=iXCwWXhAX7kvp+WmecSmDvMABSElLwxyLBGeKfv2dDg1Gcgpfj5hKrSnmws6ZLb1R
-	 DABcqEU0X7HWj/7ljISDwX0L5ZCQnOGNdM3C9FjhbVREbzawRplseisvHGhBEEroBN
-	 QJzxvUWj2UNlZns1FvY8CVwUs7vXTi8vvTWBAafQRd7qVQbJpILrKtllUu7jqeKJf9
-	 7gNYgrYkn91JxlEENNexeNZ2ALl920WNEwNikaLvF8ZFhp57LIOzm9mxDbtptBT+N1
-	 aWVBT2VI1buaPvqQXHxKdYIY/N2FR2/Yy9rcdxUbL5P3z8F8gqIQJgJMLAjVRbJBPn
-	 lbHYYp+9BsI3w==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4bX2rT6Qxqz4wcZ;
-	Wed,  2 Jul 2025 11:49:29 +1000 (AEST)
-Date: Wed, 2 Jul 2025 11:49:41 +1000
-From: Stephen Rothwell <sfr@canb.auug.org.au>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bX32R46p7z2xCd;
+	Wed,  2 Jul 2025 11:58:07 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1751421487;
+	bh=FikZ2tqBYmNhAVY3oqnGQ7MPas/t5KOAWI/+eYy3y0E=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=RpUJV7H0lb+POZjhJ1kNG1d86TBEbT0WT3hS1RHABYv6qvUJcNimMrg6UT36VPNCp
+	 SOp+JGCpScyM624y4BTceBkyJdAUax+0wlMICosNn6JLx/rKpHwWS3MWJXZSE0l11P
+	 1nma8oCwyQeDEUA1Pk1gbpiafqiGjxNpI7RIwg//x7YanAPfxtLSerYits2FrnVgBr
+	 y2CJI7bsEGTcufux5WVfAon5DO2FPLtH/pEiK4CaCYXLDJZgGik35RzWZDLd5rhYan
+	 POscMV+LONrOd5z6wPCHU84aQjkSQXbplUf96UJLHKJakOE/KvRD+yg0oZY5R1M18F
+	 maj175ErQGpWA==
+Received: from [192.168.68.112] (unknown [180.150.112.153])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 93B8D6443C;
+	Wed,  2 Jul 2025 09:58:06 +0800 (AWST)
+Message-ID: <8b035557ad025d31ab347349ebf9b91ff668498a.camel@codeconstruct.com.au>
+Subject: Re: Add bmc/linux for-next to linux-next
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Stephen Rothwell <sfr@canb.auug.org.au>
 Cc: linux-next@vger.kernel.org, Joel Stanley <joel@jms.id.au>,
  linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org
-Subject: Re: Add bmc/linux for-next to linux-next
-Message-ID: <20250702114941.5bfe1e5a@canb.auug.org.au>
-In-Reply-To: <2ae27beb3fa9266e8f73cfa10d8299465d872183.camel@codeconstruct.com.au>
-References: <2ae27beb3fa9266e8f73cfa10d8299465d872183.camel@codeconstruct.com.au>
+ linux-aspeed@lists.ozlabs.org,  openbmc@lists.ozlabs.org
+Date: Wed, 02 Jul 2025 11:28:06 +0930
+In-Reply-To: <20250702114941.5bfe1e5a@canb.auug.org.au>
+References: 
+	<2ae27beb3fa9266e8f73cfa10d8299465d872183.camel@codeconstruct.com.au>
+	 <20250702114941.5bfe1e5a@canb.auug.org.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -65,57 +67,48 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/olnj4gvN==N6hy44f10+yNA";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS
-	autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
---Sig_/olnj4gvN==N6hy44f10+yNA
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Hi Stephen,
 
-Hi Andrew,
-
-On Wed, 02 Jul 2025 11:01:54 +0930 Andrew Jeffery <andrew@codeconstruct.com=
-.au> wrote:
->
-> Could you add the following to linux-next?
+On Wed, 2025-07-02 at 11:49 +1000, Stephen Rothwell wrote:
+> Hi Andrew,
 >=20
->    Repo: https://git.kernel.org/pub/scm/linux/kernel/git/bmc/linux.git
->    Branch: for-next
+> On Wed, 02 Jul 2025 11:01:54 +0930 Andrew Jeffery <andrew@codeconstruct.c=
+om.au> wrote:
+> >=20
+> > Could you add the following to linux-next?
+> >=20
+> > =C2=A0=C2=A0 Repo: https://git.kernel.org/pub/scm/linux/kernel/git/bmc/=
+linux.git
+> > =C2=A0=C2=A0 Branch: for-next
+> >=20
+> > This aligns with the recent patch to MAINTAINERS for the ASPEED tree:
+> >=20
+> > https://lore.kernel.org/all/20250702-bmc-tree-update-v1-1-c270cd8af0ab@=
+codeconstruct.com.au/
 >=20
-> This aligns with the recent patch to MAINTAINERS for the ASPEED tree:
+> So, does this replace the aspeed tree
+> (git://git.kernel.org/pub/scm/linux/kernel/git/joel/bmc.git branch
+> for-next)?=C2=A0 Or sit along side it?
+
+It can replace joel/bmc.git, however, it should be fine to sit along-
+side until Joel confirms removal of his tree with you. I've been doing
+the BMC SoC patch wrangling recently, and he hasn't been updating his
+tree with the branches I put together until I poke him about it. In
+this case I'll just hassling him to update his tree, which should
+remove any opportunity for conflicts or the like.
+
 >=20
-> https://lore.kernel.org/all/20250702-bmc-tree-update-v1-1-c270cd8af0ab@co=
-deconstruct.com.au/
+> Either way, who should be the contact(s) for this tree?
+>=20
 
-So, does this replace the aspeed tree
-(git://git.kernel.org/pub/scm/linux/kernel/git/joel/bmc.git branch
-for-next)?  Or sit along side it?
+Both myself and Joel.
 
-Either way, who should be the contact(s) for this tree?
-
---=20
 Cheers,
-Stephen Rothwell
 
---Sig_/olnj4gvN==N6hy44f10+yNA
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmhkkDUACgkQAVBC80lX
-0GxEeAf9GBf7tmaV5IVqLypKCi0Vd0YU0OiupwyekgLXR6FnI/jA2pB5AbHCe5mt
-sKYyqctFxEMqPaS3x5GZXHMea/kJ899u+RbkhQNUwGHIf94SJfkhatNbvDveAZzD
-LfQWG8VIwar6MCP/wH8LH4q10lMRaZPGHTf//iLr+rSPyhOKCTmXYEh3IhWa55ZF
-pEQ7TeOyXnd0PZIKcTmpuq95fKJyV9UX5W08XXHC4crCLitT1mNA4ydgwwpS+eRk
-WEr2keM3r/9RyShdN02dTkgzH2b/YJ8X1LjSMJyM/o3EjNbuv7+CcZQlgK8Flo4B
-0Jf0++FNkD8ktwVo1JPp4Ir+815Cbw==
-=pNgw
------END PGP SIGNATURE-----
-
---Sig_/olnj4gvN==N6hy44f10+yNA--
+Andrew
 
