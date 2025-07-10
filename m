@@ -1,95 +1,95 @@
-Return-Path: <openbmc+bounces-324-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-323-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F051DB028E2
-	for <lists+openbmc@lfdr.de>; Sat, 12 Jul 2025 04:07:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E0CCB028E1
+	for <lists+openbmc@lfdr.de>; Sat, 12 Jul 2025 04:07:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bfBm61pg8z3blH;
-	Sat, 12 Jul 2025 12:07:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bfBlw1Yqmz3bjG;
+	Sat, 12 Jul 2025 12:06:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=170.10.133.124
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752160884;
-	cv=none; b=WEsvOEvIBjJP0vs8uKYTGsmkrhGdrR5MrzKgC2fyFVb13Uwpq+Ts8xnVii1z+3z8wOBs5lQ+W6QwEo9kcIgTTTJpUuBof7tpexB5ph15Cpjh9siFZtPE5Z0adSdXiaLjf8/6T5AinYgRJ1KD0TfVywhReEtyPopikRd3bq3VdFehb6JqYjVEDls/WgDauQPLcyvTBqV4M89A4dh/Gtxu3Kj8uI5gPP22VWdiaF8GRzXjnfeEHmMODQAGoIrRneAWEbz+5cYAshXXMoBrm9+EH5D52PnHtqGaE94zrFQtegn+gX5wGnw+CS7H2iBCGkyToC542PmO+G4UAhtyaCqTyg==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752160887;
+	cv=none; b=K1ZKZUk8uO0AFuBYsyek2AvGkoVhy4NRNDtUz+s0c8hxq4+pn0vpyRTMGzzTWSpjLai+ARDTL/Rvso5AQVMzhvKYbjUcKCccAvpD5Spra4KfKrbz7EluwplWazX48lb6yytMaicT85F67k3njB5rqPKNe1y1OJGVyblPKzSSmI2y6REA4YyftXORCSi0eIy5Hak2O+BdZLJWTVF/N6m8j+aUrFRmIh777akyo8dZMpMVjMeO+69XCPhHdaab8D7Cw4V6NlTlp6oNL+mQGjHjPtx+v+iZD1e0pRcwkUuDe66kDm/AP+JLt3lbImu4scXG/CuOLkL7E/LbqahZ6NrpLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1752160884; c=relaxed/relaxed;
-	bh=8TcSjx0C2BwMhGthThgDZI0WYIDHS3xoAOaKbpomAhE=;
+	t=1752160887; c=relaxed/relaxed;
+	bh=1zVc4uZxRMU4cvDiAS+onbHkVKec91CN3SQjz5cVgQ4=;
 	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
-	 To:Cc:Content-Type; b=aY4evE4q+ObLhmbOIRW4rXFTgNfY1CAm5ZKWaD7zfxiHrAFHJvaFIPUCsIvdbcBKdCteIzKaTJ3WVbMWESQxt5G7bIROagtQpz6OxRbl3ZIrQumOO90a0dQKrHKnsMssUAriVNeQteoqCcaiNeGN12TdA/y9BW+ggoq7xhjw0uMa2CoRqi42wFmXemZ4yW1XbrlkjdOY7EV+RFCG1ajoJaUst9r9JrvU+BzeYuSc/l0WvqLXLPPLL62b1pZLb47BY/+ojq7qh+n1Qv0D86S2EubmhvA2ZqFUxfl7W+MfQTyb00d5+QPXqifUg8I79h+RCHqHIjtxxXDjdWpw8oeoRA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5NAG2/j; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5NAG2/j; dkim-atps=neutral; spf=pass (client-ip=170.10.133.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org) smtp.mailfrom=redhat.com
+	 To:Cc:Content-Type; b=nnrtwvpezXIuEauXFj9vbPaC1gV9LmmlH5Gtu80A279MMowxZuLB7+Zuxsz0wAri6L5utFaGOX9DIw5bq6I4uM+iRHHtan+HiZc9gtewcg3T3to7mtMPlg0rPfJwR6zw7uD/utPe1hrf80Fbt48b/IntamuOVIS9ZSxf9D+R/3GVzwDo7/mZwk+icvAHebH1E4XWmujsJltx3EOpWWVItDUpP+kYUkv9EjYLvGhtwsM6fDal9it6ikiVsw4pXTsWbKSlAE/zTtUQRgQTC+sGj0jTFgszSjJNCpsHyQYDJ4JP/T0wU/tf2fnJbTQ6xUoCMuIcDzpJr2OFnNdUzoXBTg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b0ImFRvu; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=II7ovu9h; dkim-atps=neutral; spf=pass (client-ip=170.10.133.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org) smtp.mailfrom=redhat.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5NAG2/j;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5NAG2/j;
+	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b0ImFRvu;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=II7ovu9h;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=redhat.com (client-ip=170.10.133.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org)
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bdJTc0kn9z2yDk
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Jul 2025 01:21:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bdJTf6Xf4z2yDk
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Jul 2025 01:21:26 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752160881;
+	s=mimecast20190719; t=1752160883;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8TcSjx0C2BwMhGthThgDZI0WYIDHS3xoAOaKbpomAhE=;
-	b=F5NAG2/jFx3ypDYZCeAKzWOtPfNQp9Gq9DqzoPR++xBk0iUD6V95Roc4HYyViRFHyYfrMc
-	651vt70bsZB7hB5IencFlDFtRUr6b0m1fbGOSzz3tMSDTKxlY08U/rAtyMMutpdewVhKvH
-	K2R80l/e1JKoYbgTupNMX87k2GzRyEA=
+	bh=1zVc4uZxRMU4cvDiAS+onbHkVKec91CN3SQjz5cVgQ4=;
+	b=b0ImFRvufukVZDUBsfavy/c7dVgTjvZgJz3MepkMVBQXn9maJ1uCo5c9NMMOyis1LN1gXQ
+	XPaRPoB2ZaiW3HcNqfOWf/O+PRvd6wmGkL3u7ZAgxiTjqsBv014smwDzCoCW2cSNMiTdk6
+	cpJqj683AvhgegyErc9nyVpa12sKqNQ=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752160881;
+	s=mimecast20190719; t=1752160884;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8TcSjx0C2BwMhGthThgDZI0WYIDHS3xoAOaKbpomAhE=;
-	b=F5NAG2/jFx3ypDYZCeAKzWOtPfNQp9Gq9DqzoPR++xBk0iUD6V95Roc4HYyViRFHyYfrMc
-	651vt70bsZB7hB5IencFlDFtRUr6b0m1fbGOSzz3tMSDTKxlY08U/rAtyMMutpdewVhKvH
-	K2R80l/e1JKoYbgTupNMX87k2GzRyEA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=1zVc4uZxRMU4cvDiAS+onbHkVKec91CN3SQjz5cVgQ4=;
+	b=II7ovu9h2AwFcUppAJbPSch4u7QDjbTTF+JL3X+H3s1vESjzahTSkXbHN2pw/wf4GiesB6
+	5yipO25tDbp9iZ/kKHVEMoDgFfq7xTjt+Or8O2lEA59iUvCpP/Dw2QbNH8L5MlSHcVhlZG
+	8Yo1DtSJSeS3awvlFIF1kXH80628ZrQ=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-n-Q3uT7nMXSVscfl7udCWQ-1; Thu, 10 Jul 2025 11:21:19 -0400
-X-MC-Unique: n-Q3uT7nMXSVscfl7udCWQ-1
-X-Mimecast-MFC-AGG-ID: n-Q3uT7nMXSVscfl7udCWQ_1752160879
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4a587c85a60so23111351cf.2
-        for <openbmc@lists.ozlabs.org>; Thu, 10 Jul 2025 08:21:19 -0700 (PDT)
+ us-mta-34-blEj1bV2OuiFU6xiI2CjKA-1; Thu, 10 Jul 2025 11:21:22 -0400
+X-MC-Unique: blEj1bV2OuiFU6xiI2CjKA-1
+X-Mimecast-MFC-AGG-ID: blEj1bV2OuiFU6xiI2CjKA_1752160882
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4a589edc51aso26316431cf.0
+        for <openbmc@lists.ozlabs.org>; Thu, 10 Jul 2025 08:21:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752160879; x=1752765679;
+        d=1e100.net; s=20230601; t=1752160882; x=1752765682;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8TcSjx0C2BwMhGthThgDZI0WYIDHS3xoAOaKbpomAhE=;
-        b=EEOCuoFOZV3348hb+BvwPFYeLRrWx3IfyxJuKn8I9vtoQd0scT2vEMqJhu6nPWjnSV
-         dGHb/fHOH2k7aq4k8LdhxygSIO8Lj7YgkDZC6MCMOAE1tK3XbCqGw04YxMCi3+vsOBYI
-         F528HsXqIPMHSaHDSRPvO7/Lvljd02zCeRrWIJc27vEEi/jqfU9x1BtvSrVbbfEUs9YA
-         vPutaiKBJvDEm/vmiAjY0F5hDSJcXyWgsiiU0nWHnjBT+SBYOwpIAYIUpwVJhazaq+93
-         P/wWCORbNg3RAqtsqpTS6aMlUeEWvRslKj7bWwc0VY/Mt/0nmTKVIST5QMnKolpvyhBe
-         qgxw==
-X-Forwarded-Encrypted: i=1; AJvYcCVH2GADQEsbXZ3ucxUYs7c+wy2SDqXNobObWHTVF+yHfgYhQsY5AhGWGyvi/k6wV3Gcbaba2e4p@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxtqneyN5WuUEcpx2fWfyG3c83WutVB2M0lPtXjfpdUNvNXByrq
-	QG+6qfNFHVaC2wLnA1kNCB9SQA4QuT2oUjcY0FRmyIW4S6soy2+QX034Jh3lrds7E3wB4Ibt1fG
-	hnm3B9ZnFjKrUGuY/5GasYYm0QVpJqeie7KlmIc7Wn2/gGjC0cJHVngSXbuow
-X-Gm-Gg: ASbGnct1S6iyl2KNTWIK8btgzFEhSKXXz61mKrNuG8Cy2SpPUqKokfWc+pEKZ0zritQ
-	bFI7eO5pbhCBZ4XfjF/e9VpiyTBQJiZgPAGJV/bLc6J2328FyyPJx9FTDUlofybKbQqgFRMiz5h
-	1PwgbuBeWPR2HiOVB2K9ES4+XtOb6ubGFmoS4eANo3ix/ZktIgcaO6v0SAjfHMPoDMP4ZKQEnz4
-	kJ7Q5d4vYtg/2nyYjlEgCaDh3SghaSEpRET6g+2ASJBl3iiz9umpNIDOXMngGuFgA/UO4MIVx4J
-	7pQQQwEEp2QfT65XvUOvp3vRu5LgTzvjOHQttwWzKJmnnPVuW3lE4A5D718s
-X-Received: by 2002:a05:622a:2cd:b0:494:9455:5731 with SMTP id d75a77b69052e-4a9dec1f0b4mr69146561cf.7.1752160879135;
-        Thu, 10 Jul 2025 08:21:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOYaK+S6nKLNB0+onalYZ18FMGM4SU1Pk1Rw8vuZDxj3sx1uTSsbM+HxfhIu/O6GetrMHApA==
-X-Received: by 2002:a05:622a:2cd:b0:494:9455:5731 with SMTP id d75a77b69052e-4a9dec1f0b4mr69146151cf.7.1752160878737;
-        Thu, 10 Jul 2025 08:21:18 -0700 (PDT)
+        bh=1zVc4uZxRMU4cvDiAS+onbHkVKec91CN3SQjz5cVgQ4=;
+        b=lEcGyn7229qigJ8zaxvbN86AYUPEBaRnTh5LaRP6h0JT68XybodjR3DGVVa38/xwdK
+         MxTK5nbL65VrtazVsX3Spd1E2yixrr8lYkDKOgkhI8wVF+su0Z0eshQVKbWtcRUIj7e0
+         fVI2zf3sHSwfQ0xPfgn+HT72GRopQSCg9T602t0V9Fk6p60f9VAq2gexdvTEN9VPA4er
+         nWfLat6CjmNlmI2mXusWR4WEWAHNElocfoPxiHU0Vj41o56pfQ82QbMU3Qf8ii1yVqad
+         FDYLOlJU+7wjDOH9I5UjrcCsHINyi5LOwDlDEvD6rTgjNsFLVe36e9d2u6clKSiGqLPq
+         0ceg==
+X-Forwarded-Encrypted: i=1; AJvYcCVdJl9l9IyzceuZpoYgJZc1fVHIyWelzD1iAUjabgQeQLIPTWDItqeweCBO7/SF1lxzQ0YGYvbf@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwnHCQ5yahhZY7/tBpL4tY3bEew+3/QL5USk2+vRILi9e8y2SnX
+	ihpAxpefHPYyUhgW7zK4+s8ThN70yxKfteEC1Xd3sPVECLXBYeXKXPPQauiJTNtkjaWcpqN/4f0
+	KzG8fEzAOz/RLBPayrK6BvqB0VU52Q4+u/qCfDF5soo899TbS2F7RpHDC/IfY
+X-Gm-Gg: ASbGncv3vDjAvd1GtV/qJXl+PtXgULOLJnAkuaSV/kNceF51le0+VuWDJMru+eZJQRc
+	ulNfoE+OPp8WH1xK+vxFWwg+2fghHVGIl2lzKSLvCFT52x9Bd/+FAcZMVVdo8fpCM5txZG/lmYh
+	P2GGzSUIckE64uSQ30WoB6J08JHsB+CQLjOvZB4MmshSUThVcw/qSyLfZ3bQ7AQVhH5lc1j8aOW
+	RCtyELnd+h0NJpiAOE3vhfSOu0W2uitKRAO1eqcJoetZVmA9SACcatFUZp3EKMhf34r3jiUpYHt
+	ERPtxoZLUKJNT8ptjlWXfV95eY/j/AHYjBlgm4wbqowyQCKn8gwhwieo/8k1
+X-Received: by 2002:a05:622a:8d0b:b0:4a4:31e2:2e77 with SMTP id d75a77b69052e-4a9f7367d48mr23115421cf.50.1752160881803;
+        Thu, 10 Jul 2025 08:21:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/1O4MLvOzk7gKxJZFO5slOGKTVfTHOFq+wSEYq355CZZ1O7svKyn2khuzgSoy03/2j0xmxA==
+X-Received: by 2002:a05:622a:8d0b:b0:4a4:31e2:2e77 with SMTP id d75a77b69052e-4a9f7367d48mr23114911cf.50.1752160881463;
+        Thu, 10 Jul 2025 08:21:21 -0700 (PDT)
 Received: from [192.168.1.3] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee2c2sm9654471cf.74.2025.07.10.08.21.16
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee2c2sm9654471cf.74.2025.07.10.08.21.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 08:21:17 -0700 (PDT)
+        Thu, 10 Jul 2025 08:21:20 -0700 (PDT)
 From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 10 Jul 2025 11:20:30 -0400
-Subject: [PATCH 10/15] rtc: max31335: convert from round_rate() to
+Date: Thu, 10 Jul 2025 11:20:31 -0400
+Subject: [PATCH 11/15] rtc: nct3018y: convert from round_rate() to
  determine_rate()
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -102,7 +102,7 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Message-Id: <20250710-rtc-clk-round-rate-v1-10-33140bb2278e@redhat.com>
+Message-Id: <20250710-rtc-clk-round-rate-v1-11-33140bb2278e@redhat.com>
 References: <20250710-rtc-clk-round-rate-v1-0-33140bb2278e@redhat.com>
 In-Reply-To: <20250710-rtc-clk-round-rate-v1-0-33140bb2278e@redhat.com>
 To: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
@@ -121,15 +121,15 @@ Cc: linux-clk@vger.kernel.org, linux-rtc@vger.kernel.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, 
  Brian Masney <bmasney@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752160847; l=1704;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752160847; l=1680;
  i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=UPXy6/C/RD79zBD8+YjC+4PQ2wHdzGnij5BrRNttYFg=;
- b=VczBglJXF7c0OhaNV6IcNJHendkDjPzxJK9SOdtvRnVBdd83JQDd6pRndtaJb0pB6PnPQgE6n
- YzmdtsurZ5VCbLJUyfz/1pItIEplDMwKOk1THQ06/VWvI4nd8eqLOL0
+ bh=n49+tG0DWMRf1aqATyzqFiQzu9HDymGoH2RU27/qnxQ=;
+ b=P6B78+RNiRcz4avwFwJ8Y49o2kiWmwP4zkdeQ/qf8zNH+D8uJk3HIGRZAfLT34wdb2ZKqzKoE
+ pRY4BcYTZNGDdsBg2fjEfI6IUZY9CLR90bRG/tlSi/EnUAB3F5vgkHc
 X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
  pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: hdt2eK_wJhgE2rhnZ60q1ImS3bcv45uXq_OHtPSqDRc_1752160879
+X-Mimecast-MFC-PROC-ID: IXwjOeQqmNmP2xRPpgfBQBVjkY_mvHr0aGhoV75EBII_1752160882
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -145,44 +145,49 @@ on the cover letter of this series.
 
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
- drivers/rtc/rtc-max31335.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/rtc/rtc-nct3018y.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/rtc/rtc-max31335.c b/drivers/rtc/rtc-max31335.c
-index a7bb37aaab9e6e315db70bc6bc0dbaa553fdecfa..dfb5bad3a3691d0968bac78cbc9d54a2ea7662ba 100644
---- a/drivers/rtc/rtc-max31335.c
-+++ b/drivers/rtc/rtc-max31335.c
-@@ -497,15 +497,17 @@ static unsigned long max31335_clkout_recalc_rate(struct clk_hw *hw,
- 	return max31335_clkout_freq[reg & freq_mask];
+diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
+index cea05fca0bccddc6384c462cf1ebdc59b377a24d..cd4b1db902e9f68781787236bec56c2cae8436ab 100644
+--- a/drivers/rtc/rtc-nct3018y.c
++++ b/drivers/rtc/rtc-nct3018y.c
+@@ -367,16 +367,21 @@ static unsigned long nct3018y_clkout_recalc_rate(struct clk_hw *hw,
+ 	return clkout_rates[flags];
  }
  
--static long max31335_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
+-static long nct3018y_clkout_round_rate(struct clk_hw *hw, unsigned long rate,
 -				       unsigned long *prate)
-+static int max31335_clkout_determine_rate(struct clk_hw *hw,
++static int nct3018y_clkout_determine_rate(struct clk_hw *hw,
 +					  struct clk_rate_request *req)
  {
- 	int index;
+ 	int i;
  
--	index = find_closest(rate, max31335_clkout_freq,
-+	index = find_closest(req->rate, max31335_clkout_freq,
- 			     ARRAY_SIZE(max31335_clkout_freq));
+ 	for (i = 0; i < ARRAY_SIZE(clkout_rates); i++)
+-		if (clkout_rates[i] <= rate)
+-			return clkout_rates[i];
++		if (clkout_rates[i] <= req->rate) {
++			req->rate = clkout_rates[i];
  
--	return max31335_clkout_freq[index];
-+	req->rate = max31335_clkout_freq[index];
+-	return clkout_rates[0];
++			return 0;
++		}
++
++	req->rate = clkout_rates[0];
 +
 +	return 0;
  }
  
- static int max31335_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
-@@ -554,7 +556,7 @@ static int max31335_clkout_is_enabled(struct clk_hw *hw)
+ static int nct3018y_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -446,7 +451,7 @@ static const struct clk_ops nct3018y_clkout_ops = {
+ 	.unprepare = nct3018y_clkout_unprepare,
+ 	.is_prepared = nct3018y_clkout_is_prepared,
+ 	.recalc_rate = nct3018y_clkout_recalc_rate,
+-	.round_rate = nct3018y_clkout_round_rate,
++	.determine_rate = nct3018y_clkout_determine_rate,
+ 	.set_rate = nct3018y_clkout_set_rate,
+ };
  
- static const struct clk_ops max31335_clkout_ops = {
- 	.recalc_rate = max31335_clkout_recalc_rate,
--	.round_rate = max31335_clkout_round_rate,
-+	.determine_rate = max31335_clkout_determine_rate,
- 	.set_rate = max31335_clkout_set_rate,
- 	.enable = max31335_clkout_enable,
- 	.disable = max31335_clkout_disable,
 
 -- 
 2.50.0
