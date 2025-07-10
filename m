@@ -1,94 +1,96 @@
-Return-Path: <openbmc+bounces-334-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-333-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 348DEB028EC
-	for <lists+openbmc@lfdr.de>; Sat, 12 Jul 2025 04:09:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4341B028EB
+	for <lists+openbmc@lfdr.de>; Sat, 12 Jul 2025 04:09:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bfBmx4z4bz3bsT;
-	Sat, 12 Jul 2025 12:07:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bfBmr33PQz3brv;
+	Sat, 12 Jul 2025 12:07:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=170.10.129.124
 ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752160860;
-	cv=none; b=lAFXpDWiIAi2EvcrSKCn5f9ZWht5Iq4A5l+3sUqRZB5NPAxQeySetbRnaT8ZIIQcaj8/wuT5Icr741AQ7pQa5XHKPwsKCMPkCOq7hAf3Mvz/eu9sOP7YEqRW52wEF56f4J9Qc4C+a9A8AzwkOyePWgclL9Tv+PeBUDI57Hnwe0D5j1l/wzmFn2DZR10SACcxtZMQnItkEHUYbq6i0jv9AuN/KIAyCozgBbt6VLN5FhU74iJLZ8x+aTWNDzwE8RhWkY+CV7do42QAWznERnATtnYFtVdT5iOiguBqSTBFamfMjHD36Zef4fEnZV//PpDcl6O8e0qqxNLS3LKP62Aesg==
+	cv=none; b=hTppT5vf/9pM0AbjFYbg3m4xMXrjpI4fo+DsD/ezJwHI/dCjxqFL1o1Q990/YPAwelshPGSXQ+6apYTkR9741m/jkyyFn46A6iqiUMCl/LWOasNckakvo3DBVEyaHfFCtsHUaLIDxBYtD1pYVPa75/iZt+N9n8CjMS9j81vgg0ZHEDXmCB6MvikXd9S6wckYy6St2ElRFz1iDhT1ypMXiUARKTfcBr8mQeSVypIhgdftB+jQEXxCqLd/p793+PZ09ARwQ5AAH56x9XsgHJi07Xq3/oSosTTSf+kVOJ/etq+P4LJ31aKClfJTRe87kV/h98OGInRW6D4RCgPPduIWmg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
 	t=1752160860; c=relaxed/relaxed;
-	bh=Ds7++Ij2+1V4ib5aZvqnghth0svM2cKB0bqVi1/rlYY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:To:Cc:Content-Type; b=W50Yw9aey2cIjfgu6MsddjrPqSxVh6PL0IyZzReKj+wZDULFpenXWToQgR8k6RoPZk7C1kchqnjSsJSXMkG5eNrmdC3F0F7s9m9ckAw7xEYFcc5XNHG7WCxgqkbz3gSAJdfQnDuEC5rx2ch7/RB21QoUIUYtFfvr728lgrGi9xawAEfdvIHEvaehQVIW1O+4+Yci3pRJ0OwEKagKhPxVFwAcRSkqaqFpgDB+l1yc0qB/D+/0qvgjSdLJemc0itV4j6CJegT0pXsn+BOJgMjEegUQ8VKrXmFw0KmWeSF+OCqchFt5om+cLolbt0U+evqgUy3zKNXrq8YTURFDc4QtrA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hWTlYsg+; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WQyUrXSn; dkim-atps=neutral; spf=pass (client-ip=170.10.133.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org) smtp.mailfrom=redhat.com
+	bh=LHPBpe2ME5Me1EAnJ5XGIYrRbZqrmoRVe5YJ3r8jZqs=;
+	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
+	 To:Cc:Content-Type; b=YlBa3Ar82zYnDGd5TmSzJfQHtPV27IDZ8CganvzpJndjJoEEl5dKD9jK/lhmWODwkB2FDmL9Ey5RrK8RD8cIfMOeQ0ndDBb4ZWDxolCx33F8B/1CT3y5MmUMODHivq2vJXMC2Dg+jeEbjmt8M+7iIUkYVfF2DYk5joxHgvfCizz5JOp6LhrrhMFi9O8/IedaJ0NV/vMcF96AITEjBB9Qn426RO4qqLzfCU3JPSvpxC6Q9sU6UqwAsiuXPw4/7uIwEGWmPopOVgmvcJeiTYm8795Cjscq7NvOJBzGD8A1Ve29npagzS+trcwcSQmp+vjqNQ+7Cxm8KNQYbPMsNobA7w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YNRkH1e/; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YNRkH1e/; dkim-atps=neutral; spf=pass (client-ip=170.10.129.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org) smtp.mailfrom=redhat.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hWTlYsg+;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WQyUrXSn;
+	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YNRkH1e/;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YNRkH1e/;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=redhat.com (client-ip=170.10.133.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org)
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=redhat.com (client-ip=170.10.129.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bdJT65wwWz2yDk
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Jul 2025 01:20:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bdJT81XStz30Vb
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Jul 2025 01:20:59 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752160852;
+	s=mimecast20190719; t=1752160857;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Ds7++Ij2+1V4ib5aZvqnghth0svM2cKB0bqVi1/rlYY=;
-	b=hWTlYsg+VjlBwm4Piq8aboa7mfWKw/VxLab0EuP5uV0cMC6osf6K02BadEa2ygEUc4bSRp
-	GONcdopOEiYnyUjCOl8Gt0m/XS+ernC+pqU3ML+hsYcogSTd8E9HQ1KXXAeC8CjZ3uK6ss
-	Ch8yy7UlCBCmI0r1cumTiIcLHnzv8NU=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LHPBpe2ME5Me1EAnJ5XGIYrRbZqrmoRVe5YJ3r8jZqs=;
+	b=YNRkH1e/hekPqIPvpxj4vvOasJUc82LQ95oXqhGfBY1jwT/EJFHruWD0LwserkvTO35ewb
+	JNyNcYFnCHLL7EGej305IdcZItJSX3nPaRizmtrpF6b455cLEgD+LlKkOcwsl9547DwamB
+	G8OFEnD05v7hHJkd/DEbWYwcJuUd6mo=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1752160853;
+	s=mimecast20190719; t=1752160857;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Ds7++Ij2+1V4ib5aZvqnghth0svM2cKB0bqVi1/rlYY=;
-	b=WQyUrXSnG3OSyZ/N8h6G9rY8T+aORV7qo8AB2UEAh0m+pcFGGogrZhp0O6is3+w8mUsRkK
-	zdLptw23Iuy9tqiayZ5DJZlJdS3apZ0Fr36CW/xKty52lVvXAWziHP7Bj1SUZ+VAmSuPHj
-	lFQoxZEm/PMS+VYAfwrOrdCE9CulnXo=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LHPBpe2ME5Me1EAnJ5XGIYrRbZqrmoRVe5YJ3r8jZqs=;
+	b=YNRkH1e/hekPqIPvpxj4vvOasJUc82LQ95oXqhGfBY1jwT/EJFHruWD0LwserkvTO35ewb
+	JNyNcYFnCHLL7EGej305IdcZItJSX3nPaRizmtrpF6b455cLEgD+LlKkOcwsl9547DwamB
+	G8OFEnD05v7hHJkd/DEbWYwcJuUd6mo=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-458-F_0AfkWHNpWIgzOX9EmVrg-1; Thu, 10 Jul 2025 11:20:51 -0400
-X-MC-Unique: F_0AfkWHNpWIgzOX9EmVrg-1
-X-Mimecast-MFC-AGG-ID: F_0AfkWHNpWIgzOX9EmVrg_1752160851
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4a587a96f0aso32190911cf.3
-        for <openbmc@lists.ozlabs.org>; Thu, 10 Jul 2025 08:20:51 -0700 (PDT)
+ us-mta-183-0r-dmV5ZOTec_E6uEouqqg-1; Thu, 10 Jul 2025 11:20:55 -0400
+X-MC-Unique: 0r-dmV5ZOTec_E6uEouqqg-1
+X-Mimecast-MFC-AGG-ID: 0r-dmV5ZOTec_E6uEouqqg_1752160855
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4a44c8e11efso30445491cf.0
+        for <openbmc@lists.ozlabs.org>; Thu, 10 Jul 2025 08:20:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752160851; x=1752765651;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ds7++Ij2+1V4ib5aZvqnghth0svM2cKB0bqVi1/rlYY=;
-        b=Q1TjwhW6eGwGPjdbKmtCn7ohmPu2VyoiIoWrC0NiaSua48gmEdk6tsw7P+90p12Rrp
-         cYiVTZHuVsWQ/JnbMEPlcXDhqDtnixoNQFY5txPMuHN1PerVDJYptdZGsElxixapvTqS
-         ZXHOhycQ0JyenZl1XzsgicowC57Cv4ol0hC+9ZW6hS2rehG3dG72Jkttmo5Iw+DIMGk9
-         HRg35vKtLSxOY2xaAzpaalOKX7OVhsiDxq58e0Sqeg3U8o//CgCdrtMvAfPUpCeAcOZq
-         D/2T0ykKFrWR1zCwvg1ahmzd/NQEueHHx0zo1I8OR20Y1TP8L247ojSqxdEQpyysssdu
-         o07A==
-X-Forwarded-Encrypted: i=1; AJvYcCVBm5CzN1aOCbfsetcxASyhQk4OmqNyWRCt6Q1mhEoPobX5hov8oQysLK6Ot62dHdCoyD7QfVqm@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwxVi0atsGXUeSLDft7WGTG6rzY/9HI30nlTktE+SjTkhHyekUP
-	f/ck+Zs6cf8bJ8cdvuB5VRBl/rSfAXa/IlowOzQ7ZELy4ry8xySyxl9XJzAPNesDvh9qfQ0JMom
-	ldSiW/LBlKj52lExPLVBQng/4zjRVPNE4XfmnTrJtRg0Bq+zKu1gy0YRTe0Yi
-X-Gm-Gg: ASbGncvHhTBe/E2ln2E1worBYvkpuUW+PtWUA1Tiv8KK4vXFntTlLQjkx4sQe6X8LkC
-	EVmKICk0v8WQG7jIXolWZJ0cUiIdO95ze0Vu9sjXCEitY/VW5ZoTDSyooBOSvSmNTAX/uXenQMJ
-	2LkGASRjGWqmh6niw7jg+EPhVlGxRAs3NP/0V4RuX9+K7kfaHXPimINXXhvUR8D2fRsWSRDgF+w
-	EYyBGNvunE/MEF1H9upMPL95+AdsQ3xIctiEidIB4UHbqwUHazMwc4wXu7xjY/5d9jlrewxp+mA
-	h9MyWQt8kX3lYW3B9Q7aiUqtx8q/SEtV+H1fbKU8ty4neYTk7pzidHOVxskP
-X-Received: by 2002:a05:622a:1144:b0:477:1ee1:23d9 with SMTP id d75a77b69052e-4a9ec75e251mr55310061cf.20.1752160850871;
-        Thu, 10 Jul 2025 08:20:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEToM0xvOjTAuNFn12a/+Huuy1Y8IvYOkC01RE80GL773b7iqyZVQh3usJvnkGTDa9plKREUA==
-X-Received: by 2002:a05:622a:1144:b0:477:1ee1:23d9 with SMTP id d75a77b69052e-4a9ec75e251mr55309261cf.20.1752160850187;
-        Thu, 10 Jul 2025 08:20:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752160855; x=1752765655;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LHPBpe2ME5Me1EAnJ5XGIYrRbZqrmoRVe5YJ3r8jZqs=;
+        b=ulk93LMQy3lhHz1e70zdx3vPEoIW5BAei+p0yORWQgua02hAb21fs/S/EtFsQKd6Yr
+         61o01Poo46pVs0Twgk/CiuWYz1OQPcUi3jyRDlNqfJ9ya43sNWzhrHDWXG4S3uHDaLMS
+         P+Zr826ESd0zkC3Hyr3OMceY1CTTP4kirbtq5TgVtoEfjq1Dg80qlazWvgV3XhPEvPxr
+         ZY+PSE2HD6hIWV60NbnmTnf9ppE0gCID9brp/5A/VZ4dnHjQljb2l2htVDFsMUv2oRW3
+         I4l+ogaclQH2r/GLuHsAe7BsISmZtINzclbqOTQphemQ7vigyo0gcc9GBAthHXt74vi8
+         +lbA==
+X-Forwarded-Encrypted: i=1; AJvYcCWCKUtYTfV487fNegZNyUg3ekjg3nw4/i94HKKvpcZ7TGC7r3NL46FBRxqI0J74VFl0dnasxLqG@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwBWbF8mwe8eKypQQuBLh5ze6oxybCTlB+91I7MmpfamHQpnk7j
+	WLkBLfvRNno5UistlZhAL7Hc+bocjCCw20eOEYyybIdDBdMpa+6sqjXY3oF4uJRUkUML2DClbDL
+	QQuc8Q4tcCYwnIANUsSQtdJfneuqUCcNUFdR5axrjINoCDScoPSvpDVFBCqHP
+X-Gm-Gg: ASbGncvSxtkT1+vTvqnSSiion4CnpnHjGeSZq9jvbQztfs+uzbThP3Rz08v0wOJhpOH
+	7kYo9yNwu7Zk07QSYSfhthOi5yNypADiKfZFef/6HvnN485+d5Fq/sPuuM/SheZI+igiSV7zg74
+	4GL7VtldSR9OLDRB/F/XyYYNKobseSbGxBR1X36d2I3nl7rDpHY0d002/K7xFyDbs6mIF3RlUaT
+	mITXxWx0byJS60jkWLY2aG+ei3CeAByHX2us4LjfUnVmcWgZdha/rxPCuMX8an22flRQkLSkr2F
+	dwwkxsF1xN6+UQ/oI7VfmnJnxLJdr4pnGHeyRo/oTUt8hbzrE04+jSB8XR3z
+X-Received: by 2002:a05:622a:101:b0:4a9:e276:2fb7 with SMTP id d75a77b69052e-4a9ec7ca38amr47392711cf.29.1752160854896;
+        Thu, 10 Jul 2025 08:20:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDLcNv2lDHhPRuPa3PBLGRvRknazi0MkGkMJ3jjn/hzszBgqiL8MPXlo3Ug0921v1/TzKKEQ==
+X-Received: by 2002:a05:622a:101:b0:4a9:e276:2fb7 with SMTP id d75a77b69052e-4a9ec7ca38amr47392181cf.29.1752160854435;
+        Thu, 10 Jul 2025 08:20:54 -0700 (PDT)
 Received: from [192.168.1.3] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee2c2sm9654471cf.74.2025.07.10.08.20.47
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a9edeee2c2sm9654471cf.74.2025.07.10.08.20.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 08:20:49 -0700 (PDT)
+        Thu, 10 Jul 2025 08:20:51 -0700 (PDT)
 From: Brian Masney <bmasney@redhat.com>
-Subject: [PATCH 00/15] rtc: convert from clk round_rate() to
- determine_rate() and fix a few bugs
-Date: Thu, 10 Jul 2025 11:20:20 -0400
-Message-Id: <20250710-rtc-clk-round-rate-v1-0-33140bb2278e@redhat.com>
+Date: Thu, 10 Jul 2025 11:20:21 -0400
+Subject: [PATCH 01/15] rtc: ds1307: fix incorrect maximum clock rate
+ handling
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -100,10 +102,9 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIADTab2gC/x3MwQpAQBCA4VfRnE3NEuJV5LDtDiZamkVK3t3m+
- B3+/4HIKhyhyx5QviTKFhJMnoGbbZgYxSdDQUVFjSHUw6FbF9TtDB7VHoyG2pLq2htbOUjhrjz
- K/U/74X0/Vlb142QAAAA=
-X-Change-ID: 20250710-rtc-clk-round-rate-1093066d1a5c
+Message-Id: <20250710-rtc-clk-round-rate-v1-1-33140bb2278e@redhat.com>
+References: <20250710-rtc-clk-round-rate-v1-0-33140bb2278e@redhat.com>
+In-Reply-To: <20250710-rtc-clk-round-rate-v1-0-33140bb2278e@redhat.com>
 To: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
  Akinobu Mita <akinobu.mita@gmail.com>, 
  Michael Turquette <mturquette@baylibre.com>, 
@@ -120,15 +121,15 @@ Cc: linux-clk@vger.kernel.org, linux-rtc@vger.kernel.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, 
  Brian Masney <bmasney@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1752160847; l=6092;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1752160847; l=1091;
  i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=9M3wopRrGysSMIdgOwMKcjjazdX85vpeXMPuYsQrbNY=;
- b=AA9zUj0gJWaQ5insN3QRj2sCaM8YtZtb1pwCdKfcn8t61rNC+0mFATNTarVGL7O+fipo2Lz7w
- iG1H+HResmQB2HXjyK41d1ZGP7JTaY4eabya5WkXNS64i/eBlg0iQAu
+ bh=wnFIaXx40Vz/ClvnEh6f8bTkAdbeJwxG+N4rRNHdiSk=;
+ b=+A8YUXgylGkUHOwIsLqyv4get20Ku0mnYqFwH3tYHrj3MlQDQaPOSNxpmXm2HBwGJcu7rJVBN
+ 2qwZqI6Hq0xA8ZZ0bQnzaWsxGGatsZPg2KaA+vl4sQUtpFK6xQIbwo6
 X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
  pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: BQ8-IMKyn5XNo6o_kSYg3d4KEH7nGmf8yVSS1K6-bus_1752160851
+X-Mimecast-MFC-PROC-ID: ZbEWRYyAsjofi3wP_GuycmdscLjwlaftz81QrvD9g70_1752160855
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
@@ -138,182 +139,33 @@ X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-The round_rate() clk ops is deprecated in the clk framework in favor
-of the determine_rate() clk ops, so let's go ahead and convert the
-drivers in the rtc subsystem using the Coccinelle semantic patch
-posted below. I did a few minor cosmetic cleanups of the code in a
-few cases.
+When ds3231_clk_sqw_round_rate() is called with a requested rate higher
+than the highest supported rate, it currently returns 0, which disables
+the clock. According to the clk API, round_rate() should instead return
+the highest supported rate. Update the function to return the maximum
+supported rate in this case.
 
-I also noticed that in some of the drivers that if round_rate() is
-called with a requested rate higher than the highest supported rate,
-then the clock is disabled. According to the clk API, round_rate()
-should instead return the highest supported rate. This series also
-updates the functions to return the maximum supported rate.
-
-Coccinelle semantic patch:
-
-    virtual patch
-
-    // Look up the current name of the round_rate function
-    @ has_round_rate @
-    identifier round_rate_name =~ ".*_round_rate";
-    identifier hw_param, rate_param, parent_rate_param;
-    @@
-
-    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
-                  unsigned long *parent_rate_param)
-    {
-    	...
-    }
-
-    // Rename the route_rate function name to determine_rate()
-    @ script:python generate_name depends on has_round_rate @
-    round_rate_name << has_round_rate.round_rate_name;
-    new_name;
-    @@
-
-    coccinelle.new_name = round_rate_name.replace("_round_rate", "_determine_rate")
-
-    // Change rate to req->rate; also change occurrences of 'return XXX'.
-    @ chg_rate depends on generate_name @
-    identifier has_round_rate.round_rate_name;
-    identifier has_round_rate.hw_param;
-    identifier has_round_rate.rate_param;
-    identifier has_round_rate.parent_rate_param;
-    identifier ERR =~ "E.*";
-    expression E;
-    @@
-
-    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
-                  unsigned long *parent_rate_param)
-    {
-    <...
-    (
-    -return -ERR;
-    +return -ERR;
-    |
-    - return rate_param;
-    + return 0;
-    |
-    - return E;
-    + req->rate = E;
-    +
-    + return 0;
-    |
-    - rate_param
-    + req->rate
-    )
-    ...>
-    }
-
-    // Coccinelle only transforms the first occurrence of the rate parameter
-    // Run a second time. FIXME: Is there a better way to do this?
-    @ chg_rate2 depends on generate_name @
-    identifier has_round_rate.round_rate_name;
-    identifier has_round_rate.hw_param;
-    identifier has_round_rate.rate_param;
-    identifier has_round_rate.parent_rate_param;
-    @@
-
-    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
-                  unsigned long *parent_rate_param)
-    {
-    <...
-    - rate_param
-    + req->rate
-    ...>
-    }
-
-    // Change parent_rate to req->best_parent_rate
-    @ chg_parent_rate depends on generate_name @
-    identifier has_round_rate.round_rate_name;
-    identifier has_round_rate.hw_param;
-    identifier has_round_rate.rate_param;
-    identifier has_round_rate.parent_rate_param;
-    @@
-
-    long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
-                  unsigned long *parent_rate_param)
-    {
-    <...
-    (
-    - *parent_rate_param
-    + req->best_parent_rate
-    |
-    - parent_rate_param
-    + &req->best_parent_rate
-    )
-    ...>
-    }
-
-    // Convert the function definition from round_rate() to determine_rate()
-    @ func_definition depends on chg_rate @
-    identifier has_round_rate.round_rate_name;
-    identifier has_round_rate.hw_param;
-    identifier has_round_rate.rate_param;
-    identifier has_round_rate.parent_rate_param;
-    identifier generate_name.new_name;
-    @@
-
-    - long round_rate_name(struct clk_hw *hw_param, unsigned long rate_param,
-    -               unsigned long *parent_rate_param)
-    + int new_name(struct clk_hw *hw, struct clk_rate_request *req)
-    {
-        ...
-    }
-
-    // Update the ops from round_rate() to determine_rate()
-    @ ops depends on func_definition @
-    identifier has_round_rate.round_rate_name;
-    identifier generate_name.new_name;
-    @@
-
-    {
-        ...,
-    -   .round_rate = round_rate_name,
-    +   .determine_rate = new_name,
-        ...,
-    }
-
-Note that I used coccinelle 1.2 instead of 1.3 since the newer version
-adds unnecessary braces as described in this post.
-https://lore.kernel.org/cocci/67642477-5f3e-4b2a-914d-579a54f48cbd@intel.com/
-
+Fixes: 6c6ff145b3346 ("rtc: ds1307: add clock provider support for DS3231")
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
-Brian Masney (15):
-      rtc: ds1307: fix incorrect maximum clock rate handling
-      rtc: hym8563: fix incorrect maximum clock rate handling
-      rtc: nct3018y: fix incorrect maximum clock rate handling
-      rtc: pcf85063: fix incorrect maximum clock rate handling
-      rtc: pcf8563: fix incorrect maximum clock rate handling
-      rtc: rv3028: fix incorrect maximum clock rate handling
-      rtc: ds1307: convert from round_rate() to determine_rate()
-      rtc: hym8563: convert from round_rate() to determine_rate()
-      rtc: m41t80: convert from round_rate() to determine_rate()
-      rtc: max31335: convert from round_rate() to determine_rate()
-      rtc: nct3018y: convert from round_rate() to determine_rate()
-      rtc: pcf85063: convert from round_rate() to determine_rate()
-      rtc: pcf8563: convert from round_rate() to determine_rate()
-      rtc: rv3028: convert from round_rate() to determine_rate()
-      rtc: rv3032: convert from round_rate() to determine_rate()
+ drivers/rtc/rtc-ds1307.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- drivers/rtc/rtc-ds1307.c   | 15 ++++++++++-----
- drivers/rtc/rtc-hym8563.c  | 15 ++++++++++-----
- drivers/rtc/rtc-m41t80.c   | 21 +++++++++++----------
- drivers/rtc/rtc-max31335.c | 12 +++++++-----
- drivers/rtc/rtc-nct3018y.c | 15 ++++++++++-----
- drivers/rtc/rtc-pcf85063.c | 15 ++++++++++-----
- drivers/rtc/rtc-pcf8563.c  | 15 ++++++++++-----
- drivers/rtc/rtc-rv3028.c   | 15 ++++++++++-----
- drivers/rtc/rtc-rv3032.c   | 21 +++++++++++++--------
- 9 files changed, 91 insertions(+), 53 deletions(-)
----
-base-commit: b551c4e2a98a177a06148cf16505643cd2108386
-change-id: 20250710-rtc-clk-round-rate-1093066d1a5c
+diff --git a/drivers/rtc/rtc-ds1307.c b/drivers/rtc/rtc-ds1307.c
+index 5efbe69bf5ca8cbc2a325cf2797afcd14f3760bf..c8a666de9cbe9163ab7e112b01b99d97c94970d3 100644
+--- a/drivers/rtc/rtc-ds1307.c
++++ b/drivers/rtc/rtc-ds1307.c
+@@ -1466,7 +1466,7 @@ static long ds3231_clk_sqw_round_rate(struct clk_hw *hw, unsigned long rate,
+ 			return ds3231_clk_sqw_rates[i];
+ 	}
+ 
+-	return 0;
++	return ds3231_clk_sqw_rates[ARRAY_SIZE(ds3231_clk_sqw_rates) - 1];
+ }
+ 
+ static int ds3231_clk_sqw_set_rate(struct clk_hw *hw, unsigned long rate,
 
-Best regards,
 -- 
-Brian Masney <bmasney@redhat.com>
+2.50.0
 
 
