@@ -1,58 +1,53 @@
-Return-Path: <openbmc+bounces-340-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-341-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A9AB062D2
-	for <lists+openbmc@lfdr.de>; Tue, 15 Jul 2025 17:25:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF65B064EA
+	for <lists+openbmc@lfdr.de>; Tue, 15 Jul 2025 19:07:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bhNKn1fSnz2xYl;
-	Wed, 16 Jul 2025 01:25:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bhQbk27M4z2xd6;
+	Wed, 16 Jul 2025 03:07:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752593117;
-	cv=none; b=XQQ1WarSQ2D3CHCRJbkF/wQxOA4t9hXsfdM2gxjF1dmSCmeG8ckyKXBMqi/wjFF8ol5sPqIAMidD9qv+4Ir6iDyk6hzbQyMK4hYeFaNUcOYGfm6qsXM/IkNxL4cwnAMj0iOvjxAdBySDorc9foQ4+m+Ew2r99zxYgCAIH9lMRvEUIU/cXjx1lNCDEXcDD+zhOuUEcaHvIuXrZfzPYhlBLYy9YBfmvM+XdgR2YN2qCng2AF2cGVNtTzAnoWMWwQLrRMIOKqs/4xWatnZUgMkqThG/r/U+7hnTCPVbfEh4rGj0xQLEGpf7zz8ZFIKfx6RH/PV4Bnt+1Ex6vqaqTDZ4ZA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=212.227.17.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752599250;
+	cv=none; b=F6IYenaelI8ihRSUwZgVkfop+5x+9BHuw9U9GoWdlcec2frdMXIV5wxmPlxNwfRNiJFQZA3kVLTcp4qg4FVQeG2m3BQkIC/fy4pXq5nsNxSaJMaZ4ikzEvJHTC5eP8E6PydP2VFcg68eudxuzcvw5xeltPweVfCLhwCBoDhJdvnu8Gm3AEQELfE/4WKf1LX+A5lHwdz/3jx53FblTEwvjxaGVgqqvZwcz3xrEDM1OAoU/6E6BGlJ9x4O1PQa/Wd5EeLrNf8QOa10LmEwjNcXZTvK5S8TjkpDY4x2mVfbf7f6CMkwh4QGrPRW+5MwA1nEBcq3bGKG4gUJphkay/ZzcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1752593117; c=relaxed/relaxed;
-	bh=GA5gdyFg1uZV5+jdJaA/+N++eUsrCQesqrVksX5qS1Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OFfMR2py33zSrySoQ8BXnseuo/xH0JOjvYovmLHXZK7X+cHsMNH/Z//i1N+iJPYppjtMTh3ma53cC0oc08y4uFN8jGo6Kb2UO2rj/tkEWCJVN9Vejr/1DRNdGE5lAoGB6sCJhlArJeDMNgJSJ+iZomgMQNBHl8ZQ7GYvA+5zbpPS+Go15nF1n3Q+Pu6DS1a8nX3uvOQZkQ3R1kv9GWLYxssaRMPWsKci1hvVEm/yxLI9lqZOIDsOxdBc9oRo3DdFD0HM1uMPnFFr1WZUGj92BBNWIzi9WcCto1zmrpohfEPTH2axtFq3HOpeneWIXdFFjKkuWCTRJ+fBBZEqtbQMUw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YoOGDjgF; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1752599250; c=relaxed/relaxed;
+	bh=rGs/l04TD5R/3ve+iKBgA47mAtv6wQTleh/5nWpeFXY=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=bm3jAirTRezfrP65H3ejuGyn5wQZMI+BkNQT75/6CcRJdBvWIkWhHXtW5P4umRGLQtTbpp446D8jOszYwQ26eDX6+nkvhmWw153iP2etkDIj752LBg6awk9JWNWDpjwMScEoMkuBtRnUPllUA1G2r1vYaUWd/vu3hef/9GtiUHFU6sEmejBr34UJBwFRaBAuItOGymKVqokd/1wAGxarmtvLwcNua9jKPNWccVE3AIaLLPpXmaKu92W2zviuTSvKORCToafIrBavrvcHCM8HxUHiLGrvXZmYuirvGtUdNnLpNp3qitmqxk+zsgXPWBouNlJNJYsRrMyjzsDqaNrXsg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; dkim=pass (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=Gms+X0Ob; dkim-atps=neutral; spf=pass (client-ip=212.227.17.11; helo=mout.web.de; envelope-from=markus.elfring@web.de; receiver=lists.ozlabs.org) smtp.mailfrom=web.de
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YoOGDjgF;
+	dkim=pass (2048-bit key; secure) header.d=web.de header.i=markus.elfring@web.de header.a=rsa-sha256 header.s=s29768273 header.b=Gms+X0Ob;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=web.de (client-ip=212.227.17.11; helo=mout.web.de; envelope-from=markus.elfring@web.de; receiver=lists.ozlabs.org)
+X-Greylist: delayed 390 seconds by postgrey-1.37 at boromir; Wed, 16 Jul 2025 03:07:26 AEST
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bhNKm2mRZz2xQ6;
-	Wed, 16 Jul 2025 01:25:16 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id CF31D46A9C;
-	Tue, 15 Jul 2025 15:25:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC899C4CEF9;
-	Tue, 15 Jul 2025 15:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752593113;
-	bh=+iZhsBUWZSulP41RkMskAokjoebc7RkoZj+v+sID3+g=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=YoOGDjgFRp7HK1g5v9jpXVwss1E7P+fld3vFuN3PW900mdZ2CIwKK2cp5ZcvL7d0y
-	 9rRd/bpND3G2dqZehY4LWofXABaXOQgm/nb+1xttzDLiQjJdi5jL7ugbavQg82q+3b
-	 AGBvubAtgWiE5n5to9Jx9ziV0YD1VxPMz4+BkxJn+IGMoVDb1XsES5DIOQuW/g9a5t
-	 duyU3WBsecV2D7qMPMaSHGSfgsD4D9rm3fTl6t2UqTys7O3DyAr/2W7dAETILAdjRa
-	 qEMQr+XDIkQVK93cS4IC2Fftunhcd514xknZWlivvD4vvMxF9CcGIbO9BGGbOCqsBs
-	 9dEzTc4bNiYtA==
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-60bf5a08729so10304766a12.0;
-        Tue, 15 Jul 2025 08:25:13 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVFf8o+qac4ORDILXZdwZDvNMIKJ3rWVL2ccORXPxY1xThebN8l5+WWN68tSBPzE5coTHG6zZSDCA==@lists.ozlabs.org, AJvYcCVV4ENN5RDc43M7i6UUUdoAmxNTDzU69oTjw7D+b410lxRxxgEWnB11LjJ2g9ZtH0Q0Drlcv9HKRVephVQ=@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwzTtoPfsAsTQAs7AvXaEgA8f4pKk+A0sypvf60HqG9dh/rzsel
-	igmaA12yhGTi1xVGbu9nOVBVqRA6YKH+md3EiVPPsSGNmtzou+jFDracMEfIbOnep+J9aZW0gWj
-	UEI8agXQ1AOZ+Bq0Vp6YXxyYBU0IIcw==
-X-Google-Smtp-Source: AGHT+IFhI1Gf1QWnLIvPSTSWf4gnALh46fJcdiVacHnkECq+ju3RTb7CbKGPKrz2qlxBZ7zAD9wzoI4qtasBTfMiC+U=
-X-Received: by 2002:a17:907:8689:b0:ae4:85d:76fc with SMTP id
- a640c23a62f3a-ae6fcbc35bfmr1706242066b.30.1752593112041; Tue, 15 Jul 2025
- 08:25:12 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bhQbf2yMcz2xYl;
+	Wed, 16 Jul 2025 03:07:25 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1752599233; x=1753204033; i=markus.elfring@web.de;
+	bh=rGs/l04TD5R/3ve+iKBgA47mAtv6wQTleh/5nWpeFXY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Gms+X0ObcYEH56yM90oN8j65PCTF8VNtlG5gbjvb+OqIq3qhg7k7YODEEBjRj20y
+	 ktFrlTgko9DqhtJ5eC/XEkP7asrPv4pnODzjaI/RUgACL+XqUaTluWoB2J2kFQKBW
+	 /bi0Z0k1AaujQf9YIH6pobcFkE77bhs2+P53ijj9TcCLSpVjWULvMtHIF2U+ZNM71
+	 qUbp1ft3Z7O0zD/iG1sUuwjGbb4/EPsSCYzk8btK0erwZUbu9vcPf7irZMd4SDeko
+	 BVbnH+T1t+m+5EGc3RPxXNKlSa2Cd7DkVTdgytLP5+t2jtcWtRq41ME7+6jb/UX8f
+	 vaDVqMwkFC2rHKGmqA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.93.1]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQPdr-1uG5Qf1ZaL-00VKQl; Tue, 15
+ Jul 2025 19:00:40 +0200
+Message-ID: <8fe0f561-ef44-4ec2-9b93-f73105bd67ed@web.de>
+Date: Tue, 15 Jul 2025 19:00:27 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -64,140 +59,111 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20250715034320.2553837-1-jacky_chou@aspeedtech.com> <20250715034320.2553837-7-jacky_chou@aspeedtech.com>
-In-Reply-To: <20250715034320.2553837-7-jacky_chou@aspeedtech.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 15 Jul 2025 10:25:00 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ4yeYGAyCwHi=4CBurxGOc5oAqTQqun+5+Ps4hxwDU9Q@mail.gmail.com>
-X-Gm-Features: Ac12FXx6Zdty1kF4V51gulFmHIQBgnZZ8rlts-SPK0sS7WQh8WbpLuYAl_mXY8I
-Message-ID: <CAL_JsqJ4yeYGAyCwHi=4CBurxGOc5oAqTQqun+5+Ps4hxwDU9Q@mail.gmail.com>
-Subject: Re: [PATCH v2 06/10] ARM: dts: aspeed-g6: Add PCIe RC node
-To: Jacky Chou <jacky_chou@aspeedtech.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
-	mani@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au, 
-	andrew@codeconstruct.com.au, linux-aspeed@lists.ozlabs.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, 
-	linus.walleij@linaro.org, p.zabel@pengutronix.de, BMC-SW@aspeedtech.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+To: Jacky Chou <jacky_chou@aspeedtech.com>, linux-aspeed@lists.ozlabs.org,
+ linux-pci@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Bjorn Helgaas <bhelgaas@google.com>, Conor Dooley <conor+dt@kernel.org>,
+ Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, openbmc@lists.ozlabs.org,
+ BMC-SW@aspeedtech.com
+References: <20250715034320.2553837-10-jacky_chou@aspeedtech.com>
+Subject: Re: [PATCH v2 09/10] PCI: aspeed: Add ASPEED PCIe RC driver
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250715034320.2553837-10-jacky_chou@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+X-Provags-ID: V03:K1:PoiZJ9fSzSlWKLh1vwNyOAzkuNF7hTRNV71wlCsQn9g9VWcuxTx
+ nT8JNwaatT96O2Duhbk0shm1AnqD4uQPhFU12ISegzxBQZh3+6CXUa5B7lNmbliSmSeZm8S
+ G4xWGpI8d1VQASPeeVwHpTZK5ZBwxPjT7anBgPmC4d2Tui/pGWvOVuFtKIpaPfsuZYgmH0J
+ v9SrV1YYB8SF8bevLSxeA==
+UI-OutboundReport: notjunk:1;M01:P0:dltKTgujAqk=;G33VzvogkYGATuj3pK/oweWwyHK
+ fEPFBsUirFno4vQPLhkPD33QkLMWQIUSFm7pguv9duWnnYsWhQMfNMa6dEqd3jBFRsB8sN3Uv
+ 0/Af/vQD1T0lhT1MNLnikeANdHcsVCMdNh6uv6WCEmGzheORvd2kUYxoahgzedCxpk9x5Wq5W
+ FJUBr3zzCPmzfNjOOjcaUrE2pHIDSpIFx2YNFbqRy3y9cznehNssmPzJuMas0WFNvUuMIEyG2
+ fRwyL90pVaReIGQYx358GA6Tk0Xxik1pGj05AOqBCqkeB4LMCt5rHw6qcmpDVBIIs2rGMd13c
+ n91NSmW9vm3i9KtWIg/qrzXTTeAyYpKO47BzP0v4qJiLUSLmVUoY01/WkO2r4NHxjYaRT+zRs
+ pfPmJP5EODzDyyfYXMbChAF3BoEEKnqqrLap2oVzs9wsucgZ8dTWHaFfC8aNaYYMF4hO2MdYW
+ 4F/DI12rv+GrZzw4UPVwItNTv25OjuUA6wRx7WF+QdCvm20sJNRgMHd1cIjNpxgWFTc2FBwQb
+ xvZslAqmZEymC4XWlxPe9eUANUbY3mbjs3OKs11WGAkSzJeU7Cl7QrSDxsiJOnsQFqq+HhkWx
+ l26c11DhOPZEG+x9eiyMTmEbI4o5A1xPSnrbwRQDPE6f82s1V2icThMjOv/m+UGbRcFD8Dfv7
+ NpHnzlyEMhk4XgSpipW2JJCZPMlYx1KVHGrk2foRWxzaHxW7QvE2hHjOcvV0Xd+Jgdr89rVh/
+ rNB64yoMc1nds/lB5baH5pkqlD76zkiwQ8tQ0gsZ4R5Ktjb7lukB3vqSlkrlPlt3RBITyfj1e
+ CcEcKB8n9DYhXjea6070U0Rg49IW77ZyyoVzsXb9Qc8MYTR8sIdUTddqbFfBnzog48jL0AL8L
+ BWiqnqaAIi1McB9WZXCsMzJ/NNhHA3QV83OmkQXTTDkSPr0dH40JoFNNXAGsa6MXr0CDkmjPz
+ QMViA5P+2Wr5a+2vp8SblB3o0uBdzdLijDSCRSvGbzkDI7j8YcfMy1YhAXVPrVl2rX/TLVUtf
+ kM5CmbZ/X2TsgBg5G2TZwwDbP2cGQxZKA7EjrAJJPd6gu1+nWMd7tb5VOOO6vREeGeDBFSYY6
+ NQtxFsQcwAILbdTMwEEZcdLIVCqqfEtKSD1OhYMRRI7yp6o1ME6C2sL6WwMcfcQI0KHNWJ8sN
+ UT7BrXP/zgZg0cUwX/d7FQlrfP6GFknrHU1cWxzxbcsrwYIyyXGR84v42CtrLLvQvj/ceQKFB
+ RVbAyzSkInG747GnlXQXs/cfNbBO+8qNJOsxoxnwUz1MxE15pl1c28ioYloIgdjO3HPWtww+d
+ 0OGiBTeSY8CGL2J2tIxj3STMYs7/fX19JCUCFLOKdyooJaL5d8dYLz8x4B19MjgIcWYkWvsvO
+ GFv8tZPhuJXEVM+YynETNGH9Bq3x9CsBIcofoQkG80QZgON7lH5O2LcpdEuduhWfbs8ugNwXK
+ 0J/SssU69wZuiSzRDFt6oaEwdetYLtImmEcwsTNpih5j7y7TG3aWqN7VwryrgCYTmM5OUvTcY
+ 23Cv6vT5mYzRElA0hU8wm2q0sldHlwJw4SMEHCKP6CDkTHNAxQfR14vh86rx+OjTZjCe9kj2s
+ GB4spYEv5lafaqr/u14QXnNazlhLMGWXOLrZmV3qi/FA1iDLniJIPbsfT3f/y9mwCTtFO9kgw
+ t5dDDZDT5dj0JBeJfLrcA4iRozlBI4r2xTOJmUiUWpJf9R3TGa/hHbrnrkKO/1Q2R4NnFlAYO
+ nBs21RXQAdRaG57cH68/yV47GHwjUx8U1d6O2/7oDqj9K4epsTosS/9oebhgUNvaEwHFYR5hX
+ DpwQA00mfVvRc5cNp0D8Xrlvuie54d6M00qqcD8uQO00b8BIdnqo3yQAh8UDG/mfJrDIfZL2r
+ 5dGu0M0H4azZ7xH6DsVF97YqkJkB/7sD8J9llK20NQKGJ+wtJdeZnA5AzGFsef7dkp4kwPQWa
+ cPnpLjsybXrsbG7vyD0Ea5YqrF8rBDs8UCfEmvAE5crivPB8ySCL7KJ0lwmeMZEqgorakSiK6
+ 3CtvDtAa+mcQvx7MI9KYVFsWVZhj0zXik0gxyy4G8Ki4IvbVwrREnff6Fi3tme2NG232cE11A
+ M/vU4wiFFIzBi9bDz4DIKHHlH6ue+WNNn/QCNWCjvLeStTFz/KTmR6Hy7xVkRA/qKwSOkKAfP
+ sQsQNZKyCAFfbGNukTbVcZrlqMmcbLlfdQeWj+ZOKWCtFzlU5jB1kFqUsXZmYujXr82EoMIgi
+ EzuWSRf+XMI/vhYLqOALBXQjY8v8ht2RW3CTJSvEhrxkPA5G4jX7fqr34N/j5lx/rtAG7UgG/
+ tY0knrNsmnCQ/PX3AUjP96Qjq+zIt3ioiJ3cADNJy58Q77CBeehDXlxBgAhECSV0OVN7u10ko
+ 7CaYsKg3Q28U+NyCzzQ8jzUcr1YTP/VH6YEEG3WQDonhKKGKD7eXJjeBO1TExwLuNlKm1FAld
+ bRhnFRbSFs8fwslvFJZi5khFlksuTMRJONPXAsJCUc8U+ZpwtzH4F5tAxoIKy5OVMycYJGD0m
+ 1P+Wn+kwWGWfFxLH+ucFNra4y2vNxSM6sTvM3QANYOtLYUhuhPNTE8yXkLTGIvQpxOezJU2mf
+ cYdFbdOlk6MVxRkk3mVxiyOrFpzu/VxRgrAGOTtSCyFkB4AnHyMq5CMtrj5ecIQ/mUGFRNIby
+ YIMDDCjJpMCPiR988pWeojGXDXd7pkbJGCo/7T2+MoK+JdRwgJly3y+/p/ikHE67ZYAMKs0f3
+ tXRQd7l4i+NqElyzE5l0CgTSYyJoP6lOVctmGZTPpyQDl0WXAY3hJE3zL0MoxxvSCrzcp1Klm
+ 1KxBhm6RvuTtZhrmM3BjUPZuj1851wP/ahI8emi7x91ZfAtUXK2drnw9O1Gk0Jr/zbkX8krg/
+ p5Or012mN6PqoYCriCdRYOtcpitLrjEPUyUKhzWP4OEaRzEB1Zc0Vbk+PHgYG7aDVOu2baeRz
+ 9Q4nwvLfezuFz9aEK+82fOFhqNLmAJN67LarkHd6QL3fCraKhU2WEa3wKus3Y1ezujGd/GRJ8
+ aaD36h2KcZW13gqrWL4a3ojj6/glo8NheiqhrOt03rEnS5m5AdsWBtbbrjR55zzI2BWqeGvIb
+ rxbrNldJOQ2cBLTFOg3JqhZ5N/lJOJA4skxQGrP9T/cEwisJM1W3Eqk2XtFPZXAR9MxeeDJDV
+ gN4zd7iVW6yWiqsnAEb6kmsudwn66MkcRfgC8e58yFqcNGHCUyPyKwawo1x+841Dh542oUrgd
+ Cxx4X/Do0feZU2i0Pvxjc6jsICG0RzeTcSkTRL7+ylMJCLum6viftwLWRKo9VlFc11R47ZzQK
+ 7xsKBlZBubH3j975aC+kHepRDPqIMs2bfsKwUrkfyiLOW/SaHdKj34Im8HXMhP1wQVQXSafQY
+ 0AKZDKVb6njG2uzoMFx3SSLEJmXmkPciskYjdBNqtt62H/bsxYiD8Ye6wpaoA98pFdJRBHCgy
+ r+MXeUhJ5AtEXmfJSb4j/1mvWThsphIunLUyObE02gwSHCnzX6u6jZBUnPDa7Ad+z6PbJGpyW
+ 3x92mCFwx7BvVbVeYEuRlmAeE4uFCKJc+6cuEdNsX2yZviWWEZnHMMXvdCV1D49oaQ==
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Jul 14, 2025 at 10:43=E2=80=AFPM Jacky Chou <jacky_chou@aspeedtech.=
-com> wrote:
->
-> The AST2600 has one PCIe RC, and add the relative configure regmap.
->
-> Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-> ---
->  arch/arm/boot/dts/aspeed/aspeed-g6.dtsi | 61 +++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi b/arch/arm/boot/dts/=
-aspeed/aspeed-g6.dtsi
-> index 8ed715bd53aa..ed99780b6860 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-g6.dtsi
-> @@ -379,6 +379,67 @@ rng: hwrng@1e6e2524 {
->                                 quality =3D <100>;
->                         };
->
-> +                       pcie_phy1: syscon@1e6ed200 {
-> +                               compatible =3D "aspeed,pcie-phy", "syscon=
-";
-> +                               reg =3D <0x1e6ed200 0x100>;
-
-This looks like part of something else? It should be a child of that.
-
-If this is the controls for the PCIe PHY, then use the PHY binding
-instead of your own custom phandle property.
-
-> +                       };
+=E2=80=A6
+> +++ b/drivers/pci/controller/pcie-aspeed.c
+> @@ -0,0 +1,1137 @@
+=E2=80=A6
+> +static int aspeed_irq_msi_domain_alloc(struct irq_domain *domain,
+> +				       unsigned int virq, unsigned int nr_irqs,
+> +				       void *args)
+> +{
+=E2=80=A6
+> +	mutex_lock(&pcie->lock);
 > +
-> +                       pcie_cfg: syscon@1e770000 {
-> +                               compatible =3D "aspeed,pcie-cfg", "syscon=
-";
-> +                               reg =3D <0x1e770000 0x80>;
+> +	bit =3D bitmap_find_free_region(pcie->msi_irq_in_use, MAX_MSI_HOST_IRQ=
+S,
+> +				      get_count_order(nr_irqs));
+> +
+> +	mutex_unlock(&pcie->lock);
+=E2=80=A6
 
-Looks like this is really part of the PCIe block as a h/w block isn't
-going to start at offset 0xc0.
+Under which circumstances would you become interested to apply a statement
+like =E2=80=9Cguard(mutex)(&pcie->lock);=E2=80=9D?
+https://elixir.bootlin.com/linux/v6.16-rc6/source/include/linux/mutex.h#L2=
+25
 
-
-> +                       };
-> +
-> +                       pcie0: pcie@1e7700c0 {
-> +                               compatible =3D "aspeed,ast2600-pcie";
-> +                               device_type =3D "pci";
-> +                               reg =3D <0x1e7700c0 0x40>;
-> +                               linux,pci-domain =3D <0>;
-
-No need for this. You only have 1 PCI host.
-
-> +                               #address-cells =3D <3>;
-> +                               #size-cells =3D <2>;
-> +                               interrupts =3D <GIC_SPI 168 IRQ_TYPE_LEVE=
-L_HIGH>;
-> +                               bus-range =3D <0x80 0xff>;
-
-Does this h/w not support bus 0-0x7f for some reason?
-
-> +
-> +                               ranges =3D <0x01000000 0x0 0x00018000 0x0=
-0018000 0x0 0x00008000
-> +                                         0x02000000 0x0 0x70000000 0x700=
-00000 0x0 0x10000000>;
-> +
-> +                               status =3D "disabled";
-> +
-> +                               resets =3D <&syscon ASPEED_RESET_H2X>;
-> +                               reset-names =3D "h2x";
-> +
-> +                               #interrupt-cells =3D <1>;
-> +                               msi-parent =3D <&pcie0>;
-> +                               msi-controller;
-> +
-> +                               aspeed,ahbc =3D <&ahbc>;
-> +                               aspeed,pciecfg =3D <&pcie_cfg>;
-> +
-> +                               interrupt-map-mask =3D <0 0 0 7>;
-> +                               interrupt-map =3D <0 0 0 1 &pcie_intc0 0>=
-,
-> +                                               <0 0 0 2 &pcie_intc0 1>,
-> +                                               <0 0 0 3 &pcie_intc0 2>,
-> +                                               <0 0 0 4 &pcie_intc0 3>;
-> +                               pcie_intc0: interrupt-controller {
-> +                                       interrupt-controller;
-> +                                       #address-cells =3D <0>;
-> +                                       #interrupt-cells =3D <1>;
-> +                               };
-> +
-> +                               pcie@8,0 {
-> +                                       reg =3D <0x804000 0 0 0 0>;
-> +                                       #address-cells =3D <3>;
-> +                                       #size-cells =3D <2>;
-> +                                       device_type =3D "pci";
-> +                                       resets =3D <&syscon ASPEED_RESET_=
-PCIE_RC_O>;
-> +                                       reset-names =3D "perst";
-> +                                       clocks =3D <&syscon ASPEED_CLK_GA=
-TE_BCLK>;
-> +                                       pinctrl-names =3D "default";
-> +                                       pinctrl-0 =3D <&pinctrl_pcierc1_d=
-efault>;
-> +                                       aspeed,pciephy =3D <&pcie_phy1>;
-> +                                       ranges;
-> +                               };
-> +                       };
-> +
->                         gfx: display@1e6e6000 {
->                                 compatible =3D "aspeed,ast2600-gfx", "sys=
-con";
->                                 reg =3D <0x1e6e6000 0x1000>;
-> --
-> 2.43.0
->
+Regards,
+Markus
 
