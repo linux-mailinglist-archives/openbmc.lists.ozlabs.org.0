@@ -1,79 +1,48 @@
-Return-Path: <openbmc+bounces-342-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-355-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BA36B0679D
-	for <lists+openbmc@lfdr.de>; Tue, 15 Jul 2025 22:14:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5903B06A2C
+	for <lists+openbmc@lfdr.de>; Wed, 16 Jul 2025 01:57:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bhVlp3CFLz2xlK;
-	Wed, 16 Jul 2025 06:14:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bhbgz0c9Nz3bmC;
+	Wed, 16 Jul 2025 09:56:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.16
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752610486;
-	cv=none; b=jjTg73/gbEjV3MDFVt0p8DY0tjjOqqEcRVMU+kdlAKDMO6ZuDO5OWsCKpJ588tLWVbwo2OjuQdloWPy0Etck9e19DkauhBtM4AlXfAxeQwdWGypNNCz+dIEsEWv7yUf4726IYvMcV4yQN4dmtfHk52s+A726La2fUqaLlXJ8KZB4CcidrWtT6hKWeuH1sUAsJuoHl1p2tDk/zWGyoN6MSGP6oiPTLrDAKMfZFMIorsYcSFIYc927uNxeGjYAOxNrS53+KV8SLevPSt0PQ9d86YesvE/9rX78RRiZrl0N8KKNEmDlE7b4hbQnRTJaGUjsfNxfoal9Iu/bhXOY2VkTUQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752551021;
+	cv=none; b=ZaZzUwE4UGxM07nb5BScRbqtESZbWjJClw4CPBV63KjLMgglDGhyjO/mcPW8tdcC7dCvCWP0VAzVUlEZc9YARM78LQcDAC62K1j7s6BY6nefLDA8ejcwrOdy0FCK7a2NvoG/osa7ONZUppZozYprI4PMqKL1t581bAZveqZcMtASpsjPSB2RlTPtahwyKpYxJbffCr3kZem+gGnzR0sUjWsolKGPz1TALUyotw6dOl1bAuZhUcYR1wgNQAYHqfDhp4qM1QKYZdlEZsW9tQU8PILm5kquT/ri0xmP0lyu8DiMYj8Y2EW1GsKh4llwKlcKDw/C1j4+LuqT6+jIJaziFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1752610486; c=relaxed/relaxed;
-	bh=Sq2CjF7l+besw1ZeKs/NEZSe/PtB82XT3dJtEgbj7pI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GH5cCX5gs0xw5W/KLDr/WwmcNYGMIFLVATy/Wtm8NZaLVqwVOc9Lby+fLm1qKjnHionEX5RH9V5bybOeKNE862rceqSahdIytmhDlXDTKw3s2SUFSN2I2Q6LpHkJasOCoJcfEvw/Zj8k8+m+CQP9+nZSIrq9m+woYHr/44zUHatE8+nWaBsD/UDcAGEZ40J6TNFMNTESjBEn+lL7ydkqZlhh3APGYfEoOZPQAHLNCAm2VsN0zeMjMtCEgRLoSyfn6mg0a0Efg5xrn2Vz/c9t4zGwoYhWaMVycuYgt8tYHOIX/7xoOeAjc325rOtDN11RHv1R7LwnK6yKFmZhEAwIsw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OJDa4TKl; dkim-atps=neutral; spf=pass (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OJDa4TKl;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.16; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	t=1752551021; c=relaxed/relaxed;
+	bh=Q9yxueNIc+k7Eb1uC5SYdYsXuc+n34gPCF/CSAr9Fgo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NAhCmev2G4K+yIoHjvCzLHyoTG9q16fv2elnZDaj6vi23Yhj53DReTDHMzpN0NKJB7IKqMwMltxhq+YDVUU+jWJjSs8DsV3hTrpTkSUCCY8HctcHMUum2g6UNZHHjZJbcSXUXUG9IcDkh75ocIs9ail32y6k6ve8M0+fdpHSo9pGVbbEbTqXjxZZQUip3W+3vlxs9J0RQSXvt3Qb2oBWGqfuVVGnALbjjTUXcKLZRclhOLLy1zb2u+olqbpuFcm1yFKU5GXVeF+tIamAO3dW/CKrvq3UZgTnsLioqPEhbiG0wlcTAeimOoL8mgShMeMQ3pCu/DVxEtbQSlFBbniIwQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bhVll47KDz2xd6;
-	Wed, 16 Jul 2025 06:14:41 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752610484; x=1784146484;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=eS6Mpdyp46gQ6nUgwPSL7+/IQm0H6qYJBJumRgSICho=;
-  b=OJDa4TKlNW3cpCmcSlwtkWA8zj9usRwubyngMgPGKlLth668S6tIMaZi
-   rQ2JJ9wU/PKC4yqY0CFheIpswzQE/825XpcOtZuu0CtS+hpFlszZmjvrT
-   G2LHot0kIguTfNMvRDb/Skr8TZsn6IQxEfaq2BmI+1liWjC0MSLKiHZbw
-   7G5iNN3f4txxUx+B5qQUcmCOaOouassuOb4k7CKxZ270lBkiVxliQRO1B
-   0WXRICzz0PgR6Mc9J0cA/R2tAwN2ujHGY9gvbCkMFw/9QkN6LdT+L3J3u
-   BTmz97SRot1jq6kLqMqpGugfNgd3mymUCcWpREBbLg8uWvq2OJHZzQKOh
-   Q==;
-X-CSE-ConnectionGUID: PhTeyS8FTRSN58n49J4UEA==
-X-CSE-MsgGUID: RTI7VdqASk661zULo8lC4w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11493"; a="42473897"
-X-IronPort-AV: E=Sophos;i="6.16,314,1744095600"; 
-   d="scan'208";a="42473897"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2025 13:14:39 -0700
-X-CSE-ConnectionGUID: swZoM0+0REi7GGWqObo93g==
-X-CSE-MsgGUID: nZzgw5MpQzKGR4ifrqa3mg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,314,1744095600"; 
-   d="scan'208";a="161631582"
-Received: from lkp-server01.sh.intel.com (HELO 9ee84586c615) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 15 Jul 2025 13:14:34 -0700
-Received: from kbuild by 9ee84586c615 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ubm2p-000BVn-1r;
-	Tue, 15 Jul 2025 20:14:31 +0000
-Date: Wed, 16 Jul 2025 04:13:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jacky Chou <jacky_chou@aspeedtech.com>, bhelgaas@google.com,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	joel@jms.id.au, andrew@codeconstruct.com.au,
-	linux-aspeed@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
-	linus.walleij@linaro.org, p.zabel@pengutronix.de,
-	BMC-SW@aspeedtech.com
-Subject: Re: [PATCH v2 08/10] PCI: Add FMT and TYPE definition for TLP header
-Message-ID: <202507160314.e3odwyX7-lkp@intel.com>
-References: <20250715034320.2553837-9-jacky_chou@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bh4m96G7qz3bmY;
+	Tue, 15 Jul 2025 13:43:37 +1000 (AEST)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 15 Jul
+ 2025 11:43:20 +0800
+Received: from mail.aspeedtech.com (192.168.10.13) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 15 Jul 2025 11:43:20 +0800
+From: Jacky Chou <jacky_chou@aspeedtech.com>
+To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kwilczynski@kernel.org>,
+	<mani@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
+	<linux-aspeed@lists.ozlabs.org>, <linux-pci@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>
+CC: <openbmc@lists.ozlabs.org>, <linux-gpio@vger.kernel.org>,
+	<linus.walleij@linaro.org>, <p.zabel@pengutronix.de>, <BMC-SW@aspeedtech.com>
+Subject: [PATCH v2 00/10] Add ASPEED PCIe Root Complex support
+Date: Tue, 15 Jul 2025 11:43:10 +0800
+Message-ID: <20250715034320.2553837-1-jacky_chou@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -85,53 +54,73 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250715034320.2553837-9-jacky_chou@aspeedtech.com>
-X-Spam-Status: No, score=-5.4 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Jacky,
+This patch series adds support for the ASPEED PCIe Root Complex,
+including device tree bindings, pinctrl support, and the PCIe host controller
+driver. The patches introduce the necessary device tree nodes, pinmux groups,
+and driver implementation to enable PCIe functionality on ASPEED platforms.
+Currently, the ASPEED PCIe Root Complex only supports a single port.
 
-kernel test robot noticed the following build warnings:
+Summary of changes:
+- Add device tree binding documents for ASPEED PCIe PHY, PCIe Config, and PCIe RC
+- Update MAINTAINERS for new bindings and driver
+- Add PCIe RC node and PERST control pin to aspeed-g6 device tree
+- Add PCIe RC PERST pin group to aspeed-g6 pinctrl
+- Implement ASPEED PCIe Root Complex host controller driver
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus robh/for-next linusw-pinctrl/devel linusw-pinctrl/for-next linus/master v6.16-rc6 next-20250715]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+This series has been tested on AST2600/AST2700 platforms and enables PCIe device
+enumeration and operation.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jacky-Chou/dt-bindings-soc-aspeed-Add-ASPEED-PCIe-Config-support/20250715-114814
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20250715034320.2553837-9-jacky_chou%40aspeedtech.com
-patch subject: [PATCH v2 08/10] PCI: Add FMT and TYPE definition for TLP header
-config: i386-buildonly-randconfig-004-20250715 (https://download.01.org/0day-ci/archive/20250716/202507160314.e3odwyX7-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250716/202507160314.e3odwyX7-lkp@intel.com/reproduce)
+Jacky Chou (10):
+  dt-bindings: soc: aspeed: Add ASPEED PCIe Config support
+  dt-bindings: soc: aspeed: Add ASPEED PCIe PHY support
+  dt-bindings: PCI: Add ASPEED PCIe RC support
+  dt-bindings: pinctrl: aspeed,ast2600-pinctrl: Add PCIe RC PERST# group
+  ARM: dts: aspeed-g6: Add AST2600 PCIe RC PERST#
+  ARM: dts: aspeed-g6: Add PCIe RC node
+  pinctrl: aspeed-g6: Add PCIe RC PERST pin group
+  PCI: Add FMT and TYPE definition for TLP header
+  PCI: aspeed: Add ASPEED PCIe RC driver
+  MAINTAINERS: Add ASPEED PCIe RC driver
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507160314.e3odwyX7-lkp@intel.com/
+ .../bindings/pci/aspeed,ast2600-pcie.yaml     |  198 +++
+ .../pinctrl/aspeed,ast2600-pinctrl.yaml       |    2 +
+ .../bindings/soc/aspeed/aspeed,pcie-cfg.yaml  |   41 +
+ .../bindings/soc/aspeed/aspeed,pcie-phy.yaml  |   44 +
+ MAINTAINERS                                   |   10 +
+ .../boot/dts/aspeed/aspeed-g6-pinctrl.dtsi    |    5 +
+ arch/arm/boot/dts/aspeed/aspeed-g6.dtsi       |   61 +
+ drivers/pci/controller/Kconfig                |   13 +
+ drivers/pci/controller/Makefile               |    1 +
+ drivers/pci/controller/pcie-aspeed.c          | 1137 +++++++++++++++++
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c    |   12 +-
+ include/uapi/linux/pci_regs.h                 |   32 +
+ 12 files changed, 1555 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-cfg.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-phy.yaml
+ create mode 100644 drivers/pci/controller/pcie-aspeed.c
 
-All warnings (new ones prefixed by >>):
-
-   In file included from <built-in>:1:
-   In file included from ./usr/include/linux/pci.h:21:
->> usr/include/linux/pci_regs.h:1234:39: warning: // comments are not allowed in this language [-Wcomment]
-    1234 | #define PCI_TLP_FMT_3DW_NO_DATA         0x0  // 3DW header, no data
-         |                                              ^
-   1 warning generated.
---
-   In file included from <built-in>:1:
->> ./usr/include/linux/pci_regs.h:1234:39: warning: // comments are not allowed in this language [-Wcomment]
-    1234 | #define PCI_TLP_FMT_3DW_NO_DATA         0x0  // 3DW header, no data
-         |                                              ^
-   1 warning generated.
+---
+v2:
+ - Moved ASPEED PCIe PHY yaml binding to `soc/aspeed` directory and
+   changed it as syscon
+ - Added `MAINTAINERS` entry for the new PCIe RC driver
+ - Updated device tree bindings to reflect the new structure
+ - Refactored configuration read and write functions to main bus and
+   child bus ops
+ - Refactored initialization to implement multiple ports support
+ - Added PCIe FMT and TYPE definitions for TLP header in
+   `include/uapi/linux/pci_regs.h`
+ - Updated from reviewer comments
+---
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0
+
 
