@@ -1,49 +1,49 @@
-Return-Path: <openbmc+bounces-357-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-358-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3324B07065
-	for <lists+openbmc@lfdr.de>; Wed, 16 Jul 2025 10:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 557B7B07069
+	for <lists+openbmc@lfdr.de>; Wed, 16 Jul 2025 10:24:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bhpwt3QZNz30T8;
-	Wed, 16 Jul 2025 18:23:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4bhpxt1b17z3bVW;
+	Wed, 16 Jul 2025 18:24:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:4641:c500::1"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752654222;
-	cv=none; b=KXAr4xTqheVvEYdAytSgMy0bDK/5/Y6LezfzXmHE8SF4FPwff9N/s0SZ76NEww0LJgxXdd9pHmk+L9LW8QFUig9sR1B8DUVhhScpW8FwvghJBVLnvHY7+pSSQLmK1l3svQtidfjlFur3kcPVPDb4EeEGu0I99oYg2qAYPT4Du7UZ9gCtj2Jl1fCxcBTLGiafBEJUb19NezTkPTgfQkV+hPmuBX5UWVZ3BdOmKbQHWCHWCLZJSStn0+o3gKDECJAlywMw9cp6W1YUcXzAT7iDFcDTD2wl2ct1R2jRQo8fy+yM9k2jJXbsQIeH1Bm2bA842iuipo2mm9d5h/MPZ1aDOA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1752654274;
+	cv=none; b=OvnF+K1A3462Hrs4vJc8d/ybyQAEIVoH3Qp/3Ou8a+sg+HTUNqw1J8coGlyXA+kbQbDSK8ej9NBTbz92S5xZ9t/ocUPYdnqZgHnl+gmkqBpyPrHDWEyWW+V+E+BoRMBYZcBOWtwHMBSc2/oVQMrdzW4ZkdKbNAONbLDirHw+4J9s3RZG0N72qHPRaKoe+XvNXQKOsITgw82uuDV6jO2BG4/8o5NU9SEv6L1VN/AEBFyH8fYFMBKEkRcoakSxcMMLABSJWMU6g/UOouGRyFuMwsF4APmGLl4CfNf1Z+XS1UsnKAJH84zPDj3R7p0qkqJe24WM5VYlGv7352GRu0HF9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1752654222; c=relaxed/relaxed;
-	bh=zMqIeYsdByrg0V4XfdLCEiDMy3FizptbIRYnCCNLKvU=;
+	t=1752654274; c=relaxed/relaxed;
+	bh=dBYw5oog6yO0VQIk58vTdpBz6vwF0hjlDU5vofNWgIo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaPheWv7wwa5esQU1tyC6ZdQWyoZTU9gSRll5L1oZF647H2Lr8R1hal53M0KH36gBO0Bd2NHyixpC1bYaz+uPAU5koVwbFEXJ1Juc18QxwFgs8CQ5VsUzKLB0/umMyHVUjNmpb9G3Z5GnE01h+EagJNJdKHHsB4/PsKZvdK/32cxMB+3cssfIDmWRwjMWjFm6u8p+OzE89eGg1IEyfL1N9wphzrKpMUoFe3HDAtx8gMaPw2X62MYFupEt1C7TBMdZRJ6/VG7ku240q7fEX6Uqqd4957BKFn4GZdTZruzT5S22frFnwQHOL+ZUZ4qCizu/di4nJ4sQ4G6yj+SJpTh5Q==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OsuSqHmD; dkim-atps=neutral; spf=pass (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=YKePGBwX6PgDH5rCByPhdhHyncAQLTs88v6XPx5gV7S0a3nVk58H6rpiWyfWdG34LTcPww5hBSvdJPgn5KWiW7IjLXdp1HuirLmaSyX0miY00UuFGBOgtttVTo0eb7IIkEyvv6gtDekSI0ElJN+q6ZP9o8SWt31sxbeyNGMHsHbZstBDBLAmYmNao+9YY5ySBigQkJCOSvzuuLyv3G3ztYAa+aQrW+omhO27e0RWeqKO3haPyeJW8QV7kqcD3oVJRPk8cPwTwiZacVP/6N9i9PpdA2V0a8onEdjNXmYCqlVxdB3gOWvmHCKp97ELf80TAb46nIgSeKN9I7AnIjIOKQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Iiu//ig0; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OsuSqHmD;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Iiu//ig0;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bhpws3938z2xd6;
-	Wed, 16 Jul 2025 18:23:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bhpxs0dwVz2ySY;
+	Wed, 16 Jul 2025 18:24:33 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 3FCFD5C5674;
-	Wed, 16 Jul 2025 08:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A6F9C4CEF0;
-	Wed, 16 Jul 2025 08:23:38 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 846F943FF3;
+	Wed, 16 Jul 2025 08:24:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFDEC4CEF0;
+	Wed, 16 Jul 2025 08:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752654218;
-	bh=cp2m1cQPpeNT2d53wsl0tGzY5ODL2sh/xGBe89ivRr4=;
+	s=k20201202; t=1752654270;
+	bh=Sx6GtXQhUUHM3FrpmZ+GaCxjq7UxqdGBPOXm9TRFxoM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OsuSqHmDg5QaUkjKR88pXkBRjXFiGTJmpqIR2xTr5Z9U1Ok9P/L5vM+a06yTG3toz
-	 at3wk0tkzeoEdt0BukhNBUIqcbPqs732/P+an+XUDciRV3hHnaPzyNPpyHmN8OXYWc
-	 BfRruYWHr+/kBdTkHGaGdfGb+meDtFsBpDNxR8r2f82JlPhK7gakGM2tsl+l0OjIcU
-	 sPZL6T47LdaQ43C70ikZe6EPoBxS36V78shXEYhmf5W5W03iRjAkjgrj8TRd3Atm+c
-	 WmPx1C5+9MA91F/pTTKGPiALFC+YTLSWiyrLEBh89IIL12Ks8wyLQ+BJCGLvU8rGQb
-	 MpkLR0taXi9CA==
-Date: Wed, 16 Jul 2025 10:23:36 +0200
+	b=Iiu//ig0tvsYWLj3RYhibc9P+zvAzAbb29UT0vX3qk8p/xgxwKLdf3zW7fwGYc1Oj
+	 AjEzWR0K269SObv38lNZWA5KeWYZ/Wv1szxIR7/2VkY64vkA3AXs+op48eVXtKkXCr
+	 Rf5f2m7eVMdB4efgBFeU+ydDBGGB2kkZEilBlSb36zDBslg2cOU5mprxqHxhCXPSWL
+	 jCOs/zzWzvSsfcyHaG7AJwtVPbQpy1VuNCV7y5zNqCOAD0y7XMJ4N6DUDGoa0eMaT6
+	 N1ZW3ORoGmddFRSF1oL2BQu0Y2TrfHglL1GyLHzrmTcSLym1gc186GnN1KeSWs2wNt
+	 87f12ZxVIRozQ==
+Date: Wed, 16 Jul 2025 10:24:27 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Jacky Chou <jacky_chou@aspeedtech.com>
 Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
@@ -52,11 +52,11 @@ Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
 	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
 	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, 
 	linus.walleij@linaro.org, p.zabel@pengutronix.de, BMC-SW@aspeedtech.com
-Subject: Re: [PATCH v2 02/10] dt-bindings: soc: aspeed: Add ASPEED PCIe PHY
- support
-Message-ID: <20250716-innocent-satisfied-pug-9ecc15@krzk-bin>
+Subject: Re: [PATCH v2 01/10] dt-bindings: soc: aspeed: Add ASPEED PCIe
+ Config support
+Message-ID: <20250716-wine-partridge-of-wonder-af10a6@krzk-bin>
 References: <20250715034320.2553837-1-jacky_chou@aspeedtech.com>
- <20250715034320.2553837-3-jacky_chou@aspeedtech.com>
+ <20250715034320.2553837-2-jacky_chou@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -70,94 +70,37 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250715034320.2553837-3-jacky_chou@aspeedtech.com>
+In-Reply-To: <20250715034320.2553837-2-jacky_chou@aspeedtech.com>
 X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Tue, Jul 15, 2025 at 11:43:12AM +0800, Jacky Chou wrote:
-> This PHY is used by many modules. In our design, our
-> PCIe has RC and EP funcitons. On the different function,
-> each driver will use configure and get some information
-> from the PHY interface to do somting that it wants to.
-> Getting link status, setting syscon credits and so on.
-> Therefore, define it as syscon for all modules.
-> 
-> Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-> ---
->  .../bindings/soc/aspeed/aspeed,pcie-phy.yaml  | 44 +++++++++++++++++++
->  1 file changed, 44 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-phy.yaml
-
-Phys go to phy, not soc directory. Soc is not a dumping ground.
-
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-phy.yaml b/Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-phy.yaml
-> new file mode 100644
-> index 000000000000..5fa585d63ca6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/aspeed/aspeed,pcie-phy.yaml
-> @@ -0,0 +1,44 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/soc/aspeed/aspeed,pcie-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: ASPEED PCIe PHY
-> +
+On Tue, Jul 15, 2025 at 11:43:11AM +0800, Jacky Chou wrote:
 > +maintainers:
 > +  - Jacky Chou <jacky_chou@aspeedtech.com>
 > +
-> +description:
-> +  The ASPEED PCIe PHY provides the physical layer interface for PCIe
-> +  controllers in the SoC. This node represents the register block for the PCIe
-> +  PHY, which is typically accessed by PCIe Root Complex or Endpoint drivers
-> +  via syscon. It is used to configure and get the status of the PCIe PHY
-> +  hardware, including power management, link training, and other PHY-specific
-> +  operations.
+> +description: |
+
+Drop |
+
+> +  The ASPEED PCIe configuration syscon block provides a set of registers shared
+> +  by multiple PCIe-related devices within the SoC. This node represents the
+> +  common configuration space that allows these devices to coordinate and manage
+> +  shared PCIe settings, including address mapping, control, and status
+> +  registers. The syscon interface enables for various PCIe devices to access
+> +  and modify these shared registers in a consistent and centralized manner.
 > +
 > +properties:
 > +  compatible:
 > +    items:
 > +      - enum:
-> +          - aspeed,pcie-phy
+> +          - aspeed,pcie-cfg
 
-No, see writing bindings.
+NAK, see writing bindings. You already received comments about generic
+compatible in the past.
 
-> +      - const: syscon
+Best regards,
+Krzysztof
 
-It's not a syscon, but phy. I don't think you understood previous
-feedback. Go back to v1. You just send something to pass the review
-instead of reworking to make it correct.
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    syscon@1e6ed200 {
-
-wrong name, that's a phy
-
-> +      compatible = "aspeed,pcie-phy", "syscon";
-> +      reg = <0x1e6ed200 0x100>;
-
-Incomplete
-
-> +    };
-> -- 
-> 2.43.0
-> 
 
