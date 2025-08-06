@@ -1,50 +1,81 @@
-Return-Path: <openbmc+bounces-416-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-418-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14CF2B1C05B
-	for <lists+openbmc@lfdr.de>; Wed,  6 Aug 2025 08:12:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68518B1CF94
+	for <lists+openbmc@lfdr.de>; Thu,  7 Aug 2025 02:01:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4bxg1S1Htcz3bkg;
-	Wed,  6 Aug 2025 16:12:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4by6kw21Pcz3bkb;
+	Thu,  7 Aug 2025 10:01:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1754460732;
-	cv=none; b=Uf3IHNUT9Sz41uSTAgazyHx3uNJR5KRPz+l2HKEOYn47GBKTiPZcb8BoZwjy0DOBr6RGBqKdz6KeafRzwlRguOELmGjKYKXWRM7ua4XfHJ8phZWi1aenRceJ/5TpSHhC/NDpqLjwiBzosPIiRcnoX3xUs9zNTzkpb07Y3CS5j8X4AYYK+V0uqdMcisHwbFlMKWe7N0M9bVQiCLBKVpAhUjbqRoqzT3JxZwRphidAXt0/kLrBEYpHnbyDehOhYEocwHNca7R67ysR+j1jsea3LHBhX+H9w0MzqF44G/RN1r22Q5Wt8ct/B3WvM0Sh85ENZxyHxG3GOUwXyi+fUnoKSA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::42d"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1754482361;
+	cv=none; b=fI7V95BUXrFd3ARzs3GMtRgwdjwqCSBYPGNe37v4j0bBe4uG2A11LWP7gdy+2fusjo1gXWZUdTzadDLlYvkSGPOoFrcI0zgXmNkxaWm+Rx7yW7FKQA76aC0o81598pNhrL8jpuyW1G6YpkVHvPrULIJgjOQyFZLdJLolvmZnVNH0/uPrgJn9UtP5l+ZgkCNvGWoJ12ZPW96TY7ojXpMjZQCZZsKL1PbaT5qJ1oPMp31iDGyoW5EA6vkySfPSPEDNiRyNTEP2o2GQyBLoKxBRE1Y2VImNtUBcNPASG1TKrihO4x9WfFS9Qq8soYEIKE7AC0uSett1n+upfsYrEzAHxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1754460732; c=relaxed/relaxed;
-	bh=bNLGop2Jz4ic/YOxvNUojmnOrpzUvTpLGEB9AT4+3/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CusrMN0v0zQuPTAWs0+47Iua2JRO5xdvkHmsleDrdWy9T4fktXA9Os2Jbkrd18Pyrw7ShT7rzrnPUrioUXV+Y3ZXOJ/Wum3HXAvOh2Zq39+bDGLBgdDuy8qKtRN/P4bJad+fpkx1rRERWVEQSU0Pm5erSIwLjKTgv2VbTFWKuqBJpVFCuYllSzgmsXP/Q2nnKH4QISCl/p87WENvgHbAj7Gq4czmtx6q/oaILAUgyzvNNoRKh0dXiwTmGK6NiuveRfWfS9et2f7CVWDtdW8HhG8NNghAReOLG68wxXYUof4O8lF81ADrIPNGIb7/H4PyGlCTC3W2f1oK06+7/QJlhg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=G4URkEDa; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1754482361; c=relaxed/relaxed;
+	bh=bUuRw/uP3eX4lo9DLBbcc7Qn+qqbAH+Pnq6vmx0iXYU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ZivwfrM05x8cwYeCGYLXsXflLxE7FblMVg5rOFDt/obPTQtgB/zohMyEAebhBt3HZZFnq2nUZnVSIH0Mm+T/uC4rtBG3bMmg4vIOMkpYj8ELtnB+C8xhfW7cWg0v8nRXI/zdZTY5pj9+7B+Q9FSsFIdjbAW8NOmzMqGelqxoj77dv0jsrOH90oEpKco0y9kLVV2oS87DS3E/4fmwEMApxWR4uQs7DyryG0PeNT3pHVtnO1HstLofug3aCRdUxjkFb+UXVIoXR9CKg1kfp0+trHc/6R5cGCAefSnPsRjcSLUDTnXZcjIZ6TWO18t0yAqXVHDRxw/k8lmX4GJ25qeZyg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TS6mR5TD; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=fredchen.openbmc@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=G4URkEDa;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TS6mR5TD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=fredchen.openbmc@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4bxg1R0S0Hz30MY;
-	Wed,  6 Aug 2025 16:12:11 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 3FAFE601F9;
-	Wed,  6 Aug 2025 06:12:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B0AC4CEE7;
-	Wed,  6 Aug 2025 06:12:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1754460728;
-	bh=a2OdDodOEbbp9tXUA0xlJL5eokcDTjcd+JbKFopSfyA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=G4URkEDajiTuCGVqNukl/+g9SEnVUL609qy6u6NM8KhancgmEDtVUobCRfCWysinR
-	 LQP9WUHZBMHaO8JaqN4eQ/BYiFgVMCl4JO2uHLy8F8iHVhwZ2by1sQc71B+4PJa4+a
-	 tHAn3vtcy00k2Ff56Aj1aAwybje464PvUf65HiXr8v6mV8oPDQV7oH0SjlDNnON+R3
-	 NExei84bszGBvDeXjQmiIyTbL8N8DJttKSl7uINjiW7Z+1wHra6C4mptlw5ha2FpuR
-	 E2lalRrHtktt4ZlaZLDx/w8VBSAV0ATtNOR2Y2QR2DJZ7zY6VahQDxb2dc3r+X6Sub
-	 F53anNWdcyOpA==
-Message-ID: <63cfaf2c-a25a-45af-8f76-5352e6adf2f0@kernel.org>
-Date: Wed, 6 Aug 2025 08:12:03 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4bxq1N3l96z30W5
+	for <openbmc@lists.ozlabs.org>; Wed,  6 Aug 2025 22:12:39 +1000 (AEST)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-76bc55f6612so800395b3a.0
+        for <openbmc@lists.ozlabs.org>; Wed, 06 Aug 2025 05:12:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754482357; x=1755087157; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUuRw/uP3eX4lo9DLBbcc7Qn+qqbAH+Pnq6vmx0iXYU=;
+        b=TS6mR5TDpqa6v8XggYawqRFL0YU5JXLqkCSjlXtafYpm4YpFbQg22D4bcIkElX6JA9
+         8TygJW9qah5IB2hYsEfbtD2AZYojAhb0Hb6tBB7ho72+QYlQbZ+MMX6I6bclajXsPJ5i
+         qaXlV+I8Zm8rwmmdXr7vMoHZIFxk5V0+CNEoM1X2KO4yj6Al7ew69bs4aFTEeJ6H104S
+         OE/4Il60uuaZxRAWAKgXeLeYXHxVGoQcouBfvEYZAxyptvI/JWZ9b1IYAqoMA1tBnPXw
+         Xp+Icdus111EFWGuXGaJbKlT+Sh3Me0UcAj+6atT1vRBXtEtLR+jBJLwQEj7G9aPmJy4
+         cWUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754482357; x=1755087157;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUuRw/uP3eX4lo9DLBbcc7Qn+qqbAH+Pnq6vmx0iXYU=;
+        b=VK4GVM2xya08O/k34IN7EhdM4S+90phNDGDZ/URIM6w0L8bEB+q/9KelU9JyYBIGAr
+         u5PATubfsirnDB/9vw2ccQR/VA2BCvzGEGnSeW8YQXEhEVo/uLcZ3DsMn8VH+54seba1
+         BfRuOBXarmLy0vty+W3TxkzW6+Kqrv51ZJuaqhTVybxenyFA7BggYd4lkU+Q5qsqGahd
+         LOIjoqbknrSK2tXfq3m3om1Zqo5Ube1Xum3gLqQ6ZaZM+TQoxjjKSSAYvkG+OxQ6V2+2
+         MEPbQdyXyPeCZ6l4wHw+CfV+H4ct3U5KabXYLH8Qb9QSgKqCcNY0AfpGhNCfEApStr2E
+         Rgfw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSggZZ6WLtSsUZCTMskBTuXCGouuKfBcgOA0jAzKPlgHcU/ripCTGYMNGnfasVTF5VABoLxLyq@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzyDROHg8hjCQ6iapni6Oj7ZeZMOSCnRrOoksbaUeyYX0bzoANZ
+	dfVFKeUhOJjiKglMjfHEim2wa7r8m+HzR5/WFhWy8AUKwGxufKBgmOSn250fRA==
+X-Gm-Gg: ASbGncv+UdWR0Ro1B8frVPMXxgFaSG+bExIMOY5OQIsUsIbPiZn6H6zidJDkOKKHRHa
+	mkmBwgvUiI8wWgbdYxkuPqrZzSTwO+CxDmUE5MfYM7hHRM5bYFemRWEwaNCOVqIcBGXrnyA+UFg
+	R1c5Ecf20qv2srFSRL+Ay2ITIbCLK6CRauhg1hGrXQi03YmdwU5xRUwDEC3nPETUeoaoQgBbVAV
+	Cn3sLUhNaoFm2rBOMz/fD1LGt3VTcptNixb2eXGYkCux+Pr+AkKc7Oa5z1+7TJWKxR8keBE7t71
+	oNBFm81TVz8OarbHCjp+o2C56gfJTL445ucOXPmKVVCjE1oUAp1lZGEo/grX3JvDo0+hdAKIEmy
+	qij6H4kQ2RU9uDIE5U+8oi4zxkgebrFCsIXK1fMByIIZij40qlJqno2XXUiDpqSuvjWeFk6Ujhf
+	2HoAFB8YQBzSw=
+X-Google-Smtp-Source: AGHT+IECcMvOyk+ET5/yKxVJ5O9hkgsXDmPvXFmIk7vOHnR/KQZ/RCZHPS1+tFDYuDJ/SZM/VPCNhA==
+X-Received: by 2002:a05:6a00:2e15:b0:76b:dfd4:b8bf with SMTP id d2e1a72fcca58-76c29547878mr3462525b3a.0.1754482356485;
+        Wed, 06 Aug 2025 05:12:36 -0700 (PDT)
+Received: from fred-System-Product-Name.. (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bcce6f474sm15212060b3a.4.2025.08.06.05.12.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Aug 2025 05:12:35 -0700 (PDT)
+From: Fred Chen <fredchen.openbmc@gmail.com>
+To: andrew@codeconstruct.com.au,
+	openbmc@lists.ozlabs.org,
+	joel@jms.id.au
+Subject: [PATCH linux dev-6.6 1/2] hwmon: Add driver for MPS MPQ8785 Synchronous Step-Down Converter
+Date: Wed,  6 Aug 2025 20:12:31 +0800
+Message-ID: <20250806121232.2331329-1-fredchen.openbmc@gmail.com>
+X-Mailer: git-send-email 2.49.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -56,89 +87,273 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/2] Adding device tree and binding for NVIDIA
- GB200-UT3.0b
-To: Donald Shannon <donalds@nvidia.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
- andrew@codeconstruct.com.au, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-References: <20250723222350.200094-1-donalds@nvidia.com>
- <20250724-affable-gorgeous-dragon-130ac6@kuoka>
- <5e5c8bd2-4c4b-4371-a6b2-d4d4359a4233@nvidia.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <5e5c8bd2-4c4b-4371-a6b2-d4d4359a4233@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 05/08/2025 20:18, Donald Shannon wrote:
->>> Changes v6 -> v7:
->>>    - Removed Acked-by Krzysztof
->> Why? You did not even give me chance to respond to your reply.
->>
->> Best regards,
->> Krzysztof
-> 
-> Hi Krzysztof,
-> 
-> I will reply here to keep our discussion together.
-> 
-> I think that the issue was me using your kernel.org email and not your linaro.org email.
-> I will fix this in the next patch series along with some fixes for the warnings from the other thread.
+From: Charles Hsu <ythsu0511@gmail.com>
 
-You should not "use email" at all. You MUST copy the tag as given,
-without modifying it or writing by yourself. Use for example `b4
-trailers` for that. Or just copy paste.
+Add support for mpq8785 device from Monolithic Power Systems, Inc.
+(MPS) vendor. This is synchronous step-down controller.
 
-Best regards,
-Krzysztof
+Signed-off-by: Charles Hsu <ythsu0511@gmail.com>
+Link: https://lore.kernel.org/r/20240131074822.2962078-2-ythsu0511@gmail.com
+[groeck: probe_new --> probe; add MODULE_IMPORT_NS(PMBUS)]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+(cherry picked from commit f20b4a931130cb574c40563cfda0fc2cb944b4df)
+---
+ Documentation/hwmon/index.rst   |  1 +
+ Documentation/hwmon/mpq8785.rst | 94 +++++++++++++++++++++++++++++++++
+ drivers/hwmon/pmbus/Kconfig     |  9 ++++
+ drivers/hwmon/pmbus/Makefile    |  1 +
+ drivers/hwmon/pmbus/mpq8785.c   | 90 +++++++++++++++++++++++++++++++
+ 5 files changed, 195 insertions(+)
+ create mode 100644 Documentation/hwmon/mpq8785.rst
+ create mode 100644 drivers/hwmon/pmbus/mpq8785.c
+
+diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
+index 88dadea85cfc..1f9dd8786609 100644
+--- a/Documentation/hwmon/index.rst
++++ b/Documentation/hwmon/index.rst
+@@ -158,6 +158,7 @@ Hardware Monitoring Kernel Drivers
+    mp2888
+    mp2975
+    mp5023
++   mpq8785
+    nct6683
+    nct6775
+    nct7802
+diff --git a/Documentation/hwmon/mpq8785.rst b/Documentation/hwmon/mpq8785.rst
+new file mode 100644
+index 000000000000..bf8176b87086
+--- /dev/null
++++ b/Documentation/hwmon/mpq8785.rst
+@@ -0,0 +1,94 @@
++.. SPDX-License-Identifier: GPL-2.0-only
++
++Kernel driver mpq8785
++=======================
++
++Supported chips:
++
++  * MPS MPQ8785
++
++    Prefix: 'mpq8785'
++
++Author: Charles Hsu <ythsu0511@gmail.com>
++
++Description
++-----------
++
++The MPQ8785 is a fully integrated, PMBus-compatible, high-frequency, synchronous
++buck converter. The MPQ8785 offers a very compact solution that achieves up to
++40A output current per phase, with excellent load and line regulation over a
++wide input supply range. The MPQ8785 operates at high efficiency over a wide
++output current load range.
++
++The PMBus interface provides converter configurations and key parameters
++monitoring.
++
++The MPQ8785 adopts MPS's proprietary multi-phase digital constant-on-time (MCOT)
++control, which provides fast transient response and eases loop stabilization.
++The MCOT scheme also allows multiple MPQ8785 devices to be connected in parallel
++with excellent current sharing and phase interleaving for high-current
++applications.
++
++Fully integrated protection features include over-current protection (OCP),
++over-voltage protection (OVP), under-voltage protection (UVP), and
++over-temperature protection (OTP).
++
++The MPQ8785 requires a minimal number of readily available, standard external
++components, and is available in a TLGA (5mmx6mm) package.
++
++Device compliant with:
++
++- PMBus rev 1.3 interface.
++
++The driver exports the following attributes via the 'sysfs' files
++for input voltage:
++
++**in1_input**
++
++**in1_label**
++
++**in1_max**
++
++**in1_max_alarm**
++
++**in1_min**
++
++**in1_min_alarm**
++
++**in1_crit**
++
++**in1_crit_alarm**
++
++The driver provides the following attributes for output voltage:
++
++**in2_input**
++
++**in2_label**
++
++**in2_alarm**
++
++The driver provides the following attributes for output current:
++
++**curr1_input**
++
++**curr1_label**
++
++**curr1_max**
++
++**curr1_max_alarm**
++
++**curr1_crit**
++
++**curr1_crit_alarm**
++
++The driver provides the following attributes for temperature:
++
++**temp1_input**
++
++**temp1_max**
++
++**temp1_max_alarm**
++
++**temp1_crit**
++
++**temp1_crit_alarm**
+diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
+index b4e93bd5835e..705cf1cc07cc 100644
+--- a/drivers/hwmon/pmbus/Kconfig
++++ b/drivers/hwmon/pmbus/Kconfig
+@@ -349,6 +349,15 @@ config SENSORS_MPQ7932
+ 	  This driver can also be built as a module. If so, the module will
+ 	  be called mpq7932.
+ 
++config SENSORS_MPQ8785
++	tristate "MPS MPQ8785"
++	help
++	  If you say yes here you get hardware monitoring functionality support
++	  for power management IC MPS MPQ8785.
++
++	  This driver can also be built as a module. If so, the module will
++	  be called mpq8785.
++
+ config SENSORS_PIM4328
+ 	tristate "Flex PIM4328 and compatibles"
+ 	help
+diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
+index 84ee960a6c2d..14f004c26a3f 100644
+--- a/drivers/hwmon/pmbus/Makefile
++++ b/drivers/hwmon/pmbus/Makefile
+@@ -36,6 +36,7 @@ obj-$(CONFIG_SENSORS_MP2888)	+= mp2888.o
+ obj-$(CONFIG_SENSORS_MP2975)	+= mp2975.o
+ obj-$(CONFIG_SENSORS_MP5023)	+= mp5023.o
+ obj-$(CONFIG_SENSORS_MPQ7932)	+= mpq7932.o
++obj-$(CONFIG_SENSORS_MPQ8785)	+= mpq8785.o
+ obj-$(CONFIG_SENSORS_PLI1209BC)	+= pli1209bc.o
+ obj-$(CONFIG_SENSORS_PM6764TR)	+= pm6764tr.o
+ obj-$(CONFIG_SENSORS_PXE1610)	+= pxe1610.o
+diff --git a/drivers/hwmon/pmbus/mpq8785.c b/drivers/hwmon/pmbus/mpq8785.c
+new file mode 100644
+index 000000000000..4e2549cc8120
+--- /dev/null
++++ b/drivers/hwmon/pmbus/mpq8785.c
+@@ -0,0 +1,90 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Driver for MPS MPQ8785 Step-Down Converter
++ */
++
++#include <linux/i2c.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include "pmbus.h"
++
++static int mpq8785_identify(struct i2c_client *client,
++			    struct pmbus_driver_info *info)
++{
++	int vout_mode;
++
++	vout_mode = pmbus_read_byte_data(client, 0, PMBUS_VOUT_MODE);
++	if (vout_mode < 0 || vout_mode == 0xff)
++		return vout_mode < 0 ? vout_mode : -ENODEV;
++	switch (vout_mode >> 5) {
++	case 0:
++		info->format[PSC_VOLTAGE_OUT] = linear;
++		break;
++	case 1:
++	case 2:
++		info->format[PSC_VOLTAGE_OUT] = direct,
++		info->m[PSC_VOLTAGE_OUT] = 64;
++		info->b[PSC_VOLTAGE_OUT] = 0;
++		info->R[PSC_VOLTAGE_OUT] = 1;
++		break;
++	default:
++		return -ENODEV;
++	}
++
++	return 0;
++};
++
++static struct pmbus_driver_info mpq8785_info = {
++	.pages = 1,
++	.format[PSC_VOLTAGE_IN] = direct,
++	.format[PSC_CURRENT_OUT] = direct,
++	.format[PSC_TEMPERATURE] = direct,
++	.m[PSC_VOLTAGE_IN] = 4,
++	.b[PSC_VOLTAGE_IN] = 0,
++	.R[PSC_VOLTAGE_IN] = 1,
++	.m[PSC_CURRENT_OUT] = 16,
++	.b[PSC_CURRENT_OUT] = 0,
++	.R[PSC_CURRENT_OUT] = 0,
++	.m[PSC_TEMPERATURE] = 1,
++	.b[PSC_TEMPERATURE] = 0,
++	.R[PSC_TEMPERATURE] = 0,
++	.func[0] =
++		PMBUS_HAVE_VIN | PMBUS_HAVE_STATUS_INPUT |
++		PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
++		PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT |
++		PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP,
++	.identify = mpq8785_identify,
++};
++
++static int mpq8785_probe(struct i2c_client *client)
++{
++	return pmbus_do_probe(client, &mpq8785_info);
++};
++
++static const struct i2c_device_id mpq8785_id[] = {
++	{ "mpq8785", 0 },
++	{ },
++};
++MODULE_DEVICE_TABLE(i2c, mpq8785_id);
++
++static const struct of_device_id __maybe_unused mpq8785_of_match[] = {
++	{ .compatible = "mps,mpq8785" },
++	{}
++};
++MODULE_DEVICE_TABLE(of, mpq8785_of_match);
++
++static struct i2c_driver mpq8785_driver = {
++	.driver = {
++		   .name = "mpq8785",
++		   .of_match_table = of_match_ptr(mpq8785_of_match),
++	},
++	.probe = mpq8785_probe,
++	.id_table = mpq8785_id,
++};
++
++module_i2c_driver(mpq8785_driver);
++
++MODULE_AUTHOR("Charles Hsu <ythsu0511@gmail.com>");
++MODULE_DESCRIPTION("PMBus driver for MPS MPQ8785");
++MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS(PMBUS);
+-- 
+2.49.0
+
 
