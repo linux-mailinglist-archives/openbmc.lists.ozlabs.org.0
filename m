@@ -1,94 +1,60 @@
-Return-Path: <openbmc+bounces-432-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-433-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7890CB23A8E
-	for <lists+openbmc@lfdr.de>; Tue, 12 Aug 2025 23:21:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BC89B23D90
+	for <lists+openbmc@lfdr.de>; Wed, 13 Aug 2025 03:03:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c1kvc49qwz2xK2;
-	Wed, 13 Aug 2025 07:21:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c1qqy2MXmz2xHp;
+	Wed, 13 Aug 2025 11:03:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.151
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755033676;
-	cv=none; b=E+gJpJY25D0cuJXOpSDQLcQbMNYni4ouHRnTFN8vesXAVNtiQQwm/0ZYhcmIM7marbh7oA9GXbz9PdDJYC59J9vuk6/CReOMvRKrNixbSOen8aP648+kZnbhpxC1571Lnqhk4pJknP4zXuDotPJe/Zbmho0fgtCa3gO0zJlhy1lpj2TM/9SqMAaRttueU53+AP0Fmwy+DRuRwcpzDJM8kUBx+7m50zE+fjyyJhV2Yanvq5pRnulpabhI60ZM3ifE+9Y/6hGzDLMu3SN8OwGB3I5mEiBIl+rSSdmZBap6ByhNYQ+CRoU73obyyMzL92peXmU5Tnsz6P2m3uiJQMaRLw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755047006;
+	cv=none; b=laj1xQUzNpj6vD9/JnbDQ5GXKnuhDNG2Rteifd7DQ/MaPoAHhWuHX1Z6i16VHRFvaB8xh22PvuP+kFEojdMFkz2lW1aKhqkOAie0qnF4djNWtY+CcwuYsT8bKgDDHB13/7W4+YW6TAXuQsWj2eVjlhRse/tSdAqTGeUii8ughAhZLcW81cbkqrrpUGOTimLwIxseErgSvRXc8CpQZsorq7IPfnf35QXpduoEkCl7VnN0FsB7x9KuPwGIlHp/hgR/BwSXOMPhWQ7kHr383CI3fsQ4JjeTcdiD83PTeuQ/+JEwHdHf5HAJrGi1FXKwy4XWM8Jgg6aSy6VvLm+F68lITw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755033676; c=relaxed/relaxed;
-	bh=24LigCkE6zctm6E4jG8q8Crh12iLYDW/kuAAOEBeNkc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NziA6qkI/LvmOyz/LSehR0fKRIswCuvAKhAS1UtspTapI4zWQABB4uUulSN5ahiTfV6i+m7DHLZv1q9fZ+daClBZqHxf9w14jSbj9Olj5f3aU9QXegjE+H7zv0VSLrKvYgGKhuSRPVpLcKGfD3iVCAJdnIbntkcTWV+G2Dh69Z60YL903507S/EDGKWt8HrymYHLVUVd/uUNUiP9WBWhiQWx7o39JyZ0whCZx+4vCCRTbsM6fRcw2Shy6GpoCuv4/M8EMiEgjZWj6B1ojMuIjw8+eh2s5VHIhkmhWglI1l4EbTwFbkoH26buw/ETeSPSnPOg1wxorrSTplksr7BalQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=YPjQcEdb; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jxmCYdRQ; dkim-atps=neutral; spf=pass (client-ip=103.168.172.151; helo=fout-a8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+	t=1755047006; c=relaxed/relaxed;
+	bh=ubPx2kdzCVq5b3prRy0vDqzOBhzXRv4VrDUeDBVEQaM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=kerl5obvfRjsgxvzhghGfpQaXogHodAnn944Rf5gfUb+f5eJm4yKjx+m96k7kHeFG/EXnMGDPyOOOyPd8DuVDbVCBNXBsx6j6+9hWt91x1qecZXD6LRtppldWc47j+zH5Edtfp1gBxbsNIIx3wBFG7zhHuamPTqB7zyIUoSlj0BU082Qme2ufsUFmpyLKIu5Phm/mJXQ2XoNtXgHOnqF3iR/YOArHE+peXBe3S29Qwcq1W/7dzqRsmy9gf6tSBk+GU8sAuHRxFq1pHNhJ0FVehTw9CP9lBBqtsWFo+agMg6qH9vNxeQ93XacUYdcWhinW/U3v6Cw4hWIf+GBJA3GbA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=a5M/i6J1; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=YPjQcEdb;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=jxmCYdRQ;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=a5M/i6J1;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.151; helo=fout-a8-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-X-Greylist: delayed 410 seconds by postgrey-1.37 at boromir; Wed, 13 Aug 2025 07:21:13 AEST
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c1kvY6pTPz2xCd
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Aug 2025 07:21:13 +1000 (AEST)
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A0623EC0255;
-	Tue, 12 Aug 2025 17:14:19 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 12 Aug 2025 17:14:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1755033259; x=1755119659; bh=24LigCkE6z
-	ctm6E4jG8q8Crh12iLYDW/kuAAOEBeNkc=; b=YPjQcEdbg3Sxm+MQnhtdQew5A1
-	I3WNejBbWsOBIjmdHTgdOvLnWiFX4W52JJT7HzrfoXpQOYiN0kTtRSr32HfSj+wX
-	qe4EnTVFWJwrRaWVUhVLOeUqpQTfFdugTPpvR56KybQlXMM/Y/TuaDH20wi/izdY
-	PWwmZxBPyV563Tt9jju9Jn0TgPMjkCryT6tMJ8bJPCeONAXE6gywfGj05YFl0bjI
-	ArqwpbQUIgU4Oe2tVKjOC9NEDI+qYv9Ba8dUVZlPCNCqx5BViWqgdglTUVCQoxD/
-	vFADi3ysLPKqId/z0NyRQIEBvr7CuOa/nZ6R2F1dZ+70E/UE2+N7VCZV6kCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1755033259; x=1755119659; bh=24LigCkE6zctm6E4jG8q8Crh12iLYDW/kuA
-	AOEBeNkc=; b=jxmCYdRQk3qc8EQlcKAdZw7WN92mS+g+Rfv9iE7WWgWTko1DhQw
-	Ooisu52iQzYT5/oou/vmO5W+R9nfog7ed679S67APMN6ZDEXRkj4RJZo6X3wrLWu
-	VmL+puZ+bpSxnPqeq8qyRQdvRw5GLNtezctkKVw27R/VZXW4RNw6WJKICGxbV8EW
-	gB4SPew91HFUPLhYg7zImUKgIO1E721KiJ8EDp+ihHqZ4osuNahzOeIzmMyv9P4b
-	uzYH5+e/4O7v30lB+x4BtSTXYNRLInV8MacM2duIWTLYae1cJXs6l3DNqKScC2/f
-	kHywKIDcsKLa8CIZP2JArypEsPH3QfRgZHg==
-X-ME-Sender: <xms:qq6baPZfDkWuNzaDQrpiVWkEaoWnmQ__I7ZrT6d-ZxvpgQ_UAzpCkQ>
-    <xme:qq6baFRbf4aCCIu3XzdKszoIwwIV-Ee2fI2YJ_CEvmi8PavwX6-sWJLgRUT2uZyut
-    uOblaw-u5KF4OrAqG4>
-X-ME-Received: <xmr:qq6baO7bSMT-pHbvqv9iUY7IoXG_eEAainRkCfjhyCAwav3bURM5TaF97OA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeifeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdljedtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredttddv
-    necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
-    iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeetveeugfevteettdefvedufeehheet
-    feekuefgudfgtdefvddufeevveethffhffenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiiipdhnsggp
-    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrnhgurhgvfi
-    estghouggvtghonhhsthhruhgtthdrtghomhdrrghupdhrtghpthhtohepohhpvghnsghm
-    tgeslhhishhtshdrohiilhgrsghsrdhorhhgpdhrtghpthhtohepghgvihhsshhonhgrth
-    horhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:qq6baCyC2JmxoVczpib5rf3HFZJhvde8r3NqCzNXhtPIfG9zLKuo1A>
-    <xmx:qq6baFS14ZFnay1baDnhBTzTtpOrE5cn66TO8tk3cZEt-GSmnMgrMA>
-    <xmx:qq6baJW6XVUiPbZqaYClzmIwghdU2B_wyteEEvZu3BZa0RbGGJBvpA>
-    <xmx:qq6baHZdBp9I2AQk5LW6teC0UCJyWzjPAr_B59ofN2kxieGsWRNOLw>
-    <xmx:q66baC5MapwvSLZ03YMsgkpiZUd97k1laq7BRPcNVuumGCzNRplBg0bq>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Aug 2025 17:14:18 -0400 (EDT)
-Date: Tue, 12 Aug 2025 17:14:17 -0400
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: openbmc <openbmc@lists.ozlabs.org>,
-	Andrew Geissler <geissonator@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c1qqx0JGYz2xHY
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Aug 2025 11:03:24 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1755047002;
+	bh=ubPx2kdzCVq5b3prRy0vDqzOBhzXRv4VrDUeDBVEQaM=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=a5M/i6J1Xt8rdPOFzvhuZ2KCICHkV5kHKUhIdvxosxZjV0BMNMqIa5SDxjhz/oeQu
+	 87TwvLiohk5sT5K14L7lEERESr0vrE2Z+wjsCu0ctEmFLvj4EOCLECmSGpT1nym1mj
+	 /SbPEEVA3eVibAJjv4I16No7M9xnpM1Sgx6aAknNLymSV6N9Zw3HkPuYaKEe1kaY8O
+	 CRo2HeIs7m67rL7RSwVlY4dKpbXxf1j0lAWBsdBd7XKlpMtUAaEtPjp1/jIjH/gpFH
+	 sHfDkyGtTx4JX0Bj4FP3ll6pi+peZs8bSi4fX/xxr7LQIg+DCwvsa4re+kR5iBcNRg
+	 OmeY4M3fB39ug==
+Received: from [192.168.68.112] (unknown [180.150.112.70])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 259B26409F;
+	Wed, 13 Aug 2025 09:03:21 +0800 (AWST)
+Message-ID: <156939ddd94e07da334913c676973a7757311192.camel@codeconstruct.com.au>
 Subject: Re: Proposed deprecation of device-tree-gpio-naming.md
-Message-ID: <aJuuqQxqOeuBYhmg@heinlein>
-References: <eff663ee55f2614dde750f5f0669ec876f107c0d.camel@codeconstruct.com.au>
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Patrick Williams <patrick@stwcx.xyz>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Andrew Geissler
+ <geissonator@gmail.com>
+Date: Wed, 13 Aug 2025 10:33:20 +0930
+In-Reply-To: <aJuuqQxqOeuBYhmg@heinlein>
+References: 
+	<eff663ee55f2614dde750f5f0669ec876f107c0d.camel@codeconstruct.com.au>
+	 <aJuuqQxqOeuBYhmg@heinlein>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -100,87 +66,80 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="FmRnnpfPLvwGKx0H"
-Content-Disposition: inline
-In-Reply-To: <eff663ee55f2614dde750f5f0669ec876f107c0d.camel@codeconstruct.com.au>
-X-Spam-Status: No, score=1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
-	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.1
-X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+On Tue, 2025-08-12 at 17:14 -0400, Patrick Williams wrote:
+> On Wed, Aug 06, 2025 at 09:24:37AM +0930, Andrew Jeffery wrote:
+>=20
+> > Devicetrees represent the hardware, and from experience
+> > over time I think it's best that they reflect the information from the
+> > schematics without influence from software implementation choices.
+>=20
+> Can you elaborate on what this experience is?=C2=A0 I'm not sure what thi=
+s is
+> referring to or what issues you've observed with it.
 
---FmRnnpfPLvwGKx0H
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+- All devicetrees that get merged upstream, because I'm merging them,
+- The bikeshedding that occurs when trying to update the document
+- The lack of coverage in the design document that results in people
+using net names regardless
+- The avoidance of updating the document, by the existence of net names
+in the submitted devicetrees
+- That to name the GPIO you then have to consult some other piece of
+documentation that isn't the schematic, whose existence you must first
+be aware of, that may have little meaning to you otherwise
 
-On Wed, Aug 06, 2025 at 09:24:37AM +0930, Andrew Jeffery wrote:
+>=20
+> If GPIO names were to reflect the "information from the schematics", I
+> assume this is to mean the net-name?=C2=A0 Which net-name are we going to
+> use?=C2=A0 The one on the DC-SCM, the one on the connector the DC-SCM is
+> plugged into, etc.=C2=A0 There are probably, on average, 4 different name=
+s
+> from a source of a signal to the BMC.
 
-> Devicetrees represent the hardware, and from experience
-> over time I think it's best that they reflect the information from the
-> schematics without influence from software implementation choices.
+Sure.
 
-Can you elaborate on what this experience is?  I'm not sure what this is
-referring to or what issues you've observed with it.
+>=20
+> You could of course say "whatever the person implementing the devicetree
+> wants" for the pin name, but usually that's the least useful name to
+> anyone else.=C2=A0 On top of that, schematics are often times closed and
+> unavailable to more than a handful of people.=C2=A0
+>=20
 
-Devicetrees do often represent the hardware but they don't just represent t=
-he
-hardware.  For example, we have the flash layout in there.  That's
-strictly a software function that has no connection to the hardware
-(except for the flash size itself).  I'm not convinced we have enough
-words as to why it is okay to specify the flash layout but not okay to
-represent the intended purpose of a GPIO.
+Contribution of reverse-engineered of boards is not something that
+tends to happen frequently. I don't think we should weigh its
+importance too highly here.
 
-If GPIO names were to reflect the "information from the schematics", I
-assume this is to mean the net-name?  Which net-name are we going to
-use?  The one on the DC-SCM, the one on the connector the DC-SCM is
-plugged into, etc.  There are probably, on average, 4 different names
-=66rom a source of a signal to the BMC.
+https://discord.com/channels/775381525260664832/775381525260664836/12881607=
+38157924362
 
-You could of course say "whatever the person implementing the devicetree
-wants" for the pin name, but usually that's the least useful name to
-anyone else.  On top of that, schematics are often times closed and
-unavailable to more than a handful of people.  Having a devicetree named
-"power-sequence-start" is way better than "DC_SCM_GPIO_P7", right?=20
+If the schematic is closed and broadly unavailable then perhaps the
+document serves as a reasonable way to name things, but I'm not sure it
+should take priority.
 
-Sure, we can have this translation in entity-manager or wherever, if
-someone contributes the entity-manager config for their board.  But,
-that means it's only available to BMC code.  When I'm actively debugging
-something, I have yet another hoop to jump through to go from
-"DC_SCM_GPIO_P7" to "this is the power sequence start".  If it is in the
-device tree it shows up right in "gpioinfo".
+>  Having a devicetree named
+> "power-sequence-start" is way better than "DC_SCM_GPIO_P7", right?=20
 
-> However, perhaps it's still a reasonable set of suggestions for
-> consumption of pins with the translation from net names done by the
-> applications themselves?
+If you have enough information to confidently name the GPIO "power-
+sequence-start" in the devicetree, where that isn't the net name, then
+you have enough information to choose a net name that isn't
+"DC_SCM_GPIO_P7". Pick the most useful net name? We can query this in
+review.
 
-I think it is.
+>=20
+> Sure, we can have this translation in entity-manager or wherever, if
+> someone contributes the entity-manager config for their board.=C2=A0 But,
+> that means it's only available to BMC code.=C2=A0 When I'm actively debug=
+ging
+> something, I have yet another hoop to jump through to go from
+> "DC_SCM_GPIO_P7" to "this is the power sequence start".=C2=A0 If it is in=
+ the
+> device tree it shows up right in "gpioinfo".
 
---=20
-Patrick Williams
+Picking a more useful net name likely helps the cause there.
 
---FmRnnpfPLvwGKx0H
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmibrqgACgkQqwNHzC0A
-wRmDpQ/+PYAS9eHsLCua7D8Aqce5GRc2H8rTgrdyiiVo4QpQeZtOcAf8UIM7idDN
-2PrELzPmNA0i9Rz2F+8jVyT1TwzB9yiZ2AaeeKs+e6CGBvJsTzi59yUNaWP7tPKV
-Wp7aPLhOZeJ41ox2gXtKysuBSAaGKIfS+ebvXWLLYYGVv+SvDAz0YdPeT36xnObO
-Cy0JJjAQxrmUopRZRgpHxdgSFnK81hDYVe2WyxhtEM39eNbKvGe3QWjtnxL4yQIH
-6ayw804auks1jxmQ/8ue6MeCChIMOxtuNNGkmFiIxErrhWK/hmc7pPUYYaGejkmL
-bY9o3cRJgnyNqK5q3u3NSt0tM3YYjMG0WgZ9bFEk7GPojJg5UjowvunNDJNLnLCo
-rAl4sFA9rCBZdjd+uCIKeuXRsabfbXmaau11ZvWkwKRe9GfWus9Y9j+d7KF/m6gE
-Z4s3toRmRt9J/ZhACTEZ9fqIkPhdBcT/o4MxPb1Cr/lrRmn+/xz+fPS2xKj2oenY
-GzmrYk91JRTbgJ4o6s7dgQQT+SbwU5JyAXaIoFbF9d5NWfIsL+06HjtpEzGD38GZ
-eHRex8rwAayGEDW/uxi88speuT3qnDfK+32NUE5asox1LKmuo2iKequeseXEVgGk
-uqJ+ZTEjubvdVHp66FJbYwGxixpVhxT4SQSSOIVraLRKoZsIzMA=
-=fq1H
------END PGP SIGNATURE-----
-
---FmRnnpfPLvwGKx0H--
+Andrew
 
