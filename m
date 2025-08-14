@@ -1,70 +1,63 @@
-Return-Path: <openbmc+bounces-456-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-457-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BF69B269D8
-	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 16:45:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE57AB2719F
+	for <lists+openbmc@lfdr.de>; Fri, 15 Aug 2025 00:30:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c2p2K53D0z2yhX;
-	Fri, 15 Aug 2025 00:45:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c30M454Z5z2xS2;
+	Fri, 15 Aug 2025 08:30:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::a2a"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755182745;
-	cv=none; b=h21Nykn7TLeUexKHgwUNSigAJiJ0uSboUhIMOA43X5ixDHgWcMM6DgRpNYCJmDdYMjEiAQc8081CNn8w0yYd7jnFHz41eRheeB1/isIBoyHgZ6juC5RQyUBp+RxR7gi+xFdfxYG+EUM51bud7xeRaEWrYsLZfTTIzEAwgxRGXENfK28v7ye7LnYuDH0Z49Ijm/x2Z1tKfAmbPvpGh31cpf1YTRuFxagx1SaG0U89rfxLZqzHvEpYrDgIaIxvsRokcJ6S5jCV1qlKNL9RCgdNkslhVsfomMFPAQ34hwSNn33kh4umPLAuUjACJui2UsdQMaQO6JKU+rgmNTS/4V3uVQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755210656;
+	cv=none; b=YYPI473tluVj3wBu8ydWE9J2FGowv+xmCE0Z0U3W3imKf0yBYVeemOVA5q2Cr2W8+xVA9s7qDFpAJxo8O8azBaeXgc4xHM/RcFREP2+IOer+DhgPYp6OJuLUstDn2PDTkGE9Q/pCIjaPX06IiKHz4uXyNO9xNd8Q+gCRyfVssMYe9IyxyAXU97usOXrkmOFW/bQ1gMPIKOwAwF0+BqxaoZmwrNg2Dwu1ODgdQ2PnQSRNnbdKp9kldB72jNps23VDFsYh6AMH/S+UNjfBb5szRlOMcSpCe615HWXi1LeE69JpOO+RQGv15OTOB2Ok9vEeuSkb8Z7Yynwnd6qRZrb0cg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755182745; c=relaxed/relaxed;
-	bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GQRYzAZ5m56KAQ5byipIX4iSXtm+uVYqihAMbPvkqMB06REqye/qqJCtamgjdXC7gtbo3RORuyziXZQK2y5InvU7A6jwyTjV8vQvPoOB2zkaYkbhW9KRNTbdfS2t4f82LTBZnh9Q8I6Vt2VEhwbjh77b+IC6L5CSi0JywUR5UOhBC9LgdULj8sPogEz9l5apN3xi6KZ4XPm2ZgTBAokM0mjHMaYkzpKSNym3oLwb/jsPtqOYRss+UM670RxY1Z9lGU8HRR74kLuGyhOL+K0P4RSJdaK4r4xBQqoV4B6NGPX66vM3D6sd3O0boYnHztaVv0wJx6+gcuIbskDraOumHw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bJGUiEOe; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::a2a; helo=mail-vk1-xa2a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1755210656; c=relaxed/relaxed;
+	bh=vIFp7ebVwT9oleEhOGII0IqB6tGpNR9cpd6TYV5Jql0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B0A0AJyXv8fXswooOOS6t2Z37m2tWUHvt1A3IwADeQpsBHZEFWTZopaUN8AEaOq/ZpMUWmtGwhjjb9sz0Z/nfJXesOs/pCk3V+0azzbmSdhA9RSyhYaRV65MtADsYx67Gb1xoA3v6BfA2IieEjFc99wc/HNiKHY5oxAecRneFxbsvFNQzFaNKfeBr42wjv0pXQ5eZG+YfqWQKvRu1Nj0gJ3mXJIuzlEJT5DIjeVoTVdc4VfsNuZM6qvfR6Bqlr4/2gBLxIgcnGAjZBKFO9KXtJ9pjK3l7pWOhQo6TImQZZZJ9nu/xqscrPEFSoObO70ZM7AsNdbiJFEFNIHJa8szwA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=c8NZu8Q2; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bJGUiEOe;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=c8NZu8Q2;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2a; helo=mail-vk1-xa2a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2p2J38zDz2xQ6
-	for <openbmc@lists.ozlabs.org>; Fri, 15 Aug 2025 00:45:43 +1000 (AEST)
-Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-53b174dbfceso331991e0c.2
-        for <openbmc@lists.ozlabs.org>; Thu, 14 Aug 2025 07:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755182740; x=1755787540; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
-        b=bJGUiEOeAGR8qAEuTaFta/x7eM/yVFN9FjoAHkOdSVfs19+0G3Y84XVJ2dCCatYjEo
-         EFyn+VEFwhUTLP+YJ96ZuWnsgI1siXTBzov7X06IRXxCyjdh1rrN6gFc8kmHjhcMNFE0
-         28FiV/bohqEPpZi+OjGOnA5kw+gWaOMLVcp0qHKOPP1NnGHsYfXaFxUiQVD2+UhgVOqx
-         jIaDixhCOC1qTu1mZiVlgc9DX+IODPs7IsXNCX9zzEt/acFLR9bZl/NgjSD+SHT7F1ot
-         NWNhjtL0jzY+SuJ4tpuDrrwqbRBtzXCXjpiEik5Z1po5JP/ak3QCnpSOVeV7BTRg9Byh
-         0reQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755182740; x=1755787540;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
-        b=fvZL6wmRO4Sk97/ByvlEmsYIpTi7fIQy1iZS/pi2YIljnbkY6+6x8JTAYr59yAX4mr
-         ME2r7ExQCDiZqzzGzqu3MapC32Jls4Yx86WbZcTa4uzkSO3lUg81Tj65AB33B2qR+t2Y
-         VxXR27vQ4J9XFGrpCaJy4seYEAlWLIPBK0TLuM4nArCXK73d6uqNDR2vfVCaarkBR6Ve
-         Hs1jDroI7DkliHhT86EhotZRCqK9AZQRJTQHGPDpI0UXZBwsH77F804cTGupv5WFbvdo
-         6k9IHAetHeXLsh6heXUgBfhDQv3KZ10mYfWG9XeTEFehy7hJ0e3AUP1kk0I6bCw38r9d
-         887Q==
-X-Gm-Message-State: AOJu0Yw0kQ/g6K0g5Xthw+Nj1t5mur/14rM8DDxDaO1AQ7CUXAleuRPR
-	jndbcKn3hIWZXNnzJV3AHOmszxCCPUAUJY8KUpUQ3KYg9jXXWoyz18F5E9LKlPeWPtKZ8n701/u
-	wFArWRF/bTKR6Hw1ErHwmuCBTNx32jhc=
-X-Gm-Gg: ASbGncuzYl0HjDYfVPeakUGgy1tOoPUTIjC9CpqN3VlOaSTrb7ShQhWS8gdee3YqWSY
-	eMw34Sl2zS6Ckr4JcgrbRA/qn2H2ZrsnGamRZFvbX0bzA7wZqP3oGWWc9hqtu5RAtNsQL2P/S8D
-	fr8/nNzLvG1/PNhZ53Ja681G8Oo8I+NXQCY6MUdmAY4+8Hi+Ibn+e2QsvshLVR7cAHg1W4km+Gc
-	/YoSQHB
-X-Google-Smtp-Source: AGHT+IGEJbNpTjIZdQE3WpFCBrFnVABT5LqecdYsSxYjzYEd1aiyCMiwv49x6TebtLQRr5+1H1RFtqadZKzW2RcfrAU=
-X-Received: by 2002:a05:6102:510f:b0:4fd:3b3:d4b0 with SMTP id
- ada2fe7eead31-5100271cc8emr1265902137.20.1755182740595; Thu, 14 Aug 2025
- 07:45:40 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c30M36WcVz2xQ6;
+	Fri, 15 Aug 2025 08:30:55 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 3D4D945C0A;
+	Thu, 14 Aug 2025 22:30:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6FBC4CEED;
+	Thu, 14 Aug 2025 22:30:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755210653;
+	bh=N5VWGitysz6JFmoe9n2FhghAKkO8HINQCHJY2U2kRIs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c8NZu8Q23AcSpDXYfCjfS+nijpycYbRazO8ud7muK7v/NQSmnieFRpVKZ9HpE+Se3
+	 ihK/DheTyy0oiRrb1M1422BzweCx9GFLH23gWJEy8hhRFRngUNMiGhj74MtotNPhtF
+	 yqrUOurUhDDUC58YxblyH88j6+KNNTcK/igm+HoklMSc/qyxQ5KQz0I5OYmUnqEyQb
+	 hSHC3P59PHrQpHRwdNhYBEJf+FY2XgcEMPuuTzqg6Z4f866bnKk9VJKWj+onG9pmFj
+	 gWnmU3joyDUmkrHXStOUAiu75Y3Os4fO4BMRMQVIFbAidL1DN8rkqKZOMOECpHF6et
+	 Ltq0O6AyGRRpQ==
+Date: Thu, 14 Aug 2025 17:30:52 -0500
+From: Rob Herring <robh@kernel.org>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	andrew@codeconstruct.com.au, p.zabel@pengutronix.de,
+	andriy.shevchenko@linux.intel.com, naresh.solanki@9elements.com,
+	linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v17 1/3] dt-bindings: i2c: aspeed,i2c.yaml: add
+ transfer-mode and global-regs properties and update example
+Message-ID: <20250814223052.GA4004307-robh@kernel.org>
+References: <20250814084156.1650432-1-ryan_chen@aspeedtech.com>
+ <20250814084156.1650432-2-ryan_chen@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -76,32 +69,111 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <SEYPR04MB7755127F14678E6D3616B901F162A@SEYPR04MB7755.apcprd04.prod.outlook.com>
- <TY0PR04MB73524FA10F833221A4C2A51EF15CA@TY0PR04MB7352.apcprd04.prod.outlook.com>
- <TY0PR04MB7352C16AEABDB768394727B2F135A@TY0PR04MB7352.apcprd04.prod.outlook.com>
-In-Reply-To: <TY0PR04MB7352C16AEABDB768394727B2F135A@TY0PR04MB7352.apcprd04.prod.outlook.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Thu, 14 Aug 2025 16:45:23 +0200
-X-Gm-Features: Ac12FXx3HrOVDOMXM3PCnPaY6R5Tg1nys_sXEmUPl1cU593QD6V_Kv6R1ingoOo
-Message-ID: <CALLMt=ojGUwXBpwr_dzkRqkuSvbS5XEz4BRrmsK7vfJtOaJ3Vg@mail.gmail.com>
-Subject: Re: Quantas CCLA Schedule A update 20250813
-To: =?UTF-8?B?TGl0enVuZyBDaGVuICjpmbPliKnnkK4p?= <Litzung.Chen@quantatw.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
-	=?UTF-8?B?Q29zbW8gQ2hvdSAo5ZGo5qW35Z+5KQ==?= <Cosmo.Chou@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250814084156.1650432-2-ryan_chen@aspeedtech.com>
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Thu, Aug 14, 2025 at 4:17=E2=80=AFAM Litzung Chen (=E9=99=B3=E5=88=A9=E7=
-=90=AE)
-<Litzung.Chen@quantatw.com> wrote:
->
-> Hi team,
-> Please find the attached file for updated Schedule A of CCLA from Quanta.
+On Thu, Aug 14, 2025 at 04:41:54PM +0800, Ryan Chen wrote:
+> - Add property "aspeed,global-regs" to get phandle set global
+> register, for register mode selection and clock divider control.
+> - Add an optional property "aspeed,transfer-mode" to
+> allow device tree to specify the desired transfer method used
+> by each I2C controller instance.
+> - Update example to demonstrate usage of 'aspeed,global-regs' and
+> 'aspeed,transfer-mode' for AST2600 I2C controller.
 
-Thanks for keeping it updated. I've uploaded it to the project's google dri=
-ve.
+All of this is evident reading the patch. Explain here why you need this 
+change.
+
+> 
+> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
+> ---
+>  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 39 +++++++++++++++++++
+>  1 file changed, 39 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> index 5b9bd2feda3b..2a9f7d1d2ea1 100644
+> --- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> @@ -44,6 +44,34 @@ properties:
+>      description: frequency of the bus clock in Hz defaults to 100 kHz when not
+>        specified
+>  
+> +  aspeed,transfer-mode:
+> +    description: |
+> +      ASPEED ast2600 platform equipped with 16 I2C controllers each i2c controller
+> +      have 1 byte transfer buffer(byte mode), 32 bytes buffer(buffer mode), and
+> +      share a DMA engine.
+> +      Select I2C transfer mode for this controller. Supported values are:
+> +        - "byte": Use 1 byte for i2c transmit (1-byte buffer).
+> +        - "buffer": Use buffer (32-byte buffer) for i2c transmit. (default)
+> +                    Better performance then byte mode.
+
+If no 'aspeed,transfer-mode' property defaults to buffer mode, you never 
+need 'aspeed,transfer-mode = "buffer"'.
+
+When would you ever use "byte" mode? Sometimes you want worse 
+performance? That makes no sense.
+
+I feel like we already discussed this, but I'm not going to dig thru 17 
+versions to see.
+
+> +        - "dma": Each controller DMA mode is shared DMA engine. The AST2600 SoC
+> +                 provides a single DMA engine shared for 16 I2C controllers,
+> +                 so only a limited number of controllers can use DMA simultaneously.
+> +                 Therefore, the DTS must explicitly assign which controllers are
+> +                 configured to use DMA.
+> +      Only one mode can be selected per controller.
+
+The only thing that really makes sense is dma, and you need 1 boolean 
+property for that. IOW, what you had on v10 which we gave reviewed-by 2+ 
+years ago.
+
+Do you have any actual test results or usecase that show DMA is useful 
+here? Typical I2C xfers are not streaming large amounts of data to 
+justify the setup costs of DMA. It wouldn't surprise me if DMA was 
+actually slower.
+
+> +      On AST2600, each controller supports all three modes.
+> +      If not specified, buffer mode is used by default.
+> +    enum:
+> +      - byte
+> +      - buffer
+> +      - dma
+> +
+> +  aspeed,global-regs:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: |
+
+Don't need '|'. Read the documentation about when it is needed or not 
+needed.
+
+> +      The phandle of i2c global register node, For control the i2c register
+> +      define selection, clock divider mode selection and clock divider control.
+> +
+>  required:
+>    - reg
+>    - compatible
+> @@ -66,3 +94,14 @@ examples:
+>        interrupts = <0>;
+>        interrupt-parent = <&i2c_ic>;
+>      };
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    i2c1: i2c@80 {
+> +      compatible = "aspeed,ast2600-i2c-bus";
+> +      reg = <0x80 0x80>, <0xc00 0x20>;
+> +      aspeed,global-regs = <&i2c_global>;
+> +      clocks = <&syscon ASPEED_CLK_APB>;
+> +      resets = <&syscon ASPEED_RESET_I2C>;
+> +      interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
+> +      aspeed,transfer-mode = "buffer";
+> +    };
+> -- 
+> 2.34.1
+> 
 
