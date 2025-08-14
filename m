@@ -1,127 +1,70 @@
-Return-Path: <openbmc+bounces-455-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-456-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A9E2B268F4
-	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 16:18:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BF69B269D8
+	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 16:45:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c2nR43q1xz30Vq;
-	Fri, 15 Aug 2025 00:18:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c2p2K53D0z2yhX;
+	Fri, 15 Aug 2025 00:45:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755181120;
-	cv=none; b=FZF+aY02KYYe1j1yGPtONTSjeVhyYk9PIl2C4yC6on1s4100Fsrh4nc7c5lcnozkBxCWi4QpFMzLWhQ7NodsVuSgChZgH3JHvStzHgNXTsMReqQjc5+AT2xcgcECoWUm21rhVgSV5JLc2+NXIuKqqc+vQ1/NXJb07z9Dd0NkMCtOlRVXyRmeE2MhvHzPRfXiEQSfZVjugJQqFkcDszC0ChDFFyI7su8K/8UH6JsuKH2vaqPqodtSv+iwLKq71RYQauCd6c1BaO1xYVw/FqjgbBOTru55rfpb3vkOX5WqCUjOZHJG5BkddwXUdP2070IZkySaR3vnviu1RfJVZh5zWg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::a2a"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755182745;
+	cv=none; b=h21Nykn7TLeUexKHgwUNSigAJiJ0uSboUhIMOA43X5ixDHgWcMM6DgRpNYCJmDdYMjEiAQc8081CNn8w0yYd7jnFHz41eRheeB1/isIBoyHgZ6juC5RQyUBp+RxR7gi+xFdfxYG+EUM51bud7xeRaEWrYsLZfTTIzEAwgxRGXENfK28v7ye7LnYuDH0Z49Ijm/x2Z1tKfAmbPvpGh31cpf1YTRuFxagx1SaG0U89rfxLZqzHvEpYrDgIaIxvsRokcJ6S5jCV1qlKNL9RCgdNkslhVsfomMFPAQ34hwSNn33kh4umPLAuUjACJui2UsdQMaQO6JKU+rgmNTS/4V3uVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755181120; c=relaxed/relaxed;
-	bh=V+vnB+61+tXOtwzGfCSSnwdvyVeojqtPAkoFjSfvsr4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=VrSEMDPDQK3+ZoKFkDtTvV4tCAbpQggclZmu74lNUhzLAqgpBm3T45lArMILKwsHmGPqDv5aTs3hMYIvvuYiu30/iIv/UZkSzDuyVXnhBx+kPtiRqf2n6elT23hT8PIra5fdr3z8IYZK1lX1UyFNqlnXMCLiuQaNObCfLMeaEL6sVd6FxJxUuBRi4sn6ikdO2AvVgHJKJAPm1v1a/kbUGVUmeLvS3ZyNL+R7kN1OATb5DGQdQsz5z05TwFsHSfnA+7mdQ0n8kw6JiEAXPy00Myb6kVVyoCCenBB4uqK8LBdFPJYcqJlqGunz76aoQoPcTf5eqP4aXLrsaI0gqy0xMw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqgU/EDu; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1755182745; c=relaxed/relaxed;
+	bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GQRYzAZ5m56KAQ5byipIX4iSXtm+uVYqihAMbPvkqMB06REqye/qqJCtamgjdXC7gtbo3RORuyziXZQK2y5InvU7A6jwyTjV8vQvPoOB2zkaYkbhW9KRNTbdfS2t4f82LTBZnh9Q8I6Vt2VEhwbjh77b+IC6L5CSi0JywUR5UOhBC9LgdULj8sPogEz9l5apN3xi6KZ4XPm2ZgTBAokM0mjHMaYkzpKSNym3oLwb/jsPtqOYRss+UM670RxY1Z9lGU8HRR74kLuGyhOL+K0P4RSJdaK4r4xBQqoV4B6NGPX66vM3D6sd3O0boYnHztaVv0wJx6+gcuIbskDraOumHw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bJGUiEOe; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::a2a; helo=mail-vk1-xa2a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqgU/EDu;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bJGUiEOe;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2a; helo=mail-vk1-xa2a.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2nR26TFKz2yhX;
-	Fri, 15 Aug 2025 00:18:38 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id E44A6601D8;
-	Thu, 14 Aug 2025 14:18:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140DFC4CEEF;
-	Thu, 14 Aug 2025 14:18:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755181116;
-	bh=aIOvB7Z2yTByNAFttZWfPG8POEc6396jSKH09BJ+/Lw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=EqgU/EDu3oDCYRt1Si13BRghMkcwK5LqN9GkAcGcfcrhFTazE34zUUq8Od+e5oGUJ
-	 GNx5ulPcFgtO5ZyiSpwIBr8FUNyAthpqEJ1HFf9GnjWHY+qIpiLzwl5jpRBrlolPn2
-	 z6xjKGXo4jawDOcpqGnCDN73BGfqRqAyieck88qD94UdpBJX7zr50+UVyAUEIFPEy1
-	 8iZ5/OdecI+vpH1tXXE5PIrAiCENDSW7wdju78QYNBO7tccEMhyLT5/PeO3ORXivtj
-	 sVMKdqgvEftfF5s9YxpUhwR00ND4s4PmT0wxP/dvrTnBxT6CdvlYHRM7ommRoJA5zP
-	 uiUsOyuYlg5Jw==
-From: Mark Brown <broonie@kernel.org>
-To: linux-kernel@vger.kernel.org, 
- Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- Andrea della Porta <andrea.porta@suse.com>, 
- =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, Andy Shevchenko <andy@kernel.org>, 
- Andy Yan <andy.yan@rock-chips.com>, Avi Fishman <avifishman70@gmail.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Benjamin Fair <benjaminfair@google.com>, 
- Bjorn Andersson <andersson@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, 
- David Airlie <airlied@gmail.com>, David Lechner <dlechner@baylibre.com>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Drew Fustini <fustini@kernel.org>, dri-devel@lists.freedesktop.org, 
- Fabio Estevam <festevam@gmail.com>, 
- Fabrice Gasnier <fabrice.gasnier@foss.st.com>, Fu Wei <wefu@redhat.com>, 
- Guo Ren <guoren@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, imx@lists.linux.dev, 
- Iwona Winiarska <iwona.winiarska@intel.com>, 
- Jaroslav Kysela <perex@perex.cz>, Jassi Brar <jassisinghbrar@gmail.com>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Jerome Brunet <jbrunet@baylibre.com>, Jonas Karlman <jonas@kwiboo.se>, 
- Jonathan Cameron <jic23@kernel.org>, Kevin Hilman <khilman@baylibre.com>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Lee Jones <lee@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
- Linus Walleij <linus.walleij@linaro.org>, linux-actions@lists.infradead.org, 
- linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
- linux-input@vger.kernel.org, linux-media@vger.kernel.org, 
- linux-mmc@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
- linux-pwm@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-rockchip@lists.infradead.org, linux-rtc@vger.kernel.org, 
- linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
- linux-spi@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-sunxi@lists.linux.dev, Liu Ying <victor.liu@nxp.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Maxime Ripard <mripard@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Miquel Raynal <miquel.raynal@bootlin.com>, Nancy Yuen <yuenn@google.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Nicolin Chen <nicoleotsuka@gmail.com>, 
- =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, openbmc@lists.ozlabs.org, 
- Patrick Venture <venture@google.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, Robert Foss <rfoss@kernel.org>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Samuel Holland <samuel@sholland.org>, Sandy Huang <hjc@rock-chips.com>, 
- Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
- Shengjiu Wang <shengjiu.wang@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Stephen Boyd <sboyd@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
- Tali Perry <tali.perry1@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Tomer Maimon <tmaimon77@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
- =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Vasily Khoruzhick <anarsoul@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
- Vladimir Zapolskiy <vz@mleia.com>, Xiubo Li <Xiubo.Lee@gmail.com>, 
- Yangtao Li <tiny.windzz@gmail.com>, Zhang Rui <rui.zhang@intel.com>
-In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
-References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
-Subject: Re: (subset) [PATCH 00/21] treewide: remove unneeded 'fast_io'
- parameter in regmap_config
-Message-Id: <175518109481.47921.1666131365484481268.b4-ty@kernel.org>
-Date: Thu, 14 Aug 2025 15:18:14 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2p2J38zDz2xQ6
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Aug 2025 00:45:43 +1000 (AEST)
+Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-53b174dbfceso331991e0c.2
+        for <openbmc@lists.ozlabs.org>; Thu, 14 Aug 2025 07:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755182740; x=1755787540; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
+        b=bJGUiEOeAGR8qAEuTaFta/x7eM/yVFN9FjoAHkOdSVfs19+0G3Y84XVJ2dCCatYjEo
+         EFyn+VEFwhUTLP+YJ96ZuWnsgI1siXTBzov7X06IRXxCyjdh1rrN6gFc8kmHjhcMNFE0
+         28FiV/bohqEPpZi+OjGOnA5kw+gWaOMLVcp0qHKOPP1NnGHsYfXaFxUiQVD2+UhgVOqx
+         jIaDixhCOC1qTu1mZiVlgc9DX+IODPs7IsXNCX9zzEt/acFLR9bZl/NgjSD+SHT7F1ot
+         NWNhjtL0jzY+SuJ4tpuDrrwqbRBtzXCXjpiEik5Z1po5JP/ak3QCnpSOVeV7BTRg9Byh
+         0reQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755182740; x=1755787540;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KoGcPMZXHzM6NwMEpMpFFHsvE66QhYvhQKxvfwcxkiI=;
+        b=fvZL6wmRO4Sk97/ByvlEmsYIpTi7fIQy1iZS/pi2YIljnbkY6+6x8JTAYr59yAX4mr
+         ME2r7ExQCDiZqzzGzqu3MapC32Jls4Yx86WbZcTa4uzkSO3lUg81Tj65AB33B2qR+t2Y
+         VxXR27vQ4J9XFGrpCaJy4seYEAlWLIPBK0TLuM4nArCXK73d6uqNDR2vfVCaarkBR6Ve
+         Hs1jDroI7DkliHhT86EhotZRCqK9AZQRJTQHGPDpI0UXZBwsH77F804cTGupv5WFbvdo
+         6k9IHAetHeXLsh6heXUgBfhDQv3KZ10mYfWG9XeTEFehy7hJ0e3AUP1kk0I6bCw38r9d
+         887Q==
+X-Gm-Message-State: AOJu0Yw0kQ/g6K0g5Xthw+Nj1t5mur/14rM8DDxDaO1AQ7CUXAleuRPR
+	jndbcKn3hIWZXNnzJV3AHOmszxCCPUAUJY8KUpUQ3KYg9jXXWoyz18F5E9LKlPeWPtKZ8n701/u
+	wFArWRF/bTKR6Hw1ErHwmuCBTNx32jhc=
+X-Gm-Gg: ASbGncuzYl0HjDYfVPeakUGgy1tOoPUTIjC9CpqN3VlOaSTrb7ShQhWS8gdee3YqWSY
+	eMw34Sl2zS6Ckr4JcgrbRA/qn2H2ZrsnGamRZFvbX0bzA7wZqP3oGWWc9hqtu5RAtNsQL2P/S8D
+	fr8/nNzLvG1/PNhZ53Ja681G8Oo8I+NXQCY6MUdmAY4+8Hi+Ibn+e2QsvshLVR7cAHg1W4km+Gc
+	/YoSQHB
+X-Google-Smtp-Source: AGHT+IGEJbNpTjIZdQE3WpFCBrFnVABT5LqecdYsSxYjzYEd1aiyCMiwv49x6TebtLQRr5+1H1RFtqadZKzW2RcfrAU=
+X-Received: by 2002:a05:6102:510f:b0:4fd:3b3:d4b0 with SMTP id
+ ada2fe7eead31-5100271cc8emr1265902137.20.1755182740595; Thu, 14 Aug 2025
+ 07:45:40 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -133,51 +76,32 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-cff91
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <SEYPR04MB7755127F14678E6D3616B901F162A@SEYPR04MB7755.apcprd04.prod.outlook.com>
+ <TY0PR04MB73524FA10F833221A4C2A51EF15CA@TY0PR04MB7352.apcprd04.prod.outlook.com>
+ <TY0PR04MB7352C16AEABDB768394727B2F135A@TY0PR04MB7352.apcprd04.prod.outlook.com>
+In-Reply-To: <TY0PR04MB7352C16AEABDB768394727B2F135A@TY0PR04MB7352.apcprd04.prod.outlook.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 14 Aug 2025 16:45:23 +0200
+X-Gm-Features: Ac12FXx3HrOVDOMXM3PCnPaY6R5Tg1nys_sXEmUPl1cU593QD6V_Kv6R1ingoOo
+Message-ID: <CALLMt=ojGUwXBpwr_dzkRqkuSvbS5XEz4BRrmsK7vfJtOaJ3Vg@mail.gmail.com>
+Subject: Re: Quantas CCLA Schedule A update 20250813
+To: =?UTF-8?B?TGl0enVuZyBDaGVuICjpmbPliKnnkK4p?= <Litzung.Chen@quantatw.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
+	=?UTF-8?B?Q29zbW8gQ2hvdSAo5ZGo5qW35Z+5KQ==?= <Cosmo.Chou@quantatw.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Wed, 13 Aug 2025 18:14:46 +0200, Wolfram Sang wrote:
-> While working on a driver using regmap with MMIO, I wondered if I need
-> to set 'fast_io' in the config. Turned out I don't need to, so I added
-> documentation for it with commit ffc72771ff6e ("regmap: Annotate that
-> MMIO implies fast IO").
-> 
-> This series fixes the existing users in the tree which needlessly set
-> the flag. They have been found using this coccinelle script:
-> 
-> [...]
+On Thu, Aug 14, 2025 at 4:17=E2=80=AFAM Litzung Chen (=E9=99=B3=E5=88=A9=E7=
+=90=AE)
+<Litzung.Chen@quantatw.com> wrote:
+>
+> Hi team,
+> Please find the attached file for updated Schedule A of CCLA from Quanta.
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[21/21] ASoC: remove unneeded 'fast_io' parameter in regmap_config
-        commit: d578faf7096affc036fd16333f1bfbe4991a22f7
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Thanks for keeping it updated. I've uploaded it to the project's google dri=
+ve.
 
