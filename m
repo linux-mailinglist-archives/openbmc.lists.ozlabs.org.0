@@ -1,63 +1,127 @@
-Return-Path: <openbmc+bounces-453-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-454-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EDADB26302
-	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 12:43:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5244BB263E7
+	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 13:14:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c2hfP1bjNz3cZ4;
-	Thu, 14 Aug 2025 20:43:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c2jLK070Xz3cb0;
+	Thu, 14 Aug 2025 21:14:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a0a:edc0:2:b01:1d::104"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755168189;
-	cv=none; b=lCrDLB5x38LVCORf3RQOKpqXTfxMqJmd4aSsjZJU+hLv4RpalrPXttrXz6wuMHJjRp9Xzr6PNaPU6z+zdXheo9Wu/v8Zlmmrgo05nODFh1lgtbH2E6pbAbdChU8q1RTiVTHmCJesLnOmTR0WPnTsIcF+M8ITVVkRr44d26q3549C6o3as+AWPiWWRONJFJaX4ArXC/4ZkUxN7zayMSfCHlzF8mUFbk3dazkhHYUMnz2p8QHCvXJU1ceSEJ9+pXPfh05t3ZLTuU6TMRYxXrPl2c0VoGIkk2EoyvsX/lsEttWdlDs6GLfwps7r5JCITnjVJqvZmIFo4BZk+DrpRg3UcQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755170056;
+	cv=none; b=Gt7JTFWzdQv68GSu8YPIx7eTK9R2Cr9IJUKBNlK+LDZ/lCT4l8s0Yyc1VosF5Idi0JhLrp4PHwdFNedlyGQn8ikQzs6EmxAeQlTHgzndp4l6ytss7Wg642otf10exVK04agkXclaUACGrUAonMQsFiF7w6I3vLw69b/P8S+xoQTs78ZDMrs+2ZEKlwKG8jawu4p/pW+R7NzFH9oGeTfKE0145TwWXGs0tTNGAGDjcGtrxp/un/uUhyW3KG2CQvx66JTRfYYkdJI8eB+B53zbGv+tdX3k2ZvGQEChWKURs8uKOQRvwjnamD0jiYXclxvUwzbx98KHRhio0pHdJYdlDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755168189; c=relaxed/relaxed;
-	bh=si9CbDdbSkrtahoEM2agGz+twUDM2oOQDkB8gFVKoJ0=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=M4pRn48TLfUXz0z71qGcX4M32xBsC6a0sDfhBQPa3GKfQPVLHDQF9dGAeMG6GCu4JP3GP+1s/73UeCYABTzlUIvADrho1KAZ8W6+1uvBoDNoJzdrbkH7CSarOdgY01A41PMa4NlU8dXd+Nr/evjWFsNhdJGVL+lOJrXkbvGz8C190LWZB8QHNdNSCr9jrQqy/DQWjCL+6xq2o6oNDMmn5/ud7aCO08gr0+CaMOaM1HcDKEd+wTxdqGapK+YqGDKvPkQ3+dXo89/LkcGC0LXDbDTqXIKCabuRjGsGMOiNYnJyauFhWsH0Z91cPAda5KzeOUAxYtq5kzLhYxb6ZJq31A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org) smtp.mailfrom=pengutronix.de
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=p.zabel@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	t=1755170056; c=relaxed/relaxed;
+	bh=kFeStXaq4pFc1y8zqxBRqu0P3/4wAb5zokeet7M3iR8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=PFRMEP+nelnHUA9MtwWcW7GIKuQp0bmU9bv9P8BECMw9kZ8u/h0Fu+kw42MSyXoHZ2ershj6vMmgFGlwuQdZSZ7elX2ke+pZsxvgkQvbNMft2PEUF4KpQrihoeuGsUAgMD8i8MUcaN9WEVqPYG6ODn7duJmeu8qKyoEy2Dqv1EbVxf4w5Yd55AGcMFXS7Bi8pcqLZbc1AnorH/a5912fJKGVPsxl7ZmpMSG0oJR9fLJZYJqnmbJTUajzy834Ys+e6wlCB+JPI3EPoz4X40cR7Yu4CyNLK8GM8cy8GjEyCSMzoNmQ+v95RuAkHRIKsUumRG144A/r0OHuqnjyuyY62w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nNpjrfeQ; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nNpjrfeQ;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2hfM6dHrz3cYk
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Aug 2025 20:43:06 +1000 (AEST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVPp-0008Iy-NQ; Thu, 14 Aug 2025 12:42:37 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVPl-000EwX-2f;
-	Thu, 14 Aug 2025 12:42:33 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1umVPl-000GxG-2N;
-	Thu, 14 Aug 2025 12:42:33 +0200
-Message-ID: <bf5a4aa0fc1a324a17c25e8ed5acbfd94d240251.camel@pengutronix.de>
-Subject: Re: [PATCH v17 2/3] i2c: ast2600: Add controller driver for new
- register layout
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Ryan Chen <ryan_chen@aspeedtech.com>, benh@kernel.crashing.org, 
- joel@jms.id.au, andi.shyti@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-  conor+dt@kernel.org, andrew@codeconstruct.com.au, 
- andriy.shevchenko@linux.intel.com, naresh.solanki@9elements.com, 
- linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
- devicetree@vger.kernel.org,  linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org,  linux-kernel@vger.kernel.org
-Date: Thu, 14 Aug 2025 12:42:33 +0200
-In-Reply-To: <20250814084156.1650432-3-ryan_chen@aspeedtech.com>
-References: <20250814084156.1650432-1-ryan_chen@aspeedtech.com>
-	 <20250814084156.1650432-3-ryan_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2jLJ0GSQz30T9;
+	Thu, 14 Aug 2025 21:14:16 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by nyc.source.kernel.org (Postfix) with ESMTP id ADBE6A56A87;
+	Thu, 14 Aug 2025 11:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF02C4CEED;
+	Thu, 14 Aug 2025 11:13:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755170053;
+	bh=tEQmYgzbbnDyqDEJWRtGvNd+F5EzBR/vQBdSyaJQhYo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=nNpjrfeQtIacQG0WEX7mhSYTd7hQlnB7xgoGgJ3v0sCDCZTw/gWywOLfqOYZY4LEw
+	 5E1vCRzlD1L7yPW24oE8hMcbLDvBgKF7UglcpNWQtk+d21igAN/jkLiw4vfw95mmaO
+	 Wy7Aqpr6pD43wwMPVYuuHLtW+Bl/6xetkfjwBZUQFNWFgaJ0eeIdJk6JAFWM+nmE53
+	 +kHohC9FP8zxW9RrnA7dkwqqcgSuN4MKh4R6jlzu+aBiOCgoS1PQtvycwFenFDAKSf
+	 8NGwtU+raJOCaLGmFHJD4RvJXWWS3gsAOxCpMzRtcOJrdMPkcN8DQ2NiQbSAuAjRLj
+	 ccmAEOd0wNzVg==
+From: Mark Brown <broonie@kernel.org>
+To: linux-kernel@vger.kernel.org, 
+ Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, 
+ Andrea della Porta <andrea.porta@suse.com>, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Andrzej Hajda <andrzej.hajda@intel.com>, Andy Shevchenko <andy@kernel.org>, 
+ Andy Yan <andy.yan@rock-chips.com>, Avi Fishman <avifishman70@gmail.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, 
+ Benjamin Fair <benjaminfair@google.com>, 
+ Bjorn Andersson <andersson@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, 
+ David Airlie <airlied@gmail.com>, David Lechner <dlechner@baylibre.com>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Drew Fustini <fustini@kernel.org>, dri-devel@lists.freedesktop.org, 
+ Fabio Estevam <festevam@gmail.com>, 
+ Fabrice Gasnier <fabrice.gasnier@foss.st.com>, Fu Wei <wefu@redhat.com>, 
+ Guo Ren <guoren@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, imx@lists.linux.dev, 
+ Iwona Winiarska <iwona.winiarska@intel.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Jassi Brar <jassisinghbrar@gmail.com>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Jerome Brunet <jbrunet@baylibre.com>, Jonas Karlman <jonas@kwiboo.se>, 
+ Jonathan Cameron <jic23@kernel.org>, Kevin Hilman <khilman@baylibre.com>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Lee Jones <lee@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Linus Walleij <linus.walleij@linaro.org>, linux-actions@lists.infradead.org, 
+ linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
+ linux-input@vger.kernel.org, linux-media@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-pm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+ linux-pwm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-rockchip@lists.infradead.org, linux-rtc@vger.kernel.org, 
+ linux-samsung-soc@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-spi@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-sunxi@lists.linux.dev, Liu Ying <victor.liu@nxp.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, Nancy Yuen <yuenn@google.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Nicolin Chen <nicoleotsuka@gmail.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, openbmc@lists.ozlabs.org, 
+ Patrick Venture <venture@google.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+ Samuel Holland <samuel.holland@sifive.com>, 
+ Samuel Holland <samuel@sholland.org>, Sandy Huang <hjc@rock-chips.com>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>, 
+ Shengjiu Wang <shengjiu.wang@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Stephen Boyd <sboyd@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
+ Tali Perry <tali.perry1@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Tomer Maimon <tmaimon77@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Vasily Khoruzhick <anarsoul@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
+ Vladimir Zapolskiy <vz@mleia.com>, Xiubo Li <Xiubo.Lee@gmail.com>, 
+ Yangtao Li <tiny.windzz@gmail.com>, Zhang Rui <rui.zhang@intel.com>
+In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+Subject: Re: (subset) [PATCH 00/21] treewide: remove unneeded 'fast_io'
+ parameter in regmap_config
+Message-Id: <175517003454.17441.365944262533574232.b4-ty@kernel.org>
+Date: Thu, 14 Aug 2025 12:13:54 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -69,142 +133,51 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
-X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-cff91
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Do, 2025-08-14 at 16:41 +0800, Ryan Chen wrote:
-> Add i2c-ast2600 new register mode driver to support AST2600
-> i2c new register mode. This i2c-ast2600 new driver and the
-> legacy i2c-aspeed driver both match the same compatible string
-> "aspeed,ast2600-i2c-bus" because they target the same I2C
-> controller IP on AST2600. However, AST2600 SoCs may configure
-> the controller instances to operate either in the legacy
-> register layout or the new layout (via global register).
-> The new register mode support following.
->=20
-> - Add new clock divider option for more flexible and accurate
->  clock rate generation
-> - Add tCKHighMin timing to guarantee SCL high pulse width.
-> - Add support dual pool buffer mode, split 32 bytes pool buffer
->  of each device into 2 x 16 bytes for Tx and Rx individually.
-> - Increase DMA buffer size to 4096 bytes and support byte alignment.
-> - Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
-> - Re-define registers for separating controller and target
->  mode control.
-> - Support 4 individual DMA buffers for controller Tx and Rx,
->  target Tx and Rx.
->=20
-> And following is new register set for package transfer sequence.
-> - New Master operation mode:
->   S -> Aw -> P
->   S -> Aw -> TxD -> P
->   S -> Ar -> RxD -> P
->   S -> Aw -> TxD -> Sr -> Ar -> RxD -> P
-> - Bus SDA lock auto-release capability for new controller DMA
->  command mode.
-> - Bus auto timeout for new controller/target DMA mode.
->=20
-> Since the register layout is selected via a global register at
-> runtime and both drivers bind to the same compatible string,
-> this patch defines the driver selection at build-time using
-> Kconfig, ensuring that only one driver is compiled into the
-> kernel. This approach avoids ambiguity and ensures consistent
-> behavior for each platform configuration.
->=20
-> The following is two versus register layout.
-> Old register mode:
-> {I2CD00}: Function Control Register
-> {I2CD04}: Clock and AC Timing Control Register
-> {I2CD08}: Clock and AC Timing Control Register
-> {I2CD0C}: Interrupt Control Register
-> {I2CD10}: Interrupt Status Register
-> {I2CD14}: Command/Status Register
-> {I2CD18}: Slave Device Address Register
-> {I2CD1C}: Pool Buffer Control Register
-> {I2CD20}: Transmit/Receive Byte Buffer Register
-> {I2CD24}: DMA Mode Buffer Address Register
-> {I2CD28}: DMA Transfer Length Register
-> {I2CD2C}: Original DMA Mode Buffer Address Setting
-> {I2CD30}: Original DMA Transfer Length Setting and Final Status
->=20
-> New Register mode
-> {I2CC00}: Master/Slave Function Control Register
-> {I2CC04}: Master/Slave Clock and AC Timing Control Register
-> {I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
-> {I2CC0C}: Master/Slave Pool Buffer Control Register
-> {I2CM10}: Master Interrupt Control Register
-> {I2CM14}: Master Interrupt Status Register
-> {I2CM18}: Master Command/Status Register
-> {I2CM1C}: Master DMA Buffer Length Register
-> {I2CS20}: Slave~ Interrupt Control Register
-> {I2CS24}: Slave~ Interrupt Status Register
-> {I2CS28}: Slave~ Command/Status Register
-> {I2CS2C}: Slave~ DMA Buffer Length Register
-> {I2CM30}: Master DMA Mode Tx Buffer Base Address
-> {I2CM34}: Master DMA Mode Rx Buffer Base Address
-> {I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
-> {I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
-> {I2CS40}: Slave Device Address Register
-> {I2CM48}: Master DMA Length Status Register
-> {I2CS4C}: Slave  DMA Length Status Register
-> {I2CC50}: Current DMA Operating Address Status
-> {I2CC54}: Current DMA Operating Length  Status
->=20
-> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> ---
->  drivers/i2c/busses/Kconfig       |   23 +-
->  drivers/i2c/busses/Makefile      |    1 +
->  drivers/i2c/busses/i2c-ast2600.c | 1038 ++++++++++++++++++++++++++++++
->  3 files changed, 1054 insertions(+), 8 deletions(-)
->  create mode 100644 drivers/i2c/busses/i2c-ast2600.c
->=20
-[...]
-> diff --git a/drivers/i2c/busses/i2c-ast2600.c b/drivers/i2c/busses/i2c-as=
-t2600.c
-> new file mode 100644
-> index 000000000000..15e600ff50ec
-> --- /dev/null
-> +++ b/drivers/i2c/busses/i2c-ast2600.c
-> @@ -0,0 +1,1038 @@
-[...]
-> +static int ast2600_i2c_probe(struct platform_device *pdev)
-> +{
->=20
-[...]
-> +	i2c_bus->rst =3D devm_reset_control_get_shared(dev, NULL);
-> +	if (IS_ERR(i2c_bus->rst))
-> +		return dev_err_probe(dev, PTR_ERR(i2c_bus->rst), "Missing reset ctrl\n=
-");
+On Wed, 13 Aug 2025 18:14:46 +0200, Wolfram Sang wrote:
+> While working on a driver using regmap with MMIO, I wondered if I need
+> to set 'fast_io' in the config. Turned out I don't need to, so I added
+> documentation for it with commit ffc72771ff6e ("regmap: Annotate that
+> MMIO implies fast IO").
+> 
+> This series fixes the existing users in the tree which needlessly set
+> the flag. They have been found using this coccinelle script:
+> 
+> [...]
 
-What ...
+Applied to
 
-> +	i2c_bus->rst =3D devm_reset_control_get_shared_deasserted(dev, NULL);
-> +	if (IS_ERR(i2c_bus->rst))
-> +		return dev_err_probe(dev, PTR_ERR(i2c_bus->rst), "Missing reset ctrl\n=
-");
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-... is this?
+Thanks!
 
-Choose one. If you use 1), call reset_control_deassert() somewhere. If
-you use 2), remove reset_control_assert() below.
+[19/21] spi: remove unneeded 'fast_io' parameter in regmap_config
+        commit: 48124569bbc6bfda1df3e9ee17b19d559f4b1aa3
 
-[...]
-> +static void ast2600_i2c_remove(struct platform_device *pdev)
-> +{
-> +	struct ast2600_i2c_bus *i2c_bus =3D platform_get_drvdata(pdev);
-> +
-> +	/* Disable everything. */
-> +	writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
-> +	writel(0, i2c_bus->reg_base + AST2600_I2CM_IER);
-> +	reset_control_assert(i2c_bus->rst);
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Drop if using devm_reset_control_get_shared_deasserted()
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-regards
-Philipp
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
