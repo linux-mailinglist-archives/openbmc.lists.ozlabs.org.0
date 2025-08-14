@@ -1,48 +1,48 @@
-Return-Path: <openbmc+bounces-454-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-455-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5244BB263E7
-	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 13:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A9E2B268F4
+	for <lists+openbmc@lfdr.de>; Thu, 14 Aug 2025 16:18:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c2jLK070Xz3cb0;
-	Thu, 14 Aug 2025 21:14:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c2nR43q1xz30Vq;
+	Fri, 15 Aug 2025 00:18:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2604:1380:45d1:ec00::3"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755170056;
-	cv=none; b=Gt7JTFWzdQv68GSu8YPIx7eTK9R2Cr9IJUKBNlK+LDZ/lCT4l8s0Yyc1VosF5Idi0JhLrp4PHwdFNedlyGQn8ikQzs6EmxAeQlTHgzndp4l6ytss7Wg642otf10exVK04agkXclaUACGrUAonMQsFiF7w6I3vLw69b/P8S+xoQTs78ZDMrs+2ZEKlwKG8jawu4p/pW+R7NzFH9oGeTfKE0145TwWXGs0tTNGAGDjcGtrxp/un/uUhyW3KG2CQvx66JTRfYYkdJI8eB+B53zbGv+tdX3k2ZvGQEChWKURs8uKOQRvwjnamD0jiYXclxvUwzbx98KHRhio0pHdJYdlDQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755181120;
+	cv=none; b=FZF+aY02KYYe1j1yGPtONTSjeVhyYk9PIl2C4yC6on1s4100Fsrh4nc7c5lcnozkBxCWi4QpFMzLWhQ7NodsVuSgChZgH3JHvStzHgNXTsMReqQjc5+AT2xcgcECoWUm21rhVgSV5JLc2+NXIuKqqc+vQ1/NXJb07z9Dd0NkMCtOlRVXyRmeE2MhvHzPRfXiEQSfZVjugJQqFkcDszC0ChDFFyI7su8K/8UH6JsuKH2vaqPqodtSv+iwLKq71RYQauCd6c1BaO1xYVw/FqjgbBOTru55rfpb3vkOX5WqCUjOZHJG5BkddwXUdP2070IZkySaR3vnviu1RfJVZh5zWg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755170056; c=relaxed/relaxed;
-	bh=kFeStXaq4pFc1y8zqxBRqu0P3/4wAb5zokeet7M3iR8=;
+	t=1755181120; c=relaxed/relaxed;
+	bh=V+vnB+61+tXOtwzGfCSSnwdvyVeojqtPAkoFjSfvsr4=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=PFRMEP+nelnHUA9MtwWcW7GIKuQp0bmU9bv9P8BECMw9kZ8u/h0Fu+kw42MSyXoHZ2ershj6vMmgFGlwuQdZSZ7elX2ke+pZsxvgkQvbNMft2PEUF4KpQrihoeuGsUAgMD8i8MUcaN9WEVqPYG6ODn7duJmeu8qKyoEy2Dqv1EbVxf4w5Yd55AGcMFXS7Bi8pcqLZbc1AnorH/a5912fJKGVPsxl7ZmpMSG0oJR9fLJZYJqnmbJTUajzy834Ys+e6wlCB+JPI3EPoz4X40cR7Yu4CyNLK8GM8cy8GjEyCSMzoNmQ+v95RuAkHRIKsUumRG144A/r0OHuqnjyuyY62w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nNpjrfeQ; dkim-atps=neutral; spf=pass (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 MIME-Version:Content-Type; b=VrSEMDPDQK3+ZoKFkDtTvV4tCAbpQggclZmu74lNUhzLAqgpBm3T45lArMILKwsHmGPqDv5aTs3hMYIvvuYiu30/iIv/UZkSzDuyVXnhBx+kPtiRqf2n6elT23hT8PIra5fdr3z8IYZK1lX1UyFNqlnXMCLiuQaNObCfLMeaEL6sVd6FxJxUuBRi4sn6ikdO2AvVgHJKJAPm1v1a/kbUGVUmeLvS3ZyNL+R7kN1OATb5DGQdQsz5z05TwFsHSfnA+7mdQ0n8kw6JiEAXPy00Myb6kVVyoCCenBB4uqK8LBdFPJYcqJlqGunz76aoQoPcTf5eqP4aXLrsaI0gqy0xMw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqgU/EDu; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nNpjrfeQ;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EqgU/EDu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:45d1:ec00::3; helo=nyc.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from nyc.source.kernel.org (nyc.source.kernel.org [IPv6:2604:1380:45d1:ec00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2jLJ0GSQz30T9;
-	Thu, 14 Aug 2025 21:14:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c2nR26TFKz2yhX;
+	Fri, 15 Aug 2025 00:18:38 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id ADBE6A56A87;
-	Thu, 14 Aug 2025 11:14:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF02C4CEED;
-	Thu, 14 Aug 2025 11:13:54 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id E44A6601D8;
+	Thu, 14 Aug 2025 14:18:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140DFC4CEEF;
+	Thu, 14 Aug 2025 14:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755170053;
-	bh=tEQmYgzbbnDyqDEJWRtGvNd+F5EzBR/vQBdSyaJQhYo=;
+	s=k20201202; t=1755181116;
+	bh=aIOvB7Z2yTByNAFttZWfPG8POEc6396jSKH09BJ+/Lw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=nNpjrfeQtIacQG0WEX7mhSYTd7hQlnB7xgoGgJ3v0sCDCZTw/gWywOLfqOYZY4LEw
-	 5E1vCRzlD1L7yPW24oE8hMcbLDvBgKF7UglcpNWQtk+d21igAN/jkLiw4vfw95mmaO
-	 Wy7Aqpr6pD43wwMPVYuuHLtW+Bl/6xetkfjwBZUQFNWFgaJ0eeIdJk6JAFWM+nmE53
-	 +kHohC9FP8zxW9RrnA7dkwqqcgSuN4MKh4R6jlzu+aBiOCgoS1PQtvycwFenFDAKSf
-	 8NGwtU+raJOCaLGmFHJD4RvJXWWS3gsAOxCpMzRtcOJrdMPkcN8DQ2NiQbSAuAjRLj
-	 ccmAEOd0wNzVg==
+	b=EqgU/EDu3oDCYRt1Si13BRghMkcwK5LqN9GkAcGcfcrhFTazE34zUUq8Od+e5oGUJ
+	 GNx5ulPcFgtO5ZyiSpwIBr8FUNyAthpqEJ1HFf9GnjWHY+qIpiLzwl5jpRBrlolPn2
+	 z6xjKGXo4jawDOcpqGnCDN73BGfqRqAyieck88qD94UdpBJX7zr50+UVyAUEIFPEy1
+	 8iZ5/OdecI+vpH1tXXE5PIrAiCENDSW7wdju78QYNBO7tccEMhyLT5/PeO3ORXivtj
+	 sVMKdqgvEftfF5s9YxpUhwR00ND4s4PmT0wxP/dvrTnBxT6CdvlYHRM7ommRoJA5zP
+	 uiUsOyuYlg5Jw==
 From: Mark Brown <broonie@kernel.org>
 To: linux-kernel@vger.kernel.org, 
  Wolfram Sang <wsa+renesas@sang-engineering.com>
@@ -120,8 +120,8 @@ In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
 References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
 Subject: Re: (subset) [PATCH 00/21] treewide: remove unneeded 'fast_io'
  parameter in regmap_config
-Message-Id: <175517003454.17441.365944262533574232.b4-ty@kernel.org>
-Date: Thu, 14 Aug 2025 12:13:54 +0100
+Message-Id: <175518109481.47921.1666131365484481268.b4-ty@kernel.org>
+Date: Thu, 14 Aug 2025 15:18:14 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -154,12 +154,12 @@ On Wed, 13 Aug 2025 18:14:46 +0200, Wolfram Sang wrote:
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
 Thanks!
 
-[19/21] spi: remove unneeded 'fast_io' parameter in regmap_config
-        commit: 48124569bbc6bfda1df3e9ee17b19d559f4b1aa3
+[21/21] ASoC: remove unneeded 'fast_io' parameter in regmap_config
+        commit: d578faf7096affc036fd16333f1bfbe4991a22f7
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
