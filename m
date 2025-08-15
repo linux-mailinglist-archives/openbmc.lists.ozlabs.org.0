@@ -1,163 +1,90 @@
-Return-Path: <openbmc+bounces-470-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-466-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 543CCB289CE
-	for <lists+openbmc@lfdr.de>; Sat, 16 Aug 2025 04:11:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5516BB28875
+	for <lists+openbmc@lfdr.de>; Sat, 16 Aug 2025 00:44:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c3jBn0tq2z3clw;
-	Sat, 16 Aug 2025 12:11:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c3cc62Rd9z3cZR;
+	Sat, 16 Aug 2025 08:44:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755268935;
-	cv=none; b=d2qHk6VAU3MxLGcqdFnb2rSGYRy0UyIOBEv67++7Zx7d7G0x6v27qH3GqGyfeyJjJQLZgFMEwW4TK/0zwECoSekbWX81SaC2o5SmdmwPVEkm5Y9yjn+kP/F7KM4Lsj+/P+bYdMTTpDq+JO1njampGE9GuPNImCedOIZo8/nfyL/IMgtw/z2EX8NAjLVPBS76vIr77FrRFQjSpF4SrUbSO2TMcKxVlycmZHIQZWU7x66LNM2mc3TZqk3EJTNub0W0Ah/z4YnJe7uuWTpmdXoyn+bxd3hxUuEPgkURx0a1Iqh6sgNAiJoO7kISsnt5lL250jpgkiNf0zBMb+mUGyLdsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755268935; c=relaxed/relaxed;
-	bh=MUHHvX5veTJjJhRHjeR4HMXv6t4yNx+G1Z6qiMl+8Hg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S19DMUdb7L8DZvjbbR7eE6Qeai4I4x/ykev6+/G9jB+F2v+SbxxrlEQp7REFcNRQRc3iXMysJsyN77EXgi6ve6XanatygZ7ySAKYWzY5cVAv3Lq5VxokBZ5RF1G3Ak0U7SjuZw6K+nQRDx38UQjLoO/XjRl3sjh0PZFAplerZA2e9dwapQZMj6KMbSd8SKnJJse050y0xYfOcLLe09AcFfJM5b8NqE7jgZ94HdQvRt3fQMpWuWw1VZiPYZKcQGD66fKudpIUcv7tH0IdiJAMRNYRMkRBcRQGm3fpmKINOQtm304dlYOFYb0sLaTWflQ9objDl+dlEZmWZkabJ37khQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QGhHpuiS; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=andersson@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:240a::602" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755297862;
+	cv=pass; b=ai4xktI83kBBSVugcod5N7+xY/3jNeV0hwxyVRlaRxqe9/vlJW9BQj4QKbnlEvVXUqEnLTKxX1OMveQJBHG0NEHLULbMm6nO6kAVZ1sbnIqVScPji5q73NUkAT3GXFJOBdT5K41YdJT3gYLVZIbGbyXUKig+d+iAINb1R2QLpN5sg7QpCdvJ8V4hL2qjGm2qUrVQ/SV4Ce3eH8ZVEA6UUrwbUL/YfXw9SE4GVEnQNoPLPOXV0Zv5AzhTVfpFxhrOzjbHk5MPuCjlwvgg9RKgaRw2zkQJbQuEEZNmyxcPO1QsdmF/Izy/y5WhIG+ofWgwrdtRDwe0thh9Vxa0qH4o3A==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1755297862; c=relaxed/relaxed;
+	bh=EK68s2SbsUE+hKjDYrAHOcUn2ehn7pg+/Aah7Nk8o64=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cBsGYpDwo91stNtJqg6bJ9Oej5mp0s9m6W2uCANxpaePxkgT1Iu7+Jf9z/oOnxZOm7hoDRnbuKPJx2AVg2OIRzjCyNuc3JnCaScRY/HmpYTBZ6/jgpM3bETUSXRTmAPeAHxk2gqImD3sjGgxnkhU7L2GP8IbywJEPSuJoq9LhQxMcjMoDweXELQlZSoTpRZ7lcm4kLUHVfxYF2kwltFJNgJ03QMOOixhNx+NKKmZu6Agl12KpPXe8CKVHn8YKYrWJfIFt4U4/LTFyF5v6hHxGVgGve2gGoq2hCthmv3/yS0ub4FeUxyWrJEaZr9wxvf8IC3veuYNtmEZp2KgB/sdOw==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=blDgkxp+; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:240a::602; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QGhHpuiS;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=blDgkxp+;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=andersson@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f403:240a::602; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org)
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on20602.outbound.protection.outlook.com [IPv6:2a01:111:f403:240a::602])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c3Pvp2VvRz3cgM;
-	Sat, 16 Aug 2025 00:42:14 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id DEA18439C8;
-	Fri, 15 Aug 2025 14:42:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B35C4CEEB;
-	Fri, 15 Aug 2025 14:42:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755268931;
-	bh=3eUf4UXirGpUX0gw3VvalDgnQQxUYuzOa7d+Bn86Fb0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGhHpuiSTtGAbt/6dlTCnnoTA4ZplxFC8Tro0GJAdbAh12tMNEUSLu07z11OvQBvk
-	 oHTf5TJS/YKStrrrPHeWRzwJ0jGE6j5AZ1tbRvaZy3dDmEE9KCuVb15MPpzSH6J/gw
-	 2nlRciQR5ILTUmZcjfPb8Wftcr9/dguuRdUZKw9cWJDeaG76YAPPH1GvTVv9P/kSEx
-	 wLYcS3eJZ7unChNgWOYh7wQNPjdRjal2zeZDCWKyPnLkisSlJQ+WGVCBgVhn2LIrAt
-	 +qG7XHhqCY/zS15DuM72YtrsT2tpKSGGxqzGtUU2p/oH3AF5g3+H8o04kc5YGhgMBJ
-	 knwp+/59e078g==
-From: Bjorn Andersson <andersson@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: Mark Brown <broonie@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	=?UTF-8?q?Andreas=20F=C3=A4rber?= <afaerber@suse.de>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	David Airlie <airlied@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Drew Fustini <fustini@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	Fabio Estevam <festevam@gmail.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Fu Wei <wefu@redhat.com>,
-	Guo Ren <guoren@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
-	imx@lists.linux.dev,
-	Iwona Winiarska <iwona.winiarska@intel.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Lee Jones <lee@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-actions@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-input@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-mmc@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-pwm@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-rtc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Nicolin Chen <nicoleotsuka@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	openbmc@lists.ozlabs.org,
-	Patrick Venture <venture@google.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Sandy Huang <hjc@rock-chips.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Takashi Iwai <tiwai@suse.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Xiubo Li <Xiubo.Lee@gmail.com>,
-	Yangtao Li <tiny.windzz@gmail.com>,
-	Zhang Rui <rui.zhang@intel.com>
-Subject: Re: (subset) [PATCH 00/21] treewide: remove unneeded 'fast_io' parameter in regmap_config
-Date: Fri, 15 Aug 2025 09:42:02 -0500
-Message-ID: <175526892008.370600.8859545110801188375.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
-References: <20250813161517.4746-1-wsa+renesas@sang-engineering.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c3cc46jVgz3cYm;
+	Sat, 16 Aug 2025 08:44:20 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=v68jxFjXIPZFUnctvmXh0bnvwgoL+nnSLmJOi8VUGr0YJnSQRrZ5Nr/A4XapTZC2uQO+tIadCxffWQpdsLVSmktODhgBcmUEOz5ySu6cKWwr2RPIhzDNx1ATMRzqQYDzuhAVQLEeG5yd2rrXrd6TT/DUdVuBisZFVJV95JoiCh3oWGL8x1MFoKz5iksbOJB0Q1pVS+uiWLP1iFAP15BPrwrxPuLX89M5oCb8dsd0kfxFSATGJ9pvZUPO7qpRx5Yp9BuTGASg76gt/8+wOPxfhtX/KZeAyL5Vg0XNokzV10Y5SFgHDKWZ2N3BmuYuKD1o9XppENaJMRJ/OmxfZcpJAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EK68s2SbsUE+hKjDYrAHOcUn2ehn7pg+/Aah7Nk8o64=;
+ b=MpT5JlT//YNCoLjXRxYajUZWLhSQJeuBT7Ei+XBtyJYU4fSNRuZd+eoC52IaTHleIFSQ8gtU2llJtmeK8OQZWHbCxAtFRyl2IF6KaIrih04DwWLcQWkgkuKwV2z7ZAQ81mryZwLqObAhGQ8fIcU/YFGBlGkA32fIFKMwmbX6xsgb2k55PWYINgcbeEn5miEmU0MmWkrCJQom5RRCscTGrrPp46mtLOxg6Y0o+lGDwcwAoH8tjYMiKuCG087CW4wCfyzjqBWq8wHeN9yeE2iGj29bo5LbJXGXHxUnakCZIkZeEy0nu/aJVC3hIfivJ6KxTi3mGvZ2JAs9/G6RElUEEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EK68s2SbsUE+hKjDYrAHOcUn2ehn7pg+/Aah7Nk8o64=;
+ b=blDgkxp+ETT/C/lRnQ4d3LvXGWWS299KqDdCFLx6ULAzucumS9u29ATs19O+vl48UTWLWo/cJjEo9RvIYTvWbg4fIRfhu/DNA6AIplzElxID5vpz3+Km15Slb3AVqKvWn4xwqZiqg7n6AA52tobO7chh2robq55v387oDpzHRCrdOf+nHfKo2bllfkJsZdCIcZTTqq7wD2Wn/T36doy5TX94GxvPj9eTO9pGrb/Tv3UxOojGiuGOoKVhsDxizDMqqNjlI05G2A+20pAei9u/PAsJxqT/uOzJbYh1DOSMbi1Pv+XhcL8v9gN4q8MRFWKpCIF48+eC6pevGfOT6eU1fg==
+Received: from BL1PR13CA0402.namprd13.prod.outlook.com (2603:10b6:208:2c2::17)
+ by MN0PR12MB5716.namprd12.prod.outlook.com (2603:10b6:208:373::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.18; Fri, 15 Aug
+ 2025 22:43:59 +0000
+Received: from BN2PEPF000055DA.namprd21.prod.outlook.com
+ (2603:10b6:208:2c2:cafe::32) by BL1PR13CA0402.outlook.office365.com
+ (2603:10b6:208:2c2::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.7 via Frontend Transport; Fri,
+ 15 Aug 2025 22:43:59 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN2PEPF000055DA.mail.protection.outlook.com (10.167.245.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9073.0 via Frontend Transport; Fri, 15 Aug 2025 22:43:58 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 15 Aug
+ 2025 15:43:46 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 15 Aug
+ 2025 15:43:46 -0700
+Received: from dondevbox.nvidia.com (10.127.8.13) by mail.nvidia.com
+ (10.129.68.7) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
+ Transport; Fri, 15 Aug 2025 15:43:46 -0700
+From: Donald Shannon <donalds@nvidia.com>
+To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+	<donalds@nvidia.com>
+CC: <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
+	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+	<openbmc@lists.ozlabs.org>
+Subject: [PATCH v8 0/2] Adding device tree and binding for NVIDIA GB200-UT3.0b
+Date: Fri, 15 Aug 2025 15:43:42 -0700
+Message-ID: <20250815224344.908130-1-donalds@nvidia.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -169,31 +96,126 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055DA:EE_|MN0PR12MB5716:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2c1115c5-d994-4a2c-d8fe-08dddc4d3972
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|7416014|376014|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?6xxEZ+Cg2l11/kC3z0mqS2KqTW5ZV0SRxfsVYwKnCfRT84wOei7ISVDTiYLW?=
+ =?us-ascii?Q?IMEM450tMxM6dNlXoxirHiwMncD5nC7BFEPxlKOl6tqaL05HCzvc5lQNHYVu?=
+ =?us-ascii?Q?hbvNzCKMUKBaJIMazPon3/Yp7c39v7HvPxJCXnLyXGBeFzTh9WZCdZ+SnLSo?=
+ =?us-ascii?Q?27wbt1+IWlXPEYOnVXZqsXgMaLJ/z+tahGMd8kBBYQYDE6jc9KY2f0XsfYvG?=
+ =?us-ascii?Q?91lhC2Ld6JXBMEpbEYnjggoBXWjVcKtiawVwbo/o3FGImPZ9yG2ItrR5VsMQ?=
+ =?us-ascii?Q?HiAAvd+eu0mjkswTMooeWLd7EgR1xHZuF6s8hTj8k5mz6Lk+xBBhrh8xunxs?=
+ =?us-ascii?Q?KpMutxYuROAVcELYY+jZ+mLYwTqW1WAgMTyGlNNxKwARB6ZSjd5rgo6aJ8n7?=
+ =?us-ascii?Q?3kEpfmZtQNGZTPFRzPUTffPf6YCLpo4KKNgQDrn3eHt30cqhXyhAJPLbt6fH?=
+ =?us-ascii?Q?D8pqQGtDG9N++wR7NeyML+MP4fCeckD7M9N0aKRXUf7YW4aO6NAlR0NFN1KT?=
+ =?us-ascii?Q?bnrL2E2s06HUXCnxfNjR6PloEi5oStBwvUJGDdZOUhWMtmGua+8KrZaDz61H?=
+ =?us-ascii?Q?sGerW9Y8qj/lP4BAFPQ6hifsYZj45hjJNBKXlovmCTIqF+9H3QmGbrQOnkwX?=
+ =?us-ascii?Q?QdIawfEyKiPZwhQMgXG4WYo47hLXCPRodesN4r4cDnxGyYGDuMqDCUOOShPG?=
+ =?us-ascii?Q?yWob3xPsXTSNV7XfFjGvu+r7NAALji1y2dAwPaP0zL+lRrUs86j+M0DyAZKa?=
+ =?us-ascii?Q?8vqQBxW6k3WyFIyDVCRwQBnrK6UB5dRT1X8sK1Evh9nDIdp04bW0u178oud9?=
+ =?us-ascii?Q?fpNdMsHlvmOn/eN0rMIEOMqhIxAz2yF6vHwdT88ZvKkjg5CaSoSvTcICmKBZ?=
+ =?us-ascii?Q?g8CmHxJ4iAgnyJzd8AWBUAS59mSz9XEm0HUanx0Wk32HKfnuJJzGlabJPRbj?=
+ =?us-ascii?Q?gVf2V7xQQ5abiWBM+xTkoV/RvOWARDJ+XFMFg+BvV0oMldXxSpaoSPKwz+wM?=
+ =?us-ascii?Q?H0ynvVUpYn3vv8RfKG+KRUOI6veVskGPBgGzYqw2xoH6H53FdEjLudcG4ZQr?=
+ =?us-ascii?Q?aRk07YBYTMvEijw7Brw1ICnN9svYsSZbQ0SuEV55Hg/8NjhB2gw2jYo0zwmy?=
+ =?us-ascii?Q?qpmgrtDizSbCgkTDnKiq8BgHV5fIKIOPe4mdfGJdn89f/abJbBP6cks4wNG6?=
+ =?us-ascii?Q?26cB4HX0LgxWygv1ocTR+3fBKnFyPRMCYXQVUXaCJSBGOE19AGnSK2kcNdL/?=
+ =?us-ascii?Q?UKRLFt8N0dJnCkBVV8K2T26Wq56+ic/zGdyytkZsJOG/TqrXH8DKrtE+8EFR?=
+ =?us-ascii?Q?fe0rkNFiWL8NHXdMQd2l5H2pwEbx+9SF62ZEhQ8H+XX64m+WnH7bBC+0exhA?=
+ =?us-ascii?Q?T6qX4IDa5A5R7zqyOe00arE+Wsn3rAcwWGbJkwIuI8ibQaZIjjmDRNSBhMm0?=
+ =?us-ascii?Q?pA409st8BtC+nelVEGvSfana6ZyIBQKetzzqDrm43mvUKQIse4KF8GltUz2R?=
+ =?us-ascii?Q?LOtl/DQ8fmYgaDA=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Aug 2025 22:43:58.9004
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c1115c5-d994-4a2c-d8fe-08dddc4d3972
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN2PEPF000055DA.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5716
+X-Spam-Status: No, score=-3.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+Patch 1 adds the binding for the NVIDIA GB200-UT3.0b platform.
+Patch 2 adds the device tree for the NVIDIA GB200-UT3.0b platform.
 
-On Wed, 13 Aug 2025 18:14:46 +0200, Wolfram Sang wrote:
-> While working on a driver using regmap with MMIO, I wondered if I need
-> to set 'fast_io' in the config. Turned out I don't need to, so I added
-> documentation for it with commit ffc72771ff6e ("regmap: Annotate that
-> MMIO implies fast IO").
-> 
-> This series fixes the existing users in the tree which needlessly set
-> the flag. They have been found using this coccinelle script:
-> 
-> [...]
+This is an Aspeed AST2600 based unit testing platform for GB200.
+UT3.0b is different than nvidia-gb200nvl-bmc due to networking topology
+differences, additional gpio expanders, and voltage regulator gating
+some devices.
 
-Applied, thanks!
+Reference to Ast2600 SOC [1].
+Reference to Blackwell GB200NVL Platform [2].
 
-[18/21] soc: remove unneeded 'fast_io' parameter in regmap_config
-        commit: 5d8a9c8401648d338d072a488d455ed4611c5d4b
+Link: https://www.aspeedtech.com/server_ast2600/ [1]
+Link: https://nvdam.widen.net/s/wwnsxrhm2w/blackwell-datasheet-3384703 [2]
+Signed-off-by: Donald Shannon <donalds@nvidia.com>
+---
+Changes v1 -> v2:
+  - Changed phy-mode to rgmii-id [Lunn]
+  - Removed redundant max-speed for mac0 [Lunn]
+  - Fixed typo from gb200nvl to gb200 in Makefile
+Changes v2 -> v3:
+ - Fixed whitespace issues [Krzysztof]
+ - Fixed schema validation issues from my end ( there are still issues
+ with the aspeed dtsi file that are not related to this new dts)
+ [Herring]
+ - Reordered to follow style guide [Krzysztof]
+ - Removed redundant status okays
+ - Changed vcc to vdd for the power gating on the gpio expanders
+Changes v3 -> v4:
+  - Added changelog [Krzysztof]
+  - Added nvidia,gb200-ut30b board binding [Krzysztof]
+  - Removed unused imports
+  - Reordered a couple other style guide violations
+  - Added back in a couple needed "status okay"s
+Changes v4 -> v5:
+ - Resumed my patch after a pause
+ - Don't plan to make this include of nvidia-gb200nvl-bmc due to some
+ platform differences
+ - Fixed io expanders that weren't gated by the 3.3V standby regulator
+ - Fixed incorrect interrupt pin for one IO expander
+ - Removed some IO expanders and I2C busses
+Changes v5 -> v6:
+ - Fixed subject line
+ - Added missing gpio-key compatible type to buttons
+ - Added Acked-by for Krzysztof
+Changes v6 -> v7:
+  - Removed Acked-by Krzysztof
+Changes v7 -> v8:
+  - Added missing linux,code for identify and uid button
+  - Added Acked-by for Krzysztof
+---
 
-Best regards,
+Donald Shannon (2):
+  dt-bindings: arm: aspeed: Add NVIDIA GB200-UT3.0b  board
+  ARM: dts: aspeed: Add NVIDIA GB200 UT3.0b board
+
+ .../bindings/arm/aspeed/aspeed.yaml           |    1 +
+ arch/arm/boot/dts/aspeed/Makefile             |    1 +
+ .../aspeed/aspeed-bmc-nvidia-gb200-ut30b.dts  | 1030 +++++++++++++++++
+ 3 files changed, 1032 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-gb200-ut30b.dts
+
+
+base-commit: 05adbee3ad528100ab0285c15c91100e19e10138
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.43.0
+
 
