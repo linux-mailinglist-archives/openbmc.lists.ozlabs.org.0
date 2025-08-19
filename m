@@ -1,71 +1,91 @@
-Return-Path: <openbmc+bounces-478-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-481-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9B1EB2BDC5
-	for <lists+openbmc@lfdr.de>; Tue, 19 Aug 2025 11:44:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3CB6B2D006
+	for <lists+openbmc@lfdr.de>; Wed, 20 Aug 2025 01:35:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c5l685SvCz2xnM;
-	Tue, 19 Aug 2025 19:44:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c65Xk2ZYQz30Qb;
+	Wed, 20 Aug 2025 09:35:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755596656;
-	cv=none; b=hWen40bizj5XJft9dyePzrw4q2UFuR808SUfjad3Qe6jCEefvOoNsl2VDPg4RnNEgaymTYMOYAQoTDw+tdabzU59LEVU7OnB8oK/ZfMiFbnjrmEXvzkARjLPGfGkRcISVFP5u8lvIyqlAfiZwMOY6i1Uwt3kGfa8Wiz9Tjo4OT1KXeTQldztRmA0LiyZXsIxauiSyv+UwpPEJvPcpX5NFEd2+GxkY7updbSzq4KPmI6XKNh3Nrxk1R9qiZSEBxl0dNxIPIaIbcG1apDvz5HeAE6hyR/I9d9WxlhXIEnSKTEnyXtDbV1Y8SSrsjlEPcyLuFelsf5vuUeHpKTqCL0NWw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::62c"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755609456;
+	cv=none; b=dCPljPxZxcJqSOP37WTHZ4LAsge5soo2VrgWLqM8GGU2zKqTCTGhTU3xz0gb14R1JuU32oba5hOe6krgP5IM4dQP4yIS6PkR9DV9CKhK7KPUY58Il0+U/TcugD/b9h4ajadyCPJV2yueiR/vqD1xws7n1eo9RKFDny6gH6dJKaXRLB9jnED9FHknx7sZi4rQYNdApOXBrQHFdNxMywaGfS6RbkGFmar4oSKYFg2hzmqbrLha/2OBxSMzPVtYg0Uw682lT2bZ33ZM4EsyyPg45W30/W9gjhCaYb49ssfPYFy7pBamBt1PNpfNFgRx5fCzbi9wJvxhfnlUClClyGYejw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755596656; c=relaxed/relaxed;
-	bh=OOZDAaZrI66ydwRO+2rFbEiHfOOLnYyWJFOFD28ZEkM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ho/P3Ti451BX8Cy5hw2W2eUlpkx1q3Akls/zyZQGxPQLbvAV++IuMW4cH/p1pP+I91yid/QnVbY6owwuJ9vn5W0JErgaRoj0T2vyWVC20kRmATjh2k9IOmsiPz88HqHWgwTL7INy1M0pHLI8QrbkqszJI7xKrZdE09AH1nW/2Bsm2Kxh2/lAWPzM0L1gEpomN0XZNQteIRGTbv6JHYrXQW2Zl50u0aEH8ihoz9i82oc313INxqIRyOHoE7tGlrEkaV7Wp5+C68CDXHrWpZdXzcp8vq0+67LBYbrwBG7TKGy5CsYlCCQOgYPeEUhcjiay/L5iQHdfsIFhDHONgTlVyQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EJuS8eZi; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
+	t=1755609456; c=relaxed/relaxed;
+	bh=oLZdKJG7O7Ehre+Qc9i4124u/zsW2vIpuZVf+PiEblg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fhp4/yfmK0M3dQSF3nTz9kwISjXD/Sn+gwL9fJLbebP5Xn0Jb3wUYMXOvpSOnkeoeko7Dexm9MNH8lkUa6u499mNGZ+cxNpqj/mGJQ7e3jDg/XAKD9cVf21dhke2Hu97SzHM2Y3VJrThvFQPlzg7t9Cdtm1lQwyXmFE0oGQuUSFuVkn/JeTUcIspO/ZSNOJkTHHZZVrjfbdWy3VOGiuTYOynOB2BpPXj1FpnvfxWXdcasPA57qcYNdbNNaM9uKWb9z27elZ7zu6dqmAUF5IhJnCVBNUZLbkf3JAS0YDI+3FaI466kJNn8aVxAaW7qJxZTfUBQJ0lUrxiLBkud42DvQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=y15IzUAi; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::62c; helo=mail-ej1-x62c.google.com; envelope-from=krzysztof.kozlowski@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EJuS8eZi;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=y15IzUAi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::62c; helo=mail-ej1-x62c.google.com; envelope-from=krzysztof.kozlowski@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c5l673hyRz2xPx
-	for <openbmc@lists.ozlabs.org>; Tue, 19 Aug 2025 19:44:13 +1000 (AEST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-55ce4b9c904so5729718e87.0
-        for <openbmc@lists.ozlabs.org>; Tue, 19 Aug 2025 02:44:13 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c5qrF732yz3d3M
+	for <openbmc@lists.ozlabs.org>; Tue, 19 Aug 2025 23:17:33 +1000 (AEST)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-afcb7a5cff3so97926966b.3
+        for <openbmc@lists.ozlabs.org>; Tue, 19 Aug 2025 06:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755596649; x=1756201449; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OOZDAaZrI66ydwRO+2rFbEiHfOOLnYyWJFOFD28ZEkM=;
-        b=EJuS8eZiS6rHWeZPiYVMgl4vW33f96RQ+AbfEKi3UGTGzkPWS/+fCsu9Uuzvak4Mqw
-         NOK7jLGAyXsAvtYVqg1aX3B2/RM3j7JOCZ5Y2O1F5bpjn58prZ5i/SAMKy7IO8Me8aon
-         5s+lRk0G+jZprv4OPNB0I/LRrUyOREXR88m0mnNIPZIe9QcjjnfJzqsgInO8iu9hn2uT
-         sHdY98qmyBtrpHs0E3qMhzPs8yxp4QA8ZymgFcb2DIuuToWWSAmR+WmXwlNoT25YUZqj
-         KSl8rDkayUMLJlF7FdQ0a9dwJ0AgKnD+kavyhCoV3tUlgxdTtrTyWFzol3RagMwzxaFx
-         sd9w==
+        d=linaro.org; s=google; t=1755609450; x=1756214250; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oLZdKJG7O7Ehre+Qc9i4124u/zsW2vIpuZVf+PiEblg=;
+        b=y15IzUAinuz94riVGnxvEZh3vzqdEniarjD8RDE9Rmsm393VYjevXAHskctBKUyVr8
+         0Ny2ZQ6p1JSUsARltURdpqWG7cW7HcBzkosvon6n3cwWK1QiOtTMHfn2Pp6iWx3TBcku
+         xUUmIWS7glAkNFxlgV7Y2gHF8V8YZGlKeKFrGYV34ZwDCs1mUPjVsenLcLn/fPfyRHLz
+         0CkKZNaSXmoxQMvw5N0JX8SUzNdKAz1Y80t/0DHf3s5t0wlCAiy+O4jtZB/Xybu2stuX
+         j0tv4S0zg403wqW9YKitgP3DtuhKHuT2ItBISC2q81eWsp6WU7xtm1yvUQm1eI0a5ufy
+         Hu/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755596649; x=1756201449;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OOZDAaZrI66ydwRO+2rFbEiHfOOLnYyWJFOFD28ZEkM=;
-        b=fCdRW7au/Il3v/4kbu1MjcG8uyUrJyededWCugiTzUoU2ZgtdFbJeWbfLnCfgnLaLc
-         WNKTtbotIeNG5EsNjHLxIlP9UuJ8sflVdG5We2dgjBxH8aL+pf8CZdOHt7Nckk01NMUY
-         iIMHpxBFhxdZMcfjP4ys+bx8QN97e0j5LlGh3iCnFPf6vMZ4otddFD29p5Abxk+MwTEz
-         YxkOkfQ9WzMrcNUUzbCk3NzFu/DbJW51yNWkLUGL4R7dp18VMJpnfgpBT+685ZMkr9qg
-         vSAKxayw4YU96h+GNDDvCUN2v+pprmTJyVYc1C0S5TZgZYgfLg+scPOFjczm94/sUhCl
-         nDbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVhdvd87ORpR4jIHXq2wVv1NOL3ajPYOkEeqz/y9VnCuRlldLyNYpd29a0FEco3AhYyViqdge7i@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwUMsSBOHvMIxwjZ5v+3bm+VGhux8SmG4/dYvEevgZnukebLcZM
-	AT/WWKRV/83XVF1FYx4HmfvaHjrOgAYHO/+2hrGUOF3qUe2yVlxG2PJPtNT0MgBpvBJpg7G5XZI
-	6AnDEWxQLBb+DNQ7VU3fw/FXT4cNKgABEjdC3bRQJrw==
-X-Gm-Gg: ASbGncsoz+aX/jf/kLvUosqWNih/O0Cct5x4TvarlCG+2CR63KoNb7LVQgWVxC4Pjg9
-	AnTAFFYnojdk0dUMMje7/prUPrUH1CS0qFKAT3MhpV80N6BUDQwB5/YbYiJT99pJqOQvF0n6D5A
-	A9j0a4M6X2XvrG0FJG3VqGGPEldVWM+8aWCiJ1gdDBmXPE4le738tDApO+lj9cio9o1dhEEnPbz
-	hOk59uPLRfc
-X-Google-Smtp-Source: AGHT+IEb5axoDvieP94ahUcvQF4Cdj/DI1kgL87CBZO05dhRfNXWtWdEPdVzxE8EKpKiDOV7nU9/phOY4imeW35mO0s=
-X-Received: by 2002:a05:6512:3984:b0:55b:79e8:bf83 with SMTP id
- 2adb3069b0e04-55e00e3ab16mr476219e87.14.1755596649121; Tue, 19 Aug 2025
- 02:44:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755609450; x=1756214250;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oLZdKJG7O7Ehre+Qc9i4124u/zsW2vIpuZVf+PiEblg=;
+        b=VZlxzfj7u1K42pMVDee35T5fGbnRdxDEVH9JHYAMrh893fBOwhYNo0Mxiivl5nWlHE
+         w+hz4l8UwqRwQplt0ohS761k/LI+lB55X0d2wCvgbg/QaLdvHHrqrP+s16fdqMSOqRPZ
+         idJ0ICn8sUtaB/19C+fqKj2BfpOLbo6VlMDdLknklsizkThLTN47MKRY5gm0Bo+tnLy7
+         DOZq+Yt4KkGxfv7DQR9FVOpLWcu3TlGdeIiqgHI2cXYmza9J5bTh/XDWHLLRQlTnpb41
+         VNpI0noYGUJ8CWFte/rKRVODym+ncVk3JT9JVfXwdtW/p9H6MmIWq5Wvdoh7IqT3KqnZ
+         KoPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXrsTZTW9/WIB6zli5bOPztGQ6nv6AUVfkg3tKAvGI7VYX+FkLIC6Isn51s6O+jRcsMX7IwtDNP@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxjxzEWQGV/VaKzVuzhlLUxIhIPY5TJ371BAcHy+HBzVHOkoIxB
+	P7ci4SzxUypnn+B1ph+3tl2YAapjS5P/hw+pQPsiROjaXJiV4NW3+4XGm4wNzpGEQlQ=
+X-Gm-Gg: ASbGncvNDUjDPPmzAFNbqxlgETnBH00/Er2ih3GXLMiZ8GwVL9XREht6yUT9cD1bMFz
+	zw/6KEG/7KtACi9ZUo4CkKqufMOFFINtfhu4GS9Yr3YPTOP4gMtK7xoRlizJUsaYAKoeR3AE/4R
+	lp13l/9ZuLcq+6XxPMWAbDYbSgUtBpN1hBB6eOEwg1O9v1Ugq5cu/YBp8Esu8BTTXgbvKR9P/jo
+	FLjUgUiLsrx6TYGoGi6HUKxR/pzrHnFMf60pJxcfbCVMg0hvyLeX2eueqBRwaGJSMy7+prhC/fL
+	CWLZhBj6O/MppFENtPtDpemLZC2EsIRU63g6EXNUnA6tSuBrHSZWlXKbpwm1fMEd02vLeyFDKqT
+	P12mZjcOSw7VaZcSf9uIatw1nkwzgz6wNI3liW0ys/8/K
+X-Google-Smtp-Source: AGHT+IFIWiubby8P54yyZ+NEDm49d/HfNfJgTlf8XBWHA6lj9Z1eblfmQfpYt6YpsbvQ/KV+F2nOQw==
+X-Received: by 2002:a17:906:3087:b0:ae3:bd92:e6aa with SMTP id a640c23a62f3a-afddd1e42fdmr111924566b.6.1755609450475;
+        Tue, 19 Aug 2025 06:17:30 -0700 (PDT)
+Received: from kuoka.. ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afcdd04de2csm1023271666b.111.2025.08.19.06.17.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Aug 2025 06:17:29 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ARM: dts: nuvoton: Minor whitespace cleanup
+Date: Tue, 19 Aug 2025 15:17:26 +0200
+Message-ID: <20250819131725.86770-3-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -77,49 +97,57 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20250811-gpio-mmio-pinctrl-conv-v1-0-a84c5da2be20@linaro.org>
-In-Reply-To: <20250811-gpio-mmio-pinctrl-conv-v1-0-a84c5da2be20@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 19 Aug 2025 11:43:58 +0200
-X-Gm-Features: Ac12FXxWHK9Y341YvKoMtvojeGQDJurTuXUIgTK46n0rp4Sv0-QLWOBJFmGfpkc
-Message-ID: <CACRpkdYungF_01g0XO=u7meo7pq+9y2YHP5XCBDtKHByee8yPA@mail.gmail.com>
-Subject: Re: [PATCH 0/5] pinctrl: replace legacy bgpio_init() with its
- modernized alternative
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: =?UTF-8?Q?Cl=C3=A9ment_Le_Goffic?= <legoffic.clement@gmail.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
-	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
-	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
-	=?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
-	linux-gpio@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	openbmc@lists.ozlabs.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1211; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=FEspt0iVKZ8yfRYHrWhEsNIN4cLzv4KYS3eGc/EoYA4=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBopHlmVyXrlyiIY/gFdHxz3MbWI6HNQCV5+WQeJ
+ gzzOwzjrN6JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaKR5ZgAKCRDBN2bmhouD
+ 1zEfD/4o1kY/URGy1Rv0/7JJOv4u7J3qfRTUUAcvGf1S2qKzsmGl39EaMnzjXjDqu2GnGA1Fm2O
+ GmV19bSHZUVoEn1ABR09+K/nGH43plaLaRHvynGhdnmYmiW4Z++g/wsflv09sjgO3gh5kK7hhpe
+ 41Q780e27VHbgHqJOq5FYnMK03fIBIBoIzpK/xmYgbKsp7Og42bOMs/3qpWONN8S9PpYtmw11UE
+ 6vBMez9FzgDaTMR/6D6ujfScd+XcqLIFTNGi1RtkcXvWg3BEtKWPOkgZnerWRH/QZAbs6CWAGRN
+ 7Q5bZBA1Mhgu4+N4NqQXjBUvTUo5gpSaM5wdeHjY7L/r8dpaIbMics5iakPqy9kdBx5LRys2g+C
+ lsECQcD7EhfdcEAiiBE5F5sU+1THfw0JiP6xokGCV7GS5w7DpRL4LS5pjTIRVuyVJtUe5YKSL0t
+ 5LQyQdFFm5PVBV3iQbvfQjj+kP1nMnCikBf1eZap5T/Lm9r4k3i3Ciim1aMWDPsCkrk8v2fBqU+
+ iNAPadd5dI1tbNhZX7wPTxiIyHx7Muu5TJb4R8QBWavrXGo/V3rRQWNBSit/GcmcVMrb1iKbCkY
+ yRBQEAw4aZsSdD8N2qtXth7FQfZ/oyHJOkFvXEaPSOx0stPWUbeW5BV+neA9J8n3opFCUxHCXob forjO0sLkEolgSA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Aug 11, 2025 at 5:02=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
+The DTS code coding style expects exactly one space around '='
+character.
 
-> We are in the process of modernizing the gpio-mmio interface. This
-> series converts all pinctrl drivers calling bgpio_init() to using the
-> new variant from linux/gpio/generic.h.
->
-> Linus: Please create an immutable branch containing these commits once
-> queued as I'll have some more changes comming on top of them - most
-> importantly: removing the old interface. I will need them in my tree.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-All patches applied to this immutable branch based on v6.17-rc1:
-https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git/lo=
-g/?h=3Dib-gpio_generic_chip_init
+diff --git a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+index 98c35771534e..ab3c3c5713ae 100644
+--- a/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
++++ b/arch/arm/boot/dts/nuvoton/nuvoton-common-npcm7xx.dtsi
+@@ -154,7 +154,7 @@ sdmmc: mmc@f0842000 {
+ 			status = "disabled";
+ 			reg = <0xf0842000 0x200>;
+ 			interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks =  <&clk NPCM7XX_CLK_AHB>;
++			clocks = <&clk NPCM7XX_CLK_AHB>;
+ 			clock-names = "clk_mmc";
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&mmc8_pins
+@@ -166,7 +166,7 @@ sdhci: mmc@f0840000 {
+ 			status = "disabled";
+ 			reg = <0xf0840000 0x200>;
+ 			interrupts = <GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks =  <&clk NPCM7XX_CLK_AHB>;
++			clocks = <&clk NPCM7XX_CLK_AHB>;
+ 			clock-names = "clk_sdhc";
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&sd1_pins>;
+-- 
+2.48.1
 
-Then I have merged this to my devel branch.
-
-Yours,
-Linus Walleij
 
