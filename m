@@ -1,93 +1,153 @@
-Return-Path: <openbmc+bounces-494-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-495-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34778B2ED75
-	for <lists+openbmc@lfdr.de>; Thu, 21 Aug 2025 07:12:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B6E82B2ED9C
+	for <lists+openbmc@lfdr.de>; Thu, 21 Aug 2025 07:33:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c6ryf6rPGz3blv;
-	Thu, 21 Aug 2025 15:11:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c6sSL2x6zz2xpn;
+	Thu, 21 Aug 2025 15:33:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:2414::62d" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755753098;
-	cv=pass; b=hiDmK0EsiHJqfuvXA6h4rHQKH4/rSXBk48JgmfM8aTamqT5tTn3WX8K4tvJvnfUatntDMj8kwmh9Td7W3cAoTEwy9ty/GtkthxMMEoy7bdFuWbrpvpFiDrNU9v5Q8gFJ7WfHupIjyrZMhvnK7+9Z077z8Ij0AjwQZNu41s2xkqZRoHxf/XAjd2qi5dxZJZyQqez+MDLWK0dffSz79SVkli/ybwJ9zG/UBcEX/dxWOHCeUv8VSuUBqpg8Wr61mo0kGOlOsWag9L/P9C1bC1hXGE7MWPSZeUvSjaTeOLC8+wfiXObG5dsddvlAOxTYneHy4Q/NPTGbRBU+mvH/PayA9w==
+Authentication-Results: lists.ozlabs.org; arc=fail smtp.remote-ip=148.163.156.1
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755754434;
+	cv=fail; b=I5NEG8hsHELCl+ImjstabjpEDbZjlEV6EyL/LSlFFJ3MSXHmWW1U9eBAtLHRMWN5QbYygX4HXc4PDvlZZQEwbtWg7bKYBPRGruBb1FKVbxsUXCBJX5YaaqDdInpqUMuTrgmn93lX1aQXNmF05vtgzM0+uraXMRj76fyI69eQsUO+MLSqtljC8c0WCBXewj/zocv8/Remo0V9pNJboPGGiXzKCMwTmsUyg6BU2roL4Ifo8fY+HzI1D5o0LaB5qHSgAKau9IK8aa7SyYcMqNkKP/s6QeJ6TdbzEOgY14IFuH55eUTyHJeKfWYPXDOSgZEp7G/1LnrCm7YUGL35LtWNSQ==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755753098; c=relaxed/relaxed;
-	bh=vy32HneyvBAz/dAKaFbhBI7qK0TTysyyev6zz1z/ZB8=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P+T+ZjrUmcRky7LZvf0wLk5hW+l9GbUfv66hPhbnnhrm9w3k2vr2i0hGwgQhD7xyLmliMDi+7+WeCA9FAqQELUysG1TctISOMUO+otJ7i07aQgA2Dp1J4BSrUrarhPafKvt6SnN2S0wXy/X6rTrHwhT9bUFFe9GDasZBuBPMkTS/Ir1G2IAlvXDwx1Zh0zJKtaEPLYKSWVMU35UOjkCF0w0o2uCsLLDPKr0/OhPaXieEOaYPzH92iAbtUU06Dye4KPt7c5CSjVrPM3swJUKokUhE/vaPlw0zI1DrlW2J9PGY5syruwn0sqRj5hL2GfX9Bs5DBn8lV5y0e2tCqvGdYQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=OU+f+YHg; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:2414::62d; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+	t=1755754434; c=relaxed/relaxed;
+	bh=2UHc3r+PQhEsY5KerlBF3FNkWb1yfFET3qZlaJUKKps=;
+	h=From:To:Date:Message-ID:References:In-Reply-To:Content-Type:
+	 MIME-Version:Subject; b=F5TdC4at3CKXGFG17cLJp3eVpHpBQsQ7zkX2F6Ay7IgwQINttWVHWqp3rQ4ju7fvmTCuS9Ofdy4u7FXOe3I21pz2bhZVp8iZkXvXQ6MepK+vIJoTCDmiEXQUdbXU+CRH6NYuddfkZqT/DAy/n3rx+vo7rkp0QA1+XN5sKuswoJOuBUbdxWpn4e3uPG+/mSNI7okNSJQIfrHN2TzG4HXfIZ9SW3OZ67xqC11MBs1D0z2uEl6jEvgSiuwIEifiLCIaGH7xtfzslF5v5DcRPnU+nS05Ed+7cY72nVPnGiYz6pT9EhWd4jjGHNgJwr69mHTznJQVvMdHZglu32Vr+710Gw==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=in.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SjV/DD0v; dkim-atps=neutral; spf=pass (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=devenrao@in.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=in.ibm.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=in.ibm.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=OU+f+YHg;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SjV/DD0v;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f403:2414::62d; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org)
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2062d.outbound.protection.outlook.com [IPv6:2a01:111:f403:2414::62d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=in.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=devenrao@in.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c6ryd6xwYz2xpn;
-	Thu, 21 Aug 2025 15:11:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c6sSK44RFz2xc8
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Aug 2025 15:33:52 +1000 (AEST)
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KNA2NP012643;
+	Thu, 21 Aug 2025 05:33:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+	content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=2UHc3r+PQhEsY5KerlBF3FNkWb1yfF
+	ET3qZlaJUKKps=; b=SjV/DD0v9Yf00nNi7cEGazcmqDfx7yazwVa91OHchdmlQp
+	QgmWz62mYGSUBn3pZMPmr9wC1d1Grwyc4KhCDyH20B1PKB5UXlQ+Yvs4zCHBJCQs
+	dBQertqz9HXqF5x8uLVIA5CnGgOR9DVQHwqp4fF3xGyinrurLp4NAw+x8ihKZI7C
+	CIdKdDdX7OfnAjUWd800jofR5/TCPgkZCgtl5sYEhTZ+uzXhTazjOEoIW+s13Tao
+	EH/lsWidoXVnGJaiCS6AdC7x2VY4zbKurKksZn8IKLGaE7RF0SiS4VzaSVSeLWfz
+	xi0PKYhKudvAyY6g4TwyLHYSHlKRsvWXU7UAEo5A==
+Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10on2087.outbound.protection.outlook.com [40.107.93.87])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38veutv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 05:33:49 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wmuZqP+WzGRp41w3FDTxIVuln5g5Vpmd6bv2ouPKs0ELvWPxuw7GvtLa5Lbo5JpHLVZY1DVvlHvggjgKyKC7RFU9uTSYGPmrAhap3al9RIYxVlFjplvM4ycg0AIpyuuBdDN1ho+QSj45argvqKFreSVIYbSEPAZ4jhUQ2J3XPXNDRUTXwQVDx4Kam9B2GMXsluP/GReGnvloyXlXe3nmpJNHAnxSmpSB++ehaKbsS1kQYxlV0ymE9vSZTSkByv8zZvAWiNRuukWmbR7nLBi/Bs9P2SwH9ckKSIbvo10s9NW+x+OVJ1wmy5BrhfqnafKdZoJKOCMcZmBM2ds90da7hg==
+ b=rlHpfstJGoJUi2CIWlvebcr3ixMmkLnvvFBjrb8mJNy+v80nIbi3HJA95kM2WIF644ukWvLhxscNV/z2zvX9keJr51x84u/SoV/KGSPLTkTRCSltADVvziQFYW8LM5VwH0b9WFwmZkUdFYql4wbNBpXNgaZBVu1St6Yil7b3Ov9kxwtM/aLHJc/0JEtpAfxgvEsS7N3JB1XnvFvIvzoyGe/50Biew/yTR+8ia5odsg1oCUNQv54xBdqxma6mUqHNuHLx642A6mmuK3tkWh66PlHmopcoLGZeE0vp8nwHmT0c2Qke4MN2jVqwVgXJnNirkqhfEAvvvHfH8/hQ4AXGkw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vy32HneyvBAz/dAKaFbhBI7qK0TTysyyev6zz1z/ZB8=;
- b=J+/m5tPI0aeiXQnkispqwJ9ps8Y8Fvp+AeXstlHBuBF48mNZDq7r+RZ4YYmtUi7zuO/dxLrL6hkvDEpJk3VJt1CJoPvUFX+589qf2QXNdQ7M0o05Qr6Jyf0ozzXyrwsOVjQNzjJO7GzTUo4zTbOzRHZ09hEnXHoN6CEi8WfuqB41ZTMO8ST0YjnNOnIhIebdYVZfwPryrspLu5g+Y0g0Fl60I6ZXuuLpZeCI272P4Wz2rDuiDBxE2Q5925oj9C00Hj8iEY4RlrhJfq2AwOpWnKPsVXQfPM3iUkP37YV+Ndnbhm7FO2tcLo3J2k/ZhC9/IFJdm9iXRzTHc5V50OaiIw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vy32HneyvBAz/dAKaFbhBI7qK0TTysyyev6zz1z/ZB8=;
- b=OU+f+YHgGUEIjrc0pbrc4+KO9NMeue1Q8TTzRQzRuGJvS890kBtFV4pwV6aTdlDWPX+IbDtCkJy7pKOdoKKtwXM2GsCJ5WnIMqmP+YY88KlRIHSu15D3xdSPWQOvVam5ReEoHQ9sp21aQmT49RzK7k71XUDtkUO5BpMy0UM+2h7rvVz0OEnIlfnGJJyqr3exZ3RQCPdZChanO20rW/Ff9tSluD1Z/n4o3W4SK1lKDh41eXrcKy9H7YparwSlWIUaZk5Hyd/Wwk+hVF9TXdQdQTvKkihUc9nZe6whxSiCp8s6xTOjMDm3PH+VWnBw7oQIMcIp8Jh5eFBMOV67N0nXZA==
-Received: from CH0PR04CA0091.namprd04.prod.outlook.com (2603:10b6:610:75::6)
- by DS7PR12MB8291.namprd12.prod.outlook.com (2603:10b6:8:e6::13) with
+ bh=2UHc3r+PQhEsY5KerlBF3FNkWb1yfFET3qZlaJUKKps=;
+ b=esvTzyBJCXinH+F7nrn/k5U75mRlH1rCxN5j2UYfHhEG1qx8NzeRbfm+R1rBfa/VgVRzynIMAeoX4UVBjEo57OxNA5+qM5Axuid/kcDDie17mt4tpvazc8TncbVz6fAwIg4LFQ3u97O4NCV5NgZfOYVviaXHlei2Us3SjAmTHAe1aSO+5z4DwHWklIeiDBjzFqvAmu8wR4nPKkrTLiO2iCwdrLJy+SgRHpkDX5jFPVNq4l0raQNV2kKosAaSGxCzjKvP0tU6rDSk/9XSwR4EBPWGsqSTcpP8yc6OR2gSL11RuW8ZM+/Zqr6QKHgu7s79j4OFumAd3twvKDQ52m/mgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=in.ibm.com; dmarc=pass action=none header.from=in.ibm.com;
+ dkim=pass header.d=in.ibm.com; arc=none
+Received: from SJ0PR15MB4469.namprd15.prod.outlook.com (2603:10b6:a03:372::17)
+ by PH8PR15MB6092.namprd15.prod.outlook.com (2603:10b6:510:254::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Thu, 21 Aug
- 2025 05:11:10 +0000
-Received: from DS2PEPF00003446.namprd04.prod.outlook.com
- (2603:10b6:610:75:cafe::8c) by CH0PR04CA0091.outlook.office365.com
- (2603:10b6:610:75::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.14 via Frontend Transport; Thu,
- 21 Aug 2025 05:11:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- DS2PEPF00003446.mail.protection.outlook.com (10.167.17.73) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Thu, 21 Aug 2025 05:11:10 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 20 Aug
- 2025 22:10:52 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 20 Aug
- 2025 22:10:51 -0700
-Received: from dondevbox.nvidia.com (10.127.8.13) by mail.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Wed, 20 Aug 2025 22:10:51 -0700
-From: Donald Shannon <donalds@nvidia.com>
-To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<donalds@nvidia.com>
-CC: <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
-	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
-	<openbmc@lists.ozlabs.org>, <etanous@nvidia.com>
-Subject: [PATCH 2/2] ARM: dts: aspeed: Add NVIDIA VR144NVL board
-Date: Wed, 20 Aug 2025 22:10:47 -0700
-Message-ID: <20250821051047.3638978-3-donalds@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250821051047.3638978-1-donalds@nvidia.com>
-References: <20250821051047.3638978-1-donalds@nvidia.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.14; Thu, 21 Aug
+ 2025 05:33:47 +0000
+Received: from SJ0PR15MB4469.namprd15.prod.outlook.com
+ ([fe80::c1a3:c1:6717:d74c]) by SJ0PR15MB4469.namprd15.prod.outlook.com
+ ([fe80::c1a3:c1:6717:d74c%3]) with mapi id 15.20.9031.026; Thu, 21 Aug 2025
+ 05:33:47 +0000
+From: Marri Devender Rao <devenrao@in.ibm.com>
+To: Patrick Williams <patrick@stwcx.xyz>,
+        OpenBMC List
+	<openbmc@lists.ozlabs.org>
+Thread-Topic: [EXTERNAL] Re: TOF elections for 2025H2
+Thread-Index: AQHcEUl4zgap5UppVkiOSyfNhIx02bRsl8Lc
+Date: Thu, 21 Aug 2025 05:33:47 +0000
+Message-ID:
+ <SJ0PR15MB446982270CCD58376C6A8BF1FA32A@SJ0PR15MB4469.namprd15.prod.outlook.com>
+References: <aKOKlY97pOtfuaEv@heinlein> <aKThH-wUWmqyCisX@heinlein>
+In-Reply-To: <aKThH-wUWmqyCisX@heinlein>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR15MB4469:EE_|PH8PR15MB6092:EE_
+x-ms-office365-filtering-correlation-id: b62407de-b62b-4b83-4e73-08dde0744d47
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|1800799024|10070799003|376014|13003099007|38070700018|8096899003;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?iDJrnE0uLWb6Rpo+MbC783wBOIutLIMIkjAqA1Xbc4IYBvzrWhIOlvOGor?=
+ =?iso-8859-1?Q?irYK8btSYs+ZUh5LpHApoAet2a/8EZOKlhoHrMnOrpmh0Q3DMQUunnflj3?=
+ =?iso-8859-1?Q?uamGuB07lvjYQrXNE8cAikpbjf9dB9UYUjmpy7bjpLWdi5ogV1XyWNHFmQ?=
+ =?iso-8859-1?Q?hK4Cw8A1n9pFwsbJIsNCOT41B/eyle8kep5DVA3Bpvhd8Dsq9qOaj+171n?=
+ =?iso-8859-1?Q?/mju2nnyHy/thM+imDVTNnlgsosg3wfTLMtaWSY2O+LByCGKNmBiNFoMX8?=
+ =?iso-8859-1?Q?UXi7/8LHbbBwoceLbCu+9XsMUCwer6NPytyJFW5gBk4q/Uiy/FHp3FUxbY?=
+ =?iso-8859-1?Q?h1xHxWTG7GMdlrwm7brN22QfMDzPMblY1ktStDYTYFtGQDm/2g5G7UZlTm?=
+ =?iso-8859-1?Q?i9B1UQdECP+eJBQlpA9gAUxarl1zzIJu0pqakXqEzxpoP3WCJjSky6El6K?=
+ =?iso-8859-1?Q?oPQ17wJ7DvNukuRGHx4xc9HODu7mP2wSy9WJUSKE5Rse5y5frPQozh25g6?=
+ =?iso-8859-1?Q?KvMZKgQ7YMHg9HWbGjiKFddIQ2QLwvDPG+Uz1o7MQqGfuOIMAhTGPiqfXf?=
+ =?iso-8859-1?Q?sAra5oO286dPn99Kcg5TqKNM78R0beY8tmUueRJtnJv1Faewp3niyNC2dC?=
+ =?iso-8859-1?Q?yTV3o+eRNjvVrIO1OckNKZo5s2jQkDrI+57w6h4FyaB+3cgY+ZXoM0CShZ?=
+ =?iso-8859-1?Q?mYyp8DUyZRz+9W3+TOf/7doyJ2TgLAS3/vJ+G/X+3o6YBQeyOaj7HyaQoU?=
+ =?iso-8859-1?Q?hnYHCyHMhRf1JS8AdXfubc7XDyowKI0ivx0/W+UVy9iPrRfzanhGMbLVpc?=
+ =?iso-8859-1?Q?DQKewW83QbgUbmII6GYZLlBAZirLqbDZuEVZJPMjCusDyXnKzvgzIvXyyw?=
+ =?iso-8859-1?Q?y1h/HOfXTxAqu79Xkhw1Uk0/O9DtM/OhZ1rbLY++s1MolbLylNeSJ8EG2t?=
+ =?iso-8859-1?Q?PmYuD+DMlQFiZJQNfndxk7bjfNONGFdXJxTKdfd8+MBfpp/Jmn/ZZwqzJo?=
+ =?iso-8859-1?Q?AYXN/beu811W8cFLY7qrqnW9tTv0MzAAEs/8b7MYVfvIfc5d/EJb+j/fUS?=
+ =?iso-8859-1?Q?yHIKrPphAbZ71YvA1hZqwSJuzEGWFv03MryWPD+EZs0grNNVK1Yi2ojb8q?=
+ =?iso-8859-1?Q?jO8NYmKEsN17kZh9n67b9COPv8qyG7dD84hkCof1RVqZJSVSdOR0ca2Hxx?=
+ =?iso-8859-1?Q?JOvoo0lahLf5dNiE3Q3bJEWB1KBcDrTqYQ4sXgoHjvkfGqvbJlOsMo87Qu?=
+ =?iso-8859-1?Q?HislFIkDk9UgWYF3RZd45QD6GizuS3jcuuSOV/SEPtB+A8jwPMStDJC0I0?=
+ =?iso-8859-1?Q?A9Jv3clrRopw9piZYcUKkbqfzn9i/YCkmaO9R9I5hI26X6qY67RozJh2KR?=
+ =?iso-8859-1?Q?TLzUgF32fPqayVX7To9AWO4itCkVoE5AWmDdus6a3G9VvQ7JAmInQcUeYn?=
+ =?iso-8859-1?Q?F1OChwbG29DGKcDrPYytgUJmduTFxXdg5GlGFlMQH9Ol5qgbF821Rpo0SU?=
+ =?iso-8859-1?Q?xMWAPWNi8klL/vDOgxyev4s9PkQuSORM3vLFaPcq8jTyAwrnAFZRRYZobz?=
+ =?iso-8859-1?Q?DCVJm/k=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR15MB4469.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(10070799003)(376014)(13003099007)(38070700018)(8096899003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?46ERjyoiWDcHlAAY3/zeE8KGLHwv9ufCngj445nbJCOlVhWpf9wOU3YbOi?=
+ =?iso-8859-1?Q?49Xd9f1aqfMQKL9U9Y19yJboo4DXonIXCx9ff47tOX2QzOzhweKW0RRHgQ?=
+ =?iso-8859-1?Q?3zM8kmZprrhuCO0pbpDgyILwyXv3qQx0w/n+sbWH4SyXlDUnKLi2PqhZ2q?=
+ =?iso-8859-1?Q?1lXLuFa41Xn9QhbyN000QSC8goGfPRF/KudZF4LHn6kexLGRiTdNy5Bqda?=
+ =?iso-8859-1?Q?w5wQIzPTHVuIisdLiNLtY5rqlsRrDgC4olfRli6wuLlAXz/zQrozODEbYf?=
+ =?iso-8859-1?Q?TUJZeLxqhnMLSGLlNee8yaQ4Foyhoi1n5KFow4Y5vgCtu7vxNLlW3iqE1K?=
+ =?iso-8859-1?Q?i+2d3d+AEFtDUzrnUUguliH9sZ8odIH0vnXud0iUdgeeFKxYX4H6z37+wI?=
+ =?iso-8859-1?Q?NoGC6bK18xns8h355oZABaGrA16iC2TTEAr3h575Ra8Rw2towmzX8F0emj?=
+ =?iso-8859-1?Q?LF1AFK1ZoqXnbjwRiLbgLrACNbhTNQGSPESmsMMapTMLOHvqvimsrSY+Po?=
+ =?iso-8859-1?Q?HOlPC0McvIkbHQHndb9/YxchM0yDsTxGu1577jOE04o2m3aGimtkX+yqsx?=
+ =?iso-8859-1?Q?XNO+GYNor8CpUaAqj8a/RzjWbAZYDv05xeRuaH+KYE9ofT7WfQ66ASQe71?=
+ =?iso-8859-1?Q?DnnFdScuLdMR3Y/oYmc5EBxQUrGuxXXm+SjiYFyqXxgl7TSPZipolIFA7G?=
+ =?iso-8859-1?Q?pasJSR+CtHVAHzY/bwXEA3Go1fUrAy8g8so40PhSOn/lBYg12CHbQR2kZl?=
+ =?iso-8859-1?Q?YaPAqYFSr+a6cS0g1N6V7UI5JGmLX2p0MSREvQYv7kJUSXZjef6rEx01GM?=
+ =?iso-8859-1?Q?05/aLJDfFOwwzuwkgfnyrj9UqI9QktysiqXWfoZKcSZT0zHYPPcBjJ3VHh?=
+ =?iso-8859-1?Q?OEQH1xstat9rZuWu83nIrxxf9p1chaBBatcgwRnJrv41y/lfetJVHjjnLw?=
+ =?iso-8859-1?Q?wGjUIc6cpmm7ddPuhFGsRMi+h6HYqA/vw9FW+SSWqIX90aFqn/x5An5W/f?=
+ =?iso-8859-1?Q?AjYGvWoaIXYLsw0aWlRbc0WRRh+Y55XTnLzzu4L9+NVXsxBPkiEW6Xsfhu?=
+ =?iso-8859-1?Q?s0HsPdTDfzJj3quJpwF+NWSGbTNXTXn0Sd7US6pSeEaX05QSXcDrAP7NY3?=
+ =?iso-8859-1?Q?jKol3LlYHkPJjT9P1nrfC33R4V0Qf85YHLMRnVpRIzea+l40FLVe6pEjfM?=
+ =?iso-8859-1?Q?tNEa1lnMxFN8Xue08wmj/E/TnLKm2Whui6PB3QIulOsNb/IOGTMr8i5x7R?=
+ =?iso-8859-1?Q?TIv5EUAXKV8mhiFzbN2FV0UoOKxcRhq02N8u8nXu9ypD6kzynxaL4IuxFu?=
+ =?iso-8859-1?Q?h8x1zwT1hPeIjrCOrV4xI6dLWsLrutxmrPZW/z8XFsAUZZPkKQ00a0PhW3?=
+ =?iso-8859-1?Q?CrSwCzVUSZrU+WVvXp4oOuCzmsrlY3+p1Pc85xVnuSDe8OHLcH+5aIoqX0?=
+ =?iso-8859-1?Q?vZXR6i611YepbHZD/h/lFze8AZ6Xu1OkVMiivdfu/GpQgk88/V+XPBDqWh?=
+ =?iso-8859-1?Q?ZxLz4pE6O8HZbdPo3WYSlm86eO9mKCmg6NHj07wfLGmRp97hczgLmQA9Rk?=
+ =?iso-8859-1?Q?jjhA+QrKzoccN4XqnTFRjFAjj0zPtnIwVaKPmeVDL8MSVfpWaNPiKOys2J?=
+ =?iso-8859-1?Q?YHPU6+gsEi0AFsqU0+3EpsFqZ+GJCaP3nh2dpX+WP4BKu7GXQjeRjjO6T3?=
+ =?iso-8859-1?Q?q3GUOBo7bnFJLulrGTE=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SJ0PR15MB446982270CCD58376C6A8BF1FA32ASJ0PR15MB4469namp_"
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -99,976 +159,130 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003446:EE_|DS7PR12MB8291:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5f55c151-1d50-429f-5361-08dde0712483
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|82310400026|36860700013|376014|7416014|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?f9cXJGh4Rw3kt/HUsh9DaqGD4oQs4nV5JKJFC29sHgxFpiqszCmFRDUADhgH?=
- =?us-ascii?Q?UEFUPTbSCwCk++tUCjXXv+ShT3mpLba9PYAplK+shnKevDyRCrVMANSfRGjX?=
- =?us-ascii?Q?k/p1vPknIjaNr7fsyLj5oOVfGSWvFI5PDrkVVV4WU5+auVD0AwfsRvIzmSOs?=
- =?us-ascii?Q?V1Y7x4UD34qmxwm4KAmiaPV/WKROq+N/wmyXh+pKytcG0MQK9dFsD+wAFcOa?=
- =?us-ascii?Q?uSjcbVYqFkXLUdmsZloEwNoHSAMkFBvsGATJrHOXHZpNKFtqUZS7hz+v0wuB?=
- =?us-ascii?Q?pNuP8BmQbCNdsd7gxYBmfZc+ifH3dim0WSdcKC6dS3/xk5l6ZqbJuHleAous?=
- =?us-ascii?Q?kRArZOuUCFFVpk263yu4u43GAGpeelJhg/V1Z+08I39Ap1d27tBK+63cf7Dz?=
- =?us-ascii?Q?HCTUNbFy2I+H4fchoqLxiV9PLr1VxN8lbWgH/4aSi3/vzgvyaflxvOd/zS4G?=
- =?us-ascii?Q?UPZBU9Pj0Of0KsKhXEAh4GsPO0z7ApgbYcI+pTaOKf/3pd01s8njKSCWUvgp?=
- =?us-ascii?Q?m3oF3DteWOPR7X073UAhvXxxO1yKUeIzCZRxrLCtYCbmJQo6RVH266iDqbrf?=
- =?us-ascii?Q?b27ltx23wed5JUnZ52rWwh5LybOiW1XbheoMgDCArRBV+uY7yk3GFsXdjkEr?=
- =?us-ascii?Q?238m2AveO6UZm1gJW4vTGrZQO1eNrtEXet3jpcHBmxq2SA5z+3+hpfyHpgN1?=
- =?us-ascii?Q?VVBiq+GdpbM05j3o9dzmb3Ug3PjxQxEAvIRrfP4keLhIKJ5isqSaFBkIlR4P?=
- =?us-ascii?Q?DZoA7GmKfm5BCjvvigrmAbSd5wkEGd+PhNIi08ffTQKVut+w7hDZXHqe6F1I?=
- =?us-ascii?Q?uFuv9jXLlmnQOIs+NoIPvdi5tDzvpN93EQnGgiZ+qtcolZfbKJLfj6kbp+4b?=
- =?us-ascii?Q?f9nBSkNeWRkJYKM34wwz77zXo3lDeIQP1fhwU3egYSorscYSH0YwQLc/3PJ/?=
- =?us-ascii?Q?zP7dxjnXZ7wtDh7xVgEk6IwEwwMSnpzQvlmVydzCY3X1IfIb6RNiv+cIQb+s?=
- =?us-ascii?Q?IVwZg2dAb3KBDR59FO8Ijm9dr/qIgQrVRzJXUetxj76/dc+7xUWKOOLciyqZ?=
- =?us-ascii?Q?USB8vT7GEwGopn/VhkyQjw0LvbxM4ymo+PkYPRcUeJAkissjO/WAswcRY0OX?=
- =?us-ascii?Q?5iZ4WKwZWwUo/lXHhCu6rljmh9oz5E2RqgVzWQoVa7yGOo+CS88LROiX/y5+?=
- =?us-ascii?Q?Y3np1Wf3vBv6caqOw1QtiJ4bGRAxi/4De04JkSPOGO+5UxarjgVe0wU2fuGU?=
- =?us-ascii?Q?+MVbxB49nujdCK4P7Vry8kvCyugcglckJ8/FXG656c70eVEa6EX8gtip23pS?=
- =?us-ascii?Q?D9cTNBsTKTFEGvv6lDq4uY8DS+LvCqix+uDwSU/6S8/wkkhzlOxR/6yHiPFE?=
- =?us-ascii?Q?8ULFjh7XObV9uqFRIIq6rO4NBoOHALNVzu6In2NnEX/Lx5OZh5XegxBlgvMF?=
- =?us-ascii?Q?bx1+ELIfb5ageLMvgCxvrFuCcw5oUSn3LjHZzyZwE5ph2kH/XYjNDtPqGlHD?=
- =?us-ascii?Q?SyUpN7dKGoc88KFEZNUiCHxK6uAjV6RieYJm?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(7416014)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2025 05:11:10.3448
+X-OriginatorOrg: in.ibm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR15MB4469.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b62407de-b62b-4b83-4e73-08dde0744d47
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2025 05:33:47.3533
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5f55c151-1d50-429f-5361-08dde0712483
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS2PEPF00003446.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8291
-X-Spam-Status: No, score=-3.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-	SPF_HELO_PASS,SPF_PASS,WEIRD_QUOTING autolearn=disabled version=4.0.1
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: x5Qys2uB7KGjcIEziK00ILXG5ex6lrhj0uAVZCcRgOi+6drZ/DmOv5QSBAmkM9B4r0A9TXCa8w0R9XkDsQFRtw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR15MB6092
+X-Proofpoint-GUID: xdVdx6b3yt4_iLn4KjrRO4YlyFShyv1u
+X-Authority-Analysis: v=2.4 cv=IrhHsL/g c=1 sm=1 tr=0 ts=68a6afbe cx=c_pps
+ a=6lib/t1tMPUsg/VFQO8C4g==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10
+ a=NEAV23lmAAAA:8 a=hwW9ofN5u82dzU0bgk0A:9 a=wPNLvfGTeEIA:10 a=7jBqKnKQzRwA:10
+ a=1urcsAcQ4Z0A:10 a=tgtgJ2ir1Bd-oDNDnLMA:9 a=c5sJwLyTszVa8eV_:21
+ a=frz4AuCg-hUA:10 a=_W_S_7VecoQA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfXy8wNKq6D/3uR
+ JTmA6S4qQ6w5Ug9UnkJEo3rj8SfvpO5hn+qAzozRtUFxKcSxVM/OVTv/xcp8ppaRNE1COuFYdzE
+ 08RfaBTlf5yLuOX+A94rvuH2p6kDGbrpZvZWrb2pD9hQc7R9DevtY2xU/b742gdshTMq2Gtt9r0
+ JFHlnyvztD4vy9rx+h4QaV/0CKxaQ+jCrDDOJ2pyRkpuxlNZMF+6VWZ4VDm65evUuSjjeqIoWsp
+ x36pz/9PlLCvw2xG97F0JUjj911uHmEVfGLda8xgKNYbVweMKaF2sKDdTSyiKbdzBas4b2hGRc5
+ zfww0ZeAoDGsHYUcXkTq8ovURF1EolvUUqxbourdQDIbFSLoh5Mvsfpm9HMLl9LFIBVsk5kRjiR
+ eHKB6VLQ/qyhdC94x/XLTo/0wECXzQ==
+X-Proofpoint-ORIG-GUID: xdVdx6b3yt4_iLn4KjrRO4YlyFShyv1u
+Subject: RE: TOF elections for 2025H2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-20_06,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ clxscore=1011 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508190222
+X-Spam-Status: No, score=-0.7 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,HTML_MESSAGE,RCVD_IN_DNSWL_LOW,
+	RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-This is an Aspeed AST2600 based BMC board for the NVIDIA VR144NVL
-Platform.
+--_000_SJ0PR15MB446982270CCD58376C6A8BF1FA32ASJ0PR15MB4469namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Reference to Ast2600 SOC [1].
-Reference to DC-SCM Spec [2].
+I nominate Manoj
 
-Link: https://www.aspeedtech.com/server_ast2600/ [1]
-Link: https://www.opencompute.org/w/index.php?title=Server/MHS/DC-SCM-Specs-and-Designs [2]
 
-Signed-off-by: Donald Shannon <donalds@nvidia.com>
----
- arch/arm/boot/dts/aspeed/Makefile             |   1 +
- .../dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts | 879 ++++++++++++++++++
- 2 files changed, 880 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
+________________________________
+From: Patrick Williams
+Sent: Wednesday, August 20, 2025 02:09
+To: OpenBMC List
+Subject: [EXTERNAL] Re: TOF elections for 2025H2
 
-diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
-index 8062c685f7e8..b479824c434b 100644
---- a/arch/arm/boot/dts/aspeed/Makefile
-+++ b/arch/arm/boot/dts/aspeed/Makefile
-@@ -55,6 +55,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-lenovo-hr855xg2.dtb \
- 	aspeed-bmc-microsoft-olympus.dtb \
- 	aspeed-bmc-nvidia-gb200nvl-bmc.dtb \
-+	aspeed-bmc-nvidia-vr144nvl.dtb \
- 	aspeed-bmc-opp-lanyang.dtb \
- 	aspeed-bmc-opp-mowgli.dtb \
- 	aspeed-bmc-opp-nicole.dtb \
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
-new file mode 100644
-index 000000000000..145b3838df8a
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
-@@ -0,0 +1,879 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+	model = "AST2600 VR144NVL BMC";
-+	compatible = "nvidia,vr144nvl-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		serial2 = &uart3;
-+		serial4 = &uart5;
-+		i2c16 = &c0uphy0;
-+		i2c17 = &c0uphy2;
-+		i2c18 = &c0unused2;
-+		i2c19 = &c0unused3;
-+		i2c20 = &c0unused4;
-+		i2c21 = &c0unused5;
-+		i2c22 = &c0unused6;
-+		i2c23 = &c0unused7;
-+		i2c24 = &c1uphy0;
-+		i2c25 = &c1uphy2;
-+		i2c26 = &c1unused2;
-+		i2c27 = &c1unused3;
-+		i2c28 = &c1unused4;
-+		i2c29 = &c1unused5;
-+		i2c30 = &c1unused6;
-+		i2c31 = &c1unused7;
-+		i2c32 = &i2c_usb_hub;
-+		i2c33 = &i2c_tpm;
-+		i2c34 = &i2c_dp;
-+		i2c35 = &i2c_rtc;
-+	};
-+
-+	buttons {
-+		compatible = "gpio-keys";
-+		button-power {
-+			label = "power_btn";
-+			linux,code = <KEY_POWER>;
-+			gpios = <&exp7 9 GPIO_ACTIVE_LOW>;
-+		};
-+		button-uid {
-+			label = "uid_btn";
-+			linux,code = <KEY_FN_1>;
-+			gpios = <&exp7 11 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		hb-led {
-+			gpios = <&gpio0 127 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_HEARTBEAT;
-+			color = <LED_COLOR_ID_GREEN>;
-+			label = "bmc-hbled";
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		pwr-led {
-+			gpios = <&exp7 8 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_POWER;
-+			color = <LED_COLOR_ID_WHITE>;
-+			label = "pwr-led";
-+			linux,default-trigger = "default-on";
-+			default-state = "on";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		uid-led {
-+			gpios = <&exp7 10 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_BLUE>;
-+			label = "uid-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		fault-led {
-+			gpios = <&exp7 12 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_PANIC;
-+			color = <LED_COLOR_ID_WHITE>;
-+			label = "fault-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+			panic-indicator;
-+		};
-+		warn-led {
-+			gpios = <&exp7 15 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_PANIC;
-+			color = <LED_COLOR_ID_RED>;
-+			label = "warn-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x80000000>;
-+	};
-+
-+	reg_3v3_stby: regulator-3v3-standby {
-+		compatible = "regulator-fixed";
-+		regulator-name = "3v3-standby";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpio = <&gpio0 ASPEED_GPIO(M, 3) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-always-on;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@9f000000 {
-+			no-map;
-+			reg = <0x9f000000 0x01000000>; /* 16M */
-+		};
-+
-+		ramoops@a0000000 {
-+			compatible = "ramoops";
-+			reg = <0xa0000000 0x100000>; /* 1MB */
-+			record-size = <0x10000>; /* 64KB */
-+			max-reason = <2>; /* KMSG_DUMP_OOPS */
-+		};
-+
-+		gfx_memory: framebuffer {
-+			compatible = "shared-dma-pool";
-+			reusable;
-+			size = <0x01000000>;
-+			alignment = <0x01000000>;
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			compatible = "shared-dma-pool";
-+			reusable;
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+		};
-+	};
-+};
-+
-+// Enable Primary flash on FMC for bring up activity
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+		status = "okay";
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			u-boot@0 {
-+				// 896KB
-+				reg = <0x0 0xe0000>;
-+				label = "u-boot";
-+			};
-+
-+			kernel@100000 {
-+				// 9MB
-+				reg = <0x100000 0x900000>;
-+				label = "kernel";
-+			};
-+
-+			rofs@a00000 {
-+				// 55292KB (extends to end of 64MB SPI - 4KB)
-+				reg = <0xa00000 0x35FF000>;
-+				label = "rofs";
-+			};
-+		};
-+	};
-+};
-+
-+&spi2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi2_default>;
-+	status = "okay";
-+	// Data SPI is 64MB in size
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		label = "config";
-+		spi-max-frequency = <50000000>;
-+		status = "okay";
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			u-boot-env@0 {
-+				// 256KB
-+				reg = <0x0 0x40000>;
-+				label = "u-boot-env";
-+			};
-+
-+			rwfs@40000 {
-+				// 16MB
-+				reg = <0x40000 0x1000000>;
-+				label = "rwfs";
-+			};
-+
-+			log@1040000 {
-+				// 40MB
-+				reg = <0x1040000 0x2800000>;
-+				label = "log";
-+			};
-+		};
-+	};
-+};
-+
-+&mdio0 {
-+	status = "okay";
-+	ethphy0: ethernet-phy@0 {
-+		compatible = "ethernet-phy-ieee802.3-c22";
-+		reg = <0>;
-+	};
-+};
-+
-+&mac0 {
-+	pinctrl-names = "default";
-+	phy-mode = "rgmii-id";
-+	phy-handle = <&ethphy0>;
-+	pinctrl-0 = <&pinctrl_rgmii1_default>;
-+	status = "okay";
-+};
-+
-+// USB Port B
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+// USB Port B
-+&uhci {
-+	status = "okay";
-+};
-+
-+// USB port A
-+&vhub {
-+	status = "okay";
-+};
-+
-+&rng {
-+	status = "okay";
-+};
-+
-+&video {
-+	memory-region = <&video_engine_memory>;
-+	status = "okay";
-+};
-+
-+&gpio0 {
-+	gpio-line-names =
-+		/*A0-A7*/ "", "", "", "", "", "", "", "",
-+		/*B0-B7*/ "", "", "", "", "", "", "", "",
-+		/*C0-C7*/ "", "", "", "", "", "", "", "",
-+		/*D0-D7*/ "", "", "", "", "", "", "", "",
-+		/*E0-E7*/ "RTL8221_PHY_RST_L-O", "RTL8211_PHY_INT_L-I",	"", "", "", "", "",
-+					"MUX_SGPIO_SEL-O",
-+		/*F0-F7*/ "", "", "", "", "", "", "", "",
-+		/*G0-G7*/ "", "", "", "", "", "", "", "",
-+		/*H0-H7*/ "", "", "", "", "", "", "", "",
-+		/*I0-I7*/ "", "", "", "", "", "QSPI2_RST_L-O", "GLOBAL_WP-O", "BMC_DDR4_TEN-O",
-+		/*J0-J7*/ "", "", "", "", "", "", "", "",
-+		/*K0-K7*/ "", "", "", "", "", "", "", "",
-+		/*L0-L7*/ "", "", "", "", "", "", "", "",
-+		/*M0-M7*/ "HUB_RST_N-O", "BMC_FRU_WP-O", "SCM_PGOOD_C-O", "HPM_STBY_POWER_EN-O",
-+					"STBY_POWER_PG_3V3-I", "PCIE_EP_RST_C_L-O", "", "",
-+		/*N0-N7*/ "", "", "", "", "", "", "", "",
-+		/*O0-O7*/ "", "", "", "", "", "", "", "",
-+		/*P0-P7*/ "", "", "", "", "", "", "", "BMC_HBLED_L-O",
-+		/*Q0-Q7*/ "", "", "", "", "", "", "", "",
-+		/*R0-R7*/ "", "SP0_AP_INTR_N-I", "", "", "", "", "", "",
-+		/*S0-S7*/ "", "", "", "", "", "", "", "",
-+		/*T0-T7*/ "", "", "", "", "", "", "", "",
-+		/*U0-U7*/ "", "", "", "", "", "", "", "",
-+		/*V0-V7*/ "", "", "", "","PCB_TEMP_ALERT_L-I", "","", "",
-+		/*W0-W7*/ "", "", "", "", "", "", "", "",
-+		/*X0-X7*/ "", "", "", "", "", "", "", "",
-+		/*Y0-Y7*/ "", "", "", "EMMC_RST_L-O", "","", "", "",
-+		/*Z0-Z7*/ "GPIOZ0_EROT_OOB_INTR_N_C-I","", "", "", "", "", "", "";
-+};
-+
-+&gpio1 {
-+	/* 36 1.8V GPIOs */
-+	gpio-line-names =
-+		/*A0-A7*/ "", "", "", "", "", "", "", "",
-+		/*B0-B7*/ "", "", "", "", "AP_EROT_REQ-O", "EROT_AP_GNT-I", "I2C_MGMT0_ALERT_N-I",
-+					"",
-+		/*C0-C7*/ "", "", "", "", "", "", "", "",
-+		/*D0-D7*/ "", "", "", "", "", "", "", "I2C_SSIF_ALERT_N-I",
-+		/*E0-E7*/ "", "", "", "", "", "", "", "";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+// I2C1
-+&i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C2
-+// Baseboard 0 Management 1
-+&i2c1 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		c0uphy0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+		reg = <0>;
-+		};
-+
-+		c0uphy2: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		c0unused2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		c0unused3: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		c0unused4: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		c0unused5: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		c0unused6: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		c0unused7: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+
-+	exp0: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"MCU_RESET_L-O",
-+			"MCU_RECOVERY_L-O",
-+			"GPU_MCU_RESET_L_3V3-O",
-+			"GPU_MCU_RECOVERY_L_3V3-O",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"HMC_IST_PRE_RST_L-O",
-+			"CPLD_READY-I",
-+			"MODULE_PWR_GOOD-I",
-+			"MCU_HMC_ALERT_L-I",
-+			"USB_HMC_HUB_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"PRIMARY_NODE_L-O",
-+			"IST_SYS_RST_L-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp1: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"CPU_FORCED_RECOVERY_L-O",
-+			"CPU_BOOT_DEV_SEL0-O",
-+			"CPU_BOOT_DEV_SEL1-O",
-+			"CPU_BOOT_DEV_SEL2-O",
-+			"BOARD_ID_0-I",
-+			"CPU_RECOVERY_TYPE0-O",
-+			"CPU_RECOVERY_TYPE1-O",
-+			"CPU_IST_BOOT_HMC-O",
-+			"CPU_BOOT_CHAIN0-O",
-+			"BOARD_ID_1-I",
-+			"BOARD_ID_2-I",
-+			"CPU_DIE_SEL0-O",
-+			"CPU_DIE_SEL1-O",
-+			"CPU_DIE_SEL2-O",
-+			"CPU_BOOT_COMPLETE-I",
-+			"IOX_JTAG_NVSEL-O";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C3
-+// Baseboard 0 Management 0
-+&i2c2 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp3: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"BMC_SHDN_FORCE_L-O",
-+			"IOX_STBY_PWR_PGOOD-I",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"GLOBAL_WP_BMC-O",
-+			"USB_HUB0_RST_L-O",
-+			"IOX_PRE_RST_N-O",
-+			"LEAK_DETECT_L-I",
-+			"RUN_PWR_EN-O",
-+			"MODULE_PWR_GOOD-I",
-+			"CPU_CHIPTHROT_L_3V3-I",
-+			"SHDN_REQ_L_3V3-O",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"CPU1_SHDN_OK_L_3V3-I",
-+			"PWR_BRAKE_L_3V3-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp4: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"I2C_BUS_MUX_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"AIC_USB_EN-O",
-+			"SOCAMM_DAC_SEL0-O",
-+			"SNN_SOCAMM_DAC_SEL1-O",
-+			"C0_SOCAMM_I2C_SEL_R-O",
-+			"SNN_C1_SOCAMM_I2C_SEL_R-O",
-+			"EEPROM_POWER_DISABLE-O",
-+			"CPU_L0L1_RST_L_3V3-I",
-+			"CPU_L2_RST_L_3V3-I",
-+			"BOARD_ID_0-I",
-+			"BOARD_ID_1-I",
-+			"BMC_LEAK_TEST_L-O",
-+			"MCU_BMC_ALERT_L-I",
-+			"CPU_BOOT_COMPLETE_3V3-I",
-+			"BOARD_ID_2-I";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C4
-+// Baseboard 1 Management 1
-+&i2c3 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		c1uphy0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		c1uphy2: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		c1unused2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		c1unused3: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		c1unused4: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		c1unused5: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		c1unused6: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		c1unused7: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+
-+	exp5: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"MCU_RESET_L-O",
-+			"MCU_RECOVERY_L-O",
-+			"GPU_MCU_RESET_L_3V3-O",
-+			"GPU_MCU_RECOVERY_L_3V3-O",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"HMC_IST_PRE_RST_L-O",
-+			"CPLD_READY-I",
-+			"MODULE_PWR_GOOD-I",
-+			"MCU_HMC_ALERT_L-I",
-+			"USB_HMC_HUB_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"PRIMARY_NODE_L-O",
-+			"IST_SYS_RST_L-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp6: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"CPU_FORCED_RECOVERY_L-O",
-+			"CPU_BOOT_DEV_SEL0-O",
-+			"CPU_BOOT_DEV_SEL1-O",
-+			"CPU_BOOT_DEV_SEL2-O",
-+			"BOARD_ID_0-I",
-+			"CPU_RECOVERY_TYPE0-O",
-+			"CPU_RECOVERY_TYPE1-O",
-+			"CPU_IST_BOOT_HMC-O",
-+			"CPU_BOOT_CHAIN0-O",
-+			"BOARD_ID_1-I",
-+			"BOARD_ID_2-I",
-+			"CPU_DIE_SEL0-O",
-+			"CPU_DIE_SEL1-O",
-+			"CPU_DIE_SEL2-O",
-+			"CPU_BOOT_COMPLETE-I",
-+			"IOX_JTAG_NVSEL-O";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C5
-+&i2c4 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C6
-+// Management Board
-+&i2c5 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp7: gpio@20 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"HMC_RST_R_L-O",
-+			"HMC_RECOVERY_R-O",
-+			"HMC_SPI_MUX_R_SEL-O",
-+			"GLOBAL_WP-O",
-+			"HMC_READY-I",
-+			"HMC_PRSNT_R-I",
-+			"BMC_SELF_PWR_CYCLE-O",
-+			"EEDO_LED2-O",
-+			"PWR_LED_L-O",
-+			"PWR_BTN_L-I",
-+			"UID_LED_L-O",
-+			"UID_BTN_L-I",
-+			"FAULT_LED_L-I",
-+			"USB2_HUB_RST_L-O",
-+			"BMC_M2_RST_L-O",
-+			"WARN_LED_L-O";
-+	};
-+
-+	temp-sensor@48 {
-+		compatible = "ti,tmp1075";
-+		reg = <0x48>;
-+	};
-+};
-+
-+// I2C7
-+// BMC Expander + Management Board
-+&i2c6 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp8: gpio@20 {
-+		compatible = "ti,tca6408";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+					"",
-+					"",
-+					"EROT_FATAL_ERROR_N-I",
-+					"",
-+					"",
-+					"EROT_RECOV_N-O",
-+					"NRESET_IN_IOX_N-O",
-+					"";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9546";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		i2c_usb_hub:i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		i2c_tpm:i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+		};
-+
-+		i2c_dp:i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		i2c_rtc:i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+// I2C8
-+// Baseboard 1 Management 0
-+&i2c7 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp9: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"BMC_SHDN_FORCE_L-O",
-+			"IOX_STBY_PWR_PGOOD-I",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"GLOBAL_WP_BMC-O",
-+			"USB_HUB0_RST_L-O",
-+			"IOX_PRE_RST_N-O",
-+			"LEAK_DETECT_L-I",
-+			"RUN_PWR_EN-O",
-+			"MODULE_PWR_GOOD-I",
-+			"CPU_CHIPTHROT_L_3V3-I",
-+			"SHDN_REQ_L_3V3-O",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"CPU1_SHDN_OK_L_3V3-I",
-+			"PWR_BRAKE_L_3V3-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp10: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"I2C_BUS_MUX_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"AIC_USB_EN-O",
-+			"SOCAMM_DAC_SEL0-O",
-+			"SNN_SOCAMM_DAC_SEL1-O",
-+			"C0_SOCAMM_I2C_SEL_R-O",
-+			"SNN_C1_SOCAMM_I2C_SEL_R-O",
-+			"EEPROM_POWER_DISABLE-O",
-+			"CPU_L0L1_RST_L_3V3-I",
-+			"CPU_L2_RST_L_3V3-I",
-+			"BOARD_ID_0-I",
-+			"BOARD_ID_1-I",
-+			"BMC_LEAK_TEST_L-O",
-+			"MCU_BMC_ALERT_L-I",
-+			"CPU_BOOT_COMPLETE_3V3-I",
-+			"BOARD_ID_2-I";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C9
-+&i2c8 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C10
-+&i2c9 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C11
-+// BMC FRU + TEMP
-+&i2c10 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c02";
-+		reg = <0x50>;
-+		pagesize = <16>;
-+	};
-+
-+	temp-sensor@48 {
-+		compatible = "ti,tmp1075";
-+		reg = <0x48>;
-+	};
-+
-+};
-+
-+// I2C13
-+&i2c12 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C14
-+&i2c13 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C15
-+&i2c14 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C16
-+&i2c15 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
--- 
-2.43.0
+On Mon, Aug 18, 2025 at 04:18:29PM -0400, Patrick Williams wrote:
+>     https://github.com/openbmc/tof-election/tree/main/2025H1
 
+Rohit mentioned that I had the wrong link.  Please use this one for the
+current eligible developers:
+
+    https://github.com/openbmc/tof-election/tree/main/2025H2
+
+--
+Patrick Williams
+
+--_000_SJ0PR15MB446982270CCD58376C6A8BF1FA32ASJ0PR15MB4469namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, =
+Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);" clas=
+s=3D"elementToProof">
+I nominate Manoj</div>
+<div id=3D"appendonsend"></div>
+<div><br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<hr style=3D"display: inline-block; width: 98%;">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<b>From:</b>&nbsp;Patrick Williams<br>
+<b>Sent:</b>&nbsp;Wednesday, August 20, 2025 02:09<br>
+<b>To:</b>&nbsp;OpenBMC List<br>
+<b>Subject:</b>&nbsp;[EXTERNAL] Re: TOF elections for 2025H2 </div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-size: 11pt;">On Mon, Aug 18, 2025 at 04:18:29PM -0400, P=
+atrick Williams wrote:<br>
+&gt;&nbsp;&nbsp;&nbsp;&nbsp; <a data-auth=3D"NotApplicable" rel=3D"noopener=
+ noreferrer" class=3D"OWAAutoLink" id=3D"OWAc7e9f1dc-d022-9f0a-5f5c-a04f15c=
+458ee" target=3D"_blank" href=3D"https://github.com/openbmc/tof-election/tr=
+ee/main/2025H1">
+https://github.com/openbmc/tof-election/tree/main/2025H1</a><br>
+<br>
+Rohit mentioned that I had the wrong link.&nbsp; Please use this one for th=
+e<br>
+current eligible developers:<br>
+<br>
+&nbsp;&nbsp;&nbsp; <a data-auth=3D"NotApplicable" rel=3D"noopener noreferre=
+r" class=3D"OWAAutoLink" id=3D"OWA137be655-b26e-713c-5ac3-c20e56e5ad70" tar=
+get=3D"_blank" href=3D"https://github.com/openbmc/tof-election/tree/main/20=
+25H2">
+https://github.com/openbmc/tof-election/tree/main/2025H2</a><br>
+<br>
+--<br>
+Patrick Williams<br>
+</div>
+</body>
+</html>
+
+--_000_SJ0PR15MB446982270CCD58376C6A8BF1FA32ASJ0PR15MB4469namp_--
 
