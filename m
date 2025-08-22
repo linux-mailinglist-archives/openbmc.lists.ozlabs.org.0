@@ -1,89 +1,73 @@
-Return-Path: <openbmc+bounces-505-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-509-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16381B31601
-	for <lists+openbmc@lfdr.de>; Fri, 22 Aug 2025 13:00:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D724B3263B
+	for <lists+openbmc@lfdr.de>; Sat, 23 Aug 2025 03:41:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c7cg60QNQz3cZp;
-	Fri, 22 Aug 2025 21:00:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c80Bw2jVcz3d9s;
+	Sat, 23 Aug 2025 11:41:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.154
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755860449;
-	cv=none; b=hE+M/vUcCHnfQxuMgy0eGZg3+qoy4ZM4JToEHQrUQtK/mgwVf2XFn1x4o/CbvKzdJ1+YXWBc753oavOzvJTHXalcAXkwShleKe9Wm0vB1Qe7Nfdu5ifGlQ8+GD7s06+aFopWmYEsuQYtEewGNQv9bUGk+tlOnp0Qs2Ph085BH4D7ILccIOdts2HGTlBV68bfx6d0H73zJ3U5BXxEYeJsojVOjpuGo95YFGoJFONzJMO/9WoGEuOTu5N/9MIC3uNztnkPKD1/6yQArX4wBG2yBL+FX+zLDSyPH2riAVY4gNjzfXl45wUrK44cucu+mKTpqOgmym3+MwHLi5J4JUNF8w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755876977;
+	cv=none; b=a3qvjADSyXRkJvQZEuJfXbvQoXCBSFHQq24wnrbCBcjaDF4mkIKjZ/YrRwUOSRO8s9HB/JJpSD0YcJ8raJGvQ8BiCgDtUDK7GGHc8FTBDiIjrQ8zNCPNTdHm0gzKJo5DGaVXeHXtasHMSXYKXAZLree6im/nx51X9aXH0JzT7Ofkwx2hWDTBUJRKOtKjuvbYo4wNPiPj4tt3dYtbNCqA9GwvYrlBxfhok+zYorVFrl1yhDeearrgrqvjfxoik6wZarDT95bf2iKeCZta0wesn6ua1NsFjXnJaOtA9W+DfL7E1kqX0LLEHm2TFJUoRoJ5/X8mj/0wmWZuA9vqCyL+kg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755860449; c=relaxed/relaxed;
-	bh=LsEQJ92dbeDoE8gM4T1VoJaeuWmJK9cqyvFtDb4SI70=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 In-Reply-To:To; b=brvVSa8MpLMzTLJCbPsSvcc8m6bujGXAtLxvQCpyh8aVRiqBlpdtlx3fFfaLUq/R7FpB0IImKwmncOFXhXL3Gpt4QNrPi2dnm6o+SksB4Zm/9traRFJjywG9ySTVkbCp3QXrXdv0QpIADaibwC4IEWHBjT+IQji/WWKG4o8nKm6sz1qtBtyzF49qO8YdgBHXVM9p3aHGE2mdcytewP7me4xiRqp4xUHeLVq+NHTYThYnLvgf5aBHzny+8SJtA0bYeEVGw3E4/Ja1zyIgZ67BKBkX15ZcXHTSMOpWEONqA8M9jcRioVr52tnYMEXuwjcjUw9jkuYtzkjJVaOsZi9poQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=Rd/WQAp3; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=J+U/SfrX; dkim-atps=neutral; spf=pass (client-ip=103.168.172.154; helo=fhigh-a3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
+	t=1755876977; c=relaxed/relaxed;
+	bh=wdeejnjgmwcBIRs7F/fNBtVj8QKR4gAxEw8aPn/gFWI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=U/jnMMW4AGEAXvNDzI7rWPS2TIAu3j1+z8tGcFiwxWe5RCAHjFofbPP0Q0+5CfZi3Y1kUKIedWL7ZLvEnCkfwYT81sYElvsbMQM/vjVPd2PjuRTg3lEVIPcX9UAzD98iBv+iJixVthDiQTVyuSp1uij+0PlhiUYHUEdgkG0crOwTZPX0arIYTQtV1hVV36diiabfM5bF3b1LpH5NRdrly372Ds8rQHb93ylsUn+FekgyzpGAsFRzqQEMPV3uCg6LDGqvx9KTkExtFN9o7k3CeTwp+d67bk/brQXpSJCIlKvy48r6ehyfwAA4zqFjce3ASf1tM5ZAuuWVqlnuLlsxlg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Gkm3JskI; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=Rd/WQAp3;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=J+U/SfrX;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Gkm3JskI;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.154; helo=fhigh-a3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c7cg211w9z3bqP
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Aug 2025 21:00:44 +1000 (AEST)
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 256AE14007D3
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Aug 2025 07:00:42 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 22 Aug 2025 07:00:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1755860442;
-	 x=1755946842; bh=LsEQJ92dbeDoE8gM4T1VoJaeuWmJK9cqyvFtDb4SI70=; b=
-	Rd/WQAp3ig/IpbrG2kE3nWtKPwrq1O/PtX6AEqUvIbVXOTmE7bNGsrxyzo+nx6nC
-	VsxNsIDUZRjamr8zeL8IFMPHlbTULm7YCss9+hNkgckdgV69KCt8hSel9QErBAte
-	xl8nWXAvU/aSpk6y9avrxzn/utNPj14x72kqndGPS7yYpoV+LXyzqNJ0iZ+gIq6e
-	WeA0qZ2XtZ4ehweOVRkrJZYSTSO9pqcJ9POCdyvBXBKJsxKy9Ttln3ibnY3Oj3Vt
-	VFBanZEstyu4piTsRgNI3DTZIMQGiRsmWjssnc+fmu6+w/aNkF3nYUfNDaUO3cRo
-	AVwV7cbH1c8EhPAKwJSHPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1755860442; x=1755946842; bh=L
-	sEQJ92dbeDoE8gM4T1VoJaeuWmJK9cqyvFtDb4SI70=; b=J+U/SfrXEOUaMBSyC
-	RZiqzF1DFJxkXcG5ba6yb+7rWdzwxulsCya0Mh9XJ3CiQ82DEhTl4WH7a1+SRlUM
-	uzqtcnWrkqNCPrL52DmLj8LptH6K64kdR/429kAdp3mas8GSKsBMQcf0Z0dYsKXC
-	Nq+0cCFe3v1MBu+uyDs3vzZXzwR5b4abue1GNXyCVgHjCM5d/2CTGYq/9+BKnvZX
-	hIgu/yzL4akh6N/WO8cPRbSBtqHJHBNp7mwK8bYn1ZCTUscVJ49pnStNTjkzZ76d
-	eEPfH81GaoNw1XwBOZwjOiAW/gTnohG3jNMBqmTXc9UYTwiN2LBrxPnw0Xyayx1v
-	EFISA==
-X-ME-Sender: <xms:2U2oaI1t--JGCctj03ZenJa4jrfppt58MoHZrVybgL93BJQIKur9zw>
-    <xme:2U2oaFG-mElR02-JhVi3UcXcbEX2aJdqMCFcHGIzGP9rBFmYmdluvKHCB5upEVDXG
-    aQkGROctJtceZBmQV4>
-X-ME-Received: <xmr:2U2oaKRPJ6pnl_DX-jpECiJZpu8wHBDvrRNMnZJSkQPs35NBpcVTU5dr8BTVEucHDwE1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieefheekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
-    hlucfvnfffucdlfeehmdenucfjughrpegtgffhggfufffkfhgjvffosehtqhhmtdhhtdej
-    necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
-    iftgigrdighiiiqeenucggtffrrghtthgvrhhnpefggeejhfeffedtveejieeffedvjeei
-    kefhgfdvheetuddtjeelgeejudfgudevveenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
-    thhrihgtkhesshhtfigtgidrgiihiidpnhgspghrtghpthhtohepuddpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdho
-    rhhg
-X-ME-Proxy: <xmx:2U2oaEA2nwiPYzG7xEXJ0VJZ4fhRYVluubPXlmo55O75QtxktKJL3A>
-    <xmx:2U2oaC2GMvtDEY06oHhKtUadeaWLYnGuLT38Ij4DZYnnSJeIdrDxdA>
-    <xmx:2U2oaKWYih-NDViMvQSfL3qf3iiy6I-stk4JUnOn4wqUaxW6sL3pXg>
-    <xmx:2U2oaMnb1pnPC0tZ3Cmc3UuIujQoEvrukJJB6Nt9enRqP_3BIy6pZA>
-    <xmx:2k2oaHBjqq2ejmWN1PRNbs_McTViwvMpawQ7BT74HEAegZh5GEuVwyw7>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Fri, 22 Aug 2025 07:00:41 -0400 (EDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Patrick Williams <patrick@stwcx.xyz>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c7kmx0h5fz3cmK;
+	Sat, 23 Aug 2025 01:36:17 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 3A80D44618;
+	Fri, 22 Aug 2025 15:36:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9AE6C4CEED;
+	Fri, 22 Aug 2025 15:36:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755876974;
+	bh=M4axMQs8H13c09qWo6K3CitPMFiulFvZkPJOaBof5qk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=Gkm3JskIl9AEISSDTxGOPEQ5Ekw+yO/AvQdomznGVF8QhL2AKSjB9ug0fr1l8cDAC
+	 R5sn0gLRNWsiAEXDV/8IqKrKhmFhfaIV0eZ2Ifeh4tLF63tK6IWjZnREefRXi/M03D
+	 sonYkEFxAHk5WnTO9vZYeGm/kLZ++fqGgDYfTihFHvZFAojKUxRz39rTZqvajG+zmS
+	 C5cdC9xRurIk0OtWquWGUHHvSsQMbdCi9wn8LX+sUhjGWTlzoGERhtdVdDoJXui0e5
+	 RMD+nlwye1ZCE/pFkHY1ti7fjopPKBrl36OGkQOSbkQ95P59TCZ58RYnkJ70Qa5E+H
+	 M8+0Xh8w08Hdg==
+Date: Fri, 22 Aug 2025 10:36:11 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Jacky Chou <jacky_chou@aspeedtech.com>
+Cc: "bhelgaas@google.com" <bhelgaas@google.com>,
+	"lpieralisi@kernel.org" <lpieralisi@kernel.org>,
+	"kwilczynski@kernel.org" <kwilczynski@kernel.org>,
+	"mani@kernel.org" <mani@kernel.org>,
+	"robh@kernel.org" <robh@kernel.org>,
+	"krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+	"conor+dt@kernel.org" <conor+dt@kernel.org>,
+	"joel@jms.id.au" <joel@jms.id.au>,
+	"andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
+	"linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
+	"linus.walleij@linaro.org" <linus.walleij@linaro.org>,
+	"p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+	BMC-SW <BMC-SW@aspeedtech.com>
+Subject: Re: =?utf-8?B?5Zue6KaG?= =?utf-8?Q?=3A?= [PATCH v2 09/10] PCI:
+ aspeed: Add ASPEED PCIe RC driver
+Message-ID: <20250822153611.GA684739@bhelgaas>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -94,51 +78,85 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
   <mailto:openbmc+subscribe-nomail@lists.ozlabs.org>
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
-Mime-Version: 1.0 (1.0)
-Subject: Re: TOF elections for 2025H2
-Date: Fri, 22 Aug 2025 07:00:30 -0400
-Message-Id: <7E7035EF-ABF5-4B19-AA97-7A9C5FA1C7CB@stwcx.xyz>
-References: <aKOKlY97pOtfuaEv@heinlein>
-In-Reply-To: <aKOKlY97pOtfuaEv@heinlein>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-X-Mailer: iPhone Mail (22G100)
-X-Spam-Status: No, score=1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
-	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
-X-Spam-Level: *
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SEYPR06MB5134692DCCFD55F5ABD812F39D3DA@SEYPR06MB5134.apcprd06.prod.outlook.com>
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-We do only need a single nomination for an individual. The vote itself occur=
-s later.=20
+On Fri, Aug 22, 2025 at 07:00:25AM +0000, Jacky Chou wrote:
+> > v1 posting was
+> > https://lore.kernel.org/r/20250613033001.3153637-1-jacky_chou@aspeedtech
+> > .com
+> > Links to previous postings are helpful in the cover letter.
+> > 
+> > On Tue, Jul 15, 2025 at 11:43:19AM +0800, Jacky Chou wrote:
+> > > Introduce PCIe Root Complex driver for ASPEED SoCs. Support RC
+> > > initialization, reset, clock, IRQ domain, and MSI domain setup.
+> > > Implement platform-specific setup and register configuration for
+> > > ASPEED. And provide PCI config space read/write and INTx/MSI interrupt
+> > > handling.
 
-=E2=80=94 Patrick Williams
+> > > +#define MAX_MSI_HOST_IRQS	64
+> > > +#define PCIE_RESET_CONFIG_DEVICE_WAIT_MS	500
+> > 
+> > Where does this value come from?  Is there a generic value from
+> > drivers/pci/pci.h you can use?
+> 
+> We check the PCIe specification to find these contents.
+>
+> "With a Downstream Port that supports Link speeds greater than 5.0
+> GT/s, software must wait a minimum of 100 ms after Link training
+> completes before sending a Configuration Request to the device
+> immediately below that Port."
+>
+> So, we think delay 500ms to let kernel issue the first configuration
+> command is enough after deassert PERST.
 
-> On Aug 18, 2025, at 4:18=E2=80=AFPM, Patrick Williams <patrick@stwcx.xyz> w=
-rote:
->=20
-> =EF=BB=BFHello,
->=20
-> It is time again for TOF elections.  The current roll-call is available
-> at:
->    https://github.com/openbmc/tof-election/tree/main/2025H1
->=20
-> For this half, we have 3 seats up for election.  Currently those are
-> held by Andrew Geissler, Ed Tanous, and Manojkiran Eda.  All 3 are
-> eligible for re-nomination / re-election.
->=20
-> Nominations for those 3 seats may be sent to the mailing list by
-> replying to this email.  Only those eligible to vote may nominate or be
-> nominated.
->=20
-> Nominations are due by Sunday August 31, 2025.  The election, if
-> required, will be held immeidately after with more details to follow.
->=20
-> As usual, disagreements with the rollcall results can be raised to the
-> TOF.
->=20
-> --
-> Patrick Williams
-> <signature.asc>
+Isn't this PCIE_RESET_CONFIG_WAIT_MS?
 
+I prefer to use #defines from the PCI core whenever possible because
+it makes it easier to ensure that all drivers include the required
+delays.
+
+> > > +#define PCIE_RESET_CONFIG_RC_WAIT_MS		10
+> > 
+> > Ditto.  If it's an Aspeed-specific value, can you point to the
+> > source in the Aspeed datasheet?
+> 
+> This delay is set to ensure that the RC internal settings are
+> completely reset.  We do not put its usage in our datasheet.
+
+The "PCIE_" prefix suggests something required by the PCIe base spec.
+If this is an Aspeed-specific value, perhaps remove the "PCIE_"
+prefix?
+
+> > > +static int aspeed_ast2700_child_config(struct pci_bus *bus, unsigned int
+> > devfn,
+> > > +				       int where, int size, u32 *val,
+> > > +				       bool write)
+> > > +{
+> > > +	struct aspeed_pcie *pcie = bus->sysdata;
+> > > +	u32 bdf_offset, status, cfg_val;
+> > > +	int ret;
+> > > +
+> > > +	bdf_offset = aspeed_pcie_get_bdf_offset(bus, devfn, where);
+> > > +
+> > > +	cfg_val = CRG_PAYLOAD_SIZE;
+> > > +	if (write)
+> > > +		cfg_val |= (bus->number == 1) ? CRG0_WRITE_FMTTYPE :
+> > CRG1_WRITE_FMTTYPE;
+> > > +	else
+> > > +		cfg_val |= (bus->number == 1) ? CRG0_READ_FMTTYPE :
+> > > +CRG1_READ_FMTTYPE;
+> > 
+> > I don't think you should assume that bus 0 is the root bus.  The root bus
+> > number should come from the DT bus-range.
+
+Just making sure you saw this part since you didn't mention it.
+
+Bjorn
 
