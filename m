@@ -1,93 +1,50 @@
-Return-Path: <openbmc+bounces-508-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-510-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B46A5B323AB
-	for <lists+openbmc@lfdr.de>; Fri, 22 Aug 2025 22:39:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2AA1B34FCB
+	for <lists+openbmc@lfdr.de>; Tue, 26 Aug 2025 01:51:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4c7sVQ6dN5z3d8R;
-	Sat, 23 Aug 2025 06:39:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4c9ndC5NBdz3cm7;
+	Tue, 26 Aug 2025 09:51:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:200a::621" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1755895150;
-	cv=pass; b=jCzugcD6L7aM9C2LgrqmFYvmE/hkTh4QV20i7kdDfDgK7Y5bhnwqbycP846PD4SF73gJiE5n6id9Uzown/nDB5w6RgBJvr0cw6GclY7eIZske2z7TjAePl2/j5UEb/Vagdln/HdvVT6SU+FjvRr0h2V+5PZzFVei2hA03ehyOJ74fKVT7WDXZ58BtV2goup1/XkPtU32zqdNkDqQzKYCjbV+y0ixergHM9l/EVoC84LyPOo2e6R2TP4PMuV8NaB8KIQOm+z9RGGTcrA7T+K0RPKCuTYcULC7Nb1Zatb+nosGyYYgiAC58/R5ym+IYbB4TVhuX7f5nwdvrCxxvp/Rdg==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1755895150; c=relaxed/relaxed;
-	bh=ZpBHTYr+6Lq9jTsCVQT57AjbTDUUPLVRnBTnnVsqc0s=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KLvZR5Lezi2cGOsu7BBgt8eyKsDIgGd4DfLBM3f0ZiLBTttw4SYxyO/JwxUC8H7m5SWH28XMlntnVC2SyXP44C2fbOj8+SVjnKsrjfYDYyNLsFQSE/41y0YzW3h9NYI07sRDF+egvc4ymoYuKDmv5Nw+2WKqH0kvcEw1xygOj6+mTF0VWki3GmdKy25jgDbjhQPpSAq+88+mJAJbbvT7yCsyUzXhRMTH5QQnqHVNjap1xp7NEPD5ZIHUyTwkd/hO/XAJp/20eUG1xzYKWzjjK5mtghstGVnTSinJRTuneEW8DKeeN0wX0aOFcxvFJwIw5Y8r5m+96k77lRLYiiEf9w==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=lLXjZK7s; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:200a::621; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756131563;
+	cv=none; b=EgMe8jrir/dunaN7+IjhBOVUQWZhpHSD0Tm3WH7zGDvsgtF0Ctw9rBzH9MAMNLyGazpdv9Dpr4Lu58OCHo5TtmbjfQAepnb82jyAD8UOlE0LxuSANViOML6JhrcQzPlAWGeRkIqjwqJeussk0VENTCApNfqda06Q5jXQxocghx5dfEUQt+RiADZrUvmbWnwwpgQq3u29yxbXRQDcn9I0m4+YlcMfrzkTeeA8dV8Uxc6NMvijMBD6qn8AB2aTU+rh8S5o2nbEO8U7ra1HrFot5IYdXy1vdX7vC8KWb+APMxQ4OL81vH2S1+2I7BcAaojJlN4DSJGkk9idTrsO3QxM1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1756131563; c=relaxed/relaxed;
+	bh=oQqVQRqYdgNweY6XodykhXVA88vzrM2WNBhEzWOALkI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=TL3ToHwftnZIpOTz6w3TaARnksrEsKYOGqWLi1N4iemTVQJFcZ6ZgGBbm7jODyEvpQGyNLBCrrmw57CjEZYRbJyKkdIWPn1AaTajEajSxJs9yZaGFmLg9YW3eDqlFUxBwxhJA+j40CdI2CS7FxmHgqaQU/yYwKBoi3LrAEDpzDAokjmdliSbDQNp5FkUo42Uv+Ya2B7WL8kIgYLZusKwEqEargZgkWxc7bO0Sb3J3P/hngI0x6ABY4KYgRix+xD61YyUiA9HV7Jkt2zlzgD6Tali2qxSSq9d9GEEadSnCIDOat4VbzWs8dEvheGfXRqwoD9W9/pYJo/BWptQk/tAdg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=I6X70Mzk; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=hverkuil+cisco@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=lLXjZK7s;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=I6X70Mzk;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f403:200a::621; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=donalds@nvidia.com; receiver=lists.ozlabs.org)
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on20621.outbound.protection.outlook.com [IPv6:2a01:111:f403:200a::621])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=hverkuil+cisco@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4c7sVQ044gz3d8J;
-	Sat, 23 Aug 2025 06:39:09 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tQYPqKxzmQUcxKhWf32oESu+77h0tMZoeh5Sl+xt3b2T9TFk8Rj7UHGybr+Uevy50Zlt5vdt4prCYzehB5MvaiOPckolt8WIfh5XNcSw5ChcVBnw+rcC9v3pytxcxqZoSpbs1KzD5rUJ8GQBu8PujZK35M7b6XLGO2N2S0LRHg74xg+3jbMKYGWkTn4h+pr76LAow/swbIAuJVHntxh+s1xD8YLojAK3ZfbPCtLGSMsK+Bq8INPFeQxt0sSy7tUz1atbTpBi0dRsegc+ep6oGhXe1U+mg06unwmrKDRsAXUH2Ltp1Y2TWhyKKpGSNbQpx2mJGFaWfq3pkHSrhNhuSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZpBHTYr+6Lq9jTsCVQT57AjbTDUUPLVRnBTnnVsqc0s=;
- b=CL3AGO+sjzWycdDQal6LcICBW3d4Y/qqnaUbVJp8v8zf0/NXZbEk3Nk9+xQpih2QbUwfJgEmiKe3O2j0dfMTjtzG1qITCTlszLaM/ODuxCZegZDkEvrB8yiYhq2cFrQkif82BOuDxbm/NBU1yTP18BZiE1yXNkHGHMXi8lua3kfxsBs37m7+7EBRg/R+zvbHEZ4Bkc/S9rWo7yk3iaYMSbRaRKfn0/bIb2N6h1dO9Siw4ioVh5KVbsq5UfxJRVmY3QGfi0l6G7DbMmn2SHzvjG4cHkcaSNfyD7AY0xOWIl+d2nhmwkQZ2YVmNDBLiCkiUkcboOaL/nqPx2HcKXCVcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=kernel.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZpBHTYr+6Lq9jTsCVQT57AjbTDUUPLVRnBTnnVsqc0s=;
- b=lLXjZK7s5OJ/zl3oy8rPeySrRlndyy/zNJd7Dt3iflE+q/Bz+LNLzaLGhrngBNhGaQ3tUbC6e8dhLBDwEeumpNfjkBO5/Ss+pMQTiSICTDRlY0QbbWO8YlFf3lCYuapiShWs1lGNDj0Sb8KLVWXfrptThnhr2ctRAisygW9cdAp9QCS+n58IuPXblinLUPsUzCuXRos/LJ+Eix6w1idB3VjCkhI8elywWa0ev9zFxvJZG9VCJa9QaFvhyM5wIXrKO/nGttEG7YZ4qMpf6rW/NZcxo5Z9tlUAj0fktHYlu8FHzenKs3tZ56nmkdku1QJAb08A405qUIm8k3BUtQ5VBg==
-Received: from CH0PR03CA0026.namprd03.prod.outlook.com (2603:10b6:610:b0::31)
- by CH3PR12MB8186.namprd12.prod.outlook.com (2603:10b6:610:129::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Fri, 22 Aug
- 2025 20:38:44 +0000
-Received: from CH3PEPF0000000E.namprd04.prod.outlook.com
- (2603:10b6:610:b0:cafe::b7) by CH0PR03CA0026.outlook.office365.com
- (2603:10b6:610:b0::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.19 via Frontend Transport; Fri,
- 22 Aug 2025 20:38:44 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH3PEPF0000000E.mail.protection.outlook.com (10.167.244.42) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Fri, 22 Aug 2025 20:38:44 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 22 Aug
- 2025 13:38:23 -0700
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 22 Aug
- 2025 13:38:22 -0700
-Received: from dondevbox.nvidia.com (10.127.8.13) by mail.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server id 15.2.1544.14 via Frontend
- Transport; Fri, 22 Aug 2025 13:38:22 -0700
-From: Donald Shannon <donalds@nvidia.com>
-To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<donalds@nvidia.com>
-CC: <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
-	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
-	<openbmc@lists.ozlabs.org>, <etanous@nvidia.com>
-Subject: [PATCH v2 2/2] ARM: dts: aspeed: Add NVIDIA VR144NVL board
-Date: Fri, 22 Aug 2025 13:38:18 -0700
-Message-ID: <20250822203818.4062595-3-donalds@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250822203818.4062595-1-donalds@nvidia.com>
-References: <20250822203818.4062595-1-donalds@nvidia.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4c9Xwp3DQlz3cjm;
+	Tue, 26 Aug 2025 00:19:22 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id D44E7601F6;
+	Mon, 25 Aug 2025 14:19:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5AFC113D0;
+	Mon, 25 Aug 2025 14:19:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756131556;
+	bh=pKnzrmU2im87vPYyT9k12MpOMguymJTGkL2f1FNL7sg=;
+	h=Date:From:Subject:To:References:In-Reply-To:From;
+	b=I6X70Mzk68dV74OLkQLI7EOv+MkAHb8W7Qzih4xxEwqbyJYuPGLeiZcV1HHTC8Qrv
+	 LOFFEO6/Da+cZbXzWGsDamho+Hkc6fCQMj6pg+D4Zxagg1Eu8paKvEnPeXWxL1rgjP
+	 41cqHVFs6Tl9SjxaI/ZmPXtryD1XxcNDkpoq+q/hIoMN1LwHp3B10QqRcCknFClo6C
+	 1wjbQmcZO6bdWBX04t35TErbPHsSevhDFV3c7ZDZr/QyqotWQX9ziwd28gfTzo5bkQ
+	 lAP0cP2FOUTFOT7AqUfTsrAlCgVYTYRFQeNOIplvy+5YJOtXRwYPU79TDS8Rk8Z69E
+	 r1Mmnx7RLVdTw==
+Message-ID: <495e8ffa-c826-45ff-a3fa-ec6e406f6b2c@kernel.org>
+Date: Mon, 25 Aug 2025 16:19:12 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -99,876 +56,525 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF0000000E:EE_|CH3PR12MB8186:EE_
-X-MS-Office365-Filtering-Correlation-Id: 890f692b-f320-40ae-0a1e-08dde1bbe370
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|82310400026|7416014|376014|1800799024|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?FRstnX0FKT99ZPAlOsgbibA9/V2U8J8bPzkgxb23oFM3quQ5jxS8mrONVV+b?=
- =?us-ascii?Q?Xe9z/lsz/drCj6/fvu3zsJb0tUoYqBdUFIoE5wP0CCa5hifvyAXCQKDiKfVq?=
- =?us-ascii?Q?01l3dysKuzt86urr5Ok1fFWuxvX+jDkUIKUvgQJOSjwaB9TiPwUEiFAuUesV?=
- =?us-ascii?Q?5lMjBFpCInEwgrWBj3XZ3u1s17HDVaqcPVfeJJ0ghwEXP9bKtXMV0HGVkYgx?=
- =?us-ascii?Q?7eAQob/XA7yzekQgfd0XpZ21LsO6B1ojc2x5WvhSquo6I5j/rK6Ew1M6N3//?=
- =?us-ascii?Q?93GSc5Z5fWK48tTLvQ7IIRS3gq7wLTJWCHSMsSn50cxIlR6hr69FRhDXZu2u?=
- =?us-ascii?Q?KSIFLWxwepX+cdkMMAtXsgd/AuomdVRR312UT1qjIF29IX4gFYBOoQIyy3UQ?=
- =?us-ascii?Q?TYB5For/SJWmHdV1fQyP4vhyH5CKffhWtAT/PbQg9y+JtBTanXBILgqREdY1?=
- =?us-ascii?Q?tQSrv0Btx4V4os3ZhvLhvg7J80vAA2MOP7b6c54a3UdjHnewaOnkw6z/8ZPr?=
- =?us-ascii?Q?OJAQMGzFF8Z1UHktSyDTFA3wlMuqt2h1mSY+p7iwNEv64D9iy7RDO0jOGDsR?=
- =?us-ascii?Q?2JbbBvc1VWu+eJfzzbQGIsGS8Wl2f8bcFb42Q9+8hUukzGZe1+Ab+zqSyFtW?=
- =?us-ascii?Q?oxIHU6WLK57EaF/ANERbqGhJKfmPYNAuzhSzcOgZ8ODYa8q+6wRMrDtV6D+U?=
- =?us-ascii?Q?tx/mPx0XozXiBLpEEK7cth+W2c89L8D5s+1AyiIEP/qQtZ7v/p+/B4ddvxQj?=
- =?us-ascii?Q?6lrljXouqz6rSirruTjr/CmgEJbdxkEwOevieV9YIG71KoPloaQ1l9HEz1x/?=
- =?us-ascii?Q?tDqsc5jdROi73CADGq6uDyQ5mSbovsLzkZhOJkrgcLQEFt/GMbeNRz4wTGTU?=
- =?us-ascii?Q?ZRFEV8G8vqv7Trh299T0ckA4Ao8ea1IQ0vYn1hH60HOw7sdsu0RcIBbGE1qW?=
- =?us-ascii?Q?zO1wtW9750vuFabQIsnrPhk6nSwhKEBIdUbLzOA1z29nAiikuTvcGEQIzoKw?=
- =?us-ascii?Q?oRPNHSbSwRZ5WaTdjXZs3m757G+YLOg1ssSdJP2BksY6BLYf+WjiNLSSWRwj?=
- =?us-ascii?Q?CxEW3dwBb+8fSRfjegaoII5YWxIZFkxVBjwvcg0bHsQtojIMtV4UCHeUQ4Cm?=
- =?us-ascii?Q?q05Qg97ZUvmHnRpZQPs4NVfTcyYIa1EKGegZwp+9B80fdVxocOkosNtaG3IE?=
- =?us-ascii?Q?mjzyFJr53hDovL6G8h+RyLGgMWDxyscPlDtfJUlQXmxfkZeEtUtjE06b0fas?=
- =?us-ascii?Q?OOYsD4235/RXgDz2w4LYJieBbTLbxISScb+32CeRR4TS4C+ySKrz1kU9qqVd?=
- =?us-ascii?Q?tVetdncUTCV4bcYe6UaV8mFr0MNQ9/vQFLYeO+BoibU1xNaqDBAUzeipK0jX?=
- =?us-ascii?Q?3kSwLMVdrRITywytObUdeie2KMBNDtAR7VnH3YzLYlx1ezXstHxQqFF6XyMX?=
- =?us-ascii?Q?sfdRD2jmpnU7yjCJkkOqmKz4zWZ794xOXEGlLdjeZw7n7GujY5rKSB2LYqet?=
- =?us-ascii?Q?rhFDodD0gwsqRFLfi/qENeDlcGqfnrP1K8dn?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(7416014)(376014)(1800799024)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2025 20:38:44.5856
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 890f692b-f320-40ae-0a1e-08dde1bbe370
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH3PEPF0000000E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8186
-X-Spam-Status: No, score=-3.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-	SPF_HELO_PASS,SPF_PASS,WEIRD_QUOTING autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH v7 1/1] media: aspeed: Allow to capture from SoC display
+ (GFX)
+To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
+ mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
+ linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+References: <20250603064500.94048-1-jammy_huang@aspeedtech.com>
+ <20250603064500.94048-2-jammy_huang@aspeedtech.com>
+Content-Language: en-US, nl
+In-Reply-To: <20250603064500.94048-2-jammy_huang@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.1 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-This is an Aspeed AST2600 based BMC board for the NVIDIA VR144NVL
-Platform.
+Hi Jammy,
 
-Reference to Ast2600 SOC [1].
-Reference to DC-SCM Spec [2].
+Apologies for the long delay. It looks good, except for a few missing checks
+when changing inputs, see below.
 
-Link: https://www.aspeedtech.com/server_ast2600/ [1]
-Link: https://www.opencompute.org/w/index.php?title=Server/MHS/DC-SCM-Specs-and-Designs [2]
+On 03/06/2025 08:45, Jammy Huang wrote:
+> ASPEED BMC IC has 2 different display engines. Please find AST2600's
+> datasheet to get detailed information.
+> 
+> 1. VGA on PCIe
+> 2. SoC Display (GFX)
+> 
+> By default, video engine (VE) will capture video from VGA. This patch
+> adds an option to capture video from GFX with standard ioctl,
+> vidioc_s_input.
+> 
+> An enum, aspeed_video_input, is added for this purpose.
+> enum aspeed_video_input {
+> 	VIDEO_INPUT_VGA = 0,
+> 	VIDEO_INPUT_GFX,
+> 	VIDEO_INPUT_MAX
+> };
+> 
+> To test this feature, you will need to enable GFX first. Please refer to
+> ASPEED's SDK_User_Guide, 6.3.x Soc Display driver, for more information.
+> In your application, you will need to use v4l2 ioctl, VIDIOC_S_INPUT, as
+> below to select before start streaming.
+> 
+> int rc;
+> struct v4l2_input input;
+> 
+> input.index = VIDEO_INPUT_GFX;
+> rc = ioctl(fd, VIDIOC_S_INPUT, &input);
+> if (rc < 0)
+> {
+> 	...
+> }
+> 
+> Link: https://github.com/AspeedTech-BMC/openbmc/releases
+> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> ---
+>  drivers/media/platform/aspeed/aspeed-video.c | 189 ++++++++++++++++---
+>  include/uapi/linux/aspeed-video.h            |   7 +
+>  2 files changed, 168 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+> index 54cae0da9aca..97392ceed083 100644
+> --- a/drivers/media/platform/aspeed/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed/aspeed-video.c
+> @@ -4,6 +4,7 @@
+>  
+>  #include <linux/atomic.h>
+>  #include <linux/bitfield.h>
+> +#include <linux/cleanup.h>
+>  #include <linux/clk.h>
+>  #include <linux/delay.h>
+>  #include <linux/device.h>
+> @@ -25,6 +26,8 @@
+>  #include <linux/workqueue.h>
+>  #include <linux/debugfs.h>
+>  #include <linux/ktime.h>
+> +#include <linux/regmap.h>
+> +#include <linux/mfd/syscon.h>
+>  #include <media/v4l2-ctrls.h>
+>  #include <media/v4l2-dev.h>
+>  #include <media/v4l2-device.h>
+> @@ -203,6 +206,25 @@
+>  #define VE_MEM_RESTRICT_START		0x310
+>  #define VE_MEM_RESTRICT_END		0x314
+>  
+> +/* SCU's registers */
+> +#define SCU_MISC_CTRL			0xC0
+> +#define  SCU_DPLL_SOURCE		BIT(20)
+> +
+> +/* GFX's registers */
+> +#define GFX_CTRL			0x60
+> +#define  GFX_CTRL_ENABLE		BIT(0)
+> +#define  GFX_CTRL_FMT			GENMASK(9, 7)
+> +
+> +#define GFX_H_DISPLAY			0x70
+> +#define  GFX_H_DISPLAY_DE		GENMASK(28, 16)
+> +#define  GFX_H_DISPLAY_TOTAL		GENMASK(12, 0)
+> +
+> +#define GFX_V_DISPLAY			0x78
+> +#define  GFX_V_DISPLAY_DE		GENMASK(27, 16)
+> +#define  GFX_V_DISPLAY_TOTAL		GENMASK(11, 0)
+> +
+> +#define GFX_DISPLAY_ADDR		0x80
+> +
+>  /*
+>   * VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
+>   * VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
+> @@ -262,6 +284,7 @@ struct aspeed_video_perf {
+>  /*
+>   * struct aspeed_video - driver data
+>   *
+> + * version:		holds the version of aspeed SoC
+>   * res_work:		holds the delayed_work for res-detection if unlock
+>   * buffers:		holds the list of buffer queued from user
+>   * flags:		holds the state of video
+> @@ -273,6 +296,7 @@ struct aspeed_video_perf {
+>   * yuv420:		a flag raised if JPEG subsampling is 420
+>   * format:		holds the video format
+>   * hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
+> + * input:		holds the video input
+>   * frame_rate:		holds the frame_rate
+>   * jpeg_quality:	holds jpeq's quality (0~11)
+>   * jpeg_hq_quality:	holds hq's quality (1~12) only if hq_mode enabled
+> @@ -298,6 +322,9 @@ struct aspeed_video {
+>  	struct video_device vdev;
+>  	struct mutex video_lock;	/* v4l2 and videobuf2 lock */
+>  
+> +	struct regmap *scu;
+> +	struct regmap *gfx;
+> +	u32 version;
+>  	u32 jpeg_mode;
+>  	u32 comp_size_read;
+>  
+> @@ -316,6 +343,7 @@ struct aspeed_video {
+>  	bool yuv420;
+>  	enum aspeed_video_format format;
+>  	bool hq_mode;
+> +	enum aspeed_video_input input;
+>  	unsigned int frame_rate;
+>  	unsigned int jpeg_quality;
+>  	unsigned int jpeg_hq_quality;
+> @@ -331,21 +359,25 @@ struct aspeed_video {
+>  #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
+>  
+>  struct aspeed_video_config {
+> +	u32 version;
+>  	u32 jpeg_mode;
+>  	u32 comp_size_read;
+>  };
+>  
+>  static const struct aspeed_video_config ast2400_config = {
+> +	.version = 4,
+>  	.jpeg_mode = AST2400_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>  };
+>  
+>  static const struct aspeed_video_config ast2500_config = {
+> +	.version = 5,
+>  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>  };
+>  
+>  static const struct aspeed_video_config ast2600_config = {
+> +	.version = 6,
+>  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>  	.comp_size_read = AST2600_VE_COMP_SIZE_READ_BACK,
+>  };
+> @@ -485,6 +517,7 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
+>  
+>  static const char * const format_str[] = {"Standard JPEG",
+>  	"Aspeed JPEG"};
+> +static const char * const input_str[] = {"HOST VGA", "BMC GFX"};
+>  
+>  static unsigned int debug;
+>  
+> @@ -609,6 +642,14 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>  		aspeed_video_free_buf(video, &video->bcd);
+>  	}
+>  
+> +	if (video->input == VIDEO_INPUT_GFX) {
+> +		u32 val;
+> +
+> +		// update input buffer address as gfx's
+> +		regmap_read(video->gfx, GFX_DISPLAY_ADDR, &val);
+> +		aspeed_video_write(video, VE_TGS_0, val);
+> +	}
+> +
+>  	spin_lock_irqsave(&video->lock, flags);
+>  	buf = list_first_entry_or_null(&video->buffers,
+>  				       struct aspeed_video_buffer, link);
+> @@ -1026,9 +1067,23 @@ static void aspeed_video_get_timings(struct aspeed_video *v,
+>  	}
+>  }
+>  
+> +static void aspeed_video_get_resolution_gfx(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+> +{
+> +	u32 h_val, v_val;
+> +
+> +	regmap_read(video->gfx, GFX_H_DISPLAY, &h_val);
+> +	regmap_read(video->gfx, GFX_V_DISPLAY, &v_val);
+> +
+> +	det->width = FIELD_GET(GFX_H_DISPLAY_DE, h_val) + 1;
+> +	det->height = FIELD_GET(GFX_V_DISPLAY_DE, v_val) + 1;
+> +	video->v4l2_input_status = 0;
+> +}
+> +
+>  #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
+>  
+> -static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +static void aspeed_video_get_resolution_vga(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+>  {
+>  	bool invalid_resolution = true;
+>  	int rc;
+> @@ -1036,7 +1091,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>  	u32 mds;
+>  	u32 src_lr_edge;
+>  	u32 src_tb_edge;
+> -	struct v4l2_bt_timings *det = &video->detected_timings;
+>  
+>  	det->width = MIN_WIDTH;
+>  	det->height = MIN_HEIGHT;
+> @@ -1113,14 +1167,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>  
+>  	aspeed_video_get_timings(video, det);
+>  
+> -	/*
+> -	 * Enable mode-detect watchdog, resolution-change watchdog and
+> -	 * automatic compression after frame capture.
+> -	 */
+> +	/* Enable mode-detect watchdog, resolution-change watchdog */
+>  	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
+>  			    VE_INTERRUPT_MODE_DETECT_WD);
+> -	aspeed_video_update(video, VE_SEQ_CTRL, 0,
+> -			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
+> +	aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_EN_WATCHDOG);
+> +}
+> +
+> +static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +{
+> +	struct v4l2_bt_timings *det = &video->detected_timings;
+> +
+> +	if (video->input == VIDEO_INPUT_GFX)
+> +		aspeed_video_get_resolution_gfx(video, det);
+> +	else
+> +		aspeed_video_get_resolution_vga(video, det);
+>  
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
+>  		 det->width, det->height);
+> @@ -1156,7 +1216,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
+>  
+>  	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
+> -	if (size < DIRECT_FETCH_THRESHOLD) {
+> +	if (video->input == VIDEO_INPUT_VGA && size < DIRECT_FETCH_THRESHOLD) {
+>  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
+>  		aspeed_video_write(video, VE_TGS_0,
+>  				   FIELD_PREP(VE_TGS_FIRST,
+> @@ -1171,10 +1231,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+>  				    VE_CTRL_INT_DE);
+>  	} else {
+> +		u32 ctrl, val, bpp;
+> +
+>  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
+> +		ctrl = VE_CTRL_DIRECT_FETCH;
+> +		if (video->input == VIDEO_INPUT_GFX) {
+> +			regmap_read(video->gfx, GFX_CTRL, &val);
+> +			bpp = FIELD_GET(GFX_CTRL_FMT, val) ? 32 : 16;
+> +			if (bpp == 16)
+> +				ctrl |= VE_CTRL_INT_DE;
+> +			aspeed_video_write(video, VE_TGS_1, act->width * (bpp >> 3));
+> +		}
+>  		aspeed_video_update(video, VE_CTRL,
+>  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+> -				    VE_CTRL_DIRECT_FETCH);
+> +				    ctrl);
+>  	}
+>  
+>  	size *= 4;
+> @@ -1207,6 +1277,22 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>  		aspeed_video_free_buf(video, &video->srcs[0]);
+>  }
+>  
+> +/*
+> + * Update relative parameters when timing changed.
+> + *
+> + * @video: the struct of aspeed_video
+> + * @timings: the new timings
+> + */
+> +static void aspeed_video_update_timings(struct aspeed_video *video, struct v4l2_bt_timings *timings)
+> +{
+> +	video->active_timings = *timings;
+> +	aspeed_video_set_resolution(video);
+> +
+> +	video->pix_fmt.width = timings->width;
+> +	video->pix_fmt.height = timings->height;
+> +	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +}
+> +
+>  static void aspeed_video_update_regs(struct aspeed_video *video)
+>  {
+>  	u8 jpeg_hq_quality = clamp((int)video->jpeg_hq_quality - 1, 0,
+> @@ -1219,6 +1305,8 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	u32 ctrl = 0;
+>  	u32 seq_ctrl = 0;
+>  
+> +	v4l2_dbg(1, debug, &video->v4l2_dev, "input(%s)\n",
+> +		 input_str[video->input]);
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
+>  		 video->frame_rate);
+>  	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
+> @@ -1234,6 +1322,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	else
+>  		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
+>  
+> +	if (video->input == VIDEO_INPUT_VGA)
+> +		ctrl |= VE_CTRL_AUTO_OR_CURSOR;
+> +
+>  	if (video->frame_rate)
+>  		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
+>  
+> @@ -1252,7 +1343,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>  	aspeed_video_update(video, VE_SEQ_CTRL,
+>  			    video->jpeg_mode | VE_SEQ_CTRL_YUV420,
+>  			    seq_ctrl);
+> -	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
+> +	aspeed_video_update(video, VE_CTRL,
+> +			    VE_CTRL_FRC | VE_CTRL_AUTO_OR_CURSOR |
+> +			    VE_CTRL_SOURCE, ctrl);
+>  	aspeed_video_update(video, VE_COMP_CTRL,
+>  			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
+>  			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
+> @@ -1280,6 +1373,7 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
+>  	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
+>  
+>  	/* Set control registers */
+> +	aspeed_video_write(video, VE_SEQ_CTRL, VE_SEQ_CTRL_AUTO_COMP);
+>  	aspeed_video_write(video, VE_CTRL, ctrl);
+>  	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
+>  
+> @@ -1311,12 +1405,7 @@ static void aspeed_video_start(struct aspeed_video *video)
+>  	aspeed_video_get_resolution(video);
+>  
+>  	/* Set timings since the device is being opened for the first time */
+> -	video->active_timings = video->detected_timings;
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = video->active_timings.width;
+> -	video->pix_fmt.height = video->active_timings.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &video->detected_timings);
+>  }
+>  
+>  static void aspeed_video_stop(struct aspeed_video *video)
+> @@ -1401,10 +1490,10 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
+>  {
+>  	struct aspeed_video *video = video_drvdata(file);
+>  
+> -	if (inp->index)
+> +	if (inp->index >= VIDEO_INPUT_MAX)
+>  		return -EINVAL;
+>  
+> -	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
+> +	sprintf(inp->name, "%s capture", input_str[inp->index]);
+>  	inp->type = V4L2_INPUT_TYPE_CAMERA;
+>  	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
+>  	inp->status = video->v4l2_input_status;
+> @@ -1414,16 +1503,47 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
+>  
+>  static int aspeed_video_get_input(struct file *file, void *fh, unsigned int *i)
+>  {
+> -	*i = 0;
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	*i = video->input;
+>  
+>  	return 0;
+>  }
+>  
+>  static int aspeed_video_set_input(struct file *file, void *fh, unsigned int i)
+>  {
+> -	if (i)
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	if (i >= VIDEO_INPUT_MAX)
+>  		return -EINVAL;
+>  
+> +	if (IS_ERR(video->scu)) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: scu isn't ready for input-control\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (IS_ERR(video->gfx) && i == VIDEO_INPUT_GFX) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev, "%s: gfx isn't ready for GFX input\n", __func__);
+> +		return -EINVAL;
+> +	}
 
-Signed-off-by: Donald Shannon <donalds@nvidia.com>
----
- arch/arm/boot/dts/aspeed/Makefile             |   1 +
- .../dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts | 779 ++++++++++++++++++
- 2 files changed, 780 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
+This need extra checks: one to just return 0 if the new input is the same as the old one:
 
-diff --git a/arch/arm/boot/dts/aspeed/Makefile b/arch/arm/boot/dts/aspeed/Makefile
-index 8062c685f7e8..b479824c434b 100644
---- a/arch/arm/boot/dts/aspeed/Makefile
-+++ b/arch/arm/boot/dts/aspeed/Makefile
-@@ -55,6 +55,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-lenovo-hr855xg2.dtb \
- 	aspeed-bmc-microsoft-olympus.dtb \
- 	aspeed-bmc-nvidia-gb200nvl-bmc.dtb \
-+	aspeed-bmc-nvidia-vr144nvl.dtb \
- 	aspeed-bmc-opp-lanyang.dtb \
- 	aspeed-bmc-opp-mowgli.dtb \
- 	aspeed-bmc-opp-nicole.dtb \
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
-new file mode 100644
-index 000000000000..5984984b5109
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-nvidia-vr144nvl.dts
-@@ -0,0 +1,779 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+	model = "AST2600 VR144NVL BMC";
-+	compatible = "nvidia,vr144nvl-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		serial2 = &uart3;
-+		serial4 = &uart5;
-+		i2c16 = &c0uphy0;
-+		i2c17 = &c0uphy2;
-+		i2c24 = &c1uphy0;
-+		i2c25 = &c1uphy2;
-+		i2c32 = &i2c_usb_hub;
-+		i2c33 = &i2c_tpm;
-+		i2c34 = &i2c_dp;
-+		i2c35 = &i2c_rtc;
-+	};
-+
-+	buttons {
-+		compatible = "gpio-keys";
-+		button-power {
-+			label = "power_btn";
-+			linux,code = <KEY_POWER>;
-+			gpios = <&exp7 9 GPIO_ACTIVE_LOW>;
-+		};
-+		button-uid {
-+			label = "uid_btn";
-+			linux,code = <KEY_FN_1>;
-+			gpios = <&exp7 11 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		hb-led {
-+			gpios = <&gpio0 127 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_HEARTBEAT;
-+			color = <LED_COLOR_ID_GREEN>;
-+			label = "bmc-hbled";
-+			linux,default-trigger = "heartbeat";
-+			default-state = "on";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		pwr-led {
-+			gpios = <&exp7 8 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_POWER;
-+			color = <LED_COLOR_ID_WHITE>;
-+			label = "pwr-led";
-+			linux,default-trigger = "default-on";
-+			default-state = "on";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		uid-led {
-+			gpios = <&exp7 10 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_BLUE>;
-+			label = "uid-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+		fault-led {
-+			gpios = <&exp7 12 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_PANIC;
-+			color = <LED_COLOR_ID_WHITE>;
-+			label = "fault-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+			panic-indicator;
-+		};
-+		warn-led {
-+			gpios = <&exp7 15 GPIO_ACTIVE_LOW>;
-+			function = LED_FUNCTION_PANIC;
-+			color = <LED_COLOR_ID_RED>;
-+			label = "warn-led";
-+			default-state = "off";
-+			retain-state-suspended;
-+			retain-state-shutdown;
-+		};
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x80000000>;
-+	};
-+
-+	reg_3v3_stby: regulator-3v3-standby {
-+		compatible = "regulator-fixed";
-+		regulator-name = "3v3-standby";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+		gpio = <&gpio0 ASPEED_GPIO(M, 3) GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-always-on;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@9f000000 {
-+			no-map;
-+			reg = <0x9f000000 0x01000000>; /* 16M */
-+		};
-+
-+		ramoops@a0000000 {
-+			compatible = "ramoops";
-+			reg = <0xa0000000 0x100000>; /* 1MB */
-+			record-size = <0x10000>; /* 64KB */
-+			max-reason = <2>; /* KMSG_DUMP_OOPS */
-+		};
-+
-+		gfx_memory: framebuffer {
-+			compatible = "shared-dma-pool";
-+			reusable;
-+			size = <0x01000000>;
-+			alignment = <0x01000000>;
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			compatible = "shared-dma-pool";
-+			reusable;
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+		};
-+	};
-+};
-+
-+// Enable Primary flash on FMC for bring up activity
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+		status = "okay";
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			u-boot@0 {
-+				// 896KB
-+				reg = <0x0 0xe0000>;
-+				label = "u-boot";
-+			};
-+
-+			kernel@100000 {
-+				// 9MB
-+				reg = <0x100000 0x900000>;
-+				label = "kernel";
-+			};
-+
-+			rofs@a00000 {
-+				// 55292KB (extends to end of 64MB SPI - 4KB)
-+				reg = <0xa00000 0x35FF000>;
-+				label = "rofs";
-+			};
-+		};
-+	};
-+};
-+
-+&spi2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi2_default>;
-+	status = "okay";
-+	// Data SPI is 64MB in size
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		label = "config";
-+		spi-max-frequency = <50000000>;
-+		status = "okay";
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			u-boot-env@0 {
-+				// 256KB
-+				reg = <0x0 0x40000>;
-+				label = "u-boot-env";
-+			};
-+
-+			rwfs@40000 {
-+				// 16MB
-+				reg = <0x40000 0x1000000>;
-+				label = "rwfs";
-+			};
-+
-+			log@1040000 {
-+				// 40MB
-+				reg = <0x1040000 0x2800000>;
-+				label = "log";
-+			};
-+		};
-+	};
-+};
-+
-+&mdio0 {
-+	status = "okay";
-+	ethphy0: ethernet-phy@0 {
-+		compatible = "ethernet-phy-ieee802.3-c22";
-+		reg = <0>;
-+	};
-+};
-+
-+&mac0 {
-+	pinctrl-names = "default";
-+	phy-mode = "rgmii-id";
-+	phy-handle = <&ethphy0>;
-+	pinctrl-0 = <&pinctrl_rgmii1_default>;
-+	status = "okay";
-+};
-+
-+// USB Port B
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+// USB Port B
-+&uhci {
-+	status = "okay";
-+};
-+
-+// USB port A
-+&vhub {
-+	status = "okay";
-+};
-+
-+&rng {
-+	status = "okay";
-+};
-+
-+&video {
-+	memory-region = <&video_engine_memory>;
-+	status = "okay";
-+};
-+
-+&gpio0 {
-+	gpio-line-names =
-+		/*A0-A7*/ "", "", "", "", "", "", "", "",
-+		/*B0-B7*/ "", "", "", "", "", "", "", "",
-+		/*C0-C7*/ "", "", "", "", "", "", "", "",
-+		/*D0-D7*/ "", "", "", "", "", "", "", "",
-+		/*E0-E7*/ "RTL8221_PHY_RST_L-O", "RTL8211_PHY_INT_L-I",	"", "", "", "", "",
-+					"MUX_SGPIO_SEL-O",
-+		/*F0-F7*/ "", "", "", "", "", "", "", "",
-+		/*G0-G7*/ "", "", "", "", "", "", "", "",
-+		/*H0-H7*/ "", "", "", "", "", "", "", "",
-+		/*I0-I7*/ "", "", "", "", "", "QSPI2_RST_L-O", "GLOBAL_WP-O", "BMC_DDR4_TEN-O",
-+		/*J0-J7*/ "", "", "", "", "", "", "", "",
-+		/*K0-K7*/ "", "", "", "", "", "", "", "",
-+		/*L0-L7*/ "", "", "", "", "", "", "", "",
-+		/*M0-M7*/ "HUB_RST_N-O", "BMC_FRU_WP-O", "SCM_PGOOD_C-O", "HPM_STBY_POWER_EN-O",
-+					"STBY_POWER_PG_3V3-I", "PCIE_EP_RST_C_L-O", "", "",
-+		/*N0-N7*/ "", "", "", "", "", "", "", "",
-+		/*O0-O7*/ "", "", "", "", "", "", "", "",
-+		/*P0-P7*/ "", "", "", "", "", "", "", "BMC_HBLED_L-O",
-+		/*Q0-Q7*/ "", "", "", "", "", "", "", "",
-+		/*R0-R7*/ "", "SP0_AP_INTR_N-I", "", "", "", "", "", "",
-+		/*S0-S7*/ "", "", "", "", "", "", "", "",
-+		/*T0-T7*/ "", "", "", "", "", "", "", "",
-+		/*U0-U7*/ "", "", "", "", "", "", "", "",
-+		/*V0-V7*/ "", "", "", "","PCB_TEMP_ALERT_L-I", "","", "",
-+		/*W0-W7*/ "", "", "", "", "", "", "", "",
-+		/*X0-X7*/ "", "", "", "", "", "", "", "",
-+		/*Y0-Y7*/ "", "", "", "EMMC_RST_L-O", "","", "", "",
-+		/*Z0-Z7*/ "GPIOZ0_EROT_OOB_INTR_N_C-I","", "", "", "", "", "", "";
-+};
-+
-+&gpio1 {
-+	/* 36 1.8V GPIOs */
-+	gpio-line-names =
-+		/*A0-A7*/ "", "", "", "", "", "", "", "",
-+		/*B0-B7*/ "", "", "", "", "AP_EROT_REQ-O", "EROT_AP_GNT-I", "I2C_MGMT0_ALERT_N-I",
-+					"",
-+		/*C0-C7*/ "", "", "", "", "", "", "", "",
-+		/*D0-D7*/ "", "", "", "", "", "", "", "I2C_SSIF_ALERT_N-I",
-+		/*E0-E7*/ "", "", "", "", "", "", "", "";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+// I2C1
-+&i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C2
-+// Baseboard 0 Management 1
-+&i2c1 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		c0uphy0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		c0uphy2: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+	};
-+
-+	exp0: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"MCU_RESET_L-O",
-+			"MCU_RECOVERY_L-O",
-+			"GPU_MCU_RESET_L_3V3-O",
-+			"GPU_MCU_RECOVERY_L_3V3-O",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"HMC_IST_PRE_RST_L-O",
-+			"CPLD_READY-I",
-+			"MODULE_PWR_GOOD-I",
-+			"MCU_HMC_ALERT_L-I",
-+			"USB_HMC_HUB_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"PRIMARY_NODE_L-O",
-+			"IST_SYS_RST_L-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp1: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"CPU_FORCED_RECOVERY_L-O",
-+			"CPU_BOOT_DEV_SEL0-O",
-+			"CPU_BOOT_DEV_SEL1-O",
-+			"CPU_BOOT_DEV_SEL2-O",
-+			"BOARD_ID_0-I",
-+			"CPU_RECOVERY_TYPE0-O",
-+			"CPU_RECOVERY_TYPE1-O",
-+			"CPU_IST_BOOT_HMC-O",
-+			"CPU_BOOT_CHAIN0-O",
-+			"BOARD_ID_1-I",
-+			"BOARD_ID_2-I",
-+			"CPU_DIE_SEL0-O",
-+			"CPU_DIE_SEL1-O",
-+			"CPU_DIE_SEL2-O",
-+			"CPU_BOOT_COMPLETE-I",
-+			"IOX_JTAG_NVSEL-O";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C3
-+// Baseboard 0 Management 0
-+&i2c2 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp3: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"BMC_SHDN_FORCE_L-O",
-+			"IOX_STBY_PWR_PGOOD-I",
-+			"THERM_OVERT_L-I",
-+			"THERM_WARN_L-I",
-+			"GLOBAL_WP_BMC-O",
-+			"USB_HUB0_RST_L-O",
-+			"IOX_PRE_RST_N-O",
-+			"LEAK_DETECT_L-I",
-+			"RUN_PWR_EN-O",
-+			"MODULE_PWR_GOOD-I",
-+			"CPU_CHIPTHROT_L_3V3-I",
-+			"SHDN_REQ_L_3V3-O",
-+			"CPU0_SHDN_OK_L_3V3-I",
-+			"CPU1_SHDN_OK_L_3V3-I",
-+			"PWR_BRAKE_L_3V3-O",
-+			"PWR_BRAKE_STATUS_L-I";
-+	};
-+
-+	exp4: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"I2C_BUS_MUX_RST_L-O",
-+			"HPM_MCU_OK-I",
-+			"AIC_USB_EN-O",
-+			"SOCAMM_DAC_SEL0-O",
-+			"SNN_SOCAMM_DAC_SEL1-O",
-+			"C0_SOCAMM_I2C_SEL_R-O",
-+			"SNN_C1_SOCAMM_I2C_SEL_R-O",
-+			"EEPROM_POWER_DISABLE-O",
-+			"CPU_L0L1_RST_L_3V3-I",
-+			"CPU_L2_RST_L_3V3-I",
-+			"BOARD_ID_0-I",
-+			"BOARD_ID_1-I",
-+			"BMC_LEAK_TEST_L-O",
-+			"MCU_BMC_ALERT_L-I",
-+			"CPU_BOOT_COMPLETE_3V3-I",
-+			"BOARD_ID_2-I";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C4
-+// Baseboard 1 Management 1
-+&i2c3 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		c1uphy0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		c1uphy2: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+	};
-+
-+	exp5: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"MCU_RESET_L_C1-O",
-+			"MCU_RECOVERY_L_C1-O",
-+			"GPU_MCU_RESET_L_3V3_C1-O",
-+			"GPU_MCU_RECOVERY_L_3V3_C1-O",
-+			"THERM_OVERT_L_C1-I",
-+			"THERM_WARN_L_C1-I",
-+			"HMC_IST_PRE_RST_L_C1-O",
-+			"CPLD_READY_C1-I",
-+			"MODULE_PWR_GOOD_C1-I",
-+			"MCU_HMC_ALERT_L_C1-I",
-+			"USB_HMC_HUB_RST_L_C1-O",
-+			"HPM_MCU_OK_C1-I",
-+			"CPU0_SHDN_OK_L_3V3_C1-I",
-+			"PRIMARY_NODE_L_C1-O",
-+			"IST_SYS_RST_L_C1-O",
-+			"PWR_BRAKE_STATUS_L_C1-I";
-+	};
-+
-+	exp6: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"CPU_FORCED_RECOVERY_L_C1-O",
-+			"CPU_BOOT_DEV_SEL0_C1-O",
-+			"CPU_BOOT_DEV_SEL1_C1-O",
-+			"CPU_BOOT_DEV_SEL2_C1-O",
-+			"BOARD_ID_0_C1-I",
-+			"CPU_RECOVERY_TYPE0_C1-O",
-+			"CPU_RECOVERY_TYPE1_C1-O",
-+			"CPU_IST_BOOT_HMC_C1-O",
-+			"CPU_BOOT_CHAIN0_C1-O",
-+			"BOARD_ID_1_C1-I",
-+			"BOARD_ID_2_C1-I",
-+			"CPU_DIE_SEL0_C1-O",
-+			"CPU_DIE_SEL1_C1-O",
-+			"CPU_DIE_SEL2_C1-O",
-+			"CPU_BOOT_COMPLETE_C1-I",
-+			"IOX_JTAG_NVSEL_C1-O";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C5
-+&i2c4 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C6
-+// Management Board
-+&i2c5 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp7: gpio@20 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x20>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"HMC_RST_R_L-O",
-+			"HMC_RECOVERY_R-O",
-+			"HMC_SPI_MUX_R_SEL-O",
-+			"GLOBAL_WP-O",
-+			"HMC_READY-I",
-+			"HMC_PRSNT_R-I",
-+			"BMC_SELF_PWR_CYCLE-O",
-+			"EEDO_LED2-O",
-+			"PWR_LED_L-O",
-+			"PWR_BTN_L-I",
-+			"UID_LED_L-O",
-+			"UID_BTN_L-I",
-+			"FAULT_LED_L-I",
-+			"USB2_HUB_RST_L-O",
-+			"BMC_M2_RST_L-O",
-+			"WARN_LED_L-O";
-+	};
-+
-+	temp-sensor@48 {
-+		compatible = "ti,tmp1075";
-+		reg = <0x48>;
-+	};
-+};
-+
-+// I2C7
-+// BMC Expander + Management Board
-+&i2c6 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp8: gpio@20 {
-+		compatible = "ti,tca6408";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-line-names =
-+			"",
-+			"",
-+			"EROT_FATAL_ERROR_N-I",
-+			"",
-+			"",
-+			"EROT_RECOV_N-O",
-+			"NRESET_IN_IOX_N-O",
-+			"";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9546";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+		i2c-mux-idle-disconnect;
-+		vdd-supply = <&reg_3v3_stby>;
-+
-+		i2c_usb_hub:i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		i2c_tpm:i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+		};
-+
-+		i2c_dp:i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		i2c_rtc:i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+// I2C8
-+// Baseboard 1 Management 0
-+&i2c7 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	exp9: gpio@20 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x20>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"BMC_SHDN_FORCE_L_C1-O",
-+			"IOX_STBY_PWR_PGOOD_C1-I",
-+			"THERM_OVERT_L_C1-I",
-+			"THERM_WARN_L_C1-I",
-+			"GLOBAL_WP_BMC_C1-O",
-+			"USB_HUB0_RST_L_C1-O",
-+			"IOX_PRE_RST_N_C1-O",
-+			"LEAK_DETECT_L_C1-I",
-+			"RUN_PWR_EN_C1-O",
-+			"MODULE_PWR_GOOD_C1-I",
-+			"CPU_CHIPTHROT_L_3V3_C1-I",
-+			"SHDN_REQ_L_3V3_C1-O",
-+			"CPU0_SHDN_OK_L_3V3_C1-I",
-+			"CPU1_SHDN_OK_L_3V3_C1-I",
-+			"PWR_BRAKE_L_3V3_C1-O",
-+			"PWR_BRAKE_STATUS_L_C1-I";
-+	};
-+
-+	exp10: gpio@21 {
-+		compatible = "nxp,pca9535";
-+		reg = <0x21>;
-+		interrupt-parent = <&gpio1>;
-+		interrupts = <ASPEED_GPIO(B, 6) IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		vcc-supply = <&reg_3v3_stby>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio-line-names =
-+			"I2C_BUS_MUX_RST_L_C1-O",
-+			"HPM_MCU_OK_C1-I",
-+			"AIC_USB_EN_C1-O",
-+			"SOCAMM_DAC_SEL0_C1-O",
-+			"SNN_SOCAMM_DAC_SEL1_C1-O",
-+			"C0_SOCAMM_I2C_SEL_R_C1-O",
-+			"SNN_C1_SOCAMM_I2C_SEL_R_C1-O",
-+			"EEPROM_POWER_DISABLE_C1-O",
-+			"CPU_L0L1_RST_L_3V3_C1-I",
-+			"CPU_L2_RST_L_3V3_C1-I",
-+			"BOARD_ID_0_C1-I",
-+			"BOARD_ID_1_C1-I",
-+			"BMC_LEAK_TEST_L_C1-O",
-+			"MCU_BMC_ALERT_L_C1-I",
-+			"CPU_BOOT_COMPLETE_3V3_C1-I",
-+			"BOARD_ID_2_C1-I";
-+	};
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c64";
-+		reg = <0x50>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+// I2C9
-+&i2c8 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C10
-+&i2c9 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C11
-+// BMC FRU + TEMP
-+&i2c10 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c02";
-+		reg = <0x50>;
-+		pagesize = <16>;
-+	};
-+
-+	temp-sensor@48 {
-+		compatible = "ti,tmp1075";
-+		reg = <0x48>;
-+	};
-+
-+};
-+
-+// I2C13
-+&i2c12 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C14
-+&i2c13 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C15
-+&i2c14 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
-+
-+// I2C16
-+&i2c15 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+};
--- 
-2.43.0
+	if (video->input == i)
+		return 0;
+
+followed by a check to see if we're streaming:
+
+	if (vb2_is_busy(&video->queue))
+		return -EBUSY;
+
+Changing the input will also update the format, which is not allowed while streaming.
+
+Regards,
+
+	Hans
+
+> +
+> +	video->input = i;
+> +
+> +	if (video->version == 6) {
+> +		/* modify dpll source per current input */
+> +		if (video->input == VIDEO_INPUT_VGA)
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, 0);
+> +		else
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL, SCU_DPLL_SOURCE, SCU_DPLL_SOURCE);
+> +	}
+> +
+> +	aspeed_video_update_regs(video);
+> +
+> +	/* update signal status */
+> +	aspeed_video_get_resolution(video);
+> +	if (!video->v4l2_input_status)
+> +		aspeed_video_update_timings(video, &video->detected_timings);
+> +
+>  	return 0;
+>  }
+>  
+> @@ -1527,13 +1647,7 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
+>  	if (vb2_is_busy(&video->queue))
+>  		return -EBUSY;
+>  
+> -	video->active_timings = timings->bt;
+> -
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = timings->bt.width;
+> -	video->pix_fmt.height = timings->bt.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &timings->bt);
+>  
+>  	timings->type = V4L2_DV_BT_656_1120;
+>  
+> @@ -1909,6 +2023,7 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
+>  	val08 = aspeed_video_read(v, VE_CTRL);
+>  	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
+>  		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
+> +		seq_printf(s, "  %-20s:\t%s\n", "Input", input_str[v->input]);
+>  		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
+>  			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
+>  	} else {
+> @@ -2068,12 +2183,29 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Get regmap without checking res, such as clk/reset, that could lead to
+> + * conflict.
+> + */
+> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
+> +{
+> +	struct device_node *syscon_np __free(device_node) = of_parse_phandle(np, property, 0);
+> +
+> +	if (!syscon_np)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	return device_node_to_regmap(syscon_np);
+> +}
+> +
+>  static int aspeed_video_init(struct aspeed_video *video)
+>  {
+>  	int irq;
+>  	int rc;
+>  	struct device *dev = video->dev;
+>  
+> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
+> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
+> +
+>  	irq = irq_of_parse_and_map(dev->of_node, 0);
+>  	if (!irq) {
+>  		dev_err(dev, "Unable to find IRQ\n");
+> @@ -2165,6 +2297,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
+>  	if (!config)
+>  		return -ENODEV;
+>  
+> +	video->version = config->version;
+>  	video->jpeg_mode = config->jpeg_mode;
+>  	video->comp_size_read = config->comp_size_read;
+>  
+> diff --git a/include/uapi/linux/aspeed-video.h b/include/uapi/linux/aspeed-video.h
+> index 6586a65548c4..15168e8c931e 100644
+> --- a/include/uapi/linux/aspeed-video.h
+> +++ b/include/uapi/linux/aspeed-video.h
+> @@ -8,6 +8,13 @@
+>  
+>  #include <linux/v4l2-controls.h>
+>  
+> +/* aspeed video's input types */
+> +enum aspeed_video_input {
+> +	VIDEO_INPUT_VGA = 0,
+> +	VIDEO_INPUT_GFX,
+> +	VIDEO_INPUT_MAX
+> +};
+> +
+>  #define V4L2_CID_ASPEED_HQ_MODE			(V4L2_CID_USER_ASPEED_BASE  + 1)
+>  #define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(V4L2_CID_USER_ASPEED_BASE  + 2)
+>  
 
 
