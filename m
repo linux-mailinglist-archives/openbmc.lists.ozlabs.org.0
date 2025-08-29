@@ -1,50 +1,39 @@
-Return-Path: <openbmc+bounces-532-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-533-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A703BB3B460
-	for <lists+openbmc@lfdr.de>; Fri, 29 Aug 2025 09:31:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67744B3B502
+	for <lists+openbmc@lfdr.de>; Fri, 29 Aug 2025 09:57:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cCqgc6QsYz2ytT;
-	Fri, 29 Aug 2025 17:30:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cCrGj5vB1z2ykc;
+	Fri, 29 Aug 2025 17:57:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756452652;
-	cv=none; b=YfIkpiQflPZUDD1I4I7R4PA6gepX7X3Ozl9Pm/PbVIareKb/K8y+BNJolAj8vmcD6AgNZZShtE9h5feVwquh6Hwn2l+kXYEzsz65fc76Xuhufqtq3YHyHg2gi5xb1mZL+++au3nGgn6ww0nA5d/cReVaT5hTV4ZyuBTk37tunfXsehcOXoFNanUk2czoOZ2tbI5NKQBTwb3vGBD3q6a7t1ZKcn6W0ihqiqcJk7mVPipiTN4RhtoVP4OnlfH/L7RWgA63bqO4CUi+5jCjv7/t7syDCvzWzwkp5SjG2vTuR2VNNhtWvm7+iVBhr88U4Ml2LyZSmdjQhA1rYfYw1op7Ig==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=141.14.17.11
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756454269;
+	cv=none; b=WorNIQfr27FddsBqhI7xgli6x6V4dIySK+u3fsYFwvWnpc7JqFdN6y/UHtwu7PuM4cuMR7p4Z1djdPkVAaJIKH4RIvFoom+oRy8GFBIY3jZ+fZ7RfKL3/G/bqta17QEn4uFMVndy8PGJYeUWx63gNCVgBotFJwo4+zES8Fj7LDqAS/gX/sA6nB3cXG+D6bNf2cPDhXG1KsByfPKXuqlF61zSOX/gsZ6Qk8d1NopVrhihmEXLHKWY9UY+iQTKvNHHEiRTYOpF6iIHZorUa7SN/E7wy4PQefr87n7R+UMglnwcn2Mf4BaqRoXdaQEFpX8WunHQ87BqA7ZJyWMS1WsvVA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1756452652; c=relaxed/relaxed;
-	bh=7lFIu6wWgNdhJ6kc1i3EgW+d29dPGHx1mB3/6x261t8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=liwdtwxyfgmrXdyaHBcVrrrv1ayrG7YZau5fWg96P1+K7JLt06xVOMOaNoZtiwLlPNJAI9UJ8AILPPHWBxPYHo0/meeNU93yzkcruDYtX3Lt//YiwTowdTuIhiweGkjFdWmAPMrIa7elYmwLpzJ5F/EII91/ApojApLxgHQFyZrDZrXEdRB2Z6FFkO7yrsXzwqvMW/I0EAoGq54XTi+ZP6Iymr6gu70HSQmRb90AdOkvaBTmYs2yWvRyLqSoQMJTUFk2D2CVYIP4dkteXcGNVQS2d0LDgBXx2H6Cf/XPjIXtmimkqAVYLGL+awZ9WJHUpKfW2zNsYNI0zFP4uz+LLQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1756454269; c=relaxed/relaxed;
+	bh=lX0GPgiOQI2waPh6kW7kcLXHqrYQmjDmO7bMKrBFCSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=a/6cOKvpK5jFKIU+GCxJSWQ/83vfHO4J62GE1l29y2LlzyHhmTnSDOS5vrxt/C1zdJpQRLg918Nf9dUTrCT3Q/S1ks50sEnDvrvR3/jVJT+vjMZpDRHd33CapEZcJk3lrUM5TjR6zB9K/vKq0VCJXZ6bnAPPWZjX65ZBr0AHIleRFlbCwTgM/HBvcncwGTjM9VZKC5Ngl+GqYUomPmdjydvUj+kCd89tfKg0ZfRZDNagqEgbWjXCdSBl/U5yfFCudBuX11NODJkU735Ka+byB1wfjjeA7Z4OSLJ4IaBrrFAALqGpsLzgqk0tGMqZtDg8XUMrY8KOac9cWiUpZCr1AA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org) smtp.mailfrom=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cCqgc0p6Yz2ywh;
-	Fri, 29 Aug 2025 17:30:52 +1000 (AEST)
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 29 Aug
- 2025 15:30:31 +0800
-Received: from twmbx02.aspeed.com (192.168.10.13) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 29 Aug 2025 15:30:31 +0800
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-To: <lee@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-	<conor+dt@kernel.org>, <joel@jms.id.au>, <andrew@codeconstruct.com.au>,
-	<linus.walleij@linaro.org>, <brgl@bgdev.pl>, <billy_tsai@aspeedtech.com>,
-	<devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
-	<openbmc@lists.ozlabs.org>, <linux-gpio@vger.kernel.org>,
-	<BMC-SW@aspeedtech.com>
-Subject: [PATCH v1 4/4] arm64: dts: add AST27xx pinctrl configuration nodes
-Date: Fri, 29 Aug 2025 15:30:30 +0800
-Message-ID: <20250829073030.2749482-5-billy_tsai@aspeedtech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250829073030.2749482-1-billy_tsai@aspeedtech.com>
-References: <20250829073030.2749482-1-billy_tsai@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cCrGh1Zkjz2xnM
+	for <openbmc@lists.ozlabs.org>; Fri, 29 Aug 2025 17:57:46 +1000 (AEST)
+Received: from [192.168.0.192] (ip5f5af7a9.dynamic.kabel-deutschland.de [95.90.247.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 5D5E5602019A2;
+	Fri, 29 Aug 2025 09:56:52 +0200 (CEST)
+Message-ID: <38fb5e01-6885-4a90-a793-6d2f03e56787@molgen.mpg.de>
+Date: Fri, 29 Aug 2025 09:56:51 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -56,1387 +45,552 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
-	autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/1] media: aspeed: Allow to capture from SoC display
+ (GFX)
+To: Jammy Huang <jammy_huang@aspeedtech.com>
+References: <20250829035301.2697535-1-jammy_huang@aspeedtech.com>
+ <20250829035301.2697535-2-jammy_huang@aspeedtech.com>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: eajames@linux.ibm.com, mchehab@kernel.org, joel@jms.id.au,
+ andrew@aj.id.au, linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20250829035301.2697535-2-jammy_huang@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.3 required=5.0 tests=RCVD_IN_DNSWL_MED,
+	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Add pinctrl0 and pinctrl1 nodes for AST27xx SoC0 and SoC1 to configure
-the pinmux settings for each ball.
+Dear Jammy,
 
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
----
- .../boot/dts/aspeed/aspeed-g7-pinctrl.dtsi    | 1359 +++++++++++++++++
- 1 file changed, 1359 insertions(+)
- create mode 100644 arch/arm64/boot/dts/aspeed/aspeed-g7-pinctrl.dtsi
 
-diff --git a/arch/arm64/boot/dts/aspeed/aspeed-g7-pinctrl.dtsi b/arch/arm64/boot/dts/aspeed/aspeed-g7-pinctrl.dtsi
-new file mode 100644
-index 000000000000..2167db85839d
---- /dev/null
-+++ b/arch/arm64/boot/dts/aspeed/aspeed-g7-pinctrl.dtsi
-@@ -0,0 +1,1359 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2025 ASPEED Corp.
-+
-+&pinctrl0 {
-+	pinctrl_emmc_default: emmc-default {
-+		function = "EMMC";
-+		groups = "EMMCG1";
-+	};
-+
-+	pinctrl_emmcg4_default: emmc-default {
-+		function = "EMMC";
-+		groups = "EMMCG4";
-+	};
-+
-+	pinctrl_emmcg8_default: emmcg8-default {
-+		function = "EMMC";
-+		groups = "EMMCG8";
-+	};
-+
-+	pinctrl_emmcwpn_default: emmcwpn-default {
-+		function = "EMMC";
-+		groups = "EMMCWPN";
-+	};
-+
-+	pinctrl_emmccdn_default: emmccdn-default {
-+		function = "EMMC";
-+		groups = "EMMCCDN";
-+	};
-+
-+	pinctrl_vgaddc_default: vgaddc-default {
-+		function = "VGADDC";
-+		groups = "VGADDC";
-+	};
-+
-+	pinctrl_usb3axhd_default: usb3axhd-default {
-+		function = "USB3A";
-+		groups = "USB3AXHD";
-+	};
-+
-+	pinctrl_usb3axhpd_default: usb3axhpd-default {
-+		function = "USB3A";
-+		groups = "USB3AXHPD";
-+	};
-+
-+	pinctrl_usb3axh_default: usb3axh-default {
-+		function = "USB3A";
-+		groups = "USB3AXH";
-+	};
-+
-+	pinctrl_usb3axhp_default: usb3axhp-default {
-+		function = "USB3A";
-+		groups = "USB3AXHP";
-+	};
-+
-+	pinctrl_usb3axh2b_default: usb3axh2b-default {
-+		function = "USB3A";
-+		groups = "USB3AXH2B";
-+	};
-+
-+	pinctrl_usb3axhp2b_default: usb3axhp2b-default {
-+		function = "USB3A";
-+		groups = "USB3AXHP2B";
-+	};
-+
-+	pinctrl_usb2axhd1_default: usb2axhd1-default {
-+		function = "USB2A";
-+		groups = "USB2AXHD1";
-+	};
-+
-+	pinctrl_usb2axhpd1_default: usb2axhpd1-default {
-+		function = "USB2A";
-+		groups = "USB2AXHPD1";
-+	};
-+
-+	pinctrl_usb2ad1_default: usb2ad1-default {
-+		function = "USB2A";
-+		groups = "USB2AD1";
-+	};
-+
-+	pinctrl_usb2axh_default: usb2axh-default {
-+		function = "USB2A";
-+		groups = "USB2AXH";
-+	};
-+
-+	pinctrl_usb2axhp_default: usb2axhp-default {
-+		function = "USB2A";
-+		groups = "USB2AXHP";
-+	};
-+
-+	pinctrl_usb2axh2b_default: usb2axh2b-default {
-+		function = "USB2A";
-+		groups = "USB2AXH2B";
-+	};
-+
-+	pinctrl_usb2axhp2b_default: usb2axhp2b-default {
-+		function = "USB2A";
-+		groups = "USB2AXHP2B";
-+	};
-+
-+	pinctrl_usb2ahpd0_default: usb2ahpd0-default {
-+		function = "USB2A";
-+		groups = "USB2AHPD0";
-+	};
-+
-+	pinctrl_usb2ad0_default: usb2ad0-default {
-+		function = "USB2A";
-+		groups = "USB2AD0";
-+	};
-+
-+	pinctrl_usb2ah_default: usb2ah-default {
-+		function = "USB2A";
-+		groups = "USB2AH";
-+	};
-+
-+	pinctrl_usb2ahp_default: usb2ahp-default {
-+		function = "USB2A";
-+		groups = "USB2AHP";
-+	};
-+
-+	pinctrl_usb3bxhd_default: usb3bxhd-default {
-+		function = "USB3B";
-+		groups = "USB3BXHD";
-+	};
-+
-+	pinctrl_usb3bxhpd_default: usb3bxhpd-default {
-+		function = "USB3B";
-+		groups = "USB3BXHPD";
-+	};
-+
-+	pinctrl_usb3bxh_default: usb3bxh-default {
-+		function = "USB3B";
-+		groups = "USB3BXH";
-+	};
-+
-+	pinctrl_usb3bxhp_default: usb3bxhp-default {
-+		function = "USB3B";
-+		groups = "USB3BXHP";
-+	};
-+
-+	pinctrl_usb3bxh2a_default: usb3bxh2a-default {
-+		function = "USB3B";
-+		groups = "USB3BXH2A";
-+	};
-+
-+	pinctrl_usb3bxhp2a_default: usb3bxhp2a-default {
-+		function = "USB3B";
-+		groups = "USB3BXHP2A";
-+	};
-+
-+	pinctrl_usb2bxhd1_default: usb2bxhd1-default {
-+		function = "USB2B";
-+		groups = "USB2BXHD1";
-+	};
-+
-+	pinctrl_usb2bxhpd1_default: usb2bxhpd1-default {
-+		function = "USB2B";
-+		groups = "USB2BXHPD1";
-+	};
-+
-+	pinctrl_usb2bd1_default: usb2bd1-default {
-+		function = "USB2B";
-+		groups = "USB2BD1";
-+	};
-+
-+	pinctrl_usb2bxh_default: usb2bxh-default {
-+		function = "USB2B";
-+		groups = "USB2BXH";
-+	};
-+
-+	pinctrl_usb2bxhp_default: usb2bxhp-default {
-+		function = "USB2B";
-+		groups = "USB2BXHP";
-+	};
-+
-+	pinctrl_usb2bxh2a_default: usb2bxh2a-default {
-+		function = "USB2B";
-+		groups = "USB2BXH2A";
-+	};
-+
-+	pinctrl_usb2bxhp2a_default: usb2bxhp2a-default {
-+		function = "USB2B";
-+		groups = "USB2BXHP2A";
-+	};
-+
-+	pinctrl_usb2bhpd0_default: usb2bhpd0-default {
-+		function = "USB2B";
-+		groups = "USB2BHPD0";
-+	};
-+
-+	pinctrl_usb2bd0_default: usb2bd0-default {
-+		function = "USB2B";
-+		groups = "USB2BD0";
-+	};
-+
-+	pinctrl_usb2bh_default: usb2bh-default {
-+		function = "USB2B";
-+		groups = "USB2BH";
-+	};
-+
-+	pinctrl_usb2bhp_default: usb2bhp-default {
-+		function = "USB2B";
-+		groups = "USB2BHP";
-+	};
-+
-+	pinctrl_jtagm0_default: jtagm0-default {
-+		function = "JTAG0";
-+		groups = "JTAGM0";
-+	};
-+
-+	pinctrl_jtag_psp_default: jtag-psp-default {
-+		function = "JTAG0";
-+		groups = "PSP";
-+	};
-+
-+	pinctrl_jtag_ssp_default: jtag-ssp-default {
-+		function = "JTAG0";
-+		groups = "SSP";
-+	};
-+
-+	pinctrl_jtag_tsp_default: jtag-tsp-default {
-+		function = "JTAG0";
-+		groups = "TSP";
-+	};
-+
-+	pinctrl_jtag_ddr_default: jtag-ddr-default {
-+		function = "JTAG0";
-+		groups = "DDR";
-+	};
-+
-+	pinctrl_jtag_usb3a_default: jtag-usb3a-default {
-+		function = "JTAG0";
-+		groups = "USB3A";
-+	};
-+
-+	pinctrl_jtag_usb3b_default: jtag-usb3b-default {
-+		function = "JTAG0";
-+		groups = "USB3B";
-+	};
-+
-+	pinctrl_jtag_pciea_default: jtag-pciea-default {
-+		function = "JTAG0";
-+		groups = "PCIEA";
-+	};
-+
-+	pinctrl_jtag_pcieb_default: jtag-pcieb-default {
-+		function = "JTAG0";
-+		groups = "PCIEB";
-+	};
-+
-+	pinctrl_pcierc0_perst_default: pcierc0-perst-default {
-+		function = "PCIERC";
-+		groups = "PCIERC0PERST";
-+	};
-+
-+	pinctrl_pcierc1_perst_default: pcierc1-perst-default {
-+		function = "PCIERC";
-+		groups = "PCIERC1PERST";
-+	};
-+};
-+
-+&pinctrl1 {
-+	pinctrl_sgpm0_default: sgpm0-default {
-+		function = "SGPM0";
-+		groups = "SGPM0";
-+	};
-+
-+	pinctrl_sgpm1_default: sgpm1-default {
-+		function = "SGPM1";
-+		groups = "SGPM1";
-+	};
-+
-+	pinctrl_sgps_default: sgps-default {
-+		function = "SGPS";
-+		groups = "SGPS";
-+	};
-+
-+	pinctrl_adc0_default: adc0-default {
-+		function = "ADC0";
-+		groups = "ADC0";
-+	};
-+
-+	pinctrl_adc1_default: adc1-default {
-+		function = "ADC1";
-+		groups = "ADC1";
-+	};
-+
-+	pinctrl_adc2_default: adc2-default {
-+		function = "ADC2";
-+		groups = "ADC2";
-+	};
-+
-+	pinctrl_adc3_default: adc3-default {
-+		function = "ADC3";
-+		groups = "ADC3";
-+	};
-+
-+	pinctrl_adc4_default: adc4-default {
-+		function = "ADC4";
-+		groups = "ADC4";
-+	};
-+
-+	pinctrl_adc5_default: adc5-default {
-+		function = "ADC5";
-+		groups = "ADC5";
-+	};
-+
-+	pinctrl_adc6_default: adc6-default {
-+		function = "ADC6";
-+		groups = "ADC6";
-+	};
-+
-+	pinctrl_adc7_default: adc7-default {
-+		function = "ADC7";
-+		groups = "ADC7";
-+	};
-+
-+	pinctrl_adc8_default: adc8-default {
-+		function = "ADC8";
-+		groups = "ADC8";
-+	};
-+
-+	pinctrl_adc9_default: adc9-default {
-+		function = "ADC9";
-+		groups = "ADC9";
-+	};
-+
-+	pinctrl_adc10_default: adc10-default {
-+		function = "ADC10";
-+		groups = "ADC10";
-+	};
-+
-+	pinctrl_adc11_default: adc11-default {
-+		function = "ADC11";
-+		groups = "ADC11";
-+	};
-+
-+	pinctrl_adc12_default: adc12-default {
-+		function = "ADC12";
-+		groups = "ADC12";
-+	};
-+
-+	pinctrl_adc13_default: adc13-default {
-+		function = "ADC13";
-+		groups = "ADC13";
-+	};
-+
-+	pinctrl_adc14_default: adc14-default {
-+		function = "ADC14";
-+		groups = "ADC14";
-+	};
-+
-+	pinctrl_adc15_default: adc15-default {
-+		function = "ADC15";
-+		groups = "ADC15";
-+	};
-+
-+	pinctrl_pwm0_default: pwm0-default {
-+		function = "PWM0";
-+		groups = "PWM0";
-+	};
-+
-+	pinctrl_pwm1_default: pwm1-default {
-+		function = "PWM1";
-+		groups = "PWM1";
-+	};
-+
-+	pinctrl_pwm2_default: pwm2-default {
-+		function = "PWM2";
-+		groups = "PWM2";
-+	};
-+
-+	pinctrl_pwm3_default: pwm3-default {
-+		function = "PWM3";
-+		groups = "PWM3";
-+	};
-+
-+	pinctrl_pwm4_default: pwm4-default {
-+		function = "PWM4";
-+		groups = "PWM4";
-+	};
-+
-+	pinctrl_pwm5_default: pwm5-default {
-+		function = "PWM5";
-+		groups = "PWM5";
-+	};
-+
-+	pinctrl_pwm6_default: pwm6-default {
-+		function = "PWM6";
-+		groups = "PWM6";
-+	};
-+
-+	pinctrl_pwm7_default: pwm7-default {
-+		function = "PWM7";
-+		groups = "PWM7";
-+	};
-+
-+	pinctrl_pwm8_default: pwm8-default {
-+		function = "PWM8";
-+		groups = "PWM8";
-+	};
-+
-+	pinctrl_pwm9_default: pwm9-default {
-+		function = "PWM9";
-+		groups = "PWM9";
-+	};
-+
-+	pinctrl_pwm10_default: pwm10-default {
-+		function = "PWM10";
-+		groups = "PWM10";
-+	};
-+
-+	pinctrl_pwm11_default: pwm11-default {
-+		function = "PWM11";
-+		groups = "PWM11";
-+	};
-+
-+	pinctrl_pwm12_default: pwm12-default {
-+		function = "PWM12";
-+		groups = "PWM12";
-+	};
-+
-+	pinctrl_pwm13_default: pwm13-default {
-+		function = "PWM13";
-+		groups = "PWM13";
-+	};
-+
-+	pinctrl_pwm14_default: pwm14-default {
-+		function = "PWM14";
-+		groups = "PWM14";
-+	};
-+
-+	pinctrl_pwm15_default: pwm15-default {
-+		function = "PWM15";
-+		groups = "PWM15";
-+	};
-+
-+	pinctrl_tach0_default: tach0-default {
-+		function = "TACH0";
-+		groups = "TACH0";
-+	};
-+
-+	pinctrl_tach1_default: tach1-default {
-+		function = "TACH1";
-+		groups = "TACH1";
-+	};
-+
-+	pinctrl_tach2_default: tach2-default {
-+		function = "TACH2";
-+		groups = "TACH2";
-+	};
-+
-+	pinctrl_tach3_default: tach3-default {
-+		function = "TACH3";
-+		groups = "TACH3";
-+	};
-+
-+	pinctrl_tach4_default: tach4-default {
-+		function = "TACH4";
-+		groups = "TACH4";
-+	};
-+
-+	pinctrl_tach5_default: tach5-default {
-+		function = "TACH5";
-+		groups = "TACH5";
-+	};
-+
-+	pinctrl_tach6_default: tach6-default {
-+		function = "TACH6";
-+		groups = "TACH6";
-+	};
-+
-+	pinctrl_tach7_default: tach7-default {
-+		function = "TACH7";
-+		groups = "TACH7";
-+	};
-+
-+	pinctrl_tach8_default: tach8-default {
-+		function = "TACH8";
-+		groups = "TACH8";
-+	};
-+
-+	pinctrl_tach9_default: tach9-default {
-+		function = "TACH9";
-+		groups = "TACH9";
-+	};
-+
-+	pinctrl_tach10_default: tach10-default {
-+		function = "TACH10";
-+		groups = "TACH10";
-+	};
-+
-+	pinctrl_tach11_default: tach11-default {
-+		function = "TACH11";
-+		groups = "TACH11";
-+	};
-+
-+	pinctrl_tach12_default: tach12-default {
-+		function = "TACH12";
-+		groups = "TACH12";
-+	};
-+
-+	pinctrl_tach13_default: tach13-default {
-+		function = "TACH13";
-+		groups = "TACH13";
-+	};
-+
-+	pinctrl_tach14_default: tach14-default {
-+		function = "TACH14";
-+		groups = "TACH14";
-+	};
-+
-+	pinctrl_tach15_default: tach15-default {
-+		function = "TACH15";
-+		groups = "TACH15";
-+	};
-+
-+	pinctrl_jtagm1_default: jtagm1-default {
-+		function = "JTAGM1";
-+		groups = "JTAGM1";
-+	};
-+
-+	pinctrl_mdio0_default: mdio0-default {
-+		function = "MDIO0";
-+		groups = "MDIO0";
-+	};
-+
-+	pinctrl_mdio1_default: mdio1-default {
-+		function = "MDIO1";
-+		groups = "MDIO1";
-+	};
-+
-+	pinctrl_mdio2_default: mdio2-default {
-+		function = "MDIO2";
-+		groups = "MDIO2";
-+	};
-+
-+	pinctrl_rgmii0_default: rgmii0-default {
-+		function = "RGMII0";
-+		groups = "RGMII0";
-+	};
-+
-+	pinctrl_rgmii1_default: rgmii1-default {
-+		function = "RGMII1";
-+		groups = "RGMII1";
-+	};
-+
-+	pinctrl_rmii0_default: rmii0-default {
-+		function = "RMII0";
-+		groups = "RMII0";
-+	};
-+
-+	pinctrl_rmii0_rclko_default: rmii0-rclko-default {
-+		function = "RMII0RCLKO";
-+		groups = "RMII0RCLKO";
-+	};
-+
-+	pinctrl_rmii1_default: rmii1-default {
-+		function = "RMII1";
-+		groups = "RMII1";
-+	};
-+
-+	pinctrl_rmii1_rclko_default: rmii1-rclko-default {
-+		function = "RMII1RCLKO";
-+		groups = "RMII1RCLKO";
-+	};
-+
-+	pinctrl_sgmii_default: sgmii-default {
-+		function = "SGMII";
-+		groups = "SGMII";
-+	};
-+
-+	pinctrl_fwspi_quad_default: fwspi-quad-default {
-+		function = "FWQSPI";
-+		groups = "FWQSPI";
-+	};
-+
-+	pinctrl_fsi0_default: fsi0-default {
-+		function = "FSI0";
-+		groups = "FSI0";
-+	};
-+
-+	pinctrl_fsi1_default: fsi1-default {
-+		function = "FSI1";
-+		groups = "FSI1";
-+	};
-+
-+	pinctrl_fsi2_default: fsi2-default {
-+		function = "FSI2";
-+		groups = "FSI2";
-+	};
-+
-+	pinctrl_fsi3_default: fsi3-default {
-+		function = "FSI3";
-+		groups = "FSI3";
-+	};
-+
-+	pinctrl_spi0_default: spi0-default {
-+		function = "SPI0";
-+		groups = "SPI0";
-+	};
-+
-+	pinctrl_spi0_quad_default: spi0-quad-default {
-+		function = "QSPI0";
-+		groups = "QSPI0";
-+	};
-+
-+	pinctrl_spi0_cs1_default: spi0-cs1-default {
-+		function = "SPI0CS1";
-+		groups = "SPI0CS1";
-+	};
-+
-+	pinctrl_spi1_default: spi1-default {
-+		function = "SPI1";
-+		groups = "SPI1";
-+	};
-+
-+	pinctrl_spi1_quad_default: spi1-quad-default {
-+		function = "QSPI1";
-+		groups = "QSPI1";
-+	};
-+
-+	pinctrl_spi1_cs1_default: spi1-cs1-default {
-+		function = "SPI1CS1";
-+		groups = "SPI1CS1";
-+	};
-+
-+	pinctrl_spi2_default: spi2-default {
-+		function = "SPI2";
-+		groups = "SPI2";
-+	};
-+
-+	pinctrl_spi2_quad_default: spi2-quad-default {
-+		function = "QSPI2";
-+		groups = "QSPI2";
-+	};
-+
-+	pinctrl_spi2_cs1_default: spi2-cs1-default {
-+		function = "SPI2CS1";
-+		groups = "SPI2CS1";
-+	};
-+
-+	pinctrl_espi0_default: espi0-default {
-+		function = "ESPI0";
-+		groups = "ESPI0";
-+	};
-+
-+	pinctrl_espi1_default: espi1-default {
-+		function = "ESPI1";
-+		groups = "ESPI1";
-+	};
-+
-+	pinctrl_lpc0_default: lpc0-default {
-+		function = "LPC0";
-+		groups = "LPC0";
-+	};
-+
-+	pinctrl_lpc1_default: lpc1-default {
-+		function = "LPC1";
-+		groups = "LPC1";
-+	};
-+
-+	pinctrl_vpi_default: vpi-default {
-+		function = "VPI";
-+		groups = "VPI";
-+	};
-+
-+	pinctrl_sd_default: sd-default {
-+		function = "SD";
-+		groups = "SD";
-+	};
-+
-+	pinctrl_hvi3c0_default: hvi3c0-default {
-+		function = "I3C0";
-+		groups = "HVI3C0";
-+	};
-+
-+	pinctrl_hvi3c1_default: hvi3c1-default {
-+		function = "I3C1";
-+		groups = "HVI3C1";
-+	};
-+
-+	pinctrl_hvi3c2_default: hvi3c2-default {
-+		function = "I3C2";
-+		groups = "HVI3C2";
-+	};
-+
-+	pinctrl_hvi3c3_default: hvi3c3-default {
-+		function = "I3C3";
-+		groups = "HVI3C3";
-+	};
-+
-+	pinctrl_i3c4_default: i3c4-default {
-+		function = "I3C4";
-+		groups = "I3C4";
-+	};
-+
-+	pinctrl_i3c5_default: i3c5-default {
-+		function = "I3C5";
-+		groups = "I3C5";
-+	};
-+
-+	pinctrl_i3c6_default: i3c6-default {
-+		function = "I3C6";
-+		groups = "I3C6";
-+	};
-+
-+	pinctrl_i3c7_default: i3c7-default {
-+		function = "I3C7";
-+		groups = "I3C7";
-+	};
-+
-+	pinctrl_i3c8_default: i3c8-default {
-+		function = "I3C8";
-+		groups = "I3C8";
-+	};
-+
-+	pinctrl_i3c9_default: i3c9-default {
-+		function = "I3C9";
-+		groups = "I3C9";
-+	};
-+
-+	pinctrl_i3c10_default: i3c10-default {
-+		function = "I3C10";
-+		groups = "I3C10";
-+	};
-+
-+	pinctrl_i3c11_default: i3c11-default {
-+		function = "I3C11";
-+		groups = "I3C11";
-+	};
-+
-+	pinctrl_hvi3c12_default: hvi3c12-default {
-+		function = "I3C12";
-+		groups = "HVI3C12";
-+	};
-+
-+	pinctrl_hvi3c13_default: hvi3c13-default {
-+		function = "I3C13";
-+		groups = "HVI3C13";
-+	};
-+
-+	pinctrl_hvi3c14_default: hvi3c14-default {
-+		function = "I3C14";
-+		groups = "HVI3C14";
-+	};
-+
-+	pinctrl_hvi3c15_default: hvi3c15-default {
-+		function = "I3C15";
-+		groups = "HVI3C15";
-+	};
-+
-+	pinctrl_tach0_default: tach0-default {
-+		function = "TACH0";
-+		groups = "TACH0";
-+	};
-+
-+	pinctrl_tach1_default: tach1-default {
-+		function = "TACH1";
-+		groups = "TACH1";
-+	};
-+
-+	pinctrl_tach2_default: tach2-default {
-+		function = "TACH2";
-+		groups = "TACH2";
-+	};
-+
-+	pinctrl_tach3_default: tach3-default {
-+		function = "TACH3";
-+		groups = "TACH3";
-+	};
-+
-+	pinctrl_tach4_default: tach4-default {
-+		function = "TACH4";
-+		groups = "TACH4";
-+	};
-+
-+	pinctrl_tach5_default: tach5-default {
-+		function = "TACH5";
-+		groups = "TACH5";
-+	};
-+
-+	pinctrl_tach6_default: tach6-default {
-+		function = "TACH6";
-+		groups = "TACH6";
-+	};
-+
-+	pinctrl_tach7_default: tach7-default {
-+		function = "TACH7";
-+		groups = "TACH7";
-+	};
-+
-+	pinctrl_tach8_default: tach8-default {
-+		function = "TACH8";
-+		groups = "TACH8";
-+	};
-+
-+	pinctrl_tach9_default: tach9-default {
-+		function = "TACH9";
-+		groups = "TACH9";
-+	};
-+
-+	pinctrl_tach10_default: tach10-default {
-+		function = "TACH10";
-+		groups = "TACH10";
-+	};
-+
-+	pinctrl_tach11_default: tach11-default {
-+		function = "TACH11";
-+		groups = "TACH11";
-+	};
-+
-+	pinctrl_tach12_default: tach12-default {
-+		function = "TACH12";
-+		groups = "TACH12";
-+	};
-+
-+	pinctrl_tach13_default: tach13-default {
-+		function = "TACH13";
-+		groups = "TACH13";
-+	};
-+
-+	pinctrl_tach14_default: tach14-default {
-+		function = "TACH14";
-+		groups = "TACH14";
-+	};
-+
-+	pinctrl_tach15_default: tach15-default {
-+		function = "TACH15";
-+		groups = "TACH15";
-+	};
-+
-+	pinctrl_thru0_default: thru0-default {
-+		function = "THRU0";
-+		groups = "THRU0";
-+	};
-+
-+	pinctrl_thru1_default: thru1-default {
-+		function = "THRU1";
-+		groups = "THRU1";
-+	};
-+
-+	pinctrl_thru2_default: thru2-default {
-+		function = "THRU2";
-+		groups = "THRU2";
-+	};
-+
-+	pinctrl_thru3_default: thru3-default {
-+		function = "THRU3";
-+		groups = "THRU3";
-+	};
-+
-+	pinctrl_ncts5_default: ncts5-default {
-+		function = "NCTS5";
-+		groups = "NCTS5";
-+	};
-+
-+	pinctrl_ndcd5_default: ndcd5-default {
-+		function = "NDCD5";
-+		groups = "NDCD5";
-+	};
-+
-+	pinctrl_ndsr5_default: ndsr5-default {
-+		function = "NDSR5";
-+		groups = "NDSR5";
-+	};
-+
-+	pinctrl_nri5_default: nri5-default {
-+		function = "NRI5";
-+		groups = "NRI5";
-+	};
-+
-+	pinctrl_i2c0_default: i2c0-default {
-+		function = "I2C0";
-+		groups = "I2C0";
-+	};
-+
-+	pinctrl_i2c1_default: i2c1-default {
-+		function = "I2C1";
-+		groups = "I2C1";
-+	};
-+
-+	pinctrl_i2c2_default: i2c2-default {
-+		function = "I2C2";
-+		groups = "I2C2";
-+	};
-+
-+	pinctrl_i2c3_default: i2c3-default {
-+		function = "I2C3";
-+		groups = "I2C3";
-+	};
-+
-+	pinctrl_i2c4_default: i2c4-default {
-+		function = "I2C4";
-+		groups = "I2C4";
-+	};
-+
-+	pinctrl_i2c5_default: i2c5-default {
-+		function = "I2C5";
-+		groups = "I2C5";
-+	};
-+
-+	pinctrl_i2c6_default: i2c6-default {
-+		function = "I2C6";
-+		groups = "I2C6";
-+	};
-+
-+	pinctrl_i2c7_default: i2c7-default {
-+		function = "I2C7";
-+		groups = "I2C7";
-+	};
-+
-+	pinctrl_i2c8_default: i2c8-default {
-+		function = "I2C8";
-+		groups = "I2C8";
-+	};
-+
-+	pinctrl_i2c9_default: i2c9-default {
-+		function = "I2C9";
-+		groups = "I2C9";
-+	};
-+
-+	pinctrl_i2c10_default: i2c10-default {
-+		function = "I2C10";
-+		groups = "I2C10";
-+	};
-+
-+	pinctrl_i2c11_default: i2c11-default {
-+		function = "I2C11";
-+		groups = "I2C11";
-+	};
-+
-+	pinctrl_i2c12_default: i2c12-default {
-+		function = "I2C12";
-+		groups = "I2C12";
-+	};
-+
-+	pinctrl_i2c13_default: i2c13-default {
-+		function = "I2C13";
-+		groups = "I2C13";
-+	};
-+
-+	pinctrl_i2c14_default: i2c14-default {
-+		function = "I2C14";
-+		groups = "I2C14";
-+	};
-+
-+	pinctrl_i2c15_default: i2c15-default {
-+		function = "I2C15";
-+		groups = "I2C15";
-+	};
-+
-+	pinctrl_salt0_default: salt0-default {
-+		function = "SALT0";
-+		groups = "SALT0";
-+	};
-+
-+	pinctrl_salt1_default: salt1-default {
-+		function = "SALT1";
-+		groups = "SALT1";
-+	};
-+
-+	pinctrl_salt2_default: salt2-default {
-+		function = "SALT2";
-+		groups = "SALT2";
-+	};
-+
-+	pinctrl_salt3_default: salt3-default {
-+		function = "SALT3";
-+		groups = "SALT3";
-+	};
-+
-+	pinctrl_salt4_default: salt4-default {
-+		function = "SALT4";
-+		groups = "SALT4";
-+	};
-+
-+	pinctrl_salt5_default: salt5-default {
-+		function = "SALT5";
-+		groups = "SALT5";
-+	};
-+
-+	pinctrl_salt6_default: salt6-default {
-+		function = "SALT6";
-+		groups = "SALT6";
-+	};
-+
-+	pinctrl_salt7_default: salt7-default {
-+		function = "SALT7";
-+		groups = "SALT7";
-+	};
-+
-+	pinctrl_salt8_default: salt8-default {
-+		function = "SALT8";
-+		groups = "SALT8";
-+	};
-+
-+	pinctrl_salt9_default: salt9-default {
-+		function = "SALT9";
-+		groups = "SALT9";
-+	};
-+
-+	pinctrl_salt10_default: salt10-default {
-+		function = "SALT10";
-+		groups = "SALT10";
-+	};
-+
-+	pinctrl_salt11_default: salt11-default {
-+		function = "SALT11";
-+		groups = "SALT11";
-+	};
-+
-+	pinctrl_salt12_default: salt12-default {
-+		function = "SALT12";
-+		groups = "SALT12";
-+	};
-+
-+	pinctrl_salt13_default: salt13-default {
-+		function = "SALT13";
-+		groups = "SALT13";
-+	};
-+
-+	pinctrl_salt14_default: salt14-default {
-+		function = "SALT14";
-+		groups = "SALT14";
-+	};
-+
-+	pinctrl_salt15_default: salt15-default {
-+		function = "SALT15";
-+		groups = "SALT15";
-+	};
-+
-+	pinctrl_can_default: can-default {
-+		function = "CANBUS";
-+		groups = "CANBUS";
-+	};
-+	pinctrl_di2c0_default: di2c0-default {
-+		function = "I2C0";
-+		groups = "DI2C0";
-+	};
-+
-+	pinctrl_di2c1_default: di2c1-default {
-+		function = "I2C1";
-+		groups = "DI2C1";
-+	};
-+
-+	pinctrl_di2c2_default: di2c2-default {
-+		function = "I2C2";
-+		groups = "DI2C2";
-+	};
-+
-+	pinctrl_di2c3_default: di2c3-default {
-+		function = "I2C3";
-+		groups = "DI2C3";
-+	};
-+	pinctrl_di2c8_default: di2c8-default {
-+		function = "I2C8";
-+		groups = "DI2C8";
-+	};
-+
-+	pinctrl_di2c9_default: di2c9-default {
-+		function = "I2C9";
-+		groups = "DI2C9";
-+	};
-+
-+	pinctrl_di2c10_default: di2c10-default {
-+		function = "I2C10";
-+		groups = "DI2C10";
-+	};
-+
-+	pinctrl_di2c11_default: di2c11-default {
-+		function = "I2C11";
-+		groups = "DI2C11";
-+	};
-+
-+	pinctrl_di2c12_default: id2c12-default {
-+		function = "I2C12";
-+		groups = "DI2C12";
-+	};
-+
-+	pinctrl_di2c13_default: di2c13-default {
-+		function = "I2C13";
-+		groups = "DI2C13";
-+	};
-+
-+	pinctrl_di2c14_default: di2c14-default {
-+		function = "I2C14";
-+		groups = "DI2C14";
-+	};
-+
-+	pinctrl_di2c15_default: di2c15-default {
-+		function = "I2C15";
-+		groups = "DI2C15";
-+	};
-+
-+	pinctrl_ncts0_default: ncts0-default {
-+		function = "UART0";
-+		groups = "NCTS0";
-+	};
-+
-+	pinctrl_ndcd0_default: ndcd0-default {
-+		function = "UART0";
-+		groups = "NDCD0";
-+	};
-+
-+	pinctrl_ndsr0_default: ndsr0-default {
-+		function = "UART0";
-+		groups = "NDSR0";
-+	};
-+
-+	pinctrl_nri0_default: nri0-default {
-+		function = "UART0";
-+		groups = "NRI0";
-+	};
-+
-+	pinctrl_ndtr0_default: ndtr0-default {
-+		function = "UART0";
-+		groups = "NDTR0";
-+	};
-+
-+	pinctrl_nrts0_default: nrts0-default {
-+		function = "UART0";
-+		groups = "NRTS0";
-+	};
-+
-+	pinctrl_txd0_default: txd0-default {
-+		function = "UART0";
-+		groups = "TXD0";
-+	};
-+
-+	pinctrl_rxd0_default: rxd0-default {
-+		function = "UART0";
-+		groups = "RXD0";
-+	};
-+
-+	pinctrl_ncts1_default: ncts1-default {
-+		function = "UART1";
-+		groups = "NCTS1";
-+	};
-+
-+	pinctrl_ndcd1_default: ndcd1-default {
-+		function = "UART1";
-+		groups = "NDCD1";
-+	};
-+
-+	pinctrl_ndsr1_default: ndsr1-default {
-+		function = "UART1";
-+		groups = "NDSR1";
-+	};
-+
-+	pinctrl_nri1_default: nri1-default {
-+		function = "UART1";
-+		groups = "NRI1";
-+	};
-+
-+	pinctrl_ndtr1_default: ndtr1-default {
-+		function = "UART1";
-+		groups = "NDTR1";
-+	};
-+
-+	pinctrl_nrts1_default: nrts1-default {
-+		function = "UART1";
-+		groups = "NRTS1";
-+	};
-+
-+	pinctrl_txd1_default: txd1-default {
-+		function = "UART1";
-+		groups = "TXD1";
-+	};
-+
-+	pinctrl_rxd1_default: rxd1-default {
-+		function = "UART1";
-+		groups = "RXD1";
-+	};
-+
-+	pinctrl_txd2_default: txd2-default {
-+		function = "UART2";
-+		groups = "TXD2";
-+	};
-+
-+	pinctrl_rxd2_default: rxd2-default {
-+		function = "UART2";
-+		groups = "RXD2";
-+	};
-+
-+	pinctrl_txd3_default: txd3-default {
-+		function = "UART3";
-+		groups = "TXD3";
-+	};
-+
-+	pinctrl_rxd3_default: rxd3-default {
-+		function = "UART3";
-+		groups = "RXD3";
-+	};
-+
-+	pinctrl_ncts5_default: ncts5-default {
-+		function = "UART5";
-+		groups = "NCTS5";
-+	};
-+
-+	pinctrl_ndcd5_default: ndcd5-default {
-+		function = "UART5";
-+		groups = "NDCD5";
-+	};
-+
-+	pinctrl_ndsr5_default: ndsr5-default {
-+		function = "UART5";
-+		groups = "NDSR5";
-+	};
-+
-+	pinctrl_nri5_default: nri5-default {
-+		function = "UART5";
-+		groups = "NRI5";
-+	};
-+
-+	pinctrl_ndtr5_default: ndtr5-default {
-+		function = "UART5";
-+		groups = "NDTR5";
-+	};
-+
-+	pinctrl_nrts5_default: nrts5-default {
-+		function = "UART5";
-+		groups = "NRTS5";
-+	};
-+
-+	pinctrl_txd5_default: txd5-default {
-+		function = "UART5";
-+		groups = "TXD5";
-+	};
-+
-+	pinctrl_rxd5_default: rxd5-default {
-+		function = "UART5";
-+		groups = "RXD5";
-+	};
-+
-+	pinctrl_ncts6_default: ncts6-default {
-+		function = "UART6";
-+		groups = "NCTS6";
-+	};
-+
-+	pinctrl_ndcd6_default: ndcd6-default {
-+		function = "UART6";
-+		groups = "NDCD6";
-+	};
-+
-+	pinctrl_ndsr6_default: ndsr6-default {
-+		function = "UART6";
-+		groups = "NDSR6";
-+	};
-+
-+	pinctrl_nri6_default: nri6-default {
-+		function = "UART6";
-+		groups = "NRI6";
-+	};
-+
-+	pinctrl_ndtr6_default: ndtr6-default {
-+		function = "UART6";
-+		groups = "NDTR6";
-+	};
-+
-+	pinctrl_nrts6_default: nrts6-default {
-+		function = "UART6";
-+		groups = "NRTS6";
-+	};
-+
-+	pinctrl_txd6_default: txd6-default {
-+		function = "UART6";
-+		groups = "TXD6";
-+	};
-+
-+	pinctrl_rxd6_default: rxd6-default {
-+		function = "UART6";
-+		groups = "RXD6";
-+	};
-+
-+	pinctrl_txd7_default: txd7-default {
-+		function = "UART7";
-+		groups = "TXD7";
-+	};
-+
-+	pinctrl_rxd7_default: rxd7-default {
-+		function = "UART7";
-+		groups = "RXD7";
-+	};
-+
-+	pinctrl_txd8_default: txd8-default {
-+		function = "UART8";
-+		groups = "TXD8";
-+	};
-+
-+	pinctrl_rxd8_default: rxd8-default {
-+		function = "UART8";
-+		groups = "RXD8";
-+	};
-+
-+	pinctrl_txd9_default: txd9-default {
-+		function = "UART9";
-+		groups = "TXD9";
-+	};
-+
-+	pinctrl_rxd9_default: rxd9-default {
-+		function = "UART9";
-+		groups = "RXD9";
-+	};
-+
-+	pinctrl_txd10_default: txd10-default {
-+		function = "UART10";
-+		groups = "TXD10";
-+	};
-+
-+	pinctrl_rxd10_default: rxd10-default {
-+		function = "UART10";
-+		groups = "RXD10";
-+	};
-+
-+	pinctrl_txd11_default: txd11-default {
-+		function = "UART11";
-+		groups = "TXD11";
-+	};
-+
-+	pinctrl_rxd11_default: rxd11-default {
-+		function = "UART11";
-+		groups = "RXD11";
-+	};
-+
-+	pinctrl_pcierc2_perst_default: pcierc2-perst-default {
-+		function = "PCIERC";
-+		groups = "PE2SGRSTN";
-+	};
-+
-+	pinctrl_usb2cud_default: usb2cud-default {
-+		function = "USB2C";
-+		groups = "USB2CUD";
-+	};
-+
-+	pinctrl_usb2cd_default: usb2cd-default {
-+		function = "USB2C";
-+		groups = "USB2CD";
-+	};
-+
-+	pinctrl_usb2ch_default: usb2ch-default {
-+		function = "USB2C";
-+		groups = "USB2CH";
-+	};
-+
-+	pinctrl_usb2cu_default: usb2cu-default {
-+		function = "USB2C";
-+		groups = "USB2CU";
-+	};
-+
-+	pinctrl_usb2dd_default: usb2dd-default {
-+		function = "USB2D";
-+		groups = "USB2DD";
-+	};
-+
-+	pinctrl_usb2dh_default: usb2dh-default {
-+		function = "USB2D";
-+		groups = "USB2DH";
-+	};
-+};
--- 
-2.25.1
+Thank you for your patch.
 
+
+Am 29.08.25 um 05:53 schrieb Jammy Huang:
+> ASPEED BMC IC has 2 different display engines. Please find AST2600's
+> datasheet to get detailed information.
+
+Please specify the revision, you used for implementing this.
+
+> 
+> 1. VGA on PCIe
+> 2. SoC Display (GFX)
+> 
+> By default, video engine (VE) will capture video from VGA. This patch
+> adds an option to capture video from GFX with standard ioctl,
+> vidioc_s_input.
+> 
+> An enum, aspeed_video_input, is added for this purpose.
+> enum aspeed_video_input {
+> 	VIDEO_INPUT_VGA = 0,
+> 	VIDEO_INPUT_GFX,
+> 	VIDEO_INPUT_MAX
+> };
+> 
+> To test this feature, you will need to enable GFX first. Please refer to
+> ASPEED's SDK_User_Guide, 6.3.x Soc Display driver, for more information.
+> In your application, you will need to use v4l2 ioctl, VIDIOC_S_INPUT, as
+> below to select before start streaming.
+> 
+> int rc;
+> struct v4l2_input input;
+> 
+> input.index = VIDEO_INPUT_GFX;
+> rc = ioctl(fd, VIDIOC_S_INPUT, &input);
+> if (rc < 0)
+> {
+> 	...
+> }
+
+Please paste the new log lines, and document your test setup.
+
+> Link: https://github.com/AspeedTech-BMC/openbmc/releases
+> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> ---
+>   v10 changes:
+>    - Fix alignment check.
+>   v9 changes:
+>    - Fix line length WARNING.
+>   v8 changes:
+>    - Add check in aspeed_video_set_input().
+>   v5 changes:
+>    - Simplify aspeed_regmap_lookup.
+>   v4 changes:
+>    - Use scoped/cleanup to make aspeed_regmap_lookup simpler.
+>   v3 changes:
+>    - Update for enum_input.
+> ---
+>   drivers/media/platform/aspeed/aspeed-video.c | 199 ++++++++++++++++---
+>   include/uapi/linux/aspeed-video.h            |   7 +
+>   2 files changed, 178 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+> index 54cae0da9aca..b83e43245277 100644
+> --- a/drivers/media/platform/aspeed/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed/aspeed-video.c
+> @@ -4,6 +4,7 @@
+>   
+>   #include <linux/atomic.h>
+>   #include <linux/bitfield.h>
+> +#include <linux/cleanup.h>
+>   #include <linux/clk.h>
+>   #include <linux/delay.h>
+>   #include <linux/device.h>
+> @@ -25,6 +26,8 @@
+>   #include <linux/workqueue.h>
+>   #include <linux/debugfs.h>
+>   #include <linux/ktime.h>
+> +#include <linux/regmap.h>
+> +#include <linux/mfd/syscon.h>
+>   #include <media/v4l2-ctrls.h>
+>   #include <media/v4l2-dev.h>
+>   #include <media/v4l2-device.h>
+> @@ -203,6 +206,25 @@
+>   #define VE_MEM_RESTRICT_START		0x310
+>   #define VE_MEM_RESTRICT_END		0x314
+>   
+> +/* SCU's registers */
+> +#define SCU_MISC_CTRL			0xC0
+> +#define  SCU_DPLL_SOURCE		BIT(20)
+> +
+> +/* GFX's registers */
+> +#define GFX_CTRL			0x60
+> +#define  GFX_CTRL_ENABLE		BIT(0)
+> +#define  GFX_CTRL_FMT			GENMASK(9, 7)
+> +
+> +#define GFX_H_DISPLAY			0x70
+> +#define  GFX_H_DISPLAY_DE		GENMASK(28, 16)
+> +#define  GFX_H_DISPLAY_TOTAL		GENMASK(12, 0)
+> +
+> +#define GFX_V_DISPLAY			0x78
+> +#define  GFX_V_DISPLAY_DE		GENMASK(27, 16)
+> +#define  GFX_V_DISPLAY_TOTAL		GENMASK(11, 0)
+> +
+> +#define GFX_DISPLAY_ADDR		0x80
+> +
+>   /*
+>    * VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
+>    * VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
+> @@ -262,6 +284,7 @@ struct aspeed_video_perf {
+>   /*
+>    * struct aspeed_video - driver data
+>    *
+> + * version:		holds the version of aspeed SoC
+
+Please document in the commit message, what the version field is needed for.
+
+>    * res_work:		holds the delayed_work for res-detection if unlock
+>    * buffers:		holds the list of buffer queued from user
+>    * flags:		holds the state of video
+> @@ -273,6 +296,7 @@ struct aspeed_video_perf {
+>    * yuv420:		a flag raised if JPEG subsampling is 420
+>    * format:		holds the video format
+>    * hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
+> + * input:		holds the video input
+>    * frame_rate:		holds the frame_rate
+>    * jpeg_quality:	holds jpeq's quality (0~11)
+>    * jpeg_hq_quality:	holds hq's quality (1~12) only if hq_mode enabled
+> @@ -298,6 +322,9 @@ struct aspeed_video {
+>   	struct video_device vdev;
+>   	struct mutex video_lock;	/* v4l2 and videobuf2 lock */
+>   
+> +	struct regmap *scu;
+> +	struct regmap *gfx;
+> +	u32 version;
+>   	u32 jpeg_mode;
+>   	u32 comp_size_read;
+>   
+> @@ -316,6 +343,7 @@ struct aspeed_video {
+>   	bool yuv420;
+>   	enum aspeed_video_format format;
+>   	bool hq_mode;
+> +	enum aspeed_video_input input;
+>   	unsigned int frame_rate;
+>   	unsigned int jpeg_quality;
+>   	unsigned int jpeg_hq_quality;
+> @@ -331,21 +359,25 @@ struct aspeed_video {
+>   #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
+>   
+>   struct aspeed_video_config {
+> +	u32 version;
+>   	u32 jpeg_mode;
+>   	u32 comp_size_read;
+>   };
+>   
+>   static const struct aspeed_video_config ast2400_config = {
+> +	.version = 4,
+>   	.jpeg_mode = AST2400_VE_SEQ_CTRL_JPEG_MODE,
+>   	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>   };
+>   
+>   static const struct aspeed_video_config ast2500_config = {
+> +	.version = 5,
+>   	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>   	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
+>   };
+>   
+>   static const struct aspeed_video_config ast2600_config = {
+> +	.version = 6,
+>   	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
+>   	.comp_size_read = AST2600_VE_COMP_SIZE_READ_BACK,
+>   };
+> @@ -485,6 +517,7 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
+>   
+>   static const char * const format_str[] = {"Standard JPEG",
+>   	"Aspeed JPEG"};
+> +static const char * const input_str[] = {"HOST VGA", "BMC GFX"};
+>   
+>   static unsigned int debug;
+>   
+> @@ -609,6 +642,14 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
+>   		aspeed_video_free_buf(video, &video->bcd);
+>   	}
+>   
+> +	if (video->input == VIDEO_INPUT_GFX) {
+> +		u32 val;
+> +
+> +		// update input buffer address as gfx's
+> +		regmap_read(video->gfx, GFX_DISPLAY_ADDR, &val);
+> +		aspeed_video_write(video, VE_TGS_0, val);
+> +	}
+> +
+>   	spin_lock_irqsave(&video->lock, flags);
+>   	buf = list_first_entry_or_null(&video->buffers,
+>   				       struct aspeed_video_buffer, link);
+> @@ -1026,9 +1067,23 @@ static void aspeed_video_get_timings(struct aspeed_video *v,
+>   	}
+>   }
+>   
+> +static void aspeed_video_get_resolution_gfx(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+> +{
+> +	u32 h_val, v_val;
+> +
+> +	regmap_read(video->gfx, GFX_H_DISPLAY, &h_val);
+> +	regmap_read(video->gfx, GFX_V_DISPLAY, &v_val);
+> +
+> +	det->width = FIELD_GET(GFX_H_DISPLAY_DE, h_val) + 1;
+> +	det->height = FIELD_GET(GFX_V_DISPLAY_DE, v_val) + 1;
+> +	video->v4l2_input_status = 0;
+> +}
+> +
+>   #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
+>   
+> -static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +static void aspeed_video_get_resolution_vga(struct aspeed_video *video,
+> +					    struct v4l2_bt_timings *det)
+>   {
+>   	bool invalid_resolution = true;
+>   	int rc;
+> @@ -1036,7 +1091,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>   	u32 mds;
+>   	u32 src_lr_edge;
+>   	u32 src_tb_edge;
+> -	struct v4l2_bt_timings *det = &video->detected_timings;
+>   
+>   	det->width = MIN_WIDTH;
+>   	det->height = MIN_HEIGHT;
+> @@ -1113,14 +1167,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+>   
+>   	aspeed_video_get_timings(video, det);
+>   
+> -	/*
+> -	 * Enable mode-detect watchdog, resolution-change watchdog and
+> -	 * automatic compression after frame capture.
+> -	 */
+> +	/* Enable mode-detect watchdog, resolution-change watchdog */
+>   	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
+>   			    VE_INTERRUPT_MODE_DETECT_WD);
+> -	aspeed_video_update(video, VE_SEQ_CTRL, 0,
+> -			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
+> +	aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_EN_WATCHDOG);
+
+Please document in the commit message, why automatic compression is removde.
+
+> +}
+> +
+> +static void aspeed_video_get_resolution(struct aspeed_video *video)
+> +{
+> +	struct v4l2_bt_timings *det = &video->detected_timings;
+> +
+> +	if (video->input == VIDEO_INPUT_GFX)
+> +		aspeed_video_get_resolution_gfx(video, det);
+> +	else
+> +		aspeed_video_get_resolution_vga(video, det);
+>   
+>   	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
+>   		 det->width, det->height);
+
+Update to mention the source?
+
+> @@ -1156,7 +1216,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>   	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
+>   
+>   	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
+> -	if (size < DIRECT_FETCH_THRESHOLD) {
+> +	if (video->input == VIDEO_INPUT_VGA && size < DIRECT_FETCH_THRESHOLD) {
+>   		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
+>   		aspeed_video_write(video, VE_TGS_0,
+>   				   FIELD_PREP(VE_TGS_FIRST,
+> @@ -1171,10 +1231,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>   				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+>   				    VE_CTRL_INT_DE);
+>   	} else {
+> +		u32 ctrl, val, bpp;
+> +
+>   		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
+> +		ctrl = VE_CTRL_DIRECT_FETCH;
+> +		if (video->input == VIDEO_INPUT_GFX) {
+> +			regmap_read(video->gfx, GFX_CTRL, &val);
+> +			bpp = FIELD_GET(GFX_CTRL_FMT, val) ? 32 : 16;
+> +			if (bpp == 16)
+> +				ctrl |= VE_CTRL_INT_DE;
+> +			aspeed_video_write(video, VE_TGS_1, act->width * (bpp >> 3));
+> +		}
+>   		aspeed_video_update(video, VE_CTRL,
+>   				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
+> -				    VE_CTRL_DIRECT_FETCH);
+> +				    ctrl);
+>   	}
+>   
+>   	size *= 4;
+> @@ -1207,6 +1277,22 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+>   		aspeed_video_free_buf(video, &video->srcs[0]);
+>   }
+>   
+> +/*
+> + * Update relative parameters when timing changed.
+> + *
+> + * @video: the struct of aspeed_video
+> + * @timings: the new timings
+> + */
+> +static void aspeed_video_update_timings(struct aspeed_video *video, struct v4l2_bt_timings *timings)
+> +{
+> +	video->active_timings = *timings;
+> +	aspeed_video_set_resolution(video);
+> +
+> +	video->pix_fmt.width = timings->width;
+> +	video->pix_fmt.height = timings->height;
+> +	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +}
+> +
+>   static void aspeed_video_update_regs(struct aspeed_video *video)
+>   {
+>   	u8 jpeg_hq_quality = clamp((int)video->jpeg_hq_quality - 1, 0,
+> @@ -1219,6 +1305,8 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>   	u32 ctrl = 0;
+>   	u32 seq_ctrl = 0;
+>   
+> +	v4l2_dbg(1, debug, &video->v4l2_dev, "input(%s)\n",
+> +		 input_str[video->input]);
+>   	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
+>   		 video->frame_rate);
+>   	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
+> @@ -1234,6 +1322,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>   	else
+>   		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
+>   
+> +	if (video->input == VIDEO_INPUT_VGA)
+> +		ctrl |= VE_CTRL_AUTO_OR_CURSOR;
+> +
+>   	if (video->frame_rate)
+>   		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
+>   
+> @@ -1252,7 +1343,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
+>   	aspeed_video_update(video, VE_SEQ_CTRL,
+>   			    video->jpeg_mode | VE_SEQ_CTRL_YUV420,
+>   			    seq_ctrl);
+> -	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
+> +	aspeed_video_update(video, VE_CTRL,
+> +			    VE_CTRL_FRC | VE_CTRL_AUTO_OR_CURSOR |
+> +			    VE_CTRL_SOURCE, ctrl);
+>   	aspeed_video_update(video, VE_COMP_CTRL,
+>   			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
+>   			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
+> @@ -1280,6 +1373,7 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
+>   	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
+>   
+>   	/* Set control registers */
+> +	aspeed_video_write(video, VE_SEQ_CTRL, VE_SEQ_CTRL_AUTO_COMP);
+>   	aspeed_video_write(video, VE_CTRL, ctrl);
+>   	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
+>   
+> @@ -1311,12 +1405,7 @@ static void aspeed_video_start(struct aspeed_video *video)
+>   	aspeed_video_get_resolution(video);
+>   
+>   	/* Set timings since the device is being opened for the first time */
+> -	video->active_timings = video->detected_timings;
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = video->active_timings.width;
+> -	video->pix_fmt.height = video->active_timings.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &video->detected_timings);
+>   }
+>   
+>   static void aspeed_video_stop(struct aspeed_video *video)
+> @@ -1401,10 +1490,10 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
+>   {
+>   	struct aspeed_video *video = video_drvdata(file);
+>   
+> -	if (inp->index)
+> +	if (inp->index >= VIDEO_INPUT_MAX)
+>   		return -EINVAL;
+>   
+> -	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
+> +	sprintf(inp->name, "%s capture", input_str[inp->index]);
+>   	inp->type = V4L2_INPUT_TYPE_CAMERA;
+>   	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
+>   	inp->status = video->v4l2_input_status;
+> @@ -1414,16 +1503,57 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
+>   
+>   static int aspeed_video_get_input(struct file *file, void *fh, unsigned int *i)
+>   {
+> -	*i = 0;
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	*i = video->input;
+>   
+>   	return 0;
+>   }
+>   
+>   static int aspeed_video_set_input(struct file *file, void *fh, unsigned int i)
+>   {
+> -	if (i)
+> +	struct aspeed_video *video = video_drvdata(file);
+> +
+> +	if (i >= VIDEO_INPUT_MAX)
+>   		return -EINVAL;
+>   
+> +	if (i == video->input)
+> +		return 0;
+> +
+> +	if (vb2_is_busy(&video->queue))
+> +		return -EBUSY;
+> +
+> +	if (IS_ERR(video->scu)) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev,
+> +			 "%s: scu isn't ready for input-control\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (IS_ERR(video->gfx) && i == VIDEO_INPUT_GFX) {
+> +		v4l2_dbg(1, debug, &video->v4l2_dev,
+> +			 "%s: gfx isn't ready for GFX input\n", __func__);
+> +		return -EINVAL;
+> +	}
+> +
+> +	video->input = i;
+> +
+> +	if (video->version == 6) {
+> +		/* modify dpll source per current input */
+> +		if (video->input == VIDEO_INPUT_VGA)
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL,
+> +					   SCU_DPLL_SOURCE, 0);
+> +		else
+> +			regmap_update_bits(video->scu, SCU_MISC_CTRL,
+> +					   SCU_DPLL_SOURCE, SCU_DPLL_SOURCE);
+
+You could use the ternary operator.
+
+> +	}
+> +
+> +	aspeed_video_update_regs(video);
+> +
+> +	/* update signal status */
+> +	aspeed_video_get_resolution(video);
+> +	if (!video->v4l2_input_status)
+> +		aspeed_video_update_timings(video, &video->detected_timings);
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1527,13 +1657,7 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
+>   	if (vb2_is_busy(&video->queue))
+>   		return -EBUSY;
+>   
+> -	video->active_timings = timings->bt;
+> -
+> -	aspeed_video_set_resolution(video);
+> -
+> -	video->pix_fmt.width = timings->bt.width;
+> -	video->pix_fmt.height = timings->bt.height;
+> -	video->pix_fmt.sizeimage = video->max_compressed_size;
+> +	aspeed_video_update_timings(video, &timings->bt);
+>   
+>   	timings->type = V4L2_DV_BT_656_1120;
+>   
+> @@ -1909,6 +2033,7 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
+>   	val08 = aspeed_video_read(v, VE_CTRL);
+>   	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
+>   		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
+> +		seq_printf(s, "  %-20s:\t%s\n", "Input", input_str[v->input]);
+>   		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
+>   			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
+>   	} else {
+> @@ -2068,12 +2193,29 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
+>   	return 0;
+>   }
+>   
+> +/*
+> + * Get regmap without checking res, such as clk/reset, that could lead to
+> + * conflict.
+> + */
+> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
+> +{
+> +	struct device_node *syscon_np __free(device_node) = of_parse_phandle(np, property, 0);
+> +
+> +	if (!syscon_np)
+> +		return ERR_PTR(-ENODEV);
+> +
+> +	return device_node_to_regmap(syscon_np);
+> +}
+> +
+>   static int aspeed_video_init(struct aspeed_video *video)
+>   {
+>   	int irq;
+>   	int rc;
+>   	struct device *dev = video->dev;
+>   
+> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
+> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
+> +
+>   	irq = irq_of_parse_and_map(dev->of_node, 0);
+>   	if (!irq) {
+>   		dev_err(dev, "Unable to find IRQ\n");
+> @@ -2165,6 +2307,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
+>   	if (!config)
+>   		return -ENODEV;
+>   
+> +	video->version = config->version;
+>   	video->jpeg_mode = config->jpeg_mode;
+>   	video->comp_size_read = config->comp_size_read;
+>   
+> diff --git a/include/uapi/linux/aspeed-video.h b/include/uapi/linux/aspeed-video.h
+> index 6586a65548c4..15168e8c931e 100644
+> --- a/include/uapi/linux/aspeed-video.h
+> +++ b/include/uapi/linux/aspeed-video.h
+> @@ -8,6 +8,13 @@
+>   
+>   #include <linux/v4l2-controls.h>
+>   
+> +/* aspeed video's input types */
+> +enum aspeed_video_input {
+> +	VIDEO_INPUT_VGA = 0,
+> +	VIDEO_INPUT_GFX,
+> +	VIDEO_INPUT_MAX
+> +};
+> +
+>   #define V4L2_CID_ASPEED_HQ_MODE			(V4L2_CID_USER_ASPEED_BASE  + 1)
+>   #define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(V4L2_CID_USER_ASPEED_BASE  + 2)
+>   
+
+
+Kind regards,
+
+Paul
 
