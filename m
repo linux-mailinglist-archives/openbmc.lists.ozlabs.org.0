@@ -1,60 +1,91 @@
-Return-Path: <openbmc+bounces-568-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-569-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 696B5B4123C
-	for <lists+openbmc@lfdr.de>; Wed,  3 Sep 2025 04:14:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA8A7B4123D
+	for <lists+openbmc@lfdr.de>; Wed,  3 Sep 2025 04:16:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cGmQT2FW4z30BW;
-	Wed,  3 Sep 2025 12:14:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cGmS65sXPz2yr4;
+	Wed,  3 Sep 2025 12:16:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756865681;
-	cv=none; b=gPxQt+oq2kF0IQ8oD9GjxoLICSdLf0hLIrl4WkUOAXGVjak2a6QRizAUlGxW5eSSBZIV4Y+EhD4VmxOQd1O7KwHnmjPyufFhjXfNm9OYYC6CrwjTdUe9VzDJhxKnuaAN+ZSC7gb2Sak5gm3Gm8eJ2yz9W/0IjJIBpfevKuB0j690mJCnczBf8um8gr/J5ZSxV8tUglHtMMjqRW4Vim7p5vYv0Okwx+rqWUdMH1j2FPGjNk8rZL1YNI87nbtjwBtyC05lVaRu3a5CJs3l7cFEu9CPTbBkiL7DI11Ft2NdATp4gTLK38Sjvpfxhd4Q0xA6LorWyGijycmVZwrV7zIrHQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.144
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756865766;
+	cv=none; b=lU9vQOgYfRdExiCibw1k5UDML9HKg70i+hNPRDz+/JxcEqVUKUmruqFWf2OWJeFpenaPWh76QDuB0auZ6eDftFCQAi9gD8KyeWjBwgQD/Emkw39VYZ4Vd1+9DbLQjIOqOd8xdpBJnadXSI1CEy1yJutJbMXHWxTuJb5ferSFKlnismYc7uhEWmroafl/G0wcEFXUPl3ASmgh5LG4FSNJu1yBWW2RaL0nGfblaC6ySy0/XZTFcW4o+cKnvAknOY+YDAhNb+RgIoAo0pphBKcyD4dIgxKXsfG37LDYlbR8AlDgF8TWHl6qbYjLgjHQIz7zPG84o8fBqPElFOqwTKQdGQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1756865681; c=relaxed/relaxed;
-	bh=Oq/uYbHX5tvNrFv3S3IE/iyWmkYMcaYFIsJUt3p8ODU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Ql4R5fX29qJ5gJLqcpWulFP7dg8KZuhhQEH9fOeYIoWeKaGzTMJ06B2/YLbbBhvnYVNde5A6Z5BAZBH1W0jKsuHqMYzf/V7IbNzmntXwX0YFWxVZr5L9/34PHIrQIIlTs7KLDrAqPpcjgf/zB+OrXAIs8skVljRu1Nma+TZX8IEU9NjlTUs71Fp4S6K/iU1pFVvmOS0pFsLk9utMEUsrLo3rAVMDkAW2umiEu2aZw3Q/07x6qvuOhmKAwRnxtlMhqCvOFSrlDWhcB0UNO7TURMcyoRgknzk4m5Eq7omIdug3u69IQQFPPhAqleSCHtURvE3FowPoQYsIIwuKy4OyJA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Cb/niFgU; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+	t=1756865766; c=relaxed/relaxed;
+	bh=O+91Ct0+f3KIg73Wo/2PalQsLNhzhpOTyEh86OEAFl4=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mQHPvMx+GQsTiQvwfA5SC7ZzLJybNwUpfBHRsEnkKm259Wzm7577CBIeFqp5KnnpvT/Oq8IhXL6zVkKwftXNnUMdSdwHY5aXcuzI4GbKHyQPpwiMQdFF8BZMPaX/n3PDvchau8QroPJrVmIDjn9vYkYRoEic1uUOjTdKNssKfFsh82xV8GXH1qGUMbldr66c3cnzndaGXVIGaAYT7BOsicKJM45hQAwv4i99rlo9OEZw4JKRRv21OtX4J0MdGl965rfYT8nEtFTiuzwHCJOi4rz7w5xFCEdqlzYfbWDudVI+JIJswdLgbht2i12FhHVTC83Z8eXbca33xkncIhRfBg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=EMDox6pc; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ecLxY7J5; dkim-atps=neutral; spf=pass (client-ip=103.168.172.144; helo=fout-a1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Cb/niFgU;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=EMDox6pc;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ecLxY7J5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.144; helo=fout-a1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cGmQR5tbGz306d
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Sep 2025 12:14:39 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1756865678;
-	bh=Oq/uYbHX5tvNrFv3S3IE/iyWmkYMcaYFIsJUt3p8ODU=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=Cb/niFgUuKQxnpCP2s1jl0I7QYR9dlrbTan92uxYBH81l53KeiXsMLeLFNtsLEbkW
-	 SJHr7a4o7E0ISHDQnZZ3XZQzwu7OFWpCQrh+XgUPXeSPgcMrlhslXFK+cJ15viSC0t
-	 7O4af4yZvTxRalkTqaqJOurQlPLpAEZoOHP140kYuy1MLWTX8xJD52q+M55QP7bnAy
-	 run4RIQS/VUy4bBSFf4vI99F9Y5TkpNh3uEdrA61eDq1Boz4OOc3eYNu6Lt8EMWJ0/
-	 pOnFDAlKBtFCh6ShECt/wWrLXBpnZiDjzmd0vBNSMT/4to0d/JDhgTuIevj4F3844m
-	 NWokXQ9exAwfg==
-Received: from [192.168.68.113] (unknown [180.150.112.213])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id AA2C069374;
-	Wed,  3 Sep 2025 10:14:36 +0800 (AWST)
-Message-ID: <3213e3a2b9845e23734eda3b8850e683ed5ef7b1.camel@codeconstruct.com.au>
-Subject: Re: [PATCH linux dev-6.12 v1 1/6] soc: aspeed: Add XDMA Engine
- Driver
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Ninad Palsule <ninad@linux.ibm.com>, openbmc@lists.ozlabs.org, 
-	joel@jms.id.au, eajames@linux.ibm.com
-Cc: Andrew Jeffery <andrew@aj.id.au>
-Date: Wed, 03 Sep 2025 11:44:35 +0930
-In-Reply-To: <20250902183155.2988560-2-ninad@linux.ibm.com>
-References: <20250902183155.2988560-1-ninad@linux.ibm.com>
-	 <20250902183155.2988560-2-ninad@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cGmS00Z8Tz2xnw
+	for <openbmc@lists.ozlabs.org>; Wed,  3 Sep 2025 12:15:59 +1000 (AEST)
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E3C79EC06CF
+	for <openbmc@lists.ozlabs.org>; Tue,  2 Sep 2025 22:15:56 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 02 Sep 2025 22:15:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1756865756; x=1756952156; bh=O+91Ct0+f3
+	KIg73Wo/2PalQsLNhzhpOTyEh86OEAFl4=; b=EMDox6pc2OpWeeConCmeWj3GWH
+	gd3m8MTwav20d2shEV6/7X8X/RQtl0opdYS4xqUKLFJ58Rk+LRFQzr7HilGtghYf
+	4s/YHHKU5kBFSv4o/o4FZgM83GoxtpO/ILnSImZyNI18/D2tpKPFkZktKPvp8zka
+	7vGsq1r4DfZZKzxV1vLWVZc9weaRnBbLv8hKTEigUUYF93rUvYM09yhVlSrZKUfK
+	pOTWMYlWm3y0KfMsOgt0g3kc8s4qEyzmKxG1moGdLnt4eInAlUl5zAsCo4CkmGHp
+	vqZIUo5COOZ8UEEFiAR0UBUUVgCuS1R6nmgmfjp5YIjZjk8VyKKXEWiu7+Ng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1756865756; x=1756952156; bh=O+91Ct0+f3KIg73Wo/2PalQsLNhzhpOTyEh
+	86OEAFl4=; b=ecLxY7J5cFPq4sS4uQJKswSyM3GsUSOHK1kX96XM5Hogut23Gmm
+	3HTg6CjFpsvW04fB2OBG1fWr4MMrh1nwZnW/R6oVqrOuf1Wr8Izv5Cl6ZxJfhSSI
+	/WtyFRLpmJioiDCnrJq1TOw9BKSKus6qJzT3SgOfQ/F6wdcZzWyJo6Qe13HcE6eu
+	NjmQZlmECPJCcYB86roqFx2GCX80skJDXo5Yc/T0HwnhCy11uGNsDou8cBv66LMZ
+	2wNQxFwGpXu23WrD+UuG9o0rxlV9BCzg+LhaQhRmJxQ01klE8ZFkuqiFzEjAf+iN
+	PqRJ9lJfHs9G+YMbt+6MW/eEdYj1LyWpt5Q==
+X-ME-Sender: <xms:3KS3aKAIKkvWyuvzV7TyYpbo8jLaaz3HNbUYvwpIDs8bQFAWiUuDnQ>
+    <xme:3KS3aGjXR_T5KFjjJt0nt6AxzU7drvAohE6-VSkOHUTiecAkhVjPtZspcqYbWL1pg
+    beFe9slv9i0IuxTfTA>
+X-ME-Received: <xmr:3KS3aG-oc7rm0-iMmcM6yPpeyhHQ9m89pSapSxMnOOhvrosMwi4-T1L6c-M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduledvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrhhluc
+    fvnfffucdlvdefmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfh
+    rhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgi
+    drgiihiieqnecuggftrfgrthhtvghrnhepffehueeltdejvdegtdetlefgveeigfevfeej
+    udfgueeghfdvveeljefghfduteevnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpmh
+    gvmhgsvghrshhhihhpqdgrnhguqdhvohhtihhnghdrmhgupdifihhkihhpvgguihgrrdho
+    rhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepph
+    grthhrihgtkhesshhtfigtgidrgiihiidpnhgspghrtghpthhtohepuddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrd
+    horhhg
+X-ME-Proxy: <xmx:3KS3aK9mC3YpQuX5nOMxFfR9L84hn0Ec9TLE4RKZnkhUYrXjLRRDkg>
+    <xmx:3KS3aHDfGq6mAiIp7NIGElCI2sBtOlgH1MEVn5ldYIZ-ICOP9G7_TQ>
+    <xmx:3KS3aCzMbnACNnQ3M6SOK-_1u5EiHqCiEE5evns9RjwN-Ora4Kf_1A>
+    <xmx:3KS3aEQWwKNBEo2uKl8tjkCmuGsRANOuzu-JlDMncKjcE8S8ZzUntg>
+    <xmx:3KS3aI-h3faaE4cSyrBoSmyGcKANr46whxbKF_wh1x5xnR_geearEmaV>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Tue, 2 Sep 2025 22:15:56 -0400 (EDT)
+Date: Tue, 2 Sep 2025 22:15:55 -0400
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: Re: TOF elections for 2025H2
+Message-ID: <aLek2wDSYDGMLPH6@heinlein>
+References: <aKOKlY97pOtfuaEv@heinlein>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -66,124 +97,102 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="HKC10PqmWzvy/Gx2"
+Content-Disposition: inline
+In-Reply-To: <aKOKlY97pOtfuaEv@heinlein>
+X-Spam-Status: No, score=1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.1
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Tue, 2025-09-02 at 13:31 -0500, Ninad Palsule wrote:
-> From: Eddie James <eajames@linux.ibm.com>
->=20
-> The XDMA engine embedded in the AST2500 and AST2600 SOCs performs PCI
-> DMA operations between the SOC (acting as a BMC) and a host processor
-> in a server.
->=20
-> This commit adds a driver to control the XDMA engine and adds functions
-> to initialize the hardware and memory and start DMA operations.
->=20
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> Link: https://lore.kernel.org/r/1588697905-23444-3-git-send-email-eajames=
-@linux.ibm.com
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> Signed-off-by: Ninad Palsule <ninad@linux.ibm.com>
-> ---
-> =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 2 +
-> =C2=A0drivers/soc/aspeed/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=
-=A0 10 +
-> =C2=A0drivers/soc/aspeed/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
-=C2=A0 1 +
-> =C2=A0drivers/soc/aspeed/aspeed-xdma.c | 961 ++++++++++++++++++++++++++++=
-+++
-> =C2=A0include/uapi/linux/aspeed-xdma.h |=C2=A0 38 ++
-> =C2=A05 files changed, 1012 insertions(+)
-> =C2=A0create mode 100644 drivers/soc/aspeed/aspeed-xdma.c
-> =C2=A0create mode 100644 include/uapi/linux/aspeed-xdma.h
 
-Applying this to dev-6.12 and building it for aspeed_g5_defconfig
-produces:
+--HKC10PqmWzvy/Gx2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   ../drivers/soc/aspeed/aspeed-xdma.c: In function =E2=80=98aspeed_xdma_pr=
-obe=E2=80=99:                                                              =
-                           =20
-   ../drivers/soc/aspeed/aspeed-xdma.c:844:1: warning: label =E2=80=98err_m=
-isc=E2=80=99 defined but not used [-Wunused-label]
-     844 | err_misc:             =20
-         | ^~~~~~~~                                                        =
-      =20
-   ../drivers/soc/aspeed/aspeed-xdma.c: In function =E2=80=98aspeed_xdma_re=
-move=E2=80=99:                                                             =
-                           =20
-   ../drivers/soc/aspeed/aspeed-xdma.c:885:9: error: implicit declaration o=
-f function =E2=80=98misc_deregister=E2=80=99; did you mean =E2=80=98bus_unr=
-egister=E2=80=99? [-Werror=3Dimplicit-function-declaration]
-     885 |         misc_deregister(&ctx->misc);                            =
-      =20
-         |         ^~~~~~~~~~~~~~~                                         =
-      =20
-         |         bus_unregister                                          =
-      =20
-   ../drivers/soc/aspeed/aspeed-xdma.c:885:29: error: =E2=80=98struct aspee=
-d_xdma=E2=80=99 has no member named =E2=80=98misc=E2=80=99                 =
-                                           =20
-     885 |         misc_deregister(&ctx->misc);          =20
-         |                             ^~
-   ../drivers/soc/aspeed/aspeed-xdma.c: At top level:                      =
-                                                                           =
-           =20
-   ../drivers/soc/aspeed/aspeed-xdma.c:423:12: warning: =E2=80=98aspeed_xdm=
-a_start=E2=80=99 defined but not used [-Wunused-function]                  =
-                           =20
-     423 | static int aspeed_xdma_start(struct aspeed_xdma *ctx, unsigned i=
-nt num_cmds,                                                               =
-           =20
-         |            ^~~~~~~~~~~~~~~~~                                    =
-      =20
-   cc1: some warnings being treated as errors                              =
-      =20
-   make[6]: *** [../scripts/Makefile.build:229: drivers/soc/aspeed/aspeed-x=
-dma.o] Error 1                                                             =
-           =20
-   make[5]: *** [../scripts/Makefile.build:478: drivers/soc/aspeed] Error 2=
-      =20
-   make[4]: *** [../scripts/Makefile.build:478: drivers/soc] Error 2       =
-      =20
-   make[4]: *** Waiting for unfinished jobs....  =20
+Greetings,
 
-Can you please fix these?
+For the TOF elections this half, we had 4 qualified individuals
+nominated and there are 3 seats expiring.  Therefore, we are going to
+have to hold an election for the half.
 
-Also, during application, checkpatch complained:
+Per the TOF election rules[1] (with minor date adjustments):
+    - The election will begin on Sept 3rd, 2025.
+    - The election will conclude on Sept 10th, 2025 (*).
+    - The election will be by Ranked Choice Voting of qualified OpenBMC
+      developers.
 
-     =E2=9C=93 [PATCH v1 1/6] soc: aspeed: Add XDMA Engine Driver          =
-              =20
-       + Link: https://patch.msgid.link/20250902183155.2988560-2-ninad@linu=
-x.ibm.com                                                                  =
-                                                                           =
-                                                                           =
-                     =20
-       + Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>       =
-      =20
-       =E2=97=8F checkpatch.pl: 164: WARNING: please write a help paragraph=
- that fully describes the config symbol
-       =E2=97=8F checkpatch.pl: 228: WARNING: please, no space before tabs =
-              =20
-       =E2=97=8F checkpatch.pl: 563: WARNING: quoted string split across li=
-nes           =20
-       =E2=97=8F checkpatch.pl: 834: WARNING: struct kobj_type should norma=
-lly be const                                                               =
-                   =20
-       =E2=97=8F checkpatch.pl: 959: WARNING: Possible unnecessary 'out of =
-memory' message=20
-       =E2=97=8F checkpatch.pl: 1152: WARNING: Prefer "GPL" over "GPL v2" -=
- see commit bf7fbeeae6db ("module: Cure the MODULE_LICENSE "GPL" vs. "GPL v=
-2" bogosity")
+For refreshment, you are considered "qualified" if your Github user ID
+is found at the rollcall[2].
 
-Can you please address these as well when posting v2?
+The 4 nominated developers are (alphabetical by Github IDs):
+    * dkodihal:         Deepak Kodihalli
+    * edtanous:         Ed Tanous
+    * geissonator:      Andrew Geissler
+    * manojkiraneda:    ManojKiran Eda
 
-Thanks,
+I'll again say this is a Ranked Choice Voting.  That means you should
+ideally vote for at least 3 individuals, in the order of your
+preference[3].
 
-Andrew
+As with the last election, we have a tool to facilitate voting[4].  You are
+expected to fork the Github repository, run the tool, commit the
+resulting JSON file, and create a Pull-Request to submit your vote.
+
+If you have the `gh` tool this would be as follows:
+```
+gh repo fork --clone openbmc/tof-election
+cd tof-election
+=2E/vote --user <github-id>
+# make your selections with 'vote N', 'save', 'quit'
+git add 2025H2/votes/<github-id>.json
+git commit -s -m "2025H2: <github-id>: add vote"
+git push origin
+gh pr create
+```
+
+If you don't use the `gh` tool hopefully you know the equivalent
+git-commands / github webui operations.
+
+Please reach out either by email or in #tsc-and-tof in Discord if you
+have trouble voting.
+
+(*) - Since the election rules do not specify a timezone for the
+      election, please submit your vote/PR by 23:59:59 Samoa Standard
+      Time (SST).
+
+[1]: https://github.com/openbmc/docs/blob/master/tof/membership-and-voting.=
+md#terms-and-elections
+[2]: https://github.com/openbmc/tof-election/blob/main/2025H2/rollcall.json
+[3]: https://en.wikipedia.org/wiki/Instant-runoff_voting
+[4]: https://github.com/openbmc/tof-election
+
+--=20
+Patrick Williams
+
+--HKC10PqmWzvy/Gx2
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmi3pNgACgkQqwNHzC0A
+wRnuwg/7BrffyK5cRzN4XBuvIo+Z+R04r1MMKyc8Q8+359QoG9IMj53f8W8w/Fuh
+DoQmOkm6Sx+ZAVRx5bygypLEmls6uh9jhE4X18rWlMNpBxOUKZcConi8suiaPkS2
+ejR/zSdRmzVycs1rzBiYKSdsLwR6N9dquUkltt7XwZ4GKS/NZl1bx74Xo2i8E5uJ
+TeOTokp4BIRhr4X8KyTgehjsbfqUAV9NSUifvNbmSkaQFXrPPmO2MuL1R0+BlQMa
+5mjjlCtW7pYV44m8dgvAKrxNhbC0XDe88f7AU1gd+EMkL5vmAFHy+l+Gfr4kMZ0v
+M1LLUK5eAeoJ0meNH6+UzKXnEksIKSv69Yx3QWF7CGxSqyZ96fkgEo50SB+K5RcB
+G6VOpHKNVpRZeTAWzpTWvKcyzrPVxVvzI89NpizhAX3ZG8tZXLJsmcZWy53P15u0
+e2i+tmyXWGuqFutbZg1fwkgJ3qsK8Gt4YA3+ZAdnk2koweBaZV1vJla1HqCIem/F
+FKN2g7NssQbCCjIkzD6YQvHUvCHCNChsI8uXmdqnuyOPLPuD+kiqs1MmBKNjeo+r
+M1zZl34u+TaDSRrf6z+/60VuWr3Kt0P2Od8anYjARDz4pX7CmOsy069m2Fs/Xe0J
+QqQKxSlpFTuf6OaPI9G6GgrR3Kf5KrPgScdSkY7CHGdOJSaqjBI=
+=FHtr
+-----END PGP SIGNATURE-----
+
+--HKC10PqmWzvy/Gx2--
 
