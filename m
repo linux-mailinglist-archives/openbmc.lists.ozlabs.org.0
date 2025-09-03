@@ -1,57 +1,60 @@
-Return-Path: <openbmc+bounces-571-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-572-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3D20B412BA
-	for <lists+openbmc@lfdr.de>; Wed,  3 Sep 2025 05:03:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73B83B41474
+	for <lists+openbmc@lfdr.de>; Wed,  3 Sep 2025 07:46:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cGnVd4KCDz2xlM;
-	Wed,  3 Sep 2025 13:03:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cGs764FHYz2xcB;
+	Wed,  3 Sep 2025 15:46:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756868601;
-	cv=none; b=Y6WHbuW6ukFrMnfnRYKGBOb263kJHT9QT87Izb8GwOQIgKkEI8Hfkqbw5H6Z+dWiFXJ71twibjKBc5GUqH2LgVNcpd4ZyqYwjwiuHGvaVbDUY6a3MwwK6F1hLyWCaQn78YH4VF1EuqT5/o0bjhciRvQzbF4YAe3LrgTHySO4Zqh531zz66yHmYFUkbdJlF5gs9qa1O9wLAS1TjOGc2aAncqtnRP0lS3qCvNr4IhiZahe7TlDhyStwue1bsjX1dc1ThcaNxMieI5jeiK6IgOLLy6BIzZucKAa+XypAIUaZ3+2SA5S7zW3hL4VwdksWYjAYuj9ht1zJfu1jrQbrlrPxA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756878402;
+	cv=none; b=Tq8geF3C0LN1zmIRPr6ZTVO7LyW+W6vy3Q0t+xZtaoQXyp6VuXhVkeVFYv6B/HhYmfk3EL+SVMJYdDGtM7eARfPvrhZ2k5HFxH8DR5L29TojwaOEip7+igTowYEEgR7ssgm5ZjwIeeWaCmoJRsOhMjsc9XEYsuY97HeVMW3fg+lAnnBfsO+8at/n781drLB0ZsjTbZ7n2Wc0iexZrLDbilX+2tDjxdLZFo6l+xQ+2J9M7xthfw+AdBhZmSgIiTx2ztxQP1Y2/2pLwI/4uRUTb/7u1bl6lS/wc0TDzhJt75Z/1Auwi25BE6xaOOBXaOTnLqPXLC2VljV/ztioOfEn8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1756868601; c=relaxed/relaxed;
-	bh=dC3BlKDsQo4SasvikH5N/81BL3aGjY4iT1OuBeHL9r0=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=mO6C8RSklRow8DGQ3I1c+FjOoBXVr6DtG2BSb4VUtsbbzItPT1GvB5hSFRq/z1R5tFhEiMsnNN3avZ45ZRyUah4JsQpAyTQJsA2EdPB/2ZYcHkPbphBevcF2dMaL/a/dD9oHPi5zHH3sJ3lQqPBy65oDfbDq69WcGLqzgCpI/G2lZgSpY01iqaCwKGcnWrWVcAqk7IXELRQiTrQKseuUHEAW5fmwRiZbKFpoLCwyG1f554vd/sJ7PG9TAq/4Bt1xyA4Grhp4iPHrcqxphG5G2x28oFZV9uPF94EtjHyT7QSnGoBah7EcWRsaDSosKuG39sJgbVC67+BQydycAfbRLQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=VqWwo1qa; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	t=1756878402; c=relaxed/relaxed;
+	bh=Zffg5Z8PXY4zN2j9mhgh+YxhyBSx05brIZWAwih9GV0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RAYE05IkVvGvBGFUy1DZMBPTAG5B74qDS/hH8kwUkUITmYu5Z1AtH/zi7oIqqVnSq3PYhQ4BxB1ZqZJVs6itV9s1JDl8iTW4t0fwYQocNwwPyZDFRGjygVN1C6K3vbAHYYPpf0iic2NI23hWdtiJqxsduX4y617QGr4DCNyE6cWZOgv0+uc54bB5Kx+bErmo9Gr9qpfZDXGURKvoVzyZgL9KIwOrIipBvAkwDVJRE0wrynbuPHDLDX5SEbLH7Na+lL8L6YcWfcVaApj8tYTq6+RubYE8/i6k8xWXxvUUwHzMLor0/sTAbYaIdXDhuvv+5Zsy3/7rwuhgXq/0e1HxAg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Ve/eYgzS; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=VqWwo1qa;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Ve/eYgzS;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cGnVc0PPFz2xgX
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Sep 2025 13:03:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cGs7557YCz2xK5;
+	Wed,  3 Sep 2025 15:46:41 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1756868599;
-	bh=dC3BlKDsQo4SasvikH5N/81BL3aGjY4iT1OuBeHL9r0=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=VqWwo1qaa6SoQv20C4KQrc6+9YvQYUw7vo/HNCSgES6AiuO+Y5pxgVsMfQrBDnT6j
-	 RoEqf15k3ntMRZ4WcUUTLTQzsz1hnpkonkOdD14nILBPTJZn9BBNErCwJw9QPPTl8W
-	 tL/H3Y/ag09j6dmtaFZFh1WMPXAzWX1+Ninb24DJ40MWqlXWzCSBAlN6/BJi53xp5E
-	 6Nalfe/6Kxg+2zqXPoUG8yT5Zi5sAmz+0/Ryz2IqOxalVACuWT/SrClYMRu0gv2GHj
-	 kkibptySH24nrt89L6TAOWSf8q+I2WcLFoLGg2R9j9PAwmr1+I4rtfi8ssvt6sbg/w
-	 3nvhlQBYMmJUw==
-Received: from [10.209.99.88] (unknown [180.150.112.213])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 2AB2D69374;
-	Wed,  3 Sep 2025 11:03:19 +0800 (AWST)
-Message-ID: <d7a0a152b19dd7b73a2a34a34bc163372d39f20b.camel@codeconstruct.com.au>
-Subject: Re: [PATCH linux dev-6.6 1/2] hwmon: (pmbus/adm1275) add adm1281
- support
+	d=codeconstruct.com.au; s=2022a; t=1756878400;
+	bh=Zffg5Z8PXY4zN2j9mhgh+YxhyBSx05brIZWAwih9GV0=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=Ve/eYgzSLT+JX8CYm/uZYyXSsH/1b/RAEpWcreHIQTlZ9J6GgZuBvNJy/9KHhUxLM
+	 GCfJxVtR+BQ58eP6pe+FfQ2UZ8JlDemGxWY7vJmD6RGwLRTVZzI6tQYw/zbA7UgkWu
+	 nZ3RfXQnbK2JLf+eG2tmoD00VihAjzwKZ1zLM4moSDStti+gVvdTDhxCbedkkS5bjC
+	 2baawU2OyhSLiGH8ZYyO7GO7FuKdzcP3RR+lZpRwAfgnbDZdl+En2RcbeHVanf7F2c
+	 ncL5ApDbUGPNGQHUQusvKr05fLEC1JvXB5qfkQ0X15JbMqLfU7RAX7CCKIfkE9OHpN
+	 2PKFxr9fcI+Ew==
+Received: from [192.168.68.113] (unknown [180.150.112.213])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id BFD326E02C;
+	Wed,  3 Sep 2025 13:46:37 +0800 (AWST)
+Message-ID: <c9348ebb7f0cd24c950ba07abf4641a1d5382160.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v8 2/2] ARM: dts: aspeed: Add NVIDIA GB200 UT3.0b board
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: "Allen.Wang" <allen.wang.quanta@gmail.com>, openbmc@lists.ozlabs.org, 
-	joel@jms.id.au
-Date: Wed, 03 Sep 2025 12:33:18 +0930
-In-Reply-To: <20250815011921.716573-1-Allen_Wang@quantatw.com>
-References: <20250815011921.716573-1-Allen_Wang@quantatw.com>
+To: Donald Shannon <donalds@nvidia.com>, robh@kernel.org,
+ krzk+dt@kernel.org,  conor+dt@kernel.org
+Cc: joel@jms.id.au, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
+	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
+Date: Wed, 03 Sep 2025 15:16:36 +0930
+In-Reply-To: <20250815224344.908130-3-donalds@nvidia.com>
+References: <20250815224344.908130-1-donalds@nvidia.com>
+	 <20250815224344.908130-3-donalds@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -65,31 +68,94 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,WEIRD_QUOTING
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Allan,
+SGkgRG9uYWxkLAoKU29ycnkgZm9yIHRoZSBkZWxheS4KCk9uIEZyaSwgMjAyNS0wOC0xNSBhdCAx
+NTo0MyAtMDcwMCwgRG9uYWxkIFNoYW5ub24gd3JvdGU6Cj4gVGhpcyBpcyBhbiBBc3BlZWQgQVNU
+MjYwMCBiYXNlZCB1bml0IHRlc3RpbmcgcGxhdGZvcm0gZm9yIEdCMjAwLgo+IFVUMy4wYiBpcyBk
+aWZmZXJlbnQgdGhhbiBudmlkaWEtZ2IyMDBudmwtYm1jIGR1ZSB0byBuZXR3b3JraW5nIHRvcG9s
+b2d5Cj4gZGlmZmVyZW5jZXMsIGFkZGl0aW9uYWwgZ3BpbyBleHBhbmRlcnMsIGFuZCB2b2x0YWdl
+IHJlZ3VsYXRvciBnYXRpbmcKPiBzb21lIGRldmljZXMuCj4gCj4gUmVmZXJlbmNlIHRvIEFzdDI2
+MDAgU09DIFsxXS4KPiBSZWZlcmVuY2UgdG8gQmxhY2t3ZWxsIEdCMjAwTlZMIFBsYXRmb3JtIFsy
+XS4KPiAKPiBMaW5rOiBodHRwczovL3d3dy5hc3BlZWR0ZWNoLmNvbS9zZXJ2ZXJfYXN0MjYwMC/C
+oFsxXQo+IExpbms6IGh0dHBzOi8vbnZkYW0ud2lkZW4ubmV0L3Mvd3duc3hyaG0ydy9ibGFja3dl
+bGwtZGF0YXNoZWV0LTMzODQ3MDPCoFsyXQo+IFNpZ25lZC1vZmYtYnk6IERvbmFsZCBTaGFubm9u
+IDxkb25hbGRzQG52aWRpYS5jb20+Cj4gLS0tCj4gwqBhcmNoL2FybS9ib290L2R0cy9hc3BlZWQv
+TWFrZWZpbGXCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqDCoCAxICsKPiDCoC4uLi9hc3Bl
+ZWQvYXNwZWVkLWJtYy1udmlkaWEtZ2IyMDAtdXQzMGIuZHRzwqAgfCAxMDMwICsrKysrKysrKysr
+KysrKysrCj4gwqAyIGZpbGVzIGNoYW5nZWQsIDEwMzEgaW5zZXJ0aW9ucygrKQo+IMKgY3JlYXRl
+IG1vZGUgMTAwNjQ0IGFyY2gvYXJtL2Jvb3QvZHRzL2FzcGVlZC9hc3BlZWQtYm1jLW52aWRpYS1n
+YjIwMC11dDMwYi5kdHMKPiAKPiBkaWZmIC0tZ2l0IGEvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVk
+L01ha2VmaWxlIGIvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkL01ha2VmaWxlCj4gaW5kZXggYWJh
+NzQ1MWFiNzQ5Li4zN2VkYzQ2MjVhOWYgMTAwNjQ0Cj4gLS0tIGEvYXJjaC9hcm0vYm9vdC9kdHMv
+YXNwZWVkL01ha2VmaWxlCj4gKysrIGIvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkL01ha2VmaWxl
+Cj4gCgoqc25pcCoKCj4gKyZncGlvMCB7Cj4gK8KgwqDCoMKgwqDCoMKgZ3Bpby1saW5lLW5hbWVz
+ID0KPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypBMC1BNyovICIiLCAiIiwgIiIs
+ICIiLCAiIiwgIiIsICIiLCAiIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypC
+MC1CNyovICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwKPiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgLypDMC1DNyovICJTR1BJT19JMkNfTVVYX1NFTC1PIiwgIiIsICIiLCAi
+IiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qRDAt
+RDcqLyAiIiwgIiIsICIiLCAiVUFSVDFfTVVYX1NFTC1PIiwgIiIsICJGUEdBX1BFWF9SU1RfTC1P
+IiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKkUwLUU3Ki8gIlJU
+TDgyMjFfUEhZX1JTVF9MLU8iLCAiUlRMODIxMV9QSFlfSU5UX0wtSSIswqAiIiwgIlVBUlQzX01V
+WF9TRUwtTyIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCIiLCAiIiwgIiIsICJTR1BJT19CTUNf
+RU4tTyIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qRjAtRjcqLyAiIiwgIiIs
+ICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oC8qRzAtRzcqLyAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoC8qSDAtSDcqLyAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwg
+IiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qSTAtSTcqLyAiIiwgIiIsICIi
+LCAiIiwgIiIsICJRU1BJMl9SU1RfTC1PIiwgIkdMT0JBTF9XUF9CTUMtTyIsICJCTUNfRERSNF9U
+RU4tTyIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qSjAtSjcqLyAiIiwgIiIs
+ICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oC8qSzAtSzcqLyAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoC8qTDAtTDcqLyAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwg
+IiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qTTAtTTcqLyAiUENJRV9FUF9S
+U1RfRU4tTyIsICJCTUNfRlJVX1dQLU8iLCAiRlBHQV9SU1RfTC1PIiwgIlNUQllfUE9XRVJfRU4t
+TyIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJTVEJZX1BPV0VSX1BHLUkiLCAiUENJRV9FUF9S
+U1RfTC1PIiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKk4wLU43
+Ki8gIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAvKk8wLU83Ki8gIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKlAwLVA3Ki8gIiIsICIiLCAiIiwgIiIsICIi
+LCAiIiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKlEwLVE3Ki8g
+IiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAvKlIwLVI3Ki8gIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKlMwLVM3Ki8gIiIsICIiLCAiIiwgIiIsICIiLCAi
+IiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKlQwLVQ3Ki8gIiIs
+ICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAvKlUwLVU3Ki8gIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLAo+ICvCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAvKlYwLVY3Ki8gIkFQX0VST1RfUkVRLU8iLCAiRVJPVF9B
+UF9HTlQtSSIsICIiLCAiIiwiUENCX1RFTVBfQUxFUlQtSSIsICIiLCIiLCAiIiwKPiArwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypXMC1XNyovICIiLCAiIiwgIiIsICIiLCAiIiwgIiIs
+ICIiLCAiIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypYMC1YNyovICIiLCAi
+IiwgIlRQTV9NVVhfU0VMLU8iLCAiIiwgIiIsICIiLCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoC8qWTAtWTcqLyAiIiwgIiIsICIiLCAiRU1NQ19SU1QtTyIsICIiLCIi
+LCAiIiwgIiIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoC8qWjAtWjcqLyAiQk1D
+X1JFQURZLU8iLCIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiOwo+ICt9Owo+ICsKPiArJmdwaW8x
+IHsKPiArwqDCoMKgwqDCoMKgwqAvKiAzNiAxLjhWIEdQSU9zICovCj4gK8KgwqDCoMKgwqDCoMKg
+Z3Bpby1saW5lLW5hbWVzID0KPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypBMC1B
+NyovICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgLypCMC1CNyovICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICJJT19FWFBBTkRF
+Ul9JTlRfTC1JIiwiIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgLypDMC1DNyov
+ICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgLypEMC1ENyovICIiLCAiIiwgIiIsICIiLCAiIiwgIiIsICJTUElfSE9TVF9UUE1f
+UlNUX0wtTyIsICJTUElfQk1DX0ZQR0FfSU5UX0wtSSIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoC8qRTAtRTcqLyAiIiwgIiIsICIiLCAiIiwgIiIsICIiLCAiIiwgIiI7Cj4gK307
+Cj4gKwo+ICsmc2dwaW9tMCB7CgpTbyB0aGUgc3R5bGUgZ3VpZGUgYXNrcyB0aGUgcmVmZXJlbmNl
+ZCBub2RlcyB0byBiZSBvcmRlcmVkIGVpdGhlcgphbHBoYWJldGljYWxseSwgb3IgaW4gRFRTSSBv
+cmRlclsxXSAod2hpY2ggc2hvdWxkIGJlIHVuaXQtYWRkcmVzcwpvcmRlcikuCgpbMV06IGh0dHBz
+Oi8vZG9jcy5rZXJuZWwub3JnL2RldmljZXRyZWUvYmluZGluZ3MvZHRzLWNvZGluZy1zdHlsZS5o
+dG1sI29yZGVyLW9mLW5vZGVzCgpXaGF0IHdlIGhhdmUgdG8gdGhlIHF1b3RlZCBzZWN0aW9uIGFi
+b3ZlIGlzbid0IGluIGFscGhhYmV0aWNhbCBvcmRlci4KVG8gdGhpcyBwb2ludCBpdCB3YXMgRFRT
+SSBvcmRlciwgYnV0IHRoYXQgYnJlYWtzIGhlcmUgdG9vLgoKTXkgcHJlZmVyZW5jZSBpcyB0aGF0
+IG5vZGVzIGluIHRoZSBEVFMgcmVmZXJlbmNpbmcgdGhlIERUU0kgYXJlCmFscGhhYmV0aWNhbCAo
+YXMgd2UgY2FuJ3Qgc2VlIHRoZSB1bml0IGFkZHJlc3MgZm9yIG9yZGVyaW5nKS4gQ2FuIHlvdQpw
+bGVhc2UgZml4IGl0PwoKWW91IG1lbnRpb24gaW4geW91ciBjb3ZlciBsZXR0ZXIgdGhhdCBvcmRl
+cmluZyB3YXMgYWRkcmVzc2VkIGluIHYzIC0KZGlkIHdlIGxvc2UgdGhhdCBhbG9uZyB0aGUgd2F5
+PwoKKnNuaXAqCgo+ICsKPiArJnVhcnRfcm91dGluZyB7IH07CgpEcm9wIHRoaXM/CgpDaGVlcnMs
+CgpBbmRyZXcK
 
-I've applied both patches in your series to dev-6.6.
-
-Andrew
-
-On Fri, 2025-08-15 at 09:19 +0800, Allen.Wang wrote:
-> From: Jose Ramon San Buenaventura <jose.sanbuenaventura@analog.com>
->=20
-> Add support for adm1281 which is similar to adm1275 and other chips
-> of the series.
->=20
-> Signed-off-by: Jose Ramon San Buenaventura <jose.sanbuenaventura@analog.c=
-om>
-> Link: https://lore.kernel.org/r/20240425070948.25788-3-jose.sanbuenaventu=
-ra@analog.com
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> (cherry picked from commit 916300902725b362d5008ee10825a39056f0b095)
-> ---
-> =C2=A0Documentation/hwmon/adm1275.rst | 14 +++++++++++---
-> =C2=A0drivers/hwmon/pmbus/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ++--
-> =C2=A0drivers/hwmon/pmbus/adm1275.c=C2=A0=C2=A0 |=C2=A0 7 +++++--
-> =C2=A03 files changed, 18 insertions(+), 7 deletions(-)
 
