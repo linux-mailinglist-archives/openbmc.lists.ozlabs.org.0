@@ -1,29 +1,29 @@
-Return-Path: <openbmc+bounces-590-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-591-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58850B438C9
-	for <lists+openbmc@lfdr.de>; Thu,  4 Sep 2025 12:34:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7633EB438D0
+	for <lists+openbmc@lfdr.de>; Thu,  4 Sep 2025 12:34:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cHbSY6b2Pz2xd6;
-	Thu,  4 Sep 2025 20:34:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cHbSb1CZwz304x;
+	Thu,  4 Sep 2025 20:34:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756982061;
-	cv=none; b=XH3uSix3CVAJ+l5+6GtxPs1DKWl+5GLrYHPC/kOqOMikGm3iALUDHOnr6k5uikmK6ZDbfGQ+F0Q7RnPMcMLjI5/GoQx+dL/2g1L3OJgwHWsM7O/m6nsgX43oEpAVBfDPMsV+aVh2oPoyfcg91rWzilSY+eBwtgnli4HVfDaa/ViVpNRJ96Um8ipES7eZR8TXarAqYeNsgwQACSy6+AlZeQPe6fS6W/YCnhlSdkdDNnZVIpsCCpHKT2DhBWIOw1umNikpA+6bUAaVA26rfUfY8tZFXeoicIi7kF/R6V3BBr2o2hvNleRV+E9R016cW8tPIjqcjIDqc4z2gwrzMsOEmQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1756982063;
+	cv=none; b=bMIUp1HW2oDNt71Myfxma5g5FM9X3MoplO9Q+gtEqwzCeQeVRbOwiUyqVJxJbE1bT/mYvVfp4mAoxA/6qmHs/lHt09YeeWIHd1JCM3m/F6CvObtaE1yq2zOwpWZ7IOBa+xXwKFkf3rZVhGF6eK1hGvIQy0lA6IPb+5blOiALPUSrMXHvN1K6jCTMVUwm5LCDRgiCcV7r1oAoNN6SK8pSyacp6s0dcJk4ViRVKGgB4TQtYBXXIMui/R5WWaBAQrijKrodo+Nr3SkAbjW2xRgrqXVobTxCa4dnKS11s51RQJNfb1m49m8YxQ0h2KViEHB3wOr3PD2+HZ7M/G5AiJmFWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1756982061; c=relaxed/relaxed;
-	bh=DahGBC2yOouijprcUWySo9CE96xEr74ilYGjS+h0t68=;
+	t=1756982063; c=relaxed/relaxed;
+	bh=aEwpBINPjbjM4iJfwpe6U76HB2tf7+P6nKFDDIm0FtY=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WaLHuWfBebQ1tyH7oYoREJvUTkEQ8FF43LjYJzVnZO8qsaFhp8TtF/dH80t1vZqBH6tucYGt4Ze5NYXxqVNJKyUfLMeYu/cdSomFts9ISJ2XZC0ebzdmtCBSkIYs9Aos9Z0/+iwOUh1j5SoGBxcwAWS7sc7UPguA1EnactVttIYkbBG0hBeJ+h983McSLp2mKi6ns5KbYL9HwP4Wk0nMZxgcO/EDB2QuM123Om7pB0QyniZEF8OqfBQbP2ecGRwsde3C+TtEn63D8cXglOUNVZ9aC6a7szNCbTOecX/KRJ9lsfAB3Hd+eZadYaFuMAlpgXhZAEXxa4inkGX1AjTJeg==
+	 MIME-Version:Content-Type; b=HQlclkaA7GlUXW6D+FO2sV+DaZaeWysCSpxK3Q/U8jM8c3otLXbjTg74Opfxp32W6hhns+Xb0Gn+j3zZcBkG9S342/Bav1olyhlz65fUqgQvKSpbW0ILv/MqRklSCaxHmkLr7QJJ0bclz/3VlM2uaa5Zluq7rmO7OD3ow2zisE2J15Bu55PRkEoMup4IqLUO74qDVkBLT6S9Jnm1MpBmyJ6NTw/heUg1MAoa0qpVXwFqBNYlgxov/Akad2h06wiMtnTlGRmqV6Eye5DT0av/I0ikDNJ45ARTnbIGtzbpU1do6dzSCE8B/n7Vy8a80XgTTkCCZTrowE0NOxZd3RCM4A==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cHbSY2W65z2yrp;
-	Thu,  4 Sep 2025 20:34:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cHbSZ0Qcdz303F;
+	Thu,  4 Sep 2025 20:34:22 +1000 (AEST)
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 4 Sep
@@ -39,9 +39,9 @@ To: <lee@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
 	<linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
 	<openbmc@lists.ozlabs.org>, <linux-gpio@vger.kernel.org>,
 	<BMC-SW@aspeedtech.com>
-Subject: [PATCH v2 1/4] dt-bindings: mfd: aspeed,ast2x00-scu: Support ast2700 pinctrl
-Date: Thu, 4 Sep 2025 18:33:58 +0800
-Message-ID: <20250904103401.88287-2-billy_tsai@aspeedtech.com>
+Subject: [PATCH v2 2/4] dt-bindings: pinctrl: aspeed: Add support for AST27xx
+Date: Thu, 4 Sep 2025 18:33:59 +0800
+Message-ID: <20250904103401.88287-3-billy_tsai@aspeedtech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250904103401.88287-1-billy_tsai@aspeedtech.com>
 References: <20250904103401.88287-1-billy_tsai@aspeedtech.com>
@@ -62,27 +62,585 @@ X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Add the ast2700 pinctrl compatible string.
-"aspeed,ast2700-soc0-pinctrl" and "aspeed,ast2700-soc1-pinctrl"
+Add bindings for the pin controller found in the ASPEED AST27xx SoC.
+The ASPEED AST2700 SoC contains two separate pin controllers, each
+managed by a distinct System Control Unit (SCU).
+Because these two controllers have different register maps, control
+different sets of pins, support different pin configuration options, and
+implement different multi-function switch logic, they are not compatible.
+Therefore, two separate device tree bindings,'aspeed,ast2700-soc0-pinctrl'
+and 'aspeed,ast2700-soc1-pinctrl', are introduced.
 
 Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
 ---
- Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../pinctrl/aspeed,ast2700-soc0-pinctrl.yaml  | 115 +++++
+ .../pinctrl/aspeed,ast2700-soc1-pinctrl.yaml  | 435 ++++++++++++++++++
+ 2 files changed, 550 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc1-pinctrl.yaml
 
-diff --git a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
-index 5eccd10d95ce..3a993702a6f6 100644
---- a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
-+++ b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
-@@ -61,6 +61,8 @@ patternProperties:
-             - aspeed,ast2400-pinctrl
-             - aspeed,ast2500-pinctrl
-             - aspeed,ast2600-pinctrl
-+            - aspeed,ast2700-soc0-pinctrl
-+            - aspeed,ast2700-soc1-pinctrl
- 
-     required:
-       - compatible
+diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
+new file mode 100644
+index 000000000000..0fee62259250
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
+@@ -0,0 +1,115 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: ASPEED AST2700 SoC0 Pin Controller
++
++maintainers:
++  - Billy Tsai <billy_tsai@aspeedtech.com>
++
++description: |
++  Bindings for the ASPEED AST2700 SoC0 Pin Controller.
++
++properties:
++  compatible:
++    const: aspeed,ast2700-soc0-pinctrl
++
++additionalProperties:
++  $ref: pinmux-node.yaml#
++  additionalProperties: false
++
++  properties:
++    function:
++      enum:
++        - EMMC
++        - VGADDC
++        - USB3A
++        - USB2A
++        - USB3B
++        - USB2B
++        - JTAG0
++        - PCIERC
++
++    groups:
++      enum:
++        - EMMCG1
++        - EMMCG4
++        - EMMCG8
++        - EMMCWPN
++        - EMMCCDN
++        - VGADDC
++        - USB3AXHD
++        - USB3AXHPD
++        - USB3AXH
++        - USB3AXHP
++        - USB3AXH2B
++        - USB3AXHP2B
++        - USB2AXHD1
++        - USB2AXHPD1
++        - USB2AD1
++        - USB2AXH
++        - USB2AXHP
++        - USB2AXH2B
++        - USB2AXHP2B
++        - USB2AHPD0
++        - USB2AD0
++        - USB2AH
++        - USB2AHP
++        - USB3BXHD
++        - USB3BXHPD
++        - USB3BXH
++        - USB3BXHP
++        - USB3BXH2A
++        - USB3BXHP2A
++        - USB2BXHD1
++        - USB2BXHPD1
++        - USB2BD1
++        - USB2BXH
++        - USB2BXHP
++        - USB2BXH2A
++        - USB2BXHP2A
++        - USB2BHPD0
++        - USB2BD0
++        - USB2BH
++        - USB2BHP
++        - JTAGM0
++        - PSP
++        - SSP
++        - TSP
++        - DDR
++        - USB3A
++        - USB3B
++        - PCIEA
++        - PCIEB
++        - PCIERC0PERST
++        - PCIERC1PERST
++
++    pins:
++      $ref: /schemas/types.yaml#/definitions/string-array
++    drive-strength:
++      minimum: 0
++      maximum: 15
++
++allOf:
++  - $ref: pinctrl.yaml#
++
++required:
++  - compatible
++
++examples:
++  - |
++    pinctrl0: pinctrl{
++        compatible = "aspeed,ast2700-soc0-pinctrl";
++
++        pinctrl_emmc_default: emmc-default {
++            function = "EMMC";
++            groups = "EMMCG1";
++        };
++
++        pinctrl_emmcclk_driving: emmcclk-driving {
++            pins = "AC14";
++            drive-strength = <2>;
++        };
++    };
+diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc1-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc1-pinctrl.yaml
+new file mode 100644
+index 000000000000..1c0121aa26cd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc1-pinctrl.yaml
+@@ -0,0 +1,435 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc1-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: ASPEED AST2700 SoC1 Pin Controller
++
++maintainers:
++  - Billy Tsai <billy_tsai@aspeedtech.com>
++
++description: |
++  Bindings for the ASPEED AST2700 SoC1 Pin Controller.
++
++properties:
++  compatible:
++    const: aspeed,ast2700-soc1-pinctrl
++
++additionalProperties:
++  $ref: pinmux-node.yaml#
++  additionalProperties: false
++
++  properties:
++    function:
++      enum:
++        - ADC0
++        - ADC1
++        - ADC2
++        - ADC3
++        - ADC4
++        - ADC5
++        - ADC6
++        - ADC7
++        - ADC8
++        - ADC9
++        - ADC10
++        - ADC11
++        - ADC12
++        - ADC13
++        - ADC14
++        - ADC15
++        - CANBUS
++        - DDR
++        - ESPI0
++        - ESPI1
++        - FSI0
++        - FSI1
++        - FSI2
++        - FSI3
++        - FWQSPI
++        - I2C0
++        - I2C1
++        - I2C2
++        - I2C3
++        - I2C4
++        - I2C5
++        - I2C6
++        - I2C7
++        - I2C8
++        - I2C9
++        - I2C10
++        - I2C11
++        - I2C12
++        - I2C13
++        - I2C14
++        - I2C15
++        - I3C0
++        - I3C1
++        - I3C2
++        - I3C3
++        - I3C4
++        - I3C5
++        - I3C6
++        - I3C7
++        - I3C8
++        - I3C9
++        - I3C10
++        - I3C11
++        - I3C12
++        - I3C13
++        - I3C14
++        - I3C15
++        - JTAGM0
++        - JTAGM1
++        - LPC0
++        - LPC1
++        - LTPI_PS_I2C0
++        - LTPI_PS_I2C1
++        - LTPI_PS_I2C2
++        - LTPI_PS_I2C3
++        - MDIO0
++        - MDIO1
++        - MDIO2
++        - NCTS5
++        - NDCD5
++        - NDSR5
++        - NRI5
++        - PCIERC
++        - PWM0
++        - PWM1
++        - PWM2
++        - PWM3
++        - PWM4
++        - PWM5
++        - PWM6
++        - PWM7
++        - PWM8
++        - PWM9
++        - PWM10
++        - PWM11
++        - PWM12
++        - PWM13
++        - PWM14
++        - PWM15
++        - QSPI0
++        - QSPI1
++        - QSPI2
++        - RGMII0
++        - RGMII1
++        - RMII0
++        - RMII0RCLKO
++        - RMII1
++        - RMII1RCLKO
++        - SALT0
++        - SALT1
++        - SALT2
++        - SALT3
++        - SALT4
++        - SALT5
++        - SALT6
++        - SALT7
++        - SALT8
++        - SALT9
++        - SALT10
++        - SALT11
++        - SALT12
++        - SALT13
++        - SALT14
++        - SALT15
++        - SD
++        - SGMII
++        - SGPM0
++        - SGPM1
++        - SGPS
++        - SPI0
++        - SPI0CS1
++        - SPI1
++        - SPI1CS1
++        - SPI2
++        - SPI2CS1
++        - SSP
++        - TACH0
++        - TACH1
++        - TACH2
++        - TACH3
++        - TACH4
++        - TACH5
++        - TACH6
++        - TACH7
++        - TACH8
++        - TACH9
++        - TACH10
++        - TACH11
++        - TACH12
++        - TACH13
++        - TACH14
++        - TACH15
++        - THRU0
++        - THRU1
++        - THRU2
++        - THRU3
++        - TSP
++        - UART0
++        - UART1
++        - UART2
++        - UART3
++        - UART5
++        - UART6
++        - UART7
++        - UART8
++        - UART9
++        - UART10
++        - UART11
++        - USB2C
++        - USB2D
++        - VPI
++
++    groups:
++      enum:
++        - ADC0
++        - ADC1
++        - ADC2
++        - ADC3
++        - ADC4
++        - ADC5
++        - ADC6
++        - ADC7
++        - ADC8
++        - ADC9
++        - ADC10
++        - ADC11
++        - ADC12
++        - ADC13
++        - ADC14
++        - ADC15
++        - CANBUS
++        - DI2C0
++        - DI2C1
++        - DI2C2
++        - DI2C3
++        - DI2C8
++        - DI2C9
++        - DI2C10
++        - DI2C11
++        - DI2C12
++        - DI2C13
++        - DI2C14
++        - DI2C15
++        - DSGPM0
++        - ESPI0
++        - ESPI1
++        - FSI0
++        - FSI1
++        - FSI2
++        - FSI3
++        - FWQSPI
++        - HVI3C0
++        - HVI3C1
++        - HVI3C2
++        - HVI3C3
++        - HVI3C12
++        - HVI3C13
++        - HVI3C14
++        - HVI3C15
++        - I2C0
++        - I2C1
++        - I2C2
++        - I2C3
++        - I2C4
++        - I2C5
++        - I2C6
++        - I2C7
++        - I2C8
++        - I2C9
++        - I2C10
++        - I2C11
++        - I2C12
++        - I2C13
++        - I2C14
++        - I2C15
++        - I3C4
++        - I3C5
++        - I3C6
++        - I3C7
++        - I3C8
++        - I3C9
++        - I3C10
++        - I3C11
++        - JTAGM1
++        - LPC0
++        - LPC1
++        - LTPI_PS_I2C0
++        - LTPI_PS_I2C1
++        - LTPI_PS_I2C2
++        - LTPI_PS_I2C3
++        - MDIO0
++        - MDIO1
++        - MDIO2
++        - NCTS0
++        - NCTS1
++        - NCTS5
++        - NCTS6
++        - NDCD0
++        - NDCD1
++        - NDCD5
++        - NDCD6
++        - NDSR0
++        - NDSR1
++        - NDSR5
++        - NDSR6
++        - NDTR0
++        - NDTR1
++        - NDTR5
++        - NDTR6
++        - NRI0
++        - NRI1
++        - NRI5
++        - NRI6
++        - NRTS0
++        - NRTS1
++        - NRTS5
++        - NRTS6
++        - PE2SGRSTN
++        - PWM0
++        - PWM1
++        - PWM2
++        - PWM3
++        - PWM4
++        - PWM5
++        - PWM6
++        - PWM7
++        - PWM8
++        - PWM9
++        - PWM10
++        - PWM11
++        - PWM12
++        - PWM13
++        - PWM14
++        - PWM15
++        - QSPI0
++        - QSPI1
++        - QSPI2
++        - RGMII0
++        - RGMII1
++        - RMII0
++        - RMII0RCLKO
++        - RMII1
++        - RMII1RCLKO
++        - RXD0
++        - RXD1
++        - RXD2
++        - RXD3
++        - RXD5
++        - RXD6
++        - RXD7
++        - RXD8
++        - RXD9
++        - RXD10
++        - RXD11
++        - SALT0
++        - SALT1
++        - SALT2
++        - SALT3
++        - SALT4
++        - SALT5
++        - SALT6
++        - SALT7
++        - SALT8
++        - SALT9
++        - SALT10
++        - SALT11
++        - SALT12
++        - SALT13
++        - SALT14
++        - SALT15
++        - SD
++        - SGMII
++        - SGPM0
++        - SGPM1
++        - SGPS
++        - SPI0
++        - SPI0CS1
++        - SPI1
++        - SPI1CS1
++        - SPI2
++        - SPI2CS1
++        - TACH0
++        - TACH1
++        - TACH2
++        - TACH3
++        - TACH4
++        - TACH5
++        - TACH6
++        - TACH7
++        - TACH8
++        - TACH9
++        - TACH10
++        - TACH11
++        - TACH12
++        - TACH13
++        - TACH14
++        - TACH15
++        - THRU0
++        - THRU1
++        - THRU2
++        - THRU3
++        - TXD0
++        - TXD1
++        - TXD2
++        - TXD3
++        - TXD5
++        - TXD6
++        - TXD7
++        - TXD8
++        - TXD9
++        - TXD10
++        - TXD11
++        - USB2CD
++        - USB2CH
++        - USB2CU
++        - USB2CUD
++        - USB2DD
++        - USB2DH
++        - VPI
++
++    pins:
++      $ref: /schemas/types.yaml#/definitions/string-array
++    bias-disable:
++      type: boolean
++    bias-pull-down:
++      type: boolean
++    bias-pull-up:
++      type: boolean
++    drive-strength:
++      minimum: 0
++      maximum: 3
++    power-source:
++      enum: [1800, 3300]
++
++allOf:
++  - $ref: pinctrl.yaml#
++
++required:
++  - compatible
++
++examples:
++  - |
++    pinctrl1: pinctrl {
++        compatible = "aspeed,ast2700-soc1-pinctrl";
++
++        pinctrl_hvi3c0_default: hvi3c0-default {
++            function = "I3C0";
++            groups = "HVI3C0";
++        };
++
++        pinctrl_i3c0_3_hv_voltage: i3chv-voltage {
++            pins = "U25";
++            power-source = <1800>;
++        };
++
++        pinctrl_i3c0_driving: i3c0-driving {
++            pins = "U25", "U26";
++            drive-strength = <2>;
++        };
++    };
 -- 
 2.25.1
 
