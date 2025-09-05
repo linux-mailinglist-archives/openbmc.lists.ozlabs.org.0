@@ -1,57 +1,57 @@
-Return-Path: <openbmc+bounces-596-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-597-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 944A7B44B02
-	for <lists+openbmc@lfdr.de>; Fri,  5 Sep 2025 02:43:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB00FB44B52
+	for <lists+openbmc@lfdr.de>; Fri,  5 Sep 2025 03:41:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cHyJ909Jbz2yyd;
-	Fri,  5 Sep 2025 10:43:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cHzbT3RJHz30MY;
+	Fri,  5 Sep 2025 11:41:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c40f::7" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757033000;
-	cv=pass; b=iDkhtTopJvyTDPi1+hzDouBhVR10Ivr2u9EAXC4Hddj2jTog4GxpRr8oplD3I/BV5UFwtyND8UtAxi36jTIa3GXJutUsHHo0iyaqOjVtPvyj7HW6LLae8KNrMegcGTZyPpAIOALGv4GqFKVJV+GUVNgr4Z/aleJQAGNanENbrwBR8LF8Z67QrMLl8NbxrHFASyc81PSmKiH1d8A/6QAzuOPKdcFOImU+BX7oBKZoTVwxNFPDG4sSflEeA3XVPzBXqQ5s5iQHzLIs2MieYYto4DbOb+N7C5hi3RuIvoBaDb4WbT/2LNIo312KqdPJ68z4HdNq7y+sQE4aTbZp8iSMbw==
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c405::7" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757036501;
+	cv=pass; b=XA4nDOClIgL1A6iR6MfrSUHVk2I6biOvJcKG4iX8wRVDnFoXAEM81HiRjpLCbFNaYvStJuHbdqZg82AGDHFq48fwAWgMxeUbIRH2U0GIM3cgjBPRHsytNmTwFQ/BuI770lzb5OoZtoYCOLz8L6Rx13H+ODxvmG2h08my0cSXjXiI+mdsyLI6yC7v9E+K0GlBnnWzr012miRDnbxq2+QDAs/b7DYzof9JAuKuSBbpc9U1egEFkfmaoWAEIxLXM0eKOIrINJqvj1/UZaN+MlmUIp9rEpz4scyxG6/Y2kwGDSG4rn7w7VE353tSR3PIUlSRgj5E0GeDpaxnG/cOnP+AyQ==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757033000; c=relaxed/relaxed;
-	bh=cQmCoE5fU3a2J8F9lTTThT7I9/7Ng5Mo13F21Lu/zzo=;
+	t=1757036501; c=relaxed/relaxed;
+	bh=5qO1kRcHfW3GUuZMT7GD6MofdTG5ccKj8GCpFfhN9i0=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=YSuP5oGvjLfiVvVAhCVyMbzbFOQgX5zw7iPaT9CnUPEsu0jIrxWGRq+enpWtJ9WLZnDT0uBQ/JMiYEx9t2Btw8xSlr9DF/8DL76SAFFELa5jUeGdGql6JJDg1d9N20jKy7e+kaDvFN6hCALqih2RE+OF9+KmrBIsbr8Eu29QKbB0KhaoYs084rCfWZw6RSXXcDG5Vylw1K13+usQlejVbXYWDHZ3k4z4RFu5SKvR5ysi3j85qLZaqX4c/uY72pqoJxlnG1pwvHRyrrF8LjAD4Srql0Bhax9qVwOJrvAlmbVVTB9oTTtVtzWRFL1RsRaHeL4lFBYa4IwU0aReHOCh/Q==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=Css0R7dj; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c40f::7; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+	 Content-Type:MIME-Version; b=RlFIT9LI+X6mwCV2ca1GhOHdNsPwmq7N06UyS0HK/rLGzwYRviHPPuhtuTsyyChQoWQf5zRHJqvcv1JtRrIEN9v21f0AMXjMmcQDd0zTwJWgOzUx725NekzMWg3Z6CtgaJv6AJWNYffaXCk1Pyb6EPRJSl2KuLPm+XXq6sGALBNAAhnRNPpXHJWvEDenv2xwYjYD2A1ih/UQJzuS3QBn1eUpPVHMbj0DiIS0Oj23DjOm3pyWLYsTmpRA/ef/IErgj8Ls51JEqDsyaVAjohVKTJbjuQ4g+MlEwLsTksiPRRIyDLVxcKbDGFgDtYGE/AJv0jL0/BpWHRHfj6x3zna8OA==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=VeG3D/IC; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c405::7; helo=tydpr03cu002.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=Css0R7dj;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=VeG3D/IC;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c40f::7; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazlp170130007.outbound.protection.outlook.com [IPv6:2a01:111:f403:c40f::7])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c405::7; helo=tydpr03cu002.outbound.protection.outlook.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazlp170130007.outbound.protection.outlook.com [IPv6:2a01:111:f403:c405::7])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cHyJ66gJyz2yql;
-	Fri,  5 Sep 2025 10:43:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cHzbS3sSkz2yql;
+	Fri,  5 Sep 2025 11:41:40 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MXaywiIoJkBkBEKPYGAdqbbUtoN2zNBEWWtHCVLzXLi0WcaPowkyZGkME08ZayR4pM9zCH2h3lAOpDsdCPZ3JPrU3carTVL3a3aGex55ANnFE+4+XMKmN6tmXpHLgdMM7kPkTHOKYvUZhhVr/wS+IP1k66yDEVz1VEXuAfW11gCkOBx64ouFsvSMYxfqjkP8cOoMXAA/n/Sqx9ONpBeYfrJKNHOVbgv8NzjUGukq8qBsJZ1NgtzQkFsFbm+2yKr+6AA1eK1xEeFzdfBzVeVGt1vtZ5LZAFx5e0z7h6oR0WT/VhT5o9fx8AUUtdXKv0Gg5bR5P3kJGVOoMYSKGeSEng==
+ b=Og3XgnfxNOlEW2kin+E3Bfvelahx1YIyc78zsPCGHLzsgrntEfVb6LfA/K46xY+HPLV1F5w+falT9l1puGaZxCzF67ELfjELXR8gqM9MlJ1JILvOyr+koBU7aNmqDP83ThO9RJpY2myCRd7fRr7q9vDhqHaFAiSNguaqmEp1zlZgihiBD0aLHaKWducsohS4aRsL7FyTgZLI31oVFoC/crxOxW/+9jdSqWKGNrsVzUpltG55/we2IuVhDyKVHhbdy+RHARrCWPEZIApv3Q0aewZtpZN4rhqKS7dzVCzdniSKBz0q6kHJkHVymhsaHtk+Zd8I60ZpdO1xY1A9lK+xRA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cQmCoE5fU3a2J8F9lTTThT7I9/7Ng5Mo13F21Lu/zzo=;
- b=r0kUIMqnUDxXkDoQVTBlZd5vzcRoXodvheWiumxI3N/3uBf4xh4mFBRIL52uG/sFyaGAf7tg80JETH9ZVfyxLrki2LM14HqmIrvxaNugZtIYyoGsIu1iTNBM+8MOsQKN8wstR+B8AlNFyYwrjHd31o+WsWjVSr2gY+OFEJS5LuvgHq5xAhE3hcDoc+ZKMKEkvduKNl2o54xblnVMHjV817XLQFBPEOIAIrGQq9ouwC69KSYPW3FlQ+/lPnWFSLftm1cMEtTpbrxItjWh54tyzoIcPQ1zG19NjYSq+GfJG557WScSit3KP3YRFAHjUmePNrcSrE/1Mily4n4GJHJKfA==
+ bh=5qO1kRcHfW3GUuZMT7GD6MofdTG5ccKj8GCpFfhN9i0=;
+ b=SAUNxfTFZEUzpIR82e97oFm2OMcWMV/HRTb6nlj7ibKRhKLa/DIJLEssbdYOEP4lToCUT80LvKID1b6KpxesAClnblaHzJukYYLJ6hwB9WoLkev7/AmYDKu+EAEllCainmNkBrgxyFNGWTgfA6r2jWtsvBWI6rIU61D54f8Isc8rVv8WgBxV5IBJ0pe0ab3dvqv42Oa5hUe97DZ7rvkeiIrmXqvYd7ygxFdgBXwJiTPsm3NsG5j0WNfsZkKL/SLWdX8x9+xqgEK9mBDlpon+7VLZoD8Rwwmc1kskS4NAXSTdJrsD9E0nodvDGe4pcvgAcXu7KeIUBZcU400gL+iZsg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cQmCoE5fU3a2J8F9lTTThT7I9/7Ng5Mo13F21Lu/zzo=;
- b=Css0R7djt2e4+aHr+RMzazs03Vwei9jf72JlJysSkozP3RzSrm22v7WpbGWUCmgKAJ+psBtxon5Jpxxfq1OoPD6InNRxNjtubvwtU+vxj+BolvcuJk4oYBW9Zq6zeDOSZW3Hm0D+2IGD3TeVkEKlf+pGHHvJTGYINqbEyP1TQGu0FVGbA8K7qnXnM5yBly8hNFRaMs8kUQi84bS+JRFMSX9BitUip8fmPe8N5QQcpOJsPCYYgU1VrlHwj1HMNxuQPZ6lkl6+SnnJrBj/ziVC3Nuk6R4lrVHJtpKXZDje2PSHCK+xeiE26ENi9aMkIEpUOWFTLmOc2AdIjDBwwg0BNA==
+ bh=5qO1kRcHfW3GUuZMT7GD6MofdTG5ccKj8GCpFfhN9i0=;
+ b=VeG3D/ICsQReLFm6zXy7VJuN6qRaXOR8GNcRJDwhFUeRxUuczoCsPcHfYL2hEAI9fpFpEUk0HfZfTffzLJS9eo8+jWTWLYQp7qfPYZP0v4ZVlIhmxm3Fo6ddZaiK0tSXh6wpF7mERFr+wnBqYg+4WewAWmjmrU+tXWCyaebjnvzgG9sUerv0Ta3UOUMn2y3y1xnCh8I+J50uLdHXpFzkvwnsub1RioiogL2+6l1otq+W0gS5dZnsQ/BcJJUI0Huc4u4BK80TiL+vFZxrES8nyS9mf6sVWUK8SQMWtZ/WQRX4r3GG6atJbLx0EVPWtV4mLhxMzmIYo+fcnP3x9blhAg==
 Received: from SEYPR06MB5134.apcprd06.prod.outlook.com (2603:1096:101:5a::12)
- by SEYPR06MB6862.apcprd06.prod.outlook.com (2603:1096:101:1a7::6) with
+ by JH0PR06MB7210.apcprd06.prod.outlook.com (2603:1096:990:8d::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.17; Fri, 5 Sep
- 2025 00:42:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.18; Fri, 5 Sep
+ 2025 01:41:13 +0000
 Received: from SEYPR06MB5134.apcprd06.prod.outlook.com
  ([fe80::6b58:6014:be6e:2f28]) by SEYPR06MB5134.apcprd06.prod.outlook.com
  ([fe80::6b58:6014:be6e:2f28%7]) with mapi id 15.20.9094.017; Fri, 5 Sep 2025
- 00:42:55 +0000
+ 01:41:13 +0000
 From: Jacky Chou <jacky_chou@aspeedtech.com>
 To: Bjorn Helgaas <helgaas@kernel.org>
 CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
@@ -72,17 +72,15 @@ CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
 	<linux-phy@lists.infradead.org>, "openbmc@lists.ozlabs.org"
 	<openbmc@lists.ozlabs.org>, "linux-gpio@vger.kernel.org"
 	<linux-gpio@vger.kernel.org>
-Subject:
- =?big5?B?pl7C0DogW1BBVENIIHYzIDA4LzEwXSBQQ0k6IEFkZCBGTVQgYW5kIFRZUEUgZGVm?=
- =?big5?Q?inition_for_TLP_header?=
-Thread-Topic: [PATCH v3 08/10] PCI: Add FMT and TYPE definition for TLP header
-Thread-Index: AQHcGwWZ7trgU+RIp06LGvatVToprbSCDxcAgAG2knA=
-Date: Fri, 5 Sep 2025 00:42:55 +0000
+Subject: [PATCH v3 09/10] PCI: aspeed: Add ASPEED PCIe RC driver
+Thread-Topic: [PATCH v3 09/10] PCI: aspeed: Add ASPEED PCIe RC driver
+Thread-Index: AQHcGwWaph4aFqMwQkOoce6H5iMHG7SCE6UAgAGyyVA=
+Date: Fri, 5 Sep 2025 01:41:13 +0000
 Message-ID:
- <SEYPR06MB51345BF3DAAB8D55B06E2D679D03A@SEYPR06MB5134.apcprd06.prod.outlook.com>
-References: <20250901055922.1553550-9-jacky_chou@aspeedtech.com>
- <20250903223202.GA1235935@bhelgaas>
-In-Reply-To: <20250903223202.GA1235935@bhelgaas>
+ <SEYPR06MB5134E916ABFBF7FBB8744F189D03A@SEYPR06MB5134.apcprd06.prod.outlook.com>
+References: <20250901055922.1553550-10-jacky_chou@aspeedtech.com>
+ <20250903224820.GA1234878@bhelgaas>
+In-Reply-To: <20250903224820.GA1234878@bhelgaas>
 Accept-Language: zh-TW, en-US
 Content-Language: zh-TW
 X-MS-Has-Attach:
@@ -90,85 +88,71 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEYPR06MB5134:EE_|SEYPR06MB6862:EE_
-x-ms-office365-filtering-correlation-id: e2888a5c-5acc-403a-74c9-08ddec152745
+x-ms-traffictypediagnostic: SEYPR06MB5134:EE_|JH0PR06MB7210:EE_
+x-ms-office365-filtering-correlation-id: 8cf39087-8218-4162-c769-08ddec1d4c5e
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|376014|7416014|38070700018;
+ BCL:0;ARA:13230040|376014|7416014|1800799024|366016|38070700018;
 x-microsoft-antispam-message-info:
- =?big5?B?T0FzQlFOYkl0c1I0WGhIeEpMS0p4a1VnMmc1TTRDY3p3dFhEUG1JV3UrbDVrV01i?=
- =?big5?B?VlpldTF2OGdNT2RqamVPaXJDQWFNQzJETjhVR0lZWkQrNHlrZVovbllDM3pLMFZL?=
- =?big5?B?SEpNbE83NW5aWXFRY2dHQmxQRVhPb1RBTTQ3ZzlhN3VRWnVvaGU3aW95Z2dFUHQw?=
- =?big5?B?RG9QUHRKdHUzVWR1ZURlY25QSFl5K09iYmFoVTZMdkRWN21ReXQ2V0ZHMjcrVWZn?=
- =?big5?B?K2xRM0dWU2hld2Ezc0hRWnFRcEJlelhaY1BCWlZiYWM0Tm9HSDBxMTBxdUxoYnRR?=
- =?big5?B?RWhWajhmSWtJMVpWQ1AzKzN2OEUwdEwwQXhGVHpCZDFnQzBhNXZNbWpVSXhrYk5B?=
- =?big5?B?dkk5cnV4cWlHT25BdXRlbmlzNGQ0QmxBRkdlT1pNNFRnQWttODhGbmFZVUFCcXlT?=
- =?big5?B?cnVGdEtVMThmSzE1bStpL2FLT2s4QkptSmZJR0FFQ3NtSlRRb2tGWGFhejBIRzlQ?=
- =?big5?B?eVpidGVBNWpXcW1pZFdpdzA2cGVYR1FsaTZuN0NBdlczT2lOZm55L1BMU2g2RVhm?=
- =?big5?B?bUIzdDJIKytGdEc3ZVpPUFV3c0R3Y2VWZHRXS2tsUW4wZUUvU1JVMm9ZQXc3SzRt?=
- =?big5?B?UTJJZFE3TXhIVDRVR1VSNkFZZ2tuQ2o5M0NLakNnUitvSUZLYXRqVVRpdmFWS1p5?=
- =?big5?B?bmNnQS9rMkVjRlBNQmthbmR1emlHRlFvS2RzTmhvQzErb2x2M0JaK2dJQXNxRmFx?=
- =?big5?B?MlJ1MEk0Y0hzYjJnbG12bC9iV2ZnZCtwS0dtNTNHV3ZraXFWbytzMlBrRDRWK21I?=
- =?big5?B?MkpFSDRjTVI2bXM3S3JhdGFVSEpZTnFxY09leTEvdXpmdFhZOW5UT1NtL3lIek03?=
- =?big5?B?N2lUdXh1TElvL1lwU005T04xUWJPUE1HT0pJM3RqVjh4azA4TXNZbmpnRjZPT1ph?=
- =?big5?B?VSt2SjZ2NHN3M1MzYzNJempNeHRscHZtK0YzUi8zZDhKV25KeEZONDhTbDVjVUF4?=
- =?big5?B?MUwrYzVFd3VhOTluR3pZaWg5a3NRMGFTVGFRWnl2akxvdHQ0clMvMkR5U2pTQlhw?=
- =?big5?B?NG9lY0haSkRIOHlBMW5lZm5xNWxMSzUyUGVxK0ZNUkMxRTRWNXJOb1B0dFB6NTBw?=
- =?big5?B?bkxtOW5ma3VSb1JNU0ovQ1hVVVpSV05yQ1lYNGdFNCt3Rys5dEszWnBGTlF4ckkx?=
- =?big5?B?Y1ZTaTlhblA3TmsxL2dPa085TkpzaXpaclNsTCsrYnBqTDB3MDZmMFZNdHA5N2gz?=
- =?big5?B?TFhUWlJXd2FDaVpUVEhHN2FNSUkySU8rVEh0SWZsVHF4NlNsZmZialBuMkh4RTZX?=
- =?big5?B?azlHMVhMV3h4d1J5OTZ1Q3dxdnBUTWVPK0hIbzVCVjVvaHhCWW5oa2d2NU13TjIz?=
- =?big5?B?djI5VVNLaTFDa3V4S2hSWDVROWNuZ2pEZlBHaHlNMzVidUxnODVVWGdQbDByajcx?=
- =?big5?B?SmJoV1RvMHFIMjA4MGs2L29XY0R5QTBBaXlaaEphb3NHTmg5d05nZTA1a0c1YzRv?=
- =?big5?B?bnRQNjJnejZkWmNMejRYd25BdjdLeENLUnpQSWVQMDRZcGp5Ny9xVmc5cTR0MmV1?=
- =?big5?B?ZmkxNm1QRFZrTXRsUjV0cEx5Q1Z1REd0MXROY1prUTRqQ2VwWklkaHQ5ZEx2Zi9a?=
- =?big5?B?YWhLTWJ1R0Y2Uk1sdUNmc1JycmMxNnNUZnJoT09XcnFzZXpyd0hLOHVOZktUQUhV?=
- =?big5?B?VlQ5ZjdMRW5KMUNOQWFWM2xKVkFsUktYZ1lQOTUvZWpDRlZNMENCdjR4VjdhYnk0?=
- =?big5?B?ZnM2ZGM1VHp4Sk1ZazdIYk5Kam84cmtoR1N2RlVERDk0WWY3eTF2ZytiS1BaKzZH?=
- =?big5?B?cUtweGV6a3hrcE0xOElYb2tYT2FNWDF1T2g1ZWtlU0VZU1VzaEVKc29nU09MSGg5?=
- =?big5?B?a1d5aXA3NEpIcElibVNxWnVKTEdzSGF4aVJaeHJxYVZRQytLa29JbEU0RFBmemlM?=
- =?big5?B?elpYL3pnPT0=?=
+ =?us-ascii?Q?3G4OGqqYJEpS1hcn72gZG0s0BkbQfL9SC8qEvdYhKlTtcJP5BZ2JVn7uYzj8?=
+ =?us-ascii?Q?CugYCIGdPbfOh4Jrwj5USe5/k4GeeW753w2IxAk+ACZPn6BYU+6Kc0OYioM6?=
+ =?us-ascii?Q?jq31ygDjljv2iJM2muhsKFKB1OH4iseG6lwgbUT3JI42b1xDZ6hTwN/l32a6?=
+ =?us-ascii?Q?7D1P86pw1jrMegRmkVK7vncDqGyKBrQKDI2trnlB1wBMopNrzP7e2ptc22Vs?=
+ =?us-ascii?Q?42xJ9C8/6BQTeenR+YzKAkvhG2OXFd3f7UvclYAtaFS63fDHFVzu5IWrOqvU?=
+ =?us-ascii?Q?TQkIrUH2L40cp/DwPRyO0uQAhHYjvm55MZ/3/okHuAZe1Av5fDaamrcxk1WV?=
+ =?us-ascii?Q?NqOr3Lrqz3955sY1LEsSC0M14G3N+bfJGYqi/bUsXtdmyTNLWzazeZhBAsr7?=
+ =?us-ascii?Q?TRUtymq8/D+h4zRxFym6p39u/N/RlFnrjJb1s4+lWjfbDEtH/C1LSrglgckH?=
+ =?us-ascii?Q?PoenvvYlMQv6Jt0pItyo5OUIiPHLML7cDKjIGTIDJtiinGPd5+Nbo77gktef?=
+ =?us-ascii?Q?Pw/N3Ee+nS+m+r7YbSPJBOIgV1s7qfBrBV9eNYMc1Ktcor771qxAX19YzFdU?=
+ =?us-ascii?Q?/y9KUFTLPaPVZfUATBwVBuWJCF9U2dU+J/6xEvxcgbtc83kMXkStpIgyIO3/?=
+ =?us-ascii?Q?dFD1Iddk6RNhpVKAMBXqM5MHQvLhDYjMQ79LhGPe5CCjTQSVfvhPvUwYhUix?=
+ =?us-ascii?Q?OmUqERhsKImqbvhtyxfQCGt80hKn97+xU+VjWmQRiwbZjABnyNk0i5D64M6t?=
+ =?us-ascii?Q?NHg2f0VU5uS8g794u/A0NLJgvPmUNkhJ4s12FIheQYcEaJcICyoJ2uWSZXrL?=
+ =?us-ascii?Q?I0lXy6E+bWBwWjqh2FrZGRYzV7fp6MfLPCGvg7lDP81tEGozCOGCY/Faom5n?=
+ =?us-ascii?Q?ebEqBSePKdpskqGrkVF8rRovmvYNGmD/G+EI1wzpnK6CJ51IH3BVchM7piMz?=
+ =?us-ascii?Q?L/XS0pyLSParw7i6VO0nRjPUolfF6N/WU+5F+oetzwrf40xOM659gWb1bNuQ?=
+ =?us-ascii?Q?cFr8gZyngigTz/jNf14OpOWCC6ztKnXlWFYsgfquoCxBaOO9Pait9lGunmrt?=
+ =?us-ascii?Q?rGkvZbEbUrJpY+BKTp3lPaHMaCl0sOxVe/dVs8B1ESUBMWyNaDSkLmhk+70B?=
+ =?us-ascii?Q?MlNJHoUFt0M6uzwe7wbOMjIGQmqfRX/61DXCuRWUAum6QgMCHfhb0N8kALrq?=
+ =?us-ascii?Q?XuFOv4xiAeyxgvPK9DoRpjjbB1PKDKEB4XN9wW2YkhFLiqg4w+eJJuDmIzZ5?=
+ =?us-ascii?Q?yicLePE7w2OwdpwsZSeiQCtrB4Ucqs0dRv3PVeQ6oGAQOtLUUCzMFLUMFo+b?=
+ =?us-ascii?Q?nTT5/F7yp332nWHDt8qeeYuPY/BtK3BFn43TnCWkNtRkAmhEU8WTAI/G4/kL?=
+ =?us-ascii?Q?bP+ZAlbDcVuMpL2n+zmS5O1mEatqioWCFgbkI793pYGX2x1bDdO25Erd4/W+?=
+ =?us-ascii?Q?FiotyckX41Nf61CoolqPWhlCxf4vtcouZvWhDVC4pqVf3rLv9L3D2w=3D=3D?=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEYPR06MB5134.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018);DIR:OUT;SFP:1102;
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEYPR06MB5134.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?big5?B?Qnh4NDhvNHVmUmxUY3RMQjE4WmVGd2xneko2S2gwb3YyZGlHVmhKYmlZZUhQd0Na?=
- =?big5?B?aEp1VDhvQlBiK2x6RFErd1krbTFDUnhPeC9zSmkxM2d4RStEcnFVeXYxVGNxKzFq?=
- =?big5?B?a0lEaHlNUFQzempIQ25DN3B4YTZpN3hkbjFlTGhzNFJ1b1o2S0V3bGpNZzFZYnNQ?=
- =?big5?B?am1VYzJsVW1UTGtDbVFPYVJBeDkvT3gzeXVkZklPaGk0UlFsV0NmZVIvQ2liZUJ1?=
- =?big5?B?R2pZQ1dqdFpQKy93RWRST1RoU01mdnNBU1NMZUNGMHhUL1psSC8zM2UreEFmUU9Q?=
- =?big5?B?bGxGSG9ueUhPRXQyaDZBQXZDR0phWjA4NitkZDJ1YXprb2E0d1hheDExTEdKKzZK?=
- =?big5?B?YlRTZ3ZrazZzK0MwQUFxR3ZnNjVMbWtxZFFxZGg1N2pQWDB0cnJ1Y0c4UHpVYjhK?=
- =?big5?B?cDBQN2hGVUY3c1YxSGVhTURpN2pFY01nSWU0NWowUjAraEFoYTZsN1pxaFhVakdL?=
- =?big5?B?UTVKN0JENUd6V0xWL0VQZmQzcER5bER6aThrM1QycmRYM3VJcXF6OTBQRklvcTlS?=
- =?big5?B?WHNUQ29ZaVREMXdEZHlESkZnM0ZJbi9lSTVVeGs3bnJkNDAwMk9sRUxYU1VjcW9W?=
- =?big5?B?T0NQTis0RG9tUmUrNmxYbUgzWFFCWmo1SFViRnJ1VTQvc1d5QXA3VUNaMG16RFVM?=
- =?big5?B?aUYrK1NqL3VnTWZyZVdLYjJFaFRtRmhsYnhLVlk3cHVYdFNtUzV1QW81cS9qVVBy?=
- =?big5?B?Q3diU0Y5OHA3STJlVlRZTXhLTXlZOHh2c2JGQkF3WXFIR1hsclBrZXc5RjVLTUtU?=
- =?big5?B?WkgxSkZJVjlLYk5jV3NWdG1mZmw2MHhhYUpyK2xGZDQrY0wvdncyRUhXSEhMU1NP?=
- =?big5?B?V2xtVlRjUmJ1M0RpMkJyMzdMQ3JzcVFpK1dFMDFCRWUrcHduMk9LR3RPQXJ1RE9T?=
- =?big5?B?cWFFaDZaRE1QdkxXWUsvM21SQU4zMWRXQ0tFeXR4U1FjYWdMRklLQ3I4K3N3OXRv?=
- =?big5?B?aUZnMTlzUnBNeHZJcTJCNEl3QjRIUnF1S2tGMmthU1IwZnlOcy9uN0ozeEZqaUs0?=
- =?big5?B?bHlFV3ViSG1WYzRyb0Z1amF1V2svVkkwWS9RTDZ2YmNpYzk3ajlsSnhaenNJMDcx?=
- =?big5?B?YTBzUWdEWkpDTUdnQmlIVGFTbEkydFVVT0YrNXVZS2RvMzRKMnFUR3d0dmFvdERi?=
- =?big5?B?Mm1BSkJwN0diOTd1dW9mRXlVdTUyQlF4TDhwNVVJUFRXa1MzZHdHeDBnRStISVVN?=
- =?big5?B?eEZoNC8rWlhLWU1CRFJHVldLZUlsRUJmRVFzQUpHYXVQNU1uMzlXZTc0cmxKVm01?=
- =?big5?B?aHdLNnRRbGY2VFhPNGZWQ3FEYmJPS0pMU3o0TlVsa1Q2dmtwRk5MVGdCSUMxY005?=
- =?big5?B?TTFsem9GUUtreWIwZXFCTDFBQmloWVNpVmlGQ1diUmVwYWx5RGs3cDZoUjFCckNF?=
- =?big5?B?YmxwVFlxSWVGNnMyT0kvTS9SdndERHBOSVltak41djg1NjJjVTVYWWxjNFd2MU50?=
- =?big5?B?YjBTVXNHWGdJVUxqeFd1QUF5Rmh4T0xGOUFENmZDT3hFNlUzN1ltaUY1bUdJdlB0?=
- =?big5?B?YndnWE9UaG10dlJDTkFHN1BJSm9jUDEvMktacWZteWw1emdhdHViTi9haDloS2lk?=
- =?big5?B?blQ2cG1UdUVKZ2Z6Ynlidjk1Y1ZCTmxydVJpM044ejNyanFIUGdGVmUxc1JYTTBK?=
- =?big5?B?UG1EbkI3L1gyRHpaeXRZVHJIWjByRitjRkU3RU5tc1pJb1ZXRk1IczJqZTUxM3pw?=
- =?big5?B?aGlHQmxPRnQvUlZuRUpxOHJTQ1V3U1E3RVJTcXJ4WFllSGQ3emdIU3g2SkdSUTJE?=
- =?big5?B?TzI4V0RlWVlkbG40SzRLenRKZ0YzaFpPcVhVVHlVNmRHcE5IWndvdHBwZXpTOVlG?=
- =?big5?B?cnpDd1g4OU53d1JRajEvOHV1dTBUZWxKQkdnVjVFQ1FFY1EzUXhnWU1peG1LRWx5?=
- =?big5?B?cG95RFpQc085ZFcyYjZ4ajQvSUxjRDVoTzZvWHM3aWJ1akJoQmErYzkrZzJZNUpB?=
- =?big5?B?ZWhWdmZWWXcrNjBiS2t3TC81aEhyT3puTWJIeXNiTVAycHgrdVJmTXVmeHMvcXlO?=
- =?big5?Q?FfYrfkmHu8IFtsod?=
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ =?us-ascii?Q?0koKuglpQa2zik8kfT/uPeJdYiIjJRC1AnlwZWK45JZUJ/akcsv2LnTmt/Vu?=
+ =?us-ascii?Q?md1O3a+tRR34l02H6+RamlAY0qJT2eDQP6hn4CofymY/n8s8aKuPexjX7rwb?=
+ =?us-ascii?Q?tCrNLbcPSDp2olCcHbY1DeZqcGcdR4zGFHjO0MNgwZHMb7auOXcIZyLEYtN6?=
+ =?us-ascii?Q?VhIpr5cFQ/LAHK9vdRHwzogrDAiQOmTNKVtkjO2XWwLKkxBgAkKSnU1/chYk?=
+ =?us-ascii?Q?dnOOTHT5G5MtG0GMO9cDxFOhKHn6OPu62+pF10TA1swTUBHuCSeMT+uP7/Y+?=
+ =?us-ascii?Q?HKFiJE8Pn14/97LBjnDUMJklptETqYuj5OFZgq943uTZfbKZTjIQtq7D3VPz?=
+ =?us-ascii?Q?TGvu4BwAIVZDy0v/fvmrTqEVOE+CSP+qWhlgV5UAHoAhNbvlgr7s9dfGMEk9?=
+ =?us-ascii?Q?/aG3hmWAiKu4WQq55eN9jELMlve65xvf6eiBAkMe5FWh/msOiwIN+t/LK/iq?=
+ =?us-ascii?Q?2TDjv0DK/p7ZchBBgHFG3qKYxd/tzkhfTKG3pkOJM6qgYLV+49pfIVHf2fpH?=
+ =?us-ascii?Q?+iE/cDCCYN7WrmfP75HD3P30c0P8HFGI8DOHAPnZOdveFiNetgJ+tCx12h7r?=
+ =?us-ascii?Q?fhLWEMJ8+IrdhAUEOr3KkjYBL51ROeAtpMYaz2fJENyDKQcu4cmmCa4ab55B?=
+ =?us-ascii?Q?Tt9w4OTpYwNHXyP/L/zZtyvUuFsXuUKZRfOfn5j04R+AbbPpkD2LGATQf1AM?=
+ =?us-ascii?Q?wweyI05ZSy7C1yGcOXBEVtCnbmoVs1chwCnF6NPlHE5MFga2dYsxdFbryPE/?=
+ =?us-ascii?Q?m+K7Jj33KE8357Lezd3FtS6Eo0IQt9G6aM3QerqdbYiruqqnPk/PcMBORGwK?=
+ =?us-ascii?Q?aJBjU8perIzWh1XciCp0JKxCeNEbxVxWoR7+EjnNOlmoUVKXS+zGbMUZMLBG?=
+ =?us-ascii?Q?g5/q+A6ML88uHZo1UFoW6B7EjZsydLBFlyZGhu+F5dJY3V1Ze09Ydkro13yf?=
+ =?us-ascii?Q?60C0GDSUhZudvYGhp8FhitgM5AR9mIM7VucOwiGr54VTQXbEBAbTF9O/7jpd?=
+ =?us-ascii?Q?ShBcVwTsvmXqqq+LxhWUkWdaVB5Jmp1x0+zxq8ZmF/7idK6tRHkbNIu3YSEG?=
+ =?us-ascii?Q?sUfxTDHULJOMvpVgk0MfZIeNtucH0eNkxbpPPZ09WnO4HyR7oOHzLbzmsiun?=
+ =?us-ascii?Q?dM0h6VQUorfm/wfZ/VfIOIgFYAwxgNrPE5UQ8MiuzLlbvjgUgVLwQe0khD7m?=
+ =?us-ascii?Q?rfxD87IUi3QMKTn4WVOfMGfIoRCMe5BYTcAKeIeU76x4kedJb9WCm4t1+mmh?=
+ =?us-ascii?Q?6UEDFs6ZimADLgdYxzCO1y21B78TtVPjjJHmqMGbtxZB7ylSvrH0zteXV7vS?=
+ =?us-ascii?Q?pZdPaPlTGFr/CjuTMTz+LN4ekUp8Alecu6s6qFAUN1EFI3Xw7h0+BDl8Tj1C?=
+ =?us-ascii?Q?azrGgqu1an6/CQX4Ug5+foxzxMpNlAiyVBEffZPVI+OT1zA36Huyk5gYQH/b?=
+ =?us-ascii?Q?N3fTooCnmG2Sh5Pw8xScAOtecSApu73ZUthcFuJx8S79j93YcbRgsdYZNqwg?=
+ =?us-ascii?Q?JIvE6ZAn+rOxgZo+NM70kVq2jBZFM453PdtBvs/DhOgxl3wBSzZiUHBQPUBr?=
+ =?us-ascii?Q?4g837rSTjVbW2QVJ35LA2wb91cugabynPKdZ1n/H?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -183,37 +167,406 @@ MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SEYPR06MB5134.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e2888a5c-5acc-403a-74c9-08ddec152745
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Sep 2025 00:42:55.3765
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8cf39087-8218-4162-c769-08ddec1d4c5e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Sep 2025 01:41:13.5733
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YzTASUzIGvmaHRHjiBHWglRQ+NvTgRpffc8i+CggIONtIz6m4eIAwIU+k0eyS0pfUlk+PXIh/YA9g/VQI9qUO+6BSzEwgyvhS7TYdAKPNKE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6862
+X-MS-Exchange-CrossTenant-userprincipalname: 4cHLPrvtqhSanP7jm81q7jyhmS2J07epe0PUr/k6L2LeOefoLm5b03GROVSPLKm4r9QdvJ8XWZut1KaB5MqAVUKOaY6cyJd9iJgajQBGjDw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7210
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
 	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-SGkgQmpvcm4sDQoNClRoYW5rIHlvdSBmb3IgeW91ciByZXBseS4NCg0KPiA+IGRpZmYgLS1naXQg
-YS9kcml2ZXJzL3BjaS9wY2kuaCBiL2RyaXZlcnMvcGNpL3BjaS5oIGluZGV4DQo+ID4gMzRmNjVk
-Njk2NjJlLi40NWQ0N2Q2YzRmNTMgMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9wY2kvcGNpLmgN
-Cj4gPiArKysgYi9kcml2ZXJzL3BjaS9wY2kuaA0KPiA+IEBAIC04MSw2ICs4MSwxOCBAQCBzdHJ1
-Y3QgcGNpZV90bHBfbG9nOw0KPiA+ICAjZGVmaW5lIFBDSUVfTVNHX0NPREVfREVBU1NFUlRfSU5U
-QwkweDI2DQo+ID4gICNkZWZpbmUgUENJRV9NU0dfQ09ERV9ERUFTU0VSVF9JTlRECTB4MjcNCj4g
-Pg0KPiA+ICsvKiBGb3JtYXQgb2YgVExQOyBQQ0llIHI1LjAsIHNlYyAyLjIuMSAqLw0KPiANCj4g
-UGxlYXNlIHVwZGF0ZSB0byBQQ0llIHI3LjAuDQo+IA0KDQpJIHdpbGwgdXBkYXRlIHRoaXMgaW4g
-bmV4dCB2ZXJzaW9uLg0KDQo+ID4gKyNkZWZpbmUgUENJRV9UTFBfRk1UXzNEV19OT19EQVRBCTB4
-MDAgLyogM0RXIGhlYWRlciwgbm8gZGF0YSAqLw0KPiA+ICsjZGVmaW5lIFBDSUVfVExQX0ZNVF80
-RFdfTk9fREFUQQkweDAxIC8qIDREVyBoZWFkZXIsIG5vIGRhdGEgKi8NCj4gPiArI2RlZmluZSBQ
-Q0lFX1RMUF9GTVRfM0RXX0RBVEEJCTB4MDIgLyogM0RXIGhlYWRlciwgd2l0aCBkYXRhICovDQo+
-ID4gKyNkZWZpbmUgUENJRV9UTFBfRk1UXzREV19EQVRBCQkweDAzIC8qIDREVyBoZWFkZXIsIHdp
-dGggZGF0YSAqLw0KPiA+ICsNCj4gPiArLyogVHlwZSBvZiBUTFA7IFBDSWUgcjUuMCwgc2VjIDIu
-Mi4xICovDQo+ID4gKyNkZWZpbmUgUENJRV9UTFBfVFlQRV9DRkcwX1JECQkweDA0IC8qIENvbmZp
-ZyBUeXBlIDAgUmVhZA0KPiBSZXF1ZXN0ICovDQo+ID4gKyNkZWZpbmUgUENJRV9UTFBfVFlQRV9D
-RkcwX1dSCQkweDA0IC8qIENvbmZpZyBUeXBlIDAgV3JpdGUNCj4gUmVxdWVzdCAqLw0KPiA+ICsj
-ZGVmaW5lIFBDSUVfVExQX1RZUEVfQ0ZHMV9SRAkJMHgwNSAvKiBDb25maWcgVHlwZSAxIFJlYWQN
-Cj4gUmVxdWVzdCAqLw0KPiA+ICsjZGVmaW5lIFBDSUVfVExQX1RZUEVfQ0ZHMV9XUgkJMHgwNSAv
-KiBDb25maWcgVHlwZSAxIFdyaXRlDQo+IFJlcXVlc3QgKi8NCg0KVGhhbmtzLA0KSmFja3kNCg0K
+Hi Bjorn,
+
+Thank you for your reply.
+
+> > +/* TLP configuration type 0 and type 1 */
+> > +#define CRG0_READ_FMTTYPE
+> \
+> > +	FIELD_PREP(ASPEED_TLP_COMMON_FIELDS,                     \
+> > +		   ASPEED_TLP_FMT_TYPE(PCIE_TLP_FMT_3DW_NO_DATA, \
+> > +				       PCIE_TLP_TYPE_CFG0_RD))
+> > +#define CRG0_WRITE_FMTTYPE
+> \
+> > +	FIELD_PREP(ASPEED_TLP_COMMON_FIELDS,                  \
+> > +		   ASPEED_TLP_FMT_TYPE(PCIE_TLP_FMT_3DW_DATA, \
+> > +				       PCIE_TLP_TYPE_CFG0_WR))
+> > +#define CRG1_READ_FMTTYPE
+> \
+> > +	FIELD_PREP(ASPEED_TLP_COMMON_FIELDS,                     \
+> > +		   ASPEED_TLP_FMT_TYPE(PCIE_TLP_FMT_3DW_NO_DATA, \
+> > +				       PCIE_TLP_TYPE_CFG1_RD))
+> > +#define CRG1_WRITE_FMTTYPE
+> \
+> > +	FIELD_PREP(ASPEED_TLP_COMMON_FIELDS,                  \
+> > +		   ASPEED_TLP_FMT_TYPE(PCIE_TLP_FMT_3DW_DATA, \
+> > +				       PCIE_TLP_TYPE_CFG1_WR))
+> > +#define CRG_PAYLOAD_SIZE		0x01 /* 1 DWORD */
+>=20
+> What does "CRG" in the above mean?  If it means the same as "CFG", i.e., =
+an
+> abbreviation for "configuration", can you use "CFG" instead?
+> It it's to match an internal spec, go ahead and keep "CRG".
+>=20
+
+It is "configuration". I will change "CRG" to "CFG" in next version.
+
+> > + * struct aspeed_pcie_rc_platform - Platform information
+> > + * @setup: initialization function
+> > + * @reg_intx_en: INTx enable register offset
+> > + * @reg_intx_sts: INTx status register offset
+> > + * @reg_msi_en: MSI enable register offset
+> > + * @reg_msi_sts: MSI enable register offset
+> > + * @msi_address: HW fixed MSI address  */ struct
+> > +aspeed_pcie_rc_platform {
+> > +	int (*setup)(struct platform_device *pdev);
+> > +	int reg_intx_en;
+> > +	int reg_intx_sts;
+> > +	int reg_msi_en;
+> > +	int reg_msi_sts;
+> > +	int msi_address;
+>=20
+> I think this should be u32 to match struct msi_msg.address_lo.
+>=20
+
+Agreed.
+
+> > +static irqreturn_t aspeed_pcie_intr_handler(int irq, void *dev_id) {
+> > +	struct aspeed_pcie *pcie =3D dev_id;
+> > +	const struct aspeed_pcie_rc_platform *platform =3D pcie->platform;
+> > +	unsigned long status;
+> > +	unsigned long intx;
+> > +	u32 bit;
+> > +	int i;
+> > +
+> > +	intx =3D FIELD_GET(PCIE_INTX_STS,
+> > +			 readl(pcie->reg + platform->reg_intx_sts));
+> > +	for_each_set_bit(bit, &intx, PCI_NUM_INTX)
+> > +		generic_handle_domain_irq(pcie->intx_domain, bit);
+> > +
+> > +	if (IS_ENABLED(CONFIG_PCI_MSI)) {
+> > +		for (i =3D 0; i < 2; i++) {
+> > +			int msi_sts_reg =3D platform->reg_msi_sts + (i * 4);
+> > +
+> > +			status =3D readl(pcie->reg + msi_sts_reg);
+> > +			writel(status, pcie->reg + msi_sts_reg);
+> > +
+> > +			/*
+> > +			 * AST2700 A1 workaround:
+> > +			 * The MSI status needs to clear one more time.
+> > +			 */
+> > +			if (of_device_is_compatible(pcie->dev->of_node,
+> > +						    "aspeed,ast2700-pcie"))
+>=20
+> It looks pretty expensive to look this up for every interrupt.  It's cons=
+tant for
+> the life of the driver, so you only need to do it once at probe time.
+>=20
+
+Calling of_device_is_compatible() in the interrupt path is unnecessary.
+In next version, I will add a variable in private at probe and=20
+have the ISR check the variable instead.
+
+> > +				writel(status, pcie->reg + msi_sts_reg);
+> > +
+> > +			for_each_set_bit(bit, &status, 32) {
+> > +				bit +=3D (i * 32);
+> > +				generic_handle_domain_irq(pcie->msi_domain,
+> > +							  bit);
+> > +			}
+> > +		}
+> > +	}
+> > +
+> > +	return IRQ_HANDLED;
+> > +}
+>=20
+> > +static int aspeed_msi_set_affinity(struct irq_data *irq_data,
+> > +				   const struct cpumask *mask, bool force) {
+> > +	return -EINVAL;
+> > +}
+>=20
+> From comparing with other drivers, I doubt this is needed.
+>=20
+
+Agreed.
+It seems unnecessary. I will remove in next version.
+
+> > +
+> > +static struct irq_chip aspeed_msi_bottom_irq_chip =3D {
+> > +	.name =3D "ASPEED MSI",
+> > +	.irq_compose_msi_msg =3D aspeed_msi_compose_msi_msg,
+>=20
+> I would prefer a name that matches irq_chip.irq_compose_msi_msg, e.g.,
+> "aspeed_irq_compose_msi_msg()".
+>=20
+
+Agreed.
+
+> > +static int aspeed_pcie_msi_init(struct aspeed_pcie *pcie) {
+> > +	int ret =3D 0;
+> > +
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_en);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_en + 0x04);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_sts);
+> > +	writel(~0, pcie->reg + pcie->platform->reg_msi_sts + 0x04);
+> > +
+> > +	struct irq_domain_info info =3D {
+> > +		.fwnode		=3D dev_fwnode(pcie->dev),
+> > +		.ops		=3D &aspeed_msi_domain_ops,
+> > +		.host_data	=3D pcie,
+> > +		.size		=3D MAX_MSI_HOST_IRQS,
+> > +	};
+> > +
+> > +	pcie->msi_domain =3D msi_create_parent_irq_domain(&info,
+> > +							&aspeed_msi_parent_ops);
+> > +	if (!pcie->msi_domain)
+> > +		return dev_err_probe(pcie->dev, -ENOMEM,
+> > +				     "failed to create MSI domain\n");
+> > +
+> > +	return ret;
+>=20
+> Useless "ret".  Remove it and just "return 0;"
+>=20
+
+Agreed.
+
+> > +static int aspeed_ast2600_setup(struct platform_device *pdev) {
+> > +	struct aspeed_pcie *pcie =3D platform_get_drvdata(pdev);
+> > +	struct device *dev =3D pcie->dev;
+> > +
+> > +	if (pcie->host_bus_num !=3D 0x80)
+> > +		return dev_err_probe(dev, -EINVAL,
+> > +				     "The host bus must be 0x80\n");
+>=20
+> Why not check this at the point you read it from the devicetree?
+>=20
+
+Sorry.
+Do you mean this check put in aspeed_pcie_parse_dt()?
+
+> > +	pcie->ahbc =3D syscon_regmap_lookup_by_phandle(dev->of_node,
+> > +						     "aspeed,ahbc");
+> > +	if (IS_ERR(pcie->ahbc))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->ahbc),
+> > +				     "failed to map ahbc base\n");
+>=20
+> Same here.  Looks like a devicetree validation check.
+>=20
+
+And this also puts to aspeed_pcie_parse_dt()?
+
+> > +static int aspeed_pcie_parse_port(struct aspeed_pcie *pcie,
+> > +				  struct device_node *node,
+> > +				  int slot)
+> > +{
+> > +	struct aspeed_pcie_port *port;
+> > +	struct device *dev =3D pcie->dev;
+> > +	int ret;
+> > +
+> > +	port =3D devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
+> > +	if (!port)
+> > +		return -ENOMEM;
+> > +
+> > +	port->clk =3D devm_get_clk_from_child(dev, node, NULL);
+> > +	if (IS_ERR(port->clk))
+> > +		return dev_err_probe(dev, PTR_ERR(port->clk),
+> > +				     "failed to get pcie%d clock\n", slot);
+> > +
+> > +	port->phy =3D devm_of_phy_get(dev, node, NULL);
+> > +	if (IS_ERR(port->phy))
+> > +		return dev_err_probe(dev, PTR_ERR(port->phy),
+> > +				     "failed to get phy pcie%d\n",
+> > +				     port->slot);
+>=20
+> port->slot hasn't been set yet.
+>=20
+
+Agreed.
+I will change it to "slot" in next version.
+
+> > +	port->perst =3D of_reset_control_get_exclusive(node, "perst");
+> > +	if (IS_ERR(port->perst))
+> > +		return dev_err_probe(dev, PTR_ERR(port->perst),
+> > +				     "failed to get pcie%d reset control\n",
+> > +				     slot);
+> > +	ret =3D devm_add_action_or_reset(dev, aspeed_pcie_reset_release,
+> > +				       port->perst);
+> > +	if (ret)
+> > +		return ret;
+> > +	reset_control_assert(port->perst);
+> > +
+> > +	port->slot =3D slot;
+> > +	port->pcie =3D pcie;
+> > +
+> > +	INIT_LIST_HEAD(&port->list);
+> > +	list_add_tail(&port->list, &pcie->ports);
+> > +
+> > +	return 0;
+> > +}
+>=20
+> > +static int aspeed_pcie_probe(struct platform_device *pdev) {
+> > +	struct device *dev =3D &pdev->dev;
+> > +	struct pci_host_bridge *host;
+> > +	struct aspeed_pcie *pcie;
+> > +	struct device_node *node =3D dev->of_node;
+> > +	const struct aspeed_pcie_rc_platform *md;
+> > +	u32 bus_range[2];
+> > +	int irq, ret;
+> > +
+> > +	md =3D of_device_get_match_data(dev);
+> > +	if (!md)
+> > +		return -ENODEV;
+> > +
+> > +	host =3D devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
+> > +	if (!host)
+> > +		return -ENOMEM;
+> > +
+> > +	pcie =3D pci_host_bridge_priv(host);
+> > +	pcie->dev =3D dev;
+> > +	pcie->tx_tag =3D 0;
+> > +	platform_set_drvdata(pdev, pcie);
+> > +
+> > +	pcie->platform =3D md;
+> > +	pcie->host =3D host;
+> > +	INIT_LIST_HEAD(&pcie->ports);
+> > +
+> > +	ret =3D of_property_read_u32_array(node, "bus-range", bus_range,
+> > +					 ARRAY_SIZE(bus_range));
+>=20
+> No other drivers do this; why do you need it?
+>=20
+
+I need to get the number of root bus.
+At 2700 configuration command, it needs to use the next number of root bus
+to send the header type of cfg command of TLP.
+
+static int aspeed_ast2700_child_config(struct pci_bus *bus, unsigned int de=
+vfn,
+				       int where, int size, u32 *val,
+				       bool write)
+{
+
+.....
+
+	if (write)
+		cfg_val |=3D (bus->number =3D=3D (pcie->host_bus_num + 1)) ?
+				   CFG0_WRITE_FMTTYPE :
+				   CFG1_WRITE_FMTTYPE;
+	else
+		cfg_val |=3D (bus->number =3D=3D (pcie->host_bus_num + 1)) ?
+				   CFG0_READ_FMTTYPE :
+				   CFG1_READ_FMTTYPE;
+	writel(cfg_val, pcie->reg + H2X_CFGE_TLP_1ST);
+
+....
+
+> > +	if (ret) {
+> > +		dev_warn(dev, "failed to get bus range, assuming bus is 0\n");
+> > +		pcie->host_bus_num =3D 0;
+> > +	}
+> > +	pcie->host_bus_num =3D bus_range[0];
+> > +
+> > +	pcie->reg =3D devm_platform_ioremap_resource(pdev, 0);
+> > +	if (IS_ERR(pcie->reg))
+> > +		return PTR_ERR(pcie->reg);
+> > +
+> > +	pcie->domain =3D of_get_pci_domain_nr(node);
+>=20
+> Almost no drivers use this; why do you need it?
+>=20
+
+It is just used for message, must not be requirement.
+I will remove it in next version.
+
+> > +	pcie->h2xrst =3D devm_reset_control_get_exclusive(dev, "h2x");
+> > +	if (IS_ERR(pcie->h2xrst))
+> > +		return dev_err_probe(dev, PTR_ERR(pcie->h2xrst),
+> > +				     "failed to get h2x reset\n");
+> > +
+> > +	ret =3D devm_mutex_init(dev, &pcie->lock);
+> > +	if (ret)
+> > +		return dev_err_probe(dev, ret, "failed to init mutex\n");
+> > +
+> > +	ret =3D pcie->platform->setup(pdev);
+> > +	if (ret)
+> > +		return dev_err_probe(dev, ret, "failed to setup PCIe RC\n");
+> > +
+> > +	ret =3D aspeed_pcie_parse_dt(pcie);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret =3D aspeed_pcie_init_ports(pcie);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	host->sysdata =3D pcie;
+> > +
+> > +	ret =3D aspeed_pcie_init_irq_domain(pcie);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	irq =3D platform_get_irq(pdev, 0);
+> > +	if (irq < 0)
+> > +		return irq;
+> > +
+> > +	ret =3D devm_add_action_or_reset(dev, aspeed_pcie_irq_domain_free,
+> pcie);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret =3D devm_request_irq(dev, irq, aspeed_pcie_intr_handler,
+> IRQF_SHARED,
+> > +			       dev_name(dev), pcie);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret =3D pci_host_probe(host);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	return 0;
+>=20
+> This is the same as:
+>=20
+>   return pci_host_probe(hoste);
+>=20
+
+Agreed.
+
+> > +}
+> > +
+> > +const struct aspeed_pcie_rc_platform pcie_rc_ast2600 =3D {
+> > +	.setup =3D aspeed_ast2600_setup,
+> > +	.reg_intx_en =3D 0xc4,
+> > +	.reg_intx_sts =3D 0xc8,
+> > +	.reg_msi_en =3D 0xe0,
+> > +	.reg_msi_sts =3D 0xe8,
+> > +	.msi_address =3D 0x1e77005c,
+>=20
+> Where does this .msi_address come from?  Does this depend on an address
+> map that could vary based on the platform?  Should it come from devicetre=
+e?
+>=20
+
+The .msi_address is a SoC-fixed MSI doorbell target address used by the RC
+to capture MSI writes. The memory write of MSI will not be mapped to RAM.
+I think it should be keep in the SoC match data rather than Devicetree.
+
+> > +};
+> > +
+> > +const struct aspeed_pcie_rc_platform pcie_rc_ast2700 =3D {
+> > +	.setup =3D aspeed_ast2700_setup,
+> > +	.reg_intx_en =3D 0x40,
+> > +	.reg_intx_sts =3D 0x48,
+> > +	.reg_msi_en =3D 0x50,
+> > +	.reg_msi_sts =3D 0x58,
+> > +	.msi_address =3D 0x000000f0,
+> > +};
+
+Thanks,
+Jacky
 
