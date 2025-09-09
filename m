@@ -1,94 +1,67 @@
-Return-Path: <openbmc+bounces-606-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-607-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9058AB48E70
-	for <lists+openbmc@lfdr.de>; Mon,  8 Sep 2025 15:00:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A35EB4FF39
+	for <lists+openbmc@lfdr.de>; Tue,  9 Sep 2025 16:22:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cL6Vb4t97z2yrB;
-	Mon,  8 Sep 2025 22:59:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cLmH61GsVz3cfj;
+	Wed, 10 Sep 2025 00:22:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::42c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757336391;
-	cv=none; b=byRVmHYMo8el836PHQ29bomgRTbLyil1kYb4TaBqYJoTD1kMEMz7s2bKQiSoJvXVWCYG875BZzqIzLhciuYddckCkNFgnfKOfF9ZIAx8dKOfh7GbhXj4t+y623Pn0mOI6+tp2UtbKIc61dKjb8Luwl2p7pObZDtYhOAqg0wukp4TLPGcq9IUXc3h7gn49GWRRNUIk5FfndbQ57bk4dAReGvBDFBluQGRi16K9s1mW4CWXejAd0BvtQdIlfb3nQ4XZGwbHqIpBZgAugrHwWO5oMQxU2Oi/qlNcBkhXW8XCyUjSm/xLOFIaf7rAhnNe/+RJzPK6g7sSTu/tJN9ts4KUA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757427730;
+	cv=none; b=X+JeMJOYc0VNicnefrAIqh7s2d20zs3we0UPIFtFAPb0mEudJ9fM5Wamh9EF6jLFlgacSr5WoHdbnTkusqY+9HKKRLwNH4EX43r9LoPHFnUnY32JlCMWlljcq6LaGmaoFBA1k2Mz+O+diyke3qfC91EGj4T/wFsLgRbBthEzd1AOArtbFHCYDiTeT5MmmlRNv20mG2RcwyqC8DH+/Szc8tW2zS6ugTiKeAux3uPrKQE4p/HFifef4hNmDAZJN3sgZJS7H7XI9Qyp2xkmMJqXET8ltyoJbkw+HX9QtfxiEgtQtvfmOZwaRY0J22ItNAtwRQGxj/o1/HQjvUIozIny2g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757336391; c=relaxed/relaxed;
-	bh=ohTjPehvEZpnbTZWGGl3LmVxYQyjSBeyFWblJS+0WIQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=kssMLIVoTUBLnHg5m7lhIyYGTgG4RtqR8jOdL1WS7FVIZbEX1hkBDCdxEC8Dwqm0dto3HgSW2apvkrtAFt9+pGJfB1kNjYVLCu8GQ72EnHgMXqPo6yPKWSewmzQG/G+5xf7gCJhqsLrQ8yUY/w06VaiSfed9av7fqlAVxSZfR1XTgUD0+LyUXSeUkcBxJqmgOdM/l7kSVVnTtwGZukw3gSjiPcnlFueeq306saTQmoDBwxw/U0KVyvO1BwL44wR1OMKLhP5Iy+AaM7mPYRXImjwEDXPTfa65sa8/MS8R1jRcmELdI77VIL0P4oYcsc7K/5ZXx6xVaDNDs/2Z8Kj5lA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WlW0Oqko; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1757427730; c=relaxed/relaxed;
+	bh=Fh6I4DhLpoSWw3prPBBpsVZdYmWxETB/jEQuet0Wa6s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BQZ8GjFFh+hgPnJrbW6yWE3ezfKNKQvdT0ZWU58JL0xIGYkWlDueymK5XPX6zab+XKme7geZJ/ICDycOZXjsNI4NXEN4+5fOJpJQRzE1xhYem8qG2+p2wSdApaSHyB5UfhgH5eyQogxDKeI7zu+8+OUCuCxwQllfmgLLuBekUr8W3WjCvr5+co73oEDFzcdG97dg+/eIC5omLClkm+K2bR8kwZeiF9AdEWvdCZZkuo2VFpik0qVdO0psF/MLCQgdfCd9/fyqgxE5+lmKc5ZzjDFbCapjDDtCWD5tplSK5d8/KuOan96knvAFZp5+GAkd2mgKq0SXGkDwpMjGPkpYXw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Lijg5Xxh; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WlW0Oqko;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Lijg5Xxh;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cL6VZ5zxtz30QJ
-	for <openbmc@lists.ozlabs.org>; Mon,  8 Sep 2025 22:59:50 +1000 (AEST)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-3df35a67434so2702108f8f.3
-        for <openbmc@lists.ozlabs.org>; Mon, 08 Sep 2025 05:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757336388; x=1757941188; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ohTjPehvEZpnbTZWGGl3LmVxYQyjSBeyFWblJS+0WIQ=;
-        b=WlW0Oqkoj+kFPF/yzXocafawCKr38ZX8swnGtjgTpX6JDbtNsb261xhFX7T80UB92U
-         n75FAiCu5hbFjUbxItrd8LxBL+o+bg6DX7qYETKLY7bUTPpVSIzXAGbdpeTkmBAg2co5
-         BCP/nQSYDDzX1RMdeaJHW10qOtRmP3Tx62krQB2S0W/4lquUR1O4YrEafVwotz6TzaQk
-         P8U9nxniuOGogjxBZuz8JyYI3oh0pNDGbtAdeCoyClH4z/sGxGDaWmNUpulAWA6QO9Ui
-         NQzfSURpgHsklkmqogPo4yTcG/JvU8Gu36slEH8EoE6viFBd5R2/jgLJcqdYuiSvjwyJ
-         WWbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757336388; x=1757941188;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ohTjPehvEZpnbTZWGGl3LmVxYQyjSBeyFWblJS+0WIQ=;
-        b=h4tDof8djy6ua6Ij+8ZqNTpyIKC6eAeeLRhMGp1B2we+qkASTYbows9lYnJybu6mtG
-         li6+NKHWuFn9r2Kv64lylgDAgv40PUlztnyo3JBoIGqM7pRLjEP0xw6hPZsq+m4XdOgl
-         FMSjG3wIF4dXa7WlMjIp8351wq/IhXVRJXIamBvlGWD7e/vVx4c/Qp/74n5GBpFiXeEy
-         ukmlrQ3684iwFDAjadX8cYWrBlANHQabdGjvf9pgRST1O9POe7ILgDLU19Ss4PB71dnQ
-         oybDWfpqUkcW8ilx+Amv6G8RpSdLKkRJYczNGI7vaCqyJcAiEmJM+5nlimi0io3BQFf6
-         Y3KA==
-X-Gm-Message-State: AOJu0Yw6s9h5niufHU2293IVHoV9olKKArzIhRAZeljh06fG+/yyb9oL
-	ik2J5btFXPW7Tjy1Dl7Q22qVleHNy0zQ6OT1SvcwWFbORU8/eY4zbdgWYuntzQ==
-X-Gm-Gg: ASbGncsNY4HUNaND+8M9OaULswHCKegkTuF4SITPXXbfYeYPdMvx1kd+LuO8Vhsa3ud
-	2Vg1io+sftmYlco2jKxFqwmGHJsYhcrH4IhdOjZOaVm+CQAo7DO/IUhxMTofX6IU9goU8Af9fio
-	q52aEDAp3ZYRYFgFS1+r2h9AH3+9Y0FJC1qtVeLB3AZIctaVsfpTdFisnMpI2L+lLLXNFMSQV2W
-	cNKu13/vqsicqR8B2BqDqx7+3RC+mpQXPSLihCyweHpAJjhAxPcwMqgF9wPUdK+/g1rMykdJpEZ
-	z3nTtKt9By3GgHMti6rWfR7d5emgUoc1UF/85vADu4wrm3l+TDqhiLumVWbNcKaiFbxBDsQ+eA2
-	xJxwrp22db/FxWYE3jooadw5iDnVhbqT30focHSV6yfXb
-X-Google-Smtp-Source: AGHT+IG/sznJSOJRWqTPYkU9mtj3z/JTHqvpHXVfviEB9X7NQmlAgsa7OmrD+qN2TANTMUAGW3TFnw==
-X-Received: by 2002:a05:6000:200f:b0:3e7:4c93:18d9 with SMTP id ffacd0b85a97d-3e74c931c04mr1957542f8f.60.1757336387588;
-        Mon, 08 Sep 2025 05:59:47 -0700 (PDT)
-Received: from taln60.nuvoton.co.il ([212.199.177.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cf276d5816sm41260581f8f.25.2025.09.08.05.59.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 05:59:47 -0700 (PDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	avifishman70@gmail.com,
-	tali.perry1@gmail.com,
-	joel@jms.id.au,
-	venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cLmH51Bp6z3cfg
+	for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 00:22:09 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id E897E60224;
+	Tue,  9 Sep 2025 14:22:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6D0C4CEF4;
+	Tue,  9 Sep 2025 14:22:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757427726;
+	bh=hcsO+0CDu8ebk5l7xQEiuvFomx6Jn3bzyePgBxbYNfA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Lijg5Xxhk1ndqA8YsuTfBeLqkWzIrQloB4O6QQHsC7UOsWD/DnAW4cfZ7CSNrBgPh
+	 TMjyuG7AKDCV/XwzIBXauLf1RDk7g34JLK03efmZyFBF6l5Jm5af+1T1+L2cHUWd9q
+	 EtcGOys1wz0Mmb0pB3f9HTm5hXixAl/55644e0PTGR+/yLdlZi45KFBzhdKRF04ZNt
+	 0jmryVkcm2SPC63DgbVuPwzOCw84RPbvcBHTIDL2l793Tdtwv+gZsihhlzKwCZxEHL
+	 8hvA7ydUlWyRYf0v2Dc5rpBtH/A64D/ESUQCjZo5VIooHXPh6DL9hz3F6sfbmQ2NWj
+	 ra68COBXtoOxg==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Joel Stanley <joel@jms.id.au>
 Cc: openbmc@lists.ozlabs.org,
+	linux-watchdog@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v2 2/2] arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
-Date: Mon,  8 Sep 2025 15:59:38 +0300
-Message-Id: <20250908125938.3584927-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250908125938.3584927-1-tmaimon77@gmail.com>
-References: <20250908125938.3584927-1-tmaimon77@gmail.com>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: watchdog: Convert nuvoton,npcm-wdt to DT schema
+Date: Tue,  9 Sep 2025 09:21:59 -0500
+Message-ID: <20250909142201.3209482-1-robh@kernel.org>
+X-Mailer: git-send-email 2.51.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -101,488 +74,125 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Enable peripheral support for the Nuvoton NPCM845 Evaluation Board by
-adding device nodes for Ethernet controllers, MMC controller, SPI
-controllers, USB device controllers, random number generator, ADC,
-PWM-FAN controller, I2C controllers, and PECI interface.
-Include MDIO nodes for Ethernet PHYs, reserved memory for TIP, and
-aliases for device access.
+Convert the Nuvoton watchdog binding to DT schema format. It's a
+straight-forward conversion.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- .../boot/dts/nuvoton/nuvoton-npcm845-evb.dts  | 439 ++++++++++++++++++
- 1 file changed, 439 insertions(+)
+ .../bindings/watchdog/nuvoton,npcm-wdt.txt    | 30 ----------
+ .../watchdog/nuvoton,npcm750-wdt.yaml         | 60 +++++++++++++++++++
+ 2 files changed, 60 insertions(+), 30 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
+ create mode 100644 Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
 
-diff --git a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-index 2638ee1c3846..145a2e599600 100644
---- a/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-+++ b/arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dts
-@@ -10,6 +10,42 @@ / {
- 
- 	aliases {
- 		serial0 = &serial0;
-+		ethernet1 = &gmac1;
-+		ethernet2 = &gmac2;
-+		ethernet3 = &gmac3;
-+		mdio-gpio0 = &mdio0;
-+		mdio-gpio1 = &mdio1;
-+		fiu0 = &fiu0;
-+		fiu1 = &fiu3;
-+		fiu2 = &fiux;
-+		fiu3 = &fiu1;
-+		i2c0 = &i2c0;
-+		i2c1 = &i2c1;
-+		i2c2 = &i2c2;
-+		i2c3 = &i2c3;
-+		i2c4 = &i2c4;
-+		i2c5 = &i2c5;
-+		i2c6 = &i2c6;
-+		i2c7 = &i2c7;
-+		i2c8 = &i2c8;
-+		i2c9 = &i2c9;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c12 = &i2c12;
-+		i2c13 = &i2c13;
-+		i2c14 = &i2c14;
-+		i2c15 = &i2c15;
-+		i2c16 = &i2c16;
-+		i2c17 = &i2c17;
-+		i2c18 = &i2c18;
-+		i2c19 = &i2c19;
-+		i2c20 = &i2c20;
-+		i2c21 = &i2c21;
-+		i2c22 = &i2c22;
-+		i2c23 = &i2c23;
-+		i2c24 = &i2c24;
-+		i2c25 = &i2c25;
-+		i2c26 = &i2c26;
- 	};
- 
- 	chosen {
-@@ -25,12 +61,415 @@ refclk: refclk-25mhz {
- 		clock-frequency = <25000000>;
- 		#clock-cells = <0>;
- 	};
+diff --git a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
+deleted file mode 100644
+index 866a958b8a2b..000000000000
+--- a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
++++ /dev/null
+@@ -1,30 +0,0 @@
+-Nuvoton NPCM Watchdog
+-
+-Nuvoton NPCM timer module provides five 24-bit timer counters, and a watchdog.
+-The watchdog supports a pre-timeout interrupt that fires 10ms before the
+-expiry.
+-
+-Required properties:
+-- compatible      : "nuvoton,npcm750-wdt" for NPCM750 (Poleg), or
+-                    "nuvoton,wpcm450-wdt" for WPCM450 (Hermon), or
+-                    "nuvoton,npcm845-wdt" for NPCM845 (Arbel).
+-- reg             : Offset and length of the register set for the device.
+-- interrupts      : Contain the timer interrupt with flags for
+-                    falling edge.
+-
+-Required clocking property, have to be one of:
+-- clocks          : phandle of timer reference clock.
+-- clock-frequency : The frequency in Hz of the clock that drives the NPCM7xx
+-                    timer (usually 25000000).
+-
+-Optional properties:
+-- timeout-sec : Contains the watchdog timeout in seconds
+-
+-Example:
+-
+-timer@f000801c {
+-    compatible = "nuvoton,npcm750-wdt";
+-    interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+-    reg = <0xf000801c 0x4>;
+-    clocks = <&clk NPCM7XX_CLK_TIMER>;
+-};
+diff --git a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
+new file mode 100644
+index 000000000000..7aa30f5b5c49
+--- /dev/null
++++ b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
+@@ -0,0 +1,60 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/watchdog/nuvoton,npcm750-wdt.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
++title: Nuvoton NPCM Watchdog
 +
-+		tip_reserved: tip@0 {
-+			reg = <0x0 0x0 0x0 0x6200000>;
-+		};
-+	};
++maintainers:
++  - Joel Stanley <joel@jms.id.au>
 +
-+	mdio0: mdio-0 {
-+		compatible = "virtual,mdio-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		gpios = <&gpio1 25 GPIO_ACTIVE_HIGH>,
-+			<&gpio1 26 GPIO_ACTIVE_HIGH>;
++description:
++  Nuvoton NPCM timer module provides five 24-bit timer counters, and a watchdog.
++  The watchdog supports a pre-timeout interrupt that fires 10ms before the
++  expiry.
 +
-+		phy0: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
++allOf:
++  - $ref: watchdog.yaml#
 +
-+	mdio1: mdio-1 {
-+		compatible = "virtual,mdio-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		gpios = <&gpio2 27 GPIO_ACTIVE_HIGH>,
-+			<&gpio2 28 GPIO_ACTIVE_HIGH>;
++properties:
++  compatible:
++    oneOf:
++      - enum:
++          - nuvoton,npcm750-wdt
++          - nuvoton,wpcm450-wdt
++      - items:
++          - enum:
++              - nuvoton,npcm845-wdt
++          - const: nuvoton,npcm750-wdt
 +
-+		phy1: ethernet-phy@0 {
-+			reg = <0>;
-+		};
-+	};
-+};
++  reg:
++    maxItems: 1
 +
-+&gmac1 {
-+	phy-mode = "rgmii-id";
-+	snps,eee-force-disable;
-+	status = "okay";
-+};
++  interrupts:
++    maxItems: 1
 +
-+&gmac2 {
-+	phy-mode = "rmii";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&r1_pins
-+			&r1oen_pins>;
-+	phy-handle = <&phy0>;
-+	status = "okay";
-+};
++  clocks:
++    maxItems: 1
 +
-+&gmac3 {
-+	phy-mode = "rmii";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&r2_pins
-+			&r2oen_pins>;
-+	phy-handle = <&phy1>;
-+	status = "okay";
- };
- 
- &serial0 {
- 	status = "okay";
- };
- 
-+&fiu0 {
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		spi-rx-bus-width = <1>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			bbuboot1@0 {
-+				label = "bb-uboot-1";
-+				reg = <0x0000000 0x80000>;
-+				read-only;
-+				};
-+			bbuboot2@80000 {
-+				label = "bb-uboot-2";
-+				reg = <0x0080000 0x80000>;
-+				read-only;
-+				};
-+			envparam@100000 {
-+				label = "env-param";
-+				reg = <0x0100000 0x40000>;
-+				read-only;
-+				};
-+			spare@140000 {
-+				label = "spare";
-+				reg = <0x0140000 0xC0000>;
-+				};
-+			kernel@200000 {
-+				label = "kernel";
-+				reg = <0x0200000 0x400000>;
-+				};
-+			rootfs@600000 {
-+				label = "rootfs";
-+				reg = <0x0600000 0x700000>;
-+				};
-+			spare1@D00000 {
-+				label = "spare1";
-+				reg = <0x0D00000 0x200000>;
-+				};
-+			spare2@F00000 {
-+				label = "spare2";
-+				reg = <0x0F00000 0x200000>;
-+				};
-+			spare3@1100000 {
-+				label = "spare3";
-+				reg = <0x1100000 0x200000>;
-+				};
-+			spare4@1300000 {
-+				label = "spare4";
-+				reg = <0x1300000 0x0>;
-+			};
-+		};
-+	};
-+};
++  clock-frequency:
++    description: Frequency in Hz of the clock that drives the NPCM timer.
 +
-+&fiu1 {
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		spi-rx-bus-width = <2>;
-+		spi-tx-bus-width = <2>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			system1@0 {
-+				label = "spi1-system1";
-+				reg = <0x0 0x0>;
-+			};
-+		};
-+	};
-+};
++required:
++  - compatible
++  - reg
++  - interrupts
 +
-+&fiu3 {
-+	pinctrl-0 = <&spi3_pins>, <&spi3quad_pins>;
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		spi-rx-bus-width = <1>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			system1@0 {
-+				label = "spi3-system1";
-+				reg = <0x0 0x0>;
-+			};
-+		};
-+	};
-+};
++unevaluatedProperties: false
 +
-+&fiux {
-+	spix-mode;
-+};
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
 +
-+&sdhci {
-+	status = "okay";
-+};
-+
-+&udc0 {
-+	status = "okay";
-+};
-+
-+&udc1 {
-+	status = "okay";
-+};
-+
-+&udc2 {
-+	status = "okay";
-+};
-+
-+&udc3 {
-+	status = "okay";
-+};
-+
-+&udc4 {
-+	status = "okay";
-+};
-+
-+&udc5 {
-+	status = "okay";
-+};
-+
-+&udc6 {
-+	status = "okay";
-+};
-+
-+&udc7 {
-+	status = "okay";
-+};
-+
-+&mc {
-+	status = "okay";
-+};
-+
-+&peci {
-+	status = "okay";
-+};
-+
-+&rng {
-+	status = "okay";
-+};
-+
-+&adc {
-+	#io-channel-cells = <1>;
-+	status = "okay";
-+};
-+
- &watchdog1 {
- 	status = "okay";
- };
-+
-+&pwm_fan {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pwm0_pins &pwm1_pins
-+		&pwm2_pins &pwm3_pins
-+		&pwm4_pins &pwm5_pins
-+		&pwm6_pins &pwm7_pins
-+		&fanin0_pins &fanin1_pins
-+		&fanin2_pins &fanin3_pins
-+		&fanin4_pins &fanin5_pins
-+		&fanin6_pins &fanin7_pins>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	fan@0 {
-+		reg = <0x00>;
-+		fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@1 {
-+		reg = <0x01>;
-+		fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@2 {
-+		reg = <0x02>;
-+		fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@3 {
-+		reg = <0x03>;
-+		fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@4 {
-+		reg = <0x04>;
-+		fan-tach-ch = /bits/ 8 <0x08 0x09>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@5 {
-+		reg = <0x05>;
-+		fan-tach-ch = /bits/ 8 <0x0A 0x0B>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@6 {
-+		reg = <0x06>;
-+		fan-tach-ch = /bits/ 8 <0x0C 0x0D>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@7 {
-+		reg = <0x07>;
-+		fan-tach-ch = /bits/ 8 <0x0E 0x0F>;
-+		cooling-levels = <127 255>;
-+	};
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	eeprom@50 {
-+		compatible = "atmel,24c256";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	ipmb@10 {
-+		compatible = "ipmb-dev";
-+		reg = <0x10>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	ipmb@11 {
-+		compatible = "ipmb-dev";
-+		reg = <0x11>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	tmp100@48 {
-+		compatible = "tmp100";
-+		reg = <0x48>;
-+		status = "okay";
-+	};
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&i2c14 {
-+	status = "okay";
-+};
-+
-+&i2c15 {
-+	status = "okay";
-+};
-+
-+&i2c16 {
-+	status = "okay";
-+};
-+
-+&i2c17 {
-+	status = "okay";
-+};
-+
-+&i2c18 {
-+	status = "okay";
-+};
-+
-+&i2c19 {
-+	status = "okay";
-+};
-+
-+&i2c20 {
-+	status = "okay";
-+};
-+
-+&i2c21 {
-+	status = "okay";
-+};
-+
-+&i2c22 {
-+	status = "okay";
-+};
-+
-+&i2c23 {
-+	status = "okay";
-+};
-+
-+&i2c24 {
-+	status = "okay";
-+};
-+
-+&i2c25 {
-+	status = "okay";
-+};
-+
-+&i2c26 {
-+	status = "okay";
-+};
++    watchdog@f000801c {
++        compatible = "nuvoton,npcm750-wdt";
++        interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
++        reg = <0xf000801c 0x4>;
++        clocks = <&clk NPCM7XX_CLK_TIMER>;
++    };
 -- 
-2.34.1
+2.51.0
 
 
