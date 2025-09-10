@@ -1,78 +1,78 @@
-Return-Path: <openbmc+bounces-619-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-620-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38B5FB50F3D
-	for <lists+openbmc@lfdr.de>; Wed, 10 Sep 2025 09:26:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98FB7B50F40
+	for <lists+openbmc@lfdr.de>; Wed, 10 Sep 2025 09:26:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cMC0R4z9Jz3cnZ;
-	Wed, 10 Sep 2025 17:25:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cMC0T6Vx1z3cy9;
+	Wed, 10 Sep 2025 17:26:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::334"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757489159;
-	cv=none; b=RSzGsQHaSq9ZOjXjqaIk5KQ2Ea+2ov/RgU6IMynB0e9uVIoKefygMAnVrakvn9glq8prXsxu5+BwsTmCBo8/y5HxK6maDglemJUx7bEApGWCCfn4RjDJynfw/DMQDoxqDmSEqdM7pB1ZxEwx6uaXr6CwIg2fDPS2zC0uQY30HA0c0Cz+jn3PxKo2TKbfjp/mC/Ie0ilHBL108aaTfYGaznOXA9qH+OfmiuCgyyPgmky6tMQL8MSTW1qNTHpAA/Rx+YP6roQRJ949Zwb2QSf8+S5WFLBokc+dyl6+o3OPGi9JjPLlEPiKJtxn7bFOq09Accy+AyYemzDMUGfXCfqSBA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::32f"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757489161;
+	cv=none; b=oIsUctdYqKvAzsB3wInaNWOQ/75k6d8MjIhl1IBGq37yGVBt1h3KE5uqEh9NvIyFiznXRiqL2JAx/UkcXJeTWmEKXvKiinac2FpWnytq3Qeq+VI4x92996PScvHxNNMTovWcCHHqpnMKrczucVw2anCVogMLUsIam1Gbya7X8jvAfUNgMZakqwLe8PLpt7DvJvEZkLHaDPQsLbzY1OXYauchyYBNy3z0wQDJCOYTjD+Mw+mS5k8/xYvNF5SoMbNvwkYsaetO7NGWr4AGXfZY412QhVWa7oBBcGsFYyeaSU0ftytLKEFipNkXiwRK8RDHUf+Alctl5Dyfpo1/hDVckw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757489159; c=relaxed/relaxed;
-	bh=FGe2kCYyrBIF4DaoEyXhe9vc0rRZs52BhYtoGcoY0gY=;
+	t=1757489161; c=relaxed/relaxed;
+	bh=zF013nrJ5GJsI3fsA8ibqvOnAPNLfV95/lnk4xGU4QE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F+/WcVVYBEbxVQroLb15OUpBE6nqP2L6lxaMqzU+7tUYqiXOVQzpNif1FAR+4sDZ9dDduNjhDqVHMWkogNUxI19acvWBndymGs1GGyMGsCeoml9GWWgbHcbZnEKjk5AbAwtawXGZXTkx2jfybBormVS1thNvpsLgknCqFGnW/JH1boOngpGat/0uBI1LP9athg8JSLydoi7d/iCJjdypNYYsnxywPZzVg7Q9HLVnGLOJJ7zS3UB0fCSrFOlaryIdOkBwZPHQETg15uPR0JEoSCiUjjB21uaS6IwOXGGwDPSrZgNH75D/L2+TCUHylJiTTd7+K5fsvtNGbMy6US7+yw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=tWcN4Rmz; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
+	 In-Reply-To:To:Cc; b=GnwU97zrrYXohDKjpvckcC+gSfR1DzM/IMNj1tEERHlRQ/t1z2zyWthnWePh51yEqwKuaLYc9U5Dle0MDvXwCI1EYrwuKraGY2MG5fV3TOgi4YmOPCIOfJMaohV1NfrTVeePJp2ibRKl6QB6wHijEPkSjULa5zENFVZAe5qNNDaG+Hj8Eh5/YRXi58U2rL8comFJsNGW8liIEI1Ick9eND/PYAVU9NnS1JTZKJP2poLyKad21nszvqJTT/JwjajlTcjzqFVMCWbtu3FPb1Ub57ik98pLCI1/te4Wbw4VXJvPYIuXPIXffbvHuxCH3NwhIQoJ2bIy3tdvdmTlOyQohw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=vgMPxrv7; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::32f; helo=mail-wm1-x32f.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=tWcN4Rmz;
+	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=vgMPxrv7;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::32f; helo=mail-wm1-x32f.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cMC0Q6GWJz3cll
-	for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 17:25:58 +1000 (AEST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-45ded619608so14121315e9.3
-        for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 00:25:58 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cMC0S5TzPz3cll
+	for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 17:26:00 +1000 (AEST)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-45cb659e858so44556175e9.2
+        for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 00:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757489155; x=1758093955; darn=lists.ozlabs.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757489158; x=1758093958; darn=lists.ozlabs.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FGe2kCYyrBIF4DaoEyXhe9vc0rRZs52BhYtoGcoY0gY=;
-        b=tWcN4RmzfXSfxPrqGPcYabqIKOWGOpkyqH7pesx06GeuDVjMXPXyYQwg/GC4LM/q0l
-         T3ntDHJwnB/xZ8FyvwcVukBVxPamumorxXgXeR8I+C7EN2Uv1Yuwd42qxtUkAPsGftEk
-         qeqllRqjGr/NzQay4k/Om0FD61EDqiCeS6jlvaQCa1C+5l/73mJ/NKRZfPD6kx78d8VD
-         TLoG3L9ZDHAkGJPAwPrUOJilP1JM+dLFW34YbbnJrIHQE3eKxALwzxawdA9/DIqwzsZL
-         IzxAx+c8Mi9M/I4rlfBkLwOLgQRWLa0nr1bEz2Oxyml2+WLWJngMR7IZ7JXnVI7iB5Bm
-         9hIA==
+        bh=zF013nrJ5GJsI3fsA8ibqvOnAPNLfV95/lnk4xGU4QE=;
+        b=vgMPxrv7KaQOEoOM6skFntwxHCHsc46TUGAz4wqJp3NR602vK3uw+ixk56bADGVwwr
+         dzGJZMFS1UefApCTFwlgutjsacvYsaS8i833VDcEjPEvB2m2SO9EpuuHFFE98rD9B3RB
+         oGRaHwOYiXRt5cYBxs5qeaOpEf2L1pQXOgkYsPQb60yIFhqKuWJ7nZZHqwB6jHv+ZkEY
+         rfAwwIbxJ9xspPKPgNjHGz0NjLwQUdVuwmSA+LrMZMBAtzBoq+XbIHs5Le4tnvf4QAm1
+         kqFJtI9GIeajPdfsUQ/frE1Kw/pYxZn570r7oe5SdPnqa8oe7n/wx8shkVDT68sanVAD
+         pUgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757489155; x=1758093955;
+        d=1e100.net; s=20230601; t=1757489158; x=1758093958;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FGe2kCYyrBIF4DaoEyXhe9vc0rRZs52BhYtoGcoY0gY=;
-        b=V+IBCcc0SicoCDRQv3OX/iiyfk+EZlofvxCrJ1LVHysmYiLEXcIbdPFTgida61PaJF
-         qFuYyXpVA/wnyTEdFH4m3lpI5qczcOo8n2KjinmbzcbAixIa8NqcYIjZS0qflw3Q2yoA
-         kbciPXscNFPvqhwb2MR5htAoKW1fbJFGbBFT0g9KNoGpGnC151D8/2EulxgzLkBjSMQd
-         m4tEWzkpb+8eqwbSltLRurmfVbDqLip9gssVHQD3yDAzntjlM4ddnYa4+Q3VVTI9U6VW
-         MQfQpPaMUzP8GDMVy3D3qvzrF7GMPtJ9clYGv/2kXzCFIi2H4/I5U3bwre8Zqw1uN1Ne
-         sFaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVL849BM/L8H3KJr/Wz/ks6nf/GTWd+JrfQtgp+ylCdcLzFOA6vqydh53ZvSRZpr2Btpgk2QB9W@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwIU1mH9tJMPi1Lh4+DSPf+nx3TRlDv3HgiqUd9l312nbd98lok
-	xTDq8IZfxHM12edVl4B68STk6c2Aj2LJDDWrF2yeFVZSaoA90MM7MUHF5i/U7KFPAZY=
-X-Gm-Gg: ASbGncuWWkkeXiOW/R+PtfviY4HHdLxpWmiS/fCRJyxJjQ5gsLozGVBMh9Ajf5cz239
-	57A6bAxQpoIL3imzeFyoikTFKLoZ0ryeGgXLKKX3gBhPvAkkw3ThjjP96cVL2tC90mpJQRcarAQ
-	X7LRhHzly1kItu5LqElZiRe4W0b8RU7EwEg7r/XPcXtAZiQ7Moqy+AdtGdC4+K7YgNI+DFtWt9K
-	kxn5+D4Fw/z9jngwt6unInifTofN+eDugHVK+kSbU600jq1KllVrocvrZ6qnQDjPnKGr0LQkCS8
-	wBte8MYKqXOdXdClvoiqAPLYy7czlOskV9+TF9l0XOt6/EPf381tkOFDUYNCCDZrIIAnQBw+jZx
-	ckNn0IgOKXlxJQyUJMeKKtCjTVzlh
-X-Google-Smtp-Source: AGHT+IFKukxuWQbV3GQkjDT5tJO7ETqBsVAR9QXCb3Q6hoLg7Ipuas1CKAmh+SOgrGuDOECJ9CxThg==
-X-Received: by 2002:a05:600c:4ba2:b0:45d:f650:376f with SMTP id 5b1f17b1804b1-45df65037a8mr16159965e9.23.1757489155474;
-        Wed, 10 Sep 2025 00:25:55 -0700 (PDT)
+        bh=zF013nrJ5GJsI3fsA8ibqvOnAPNLfV95/lnk4xGU4QE=;
+        b=HKQmcusIVEG+XTPVl5vg6w7Rl3W8sODNrUFDU2oZnmHhd/giAg6XYLdfp9ZZY4Cvw4
+         13cYAq9QEpKavfaG1y1YzxLv5HdwFRPjfi2MJJiVipoyJgTfR+Grj3DisTK9GSktu3QB
+         3CAdWltuwEM8UzRL5BpJsbhd7cl7udBmYSMVDAY74ZXr9dZ8UzAX0RODIDkbdivwI2GM
+         nsv1zngvy78JLfx8UG7PBiXXpLXKR87RO2hOD/O/N3h8+ohjJkcjCkaYEtSiSinyfxYx
+         XpxM//X0KOYF9+fZHvkLytPYO5/xtjGC1NmpTyScCwcYw4oqFC9vmeAuqfUr2NwybpMj
+         LV5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXKYJpNniEzYB3oOAY5XCwHX2AW1E59o4h+yiPaGhxJDhbcnXojiiJ23T07ym+1Bt9ToOyTQIiI@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyeyUz012un1g4sZ8ZIsJ8WFZy3EwLL8Cfl7q2qWeFXfmzQlyBT
+	xIY3h//JQhgTpPyvRQARNjsnGF1fO99YtmK9KHOYtNgmsi/ynHye9sffjAOHbF0WHPw=
+X-Gm-Gg: ASbGncvKOv3B/mfnEb/4OWORTu3PbPnBIVFjkND4F0xIi1NMr9/XgjpSbqLjmCPd3eW
+	S3YoncS/45F45wwIScNrI9FpwaTdN2o43jjnxJ71UZusio1O6c1fiOluOhKQEMD8B6jlTg6x0hw
+	nDlQExioP1enLoUTb28Byiso+Pqg95Z7d5Cy1qUCtBKP1S/6uTNSDxhPNRg9XXsV5N4ZIUbs9ED
+	Ohu0Cc5op6ifXc9Br08e/xMwlk2vMQQUs36v+UUEs1BItJQW3AIHeBMNmhUZ6TI4bQefBGVQEiL
+	6Snq72D8OgmBBs3EZCAbWiqZSxAKxknA0xxKhkaUAwb230Q2LBGjcQb6brSBSrKYTOJ5cKibtzh
+	I7od54GbrPZRqmN4lzg==
+X-Google-Smtp-Source: AGHT+IFDCPBIKWcO0wPtCekfCK5Pt9XoqR33Si9x+IdwjWaGC2asnXF0pj2h+APM1jnRfwQG3SS7dA==
+X-Received: by 2002:a05:600c:4f83:b0:45c:b56c:4183 with SMTP id 5b1f17b1804b1-45dddee9c59mr136102255e9.18.1757489157517;
+        Wed, 10 Sep 2025 00:25:57 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:3936:709a:82c4:3e38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8236428sm16729825e9.24.2025.09.10.00.25.53
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8236428sm16729825e9.24.2025.09.10.00.25.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 00:25:54 -0700 (PDT)
+        Wed, 10 Sep 2025 00:25:56 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 10 Sep 2025 09:25:46 +0200
-Subject: [PATCH 2/3] pinctrl: use more common syntax for compound literals
+Date: Wed, 10 Sep 2025 09:25:47 +0200
+Subject: [PATCH 3/3] gpio: use more common syntax for compound literals
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -86,7 +86,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-make-compound-literals-normal-again-v1-2-076ee7738a0b@linaro.org>
+Message-Id: <20250910-make-compound-literals-normal-again-v1-3-076ee7738a0b@linaro.org>
 References: <20250910-make-compound-literals-normal-again-v1-0-076ee7738a0b@linaro.org>
 In-Reply-To: <20250910-make-compound-literals-normal-again-v1-0-076ee7738a0b@linaro.org>
 To: Lee Jones <lee@kernel.org>, 
@@ -120,21 +120,21 @@ Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  linux-unisoc@lists.infradead.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3691;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14003;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=tWDuSmRqjBxh4PCbBXZnSady6kuFU8Rp72hLJEvwTyY=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBowSf8QZSyHCR/xAEwQhF3yXvsq3FFB2Sm0TpBi
- tTuwCsYkxeJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaMEn/AAKCRARpy6gFHHX
- cjLEEADOrejKydnAO7p85xcuEBK/60vbBbndYaZrZm7VhXvcHChD6etGR9x/gUym2NKntRzIFsL
- hAXVhRuugK9dp6StaYPOv0NzNg2DHcw92GeNV1ULDNv/30mZ9sw+dy7U36UDGUF/KoiRIAm8iba
- +5A4dTlF2MpVWXQ2GwUyGaIareKlqy3x20YM/2GK9plb6g1DEexAqB49SWARBjv54DYfFP2IRu8
- 2fwwsm62dpHpqSVvggXPlROV0Q8f7t4uHPGU2pXh+8o0BG1Ajkg/btvLzTMjCCcK/jRyQp9IbEK
- /JBENsMRS1/eBdlhuZJDv9okaKfAXrSadQlX2eGOZ7J5/9MjqLU8C6uO3xxT4NIP9H8H/Do7C/0
- 5FskCXqtSsbFOlbGaDuFD3c5GBgoYSX4bzC45Ulqmdu/oBRgtjFtjalSE/oil8BkOnp0fNYY2L4
- alFoFFiKMyRYIv4AQN6JH5r+KVvxbCOLCQnjHkYs8E7KAYKIbd4YgSYOfqS5YMhNhcUyfU6RmqP
- KSBeRYlyoKiaeo7oU7kZid60qvH6K/JPXDowfDz6OhK8a7ptCBzSF5md7/9/z0huGOcZB7nimGk
- EdU2rJBoEaNl4MGY9Md2JqQEkgsF2omrEVhjvDKeAQKX0ALrzTW7a1k3U9SLIK/rulrTObN7XHB
- yIXBeQDJ0g933cg==
+ bh=INGW7B2ADGb/rlHHC57TDLO10ReKZPd3voP5EzMoCZQ=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBowSf9wMqvNTbZ5BfVZ4pmQJ1MRpUGegkac0qkt
+ ovD3xCxd/OJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaMEn/QAKCRARpy6gFHHX
+ ctLPD/4pzJYzgrK6wx3tKnjhMqfr7Nb6jtllZTqaxOJyRf3KujiHHh4tRF3I+/55rNZI79714Ik
+ Fs/HKHyW7lCg2x0BLvCdtnPpDsG94K7x9BGQYBQouFFHvhTf1W94UcnlcI8HcRQXudH1TYTt0rg
+ EGZl9aLf66CNHix6Q+bJ9X0KZrpYsnuzlplOQvOzdAoxDkcpsm35Xrf8ndIT8c2GYY0mUm15SZJ
+ dcrmlfY9ksAsgLEM0jJNV9F5QbkoQQksjgqGWasG2FlxFSwE1W86BHCceIZIuEalr5xaidm7Gux
+ phNGKngKl+Otj4ocSYzRiekJ7FDWt6BpBq/saIfm5hwFwsKQiK6gySTQRYdgmqE88C5lRNOLV7/
+ /jEjTofbVQXcoFHSZUMoiWvdONflA+az6V2L7n5FCyZd1tFupJXt3LQCq954ZHp/0RMucrAQJu/
+ X/zQyF/mzJ9cH5Fi1vi8iVGR3kEne9Tm5H7amZyLE7qojUoA6WtZnpTSc2B3cv6Ujolxbapitr6
+ iwYRd3lgIKQYjBETwVJUngT9eGzFZYKVquj5nsDg908KkhXJeWZPyxDNmhg2mvBXjt22gopF94J
+ TCThy1BrEi1FhRdA5ayZnYjRE5UHIstpGuI39eSAdioKuk/q/30kj/XcAsSHEFUihfbaVS9JNrR
+ gIl2OpuL6X6TiYA==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -151,78 +151,344 @@ Link: https://lore.kernel.org/all/20250909-gpio-mmio-gpio-conv-part4-v1-13-9f723
 Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 2 +-
- drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c | 2 +-
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 2 +-
- drivers/pinctrl/pinctrl-equilibrium.c     | 2 +-
- drivers/pinctrl/stm32/pinctrl-stm32-hdp.c | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-amdpt.c          | 2 +-
+ drivers/gpio/gpio-blzp1600.c       | 2 +-
+ drivers/gpio/gpio-dwapb.c          | 2 +-
+ drivers/gpio/gpio-ep93xx.c         | 2 +-
+ drivers/gpio/gpio-ftgpio010.c      | 2 +-
+ drivers/gpio/gpio-ge.c             | 2 +-
+ drivers/gpio/gpio-grgpio.c         | 2 +-
+ drivers/gpio/gpio-hisi.c           | 2 +-
+ drivers/gpio/gpio-idt3243x.c       | 2 +-
+ drivers/gpio/gpio-ixp4xx.c         | 2 +-
+ drivers/gpio/gpio-loongson-64bit.c | 2 +-
+ drivers/gpio/gpio-mlxbf.c          | 2 +-
+ drivers/gpio/gpio-mlxbf2.c         | 2 +-
+ drivers/gpio/gpio-mlxbf3.c         | 2 +-
+ drivers/gpio/gpio-mpc8xxx.c        | 2 +-
+ drivers/gpio/gpio-mxs.c            | 2 +-
+ drivers/gpio/gpio-rda.c            | 2 +-
+ drivers/gpio/gpio-realtek-otto.c   | 2 +-
+ drivers/gpio/gpio-tb10x.c          | 2 +-
+ drivers/gpio/gpio-ts4800.c         | 2 +-
+ drivers/gpio/gpio-vf610.c          | 2 +-
+ drivers/gpio/gpio-visconti.c       | 2 +-
+ drivers/gpio/gpio-xgene-sb.c       | 2 +-
+ drivers/gpio/gpio-xgs-iproc.c      | 2 +-
+ 24 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index 7f45c2897c3f270430ef7ac34ef064b2e2c58abc..4e8b5e6d1e4d48acba85e8c14e79dfbff6e6f6d7 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -1836,7 +1836,7 @@ static int npcm7xx_gpio_of(struct npcm7xx_pinctrl *pctrl)
- 		if (!pctrl->gpio_bank[id].base)
- 			return -EINVAL;
- 
--		config = (typeof(config)){
-+		config = (struct gpio_generic_chip_config) {
- 			.dev = dev,
- 			.sz = 4,
- 			.dat = pctrl->gpio_bank[id].base + NPCM7XX_GP_N_DIN,
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-index 920dd207792596055d6f6da9403a9b7516531277..fd4270a8fb734e1452b30dad390a80a50072fb61 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
-@@ -2329,7 +2329,7 @@ static int npcm8xx_gpio_fw(struct npcm8xx_pinctrl *pctrl)
- 		if (!pctrl->gpio_bank[id].base)
- 			return dev_err_probe(dev, -ENXIO, "fwnode_iomap id %d failed\n", id);
- 
--		config = (typeof(config)){
-+		config = (struct gpio_generic_chip_config) {
- 			.dev = dev,
- 			.sz = 4,
- 			.dat = pctrl->gpio_bank[id].base + NPCM8XX_GP_N_DIN,
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index 4dd8a3daa83e44b0e2780fedb03ab11fa46a4b7d..ef569525e9c6b00add773258f81b57db38411738 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -1064,7 +1064,7 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
- 			flags = BGPIOF_NO_OUTPUT;
- 		}
- 
--		config = (typeof(config)){
-+		config = (struct gpio_generic_chip_config) {
- 			.dev = dev,
- 			.sz = 4,
- 			.dat = dat,
-diff --git a/drivers/pinctrl/pinctrl-equilibrium.c b/drivers/pinctrl/pinctrl-equilibrium.c
-index 7e655b0444b359906a6b62e38873d740e1ce26ea..2d04829b29c9976fdebbaa56e6c1407eafa121a9 100644
---- a/drivers/pinctrl/pinctrl-equilibrium.c
-+++ b/drivers/pinctrl/pinctrl-equilibrium.c
-@@ -241,7 +241,7 @@ static int gpiolib_reg(struct eqbr_pinctrl_drv_data *drvdata)
- 		}
- 		raw_spin_lock_init(&gctrl->lock);
- 
--		config = (typeof(config)){
-+		config = (struct gpio_generic_chip_config) {
- 			.dev = dev,
- 			.sz = gctrl->bank->nr_pins / 8,
- 			.dat = gctrl->membase + GPIO_IN,
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32-hdp.c b/drivers/pinctrl/stm32/pinctrl-stm32-hdp.c
-index a8a4c2eee837ad90581d35822d49ab8e4708a8e8..22d9104499af674c489a5d265c4d7b8ef0edb44e 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32-hdp.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32-hdp.c
-@@ -642,7 +642,7 @@ static int stm32_hdp_probe(struct platform_device *pdev)
- 	hdp->gpio_chip.gc.can_sleep     = true;
- 	hdp->gpio_chip.gc.names	     = stm32_hdp_pins_group;
+diff --git a/drivers/gpio/gpio-amdpt.c b/drivers/gpio/gpio-amdpt.c
+index 0a9b870705b90bdc9bdab93ce5a4a33ebdafccc6..bbaf42307bc3d7df0a19b34cdb0a5aaa96c9ad3f 100644
+--- a/drivers/gpio/gpio-amdpt.c
++++ b/drivers/gpio/gpio-amdpt.c
+@@ -88,7 +88,7 @@ static int pt_gpio_probe(struct platform_device *pdev)
+ 		return PTR_ERR(pt_gpio->reg_base);
+ 	}
  
 -	config = (typeof(config)){
 +	config = (struct gpio_generic_chip_config) {
  		.dev = dev,
  		.sz = 4,
- 		.dat = hdp->base + HDP_GPOVAL,
+ 		.dat = pt_gpio->reg_base + PT_INPUTDATA_REG,
+diff --git a/drivers/gpio/gpio-blzp1600.c b/drivers/gpio/gpio-blzp1600.c
+index bfb35d59fa561c43889b186fdfb8d9184b750a53..0f8c826ba876129aab078d4c9cd37d9da015e35f 100644
+--- a/drivers/gpio/gpio-blzp1600.c
++++ b/drivers/gpio/gpio-blzp1600.c
+@@ -230,7 +230,7 @@ static int blzp1600_gpio_probe(struct platform_device *pdev)
+ 	if (IS_ERR(chip->base))
+ 		return PTR_ERR(chip->base);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = &pdev->dev,
+ 		.sz = 4,
+ 		.dat = chip->base + GPIO_IDATA_REG,
+diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+index 0fb781ca9da29545dce23ddbdf3bd5927c714b4c..b42ff46d292bd8f272395956709e8dccf49106e2 100644
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -525,7 +525,7 @@ static int dwapb_gpio_add_port(struct dwapb_gpio *gpio,
+ 	set = gpio->regs + GPIO_SWPORTA_DR + pp->idx * GPIO_SWPORT_DR_STRIDE;
+ 	dirout = gpio->regs + GPIO_SWPORTA_DDR + pp->idx * GPIO_SWPORT_DDR_STRIDE;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = gpio->dev,
+ 		.sz = 4,
+ 		.dat = dat,
+diff --git a/drivers/gpio/gpio-ep93xx.c b/drivers/gpio/gpio-ep93xx.c
+index c6c8170813331be567048980710226792b4b2a02..1f56e44ffc9a3c5edab016a3b66e9d63aabf88ab 100644
+--- a/drivers/gpio/gpio-ep93xx.c
++++ b/drivers/gpio/gpio-ep93xx.c
+@@ -352,7 +352,7 @@ static int ep93xx_gpio_probe(struct platform_device *pdev)
+ 
+ 	gc = &egc->chip.gc;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = &pdev->dev,
+ 		.sz = 1,
+ 		.dat = data,
+diff --git a/drivers/gpio/gpio-ftgpio010.c b/drivers/gpio/gpio-ftgpio010.c
+index dfa2c9444960a304d411e8d20db9bce0f8afa1c6..11e6907c3b54012877254e567520d868585c1f2b 100644
+--- a/drivers/gpio/gpio-ftgpio010.c
++++ b/drivers/gpio/gpio-ftgpio010.c
+@@ -264,7 +264,7 @@ static int ftgpio_gpio_probe(struct platform_device *pdev)
+ 		 */
+ 		return PTR_ERR(g->clk);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = g->base + GPIO_DATA_IN,
+diff --git a/drivers/gpio/gpio-ge.c b/drivers/gpio/gpio-ge.c
+index a02dd322e0d4cecd4564a71a550204983df33568..b5cbf27b8f44225341e23e88b985e26458d11a7b 100644
+--- a/drivers/gpio/gpio-ge.c
++++ b/drivers/gpio/gpio-ge.c
+@@ -67,7 +67,7 @@ static int __init gef_gpio_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regs))
+ 		return PTR_ERR(regs);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = regs + GEF_GPIO_IN,
+diff --git a/drivers/gpio/gpio-grgpio.c b/drivers/gpio/gpio-grgpio.c
+index 3b77fad00749cd5218268b267b5848515c6a26fc..5930f4c6f2b578ea55c8143078042d5e0aaf3cfd 100644
+--- a/drivers/gpio/gpio-grgpio.c
++++ b/drivers/gpio/gpio-grgpio.c
+@@ -353,7 +353,7 @@ static int grgpio_probe(struct platform_device *ofdev)
+ 	if (IS_ERR(regs))
+ 		return PTR_ERR(regs);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = regs + GRGPIO_DATA,
+diff --git a/drivers/gpio/gpio-hisi.c b/drivers/gpio/gpio-hisi.c
+index 01a99ac613d94e933d30f782520776693f048d1c..d8c4ab02ceaef7941e97f4788957b1f2c268de98 100644
+--- a/drivers/gpio/gpio-hisi.c
++++ b/drivers/gpio/gpio-hisi.c
+@@ -292,7 +292,7 @@ static int hisi_gpio_probe(struct platform_device *pdev)
+ 
+ 	hisi_gpio->dev = dev;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = hisi_gpio->dev,
+ 		.sz = 4,
+ 		.dat = hisi_gpio->reg_base + HISI_GPIO_EXT_PORT_WX,
+diff --git a/drivers/gpio/gpio-idt3243x.c b/drivers/gpio/gpio-idt3243x.c
+index 232a621ba086ef66b2d2f0d471388c77ac5caa5b..56f1f1e57b69438ccd1e7014d590de61cd5a9286 100644
+--- a/drivers/gpio/gpio-idt3243x.c
++++ b/drivers/gpio/gpio-idt3243x.c
+@@ -147,7 +147,7 @@ static int idt_gpio_probe(struct platform_device *pdev)
+ 
+ 	ctrl->chip.gc.parent = dev;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = &pdev->dev,
+ 		.sz = 4,
+ 		.dat = ctrl->gpio + IDT_GPIO_DATA,
+diff --git a/drivers/gpio/gpio-ixp4xx.c b/drivers/gpio/gpio-ixp4xx.c
+index 0cf10d0ba16ef7f45ac114c34468bc263442ccca..8a3b6b192288c8093abfe6644dbb680e9e25e830 100644
+--- a/drivers/gpio/gpio-ixp4xx.c
++++ b/drivers/gpio/gpio-ixp4xx.c
+@@ -294,7 +294,7 @@ static int ixp4xx_gpio_probe(struct platform_device *pdev)
+ 	flags = 0;
+ #endif
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = g->base + IXP4XX_REG_GPIN,
+diff --git a/drivers/gpio/gpio-loongson-64bit.c b/drivers/gpio/gpio-loongson-64bit.c
+index f84f8c5372494345adc64dc21f3d0439130dc6f3..b9234e12c30208dc971160d72896d8c7c6835127 100644
+--- a/drivers/gpio/gpio-loongson-64bit.c
++++ b/drivers/gpio/gpio-loongson-64bit.c
+@@ -289,7 +289,7 @@ static int loongson_gpio_init(struct platform_device *pdev, struct loongson_gpio
+ 
+ 	lgpio->reg_base = reg_base;
+ 	if (lgpio->chip_data->mode == BIT_CTRL_MODE) {
+-		config = (typeof(config)){
++		config = (struct gpio_generic_chip_config) {
+ 			.dev = &pdev->dev,
+ 			.sz = 8,
+ 			.dat = lgpio->reg_base + lgpio->chip_data->in_offset,
+diff --git a/drivers/gpio/gpio-mlxbf.c b/drivers/gpio/gpio-mlxbf.c
+index 843f40496be7b723c300b3ea2f19fc698a56abba..a18fedbc463e678d94f23f8561c6d2140015c939 100644
+--- a/drivers/gpio/gpio-mlxbf.c
++++ b/drivers/gpio/gpio-mlxbf.c
+@@ -66,7 +66,7 @@ static int mlxbf_gpio_probe(struct platform_device *pdev)
+ 
+ 	gc = &gs->chip.gc;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 8,
+ 		.dat = gs->base + MLXBF_GPIO_PIN_STATE,
+diff --git a/drivers/gpio/gpio-mlxbf2.c b/drivers/gpio/gpio-mlxbf2.c
+index f99f66cd189ca71c9d188dff0a0b42ef2223abb3..7e3b526a6caae0ef7697c2f812370f8bf5ea6049 100644
+--- a/drivers/gpio/gpio-mlxbf2.c
++++ b/drivers/gpio/gpio-mlxbf2.c
+@@ -377,7 +377,7 @@ mlxbf2_gpio_probe(struct platform_device *pdev)
+ 
+ 	gc = &gs->chip.gc;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = gs->gpio_io + YU_GPIO_DATAIN,
+diff --git a/drivers/gpio/gpio-mlxbf3.c b/drivers/gpio/gpio-mlxbf3.c
+index c812011bdbe65a9ee793ae1a5bfc656b523ab8ed..4770578269bae8bdbee60873d77c93d4c4712c9b 100644
+--- a/drivers/gpio/gpio-mlxbf3.c
++++ b/drivers/gpio/gpio-mlxbf3.c
+@@ -209,7 +209,7 @@ static int mlxbf3_gpio_probe(struct platform_device *pdev)
+ 		return PTR_ERR(gs->gpio_clr_io);
+ 	gc = &gs->chip.gc;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = gs->gpio_io + MLXBF_GPIO_READ_DATA_IN,
+diff --git a/drivers/gpio/gpio-mpc8xxx.c b/drivers/gpio/gpio-mpc8xxx.c
+index 38643fb813c562957076aab48d804f8048cee5e4..dd2cd2cc6e6f2932a62f5fe82718c53cd765ffa6 100644
+--- a/drivers/gpio/gpio-mpc8xxx.c
++++ b/drivers/gpio/gpio-mpc8xxx.c
+@@ -345,7 +345,7 @@ static int mpc8xxx_probe(struct platform_device *pdev)
+ 	gc = &mpc8xxx_gc->chip.gc;
+ 	gc->parent = dev;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = mpc8xxx_gc->regs + GPIO_DAT,
+diff --git a/drivers/gpio/gpio-mxs.c b/drivers/gpio/gpio-mxs.c
+index af45d1b1af6e049899ea6773bed92fb8a84a0dff..5635694bf9f448f85b395a3da62033735a04fbdf 100644
+--- a/drivers/gpio/gpio-mxs.c
++++ b/drivers/gpio/gpio-mxs.c
+@@ -321,7 +321,7 @@ static int mxs_gpio_probe(struct platform_device *pdev)
+ 	irq_set_chained_handler_and_data(port->irq, mxs_gpio_irq_handler,
+ 					 port);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = &pdev->dev,
+ 		.sz = 4,
+ 		.dat = port->base + PINCTRL_DIN(port),
+diff --git a/drivers/gpio/gpio-rda.c b/drivers/gpio/gpio-rda.c
+index bcd85a2237a532b875df9470d972ac88b95a91cc..fb479d13eb01a49218ad4229e7d4f70f096f5a2e 100644
+--- a/drivers/gpio/gpio-rda.c
++++ b/drivers/gpio/gpio-rda.c
+@@ -237,7 +237,7 @@ static int rda_gpio_probe(struct platform_device *pdev)
+ 
+ 	spin_lock_init(&rda_gpio->lock);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = rda_gpio->base + RDA_GPIO_VAL,
+diff --git a/drivers/gpio/gpio-realtek-otto.c b/drivers/gpio/gpio-realtek-otto.c
+index ab711422254e9e8ff1a4e7c4016389e6d352f268..37b4f73771e651e95b6127befe579ea76e03a102 100644
+--- a/drivers/gpio/gpio-realtek-otto.c
++++ b/drivers/gpio/gpio-realtek-otto.c
+@@ -401,7 +401,7 @@ static int realtek_gpio_probe(struct platform_device *pdev)
+ 		ctrl->line_imr_pos = realtek_gpio_line_imr_pos_swapped;
+ 	}
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = ctrl->base + REALTEK_GPIO_REG_DATA,
+diff --git a/drivers/gpio/gpio-tb10x.c b/drivers/gpio/gpio-tb10x.c
+index f20b6654b865555579bb356a336308e23b0e5af6..09a448ce3eec2f4a68da188ec88a9d0833ab65ab 100644
+--- a/drivers/gpio/gpio-tb10x.c
++++ b/drivers/gpio/gpio-tb10x.c
+@@ -135,7 +135,7 @@ static int tb10x_gpio_probe(struct platform_device *pdev)
+ 	 * the lines, no special set or clear registers and a data direction register
+ 	 * wher 1 means "output".
+ 	 */
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = tb10x_gpio->base + OFFSET_TO_REG_DATA,
+diff --git a/drivers/gpio/gpio-ts4800.c b/drivers/gpio/gpio-ts4800.c
+index 844347945e8e71fa0f456be0ba8de7217f6760a3..992ee231db9ff8ba47600483457e7373159f1e5d 100644
+--- a/drivers/gpio/gpio-ts4800.c
++++ b/drivers/gpio/gpio-ts4800.c
+@@ -39,7 +39,7 @@ static int ts4800_gpio_probe(struct platform_device *pdev)
+ 	else if (retval)
+ 		return retval;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 2,
+ 		.dat = base_addr + INPUT_REG_OFFSET,
+diff --git a/drivers/gpio/gpio-vf610.c b/drivers/gpio/gpio-vf610.c
+index fa7e322a834cc2afbab7d4948cd41465867aa4c8..f3590db72b141223e0a957825e94222056aa77bb 100644
+--- a/drivers/gpio/gpio-vf610.c
++++ b/drivers/gpio/gpio-vf610.c
+@@ -305,7 +305,7 @@ static int vf610_gpio_probe(struct platform_device *pdev)
+ 	if (port->sdata->have_paddr)
+ 		flags |= BGPIOF_READ_OUTPUT_REG_SET;
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = port->gpio_base + GPIO_PDIR,
+diff --git a/drivers/gpio/gpio-visconti.c b/drivers/gpio/gpio-visconti.c
+index cde1581a91033e0ffa855e6cab0a36fa01f2baa1..6d5d829634ad761b6f8f63dd1565e337faf89e44 100644
+--- a/drivers/gpio/gpio-visconti.c
++++ b/drivers/gpio/gpio-visconti.c
+@@ -191,7 +191,7 @@ static int visconti_gpio_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = priv->base + GPIO_IDATA,
+diff --git a/drivers/gpio/gpio-xgene-sb.c b/drivers/gpio/gpio-xgene-sb.c
+index c559a89aadf7a77bd9cce7e5a7d4a2b241307812..28ee3f7e91b921e7f22cbdb9c2d23cd0e80d429c 100644
+--- a/drivers/gpio/gpio-xgene-sb.c
++++ b/drivers/gpio/gpio-xgene-sb.c
+@@ -265,7 +265,7 @@ static int xgene_gpio_sb_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = &pdev->dev,
+ 		.sz = 4,
+ 		.dat = regs + MPA_GPIO_IN_ADDR,
+diff --git a/drivers/gpio/gpio-xgs-iproc.c b/drivers/gpio/gpio-xgs-iproc.c
+index 9cffdedd31b1c39123b93469465f483fbb4d076a..77eb29dcc2171a8221b965fd75c4a0d9175044d0 100644
+--- a/drivers/gpio/gpio-xgs-iproc.c
++++ b/drivers/gpio/gpio-xgs-iproc.c
+@@ -233,7 +233,7 @@ static int iproc_gpio_probe(struct platform_device *pdev)
+ 	if (IS_ERR(chip->base))
+ 		return PTR_ERR(chip->base);
+ 
+-	config = (typeof(config)){
++	config = (struct gpio_generic_chip_config) {
+ 		.dev = dev,
+ 		.sz = 4,
+ 		.dat = chip->base + IPROC_GPIO_CCA_DIN,
 
 -- 
 2.48.1
