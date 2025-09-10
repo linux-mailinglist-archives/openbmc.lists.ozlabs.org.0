@@ -1,49 +1,49 @@
-Return-Path: <openbmc+bounces-623-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-624-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3183DB51008
-	for <lists+openbmc@lfdr.de>; Wed, 10 Sep 2025 09:56:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E0BD0B5106F
+	for <lists+openbmc@lfdr.de>; Wed, 10 Sep 2025 10:04:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cMCgj6pcCz3d8B;
-	Wed, 10 Sep 2025 17:56:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cMCrQ1rNlz3d8K;
+	Wed, 10 Sep 2025 18:04:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757490993;
-	cv=none; b=mrY3owINXtDcVJsM+2gSujpMN1RKGBiEQmWi20n7Azs/uJEgr/96WXu0kaahEJYfqdbjivSKDH7KTOYbbw24VIfdaZXgMDgk3HIXtgdoe46V2IPfri0OObUbmlw00ylO9ej5dHxCpW3biY3EK0AjZHkIhQROvMY6+PAN7IDjotdSmMKccC+MyuG6/XhwI9JwlMqJ9Rm0UFKj/LWitDqe3Q9dgfi0bGyH1/gtGiv5MZ+piY2M+lw6N+tLEU2ifPwM+mvTC4dpONBZOt/qDxlxK22cFgxSDQN84RJN76KSslntLvWJghopsp7n+rcVipZ3yrzILZu4cgec0imgFYe4AQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757491446;
+	cv=none; b=k6xdCEBCbqjeXg46Ny4GFoo/5bd/WPdUpsJ1P2TIGNp/ieuaOG3GUau7HQ6dsVPdd/S1KFiwiB49+b+DbENoVPbattDFfTf5uWMPgy2NS7LugOayh8ccvnGxnc6SnKHxeeJ2Z9BNtEvkd2Aw8QicEoRhS1JdecStmpAzD5jm2A4PKK8QNojCxE0SnlpyhfQDrZuqZ9+JSnwcuyMhslTTK6Re4ZsOiiI/Q4Wq92ISb/xQEittkWEYJh5Rr6DTNnTS5FDytoeBzQQYyqoeAE8lSuSl7J0qn3S5iO3RPvw51M0bRlS/2OYQ5E1p1kZSrfrcu39LYCMH7HDsK2XspbjM2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757490993; c=relaxed/relaxed;
-	bh=3vuktXVGZ5nL9/1iFmD9xm4OsfgOIb+SVBuCjh6P12Q=;
+	t=1757491446; c=relaxed/relaxed;
+	bh=fzNTik6LdctRq+11rsbBa0F2ScxGWkODX58Sql9E4zs=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=n00R2DRXW4JvpS66hu2NonRhyuoSCTyvQu2i5kNcDnOliOKjrQcl4zPvlIA1qimY2yGyabc4nEVtYvI1GUcCzebi0wAob77sWqH9JeeYVHTYwI/MyaxIunX4oIpYuJFaYK0TS7ujmV1rzjMk1JxG6m2v5jZWKrhcghAYnLuaKacQX+UNWoTo6KInh4cvYA1W1XoxZ+ExbVGavPcDC1XUSAwhTpIA7IRXfPIv9wJc8lFrAyPlibBxsb3PssebG9Q/hmi0zwzA5bgjTf7He+M2bn/5tI8Yf+pdGeAdPRctjmZXcy3IUQto/hpitefq/yY209nNPdqeGv/vR0fKjjIgtg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=m6ew7R1W; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=aHSUAY0+PZtlVNGr7zcsw4sPageEHEMW2nJscGZmN657msS39MF52U+P6toBhZvKlbUQuTQqk/2GH5kKiy4iaEHroAF9PmMRxYNJPDMRA6v3WX5r89RfXqSQABQ//B40PnQQAhuqtQJvoMVx6mB8qCbuG5XH/bol79/JB6RQ8l2OTZF+aFNQlNnuqcfbDA8bQg1Rq5QQBccvehh3dptNjrnJR6FsXZcBxeLW9jsRH3sW7Du/XGecKWm8+y+D1/NbzBHtPD00FE3Qd1UaIjboB2U72FVhUMPR7+84FwMNz6bV9f3ealqyhIYbG7sFAWKajv4S12U/qdda7PpcZaITIg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=b27TofHo; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=m6ew7R1W;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=b27TofHo;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cMCgj2By2z3d4D
-	for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 17:56:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cMCrN72bJz3clf
+	for <openbmc@lists.ozlabs.org>; Wed, 10 Sep 2025 18:04:04 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1757490992;
-	bh=3vuktXVGZ5nL9/1iFmD9xm4OsfgOIb+SVBuCjh6P12Q=;
+	d=codeconstruct.com.au; s=2022a; t=1757491444;
+	bh=fzNTik6LdctRq+11rsbBa0F2ScxGWkODX58Sql9E4zs=;
 	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=m6ew7R1WkcTBBu7CD0RiGu0gw0BLHpF9c1+yp8CXkaXOkYuV/ixqsaXybT1XvB6Sv
-	 C1NHkmMTzq3mwCBAzDyPrmiERrppAVHrvEShJdYLiWaa8w0AryNIYpVpSXveU6WU2r
-	 C3h0tUq98CuHOgvQqYYJNTSnYuINAFrnf2p8ncXqXtxIy+w7iJccotAWJEPL0Z8zrS
-	 rPA/uLppnN6GPn2tXWHTlmwqtxclPjfi60zl808RU6oH5PcjS3Rpdou51VpYj4N7h8
-	 +Vt57OCdtoHAwwZVdqBmYl/XadpSh4CfLSqREboEiJA+0eq5snQxTuadDDq59aEvBQ
-	 VIvZSMUA56nWA==
+	b=b27TofHo5ULqqI+QmujnqYdlbdiWdz9DVokvkqTgkEFgsXFD448KpWaywZTTpWGtL
+	 2dVSl0eTJbXGyFvVnR6OJhlbD6YXvqhwFdoMizybCTdoApRdlUy239gcRu5Dbaq6eO
+	 e6cZ+4eEWnhhKDDm+ShwM/1FWZ4iipwqfoFMR5xJ+d2AQFp2yFhxlAjn1mJKrxCFkM
+	 hPcrLXrYnCjvCgA/jVMODD0nOiJHfno5RPVKDZo/QS1GVsB0QMgyP0BJA0oV5o7/bx
+	 ENjCKEQ8zDc4y1ZGEenKLP2KGv4BCjo9iRj0aooHQwS/tDd8JFB7sK4OLGKeWoblKz
+	 mZVTfg+KWFpPQ==
 Received: from [192.168.68.113] (unknown [180.150.112.213])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id D52E267672;
-	Wed, 10 Sep 2025 15:56:31 +0800 (AWST)
-Message-ID: <f516f2021e9b1c541575c5f317037873fa2c730a.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v2 2/2] arm64: dts: nuvoton: npcm845-evb: Add peripheral
- nodes
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 0C0D467672;
+	Wed, 10 Sep 2025 16:04:02 +0800 (AWST)
+Message-ID: <ba605a2fdcfbb265f260ba1cfcb30c80e1d62f7c.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v2 0/2] arm64: dts: nuvoton: Add NPCM845 SoC and EVB
+ support
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: Tomer Maimon <tmaimon77@gmail.com>, robh+dt@kernel.org, 
  krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
@@ -51,12 +51,11 @@ To: Tomer Maimon <tmaimon77@gmail.com>, robh+dt@kernel.org,
  venture@google.com, yuenn@google.com,  benjaminfair@google.com
 Cc: openbmc@lists.ozlabs.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Date: Wed, 10 Sep 2025 17:26:31 +0930
-In-Reply-To: <20250908125938.3584927-3-tmaimon77@gmail.com>
+Date: Wed, 10 Sep 2025 17:34:02 +0930
+In-Reply-To: <20250908125938.3584927-1-tmaimon77@gmail.com>
 References: <20250908125938.3584927-1-tmaimon77@gmail.com>
-	 <20250908125938.3584927-3-tmaimon77@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -70,109 +69,382 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
-	version=4.0.1
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,URI_DOTEDU
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-T24gTW9uLCAyMDI1LTA5LTA4IGF0IDE1OjU5ICswMzAwLCBUb21lciBNYWltb24gd3JvdGU6Cj4g
-RW5hYmxlIHBlcmlwaGVyYWwgc3VwcG9ydCBmb3IgdGhlIE51dm90b24gTlBDTTg0NSBFdmFsdWF0
-aW9uIEJvYXJkIGJ5Cj4gYWRkaW5nIGRldmljZSBub2RlcyBmb3IgRXRoZXJuZXQgY29udHJvbGxl
-cnMsIE1NQyBjb250cm9sbGVyLCBTUEkKPiBjb250cm9sbGVycywgVVNCIGRldmljZSBjb250cm9s
-bGVycywgcmFuZG9tIG51bWJlciBnZW5lcmF0b3IsIEFEQywKPiBQV00tRkFOIGNvbnRyb2xsZXIs
-IEkyQyBjb250cm9sbGVycywgYW5kIFBFQ0kgaW50ZXJmYWNlLgo+IEluY2x1ZGUgTURJTyBub2Rl
-cyBmb3IgRXRoZXJuZXQgUEhZcywgcmVzZXJ2ZWQgbWVtb3J5IGZvciBUSVAsIGFuZAo+IGFsaWFz
-ZXMgZm9yIGRldmljZSBhY2Nlc3MuCj4gCj4gU2lnbmVkLW9mZi1ieTogVG9tZXIgTWFpbW9uIDx0
-bWFpbW9uNzdAZ21haWwuY29tPgo+IC0tLQo+IMKgLi4uL2Jvb3QvZHRzL251dm90b24vbnV2b3Rv
-bi1ucGNtODQ1LWV2Yi5kdHPCoCB8IDQzOQo+ICsrKysrKysrKysrKysrKysrKwo+IMKgMSBmaWxl
-IGNoYW5nZWQsIDQzOSBpbnNlcnRpb25zKCspCj4gCj4gZGlmZiAtLWdpdCBhL2FyY2gvYXJtNjQv
-Ym9vdC9kdHMvbnV2b3Rvbi9udXZvdG9uLW5wY204NDUtZXZiLmR0cwo+IGIvYXJjaC9hcm02NC9i
-b290L2R0cy9udXZvdG9uL251dm90b24tbnBjbTg0NS1ldmIuZHRzCj4gaW5kZXggMjYzOGVlMWMz
-ODQ2Li4xNDVhMmU1OTk2MDAgMTAwNjQ0Cj4gLS0tIGEvYXJjaC9hcm02NC9ib290L2R0cy9udXZv
-dG9uL251dm90b24tbnBjbTg0NS1ldmIuZHRzCj4gKysrIGIvYXJjaC9hcm02NC9ib290L2R0cy9u
-dXZvdG9uL251dm90b24tbnBjbTg0NS1ldmIuZHRzCj4gQEAgLTEwLDYgKzEwLDQyIEBAIC8gewo+
-IMKgCj4gwqDCoMKgwqDCoMKgwqDCoGFsaWFzZXMgewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgc2VyaWFsMCA9ICZzZXJpYWwwOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqBldGhlcm5ldDEgPSAmZ21hYzE7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oGV0aGVybmV0MiA9ICZnbWFjMjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgZXRo
-ZXJuZXQzID0gJmdtYWMzOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBtZGlvLWdw
-aW8wID0gJm1kaW8wOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBtZGlvLWdwaW8x
-ID0gJm1kaW8xOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBmaXUwID0gJmZpdTA7
-Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGZpdTEgPSAmZml1MzsKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgZml1MiA9ICZmaXV4Owo+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqBmaXUzID0gJmZpdTE7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoGkyYzAgPSAmaTJjMDsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjMSA9
-ICZpMmMxOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpMmMyID0gJmkyYzI7Cj4g
-K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGkyYzMgPSAmaTJjMzsKPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjNCA9ICZpMmM0Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqBpMmM1ID0gJmkyYzU7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oGkyYzYgPSAmaTJjNjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjNyA9ICZp
-MmM3Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpMmM4ID0gJmkyYzg7Cj4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGkyYzkgPSAmaTJjOTsKPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgaTJjMTAgPSAmaTJjMTA7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoGkyYzExID0gJmkyYzExOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqBpMmMxMiA9ICZpMmMxMjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjMTMg
-PSAmaTJjMTM7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGkyYzE0ID0gJmkyYzE0
-Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpMmMxNSA9ICZpMmMxNTsKPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjMTYgPSAmaTJjMTY7Cj4gK8KgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoGkyYzE3ID0gJmkyYzE3Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqBpMmMxOCA9ICZpMmMxODsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgaTJjMTkgPSAmaTJjMTk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGkyYzIw
-ID0gJmkyYzIwOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpMmMyMSA9ICZpMmMy
-MTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgaTJjMjIgPSAmaTJjMjI7Cj4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGkyYzIzID0gJmkyYzIzOwo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqBpMmMyNCA9ICZpMmMyNDsKPiArwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgaTJjMjUgPSAmaTJjMjU7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoGkyYzI2ID0gJmkyYzI2Owo+IMKgwqDCoMKgwqDCoMKgwqB9Owo+IMKgCj4gwqDCoMKgwqDC
-oMKgwqDCoGNob3NlbiB7Cj4gQEAgLTI1LDEyICs2MSw0MTUgQEAgcmVmY2xrOiByZWZjbGstMjVt
-aHogewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgY2xvY2stZnJlcXVlbmN5ID0g
-PDI1MDAwMDAwPjsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCNjbG9jay1jZWxs
-cyA9IDwwPjsKPiDCoMKgwqDCoMKgwqDCoMKgfTsKPiArCj4gK8KgwqDCoMKgwqDCoMKgcmVzZXJ2
-ZWQtbWVtb3J5IHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgI2FkZHJlc3MtY2Vs
-bHMgPSA8Mj47Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCNzaXplLWNlbGxzID0g
-PDI+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqByYW5nZXM7Cj4gKwo+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB0aXBfcmVzZXJ2ZWQ6IHRpcEAwIHsKPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHJlZyA9IDwweDAgMHgwIDB4
-MCAweDYyMDAwMDA+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9Owo+ICvCoMKg
-wqDCoMKgwqDCoH07Cj4gKwo+ICvCoMKgwqDCoMKgwqDCoG1kaW8wOiBtZGlvLTAgewo+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBjb21wYXRpYmxlID0gInZpcnR1YWwsbWRpby1ncGlv
-IjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgI2FkZHJlc3MtY2VsbHMgPSA8MT47
-Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCNzaXplLWNlbGxzID0gPDA+Owo+ICvC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncGlvcyA9IDwmZ3BpbzEgMjUgR1BJT19BQ1RJ
-VkVfSElHSD4sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqA8JmdwaW8xIDI2IEdQSU9fQUNUSVZFX0hJR0g+Owo+ICsKPiArwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgcGh5MDogZXRoZXJuZXQtcGh5QDAgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmVnID0gPDA+Owo+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqB9Owo+ICvCoMKgwqDCoMKgwqDCoH07Cj4gKwo+ICvCoMKgwqDCoMKgwqDC
-oG1kaW8xOiBtZGlvLTEgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBjb21wYXRp
-YmxlID0gInZpcnR1YWwsbWRpby1ncGlvIjsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgI2FkZHJlc3MtY2VsbHMgPSA8MT47Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCNzaXplLWNlbGxzID0gPDA+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncGlv
-cyA9IDwmZ3BpbzIgMjcgR1BJT19BQ1RJVkVfSElHSD4sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqA8JmdwaW8yIDI4IEdQSU9fQUNUSVZFX0hJR0g+Owo+
-ICsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcGh5MTogZXRoZXJuZXQtcGh5QDAg
-ewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmVnID0g
-PDA+Owo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB9Owo+ICvCoMKgwqDCoMKgwqDC
-oH07Cj4gK307CgpCeSBjb250cmFzdCB0byBvcmRlcmluZyB0aGUgRFRTSSBub2RlcyBieSB1bml0
-IGFkZHJlc3MsIGZvciB0aGUKcmVmZXJlbmNlZCBub2RlcyB0aGF0IGZvbGxvdyBoZXJlIGluIHRo
-ZSBEVFMsIGNhbiB5b3UgcGxlYXNlIG9yZGVyIHRoZW0KYWxwaGFiZXRpY2FsbHk/IE9yZGVyaW5n
-IHRoZW0gYnkgdW5pdCBhZGRyZXNzIGlzIGFsbG93ZWQgYnkgdGhlIERUUwpzdHlsZSBndWlkZSwg
-YnV0IGlzIHN1cGVyIHRlZGlvdXMgdG8gdmVyaWZ5LiBBbHBoYWJldGljYWwgb3JkZXJpbmcgaXMK
-YWxzbyBhbGxvd2VkIGFuZCBpcyBzdHJhaWdodC1mb3J3YXJkIHRvIGVuZm9yY2U6CgpodHRwczov
-L2RvY3Mua2VybmVsLm9yZy9kZXZpY2V0cmVlL2JpbmRpbmdzL2R0cy1jb2Rpbmctc3R5bGUuaHRt
-bCNvcmRlci1vZi1ub2RlcwoKQ2hlZXJzLAoKQW5kcmV3Cgo+ICsKPiArJmdtYWMxIHsKPiArwqDC
-oMKgwqDCoMKgwqBwaHktbW9kZSA9ICJyZ21paS1pZCI7Cj4gK8KgwqDCoMKgwqDCoMKgc25wcyxl
-ZWUtZm9yY2UtZGlzYWJsZTsKPiArwqDCoMKgwqDCoMKgwqBzdGF0dXMgPSAib2theSI7Cj4gK307
-Cj4gKwo+ICsmZ21hYzIgewo+ICvCoMKgwqDCoMKgwqDCoHBoeS1tb2RlID0gInJtaWkiOwo+ICvC
-oMKgwqDCoMKgwqDCoHBpbmN0cmwtbmFtZXMgPSAiZGVmYXVsdCI7Cj4gK8KgwqDCoMKgwqDCoMKg
-cGluY3RybC0wID0gPCZyMV9waW5zCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAmcjFvZW5fcGlucz47Cj4gK8KgwqDCoMKgwqDCoMKgcGh5LWhhbmRsZSA9
-IDwmcGh5MD47Cj4gK8KgwqDCoMKgwqDCoMKgc3RhdHVzID0gIm9rYXkiOwo+ICt9Owo+ICsKPiAr
-JmdtYWMzIHsKPiArwqDCoMKgwqDCoMKgwqBwaHktbW9kZSA9ICJybWlpIjsKPiArwqDCoMKgwqDC
-oMKgwqBwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOwo+ICvCoMKgwqDCoMKgwqDCoHBpbmN0cmwt
-MCA9IDwmcjJfcGlucwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgJnIyb2VuX3BpbnM+Owo+ICvCoMKgwqDCoMKgwqDCoHBoeS1oYW5kbGUgPSA8JnBoeTE+
-Owo+ICvCoMKgwqDCoMKgwqDCoHN0YXR1cyA9ICJva2F5IjsKPiDCoH07Cj4gwqAKPiDCoCZzZXJp
-YWwwIHsKPiDCoMKgwqDCoMKgwqDCoMKgc3RhdHVzID0gIm9rYXkiOwo+IMKgfTsKPiDCoAo+ICsm
-Zml1MCB7Cgoqc25pcCoK
+Hi Tomer,
+
+On Mon, 2025-09-08 at 15:59 +0300, Tomer Maimon wrote:
+> This series adds device tree support for peripherals on the Nuvoton NPCM8=
+45=20
+> SoC and its Evaluation Board (EVB).
+> The first patch introduces peripheral nodes for Ethernet, MMC, SPI, USB,
+> RNG, ADC, PWM-FAN, I2C, and OP-TEE firmware in the NPCM845 SoC device tre=
+e.
+> The second patch enables these peripherals for the NPCM845-EVB, adding
+> MDIO nodes, reserved memory, aliases, and board-specific configurations
+> like PHY modes and SPI flash partitions.
+>=20
+> The NPCM8XX device tree tested on NPCM845 evaluation board.
+>=20
+> Addressed comments from:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- Krzysztof Kozlowski: ht=
+tps://lkml.indiana.edu/2507.3/05464.html
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 https://lkml.indiana.edu/2507.3/05465.html
+> Changes since version 1:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- Fix commit message
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- Fix dtbs_check warnings=
+.
+>=20
+> Tomer Maimon (2):
+> =C2=A0 arm64: dts: nuvoton: npcm845: Add peripheral nodes
+> =C2=A0 arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
+>=20
+> =C2=A0.../dts/nuvoton/nuvoton-common-npcm8xx.dtsi=C2=A0=C2=A0 | 702 +++++=
+++++++++++++-
+> =C2=A0.../boot/dts/nuvoton/nuvoton-npcm845-evb.dts=C2=A0 | 439 ++++++++++=
++
+> =C2=A0.../boot/dts/nuvoton/nuvoton-npcm845.dtsi=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0=C2=A0 7 +
+> =C2=A03 files changed, 1147 insertions(+), 1 deletion(-)
+>=20
+
+Running `make CHECK_DTBS=3Dy nuvoton/nuvoton-npcm845-evb.dtb` after
+applying the patches on next-20250908 I get the warnings below. Given
+
+- https://docs.kernel.org/process/maintainer-soc.html#validating-devicetree=
+-files
+
+and
+
+- https://docs.kernel.org/process/maintainer-soc-clean-dts.html
+
+can you please tidy this up?
+
+Thanks,
+
+Andrew
+
+[I] 0 andrew@heihei ~/s/k/l/o/build.arm64.default ((00e2ab2e))> make CHECK_=
+DTBS=3Dy nuvoton/nuvoton-npcm845-evb.dtb
+  SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+  DTC [C] arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: / (nuvoton,npcm845-evb): memory@0: '=
+device_type' is a required property
+        from schema $id: http://devicetree.org/schemas/memory.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: system-controller@f0800000 (nuvoton,=
+npcm845-gcr): compatible: ['nuvoton,npcm845-gcr', 'syscon'] is too short
+        from schema $id: http://devicetree.org/schemas/soc/nuvoton/nuvoton,=
+npcm-gcr.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: interrupt-controller@dfff9000 (arm,g=
+ic-400): 'ppi-partitions' does not match any of the regexes: '^pinctrl-[0-9=
+]+$', '^v2m@[0-9a-f]+$'
+        from schema $id: http://devicetree.org/schemas/interrupt-controller=
+/arm,gic.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: mmc@f0842000 (nuvoton,npcm845-sdhci)=
+: Unevaluated properties are not allowed ('clock-names' was unexpected)
+        from schema $id: http://devicetree.org/schemas/mmc/npcm,sdhci.yaml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/spi@fb000000: fai=
+led to match any schema with compatible: ['nuvoton,npcm845-fiu']
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): $nodename=
+:0: 'spi-nor@0' does not match '^(flash|.*sram|nand)(@.*)?$'
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): partition=
+s: Unevaluated properties are not allowed ('spare1@D00000', 'spare2@F00000'=
+ were unexpected)
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): Unevaluat=
+ed properties are not allowed ('partitions' was unexpected)
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/spi@fb002000: fai=
+led to match any schema with compatible: ['nuvoton,npcm845-fiu']
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): $nodename=
+:0: 'spi-nor@0' does not match '^(flash|.*sram|nand)(@.*)?$'
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): Unevaluat=
+ed properties are not allowed ('partitions' was unexpected)
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/spi@c0000000: fai=
+led to match any schema with compatible: ['nuvoton,npcm845-fiu']
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): $nodename=
+:0: 'spi-nor@0' does not match '^(flash|.*sram|nand)(@.*)?$'
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: spi-nor@0 (jedec,spi-nor): Unevaluat=
+ed properties are not allowed ('partitions' was unexpected)
+        from schema $id: http://devicetree.org/schemas/mtd/jedec,spi-nor.ya=
+ml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/spi@fb001000: fai=
+led to match any schema with compatible: ['nuvoton,npcm845-fiu']
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0830000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0830000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0831000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0831000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0832000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0832000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0833000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0833000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0834000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0834000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0835000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0835000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0836000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0836000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0837000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0837000 (nuvoton,npcm845-udc): =
+Unevaluated properties are not allowed ('compatible' was unexpected)
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0838000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: usb@f0839000 (nuvoton,npcm845-udc): =
+compatible: 'oneOf' conditional failed, one must be fixed:
+        ['nuvoton,npcm845-udc'] is too short
+        'nuvoton,npcm845-udc' is not one of ['chipidea,usb2', 'lsi,zevio-us=
+b', 'nuvoton,npcm750-udc', 'nvidia,tegra20-ehci', 'nvidia,tegra20-udc', 'nv=
+idia,tegra30-ehci', 'nvidia,tegra30-udc', 'nvidia,tegra114-udc', 'nvidia,te=
+gra124-udc', 'nxp,s32g2-usb', 'qcom,ci-hdrc']
+        'nuvoton,npcm845-udc' is not one of ['nvidia,tegra114-ehci', 'nvidi=
+a,tegra124-ehci', 'nvidia,tegra210-ehci']
+        'xlnx,zynq-usb-2.20a' was expected
+        'nuvoton,npcm845-udc' is not one of ['nxp,s32g3-usb']
+        from schema $id: http://devicetree.org/schemas/usb/ci-hdrc-usb2.yam=
+l#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/spi@=
+201000: failed to match any schema with compatible: ['nuvoton,npcm845-pspi'=
+]
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: timer@8000 (nuvoton,npcm845-timer): =
+'clock-names' does not match any of the regexes: '^pinctrl-[0-9]+$'
+        from schema $id: http://devicetree.org/schemas/timer/nuvoton,npcm7x=
+x-timer.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: rng@b000 (nuvoton,npcm845-rng): 'clo=
+cks' does not match any of the regexes: '^pinctrl-[0-9]+$'
+        from schema $id: http://devicetree.org/schemas/rng/nuvoton,npcm-rng=
+.yaml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@801c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@801c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@901c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@901c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@a01c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/watc=
+hdog@a01c: failed to match any schema with compatible: ['nuvoton,npcm845-wd=
+t', 'nuvoton,npcm750-wdt']
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/pwm-=
+fan-controller@103000: failed to match any schema with compatible: ['nuvoto=
+n,npcm845-pwm-fan']
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@0: fan-tach-ch: b'\x00\x01' is n=
+ot of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@1: fan-tach-ch: b'\x02\x03' is n=
+ot of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@2: fan-tach-ch: b'\x04\x05' is n=
+ot of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@3: fan-tach-ch: b'\x06\x07' is n=
+ot of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@4: fan-tach-ch: b'\x08\t' is not=
+ of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@5: fan-tach-ch: b'\n\x0b' is not=
+ of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@6: fan-tach-ch: b'\x0c\r' is not=
+ of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+/home/andrew/src/kernel.org/linux/origin/build.arm64.default/arch/arm64/boo=
+t/dts/nuvoton/nuvoton-npcm845-evb.dtb: fan@7: fan-tach-ch: b'\x0e\x0f' is n=
+ot of type 'object', 'integer', 'array', 'boolean', 'null'
+        from schema $id: http://devicetree.org/schemas/dt-core.yaml#
+arch/arm64/boot/dts/nuvoton/nuvoton-npcm845-evb.dtb: /ahb/bus@f0000000/i2c@=
+86000/tmp100@48: failed to match any schema with compatible: ['tmp100']
+
 
 
