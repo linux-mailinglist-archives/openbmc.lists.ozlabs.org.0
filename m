@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-636-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-637-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FBC1B542C5
-	for <lists+openbmc@lfdr.de>; Fri, 12 Sep 2025 08:23:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49720B54308
+	for <lists+openbmc@lfdr.de>; Fri, 12 Sep 2025 08:38:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cNPWr6bWSz3cgk;
-	Fri, 12 Sep 2025 16:23:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cNPrB4FPwz3cdg;
+	Fri, 12 Sep 2025 16:38:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757658232;
-	cv=none; b=YGQafw6CGaFI2d3UhQylBf72Q/RUgQtLgGUFgnvHt22liiw3rawJY5JwmdlGKTD+DYBzeG9Q7FIJmkFrlvl60w+BppwNv1vy6ls+/69Uh0oebejd481ELArsMZWls0pjig+gCT87lg7e+yp6AvSXT22cK2zbCt4isE72yDXMTw/ZcmSuRWJFcToslk1/cEu17jKrc9ifiRz92DlgVWPHfjoPBzqlIJqeyuyWkw8KFrnV6bm3T07Ddr6z+A9b8xiSMAcwh4rh+beSquCPXfI6TIeZxkqHi3EBhWdiFkSMWJGOogkHuh6ft9oscXehiM36gkKQxyeqpbPwaMyjiz9WbA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757659082;
+	cv=none; b=PiVkHioyXFE8rEzcfpnaY8KlD7jY8WVk7roDePSxHaLyY8Mnf1gRBs8Od0axxU57qAM57V5j1nHoxU2HU0Np7XcS5fM5GKxWknI+4MbB1+WXTaAQ1PDwW8fLZ9VQmAgKjNitG8SPBhraPSPpL/dKoCiZYZn496G2ybrA1Eo2x0QGJ7Wc5RaFjismSla0/cnT2qqm7oyXVSKWrmWAfSTjF1Uf4zoaQ90bVydNn5N1sztNrQ1KwwgA1BdJPMWBbttZtiPWh4WwpzI1nDNZCElRcUrQdyL0LeT6jHMiC+QXxr67M9cO3wfuoffQiHeQm6ANA8+CP8NAlXtSVX3IZuIsfA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757658232; c=relaxed/relaxed;
-	bh=PgJGoJ+SyNU8xTZFXwYN9HASt02ajCyHXftNu5jhfMs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=YMtGMDmiZROc+lQHiU4BDFn9UDQx/J3OcZYZrAJ8JiZsoGP7uDzD4lzxKxHjg/rVVxvntKVtsnXqkAmcSk1By53YUviIp4g7ZmRhJxZF8z0LTmQtHvelfoAn0ckqJcNtdEpt+3AInzW0hkyeMe007kMgMw0FDV/Ekmlt30JN3DxYawuN5uqL5z8JB8QRCrsCUDFB6dQSm9/imlcSgyW0/C2KJfvrSl4bX2CPx/0wrKiOEiljaheoRCoxnNADRO+5giiW/zIyYmGPv6YQm0Q6478w3q2HJ7spOUGM0LyEFoeUwHW56Fvx+mj9fPcX83Qbla0ozt1HQdLhCJogx2M/lA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=K+tUT9Ui; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1757659082; c=relaxed/relaxed;
+	bh=xto8/BdMWnXZvwLxhTrgCCEC4dPKlIq+s0YGwijdyO8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WGjeewC8HOaFfZrkXAdEW5C5mCCVys2QqewqGw07D4tTyiPp//kUrNIX/SxXlN/eKKSsWRzI8Mzp3UtsKJCYTMuhLkY2nwaTISGyT3lOo2DVcln0Hi5OOrNUS3TTycX1YyiXlPf5i3lQteov0/sKr3++3SrBxtw+wBHEFrLONT9wcB8iy2Ko/M+u1CJr34AOmrwQ9im/VGcljOLvcmjxWy+xnURgnyKhN/pqOqs3F18tqcPRFlyCmEXLrxG2mxO6GbaFHxYEBzRODwhNJtP9Hy8vYkakXTrrNKaibLpq0uXYPOipfzLKRbxaYgz2FQWh0jSg844/yEYTqzC+uNehGA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=MkOArNCD; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=K+tUT9Ui;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=MkOArNCD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cNPWq5LY7z2yrR;
-	Fri, 12 Sep 2025 16:23:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cNPr94YH0z30Vl;
+	Fri, 12 Sep 2025 16:38:01 +1000 (AEST)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 77E38601AF;
-	Fri, 12 Sep 2025 06:23:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5749EC4CEF4;
-	Fri, 12 Sep 2025 06:23:45 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 2943D4344D;
+	Fri, 12 Sep 2025 06:37:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647BDC4CEF4;
+	Fri, 12 Sep 2025 06:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757658229;
-	bh=9T73VS9+o4Zoo6JQMDrxwkWyCcTGJSPu9bJ/JLxGhoI=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=K+tUT9Ui0Lj0qetX4V8f8hxvGPJsm/BKTf0HW7pE5h0z0YOzKPHtIxQhImX/f+n88
-	 gIuNPwW4DTVun4DprE4qf5t+qx5He/qG+pETHjCT3CATCAXmMzjZ1vWuw+ac99zdfm
-	 +0aVzmrQL52bl6DV3bmQq+0IRUqRkRMDEuBcnmXuYaPcRJHCkC+i31tQKa7A3TQ56D
-	 n7cx6at6JYpOJZbx3fVBPZli50U6g2ppn8f3IMad24G4Qk3PIFAOv0b3LedhAUosuY
-	 IGi+43ynLvyWq4ea6CVaNvuE7ALbHzlh+dAhb+JmPcQZnJO83RCRsGrJ+lGYixbAwm
-	 91fKGAvuN2fkg==
-Message-ID: <295aa861-8e5c-4146-a137-20dcfc24e1c0@kernel.org>
-Date: Fri, 12 Sep 2025 08:23:43 +0200
+	s=k20201202; t=1757659079;
+	bh=FoKfA+Ido5KJFJFtC9Cz3p8xOCs463YOvLfdHV84F2k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MkOArNCDNfzMto9SJgAlT1LbW6DrUzhR2Og1Vjjfeu4YpaG4uOkCA0ELSDBCDOGyn
+	 wlzWq24sAELOx8iUeu0ez1jPuKjprH+fVF9lwvegPO149q27ItPoKlXoo12JE2Dqca
+	 oRm5/dkfdXUSHiJCYIp8MnZFRiVrigz6eXotiwSc0zbv9A35MoKHQJO4yN/xpGoa0Y
+	 JUGo0J2O0g550qO/X0dqEG1Ug5RASlGHkasJt7ZHntSl4mQ7hrcWkQYaIM3r/ul4Yg
+	 kIppaAN8Hg8RtTppWTA8vMlguYABqMXtBL5DJQQvmcgMTfmOVLuEz/eFmTmeJhpXdh
+	 Of5GMaKRdneJQ==
+Message-ID: <6feb419e-ee3d-4573-8820-19c70acdb426@kernel.org>
+Date: Fri, 12 Sep 2025 08:37:53 +0200
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,17 +57,39 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] defconfig: cleanup orphaned CONFIG_SCHED_DEBUG
-To: Trevor Woerner <twoerner@gmail.com>, linux-snps-arc@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-hexagon@vger.kernel.org, loongarch@lists.linux.dev,
- linux-m68k@lists.linux-m68k.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
- linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250828103828.33255-1-twoerner@gmail.com>
+Subject: Re: [PATCH v16 1/3] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+To: Jeremy Kerr <jk@ozlabs.org>, Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: "robh@kernel.org" <robh@kernel.org>,
+ "conor+dt@kernel.org" <conor+dt@kernel.org>,
+ "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>,
+ "andi.shyti@kernel.org" <andi.shyti@kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Mo Elbadry <elbadrym@google.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "joel@jms.id.au" <joel@jms.id.au>,
+ "p.zabel@pengutronix.de" <p.zabel@pengutronix.de>,
+ "krzk+dt@kernel.org" <krzk+dt@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
+References: <20250224055936.1804279-1-ryan_chen@aspeedtech.com>
+ <OS8PR06MB7541C3B70B15F45F4824772BF2D92@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <994cb954-f3c4-4a44-800e-9303787c1be9@kernel.org>
+ <SI6PR06MB753542037E1D6BBF5CE8D2E7F2A42@SI6PR06MB7535.apcprd06.prod.outlook.com>
+ <4523caea-3406-4de0-9ab5-424fb7a0a474@kernel.org>
+ <SI6PR06MB7535BAD19B51A381171A0E64F2A42@SI6PR06MB7535.apcprd06.prod.outlook.com>
+ <8e8aa069-af9f-453f-9bd0-e3dc2eab59ab@kernel.org>
+ <OS8PR06MB7541FD8691B43EA33BDC1D22F2A72@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <99053328-a117-493e-b5f3-00902669c8e7@kernel.org>
+ <44ef5c93448a3625fcfd003b47a516e8ba795b62.camel@ozlabs.org>
+ <f9fc4b59-bdcd-4983-b7c2-0fec94e62176@kernel.org>
+ <52943e49aaea7bb6def5bc51dfd57392b6ae66e4.camel@ozlabs.org>
+ <OS8PR06MB7541BD362CE9FC0AA3CFC46CF209A@OS8PR06MB7541.apcprd06.prod.outlook.com>
+ <3fdee5330d91b5d18a69a311e4df6de874973ced.camel@ozlabs.org>
+ <ecefaed7ed0fe83442021c0bfee0a49111269aad.camel@ozlabs.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,29 +135,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250828103828.33255-1-twoerner@gmail.com>
+In-Reply-To: <ecefaed7ed0fe83442021c0bfee0a49111269aad.camel@ozlabs.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-	SUSPICIOUS_RECIPS autolearn=disabled version=4.0.1
-X-Spam-Level: **
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 28/08/2025 12:38, Trevor Woerner wrote:
-> In commit b52173065e0a ("sched/debug: Remove CONFIG_SCHED_DEBUG") this
-> Kconfig option was removed since CONFIG_SCHED_DEBUG was made unconditional
-> by patches preceding it.
+On 11/09/2025 11:03, Jeremy Kerr wrote:
+> Hi all,
 > 
-> Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+> After a bit of a chat with Ryan, some updates on this:
+> 
+>> The question was more: it sounds like you're switching between
+>> *fundamentally different* hardware units with the mux switch - not just
+>> a different register interface for the same peripheral hardware. Is that
+>> the case?
+> 
+> Turns out: no. The controller core is the same, but what gets muxed
+> in/out is more of a compatibility interface. This provides an
+> ast2500-like register set to the ast2600 i2c peripheral.
 
-I doubt anyone will pick up such patch touching all possible
-architectures. I would suggest to split it per arch.
 
-If you want to keep it like that, there is a chance soc@ would pick it
-up if you send it to them.
+If you had two separate bindings, how would you represent it in DTS? Two
+device nodes, right? That's confusing, because there is only one device.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+If the device can present or change its programming interface, it is
+still that device, so still one binding for it. And that device driver
+will handle both (or one) programming models.
+
+I remember now the problem we talk about, but I don't get what exactly
+you want to solve/discuss. Anyway any discussion should be about newest
+patch, not something from February, so if you still have concerns please
+raise them at v18 (or whichever version is now).
 
 Best regards,
 Krzysztof
