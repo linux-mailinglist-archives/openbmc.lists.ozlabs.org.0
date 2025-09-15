@@ -1,63 +1,60 @@
-Return-Path: <openbmc+bounces-645-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-646-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9ED8B56F9D
-	for <lists+openbmc@lfdr.de>; Mon, 15 Sep 2025 07:06:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9D62B57B15
+	for <lists+openbmc@lfdr.de>; Mon, 15 Sep 2025 14:32:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cQCgd5zKQz3d89;
-	Mon, 15 Sep 2025 15:06:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cQPYx0gDMz3dT4;
+	Mon, 15 Sep 2025 22:32:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757912813;
-	cv=none; b=HQDs5o/fDziyufE8KOyAGsSPPKWkn9WuwvHXDt1udOea20m41761RG3J7w3XZ3lYBUVt0zGOuydPXlxmWl5ZTPaaugOAFUkelqyqA0CD1aJc8PhQGseNjfnf0DPsQw9dbS2UT0i3UFQIxi4tEPmv6HMB8HAy4lAXuPXY5dJcHAzX56rsjwzv8FWcW+jnOD5Qgn+nrhJrGw5ta3pK8MaChKrBgcOvd1vuih9OQDNKexEBogLUndUHtXMpsKs45QvoMZDIYjdLXJd152rwTeZVsCvzof6XBHPfOaCn1P1YhvnVvTXP1AaYFoqu2n2YGOTVpEAzduF1r8yuP+5OvLyd4Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=156.67.10.101
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1757939556;
+	cv=none; b=YoApJylODjoCfE+TEJeAQD05LwNCm2OgKBRndpG95AnB6R3s8Ebw4cYs3I6y7bJ7xyIGhYwUm1t3tCSDECjgraaIEY+H7xSQxXsAzMUPQ7q7uKonvsPSftFq/fEDOm7HRqTbaYM9WuwOmN39MpoBaNEbBb7fMkEDKj5geE4fiANuJjz5L3CTK3CdORj0vcz/L8YiNpoEc1TknxkP8XE/j8hbXYqG6VtMcRa8R+78Qp93UKWbZ33SICg8INxbwLJ5EV3ZuIhfipkZBovp4IquNMXCd1xUI+wr1luVxlUxHjwNAj/c5pWv4SPj1oMWTVcjviwl4p3gvRtOjsNaXLJKqA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1757912813; c=relaxed/relaxed;
-	bh=oNMOaL81IkhElHKr2VApsXrxfwnHiJNxSJBV5ekXwTA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=SMIYSNUSD94AJRcOvzZox1vAxaYhJfN/umhcUHlDkU6kdwDlrP8NYBeAbBwh25OQ8kdrwKng8FkalZ5iKBaS+6YABSvrAjrpJ9RdmLbKJxxk/8lx+AzF8jJpcjmftxar1iPwNxGZ55lfnJVxBFwjB89TNowLRCRA5YupuCRmJu1QJ7n1kI7R8U3LJ4GsuXeISqDzXH0iEqpzOIzr3VeS4qJoSvnT2uEhkGS0QoL7JuUZPyPhUbzP6wS+c0K19sQSAwBzeRo2tV6Rv37hI6LBr2jQoivsPOaohTNqUJvsNPynFLJUTZo7mmtiLGWaEqFvScMOK9NGir2L28CDClFkyA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bwExPnFd; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+	t=1757939556; c=relaxed/relaxed;
+	bh=L+qwPhZJSfWWFHa/0JQ9FLyPYdavHmaBAX9ONZmEHB4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kywrInoXag0Cb6L1A2ygaCXsgD2aeU1BpwZZ4Qrb5J3HgJPnXQk2RMXKwd2HIhwIk8lZP2gyKD26ax6QwMyx4QQCaKqjpiq05Gtjc7uUGASigV6x1SsXBfJj17VFHEsobSYfUzK1tz1R+xhMDno0EC5+y4OEMV3gSAsQ45jOyj6obBrlPWvCAieRTDy3JnVG2M5NzjozGOGf3TDI5nIGFHOZ17USnYNANMzL6w79hiKWgc0+CaxodfcQprVJxITEQu84RfWe3n6WNJytGp/0MhZu2B4yV/sfS6dVyg9hM8vFOsmGwM0NGLhM6wCaegcOD8E+2Z9ms0bMduUeTtt5SA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=BA16kbce; dkim-atps=neutral; spf=pass (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org) smtp.mailfrom=lunn.ch
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bwExPnFd;
+	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=BA16kbce;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cQCgd0Ypyz3d44;
-	Mon, 15 Sep 2025 15:06:53 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1757912812;
-	bh=oNMOaL81IkhElHKr2VApsXrxfwnHiJNxSJBV5ekXwTA=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=bwExPnFdRLkhCTTi+hk/aoWc+gY5XGZePQgDQN+4nim/C8quuZxzvEFZu002gI0rH
-	 9MQhVepzXwruhuA5KoAaeQc1UVV2xJ40DoOw7W6aSSAU39KsCncmJCpaaUbZo6Vhqg
-	 /IWyQZ0XW1SBb4NrMgUYpB+Z6F7UQuFy9gpVrgCP5ChIKmMztJMLz8FrXlEoK/OX0M
-	 R6Vmg4eHGafzc3EEDbyG3WGrF8dkPqJERJ6wqUddiRub+QPew+DrAs2qpMgSmaY9Yf
-	 /13wRgEQSpA7Yf/i1nm+adpnqT6V8yB1yH/BQFxjL8qyojo0YjyFdbOZ+DasjGATJg
-	 ljuHfKM4dmbVA==
-Received: from [IPv6:2405:6e00:2430:fb15:b2b4:1872:3690:c682] (unknown [120.20.190.44])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id F1C9864CF0;
-	Mon, 15 Sep 2025 13:06:49 +0800 (AWST)
-Message-ID: <28dc3bd8aeca7e3164747960747f75060c596704.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] peci: controller: peci-aspeed: convert from
- round_rate() to determine_rate()
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Brian Masney <bmasney@redhat.com>, Iwona Winiarska
-	 <iwona.winiarska@intel.com>, Joel Stanley <joel@jms.id.au>, Maxime Ripard
-	 <mripard@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-aspeed@lists.ozlabs.org, 
-	openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Date: Mon, 15 Sep 2025 14:36:48 +0930
-In-Reply-To: <aMatZAX6eFI1RmDH@redhat.com>
-References: <20250810-peci-round-rate-v1-1-ec96d216a455@redhat.com>
-	 <aMatZAX6eFI1RmDH@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1-1 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cQPYt40vYz3dM1;
+	Mon, 15 Sep 2025 22:32:33 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=L+qwPhZJSfWWFHa/0JQ9FLyPYdavHmaBAX9ONZmEHB4=; b=BA16kbceQ0CW2l1BGcmB7I60Ya
+	QnN81//wbpw8quKuMH6/dnUkOgJEKiQRUZqo2vg5uMwODqj2BFBbDfb6tacvlyba3eyRndm4qgcmz
+	m3umrb5pHfC90FqVjq/If662ZML4vhaE6WCfO5tab3MsZReSECjUY8H6hDgUxpR7uSZk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1uy8NQ-008RD7-1w; Mon, 15 Sep 2025 14:32:12 +0200
+Date: Mon, 15 Sep 2025 14:32:12 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>
+Cc: Donald Shannon <donalds@nvidia.com>, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, joel@jms.id.au,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org, etanous@nvidia.com
+Subject: Re: [PATCH v2 2/2] ARM: dts: aspeed: Add NVIDIA VR144NVL board
+Message-ID: <6b50e9fb-ce59-406b-bab6-6cfa4eb44e3e@lunn.ch>
+References: <20250822203818.4062595-1-donalds@nvidia.com>
+ <20250822203818.4062595-3-donalds@nvidia.com>
+ <f9cd6015c47d390eef9c689d2cb4fcd301c4d123.camel@codeconstruct.com.au>
+ <fcd64668-4232-4d7b-98ec-5326d40d19d7@nvidia.com>
+ <f0b75151-d355-4d03-a356-dfbfb7a9e803@nvidia.com>
+ <ae46aa8e57d01208deb56a8fd01f26a9a0bf359b.camel@codeconstruct.com.au>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -69,28 +66,28 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ae46aa8e57d01208deb56a8fd01f26a9a0bf359b.camel@codeconstruct.com.au>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Brian,
+> > 
+> > Our board phy implements tx and rx delay, so -id would be the appropriate one to use if we
+> > decide to use it.
 
-On Sun, 2025-09-14 at 07:56 -0400, Brian Masney wrote:
-> Hi Iwona, Joel, and Andrew,
->=20
-> On Sun, Aug 10, 2025 at 06:21:51PM -0400, Brian Masney wrote:
-> > The round_rate() clk ops is deprecated, so migrate this driver from
-> > round_rate() to determine_rate() using the Coccinelle semantic patch
-> > appended to the "under-the-cut" portion of the patch.
-> >=20
-> > Signed-off-by: Brian Masney <bmasney@redhat.com>
->=20
-> Would it be possible to get this picked up for v6.18? I'd like to remove
-> this API from drivers/clk in v6.19.
+I'm curious. How do you achieve this? Have you hacked the bootloader?
 
-My (strong) preference is that Iwona applies it, but I'll keep an eye
-out for any unusual delays.
+> Right, so long as there's no delay configured for the MAC in the SCU
+> (see SCU340-35C) and networking functions for your board then I think
+> it's fine to keep the node and specify `phy-mode = "rgmii-id";`.
 
-Andrew
+Yes, this is how it is supposed to work. But please add a comment to
+the commit message about how this actually works, e.g. if you have a
+hacked bootloader, please make that clear, in case somebody wants to
+run the mainline version on this hardware.
+
+	Andrew
 
