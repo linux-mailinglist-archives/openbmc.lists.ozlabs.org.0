@@ -1,80 +1,80 @@
-Return-Path: <openbmc+bounces-670-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-671-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57274B87294
-	for <lists+openbmc@lfdr.de>; Thu, 18 Sep 2025 23:37:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E40B87297
+	for <lists+openbmc@lfdr.de>; Thu, 18 Sep 2025 23:37:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cSTSB4f13z3cdb;
-	Fri, 19 Sep 2025 07:34:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cSTSC368qz3cf8;
+	Fri, 19 Sep 2025 07:34:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c111::9" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758231290;
-	cv=pass; b=bry4bMPqrPCLhjhbVjys2jOhh6tRiDjhZZJkbjFrL1wm2Rt/crSpKzg3dGbzoP66TutEQUh7Y7eZBIHrDejDPru6Jw2FFLM/f+CeEopC+lKgc/ysWMjF2dWCh+PydplDhMVQnG/0csDOP5kLyRdSRGnatcw4h/Sf7Y4P8Egez9sj8mGx3PVdzyvr+nWSu/LcxaPtKzADbqJofbPpWfsHaoIvKANe7fPDGIouZwckgs2+qyklRZamJvtRxUwHt2z/3Co+D9SG60GWPVu1E5NbtX7A2GDTNEK/4tC9FbIguNrIZqaM3CCccLEzeHhQmPOyN9sCr5Iwr7cmxTR5o5Itmg==
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758231291;
+	cv=pass; b=dRwAUujop0VysoZAodc2jCc2GWdKRWvu5A2hd9LMEiJRmddApNnnNdtEqT3WXwvuDd0Uid4nY0miua91eHFkjNae//NylUADa4G2PFVvfvsgoHZRt3uYRQBtXVxVG1NK6W7Mfa4DotZW0nFa3OJII1JiBmAgv6gkqmRIJcuhg+pJebVOlRgPIq4YLMhZhqaiG/t0HaPeGIK8YAyiOXcVR/PmgjP+TFbK4N2J3ndRxg685+AMRnKfCo3uByDH04X7LUgFyDRKSwgyG5fTw3EuttqdmZwXlJrSppks0xQSIgKx9bNS4g85RJXWrWBIk2wNw9GzQ+OYnnQOBxrY97oiOg==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1758231290; c=relaxed/relaxed;
-	bh=mzGevwWcBb6sJuLkJfDbRMqFnedU35t7SynZoSzqxfA=;
+	t=1758231291; c=relaxed/relaxed;
+	bh=q8lYncgrN2uyWafZHOvhd7k82pGxqS6Rflm16DT3Nbk=;
 	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=Wa5ONyTUGOZTquCA+0T13KUMmG61CPkAfhSLOJp9HhuLz3spxMd069+fG6c0x5EVT01xvO7x7o3+SFeH2l59jgR9v5LzvA4Vg+6WfiAUJT9+JcVWMICAQLeIUwfeSInORKlQZWoHs99GjnJa/kvZgFAGzmq21P1x9f8UPmRUNMEtHI+OGDS9mQYLuakKNMy68s3xfh2fT9hEjG2ekHnRx686bXskuWoaHRWiw59UMDq7UqIt3BnWUmLOSD3N0gNqz65rYQRp5I5uV9xOc4MJ0RON5K5jiX7dlbYcmlKEnqnw7g1z5FZuyRJMnqt0k6tl7eEgGVxaKYiOYsYAYhp0DQ==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=NMxWS+6U; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c111::9; helo=dm5pr21cu001.outbound.protection.outlook.com; envelope-from=molberding@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
+	 To:Cc:MIME-Version; b=Fxy54hpzB2Dba3I0u+aUvQ7TX4l5OD1VO/5vb41dRHuXBbYSFTIcoUDedG6DQJphWr1WwGB45AAG+iTMYUfPwkeDfA8hmT2HCe5tA3UfUV6P+sdnOVS/y6W9P6dfHJdRWki15ganegIX6vxBsKRwUyJKBpIOsKsWihB4pjdc1CyPtxfdfMIuzLcwLHJbNUYTk3AP6RI5y+XDZRyZrXwe5xwiiaUcLrihjtex5OTuoXch8ovWW1m/WAzrjMQ8VArGB9HmASfNI6pwtfxLpQNSQl1DxzN+pdnxlYNFmv7T7LWO5UyXzSbR9Z0exUldqTSp7fsjCYi2YotJPJgn2h4OnQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dwf5vnRs; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c111::9; helo=dm5pr21cu001.outbound.protection.outlook.com; envelope-from=molberding@nvidia.com; receiver=lists.ozlabs.org) smtp.mailfrom=nvidia.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=NMxWS+6U;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=dwf5vnRs;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f403:c111::9; helo=dm5pr21cu001.outbound.protection.outlook.com; envelope-from=molberding@nvidia.com; receiver=lists.ozlabs.org)
 Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazlp170110009.outbound.protection.outlook.com [IPv6:2a01:111:f403:c111::9])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cSTS860PQz3cf8
-	for <openbmc@lists.ozlabs.org>; Fri, 19 Sep 2025 07:34:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cSTSB169sz3cfm
+	for <openbmc@lists.ozlabs.org>; Fri, 19 Sep 2025 07:34:50 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eRuikfSFlWTVm34IMUH6nQ+PcM0nbd/KhXAX719SFknM45cTp/FWmvlcoVs8D1wOVMTmfmgYjwyWMjY5TVga4v/pCJTqLlNfGSsHT3YwsXNP19bJvaPd4PHl4+Ldy2bWGNeS6ouyUNvmq+6DYLkgJs+gCgE3P/7P00KtjhRwaVhqNkJA938/qpsKwYNU8BjYSta6zD7/+XimJ7zOoKBbWsD08mZkCD80IUlC4n8Erc6501+ZHvCBEjAFWSeGr3Ttg9/r7N5WYBIcUA0gHXBXYhlaUwVC5thuE9A73nzOX5RjfWc/k1ek8Xu5sZ9FGnTsFyttmP19zxJ7JOQWm9x5Qg==
+ b=oM9eFIGWR2687gRdvzC+UcMplR8BjF/3eGnkhwbcFxkYlXUOcD5Bg/9aVJJvDrXv6eixwxGO0RWVmEgWDakwjlI5qb7t+EnRqJltqeRgFY0LUE3JpG4RpZZGWP2NnQXJ303MghXBYZwLwWWbpC65C0EEgQkMqPNh5+nNEMabYmB29kSnnlQSBnL+ri3M3EnhBAQyNtNrWIHS1ZYgf5yfrfXwaqfhE9DzOH95pZLCUnGGo+GlKqRqIbpFkuArGbZHCli4rta4CirvLOivZeA8yBQZwI1TZyNshinYMAkSI/cRkG0JOmrj6BgnoirYfoDc4H42M1GLAlMzU2gNGBbfcQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mzGevwWcBb6sJuLkJfDbRMqFnedU35t7SynZoSzqxfA=;
- b=LW4Vs/0WkLU3ti0jckytocwG0pggs2Hr1LGbKz8q3sB4BfZG+T+t9OGVEgVDymYCYVAIa2JakYpsN1Z8lkwGWhlAxg6HDZuMOe6q1PjUSGvS3R/gh9QhP91S6V04iutqFOlqY3Kii3wvVcSQMQwTm013mBXUZq0N2A93HbiVfUtKoSIh91YPDZEG4iuliTtYimk+s/Gyv3ce/qxnYhCSJi0e7UgLG2iZSIItue1Se6Lq+a28cpchxHE5tLYwcRn9mwhj/AZU++LcQ5fJ72Fldry2xczk5ObwduAkY1p/yIvUTUyQzuEqhhmOK+jF9NN2Mb/c0sEIaNIL9zE5nFcpiQ==
+ bh=q8lYncgrN2uyWafZHOvhd7k82pGxqS6Rflm16DT3Nbk=;
+ b=iLCnQLeu9gubHcOTlTE/P8AC0tWIZKU8T+nDTlKdu6oBcLFMmlV+jkZ/WPeMTza2bdvAHkbLxhbYHTB+BPDwdhC1znnpHeGnPOBcQR9BxzvLcnVwvImwY+2XRgKWMe6RIVzR4awZ0WtJFqJ0PRYXI4oReKFsp3+vwIgTh0vlZzcNMWYNMpYoiDfjK0nTcmnMGdU4aJvtxKr4dmUr+k3IjD2SkXNDGBDNGUIixxtmZRSJ4TmLU/N7IvkuAKuRD3yMe4hxfDwnFX46oTS3natD1jwBYLffzIDhulWKiSart0IEa3qoodcOki2iiGZfsQU4XJfQMPc6eXnKFSv1T+V5Pg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mzGevwWcBb6sJuLkJfDbRMqFnedU35t7SynZoSzqxfA=;
- b=NMxWS+6UKI3IYnUJoEUR7bB9cltIdCkOg/ovBnBQ0uCTVHEx3JWiLBi1bGNHKYSaXL03doRdxHMI9gMgTJu3mA0JGUcWhTQX1V2kY/ZCJrLhsZm9Q0XTZq9Ew6yqIOMIzVgb6lu/DHxEbCDkBCb79qdK5gXuTT5COF5zYXuqGdDknMwYH/W5fywdNl1z3EUosg3teaOY49ByGunFZnj8WmnKiWFE6BH2gewkRHx+iNGjO7AyliTyiLvq/CUSbDrvihyFqKzbbT8jXWfLE/1ngx0J2SEctj/dFNvZn50WwhjMibFnK4nySRv4EUR7xJfjF2jrpTcFg9MjWeAPJc4WAQ==
+ bh=q8lYncgrN2uyWafZHOvhd7k82pGxqS6Rflm16DT3Nbk=;
+ b=dwf5vnRsb4izbxFTMdiMWiXl7SAk5z7skhYx/hxnO6sruTfH2LQ4VDDDGYS0A1n6ybJDCSMFY1cV8Px6D7R1cAqM4pMXxZDZVfF9fJem8e+MfpZHDWGFFiCV/uv22Ypr9rf0LzTBNr3gLs0WFIEFql1IIigKmsPhbl3QELT6ctJUdJQU1G+qsJg0U8PsbV+55muWKbrUoiOLybS0/hrtPPXnt28pU5ppjMZ6C2JNIVxOa0YysWJCw5dWTHONJyj4dTQKSKiIQiLTQT8AZQghpX5nTiFxns/1Brgt8nJhtvZVYwa/8ik3FEzyCMQAzz/QVYmhcg6g++ROXZbxLTkc8A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH1PPFDAD84AB72.namprd12.prod.outlook.com
  (2603:10b6:61f:fc00::627) by SA3PR12MB8024.namprd12.prod.outlook.com
  (2603:10b6:806:312::12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.22; Thu, 18 Sep
- 2025 21:34:33 +0000
+ 2025 21:34:35 +0000
 Received: from CH1PPFDAD84AB72.namprd12.prod.outlook.com
  ([fe80::9de5:7299:4ee9:21e8]) by CH1PPFDAD84AB72.namprd12.prod.outlook.com
  ([fe80::9de5:7299:4ee9:21e8%4]) with mapi id 15.20.9115.020; Thu, 18 Sep 2025
- 21:34:33 +0000
+ 21:34:34 +0000
 From: Marc Olberding <molberding@nvidia.com>
-Date: Thu, 18 Sep 2025 14:33:59 -0700
-Subject: [PATCH linux dev-6.12 13/14] net: mctp: add gateway routing
- support
+Date: Thu, 18 Sep 2025 14:34:00 -0700
+Subject: [PATCH linux dev-6.12 14/14] net: mctp: test: Add tests for
+ gateway routes
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250918-mctp_gateway_routing-v1-13-8fdedda742c3@nvidia.com>
+Message-Id: <20250918-mctp_gateway_routing-v1-14-8fdedda742c3@nvidia.com>
 References: <20250918-mctp_gateway_routing-v1-0-8fdedda742c3@nvidia.com>
 In-Reply-To: <20250918-mctp_gateway_routing-v1-0-8fdedda742c3@nvidia.com>
 To: openbmc@lists.ozlabs.org, joel@jms.id.au
 Cc: andrew@codeconstruct.com.au
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758231250; l=16701;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758231250; l=12424;
  i=molberding@nvidia.com; s=20250815; h=from:subject:message-id;
- bh=xHKzctxoFpfsW+3gX/CmxW7RfvLVAEblonabFXI/v0A=;
- b=AWCHeTWW2P2KvZtFolkj6U0eq6iELrD7B909PFvP+N4UPwzvRpxMj944/W1JjVdMLFmVjmjts
- 8z/q41c6XiQDeMCqaHiHphlxxlSDb1R3bQzjdYyISmqsYquAqI1UbC+
+ bh=5qQ9iB7xOhLR1KXjj6Tg4SdEAb0G7n+ncKjIM0jPnbE=;
+ b=P5RStS+zu7xu0Y3ivVzbPZniTGxZa/Soy+rFhNt/fZaoLWwyW1SB5PofdZdBfBI58tHeP5SM/
+ 4DP0mEazD9OBbHDxg/OC2zfEOwQ7JoHoyfOENsLWGzBNubA/Ofyd+48
 X-Developer-Key: i=molberding@nvidia.com; a=ed25519;
  pk=qCpZ1WFEf5YiaL88PDdYhG+A/bKk7rHp7KF2K3GmkH0=
-X-ClientProxiedBy: MW4PR04CA0226.namprd04.prod.outlook.com
- (2603:10b6:303:87::21) To CH1PPFDAD84AB72.namprd12.prod.outlook.com
+X-ClientProxiedBy: MW4P220CA0005.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:303:115::10) To CH1PPFDAD84AB72.namprd12.prod.outlook.com
  (2603:10b6:61f:fc00::627)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -89,94 +89,94 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH1PPFDAD84AB72:EE_|SA3PR12MB8024:EE_
-X-MS-Office365-Filtering-Correlation-Id: c7700eff-0ec6-44f0-71d6-08ddf6fb2858
+X-MS-Office365-Filtering-Correlation-Id: ae0ef33e-3ad2-4cc4-8365-08ddf6fb2937
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?R09GZ09jRHQ3L2VNVFFqeUhCZzFXY0NuUlhRTXN3a3hjWURlMkt2Zk5LSHRz?=
- =?utf-8?B?UnFpYmZkWWhSQ3lMWDU3YTBuUEo3WkIySzgrK3VEV0ZuZFQvblRGdFE0L2lw?=
- =?utf-8?B?VUtlYjBhSDFnek9WdGhHTG9pek9sT2w4Qkk2SEJPMHRGa3J6QVg5K2RpL1V4?=
- =?utf-8?B?VWxwV1dmR3dmUUNkbVlIa08zUDF0TVRoZkRjQkYwYTdRMkxHV0ZYVHRoRzNY?=
- =?utf-8?B?cDdZNXJSU2NBbWJTOWRaTVJLTnd0MXFsMzA3dEZ6cGdHc3pnRWtIK2x6SU9D?=
- =?utf-8?B?ZGVWdHZ0djY4UGNpZXEyZ0FzRWlQTG5Felg3TGIvNjZVK3d3UERSQ2h1eVNt?=
- =?utf-8?B?QURUVlh0Z1R6eXluYXpRZjl4YTY1SngwZW1kbUZxU09ORU1BamhVZGJqaUE1?=
- =?utf-8?B?UE9JMkd6MXFWbU92M2Z4NzhjaUd4QUdzUDlNQSt0RDRtbzZQNklKVmlnWTBi?=
- =?utf-8?B?amhiRkQ0OEhCSW1HWUtBQkFhejFSTlBNU0FCamhXamlBNXArcXhVMDh1b3Fa?=
- =?utf-8?B?Si9JN2NWQ240Q2FxUWtrVllnZStaeTJHTWpDaSszSkZTb0NXcy9DNzZ3SHl3?=
- =?utf-8?B?dkNBdmRtRnJKY05PT3pjSTlJcDNkTytDWjN5dVp6ODRUakhKVCt3ZXNyaDll?=
- =?utf-8?B?Nk9sRXAxME83WFZGMEs1MVEwMU42UEdSVnFQd0YyMTliSDBFTkJjZFhIL0F4?=
- =?utf-8?B?bUV2NHdnUXR4MU5YU3NMTmNTMkgxRFgrdmoxekppS3gxeHpsUkdIQjdPQjJ0?=
- =?utf-8?B?bEJWTmNubjJTaTFGK29qMjZYSHhmdkNFRjQrV0VVQ0tuUmV3VmtiaG1PTEx6?=
- =?utf-8?B?SmU3K0piQ1N2U3lHbjdkbDlCN2EyQ2Fya09URUVQaEljVlV2aWM5VEt5MGZi?=
- =?utf-8?B?Wkh2RjYxNGJqUWtSb2ZmNTVNVTFmYmtsdVpXRktUTlI4TDlIYnFwUktvNjV5?=
- =?utf-8?B?Mi9hL1kzK3crYXlLRzUxQnVESjBkNmpKaFNGbDJqZ0dNSzMwSXlCZjBnanhp?=
- =?utf-8?B?eUJNNFNYMkVrc05PbEs0TzVCRFVjNUM5SWo3UW5WSS9nTHg0TWZyb3d2eUpo?=
- =?utf-8?B?djdyZDZHdkJhM1BRQnJDUTJiQXRhcGZlL3pEUkd0cFUyU0N4L1hwVjBRUWNq?=
- =?utf-8?B?alhFNGJGblluc2RxN21xcGJtaGRCVTZiY3I2Yy9uWmMydHVjT2Y3cFMzM0RD?=
- =?utf-8?B?SjNqQjZvVjFCOWJPdm53UWFvTHVkenY2UnZiUk5IcnUzSEtHZlN1Z3NYV2gz?=
- =?utf-8?B?Vnhyd3FlNC9iYXpPMk1aWnlyN1dFZlY3dUxZYW5zSUR5bHlpRnl4VnFVRC9C?=
- =?utf-8?B?VjVIQy9Lak95elgyb3FtYVpya2NCQVRmNDVtVFc4QzhKVVluakhCYkMrZkp4?=
- =?utf-8?B?TjFheWhjaUJqeW1uV2xoay9LUDc5b3Z6bTN2UFd1cUx6QmtoeDVVb2M5Njl6?=
- =?utf-8?B?Mm9iWnBDcTQvT2tiZ1RyYnd3ajNFazFIYWpQdlVPN29pQXl1MHpVMktIYU91?=
- =?utf-8?B?bEFqUllPZlRVMi9OcmVCbDdHQ1FpY1NGdWYxa1lEQzdaalFlZEI5OVRaTHQ5?=
- =?utf-8?B?L3h4SmgwaEtDWW1ZNEhvR0JQM0ZlU1dLTHZPb3Q3K3dDS212RWtJNEhjNTQz?=
- =?utf-8?B?RTFjK25YKzM1enFacXFiak1GVHRXdTVZWVEydFpUNU5VRGV3TGpxVjdYQVRt?=
- =?utf-8?B?eHp5dm50QXJDSGZMeVR1VVNMUzFLWVY2WGRiZUlEUWhqTW90bTZ6QTRJQXox?=
- =?utf-8?B?S20xR2RLbXIyaTNWOTQwQjNRRlhPYWhjTkx1Nmpnb0x2K2tWSFIzdmN3Qmoz?=
- =?utf-8?B?YlkyVFlOdUdweFhTNjRsUWZud2Q2d0kwUE51Z0lmVGFzZkJvc1cvK09CRFcz?=
- =?utf-8?B?aUM3TEFOYkRkM3BPc0ZtL3VFWkNYUTMwbTU5YnJTTjNKNjQzWDZxaG9HakNS?=
- =?utf-8?Q?ZfkLeVAIJhY=3D?=
+	=?utf-8?B?aEgrTEdrYXZHOURaeHZpUnFaaFFuSkpZWXozUENiZ1IvdGlKc2tRd2FKb2Y0?=
+ =?utf-8?B?TE1XVUY4ZjdBeUF0QmFic1g5djRhRHpJMkRWSTREMDFvNTFWOHdva3ZDb2FR?=
+ =?utf-8?B?alR6YkJuaEZMai9ENUxtNFh6NlZyYUVpS3V5ZFlhQitpNWYxbGhSdWk4ME00?=
+ =?utf-8?B?NFNvT2dpV2R1TmdteWFZT2ExdzZzQUROMVIxTjdLTFBIRXlYaEJhbStaUDQw?=
+ =?utf-8?B?UWRqY1U3dzA0RTlKMnpYOVlaK1J4anlmSVI4NDFWOHN0c2VnbDhwMmFPRXdD?=
+ =?utf-8?B?SVI0S0N4Rm5ZRFg0TFVaa25hV2ZjN0V3b3FIbUJIbzYzQjFCSjE4R3ozY0xQ?=
+ =?utf-8?B?ZVc2ekVyVGJWRTVHOGtkWm81MzhPUVBqQ0VOS1U2ZWFEQmlwU21iazJyUmdi?=
+ =?utf-8?B?VlNCWGdUOEZ4dklFK3F2N2xDc3lOWjRIZmpVM0FjTG4xYTRjbGJZRHJoZzVO?=
+ =?utf-8?B?c1pud2xGOUU3U2lodkJHeHRwaVhSQWxIc1psTm9LS3ZiL002Qzl1ZDUyWVZ1?=
+ =?utf-8?B?MHNNWVBtczIvT2dldmlobFN0dW1qVG1yYU9hZHRWL1Q4V21FRlhVcXk0MWJN?=
+ =?utf-8?B?cWFlcnNKaTRTQ0YvcEtOdE1VTW51SktFSmFjY3BQaTBUWFA1RVFLZTh4WUhM?=
+ =?utf-8?B?RE55dkxJa0Z3aG1YV1RBNlN1ajA2c1JuSjNCYWpoTzFoS2pQMUhNSE1CMGt3?=
+ =?utf-8?B?bWhQRGt1U1pTa1dIb0UzQmF3em0zN3dsQUtVRUlLM2gyNGdKUzhiUzUxZGZR?=
+ =?utf-8?B?aDlUQ0h5Q2Y0M2NMUElRNHN2OUsxNGZKODZuejRBNFZhOHVFUE5nZFZ5V1dO?=
+ =?utf-8?B?YllDR0VvR1piZFpOcHZPWmJ0UHExR1ZZcVJmV1hHMURuSUM1OG5VaTlhaU1o?=
+ =?utf-8?B?cjArQzhQbTJKc0pudnA5RkVaTUNJK1B5bzd5UHpuWFBnSnJ3NitsNkh5OFZs?=
+ =?utf-8?B?MXBFQVVqMlRyYmhHWi9VZXJzY2p1WUtheTNJZDE3S3RzSFdvWk5oUWlyazlm?=
+ =?utf-8?B?SEhLdDFNak50bENRV21ZWXNzdWQrUjRLaG05V2duR0ExaDFPWER6RHNZVDhN?=
+ =?utf-8?B?eE5ZdjQzdHRTWUNpdXgyYXZCWDJiWmRxd2pTTE9jTGRnYUZZb2ZKQ0dkSVQ2?=
+ =?utf-8?B?WnMzQUVwcExWWHlsSGpmaklFSEVOMUJTQmxxOHIzc3NwbEh2QU1aVUQvWmRr?=
+ =?utf-8?B?WjJaOC8wOGxSTWtSZUp0eE5LeDRWcG1PSTQ1Y09uV3Q5NE1Sb2NjV1hjSkky?=
+ =?utf-8?B?VFBTMC9qV1d3c1hWaW5WclBGcHpKbVdiR2s4N1htZXpqTkZJSmMvZ2Y0S1JF?=
+ =?utf-8?B?VXQrWjVTVXN1dVNaeGNmNG5CWDc1dEdudDVjakwrb2xLdDdSRGt1eTI3RFVm?=
+ =?utf-8?B?UHNaYnlpVloxQWNORjBQbXpZekRwbXkzUis5aFZhb2VsNk1RVlJYNytKRVBu?=
+ =?utf-8?B?R0JCVjlhMkhnSXdBZHRxY25GRDFUR1lxc1hzQnE0ZDNueVNjVEc3YVhSK3Fj?=
+ =?utf-8?B?NWlwVWE2azlQUkhWSTBNNXF4QlptUk5Wa2hrVFZJNEpEb3ZyUXR0cU9PWWhi?=
+ =?utf-8?B?VDZ3SEx2T2ZibVNLU0dQM2RSNWIyMDBtalUyaWw5dHhubWFxWXZYODVxdXRs?=
+ =?utf-8?B?SWpkTERnM0VDeW5SeEZtQXQvSzFMMEVZclV4N3c0SkJnQXpUUXV4Wlp3eWtK?=
+ =?utf-8?B?YXhlQS9ITzBNT1JNN09aaWptK0k1ckJISWlJbnJ0ZUpWbDQxUTRSaHBWYzdX?=
+ =?utf-8?B?K0E3d2tOSkp1aHNKUlQrU3E3ZHNnbHpDdFpzbDJrUmEvcDc3S3VhL2pvdm9i?=
+ =?utf-8?B?bTN6ZHNwMFVoMW15STI5LzhlY0FYd1I5SkZUaWszNVpZSG5maUcwVnBxWnc0?=
+ =?utf-8?B?S240cTY3eUZHVDdUZHJIbXRDNldhdElUK1dXcVZsVHV4RDFucVVCeitiU2hr?=
+ =?utf-8?Q?MGX7LTDFbXA=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH1PPFDAD84AB72.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Nk1qclZFdTlpbGV3WGMyVHdaRTVHYndqWkRGc2xHbU4vU3RVaFFxVERiYm9U?=
- =?utf-8?B?bW5kMnpmWWxLSUNrdTBKOFVIQXVOK08xUTk1UHRNQUlkMHluR1pTbHU0U3pq?=
- =?utf-8?B?bTVUVXpJQ1YvUDNjRE9uWjNzY2ZRUGdUamx3ZzdlTXI5VFQ4dG4va3pmVEsr?=
- =?utf-8?B?eStnUXVkOE9VN1MzNmRTK2hEUUpmb1NWb3M5MnI1RUZ0MzIzakFXWHB5MHNC?=
- =?utf-8?B?NEJuZ3IvUUxzOFBpOXY3UDMrMDAreEFoMGtqelczcXJVQWFwZHNFT1lyUncy?=
- =?utf-8?B?ZUxtODZGU2NzaHVCSEdYZGV4azlUMEROY2RsTUlTMzdlelVjcmFscTRKQ3ZZ?=
- =?utf-8?B?VHExS25ORG52NFM0SVNnMHBxZXBpSTYybmlnUEJFWFUzdDE4a3B1UkFGaFJO?=
- =?utf-8?B?ZzZvTVdZSmljVmVWMGNpVWxua0hwbHhETitvNnZnZ3VvV2NZMllScVFYa2lF?=
- =?utf-8?B?dUtrd0QvTCt4N2VhTHZCVzdaWnFzUHBpeDMwd3pGNWErVXZhTjVqZmRKcnFa?=
- =?utf-8?B?YlF1eVU5NVVpMDZEd2VhbmF3V0lRQkpZYlF3aDZlbnFoUVd3OGFwRVlPZEh0?=
- =?utf-8?B?TTROaDh3NzJ0aUI3TkRZd1NhV0pQV0x0N1BGWEpDS1RwUEhjYmcrKzA1Vit5?=
- =?utf-8?B?elZlMkRvejZIazNlSHdIeC9aMjN2amM4V2FaZWVrcGFtSkg0NXBUbFVGWEFH?=
- =?utf-8?B?Zmt4M2M0SWx4VDFCUFVKQjRtR25qREVlcjJOTi8xR3hZWWJId1gvdDZmdm53?=
- =?utf-8?B?MUljSWZCbWNKWXB5cUZkZmpuTG1uYU9OM3pCQXFOL0ZVRkdRRzhWbkFjemJu?=
- =?utf-8?B?ai9Fa2JEV1VqMzVYQ3VvU3M3c3RYMHFpbjhsWmJ1WitDUmZZYUc3K1RkRDFX?=
- =?utf-8?B?M1FiZWtxdzVHREZaaGp4OHBQQmwxNWIyVHoxWUtNcXlja3ZJV0J4L216ckR4?=
- =?utf-8?B?bEpWSUk5cDA2dUJNaDQxbzF4RUVXeVhwSzdCRGl4RjROZG1Yc2R2SWpBTEhK?=
- =?utf-8?B?UnE5L2ZMRGtrdnkzVWM3WFdKL1JtNm9LcFFXTDVGNnl2WTllOHJlZEt6T1Mx?=
- =?utf-8?B?dFJVRmp5MFVNQWxZYnAyYmFtcW1HcW82bWlDdVBqOEsyTkNKYVY2UXl0TVpw?=
- =?utf-8?B?RGRHMnIvYmptbFQyeFFuNVl6cEJrN2VnQy96N2ZQYXErK1diNEtYUFBZeW4w?=
- =?utf-8?B?akRjM2R1ZkRFMjU2QlNiTXVic1ppRTVCS2hnbmVIcVNJTzhtaXlqTjcwNnpm?=
- =?utf-8?B?bGRJNWEyV3pINkZ4VjdsaGwrSFpxMW9UbXprOC9uQ3ZxbkZWa3d1dzhnenNX?=
- =?utf-8?B?aWlpU3Z0eHFKMUNUZ3pSS3o5d0ovMUcxYjZLdldWdzFTS1ZHRXhmUVFTVmZZ?=
- =?utf-8?B?MzQwd3BsUDRDZlhJL2tsYTJRVHRZWlJWN0V5RzRXRDQ5bUMzRUV3dFJJSEhW?=
- =?utf-8?B?MFRCdElacWRoR1BvRlk3MWs0c2g3VktiYjBxNGRTcVowZU1Vajk3c3A5RGJt?=
- =?utf-8?B?K0xyem1TSEZ4SFVsNTF4dG9DbFhVOU1iN1NkemtJTkRjR2JqbTRPYjR6MzJS?=
- =?utf-8?B?N2paNkh1TVRaU3N4NkQvQXhJSXFSRWJGMWZlUkdteE1Cci9ySDhWQ1Iwczdr?=
- =?utf-8?B?MnBSVEY4dGdnL3BLZmhhN0Z6c2tWbDMxQm83RzlLY0t0UnMwYmlkak9Ia0lG?=
- =?utf-8?B?d0diTCttWnV2Vkx1cmZpbTIyY25IZ09hRmtWN3RjMmJjWlBTVlJJOVJyc1kr?=
- =?utf-8?B?cXR5elN5eU1IZmhaMk9XWjFiMGZ4d0x6YWQ1RXJobFZmZWRZWHRMTjkwMndp?=
- =?utf-8?B?M3FwQkRZT2lrZmJlbnNlRS9Qdmx2dUNsRUZhYVlqeDhTMksvV0RvbS8ydjNK?=
- =?utf-8?B?U2Q5dlZYM1kyTTZmeFFSWWNmUUVGV1V3ZXhwemw3NjdSTHFLVnlQK3BuT3Bl?=
- =?utf-8?B?SUE2azgwenhoVjhYSmZVcVRGVTFscTF0TE90NWd1eXkxbXdzY0s0dDhwL041?=
- =?utf-8?B?eERqL04zWVFuTnNKamNaNkdIUXlFM2dIYksrd2RZeG5Fck9KblAxVEEzYmh0?=
- =?utf-8?B?YmZCdC9sWE11TXpCSkFxdUJMUzc3YWFQbDRXR1J6SzJYMm9YanFYY1M2T0xS?=
- =?utf-8?Q?xgEgWv4E5J3JzkF7rLDXsC10U?=
+	=?utf-8?B?OSs2N0M1MldxeGZvU2d0TjArN0RPRFk3Snc2cXo5RlkvMGNEUE1RalJjR3Mz?=
+ =?utf-8?B?MjQwZTJuVXBFWE5jMmVwMHNkaUVLRnJWREduRDlBRXdsbEQ5WlFQR2xqZm1z?=
+ =?utf-8?B?T0F6ajlPK05sU0czeGtyVVNqdDR0bjhrWkxxNmlLMldTOTgweWl5L2djSStC?=
+ =?utf-8?B?OEtXS2ZmSGI4ZFRPd2NZdjhmcU0wZTdkK0tyUzA3aWpEajloR1lWNzhmZHNz?=
+ =?utf-8?B?QTRXTHYwQWh2aEt4SC9laWFpN0tqSTNIc0dBRi9DUGh5aHN1S3dIdTJyRnV4?=
+ =?utf-8?B?YllkTGVsL2ZZc1o5RE40UEE2THl4eXl4WFdVdWtNOTRjQXJwQ0xzR05YY2Yx?=
+ =?utf-8?B?ZURmRmhxeDdidlBjYUZuVm83dW5mYnBNUmxhekZtQUV5S3k0anl2WHEyd3Bh?=
+ =?utf-8?B?Mk1sNjQ3OFZHV3B1ckVSd2hhc2dHcktDVk1FTlBoVUJlTFlveTFURHRoS3hD?=
+ =?utf-8?B?M0FsR0pjTlFyWTNmTkFzbTh2dVI5QWI3RVVYZVJLemNOMUtwMlRRZTZsSEho?=
+ =?utf-8?B?Q3lNRGRpSHVKK2w4MVZJV0RYb3h3bE85QmE0UHV2cW52TEVadlJYN09YWW1Q?=
+ =?utf-8?B?SUc4ckNJemNLUDFxUjJxQ3ExYzUwSGxmanlSTWlkMWhpRjhycXdmbi9DcHVl?=
+ =?utf-8?B?bXhIZnVNSzYyc1BLdEgrWDNtbkpmNCs1T1duZXMrUHVSV202L0lnaWM4MkNV?=
+ =?utf-8?B?MEprUjF2Nllqa2lYSExTLzFYL2dwNHhXZVh6M2JoaC9sK3BoQ3YwV2V4c3Vy?=
+ =?utf-8?B?OEJFaS8xQndmQjhMd0pwU2RKS2o1elkyMTlzMTJTSFBiL3NQU0V1S3VGYzZ0?=
+ =?utf-8?B?TnNvTEJnME4yclRTS3FyQ3BjbzFuck1LV0xKOWk3Nm0vQ3R3MlBIR3R0K1Az?=
+ =?utf-8?B?Rm1BVjlsRnRNa3l3eGIwME5FdUQ5ZnhsWUl6Q1EyQlZUNGRhV0pyN1BKNjgv?=
+ =?utf-8?B?MlRneng0Vk1iM2xKaVdzNWo1c0NleWUvejVUcklVVEQvR3NkSnBMcSt4eWYw?=
+ =?utf-8?B?M3VReEJZbWhEV0VHc3NSODFUUmNzQWllYU9jOUpaQXRpcS9zRkhucXJFcXhs?=
+ =?utf-8?B?cm5YNy8xY1laZ09oSFUrU2xaZGtUTzRQMWVQcitpakZ5ZWpkOFdIU1lad0RX?=
+ =?utf-8?B?Njk2bTJCaytYSFg0Ymo3aDFiNmNWdkN4MUdRU0lUbUNwd20zR1pHQmRubzlr?=
+ =?utf-8?B?UWJRZFJkNkxaSHdwMGZ3dnRnNXh1YkRvbmRMVjd3NnVyenRrVDBqZ0xTUnNn?=
+ =?utf-8?B?UjBJbXRKb2xIeWxoU3dNSGxxWXd0U1NIRWZwemZIb3BHMDhsS01ZSVVGVEYw?=
+ =?utf-8?B?Z2ZVcXhUcDBpZjhkaWlMYU9SaSttYlQ3YWFVb21XaitYSHNJSHVQMFJIRGwr?=
+ =?utf-8?B?K29maEpUVENzSzZYd3k0Z2NuVmFVU0lVZnNkaEEzQ2E2RWhPMzFUcnNRY2Uv?=
+ =?utf-8?B?SVpTSmVhcGFJb2lYSHZvanJPV2VMTkV2RUF6cGRxQ1V1czR4bHNPcEE4VjlF?=
+ =?utf-8?B?SGxWSHFTa3lUQjRSSFNNck9OUDU5Q2tMUDl0Q1ZwNE1yNVJ3VVF3UVorMlVk?=
+ =?utf-8?B?NHl3TDBBQ1BXRDFmaXNIeDhCMzBrT1JYME9ZcjVmOGIyaDJtNjNCekJFT1hE?=
+ =?utf-8?B?RGhsaG5QcVUvblYvR21uZzBZNHVEL3p1cGxzM0o2eWplYmtWZXJ0cDl0eGhw?=
+ =?utf-8?B?K1htMVp0Y1VaYTZKYTFlM21PQ2wxQlByczd0YllKWHhMcHR5ZXRzQ1RKWVBJ?=
+ =?utf-8?B?a0tMYWc0Yyt5VkIyTHJlUGg3elQ4S1pORmp6bTIrcEVGNkI2bmFyc09KREE4?=
+ =?utf-8?B?S0tmU1RxYmc4NFdxb0RGYjJ6eENmL2ttak1IeG11bzdtWHMvNGVSNWZPWmxF?=
+ =?utf-8?B?NHZmR2pvRWc0bzRFbXVQTFFIMCsvNTBzcWdpb053bWNsbEJNekhPbStNTnNp?=
+ =?utf-8?B?T29IdEdvdHl4eFlmMTRoZ2FxN1ZmZ0ZlWTFpK21wSzV3TGIrRURidEhVanE2?=
+ =?utf-8?B?ZUFYTkswbTF2dExVQ1BMM3JtZ2JmQm5Id2tHY0M4ZDZORHlxTERGbmpPdyt2?=
+ =?utf-8?B?UHg3UWZzR2tZRlhiL1Zzckt1ZFA3YmxBTHBSblFJb3UvSW1jUjNXSWF0UWpJ?=
+ =?utf-8?Q?mOydsLM+1Ht8J3qWtdjN9huoP?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c7700eff-0ec6-44f0-71d6-08ddf6fb2858
+X-MS-Exchange-CrossTenant-Network-Message-Id: ae0ef33e-3ad2-4cc4-8365-08ddf6fb2937
 X-MS-Exchange-CrossTenant-AuthSource: CH1PPFDAD84AB72.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2025 21:34:33.1792
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2025 21:34:34.6330
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XaD7PLGE4p1GV43sGev7c8m2xtqM1ktKYdQSu2XIQ966NtcX3QCZDheRNgsfnatE14V0mlbpWiBbl8YnKS9BjQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: l24GBCEnOeCQH3lUI0IVJEPjH2xBMhaIrI01xSM8dBOzAJhvNFIyGkCUBfPtvKy5pignegKV/w10Pn4xTvqXPw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8024
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
 	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
@@ -185,540 +185,368 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-This change allows for gateway routing, where a route table entry
-may reference a routable endpoint (by network and EID), instead of
-routing directly to a netdevice.
-
-We add support for a RTM_GATEWAY attribute for netlink route updates,
-with an attribute format of:
-
-    struct mctp_fq_addr {
-        unsigned int net;
-        mctp_eid_t eid;
-    }
-
-- we need the net here to uniquely identify the target EID, as we no
-longer have the device reference directly (which would provide the net
-id in the case of direct routes).
-
-This makes route lookups recursive, as a route lookup that returns a
-gateway route must be resolved into a direct route (ie, to a device)
-eventually. We provide a limit to the route lookups, to prevent infinite
-loop routing.
-
-The route lookup populates a new 'nexthop' field in the dst structure,
-which now specifies the key for the neighbour table lookup on device
-output, rather than using the packet destination address directly.
+Add a few kunit tests for the gateway routing. Because we have multiple
+route types now (direct and gateway), rename mctp_test_create_route to
+mctp_test_create_route_direct, and add a _gateway variant too.
 
 Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20250702-dev-forwarding-v5-13-1468191da8a4@codeconstruct.com.au
+Link: https://patch.msgid.link/20250702-dev-forwarding-v5-14-1468191da8a4@codeconstruct.com.au
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 
-(cherry picked from commit ad39c12fcee34b8980a80ad5c803bca9906fbd4e)
+(cherry picked from commit 48e1736e5dc1dce875fdaba9b99c01dd4cd226a0)
 ---
- include/net/mctp.h        |  13 ++-
- include/uapi/linux/mctp.h |   8 ++
- net/mctp/route.c          | 206 +++++++++++++++++++++++++++++++++-------------
- net/mctp/test/utils.c     |   3 +-
- 4 files changed, 173 insertions(+), 57 deletions(-)
+ net/mctp/test/route-test.c | 233 ++++++++++++++++++++++++++++++++++++++++++++-
+ net/mctp/test/sock-test.c  |   2 +-
+ net/mctp/test/utils.c      |  33 ++++++-
+ net/mctp/test/utils.h      |  13 ++-
+ 4 files changed, 271 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/mctp.h b/include/net/mctp.h
-index 5dccf0ab751a12d14c534af8ab8eaa6b495d9f24..a396b09dc2e20c4ab2e5c3e99a4a85ad90fa3734 100644
---- a/include/net/mctp.h
-+++ b/include/net/mctp.h
-@@ -237,8 +237,18 @@ struct mctp_route {
- 	mctp_eid_t		min, max;
+diff --git a/net/mctp/test/route-test.c b/net/mctp/test/route-test.c
+index 36dd5e9ba27a0cfc6247ff321e884a9e128ee535..7a398f41b6216afef72adecf118199753ed1bfea 100644
+--- a/net/mctp/test/route-test.c
++++ b/net/mctp/test/route-test.c
+@@ -141,7 +141,7 @@ static void mctp_test_rx_input(struct kunit *test)
+ 	dev = mctp_test_create_dev();
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
  
- 	unsigned char		type;
+-	rt = mctp_test_create_route(&init_net, dev->mdev, 8, 68);
++	rt = mctp_test_create_route_direct(&init_net, dev->mdev, 8, 68);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt);
+ 
+ 	skb = mctp_test_create_skb(&params->hdr, 1);
+@@ -1183,6 +1183,233 @@ static void mctp_test_route_extaddr_input(struct kunit *test)
+ 	mctp_test_destroy_dev(dev);
+ }
+ 
++static void mctp_test_route_gw_lookup(struct kunit *test)
++{
++	struct mctp_test_route *rt1, *rt2;
++	struct mctp_dst dst = { 0 };
++	struct mctp_test_dev *dev;
++	int rc;
 +
- 	unsigned int		mtu;
--	struct mctp_dev		*dev;
++	dev = mctp_test_create_dev();
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
 +
-+	enum {
-+		MCTP_ROUTE_DIRECT,
-+		MCTP_ROUTE_GATEWAY,
-+	} dst_type;
-+	union {
-+		struct mctp_dev	*dev;
-+		struct mctp_fq_addr gateway;
-+	};
++	/* 8 (local) -> 10 (gateway) via 9 (direct) */
++	rt1 = mctp_test_create_route_direct(&init_net, dev->mdev, 9, 0);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt1);
++	rt2 = mctp_test_create_route_gw(&init_net, dev->mdev->net, 10, 9, 0);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt2);
 +
- 	int			(*output)(struct mctp_dst *dst,
- 					  struct sk_buff *skb);
- 
-@@ -256,6 +266,7 @@ struct mctp_route {
- struct mctp_dst {
- 	struct mctp_dev *dev;
- 	unsigned int mtu;
-+	mctp_eid_t nexthop;
- 
- 	/* set for direct addressing */
- 	unsigned char halen;
-diff --git a/include/uapi/linux/mctp.h b/include/uapi/linux/mctp.h
-index e1db65df9359fea810a876786b864743c77e2478..19ad12a0cd4b4599667519aaed73a12d2892aa25 100644
---- a/include/uapi/linux/mctp.h
-+++ b/include/uapi/linux/mctp.h
-@@ -37,6 +37,14 @@ struct sockaddr_mctp_ext {
- 	__u8			smctp_haddr[MAX_ADDR_LEN];
- };
- 
-+/* A "fully qualified" MCTP address, which includes the system-local network ID,
-+ * required to uniquely resolve a routable EID.
-+ */
-+struct mctp_fq_addr {
-+	unsigned int	net;
-+	mctp_eid_t	eid;
++	rc = mctp_route_lookup(&init_net, dev->mdev->net, 10, &dst);
++	KUNIT_EXPECT_EQ(test, rc, 0);
++	KUNIT_EXPECT_PTR_EQ(test, dst.dev, dev->mdev);
++	KUNIT_EXPECT_EQ(test, dst.mtu, dev->ndev->mtu);
++	KUNIT_EXPECT_EQ(test, dst.nexthop, 9);
++	KUNIT_EXPECT_EQ(test, dst.halen, 0);
++
++	mctp_dst_release(&dst);
++
++	mctp_test_route_destroy(test, rt2);
++	mctp_test_route_destroy(test, rt1);
++	mctp_test_destroy_dev(dev);
++}
++
++static void mctp_test_route_gw_loop(struct kunit *test)
++{
++	struct mctp_test_route *rt1, *rt2;
++	struct mctp_dst dst = { 0 };
++	struct mctp_test_dev *dev;
++	int rc;
++
++	dev = mctp_test_create_dev();
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
++
++	/* two routes using each other as the gw */
++	rt1 = mctp_test_create_route_gw(&init_net, dev->mdev->net, 9, 10, 0);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt1);
++	rt2 = mctp_test_create_route_gw(&init_net, dev->mdev->net, 10, 9, 0);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt2);
++
++	/* this should fail, rather than infinite-loop */
++	rc = mctp_route_lookup(&init_net, dev->mdev->net, 10, &dst);
++	KUNIT_EXPECT_NE(test, rc, 0);
++
++	mctp_test_route_destroy(test, rt2);
++	mctp_test_route_destroy(test, rt1);
++	mctp_test_destroy_dev(dev);
++}
++
++struct mctp_route_gw_mtu_test {
++	/* working away from the local stack */
++	unsigned int dev, neigh, gw, dst;
++	unsigned int exp;
 +};
 +
- #define MCTP_NET_ANY		0x0
- 
- #define MCTP_ADDR_NULL		0x00
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 5eca3ce0ba3ceac2ea0567d4042a298abcf3c674..a20d6b11d4186b55cab9d76e367169ea712553c7 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -563,7 +563,6 @@ static int mctp_dst_input(struct mctp_dst *dst, struct sk_buff *skb)
- 
- static int mctp_dst_output(struct mctp_dst *dst, struct sk_buff *skb)
- {
--	struct mctp_hdr *hdr = mctp_hdr(skb);
- 	char daddr_buf[MAX_ADDR_LEN];
- 	char *daddr = NULL;
- 	int rc;
-@@ -586,7 +585,7 @@ static int mctp_dst_output(struct mctp_dst *dst, struct sk_buff *skb)
- 		daddr = dst->haddr;
- 	} else {
- 		/* If lookup fails let the device handle daddr==NULL */
--		if (mctp_neigh_lookup(dst->dev, hdr->dest, daddr_buf) == 0)
-+		if (mctp_neigh_lookup(dst->dev, dst->nexthop, daddr_buf) == 0)
- 			daddr = daddr_buf;
- 	}
- 
-@@ -610,7 +609,8 @@ static int mctp_dst_output(struct mctp_dst *dst, struct sk_buff *skb)
- static void mctp_route_release(struct mctp_route *rt)
- {
- 	if (refcount_dec_and_test(&rt->refs)) {
--		mctp_dev_put(rt->dev);
-+		if (rt->dst_type == MCTP_ROUTE_DIRECT)
-+			mctp_dev_put(rt->dev);
- 		kfree_rcu(rt, rcu);
- 	}
- }
-@@ -799,10 +799,16 @@ static struct mctp_sk_key *mctp_lookup_prealloc_tag(struct mctp_sock *msk,
- }
- 
- /* routing lookups */
-+static unsigned int mctp_route_netid(struct mctp_route *rt)
++static void mctp_route_gw_mtu_to_desc(const struct mctp_route_gw_mtu_test *t,
++				      char *desc)
 +{
-+	return rt->dst_type == MCTP_ROUTE_DIRECT ?
-+		READ_ONCE(rt->dev->net) : rt->gateway.net;
++	sprintf(desc, "dev %d, neigh %d, gw %d, dst %d -> %d",
++		t->dev, t->neigh, t->gw, t->dst, t->exp);
 +}
 +
- static bool mctp_rt_match_eid(struct mctp_route *rt,
- 			      unsigned int net, mctp_eid_t eid)
- {
--	return READ_ONCE(rt->dev->net) == net &&
-+	return mctp_route_netid(rt) == net &&
- 		rt->min <= eid && rt->max >= eid;
- }
- 
-@@ -811,16 +817,21 @@ static bool mctp_rt_compare_exact(struct mctp_route *rt1,
- 				  struct mctp_route *rt2)
- {
- 	ASSERT_RTNL();
--	return rt1->dev->net == rt2->dev->net &&
-+	return mctp_route_netid(rt1) == mctp_route_netid(rt2) &&
- 		rt1->min == rt2->min &&
- 		rt1->max == rt2->max;
- }
- 
--static void mctp_dst_from_route(struct mctp_dst *dst, struct mctp_route *route)
-+/* must only be called on a direct route, as the final output hop */
-+static void mctp_dst_from_route(struct mctp_dst *dst, mctp_eid_t eid,
-+				unsigned int mtu, struct mctp_route *route)
- {
- 	mctp_dev_hold(route->dev);
-+	dst->nexthop = eid;
- 	dst->dev = route->dev;
--	dst->mtu = route->mtu ?: READ_ONCE(dst->dev->dev->mtu);
-+	dst->mtu = READ_ONCE(dst->dev->dev->mtu);
-+	if (mtu)
-+		dst->mtu = min(dst->mtu, mtu);
- 	dst->halen = 0;
- 	dst->output = route->output;
- }
-@@ -854,6 +865,7 @@ int mctp_dst_from_extaddr(struct mctp_dst *dst, struct net *net, int ifindex,
- 	dst->mtu = READ_ONCE(netdev->mtu);
- 	dst->halen = halen;
- 	dst->output = mctp_dst_output;
-+	dst->nexthop = 0;
- 	memcpy(dst->haddr, haddr, halen);
- 
- 	rc = 0;
-@@ -868,24 +880,54 @@ void mctp_dst_release(struct mctp_dst *dst)
- 	mctp_dev_put(dst->dev);
- }
- 
-+static struct mctp_route *mctp_route_lookup_single(struct net *net,
-+						   unsigned int dnet,
-+						   mctp_eid_t daddr)
++static const struct mctp_route_gw_mtu_test mctp_route_gw_mtu_tests[] = {
++	/* no route-specific MTUs */
++	{ 68, 0, 0, 0, 68 },
++	{ 100, 0, 0, 0, 100 },
++	/* one route MTU (smaller than dev mtu), others unrestricted */
++	{ 100, 68, 0, 0, 68 },
++	{ 100, 0, 68, 0, 68 },
++	{ 100, 0, 0, 68, 68 },
++	/* smallest applied, regardless of order */
++	{ 100, 99, 98, 68, 68 },
++	{ 99, 100, 98, 68, 68 },
++	{ 98, 99, 100, 68, 68 },
++	{ 68, 98, 99, 100, 68 },
++};
++
++KUNIT_ARRAY_PARAM(mctp_route_gw_mtu, mctp_route_gw_mtu_tests,
++		  mctp_route_gw_mtu_to_desc);
++
++static void mctp_test_route_gw_mtu(struct kunit *test)
 +{
-+	struct mctp_route *rt;
++	const struct mctp_route_gw_mtu_test *mtus = test->param_value;
++	struct mctp_test_route *rt1, *rt2, *rt3;
++	struct mctp_dst dst = { 0 };
++	struct mctp_test_dev *dev;
++	struct mctp_dev *mdev;
++	unsigned int netid;
++	int rc;
 +
-+	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
-+		if (mctp_rt_match_eid(rt, dnet, daddr))
-+			return rt;
-+	}
++	dev = mctp_test_create_dev();
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
++	dev->ndev->mtu = mtus->dev;
++	mdev = dev->mdev;
++	netid = mdev->net;
 +
-+	return NULL;
++	/* 8 (local) -> 11 (dst) via 10 (gw) via 9 (neigh) */
++	rt1 = mctp_test_create_route_direct(&init_net, mdev, 9, mtus->neigh);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt1);
++
++	rt2 = mctp_test_create_route_gw(&init_net, netid, 10, 9, mtus->gw);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt2);
++
++	rt3 = mctp_test_create_route_gw(&init_net, netid, 11, 10, mtus->dst);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt3);
++
++	rc = mctp_route_lookup(&init_net, dev->mdev->net, 11, &dst);
++	KUNIT_EXPECT_EQ(test, rc, 0);
++	KUNIT_EXPECT_EQ(test, dst.mtu, mtus->exp);
++
++	mctp_dst_release(&dst);
++
++	mctp_test_route_destroy(test, rt3);
++	mctp_test_route_destroy(test, rt2);
++	mctp_test_route_destroy(test, rt1);
++	mctp_test_destroy_dev(dev);
 +}
 +
- /* populates *dst on successful lookup, if set */
- int mctp_route_lookup(struct net *net, unsigned int dnet,
- 		      mctp_eid_t daddr, struct mctp_dst *dst)
- {
-+	const unsigned int max_depth = 32;
-+	unsigned int depth, mtu = 0;
- 	int rc = -EHOSTUNREACH;
--	struct mctp_route *rt;
- 
- 	rcu_read_lock();
- 
--	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
--		/* TODO: add metrics */
--		if (!mctp_rt_match_eid(rt, dnet, daddr))
--			continue;
-+	for (depth = 0; depth < max_depth; depth++) {
-+		struct mctp_route *rt;
- 
--		if (dst)
--			mctp_dst_from_route(dst, rt);
--		rc = 0;
--		break;
-+		rt = mctp_route_lookup_single(net, dnet, daddr);
-+		if (!rt)
-+			break;
++#define MCTP_TEST_LLADDR_LEN 2
++struct mctp_test_llhdr {
++	unsigned int magic;
++	unsigned char src[MCTP_TEST_LLADDR_LEN];
++	unsigned char dst[MCTP_TEST_LLADDR_LEN];
++};
 +
-+		/* clamp mtu to the smallest in the path, allowing 0
-+		 * to specify no restrictions
-+		 */
-+		if (mtu && rt->mtu)
-+			mtu = min(mtu, rt->mtu);
-+		else
-+			mtu = mtu ?: rt->mtu;
++static const unsigned int mctp_test_llhdr_magic = 0x5c78339c;
 +
-+		if (rt->dst_type == MCTP_ROUTE_DIRECT) {
-+			if (dst)
-+				mctp_dst_from_route(dst, daddr, mtu, rt);
-+			rc = 0;
-+			break;
++static int test_dev_header_create(struct sk_buff *skb, struct net_device *dev,
++				  unsigned short type, const void *daddr,
++				  const void *saddr, unsigned int len)
++{
++	struct kunit *test = current->kunit_test;
++	struct mctp_test_llhdr *hdr;
 +
-+		} else if (rt->dst_type == MCTP_ROUTE_GATEWAY) {
-+			daddr = rt->gateway.eid;
-+		}
- 	}
- 
- 	rcu_read_unlock();
-@@ -902,10 +944,13 @@ static int mctp_route_lookup_null(struct net *net, struct net_device *dev,
- 	rcu_read_lock();
- 
- 	list_for_each_entry_rcu(rt, &net->mctp.routes, list) {
--		if (rt->dev->dev != dev || rt->type != RTN_LOCAL)
-+		if (rt->dst_type != MCTP_ROUTE_DIRECT || rt->type != RTN_LOCAL)
-+			continue;
++	hdr = skb_push(skb, sizeof(*hdr));
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, hdr);
++	skb_reset_mac_header(skb);
 +
-+		if (rt->dev->dev != dev)
- 			continue;
- 
--		mctp_dst_from_route(dst, rt);
-+		mctp_dst_from_route(dst, 0, 0, rt);
- 		rc = 0;
- 		break;
- 	}
-@@ -1085,11 +1130,6 @@ int mctp_local_output(struct sock *sk, struct mctp_dst *dst,
- 	return rc;
- }
- 
--static unsigned int mctp_route_netid(struct mctp_route *rt)
--{
--	return rt->dev->net;
--}
--
- /* route management */
- 
- /* mctp_route_add(): Add the provided route, previously allocated via
-@@ -1097,9 +1137,9 @@ static unsigned int mctp_route_netid(struct mctp_route *rt)
-  * hold on rt->dev for usage in the route table. On failure a caller will want
-  * to mctp_route_release().
-  *
-- * We expect that the caller has set rt->type, rt->min, rt->max, rt->dev and
-- * rt->mtu, and that the route holds a reference to rt->dev (via mctp_dev_hold).
-- * Other fields will be populated.
-+ * We expect that the caller has set rt->type, rt->dst_type, rt->min, rt->max,
-+ * rt->mtu and either rt->dev (with a reference held appropriately) or
-+ * rt->gateway. Other fields will be populated.
-  */
- static int mctp_route_add(struct net *net, struct mctp_route *rt)
- {
-@@ -1108,7 +1148,10 @@ static int mctp_route_add(struct net *net, struct mctp_route *rt)
- 	if (!mctp_address_unicast(rt->min) || !mctp_address_unicast(rt->max))
- 		return -EINVAL;
- 
--	if (!rt->dev)
-+	if (rt->dst_type == MCTP_ROUTE_DIRECT && !rt->dev)
-+		return -EINVAL;
++	hdr->magic = mctp_test_llhdr_magic;
++	memcpy(&hdr->src, saddr, sizeof(hdr->src));
++	memcpy(&hdr->dst, daddr, sizeof(hdr->dst));
 +
-+	if (rt->dst_type == MCTP_ROUTE_GATEWAY && !rt->gateway.eid)
- 		return -EINVAL;
- 
- 	switch (rt->type) {
-@@ -1177,6 +1220,7 @@ int mctp_route_add_local(struct mctp_dev *mdev, mctp_eid_t addr)
- 
- 	rt->min = addr;
- 	rt->max = addr;
-+	rt->dst_type = MCTP_ROUTE_DIRECT;
- 	rt->dev = mdev;
- 	rt->type = RTN_LOCAL;
- 
-@@ -1203,7 +1247,7 @@ void mctp_route_remove_dev(struct mctp_dev *mdev)
- 
- 	ASSERT_RTNL();
- 	list_for_each_entry_safe(rt, tmp, &net->mctp.routes, list) {
--		if (rt->dev == mdev) {
-+		if (rt->dst_type == MCTP_ROUTE_DIRECT && rt->dev == mdev) {
- 			list_del_rcu(&rt->list);
- 			/* TODO: immediate RTM_DELROUTE */
- 			mctp_route_release(rt);
-@@ -1296,21 +1340,28 @@ static const struct nla_policy rta_mctp_policy[RTA_MAX + 1] = {
- 	[RTA_DST]		= { .type = NLA_U8 },
- 	[RTA_METRICS]		= { .type = NLA_NESTED },
- 	[RTA_OIF]		= { .type = NLA_U32 },
-+	[RTA_GATEWAY]		= NLA_POLICY_EXACT_LEN(sizeof(struct mctp_fq_addr)),
- };
- 
- static const struct nla_policy rta_metrics_policy[RTAX_MAX + 1] = {
- 	[RTAX_MTU]		= { .type = NLA_U32 },
- };
- 
--/* base parsing; common to both _lookup and _populate variants */
-+/* base parsing; common to both _lookup and _populate variants.
-+ *
-+ * For gateway routes (which have a RTA_GATEWAY, and no RTA_OIF), we populate
-+ * *gatweayp. for direct routes (RTA_OIF, no RTA_GATEWAY), we populate *mdev.
++	return 0;
++}
++
++/* Test the dst_output path for a gateway-routed skb: we should have it
++ * lookup the nexthop EID in the neighbour table, and call into
++ * header_ops->create to resolve that to a lladdr. Our mock header_ops->create
++ * will just set a synthetic link-layer header, which we check after transmit.
 + */
- static int mctp_route_nlparse_common(struct net *net, struct nlmsghdr *nlh,
- 				     struct netlink_ext_ack *extack,
- 				     struct nlattr **tb, struct rtmsg **rtm,
- 				     struct mctp_dev **mdev,
-+				     struct mctp_fq_addr *gatewayp,
- 				     mctp_eid_t *daddr_start)
- {
-+	struct mctp_fq_addr *gateway = NULL;
-+	unsigned int ifindex = 0;
- 	struct net_device *dev;
--	unsigned int ifindex;
- 	int rc;
- 
- 	rc = nlmsg_parse(nlh, sizeof(struct rtmsg), tb, RTA_MAX,
-@@ -1326,11 +1377,44 @@ static int mctp_route_nlparse_common(struct net *net, struct nlmsghdr *nlh,
- 	}
- 	*daddr_start = nla_get_u8(tb[RTA_DST]);
- 
--	if (!tb[RTA_OIF]) {
--		NL_SET_ERR_MSG(extack, "ifindex missing");
-+	if (tb[RTA_OIF])
-+		ifindex = nla_get_u32(tb[RTA_OIF]);
++static void mctp_test_route_gw_output(struct kunit *test)
++{
++	const unsigned char haddr_self[MCTP_TEST_LLADDR_LEN] = { 0xaa, 0x03 };
++	const unsigned char haddr_peer[MCTP_TEST_LLADDR_LEN] = { 0xaa, 0x02 };
++	const struct header_ops ops = {
++		.create = test_dev_header_create,
++	};
++	struct mctp_neigh neigh = { 0 };
++	struct mctp_test_llhdr *ll_hdr;
++	struct mctp_dst dst = { 0 };
++	struct mctp_hdr hdr = { 0 };
++	struct mctp_test_dev *dev;
++	struct sk_buff *skb;
++	unsigned char *buf;
++	int i, rc;
 +
-+	if (tb[RTA_GATEWAY])
-+		gateway = nla_data(tb[RTA_GATEWAY]);
++	dev = mctp_test_create_dev_lladdr(sizeof(haddr_self), haddr_self);
++	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
++	dev->ndev->header_ops = &ops;
 +
-+	if (ifindex && gateway) {
-+		NL_SET_ERR_MSG(extack,
-+			       "cannot specify both ifindex and gateway");
-+		return -EINVAL;
++	dst.dev = dev->mdev;
++	__mctp_dev_get(dst.dev->dev);
++	dst.mtu = 68;
++	dst.nexthop = 9;
 +
-+	} else if (ifindex) {
-+		dev = __dev_get_by_index(net, ifindex);
-+		if (!dev) {
-+			NL_SET_ERR_MSG(extack, "bad ifindex");
-+			return -ENODEV;
-+		}
-+		*mdev = mctp_dev_get_rtnl(dev);
-+		if (!*mdev)
-+			return -ENODEV;
-+		gatewayp->eid = 0;
++	/* simple mctp_neigh_add for the gateway (not dest!) endpoint */
++	INIT_LIST_HEAD(&neigh.list);
++	neigh.dev = dev->mdev;
++	mctp_dev_hold(dev->mdev);
++	neigh.eid = 9;
++	neigh.source = MCTP_NEIGH_STATIC;
++	memcpy(neigh.ha, haddr_peer, sizeof(haddr_peer));
++	list_add_rcu(&neigh.list, &init_net.mctp.neighbours);
 +
-+	} else if (gateway) {
-+		if (!mctp_address_unicast(gateway->eid)) {
-+			NL_SET_ERR_MSG(extack, "bad gateway");
-+			return -EINVAL;
-+		}
++	hdr.ver = 1;
++	hdr.src = 8;
++	hdr.dest = 10;
++	hdr.flags_seq_tag = FL_S | FL_E | FL_TO;
 +
-+		gatewayp->eid = gateway->eid;
-+		gatewayp->net = gateway->net != MCTP_NET_ANY ?
-+			gateway->net :
-+			READ_ONCE(net->mctp.default_net);
-+		*mdev = NULL;
++	/* construct enough for a future link-layer header, the provided
++	 * mctp header, and 4 bytes of data
++	 */
++	skb = alloc_skb(sizeof(*ll_hdr) + sizeof(hdr) + 4, GFP_KERNEL);
++	skb->dev = dev->ndev;
++	__mctp_cb(skb);
 +
-+	} else {
-+		NL_SET_ERR_MSG(extack, "no route output provided");
- 		return -EINVAL;
- 	}
--	ifindex = nla_get_u32(tb[RTA_OIF]);
- 
- 	*rtm = nlmsg_data(nlh);
- 	if ((*rtm)->rtm_family != AF_MCTP) {
-@@ -1343,16 +1427,6 @@ static int mctp_route_nlparse_common(struct net *net, struct nlmsghdr *nlh,
- 		return -EINVAL;
- 	}
- 
--	dev = __dev_get_by_index(net, ifindex);
--	if (!dev) {
--		NL_SET_ERR_MSG(extack, "bad ifindex");
--		return -ENODEV;
--	}
--
--	*mdev = mctp_dev_get_rtnl(dev);
--	if (!*mdev)
--		return -ENODEV;
--
- 	return 0;
- }
- 
-@@ -1366,24 +1440,34 @@ static int mctp_route_nlparse_lookup(struct net *net, struct nlmsghdr *nlh,
- 				     unsigned int *daddr_extent)
- {
- 	struct nlattr *tb[RTA_MAX + 1];
-+	struct mctp_fq_addr gw;
- 	struct mctp_dev *mdev;
- 	struct rtmsg *rtm;
- 	int rc;
- 
- 	rc = mctp_route_nlparse_common(net, nlh, extack, tb, &rtm,
--				       &mdev, daddr_start);
-+				       &mdev, &gw, daddr_start);
- 	if (rc)
- 		return rc;
- 
--	*netid = mdev->net;
-+	if (mdev) {
-+		*netid = mdev->net;
-+	} else if (gw.eid) {
-+		*netid = gw.net;
-+	} else {
-+		/* bug: _nlparse_common should not allow this */
-+		return -1;
-+	}
++	skb_reserve(skb, sizeof(*ll_hdr));
 +
- 	*type = rtm->rtm_type;
- 	*daddr_extent = rtm->rtm_dst_len;
++	memcpy(skb_put(skb, sizeof(hdr)), &hdr, sizeof(hdr));
++	buf = skb_put(skb, 4);
++	for (i = 0; i < 4; i++)
++		buf[i] = i;
++
++	/* extra ref over the dev_xmit */
++	skb_get(skb);
++
++	rc = mctp_dst_output(&dst, skb);
++	KUNIT_EXPECT_EQ(test, rc, 0);
++
++	mctp_dst_release(&dst);
++	list_del_rcu(&neigh.list);
++	mctp_dev_put(dev->mdev);
++
++	/* check that we have our header created with the correct neighbour */
++	ll_hdr = (void *)skb_mac_header(skb);
++	KUNIT_EXPECT_EQ(test, ll_hdr->magic, mctp_test_llhdr_magic);
++	KUNIT_EXPECT_MEMEQ(test, ll_hdr->src, haddr_self, sizeof(haddr_self));
++	KUNIT_EXPECT_MEMEQ(test, ll_hdr->dst, haddr_peer, sizeof(haddr_peer));
++	kfree_skb(skb);
++}
++
+ static struct kunit_case mctp_test_cases[] = {
+ 	KUNIT_CASE_PARAM(mctp_test_fragment, mctp_frag_gen_params),
+ 	KUNIT_CASE_PARAM(mctp_test_rx_input, mctp_rx_input_gen_params),
+@@ -1200,6 +1427,10 @@ static struct kunit_case mctp_test_cases[] = {
+ 	KUNIT_CASE(mctp_test_route_output_key_create),
+ 	KUNIT_CASE(mctp_test_route_input_cloned_frag),
+ 	KUNIT_CASE(mctp_test_route_extaddr_input),
++	KUNIT_CASE(mctp_test_route_gw_lookup),
++	KUNIT_CASE(mctp_test_route_gw_loop),
++	KUNIT_CASE_PARAM(mctp_test_route_gw_mtu, mctp_route_gw_mtu_gen_params),
++	KUNIT_CASE(mctp_test_route_gw_output),
+ 	{}
+ };
  
- 	return 0;
- }
+diff --git a/net/mctp/test/sock-test.c b/net/mctp/test/sock-test.c
+index 5501f7794a8f96f1dcf26e93542bec04ddcfc769..4eb3a724dca39eb22615cbfc1201b45ee4c78d16 100644
+--- a/net/mctp/test/sock-test.c
++++ b/net/mctp/test/sock-test.c
+@@ -40,7 +40,7 @@ static void __mctp_sock_test_init(struct kunit *test,
  
--/* Full route parse for RTM_NEWROUTE: populate @rt. On success, the route will
-- * hold a reference to the dev.
-+/* Full route parse for RTM_NEWROUTE: populate @rt. On success,
-+ * MCTP_ROUTE_DIRECT routes (ie, those with a direct dev) will hold a reference
-+ * to that dev.
-  */
- static int mctp_route_nlparse_populate(struct net *net, struct nlmsghdr *nlh,
- 				       struct netlink_ext_ack *extack,
-@@ -1392,6 +1476,7 @@ static int mctp_route_nlparse_populate(struct net *net, struct nlmsghdr *nlh,
- 	struct nlattr *tbx[RTAX_MAX + 1];
- 	struct nlattr *tb[RTA_MAX + 1];
- 	unsigned int daddr_extent;
-+	struct mctp_fq_addr gw;
- 	mctp_eid_t daddr_start;
- 	struct mctp_dev *dev;
- 	struct rtmsg *rtm;
-@@ -1399,7 +1484,7 @@ static int mctp_route_nlparse_populate(struct net *net, struct nlmsghdr *nlh,
- 	int rc;
+ 	kfree(addrs);
  
- 	rc = mctp_route_nlparse_common(net, nlh, extack, tb, &rtm,
--				       &dev, &daddr_start);
-+				       &dev, &gw, &daddr_start);
- 	if (rc)
- 		return rc;
+-	rt = mctp_test_create_route(dev_net(dev->ndev), dev->mdev, 9, 0);
++	rt = mctp_test_create_route_direct(dev_net(dev->ndev), dev->mdev, 9, 0);
+ 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, rt);
  
-@@ -1425,8 +1510,15 @@ static int mctp_route_nlparse_populate(struct net *net, struct nlmsghdr *nlh,
- 	rt->min = daddr_start;
- 	rt->max = daddr_start + daddr_extent;
- 	rt->mtu = mtu;
--	rt->dev = dev;
--	mctp_dev_hold(rt->dev);
-+	if (gw.eid) {
-+		rt->dst_type = MCTP_ROUTE_GATEWAY;
-+		rt->gateway.eid = gw.eid;
-+		rt->gateway.net = gw.net;
-+	} else {
-+		rt->dst_type = MCTP_ROUTE_DIRECT;
-+		rt->dev = dev;
-+		mctp_dev_hold(rt->dev);
-+	}
- 
- 	return 0;
- }
-@@ -1446,7 +1538,8 @@ static int mctp_newroute(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (rc < 0)
- 		goto err_free;
- 
--	if (rt->dev->dev->flags & IFF_LOOPBACK) {
-+	if (rt->dst_type == MCTP_ROUTE_DIRECT &&
-+	    rt->dev->dev->flags & IFF_LOOPBACK) {
- 		NL_SET_ERR_MSG(extack, "no routes to loopback");
- 		rc = -EINVAL;
- 		goto err_free;
-@@ -1505,7 +1598,6 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
- 	hdr->rtm_tos = 0;
- 	hdr->rtm_table = RT_TABLE_DEFAULT;
- 	hdr->rtm_protocol = RTPROT_STATIC; /* everything is user-defined */
--	hdr->rtm_scope = RT_SCOPE_LINK; /* TODO: scope in mctp_route? */
- 	hdr->rtm_type = rt->type;
- 
- 	if (nla_put_u8(skb, RTA_DST, rt->min))
-@@ -1522,13 +1614,17 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
- 
- 	nla_nest_end(skb, metrics);
- 
--	if (rt->dev) {
-+	if (rt->dst_type == MCTP_ROUTE_DIRECT) {
-+		hdr->rtm_scope = RT_SCOPE_LINK;
- 		if (nla_put_u32(skb, RTA_OIF, rt->dev->dev->ifindex))
- 			goto cancel;
-+	} else if (rt->dst_type == MCTP_ROUTE_GATEWAY) {
-+		hdr->rtm_scope = RT_SCOPE_UNIVERSE;
-+		if (nla_put(skb, RTA_GATEWAY,
-+			    sizeof(rt->gateway), &rt->gateway))
-+			goto cancel;
- 	}
- 
--	/* TODO: conditional neighbour physaddr? */
--
- 	nlmsg_end(skb, nlh);
- 
- 	return 0;
+ 	rc = sock_create_kern(&init_net, AF_MCTP, SOCK_DGRAM, 0, &sock);
 diff --git a/net/mctp/test/utils.c b/net/mctp/test/utils.c
-index 6b4dc40d882c912575e28dfd8f2e730bf346885f..97b05e340586f69d8ba04c970b0ee88391db006a 100644
+index 97b05e340586f69d8ba04c970b0ee88391db006a..01f5af416b814baf812b4352c513ffcdd9939cb2 100644
 --- a/net/mctp/test/utils.c
 +++ b/net/mctp/test/utils.c
-@@ -134,6 +134,7 @@ struct mctp_test_route *mctp_test_create_route(struct net *net,
- 	rt->rt.max = eid;
- 	rt->rt.mtu = mtu;
- 	rt->rt.type = RTN_UNSPEC;
-+	rt->rt.dst_type = MCTP_ROUTE_DIRECT;
- 	if (dev)
- 		mctp_dev_hold(dev);
- 	rt->rt.dev = dev;
-@@ -176,7 +177,7 @@ void mctp_test_route_destroy(struct kunit *test, struct mctp_test_route *rt)
- 	list_del_rcu(&rt->rt.list);
- 	rtnl_unlock();
+@@ -119,10 +119,10 @@ static struct mctp_test_route *mctp_route_test_alloc(void)
+ 	return rt;
+ }
  
--	if (rt->rt.dev)
-+	if (rt->rt.dst_type == MCTP_ROUTE_DIRECT && rt->rt.dev)
- 		mctp_dev_put(rt->rt.dev);
+-struct mctp_test_route *mctp_test_create_route(struct net *net,
+-					       struct mctp_dev *dev,
+-					       mctp_eid_t eid,
+-					       unsigned int mtu)
++struct mctp_test_route *mctp_test_create_route_direct(struct net *net,
++						      struct mctp_dev *dev,
++						      mctp_eid_t eid,
++						      unsigned int mtu)
+ {
+ 	struct mctp_test_route *rt;
  
- 	refs = refcount_read(&rt->rt.refs);
+@@ -144,6 +144,31 @@ struct mctp_test_route *mctp_test_create_route(struct net *net,
+ 	return rt;
+ }
+ 
++struct mctp_test_route *mctp_test_create_route_gw(struct net *net,
++						  unsigned int netid,
++						  mctp_eid_t eid,
++						  mctp_eid_t gw,
++						  unsigned int mtu)
++{
++	struct mctp_test_route *rt;
++
++	rt = mctp_route_test_alloc();
++	if (!rt)
++		return NULL;
++
++	rt->rt.min = eid;
++	rt->rt.max = eid;
++	rt->rt.mtu = mtu;
++	rt->rt.type = RTN_UNSPEC;
++	rt->rt.dst_type = MCTP_ROUTE_GATEWAY;
++	rt->rt.gateway.eid = gw;
++	rt->rt.gateway.net = netid;
++
++	list_add_rcu(&rt->rt.list, &net->mctp.routes);
++
++	return rt;
++}
++
+ /* Convenience function for our test dst; release with mctp_test_dst_release()
+  */
+ void mctp_test_dst_setup(struct kunit *test, struct mctp_dst *dst,
+diff --git a/net/mctp/test/utils.h b/net/mctp/test/utils.h
+index 9405ca89d7032d65fbfb92503fbeb884ebd8bd25..f10d1d9066ccde53bbaf471ea79b87b1d94cd755 100644
+--- a/net/mctp/test/utils.h
++++ b/net/mctp/test/utils.h
+@@ -36,10 +36,15 @@ struct mctp_test_dev *mctp_test_create_dev_lladdr(unsigned short lladdr_len,
+ 						  const unsigned char *lladdr);
+ void mctp_test_destroy_dev(struct mctp_test_dev *dev);
+ 
+-struct mctp_test_route *mctp_test_create_route(struct net *net,
+-					       struct mctp_dev *dev,
+-					       mctp_eid_t eid,
+-					       unsigned int mtu);
++struct mctp_test_route *mctp_test_create_route_direct(struct net *net,
++						      struct mctp_dev *dev,
++						      mctp_eid_t eid,
++						      unsigned int mtu);
++struct mctp_test_route *mctp_test_create_route_gw(struct net *net,
++						  unsigned int netid,
++						  mctp_eid_t eid,
++						  mctp_eid_t gw,
++						  unsigned int mtu);
+ void mctp_test_dst_setup(struct kunit *test, struct mctp_dst *dst,
+ 			 struct mctp_test_dev *dev,
+ 			 struct mctp_test_pktqueue *tpq, unsigned int mtu);
 
 -- 
 2.34.1
