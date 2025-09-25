@@ -1,71 +1,67 @@
-Return-Path: <openbmc+bounces-685-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-687-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CE8DB9DEBE
-	for <lists+openbmc@lfdr.de>; Thu, 25 Sep 2025 09:52:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53EF9B9DF9B
+	for <lists+openbmc@lfdr.de>; Thu, 25 Sep 2025 10:07:58 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cXQsp6Gclz2yrm;
-	Thu, 25 Sep 2025 17:52:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cXRCv4cmhz2yrm;
+	Thu, 25 Sep 2025 18:07:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::12b"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758786734;
-	cv=none; b=FwtO00zheBvOtte9f2b4B6EeZeCAdc63SepfqmDE+GgEcMLGdBxKx6z4UHnZfL6KpigV+IR6R3r2vVeTj3adPCtYz4KW3V2v4m5i3TgRV1j8u34FQqzaM8OFDmxv2e7mOywLrZWtidc6SwQ/Q1bReR/e1Ymp79CDIPKNi3+/txRH0GjUXSS612eUYEF2hIdBcpAlOuyb9GpSIVrab/EqqNb9mjnATBc8DaMB6pSIEkPjaob33X0MLFUM2m+DL96O2ocHShzlBl6xt4aq9dlMcr/Wk1VZTOkOC2fUMqajqKAEP1esO63+rDmneqY18eTexTLD33Ep52gY4/daHjWZYg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=209.85.210.172
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758787675;
+	cv=none; b=nHixxGkeL/di6pcpw3ouXBOH8NbiS7wS7UdXa7peKtvMzduucq11TiwOhtVprdRXgq1HZY9VqpUUg2dWSuU8E5huxHfNULbDMtYNuZqUc2L/26tUa4iIm/DC9SkriKaobmU3jFcPkB5nyZwFxfqvxSBxwKNLsza9OwxBSHZ8961FsOKg3+xhgXChq4mg5RDe1HUq2M2V+HZYagAiAlaN+tdqF2EzhOPh29NwqKo2O8D9tQH7NhYWDol91frLzLrwBmPyuJDPGI17tOsAvuW4I3FzorCkXT/fHrYwwou0O9vrjMImzs+r1EidY6ZRvZ73+ePxU4UBTgsUZpqudNNTdA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1758786734; c=relaxed/relaxed;
-	bh=/pmdbPSS1+PFGOQZXgEhCWxoqVsYqlqHhZMSV2rIROA=;
+	t=1758787675; c=relaxed/relaxed;
+	bh=rUcMlfE8b4AOAO2p/aFN45tB3uALYO0TSoBHD4chZzo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lFj+I6NGcPficZYrApjEoPHI4Gb4S8Vo2cI2bMMFfE+IX7EmchCG/8j2N+RDtbPX5xcSvkDCjw3hVuEih4YiCIv33NLQ6RB1yoKdm2MoAqd0l3oxUUgW08OoXLfH+rwQwoacHrmRC76FfHbe0uc6Mx/f6TgBN6ilJXURPo2b2R4cczTjaKLPcOULdU89sp8kmDCUfYBC4bZVVZoxdN3emON2GUDGAG7aAYTTj9B2MHUwLw9sxX38UDta38S5APZ0O/6Qt1fyyz+jQvUTae+3eXWA2eAb7IGJ9AkBC/2gn0BsbdDoGWZ9g7xCkFjqEhQH0PN4VstjoYyD1nk57RJTqQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=V6QFZ4+J; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=V6QFZ4+J;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+	 To:Cc:Content-Type; b=eQZZDT+1w0Wq9BG/R6KjnMk4kHjsCNKwVDb40z2t2H5zRwiSonVGxpK10XGoF91CFHk1Ii9C5lvBj5iJsSo9DeXrkM+4tqrkpunlpXX0IX9vYowkIX7t9fp16Sci+ZjF5Y9ilfa5qepNqB7gu/89ubRY9UsbleO0rkdcILMSHPqAxPY72LRl6uq4eEyIEhGdKRemYYnqCnuGBhMA7G5E2UmQEqO85Mn+enkdnAroKDQls2UB5sFPErK14KWJSLngZKgEyxjBk/NoK9EUb69y8Fmc0OhTTePkcqJIByiAN+CctkkEiSmxumb4YpyrtcWXoP+xAWPvzONYqkj/BFlkyQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass (client-ip=209.85.210.172; helo=mail-pf1-f172.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.210.172; helo=mail-pf1-f172.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cXQsn0Hz4z2yrP
-	for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 17:52:12 +1000 (AEST)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-57afc648b7dso777023e87.2
-        for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 00:52:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1758786728; x=1759391528; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/pmdbPSS1+PFGOQZXgEhCWxoqVsYqlqHhZMSV2rIROA=;
-        b=V6QFZ4+JotEbtpgwO0MCxPEliGWvi7Lmi6aeJbaItB4FlFpzVwN2ipUCpFQJUtipbx
-         F3ogsoZTvGrJoFw1R+6HBW9Mvk2Na354w+dY11d3cO4d9nc7cqQwomgKDI+kC8Cg1Hvc
-         LKWyHEdQztsP2PEds2q6sdwPPMjxD9FODdVR7zI964LF2Mo4mQK/4xkuh3vHwlj7Q4N+
-         VBbLx1yRjA6iBkF9I6RpRrBrv9xWw0cBaFJvdXlp82rd0FcmXJS9tx2qqryzGGP2QnbX
-         0kmw8fOWMScbeiSnmL65mFEIs1Jz8/y/svQJHdGWOS5M7a1CJNidjOiC69SsFwJPaYuE
-         /dUg==
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cXRCt5nhrz2yrP
+	for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 18:07:53 +1000 (AEST)
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-78104c8cbb4so355380b3a.0
+        for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 01:07:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758786728; x=1759391528;
+        d=1e100.net; s=20230601; t=1758787670; x=1759392470;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/pmdbPSS1+PFGOQZXgEhCWxoqVsYqlqHhZMSV2rIROA=;
-        b=anXxuj/rl+JMvyVHHFXSH5WZZ7+H5k/xcxhlYEvPNH/W7hug357v7OPiOhGQlg6JO3
-         6ck4yuqUKUg/E3W9IoCcn4Nedk2JKKNpoFB5lIkRNWChkCKG3uBR5wLLfp5AzDiOjsE8
-         B0HbH5EvNem3M4BWVKJrD3h3kdaiUyYPk58f0mit411WiqAHbLyGVyM6psFpZNvuuvvu
-         FusbhU/0VOl3NGimsQ8OtLGhPMVw2ykDjcXqL/Lh8aBK3uUPk4bleCeU3MO4SYc+4Njk
-         FRsp3fYDsZ1FJ/43PmKkcbn13LLGwUF9h6o9ZI67d+rmfNRbXry8hwqpbwf8FJeIg0A9
-         AyMw==
-X-Forwarded-Encrypted: i=1; AJvYcCVWM9Y/QSLpgRV4wQFhdgorm+uoyuoWqQ97Gdi8eUPYbkJCNGaKmUHnt6e/t/kPq6fXra8f07wI@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzbgSzRMfcXNnz5Bq2gERxgXFGTlTT7IjPum+4SnpPAzgNdpSNk
-	JwrwXFh+2Gj/PRt5/sdl1PG0gkCLDfcvu6MhkqWMlqhVB/QS4/1CpvJL9fCP7xkD6YqSjB3qSzC
-	7C7q1luq3MJnitm80wxC/H+mLAOam1zJ6KmsapxolpA==
-X-Gm-Gg: ASbGncs6fO2KsHz+0bB1tyJ89/EkUCFK+ximsaG90e0p6gq5ilM3bOiEPy9FLAJQR9J
-	UYWfDrAiX2ZfTgeEUxyabSY+OTAMMqnyRs2+1Md6EkETyLSudD2V+K0mKj5ITH4O3cLcHlO3DXc
-	HSjkFsaooGaNCMSo0qp9ysSgsZcZeNvqAMvvTJf5bqf3TMZh8+C+g9UN2754/HEvL7wAumifASz
-	EtmmEF7dIQCaTS21RQhslxthJ60AZud2MefPQ==
-X-Google-Smtp-Source: AGHT+IFjDFQMappKZZFROu+v6o3bME1MjtTxrIbJ3f6pWVz6MpCD55Lk6Fra5LzFmOtZoqCjtC5vbl0PRHtSU8AsH3Q=
-X-Received: by 2002:a05:6512:3a8f:b0:57e:4245:114e with SMTP id
- 2adb3069b0e04-582d14effcfmr700774e87.24.1758786728179; Thu, 25 Sep 2025
- 00:52:08 -0700 (PDT)
+        bh=rUcMlfE8b4AOAO2p/aFN45tB3uALYO0TSoBHD4chZzo=;
+        b=H7OriHBMPM66GSRUQ3oal3ZY8Dq/XVG21uEsGpRfgnM2b9BjKKylWuzGhPiRNz1z6C
+         Ly4Hzt2qjiVYK3EdLbBUgFf1fV96N7J+qmuSb5rTaRI7wnWlL8CT0hQC9aBF7gCzqn1+
+         To9uZmC+Ti6pAASjmblQZNBb4Yn7maMTK65cxbxnZBAekBZScV023aKD1SYkrXug2dFq
+         JlWzgkiq6U8scPxo2uOptqhHC+mQjLf/B4qQcL7i38vEJs1MdZf/n79KsxpMkaljGR8F
+         g8HRpeE1pJhPTWQUzd60Pd/H6auJY9940205jnxwlvXuwc3CKPFlFzOLNNwsi/o2a7kW
+         zECw==
+X-Forwarded-Encrypted: i=1; AJvYcCWpifNuiPNqWrTAJ193V9sWdSZF3kxIQXrb1tGoJRTDyTIlBkGeSKzDSlUJfsaLpQPIZfQVvXus@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzoNUne+x+xAtKekJ8TpXmdO3J30jcn/4ePfncpZa2LFvJdn28g
+	WDDZTLb4IhlXq/cSdiDXAULnlrUbFYS5qbkBiRu55xyPQN5CHiNWLv/e163lqvz7
+X-Gm-Gg: ASbGncuDiCkm37URm1ZVLAkrE+FxqDb99t0rPNzrQreA+n2a2OOU1VHHPWvIwmxZYOA
+	2E7sSj1yFlTRdMpX77YwWPO9xGfBfGztqRTm72cWdz7JU5bBqRNugBTH/GhVsfDvlb6k30wubHe
+	je3GWBznjvPZS+Qb6LbHTp3Xh6rBOFOj0X4hFHN7CeNJkpJNHpjgAWeMYvRHBxaaZhJo4CBA9M6
+	8G847B8S4NLLkBNCv3wLB6UJeeBOnvk201LyOT0PgNr3oiwujjKPqs0I7ztsaVTuO0qGrtr5aBA
+	4r9N2LH/96LF3Vr+np1qOVk97UReGpQFICccDNoVXG/sv8/Fi7etd3u3D4NdFkPbmrtRaanScn7
+	JOZ1xWXIuA9wzlY68m1kdZQAwm+fBCaR6QybCS15ZRZpQOiNAMg5fUz3fs+Up
+X-Google-Smtp-Source: AGHT+IFg67+KcQRpTS9tz+fIbc8KjTDmcYr1cLpafPXukGBIIrJyZprJJ6Z/NBUzCaHzHLcZecrUBw==
+X-Received: by 2002:a05:6a00:a8c:b0:77f:156d:f5b1 with SMTP id d2e1a72fcca58-780fceebcb7mr3495313b3a.26.1758787670576;
+        Thu, 25 Sep 2025 01:07:50 -0700 (PDT)
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com. [209.85.216.46])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78102b64599sm1204608b3a.70.2025.09.25.01.07.50
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Sep 2025 01:07:50 -0700 (PDT)
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-330b4739538so753120a91.3
+        for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 01:07:50 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXlMolsg03Bp5c1gNpNWG4yVoGXW4zd3UTY/Z5DCyhMZIHPbCqUq8HXsXBKB6e0SKqfofV3heIU@lists.ozlabs.org
+X-Received: by 2002:a05:6122:90f:b0:542:2912:664f with SMTP id
+ 71dfb90a1353d-54bea2f2d56mr980779e0c.10.1758787332548; Thu, 25 Sep 2025
+ 01:02:12 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -78,14 +74,16 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 References: <20250910-make-compound-literals-normal-again-v1-0-076ee7738a0b@linaro.org>
- <20250910-make-compound-literals-normal-again-v1-2-076ee7738a0b@linaro.org> <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com>
-In-Reply-To: <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 25 Sep 2025 09:51:56 +0200
-X-Gm-Features: AS18NWCh67p36-1DiEra54BRYeOZGMgpqlB-NSoS3MdBtkk6GMB-z9-7UGdMnvw
-Message-ID: <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com>
+ <20250910-make-compound-literals-normal-again-v1-2-076ee7738a0b@linaro.org>
+ <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com> <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com>
+In-Reply-To: <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 25 Sep 2025 10:02:01 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXgoj+XuKhruEmMpjZignuM9fJLp8NJ0=ZLw8KdFKohsA@mail.gmail.com>
+X-Gm-Features: AS18NWCyYwXSHgwWU9cjWnhwFzyaiaKh315kbRG5kwTsoewxQN_WDT2npG3qPmE
+Message-ID: <CAMuHMdXgoj+XuKhruEmMpjZignuM9fJLp8NJ0=ZLw8KdFKohsA@mail.gmail.com>
 Subject: Re: [PATCH 2/3] pinctrl: use more common syntax for compound literals
-To: Geert Uytterhoeven <geert@linux-m68k.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Lee Jones <lee@kernel.org>, Andy Shevchenko <andriy.shevchenko@intel.com>, 
 	Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, 
 	Lorenzo Pieralisi <lpieralisi@kernel.org>, Avi Fishman <avifishman70@gmail.com>, 
@@ -112,45 +110,67 @@ Cc: Lee Jones <lee@kernel.org>, Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+X-Spam-Status: No, score=0.0 required=5.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+	RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Thu, Sep 25, 2025 at 9:48=E2=80=AFAM Geert Uytterhoeven <geert@linux-m68=
-k.org> wrote:
->
-> Hi Bartosz,
->
-> On Thu, 11 Sept 2025 at 12:02, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Hi Bartosz,
+
+On Thu, 25 Sept 2025 at 09:52, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> On Thu, Sep 25, 2025 at 9:48=E2=80=AFAM Geert Uytterhoeven <geert@linux-m=
+68k.org> wrote:
+> > On Thu, 11 Sept 2025 at 12:02, Bartosz Golaszewski <brgl@bgdev.pl> wrot=
+e:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > The (typeof(foo)) construct is unusual in the kernel, use a more typi=
+cal
+> > > syntax by explicitly spelling out the type.
 > >
-> > The (typeof(foo)) construct is unusual in the kernel, use a more typica=
-l
-> > syntax by explicitly spelling out the type.
->
-> Thanks for your patch, which is now commit da3a88e9656c17a3 ("pinctrl:
-> use more common syntax for compound literals") in pinctrl/for-next
->
-> > Link: https://lore.kernel.org/all/20250909-gpio-mmio-gpio-conv-part4-v1=
--13-9f723dc3524a@linaro.org/
->
-> Looks like you (slightly) missed your target. The correct link is:
->
->     Link: https://lore.kernel.org/aMAP9hAWars0T83r@smile.fi.intel.com
->
-> > Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
+> > Thanks for your patch, which is now commit da3a88e9656c17a3 ("pinctrl:
+> > use more common syntax for compound literals") in pinctrl/for-next
+> >
+> > > Link: https://lore.kernel.org/all/20250909-gpio-mmio-gpio-conv-part4-=
+v1-13-9f723dc3524a@linaro.org/
 
-Hi Geert,
+This is the origin link to the patch (by you) that started the discussion.
 
-This is a link to the discussion with Andy as per Linus Torvalds'
-recent request to use the Link: tag to point to actually useful
-information rather than just the patch's origin. Linus Walleij doesn't
-use b4 so the origin link you'd normally expect to be added
-automatically is not there at all. That's probably what caused the
-confusion.
+> >
+> > Looks like you (slightly) missed your target. The correct link is:
+> >
+> >     Link: https://lore.kernel.org/aMAP9hAWars0T83r@smile.fi.intel.com
 
-Bartosz
+This is the link to the comment (by Andy) that questioned the construct.
+
+> >
+> > > Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> This is a link to the discussion with Andy as per Linus Torvalds'
+> recent request to use the Link: tag to point to actually useful
+> information rather than just the patch's origin. Linus Walleij doesn't
+> use b4 so the origin link you'd normally expect to be added
+> automatically is not there at all. That's probably what caused the
+> confusion.
+
+I know ;-)
+
+Given the "Suggested-by: Andy", shouldn't the link point to the email
+with the actual suggestion?
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
