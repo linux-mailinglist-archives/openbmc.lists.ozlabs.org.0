@@ -1,71 +1,90 @@
-Return-Path: <openbmc+bounces-688-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-690-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 287E3B9DFF9
-	for <lists+openbmc@lfdr.de>; Thu, 25 Sep 2025 10:12:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 294F2BA14C8
+	for <lists+openbmc@lfdr.de>; Thu, 25 Sep 2025 22:06:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cXRJm47dxz2ytg;
-	Thu, 25 Sep 2025 18:12:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cXl98566kz2yrm;
+	Fri, 26 Sep 2025 06:06:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::129"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758787928;
-	cv=none; b=bd25GLCCZ3bNTAhEagDOwr93jHOCgYAai3RjRSg1WHFUEOfdcoFddKgLCNG7QoNwkcd5pbK7bHcRNic10ISlU7ocEJm0FbNiLi8xrvhMns36ZuBWpU3RwtbCnm5zuf6+gmfUdWLUnuhNtc9LjIc5UUUP4agQCyVHNupBJR6rxLaQ8fwB1mzrG56ZU/xhNkK0JiRA/pwEh9Xy5BKmjEitdzmh7ypwRUaexwVI7uJB5Ub9qE6jYNozZuH5SGZO0pK5TiHTkcRRZOtfJTOkNTK+pPDn0hPeImVteUHWLZwpGjrDwMEpLi+S2uUEjuCnjU0kKdb9/r9WVEsGp2jEa5TJOg==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::435"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1758830796;
+	cv=none; b=RPkNcMuw+lU5LDgjVBMj2W+XjQFViUQI+fUIFYjsJEBNajv5Gq1MOPiqKkDRZ+jgTnlR99JqT4efnwed53pHLYUMuP8PT6WvMddlQ/UAEAax903hokKd/kHxxghU11FbnaB17B6tS652a1nbpu1RIy4Ah+APLgrv+XFnl8XVlBOZBJXDTHi3Q5oT52AUAahEvmFZcKq+Q7gsOaFR6u3I/7ixfApcIBbxmTxia3S76Z2PE9AWlJI+USAMicKk6C4JPYCTPpugelKYs9JmKRv0oTrgIJRlP5EtOfXCdSQzXNrMNt7qrkghp+1PhLFBTgJkM3bzmLoTmdmklizWnkMr7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1758787928; c=relaxed/relaxed;
-	bh=pOUEu/+y60hAFjLRRexZAgc5r0XDC4GIpSh+/gdmcBM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iCO0149nrK/Jxsq1E8h2CCD9sTsiKAUk9pRcEQF8syPJCwLLd6rvKQK1qpFddvAOKQVLAOrnv3cdKTlyup9ARGeiXK+TZqECFv2ubxSyOo4ZKTtO4T6XFg4p3mAXyV0CaB5sgW2B+hVbmfvnYTSioxfwDK4P/UdhSnl0YfrrPuZM9Bo4wcIisykuCvw8rTLLfH6XP0KyC5zbNXiKeL1BOGOK1xBJViylVp90JTFcj2niduHyfRbrOVKkMQ8JN398TbMgSTAKm1DVZT9m0D/b8VnV7UZtim0SnzXtw9NYiVtWlV4VMnxcPivahFDxvJhi8NaItlBZ7aziH2hOi6IlGA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=R6FfKY01; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+	t=1758830796; c=relaxed/relaxed;
+	bh=0bkqtjlf9n6TLED2N6uTdBB8WnIl90DnUC/z2JWcNCs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jfMopIDToYv/zt2xR2ggGIo1kAZaRpbSUCiS6nR1c05NO9d9kFbAQr56AAtZ1GHYcb1zFRX2M+Y/7o7+0uwzaBlJ2vYsF8SoD4YrpQqXsNOEjAZEgUpvWTjSfptOYzvZ8VwvK8rmohD67Q/TVUQcFnjzkf3rzg/GpPr4Pn+F7hHJ96Er0RMsTNhXhMEHhPm0MfsCpGPfBlvABb7kR0rGpVAumrL2t5r+meBRyJOiJove4qzOn23upDItC281kLpRqpW427RcNAX+6rwcpFWk2NLsVv9ArH3QZ5gTQnS9XRwy+JRfkSI5DLOEZq90Zbf16CLB/7hBCqcpBUCTbA0CMw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Ly37BmQU; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=R6FfKY01;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Ly37BmQU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cXRJl3Pqrz2yrP
-	for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 18:12:07 +1000 (AEST)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-57933d3e498so698600e87.3
-        for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 01:12:07 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cXl971x7yz2yCK
+	for <openbmc@lists.ozlabs.org>; Fri, 26 Sep 2025 06:06:34 +1000 (AEST)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3ee64bc6b85so1293939f8f.3
+        for <openbmc@lists.ozlabs.org>; Thu, 25 Sep 2025 13:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1758787924; x=1759392724; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pOUEu/+y60hAFjLRRexZAgc5r0XDC4GIpSh+/gdmcBM=;
-        b=R6FfKY01ytAeiLN0h9vSG30dhKeJdWOrNyTU55HipZhteoIAxcWo6o3FZ17iX3T34s
-         GSBNSWef3vVL8XV/b/xfB6HduLMHOrB2yRcrDBEk1wroMIgqnBHB5BGDe4hZonyUJ7ED
-         xmEsg952LjtV+S6Xc7b2N4pBoWKRbFGSKxn4oYQe3MnVDG2h4zb1gj0UejaaLiMjUZIm
-         9MIx9o4xzemb/4FdOBsz/1ezeLe7Y8SqanYsD36D8M5agc3PxJ1Z96EbL6hC9mTcgKYF
-         +YICbQ9ZRT0UWbju/kAsDoCUXvQQsVP8BQgyskZrfKsLxGxo+vS4oCofCKPyrOm8o8d8
-         EM5g==
+        d=gmail.com; s=20230601; t=1758830789; x=1759435589; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0bkqtjlf9n6TLED2N6uTdBB8WnIl90DnUC/z2JWcNCs=;
+        b=Ly37BmQUMzZi774vpv1UcBx9q99E8rvZ4VEa8mZg3Vvdw/zImnH/wemTuVm/K80RTF
+         LVFdwi9+I76Hqy6kfteMQBgX68IVjm3hx3jMYbq/RNE15rVJM4mxHskaeuv5MUFUMZjh
+         bU/8wXCUuR2i1nvIxg7/y2FurdPyCFE1ulgGl8To3tFaFQbqLWjdqJe4ca/PG0IjSetj
+         OyzcJwt2JP7GavI/Zh+EwFQBWM+CknmFvZRS1c5IyKUwhvClUujAQ8cWFNfKOnwcqluL
+         1C7BbKRUQjLQHtCg0JtnCtl+vE+zYBFUVSubkH/rDvkM+a7+u5ryBnxM2uBF2CMqbI+3
+         xTdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758787924; x=1759392724;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pOUEu/+y60hAFjLRRexZAgc5r0XDC4GIpSh+/gdmcBM=;
-        b=gwC7ZY5PRON6eaINVO0gp7iFlpwfGasQ9YXUahNbv/oCGX0xV1gwa94KRYjfSJN2jg
-         ymFxrVMjMUEpQeuDxb0nQw4JtJR9ikzcklOdSsXeqqaB8QZKG7hY9uRs7bhPNMUcDD22
-         fKZnJLnsapa7NpE7fTA65i4Mg9ZK3RsR7qYbq26Y84wzM8YzAGQdWx7xySbTgViL35Kt
-         fn4oxXCx1jbhiwNrOfH61NvLOMt7C63O8gueqy8Abu1yZJEPBGkdvH/tBWTEwCcfXLw2
-         trCym4zSLZ9+jtu3Dwfnvif4krRUdoVHgOo9TRUBN6sIB+TztA+9zDYA/djKnuPHVfnH
-         VVpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVIZI8KY71u+5f84eJ9VQRGJBptUnVRq+/SVi8aaTCJDO1I86K/bvMRqSbKgmklgQWBS5DdkJU3@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyasFfD1h21rgZxwQPcXtpMNwP+V+1/e8e5k/MDcPSkijBhdxQo
-	78xq6Q237DBM1xmCwR27hXa0B9ySFpNVqUUaLlkcQFXyLD4Agc9894FWvCvQbpEGAG21T7Gaex8
-	SbKjpN6KlkdokViuWnQ3FfZNH+9nJDP8Q0dCVwCQABw==
-X-Gm-Gg: ASbGncsOIJnCKiQ7lHdPd+COpkj7L3swk5+1mjlzww+P4fG38B/iYAPyLYhmKtYUj3N
-	xmjT8ZA8R4z25jXJnnkQENhIy51LG0X6MCWDYQNR4qOKxa9NQ920vdFSnu/MFpfQ+E3NSMiVOMD
-	ikEFQsajJ6vB/ydO5Obt6lQuIT5CgHmC1AFcyH0t7ERk2VVOwuxgjsEyr8yu0It1ndnfhyyAiUs
-	lrvfQjh5Y6P5T7TqJk2SDG+/wczXbKDiSF3dg==
-X-Google-Smtp-Source: AGHT+IGJf55i3bv2L8+gmNkmzkA9WiH37A1+UEGPjEgNIhsONYzUjkvXwduJeRWAHBQx5JD4yW8UWOq3aNBoELENYBs=
-X-Received: by 2002:a05:6512:114a:b0:57e:6aef:3ffc with SMTP id
- 2adb3069b0e04-582d073fab8mr832508e87.4.1758787923677; Thu, 25 Sep 2025
- 01:12:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758830789; x=1759435589;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0bkqtjlf9n6TLED2N6uTdBB8WnIl90DnUC/z2JWcNCs=;
+        b=fxAWenGr1ryUM4uMtiaIeCWYyVRcCMvSU5fNB2cyZvuqzmthb0moF1SR9+gHQgueEG
+         XVZl1anbOxZTN0UD0KKE17bnuhKeqB9GzuvfinrLbb1MipqBEbqnHVMUSb/lCcNW1kR4
+         1eu2jFidTic/wNc1xyw7ORKdpF5JrYDk+uumGprmEbiKKzZ6XkVbw5OwQCjWUkdB8uAL
+         Zdg8X9d3JlVr1A6QxqbsRtOw+UvwW+Eovt33xysURA5euR+AisozGVO/C3nmeqGe1e7x
+         XbldmNBvBrNYZEH8V4b/kPIFqxAXEF4L7TKlXKYiILvrkZMJ2uxLjf1JfbNXw41LreD0
+         CJVA==
+X-Gm-Message-State: AOJu0YwtJSQb2N9LLRGA17syqa1zwm0pST4lHyoXqbZ4zA0QrndGdjvb
+	jlgQtxxXEvMbrtEi4atrVYASN9ZzOmpIt9siTuZpowDR+jk3RjCkr0y+
+X-Gm-Gg: ASbGnctZ8DcNQyUeqwjSWwbflRKIF9Lla4zZDFZxfTzTz02RUM0Cv+BTCoXhFkFWb4Q
+	XRU2ziXXnmfFXh3tKz1GNRG7zJC7Ju0E5pJRjNvAobakBF5cwBhpgcu3yICmycTKWmbCEDk9o+9
+	aZ4UOANGKlG8qr+AYbebzJBwTXmyAm1VKl3F0jMCks/FsUB2m12dj4bi+Of/gfIC8nbRWt6ZdYq
+	lbaFxk/snSUGiu/LZ51GnnyKt4wk/cl4g8WQBeULEon+Ih+lkFeEquKnlmoNzHBajd3KwF5jJCV
+	+ZaLAnUaP0lkVJ75Zzc2svP+CkA8H1pcI6NdI5v5YAwLAyrO3KRqiaFA6ret6B9DtzuZHtGgj6V
+	95B8aINRspiMBwwBm8FMf6ld5taLCPU7OtA==
+X-Google-Smtp-Source: AGHT+IGm5p2OFZYRHMpG1LWIjpAJsc2Ei0YFDZH7Y5FaApdjCSa5UwduVKsthgoMsYChaswBxq5scA==
+X-Received: by 2002:a05:6000:24c4:b0:3e7:45c7:828e with SMTP id ffacd0b85a97d-40e481be755mr5162838f8f.33.1758830789339;
+        Thu, 25 Sep 2025 13:06:29 -0700 (PDT)
+Received: from taln60.nuvoton.co.il ([212.199.177.18])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e34074983sm43901835e9.10.2025.09.25.13.06.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 13:06:28 -0700 (PDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	avifishman70@gmail.com,
+	tali.perry1@gmail.com,
+	joel@jms.id.au,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com
+Cc: openbmc@lists.ozlabs.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Tomer Maimon <tmaimon77@gmail.com>
+Subject: [PATCH v3 0/3] arm64: dts: nuvoton: add NPCM845 SoC and EVB support
+Date: Thu, 25 Sep 2025 23:06:22 +0300
+Message-Id: <20250925200625.573902-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -77,101 +96,47 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20250910-make-compound-literals-normal-again-v1-0-076ee7738a0b@linaro.org>
- <20250910-make-compound-literals-normal-again-v1-2-076ee7738a0b@linaro.org>
- <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com>
- <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com> <CAMuHMdXgoj+XuKhruEmMpjZignuM9fJLp8NJ0=ZLw8KdFKohsA@mail.gmail.com>
-In-Reply-To: <CAMuHMdXgoj+XuKhruEmMpjZignuM9fJLp8NJ0=ZLw8KdFKohsA@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 25 Sep 2025 10:11:52 +0200
-X-Gm-Features: AS18NWBR36rLL1CtueiFc1sMJzM_SH_VKHScbJyKloWTmjZnMKzJiRko6sa-obs
-Message-ID: <CAMRc=MeR3iH7cH4aLuN5T+y5FCFyzpR3BBc4chE7CPAy8Ug2gQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] pinctrl: use more common syntax for compound literals
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Lee Jones <lee@kernel.org>, Andy Shevchenko <andriy.shevchenko@intel.com>, 
-	Liviu Dudau <liviu.dudau@arm.com>, Sudeep Holla <sudeep.holla@arm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Avi Fishman <avifishman70@gmail.com>, 
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, 
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, 
-	Benjamin Fair <benjaminfair@google.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	=?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
-	=?UTF-8?Q?Cl=C3=A9ment_Le_Goffic?= <legoffic.clement@gmail.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	James Cowgill <james.cowgill@blaize.com>, Matt Redfearn <matt.redfearn@blaize.com>, 
-	Neil Jones <neil.jones@blaize.com>, 
-	Nikolaos Pasaloukos <nikolaos.pasaloukos@blaize.com>, Hoan Tran <hoan@os.amperecomputing.com>, 
-	Yang Shen <shenyang39@huawei.com>, Imre Kaloz <kaloz@openwrt.org>, 
-	Yinbo Zhu <zhuyinbo@loongson.cn>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>, 
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, imx@lists.linux.dev, 
-	linux-unisoc@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Thu, Sep 25, 2025 at 10:03=E2=80=AFAM Geert Uytterhoeven
-<geert@linux-m68k.org> wrote:
->
-> Hi Bartosz,
->
-> On Thu, 25 Sept 2025 at 09:52, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> > On Thu, Sep 25, 2025 at 9:48=E2=80=AFAM Geert Uytterhoeven <geert@linux=
--m68k.org> wrote:
-> > > On Thu, 11 Sept 2025 at 12:02, Bartosz Golaszewski <brgl@bgdev.pl> wr=
-ote:
-> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > >
-> > > > The (typeof(foo)) construct is unusual in the kernel, use a more ty=
-pical
-> > > > syntax by explicitly spelling out the type.
-> > >
-> > > Thanks for your patch, which is now commit da3a88e9656c17a3 ("pinctrl=
-:
-> > > use more common syntax for compound literals") in pinctrl/for-next
-> > >
-> > > > Link: https://lore.kernel.org/all/20250909-gpio-mmio-gpio-conv-part=
-4-v1-13-9f723dc3524a@linaro.org/
->
-> This is the origin link to the patch (by you) that started the discussion=
-.
->
-> > >
-> > > Looks like you (slightly) missed your target. The correct link is:
-> > >
-> > >     Link: https://lore.kernel.org/aMAP9hAWars0T83r@smile.fi.intel.com
->
-> This is the link to the comment (by Andy) that questioned the construct.
->
-> > >
-> > > > Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-> > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > This is a link to the discussion with Andy as per Linus Torvalds'
-> > recent request to use the Link: tag to point to actually useful
-> > information rather than just the patch's origin. Linus Walleij doesn't
-> > use b4 so the origin link you'd normally expect to be added
-> > automatically is not there at all. That's probably what caused the
-> > confusion.
->
-> I know ;-)
->
-> Given the "Suggested-by: Andy", shouldn't the link point to the email
-> with the actual suggestion?
->
+This series fix warnings and adds device tree support for peripherals on 
+the Nuvoton NPCM845 SoC and its Evaluation Board (EVB).
+The first patch fix warning and arrange node order.
+The second patch introduces peripheral nodes for Ethernet, MMC, SPI, USB,
+RNG, ADC, PWM-FAN, I2C, and OP-TEE firmware in the NPCM845 SoC device tree.
+The third patch enables these peripherals for the NPCM845-EVB, adding
+MDIO nodes, reserved memory, aliases, and board-specific configurations
+like PHY modes and SPI flash partitions.
 
-Ah, I didn't realize this is what you meant. I wanted to point to the
-entire discussion and also this is already in Linus' tree so it's up
-to him if he wants to change it.
+The NPCM8XX device tree tested on NPCM845 evaluation board.
 
-Bartosz
+Addressed comments from:
+	- Andrew Jeffery: https://patchwork.ozlabs.org/project/openbmc/patch/20250908125938.3584927-2-tmaimon77@gmail.com/
+					  https://patchwork.ozlabs.org/project/openbmc/patch/20250908125938.3584927-3-tmaimon77@gmail.com/
+
+Changes since version 2:
+	- Fix dts warning
+	- Arrange node order by ascending unit address.
+
+Changes since version 1:
+	- Fix commit message
+	- Fix dtbs_check warnings.
+
+Tomer Maimon (3):
+  arm64: dts: nuvoton: fix warning and nodes order
+  arm64: dts: nuvoton: npcm845: Add peripheral nodes
+  arm64: dts: nuvoton: npcm845-evb: Add peripheral nodes
+
+ .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   | 732 +++++++++++++++++-
+ .../boot/dts/nuvoton/nuvoton-npcm845-evb.dts  | 440 +++++++++++
+ .../boot/dts/nuvoton/nuvoton-npcm845.dtsi     |   7 +
+ 3 files changed, 1160 insertions(+), 19 deletions(-)
+
+-- 
+2.34.1
+
 
