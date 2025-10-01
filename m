@@ -1,71 +1,71 @@
-Return-Path: <openbmc+bounces-698-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-699-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC198BAFA93
-	for <lists+openbmc@lfdr.de>; Wed, 01 Oct 2025 10:37:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EDB8BAFB71
+	for <lists+openbmc@lfdr.de>; Wed, 01 Oct 2025 10:46:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cc7Zk4hVlz3cc0;
-	Wed,  1 Oct 2025 18:37:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cc7nt0Gqlz3cc0;
+	Wed,  1 Oct 2025 18:46:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::22f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1759307822;
-	cv=none; b=id+8KSvgH4M1Uri0qt3f5og0hwodind73IqgAOwzCxsJ61BmBGkTHwS5VPjflVeYKBp63w2j+FpYy6Vw86ehlLz6dR3k8BE7A+kuIXpmmKlt2QNLtC3i/nqs12YZiCB7aO8wetyzPdnUryDZ8jg99KhY3kBlNCLgxmXJOxOpmxqzBbxdzz+qoMSLy6krci1H0rnXfy5BB73v7T2SUP0RCizBLtyF/WsdWoDEAtEevOGHxgSS7ckmrnEh0/yT8wodPm8BDYi4xKLxrDrlmH6ZicyitcG4CJWM1s+v0LKxKmSQtpBmAiYJ0COCPu1BIr3ztCk0d1KGONSxBGh7LJAcdQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::132"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1759308401;
+	cv=none; b=NTX5SVWH8ZO1nKi7DzGR/4KbrqaeAhuRc0rGkqBePJEmY+XrS8uuireKK/y6+4NwoVXDG9zSzhM2VF8tGb+QW4rxYEd+nUNu1VvEC/LFw9T2vMfnzdfFUX8cikEn83Xy0Vpnp2ZjveWiPJpf+C86s4m/xiBZEA9Si+BG/Xy191w4gZ89y4reGWFtXwA2LZI3GQrmoHwnIOdgxlMqygpWFeEZqFshQvKhs9EoccxIuO40HOmqo820Ms8Hyq84QVbX6t4TSg8h8ZMpRuzunyOZUlYH3FPjH7t00KtnVnEp36NysghhsGpX5kKUZkppypwAEvhdh2vLIUJAsPzEiRg9DQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1759307822; c=relaxed/relaxed;
-	bh=gzIdYM+jt7Tm5Uc0vWk+e7hcdztHdOIk7pXCG5DPn00=;
+	t=1759308401; c=relaxed/relaxed;
+	bh=8D0lPsjedL+kyXW7Dr+b8bXHNiYNOO4VOFO0oJ6yKL8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QExlVmxKednhJpxj2yyV0xrBzUCOA++THHoyp2khPjswPZjA+Y8V5Sy04MAQOFqQeUdxOYJlKeLlVx0rD3yFZ1U0Q/WBO5kM/nJ0eVtOFzk5ubq9sZO7UO5uz+CA0qE5zA8OCFGPIIRiwHW73Lj2lRaXQboSBwjZO5WGY0KRF1D8Hw75OpLifCZrUm0xbfeRyyyfbkJa2C64QZoPaUwhF5HjPiyum4QnwvKzhYVTQ1WGSrXfXrgEM18GISYfqkUKiJb56NGxS3i3VM/2IJLOQTda4y/7ltVBPNG6sQFwSK+HqVExThcA+yCZhC5FyTxIobtzxTTqQNE3cwJXuaUNog==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tN6g/NFP; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+	 To:Cc:Content-Type; b=bUalCMS6xT6Em0rkwD54sCixP2QYea6v+D28xFboFwxRW3pEnWGOI3CgHnHAi5TrkQFgD4DzKjTId2Rz8QOrYaYhjx8dGySDiHmxo6dxPGksEuC4TaQvvK8d4waEm/ckYJtmEWqWSrn18q0z3G3dOnR29piacUbv90YrV6rCgSF00Mx7XXmyDumRqL1w50KGIKAEjLdvC//9WIYWRSehpHhbpty0kKgn9dwFXuGshqgG+CfFqryoh5LnrQtBMvywty+S0Rli41H2L7RPcgLsrtT4J9wuOK8ctdx/TwXD6vUEHHY3jhJyNDKE9DuCzFpGrhH0U/n5VrD/QN1Gt/kz4Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Jtb22s05; dkim-atps=neutral; spf=none (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org) smtp.mailfrom=bgdev.pl
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tN6g/NFP;
+	dkim=pass (2048-bit key; unprotected) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Jtb22s05;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=linus.walleij@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=bgdev.pl (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=brgl@bgdev.pl; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cc7Zg0kT9z2yx8
-	for <openbmc@lists.ozlabs.org>; Wed,  1 Oct 2025 18:36:57 +1000 (AEST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-373a56498b9so8836201fa.1
-        for <openbmc@lists.ozlabs.org>; Wed, 01 Oct 2025 01:36:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cc7nr1ZZfz303X
+	for <openbmc@lists.ozlabs.org>; Wed,  1 Oct 2025 18:46:39 +1000 (AEST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-57a59124323so7134197e87.2
+        for <openbmc@lists.ozlabs.org>; Wed, 01 Oct 2025 01:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759307813; x=1759912613; darn=lists.ozlabs.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1759308396; x=1759913196; darn=lists.ozlabs.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gzIdYM+jt7Tm5Uc0vWk+e7hcdztHdOIk7pXCG5DPn00=;
-        b=tN6g/NFPap09djR0kXA/d5TJ4+DZ4z7VCoLrHKUc5D/UdECvtAu29BuA3FIXU4REBY
-         FfSIVUzJVwH4Cldg30sd7HepIsaCGr0/zWXtyamJoPbKZzWuPqlePObsojBvkJBwg5YG
-         8tPLZZzr7AafOhPOcEGpJFrevWpLoLXdYcetTRE75UvTlqlt14KJMz0V6+qlAiuwbcx5
-         KSuPsGYnkPZwJi9eT+3Y1af4XDtC67Wp8ydgBI9eIyfYapy3Zxump0WwquPjvDtbEgqD
-         Z1+KhxqPpJ/iUQEQbP8HBFv6tEnbAi8i2sSgh0lmTRsz1NYj/4OLIXv8dOWutKgInzjw
-         CvTg==
+        bh=8D0lPsjedL+kyXW7Dr+b8bXHNiYNOO4VOFO0oJ6yKL8=;
+        b=Jtb22s05gJqFkUT9SmqagFNSRwCY8bsG/i+SJP+hNDx9mIseaw8VKTu9Pvj32Bsple
+         7D74kI35WY4bcecQzjkHrLLbJiWM61W4jwhKbk1JjHlM+UpmzI3ASci8leUM1G4d32g+
+         8Yu/588K4asMHHC0qiZuEjNv74PbC2RwYJqBjxlqezeaGsp23z6XFlCLo61GM0ecBHLa
+         /IFJklDjnlB/T3N77s49LI+4biIx2qZGHomTUjHBw/hGP8Bo9U7MvRpKLFezlyxNWYgz
+         ekDSZxZCABObk7eCVOOIJV9DvK1UE4BSkB6+4ZAwJYe3CDQZ7UIXDYm1+GxAo7b34q5j
+         W1aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759307813; x=1759912613;
+        d=1e100.net; s=20230601; t=1759308396; x=1759913196;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gzIdYM+jt7Tm5Uc0vWk+e7hcdztHdOIk7pXCG5DPn00=;
-        b=nYrum3fGYn1lCeuZ80YECFJR7bl4giBEjZ7v3P+8p89WEJV1Y9KihfaXhU/BkGx59E
-         vGTZas630J9lDPrlhabHAPzGQdkwlWd8d4HowRWoZP1PTbw0TZWotnCkNQsVa3hGaqXQ
-         os0jufReWm6Zk82Sb6ZPIyrKcELU0jXpiMKvJMCBq0vMk4bTs98Hixiz4YmKSPNDgeJK
-         EGxOzY7IFCWEilweuXTzCZoOxuXJHnrS4xsqEObWWvkHx3B/9qoY7mbNzNjGkrYTfSjW
-         mml6WUfsTBaBaicT88TD5ZT6cUdJHhJAzaXa5O6FsaeYDWhzg3RPtqxUMyJuZNK8Vbxe
-         oKKA==
-X-Forwarded-Encrypted: i=1; AJvYcCUEuIsTQ8ICL3LH8O/0e4VJT2TOnA+iP57RVzrQbpKUZXYCrTIeTe6Nt3dk7oXe6ZOxGQuEMJQ4@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyAFNHAF1cMP8f6FTcbiP1OC9QVThAFzhs7Fv72i4hhRzNVFpuO
-	XU+4kU8Lzv3PdTX0ZnmMx0jiica8P00BMe2rqbAPfajKwEnmkigr5nCf4wADyVxbI4+ebqGjZuV
-	lMhhmXvNNUCwQIcI0mdj0MIyJ4/lPQuXzNRTJwfhpdg==
-X-Gm-Gg: ASbGncvof9OmLy1/wcHW9Om98R/g2x8IUz6OReucOaxTjT/6FKMLNIQJtdID+iMVrls
-	M8Zp6F7OF3AAxjh2DNFyclqSJDgiK7fP6MWuIX3v7GIgbr8QSUDC159dPA5S7k+P9u8VITT0BFL
-	/89bA3cmUNz08oE9j9/IcSAYD8SvEISs0E1nLybMwyuBOowAngMsw7NzyBbHPSEj0wPuhwO2udx
-	hExTFA4gGsk5uaUgY3BZtdByZTNVLhF3zcHa7685w==
-X-Google-Smtp-Source: AGHT+IGR364l0fZkqCbX1kIjKIvYDxXIcwBHw+lqJUfFGXSzirJ8uNvUMS79/HggJOLuN/qEVcxWH5dtrV9+RyqdghU=
-X-Received: by 2002:a05:651c:210c:b0:357:ccfc:64ac with SMTP id
- 38308e7fff4ca-372fa205204mr25896051fa.4.1759307812626; Wed, 01 Oct 2025
- 01:36:52 -0700 (PDT)
+        bh=8D0lPsjedL+kyXW7Dr+b8bXHNiYNOO4VOFO0oJ6yKL8=;
+        b=kHFjnCytSvvbyPoH8f9iFoTrri4025wc/jbiBk/812jLn3BugYJqha5SQyfhdhCBjI
+         32OssSICzDf5IxQsaxyD9kFhAhw/74PdCM7ZGEGsxFkW6sd68KvFAtWte5uyd8I6i5Gk
+         f9Tx1blMwC3/iRscisjp5VgzygrP7xz32eUWWYM3pOprYhGjdaZz6MQ+wxz6KJLtRTFJ
+         tXOi9KoMAV+cV3PuodcIIE32zAe0R5npDxoaiop0lLCHCTmJySbxH7r7GRBrADCDiI3p
+         BT726Ge1KlRQ2t+fRqSDFOexVMQvUgEvMMDOLmhmfFQ5x16t/KxfZ92LAFyJ7Lcu8B/k
+         zX/A==
+X-Forwarded-Encrypted: i=1; AJvYcCXJdnI1RsOXdWBVfjf6+yCmoknvFFdFdqq7iN/SAahZd+lJ/11Y22HgvyqFoN7DhT5Np+H7fHsT@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yz+gLp5YyGlv+oALzkyS2Obri6sFe3d45Q9KqEBSzkYdliP1xnQ
+	dQ+x5KGgHHspp89SyHjKA4CRaVAhDNS/umtJk3cF4QgiS/kCsxa7Q1FACP0Jmgu1bawfL9w5sAD
+	Hs4nbEgrL9RIpc3ScNX+SddvdoQzW9hDX0WgvpqtMfQ==
+X-Gm-Gg: ASbGnculoL2JwscYZZOJ5VRpcXeZyQgBiMGCQEvYCYTmxn0wpy/OuKFna9+f9IWfO0x
+	5wtpjvBMy5Dg0Y+jdP8ebacr8dblhO6H8WUwCZ6VOABjsXVwtbbJf+IoL9GwWTNWhpFyZ3d43uy
+	2HjIitYFZU1h/IGW1IABpMZPF+jKKDhkVVBJpGxz9Q4ir5/75Cwn7F3LVPmW9UdygOR4AYtfrAs
+	5uD7Woem66UWAC9eWFu2bdWE9hOMuP5UbxII5ksZadYBy6T/o+Y17n28tVitEQ=
+X-Google-Smtp-Source: AGHT+IFOdBqQ3obnIdTm7ru0JPzklPYFIUGqCI693FKE/9RlmuM5kKhUigWL4UNHwLKwqtrOVDs8F+QH4ORLFYFhoak=
+X-Received: by 2002:a05:6512:ea7:b0:57a:6d7d:dd7b with SMTP id
+ 2adb3069b0e04-58af9eadd86mr760851e87.8.1759308395621; Wed, 01 Oct 2025
+ 01:46:35 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -79,14 +79,15 @@ Precedence: list
 MIME-Version: 1.0
 References: <20250910-make-compound-literals-normal-again-v1-0-076ee7738a0b@linaro.org>
  <20250910-make-compound-literals-normal-again-v1-2-076ee7738a0b@linaro.org>
- <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com> <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com>
-In-Reply-To: <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 1 Oct 2025 10:36:40 +0200
-X-Gm-Features: AS18NWDoMdvnOzF6_wDEnr52XVC2ihE3QCB2mnLOoQUz_n36xv-rRAEh7yvMfRw
-Message-ID: <CACRpkdbo88o1g_VCp0+C9hfi1VQkP99x2Mnkw_DTctBEtVAa_g@mail.gmail.com>
+ <CAMuHMdWoEXLTPyQL4kt1OPVbrDDcBdBigqUM7EbNZjZUsSmRHQ@mail.gmail.com>
+ <CAMRc=Mej9fQk-1zYKhPK6aWdptXKvjq28TywRyP+iZExRuX9og@mail.gmail.com> <CACRpkdbo88o1g_VCp0+C9hfi1VQkP99x2Mnkw_DTctBEtVAa_g@mail.gmail.com>
+In-Reply-To: <CACRpkdbo88o1g_VCp0+C9hfi1VQkP99x2Mnkw_DTctBEtVAa_g@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 1 Oct 2025 10:46:22 +0200
+X-Gm-Features: AS18NWC0XlksXBppS2yCvWpBaDAShYUzQK0jJOB31RgrqudBkZ0MvZktkc5Xz8w
+Message-ID: <CAMRc=Mf4kv03+cfB7up==PUJyxHH6U3hHF3q6iKYZWVOZamSTg@mail.gmail.com>
 Subject: Re: [PATCH 2/3] pinctrl: use more common syntax for compound literals
-To: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Linus Walleij <linus.walleij@linaro.org>
 Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Lee Jones <lee@kernel.org>, 
 	Andy Shevchenko <andriy.shevchenko@intel.com>, Liviu Dudau <liviu.dudau@arm.com>, 
 	Sudeep Holla <sudeep.holla@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -113,30 +114,40 @@ Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Lee Jones <lee@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Thu, Sep 25, 2025 at 9:52=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
+On Wed, Oct 1, 2025 at 10:36=E2=80=AFAM Linus Walleij <linus.walleij@linaro=
+.org> wrote:
+>
+> On Thu, Sep 25, 2025 at 9:52=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.p=
+l> wrote:
+>
+> > This is a link to the discussion with Andy as per Linus Torvalds'
+> > recent request to use the Link: tag to point to actually useful
+> > information rather than just the patch's origin. Linus Walleij doesn't
+> > use b4 so the origin link you'd normally expect to be added
+> > automatically is not there at all. That's probably what caused the
+> > confusion.
+>
+> What? I use b4 for everything, I don't know what gave you
+> that impression....
+>
 
-> This is a link to the discussion with Andy as per Linus Torvalds'
-> recent request to use the Link: tag to point to actually useful
-> information rather than just the patch's origin. Linus Walleij doesn't
-> use b4 so the origin link you'd normally expect to be added
-> automatically is not there at all. That's probably what caused the
-> confusion.
+Ah, sorry for this. I assumed the lack of Link is due to no b4. Should
+have looked at git log first.
 
-What? I use b4 for everything, I don't know what gave you
-that impression....
+> I have however removed the automated Link: tags generated from magic
+> gitconfig hooks as requested by Torvalds in v6.17-rc5:
+> https://lwn.net/Articles/1037069/
+>
+> This is also mentioned in my pin control pull request from yesterday.
+>
 
-I have however removed the automated Link: tags generated from magic
-gitconfig hooks as requested by Torvalds in v6.17-rc5:
-https://lwn.net/Articles/1037069/
+So it is a policy after all and not a "please"? Let me remove the hooks the=
+n...
 
-This is also mentioned in my pin control pull request from yesterday.
-
-Yours,
-Linus Walleij
+Bart
 
