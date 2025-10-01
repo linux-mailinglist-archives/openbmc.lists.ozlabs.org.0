@@ -1,49 +1,71 @@
-Return-Path: <openbmc+bounces-710-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-711-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67D24BB0282
-	for <lists+openbmc@lfdr.de>; Wed, 01 Oct 2025 13:27:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF072BB1739
+	for <lists+openbmc@lfdr.de>; Wed, 01 Oct 2025 20:07:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ccCLD5cZ9z3cjX;
-	Wed,  1 Oct 2025 21:26:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ccNDc1cDNz3cf7;
+	Thu,  2 Oct 2025 04:07:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1759317988;
-	cv=none; b=TwCFtjy5dV8SP/lK+Re9krSQrint5ON3rFCFfq2N20MHUcd8Maj+0RwTos33NPlKRCwnE7gYDfYZrc7fNntHC5qgeuyqfLPuXQYZHKV88v71IEMq7o7FC1MgTarH6cmJ7ynvIrb6GhrGtjrnzldo4c2h5HWNQpS67nMwttk1MnJrvbiodMBiKdZgtQu5/fnVJ8/5KLv5d1bvbX5NdzCXiixwN5l9YiulnjHkKSOPtrXxwMx3XF0ktvCQP+ElCmcFVsb04F7v/GhSozeJqBWZaieMNL5WeQFhEyTUVgnc6bHX7I8/bn1wTWvkwkLW9D9/a6nG43EBiHhVl375US0ayQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::e2d"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1759342032;
+	cv=none; b=gg62irpn9DVqk0aVt5kyuRNNpbupvI8lZd2Y7VWzdYox7Cg0e8DD+ReMZwTXTfdl8ODCITg6vNOrMpSxK3ytk1o2v/chkqgOhBcUlwDsjI0klj/PiibgUpEdb2uTenZagikTDXMrD5zEWi18tcTPZO7nqbgWQoA2hiNmpboi8ARNflOmeD8z7eV9trFnBkaoABYdczAqZ0E0RnlVBkDjlIdkpqmlmg/aL+IYosbQjLM6SkGA72kGRBjibTB9dVYhJo3sn6tpuLM93MGIxDsSpzHur8JR8D/zgQlAH0EVy4cCWyj2x02mukOpQBabBMkGdNXVrAiCi/oEdkdbQlhYOw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1759317988; c=relaxed/relaxed;
-	bh=W2CBn8iy9Ks/WyNgBKbgxVeaugrKtVcmImy4dqYBWyk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XlD217lU7wUP6JWlWPZcKSkuV7hL1VoVYk0ZX8J92cO8wd2HevSqjnWqfdSm9lItsIveCEV6jJvSPZ4vQh8srGRwhS7iywhcVip7bLi1ApzBRnMkerHmaZ0YeV92t93iz3LKuxTmaFVPglyBuE6TeuujnUTOuLpn2oVv+KruE5ABP2YRbOS6Nf3qzCT5g/XZ//+TwFY2MkdFBV65bzIsWA3eqiLc8ST3rOZUib/WX8RavzzU98fUYyfIzz1k1dTXZ7moaUj0REQTHO1cTQdHP9oh5UGMxt/D8rtVTEr1l7w8O0jXveGVopAsQSPRehKi33p5cDU/PzPnpVbHwxomwg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1759342032; c=relaxed/relaxed;
+	bh=RDxMoycS24bvgqsHtFc7ARnA+8jIkJYek+ij4R5LhY0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A9h6aguwRVjtwBvuTUNfqVneavl7NeCawvRFuxtKTvF+LZ7AfwlgOFCNvZ+RFAhqk4ma4Iga2HUibi0+qQnC9l3RFf480g6PgiPOg7nbvNOvH1ridSHwDuy8NvKjB8ycuRPrGezNmFcz0aP4mn/YwmtM1HTPVM/IoMjpAz5Izxeg/eVh4IVsbtN1tSxsyIRlp7N+cIKoTO66O0ptv43Kcxr4CJrUcuyEyTJi/fSV7g0yJNV0JwCf9/JhHCvlgqCAFBMzAr/Ug+WRIMeNCADyTWHSbn+ru7fwRQTx0S9KdcFbOoNqPkZl0Z8c0mLjfYisb7y3JYY5bHQwNnNep+lheA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JgnFHVDp; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::e2d; helo=mail-vs1-xe2d.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=JgnFHVDp;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2d; helo=mail-vs1-xe2d.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ccCLD1YxLz3cjG;
-	Wed,  1 Oct 2025 21:26:28 +1000 (AEST)
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 1 Oct
- 2025 19:26:05 +0800
-Received: from aspeedtech.com (192.168.10.13) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 1 Oct 2025 19:26:05 +0800
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-To: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<joel@jms.id.au>, <andrew@codeconstruct.com.au>, <clg@kaod.org>,
-	<broonie@kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
-	<linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
-	<linux-spi@vger.kernel.org>, <BMC-SW@aspeedtech.com>
-Subject: [PATCH 6/6] spi: aspeed: Only map necessary address window region
-Date: Wed, 1 Oct 2025 19:26:05 +0800
-Message-ID: <20251001112605.1130723-7-chin-ting_kuo@aspeedtech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251001112605.1130723-1-chin-ting_kuo@aspeedtech.com>
-References: <20251001112605.1130723-1-chin-ting_kuo@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ccNDZ3wkcz3cYR
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Oct 2025 04:07:09 +1000 (AEST)
+Received: by mail-vs1-xe2d.google.com with SMTP id ada2fe7eead31-580144a31b0so99696137.0
+        for <openbmc@lists.ozlabs.org>; Wed, 01 Oct 2025 11:07:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759342026; x=1759946826; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RDxMoycS24bvgqsHtFc7ARnA+8jIkJYek+ij4R5LhY0=;
+        b=JgnFHVDpBJM6HjTHhoW5g63Fg7KUtyRq+Cu1ecRBqjHfQJzFGSBvogqDW99Ra2uJac
+         Jl7P7v1IMw7SneB0PFtw4t3V0Ht7+hGR4l8kvmqyus47nfsWbCMmI2bJwqL6Vszu0Sbp
+         Cc3GbIgZpTj00mF0rZvhN0OW1V0MGe1GbOzy76XNNjFgbeXQrj0eahEht26jdeLgXPel
+         CtnbR0gFaN58KeNoOOzlY3rqag9heHkZfVgK7nFM3hoHol2u0aPp4MKp5TnqhsQGRnUN
+         be9DYx8zTYujrHi7PhMey5KedgdjQmEqBp/HUQILEv7fOJkT437GYqoRb6qIxpftH0bJ
+         yosQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759342026; x=1759946826;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RDxMoycS24bvgqsHtFc7ARnA+8jIkJYek+ij4R5LhY0=;
+        b=i/K7LYOuxqBffLzLsyzWXle3xhWdomE5V2tsr12jijMy8rv+e1FfmYfN9mLS9FPh6z
+         K2U3oIh/ybH9LJuJVLGX72eyjRBrU7Gce2axJtp49WHvf1aPzxvgvmPe0pJz9UTDa1jJ
+         zNNm/mHTXusr5SBHvjgptuR0mj6JdXHoMa4/l0D88NES0Xc0CkXyRCH4mNZhrSydbbkn
+         vQTEcmr7K7INRPcMxLItGP+ho4TGaEAPAzmlD5ty9fVMXv2CY8c65tmtSu3JfNQs+cGv
+         pwJydfOTDKYVzv3xxHcXBeW7Q11IWoRuSO72qQG9+DIPN8hGSSfP3oM+eMOhEDlt5FSy
+         uAUA==
+X-Forwarded-Encrypted: i=1; AJvYcCUS7WZ+7Q8W7T9huIvZSIrzhxj2nX5zEMh78Im8/QkLoVpeq7kfiOycs7wm70hrFhujIyvnktqI@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxX+UVnuThIPFBR5hC/OYz59/hy+gE35vj23WMjRAMDEUm7sT/3
+	3j+iZf6927ct2ToBYPYalm2vLBclgNVVuo/c+jfUeco/qo8jC5Fl0OL+vyAU/pm6ld/FxJUBpXA
+	rsIDotqHGzVVSb0A6NsPDP0NvLaUXkAb71g==
+X-Gm-Gg: ASbGncu0ROftQDfEe+tuiJMr5WRIx/JRxJfPTdVNNa0bqld5dTWa7YbPmAYNQw0PJA+
+	s/k2+5uNWajW2nc8GVR+Atk3erqEpJvkZPZk5Gdo5lilH3+NJLDOKGxuptoTqfcFWJ1SPTvJmep
+	YTOxtKLN4ldeWCu8OFpAJ/GW5nJb5rNw3Y1PSnSZ3AuRJs+A8GyN4U8P6ahfjsnQEnXx4ZZAX2k
+	w8sWjotMi6wSKN/uucE0AxWh6CC
+X-Google-Smtp-Source: AGHT+IEltAjyiUBesQGsruraeF7E8XplpL5TpwMiu+mv7RNEtCnTfEgym/jNP8OXPmmIB5PoyNbjoDnbF74ahVTbVO8=
+X-Received: by 2002:a05:6102:442c:b0:59c:e912:96c2 with SMTP id
+ ada2fe7eead31-5d3fe739c12mr2365906137.35.1759342025765; Wed, 01 Oct 2025
+ 11:07:05 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -55,118 +77,41 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <CANbCeAEeNUsV82ae4AexY-LNAh7UHggaNMQ3+gcguxFY1dq0_A@mail.gmail.com>
+ <6C7787FD-F4D6-4131-9775-EC743968BF30@stwcx.xyz> <CANbCeAERj=GshjJJKvKySLwNtjJKerN8E+fN-uDzdB6rsr5FKQ@mail.gmail.com>
+In-Reply-To: <CANbCeAERj=GshjJJKvKySLwNtjJKerN8E+fN-uDzdB6rsr5FKQ@mail.gmail.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Wed, 1 Oct 2025 13:06:48 -0500
+X-Gm-Features: AS18NWAPtCAggPl2WuaS5umU8G4QFu_HxBzv1fZRjOzlwzlCuxf4AFXmKqr2njo
+Message-ID: <CALLMt=qWbXyKbaP0X=q12G8=rzTODt=Qdgw2uZB+9Z1RRo9hCQ@mail.gmail.com>
+Subject: Re: Request for Gerrit account approval
+To: =?UTF-8?B?6ICB6JiH57KJ?= <twpeng50606@gmail.com>
+Cc: Patrick Williams <patrick@stwcx.xyz>, openbmc@lists.ozlabs.org, manager@lfprojects.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.8 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLY,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Previously, the driver mapped the entire SPI address decoding region during
-probe. On systems with small flash or limited memory, this could lead to
-excessive memory usage or allocation failures.
+On Wed, Oct 1, 2025 at 5:53=E2=80=AFAM =E8=80=81=E8=98=87=E7=B2=89 <twpeng5=
+0606@gmail.com> wrote:
+>
+> Hello,
+>
+> I am contributing to OpenBMC in my personal capacity.
+> Please find my signed Individual Contributor License Agreement (ICLA) att=
+ached.
+>
+> Name: You Peng, Wu
+> Email: twpeng50606@gmail.com
+> Gerrit username:  You PengWu
+> Change(s) in review: https://gerrit.openbmc.org/c/openbmc/phosphor-pid-co=
+ntrol/+/84144
 
-This patch changes the strategy to initially map a small address window
-for SPI flash device probing. After determining each chip select's flash
-size, the driver unmaps the temporary region and remaps only the required
-address window accordingly.
+Welcome to OpenBMC. I've uploaded your ICLA and added you to the
+appropriate gerrit group
 
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
----
- drivers/spi/spi-aspeed-smc.c | 39 +++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index 4f6ae48dd904..0c3de371fd39 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <linux/clk.h>
-+#include <linux/io.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_platform.h>
-@@ -96,7 +97,6 @@ struct aspeed_spi {
- 	const struct aspeed_spi_data	*data;
- 
- 	void __iomem		*regs;
--	void __iomem		*ahb_base;
- 	u32			 ahb_base_phy;
- 	u32			 ahb_window_size;
- 	u32			 num_cs;
-@@ -394,6 +394,13 @@ static int aspeed_spi_set_window(struct aspeed_spi *aspi)
- 	u32 cs;
- 	size_t window_size;
- 
-+	for (cs = 0; cs < aspi->data->max_cs; cs++) {
-+		if (aspi->chips[cs].ahb_base) {
-+			iounmap(aspi->chips[cs].ahb_base);
-+			aspi->chips[cs].ahb_base = NULL;
-+		}
-+	}
-+
- 	for (cs = 0; cs < aspi->data->max_cs; cs++) {
- 		seg_reg = seg_reg_base + cs * 4;
- 		seg_val_backup = readl(seg_reg);
-@@ -425,13 +432,29 @@ static int aspeed_spi_set_window(struct aspeed_spi *aspi)
- 		else
- 			dev_dbg(dev, "CE%d window closed\n", cs);
- 
--		aspi->chips[cs].ahb_base = aspi->ahb_base + offset;
- 		offset += window_size;
- 		if (offset > aspi->ahb_window_size) {
- 			dev_err(dev, "CE%d offset value 0x%llx is too large.\n",
- 				cs, (u64)offset);
- 			return -ENOSPC;
- 		}
-+
-+		/*
-+		 * No need to map the address deocding range when
-+		 * - window size is 0.
-+		 * - the CS is unused.
-+		 */
-+		if (window_size == 0 || cs >= aspi->num_cs)
-+			continue;
-+
-+		aspi->chips[cs].ahb_base =
-+			devm_ioremap(aspi->dev, start, window_size);
-+		if (!aspi->chips[cs].ahb_base) {
-+			dev_err(aspi->dev,
-+				"Fail to remap window [0x%.9llx - 0x%.9llx]\n",
-+				(u64)start, (u64)end - 1);
-+			return -ENOMEM;
-+		}
- 	}
- 
- 	return 0;
-@@ -447,7 +470,9 @@ static int aspeed_spi_chip_set_default_window(struct aspeed_spi *aspi)
- 
- 	/* No segment registers for the AST2400 SPI controller */
- 	if (aspi->data == &ast2400_spi_data) {
--		aspi->chips[0].ahb_base = aspi->ahb_base;
-+		aspi->chips[0].ahb_base = devm_ioremap(aspi->dev,
-+						       aspi->ahb_base_phy,
-+						       aspi->ahb_window_size);
- 		aspi->chips[0].ahb_window_size = aspi->ahb_window_size;
- 		return 0;
- 	}
-@@ -839,10 +864,10 @@ static int aspeed_spi_probe(struct platform_device *pdev)
- 	if (IS_ERR(aspi->regs))
- 		return PTR_ERR(aspi->regs);
- 
--	aspi->ahb_base = devm_platform_get_and_ioremap_resource(pdev, 1, &res);
--	if (IS_ERR(aspi->ahb_base)) {
--		dev_err(dev, "missing AHB mapping window\n");
--		return PTR_ERR(aspi->ahb_base);
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	if (IS_ERR(res)) {
-+		dev_err(dev, "missing AHB memory\n");
-+		return PTR_ERR(res);
- 	}
- 
- 	aspi->ahb_window_size = resource_size(res);
--- 
-2.34.1
-
+Andrew
 
