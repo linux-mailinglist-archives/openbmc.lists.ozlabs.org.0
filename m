@@ -1,84 +1,91 @@
-Return-Path: <openbmc+bounces-733-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-734-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72A9EBD13F7
-	for <lists+openbmc@lfdr.de>; Mon, 13 Oct 2025 04:48:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 568F2BD2D3A
+	for <lists+openbmc@lfdr.de>; Mon, 13 Oct 2025 13:44:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4clMH7135Zz301G;
-	Mon, 13 Oct 2025 13:48:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4clb9r6HbSz30P3;
+	Mon, 13 Oct 2025 22:44:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::534"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760323715;
-	cv=none; b=jLccJ8PBKy5qXfGKY+m+7hjw0OLIa0gge7gA+nCFy98i4k4YHeqPxJTsl4z9JkQ2VgqJ/a6EXUU0+HBcAUhUanZHpL3lDKU8v4cYg9KPJtE+2h0HvZ54tw47iH1MKJcfFGrg1GdLr/UCcrfsdAeGq896aqObQba/dMuBex2O4cm9R/CGIZJohku7+Ic7aD2g9luGHgtTMNlHxuRQc1O1A/mu627D9Q5JoVV0aLTN+9QUxcBu/SNPDD2Gl3Qd/+pxUzwppR+HHxM03FIIv8WNiQ+V+wDGLYUtAqg3Xg8TTNwiCWsXjzLvNWTFAZODM7pcMIHzQ4FOYB+HMXQDvZEr5Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::130"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760355888;
+	cv=none; b=Yqa0xi5C96mrc1q6D3tEFDuSbti3NlVrowJ5fzcF9xCRTQjfskVnlmzk09Tjcl/BN9U2syTaAqSx9bN9hzbsMKnxMnKWosHUmyEIHAcbeN6EyIR4rYWMxy6wq7CtM6zOnCYMeaGImkRdohdfZf9NdiAxSDhAPOpTNvsCZ3swUGF2oqffG5FBuqCF+iHzeQ8ZEG81YVDMtVEOHBD68ACTLB9q8Oiumn+VcapCK1HvlqUHWkR5wf4UJreCoFStZ9SmSAAj7x09tVnZ3HayRRKG3Arppbi7Ew+W9UaKymVulLK1NdT8ymszsTEWCDjPwg+JOeN0QNJqOmxDjcP8DyHB9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760323715; c=relaxed/relaxed;
-	bh=LYwrZODlGxExEtUnAKGfsrjALZ/f6UFbgI/19/EpgqQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LlsKPzycRoM0fmJxOV4I+alxJEbeGMaaIkwPTKIlxpaek8Y8vukunENTb3DyMU8D5KgQdDpLQbVMi+awXAU8X3m8rW9dzQjKkAoMtdJccrkVAavaSM0e60qsFOviaZCZ75M9U7HyxSDFq3UaONj0mXrl4mqxZmOTv1LD15Cx5/LAFyfb8gxJgXtH10Ndn+OOt5P8rC0DosvvRyQ3ZfSVNdx+3pVdlrEdQSP4FrpxAbDf8Iz/EutW7OZrvsRffAJB0+EgA5lOSTkxFjsyUcfEhChgRdGpDmyxtP3qvAzzN3ECQ+8jboeS6hlaOBWRF+Sp3C6+dJOAWG9AIT6F9T42eg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OaDhS55r; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1760355888; c=relaxed/relaxed;
+	bh=1K17b/K8yQXfwqlp4oNmjpZOU5mgfldRYoFZRQe1+Os=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=hG2KR8NKK1C1gqa8znnf2EiVQJLpCbEkLvvqDZBEJL2bnngzSBdjH0/xsRDZFsLPNhYP/ggaq5ttia8IvThXYU1iapjNuOryJ60Y84ndmDEjDfBg26OEYHZqDfiFAyU88J4gQaXypbFQ0ntnSBvzMea4jTO+v7R1O0YBJA5CWPEYF+pVu239aZ0Hw6GatykcWV6MrUv+y+mGTIhXq1TvzMnvf/zaMO3Th0E1gKEHWG7TUOrTS/q1vi796aGUDomFzPvZ6BD4AM05g//KmMLwoPGLCmbUpNU0fxYeVw0sMvLCP5RRs0SbILjqcZbLv8Fh9ZHUaBZkvVAxu92+h10qBw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=k4KfnYLi; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=OaDhS55r;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=k4KfnYLi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4clMH6060Zz2xQ0
-	for <openbmc@lists.ozlabs.org>; Mon, 13 Oct 2025 13:48:33 +1100 (AEDT)
-Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-b67684e2904so1912910a12.2
-        for <openbmc@lists.ozlabs.org>; Sun, 12 Oct 2025 19:48:33 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4clb9q20lLz2xQ6
+	for <openbmc@lists.ozlabs.org>; Mon, 13 Oct 2025 22:44:46 +1100 (AEDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-586883eb9fbso5507876e87.1
+        for <openbmc@lists.ozlabs.org>; Mon, 13 Oct 2025 04:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760323711; x=1760928511; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LYwrZODlGxExEtUnAKGfsrjALZ/f6UFbgI/19/EpgqQ=;
-        b=OaDhS55rXhR2QpRb22sFPJXSr6bS4UPj7xZ+GYnKG21U5tSN9oJTqmJsgLerMtMfXL
-         FgHAv1mZN5iQFqQxss2sdZQvC5zHsKXGMotmnDIf8KOu0EUUbTqWEVaUWkT2tgzpR1Ov
-         lU43yfUxW9ex0rb4Kl8g/EIe9K6vBLpm5cVZSuFv6Mf2Zl1h1IG/4t/LZczmEbogsoB/
-         ALqOLHdE0tavqno8EJQA0+x6gRWPb9638SF+SYaUgQ0NKVKadMAnFgz2mGYJXuNAotkS
-         ZC2C7Yg30ywb/3NwK0ngLzael7DFhDsGtlRtmIjrtmHrxah14SFrVjUimdwmpHYeWaTs
-         l+VA==
+        d=gmail.com; s=20230601; t=1760355880; x=1760960680; darn=lists.ozlabs.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1K17b/K8yQXfwqlp4oNmjpZOU5mgfldRYoFZRQe1+Os=;
+        b=k4KfnYLir9IdOV+cq5JmLWdqxt4rP5t78tMMi26uGxwqH9GOWpiITgFKj9WYCpE8ZG
+         M83+30o/P6kUtHMq8QE36VoRvmqH/nATMBcE4PD6j4GBQRDyVm/f9ssVtMqtwkWM4cpi
+         /jUY3BFIMin4OJOkBmg1sM6pdYTSxmRpEVbjj3Hxu7jAi7A4SntJWmA5yddvYMUz3v0g
+         olhVewjtFbVs0lhiX0yvebNbZSZQBmODEHI155PhW+FXSN5jVwV/KlxHhf4+gcjS+sx4
+         bj/xqF1WosL4WpqIls0VbXdrMO/fqGuBRZklxIoTxNfZs7JQxrBaQS8d8fOYu94np4g/
+         sEsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760323711; x=1760928511;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LYwrZODlGxExEtUnAKGfsrjALZ/f6UFbgI/19/EpgqQ=;
-        b=DSVrPYjEBvrjPHAHvOTqorsZ5LNAyJq2cGFMFi18PQad2JIQ5kTkY7c5fU2AxEWd7l
-         jV9WMF3xRfmRmy+e4mP/tUGcX2CfcSHdKEPaIh5M+w5hzQAPf+SAAchF7kP9m0GuxOoB
-         ksSoukXXrV49M/aDLiEMiD3Q1N+3XAPqSxZxN2C/Z+EZ4Ti0tPwgkz9j5K8t27lPN//d
-         wAsfFdwtKfM9CCpBwwFldi1VKoOAGtOFF2hEjC70wgX7pqZIAyJvxaWr8ThDgjCZhYFj
-         uhsz58BYuKl/E/HJgj/ybmxFjeFuXL5JuvjTeYUnIZN+8I7UYSejNB/3Q4h5yZ0Lmsez
-         bTTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUHpltFGlLEk8ThuKXhc/CV5F79xuZN3aOShD3Go649fZq2gxrrKRMZzTOrblPqQP1HxX70CkVq@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Ywk1cDXm5pmfDz+zZf4P8tx+M2dmuqACYu2ZZPXjyCHIPuos8Mf
-	XaiS8SJD61ZH0bKnfDXU9buM/ozXxzyRHLzu0H9ogzIns2Q80O2B9oM5
-X-Gm-Gg: ASbGncsHYS7mGCoRY4NXdQZDTWMBvJV0/yZX6TPaA+7gr3FTTjxVBMbu9GjmqTyRQkB
-	GL6vnSVOBjZ+mrVSulvIQE2u/Vxgk4QhBb9O4+FPkMOoVog8IKcwl3R4An8EBuXDRnvRssuwjy4
-	tyhxh9ve+T74YQBxQ6BrR7TA5nt/xZ8d5kfyotY44dBNoWiKfXrDgZXfYisCcEPrshSGSWijrlL
-	HNQiHPGUL7/mV7hFR92grSCd/6pZPbCqKp7pIdlttTMuSv2DFIpbCpaX6R12cj6urtOyWeC7+Mw
-	ADXHO7Fk21ONaM2Y6ZCL5uRcsfUSI4b7dlshF3F60rP0jdgeitjeOrHosx9U94W5HgDMDmAxlgh
-	EdgBfQW0s3g3JcMnxSB/2D63IrRdcdc/ILSINfSOM9vzpC1/B0iqhnEg9BMOyAYxyJM8dYXgh6S
-	b9oR9mr6z9z3rFMkKkmxH/bMurz7V7ZyNeFTgHgVSIVQ+vMnY8A/qJ
-X-Google-Smtp-Source: AGHT+IEPSr4af3AzsQ7DiUd+QGCYCUKlGw0mG7ZrvwcRpwWZsEDK3o6Je6Pxp5/3NZ5DNmxZzOKhtw==
-X-Received: by 2002:a17:903:37d0:b0:24d:1f99:713a with SMTP id d9443c01a7336-290273ef0a6mr248868405ad.31.1760323710724;
-        Sun, 12 Oct 2025 19:48:30 -0700 (PDT)
-Received: from cosmo-ubuntu-2404.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034f36408sm117760535ad.91.2025.10.12.19.48.29
+        d=1e100.net; s=20230601; t=1760355880; x=1760960680;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1K17b/K8yQXfwqlp4oNmjpZOU5mgfldRYoFZRQe1+Os=;
+        b=WlmS9sY5ZQkzcZZ4Pa1N1dMZuYU+hjtd9vt8UT6bLQdvbOleczku3jHztrRZsYv4Sv
+         E9Ty4SxRnMgF3RE4Z6L9KPyP3yi46phIjACDXFT5Ta3lOLfeDJ16QZQOK4Ay6eMltgWg
+         FxuN5FaYSAWEMl4nets8zv6FyUklfq0MVpWtyU5ie4ZfDuN1DdL/pWVP2IEWyS4nFu1f
+         ukjpi720y9hB0ODSI7kSyov2U1qSj3jeRSeg25P0nWzOsrCk1x/gcE6EViH9bND01Pi/
+         0L42uq1hHwgbvzO5gI+EqTd9iy1cdyV7NTwxcappQB05w2Zb9MbKhsk+jzYFrwpM3qi1
+         loKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWfoTejMw3qg2wTolWCxQxu68FkdggDv4r8Qx+WI1FLccrxu8K0zzBwAWS3WpSNzY9Xf+rBWxPf@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxQPbxFt3HndLBGiXFO31fO9+Z19XeTPOUpsiW0fXf1FOojmrXT
+	W/Dv1RN2LlIeMCXEmWaNbsH72mlG/LzqamJDY0Zv0ugskRRuEM0v1dt8
+X-Gm-Gg: ASbGncu2LsElf12eDykImqIri04nLTsM8TtGaZKFM82+7ql12aZpwJfPrS7zIZ3CVu8
+	EarzSdjc5fpKLpJJ9oxrAZul3CRXtckchS2XvgHB8vihfth9OTCeA4SZO1VJGKdpbAbxg30AiQd
+	lrhIRS7Gnxk1y1K7v19EohI71ZGHCOJ9J51e/O+Rv8LXhUcUNxblLpxYQ2O6rtS4aVLlrJPzoiR
+	UCQQ87JA4YuXE/Z1IH+Gj4OwKgJneiiMDKfhWiXZAOGqvjU20oxgj4Fz0dKO+9fviu65p+yMsfT
+	YCt9euDXhXjLburYC5sXCkXvvd2XR+CeG7Gr6ZvtpJFHoaw6jAznvVx5+9GbBsyvqKvclYFRYsS
+	mY05RfNx8pCNoJqaey7o8+mizQ7ISrT5jf4Mfq6qKzpab
+X-Google-Smtp-Source: AGHT+IE3d16akBxeLLNasuVPZAcPS6yQwFuxf/4sTLdfKlAN6I/lYxBnzcpDd444DNztoAVGRjcn2g==
+X-Received: by 2002:a05:6512:682:b0:57e:3d46:d6bc with SMTP id 2adb3069b0e04-5906d773518mr4914882e87.1.1760355880260;
+        Mon, 13 Oct 2025 04:44:40 -0700 (PDT)
+Received: from [192.168.1.161] ([81.200.23.195])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-590881e4f26sm4063733e87.9.2025.10.13.04.44.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Oct 2025 19:48:30 -0700 (PDT)
-From: Cosmo Chou <chou.cosmo@gmail.com>
-To: andrew@codeconstruct.com.au,
-	openbmc@lists.ozlabs.org
-Cc: chou.cosmo@gmail.com,
-	cosmo.chou@quantatw.com,
-	Amit Sunil Dhamne <amitsd@google.com>
-Subject: [PATCH linux dev-6.12] usb: typec: tcpm: Add support for parsing pd-revision DT property
-Date: Mon, 13 Oct 2025 10:46:22 +0800
-Message-ID: <20251013024622.558056-1-chou.cosmo@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Mon, 13 Oct 2025 04:44:39 -0700 (PDT)
+Message-ID: <9badd4e53ddb6166d0aa196da978bd70f61642de.camel@gmail.com>
+Subject: Re: [PATCH 2/3] hwmon: (peci/dimmtemp) add Intel Emerald Rapids
+ platform support
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Iwona Winiarska <iwona.winiarska@intel.com>, Guenter Roeck	
+ <linux@roeck-us.net>, linux-hwmon@vger.kernel.org,
+ linux-kernel@vger.kernel.org, 	openbmc@lists.ozlabs.org
+Date: Mon, 13 Oct 2025 14:44:34 +0300
+In-Reply-To: <0ede72a9-4555-4e4d-959d-3a505b6598ee@molgen.mpg.de>
+References: <20251006215321.5036-1-fr0st61te@gmail.com>
+	 <20251006215321.5036-3-fr0st61te@gmail.com>
+	 <0ede72a9-4555-4e4d-959d-3a505b6598ee@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.0 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -90,123 +97,151 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+On Tue, 2025-10-07 at 10:26 +0200, Paul Menzel wrote:
+> Dear Ivan,
+>=20
+>=20
+> Thank you for your patch.
+>=20
+> Am 06.10.25 um 23:53 schrieb Ivan Mikhaylov:
+> > Extend the functionality of hwmon (peci/dimmtemp) for Emerald
+> > Rapids
+> > platform.
+> >=20
+> > The patch has been tested on a 5S system with 16 DIMMs installed.
+>=20
+> What is 5S? 5 sockets? (Probably not.)
 
-Add support for parsing "pd-revision" DT property in TCPM and store PD
-revision and version supported by the Type-C connnector.
+Paul, thank your for review and sorry for late reply.
+5S - Intel 5 Series/5th Gen
 
-It should be noted that the PD revision is the maximum possible revision
-supported by the port. This is different from the 2 bit revision set in
-PD msg headers. The purpose of the 2 bit revision value is to negotiate
-between Rev 2.X & 3.X spec rev as part of contract negotiation, while
-this is used for Get_Revision AMS after a contract is in place.
+>=20
+> > Verified read of DIMM temperature thresholds & temperature.
+>=20
+> Also paste the output?
+>=20
 
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20241210-get_rev_upstream-v2-2-d0094e52d48f@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Cosmo: Resolved merge conflicts for backport]
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
----
- drivers/usb/typec/tcpm/tcpm.c | 47 +++++++++++++++++++++++++++++++++--
- 1 file changed, 45 insertions(+), 2 deletions(-)
+root@bmc:/sys/bus/peci# ls -l devices/0-30/
+lrwxrwxrwx    1 root     root             0 Oct 13 10:51 driver ->
+../../../../../../../bus/peci/drivers/peci-cpu
+drwxr-xr-x    4 root     root             0 Oct 13 10:51
+peci_cpu.cputemp.emr.48
+drwxr-xr-x    4 root     root             0 Oct 13 10:51
+peci_cpu.dimmtemp.emr.48
+drwxr-xr-x    2 root     root             0 Oct 13 10:51 power
+--w-------    1 root     root          4096 Oct 13 10:51 remove
+lrwxrwxrwx    1 root     root             0 Oct 13 10:51 subsystem ->
+../../../../../../../bus/peci
+-rw-r--r--    1 root     root          4096 Oct 13 10:51 uevent
+root@bmc:/sys/bus/peci# ls -l devices/0-31/
+lrwxrwxrwx    1 root     root             0 Oct 13 10:51 driver ->
+../../../../../../../bus/peci/drivers/peci-cpu
+drwxr-xr-x    4 root     root             0 Oct 13 10:51
+peci_cpu.cputemp.emr.49
+drwxr-xr-x    4 root     root             0 Oct 13 10:51
+peci_cpu.dimmtemp.emr.49
+drwxr-xr-x    2 root     root             0 Oct 13 10:51 power
+--w-------    1 root     root          4096 Oct 13 10:51 remove
+lrwxrwxrwx    1 root     root             0 Oct 13 10:51 subsystem ->
+../../../../../../../bus/peci
+-rw-r--r--    1 root     root          4096 Oct 13 10:51 uevent
 
-diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 92ce01b7d049..4fdf5b229b1d 100644
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -311,6 +311,13 @@ struct pd_data {
- 	unsigned int operating_snk_mw;
- };
- 
-+struct pd_revision_info {
-+	u8 rev_major;
-+	u8 rev_minor;
-+	u8 ver_major;
-+	u8 ver_minor;
-+};
-+
- struct tcpm_port {
- 	struct device *dev;
- 
-@@ -553,6 +560,9 @@ struct tcpm_port {
- 	 */
- 	unsigned int message_id_prime;
- 	unsigned int rx_msgid_prime;
-+
-+	/* Indicates maximum (revision, version) supported */
-+	struct pd_revision_info pd_rev;
- #ifdef CONFIG_DEBUG_FS
- 	struct dentry *dentry;
- 	struct mutex logbuffer_lock;	/* log buffer access lock */
-@@ -7081,7 +7091,9 @@ static void tcpm_port_unregister_pd(struct tcpm_port *port)
- 
- static int tcpm_port_register_pd(struct tcpm_port *port)
- {
--	struct usb_power_delivery_desc desc = { port->typec_caps.pd_revision };
-+	u16 pd_revision = port->typec_caps.pd_revision;
-+	u16 pd_version = port->pd_rev.ver_major << 8 | port->pd_rev.ver_minor;
-+	struct usb_power_delivery_desc desc = { pd_revision, pd_version };
- 	struct usb_power_delivery_capabilities *cap;
- 	int ret, i;
- 
-@@ -7348,6 +7360,29 @@ static int tcpm_fw_get_snk_vdos(struct tcpm_port *port, struct fwnode_handle *fw
- 	return 0;
- }
- 
-+static void tcpm_fw_get_pd_revision(struct tcpm_port *port, struct fwnode_handle *fwnode)
-+{
-+	int ret;
-+	u8 val[4];
-+
-+	ret = fwnode_property_count_u8(fwnode, "pd-revision");
-+	if (!ret || ret != 4) {
-+		tcpm_log(port, "Unable to find pd-revision property or incorrect array size");
-+		return;
-+	}
-+
-+	ret = fwnode_property_read_u8_array(fwnode, "pd-revision", val, 4);
-+	if (ret) {
-+		tcpm_log(port, "Failed to parse pd-revision, ret:(%d)", ret);
-+		return;
-+	}
-+
-+	port->pd_rev.rev_major = val[0];
-+	port->pd_rev.rev_minor = val[1];
-+	port->pd_rev.ver_major = val[2];
-+	port->pd_rev.ver_minor = val[3];
-+}
-+
- /* Power Supply access to expose source power information */
- enum tcpm_psy_online_states {
- 	TCPM_PSY_OFFLINE = 0,
-@@ -7685,10 +7720,18 @@ struct tcpm_port *tcpm_register_port(struct device *dev, struct tcpc_dev *tcpc)
- 	if (err < 0)
- 		goto out_destroy_wq;
- 
-+	tcpm_fw_get_pd_revision(port, tcpc->fwnode);
-+
- 	port->try_role = port->typec_caps.prefer_role;
- 
- 	port->typec_caps.revision = 0x0120;	/* Type-C spec release 1.2 */
--	port->typec_caps.pd_revision = 0x0300;	/* USB-PD spec release 3.0 */
-+
-+	if (port->pd_rev.rev_major)
-+		port->typec_caps.pd_revision = port->pd_rev.rev_major << 8 |
-+					       port->pd_rev.rev_minor;
-+	else
-+		port->typec_caps.pd_revision = 0x0300;	/* USB-PD spec release 3.0 */
-+
- 	port->typec_caps.svdm_version = SVDM_VER_2_0;
- 	port->typec_caps.driver_data = port;
- 	port->typec_caps.ops = &tcpm_ops;
--- 
-2.43.0
+root@bmc:/sys/class/hwmon/hwmon3# ls
+device        of_node       subsystem     temp11_input  temp11_max  =20
+temp13_input  temp13_max    temp15_input  temp15_max    temp1_input =20
+temp1_max     temp3_input   temp3_max     temp5_input   temp5_max   =20
+temp7_input   temp7_max     temp9_input   temp9_max
+name          power         temp11_crit   temp11_label  temp13_crit =20
+temp13_label  temp15_crit   temp15_label  temp1_crit    temp1_label =20
+temp3_crit    temp3_label   temp5_crit    temp5_label   temp7_crit  =20
+temp7_label   temp9_crit    temp9_label   uevent
 
+root@bmc:/sys/class/hwmon/hwmon5# ls
+device        of_node       subsystem     temp11_input  temp11_max  =20
+temp13_input  temp13_max    temp15_input  temp15_max    temp1_input =20
+temp1_max     temp3_input   temp3_max     temp5_input   temp5_max   =20
+temp7_input   temp7_max     temp9_input   temp9_max
+name          power         temp11_crit   temp11_label  temp13_crit =20
+temp13_label  temp15_crit   temp15_label  temp1_crit    temp1_label =20
+temp3_crit    temp3_label   temp5_crit    temp5_label   temp7_crit  =20
+temp7_label   temp9_crit    temp9_label   uevent
+
+root@bmc:/sys/class/hwmon/hwmon3# cat temp*
+95000
+35000
+DIMM F1
+93000
+95000
+35000
+DIMM G1
+93000
+95000
+34000
+DIMM H1
+93000
+95000
+35000
+DIMM A1
+93000
+95000
+36000
+DIMM B1
+93000
+95000
+36000
+DIMM C1
+93000
+95000
+36000
+DIMM D1
+93000
+95000
+36000
+
+root@bmc:/sys/class/hwmon/hwmon5# cat temp*
+95000
+34000
+DIMM F1
+93000
+95000
+34000
+DIMM G1
+93000
+95000
+35000
+DIMM H1
+93000
+95000
+36000
+DIMM A1
+93000
+95000
+35000
+DIMM B1
+93000
+95000
+35000
+DIMM C1
+93000
+95000
+35000
+DIMM D1
+93000
+95000
+35000
+DIMM E1
+93000
+
+Values around ~35 is temp*_input and thresholds as 93,95 for max and
+crit temepratures plus temp*_label.
+
+Guenter, I saw that you already applied other two patches, need I
+resubmit series with updated info of commit for this one or just this
+one?
+>=20
 
