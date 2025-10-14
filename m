@@ -1,50 +1,92 @@
-Return-Path: <openbmc+bounces-738-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-739-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC1D4BDB913
-	for <lists+openbmc@lfdr.de>; Wed, 15 Oct 2025 00:06:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A62BDBD31
+	for <lists+openbmc@lfdr.de>; Wed, 15 Oct 2025 01:41:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cmSwV5Zwrz30M0;
-	Wed, 15 Oct 2025 09:06:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cmW272r69z2yGM;
+	Wed, 15 Oct 2025 10:41:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760345424;
-	cv=none; b=EUyRtPWeJC/IA/qEQGU30C2m6cDutr7pjX1EzvfQZaP+9CB1644cQ0XrpAJVZ8WH92RnCTwRRWYEcdZY58iKFm8isWrPtpUqZVuVm1CCBJi+UVIZ8nFjXrTUy1Q6PDC4enN8BPR5GL1U66EU8+rNM2Nh1YdBBKquVVxKuez2G/2rFD8QkvGAz+nvZLak34SXkHFBI6j/61ub8TZz72jD7yFdKJsfRcHuvqEu4z+jsKm3cLuoN9iDrD+VbVPsEKg2k2TNWI62pUEOiIgfmZpBJ9g7PyjPL0u3uuaW2zHJ+/PkgJMAiA69H/dBehrdg6pcvrJRPcGj8bny4q7nmnScUw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::330"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760484263;
+	cv=none; b=V3bR+GZmpdB/X5E/NekJmoMht5EJENZ1l7Ez4GVKHKNncMZvzIn9o0HpXar47RCZgZbJejRh+hfspR8rAtsb1iIzeXm+NQmUejZiLLBcmd54aFP85FSVoS13V+qSfI56ySJTcJAE7ttlK5mtucG7H4pktPdpFE1Fj3nOaGbiqNNWU1cH8X55QpQHw60aRuqY+DxUVA0jAI+0ZeHtlpTaUumpRRRp1RO1a+W2MzM2TMkWoBwYyacMPO//hCVTxT/sRZOBCdS20eIEg6I2HZaC3fwLttKfRiFb6spyguQsvdUt+OylOdq052fszZuNat8tc+8fq5RRb2+0l3O1meyyrA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760345424; c=relaxed/relaxed;
-	bh=QFE/m2fNnQ3sy+4hztmlJ7m+AJvbDblqvisvoqosToE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=RzjTR9ZoLZQzqK4pLkwPWUYHoQ51xzponocxq/fooNWOtRIXVB6vFr6dUmvfzF3BJctVj5osToOtqUDNkZkAvmfUs98f4mbjY6/BekE8Fv/aQnXAOyhIiRIUcKPe5tuWEsy9D0Y/vG6uCD01OB/LdZfrKMMpuXtamAX1HAQV+Da6ZBJi6VEw5Ounw2cThGwakgA/oe836JJn/xUnkpLO4geZlvB5i9RWSXZQE75jpaWjblx7s69R+IlNFh1464kqVULTnhmhXJDHKFogL2I6BXoWR7gmU4l50aLt64Gzu3RW4JrbKRxEiGjA348+6vEAUBPqh/+7dvK+sm47A3mofg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=q1FNoHrR; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=hverkuil+cisco@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1760484263; c=relaxed/relaxed;
+	bh=EzbA3h2diXeHnSi6hUxLmW4I+M7NlNe4WP1JAxxHucA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BcIEcqEy3WZgGPicVmGIsRI/CyqKxdzswkPn5xtTlEyrWfqQSFFFGaWDHQlw2QBFseulUuMlALHvw4bRlooIXYo050W4axGTJz3oGKDHd7yAgLSM6ne+4pqUCR2Kn3BZ5JMOH8Gr1cqu8raE3SS604eKDSugYpXB00Aos4uXe8uaVgplmhX9Nq+/2zLa5Vcm5NkivDJQOXk9+NFTAccnkzdVWmQcmwaMflS7a+Pzdhs914s+THCiJmjiicKmY2tpzm7cWDjTX3Dk46HBGMCadRxQ8clVAhBlg3rfBFpAa3RTnrHyYbbcjlJbXhrOLcrO/ZQGJczugcmccb3VM+gkbA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=minyard.net; dkim=pass (2048-bit key; unprotected) header.d=minyard-net.20230601.gappssmtp.com header.i=@minyard-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=x5hlsQsV; dkim-atps=neutral; spf=none (client-ip=2607:f8b0:4864:20::330; helo=mail-ot1-x330.google.com; envelope-from=corey@minyard.net; receiver=lists.ozlabs.org) smtp.mailfrom=minyard.net
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=minyard.net
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=q1FNoHrR;
+	dkim=pass (2048-bit key; unprotected) header.d=minyard-net.20230601.gappssmtp.com header.i=@minyard-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=x5hlsQsV;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=hverkuil+cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=minyard.net (client-ip=2607:f8b0:4864:20::330; helo=mail-ot1-x330.google.com; envelope-from=corey@minyard.net; receiver=lists.ozlabs.org)
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4clWJb1flzz2xPx;
-	Mon, 13 Oct 2025 19:50:23 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id DFC8044DF3;
-	Mon, 13 Oct 2025 08:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764DFC4CEE7;
-	Mon, 13 Oct 2025 08:50:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760345420;
-	bh=hKIxNcSYlmHa3HALIaDXRYVpXerYOXwW45wIvvExWac=;
-	h=Date:From:Subject:To:References:In-Reply-To:From;
-	b=q1FNoHrR/0wq7EvVHZCIouBC8ZrpSaDFFCTPtse0PxCpsrdq/ntFT00qzobisEEjX
-	 mIQF1pSwWV33j5W753bJlfmiaoamG13/MreoksCY/+PA/Ihdxt7vLUFkb2zNsiFDoU
-	 2E+CeMu5OMng5e4vaJG4kJjtaV29E2gvPMNO8n4RRPVX20SuFjz3PyNqwmBVthQI+o
-	 qCAnlzs55YesKh3qnOw2LNSsj8fyvQ6pm5u1QMq9Wtoqx9tlW124ssWNDsfW2/DH27
-	 jKXGQFvbLGra5CHNqyTKOpTSqttGDFLPi1oTv4xWOkxuqJvk6w141kmL32ac+wgGtW
-	 XTXRMKk1O0kDA==
-Message-ID: <5cccc4c7-80bb-4e79-9c48-8eb6e2eeef74@kernel.org>
-Date: Mon, 13 Oct 2025 10:50:16 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cmVfY00Qnz2xcB
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Oct 2025 10:24:20 +1100 (AEDT)
+Received: by mail-ot1-x330.google.com with SMTP id 46e09a7af769-7b4f7a856acso2282752a34.3
+        for <openbmc@lists.ozlabs.org>; Tue, 14 Oct 2025 16:24:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1760484258; x=1761089058; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EzbA3h2diXeHnSi6hUxLmW4I+M7NlNe4WP1JAxxHucA=;
+        b=x5hlsQsVcLjeF/AxHDqZcGBdtipO8SsJf83/HK/gK8Jgt0C+c/qWCaFLXHwwsvRQ40
+         ID1eL4cWginaVnkuibRGQ5m1FHzYHR3HZHcZnxJkmCY1S7fmfImhCxN/Em5MBPV3bblL
+         jwDnqzqGjCuRAmbevx0Lq4RFulr6ZnpSgT25XVy2bpg4hL+umgOu9f+iOSFn0B+OIZIr
+         nHrHQmCPfg3M+nykvqCBiYBBIe0jw+Yvuo1xlm4pOuzFW694TTgC95ZS9UFujQVXWz3K
+         BEUiTBxRWAcZRl3lRJB8DETindL7YgNPyHjX3l6HrqlJ1z+kqCkfoVzTHLj5nLS/6tll
+         ugkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760484258; x=1761089058;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EzbA3h2diXeHnSi6hUxLmW4I+M7NlNe4WP1JAxxHucA=;
+        b=shLFitaqJ0Xh+obiXssYiloLbW0CrfrfCMhTJuojQUn4VQFWxyVPx9UOx4gOj31LVM
+         tMN7Sm0V3Qnmlcl2P+G1zRGVxDhWk3nWY3T8v4JD3zfIjEAekpN77nbPT8SznJPLWey7
+         EQfPTHfBRAi6+u9uzZrF4yWCNi/R5niVzd9kmbx3Q3Y4NoIoPcaPhCVlesharalSdYF6
+         6Nc8gcKet5icTmpa0Pf6uiQYheKs8myWC1Pxev5ruzWsKlZbzRZXsCtrmr498ycbHW2e
+         8F6dfTjaR5fsArHdGtCjdJtdgWGf+TmH8+N4XhALs+dJHfGFCubayEg1FCkzCzNKBVIC
+         N69w==
+X-Forwarded-Encrypted: i=1; AJvYcCWwz/6gl2W6nhZo1Bn2vq2EN/+3zgUpm5Bhcp7nyoGAjEmddUmw+Nirj7BOLefvtP1SS54Fp4B2@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzIBejhh2H0C/e1mzIeNwQrbMdVBY7S/bW3Kf9jUtB0xG0TPswV
+	m7QtwFDWId8nQZ1rVPSSyboAZtyFvVLWb1ACKmTU/fYcXRdwYrcRXJO2bS9s3Cus7xg=
+X-Gm-Gg: ASbGnctgEkkQmKRVSI6Vl3DjDfconHFjBGuKUS/xxl0UcC68QvDDUIMzuCP+FQT21xe
+	kP0ofMXEv1Rl2U8bhRcC1qsoX9NyT5mtk03xNgzAX1U+adYEQRhB/VuHuumJUFTNfEZ1O5WdRiy
+	u70DSixYaYM0tdvp7y6GtQRcBtni2C18j6WuvEzgB7jxtHFZiAPPkMxkQXHPkhetSjQc2LnL6dl
+	bHMS62GXUADT63PpSIAwe9m798tb4xW34k5h32xJooMt6MKqgwQKBFxXOK9Zb4THtbsXZCiDQUC
+	K0vq7YLcmM0zqpZQAAUZlYPoT6NwQnaLKdayejiLHxOSuIFEYKVI1wdXfDD3P0CoE+UFukXg8BE
+	TweGuU+ERQaINLXpGfOZTP+i3fGSoxCiNPdg24usyXW3X8XQa3Wq5IUY=
+X-Google-Smtp-Source: AGHT+IFQc/e1ZbUnpoFVWuijFM2zvD8w2iyi9D7yf/z3QjAKE+FCW90DUZ0U3/TgiDPhnHf198NIsA==
+X-Received: by 2002:a05:6830:641b:b0:74a:1f03:db5a with SMTP id 46e09a7af769-7c0df71bb2cmr14506181a34.3.1760484258480;
+        Tue, 14 Oct 2025 16:24:18 -0700 (PDT)
+Received: from mail.minyard.net ([2001:470:b8f6:1b:ad63:63fb:ee1c:2ee9])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7c0f9067d80sm4859579a34.11.2025.10.14.16.24.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Oct 2025 16:24:17 -0700 (PDT)
+Date: Tue, 14 Oct 2025 18:24:12 -0500
+From: Corey Minyard <corey@minyard.net>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, openbmc@lists.ozlabs.org,
+	openipmi-developer@lists.sourceforge.net,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: ipmi: Convert nuvoton,npcm750-kcs-bmc to DT
+ schema
+Message-ID: <aO7bnNtjU4G0_c1c@mail.minyard.net>
+Reply-To: corey@minyard.net
+References: <20251014152935.3782463-1-robh@kernel.org>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -56,535 +98,142 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH v10 1/1] media: aspeed: Allow to capture from SoC display
- (GFX)
-To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
- mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
- linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-References: <20250829035301.2697535-1-jammy_huang@aspeedtech.com>
- <20250829035301.2697535-2-jammy_huang@aspeedtech.com>
-Content-Language: en-US, nl
-In-Reply-To: <20250829035301.2697535-2-jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251014152935.3782463-1-robh@kernel.org>
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Hi Jammy,
+On Tue, Oct 14, 2025 at 10:29:34AM -0500, Rob Herring (Arm) wrote:
+> Convert the nuvoton,npcm750-kcs-bmc binding to DT schema format. It's a
+> straight-forward conversion.
 
-I think an older version of this patch (v8 or so?) was merged. Can you check
-what's in v6.18-rc1 against your latest patch to see if a follow-up patch is needed?
+I have queued this for 6.19, but I would like a review from the people
+that worked on this file previously.
 
-Regards,
+Thanks,
 
-	Hans
+-corey
 
-On 29/08/2025 05:53, Jammy Huang wrote:
-> ASPEED BMC IC has 2 different display engines. Please find AST2600's
-> datasheet to get detailed information.
 > 
-> 1. VGA on PCIe
-> 2. SoC Display (GFX)
-> 
-> By default, video engine (VE) will capture video from VGA. This patch
-> adds an option to capture video from GFX with standard ioctl,
-> vidioc_s_input.
-> 
-> An enum, aspeed_video_input, is added for this purpose.
-> enum aspeed_video_input {
-> 	VIDEO_INPUT_VGA = 0,
-> 	VIDEO_INPUT_GFX,
-> 	VIDEO_INPUT_MAX
-> };
-> 
-> To test this feature, you will need to enable GFX first. Please refer to
-> ASPEED's SDK_User_Guide, 6.3.x Soc Display driver, for more information.
-> In your application, you will need to use v4l2 ioctl, VIDIOC_S_INPUT, as
-> below to select before start streaming.
-> 
-> int rc;
-> struct v4l2_input input;
-> 
-> input.index = VIDEO_INPUT_GFX;
-> rc = ioctl(fd, VIDIOC_S_INPUT, &input);
-> if (rc < 0)
-> {
-> 	...
-> }
-> 
-> Link: https://github.com/AspeedTech-BMC/openbmc/releases
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 > ---
->  v10 changes:
->   - Fix alignment check.
->  v9 changes:
->   - Fix line length WARNING.
->  v8 changes:
->   - Add check in aspeed_video_set_input().
->  v5 changes:
->   - Simplify aspeed_regmap_lookup.
->  v4 changes:
->   - Use scoped/cleanup to make aspeed_regmap_lookup simpler.
->  v3 changes:
->   - Update for enum_input.
-> ---
->  drivers/media/platform/aspeed/aspeed-video.c | 199 ++++++++++++++++---
->  include/uapi/linux/aspeed-video.h            |   7 +
->  2 files changed, 178 insertions(+), 28 deletions(-)
+>  .../bindings/ipmi/npcm7xx-kcs-bmc.txt         | 40 --------------
+>  .../ipmi/nuvoton,npcm750-kcs-bmc.yaml         | 55 +++++++++++++++++++
+>  2 files changed, 55 insertions(+), 40 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+>  create mode 100644 Documentation/devicetree/bindings/ipmi/nuvoton,npcm750-kcs-bmc.yaml
 > 
-> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-> index 54cae0da9aca..b83e43245277 100644
-> --- a/drivers/media/platform/aspeed/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed/aspeed-video.c
-> @@ -4,6 +4,7 @@
->  
->  #include <linux/atomic.h>
->  #include <linux/bitfield.h>
-> +#include <linux/cleanup.h>
->  #include <linux/clk.h>
->  #include <linux/delay.h>
->  #include <linux/device.h>
-> @@ -25,6 +26,8 @@
->  #include <linux/workqueue.h>
->  #include <linux/debugfs.h>
->  #include <linux/ktime.h>
-> +#include <linux/regmap.h>
-> +#include <linux/mfd/syscon.h>
->  #include <media/v4l2-ctrls.h>
->  #include <media/v4l2-dev.h>
->  #include <media/v4l2-device.h>
-> @@ -203,6 +206,25 @@
->  #define VE_MEM_RESTRICT_START		0x310
->  #define VE_MEM_RESTRICT_END		0x314
->  
-> +/* SCU's registers */
-> +#define SCU_MISC_CTRL			0xC0
-> +#define  SCU_DPLL_SOURCE		BIT(20)
-> +
-> +/* GFX's registers */
-> +#define GFX_CTRL			0x60
-> +#define  GFX_CTRL_ENABLE		BIT(0)
-> +#define  GFX_CTRL_FMT			GENMASK(9, 7)
-> +
-> +#define GFX_H_DISPLAY			0x70
-> +#define  GFX_H_DISPLAY_DE		GENMASK(28, 16)
-> +#define  GFX_H_DISPLAY_TOTAL		GENMASK(12, 0)
-> +
-> +#define GFX_V_DISPLAY			0x78
-> +#define  GFX_V_DISPLAY_DE		GENMASK(27, 16)
-> +#define  GFX_V_DISPLAY_TOTAL		GENMASK(11, 0)
-> +
-> +#define GFX_DISPLAY_ADDR		0x80
-> +
->  /*
->   * VIDEO_MODE_DETECT_DONE:	a flag raised if signal lock
->   * VIDEO_RES_CHANGE:		a flag raised if res_change work on-going
-> @@ -262,6 +284,7 @@ struct aspeed_video_perf {
->  /*
->   * struct aspeed_video - driver data
->   *
-> + * version:		holds the version of aspeed SoC
->   * res_work:		holds the delayed_work for res-detection if unlock
->   * buffers:		holds the list of buffer queued from user
->   * flags:		holds the state of video
-> @@ -273,6 +296,7 @@ struct aspeed_video_perf {
->   * yuv420:		a flag raised if JPEG subsampling is 420
->   * format:		holds the video format
->   * hq_mode:		a flag raised if HQ is enabled. Only for VIDEO_FMT_ASPEED
-> + * input:		holds the video input
->   * frame_rate:		holds the frame_rate
->   * jpeg_quality:	holds jpeq's quality (0~11)
->   * jpeg_hq_quality:	holds hq's quality (1~12) only if hq_mode enabled
-> @@ -298,6 +322,9 @@ struct aspeed_video {
->  	struct video_device vdev;
->  	struct mutex video_lock;	/* v4l2 and videobuf2 lock */
->  
-> +	struct regmap *scu;
-> +	struct regmap *gfx;
-> +	u32 version;
->  	u32 jpeg_mode;
->  	u32 comp_size_read;
->  
-> @@ -316,6 +343,7 @@ struct aspeed_video {
->  	bool yuv420;
->  	enum aspeed_video_format format;
->  	bool hq_mode;
-> +	enum aspeed_video_input input;
->  	unsigned int frame_rate;
->  	unsigned int jpeg_quality;
->  	unsigned int jpeg_hq_quality;
-> @@ -331,21 +359,25 @@ struct aspeed_video {
->  #define to_aspeed_video(x) container_of((x), struct aspeed_video, v4l2_dev)
->  
->  struct aspeed_video_config {
-> +	u32 version;
->  	u32 jpeg_mode;
->  	u32 comp_size_read;
->  };
->  
->  static const struct aspeed_video_config ast2400_config = {
-> +	.version = 4,
->  	.jpeg_mode = AST2400_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
->  };
->  
->  static const struct aspeed_video_config ast2500_config = {
-> +	.version = 5,
->  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2400_VE_COMP_SIZE_READ_BACK,
->  };
->  
->  static const struct aspeed_video_config ast2600_config = {
-> +	.version = 6,
->  	.jpeg_mode = AST2500_VE_SEQ_CTRL_JPEG_MODE,
->  	.comp_size_read = AST2600_VE_COMP_SIZE_READ_BACK,
->  };
-> @@ -485,6 +517,7 @@ static const struct v4l2_dv_timings_cap aspeed_video_timings_cap = {
->  
->  static const char * const format_str[] = {"Standard JPEG",
->  	"Aspeed JPEG"};
-> +static const char * const input_str[] = {"HOST VGA", "BMC GFX"};
->  
->  static unsigned int debug;
->  
-> @@ -609,6 +642,14 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->  		aspeed_video_free_buf(video, &video->bcd);
->  	}
->  
-> +	if (video->input == VIDEO_INPUT_GFX) {
-> +		u32 val;
-> +
-> +		// update input buffer address as gfx's
-> +		regmap_read(video->gfx, GFX_DISPLAY_ADDR, &val);
-> +		aspeed_video_write(video, VE_TGS_0, val);
-> +	}
-> +
->  	spin_lock_irqsave(&video->lock, flags);
->  	buf = list_first_entry_or_null(&video->buffers,
->  				       struct aspeed_video_buffer, link);
-> @@ -1026,9 +1067,23 @@ static void aspeed_video_get_timings(struct aspeed_video *v,
->  	}
->  }
->  
-> +static void aspeed_video_get_resolution_gfx(struct aspeed_video *video,
-> +					    struct v4l2_bt_timings *det)
-> +{
-> +	u32 h_val, v_val;
-> +
-> +	regmap_read(video->gfx, GFX_H_DISPLAY, &h_val);
-> +	regmap_read(video->gfx, GFX_V_DISPLAY, &v_val);
-> +
-> +	det->width = FIELD_GET(GFX_H_DISPLAY_DE, h_val) + 1;
-> +	det->height = FIELD_GET(GFX_V_DISPLAY_DE, v_val) + 1;
-> +	video->v4l2_input_status = 0;
-> +}
-> +
->  #define res_check(v) test_and_clear_bit(VIDEO_MODE_DETECT_DONE, &(v)->flags)
->  
-> -static void aspeed_video_get_resolution(struct aspeed_video *video)
-> +static void aspeed_video_get_resolution_vga(struct aspeed_video *video,
-> +					    struct v4l2_bt_timings *det)
->  {
->  	bool invalid_resolution = true;
->  	int rc;
-> @@ -1036,7 +1091,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->  	u32 mds;
->  	u32 src_lr_edge;
->  	u32 src_tb_edge;
-> -	struct v4l2_bt_timings *det = &video->detected_timings;
->  
->  	det->width = MIN_WIDTH;
->  	det->height = MIN_HEIGHT;
-> @@ -1113,14 +1167,20 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->  
->  	aspeed_video_get_timings(video, det);
->  
-> -	/*
-> -	 * Enable mode-detect watchdog, resolution-change watchdog and
-> -	 * automatic compression after frame capture.
-> -	 */
-> +	/* Enable mode-detect watchdog, resolution-change watchdog */
->  	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
->  			    VE_INTERRUPT_MODE_DETECT_WD);
-> -	aspeed_video_update(video, VE_SEQ_CTRL, 0,
-> -			    VE_SEQ_CTRL_AUTO_COMP | VE_SEQ_CTRL_EN_WATCHDOG);
-> +	aspeed_video_update(video, VE_SEQ_CTRL, 0, VE_SEQ_CTRL_EN_WATCHDOG);
-> +}
-> +
-> +static void aspeed_video_get_resolution(struct aspeed_video *video)
-> +{
-> +	struct v4l2_bt_timings *det = &video->detected_timings;
-> +
-> +	if (video->input == VIDEO_INPUT_GFX)
-> +		aspeed_video_get_resolution_gfx(video, det);
-> +	else
-> +		aspeed_video_get_resolution_vga(video, det);
->  
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "Got resolution: %dx%d\n",
->  		 det->width, det->height);
-> @@ -1156,7 +1216,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
->  
->  	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
-> -	if (size < DIRECT_FETCH_THRESHOLD) {
-> +	if (video->input == VIDEO_INPUT_VGA && size < DIRECT_FETCH_THRESHOLD) {
->  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Sync Mode\n");
->  		aspeed_video_write(video, VE_TGS_0,
->  				   FIELD_PREP(VE_TGS_FIRST,
-> @@ -1171,10 +1231,20 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
->  				    VE_CTRL_INT_DE);
->  	} else {
-> +		u32 ctrl, val, bpp;
-> +
->  		v4l2_dbg(1, debug, &video->v4l2_dev, "Capture: Direct Mode\n");
-> +		ctrl = VE_CTRL_DIRECT_FETCH;
-> +		if (video->input == VIDEO_INPUT_GFX) {
-> +			regmap_read(video->gfx, GFX_CTRL, &val);
-> +			bpp = FIELD_GET(GFX_CTRL_FMT, val) ? 32 : 16;
-> +			if (bpp == 16)
-> +				ctrl |= VE_CTRL_INT_DE;
-> +			aspeed_video_write(video, VE_TGS_1, act->width * (bpp >> 3));
-> +		}
->  		aspeed_video_update(video, VE_CTRL,
->  				    VE_CTRL_INT_DE | VE_CTRL_DIRECT_FETCH,
-> -				    VE_CTRL_DIRECT_FETCH);
-> +				    ctrl);
->  	}
->  
->  	size *= 4;
-> @@ -1207,6 +1277,22 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
->  		aspeed_video_free_buf(video, &video->srcs[0]);
->  }
->  
-> +/*
-> + * Update relative parameters when timing changed.
-> + *
-> + * @video: the struct of aspeed_video
-> + * @timings: the new timings
-> + */
-> +static void aspeed_video_update_timings(struct aspeed_video *video, struct v4l2_bt_timings *timings)
-> +{
-> +	video->active_timings = *timings;
-> +	aspeed_video_set_resolution(video);
-> +
-> +	video->pix_fmt.width = timings->width;
-> +	video->pix_fmt.height = timings->height;
-> +	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +}
-> +
->  static void aspeed_video_update_regs(struct aspeed_video *video)
->  {
->  	u8 jpeg_hq_quality = clamp((int)video->jpeg_hq_quality - 1, 0,
-> @@ -1219,6 +1305,8 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	u32 ctrl = 0;
->  	u32 seq_ctrl = 0;
->  
-> +	v4l2_dbg(1, debug, &video->v4l2_dev, "input(%s)\n",
-> +		 input_str[video->input]);
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "framerate(%d)\n",
->  		 video->frame_rate);
->  	v4l2_dbg(1, debug, &video->v4l2_dev, "jpeg format(%s) subsample(%s)\n",
-> @@ -1234,6 +1322,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	else
->  		aspeed_video_update(video, VE_BCD_CTRL, VE_BCD_CTRL_EN_BCD, 0);
->  
-> +	if (video->input == VIDEO_INPUT_VGA)
-> +		ctrl |= VE_CTRL_AUTO_OR_CURSOR;
-> +
->  	if (video->frame_rate)
->  		ctrl |= FIELD_PREP(VE_CTRL_FRC, video->frame_rate);
->  
-> @@ -1252,7 +1343,9 @@ static void aspeed_video_update_regs(struct aspeed_video *video)
->  	aspeed_video_update(video, VE_SEQ_CTRL,
->  			    video->jpeg_mode | VE_SEQ_CTRL_YUV420,
->  			    seq_ctrl);
-> -	aspeed_video_update(video, VE_CTRL, VE_CTRL_FRC, ctrl);
-> +	aspeed_video_update(video, VE_CTRL,
-> +			    VE_CTRL_FRC | VE_CTRL_AUTO_OR_CURSOR |
-> +			    VE_CTRL_SOURCE, ctrl);
->  	aspeed_video_update(video, VE_COMP_CTRL,
->  			    VE_COMP_CTRL_DCT_LUM | VE_COMP_CTRL_DCT_CHR |
->  			    VE_COMP_CTRL_EN_HQ | VE_COMP_CTRL_HQ_DCT_LUM |
-> @@ -1280,6 +1373,7 @@ static void aspeed_video_init_regs(struct aspeed_video *video)
->  	aspeed_video_write(video, VE_JPEG_ADDR, video->jpeg.dma);
->  
->  	/* Set control registers */
-> +	aspeed_video_write(video, VE_SEQ_CTRL, VE_SEQ_CTRL_AUTO_COMP);
->  	aspeed_video_write(video, VE_CTRL, ctrl);
->  	aspeed_video_write(video, VE_COMP_CTRL, VE_COMP_CTRL_RSVD);
->  
-> @@ -1311,12 +1405,7 @@ static void aspeed_video_start(struct aspeed_video *video)
->  	aspeed_video_get_resolution(video);
->  
->  	/* Set timings since the device is being opened for the first time */
-> -	video->active_timings = video->detected_timings;
-> -	aspeed_video_set_resolution(video);
+> diff --git a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+> deleted file mode 100644
+> index 4fda76e63396..000000000000
+> --- a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+> +++ /dev/null
+> @@ -1,40 +0,0 @@
+> -* Nuvoton NPCM KCS (Keyboard Controller Style) IPMI interface
 > -
-> -	video->pix_fmt.width = video->active_timings.width;
-> -	video->pix_fmt.height = video->active_timings.height;
-> -	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +	aspeed_video_update_timings(video, &video->detected_timings);
->  }
->  
->  static void aspeed_video_stop(struct aspeed_video *video)
-> @@ -1401,10 +1490,10 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
->  {
->  	struct aspeed_video *video = video_drvdata(file);
->  
-> -	if (inp->index)
-> +	if (inp->index >= VIDEO_INPUT_MAX)
->  		return -EINVAL;
->  
-> -	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
-> +	sprintf(inp->name, "%s capture", input_str[inp->index]);
->  	inp->type = V4L2_INPUT_TYPE_CAMERA;
->  	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
->  	inp->status = video->v4l2_input_status;
-> @@ -1414,16 +1503,57 @@ static int aspeed_video_enum_input(struct file *file, void *fh,
->  
->  static int aspeed_video_get_input(struct file *file, void *fh, unsigned int *i)
->  {
-> -	*i = 0;
-> +	struct aspeed_video *video = video_drvdata(file);
-> +
-> +	*i = video->input;
->  
->  	return 0;
->  }
->  
->  static int aspeed_video_set_input(struct file *file, void *fh, unsigned int i)
->  {
-> -	if (i)
-> +	struct aspeed_video *video = video_drvdata(file);
-> +
-> +	if (i >= VIDEO_INPUT_MAX)
->  		return -EINVAL;
->  
-> +	if (i == video->input)
-> +		return 0;
-> +
-> +	if (vb2_is_busy(&video->queue))
-> +		return -EBUSY;
-> +
-> +	if (IS_ERR(video->scu)) {
-> +		v4l2_dbg(1, debug, &video->v4l2_dev,
-> +			 "%s: scu isn't ready for input-control\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (IS_ERR(video->gfx) && i == VIDEO_INPUT_GFX) {
-> +		v4l2_dbg(1, debug, &video->v4l2_dev,
-> +			 "%s: gfx isn't ready for GFX input\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	video->input = i;
-> +
-> +	if (video->version == 6) {
-> +		/* modify dpll source per current input */
-> +		if (video->input == VIDEO_INPUT_VGA)
-> +			regmap_update_bits(video->scu, SCU_MISC_CTRL,
-> +					   SCU_DPLL_SOURCE, 0);
-> +		else
-> +			regmap_update_bits(video->scu, SCU_MISC_CTRL,
-> +					   SCU_DPLL_SOURCE, SCU_DPLL_SOURCE);
-> +	}
-> +
-> +	aspeed_video_update_regs(video);
-> +
-> +	/* update signal status */
-> +	aspeed_video_get_resolution(video);
-> +	if (!video->v4l2_input_status)
-> +		aspeed_video_update_timings(video, &video->detected_timings);
-> +
->  	return 0;
->  }
->  
-> @@ -1527,13 +1657,7 @@ static int aspeed_video_set_dv_timings(struct file *file, void *fh,
->  	if (vb2_is_busy(&video->queue))
->  		return -EBUSY;
->  
-> -	video->active_timings = timings->bt;
+> -The Nuvoton SOCs (NPCM) are commonly used as BMCs
+> -(Baseboard Management Controllers) and the KCS interface can be
+> -used to perform in-band IPMI communication with their host.
 > -
-> -	aspeed_video_set_resolution(video);
+> -Required properties:
+> -- compatible : should be one of
+> -    "nuvoton,npcm750-kcs-bmc"
+> -    "nuvoton,npcm845-kcs-bmc", "nuvoton,npcm750-kcs-bmc"
+> -- interrupts : interrupt generated by the controller
+> -- kcs_chan : The KCS channel number in the controller
 > -
-> -	video->pix_fmt.width = timings->bt.width;
-> -	video->pix_fmt.height = timings->bt.height;
-> -	video->pix_fmt.sizeimage = video->max_compressed_size;
-> +	aspeed_video_update_timings(video, &timings->bt);
->  
->  	timings->type = V4L2_DV_BT_656_1120;
->  
-> @@ -1909,6 +2033,7 @@ static int aspeed_video_debugfs_show(struct seq_file *s, void *data)
->  	val08 = aspeed_video_read(v, VE_CTRL);
->  	if (FIELD_GET(VE_CTRL_DIRECT_FETCH, val08)) {
->  		seq_printf(s, "  %-20s:\tDirect fetch\n", "Mode");
-> +		seq_printf(s, "  %-20s:\t%s\n", "Input", input_str[v->input]);
->  		seq_printf(s, "  %-20s:\t%s\n", "VGA bpp mode",
->  			   FIELD_GET(VE_CTRL_INT_DE, val08) ? "16" : "32");
->  	} else {
-> @@ -2068,12 +2193,29 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
->  	return 0;
->  }
->  
-> +/*
-> + * Get regmap without checking res, such as clk/reset, that could lead to
-> + * conflict.
-> + */
-> +static struct regmap *aspeed_regmap_lookup(struct device_node *np, const char *property)
-> +{
-> +	struct device_node *syscon_np __free(device_node) = of_parse_phandle(np, property, 0);
+> -Example:
+> -
+> -    lpc_kcs: lpc_kcs@f0007000 {
+> -        compatible = "nuvoton,npcm750-lpc-kcs", "simple-mfd", "syscon";
+> -        reg = <0xf0007000 0x40>;
+> -        reg-io-width = <1>;
+> -
+> -        #address-cells = <1>;
+> -        #size-cells = <1>;
+> -        ranges = <0x0 0xf0007000 0x40>;
+> -
+> -        kcs1: kcs1@0 {
+> -            compatible = "nuvoton,npcm750-kcs-bmc";
+> -            reg = <0x0 0x40>;
+> -            interrupts = <0 9 4>;
+> -            kcs_chan = <1>;
+> -            status = "disabled";
+> -        };
+> -
+> -        kcs2: kcs2@0 {
+> -            compatible = "nuvoton,npcm750-kcs-bmc";
+> -            reg = <0x0 0x40>;
+> -            interrupts = <0 9 4>;
+> -            kcs_chan = <2>;
+> -            status = "disabled";
+> -        };
+> -    };
+> diff --git a/Documentation/devicetree/bindings/ipmi/nuvoton,npcm750-kcs-bmc.yaml b/Documentation/devicetree/bindings/ipmi/nuvoton,npcm750-kcs-bmc.yaml
+> new file mode 100644
+> index 000000000000..fc5df1c5e3bc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/ipmi/nuvoton,npcm750-kcs-bmc.yaml
+> @@ -0,0 +1,55 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/ipmi/nuvoton,npcm750-kcs-bmc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +	if (!syscon_np)
-> +		return ERR_PTR(-ENODEV);
+> +title: Nuvoton NPCM KCS BMC
 > +
-> +	return device_node_to_regmap(syscon_np);
-> +}
+> +maintainers:
+> +  - Avi Fishman <avifishman70@gmail.com>
+> +  - Tomer Maimon <tmaimon77@gmail.com>
+> +  - Tali Perry <tali.perry1@gmail.com>
 > +
->  static int aspeed_video_init(struct aspeed_video *video)
->  {
->  	int irq;
->  	int rc;
->  	struct device *dev = video->dev;
->  
-> +	video->scu = aspeed_regmap_lookup(dev->of_node, "aspeed,scu");
-> +	video->gfx = aspeed_regmap_lookup(dev->of_node, "aspeed,gfx");
+> +description:
+> +  The Nuvoton SOCs (NPCM) are commonly used as BMCs (Baseboard Management
+> +  Controllers) and the KCS interface can be used to perform in-band IPMI
+> +  communication with their host.
 > +
->  	irq = irq_of_parse_and_map(dev->of_node, 0);
->  	if (!irq) {
->  		dev_err(dev, "Unable to find IRQ\n");
-> @@ -2165,6 +2307,7 @@ static int aspeed_video_probe(struct platform_device *pdev)
->  	if (!config)
->  		return -ENODEV;
->  
-> +	video->version = config->version;
->  	video->jpeg_mode = config->jpeg_mode;
->  	video->comp_size_read = config->comp_size_read;
->  
-> diff --git a/include/uapi/linux/aspeed-video.h b/include/uapi/linux/aspeed-video.h
-> index 6586a65548c4..15168e8c931e 100644
-> --- a/include/uapi/linux/aspeed-video.h
-> +++ b/include/uapi/linux/aspeed-video.h
-> @@ -8,6 +8,13 @@
->  
->  #include <linux/v4l2-controls.h>
->  
-> +/* aspeed video's input types */
-> +enum aspeed_video_input {
-> +	VIDEO_INPUT_VGA = 0,
-> +	VIDEO_INPUT_GFX,
-> +	VIDEO_INPUT_MAX
-> +};
+> +properties:
+> +  compatible:
+> +    oneOf:
+> +      - const: nuvoton,npcm750-kcs-bmc
+> +      - items:
+> +          - enum:
+> +              - nuvoton,npcm845-kcs-bmc
+> +          - const: nuvoton,npcm750-kcs-bmc
 > +
->  #define V4L2_CID_ASPEED_HQ_MODE			(V4L2_CID_USER_ASPEED_BASE  + 1)
->  #define V4L2_CID_ASPEED_HQ_JPEG_QUALITY		(V4L2_CID_USER_ASPEED_BASE  + 2)
->  
-
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  kcs_chan:
+> +    description: The KCS channel number in the controller
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 3
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - kcs_chan
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    kcs@0 {
+> +        compatible = "nuvoton,npcm750-kcs-bmc";
+> +        reg = <0x0 0x40>;
+> +        interrupts = <9 4>;
+> +        kcs_chan = <1>;
+> +    };
+> -- 
+> 2.51.0
+> 
 
