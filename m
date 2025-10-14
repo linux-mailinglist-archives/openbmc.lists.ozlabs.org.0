@@ -1,80 +1,84 @@
-Return-Path: <openbmc+bounces-735-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-736-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A273BD3A65
-	for <lists+openbmc@lfdr.de>; Mon, 13 Oct 2025 16:47:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CAE7BD75A7
+	for <lists+openbmc@lfdr.de>; Tue, 14 Oct 2025 07:03:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4clgDN5K8rz30P3;
-	Tue, 14 Oct 2025 01:47:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cm2DB6rCSz2yrZ;
+	Tue, 14 Oct 2025 16:03:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::436"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760366836;
-	cv=none; b=MeMdyFD/o8dQ7sjsw5/qIYvWd9xHkXXID3jfB4ujvpFcYH1Y+inqT8HUxDOpIbXlIYCwA5ymho87YMlD9jqMHSJHPv2TbEZoBOlHNly65RoD2/pz0sRLKu8/NPv+rForJsN15eOfrx75LdZmX8ZwoRFuhiaP0h4/9DB21I+TVMZL6qD1QH4hQY7MTgUC+VR2d6Amk4z7tpzqT5pRrXkdysYiBeToybWBXpE51V+QDjhPH1ULF2NQ+wcoLrOvvEKmy5zXM9AummNPjfp71JZoyeX6r1b5hHGNAsEUPJGKuv0bgO6b71m6LNbZVIf1nAjDWwkkLUDgs4Y/HyRGdGGJcA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::429"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760418202;
+	cv=none; b=DQ/PASbmVaAPjG8LnlrAUqKGu6bgNS45I/w8P3ZzYyM5Kqlom4D0QbemjSSFJETGs3Oz3Lor6VI7yi1tcpoyQzglVYjUoDMjPdv8B0YdhyFgx3mf637xDs5JpiDgUHpHEjSd4k6ZmCuMOKUNlcZcSutY37Mw98mS41msM1yS1kl8iXzxr6v8oDM6DJ4ymFOl2a5A2hP8DHZ02hbOwxV59Ej0EMIrl8pJC6PTfC2D0QZLXdMW2TYYpPIzNZqU1FGCE+sgQLoKSeA2hpDi0dduULOHJch2+qpA4oFWE6mGPXfyTXFhWWWv08bOkBxB92+7epcZ8wwiHuo1a1SupmgHtg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760366836; c=relaxed/relaxed;
-	bh=iM5/e4UJAfJvXPy0LZcn9NuDbnYMTsJJoi6JFRNlh9k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BGVB7l+5wepk0wcApayDGDeNZrVEXa2otFTw8OKr8d003nBW1hn805FxVv4eMDpaUEjzI2nQ3P2axds/wu2iye96spa1OjRhXAkneRUYDjMU+cHL0y1Sm8HKM5por3olSskrGsJl8eCEIut9mh/QxZfbs0/ejT/mYp54oZbNAfvGZh02BVQFJc42+ENokfe7AQRWja5wJlBpjQmfXr2ES1WFfkSbe8ELcAJejctQhaBn1+YRllj7S44+3isfibgBDJ9IJRIKJm46ToU5xFYvHVpFYHU8fEgNm4kAhVWm7S1gekT0Zeq11w6yxuBRSDtPpdicOe6Nmp7F5ae2DADprg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iSiDMvmR; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::436; helo=mail-pf1-x436.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	t=1760418202; c=relaxed/relaxed;
+	bh=8YuxpXWU7E8X2YYDz33xExfZqbznPCZyFwslB8dHILY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LSz0xJxS7hn6ippuHtUy5+uHwuY56K0tIp5/veN04cL8Om/FhJgNy1x3SABxt/nMGR9W1xMAz4ALzwQfyrvqMacSE6XJDL4wKaJcrAUBoMxazJs1OZsk6i52YqRR3Hb7kQSPlz0U7Wm0gQLROfaEwYwubd2FSyrs0H/3dLnCu1MFX502batVDs6YIrFuq/iQVd2iXvcd4F3OSO9P+iDnNaM99dBC+wrbX/oJcPkyuHRH+4RFpchePR3u2kq8XS0wk5NDgdb5MzIe7HvTkDuwKGqPPB7CqDVCbONRj8M6IKla3Q1vNZ8WrvRTXDDopXmJTF2aAH5vMbLVN7AOlM8kJw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=CNI9zJA9; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::429; helo=mail-pf1-x429.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iSiDMvmR;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=CNI9zJA9;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436; helo=mail-pf1-x436.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::429; helo=mail-pf1-x429.google.com; envelope-from=chou.cosmo@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4clgDL75HHz302l
-	for <openbmc@lists.ozlabs.org>; Tue, 14 Oct 2025 01:47:13 +1100 (AEDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-79af647cef2so1359651b3a.3
-        for <openbmc@lists.ozlabs.org>; Mon, 13 Oct 2025 07:47:13 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cm2D920T8z2yr9
+	for <openbmc@lists.ozlabs.org>; Tue, 14 Oct 2025 16:03:20 +1100 (AEDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-793021f348fso4466245b3a.1
+        for <openbmc@lists.ozlabs.org>; Mon, 13 Oct 2025 22:03:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760366832; x=1760971632; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=iM5/e4UJAfJvXPy0LZcn9NuDbnYMTsJJoi6JFRNlh9k=;
-        b=iSiDMvmRYyvjsreNYM33KfPKR1Z1YwIW87CvvYtHeD7WfXrI63lYJRXOGCD84KjyTe
-         rPwQhQF+0Vt9UKlUJgJW/lO/rmOW3aam/kmaB9dvO6lWvAcAIVE6OIh8HOb5u0u2HMeX
-         bFVpk62Ox4ZBk6yY+2Fy2zzcZjcYHnQhxGBqz4hjQhzrdy3+KLgnup19A5Tb2jgfRAnL
-         5CQUyWLPnGc5r9SexRxR++2A59bDRdcep1QOivmzdetr2q2Lqy1ducHnZs7oBdAxGU7V
-         vD9oJvdY/Wcr99E2BCQEAGJi6ZSOJeQjg1zWyyNWpX4YUtunTd7UzwjgSz6YAZa/JVJg
-         cv3g==
+        d=gmail.com; s=20230601; t=1760418198; x=1761022998; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8YuxpXWU7E8X2YYDz33xExfZqbznPCZyFwslB8dHILY=;
+        b=CNI9zJA9b6tGMRMDlogRE9nhyNgLCkWBW6GRC/iZQH19CDrVH3zXmsQdA0bEU7vo5s
+         80AAz7URTYOqsPktzKkhZppxQorq+PrePuC3EwDg81izob5136W3BOvnOh9yw6h1o9Yn
+         tkXOD22HxAomQLTNfZh65I/uW8rk18JJh5B7A2v8HuAGb9TMgLdFmMJ0aqvp1A3kL6qv
+         zVyzRyzyr9TxzTHtzKd0/P+pLB3gwaPn/4J9daU42yN6UdJpjiefdU1JYHj+0eVYAxGX
+         LAdcdWJ1QSv0wk4Au6NjqCxnFe8sCn3Jgaj/Lil9pzINsHUptRWOk1JLUXwucG/7ICrm
+         lmNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760366832; x=1760971632;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iM5/e4UJAfJvXPy0LZcn9NuDbnYMTsJJoi6JFRNlh9k=;
-        b=cOdqN6zei5vTwQfMKjNLUBZgQAd2tNhNjbHm6s1mwTKST2+jhg8kMq2DelY0Jt62fI
-         9mZ9QsR8+mKup3GJL49ms56qDK+Ea3v4ph+kD9Ho+cobUt2SKWQsOpc3N4ghx5JyyYh4
-         JiQCaKXe7nLlA38m/Rh5oh5o3hb1hK1h1PfjxI+LYic7UPJyfHgtR6TADSyIudlTZlJH
-         oJxN0dhq45raOhp+EPTpcmFOHbKZzUidTsxcGmmbn+bjI9iaVa0eUiUsRMfMiUjLipKv
-         nC5DUiWM4/zeambFv41R1NyEO9cTKcxBqXsbbhu8Bb4SlDeZHvfD5qoLEBn6PniAiqfL
-         av3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXhpeIMsqh+OuaoU2rbyl7SRCOAf2SnCw0UPjykdu3kNuEy0v4quvek8hz6YjssGUiG57Gs2Hom@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzBUIGqpdK1SY8MEyGkHMuWZ6E8m+Mro0q8bbt3j9sU1qHO7Zxq
-	r95GSmsKmzfPC0jG7wKmethSRGlzu5+laARySPdiHOnzJ1TAdG4MylmV
-X-Gm-Gg: ASbGncuFHfZVhOnGh3v5VoDk/6tdETfSD6wPSQqSd3XzvY+1nQRvgBKbIPlGE658FcZ
-	4WnumKrmJSah2TEliM99yqCCpVMD7zeq4h9n9vU3jlY0oM0jIuQzEM/T6NwbIqJni6ED6+LdIGo
-	LWyDISrcHfbgSJB3/uobTVeP25o2uhcnUB6ZeXM9ranRELjBiw2YDWwX7aVmGx/t5LiM75F71yH
-	aILBldD6i9313VNpaPHxXJtM/67V6LjhWM0qw2ScIZ3Z/iSC2HB9eh8noaaB5IZufLYhmekuuJs
-	lRHft6sBv+ZAwkDSTtxm/Zy0VKnRGCkVviT8NoZY62dJCag5EfvpQWGwk/fnmUfLGpMTzPc/q5a
-	e2jHPCmL8LsBUa0FmrCVsxVU9AunBfwSIsAtq9GRfglbl2fA/FjI7PiEC8JLUkOW3/H7YVnzpSQ
-	qSIOBDrOcW0+YsSmwpaQT8xMoa
-X-Google-Smtp-Source: AGHT+IHPU/97MoKvW8vBm9Jrran+thU7TIazvVrMY0e9wgshgLyIvIk5asZAEFCjkaqXX2avBELD4Q==
-X-Received: by 2002:a05:6a20:7fa3:b0:331:e662:c97e with SMTP id adf61e73a8af0-331e662cccbmr6834583637.37.1760366831737;
-        Mon, 13 Oct 2025 07:47:11 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d09ace5sm11950521b3a.53.2025.10.13.07.47.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Oct 2025 07:47:11 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f1f5362b-16ef-4699-bec5-986de2116d83@roeck-us.net>
-Date: Mon, 13 Oct 2025 07:47:09 -0700
+        d=1e100.net; s=20230601; t=1760418198; x=1761022998;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8YuxpXWU7E8X2YYDz33xExfZqbznPCZyFwslB8dHILY=;
+        b=M5dAHuLI6x2VY+pcz4XMyNT80YUeITWoR2aV2MORKYxTh35PWuvNakHR8GOHn84PUL
+         Dwl7DQ+XG8RP96IFi1IHYvTIiOc2f3768269GvknVODdw5VB9q2WosaozHlBx8d2yR0D
+         7qpyBSY6eQYBzRhvrauaaQg0Z9OpvUsD6AzhiPUGSfJK17vm7UmIGXU+rp2+91JuIofK
+         cByihZ9+pIFDTcLPdxP1pl/fhyjzV5uGoE6vshB3thucophWw0KCh3OvRw6QZ2hh6+8k
+         E65MuQMgoreZdmLalbg9HieU29dVmIhG2vEDg+YSQ/LaYLonvmye5a1LkqFdknWgVoch
+         GX+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXecF0I71YkITmE6395+SNXHJLSLU4FxBNxh4Kpp+hBS96vNfKbHeHWukDZVeqltCyReEvrJobE@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwmgsR4CgCLE/CkELo3I4+48d0doic9pxlRg5bFRZsIKeSbxvXk
+	7TlGkAiE3aXVqCYDkpKQp/4gaFhhykUnlFC873wLFrXNuzekqF3pw48iEV7y2g==
+X-Gm-Gg: ASbGncvphhOoIIIR9mVKhYfF7SsKibQNfYCksge0f+wWKsdXi2+RiwheDBBdtboqA1x
+	KxFyTgbXvLTqs6ad+H3i5u1v3RFwjAZfRfyO2RRAB6hHC2Wi3ZrxTiPtSUus+e9hJngkKgfIGK3
+	tr0ahDwr4mt9sBqqeXdzJGBgQz3dCARxSMvHY+4e8AGy5DdKuIKYZ/k3HuP0+mtsA2VCPI2LBzR
+	2RIvwEPI7kcvSoV9w6huKMbYpgFbASOQDZ3piHncEu9ttNscTi2UGN+XL0W2LWW/k3JcWZcoJ76
+	1ZSNAUKx4SN4baS3BAoI9ACPJwyvAI5Q7P1mzPb27i3RIcmk0aqrLtzrMKfyQH2gCY73Uk25YBV
+	KME+Zm6cLqTez8zT58fUdQPFL8mkpiycDFC8KUCVTcu0fZ+jLuKlJIP7zeNAvUmNF0UicDdf0Xy
+	dPTh01XvfmcyjiVMRgvNO+Pkb64kRUiz4sixmVS1DXMPpM7JGhI/waM8Q8jQuosIo=
+X-Google-Smtp-Source: AGHT+IEyUukKtV5VV9AfEbv0lvt+2foGQ7uC+ERxXlhcakRp/fTYqEX+QtIlALIRc2os5CMigvWcEw==
+X-Received: by 2002:a05:6a20:748c:b0:2fb:62bb:dfc with SMTP id adf61e73a8af0-32da83e3953mr30784125637.28.1760418198039;
+        Mon, 13 Oct 2025 22:03:18 -0700 (PDT)
+Received: from cosmo-ubuntu-2404.dhcpserver.bu9bmc.local (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b678df48a83sm11361562a12.31.2025.10.13.22.03.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Oct 2025 22:03:17 -0700 (PDT)
+From: Cosmo Chou <chou.cosmo@gmail.com>
+To: andrew@codeconstruct.com.au,
+	openbmc@lists.ozlabs.org
+Cc: chou.cosmo@gmail.com,
+	cosmo.chou@quantatw.com,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH linux dev-6.12] mtd: spi-nor: winbond: Add support for w25q01jv
+Date: Tue, 14 Oct 2025 13:01:08 +0800
+Message-ID: <20251014050108.665338-1-chou.cosmo@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -86,102 +90,208 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hwmon: (peci/dimmtemp) add Intel Emerald Rapids
- platform support
-To: Ivan Mikhaylov <fr0st61te@gmail.com>, Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: Iwona Winiarska <iwona.winiarska@intel.com>, linux-hwmon@vger.kernel.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-References: <20251006215321.5036-1-fr0st61te@gmail.com>
- <20251006215321.5036-3-fr0st61te@gmail.com>
- <0ede72a9-4555-4e4d-959d-3a505b6598ee@molgen.mpg.de>
- <9badd4e53ddb6166d0aa196da978bd70f61642de.camel@gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <9badd4e53ddb6166d0aa196da978bd70f61642de.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 10/13/25 04:44, Ivan Mikhaylov wrote:
-> On Tue, 2025-10-07 at 10:26 +0200, Paul Menzel wrote:
->> Dear Ivan,
->>
->>
->> Thank you for your patch.
->>
->> Am 06.10.25 um 23:53 schrieb Ivan Mikhaylov:
->>> Extend the functionality of hwmon (peci/dimmtemp) for Emerald
->>> Rapids
->>> platform.
->>>
->>> The patch has been tested on a 5S system with 16 DIMMs installed.
->>
->> What is 5S? 5 sockets? (Probably not.)
-> 
-> Paul, thank your for review and sorry for late reply.
-> 5S - Intel 5 Series/5th Gen
-> 
->>
->>> Verified read of DIMM temperature thresholds & temperature.
->>
->> Also paste the output?
->>
-...
-> Guenter, I saw that you already applied other two patches, need I
-> resubmit series with updated info of commit for this one or just this
-> one?
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-No. While that information is valuable as comment, I don't see value
-of having it in the commit log.
+Add support for Winbond w25q01jv spi-nor chip.
 
-Guenter
+This chip is internally made of two dies with linear addressing
+capabilities to make it transparent to the user that two dies were
+used. There is one drawback however, the read status operation is racy
+as the status bit only gives the active die status and not the status of
+the other die. For commands affecting the two dies, it means if another
+command is sent too fast after the first die has returned a valid status
+(deviation can be up to 200us), the chip will get corrupted/in an
+unstable state.
+
+This chip hence requires a better status register read. There are three
+solutions here:
+
+1- If we assume that the most common situation producing this problem is
+status register writes, maybe we could change the "non-volatile"
+status register write commands to become "volatile" status register
+writes. In practice, what takes time is the write operation of the bits
+themselves, and not the activation of the feature in the internal
+circuitry. Enabling "volatile" status register writes would make the
+writes nearly instant.
+
+This approach, besides probably being the less impacting one, could
+overlook other possible actions where both dies can be used at the same
+time like a chip erase (or any erase over die boundaries in general).
+
+2- Wait about 200us after getting a first status ready feedback. This
+200us is about the maximum possible deviation between dies and would
+cover all cases.
+
+3- We iterate manually over all internal dies (which takes about 30us
+per die) until all are ready. This approach will always be faster than
+a blind delay which represents the maximum deviation, while also being
+totally safe.
+
+This third approach has been adopted. A flash-specific hook for the
+status register read had to be implemented. Testing with the flash_speed
+benchmark shown no difference with the existing performances (using the
+regular status read core function). In practice there are difference in
+the experimental results below, but they are part of the natural
+deviation of the benchmark:
+
+	> Without the fixup
+	$ flash_speed /dev/mtd0 -c100 -d
+	eraseblock write speed is 442 KiB/s
+	eraseblock read speed is 1606 KiB/s
+	page write speed is 439 KiB/s
+	page read speed is 1520 KiB/s
+	2 page write speed is 441 KiB/s
+	2 page read speed is 1562 KiB/s
+	erase speed is 68 KiB/s
+
+	> With the fixup
+	$ flash_speed /dev/mtd0 -c100 -d
+	eraseblock write speed is 428 KiB/s
+	eraseblock read speed is 1626 KiB/s
+	page write speed is 426 KiB/s
+	page read speed is 1538 KiB/s
+	2 page write speed is 426 KiB/s
+	2 page read speed is 1574 KiB/s
+	erase speed is 66 KiB/s
+
+However, the fixup, whatever which one we pick, must be applied on
+multi-die chips, which hence must be properly flagged. The SFDP tables
+implemented give a lot of information but the die details are part of an
+optional table that is not implemented, hence we use a post parsing
+fixup hook to set the params->n_dice value manually.
+
+Link: https://www.winbond.com/resource-files/W25Q01JV%20SPI%20RevE%2003042024%20Plus.pdf
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20250110-winbond-6-12-rc1-nor-volatile-bit-v3-1-735363f8cc7d@bootlin.com
+---
+ drivers/mtd/spi-nor/winbond.c | 84 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
+
+diff --git a/drivers/mtd/spi-nor/winbond.c b/drivers/mtd/spi-nor/winbond.c
+index 8d0a00d69e12..a4c0d99dde4f 100644
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -10,6 +10,7 @@
+ 
+ #define WINBOND_NOR_OP_RDEAR	0xc8	/* Read Extended Address Register */
+ #define WINBOND_NOR_OP_WREAR	0xc5	/* Write Extended Address Register */
++#define WINBOND_NOR_OP_SELDIE	0xc2	/* Select active die */
+ 
+ #define WINBOND_NOR_WREAR_OP(buf)					\
+ 	SPI_MEM_OP(SPI_MEM_OP_CMD(WINBOND_NOR_OP_WREAR, 0),		\
+@@ -17,6 +18,12 @@
+ 		   SPI_MEM_OP_NO_DUMMY,					\
+ 		   SPI_MEM_OP_DATA_OUT(1, buf, 0))
+ 
++#define WINBOND_NOR_SELDIE_OP(buf)					\
++	SPI_MEM_OP(SPI_MEM_OP_CMD(WINBOND_NOR_OP_SELDIE, 0),		\
++		   SPI_MEM_OP_NO_ADDR,					\
++		   SPI_MEM_OP_NO_DUMMY,					\
++		   SPI_MEM_OP_DATA_OUT(1, buf, 0))
++
+ static int
+ w25q128_post_bfpt_fixups(struct spi_nor *nor,
+ 			 const struct sfdp_parameter_header *bfpt_header,
+@@ -66,6 +73,79 @@ static const struct spi_nor_fixups w25q256_fixups = {
+ 	.post_bfpt = w25q256_post_bfpt_fixups,
+ };
+ 
++/**
++ * winbond_nor_select_die() - Set active die.
++ * @nor:	pointer to 'struct spi_nor'.
++ * @die:	die to set active.
++ *
++ * Certain Winbond chips feature more than a single die. This is mostly hidden
++ * to the user, except that some chips may experience time deviation when
++ * modifying the status bits between dies, which in some corner cases may
++ * produce problematic races. Being able to explicitly select a die to check its
++ * state in this case may be useful.
++ *
++ * Return: 0 on success, -errno otherwise.
++ */
++static int winbond_nor_select_die(struct spi_nor *nor, u8 die)
++{
++	int ret;
++
++	nor->bouncebuf[0] = die;
++
++	if (nor->spimem) {
++		struct spi_mem_op op = WINBOND_NOR_SELDIE_OP(nor->bouncebuf);
++
++		spi_nor_spimem_setup_op(nor, &op, nor->reg_proto);
++
++		ret = spi_mem_exec_op(nor->spimem, &op);
++	} else {
++		ret = spi_nor_controller_ops_write_reg(nor,
++						       WINBOND_NOR_OP_SELDIE,
++						       nor->bouncebuf, 1);
++	}
++
++	if (ret)
++		dev_dbg(nor->dev, "error %d selecting die %d\n", ret, die);
++
++	return ret;
++}
++
++static int winbond_nor_multi_die_ready(struct spi_nor *nor)
++{
++	int ret, i;
++
++	for (i = 0; i < nor->params->n_dice; i++) {
++		ret = winbond_nor_select_die(nor, i);
++		if (ret)
++			return ret;
++
++		ret = spi_nor_sr_ready(nor);
++		if (ret <= 0)
++			return ret;
++	}
++
++	return 1;
++}
++
++static int
++winbond_nor_multi_die_post_sfdp_fixups(struct spi_nor *nor)
++{
++	/*
++	 * SFDP supports dice numbers, but this information is only available in
++	 * optional additional tables which are not provided by these chips.
++	 * Dice number has an impact though, because these devices need extra
++	 * care when reading the busy bit.
++	 */
++	nor->params->n_dice = nor->params->size / SZ_64M;
++	nor->params->ready = winbond_nor_multi_die_ready;
++
++	return 0;
++}
++
++static const struct spi_nor_fixups winbond_nor_multi_die_fixups = {
++	.post_sfdp = winbond_nor_multi_die_post_sfdp_fixups,
++};
++
+ static const struct flash_info winbond_nor_parts[] = {
+ 	{
+ 		.id = SNOR_ID(0xef, 0x30, 0x10),
+@@ -145,6 +225,10 @@ static const struct flash_info winbond_nor_parts[] = {
+ 		.name = "w25q512jvq",
+ 		.size = SZ_64M,
+ 		.no_sfdp_flags = SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
++	}, {
++		/* W25Q01JV */
++		.id = SNOR_ID(0xef, 0x40, 0x21),
++		.fixups = &winbond_nor_multi_die_fixups,
+ 	}, {
+ 		.id = SNOR_ID(0xef, 0x50, 0x12),
+ 		.name = "w25q20bw",
+-- 
+2.43.0
 
 
