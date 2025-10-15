@@ -1,61 +1,92 @@
-Return-Path: <openbmc+bounces-741-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-742-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66FF1BDE6B5
-	for <lists+openbmc@lfdr.de>; Wed, 15 Oct 2025 14:14:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C22BBDF245
+	for <lists+openbmc@lfdr.de>; Wed, 15 Oct 2025 16:44:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cmqkm3j1Mz3d4D;
-	Wed, 15 Oct 2025 23:14:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cmv452sXNz3dHm;
+	Thu, 16 Oct 2025 01:44:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760530448;
-	cv=none; b=Otr4cdLjs4xFWwswJzhscdp4swI9R4MZKEwYPXD69GA9e/nURMm4YjfqPopb9Ku0xAsdOY9ll3O7JxlsgmQoFVlOLZwrdHOlxLZlO0i85uvBXCjqVrDr5F5YEKrzL43fh/20HHDWZqkcpfeJl4EKVyS+kKIn/9ikfWo/tE9xwLeivwXV6yZr4K72ZwU9BouAwC1vG33ufkE/ovndNZAp9b8YhJK4cMCSXdZgNjZNSEHaTOWH9SzsekHoe2PL+C2YzoL2NQUtoi8n81jE3KRPsTQxBqTKdEg0//cOaDevmgo+RGy1IdWcuyST99nIQ24DY4tUwNTAG91GvwU17i9l/g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.148
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760539461;
+	cv=none; b=nNzVhVFFrf/m+s32Q4u20mx+Gv+Gp6J2f7pOprJq6MBUajy9YxTFvm/VXlmTRVBeal8uqVfkQnEBG339B+orvlWDiyHLC2XbGDP+4dVPGuY4yQczvlXrBI/hRqAr6QJpkQzs3k+w0Uxmc8lQnmrC38XirOc+L4rsm3/gKkf2FM12+aUXhFW/N4qXiASVFzyPPbJvpoAuPsfhB6p4H7y2o5zw+eKPtJZK6zNTfs57mtNumgnX6HAcr1NA+8Ma0Jkh2k4hYIzNbSg9eMJpMQpEr/SpT6s+PpJQSDkbgf/73t8ePWgAblpEOipqP3IQEJ0HTvV9in1hSgBYRtLCV9/1Mw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760530448; c=relaxed/relaxed;
-	bh=f3OimdfZgjfY9/HT+h0JoDDZq5EDc2SRALwvB4NSvXE=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=iEGAw7FfEMyPb0Vmy9u7p7Dk4f78Cs1r5iRkc/WTSmH4sJShtrukc8eOGX+Wx7IIjSBJNknd/hMg+pRtIPoymk7CS/ZMb1N8isKCS65dga7uNrL8460+YaMbDHWpftmMl7/yiXfJS4wKC3Tp2FiNhoXjMVMTBSpxxm7qw1bTEHp98lSN6uRL3VRNBs2vbhouBzxBsrqksQDQCR4bqfKppa6G8x5PGoAN9HlMYWx4tVTT6m21nnjbZ7txDf0U0bYP1fJOkWeU3Ba7yjML6Iq0nYHKJKiJCYD0kEdFSixPbNZgvhvqZWEpQwg39KOAdlpJhI2gPOmAu2bpbWvy0udD2w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=o/X8KPLm; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1760539461; c=relaxed/relaxed;
+	bh=WAANnyHcNqT71fkunCGIz8y9ZAam3IRpwyX+yeR84HU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JJc5GlfQJDimRYiq7jKmPmPaZ5IAOPIKKwfGjNC2j8L13v18dUJmXcsu3wn7GOmxF8jWgpNG2n90OPbuJkM+tE185U1b634X9z7y605JooH+2e9haMB3QR7m6PpMrNJchGzjKG2e/UzfoUNtakm48P3l13S+7Le0iF2qJpfMay/MWtaeaJ+Y0g65xyrMWrF9vcUMyjA2kcynsBuV4PtusKPup8+3K2yG6p8A5j5RrZfok33jYDbspWcT2d+ralK51wIvr7nN9XWsX6gVID3M8uw+YAHnkN2/2b6tCOp246kexMCAfoyR8yPcQMJeJ+2aDXZ40EChhKiQnZlwspv3Ow==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HMs9BkLX; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=AreLM+Ox; dkim-atps=neutral; spf=pass (client-ip=103.168.172.148; helo=fout-a5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=o/X8KPLm;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HMs9BkLX;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=AreLM+Ox;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.148; helo=fout-a5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cmqkl43lXz3d3W;
-	Wed, 15 Oct 2025 23:14:07 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id BF27845140;
-	Wed, 15 Oct 2025 12:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30FBC116B1;
-	Wed, 15 Oct 2025 12:14:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760530444;
-	bh=U0qBfTAoLQ2lXuxhHDpAiZcucUrXqzfYam7mxeAjgzM=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=o/X8KPLmQwvaZ/4jk3aNbggMUsmUtSiTRQlSMl2XJzeWcdxeAHYCVUEkxd4xyQRUM
-	 lm9j3UxOz9eAQqeEiw4KJtqK6D9JhqFpzt824g1F5aOEiD9IDRQTb4jnryGTQEKfOs
-	 iAlvzz2RFp1CxWICKQO4xi1XyoRewABj3vRnEl7xWHSRMxzN0SpSnDF43LOvksIYR3
-	 ACtYefsh+xgYcs1L5mX2EWAr4I/iNRCtLcWAjJJMe7vdTvlm8DBDul72BwYuelziYo
-	 OjknTg03VXAm8mwyc8gDIxE4bHcrkdHE7kiuKHSn2QefE+Gc9U5X0I+y7ygwupdVFi
-	 /eyOx9e5W702g==
-From: Mark Brown <broonie@kernel.org>
-To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
- joel@jms.id.au, andrew@codeconstruct.com.au, clg@kaod.org, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
- openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org, BMC-SW@aspeedtech.com, 
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-In-Reply-To: <20251001112605.1130723-1-chin-ting_kuo@aspeedtech.com>
-References: <20251001112605.1130723-1-chin-ting_kuo@aspeedtech.com>
-Subject: Re: [PATCH 0/6] spi: aspeed: Improve clock, timing and address
- decoding logic
-Message-Id: <176053044168.105519.1540910122531672579.b4-ty@kernel.org>
-Date: Wed, 15 Oct 2025 13:14:01 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cmv430hTqz3dHf
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Oct 2025 01:44:18 +1100 (AEDT)
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80CFAEC01DB;
+	Wed, 15 Oct 2025 10:44:14 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Wed, 15 Oct 2025 10:44:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1760539454; x=1760625854; bh=WAANnyHcNq
+	T71fkunCGIz8y9ZAam3IRpwyX+yeR84HU=; b=HMs9BkLXCFAya+YvAocMjUizSD
+	bzMjVc+1DBgMEkdgghaMxf5dgVacoTkn6csbpKSBiSiQLHeP/5hMY2+w6yPu4hyY
+	vrGV+nogWULRGitDKcdgnuDxiPA+FYwGtFafkM5KK8Oyr+vMTEKtFoCdX9HSYoc0
+	dQ9Zr6yYj4xG1Smj60mvat/4g/AjICOJyEqvWrb/++BvvwQ80vYwAa28t4RUfBBM
+	bQ2B6Z8/EKOFRppKi/ag0zW1ZS8hQzn5omIWlV7BgWGnaejhwyzOR6iQtgIZyvnz
+	1MR3o36mdp/OO8/QIFgVwcYpKB14s6TQtvUIcJKdjJX1AlbVYEi6pUFA6ktQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1760539454; x=1760625854; bh=WAANnyHcNqT71fkunCGIz8y9ZAam3IRpwyX
+	+yeR84HU=; b=AreLM+OxZ8ONsYwmNGSd0tCw/VEok3hh5mc2Yw/hFDxWq0oACS8
+	5ltNGu40WsIPK33ycaFtv2D87ua0tqFabSSi4ktWBPBSbIZ9DkI95o9+0kwrkFwf
+	4pPwcdOadBfOp2i5YcFOL9T/sMEMbaj7v8CYDhepvZoFtNBomIBBecrDsig/4yAD
+	z0Tv5o+NJlkcN5DSh8xtmgmbAQmhWecUfV1p1Z44XC2Pw6h8hmF+Or5A6WDfSVAC
+	0xmF1RlTxHs4sbU2KX2ZCa/q9L8scUfnCkaR1Z79R/mhUpLBNEoh7oG7XsNJ2rOM
+	DeKmhF1giTZNwOL3y3hGb1O+UeAuk/HAU9g==
+X-ME-Sender: <xms:PrPvaIoxcrGEazP6ccMGaFUH6x-7lPFxwTKrzjG2AZ0H3Op1Yk1fKw>
+    <xme:PrPvaEqz7FXMw7j0eb--_ZG0q_8652eEhvQmyoPFJx1JYSvj6nQz7PEZFNdYLu2-t
+    oykGBPAGM2-gMeaHTgUm5E72C0P2EOhegh-o7rujJsuErPnjZsizds>
+X-ME-Received: <xmr:PrPvaK3IXedOXo46BBEtavgSwdgGMHQRYI1kw9hw8vzPqDZ8mtjcTK5XCro>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggdduvdefieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+    hlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddv
+    necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+    iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeefteelkeffgffhgfeiffeifeekleeh
+    jeekteekueetlefhhfelfeehtdfhkeehhfenucffohhmrghinhephihouhhtuhgsvgdrtg
+    homhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
+    rghtrhhitghksehsthiftgigrdighiiipdhnsggprhgtphhtthhopedvpdhmohguvgepsh
+    hmthhpohhuthdprhgtphhtthhopegvnhhgrdifrghlihgushhhohhumhgrnhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdroh
+    hrgh
+X-ME-Proxy: <xmx:PrPvaLAokPKtxmEDKY5IE2aDTNv-KK6JE9diSQJA21KD-XBNfDIe3w>
+    <xmx:PrPvaKfw9detdfxoCqX4_sOWqSox_ieEEffwNLzWl7XVrSXTGsXv2w>
+    <xmx:PrPvaIhseTNhH94t8Hkg4-zVthmPKXdCIeKYpBMHYVcyJgX6Jz5iag>
+    <xmx:PrPvaKoYKtudKEjimMvJGD2UdFkR90cObR8Xcjz6FntqT1JT_9_qpA>
+    <xmx:PrPvaMl1ejVG9ImyVI1C0mc_X6G0nT3aJnwk9bM5A1FcQuN1PFwI94p5>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Oct 2025 10:44:13 -0400 (EDT)
+Date: Wed, 15 Oct 2025 10:44:13 -0400
+From: Patrick Williams <patrick@stwcx.xyz>
+To: walid shouman <eng.walidshouman@gmail.com>
+Cc: openbmc@lists.ozlabs.org
+Subject: Re: IPMI Subsystem video transcript language
+Message-ID: <aO-zPckgL6MOtglX@heinlein>
+References: <CADaxruKBGgMe0rEKbid14n-xXbMWaRPq49f53LNDmJDg8O2JZQ@mail.gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -67,63 +98,56 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-96507
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="llA/15jf1R4fN9Wq"
+Content-Disposition: inline
+In-Reply-To: <CADaxruKBGgMe0rEKbid14n-xXbMWaRPq49f53LNDmJDg8O2JZQ@mail.gmail.com>
+X-Spam-Status: No, score=1.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Wed, 01 Oct 2025 19:25:59 +0800, Chin-Ting Kuo wrote:
-> This patch series introduces several improvements to the
-> ASPEED SPI driver, targeting better stability, compatibility
-> and, flexibility across multiple ASPEED platforms.
-> 
-> Key changes include:
-> 
-> * Clock selection strategy update
->   Improves fallback logic when timing calibration is skipped or
->   fails, ensuring reliable boot behavior.
-> 
-> [...]
 
-Applied to
+--llA/15jf1R4fN9Wq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+On Mon, Oct 06, 2025 at 08:43:12PM +0200, walid shouman wrote:
+> Hello,
+> Could you change the transcript language to English for the IPMI Sybsystem
+> video at https://www.youtube.com/watch?v=3DtAiua7CJ9es  as there are some
+> parts where the sound is inaudible?
+> Sincerely,
+> Walid Shouman
 
-Thanks!
+I adjusted the language settings for the video in Youtube but it might
+take them some time to regenerate the captioning.
 
-[1/6] spi: aspeed: Update clock selection strategy
-      commit: 31dcc7e1f8a9377d8fd9f967f84c121c5ba8f89c
-[2/6] spi: aspeed: Improve timing calibration algorithm for AST2600 platform
-      commit: efb79de36e947d136517bac14c139d494fcc72fa
-[3/6] spi: aspeed: Force default address decoding range assignment for each CS
-      commit: 630a185fd06109193574d10f38b29812986c21de
-[4/6] spi: aspeed: Centralize address decoding region management
-      commit: b546e0023a203e7edf9377ac8f4f490a6965afd6
-[5/6] spi: aspeed: Add per-platform adjust_window callback for decoding range
-      commit: 0586b53d4a0c7c5a132629f99da934cc674ea4cd
-[6/6] spi: aspeed: Only map necessary address window region
-      commit: 64d87ccfae3326a9561fe41dc6073064a083e0df
+--=20
+Patrick Williams
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+--llA/15jf1R4fN9Wq
+Content-Type: application/pgp-signature; name=signature.asc
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+-----BEGIN PGP SIGNATURE-----
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmjvszsACgkQqwNHzC0A
+wRk6rRAAmkUMw8l/QoaBbAI89/1/FK3a9YXpXGzeI1hgKyQdH1eyf4DBag8FZnTX
+0bA2WK50NsjrSkkybDpLcd1HW6zOF6uNRweT+MCkDnjs37ttJXmPNFKq6zfo9DGH
+xjOVaaG4h+iRxr/VJ/sthn+1swxN0pFc9A20ytRwLVnErfnbuuTfnWcNneM0wiz2
+c3KXIEWE4oVO8tn1eaGxQzrI5f1BDAwbY77b3Sf7CtdYC8BbMqOLFnKgrqC0gZB0
+CCaL2v9PTIE2JIpGBCfOLuCpfvaTK5CUHTz9PvCAPQxZn4YeTsTgQxx86Vgr4PvO
+rJsqDYxAabTCQiz9OhtNI77gN5VR+ATc/g9QTN5hd5BrwCA1BPEFMiwAxckWfNHO
+UQQBL6mtWaQ2BFZorZWCZKiBvTZi+tcvTSGQWyfQj/LJ80Ovk4AZOweOPx3Yt5Um
+25icGbZ4+tIqKu8d7DVe/xLDjlx4vONurFndxsJkCIpTSMJlTh9yyvqvAtSos+Ia
+DajlvgjIzMzSmT2gqYhhiFkJ7jZjqtoVRe7SZ6VV2ztEKEfARJvQn5IOvmcmXC4O
+JalEjVH/Vw8j831yHlrd+vi8MOFpBEBnpOkBWDxcNS5qHNScCiutzwZnJORxRKc/
+PTRovE6Cx+EYtlyBCDRpZpIjgcJRMHXd8CYHgkK0dpyylUwsGTw=
+=96Jz
+-----END PGP SIGNATURE-----
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+--llA/15jf1R4fN9Wq--
 
