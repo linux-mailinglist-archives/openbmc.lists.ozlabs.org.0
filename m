@@ -1,85 +1,85 @@
-Return-Path: <openbmc+bounces-751-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-750-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 437B8BE5B4E
-	for <lists+openbmc@lfdr.de>; Fri, 17 Oct 2025 00:41:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D19D1BE5B49
+	for <lists+openbmc@lfdr.de>; Fri, 17 Oct 2025 00:41:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cnjbp6cH5z30MY;
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cnjbp3TQmz3069;
 	Fri, 17 Oct 2025 09:41:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::432"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760580889;
-	cv=none; b=iVtJvcbYRhYg6jTEi27YZVOpVKmVM43bvx9QJOaoAn8L8fzDs7ay0aZabS8v5Wbd1etZhwe+XOquoQLXws17YSvO6Cbnlsjr54CP/381w9Q5BXj5RFmtDW87k5cf7zLRSy2BWX+S5L6H+Hd57oYJmkjItdgxkXcmI+ygBnVexjn6DKJjXn47gZOiqQ1Z+WW5jNoQwjD+fZmpVQaPqpYCTot3kY7KfrDWXmdV4joI5JYnLCwfzJXxMa+GTpi7k3lFoo/suqHFpvcXYmRrjAYxh2C0i87WFmHCc6ENpNOU4JjCJeFKTHLgPMsq1xROe+ohZwp0S8EAuWDl+HKMLbxbFw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::102d"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760580890;
+	cv=none; b=DALk4M915D3L8lKRfh9S/YBE8oKt2xkRXrsDWmALN3wQlnBLkAGfpN83mWZDwywl/VBLmNwJmnPgbkiZct3kk6RlvuTPVuz8b8Drk2yqf7GB3FwEhPdUY9fOS1bVi++2YO38v+YDu9IpUJdN5sqGfXsfon03ukULbEyFdhWS9YTirLpPi5FJRn4EglynnkI4JgICTtkK2liq/r35/kQV/5SYB72WOnI0xOl/ZrVrYv6GBkP/UBlAdJiJqhkGaGjSPTqAlelsTzaHaGJfN4WyZ5lUIbJGnEIOmFKyCcxwPpM23LKPg5J+XsUk/zH6skJuIEuE00UTDMCqhLchRyeqWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760580889; c=relaxed/relaxed;
-	bh=CN3kNOfm03CrvhGM2Cx7mJOrZjQ8n3nURYG65j59SxA=;
+	t=1760580890; c=relaxed/relaxed;
+	bh=u5b/WqlLeVwT4z5Ifiw5lh5cCcvOPAiKMmnZVYJB/2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bm7ep5JUtmJRlfeucK2hlipdc+PUmushrE0zax2EscP2xXyur6c+mAD0U4hT5QLtSusypUYWI8EmpG7pE87V6qYnaxYaBULX8+sDNcLyIOxontVBmCjvSay3lv4I6JfJkiY6iE23T1WkclgO7SyPIIQPe7lwJDXkCjd7oVWDiwtICbPhUm3qFsUGYU8l8ZX8M9uZonIIB7QgAjhpNFhphg8I/T6wjs1ADvSXN1tVVwPl58telRIh0skQltl+EgKX43ZVOXiDdz9VwEvqaX3AIFMDhl8HDBWlsLzp/38j1lWqO2jnYhtlYDMNEt41SkdezXPHpVnEM0FbX6qcKgcuOQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kdlXali8; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com; envelope-from=leo.yang.sy0@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=fqMitK5bzyjLw5GMsE9/48tVZuvWBcptvOG5kO8Jm5BKRKIpMA6PDFlghowwBe3TKAQJ3rA3iyJqW2WGPIQnbZ+6c+QSfvQ94bcO2dLCEn+P+7HXqnsZqiMyDmtJDNMJhZZKyczuap+uo42QSF+ze6IZIKKGV4QUYRHVfKoMWP9tUicDH41fNdvT7YtXJNyh5JMFEiVokLD9Ga4OrtEO/YNCn369zXersuas/xYBpgKFsuvgWdc7QukvGCvFyIijkVP3YLSp7iICRopcScvxSd8RLBwkP03gFrhvnsrAdSwEFy3J/477E8QfLKf4ThtagplWdVtF6VWjB1dVIixgZA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lMglRyYE; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=leo.yang.sy0@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kdlXali8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=lMglRyYE;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com; envelope-from=leo.yang.sy0@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=leo.yang.sy0@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cnBNm2HRNz2yr1
-	for <openbmc@lists.ozlabs.org>; Thu, 16 Oct 2025 13:14:48 +1100 (AEDT)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-76e4fc419a9so240193b3a.0
-        for <openbmc@lists.ozlabs.org>; Wed, 15 Oct 2025 19:14:48 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cnBNn4b6hz2yr1
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Oct 2025 13:14:49 +1100 (AEDT)
+Received: by mail-pj1-x102d.google.com with SMTP id 98e67ed59e1d1-339c9bf3492so304215a91.2
+        for <openbmc@lists.ozlabs.org>; Wed, 15 Oct 2025 19:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760580886; x=1761185686; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1760580888; x=1761185688; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CN3kNOfm03CrvhGM2Cx7mJOrZjQ8n3nURYG65j59SxA=;
-        b=kdlXali8vwx1mqYxg50WFtwIR8+BSU7M7rzcq9UogmN96We7JGcMVJum3Okcvx1Jjm
-         FWBmHR3XpToNWXfxpJPGzfgrfWPj14N60F3vnyV/4OjxRu4tC65n+s83jB7OliW9Esge
-         HOSTlUg/00kv0Uj5NXyXqnMbbqUUY/pHFHADgekvlPrR4dcG2JDQ5c71x5MC4tOMc99G
-         ArwiCh4Q4tRtv02Tk9FNotgRCOq6qUfYcmPcN3dE4M0eoxIADjoD6VqdQKHI3wE21oD/
-         h/Vh9s0uF/2sLTwGDCHS7W/hk+gK/jSzLhUtNb0585HWCHaivG5Nj7KE+qH828+yLW7+
-         i/SA==
+        bh=u5b/WqlLeVwT4z5Ifiw5lh5cCcvOPAiKMmnZVYJB/2c=;
+        b=lMglRyYEF4jBoGmeaOrU714W7iAHdtwhfvWy4TCeJr2JMFqKyYBll995R9v3Blb5Lr
+         aXi22/FsjBg0eJIVHzkb4UCJxlK2iwLbqaR7ZNCMiHxbucty/UgKXRuhzreMhRAsjpWw
+         mUmL/L/F4xl75m3EKXuqAsYnJSDfrGYs0oXXV1UkjybK5exREVZFYLxirC25PO8rLT3l
+         6o1H5Qvm8VikvP57HhliGuW8r3Y1YM+t+S97Q3h5p7DiHVMoBGGDqEn7MnIQzV8mhsay
+         a0bfVTQ7gpwNUDN9cEs25qI8HXwe2VKSQv+UEnS/81yaB3LZgwn9wNoWCalQuMr05Fjz
+         3XYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760580886; x=1761185686;
+        d=1e100.net; s=20230601; t=1760580888; x=1761185688;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CN3kNOfm03CrvhGM2Cx7mJOrZjQ8n3nURYG65j59SxA=;
-        b=vGdwpakngacawcTBnA8PiUGmde1JzielNSETE3tqqBmAk782LwEh5c8RU91ruog3gz
-         V38ny+4teTnQebSel+r8pxQGBaBGk/pYOyrAMWmeDja2+u703UqOmWrRVbj5EEfyBlvB
-         HtIuEjfXN1sNAMdgnx+JuR2AMN1aN6Kq/iNnI50lOXJc8aNG/1tvZQFipPxealPrADyM
-         OpdGL913UsKrbn7+14IVGqhdxyVzbRUd3KVKILxTJMkpMy7QnSVyhu8nUmqvycScR/1+
-         D4/htObSD8JTuvIPCtIiAiT8f5Vkoy/VNbkX8fAJS0FDaevxvifcCAvq32UgccHiPx79
-         8YPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUCX8Hmdm+j15iV/7yvkQ1/JLE1Y3CX8Lrf/r66zvBjNOSvgz5Cd8ic+4o/GXkipdIrwiCIphzz@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Ywhy7x+iBXYcAYMww9lxjKBfstGE8aqURhhgCYpAI2uRpzifSYv
-	d/ScoyDCMA94L2UP2dC/amTOrw+Ht6zmohXbLvtiCvKBnKN042UZmoxV
-X-Gm-Gg: ASbGncuwt5GaQVXLxvM8QI3zsTb/wd9PYiYA43ut7WyMW7rUsFttcb69BBLiA5iEVuq
-	SH7AHnQ69T5B1DzD/2dc7zXN33cwsdKkzb1tbWsw3fIIw5HrVhEgIpvWL1Rj/7QmJUs2vCSuhMe
-	UjjNMbEZK7dDKLPm0zZmVqLpj3tDiMLLS1wqM0tSfXlNIAJMjNV3DM/gCldzK4GuGHh32NFrfDm
-	kdd185zDf7JQTZR8LxagqwYae5WQh2pGIAjGnRrHletDR94C+JX8k00MiNwpQSsYQAKPGw12jHp
-	2QAARFYFsLJp0SEiGtYvHJJSlcTTJdv3g2kWNjV0rTM9/H9vhSjwAenAUVip5MhUsW9oMrYrjYa
-	dl+tGERY69blprbmvtXRQOFPlu9eY3es+3eAmjA7jmcS30uKqnCcVF/RWRgD5klBEz7LCu4LkMM
-	zUow4vze59AVp9loOTdAIsPHy3/V5DD57SOFvhZ5qbDo4oMXfc8p4=
-X-Google-Smtp-Source: AGHT+IF1Yv1SWCNP0LuVGw5aUfLp0OqH0+kdGfjJeR3BsLtSrosSDAJNzkzNQmcJAbgkkxg2tr3Dhw==
-X-Received: by 2002:a05:6a20:2585:b0:2dc:40f5:3c6c with SMTP id adf61e73a8af0-32da8462b36mr41933614637.54.1760580886013;
-        Wed, 15 Oct 2025 19:14:46 -0700 (PDT)
+        bh=u5b/WqlLeVwT4z5Ifiw5lh5cCcvOPAiKMmnZVYJB/2c=;
+        b=tqdqOcISZ07pyRQWo1kjD7InaG9IWyB8X9YgcrHgTSNyS5Bj4oysd1z9LuBwsEGp1Q
+         4ZdqMQ8pRlqerFX27b+P+CTn6jHbI2dyMfGFouzbznkAjujlJsKFRm6h0yiLDU0ETTQc
+         z2Vtzx4HG7+6i3GmP8XqIeV/G//TV69j3yiem7eEGW4IDultYuECovVIT7x9uIUQ0R1z
+         Q4tYud0QilSR59/c8/VyBoJ4WtZEJJ3zgxfJAjs/lQpCcc9MCiSDc9uET8IpR3nPesvZ
+         MiU8smj7mDp/65FhW05qubHR3xJ5BWtaDZWlJbehCDrK/JT4Ti+lPJ1OaZ9hhRy19ea5
+         jufA==
+X-Forwarded-Encrypted: i=1; AJvYcCXxsIavSb4/89FniAAgM8smaIRSTfqDT8U+yzs8nU/62g2gHL6b9ITS6LP2k5n7wf2lIm0U4GCA@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwdQX2BUysR3Jj81S6AT3JNdfvrCVINRvROuCCCYHFAoGxti0QC
+	i2ttJDl7eK2j5BIpdYExHvsqUKmiSB8Qr4NGtzKJO7i0KUBmUdMENM3Zv+sfcw==
+X-Gm-Gg: ASbGncvM/drcHfnUObwGI0wefGtQfm3xrnjMu6pWDCx1ePjORMWGiK5LYehK8LZkmIX
+	YSkkfKV2S53Bkzv3o9Br6rsejD5Kmu9O9WDt2etPZHp51l5bWoaRUBfUl6EcELM+bGhyqktnOIQ
+	ED85XzINrj6i14n0XWc/QKW8H4yxnDExMVAoKMYhm0+1bK7QTqnRYK7vtXnqg5ImCNNBD+2KQAJ
+	+TYtSa9vFy4vdDV4kc22DMyEtNRphVEKeAu/FopHbh9XY4H5ur3nQm53GGWOM/xUuJUayqRYxnd
+	7TW0Yvv7CI/qney+E/FZ27knsFqb+EjhRpQDou/4dvdVeOzZIGyVk3nDNIgYpujpwYyo7nAapEP
+	nCNdv6uXvZg17orT9aDTx8ESu1B3s2sNpXZjEA99VKiNmMW3/SdvuJwRf2Jxd3If123pWtIt6Ix
+	uS9D2RF8jj7wNosHhGlu5O6gjqtlY4puezvKpzCKr/QA8nj5myPkc=
+X-Google-Smtp-Source: AGHT+IG69RpPzqOBikn8xH3WjLrNLmyIKN9iyVepVuWw/f/vpVV3cIpSN/ZbKKKqGLBw25ws9t4YLQ==
+X-Received: by 2002:a17:90b:3ec6:b0:339:ec9c:b26d with SMTP id 98e67ed59e1d1-33b510f8488mr43209664a91.8.1760580887383;
+        Wed, 15 Oct 2025 19:14:47 -0700 (PDT)
 Received: from leo.tail3f5402.ts.net (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b61ac7af3sm21140553a91.17.2025.10.15.19.14.44
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33b61ac7af3sm21140553a91.17.2025.10.15.19.14.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Oct 2025 19:14:45 -0700 (PDT)
+        Wed, 15 Oct 2025 19:14:47 -0700 (PDT)
 From: Leo Yang <leo.yang.sy0@gmail.com>
 X-Google-Original-From: Leo Yang <Leo-Yang@quantatw.com>
 To: andrew@codeconstruct.com.au,
 	openbmc@lists.ozlabs.org
 Cc: leo-yang@quantatw.com,
 	leo.yang.sy0@gmail.com
-Subject: [PATCH linux dev-6.12 2/3] hwmon: add MP2869,MP29608,MP29612 and MP29816 series driver
-Date: Thu, 16 Oct 2025 10:12:35 +0800
-Message-ID: <20251016021241.1873764-2-Leo-Yang@quantatw.com>
+Subject: [PATCH linux dev-6.12 3/3] hwmon: add MP29502 driver
+Date: Thu, 16 Oct 2025 10:12:36 +0800
+Message-ID: <20251016021241.1873764-3-Leo-Yang@quantatw.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251016021241.1873764-1-Leo-Yang@quantatw.com>
 References: <20251016021241.1873764-1-Leo-Yang@quantatw.com>
@@ -96,73 +96,62 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=1.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+	FREEMAIL_REPLY,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 From: Wensheng Wang <wenswang@yeah.net>
 
-Add support for MPS VR mp2869/mp2869a,mp29608/mp29608a,mp29612/mp29612a
-and mp29816/mp29816a/mp29816b/mp29816c controller. This driver exposes
-telemetry and limit value readings and writtings.
+Add support for MPS VR controller mp29502. This driver exposes
+telemetry and limits value readings and writtings.
 
 Signed-off-by: Wensheng Wang <wenswang@yeah.net>
-Link: https://lore.kernel.org/r/20250805102020.749850-2-wenswang@yeah.net
+Link: https://lore.kernel.org/r/20250805102020.749850-3-wenswang@yeah.net
+[groeck: Fixed document formatting]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-(cherry picked from commit a3a2923aaf7f2cf3aaa4649bddee2f936751825f)
+(cherry picked from commit 90bad684e9ac5ae435c2715fab36f6799849e800)
 ---
- Documentation/hwmon/index.rst  |   1 +
- Documentation/hwmon/mp2869.rst | 175 +++++++++
- MAINTAINERS                    |   7 +
- drivers/hwmon/pmbus/Kconfig    |   9 +
- drivers/hwmon/pmbus/Makefile   |   1 +
- drivers/hwmon/pmbus/mp2869.c   | 659 +++++++++++++++++++++++++++++++++
- 6 files changed, 852 insertions(+)
- create mode 100644 Documentation/hwmon/mp2869.rst
- create mode 100644 drivers/hwmon/pmbus/mp2869.c
+ Documentation/hwmon/index.rst   |   1 +
+ Documentation/hwmon/mp29502.rst |  93 +++++
+ MAINTAINERS                     |   7 +
+ drivers/hwmon/pmbus/Kconfig     |   9 +
+ drivers/hwmon/pmbus/Makefile    |   1 +
+ drivers/hwmon/pmbus/mp29502.c   | 670 ++++++++++++++++++++++++++++++++
+ 6 files changed, 781 insertions(+)
+ create mode 100644 Documentation/hwmon/mp29502.rst
+ create mode 100644 drivers/hwmon/pmbus/mp29502.c
 
 diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index cd722f78c5f3..526fc0c6e3b4 100644
+index 526fc0c6e3b4..af3161adcd5a 100644
 --- a/Documentation/hwmon/index.rst
 +++ b/Documentation/hwmon/index.rst
-@@ -165,6 +165,7 @@ Hardware Monitoring Kernel Drivers
-    menf21bmc
-    mlxreg-fan
-    mp2856
-+   mp2869
+@@ -168,6 +168,7 @@ Hardware Monitoring Kernel Drivers
+    mp2869
     mp2888
     mp2891
++   mp29502
     mp2975
-diff --git a/Documentation/hwmon/mp2869.rst b/Documentation/hwmon/mp2869.rst
+    mp2993
+    mp5023
+diff --git a/Documentation/hwmon/mp29502.rst b/Documentation/hwmon/mp29502.rst
 new file mode 100644
-index 000000000000..2d9d65fc86b6
+index 000000000000..893e741a6b71
 --- /dev/null
-+++ b/Documentation/hwmon/mp2869.rst
-@@ -0,0 +1,175 @@
++++ b/Documentation/hwmon/mp29502.rst
+@@ -0,0 +1,93 @@
 +.. SPDX-License-Identifier: GPL-2.0
 +
-+Kernel driver mp2869
-+====================
++Kernel driver mp29502
++=====================
 +
 +Supported chips:
 +
-+  * MPS mp2869
++  * MPS mp29502
 +
-+    Prefix: 'mp2869'
-+
-+  * MPS mp29608
-+
-+    Prefix: 'mp29608'
-+
-+  * MPS mp29612
-+
-+    Prefix: 'mp29612'
-+
-+  * MPS mp29816
-+
-+    Prefix: 'mp29816'
++    Prefix: 'mp29502'
 +
 +Author:
 +
@@ -172,7 +161,7 @@ index 000000000000..2d9d65fc86b6
 +-----------
 +
 +This driver implements support for Monolithic Power Systems, Inc. (MPS)
-+MP2869 Dual Loop Digital Multi-phase Controller.
++MP29502 Digital Multi-phase Controller.
 +
 +Device compliant with:
 +
@@ -189,14 +178,6 @@ index 000000000000..2d9d65fc86b6
 +
 +**in1_crit_alarm**
 +
-+**in1_lcrit**
-+
-+**in1_lcrit_alarm**
-+
-+**in1_min**
-+
-+**in1_min_alarm**
-+
 +The driver provides the following attributes for output voltage:
 +
 +**in2_input**
@@ -211,53 +192,25 @@ index 000000000000..2d9d65fc86b6
 +
 +**in2_lcrit_alarm**
 +
-+**in3_input**
-+
-+**in3_label**
-+
-+**in3_crit**
-+
-+**in3_crit_alarm**
-+
-+**in3_lcrit**
-+
-+**in3_lcrit_alarm**
-+
 +The driver provides the following attributes for input current:
 +
 +**curr1_input**
 +
 +**curr1_label**
 +
++The driver provides the following attributes for output current:
++
 +**curr2_input**
 +
 +**curr2_label**
 +
-+The driver provides the following attributes for output current:
++**curr2_crit**
 +
-+**curr3_input**
++**curr2_crit_alarm**
 +
-+**curr3_label**
++**curr2_max**
 +
-+**curr3_crit**
-+
-+**curr3_crit_alarm**
-+
-+**curr3_max**
-+
-+**curr3_max_alarm**
-+
-+**curr4_input**
-+
-+**curr4_label**
-+
-+**curr4_crit**
-+
-+**curr4_crit_alarm**
-+
-+**curr4_max**
-+
-+**curr4_max_alarm**
++**curr2_max_alarm**
 +
 +The driver provides the following attributes for input power:
 +
@@ -265,35 +218,11 @@ index 000000000000..2d9d65fc86b6
 +
 +**power1_label**
 +
++The driver provides the following attributes for output power:
++
 +**power2_input**
 +
 +**power2_label**
-+
-+The driver provides the following attributes for output power:
-+
-+**power3_input**
-+
-+**power3_label**
-+
-+**power3_input**
-+
-+**power3_label**
-+
-+**power3_max**
-+
-+**power3_max_alarm**
-+
-+**power4_input**
-+
-+**power4_label**
-+
-+**power4_input**
-+
-+**power4_label**
-+
-+**power4_max**
-+
-+**power4_max_alarm**
 +
 +The driver provides the following attributes for temperature:
 +
@@ -306,75 +235,65 @@ index 000000000000..2d9d65fc86b6
 +**temp1_max**
 +
 +**temp1_max_alarm**
-+
-+**temp2_input**
-+
-+**temp2_crit**
-+
-+**temp2_crit_alarm**
-+
-+**temp2_max**
-+
-+**temp2_max_alarm**
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cc6791d023ea..242f582cc3bb 100644
+index 242f582cc3bb..3f49681e7a25 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -15707,6 +15707,13 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/leds/backlight/mps,mp3309c.yaml
- F:	drivers/video/backlight/mp3309c.c
+@@ -15721,6 +15721,13 @@ S:	Maintained
+ F:	Documentation/hwmon/mp2891.rst
+ F:	drivers/hwmon/pmbus/mp2891.c
  
-+MPS MP2869 DRIVER
++MPS MP29502 DRIVER
 +M:	Wensheng Wang <wenswang@yeah.net>
 +L:	linux-hwmon@vger.kernel.org
 +S:	Maintained
-+F:	Documentation/hwmon/mp2869.rst
-+F:	drivers/hwmon/pmbus/mp2869.c
++F:	Documentation/hwmon/mp29502.rst
++F:	drivers/hwmon/pmbus/mp29502.c
 +
- MPS MP2891 DRIVER
+ MPS MP2993 DRIVER
  M:	Noah Wang <noahwang.wang@outlook.com>
  L:	linux-hwmon@vger.kernel.org
 diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-index 0fa98903a2da..0eeade92f799 100644
+index 0eeade92f799..91ed4f090259 100644
 --- a/drivers/hwmon/pmbus/Kconfig
 +++ b/drivers/hwmon/pmbus/Kconfig
-@@ -346,6 +346,15 @@ config SENSORS_MP2856
- 	  This driver can also be built as a module. If so, the module will
- 	  be called mp2856.
+@@ -373,6 +373,15 @@ config SENSORS_MP2891
+       This driver can also be built as a module. If so, the module will
+       be called mp2891.
  
-+config SENSORS_MP2869
-+	tristate "MPS MP2869"
++config SENSORS_MP29502
++	tristate "MPS MP29502"
 +	help
 +	  If you say yes here you get hardware monitoring support for MPS
-+	  MP2869 Dual Loop Digital Multi-Phase Controller.
++	  MP29502 Dual Loop Digital Multi-Phase Controller.
 +
 +	  This driver can also be built as a module. If so, the module will
-+	  be called mp2869.
++	  be called mp29502.
 +
- config SENSORS_MP2888
- 	tristate "MPS MP2888"
+ config SENSORS_MP2975
+ 	tristate "MPS MP2975"
  	help
 diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-index 56f128c4653e..c3d1de9c0753 100644
+index c3d1de9c0753..7995b16b7502 100644
 --- a/drivers/hwmon/pmbus/Makefile
 +++ b/drivers/hwmon/pmbus/Makefile
-@@ -36,6 +36,7 @@ obj-$(CONFIG_SENSORS_MAX31785)	+= max31785.o
- obj-$(CONFIG_SENSORS_MAX34440)	+= max34440.o
- obj-$(CONFIG_SENSORS_MAX8688)	+= max8688.o
- obj-$(CONFIG_SENSORS_MP2856)	+= mp2856.o
-+obj-$(CONFIG_SENSORS_MP2869)	+= mp2869.o
+@@ -39,6 +39,7 @@ obj-$(CONFIG_SENSORS_MP2856)	+= mp2856.o
+ obj-$(CONFIG_SENSORS_MP2869)	+= mp2869.o
  obj-$(CONFIG_SENSORS_MP2888)	+= mp2888.o
  obj-$(CONFIG_SENSORS_MP2891)	+= mp2891.o
++obj-$(CONFIG_SENSORS_MP29502)	+= mp29502.o
  obj-$(CONFIG_SENSORS_MP2975)	+= mp2975.o
-diff --git a/drivers/hwmon/pmbus/mp2869.c b/drivers/hwmon/pmbus/mp2869.c
+ obj-$(CONFIG_SENSORS_MP2993)	+= mp2993.o
+ obj-$(CONFIG_SENSORS_MP5023)	+= mp5023.o
+diff --git a/drivers/hwmon/pmbus/mp29502.c b/drivers/hwmon/pmbus/mp29502.c
 new file mode 100644
-index 000000000000..cc69a1e91dfe
+index 000000000000..7241373f1557
 --- /dev/null
-+++ b/drivers/hwmon/pmbus/mp2869.c
-@@ -0,0 +1,659 @@
++++ b/drivers/hwmon/pmbus/mp29502.c
+@@ -0,0 +1,670 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
-+ * Hardware monitoring driver for MPS Multi-phase Digital VR Controllers(MP2869)
++ * Hardware monitoring driver for MPS Multi-phase Digital VR Controllers(MP29502)
 + */
 +
 +#include <linux/bitfield.h>
@@ -383,33 +302,30 @@ index 000000000000..cc69a1e91dfe
 +#include <linux/of_device.h>
 +#include "pmbus.h"
 +
-+/*
-+ * Vender specific registers, the register MFR_SVI3_IOUT_PRT(0x67),
-+ * READ_PIN_EST(0x94)and READ_IIN_EST(0x95) redefine the standard
-+ * PMBUS register. The MFR_VOUT_LOOP_CTRL(0x29) is used to identify
-+ * the vout scale and the MFR_SVI3_IOUT_PRT(0x67) is used to identify
-+ * the iout scale. The READ_PIN_EST(0x94) is used to read input power
-+ * per rail. The MP2891 does not have standard READ_IIN register(0x89),
-+ * the iin telemetry can be obtained through the vendor redefined
-+ * register READ_IIN_EST(0x95).
-+ */
++#define MFR_VOUT_SCALE_LOOP	0x29
 +#define MFR_SVI3_IOUT_PRT	0x67
 +#define MFR_READ_PIN_EST	0x94
 +#define MFR_READ_IIN_EST	0x95
++#define MFR_VOUT_PROT1	0x3D
++#define MFR_VOUT_PROT2	0x51
++#define MFR_SLOPE_CNT_SET	0xA8
 +#define MFR_TSNS_FLT_SET	0xBB
 +
-+#define MP2869_VIN_OV_FAULT_GAIN	4
-+#define MP2869_READ_VOUT_DIV	1024
-+#define MP2869_READ_IOUT_DIV	32
-+#define MP2869_OVUV_LIMIT_SCALE	10
-+#define MP2869_OVUV_DELTA_SCALE	50
-+#define MP2869_TEMP_LIMIT_OFFSET	40
-+#define MP2869_IOUT_LIMIT_UINT	8
-+#define MP2869_POUT_OP_GAIN	2
++#define MP29502_VIN_OV_GAIN	4
++#define MP29502_TEMP_LIMIT_OFFSET	40
++#define MP29502_READ_VOUT_DIV	1024
++#define MP29502_READ_IOUT_DIV	32
++#define MP29502_IOUT_LIMIT_UINT	8
++#define MP29502_OVUV_LIMIT_SCALE	10
++#define MP28502_VOUT_OV_GAIN	512
++#define MP28502_VOUT_OV_SCALE	40
++#define MP29502_VOUT_UV_OFFSET	36
++#define MP29502_PIN_GAIN	2
++#define MP29502_IIN_DIV	2
 +
-+#define MP2869_PAGE_NUM	2
++#define MP29502_PAGE_NUM	1
 +
-+#define MP2869_RAIL1_FUNC	(PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | \
++#define MP29502_RAIL_FUNC	(PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | \
 +							PMBUS_HAVE_IOUT | PMBUS_HAVE_POUT | \
 +							PMBUS_HAVE_TEMP | PMBUS_HAVE_PIN | \
 +							PMBUS_HAVE_IIN | \
@@ -418,28 +334,18 @@ index 000000000000..cc69a1e91dfe
 +							PMBUS_HAVE_STATUS_TEMP | \
 +							PMBUS_HAVE_STATUS_INPUT)
 +
-+#define MP2869_RAIL2_FUNC	(PMBUS_HAVE_VOUT | PMBUS_HAVE_IOUT | \
-+							 PMBUS_HAVE_POUT | PMBUS_HAVE_TEMP | \
-+							 PMBUS_HAVE_PIN | PMBUS_HAVE_IIN | \
-+							 PMBUS_HAVE_STATUS_VOUT | \
-+							 PMBUS_HAVE_STATUS_IOUT | \
-+							 PMBUS_HAVE_STATUS_TEMP | \
-+							 PMBUS_HAVE_STATUS_INPUT)
-+
-+struct mp2869_data {
++struct mp29502_data {
 +	struct pmbus_driver_info info;
-+	bool mfr_thwn_flt_en;
-+	int vout_scale[MP2869_PAGE_NUM];
-+	int iout_scale[MP2869_PAGE_NUM];
++	int vout_scale;
++	int vout_bottom_div;
++	int vout_top_div;
++	int ovp_div;
++	int iout_scale;
 +};
 +
-+static const int mp2869_vout_sacle[8] = {6400, 5120, 2560, 2048, 1024,
-+										 4, 2, 1};
-+static const int mp2869_iout_sacle[8] = {32, 1, 2, 4, 8, 16, 32, 64};
++#define to_mp29502_data(x)	container_of(x, struct mp29502_data, info)
 +
-+#define to_mp2869_data(x)	container_of(x, struct mp2869_data, info)
-+
-+static u16 mp2869_reg2data_linear11(u16 word)
++static u16 mp29502_reg2data_linear11(u16 word)
 +{
 +	s16 exponent;
 +	s32 mantissa;
@@ -458,59 +364,104 @@ index 000000000000..cc69a1e91dfe
 +}
 +
 +static int
-+mp2869_identify_thwn_flt(struct i2c_client *client, struct pmbus_driver_info *info,
-+			 int page)
++mp29502_identify_vout_scale(struct i2c_client *client, struct pmbus_driver_info *info,
++			    int page)
 +{
-+	struct mp2869_data *data = to_mp2869_data(info);
++	struct mp29502_data *data = to_mp29502_data(info);
 +	int ret;
 +
 +	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
 +	if (ret < 0)
 +		return ret;
 +
-+	ret = i2c_smbus_read_word_data(client, MFR_TSNS_FLT_SET);
++	ret = i2c_smbus_read_word_data(client, MFR_VOUT_SCALE_LOOP);
 +	if (ret < 0)
 +		return ret;
 +
-+	data->mfr_thwn_flt_en = FIELD_GET(GENMASK(13, 13), ret);
++	switch (FIELD_GET(GENMASK(12, 10), ret)) {
++	case 0:
++		data->vout_scale = 6400;
++		break;
++	case 1:
++		data->vout_scale = 5120;
++		break;
++	case 2:
++		data->vout_scale = 2560;
++		break;
++	case 3:
++		data->vout_scale = 2048;
++		break;
++	case 4:
++		data->vout_scale = 1024;
++		break;
++	case 5:
++		data->vout_scale = 4;
++		break;
++	case 6:
++		data->vout_scale = 2;
++		break;
++	case 7:
++		data->vout_scale = 1;
++		break;
++	default:
++		data->vout_scale = 1;
++		break;
++	}
 +
 +	return 0;
 +}
 +
 +static int
-+mp2869_identify_vout_scale(struct i2c_client *client, struct pmbus_driver_info *info,
-+			   int page)
++mp29502_identify_vout_divider(struct i2c_client *client, struct pmbus_driver_info *info,
++			      int page)
 +{
-+	struct mp2869_data *data = to_mp2869_data(info);
++	struct mp29502_data *data = to_mp29502_data(info);
 +	int ret;
 +
 +	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
 +	if (ret < 0)
 +		return ret;
 +
-+	ret = i2c_smbus_read_word_data(client, PMBUS_VOUT_SCALE_LOOP);
++	ret = i2c_smbus_read_word_data(client, MFR_VOUT_PROT1);
 +	if (ret < 0)
 +		return ret;
 +
-+	/*
-+	 * The output voltage is equal to the READ_VOUT(0x8B) register value multiply
-+	 * by vout_scale.
-+	 * Obtain vout scale from the register PMBUS_VOUT_SCALE_LOOP, bits 12-10
-+	 * PMBUS_VOUT_SCALE_LOOP[12:10]:
-+	 * 000b - 6.25mV/LSB, 001b - 5mV/LSB, 010b - 2.5mV/LSB, 011b - 2mV/LSB
-+	 * 100b - 1mV/Lsb, 101b - (1/256)mV/LSB, 110b - (1/512)mV/LSB,
-+	 * 111b - (1/1024)mV/LSB
-+	 */
-+	data->vout_scale[page] = mp2869_vout_sacle[FIELD_GET(GENMASK(12, 10), ret)];
++	data->vout_bottom_div = FIELD_GET(GENMASK(11, 0), ret);
++
++	ret = i2c_smbus_read_word_data(client, MFR_VOUT_PROT2);
++	if (ret < 0)
++		return ret;
++
++	data->vout_top_div = FIELD_GET(GENMASK(14, 0), ret);
 +
 +	return 0;
 +}
 +
 +static int
-+mp2869_identify_iout_scale(struct i2c_client *client, struct pmbus_driver_info *info,
-+			   int page)
++mp29502_identify_ovp_divider(struct i2c_client *client, struct pmbus_driver_info *info,
++			     int page)
 +{
-+	struct mp2869_data *data = to_mp2869_data(info);
++	struct mp29502_data *data = to_mp29502_data(info);
++	int ret;
++
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
++	if (ret < 0)
++		return ret;
++
++	ret = i2c_smbus_read_word_data(client, MFR_SLOPE_CNT_SET);
++	if (ret < 0)
++		return ret;
++
++	data->ovp_div = FIELD_GET(GENMASK(9, 0), ret);
++
++	return 0;
++}
++
++static int
++mp29502_identify_iout_scale(struct i2c_client *client, struct pmbus_driver_info *info,
++			    int page)
++{
++	struct mp29502_data *data = to_mp29502_data(info);
 +	int ret;
 +
 +	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
@@ -521,75 +472,103 @@ index 000000000000..cc69a1e91dfe
 +	if (ret < 0)
 +		return ret;
 +
-+	/*
-+	 * The output current is equal to the READ_IOUT(0x8C) register value
-+	 * multiply by iout_scale.
-+	 * Obtain iout_scale from the register MFR_SVI3_IOUT_PRT[2:0].
-+	 * The value is selected as below:
-+	 * 000b - 1A/LSB, 001b - (1/32)A/LSB, 010b - (1/16)A/LSB,
-+	 * 011b - (1/8)A/LSB, 100b - (1/4)A/LSB, 101b - (1/2)A/LSB
-+	 * 110b - 1A/LSB, 111b - 2A/LSB
-+	 */
-+	data->iout_scale[page] = mp2869_iout_sacle[FIELD_GET(GENMASK(2, 0), ret)];
++	switch (ret & GENMASK(2, 0)) {
++	case 0:
++	case 6:
++		data->iout_scale = 32;
++		break;
++	case 1:
++		data->iout_scale = 1;
++		break;
++	case 2:
++		data->iout_scale = 2;
++		break;
++	case 3:
++		data->iout_scale = 4;
++		break;
++	case 4:
++		data->iout_scale = 8;
++		break;
++	case 5:
++		data->iout_scale = 16;
++		break;
++	default:
++		data->iout_scale = 64;
++		break;
++	}
 +
 +	return 0;
 +}
 +
-+static int mp2869_read_byte_data(struct i2c_client *client, int page, int reg)
++static int mp29502_read_vout_ov_limit(struct i2c_client *client, struct mp29502_data *data)
 +{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp2869_data *data = to_mp2869_data(info);
 +	int ret;
++	int ov_value;
++
++	/*
++	 * This is because the vout ov fault limit value comes from
++	 * page1 MFR_TSNS_FLT_SET reg, and other telemetry and limit
++	 * value comes from page0 reg. So the page should be set to
++	 * 0 after the reading of vout ov limit.
++	 */
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 1);
++	if (ret < 0)
++		return ret;
++
++	ret = i2c_smbus_read_word_data(client, MFR_TSNS_FLT_SET);
++	if (ret < 0)
++		return ret;
++
++	ov_value = DIV_ROUND_CLOSEST(FIELD_GET(GENMASK(12, 7), ret) *
++						   MP28502_VOUT_OV_GAIN * MP28502_VOUT_OV_SCALE,
++						   data->ovp_div);
++
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++	if (ret < 0)
++		return ret;
++
++	return ov_value;
++}
++
++static int mp29502_write_vout_ov_limit(struct i2c_client *client, u16 word,
++				       struct mp29502_data *data)
++{
++	int ret;
++
++	/*
++	 * This is because the vout ov fault limit value comes from
++	 * page1 MFR_TSNS_FLT_SET reg, and other telemetry and limit
++	 * value comes from page0 reg. So the page should be set to
++	 * 0 after the writing of vout ov limit.
++	 */
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 1);
++	if (ret < 0)
++		return ret;
++
++	ret = i2c_smbus_read_word_data(client, MFR_TSNS_FLT_SET);
++	if (ret < 0)
++		return ret;
++
++	ret = i2c_smbus_write_word_data(client, MFR_TSNS_FLT_SET,
++					(ret & ~GENMASK(12, 7)) |
++		FIELD_PREP(GENMASK(12, 7),
++			   DIV_ROUND_CLOSEST(word * data->ovp_div,
++					     MP28502_VOUT_OV_GAIN * MP28502_VOUT_OV_SCALE)));
++
++	return i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++}
++
++static int mp29502_read_byte_data(struct i2c_client *client, int page, int reg)
++{
++	int ret;
++
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++	if (ret < 0)
++		return ret;
 +
 +	switch (reg) {
 +	case PMBUS_VOUT_MODE:
-+		/*
-+		 * The calculation of vout in this driver is based on direct format.
-+		 * As a result, the format of vout is enforced to direct.
-+		 */
 +		ret = PB_VOUT_MODE_DIRECT;
-+		break;
-+	case PMBUS_STATUS_BYTE:
-+		/*
-+		 * If the tsns digital fault is enabled, the TEMPERATURE flag
-+		 * of PMBUS_STATUS_BYTE should come from STATUS_MFR_SPECIFIC
-+		 * register bit1.
-+		 */
-+		if (!data->mfr_thwn_flt_en)
-+			return -ENODATA;
-+
-+		ret = pmbus_read_byte_data(client, page, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = (ret & ~GENMASK(2, 2)) |
-+			FIELD_PREP(GENMASK(2, 2),
-+				   FIELD_GET(GENMASK(1, 1),
-+					     pmbus_read_byte_data(client, page,
-+								  PMBUS_STATUS_MFR_SPECIFIC)));
-+		break;
-+	case PMBUS_STATUS_TEMPERATURE:
-+		/*
-+		 * If the tsns digital fault is enabled, the OT Fault and OT Warning
-+		 * flag of PMBUS_STATUS_TEMPERATURE should come from STATUS_MFR_SPECIFIC
-+		 * register bit1.
-+		 */
-+		if (!data->mfr_thwn_flt_en)
-+			return -ENODATA;
-+
-+		ret = pmbus_read_byte_data(client, page, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = (ret & ~GENMASK(7, 6)) |
-+			FIELD_PREP(GENMASK(6, 6),
-+				   FIELD_GET(GENMASK(1, 1),
-+					     pmbus_read_byte_data(client, page,
-+								  PMBUS_STATUS_MFR_SPECIFIC))) |
-+			 FIELD_PREP(GENMASK(7, 7),
-+				    FIELD_GET(GENMASK(1, 1),
-+					      pmbus_read_byte_data(client, page,
-+								   PMBUS_STATUS_MFR_SPECIFIC)));
 +		break;
 +	default:
 +		ret = -ENODATA;
@@ -599,39 +578,23 @@ index 000000000000..cc69a1e91dfe
 +	return ret;
 +}
 +
-+static int mp2869_read_word_data(struct i2c_client *client, int page, int phase,
-+				 int reg)
++static int mp29502_read_word_data(struct i2c_client *client, int page,
++				  int phase, int reg)
 +{
 +	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp2869_data *data = to_mp2869_data(info);
++	struct mp29502_data *data = to_mp29502_data(info);
 +	int ret;
 +
 +	switch (reg) {
 +	case PMBUS_STATUS_WORD:
-+		/*
-+		 * If the tsns digital fault is enabled, the OT Fault flag
-+		 * of PMBUS_STATUS_WORD should come from STATUS_MFR_SPECIFIC
-+		 * register bit1.
-+		 */
-+		if (!data->mfr_thwn_flt_en)
-+			return -ENODATA;
-+
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = (ret & ~GENMASK(2, 2)) |
-+			 FIELD_PREP(GENMASK(2, 2),
-+				    FIELD_GET(GENMASK(1, 1),
-+					      pmbus_read_byte_data(client, page,
-+								   PMBUS_STATUS_MFR_SPECIFIC)));
++		ret = -ENODATA;
 +		break;
 +	case PMBUS_READ_VIN:
 +		/*
-+		 * The MP2869 PMBUS_READ_VIN[10:0] is the vin value, the vin scale is
-+		 * 31.25mV/LSB. And the vin scale is set to 31.25mV/Lsb(using r/m/b scale)
-+		 * in MP2869 pmbus_driver_info struct, so the word data bit0-bit10 can be
-+		 * returned to pmbus core directly.
++		 * The MP29502 PMBUS_READ_VIN[10:0] is the vin value, the vin scale is
++		 * 125mV/LSB. And the vin scale is set to 125mV/Lsb(using r/m/b scale)
++		 * in MP29502 pmbus_driver_info struct, so the word data bit0-bit10 can
++		 * be returned to pmbus core directly.
 +		 */
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
@@ -639,58 +602,73 @@ index 000000000000..cc69a1e91dfe
 +
 +		ret = FIELD_GET(GENMASK(10, 0), ret);
 +		break;
++	case PMBUS_READ_VOUT:
++		/*
++		 * The MP29502 PMBUS_READ_VOUT[11:0] is the vout value, and vout
++		 * value is calculated based on vout scale and vout divider.
++		 */
++		ret = pmbus_read_word_data(client, page, phase, reg);
++		if (ret < 0)
++			return ret;
++
++		ret = DIV_ROUND_CLOSEST((ret &  GENMASK(11, 0)) *
++								data->vout_scale *
++								(data->vout_bottom_div +
++								4 * data->vout_top_div),
++								MP29502_READ_VOUT_DIV *
++								data->vout_bottom_div);
++		break;
 +	case PMBUS_READ_IIN:
 +		/*
-+		 * The MP2869 redefine the standard 0x95 register as iin telemetry
-+		 * per rail.
++		 * The MP29502 MFR_READ_IIN_EST register is linear11 format, and the
++		 * exponent is not a constant value. But the iin scale is set to
++		 * 1A/Lsb(using r/m/b scale). As a result, the iin read from MP29502
++		 * should be calculated to A, then return the result to pmbus core.
 +		 */
 +		ret = pmbus_read_word_data(client, page, phase, MFR_READ_IIN_EST);
 +		if (ret < 0)
 +			return ret;
 +
++		ret = DIV_ROUND_CLOSEST(mp29502_reg2data_linear11(ret),
++					MP29502_IIN_DIV);
 +		break;
 +	case PMBUS_READ_PIN:
 +		/*
-+		 * The MP2869 redefine the standard 0x94 register as pin telemetry
-+		 * per rail. The MP2869 MFR_READ_PIN_EST register is linear11 format,
-+		 * but the pin scale is set to 1W/Lsb(using r/m/b scale). As a result,
-+		 * the pin read from MP2869 should be converted to W, then return
-+		 * the result to pmbus core.
++		 * The MP29502 MFR_READ_PIN_EST register is linear11 format, and the
++		 * exponent is not a constant value. But the pin scale is set to
++		 * 1W/Lsb(using r/m/b scale). As a result, the pout read from MP29502
++		 * should be calculated to W, then return the result to pmbus core.
 +		 */
 +		ret = pmbus_read_word_data(client, page, phase, MFR_READ_PIN_EST);
 +		if (ret < 0)
 +			return ret;
 +
-+		ret = mp2869_reg2data_linear11(ret);
++		ret = mp29502_reg2data_linear11(ret) * MP29502_PIN_GAIN;
 +		break;
-+	case PMBUS_READ_VOUT:
++	case PMBUS_READ_POUT:
++		/*
++		 * The MP29502 PMBUS_READ_POUT register is linear11 format, and the
++		 * exponent is not a constant value. But the pout scale is set to
++		 * 1W/Lsb(using r/m/b scale). As a result, the pout read from MP29502
++		 * should be calculated to W, then return the result to pmbus core.
++		 * And the pout is calculated based on vout divider.
++		 */
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
 +
-+		ret = DIV_ROUND_CLOSEST((ret &  GENMASK(11, 0)) * data->vout_scale[page],
-+					MP2869_READ_VOUT_DIV);
++		ret = DIV_ROUND_CLOSEST(mp29502_reg2data_linear11(ret) *
++					(data->vout_bottom_div +
++					4 * data->vout_top_div),
++					data->vout_bottom_div);
 +		break;
 +	case PMBUS_READ_IOUT:
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
 +
-+		ret = DIV_ROUND_CLOSEST((ret & GENMASK(10, 0)) * data->iout_scale[page],
-+					MP2869_READ_IOUT_DIV);
-+		break;
-+	case PMBUS_READ_POUT:
-+		/*
-+		 * The MP2869 PMBUS_READ_POUT register is linear11 format, but the pout
-+		 * scale is set to 1W/Lsb(using r/m/b scale). As a result, the pout read
-+		 * from MP2869 should be converted to W, then return the result to pmbus
-+		 * core.
-+		 */
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = mp2869_reg2data_linear11(ret);
++		ret = DIV_ROUND_CLOSEST((ret & GENMASK(10, 0)) * data->iout_scale,
++					MP29502_READ_IOUT_DIV);
 +		break;
 +	case PMBUS_READ_TEMPERATURE_1:
 +		ret = pmbus_read_word_data(client, page, phase, reg);
@@ -699,54 +677,53 @@ index 000000000000..cc69a1e91dfe
 +
 +		ret = FIELD_GET(GENMASK(10, 0), ret);
 +		break;
-+	case PMBUS_VOUT_OV_FAULT_LIMIT:
++	case PMBUS_VIN_OV_FAULT_LIMIT:
++		/*
++		 * The MP29502 PMBUS_VIN_OV_FAULT_LIMIT is 500mV/Lsb, but
++		 * the vin  scale is set to 125mV/Lsb(using r/m/b scale),
++		 * so the word data should multiply by 4.
++		 */
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
 +
-+		if (FIELD_GET(GENMASK(12, 9), ret))
-+			ret = FIELD_GET(GENMASK(8, 0), ret) * MP2869_OVUV_LIMIT_SCALE +
-+				(FIELD_GET(GENMASK(12, 9), ret) + 1) * MP2869_OVUV_DELTA_SCALE;
-+		else
-+			ret = FIELD_GET(GENMASK(8, 0), ret) * MP2869_OVUV_LIMIT_SCALE;
++		ret = FIELD_GET(GENMASK(7, 0), ret) * MP29502_VIN_OV_GAIN;
++		break;
++	case PMBUS_VIN_UV_WARN_LIMIT:
++	case PMBUS_VIN_UV_FAULT_LIMIT:
++		/*
++		 * The MP29502 PMBUS_VIN_UV_WARN_LIMIT and PMBUS_VIN_UV_FAULT_LIMIT
++		 * scale is 125mV/Lsb, but the vin scale is set to 125mV/Lsb(using
++		 * r/m/b scale), so the word data bit0-bit9 can be returned to pmbus
++		 * core directly.
++		 */
++		ret = pmbus_read_word_data(client, page, phase, reg);
++		if (ret < 0)
++			return ret;
++
++		ret = FIELD_GET(GENMASK(9, 0), ret);
++		break;
++	case PMBUS_VOUT_OV_FAULT_LIMIT:
++		/*
++		 * The MP29502 vout ov fault limit value comes from
++		 * page1 MFR_TSNS_FLT_SET[12:7].
++		 */
++		ret = mp29502_read_vout_ov_limit(client, data);
++		if (ret < 0)
++			return ret;
++
 +		break;
 +	case PMBUS_VOUT_UV_FAULT_LIMIT:
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
 +
-+		if (FIELD_GET(GENMASK(12, 9), ret))
-+			ret = FIELD_GET(GENMASK(8, 0), ret) * MP2869_OVUV_LIMIT_SCALE -
-+				(FIELD_GET(GENMASK(12, 9), ret) + 1) * MP2869_OVUV_DELTA_SCALE;
-+		else
-+			ret = FIELD_GET(GENMASK(8, 0), ret) * MP2869_OVUV_LIMIT_SCALE;
-+		break;
-+	case PMBUS_OT_FAULT_LIMIT:
-+	case PMBUS_OT_WARN_LIMIT:
-+		/*
-+		 * The scale of MP2869 PMBUS_OT_FAULT_LIMIT and PMBUS_OT_WARN_LIMIT
-+		 * is 1°C/LSB and they have 40°C offset.
-+		 */
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = (ret & GENMASK(7, 0)) - MP2869_TEMP_LIMIT_OFFSET;
-+		break;
-+	case PMBUS_VIN_OV_FAULT_LIMIT:
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = (ret & GENMASK(7, 0)) * MP2869_VIN_OV_FAULT_GAIN;
-+		break;
-+	case PMBUS_VIN_UV_WARN_LIMIT:
-+	case PMBUS_VIN_UV_FAULT_LIMIT:
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = FIELD_GET(GENMASK(9, 0), ret);
++		ret = DIV_ROUND_CLOSEST((FIELD_GET(GENMASK(8, 0), ret) *
++								MP29502_OVUV_LIMIT_SCALE -
++								MP29502_VOUT_UV_OFFSET) *
++								(data->vout_bottom_div +
++								4 * data->vout_top_div),
++								data->vout_bottom_div);
 +		break;
 +	case PMBUS_IOUT_OC_FAULT_LIMIT:
 +	case PMBUS_IOUT_OC_WARN_LIMIT:
@@ -754,15 +731,22 @@ index 000000000000..cc69a1e91dfe
 +		if (ret < 0)
 +			return ret;
 +
-+		ret = DIV_ROUND_CLOSEST((ret & GENMASK(7, 0)) * data->iout_scale[page] *
-+						MP2869_IOUT_LIMIT_UINT, MP2869_READ_IOUT_DIV);
++		ret = DIV_ROUND_CLOSEST((ret & GENMASK(7, 0)) *
++								data->iout_scale *
++								MP29502_IOUT_LIMIT_UINT,
++								MP29502_READ_IOUT_DIV);
 +		break;
-+	case PMBUS_POUT_OP_WARN_LIMIT:
++	case PMBUS_OT_FAULT_LIMIT:
++	case PMBUS_OT_WARN_LIMIT:
++		/*
++		 * The scale of MP29502 PMBUS_OT_FAULT_LIMIT and PMBUS_OT_WARN_LIMIT
++		 * is 1°C/LSB and they have 40°C offset.
++		 */
 +		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
 +
-+		ret = (ret & GENMASK(7, 0)) * MP2869_POUT_OP_GAIN;
++		ret = (ret & GENMASK(7, 0)) - MP29502_TEMP_LIMIT_OFFSET;
 +		break;
 +	default:
 +		ret = -EINVAL;
@@ -772,77 +756,25 @@ index 000000000000..cc69a1e91dfe
 +	return ret;
 +}
 +
-+static int mp2869_write_word_data(struct i2c_client *client, int page, int reg,
-+				  u16 word)
++static int mp29502_write_word_data(struct i2c_client *client, int page, int reg,
++				   u16 word)
 +{
 +	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp2869_data *data = to_mp2869_data(info);
++	struct mp29502_data *data = to_mp29502_data(info);
 +	int ret;
 +
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
++	if (ret < 0)
++		return ret;
++
 +	switch (reg) {
-+	case PMBUS_VOUT_UV_FAULT_LIMIT:
++	case PMBUS_VIN_OV_FAULT_LIMIT:
 +		/*
-+		 * The MP2869 PMBUS_VOUT_UV_FAULT_LIMIT[8:0] is the limit value,
-+		 * and bit9-bit15 should not be changed.
-+		 */
-+		ret = pmbus_read_word_data(client, page, 0xff, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (FIELD_GET(GENMASK(12, 9), ret))
-+			ret = pmbus_write_word_data(client, page, reg,
-+						    (ret & ~GENMASK(8, 0)) |
-+				FIELD_PREP(GENMASK(8, 0),
-+					   DIV_ROUND_CLOSEST(word +
-+						(FIELD_GET(GENMASK(12, 9),
-+						ret) + 1) *
-+					MP2869_OVUV_DELTA_SCALE,
-+					MP2869_OVUV_LIMIT_SCALE)));
-+		else
-+			ret = pmbus_write_word_data(client, page, reg,
-+						    (ret & ~GENMASK(8, 0)) |
-+					FIELD_PREP(GENMASK(8, 0),
-+						   DIV_ROUND_CLOSEST(word,
-+								     MP2869_OVUV_LIMIT_SCALE)));
-+		break;
-+	case PMBUS_VOUT_OV_FAULT_LIMIT:
-+		/*
-+		 * The MP2869 PMBUS_VOUT_OV_FAULT_LIMIT[8:0] is the limit value,
-+		 * and bit9-bit15 should not be changed.
-+		 */
-+		ret = pmbus_read_word_data(client, page, 0xff, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (FIELD_GET(GENMASK(12, 9), ret))
-+			ret = pmbus_write_word_data(client, page, reg,
-+						    (ret & ~GENMASK(8, 0)) |
-+				FIELD_PREP(GENMASK(8, 0),
-+					   DIV_ROUND_CLOSEST(word -
-+							(FIELD_GET(GENMASK(12, 9),
-+							ret) + 1) *
-+						MP2869_OVUV_DELTA_SCALE,
-+						MP2869_OVUV_LIMIT_SCALE)));
-+		else
-+			ret = pmbus_write_word_data(client, page, reg,
-+						    (ret & ~GENMASK(8, 0)) |
-+				FIELD_PREP(GENMASK(8, 0),
-+					   DIV_ROUND_CLOSEST(word,
-+							     MP2869_OVUV_LIMIT_SCALE)));
-+		break;
-+	case PMBUS_OT_FAULT_LIMIT:
-+	case PMBUS_OT_WARN_LIMIT:
-+		/*
-+		 * If the tsns digital fault is enabled, the PMBUS_OT_FAULT_LIMIT and
-+		 * PMBUS_OT_WARN_LIMIT can not be written.
-+		 */
-+		if (data->mfr_thwn_flt_en)
-+			return -EINVAL;
-+
-+		/*
-+		 * The MP2869 scale of MP2869 PMBUS_OT_FAULT_LIMIT and PMBUS_OT_WARN_LIMIT
-+		 * have 40°C offset. The bit0-bit7 is the limit value, and bit8-bit15
-+		 * should not be changed.
++		 * The PMBUS_VIN_OV_FAULT_LIMIT[7:0] is the limit value,
++		 * and bit8-bit15 should not be changed. The scale of
++		 * PMBUS_VIN_OV_FAULT_LIMIT is 500mV/Lsb, but the vin
++		 * scale is set to 125mV/Lsb(using r/m/b scale), so
++		 * the word data should divide by 4.
 +		 */
 +		ret = pmbus_read_word_data(client, page, 0xff, reg);
 +		if (ret < 0)
@@ -850,15 +782,61 @@ index 000000000000..cc69a1e91dfe
 +
 +		ret = pmbus_write_word_data(client, page, reg,
 +					    (ret & ~GENMASK(7, 0)) |
-+					 FIELD_PREP(GENMASK(7, 0),
-+						    word + MP2869_TEMP_LIMIT_OFFSET));
++				FIELD_PREP(GENMASK(7, 0),
++					   DIV_ROUND_CLOSEST(word,
++							     MP29502_VIN_OV_GAIN)));
 +		break;
-+	case PMBUS_VIN_OV_FAULT_LIMIT:
++	case PMBUS_VIN_UV_WARN_LIMIT:
++	case PMBUS_VIN_UV_FAULT_LIMIT:
 +		/*
-+		 * The MP2869 PMBUS_VIN_OV_FAULT_LIMIT[7:0] is the limit value, and bit8-bit15
-+		 * should not be changed. The scale of PMBUS_VIN_OV_FAULT_LIMIT is 125mV/Lsb,
-+		 * but the vin scale is set to 31.25mV/Lsb(using r/m/b scale), so the word data
-+		 * should divide by MP2869_VIN_OV_FAULT_GAIN(4)
++		 * The PMBUS_VIN_UV_WARN_LIMIT[9:0] and PMBUS_VIN_UV_FAULT_LIMIT[9:0]
++		 * are the limit value, and bit10-bit15 should not be changed.
++		 */
++		ret = pmbus_read_word_data(client, page, 0xff, reg);
++		if (ret < 0)
++			return ret;
++
++		ret = pmbus_write_word_data(client, page, reg,
++					    (ret & ~GENMASK(9, 0)) |
++							FIELD_PREP(GENMASK(9, 0),
++								   word));
++		break;
++	case PMBUS_VOUT_OV_FAULT_LIMIT:
++		ret = mp29502_write_vout_ov_limit(client, word, data);
++		if (ret < 0)
++			return ret;
++
++		break;
++	case PMBUS_VOUT_UV_FAULT_LIMIT:
++		ret = pmbus_read_word_data(client, page, 0xff, reg);
++		if (ret < 0)
++			return ret;
++
++		ret = pmbus_write_word_data(client, page, reg,
++					    (ret & ~GENMASK(8, 0)) |
++						FIELD_PREP(GENMASK(8, 0),
++							   DIV_ROUND_CLOSEST(word *
++									data->vout_bottom_div +
++									MP29502_VOUT_UV_OFFSET *
++									(data->vout_bottom_div +
++									4 * data->vout_top_div),
++									MP29502_OVUV_LIMIT_SCALE *
++									(data->vout_bottom_div +
++									4 * data->vout_top_div))));
++		break;
++	case PMBUS_IOUT_OC_FAULT_LIMIT:
++	case PMBUS_IOUT_OC_WARN_LIMIT:
++		ret = pmbus_write_word_data(client, page, reg,
++					    DIV_ROUND_CLOSEST(word *
++							MP29502_READ_IOUT_DIV,
++							MP29502_IOUT_LIMIT_UINT *
++							data->iout_scale));
++		break;
++	case PMBUS_OT_FAULT_LIMIT:
++	case PMBUS_OT_WARN_LIMIT:
++		/*
++		 * The PMBUS_OT_FAULT_LIMIT[7:0] and PMBUS_OT_WARN_LIMIT[7:0]
++		 * are the limit value, and bit8-bit15 should not be changed.
 +		 */
 +		ret = pmbus_read_word_data(client, page, 0xff, reg);
 +		if (ret < 0)
@@ -867,47 +845,7 @@ index 000000000000..cc69a1e91dfe
 +		ret = pmbus_write_word_data(client, page, reg,
 +					    (ret & ~GENMASK(7, 0)) |
 +					FIELD_PREP(GENMASK(7, 0),
-+						   DIV_ROUND_CLOSEST(word,
-+								     MP2869_VIN_OV_FAULT_GAIN)));
-+		break;
-+	case PMBUS_VIN_UV_WARN_LIMIT:
-+	case PMBUS_VIN_UV_FAULT_LIMIT:
-+		/*
-+		 * The PMBUS_VIN_UV_LIMIT[9:0] is the limit value, and bit10-bit15 should
-+		 * not be changed. The scale of PMBUS_VIN_UV_LIMIT is 31.25mV/Lsb, and the
-+		 * vin scale is set to 31.25mV/Lsb(using r/m/b scale), so the word data can
-+		 * be written directly.
-+		 */
-+		ret = pmbus_read_word_data(client, page, 0xff, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = pmbus_write_word_data(client, page, reg,
-+					    (ret & ~GENMASK(9, 0)) |
-+						FIELD_PREP(GENMASK(9, 0),
-+							   word));
-+		break;
-+	case PMBUS_IOUT_OC_FAULT_LIMIT:
-+	case PMBUS_IOUT_OC_WARN_LIMIT:
-+		ret = pmbus_write_word_data(client, page, reg,
-+					    DIV_ROUND_CLOSEST(word * MP2869_READ_IOUT_DIV,
-+							      MP2869_IOUT_LIMIT_UINT *
-+								  data->iout_scale[page]));
-+		break;
-+	case PMBUS_POUT_OP_WARN_LIMIT:
-+		/*
-+		 * The POUT_OP_WARN_LIMIT[11:0] is the limit value, and bit12-bit15 should
-+		 * not be changed. The scale of POUT_OP_WARN_LIMIT is 2W/Lsb.
-+		 */
-+		ret = pmbus_read_word_data(client, page, 0xff, reg);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = pmbus_write_word_data(client, page, reg,
-+					    (ret & ~GENMASK(11, 0)) |
-+					FIELD_PREP(GENMASK(11, 0),
-+						   DIV_ROUND_CLOSEST(word,
-+								     MP2869_POUT_OP_GAIN)));
++						   word + MP29502_TEMP_LIMIT_OFFSET));
 +		break;
 +	default:
 +		ret = -EINVAL;
@@ -917,44 +855,39 @@ index 000000000000..cc69a1e91dfe
 +	return ret;
 +}
 +
-+static int mp2869_identify(struct i2c_client *client, struct pmbus_driver_info *info)
++static int mp29502_identify(struct i2c_client *client, struct pmbus_driver_info *info)
 +{
 +	int ret;
 +
-+	/* Identify whether tsns digital fault is enable */
-+	ret = mp2869_identify_thwn_flt(client, info, 1);
-+	if (ret < 0)
-+		return 0;
-+
-+	/* Identify vout scale for rail1. */
-+	ret = mp2869_identify_vout_scale(client, info, 0);
++	/* Identify vout scale */
++	ret = mp29502_identify_vout_scale(client, info, 0);
 +	if (ret < 0)
 +		return ret;
 +
-+	/* Identify vout scale for rail2. */
-+	ret = mp2869_identify_vout_scale(client, info, 1);
++	/* Identify vout divider. */
++	ret = mp29502_identify_vout_divider(client, info, 1);
 +	if (ret < 0)
 +		return ret;
 +
-+	/* Identify iout scale for rail 1. */
-+	ret = mp2869_identify_iout_scale(client, info, 0);
++	/* Identify ovp divider. */
++	ret = mp29502_identify_ovp_divider(client, info, 1);
 +	if (ret < 0)
 +		return ret;
 +
-+	/* Identify iout scale for rail 2. */
-+	return mp2869_identify_iout_scale(client, info, 1);
++	/* Identify iout scale */
++	return mp29502_identify_iout_scale(client, info, 0);
 +}
 +
-+static const struct pmbus_driver_info mp2869_info = {
-+	.pages = MP2869_PAGE_NUM,
++static const struct pmbus_driver_info mp29502_info = {
++	.pages = MP29502_PAGE_NUM,
 +	.format[PSC_VOLTAGE_IN] = direct,
-+	.format[PSC_CURRENT_IN] = linear,
-+	.format[PSC_CURRENT_OUT] = direct,
 +	.format[PSC_TEMPERATURE] = direct,
-+	.format[PSC_POWER] = direct,
++	.format[PSC_CURRENT_IN] = direct,
++	.format[PSC_CURRENT_OUT] = direct,
 +	.format[PSC_VOLTAGE_OUT] = direct,
++	.format[PSC_POWER] = direct,
 +
-+	.m[PSC_VOLTAGE_IN] = 32,
++	.m[PSC_VOLTAGE_IN] = 8,
 +	.R[PSC_VOLTAGE_IN] = 0,
 +	.b[PSC_VOLTAGE_IN] = 0,
 +
@@ -962,73 +895,70 @@ index 000000000000..cc69a1e91dfe
 +	.R[PSC_VOLTAGE_OUT] = 3,
 +	.b[PSC_VOLTAGE_OUT] = 0,
 +
-+	.m[PSC_CURRENT_OUT] = 1,
-+	.R[PSC_CURRENT_OUT] = 0,
-+	.b[PSC_CURRENT_OUT] = 0,
-+
 +	.m[PSC_TEMPERATURE] = 1,
 +	.R[PSC_TEMPERATURE] = 0,
 +	.b[PSC_TEMPERATURE] = 0,
++
++	.m[PSC_CURRENT_IN] = 1,
++	.R[PSC_CURRENT_IN] = 0,
++	.b[PSC_CURRENT_IN] = 0,
++
++	.m[PSC_CURRENT_OUT] = 1,
++	.R[PSC_CURRENT_OUT] = 0,
++	.b[PSC_CURRENT_OUT] = 0,
 +
 +	.m[PSC_POWER] = 1,
 +	.R[PSC_POWER] = 0,
 +	.b[PSC_POWER] = 0,
 +
-+	.func[0] = MP2869_RAIL1_FUNC,
-+	.func[1] = MP2869_RAIL2_FUNC,
-+	.read_word_data = mp2869_read_word_data,
-+	.write_word_data = mp2869_write_word_data,
-+	.read_byte_data = mp2869_read_byte_data,
-+	.identify = mp2869_identify,
++	.func[0] = MP29502_RAIL_FUNC,
++	.read_word_data = mp29502_read_word_data,
++	.read_byte_data = mp29502_read_byte_data,
++	.write_word_data = mp29502_write_word_data,
++	.identify = mp29502_identify,
 +};
 +
-+static int mp2869_probe(struct i2c_client *client)
++static int mp29502_probe(struct i2c_client *client)
 +{
 +	struct pmbus_driver_info *info;
-+	struct mp2869_data *data;
++	struct mp29502_data *data;
 +
-+	data = devm_kzalloc(&client->dev, sizeof(struct mp2869_data),
++	data = devm_kzalloc(&client->dev, sizeof(struct mp29502_data),
 +			    GFP_KERNEL);
 +	if (!data)
 +		return -ENOMEM;
 +
-+	memcpy(&data->info, &mp2869_info, sizeof(*info));
++	memcpy(&data->info, &mp29502_info, sizeof(*info));
 +	info = &data->info;
 +
 +	return pmbus_do_probe(client, info);
 +}
 +
-+static const struct i2c_device_id mp2869_id[] = {
-+	{"mp2869", 0},
-+	{"mp29608", 1},
-+	{"mp29612", 2},
-+	{"mp29816", 3},
++static const struct i2c_device_id mp29502_id[] = {
++	{"mp29502", 0},
 +	{}
 +};
-+MODULE_DEVICE_TABLE(i2c, mp2869_id);
++MODULE_DEVICE_TABLE(i2c, mp29502_id);
 +
-+static const struct of_device_id __maybe_unused mp2869_of_match[] = {
-+	{.compatible = "mps,mp2869", .data = (void *)0},
-+	{.compatible = "mps,mp29608", .data = (void *)1},
-+	{.compatible = "mps,mp29612", .data = (void *)2},
-+	{.compatible = "mps,mp29816", .data = (void *)3},
++static const struct of_device_id __maybe_unused mp29502_of_match[] = {
++	{.compatible = "mps,mp29502"},
 +	{}
 +};
-+MODULE_DEVICE_TABLE(of, mp2869_of_match);
++MODULE_DEVICE_TABLE(of, mp29502_of_match);
 +
-+static struct i2c_driver mp2869_driver = {
++static struct i2c_driver mp29502_driver = {
 +	.driver = {
-+		.name = "mp2869",
-+		.of_match_table = mp2869_of_match,
++		.name = "mp29502",
++		.of_match_table = mp29502_of_match,
 +	},
-+	.probe = mp2869_probe,
-+	.id_table = mp2869_id,
++	.probe = mp29502_probe,
++	.id_table = mp29502_id,
 +};
 +
-+module_i2c_driver(mp2869_driver);
++module_i2c_driver(mp29502_driver);
 +
-+MODULE_AUTHOR("Wensheng Wang <wenswang@yeah.net>");
-+MODULE_DESCRIPTION("PMBus driver for MPS MP2869");
++MODULE_AUTHOR("Wensheng Wang <wenswang@yeah.net");
++MODULE_DESCRIPTION("PMBus driver for MPS MP29502");
 +MODULE_LICENSE("GPL");
 +MODULE_IMPORT_NS("PMBUS");
 -- 
