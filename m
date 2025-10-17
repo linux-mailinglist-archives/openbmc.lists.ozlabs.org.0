@@ -1,62 +1,70 @@
-Return-Path: <openbmc+bounces-759-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-760-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AA92BE84E8
-	for <lists+openbmc@lfdr.de>; Fri, 17 Oct 2025 13:25:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D7FBBE89ED
+	for <lists+openbmc@lfdr.de>; Fri, 17 Oct 2025 14:42:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cp2YH1hkgz3cZN;
-	Fri, 17 Oct 2025 22:25:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cp4Gn5mlqz3cYG;
+	Fri, 17 Oct 2025 23:42:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760700307;
-	cv=none; b=MSz0tQL0T0mJ2MObgJoWZ1YpvuFyM5z/b54i/Qjf0peD/GaFfV7R94wEtxEM7DR3DxkXg0LtIw9JuonUynR1SaxoJQRuUVBRQtH23EEoisYQWkUVv+9u+Dte7Lqgmieye7xWpRYIYLeIK9y0q/Y1jF2Q0VrOE2UtgkNk3VD6ZeoXpbwuAd40HFsijf2ejxdpAZ8iaocO/NFQR3uwmfY+2YT0JxuM/vjabOytnLm3ah3xhWQvon5REKPSFEqhh0u5RkLLjEJ7nC0Nr/RzkicLWv9NPh9+oPwiThCjNXzjFy5AVgXFQ7inGjyHCHuY7zSFYmNYY8aJas5hU2IxPqtCjQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::936"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760704961;
+	cv=none; b=bagOyDrUfHveqT/Aej5O9FrEBw70QwxiB5AnXST1tjAtp7F11iDTRi2sr7zFJWa9U1qOxMBdNMCrLUG0C52ZXlnTOF/Hgrs+8GXE8MRpF7vHAF+wBWafjRC18kugC1V2atRi7QaO+KmPtYXZje0q05MgY+3p4PdquxW0VX7AxZ8iTgPwA1pmcEnYQCh/PF/sxJxJS4n8ow8H3/BhDPaqn0pf450+wvujX+N8iJ4GGsODTg5oZO2sSlellXPnjXMV9QaqYdGS4pQD051Di2BRqpygEQvVST+6/Lb1RzIzUgDQNzyl3k4wvjKnmdBNr8YA/U/0t10Sd/DBR4HFr6M/sg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760700307; c=relaxed/relaxed;
-	bh=x7SrQcEhSUYcmuUdv81JIKa1JW6QODcCoPOeMwyReHA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Gkw9aEQGI3tYofq1uL/aneCVJzKjDpbo6hfa1g/8XmT1xyskYHYsQb2FtKIkgJTiS5/4BeB3idZ17XcSgCwfynvTk3aAQtOUT0fPjSDZwgN+h8MbQiI4XI7bUFIaGRlr0xQaljtKODMTBVILG8BQQ9t6aV8kdoyysO4zGOs2q3174Pq0vAYmkt4+s9a+hJbh7ipW6p9nWL2+NXijpG3DoZBRrtKBkSQYH0tNXfxtUtMaqmunzaV6nREAu865SsNWsxN5tax8oavFrBC0sWQWV0nwhYksG3YWMLP3TS0ALMH7dSmXzWVJS31m/LOWE7QFIMzy8HtIvGVwZ4u8JM/60A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=riBoFF8m; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1760704961; c=relaxed/relaxed;
+	bh=gqCZhryuusnOdluHro6sq52rUy9P/OFJGLbRCrE/NUo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EQGIcT39WbftwgKCVXUngO0JyaJ4RzM89tqNPHkasfez08YFgYewxUSE0l5zC3k9TSyXWiTThv0qgT6pUH2ttHFVdfi2ZVvpup3C49sUNdgmwepuRtggGv0PoWCSmUNmfBtEfVWQ9OA6EqZvkhZa07LoG8kxCdwPWswfeGyH+OLIYvjw2fiIXhmSZk/eZCrckKZ9daAIENBa6qbBMLxU9xrrNwqYuCWUkm+OuDj3OjZuKE48rWVB1T7CIBhU9qYLtZ4c8dqkLlss2bZnDKmMnra0Hrpz7pm9sHp6wz9uP49B4SRRNka1tW6Llq8UEyovUw7xbveLpx6EWL7U69sWOQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PREEioJL; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::936; helo=mail-ua1-x936.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=riBoFF8m;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PREEioJL;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::936; helo=mail-ua1-x936.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cp2YG3R2xz3cZ2;
-	Fri, 17 Oct 2025 22:25:06 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 3A42841A39;
-	Fri, 17 Oct 2025 11:25:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A735C4CEE7;
-	Fri, 17 Oct 2025 11:25:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760700304;
-	bh=Oha5M5RT2nW2MzZklI9wS7QllDX3Iir9ry2TjWilqqc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=riBoFF8m0IcwZ+37LWZ9Kck4w0akHJzJVv7yYIxm0Fk8dSrg4j4K38bYDy99GWGYC
-	 J/xmAsajaw9OaKqCLeOv6Walg3iGIPnpzmNNxlvfiEtN0Ei08Vk5NyJR+EpnYuI3fJ
-	 Isr2v7iiBXOY0NnkQ5vnwAZqrZCw3sBNRtdoI3mEK74++fQfoMOEDlDdigjHjympjJ
-	 GU8vjsdfjhPmKyS3wwEWENJOqTpBy/alzbSTyXtZUn++6fZWnDqbLI2OttmDNXtoZF
-	 ugApFpcYV1uHfyMll8Vq9165mHODLDwJXT4eaw2hrzsrNI3JM46p6tU5uQxhsXai0O
-	 RvslakHm7ZigA==
-From: Mark Brown <broonie@kernel.org>
-To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
- linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Colin Ian King <coking@nvidia.com>
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20251016153000.9142-1-coking@nvidia.com>
-References: <20251016153000.9142-1-coking@nvidia.com>
-Subject: Re: [PATCH][next] spi: aspeed: fix spelling mistake "triming" ->
- "trimming"
-Message-Id: <176070030059.36285.11703430965734905306.b4-ty@kernel.org>
-Date: Fri, 17 Oct 2025 12:25:00 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cp4Gm3PBlz2xQ6
+	for <openbmc@lists.ozlabs.org>; Fri, 17 Oct 2025 23:42:39 +1100 (AEDT)
+Received: by mail-ua1-x936.google.com with SMTP id a1e0cc1a2514c-8e3eaa30c71so1280074241.0
+        for <openbmc@lists.ozlabs.org>; Fri, 17 Oct 2025 05:42:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760704956; x=1761309756; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gqCZhryuusnOdluHro6sq52rUy9P/OFJGLbRCrE/NUo=;
+        b=PREEioJLXncYyeohYJvZ1rRDMlb4PoVEEkaYyRIf9R/CyKpOornx8b0grNrLRS889G
+         /a6u8tjVPQ1pva246Z39df8/BsHQ5P5fRfG58K0JbfzNHvOSvS+X6BJX+sBmpOUjKY2E
+         ib0LTzLQhyFmtzKi3ylEbbQWj0pYGd5kvETUbYLPWXg0FXu0XgptMgMeo2/ZWH6R8wAI
+         LV2Ns3eECCd7v8TYDlJeV9E/jvDqGFIwHrjd+jkLyqAVvKdAKXMVtH5xUk1MEA2zr1LP
+         ODDqCrgg5HI7XdOwHc8WJ5hq8E1Y9EDp77d5Ailz0wDdkUNAtEE0RJbqzR12YXCF+jye
+         lG8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760704956; x=1761309756;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gqCZhryuusnOdluHro6sq52rUy9P/OFJGLbRCrE/NUo=;
+        b=ePBBBDyy5zdKmKua7rjuejUVL3v6//10V5RNjzGqfRXxStUZkUzIhqdLRGyTPHDKA/
+         ot0ajqsZ5wwq5lfenaw83bNvZJA8ZRBRDsputiI+bgXx5or0Eb5YarjUOJaWt0bfcc7y
+         s6vYKWdst1FcCtaPKBkY7xIjZ8FwiSxtCwbfiV2GJF6XHuddBle15i9In4vt9lzC7RLQ
+         Xn3oY2eR+sOzMfCrcIbZejAekF7X4uHg7xdXheVBtz/PuxyPnLacZJ0Mi88jhZQBWt0e
+         G0Q4DudfXXHeGgtw/VJz0OUTYlGLLlEmKejzNhcfYmKYhwZZQVimIfCTRXNH9uNufjuU
+         2GHA==
+X-Gm-Message-State: AOJu0Yx9Kb9ktZAe45wTCVGmjjCzxMVs7vtpjicfjtzqusaAp2lYb06j
+	METrZ7i7N90PM7PuHomF4pdHEEIT2AGugC6wEgLb1mOQHmXAXCWB2n9QDekn9PbNWSHMbQEbovK
+	ReQLjxIej0F/uJi9eGI64gozsV2MkwQI=
+X-Gm-Gg: ASbGncvgRj6TjYDQDa4LEpgL2W67PnFzCsMVAzwItFYKOP3Zqr8NNl6+pRRZ/YMCzIH
+	W2E6RN1sJzC+0zXXYZRSeG9cHMvyVxZRajv4ctf1NyzwKirt8zfpKMQ9J3+cJbN5t0XMTKlj6Bj
+	4piFCHojQjIL7opzG1Rm6tXw9uZMx/85S0wBMHAW6Z4Z1XFf6E/Za8I7n6ZrgljzBBltKCiEVPz
+	qiZ33XrZ3OqpOtfuDlBdMr9es9jsKTmM+kNG8+STNOde1kjpLmQ0W76AzfCyLZ8Py+855U=
+X-Google-Smtp-Source: AGHT+IFF+mS6ehGKaBTtVcdxaZrbYOgcPuUz+UckFiOc/IMNzYsaSgflb88GZ5JE+35BiXsH9XXy41Dii3Su0vSGJlE=
+X-Received: by 2002:a05:6102:1624:b0:5d5:f6ae:390a with SMTP id
+ ada2fe7eead31-5d7dd6d5484mr1509564137.40.1760704955643; Fri, 17 Oct 2025
+ 05:42:35 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -68,45 +76,30 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-2a268
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <CH0PR14MB4820E890AC1893D7795260B2E6E8A@CH0PR14MB4820.namprd14.prod.outlook.com>
+In-Reply-To: <CH0PR14MB4820E890AC1893D7795260B2E6E8A@CH0PR14MB4820.namprd14.prod.outlook.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Fri, 17 Oct 2025 07:42:19 -0500
+X-Gm-Features: AS18NWDowfIfFcAwjRUXBNRAImuRJsClL67524H1rX-RZuBReLxubnQBYaXU86k
+Message-ID: <CALLMt=o5-VAqPh2jrUtYuV3FVsNfg8TZ+=0h8KPnu8KKowvy6A@mail.gmail.com>
+Subject: Re: OpenBMC Lenovo CLA update 2025-10-15
+To: Chris Wood <cwood2@lenovo.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Thu, 16 Oct 2025 16:30:00 +0100, Colin Ian King wrote:
-> There is a spelling mistake in a dev_warn message. Fix it.
-> 
-> 
+On Wed, Oct 15, 2025 at 6:08=E2=80=AFPM Chris Wood <cwood2@lenovo.com> wrot=
+e:
+>
+> Attached is an updated Lenovo CLA Schedule A update that picks up one mor=
+e name than the currently executed CLA.
 
-Applied to
+Thanks for keeping your CLA updated. The new document has been
+uploaded to the projects google drive.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-Thanks!
-
-[1/1] spi: aspeed: fix spelling mistake "triming" -> "trimming"
-      commit: d77daa49085b067137d0adbe3263f75a7ee13a1b
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Andrew
 
