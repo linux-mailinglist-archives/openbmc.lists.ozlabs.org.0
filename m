@@ -1,51 +1,71 @@
-Return-Path: <openbmc+bounces-775-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-776-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 997E2BF0DC5
-	for <lists+openbmc@lfdr.de>; Mon, 20 Oct 2025 13:35:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2B0BBF2937
+	for <lists+openbmc@lfdr.de>; Mon, 20 Oct 2025 19:00:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cqtdn0VrNz303B;
-	Mon, 20 Oct 2025 22:35:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cr1rG3hMVz2xWc;
+	Tue, 21 Oct 2025 03:59:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760960124;
-	cv=none; b=LLorQPPCMTLFC+nH3v0df03CnGyI7FlEqihpGA9CMIwonzn26+LuJT7aQVBsM2hQ7QRij1pAy3HuMzrfIT4mrMQ1ug7UF2iG2YtXKggC9p042XcyW/N7T/rIFvhm86Q5x4pRwmjD3iwFZWbxAERM6uW2QKP5YTt/jPO6dbf5azqQHLQ0kzR20ZTGYoPT7hu/xZ7+N/8qr84/fhKFAtTcy28uvO99tLLkzjGAjmps+VDfAQAQ2G3tWlYtrRMuNBsLCpHy2vTs/Ro/cwWXdCx55Y2Nn7YuGYJaBppy2mIxr20P3sP2JuKjNsBLTcq7JWSEx/RODncB6PlCvY829PJGuw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::92e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1760979598;
+	cv=none; b=YEyNQRqQqJ8gSMU3/7jwHryH9MAv2NBVugEzq6VFPB9BPiUuJAG54jkpq/1j1QAIQ88X9+yXI23k4sFFqOViWwz6AgUdxpL2lqe7C9ADpw+tNYRD6vSlij8XaskgYjDrdPtuXYVM/+FUMewuhceJ7QWbFM/zNJNbu+ieXhP8G2B2l9X+xlXnDqsGZpc8OeiV6GDjQkc9b6eWid/OYtBRdg/T7d83jEGatkDp8iinA6Yn/vrGNEc71Gim4tIK0ERjF+QIOgsDqzY7IuJ1rCfuJXuZ3LKx4ukcCSOG0AiGvI1mIJaMpRfmBkNJTqxpPUOjhwPc688SFosy54t+7CMm4w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1760960124; c=relaxed/relaxed;
-	bh=0UtO/Ve7QiGpMlUuu0IVSIrQoQ/KH9yo8ixVSg0L1bc=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=Qk9ogFXPhYhgzl+6hNr6Cin38bmLjcUrWBZg5Z4nUb+uGIWWWghFlJohDV5faKtyRIdCsdypGVhds0QhSWkpqY+P6Lcl10V7fdpR568onC9prhExX/DuCBEtbtj+C5sA2H3yv/254XsSf7WULL92FD9lgJpUe546osEtY1b7GPTyx0XVFhHhfEymmomtuYyaOauoHks+u4wTve274lMdimjua6bDHb53NHWLYodaerg2PLoAm86tN8aATdFiQiRa3x5rf2EwR1xyjN10Ld9ojYNtmAUe9IJl2TMpznHOL8IAwkz+CqKdFtquoB5nDJ00gcJV7QhQnARp0sxudvKKig==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=MfN84N3F; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1760979598; c=relaxed/relaxed;
+	bh=PkrGewg2VtYamEqOQyjjSSoP4H/JKCOLNozlRWZvh2A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VQPYLeYRrTF6H+j/S0c610CYnD9w8AczyDbNFLQTrTzwBIT3qsMbBBI/eRm9ZTe948jz2QI+msrffhvs2vfWt43g29mMFyRz3zHPYlaI/ccLvtBK+6AvMiedf+StijPdZU/w+h8W9kHB6zVEXTv/6ZEL+V3GYUIuCnU7mZK1R5Cn6y6u422CVuzdsFcCZUXk+MSf5YxgCVsfw4RzPCBhmIwjdtj3WyF5ji308edjyZbfnqugxRwAz2IUr6ji5TIjvaLjndgLykpDF6mPNOcTwb5rRd8w5MUT/F8J/HILPcSoWKzjDCHx2Ou/bhSk9XqAVM9ifMj4/6MtSNyyGnga4A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iDRgIqmr; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::92e; helo=mail-ua1-x92e.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=MfN84N3F;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iDRgIqmr;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92e; helo=mail-ua1-x92e.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cqtdk5j9tz300M;
-	Mon, 20 Oct 2025 22:35:22 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 373E1489C1;
-	Mon, 20 Oct 2025 11:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A9DC4CEF9;
-	Mon, 20 Oct 2025 11:35:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760960120;
-	bh=ZioengeclCBPyaIw8m5VBq2tqjHhRbeGcSeZSVPGoOk=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=MfN84N3FvlrHrKO6hwp0uof+Ta7bEnnpHDT3YaLa+WZMR3CMdo0kZHWC3c1U6E2pF
-	 J5umlW8m4tmUBXWCdMwHbR4/0xVpTKgZPBLKDvRhZKJDxJztlux+q0MDAfDEkL6tk4
-	 8OYnemTQgRJ0/6UVcCgGgfTHTwvb9712A6SjcKvzTp9OqaiU46BCKQI2Ydk8t6rmO0
-	 EPlKRiwgd6lPVQLKfkryxc/KWv8F9NGbZx7wNrM1RS06vHJfcAyHaIhAQpol9wOgAt
-	 CEIBujREfOOxhdxe8FDc9qugI9RYC1kUt+djUMqMw1/KQ0j89XW7VWnow0FdMexgWY
-	 J7M8KbhYwuI/g==
-Date: Mon, 20 Oct 2025 06:35:18 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cr1rD6Wn3z2xS2
+	for <openbmc@lists.ozlabs.org>; Tue, 21 Oct 2025 03:59:55 +1100 (AEDT)
+Received: by mail-ua1-x92e.google.com with SMTP id a1e0cc1a2514c-8fb58f2b820so2590771241.1
+        for <openbmc@lists.ozlabs.org>; Mon, 20 Oct 2025 09:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760979593; x=1761584393; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PkrGewg2VtYamEqOQyjjSSoP4H/JKCOLNozlRWZvh2A=;
+        b=iDRgIqmrQJrCVZravbS2YUkNeSKzm7N/rhowwtRrHEPaMwNDpDxgRkq52Ll2YwaBNe
+         /AV3n5KBUudeTc0wFXQmVg3c5w//VRvN8gGhF1oYeKdMWu7u1pacLQu6y1VMgHywypRu
+         eSJtLzTxFVvwfS0mNQboTO/guJyPcWt+zaKvgwi4W7bvVzvS5H8mpQ2+Pzf9qtbRSuf4
+         3LPVhdAydhZAzCMtM1+SoET46OsVDIgn1uOdMNoKoQXW+BAz/NTlDOS17QtGpSoUOTTW
+         CQZszeGaLWP2FhBgBA5ANtEQgCKq9J7L1yHF6zYWpreRwqSJShY9kUNGhlAdHXMhhXMm
+         QMCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760979593; x=1761584393;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PkrGewg2VtYamEqOQyjjSSoP4H/JKCOLNozlRWZvh2A=;
+        b=hXn+ty1WYfbAGvNyV7Q3wGwj1/zM8G9zR1hlsJHbESCjPZSLyGfsxpEmuvXLkVeUW1
+         uALOX+3JOg+pt/ILe3XrApFhlxnNN2CeH8jx5oCFDHYMWjW10BxBXRJDq/oFPiGRK/N4
+         774KaPAz9suy2RkjrgOYslKtAvhrRRywg4L+i4rC6xIegPJ8Ru9igPr2+iio+PVMqGJL
+         Zfk5Lwf+MY++3A9dQLDhycUktSWso74K1qotZBKME4zULdybKZnZ2cxOV5Lz70qAOFso
+         uTItfi6zkUYTyxfLN3+fBsWEK8orTHozzVKaF+k1DDUh6wN7+J7zglfkb8gs7F5zP+ra
+         M13A==
+X-Gm-Message-State: AOJu0Yz3yySKQVYxgBZVKesLc3/ku/5J7bkSNXONk8vrX8lBHgUeXnru
+	dBvBfO4/kSuSKQtw3sWYmRvuULqTJr28P1IlKXoYyM7INh2uHJq33149Je/uQHmMyaR4alLLWDk
+	s5lw0C/xUCJGXUi9HCzGKs8Wjp1H/9oY=
+X-Gm-Gg: ASbGncu1vWO50BDI4OMfOxf5pdL8PYlOtILtYXvqYxu81hczjQHOGH0UstHsYmJ6yce
+	Kz+sRB6JHUfV71NvutQewvW4yIZheEY6zmYR4A/4ye8M/Dq/6j0rg8mSHZxuZhVNguHHhel0vmJ
+	Yo39/qfRYrvNvFdw5eU/DZwtYT4SP7Ydv+LCkRp4V6QEsPlenrOcJ6UWoIZrm4Dcbo9+/ws7ZrH
+	jysf+BNidu4rJN8iH4wwF7tsAlYVp3YV0IIjYZ0hyJbmZjbG4MIv8L7YUfRf5nMqwEHeeTYPkGf
+	tjMyhdv9e1kbWwZoYYUAPrJC+zk9gw==
+X-Google-Smtp-Source: AGHT+IHQSKvM0zGXW2DGcHzEnM2MzPmxOtKjVQIm3xroPBnZdtuo35PIFuWHADPbnk7GFe5d573oBjyTgsUdYzvXf58=
+X-Received: by 2002:a05:6102:2928:b0:5d6:131b:c0bf with SMTP id
+ ada2fe7eead31-5d7dd6a4a9dmr4555531137.22.1760979593066; Mon, 20 Oct 2025
+ 09:59:53 -0700 (PDT)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,79 +77,64 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: andi.shyti@kernel.org, linux-i2c@vger.kernel.org, 
- andriy.shevchenko@linux.intel.com, naresh.solanki@9elements.com, 
- p.zabel@pengutronix.de, linux-arm-kernel@lists.infradead.org, 
- openbmc@lists.ozlabs.org, conor+dt@kernel.org, 
- linux-aspeed@lists.ozlabs.org, joel@jms.id.au, krzk+dt@kernel.org, 
- andrew@codeconstruct.com.au, linux-kernel@vger.kernel.org, 
- benh@kernel.crashing.org, devicetree@vger.kernel.org
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-In-Reply-To: <20251020013200.1858325-2-ryan_chen@aspeedtech.com>
-References: <20251020013200.1858325-1-ryan_chen@aspeedtech.com>
- <20251020013200.1858325-2-ryan_chen@aspeedtech.com>
-Message-Id: <176096011475.23064.13799548826512417145.robh@kernel.org>
-Subject: Re: [PATCH v19 1/4] dt-bindings: i2c: Split AST2600 binding into a
- new YAML
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <TYZPR04MB5291728EE91DEAFBD3869B3194E9A@TYZPR04MB5291.apcprd04.prod.outlook.com>
+ <CALLMt=o5n5w=4qecOQ8q5h+3Xg4E5MC7Zvt1K=11aGGMq0BFiA@mail.gmail.com> <TYZPR04MB529187F754B2D14C94E37A9094F5A@TYZPR04MB5291.apcprd04.prod.outlook.com>
+In-Reply-To: <TYZPR04MB529187F754B2D14C94E37A9094F5A@TYZPR04MB5291.apcprd04.prod.outlook.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Mon, 20 Oct 2025 12:00:47 -0500
+X-Gm-Features: AS18NWDi1Iay6H8dtQK1oJ5_sGKLZNsBaI11fd7GV2ouIDH8-MeZY6GADo3Pnq4
+Message-ID: <CALLMt=qXN=01Lo9MMri2Hc+=6wvQ+CZsoPGOkuMSzHvh4xxUEg@mail.gmail.com>
+Subject: Re: Wiwynn Schedule A Update 2025-10-20
+To: "Jacky Hung/WYHQ/Wiwynn" <JACKY_HUNG@wiwynn.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
+	"Aldofo Lin/WYHQ/Wiwynn" <ALDOFO_LIN@wiwynn.com>, "Evan YZ Wu/WYHQ/Wiwynn" <Evan_YZ_Wu@wiwynn.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
+	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+On Mon, Oct 20, 2025 at 7:15=E2=80=AFAM Jacky Hung/WYHQ/Wiwynn
+<JACKY_HUNG@wiwynn.com> wrote:
+>
+> Hi Andrew,
+>
+> I add more members into the attached file and need your help to upload to=
+ the projects google drive again.
+> Sorry for your inconvenience and thanks for your help.
 
-On Mon, 20 Oct 2025 09:31:57 +0800, Ryan Chen wrote:
-> The AST2600 I2C controller is a new hardware design compared to the
-> I2C controllers in previous ASPEED SoCs (e.g., AST2400, AST2500).
-> 
-> It introduces new features such as:
->  - A redesigned register layout
->  - Separation between controller and target mode registers
->  - Transfer mode selection (byte, buffer, DMA)
->  - Support for a shared global register block for configuration
-> 
-> Due to these fundamental differences, maintaining a separate
-> devicetree binding file for AST2600 helps to clearly distinguish
-> the hardware capabilities and configuration options from the older
-> controllers.
-> 
-> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> ---
->  .../devicetree/bindings/i2c/aspeed,i2c.yaml   |  3 +-
->  .../devicetree/bindings/i2c/ast2600-i2c.yaml  | 67 +++++++++++++++++++
->  2 files changed, 68 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
-> 
+Sure thing, I've updated it.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Andrew
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml: warning: ignoring duplicate '$id' value 'http://devicetree.org/schemas/i2c/aspeed,i2c.yaml#'
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml: properties:reg: {'minItems': 1, 'maxItems': 2, 'items': [{'description': 'address offset and range of bus'}, {'description': 'address offset and range of bus buffer'}]} should not be valid under {'required': ['maxItems']}
-	hint: "maxItems" is not needed with an "items" list
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml: $id: Cannot determine base path from $id, relative path/filename doesn't match actual path or filename
- 	 $id: http://devicetree.org/schemas/i2c/aspeed,i2c.yaml
- 	file: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
-Documentation/devicetree/bindings/i2c/ast2600-i2c.example.dtb: /example-0/i2c@40: failed to match any schema with compatible: ['aspeed,ast2600-i2c-bus']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251020013200.1858325-2-ryan_chen@aspeedtech.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>
+> -----Original Message-----
+> From: Andrew Geissler <geissonator@gmail.com>
+> Sent: Friday, October 17, 2025 8:44 PM
+> To: Jacky Hung/WYHQ/Wiwynn <JACKY_HUNG@wiwynn.com>
+> Cc: openbmc@lists.ozlabs.org; Aldofo Lin/WYHQ/Wiwynn <ALDOFO_LIN@wiwynn.c=
+om>; Evan YZ Wu/WYHQ/Wiwynn <Evan_YZ_Wu@wiwynn.com>
+> Subject: Re: Wiwynn Schedule A Update 2025-10-16
+>
+>  [External Sender]
+>
+> On Thu, Oct 16, 2025 at 5:33=E2=80=AFPM Jacky Hung/WYHQ/Wiwynn <JACKY_HUN=
+G@wiwynn.com> wrote:
+> >
+> > Hi openbmc team,
+> >
+> > Please refer to the attached file for Schedule A Update of CCLA from Wi=
+wynn.
+>
+> Thanks for keeping your CLA updated. The new document has been uploaded t=
+o the projects google drive.
+>
+> Andrew
+> WIWYNN PROPRIETARY
+> This email (and any attachments) contains proprietary or confidential inf=
+ormation and is for the sole use of its intended recipient. Any unauthorize=
+d review, use, copying or distribution of this email or the content of this=
+ email is strictly prohibited. If you are not the intended recipient, pleas=
+e notify the sender and delete this email immediately.
 
