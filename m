@@ -1,71 +1,62 @@
-Return-Path: <openbmc+bounces-787-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-788-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01A65BFBD74
-	for <lists+openbmc@lfdr.de>; Wed, 22 Oct 2025 14:27:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D0F3C048C7
+	for <lists+openbmc@lfdr.de>; Fri, 24 Oct 2025 08:45:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cs7jM2T9Jz2yFJ;
-	Wed, 22 Oct 2025 23:27:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ctD1N2ZjSz30RJ;
+	Fri, 24 Oct 2025 17:45:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::e2f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761136071;
-	cv=none; b=m87x13ggSi1rqy5b8voLe38WexYeDZKQxeSr1fj7q7CqQNIen3nBLJdIB+1o8INqSfnGTeeTIsEkUvYgl34ylrqyCBN0jwzNthoheyJT2tGFjgBoVxxsE/t8eHgNRyt4f+ZL0TjVz6B64k5IHinrwTCU7qcLhrzONXiKbVHlZgiw6ufO1doOP6mnF/SRHec/zgL63fWWN4pCRR8gT9qGsRriFLvcaQSPfVFA5Yw9+hU9eJsJW9DsqvS2+FJ7WeaO6sHf5jwkvWikIL1+4s6G/K2yJOeDniQRvpZsp9P+0XcJZ/NvCq7VQ0V8tGYUN4APaukEA8Fx5rbXm5G8yV1P7Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761288328;
+	cv=none; b=kdVDYU3pYWGn8EM2EF6NgzH2nbTd9RtTxNVuCxWo5oJwBw8wZI4kV9sDorsevgqIRxYEnnQLtr5E3/9nUhFXeDH3D/sU7JfUeXzTvYH/lJADPwhCpFOEX+EYcI7Mfr3KcBdV7z7EFZqzbl1SHC7Uf3X1alSE7L7d3PRay7OWTpFkJwxU4+QJ6nMYWsGUBprl2NzkpNqI7VFAodNRb41ssbnLjxJ6ud3LCu/Es60Xda18ALX/K3CFAio7AKCYpydOBiuhmTZN/Wcugt2blqND/rS1NGaeDr2fV+6QxBMWoRfzjwDueN4Is0wvjGTdHWw94s8F/xrWK/ER9trrrCXepQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1761136071; c=relaxed/relaxed;
-	bh=ch/lFuMCn/1VhWWacZ0z8Q1b8f/+vmD7Shxs/pwFOOE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ohGFLr05D7/qhhqKuSxk4qk7Grv93Mq3aFn2TGK2JvQfbCuSDg01wjISRUPlLuAr+kgmZKUz2AWUNR3zBOD90DWHig4LzArhfa1dNnCfupsUs+pZYeDoJIhXYnLYf+JAuu9Hg/ViT2sIM8cIwjUMwb25m6DwEZwzuGPgF3K3MX4C6SqxAD94UqNQdbY9XA1hX8wwIPiehOmANMkpYC5dHOdWfuHj5hsAFdSaGVBjGFWZWAYdPGfHkxFnXKIoJUjb9S/0etIcvggTVAHCXpVkaWFmbnUalyLRS3z+AHSnquNRGne7ua8niPkBX4JmuQYLnP/4n3nYDAlKURnQhnEhyg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IFPq87gn; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::e2f; helo=mail-vs1-xe2f.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1761288328; c=relaxed/relaxed;
+	bh=DvwlF6aMjt/ctYUuBL3JPfNBkTxCTujVNJ6VU6bSGDo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kJ1gHbnh435b3GhBPZfYmnLmhDtfG5/7wj3tKHm8AjkYXWNTrogKxMAGQmoeVQmpIaGseLF+Uo2y4W0g+8zlErm8QC87HXN9JxFQ56LGv3QhTpCkZYqyQUokj+f5vJDuAEuoZvblcHLmE03mvfhmfknMfemPfrbzdH8EBLKb0N3x7A0hu4Zc1Bz3CC7Dqzwpl/ymp4hhMx1tpO80L2zdZ316g4LKKLoeMa/dbTdlWJbVLkXjbt6VFIgZ76t5UqEYB/QtHNHimgxEuxGpGXdjeXJY8qd03ZPgTD7nferWY8aD+q9O5BxtxfONYX8cu6UmYkVIXmZgDKLEA49o9LjgBw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ivnGSX9D; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IFPq87gn;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ivnGSX9D;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2f; helo=mail-vs1-xe2f.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cs7jK5jS9z2xxS
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Oct 2025 23:27:48 +1100 (AEDT)
-Received: by mail-vs1-xe2f.google.com with SMTP id ada2fe7eead31-5db1e29eed0so317575137.0
-        for <openbmc@lists.ozlabs.org>; Wed, 22 Oct 2025 05:27:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761136066; x=1761740866; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ch/lFuMCn/1VhWWacZ0z8Q1b8f/+vmD7Shxs/pwFOOE=;
-        b=IFPq87gnNT/9KSpZsEaK6cjJiOkolbM02cJkbZcHa2H4+Yowi16MeDEiu0sLSIYi70
-         rJlCNhZAUHtleQwaTU/GyPdIOPdsAIVjDyRvkpTC2qT6MC3oqMt8faPXO0u5rlrwRv/M
-         x/WWrGWv9Dn9NPIwmWmaYnPwaZhzOlgC6+d8Qy5+SM2WSK6WcpDOxEEauEvK7xIBwtbF
-         7cXA31uUv4FXqZ7V0v4MwUdg2sBP9JtsYx0SPCgGyyqojpSklsHgPDbpNMBuWZqtY3TH
-         x+AN72E4BxVbd+DB4qEuklSNNqx+eLhjmSRn5jUH2dkpNomMvSqCZVas5ALY4NvCwnRP
-         nmtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761136066; x=1761740866;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ch/lFuMCn/1VhWWacZ0z8Q1b8f/+vmD7Shxs/pwFOOE=;
-        b=SzoFkkLV9IGloZQBagyVaNQX+Dx6H/Kp7Ot6lOyxFvsPEmtW2s41Up/nOqyP/eYCsi
-         g0DR4n1B0N2rxayLYM3Q5Rj7K/A4x27mziDUpXzvqKOT/Ujcm4i5Ookh73WK/9ryp7Tc
-         o01UkNr1Veo2hbezNvlOROV1SjHg2cqngL+jMu9h6jNkISaDLJ9Rez0ZqFAhihXRWxLI
-         /Sx2iGGOqyyU7NY68cUGPRZQDMtNFvetlHFvkZvu4OmPdySxKV6+/mWuxo+OQCEYW7pR
-         7mkfgIWHMRZfLMN0NC8jIinJ4tg4XkrJsH7IMcpn/trBVSX5MlRrbFMhWkRZt0x4/WYu
-         yKNw==
-X-Gm-Message-State: AOJu0YxR0YUTxFpNfXwK4zt8Dtz82TJy68ry/4g3xZUOJHaiLNO0sybT
-	lrLA6X/Nx9fLZTnplK7YfyE58u6mbuLEzIlO3Jv08nsFcQaLTlM0qjjaKrQlC6Igw88NaGpvkmN
-	M1NpH0pPtvkunE7PfU0YCFQ5q2LE6De8=
-X-Gm-Gg: ASbGnct/g2b0MnPPtiIAr+WpwK4ZwV4Zb39HcH6xyZ18Wg7xMt5IAeOFUC79ZglocPC
-	92lisTo9IYqF3ncjvkGE92Ou/5WwdissGRQIfbMMTU+GET7h9ZFFQkQroIuLMG54NzV1JyH7GHB
-	/cTCiD9T+rvLVjDf69UR1M5wo2r0rwGqrmuGns1fOLGfmRv3gy7wlZuAi6CykzVEU6A6JlnhgDL
-	tp2seKThO8is8TTTGDPa29dkRPmS/Zk6nZ9KXVNAbIHF7CP2jFB3VHzC6vH4/p3t/m/FpTYGRc2
-	6ynV+JClzeFtum2h9Go=
-X-Google-Smtp-Source: AGHT+IFgKS3JOvR6P53s/UDPesgcVyov34sM//X9nzXaBKDNhFH3f1EidRDE9wpcmWYUnNpBIOtVVJPt9BO1pj/mFvM=
-X-Received: by 2002:a05:6102:ccb:b0:5db:2301:a9fb with SMTP id
- ada2fe7eead31-5db2301ac31mr345429137.33.1761136065683; Wed, 22 Oct 2025
- 05:27:45 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ctD1M4Tfsz2yjm;
+	Fri, 24 Oct 2025 17:45:27 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 6A2C543E01;
+	Fri, 24 Oct 2025 06:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4902C4CEFF;
+	Fri, 24 Oct 2025 06:45:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761288324;
+	bh=UUhpDadZzBT4RrPvzIdECya0GjjCWyOzHQkuKftuzQ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ivnGSX9DduM/MQ3ZCnpNc62OnWb6W1h9IiDDP6dsfVjSgb3jOLPa0VNNzruUqf5pS
+	 qhmliyRhoRe269hJZp5+YDDOXrtig4fQViL/rfmkqETX14BeTLZ+nPnQ6T8lF4dveM
+	 SEOIUhC8wTQ/V6yEtA30ijB80qUwyN0LhUES2BGTO5MWs2i20z7xJ5yE6b3+EwiYav
+	 S2HiYVRBLW1LRSyeZdeRRo8LsL/+kBul/V/7kJ4UPQaP4W58RJ/r8sRG061ecw60sR
+	 4uaJWGTcXUxD2sdbCdO8bSUlWf5gKjkeJstNRnwyN6e24SqUA0FeR2z8DpMtxKmLhM
+	 Gyw7h+Znj9EbA==
+Date: Fri, 24 Oct 2025 08:45:21 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org, 
+	jk@codeconstruct.com.au, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andrew@codeconstruct.com.au, p.zabel@pengutronix.de, andriy.shevchenko@linux.intel.com, 
+	naresh.solanki@9elements.com, linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v20 1/4] dt-bindings: i2c: Split AST2600 binding into a
+ new YAML
+Message-ID: <20251024-dark-ringtail-of-defiance-1daabd@kuoka>
+References: <20251021013548.2375190-1-ryan_chen@aspeedtech.com>
+ <20251021013548.2375190-2-ryan_chen@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -77,38 +68,34 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <SEYPR04MB7755127F14678E6D3616B901F162A@SEYPR04MB7755.apcprd04.prod.outlook.com>
- <TY0PR04MB73524FA10F833221A4C2A51EF15CA@TY0PR04MB7352.apcprd04.prod.outlook.com>
- <TY0PR04MB7352C16AEABDB768394727B2F135A@TY0PR04MB7352.apcprd04.prod.outlook.com>
- <TY0PR04MB7352537F1867EC8D7C71541FF1E4A@TY0PR04MB7352.apcprd04.prod.outlook.com>
- <TY0PR04MB735254690EB4CB7F14A65D7CF1F3A@TY0PR04MB7352.apcprd04.prod.outlook.com>
-In-Reply-To: <TY0PR04MB735254690EB4CB7F14A65D7CF1F3A@TY0PR04MB7352.apcprd04.prod.outlook.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Wed, 22 Oct 2025 07:27:29 -0500
-X-Gm-Features: AS18NWAJsGV3QPh4ApCcku9zHeomkktgomIl2t6Ghge8TD9gcyMN95xKw7rUQfg
-Message-ID: <CALLMt=rwLcazDuUK9hsGzZL+Eju2k0FAyrcYezvYAcqAGpJDaQ@mail.gmail.com>
-Subject: Re: Quanta CCLA Schedule A update - 20251022
-To: =?UTF-8?B?TGl0enVuZyBDaGVuICjpmbPliKnnkK4p?= <Litzung.Chen@quantatw.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
-	=?UTF-8?B?Q29zbW8gQ2hvdSAo5ZGo5qW35Z+5KQ==?= <Cosmo.Chou@quantatw.com>, 
-	=?UTF-8?B?RnJhbmsgVHNhbyAo5pu56K296aiwKQ==?= <Frank.Tsao@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251021013548.2375190-2-ryan_chen@aspeedtech.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Wed, Oct 22, 2025 at 1:50=E2=80=AFAM Litzung Chen (=E9=99=B3=E5=88=A9=E7=
-=90=AE)
-<Litzung.Chen@quantatw.com> wrote:
->
-> Hi team,
->
-> Please find the attached file for updated Schedule A of CCLA from Quanta.
+On Tue, Oct 21, 2025 at 09:35:45AM +0800, Ryan Chen wrote:
+> The AST2600 I2C controller is a new hardware design compared to the
+> I2C controllers in previous ASPEED SoCs (e.g., AST2400, AST2500).
+> 
+> It introduces new features such as:
+>  - A redesigned register layout
+>  - Separation between controller and target mode registers
+>  - Transfer mode selection (byte, buffer, DMA)
+>  - Support for a shared global register block for configuration
+> 
+> Due to these fundamental differences, maintaining a separate
+> devicetree binding file for AST2600 helps to clearly distinguish
 
-Thanks for keeping your company CLA updated. I've uploaded it to the
-project google drive folder.
+No, that's not a valid reason. You just moved the compatible and are
+still 100% identical, at least according to this commit msg, so there is
+no point in this patch.
 
-Andrew
+NAK
+
+Best regards,
+Krzysztof
+
 
