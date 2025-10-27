@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-821-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-822-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE2DAC10A9E
-	for <lists+openbmc@lfdr.de>; Mon, 27 Oct 2025 20:14:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC0D0C10E8C
+	for <lists+openbmc@lfdr.de>; Mon, 27 Oct 2025 20:24:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cwNVl1hY4z2yjy;
-	Tue, 28 Oct 2025 06:14:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cwNkC4T2gz2yyd;
+	Tue, 28 Oct 2025 06:24:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761592495;
-	cv=none; b=Tyo97CaQ2iUp+CmOQSbgqCTUtvD6fsEPMSFVhOtx6CyHl/XDLbFEUVR2GKbuWBdHLKD92yM4TcAWzOYEmGIqe7wbbWQNRIYdbETVzDuWTOvCPygMicg3UvkYTNrAZ14k2l0vZIlr0S02t6OhlCvs5t5rM1Y+749AFgLMNKVAXTKngPjDGcuAmB80csB1wIQogBWb41uppUGoxRLUMvwbGWbL7jIy+hQ1T7ng/J0g4MoB6ugJwuHo9E0VzMk3ZXmXfFr3dtyldtZuWuq+I2X1dJTiYHWisYo7u9sehO5IgyBiuQqOGRdWvXODvHg2slZrvatc1+erFfzvdY7XKDD+Ow==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761593091;
+	cv=none; b=FvHoQWGj1s7PUfkZv08Tl1wk0WdK6j1ol7pLXlHd6HHm2m7ep3HSrGYpaqS7MoxJz1yZQZSxeDqqC5eXpJFXSNrhnNvj/qZzWfR4GcDgu5CNZthHDUmP4vtr+WNKF0CtYd9kduLfe+PrtnmVvoIAhZna7iiBRAPhYAEZjftur/X/cLE9yOB/Cipw8krd+R0YQSKYdj5m+O5jSXsqlWBN1buub436ANnnN5oTT4hr/+7e4MelYYHFdQKxqBUI32Ob3qrqtWBm1fyVFNaHFfG0kvHzU9Kee5sOa5W+n7fQleES7UuRdJBtHFkrItf+r16Xm11mB64BrI9NMk/JeYpQKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1761592495; c=relaxed/relaxed;
-	bh=LmFVx7oVdKhO3U8QLv7QpspZRLRuL98Fhy6M0Ccj9GM=;
+	t=1761593091; c=relaxed/relaxed;
+	bh=Ky/Hdv+fITihiKgEw4E/lgk7NbmaPS46CWy6RIFCiho=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=cV1OmUls00bP/MBdyrjwyKcgW4XFYf7NOiNP4JDvw9NOiYHADq5UnQgnEP4fVD6uyQED7r3vPiwglR06JLCAFreg8yhFblUI0PzpfBKGFGEz45+W5zXwtngy+WLKzH5sxslrnFPZXyO/2cXPzNYjSJ/OClmpbJ8GcC4hZczKofMLZp4MATPeOtBJfl4coo2XMpzx2ijGDFr4eqMp87NlNsNxRPnNt72BSIFOXt6o5MRg/KabTluyCzhspLBzKusEdOVNjh8XqkSOZ5xUYf4acHhjbk6aMlo8Cy/sVBwnSu8WrAV7+8PBaIZT5FtgX0GMArKp6MF0En7uAqJ/h4fi7A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tGN4T1t1; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=jOv9knUq8E8cZXuJk+OeSoYWJFBE7JBNxen58ryKVzlxhIu0EVaoFxzjv4VHjhhIRKbgN59kGw0JKaIGiF86yCGGu0Yj3P3mjW6h/1KTWHEDwtxsjPHoI1qkqvglI6FWBKkc0DKahX/phsfx4aOvnwJNZrGSKZtAS1UdEy+Sp8V24OUDnt1V8IORmh6yuhfhOLdUt4haQYhNspYfQUzgEMBxTxDSVMgoriQ+7a2Rq8V7+IXx3lNse85LpXppbqUR4auSjY2t7SZIJB78Ii6ZuLBfZlLJ0dZcWC4iQKWumh5lragLWPKYaZ04Eld3xyCWYQTsivCFzYirkTgcidnR4Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iMp/sCcu; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tGN4T1t1;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iMp/sCcu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cwNVk323lz2xgp;
-	Tue, 28 Oct 2025 06:14:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cwNkB5yK8z2yhX;
+	Tue, 28 Oct 2025 06:24:50 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id C58A7488F4;
-	Mon, 27 Oct 2025 19:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985C7C4CEF1;
-	Mon, 27 Oct 2025 19:14:47 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id ED72048A6D;
+	Mon, 27 Oct 2025 19:24:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D133C4CEF1;
+	Mon, 27 Oct 2025 19:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761592491;
-	bh=UmjC+XeU6cvmCC2kxiH/o29POC8JmoxbEXi0rQcEvtM=;
+	s=k20201202; t=1761593087;
+	bh=blBWTCT+SIFaa8+odPy1K2NT/1/JwxUEuNBKMUHBGBU=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=tGN4T1t1nWKQzfOAgL6XV6X/ZmM8w6NVxI9LH7pkbpE8CkhW9vGu3YUsTzcxyN9hq
-	 Q0PYNhgYY7gMmYkrCwOybee6FjBNbbnZpjLg5S9w9E8gBq9maFEnrdBCA9vQaCbfBy
-	 FlHQzvZPkf9gc3Vz/h98nekiYBAEFp4WJdKLPd7GcRq0rOQ0equ0V6+iUBzuOTm873
-	 DQK+L7x3mQMM09CmQoWmxemTeonPbcG9/GKm7x30Ktb2JN2VOVVoLIDbpKSR9EdwJJ
-	 BtlUpkFXP4ffjYu9FPyKgvtR3K+uiPBYbENapC1A8cjSFLviQAkivnvU+euU8Und3m
-	 ZeeKx9vWGS59w==
-Message-ID: <93a2ff5f-2f8e-494b-9652-b93bc243c229@kernel.org>
-Date: Mon, 27 Oct 2025 20:14:45 +0100
+	b=iMp/sCcuj8WkwVMinkWWHH+1WE5wIOctkxm4WmKkGOpFB3tlL6dXbKLgjwApaqArE
+	 H/00yx5LviCcddxMag8atyGdVYKVM8VcWEWhgOgiaaZbqc59TqNWXtibCQ9CJJzVd2
+	 feIQMAR10vkDBV3ppruablnt24+Set2AftOQwXDEWLy4rgVCbUNBjgHIMTf8AIkLlE
+	 yl1M4m9ZBgjeF6YxKl2yGqKFQnMXi13P7ipQnSVbC8zaAk/xsLiLL+RADk4SUEF88j
+	 shnLsfHydVzjrwO6xQJ9eVMpGrk072ybXcWmo90tJSLurE/uo95Fk2aVAFyl59DNkl
+	 wp2ymHAgNiEGA==
+Message-ID: <f08b1078-fc8c-4834-984c-813e01291033@kernel.org>
+Date: Mon, 27 Oct 2025 20:24:41 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,8 +57,8 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 2/4] dt-bindings: i2c: ast2600-i2c.yaml: Add
- global-regs and transfer-mode properties
+Subject: Re: [PATCH v21 3/4] i2c: ast2600: Add controller driver for new
+ register layout
 To: Ryan Chen <ryan_chen@aspeedtech.com>, bmc-sw@aspeedtech.com,
  benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
  jk@codeconstruct.com.au, robh@kernel.org, krzk+dt@kernel.org,
@@ -68,7 +68,7 @@ To: Ryan Chen <ryan_chen@aspeedtech.com>, bmc-sw@aspeedtech.com,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
 References: <20251027061240.3427875-1-ryan_chen@aspeedtech.com>
- <20251027061240.3427875-3-ryan_chen@aspeedtech.com>
+ <20251027061240.3427875-4-ryan_chen@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,7 +114,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251027061240.3427875-3-ryan_chen@aspeedtech.com>
+In-Reply-To: <20251027061240.3427875-4-ryan_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -123,37 +123,46 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 On 27/10/2025 07:12, Ryan Chen wrote:
-> The AST2600 I2C controller supports three transfer modes: byte,
-> buffer, and DMA. To allow board designers and firmware to
-> explicitly select the preferred transfer mode for each controller
-> instance. "aspeed,transfer-mode" to allow device tree to specify
-> the desired transfer method used by each I2C controller instance.
-> 
-> And AST2600 i2c controller have two register mode, one is legacy
-> register layout which is mix controller/target register control
-> together, another is new mode which is separate controller/target
-> register control.
-> 
+> Add i2c-ast2600 new register mode driver to support AST2600
+> i2c new register mode. This i2c-ast2600 new driver and the
+> legacy i2c-aspeed driver both match the same compatible string
+> "aspeed,ast2600-i2c-bus" because they target the same I2C
+> controller IP on AST2600. However, AST2600 SoCs may configure
 
-This implies your "reg" properties have now completely different meaning
-and this would be quite an ABI break. We discussed this probably 15
-revisions ago. Where did you document the resolution of that discussion?
+Where did you document ABI compatibility of new driver with old DTS,
+which do not have required properties and uses old reg?
 
->  
->  unevaluatedProperties: false
->  
-> @@ -57,10 +85,12 @@ examples:
->        #address-cells = <1>;
->        #size-cells = <0>;
->        compatible = "aspeed,ast2600-i2c-bus";
-> -      reg = <0x40 0x40>;
-> +      reg = <0x80 0x80>, <0xc00 0x20>;
+I don't see that. I actually clearly see:
 
-Not relevant to this patch. You just added this line in patch #1, so did
-you add incorrect code just to fix it right away?
+> +	i2c_bus = devm_kzalloc(dev, sizeof(*i2c_bus), GFP_KERNEL);
+> +	if (!i2c_bus)
+> +		return -ENOMEM;
+> +
+> +	i2c_bus->reg_base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(i2c_bus->reg_base))
+> +		return PTR_ERR(i2c_bus->reg_base);
+> +
+> +	rst = devm_reset_control_get_shared_deasserted(dev, NULL);
+> +	if (IS_ERR(rst))
+> +		return dev_err_probe(dev, PTR_ERR(rst), "Missing reset ctrl\n");
+> +
+> +	i2c_bus->global_regs =
+> +		syscon_regmap_lookup_by_phandle(dev_of_node(dev), "aspeed,global-regs");
+> +	if (IS_ERR(i2c_bus->global_regs))
+> +		return PTR_ERR(i2c_bus->global_regs);
 
-No, fix your example when creating it.
 
+ABI break. No explanation of that ABI break, not even mentioning it.
+
+There is no reason to break the ABI. Your new driver *must* support both
+interfaces and both DTB. You *cannot* (please listen carefully, because
+in the past we wasted a lot of time discussing simple statements) rely
+on legacy driver binding to old DTB, because it is the same compatible.
+
+You need to rewrite all this to handle both DTBs in backwards compatible
+way.
+
+NAK
 
 Best regards,
 Krzysztof
