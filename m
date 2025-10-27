@@ -1,28 +1,28 @@
-Return-Path: <openbmc+bounces-813-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-814-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EACE6C0CCFF
-	for <lists+openbmc@lfdr.de>; Mon, 27 Oct 2025 10:59:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 630EBC0CD01
+	for <lists+openbmc@lfdr.de>; Mon, 27 Oct 2025 10:59:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cw8905wNSz3c7n;
-	Mon, 27 Oct 2025 20:58:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cw891362dz3cZS;
+	Mon, 27 Oct 2025 20:58:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761559124;
-	cv=none; b=CzIqRvsswVxD/zQLImQi6dPm/ARxRNwiX9hv7BBC94Ojj6yu6MOjNoo+iE0x1+LAPgil/FKycXfzLK/CfB/KDpMVz+22AVu0uFzQHbi1W7S+yZgihoWSPli/ksNyu1/4FDliONVzlMDM7VKrMh6vWJ+eFwM13o1edbtXyk510/VmN8AKAiiIZ3wmRHOstAL21zKZp6uTOlAPsGwBOEYCNM5AAywzJvML2QqZMayt0ON3m4E63Fjpgt5kpsWu8u6quxQ5g1ME0CEMFVnyGyJrbdlcQ+TWCgXe/IEaTcUbhN2WbLA8u06vlQzfkXHX3woh2W4fvJZkJNMEJdY/aIMiCA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761559125;
+	cv=none; b=MFL+Kx1C48kth7hgVvjZ7GzVUOqkCB6ls9tTX03mUrQm0U5sPrnnPlQRNd6VeCFT1ZCFzxD2Id3n61j6QfTHxr2E7+7kcadVvvAPjQs64T7OcRPz2c/iYPuo+yvu2LZHmSmzjXMhWdnHuXVVYmz6YDy5Qu5X+z3g5ZuMzemTi4Di/XBGuZFd07XwT79dYAw9147lZBx9IJ2zCQOt8YJ6+sekZkKZSw2amK9ztXg1ThHwuQWYh/wPmrp54Mb04SwrhG5811S7NnmUQ0/9iWLXKGS8a8QY7u6Y6xPwbgJ7W/GwHIOJaEgyr6Awxny149SdYRRZpShSg77GC8O9QlzntA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1761559124; c=relaxed/relaxed;
-	bh=rq+1y790pe0Cfp13+HuuVfB9eKgP7oyWGnOPXBOPhA4=;
+	t=1761559125; c=relaxed/relaxed;
+	bh=cvg1Ta8rWtoQoYrjOAiG/QHi60GLvBP9/tqlZR46NZQ=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ncPz9o+RH/BeWEa2gCfUkB3cnHc/kfIoJyrHXe7sbM+gres2iiBtgXxDDjje2Rud/WleeXYz1yAqd1LLXuo1nyWFvyM18ZJ0J/fPW+bXUL+K4qIk7xHkMFAaLEaxHXTTQAHZr3ymakIdGBtltWLTYJYzv26FA5nYfyOvGb9LQC08tvpaWD0I5bY38aBffpMPKiwjxmnnhqWVdVPV3pXKJkZHT5NooeZ9bpJyCqJtyznPoUA9D5mOAH/6xNbhHCGIP1Qq9Dyl3VaEXYYUSCnjXAWev+WsDBkCBRNBvhQNLBXVv6J5YcPex6CFyXwaiOPDjcfMv2bJvwfUZ45UK6B3qQ==
+	 MIME-Version:Content-Type; b=jhfI4KaeSHQhk95n3q7MbO+Yeqk/28uWPOC0o/jqa2hc3yB+e9l6jPhgDWnlUNqpfx92grtRl/D715lYoIB9CE3aqYa+qGea/bEo7CQwHCZWrd67lYA0B5n+D4Vc/nNQoGTPjScVFpEI0br8CLyGAjB2c1qn1CIcOoMAD9gToJhXbTl5nItvuNiOKch6W97XfANvnArNg/JyKu5dbjNlos3ooKv8mG0vUgZrIkRDJdnvx1mZjIN7QSTVbSCIjddtl08GqS5OsTr7xZLQPqK1wiiJOHy56ie9AYJEB6YeDYGUd6lXiicM4KhpHbgm7ys31p3de+OCTVg9FnChUX7oQA==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jacky_chou@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cw8902F6xz3c1T;
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cw8906hBXz3c8W;
 	Mon, 27 Oct 2025 20:58:44 +1100 (AEDT)
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
@@ -41,11 +41,10 @@ To: <lpieralisi@kernel.org>, <kwilczynski@kernel.org>, <mani@kernel.org>,
 	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
 	<linux-phy@lists.infradead.org>, <openbmc@lists.ozlabs.org>,
 	<linux-gpio@vger.kernel.org>
-CC: <jacky_chou@aspeedtech.com>, Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v4 3/9] dt-bindings: pinctrl: aspeed,ast2600-pinctrl: Add PCIe RC PERST# group
-Date: Mon, 27 Oct 2025 17:58:19 +0800
-Message-ID: <20251027095825.181161-4-jacky_chou@aspeedtech.com>
+CC: <jacky_chou@aspeedtech.com>
+Subject: [PATCH v4 4/9] ARM: dts: aspeed-g6: Add AST2600 PCIe RC PERST#
+Date: Mon, 27 Oct 2025 17:58:20 +0800
+Message-ID: <20251027095825.181161-5-jacky_chou@aspeedtech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251027095825.181161-1-jacky_chou@aspeedtech.com>
 References: <20251027095825.181161-1-jacky_chou@aspeedtech.com>
@@ -66,34 +65,29 @@ X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Add PCIe PERST# group to support for PCIe RC.
+Add pinctrl support for PCIe RC PERST#.
 
 Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml     | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
-index 80974c46f3ef..af8979af9b45 100644
---- a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
-@@ -141,6 +141,7 @@ additionalProperties:
-         - NRTS3
-         - NRTS4
-         - OSCCLK
-+        - PCIERC1
-         - PEWAKE
-         - PWM0
-         - PWM1
-@@ -369,6 +370,7 @@ additionalProperties:
-         - NRTS3
-         - NRTS4
-         - OSCCLK
-+        - PCIERC1
-         - PEWAKE
-         - PWM0
-         - PWM1
+diff --git a/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
+index e87c4b58994a..d46f2047135c 100644
+--- a/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
++++ b/arch/arm/boot/dts/aspeed/aspeed-g6-pinctrl.dtsi
+@@ -2,6 +2,11 @@
+ // Copyright 2019 IBM Corp.
+ 
+ &pinctrl {
++	pinctrl_pcierc1_default: pcierc1-default {
++		function = "PCIERC1";
++		groups = "PCIERC1";
++	};
++
+ 	pinctrl_adc0_default: adc0_default {
+ 		function = "ADC0";
+ 		groups = "ADC0";
 -- 
 2.34.1
 
