@@ -1,49 +1,49 @@
-Return-Path: <openbmc+bounces-829-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-828-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 515CFC17301
-	for <lists+openbmc@lfdr.de>; Tue, 28 Oct 2025 23:25:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27634C172FE
+	for <lists+openbmc@lfdr.de>; Tue, 28 Oct 2025 23:25:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cx4h16trfz304x;
-	Wed, 29 Oct 2025 09:25:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cx4gw3ChMz2xQ6;
+	Wed, 29 Oct 2025 09:25:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761659208;
-	cv=none; b=HiERoQQ7rHQVIhdyIqQNnz/uUas9DMQ7Ezkaa4TV59r3LKBo5mjk/mXHrfVL2TtgJpX6PTjDbG8XGUmZy4VGiHC7dkn452WNy7WJvZ65OxrQ3VVOyuOtbKVnQvWkPWZsOAylMv5VuZsX/T5epBKU7OPGtEkufigBHvNAFP6Gpn9+jzE6MCwBi6QdBKF6otSOi+aIfhBC4eVIhsX/I4il9ASFKEjS8gNPO3cXka4qHawKPFdl5XKKnnW7VE1KLD3QA/aIdGcl83VIuzZ7kJZKuo+5CB3eZ2cTlpLceA6qw9USBwZcaj13cJxbSOU3P3VdrpHoE1QZKhdWDQdIZ8qiVw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761671615;
+	cv=none; b=DMj6NTorQg+QN9NXLHHpd8inwdd4iJAqZIt6XC3R8q+Q+hOE1Wj6i3WoFur9WgJtlBNkuFdOWLdznixJqTY95QjIMbvh8VwJoIZzuRFzhAYrHjr65cY2M1FuItjjhkiklZQbVv1u+sSQr6Kg1hiIM4TRw5SgjL3Qr24DYJoraY/RqG1sySUYp3nBDhOi52n9/Noww2d1vWbKKUmXBEgz1K7u1NPqT7q2/RKQELP5kqEJ3cy2Gr38M/Biz+zi9pcT8Cnim7dppZN1ST6H6QvFpjuf1/AOoEw3GPW7sHwJtVvs6fJQjfp8JtA3hqF7QNPKhDZg4d1mZn0YojkuLh3Dog==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1761659208; c=relaxed/relaxed;
-	bh=DzKeKz377bw+AjGXtS7hvPLMXs0p4OIhaxJNCl5JKj0=;
+	t=1761671615; c=relaxed/relaxed;
+	bh=CdJ+7CGRqx2pwaR7nFsvxokq6e2hsboYVcp35XvnspA=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=HayD4X+STdhfAeckVXGLLQoijJey4WtdI0IN3BLjmug2xR4JmXSDuLBT11u4KqCiFg1zeoXKIG0x4QezYohyaILeBD8TUKPVeKwznbiN9Hw6l89yfD1L/jNbBc6T34Vzft2BAxLCHf4UzOEPPNxtIB5ObDRH7YOFpyt2YNl3w3X4biNOJk8fB5zs7kbu3j/bp0OfkVdiwNDaCiSwH2ghQG0IL3pHNWsnkHZShjMVuiRPToN68dCBqQ3FORbjzfdIxuwcVI0JxOKF/n6l65q3QwcuDWyqlZsT+n547f/s4sbBBHvolD/vbwX3JRY3r7gI5VWuxREy850CV8RjJhZkIg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=HyngrGjL; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 Content-Disposition:In-Reply-To; b=ED+H0QYZM0HgRKdHC64+2SIIcmSADsjgsfGckW1vUq9il1t2bMOaGBmbE2g6XFeCfnmb2pISS/3oREldfFFhpH2vl3yja2KOfX3WuHP8+nKApsh418Y4zvSwDbuyjt12wuNKC+RcHNxG9cfbEAJvJj2sLbLrJd0rh5rvv0lIVKqriYuZSZTojF+NlZ+tq1ypbN3bzjkkvVlBS8scW2cyl6Vj5qJoMuKRDAjRhHxHm0k6L7487KpC2jPpR3976R7WRGimsCDBXwH0h0/kvjViSlUvZqcEUhLF4bSghCxN4oLOLoBSm5bBnMBAWjmOlw4f1CohbyUuWyO/6oOoGbcY5A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=GHWgETQ1; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=HyngrGjL;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=GHWgETQ1;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org)
 Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cws9g5rC7z3dBZ;
-	Wed, 29 Oct 2025 00:46:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cwxmG6TcPz2xlK;
+	Wed, 29 Oct 2025 04:13:34 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id C4F5660398;
-	Tue, 28 Oct 2025 13:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4601DC116C6;
-	Tue, 28 Oct 2025 13:46:45 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 3B9306124B;
+	Tue, 28 Oct 2025 17:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B658BC4CEE7;
+	Tue, 28 Oct 2025 17:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761659205;
-	bh=gHTXG47ZT83HtioVGkOdOgeWLg99afniblJgeCrheGk=;
+	s=k20201202; t=1761671611;
+	bh=+cenkb0yL5U6fkb9PXEJLOZBBfbIw/K5JcCnxUVgehI=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=HyngrGjLb54dCOStOExNIW8Y0NWfQzBXP7/lfZg2CrXY7+IMVLq42u0PG+z1cEhOL
-	 M9rvJLEAEy7zeEAWnuV/unlMTMS3/MUsv0ix70sVbD2swTqZWjJ73oXB/FnRpo6ibM
-	 5estbSa3g/FRLspY7MtCd9VANbOrV9/5esg2D/G+7NIUhmjdRsQO8xY/aVRcPYRGXb
-	 X/UIMn6YkUr50ydC9753IDyWw8dnp67i7nUJy9ediQGszIl+HEj5mZ17iKfEPbiCQI
-	 yV1LFP3RB+1kFvEmWfqvRVyp0cXJ70Zaz3/Whr5ecoe3Wqctp9aXbfY9yaLyAIIFK6
-	 M+094b4nEUMzQ==
-Date: Tue, 28 Oct 2025 08:46:44 -0500
+	b=GHWgETQ1RNiG4NgBjVLnhJH9atMiVJdloWNMv11jPg99tyK+rmBwAzqK9hTb4gVhT
+	 2ZtFnJKwxLI4s2Q1P8yhoci5coU0j5l4vn2zCzKepsIfscxlIj7Zu5fXo/n3/KWGIz
+	 hHMqKbrGfsuMHEa9JXdVniJNLDuD3aTag4FRYpY8MZC7Tdt+1tj5Isr/dt42Ncc8NJ
+	 sH4jdipg5MKIr6H7mirxdjLBByUiKYKRocaUoLgV9TRC+GCZAmUas2q83NjwZJ561i
+	 7CYd2BuJMIACVxarC+376c/AlA60uR1HFbp6n2bx39j1c/IyYibnP+f7s04InfotSN
+	 hUMwQm5MxpCww==
+Date: Tue, 28 Oct 2025 12:13:30 -0500
 From: Bjorn Helgaas <helgaas@kernel.org>
 To: Jacky Chou <jacky_chou@aspeedtech.com>
 Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
@@ -55,8 +55,8 @@ Cc: lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	linux-phy@lists.infradead.org, openbmc@lists.ozlabs.org,
 	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v4 2/9] dt-bindings: PCI: Add ASPEED PCIe RC support
-Message-ID: <20251028134644.GA1506590@bhelgaas>
+Subject: Re: [PATCH v4 8/9] PCI: aspeed: Add ASPEED PCIe RC driver
+Message-ID: <20251028171330.GA1506282@bhelgaas>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -70,97 +70,117 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251027095825.181161-3-jacky_chou@aspeedtech.com>
+In-Reply-To: <20251027095825.181161-9-jacky_chou@aspeedtech.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Oct 27, 2025 at 05:58:18PM +0800, Jacky Chou wrote:
-> ASPEED AST2600 provides one PCIe RC for Gen2 and AST2700 provides three
-> PCIe RC for two Gen4 and one Gen2. All of these RCs have just one root
-> port to connect to PCIe device. And also have Mem, I/O access, legacy
-> interrupt and MSI.
+On Mon, Oct 27, 2025 at 05:58:24PM +0800, Jacky Chou wrote:
+> Introduce PCIe Root Complex driver for ASPEED SoCs. Support RC
+> initialization, reset, clock, IRQ domain, and MSI domain setup.
+> Implement platform-specific setup and register configuration for
+> ASPEED. And provide PCI config space read/write and INTx/MSI
+> interrupt handling.
 
-> +description:
-> +  The ASPEED PCIe Root Complex controller provides PCI Express Root Complex
-> +  functionality for ASPEED SoCs, such as the AST2600 and AST2700.
-> +  This controller enables connectivity to PCIe endpoint devices, supporting
-> +  memory and I/O windows, MSI and legacy interrupts, and integration with
-> +  the SoC's clock, reset, and pinctrl subsystems. On AST2600, the PCIe Root
-> +  Port device number is always 8.
-
-s/legacy/INTx/
-
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - aspeed,ast2600-pcie
-> +      - aspeed,ast2700-pcie
+> +config PCIE_ASPEED
+> +	bool "ASPEED PCIe controller"
+> +	depends on ARCH_ASPEED || COMPILE_TEST
+> +	depends on OF
+> +	depends on PCI_MSI
+> +	select IRQ_MSI_LIB
+> +	help
+> +	  Enable this option to support the PCIe controller found on ASPEED
+> +	  SoCs.
 > +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  ranges:
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description: IntX and MSI interrupt
+> +	  This driver provides initialization and management for PCIe
+> +	  Root Complex functionality, including interrupt and MSI support.
 
-s/IntX/INTx/
+Maybe "INTx and MSI support", since MSI is an interrupt?
 
-> +    pcie0: pcie@1e770000 {
-> +      compatible = "aspeed,ast2600-pcie";
-> +      device_type = "pci";
-> +      reg = <0x1e770000 0x100>;
-> +      #address-cells = <3>;
-> +      #size-cells = <2>;
-> +      interrupts = <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>;
-> +      bus-range = <0x00 0xff>;
-> +
-> +      ranges = <0x01000000 0x0 0x00018000 0x00018000 0x0 0x00008000
-> +                0x02000000 0x0 0x60000000 0x60000000 0x0 0x20000000>;
-> +
-> +      resets = <&syscon ASPEED_RESET_H2X>;
-> +      reset-names = "h2x";
-> +      pinctrl-0 = <&pinctrl_pcierc1_default>;
-> +      pinctrl-names = "default";
-> +
-> +      #interrupt-cells = <1>;
-> +      msi-controller;
-> +
-> +      aspeed,ahbc = <&ahbc>;
-> +
-> +      interrupt-map-mask = <0 0 0 7>;
-> +      interrupt-map = <0 0 0 1 &pcie_intc0 0>,
-> +                      <0 0 0 2 &pcie_intc0 1>,
-> +                      <0 0 0 3 &pcie_intc0 2>,
-> +                      <0 0 0 4 &pcie_intc0 3>;
-> +      legacy-interrupt-controller {
-> +        interrupt-controller;
-> +        #address-cells = <0>;
-> +        #interrupt-cells = <1>;
-> +      };
+> +/* Complete status */
 
-IIUC, Rob says there's no need for a separate interrupt-controller
-stanza and it can be directly in the host bridge [1].
+"Completion"
 
-I think that does make interrupt-map a little more verbose because the
-parent unit address will use the host bridge #address-cells (3)
-instead of the interrupt controller #address-cells (0), e.g., this
-from [2]:
+> +static int aspeed_ast2700_ahb_remap_to_bar(struct aspeed_pcie *pcie)
+> +{
+> +	struct resource_entry *win, *tmp;
+> +	struct pci_host_bridge *bridge = pcie->host;
+> +
+> +	/* Configure AHB remapping to BAR on AST27x0.
+> +	 * The BAR region is HW-fixed in AST27x0, these BARs will be filled
+> +	 * in the ranges of pcie node in DT.
+> +	 */
 
-  pcie@10e40000 {
-      compatible = "renesas,r9a08g045-pcie";
-      #address-cells = <3>;
-      #interrupt-cells = <1>;
-      interrupt-map = <0 0 0 1 &pcie 0 0 0 0>, /* INTA */
-                      <0 0 0 2 &pcie 0 0 0 1>, /* INTB */
-                      <0 0 0 3 &pcie 0 0 0 2>, /* INTC */
-                      <0 0 0 4 &pcie 0 0 0 3>; /* INTD */
+I don't understand what "HW-fixed" means here.  It looks like you're
+writing host bridge window addresses (that came from DT) to the
+hardware.  That sounds like they're not actually "fixed" but
+programmable.
 
-[1] https://lore.kernel.org/linux-pci/20250509204905.GA4080349-robh@kernel.org/
-[2] https://lore.kernel.org/linux-pci/20251007133657.390523-2-claudiu.beznea.uj@bp.renesas.com/
+Host bridge windows are not BARs themselves.  Mem space for devices
+below the host bridge is allocated from the windows, and the addresses
+are programmed into BARs of those downstream devices.
+
+Multi-line comment style:
+
+  /*
+   * Configure ...
+   */
+
+Wrap to fill 78 columns, or add blank lines between paragraphs.
+
+> +	resource_list_for_each_entry_safe(win, tmp, &bridge->windows) {
+> +		struct resource *res = win->res;
+> +
+> +		if (resource_type(res) == IORESOURCE_MEM &&
+> +		    !(res->flags & IORESOURCE_MEM_64)) {
+> +			writel(ASPEED_REMAP_BAR_BASE(res->start),
+> +			       pcie->reg + ASPEED_H2X_REMAP_DIRECT_ADDR);
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	return -ENODEV;
+> +}
+> +
+> +static int aspeed_ast2700_setup(struct platform_device *pdev)
+> +{
+> +	struct aspeed_pcie *pcie = platform_get_drvdata(pdev);
+> +	struct device *dev = pcie->dev;
+> +	int ret;
+> +
+> +	pcie->cfg = syscon_regmap_lookup_by_phandle(dev->of_node,
+> +						    "aspeed,pciecfg");
+> +	if (IS_ERR(pcie->cfg))
+> +		return dev_err_probe(dev, PTR_ERR(pcie->cfg),
+> +				     "failed to map pciecfg base\n");
+> +
+> +	regmap_update_bits(pcie->cfg, ASPEED_SCU_60,
+> +			   ASPEED_RC_E2M_PATH_EN | ASPEED_RC_H2XS_PATH_EN |
+> +			   ASPEED_RC_H2XD_PATH_EN | ASPEED_RC_H2XX_PATH_EN |
+> +			   ASPEED_RC_UPSTREAM_MEM_EN,
+> +			   ASPEED_RC_E2M_PATH_EN | ASPEED_RC_H2XS_PATH_EN |
+> +			   ASPEED_RC_H2XD_PATH_EN | ASPEED_RC_H2XX_PATH_EN |
+> +			   ASPEED_RC_UPSTREAM_MEM_EN);
+> +	regmap_write(pcie->cfg, ASPEED_SCU_64,
+> +		     ASPEED_RC0_DECODE_DMA_BASE(0) |
+> +		     ASPEED_RC0_DECODE_DMA_LIMIT(0xff) |
+> +		     ASPEED_RC1_DECODE_DMA_BASE(0) |
+> +		     ASPEED_RC1_DECODE_DMA_LIMIT(0xff));
+> +	regmap_write(pcie->cfg, ASPEED_SCU_70, ASPEED_DISABLE_EP_FUNC);
+> +
+> +	aspeed_host_reset(pcie);
+> +
+> +	writel(0, pcie->reg + ASPEED_H2X_CTRL);
+> +	writel(ASPEED_H2X_BRIDGE_EN | ASPEED_H2X_BRIDGE_DIRECT_EN,
+> +	       pcie->reg + ASPEED_H2X_CTRL);
+> +
+> +	ret = aspeed_ast2700_ahb_remap_to_bar(pcie);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "failed to assign BAR\n");
+
+This is not assigning *BARs*.  A host bridge doesn't have BARs in the
+PCI spec sense.  It might have programmable address ranges, but the
+host bridge is not itself a PCI device, so its programmability is
+device specific.
 
