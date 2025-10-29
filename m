@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-833-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-834-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3B44C19DE4
-	for <lists+openbmc@lfdr.de>; Wed, 29 Oct 2025 11:52:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09647C19F6A
+	for <lists+openbmc@lfdr.de>; Wed, 29 Oct 2025 12:19:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4cxPGM6TFwz3bfV;
-	Wed, 29 Oct 2025 21:52:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4cxPsm08Q4z3bfX;
+	Wed, 29 Oct 2025 22:19:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761735163;
-	cv=none; b=S4+1ZCtvEDrwl8ByJ2Up8oDChyKiB3XjbIDBtHzqEsQ1TMbI64LCo4Z9rGNnNH1TCSEZFb/jePBX1e6wADFBgeC13+UkDa4otSrZFZyU+bIXjykzetWga2lnPmB9CLafQfcIZtV/wNdOb3bz8MVbPLxqXI54KrbxnQKrk4ckfloLYkk8WyooQvN/DipvLPgD7nIEK7gYag1FUsX7eiDiXFOX4G4Y9XU+ZwKDtSfvfk/yki8/MAAVBJUP4fetg5jVB7SkaBDpehQqML08wj4cJMIk9mobUX3nURnLOOgoeHJbTk13r/INw49pjbPFug2NZw2nMOkor38XlCwXlv6hhg==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1761736795;
+	cv=none; b=PBo420LeraE0HMSb9Ry3O3WzFoHE5DN07lVC2A46SlGPzuRp35gG3exLcNUuGMQMme8CXfFPe9XNaPBWQFl+dltRploHppQwy59W6WU85Prsd9Q5OeIgDDH35Mamv5WyoNCrkVAkrqWzq/0SAjoYGx4yFxQoZzoxUDfpD6EFnKjrv/r8Y5OZcM4Uwb5QoO4cQ/8hEkuGPfKogkbZ1/l8TlpHEqyOUIGuJM01lccbZaLGbcfaFlkgCGUyRmW8C4BM2MGxHyOCv985dqu5B7Di6hSpZtACtu+dEH4B1q9loGCxLtrvAZrDA/kxmRj4EKciPcuYreFRFqzYHL++KE7Ggw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1761735163; c=relaxed/relaxed;
-	bh=HnTgtvKdtHrhMOVirx9l8voTajx/RI49/oZD27VCamo=;
+	t=1761736795; c=relaxed/relaxed;
+	bh=KyNXtI6PbEnTz7FPWb3eNnVb1ZmsgCXb6Hy6YuuOSsc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Wv7ACgyXdoDyjWF5GAaVxAcL9/58gNMtEHCpC3AAtKWACCchZkvvcNjBYgzFhkGYY935tJbzo8KeefdNxDr7aEZulAJGhsImed3QINAtYmrW73ZuN3PJrpessNL6wbLt5y6cv3CVWamrlzl1/my6J7rkjXV97h81XtXeTssvas0XMoLfYzCmHQpnULAdjMscdZpwFmZ4dPqNCg1IZR49r1RHrLRDQEWrRxOO9PNt9QmmmgdgWrAhaSVkiFvcCvj9+2O3ycbUfaVVYICybz2muRjvzupzcP/OamvDXHBjbciqI6k49Uj2BO2CVFrFkKTvQSdR7uNW8Ij1CimblhFhVw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=U5aAB87N; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=LUiCqd1xMvEjv9iIu7w9AFA1BoNGDZE+nMhEO7f7EuEvNrkPspoKizDBgPD8vQJI4sB8bLmFM5gF7vH5ZUlP8ZGex3Fj9fuVILxVmnO1asmhpofhfz0VVvEcTnH4HdwzlodW5rBHEuvO0/QGoRH8GigRutJRYuaL5fKxOdftCAriYw4HOZSZ08K3UtO5/U8bNL79RJ969s7q/GHxWR8qGuTl4JDpi6csfY+g956V/HPsduZHy4OJVHJGQJe7YB/j3Sr0qHKzIqtD+5v7FbaemrhHhbYo8HFkW7jk766mTLRtwdv5TXfwIxMONnKtp4PCs+4F+2ekFXy8EYJnoKPr/Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=B7EVqC+o; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=U5aAB87N;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=B7EVqC+o;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
 Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4cxPGL2mZTz3bfF;
-	Wed, 29 Oct 2025 21:52:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4cxPsl0Dvvz3bfN;
+	Wed, 29 Oct 2025 22:19:54 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 1543A601CF;
-	Wed, 29 Oct 2025 10:52:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C67C4CEF7;
-	Wed, 29 Oct 2025 10:52:34 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id AF23E601CF;
+	Wed, 29 Oct 2025 11:19:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D60C4CEF7;
+	Wed, 29 Oct 2025 11:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761735158;
-	bh=WJY9uVEvm/AtqJJTYDny4vNI0huLEu00IUv36RYkrzI=;
+	s=k20201202; t=1761736792;
+	bh=Dh+ZcU4ASdDvqiZiGQmIVyEEV0pygfzZVWIqYkkSB78=;
 	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=U5aAB87NxdYRSvJ4zuumX21WQyFgrvfPbSMf6qeueMNII2yP+89+Jp6NGNmurIoae
-	 HsjjnzobGOs4V9FdjnsA9yQLyS12UbTCJF/jKXNhBcheBgSuIfJfPxOV/eFlzieS7p
-	 CIjwqnRG+NzY1IQCbn136Q8qrRjCcbtJeO4f+K8zZSBVR46xAKSrEds04SPZZq4jBJ
-	 QLOTF/dcDRTx9qrlP1gKwnOXpkqUm6fEkdYq6TkcEx6lJyEKYPEerEvA10XjrWOoHZ
-	 DKzHE7q0EsGAyI/igrqBRCMpV1sLCay+tCm+OXU4f0lpy6/ieVRZm047xrQin9bwly
-	 5pl4UleGJaH8w==
-Message-ID: <3c3287f6-1c5c-4c4d-9349-32665a5e1585@kernel.org>
-Date: Wed, 29 Oct 2025 11:52:32 +0100
+	b=B7EVqC+obkpJ9cwtEEcxn+iPMh/RHAaEh8y5xfgsskC3Un69QoGea8ahrJ7JgNUl0
+	 vplNQl1bHY195dhxlLgNopw/mw/BVkpMHiUekW5wts4juE7MF4d7SqqhdXm1PgAQWg
+	 ik/ewch9b/0OUBhWXqOgEF1RNaWWL6rXqs0nLFn1KpMh39/YiEdzs+1HO22xmeXZOL
+	 jIb7HyhQvnE3btnI8oPRNa70rP3vRZXGWcsg9kYCUIvax4tft/71NLPdpDWsb3TkZY
+	 hiBn6TFT4IPMILYhl6c1nBp+37V6m+iy08qM7xj6O/PjKTSmlo1oMbpIPDuPfPxx/X
+	 lZs6NNNQg3krA==
+Message-ID: <36e2b87f-5567-4bd6-bd1b-789623441461@kernel.org>
+Date: Wed, 29 Oct 2025 12:19:44 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,9 +57,9 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 1/4] dt-bindings: i2c: Split AST2600 binding into a
- new YAML
-To: Ryan Chen <ryan_chen@aspeedtech.com>,
+Subject: Re: [PATCH v21 2/4] dt-bindings: i2c: ast2600-i2c.yaml: Add
+ global-regs and transfer-mode properties
+To: Ryan Chen <ryan_chen@aspeedtech.com>, BMC-SW <BMC-SW@aspeedtech.com>,
  "benh@kernel.crashing.org" <benh@kernel.crashing.org>,
  "joel@jms.id.au" <joel@jms.id.au>,
  "andi.shyti@kernel.org" <andi.shyti@kernel.org>,
@@ -77,10 +77,10 @@ To: Ryan Chen <ryan_chen@aspeedtech.com>,
  <linux-arm-kernel@lists.infradead.org>,
  "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20251021013548.2375190-1-ryan_chen@aspeedtech.com>
- <20251021013548.2375190-2-ryan_chen@aspeedtech.com>
- <0b76f196-f642-4991-ad5c-717c23938421@kernel.org>
- <TY2PPF5CB9A1BE6597ECD46BD4CB7C5F09FF2FAA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
+References: <20251027061240.3427875-1-ryan_chen@aspeedtech.com>
+ <20251027061240.3427875-3-ryan_chen@aspeedtech.com>
+ <93a2ff5f-2f8e-494b-9652-b93bc243c229@kernel.org>
+ <TY2PPF5CB9A1BE6DCA78BEDC3178B74FD75F2FAA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -126,7 +126,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <TY2PPF5CB9A1BE6597ECD46BD4CB7C5F09FF2FAA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
+In-Reply-To: <TY2PPF5CB9A1BE6DCA78BEDC3178B74FD75F2FAA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -134,127 +134,43 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 29/10/2025 09:29, Ryan Chen wrote:
->> Subject: Re: [PATCH v20 1/4] dt-bindings: i2c: Split AST2600 binding into a new
->> YAML
+On 29/10/2025 10:25, Ryan Chen wrote:
+>> Subject: Re: [PATCH v21 2/4] dt-bindings: i2c: ast2600-i2c.yaml: Add global-regs
+>> and transfer-mode properties
 >>
->> On 21/10/2025 03:35, Ryan Chen wrote:
->>> The AST2600 I2C controller is a new hardware design compared to the
->>> I2C controllers in previous ASPEED SoCs (e.g., AST2400, AST2500).
+>> On 27/10/2025 07:12, Ryan Chen wrote:
+>>> The AST2600 I2C controller supports three transfer modes: byte,
+>>> buffer, and DMA. To allow board designers and firmware to explicitly
+>>> select the preferred transfer mode for each controller instance.
+>>> "aspeed,transfer-mode" to allow device tree to specify the desired
+>>> transfer method used by each I2C controller instance.
 >>>
->>> It introduces new features such as:
->>>  - A redesigned register layout
->>>  - Separation between controller and target mode registers
->>>  - Transfer mode selection (byte, buffer, DMA)
->>>  - Support for a shared global register block for configuration
+>>> And AST2600 i2c controller have two register mode, one is legacy
+>>> register layout which is mix controller/target register control
+>>> together, another is new mode which is separate controller/target
+>>> register control.
 >>>
->>> Due to these fundamental differences, maintaining a separate
->>> devicetree binding file for AST2600 helps to clearly distinguish the
->>> hardware capabilities and configuration options from the older
->>> controllers.
->>>
->>> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
->>> ---
->>>  .../devicetree/bindings/i2c/aspeed,i2c.yaml   |  3 +-
->>>  .../devicetree/bindings/i2c/ast2600-i2c.yaml  | 66
->>> +++++++++++++++++++
->>>  2 files changed, 67 insertions(+), 2 deletions(-)  create mode 100644
->>> Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> index 5b9bd2feda3b..d4e4f412feba 100644
->>> --- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
->>> @@ -4,7 +4,7 @@
->>>  $id: http://devicetree.org/schemas/i2c/aspeed,i2c.yaml#
->>>  $schema: http://devicetree.org/meta-schemas/core.yaml#
->>>
->>> -title: ASPEED I2C on the AST24XX, AST25XX, and AST26XX SoCs
->>> +title: ASPEED I2C on the AST24XX, AST25XX SoCs
->>>
->>>  maintainers:
->>>    - Rayn Chen <rayn_chen@aspeedtech.com> @@ -17,7 +17,6 @@
->>> properties:
->>>      enum:
->>>        - aspeed,ast2400-i2c-bus
->>>        - aspeed,ast2500-i2c-bus
->>> -      - aspeed,ast2600-i2c-bus
->>>
->>>    reg:
->>>      minItems: 1
->>> diff --git a/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
->>> b/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
 >>
->> Why completely breaking naming? Please follow writing bindings carefully.
+>> This implies your "reg" properties have now completely different meaning and
+>> this would be quite an ABI break. We discussed this probably 15 revisions ago.
+>> Where did you document the resolution of that discussion?
 > 
-> Will update 
-> $id: "http://devicetree.org/schemas/i2c/aspeed,ast2600-i2c.yaml#"
->>
->>> new file mode 100644
->>> index 000000000000..6ddcec5decdc
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
->>> @@ -0,0 +1,66 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) %YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/i2c/ast2600-i2c.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: ASPEED I2C on the AST26XX SoCs
->>> +
->>> +maintainers:
->>> +  - Ryan Chen <ryan_chen@aspeedtech.com>
->>> +
->>> +allOf:
->>> +  - $ref: /schemas/i2c/i2c-controller.yaml#
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - aspeed,ast2600-i2c-bus
->>> +
->>> +  reg:
->>> +    minItems: 1
->>
->> Why?
+> Let me explain more about "reg"
+> The 'reg' property continues to describe the same register regions
+> (bus and buffer) as in the legacy layout. The selection between the legacy
+> and new register layout is controlled by a bit in the SoC-level global
+> register block, referenced through the new 'aspeed,global-regs' property.
+> Therefore, the meaning of the 'reg' property does not change and no DT ABI
+> break occurs.
 > 
-> Will update as following.
-> 
-> reg:
->   minItems: 1
->   maxItems: 2
+> Should I add it in commit message about "reg" ?
 
+Then why does the address change from 0x40 to 0x80. If it is the same,
+it cannot change.
 
-No. You changed nothing. Instead explain why this is flexible.
+You are describing the IO address space, total address space, as defined
+by datasheet. Not whatever is in the driver.
 
-See writing bindings.
-
-
-...
-
-
->>> +  bus-frequency:
->>> +    minimum: 500
->>> +    maximum: 4000000
->>> +    default: 100000
->>> +    description: frequency of the bus clock in Hz defaults to 100 kHz when
->> not
->>> +      specified
->>
->> Don't repeat constraints in free form text.
-> 
-> Will update
-> clock-frequency:
->     description: Desired I2C bus frequency in Hz
->     default: 100000
-
-Heh? You are making random set of changes like did not really read the
-feedback. I not to repeat something. What is repeated? Constraints.
-Where are the repeated "in free form text". What did you do? Dropped
-constraints.
-
-I don't know what to say.
 
 Best regards,
 Krzysztof
