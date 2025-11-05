@@ -1,84 +1,50 @@
-Return-Path: <openbmc+bounces-840-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-841-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21FB2C33749
-	for <lists+openbmc@lfdr.de>; Wed, 05 Nov 2025 01:18:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53E2BC34214
+	for <lists+openbmc@lfdr.de>; Wed, 05 Nov 2025 08:05:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d1QsY3K85z2yjq;
-	Wed,  5 Nov 2025 11:18:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d1btN00gVz2yjp;
+	Wed,  5 Nov 2025 18:05:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::634"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762301921;
-	cv=none; b=XLSpLe/LYC1Vp80jeZ9rXpNigQusFylNQjWJzqlGBA6hmvp8EEEuw9dG+MmvmRz8axql8IYOcH7Axh5ddfo0MTc9t3gHd8TbOAFz9jmy/AROgx8IXeIwMS9lKB/l2gKJ//Wnaab0ycdrebDRYRBE68u26IitRBIGohhPt6IUtsMaaQm4umY+Dj/zdvN/+n4mRWyj9nAeGgJvHWiZB2eM8wUZX0lY0cpVoSk1bF90ErpefJfJdSn2XVLAhQgE6widWaMxy4NTjKGrjJcwvVD4yTvLcwAQId2eMmbKqzcFKUP8vmNh0Rrs3+8qryRlqDSz7caSF8PMy/taX9rT3cMnSA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762326299;
+	cv=none; b=ZZ1Qr3LV9gEmPqA1+ZwXQIzTbnYRTodUZfRb49DO37zoWbccJmF0ozrCe6OLlGevUiFXV4pw32fZCUXziFYZf5272L8MIAyHXhrcFWWgEa+kY2LST7MyJuvSrTwzJv5tgHEgfdMws8I3l6AVuVfD3Mp8SNKPYjuhj/yG2jR0+Zuv4381vEZpkpfVa+sAiJBo3ZsgoRQbH78W1dnCMcsMFIO5w6MUW2dCe5Iywym6Cx5GefrLXdEnWYIfMeWHU+uVX7lJ4iu57pDuuGDRkLkh2ePEeL4xXIEluWl3BTlbGQek460DaZPUnKDpJ7SHMxsGL4i/U3tpOWkc8AyhW53xvQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762301921; c=relaxed/relaxed;
-	bh=YxT7uo4WpVhPRh5y08W+tvrInEmcsLSj28FKI/1TLFo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=P/IXLR+ezS15Gaba5QyyY81AB+FviS9DeL1WrQxmhvGzwx9zLLc63INzUcFcfpcAvQkpWPkSLq/3g/TULrTWjUiT+uU0IO7sdAeq/1+cdK2iNbXtTMBvrXrgXeCrH4XGaCwlZ/KT94lNEDutmipZVAIZS0nrf0ox67Rhrd9Rb/xwtc0+9twpGOIGLmWz+H1LZBmXZJ6UwKfp2yQqvKV8/DtMDVP/E+UAbr067+dsAdLrQF4HKGwJLXuN7esi4szvcoCPtJTX6cA+jtW4HrAZCRRrtUP3ReEag6gFi7v3Uq8lN/rKEDi0POJb3ePxNAGNCszgsIaJQKHn1f+avWwZ8w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ODs6oSJh; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1762326299; c=relaxed/relaxed;
+	bh=l9XmaKEb9RYL3cXf18FlRBFz4L274PJ5Nmz/QiKbpA0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=IbHubHeUbdi9RwMNZbb3bFzfZGLTbZXRyWDanqzPcwtqjOgBMEpdsfAJASbC1kRqKT749JP539uzhtO6mNkrZXFaDOqfbQ3BfXwQxGzyo27iYcguuR+l4wFkY0xpYY6QEJah/2MFyuoPDJ4Mrdq2ilwkLkej22dLuN5EnXEp3l7obGvmccG22MNeGhxxY9+3jx0ciUvkq9LvABDj2vIXJ0sL0AD1uyAmMlfSB09pxDAzL+wNJzig6BR7Whgo3CnvOw1D/uLsZRVJUqSiqQdSst7YvesmlLQ1nc8CZkOjLLOUXd00+ca5q6NX45b2INzlTRfa6pWhsZPgSVXLkuEMiA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=skFxXnyu; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ODs6oSJh;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=skFxXnyu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d1QsW5SBLz2yjp
-	for <openbmc@lists.ozlabs.org>; Wed,  5 Nov 2025 11:18:38 +1100 (AEDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-28a5b8b12a1so65709405ad.0
-        for <openbmc@lists.ozlabs.org>; Tue, 04 Nov 2025 16:18:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762301916; x=1762906716; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YxT7uo4WpVhPRh5y08W+tvrInEmcsLSj28FKI/1TLFo=;
-        b=ODs6oSJhg+f7NUoRlvMNJVbiAk0zmEoo6p2xq4x7hLyeSSeGsXevMRCX6tQmmir+jX
-         O/tqs8siTuViNcXxlwgWrfeQPKxt4U+FCGSsFXa1CfgINqmoi7hYhAIHpcWmVmg0H5WS
-         AxmjgueNs8FegvliWktUIZCoyvHtdoEmaJp1+Koiij0tuX4LOzzHlbJH9gRo6FRFQKKF
-         6BnhnanJxtOvwmNr34FN2cD8t/odWpHknEe5S1GVgYD8dc+ONF7wDp3E69INYUiPGmoH
-         K2HAY/NSOEyzp5NDTjwJ9aee3ZlL6W3Swwer/JMvq7swXrg9RMPuWRuVVwPFN/0ZQCHg
-         bOzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762301916; x=1762906716;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YxT7uo4WpVhPRh5y08W+tvrInEmcsLSj28FKI/1TLFo=;
-        b=obXUmOXOHKSYEtfqoWEf5FdZjBMcMTKBnY2UgAq5V7J3aT5vAmkM3dua3vjoKPLBZj
-         gOfSEWU9QddjjvI7BadxcqCJ+bsQ3XSkP4LVYbwzldgNc25rR2/K/tuzw7ftJCMVpDgk
-         uEEjTri4hgN7QLGGcyEfNoG+ajqEnFIGMWdlVMbWk4T3/CdcR/t7vrr5d4GDA5ADO1rK
-         xN84j8thNFUpl+x8UJSUOo5DNo6lLN5ujdZEtab65Dsj98pzOaadv2NRVkNttHb3MXQZ
-         skDsumrF+dTl1ZgXGxi/fqy9RlZXk6F8ZqnzwaWWxNkxlwDwd97GDtHka7oibHmpb4bb
-         ZxsQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU047Ji0iioskCSWKPte6CWvHy1sdq3MUQKAVx0gT1pO71H6h0Qf2fJFCfNTICREwe9D01ia71E@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yw3RsRrYUlocff34ctur0ILnfb7RAPfyIXGh77nWNXH+awEYtlE
-	E4gWeQiR9rUngmoXvxViLLB8wIClz2qZqrpX4Ixn2U5t43yV2qEDKI0I
-X-Gm-Gg: ASbGncuqQM/teG+WPeZunX1d/YDSnvxxcfNPHFXRrD3l6NuRQpOmVzST8jeSur4mDmv
-	srof5ZfAn5NA+H3wSITSEMcYCoycoUKzJ6AMlddkqxpaWVVvpXbcswzu5gqtuNeUG0mVS4fpvxy
-	muMoJiM8Owb4csl64lUWYtubzdYLLslyEZGEyemK0ZzKIPN5Y7UUA4BikVMSugKaH1diseePw/P
-	yKpP/Nm3YWdlu1idi6gyZ0/PtyqPOc6B7JfXCMXBtygT79Ob9X+POrndfd0Cu8ifeRPN8fSaMTg
-	UElK2/DTuIjLg9HA36AHnLda6WEVIRXjNSwEpGlHAamd3SEs/GG5AhI4ilHBM9vd66AeoPQA3TQ
-	oeFZva0AWeQhnFx05VAjV08Py8K7PyzXHCoErqzrRP69z2OHvc16oGDB2+Ocd1ZVhkSZrL+hamP
-	4OZhHPYiNU9mu3doUxrROHQSYKTG4iGzXGbKAA+Dk/uwMBB6Z5D5YZ
-X-Google-Smtp-Source: AGHT+IEfMKK/d8Ugs6NB6s0wg8G5VCoNuU9Mk43wJDaBnrbfEa5SDxsHhPErfW+oh7v1NYglbhcyRA==
-X-Received: by 2002:a17:902:d543:b0:294:fc77:f021 with SMTP id d9443c01a7336-2962adb98ddmr20961085ad.49.1762301916337;
-        Tue, 04 Nov 2025 16:18:36 -0800 (PST)
-Received: from localhost.localdomain (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29601998893sm40707155ad.40.2025.11.04.16.18.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 16:18:35 -0800 (PST)
-From: Potin Lai <potin.lai.pt@gmail.com>
-X-Google-Original-From: Potin Lai <potin.lai@quantatw.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
-	openbmc@lists.ozlabs.org,
-	Patrick Williams <patrick@stwcx.xyz>
-Cc: Potin Lai <potin.lai@quantatw.com>
-Subject: [PATCH 1/1] Revert "ARM: dts: aspeed: catalina: add pdb cpld io expander"
-Date: Wed,  5 Nov 2025 08:16:06 +0800
-Message-Id: <20251105001606.1110649-1-potin.lai@quantatw.com>
-X-Mailer: git-send-email 2.31.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d1btL68mjz2xQD;
+	Wed,  5 Nov 2025 18:04:58 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id CD4D2434DD;
+	Wed,  5 Nov 2025 07:04:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BE4C4CEF8;
+	Wed,  5 Nov 2025 07:04:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762326295;
+	bh=fECj6oacpKXc6X6f2zYwH9Ibg6UtdahRrZWnqz/qj68=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=skFxXnyuvYeO9Z1N85neSH/uQ6UDgiCWVv53PRfQvNM8Ncmh1lE8/WusgFdrOCPph
+	 YBQL1w5lvDN2OrFRbX+bt1PJBmot2Fqhw4PepfH6KzWfZ0m3qwXBl1EcSnTyCBF5oC
+	 N7sJ0/KOhelMOtouPqbOUMe/2nE7wsz7mWr+gF89voniT4QliOcoemDCRin2OPjyI+
+	 BCZMgbigPpbZB4gnYzJAMnSGu/9ZNdnjEa3p74wibJwuZM9+4YmB5pJRDU7u38gBuH
+	 2HSyLtykkxr4kAnhxiOxZ6ywPY/f1q36VaddSRTd8SybAiI8Z32u5TPKypF8ZXg1AJ
+	 9LY9ciRLlmgdg==
+Message-ID: <afa2c9aa-e84c-4a42-a735-73c01b197018@kernel.org>
+Date: Wed, 5 Nov 2025 08:04:49 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -90,105 +56,154 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v21 1/4] dt-bindings: i2c: Split AST2600 binding into a
+ new YAML
+To: Jeremy Kerr <jk@codeconstruct.com.au>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, bmc-sw@aspeedtech.com,
+ benh@kernel.crashing.org, joel@jms.id.au, andi.shyti@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andrew@codeconstruct.com.au, p.zabel@pengutronix.de,
+ andriy.shevchenko@linux.intel.com, naresh.solanki@9elements.com,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+References: <20251027061240.3427875-1-ryan_chen@aspeedtech.com>
+ <20251027061240.3427875-2-ryan_chen@aspeedtech.com>
+ <59d4d107-4f35-4906-8524-f45b9b85f0ff@kernel.org>
+ <0b9abd87b877595c13011a3d8b4e80e05488effc.camel@codeconstruct.com.au>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <0b9abd87b877595c13011a3d8b4e80e05488effc.camel@codeconstruct.com.au>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.6 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS,UPPERCASE_50_75,WEIRD_QUOTING
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-This reverts commit 252f39cc0de48040d36bef6a24f24db9116f11e9.
+On 30/10/2025 07:04, Jeremy Kerr wrote:
+> Hi Kyzysztof,
+> 
+>>> +++ b/Documentation/devicetree/bindings/i2c/ast2600-i2c.yaml
+>>> @@ -0,0 +1,66 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/i2c/ast2600-i2c.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: ASPEED I2C on the AST26XX SoCs
+>>> +
+>>> +maintainers:
+>>> +  - Ryan Chen <ryan_chen@aspeedtech.com>
+>>> +
+>>> +allOf:
+>>> +  - $ref: /schemas/i2c/i2c-controller.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - aspeed,ast2600-i2c-bus
+>>> +
+>>> +  reg:
+>>> +    minItems: 1
+>>
+>> <form letter>
+>> This is a friendly reminder during the review process.
+>>
+>> It seems my or other reviewer's previous comments were not fully
+>> addressed. Maybe the feedback got lost between the quotes, maybe you
+>> just forgot to apply it. Please go back to the previous discussion
+>> and
+>> either implement all requested changes or keep discussing them.
+>>
+>> Thank you.
+>> </form letter>
+>>
+>>> +    items:
+>>> +      - description: address offset and range of bus
+>>> +      - description: address offset and range of bus buffer
+>>> +
+>>> +  interrupts:
+>>> +    maxItems: 1
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 1
+>>
+>> Nothing improved
+> 
+> That was mostly the point - this first patch just splits out the 2600
+> definitions to the new file, with zero change.
+> 
+> That means the *actual* changes to the binding are visible via the diff
+> in 2/4, and not hidden by the copy.
+> 
+> This was mentioned on v20, and you replied saying it was irrelevant to
+> the separate discussion around the rationale for the change, but didn't
+> object to the split-patches approach.
+> 
+> If your preference is to *not* do this via a verbatim copy as an initial
+> step (and essentially squash with 2/4), that's also fine, but I'm sure
+> that knowing your preference would help Ryan out here.
 
-The reverted commit duplicated the PDB CPLD I/O expander
-definitions, causing io_expander[9-14] gpio-line-names to be
-defined twice. Removing it restores the correct configuration.
 
-Signed-off-by: Potin Lai <potin.lai@quantatw.com>
+The next patch did not correct issues copied from old binding, so above
+arguments are not applicable.
 
----
- .../aspeed/aspeed-bmc-facebook-catalina.dts   | 71 -------------------
- 1 file changed, 71 deletions(-)
+I did not ask to merge the patches. I asked not to create WRONG schema
+when copying to the new file. This split should not be a verbatim copy,
+because we do not create intentionally buggy code which we are going to
+fix immediately. Also it does not make sense to make verbatim copy of
+ast2500 stuff, since new file is ONLY ast2600.
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-catalina.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-catalina.dts
-index 368ac95e87f0..14dd0ab64130 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-catalina.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-catalina.dts
-@@ -1220,74 +1220,3 @@ &io_expander14 {
- 		"FAB_BMC_REV_ID2","FAB_BMC_REV_ID1",
- 		"FAB_BMC_REV_ID0","";
- };
--
--&io_expander9 {
--	gpio-line-names =
--		"LEAK3_DETECT_R","LEAK1_DETECT_R",
--		"LEAK2_DETECT_R","LEAK0_DETECT_R",
--		"CHASSIS3_LEAK_Q_N_PLD","CHASSIS1_LEAK_Q_N_PLD",
--		"CHASSIS2_LEAK_Q_N_PLD","CHASSIS0_LEAK_Q_N_PLD",
--		"P12V_AUX_FAN_ALERT_PLD_N","P12V_AUX_FAN_OC_PLD_N",
--		"P12V_AUX_FAN_FAULT_PLD_N","LEAK_DETECT_RMC_N_R",
--		"RSVD_RMC_GPIO3_R","SMB_RJ45_FIO_TMP_ALERT",
--		"","";
--};
--
--&io_expander10 {
--	gpio-line-names =
--		"FM_P12V_NIC1_FLTB_R_N","FM_P3V3_NIC1_FAULT_R_N",
--		"OCP_V3_2_PWRBRK_FROM_HOST_ISO_PLD_N",
--		"P12V_AUX_NIC1_SENSE_ALERT_R_N",
--		"FM_P12V_NIC0_FLTB_R_N","FM_P3V3_NIC0_FAULT_R_N",
--		"OCP_SFF_PWRBRK_FROM_HOST_ISO_PLD_N",
--		"P12V_AUX_NIC0_SENSE_ALERT_R_N",
--		"P12V_AUX_PSU_SMB_ALERT_R_L","P12V_SCM_SENSE_ALERT_R_N",
--		"NODEB_PSU_SMB_ALERT_R_L","NODEA_PSU_SMB_ALERT_R_L",
--		"P52V_SENSE_ALERT_PLD_N","P48V_HS2_FAULT_N_PLD",
--		"P48V_HS1_FAULT_N_PLD","";
--};
--
--&io_expander11 {
--	gpio-line-names =
--		"FAN_7_PRESENT_N","FAN_6_PRESENT_N",
--		"FAN_5_PRESENT_N","FAN_4_PRESENT_N",
--		"FAN_3_PRESENT_N","FAN_2_PRESENT_N",
--		"FAN_1_PRESENT_N","FAN_0_PRESENT_N",
--		"PRSNT_CHASSIS3_LEAK_CABLE_R_N","PRSNT_CHASSIS1_LEAK_CABLE_R_N",
--		"PRSNT_CHASSIS2_LEAK_CABLE_R_N","PRSNT_CHASSIS0_LEAK_CABLE_R_N",
--		"PRSNT_RJ45_FIO_N_R","PRSNT_HDDBD_POWER_CABLE_N",
--		"PRSNT_OSFP_POWER_CABLE_N","";
--};
--
--&io_expander12 {
--	gpio-line-names =
--		"RST_OCP_V3_1_R_N","NIC0_PERST_N",
--		"OCP_SFF_PERST_FROM_HOST_ISO_PLD_N","OCP_SFF_MAIN_PWR_EN",
--		"FM_OCP_SFF_PWR_GOOD_PLD","OCP_SFF_AUX_PWR_PLD_EN_R",
--		"HP_LVC3_OCP_V3_1_PWRGD_PLD","HP_OCP_V3_1_HSC_PWRGD_PLD_R",
--		"RST_OCP_V3_2_R_N","NIC1_PERST_N",
--		"OCP_V3_2_PERST_FROM_HOST_ISO_PLD_N","OCP_V3_2_MAIN_PWR_EN",
--		"FM_OCP_V3_2_PWR_GOOD_PLD","OCP_V3_2_AUX_PWR_PLD_EN_R",
--		"HP_LVC3_OCP_V3_2_PWRGD_PLD","HP_OCP_V3_2_HSC_PWRGD_PLD_R";
--};
--
--&io_expander13 {
--	gpio-line-names =
--		"NODEA_NODEB_PWOK_PLD_ISO_R","PWR_EN_NICS",
--		"PWRGD_P12V_AUX_FAN_PLD","P12V_AUX_FAN_EN_PLD",
--		"PWRGD_P3V3_AUX_PLD","PWRGD_P12V_AUX_PLD_ISO_R",
--		"FM_MAIN_PWREN_FROM_RMC_R","FM_MAIN_PWREN_RMC_EN_ISO_R",
--		"PWRGD_RMC_R","PWRGD_P12V_AUX_FAN_PLD",
--		"P12V_AUX_FAN_EN_PLD","FM_SYS_THROTTLE_N",
--		"HP_LVC3_OCP_V3_2_PRSNT2_PLD_N","HP_LVC3_OCP_V3_1_PRSNT2_PLD_N",
--		"","";
--};
--
--&io_expander14 {
--	gpio-line-names =
--		"","","","","","","","",
--		"FM_BOARD_BMC_SKU_ID3","FM_BOARD_BMC_SKU_ID2",
--		"FM_BOARD_BMC_SKU_ID1","FM_BOARD_BMC_SKU_ID0",
--		"FAB_BMC_REV_ID2","FAB_BMC_REV_ID1",
--		"FAB_BMC_REV_ID0","";
--};
--- 
-2.31.1
+That copy should include all necessary changes needed to make new
+binding correct. I already pointed out this and this was not fixed -
+neither here nor in a following commit (which I would still ask to squash).
 
+Best regards,
+Krzysztof
 
