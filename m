@@ -1,78 +1,117 @@
-Return-Path: <openbmc+bounces-858-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-862-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CAA2C420B1
-	for <lists+openbmc@lfdr.de>; Sat, 08 Nov 2025 00:49:50 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7041C4271D
+	for <lists+openbmc@lfdr.de>; Sat, 08 Nov 2025 05:41:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d3G4r0mbzz30Qk;
-	Sat,  8 Nov 2025 10:49:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d3NYJ5sQwz3069;
+	Sat,  8 Nov 2025 15:41:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762559388;
-	cv=none; b=XQsL98d8GdXxFksTtcy0E9OnhRJWPWDb5XQEuQg52FxysAMD2ACW37S+LKZBpABy7nUB/IeJdo90BHr6+LS/FALybi/HH+x4/wCfv2FjWqk8r1vmlRyhOevjbcLOO9jmdSO7tvevlColA0lE/7CVPA7PwhQzysQNAWfPAoS1flj58Z/SLxMYNEhAUwbKeEOAWnCkwxVerNCDYXCXTT0mAMNXfObogCemfQU5W/TuT2xTChOu0y6qV4zG8+Ch5PmNqZpEEzft/T41+WLf5qyOpyFqqvkS6Y9n7I2DITC8xqd//ID5qsBY6G9gM5zDCvWpTRQx59tHPcmtyy2UoSLS8w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=170.10.129.124
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762470711;
+	cv=none; b=Oe7cqi+/TK8tX4L4dS5ceNvQuB6v7kCNDWH3DhRl/3kvyGKjJAfv2gQKeQtq8AWiMV4p1y6S1BdZXrCFsRTS9l0GXrYQCZcN60rZ+DYZs9daYVU0qlijYhcKXGPSg68+WleHAAOZdrpLtMIGhi0cU4BxE5VRUvlRIvb6hs8wpGgNQdQ0jdAFvuYwrdOurOlwJV6n095YSK24q8Cyi4xbc+ul00aozTplEkhl1PUmJ04QpV7TUwvozSq5SpyxdIB7hIw9UNDTugvnearBuLVFC7nNDQZRsQKHoELPF+pA+oN6ythj41g9AviEifDD59/2klcMcL2vthhdmFqlsvn41A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762559388; c=relaxed/relaxed;
-	bh=JrAmSA5BdwcrTdGcgekVRkIjRdfQs+pfWYGhRccUzVE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TX3nJea3XJ+42dxOuMPoVDGjjzn7POYqgGHQ1uDDrF+N22Jw/hIKKts61Fh6gR/zZvpcd+9RmuQk/5fTIJ76dwAmgJ6vpcaqtMA8ghz5YWzjNG+2kLem7g/zwQlGddLmcoVeBp19xIaLbd72QevhiUxxIrvghOSInM6Lff/pVLuXrPJ1rkMyte/1QJyjyOkar1Hu1gUoALqm2VZu4VFgzfsm/q4YTRHRGWNPeHGUUEUQjSKNyFoDjSq4TtdGjRHZmV/M8MOxRJYbLZOL+nUiN6o6Z1byi2AoAdPBsJbLSWOw1HW8NN5Gop/wMy/rJxpOTtOIXOkbUjIQNBViDybDVA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OgD++bij; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+	t=1762470711; c=relaxed/relaxed;
+	bh=QXr28wg8D7Sns2qkEeLZq8j8Ed6Tt4Rhy3ccABxhAR4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=j048BrDCiQesk0aEKL26AuySD28k6mvbj2mzX+Mg8HSk22Jnpw4XlNJUBLruXgwzZQLm7f1ghLgyNhCbQDX7hwnd6uyghaRy1FzpMjokLryLQuy9xwgPDLokfjhUmj0Q1wN/t15/GeFznT86TfhiJGT9wrssX35+IbMdt6OyDLZYpMVJl9bP+j1eMSTXFXobYYXx2h3wZikkC/MftU+vMfq9R3XyYa6i55zRenFGMwMvBnW6KaziND35OlwK/PRuH4s08yG41cj3WyPyO5uYk3qTimK8onKZoVa+GhNaMgppmujt3QGBfNr8pV8TaWfmVLOq5rbQ/Rp9pRZ0G6JIOA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GUV/DLNX; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GUV/DLNX; dkim-atps=neutral; spf=pass (client-ip=170.10.129.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org) smtp.mailfrom=redhat.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OgD++bij;
+	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GUV/DLNX;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GUV/DLNX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=redhat.com (client-ip=170.10.129.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=bmasney@redhat.com; receiver=lists.ozlabs.org)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d3G4q18G4z2ynf
-	for <openbmc@lists.ozlabs.org>; Sat,  8 Nov 2025 10:49:46 +1100 (AEDT)
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5A7INsPQ001084;
-	Fri, 7 Nov 2025 23:49:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=JrAmSA
-	5BdwcrTdGcgekVRkIjRdfQs+pfWYGhRccUzVE=; b=OgD++bijhOJ3+i6gBF4pD4
-	f9R2OPsLCdMQ3V9ZMg7xHOyDl2vqgr7UDTwFq7qeYgRFv3YqCWFy2Jks2+YUi0p7
-	E0x0s4uOvv7crKi/wzZ4nusvExUVsW61Tt2BE0XDSMACtkvEzxgExQm7NdwblW/w
-	UznEPnKGsZJ8v5ulCmuSn+FzlkX7BHfwP43FuPmO/zuz6WAgC7BRSTY0HOvoBq0q
-	Fzzt5C2uU5Fl44enNtC1ObUKzNuapFoN88dVCfbO68mCgZomc0pUvakvm41rL3AY
-	B1yq7DlP7D/zyQ7HVs3NPetgq6b40OBCfM11ziqYSP/0yuRzF00dfX6r5mDgh7LA
-	==
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9p0j9420-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Nov 2025 23:49:35 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5A7NnZfL023197;
-	Fri, 7 Nov 2025 23:49:35 GMT
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4a9p0j941w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Nov 2025 23:49:35 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A7Mpkx1018784;
-	Fri, 7 Nov 2025 23:49:34 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4a5whnwagb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 07 Nov 2025 23:49:34 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 5A7NnXVL56033542
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 7 Nov 2025 23:49:34 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CF78C5805A;
-	Fri,  7 Nov 2025 23:49:33 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9D2DE58051;
-	Fri,  7 Nov 2025 23:49:33 +0000 (GMT)
-Received: from [9.61.104.176] (unknown [9.61.104.176])
-	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Fri,  7 Nov 2025 23:49:33 +0000 (GMT)
-Message-ID: <84354d51-bfa2-4d6b-895f-f9cf610d4bb6@linux.ibm.com>
-Date: Fri, 7 Nov 2025 17:49:33 -0600
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d2dHV2SD5z3bf2
+	for <openbmc@lists.ozlabs.org>; Fri,  7 Nov 2025 10:11:48 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1762470706;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QXr28wg8D7Sns2qkEeLZq8j8Ed6Tt4Rhy3ccABxhAR4=;
+	b=GUV/DLNXHts4zxWX8AbDqCvFRQz4Is7unaQwztTX7Aynw6vhaxEOZWvX0L9/d5/Bl2V/6F
+	xRX6CFwS/Ks9kOmCp0D7Vmf06rbLce3ZQnu+Et6EfdjQwcSNUL3UvkwX0AP/yLZH9t66Ii
+	ulxqd6Xs8V3dtHLGrFuSvT0z15BKI+s=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1762470706;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QXr28wg8D7Sns2qkEeLZq8j8Ed6Tt4Rhy3ccABxhAR4=;
+	b=GUV/DLNXHts4zxWX8AbDqCvFRQz4Is7unaQwztTX7Aynw6vhaxEOZWvX0L9/d5/Bl2V/6F
+	xRX6CFwS/Ks9kOmCp0D7Vmf06rbLce3ZQnu+Et6EfdjQwcSNUL3UvkwX0AP/yLZH9t66Ii
+	ulxqd6Xs8V3dtHLGrFuSvT0z15BKI+s=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-XC9iMl49N8irJ0lomcgQWQ-1; Thu, 06 Nov 2025 18:11:42 -0500
+X-MC-Unique: XC9iMl49N8irJ0lomcgQWQ-1
+X-Mimecast-MFC-AGG-ID: XC9iMl49N8irJ0lomcgQWQ_1762470701
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8908a248048so37199485a.0
+        for <openbmc@lists.ozlabs.org>; Thu, 06 Nov 2025 15:11:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762470701; x=1763075501;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QXr28wg8D7Sns2qkEeLZq8j8Ed6Tt4Rhy3ccABxhAR4=;
+        b=rPc/njGnM9uIJ77gsc7UAEP1rd3OBRh0rhuGcfIzzkuv5SnRxUFadiom0QY+FycBA3
+         L6Ik84hIWZnVqzGG8+uwbyWp+oyI6He8ieR2w4KwlyCMcBJLsr7KrzrQX1bGrv8oqYOT
+         Lo8k1I8ATPPVJD/FB742RmxgtrtRWyGb58e2u1SHPYQqkwM1ly/ugIW987Sgl/B1wr7P
+         /NTS8IsRNDWuHrLfUhpuUH9Txko6YhTOUs3kMrdO49IeFDXuXjlhjZnrxVAB5HvqhLfG
+         TS+Xfp0L0VzghgFo4x1ZuEWYlEanSUEMAZoHDBd5+WU5RCwN5nYkb6T9wXrWkOajeLKd
+         09yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV+G1lluoBp4jQ+R/FobLKzdJmUcVhhZQwI5ufjcxZNeoftAWLTFQ7QtPzM4n3fzSnufmajtTYr@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxkKSwDM+OERjuKUsc/OE2QzL1sT1WBIklvlGMl9GZj+E+CJ83F
+	8E6MHPbHvjYcs86TphgBGYwdyFY5nn2k+b5UA8ErbrroX6J7AOoS3eHPKMu75L0f4jafRtVxkBb
+	5zD5gIdts0pryYmFLq76nb4HU42uopNFTscMHxpeIVGNP9tRm6DLj1tvX0FMV
+X-Gm-Gg: ASbGnctxMD46Jcbl+ycv0J3VOUqy3abCznG+2O72/N+3Wb70lHQFkT/Ux0kyLwgR9NF
+	eba7k0lxiE4qeCNcCOCCw9vHGg+skpOj5botXo8Cel6gpH5wl8spMusKzgb2B82JkVtWUQg3F8Z
+	mGxjQBt5mj8Ij6gR2bZoFLv1ATR68D4r39HgDQ1W3MmSPA19Cc4xEoW/oxAj3PNRdABK1MMs7rI
+	IrtnB21JLmv1sQx/gIk3hABepwlfGiINGZhHe/z4gIrYC/dvQhB3cMiPlMp7aoakU1zFhbchUgt
+	l+NfKKFQ4tBDk77Irk/ZeaDwYCLc8UXBPVF+anbh0fxAnKGBxLeeISk8AbjohdcF6GQeuNH6T05
+	PGlzqp4kz3mh7H0v9CJqTGfB9FbHmxmwF3g==
+X-Received: by 2002:a05:620a:31a4:b0:8b2:43f7:c07a with SMTP id af79cd13be357-8b2452a2167mr193181685a.22.1762470701627;
+        Thu, 06 Nov 2025 15:11:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVetiFRByjjykyfxVb5wuiQuE2TgT+5D6JC3vwCG5rcTtdy2u5B3i2rGtKd9IxnXFml+2NaA==
+X-Received: by 2002:a05:620a:31a4:b0:8b2:43f7:c07a with SMTP id af79cd13be357-8b2452a2167mr193177985a.22.1762470701157;
+        Thu, 06 Nov 2025 15:11:41 -0800 (PST)
+Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b2355e56c0sm281056785a.14.2025.11.06.15.11.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Nov 2025 15:11:40 -0800 (PST)
+Date: Thu, 6 Nov 2025 18:11:35 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
+Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	"andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
+	"joel@jms.id.au" <joel@jms.id.au>,
+	"linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+	"sboyd@kernel.org" <sboyd@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-clk@vger.kernel.org" <linux-clk@vger.kernel.org>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"mripard@kernel.org" <mripard@kernel.org>
+Subject: Re: [PATCH] peci: controller: peci-aspeed: convert from round_rate()
+ to determine_rate()
+Message-ID: <aQ0rJ3ahOV0gmUVM@redhat.com>
+References: <20250810-peci-round-rate-v1-1-ec96d216a455@redhat.com>
+ <aMatZAX6eFI1RmDH@redhat.com>
+ <28dc3bd8aeca7e3164747960747f75060c596704.camel@codeconstruct.com.au>
+ <aPEZSY6RC-UVclxN@redhat.com>
+ <ba2e6b78e59afb7c89e5022770a142ec8c31659a.camel@codeconstruct.com.au>
+ <2025101759-runner-landing-374b@gregkh>
+ <2975918e3f3a7de245e93fbee52335acb78bb23a.camel@codeconstruct.com.au>
+ <2025101721-twiddling-huskiness-4852@gregkh>
+ <13566a08eeaed313ad789abcae1920d9b00483b0.camel@codeconstruct.com.au>
+ <d53256b35ee7089607463c66bb4a8c3420faf058.camel@intel.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -84,94 +123,36 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: UBIFS errors since Linux 5.15
-To: Richard Weinberger <richard@nod.at>
-Cc: linux-mtd <linux-mtd@lists.infradead.org>,
-        chengzhihao1 <chengzhihao1@huawei.com>,
-        OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>, sethjenkins@google.com,
-        adobriyan <adobriyan@gmail.com>
-References: <068ba254-0053-46d5-bff4-74c948d2e8ac@linux.ibm.com>
- <55378147.159026.1762545799936.JavaMail.zimbra@nod.at>
-Content-Language: en-US
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <55378147.159026.1762545799936.JavaMail.zimbra@nod.at>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: L0WOTQbhFUvL-8cou71wMTniaW70b_Zq
-X-Authority-Analysis: v=2.4 cv=J9enLQnS c=1 sm=1 tr=0 ts=690e858f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=JfrnYn6hAAAA:8 a=i0EeH86SAAAA:8 a=voM4FWlXAAAA:8
- a=VwQbUJbxAAAA:8 a=1XWaLZrsAAAA:8 a=pGLkceISAAAA:8 a=nqgInfV_ZEBXBheio9IA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1CNFftbPRP8L7MoqJWF3:22
- a=IC2XNlieTeVoXbcui8wp:22 a=HhbK4dLum7pmb74im6QT:22 a=cPQSjfK2_nFv0Q5t_7PE:22
- a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA3MDE1MiBTYWx0ZWRfX1k3PHk+j8Dt0
- cMZeqSga0+OjtpH80ajmkygex0suaKwe+TwcNYuL8T9jFP/tBGUC+4l+KH6iWDlncnqaxWIdK22
- IC5L7ew1Kn/uYLDliSK5BztvuY7+1dtC7k7Z02UhAbKnktuE8Y2LMokd/2H8QWcr+EGAZfojysP
- kS9iRew5NDcFn3ZKPMUC1aV5E0Rq8dClw3UMNnSkgxK1Nq+dS4cPPMDF4sJuUwygKs8BtvZ7Bwh
- JIKUtCXbh4eCXT6SEmJO7hjg85z7VwylqrbZAO3Y/qxxXxwu0gXwd/IjT2IpTwkN3xeiy0y86kO
- TRTbDJe9XIEFZKR+8ClqKMkLtPZtBWxV/TtHTkNLoAHO5/GrC0i/4Y8aE/Pld6IEu7ObeVxneSz
- I4btkb5k+BzGG+aVEhWFfXJW3z+rbg==
-X-Proofpoint-GUID: -SncNA1_bQtn9klT9qKdm9kGWUfGckyo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-07_07,2025-11-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0 suspectscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511070152
-X-Spam-Status: No, score=-0.7 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_LOW,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+In-Reply-To: <d53256b35ee7089607463c66bb4a8c3420faf058.camel@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: o6VAdwpVQJulswQsnwyprKHwwrMmdBQkeoz8ccvju5o_1762470701
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+Hi Iwona,
 
-On 11/7/25 2:03 PM, Richard Weinberger wrote:
-> Eddie,
->
-> ----- Ursprüngliche Mail -----
->> Von: "Eddie James" <eajames@linux.ibm.com>
->> An: "linux-mtd" <linux-mtd@lists.infradead.org>, "richard" <richard@nod.at>, "chengzhihao1" <chengzhihao1@huawei.com>,
->> "OpenBMC Maillist" <openbmc@lists.ozlabs.org>, "linux-kernel" <linux-kernel@vger.kernel.org>, sethjenkins@google.com,
->> "adobriyan" <adobriyan@gmail.com>
->> Gesendet: Freitag, 7. November 2025 18:38:54
->> Betreff: UBIFS errors since Linux 5.15
->> Hello,
->>
->> We are updating some BMC (Aspeed AST2600, ARM32) systems that were on
->> Linux 5.4 but observe consistent UBIFS errors with Linux 5.15 and later.
->> The errors seem to vary; there is a sampling below.
->>
->>
->> We performed a git bisect and came up with the following commit, which
->> of course is completely unrelated to UBIFS. Reverting it does prevent
->> the issue... Does anyone have any suggestions?
->>
->> commit 33fc9e26b7cb39f0d4219c875a2451802249c225
->> Author: Seth Jenkins <sethjenkins@google.com>
->> Date:   Thu Oct 27 11:36:52 2022 -0400
-> That's indeed strange.
-> Are you absolutely sure that this commit triggers the issue?
-> E.g. if you revert it on top of 5.15 the issue vanishes and when you
-> re-apply it, the issue is back?
+On Tue, Oct 21, 2025 at 09:01:23PM +0000, Winiarska, Iwona wrote:
+> Sorry for the delay - for some reason this entire thread didn't land in my inbox
+> and I just found it now, randomly browsing mailing list :/
+> 
+> I will sent it as a PR for v6.19.
 
+I'm just checking if this patch should show up in linux-next by now?
 
-Thanks for your quick reply. Yes, that is the case; it's not very 
-logical. We are currently running more extended tests with 5.15 with 
-33fc9e26b reverted. I assume the potential for corruption is there 
-without this commit too, but somehow it doesn't happen.
+Sorry to be a pest. This patch, and one other series in another
+subsystem is all that's holding me back from removing a legacy API in
+the clk subsystem. I'd really like to get these dependencies merged for
+v6.19 so that I can do that cleanup work in v6.20.
 
+Thanks,
 
-Eddie
+Brian
 
-
->
-> Thanks,
-> //richard
->
 
