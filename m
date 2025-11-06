@@ -1,47 +1,60 @@
-Return-Path: <openbmc+bounces-850-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-851-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46744C39C96
-	for <lists+openbmc@lfdr.de>; Thu, 06 Nov 2025 10:19:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE646C3A974
+	for <lists+openbmc@lfdr.de>; Thu, 06 Nov 2025 12:34:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d2Gpx1ZTRz3btw;
-	Thu,  6 Nov 2025 20:19:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d2Kpt0xl7z3069;
+	Thu,  6 Nov 2025 22:34:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762420761;
-	cv=none; b=IHpGUi7lXfx3UxZSmRZ/RrSHAkFLQn18uz+j/p9n8SnWLxyloxDvms0toKM6SsZbysUNC5I+Cfcjv3EKaBRZyWzUVN0QjAvANnFeBOgHm3owZohlS+JvzpA9s58kcqrYrP96x0bMt8apGY5akJDXsHcQNiJE7/9p2Zj5L0yV9jsrJtd0d+SCkVv8q5k2VAI9pLH3sfnSAjjV4wxFYarnNFBfiye/aqSsBky+WjABB14GaO8rIklaCxhWkkwbuaZqaorkE2uZ/eXEczAJ2BMKn5yMK1Z6hqgfFhanoetRVx7Htx9v2qNi5sxbfMRqIQ+CdkKAWVdxnkvvxf7M+jYKnw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762428870;
+	cv=none; b=K2WO7kFK5c2CEOnU5yWj5aShZuS/k/j4KvCK1ELpLjOqe9qU9UvyZumWNYxim3RtHeby4NPOnJQiMX0c0icO4cif4m2GmJKX98U6WdihgOvT4BF2V6RJbLKvOTUIxbvWUChfF1TGAcJfghE6duRlN4ihjTE7ErFfWVYa6F7szavTNTmvptFXKD+I9i5ge2o2lOmTPG7kuZq4/5p5BnLMqiEXFxbUd1NVkF6zWMo+zjV1M+ixAe94fKKM+8mWT1wmk9AJbHCSG78UVjVtF+1ij5vd9zVfD45JEjMmRlFwsHWCh2A1saZVFAaMzyfT+oZYd/GCrNfK5zhrFb1V6V5Bgw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762420761; c=relaxed/relaxed;
-	bh=R1e+n2STAIZSlmEJ0HT7X+M8eC3OwmeptdqDHQ1pxSo=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=obfEug1+Qn7ds9eXKIGa68A0Hkc2qzC0hjZic8LLBnXbqgd1+RPkD1q4jyRCmnQOCYNtk/EDKsbxHyZ2fzw+AMIb4pX0ESVaqzLMImcPPtNULnpnU0cuaQsUX9h05X3V8DYPnq12tA9C1SXGBpLuRi9LtjhOwbNnmvduDwSycEorOfFQRmRX6HevTGhwHTSmSP+Ipa3lUlnqbbGd749YVIxk0VHFxRKeJx7eSXHCGhiR2Dz1jZWjzhgAV89Lgd5jDLUvIo8fnK2OqUhcaV8qQzAh8sF1p9ICu0nP2yS84K8JPNGRfuNIPNt3fOgwlQPh4if7EI+nqxB5aY+fQaolAg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1762428870; c=relaxed/relaxed;
+	bh=uoAWLLaS6pd9UzlUzg92jVaWk5xwlBah0mG1uy97Rxo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Hp7sd7//QIzPTBb55xrMAkqxnoK97wAEZo75Vm18KEQWjRTtEORlVe1s9IdQHuDPt8hzSd7TZzKbuJygqjVNapvQwfB52sqUWfTBDL58t2NZF9+zwPaM3WLJoJEhjg+pz5OB1mRGNOA1OIPKqChutWuQmO2ExLlEE9bC2v1L8ZbmpyZ65V9DJnvPAQNqhwsZaRDVT/MUTukTC55xv1brvyAO0C+B9uauvly4a137YEJduWpfscQMzKw6xIM0JAShPHlv+HboRyCbRCTbxd6U2NrBmv3rLlS22weEfjg5ZgjL+hmWFRYkjJN0NlJNG5iQ2SrsBiYPKnI16gd+g5ugvQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=capru84j; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=capru84j;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d2Gpw2lTjz2ySP;
-	Thu,  6 Nov 2025 20:19:19 +1100 (AEDT)
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 6 Nov
- 2025 17:19:03 +0800
-Received: from aspeedtech.com (192.168.10.13) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 6 Nov 2025 17:19:03 +0800
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-To: <joel@jms.id.au>, <andrew@codeconstruct.com.au>, <clg@kaod.org>,
-	<broonie@kernel.org>, <linux-aspeed@lists.ozlabs.org>,
-	<openbmc@lists.ozlabs.org>, <linux-spi@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<BMC-SW@aspeedtech.com>
-CC: kernel test robot <lkp@intel.com>, Paul Menzel <pmenzel@molgen.mpg.de>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2] spi: aspeed: Use devm_iounmap() to unmap devm_ioremap() memory
-Date: Thu, 6 Nov 2025 17:19:03 +0800
-Message-ID: <20251106091903.2800981-1-chin-ting_kuo@aspeedtech.com>
-X-Mailer: git-send-email 2.34.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d2Kps1JVDz2xdg;
+	Thu,  6 Nov 2025 22:34:29 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 59C3F4345B;
+	Thu,  6 Nov 2025 11:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC49C4CEF7;
+	Thu,  6 Nov 2025 11:34:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762428861;
+	bh=BMvBp0vVYTdKvDSUYn73f7UGpreVUIWzVn6Q8Jb768A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=capru84jwTfVANq97uUdwiKStahByghPYOfcSZsfq7pqGdSWPnZQX0ejEBzEqm/1x
+	 hCPX8mxyjURRZeQDpwl1uf9BpSNKJ1k/WARaamJNL9BFjx3vl2s9Xh++0+A+nRu8k+
+	 y8zVeQcnh5MAnqu0vYoTXoCpt3ZY06s9ibVXKjWU7iMpfAKiREQf55fzfeN6s+1irx
+	 0QB7yl6Vg/8dQqU40OVcnTyk/g8PI3OMy88aWZgKD+j+vf0KMzJTxvqWYu1ZTw6TFg
+	 PYehweac4njn/0tcc2ITP10V8kpAPZWKoOzDKTL16kRjNknJK1Em5t6ir7u66U5Van
+	 uE82QDdn8kNOg==
+From: Mark Brown <broonie@kernel.org>
+To: joel@jms.id.au, andrew@codeconstruct.com.au, clg@kaod.org, 
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
+ linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+Cc: kernel test robot <lkp@intel.com>
+In-Reply-To: <20251105084952.1063489-1-chin-ting_kuo@aspeedtech.com>
+References: <20251105084952.1063489-1-chin-ting_kuo@aspeedtech.com>
+Subject: Re: [PATCH] spi: aspeed: Use devm_iounmap() to unmap
+ devm_ioremap() memory
+Message-Id: <176242885811.2357454.3184590153610422112.b4-ty@kernel.org>
+Date: Thu, 06 Nov 2025 11:34:18 +0000
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -53,40 +66,47 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-a6db3
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Use devm_iounmap() to unmap memory mapped with devm_ioremap().
-Thus ensure proper cleanup of device-managed resources.
+On Wed, 05 Nov 2025 16:49:52 +0800, Chin-Ting Kuo wrote:
+> The AHB IO memory for each chip select is mapped using
+> devm_ioremap(), so it should be unmapped using devm_iounmap()
+> to ensure proper device-managed resource cleanup.
+> 
+> 
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202510292356.JnTUBxCl-lkp@intel.com/
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
-V2: Refine commit message for clarity.
+Applied to
 
- drivers/spi/spi-aspeed-smc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index e8bd8fe6c4e7..179c47ffbfeb 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -396,7 +396,7 @@ static int aspeed_spi_set_window(struct aspeed_spi *aspi)
- 
- 	for (cs = 0; cs < aspi->data->max_cs; cs++) {
- 		if (aspi->chips[cs].ahb_base) {
--			iounmap(aspi->chips[cs].ahb_base);
-+			devm_iounmap(dev, aspi->chips[cs].ahb_base);
- 			aspi->chips[cs].ahb_base = NULL;
- 		}
- 	}
--- 
-2.34.1
+Thanks!
+
+[1/1] spi: aspeed: Use devm_iounmap() to unmap devm_ioremap() memory
+      commit: 2f538ef9f6f7c3d700c68536f21447dfc598f8c8
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
