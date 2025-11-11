@@ -1,60 +1,87 @@
-Return-Path: <openbmc+bounces-866-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-867-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4185AC4C338
-	for <lists+openbmc@lfdr.de>; Tue, 11 Nov 2025 08:56:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A9D7C4E9F1
+	for <lists+openbmc@lfdr.de>; Tue, 11 Nov 2025 15:56:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d5JlM73vGz3fQv;
-	Tue, 11 Nov 2025 18:56:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d5V3c423Gz2yvK;
+	Wed, 12 Nov 2025 01:56:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762847807;
-	cv=none; b=nl8a6ddSc0TIpdxe2FvJvRmnFvy172q7UGKrb7akPzgMYNAZ51nDO3TQKWFHE6iZa9xwPPqzk40BUP93u3NVcLxXb8g8CdyHuJx/VVGHbLFt9ySm8D+EbKmly38RWV3JYiX/owKWb4i85W9vP/FplGnipBQIE3nrpez+wY4K4o0Z0xpFEYJlpX1cpGWWBk/MrQ/eEIMCI4c1jJDiD34YI8FY/Y86QbJ1zk50sE461PeyxzFlEKdhubQuaVNbbDC+kNx4VK/Tr7iU6aju+I3RAy+2wCj+kXEbtSMyaXGcW9+jXA+pgRudU5Y+0iXWwSUQRQ/U0O4Qi+s4J+CBZ5NHJQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62f"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762872988;
+	cv=none; b=cBmGgDB7kV31zg7QwB4e5i+0ZN+oZUxuUxwgFr7JMrq7lc5vH9E+ctbhoEzdE6dUzh3ncSsypQR+z2swNYGZDkO87/tGGneHC4l5XXGZRyWAO7n9qB3mmd7dPmqfGHN1ggK44pg1RF5qO7QG8UOZHYBhN7cJ3ow+wKnchXRDEWqIK8Zu/Vmu2guVyojJoIZr+LC8Jq17i+oQgS8VKVN+PiKclRqo3jZPm68MXoM+xJYeOVdmFRftNbuyCQ6jTfl/A6WJy0RBvzODlCW2kBKZM+gRl0gdwoZqlGKeYDsE6icNIQD3Y2HYK45hDUc/Qj3fPQgHoNm9OHW7Z3f4Qstxuw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762847807; c=relaxed/relaxed;
-	bh=xeAsxYNqNSvdctebhieV4wnGz2Z7c+tA2gyGTo90+0w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OgoJhlpCY+UyLBLJpJ2auxqWFTHcz/o250i54OjnR1VOLeknGaZhM8UenaH1pvsM29a9iouh/dOzzDy3AYiRsGm1IRpdwaqQp30yYZK98CaPK1BihkuEiaL619h+HR4eoyZZxnc4Q+4RgGzFjEnKMSETaCGewJUu6m9Ew8sjXAQxHOlbYiQOEpNHEo3+3jsdYrw76I77BgxREpE526o8XkJnwooxAC5Syp6uZ0L3jpPf5W1TuyNwJeddFAvRK33oYL6u5MzUN6VS2ZzuJTzZx5kR02meDkCrosO9wAWAyQXnCVMw+b24tN+7qekqTCDIeiz+tA3YdBFWdVdNM8jONg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=evobaaN3; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1762872988; c=relaxed/relaxed;
+	bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j6yB5OidS/Zt+4AGdJj9bW/vwG98AYMMfhFB9B+kWDgnPTE2Jq5LRzeDFPONXqBxju5lMXCOaKHbvyp0ikA/twQbOb7egXqo/RS7b9/pCL55Vu0Ztnt9YZIZr/MxWXeTOOobA43yIKfdKqWkKmviRE+eSfSeG/9rDkaO/CSeVoDQTjYSevjMJQiterZGM+o2H0XGRvJs2iqPCgz8PL3Amh2ODOmpUBn8Oxld0seks5z1EVZA2NxfN3pkSSO1vjhyoUdzmeegfksWlEeOgqAPs5ESrJ9GIv5+qZ0SCpefGVtSPOnLT5jig7dvjvLbmbETgwDfuI3bFz0mGVx8SoVeZg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=ktGLQds4; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org) smtp.mailfrom=bytedance.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=evobaaN3;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=ktGLQds4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d5JlL4xN0z3fDq
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Nov 2025 18:56:46 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 4045661903;
-	Tue, 11 Nov 2025 07:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80079C116B1;
-	Tue, 11 Nov 2025 07:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762847803;
-	bh=oF1keJKwYhxvaP6NJqrA6M6U0gmqXpD9wpQKVAj8/Ww=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=evobaaN3/pr/xTyRkmYEEXDtrMENl8k/Br+y8LvTdXX0jV4r9Od10ACdXFboqHx4F
-	 73a0zmoeV7nnlzpvy04lDwNf9Iha4eNANDeIt3N8MJidzY5ZjvvVJyrdkx+D5HD1pW
-	 4dN+wwkJhfjNAaHFPtLdysLATbpyT80cIKZtq1RlZvc0PiTVYlXCiGEOo3aFkqUXwH
-	 YLqENrDxNSRslZ50kGGTpPlt3ABavQF/f7oWFL/76qtWsyl1eMUa5iS9Fh8xz/Y6rD
-	 BbU0ixMvr8vNo4SCDWW2oVfoG5RtaWJ0mYrNfqDa/5RWGVG3P1Ru7vSphlHVlu5CyT
-	 NrcFQ4uIKcVFg==
-Date: Tue, 11 Nov 2025 08:56:41 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	broonie@kernel.org, avifishman70@gmail.com, tali.perry1@gmail.com, joel@jms.id.au, 
-	venture@google.com, yuenn@google.com, benjaminfair@google.com, 
-	andrew@codeconstruct.com.au, openbmc@lists.ozlabs.org, devicetree@vger.kernel.org, 
-	linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v1] dt-bindings: spi: Convert nuvoton,npcm-pspi to DT
- schema
-Message-ID: <20251111-bouncy-mahogany-skylark-c4ba1d@kuoka>
-References: <20251110081457.1008316-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d5V3Z32NSz2ypw
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Nov 2025 01:56:24 +1100 (AEDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-297e982506fso35871165ad.2
+        for <openbmc@lists.ozlabs.org>; Tue, 11 Nov 2025 06:56:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1762872982; x=1763477782; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
+        b=ktGLQds4e4UbXyFKVXSkUjhy8C23sZh99N0vMHoyUTBAYOSFig0lm/2SXEGS+E4huv
+         U7EXFGt1/Uxb85bF25ludqgUWYMazrTEgB+xpKQcQtLjBlAcokTJ6tcNcsina3q29jdS
+         nOBPesXxTVFz9BnchkXusX916Du2Tw/alQdku4g+MnDwXst1CPV8FaRdPLYn19yElnVu
+         GSPQAfvkuJdCjPsdv7ru3DhztNmX2osgYSxT0KRH6FrXF0Ekbc53DgyU9R0cqxcowHsl
+         DCeIb8uxWUztY0MTYmfUPKVXqQQggLtaJJXRRrsM8OkZTTOTc+7VUwdYZcQGovnlqJk8
+         6l1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762872982; x=1763477782;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
+        b=kuaqvKinh9f0+bsn9OaJMLJOIA4MGXlaiUI4v6HbytJ906kVU7ulWXfqkFAnH4tzjS
+         EkMAqKt44GBvaYJgebi5Rl8426RHoQd69WhGcMgNssonOenp394pGvZeS2bSBVCL1cuK
+         iWATBnclqnghXVbarjBLk5rkNui4WhHR0Yk+4LsyWz4j5eDaXuMJyKp86GaXbW3ATJYj
+         HVlkFoBolMQ+YAYJ3GsVoEfs2kuaWeKUgBKw+YqHGoJLFEWeVZwEBGdoCJA8SRRgsy45
+         1h7jUt5K6NcfQa4GI1TaQiDG4eibrlqDb5iUODBfW5KJCUdsUhpNSyUMeJJNM6S2EeR/
+         Bx9w==
+X-Forwarded-Encrypted: i=1; AJvYcCWN4qU9b6fFVoP6AE2Zj+ZlwXPgo/TVZeZIbEm1UqwPkIW9CF7ubsuaxbvev602Fgv1Sap4cgCW@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yxnlt4Y8+BHeBnZX2GxdrrWTN5LilYiYKFLarMIkswMKqqN8+RK
+	Tb1yIT9YsyhGx8GsXDrbfzx99yrSzIDgwzYhHOyIMO7281kHTMhx0eVAhzNg50iY0Rw=
+X-Gm-Gg: ASbGnctj6GXtyDYLBUKTODjQwKEMtk70B8cM4Jz1lbI/P/3chmC8GMO/H/ayuUCJm1w
+	LfzH0T1o3EVT3tBUMvKomXiFfPLywARqu/o77NrBQ59/qKOds9mLpoYx9mQz/WNvWSwu1Cl7NT0
+	VHefuDpSM0JAN2IiwWhDCgBTmbw0GTjnHagTciBF4vYOyOa87C5fhLoKt8p0G1lhQ/5jX9vjej1
+	uc0LVUKct803X6L1sAh/BhaomAcv+nJ8uHDEw/JSUDLUJ9wR1ySv3QtJ97ji0OBaXmhNKscvC3I
+	oef/kQZbqGA1FMUvRmjPq13YO5ap7n4fN/8wKrWEJt4Gp5sZWz8VPPHTv3ykDNciTF1fGO8pYm4
+	JwfQ6TyfzuN1116Qp3rx/rQHxV6SDLsxM55cfLHgzvKpbLE6K4fJKDSMg9kDdQL1HUPVhglNIh0
+	zEmhMJPHbA
+X-Google-Smtp-Source: AGHT+IHzw7KGS5V49PmS3dPImgttpK5QuWelyEH8VVaWzQ8/JjHlzL/5enOIxdcpy8EEGYBBT6pxmw==
+X-Received: by 2002:a17:902:e891:b0:295:2cb6:f4a8 with SMTP id d9443c01a7336-297e56dd7bcmr160323645ad.51.1762872981997;
+        Tue, 11 Nov 2025 06:56:21 -0800 (PST)
+Received: from localhost ([106.38.226.56])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29650c5c6b3sm182427605ad.24.2025.11.11.06.56.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Nov 2025 06:56:21 -0800 (PST)
+From: Jian Zhang <zhangjian.3032@bytedance.com>
+To: dwmw2@infradead.org,
+	richard@nod.at,
+	linux-mtd@lists.infradead.org,
+	openbmc@lists.ozlabs.org
+Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	linux-kernel@vger.kernel.org
+Subject: [[RFC PATCH]] jffs2: attempt to fix "Error garbage collecting node"
+Date: Tue, 11 Nov 2025 22:56:08 +0800
+Message-ID: <20251111145609.1917969-1-zhangjian.3032@bytedance.com>
+X-Mailer: git-send-email 2.47.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -66,158 +93,266 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251110081457.1008316-1-tmaimon77@gmail.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Nov 10, 2025 at 10:14:57AM +0200, Tomer Maimon wrote:
-> Convert the Nuvoton NPCM PSPI binding to DT schema format.
-> Remove the clock-name property since it is not used.
+This patch shares analysis and a potential fix for the "Error garbage collecting node"
+issue observed in long-run tests with SPI NOR flash under repeated AC cycles.
 
-clock-name or clock-names? I clearly see the clock-names used in DTS, so
-your commit msg is not correct.
+TL;DR:
+An unstable block may pass CRC checks multiple times but fail during GC.
+The practical mitigation is to locate such blocks and perform a read-erase-write
+cycle to make them stable; the actual data content is irrelevant.
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
+Background:
 
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../bindings/spi/nuvoton,npcm-pspi.txt        | 36 ----------
->  .../bindings/spi/nuvoton,npcm-pspi.yaml       | 65 +++++++++++++++++++
->  2 files changed, 65 insertions(+), 36 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
->  create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt b/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
-> deleted file mode 100644
-> index a4e72e52af59..000000000000
-> --- a/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
-> +++ /dev/null
-> @@ -1,36 +0,0 @@
-> -Nuvoton NPCM Peripheral Serial Peripheral Interface(PSPI) controller driver
-> -
-> -Nuvoton NPCM7xx SOC support two PSPI channels.
-> -
-> -Required properties:
-> - - compatible : "nuvoton,npcm750-pspi" for Poleg NPCM7XX.
-> -				"nuvoton,npcm845-pspi" for Arbel NPCM8XX.
-> - - #address-cells : should be 1. see spi-bus.txt
-> - - #size-cells : should be 0. see spi-bus.txt
-> - - specifies physical base address and size of the register.
-> - - interrupts : contain PSPI interrupt.
-> - - clocks : phandle of PSPI reference clock.
-> - - clock-names: Should be "clk_apb5".
-> - - pinctrl-names : a pinctrl state named "default" must be defined.
-> - - pinctrl-0 : phandle referencing pin configuration of the device.
-> - - resets : phandle to the reset control for this device.
-> - - cs-gpios: Specifies the gpio pins to be used for chipselects.
-> -            See: Documentation/devicetree/bindings/spi/spi-bus.txt
-> -
-> -Optional properties:
-> -- clock-frequency : Input clock frequency to the PSPI block in Hz.
-> -		    Default is 25000000 Hz.
+In long-run tests, JFFS2 sometimes fails to perform garbage collection, producing logs like:
 
-You dropped this property. Every change done in the conversion needs to
-be documented in the commit msg with explanation WHY.
+[    3.470788] jffs2: notice: check_node_data: wrong data CRC in data node at 0x008cc2e8: read 0xb554ca36, calculated 0xc7ac50f7
+...
+[   46.815192] jffs2: Error garbage collecting node at 008cb694, mark node obsolete!
+[   46.840646] jffs2: read_cache_page() returned error: -5
 
-> -
-> -spi0: spi@f0200000 {
-> -	compatible = "nuvoton,npcm750-pspi";
-> -	reg = <0xf0200000 0x1000>;
-> -	pinctrl-names = "default";
-> -	pinctrl-0 = <&pspi1_pins>;
-> -	#address-cells = <1>;
-> -	#size-cells = <0>;
-> -	interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
-> -	clocks = <&clk NPCM7XX_CLK_APB5>;
-> -	clock-names = "clk_apb5";
-> -	resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI1>
-> -	cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
-> -};
-> diff --git a/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.yaml b/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.yaml
-> new file mode 100644
-> index 000000000000..65ad40292408
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.yaml
-> @@ -0,0 +1,65 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/spi/nuvoton,npcm-pspi.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Nuvoton NPCM Peripheral SPI (PSPI) Controller
-> +
-> +maintainers:
-> +  - Tomer Maimon <tmaimon77@gmail.com>
-> +
-> +allOf:
-> +  - $ref: spi-controller.yaml#
-> +
-> +description:
-> +  Nuvoton NPCM Peripheral Serial Peripheral Interface (PSPI) controller.
-> +  Nuvoton NPCM7xx SOC supports two PSPI channels.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nuvoton,npcm750-pspi # Poleg NPCM7XX
-> +      - nuvoton,npcm845-pspi # Arbel NPCM8XX
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +    description: PSPI reference clock.
-> +
-> +  resets:
-> +    maxItems: 1
-> +    description: PSPI module reset.
+Root cause:
 
-Drop description.
+1. During GC, a power loss occurring while an `erase` operation is in progress
+   can leave a block in an unstable state. Reads from this block may yield
+   inconsistent results.
 
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - clocks
-> +  - resets
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/reset/nuvoton,npcm7xx-reset.h>
-> +    spi0: spi@f0200000 {
-> +        compatible = "nuvoton,npcm750-pspi";
-> +        reg = <0xf0200000 0x1000>;
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&pspi1_pins>;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +        interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
-> +        clocks = <&clk NPCM7XX_CLK_APB5>;
-> +        resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI1>;
-> +        cs-gpios = <&gpio6 11 0x1>;
+2. A node may pass multiple CRC checks, but during GC — particularly when moving
+   a PRISTINE node — a CRC failure may occur, triggering the garbage collection error.
 
-Use proper GPIO defines for flags.
+Detailed analysis:
 
-Best regards,
-Krzysztof
+- In `jffs2_garbage_collect_pristine`, moving a PRISTINE node does not increment
+  the version number. At some point, two nodes with identical version numbers may
+  exist simultaneously.
+
+- With JFFS2 SUMMARY enabled, `jffs2_mark_node_obsolete` only marks the node
+  obsolete in RAM, skipping flash updates. On the next boot, the node may be
+  re-scanned and remain unstable.
+
+- During file/node construction in `jffs2_add_tn_to_tree`, two nodes with the
+  same version number are handled as follows:
+  * Current node valid → discard the new node
+  * Current node CRC error → replace with the new node
+
+  This allows an unstable node to be selected even if it passes CRC on this pass.
+
+Relevant call flow:
+
+jffs2_find_gc_block
+    jffs2_do_crccheck_inode
+        jffs2_do_read_inode_internal
+            jffs2_get_inode_nodes
+                read_dnode
+                    jffs2_add_tn_to_tree
+
+Proposed mitigation:
+
+Locate blocks that may be unstable and perform a read-erase-write cycle to
+stabilize them. The actual data content is not important, only block stability.
+
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+---
+ fs/jffs2/scan.c | 172 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 172 insertions(+)
+
+diff --git a/fs/jffs2/scan.c b/fs/jffs2/scan.c
+index 62879c218d4b..1475d2c0be4c 100644
+--- a/fs/jffs2/scan.c
++++ b/fs/jffs2/scan.c
+@@ -442,6 +442,174 @@ static int jffs2_scan_xref_node(struct jffs2_sb_info *c, struct jffs2_eraseblock
+ }
+ #endif
+ 
++static inline uint32_t jffs2_calc_node_hdr_crc(const struct jffs2_unknown_node *node)
++{
++	struct jffs2_unknown_node crcnode;
++
++	crcnode.magic = node->magic;
++	crcnode.nodetype = cpu_to_je16(je16_to_cpu(node->nodetype) | JFFS2_NODE_ACCURATE);
++	crcnode.totlen = node->totlen;
++
++	return crc32(0, &crcnode, sizeof(crcnode) - 4);
++}
++
++static int jffs2_pre_scan_eraseblock(struct jffs2_sb_info *c, struct jffs2_eraseblock *jeb)
++{
++	int ret;
++	bool error_found = false;
++	unsigned char *buf;
++	uint32_t crc;
++	struct jffs2_unknown_node *node;
++	struct jffs2_raw_inode *ri;
++	struct jffs2_raw_dirent *rd;
++
++	uint32_t ofs = 0, buf_len = c->sector_size;
++	uint32_t retlen;
++
++	buf = kmalloc(buf_len, GFP_KERNEL);
++	if (!buf) {
++		JFFS2_WARNING("Unable to allocate scan buffer of size %u\n", buf_len);
++		return -ENOMEM;
++	}
++
++	ret = jffs2_fill_scan_buf(c, buf, jeb->offset, buf_len);
++	if (ret) {
++		JFFS2_WARNING("Unable to read eraseblock at 0x%08x\n", jeb->offset);
++		goto exit;
++	}
++
++	while (ofs < c->sector_size) {
++		if (c->sector_size - ofs < sizeof(struct jffs2_unknown_node)) {
++			/* Not enough space for a node header */
++			break;
++		}
++
++		if (*(uint32_t *)(&buf[ofs]) == 0xffffffff) {
++			/* Reached empty space */
++			ofs += 4;
++			continue;
++		}
++
++		node = (struct jffs2_unknown_node *)&buf[ofs];
++		if (je16_to_cpu(node->magic) != JFFS2_MAGIC_BITMASK) {
++			ofs += 4;
++			continue;
++		}
++
++		if (jffs2_calc_node_hdr_crc(node) != je32_to_cpu(node->hdr_crc)) {
++			JFFS2_WARNING("node header CRC failed at %#08x\n",
++				      jeb->offset + ofs);
++			ofs += 4;
++			error_found = true;
++			goto check;
++		}
++
++		if (!(je16_to_cpu(node->nodetype) & JFFS2_NODE_ACCURATE)) {
++			/* This is an obsoleted node */
++			ofs += PAD(je32_to_cpu(node->totlen));
++			continue;
++		}
++
++		switch (je16_to_cpu(node->nodetype)) {
++		case JFFS2_NODETYPE_INODE:
++			if (c->sector_size - ofs < sizeof(struct jffs2_raw_inode)) {
++				/* Not enough space for a full inode node */
++				ofs += 4;
++				goto check;
++			}
++
++			ri = (struct jffs2_raw_inode *)node;
++			crc = crc32(0, ri, sizeof(*ri) - 8);
++			if (crc != je32_to_cpu(ri->node_crc)) {
++				JFFS2_WARNING("inode node CRC failed at %#08x, read=%#08x, calc=%#08x\n",
++					      jeb->offset + ofs,
++					      je32_to_cpu(ri->node_crc), crc);
++				error_found = true;
++				goto check;
++			}
++
++			if (je32_to_cpu(ri->dsize)) {
++				crc = crc32(0, ri->data, je32_to_cpu(ri->csize));
++				if (je32_to_cpu(ri->data_crc) != crc) {
++					JFFS2_WARNING("Data CRC failed data node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
++						ofs, je32_to_cpu(ri->data_crc), crc);
++					error_found = true;
++					goto check;
++				}
++			}
++
++			ofs += PAD(je32_to_cpu(node->totlen));
++			break;
++		case JFFS2_NODETYPE_DIRENT:
++			if (c->sector_size - ofs < sizeof(struct jffs2_raw_dirent)) {
++				/* Not enough space for a full dirent node */
++				ofs += 4;
++				goto check;
++			}
++
++			rd = (struct jffs2_raw_dirent *)node;
++			crc = crc32(0, rd, sizeof(*rd) - 8);
++			if (je32_to_cpu(rd->node_crc) != crc) {
++				JFFS2_WARNING("Node CRC failed dirent node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
++					ofs, je32_to_cpu(rd->node_crc), crc);
++				error_found = true;
++				goto check;
++			}
++
++			if (strnlen(rd->name, rd->nsize) != rd->nsize) {
++				JFFS2_WARNING("Name in dirent node at 0x%08x contains zeroes\n", ofs);
++				error_found = true;
++				break;
++			}
++
++			if (rd->nsize) {
++				crc = crc32(0, rd->name, rd->nsize);
++				if (je32_to_cpu(rd->name_crc) != crc) {
++					JFFS2_WARNING("Name CRC failed dirent node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
++						ofs, je32_to_cpu(rd->name_crc), crc);
++					error_found = true;
++					goto check;
++				}
++			}
++
++			ofs += PAD(je32_to_cpu(node->totlen));
++			break;
++		default:
++			ofs += PAD(je32_to_cpu(node->totlen));
++			/* Other node types are not pre-checked */
++			break;
++		}
++	}
++
++check:
++	// find any error during pre-scan, if found, erase the block, and write back.
++	if (error_found) {
++			JFFS2_WARNING("Erasing block at 0x%08x error_count %d due to pre-scan errors\n",
++				jeb->offset);
++			struct erase_info instr;
++
++			instr.addr = jeb->offset;
++			instr.len = c->sector_size;
++			ret = mtd_erase(c->mtd, &instr);
++			if (ret) {
++				JFFS2_ERROR("Erase at 0x%08x failed during pre-scan: errno %d\n",
++					jeb->offset, ret);
++				goto exit;
++			}
++
++			ret = jffs2_flash_direct_write(c, jeb->offset, buf_len, &retlen, buf);
++			if (ret) {
++				JFFS2_ERROR("Write back at 0x%08x failed during pre-scan: errno %d\n",
++					jeb->offset, ret);
++				goto exit;
++			}
++	}
++exit:
++
++	kfree(buf);
++	return ret;
++}
++
+ /* Called with 'buf_size == 0' if buf is in fact a pointer _directly_ into
+    the flash, XIP-style */
+ static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblock *jeb,
+@@ -453,6 +621,10 @@ static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblo
+ 	int err;
+ 	int noise = 0;
+ 
++	err = jffs2_pre_scan_eraseblock(c, jeb);
++	if (err) // only log warning, continue scanning
++		JFFS2_WARNING("Pre-scan of eraseblock at 0x%08x failed: err=%d\n",
++			      jeb->offset, err);
+ 
+ #ifdef CONFIG_JFFS2_FS_WRITEBUFFER
+ 	int cleanmarkerfound = 0;
+-- 
+2.47.0
 
 
