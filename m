@@ -1,159 +1,178 @@
-Return-Path: <openbmc+bounces-864-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-865-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DC9EC4B33C
-	for <lists+openbmc@lfdr.de>; Tue, 11 Nov 2025 03:24:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39789C4B7D1
+	for <lists+openbmc@lfdr.de>; Tue, 11 Nov 2025 05:58:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d59My58nCz2ySq;
-	Tue, 11 Nov 2025 13:24:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d5DnH6qxjz2yvL;
+	Tue, 11 Nov 2025 15:58:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c406::3" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762827870;
-	cv=pass; b=XLbAGb0JT6UkTkRRufG4ega3bPdvqsj9dnuuHXlSEdwmRiBt53S5zyqTCQKfj11+9HrQ3kTpCC/XVdvpQeMf/UlVrtCJelD8Ti7t1Xjn/EyoJv2WFwirnXfhBjy0bTziQZ3+7/q+89X+Sm/swMhOTPEGhPyqkTrIxhkfSQalVEH8ak2vfl1BfRgL8mrESOwMarJ/p3JCPHMbMVR7IhIchCKnHb9/qCxCSfS4BqROUjojtsaqrvGZ9FMB5GFss+zH9qOK8vYlWWw1ONWDPVp9/Zrmt1xmAFd5r9rBtQEHjeChlV9Zi1PedCLkyKf4a0oFpstp1wIrXLiLr9r2wQa9uw==
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c40f::6" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762837091;
+	cv=pass; b=LpjIqY3SzUp/kKrqeCuOobvzKAFhav8vW0xkoWd7u+DA060kgrwT1FIIQGv25YZBcomCQghTsh/rodRwM5m4vxF7YGgkXcKesD3ijnNVcVHWi61iGOqVI5zBBZ7w0otD0IVreYPdmpO1vsG8TxmwHkfiQVfcU5U/9WRfuiBrOsNUPNX7Enz/ERlP3WNbgt+DHgfIr+zHd0G9fcss3y0Tu98KNqUUhUe6a5OT4ddbevE3J/RH08m3E67wy7UoX5qcxtodxlTflJ4BhbCr5qC8rt7GRjMZjvDpjpWzuIW5Xn/VLpB1LdkkK2onZ/o4Gofr0/S+oDVRpn+W2svuI7Zh8w==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762827870; c=relaxed/relaxed;
-	bh=DWM2os22LUr8ZhDKf2g2SFoPx1FREyLA+mCLN34Nhew=;
+	t=1762837091; c=relaxed/relaxed;
+	bh=acvQROML/FODS4MuWbr4B7sgL0Z/eBASsIie1LL3B4A=;
 	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=lOH42V6CQM71YyyQq6+w4Ur+zGAbB+nCyuWvEFPV36NxgvGJbttzLVHXJ25IPU0E566WzSmJ3c113cu7LHy32o5MAtS5oQDSdJdXuF2p/wsETw9+sH+1YAHmJFCeXuXvYg1o5RmEbTVgDg5giUxsbR24f2g1m1Fo29Hx6KFvK68g1+YI0jORlnEJm8Hn+JLTwGu/hadrPpkHni4WqPolyK0Ru4LphyNRbQAUNErvqRiHkZpva+fqV1PygNWS3sGU7TS/cjdR8J/yTiXlwBo44F5PlKhSFyYQqrjvCJ2PWy1FMSyKfUiPK3qCPS/bqD/X0x9drFZJV/I4x3KCJnKHqA==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=ijmaS/GS; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c406::3; helo=os8pr02cu002.outbound.protection.outlook.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+	 Content-Type:MIME-Version; b=ZP5NgOoyKePzrSfxPgoCmXWmHnquJO2NFU8HkQ45CkVpF4Z5cjp6N5H6kdNRpkGdKysFwBuLULWK52llzbIutkMWFl+698OYcqyKM2lajQ8kuhuzJbNJlcOaCDCEgcQk5rGJwOswOQEpk2E+S3yaRZJIxV/hCLNyXeJkpu/t3V1T1Uii6R/1psoJjFmgyKUkix9cOqriDTpng4vQ89rUZJq7EQxC+p39gENgKFDxavvoiwYT3x+eDToJ1duEhJa7PAXYC7yWnCdppIlif+jXDW6GR5rB63efrPvdJuAXKJqM6+eECyZPEwOqZM+UhvJWGg55GmVvFPx92H7TWCZVUA==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=oLD5nxet; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c40f::6; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=ijmaS/GS;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=oLD5nxet;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c406::3; helo=os8pr02cu002.outbound.protection.outlook.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazlp170120003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c406::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c40f::6; helo=seypr02cu001.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazlp170130006.outbound.protection.outlook.com [IPv6:2a01:111:f403:c40f::6])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d59Mw5Fprz2yGM;
-	Tue, 11 Nov 2025 13:24:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d5DnG34Xrz2yvK;
+	Tue, 11 Nov 2025 15:58:10 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vSmYCI2X1+bH3CkQdRMEJYmMIbwkIm0NUAAkmi5Ep9cV0ztkON5IYQAugW6J2CWao3Jv5HqWBO0iBiVtdFhL3hjz6Eqgbyzupho9kilpGGD/15vet3rQ9esv6rGSulQeYfkw0vXUPfQCmC170Q1izKTjEK1hNMx2SpQXy3q5a0gioQNnpWGduMsHD9K1/rkbrkWPG3G4kfPpTNVnx/S/mDo56dtQ9QaS99DVIb+FoqaTjIrs7pECKStaFfHlLczuKcKRUu2Zt1TkuBBNSpz+blSRG7VgOOvZ9j/Y08/zGKCy+Jl8lz4GAEZkAseLSQRPZ904GQcSu4V1PzfQUta/sA==
+ b=PZ+y+QpkZMxzVXBlMiYhK6kqleU/SeNiUMWPdKd/0bycnhxIie5+N+0QElhEwE8IHIpmrMgxzfRRRGO2Y8cilroTlCDcXjtQnZfhj1tLxoCMAsDayxXHBXj5L67On0NZFzmGwvh1yE+5gJcxOqlr515X1oqZ9sov7Z22FERFWurisEf2EOeHVP0w4BHThB0F07BMTyVYaA2oW9Y+SJ3I6YAlZH+rY8dViTCi3ivykY6n8fL4FJDGmEwer1a28EUg/IPHCl2eWADIf5ZddXwzSsSDTa2i6fyldTj45o3c5Eu1G1fWhfnB3FfPkaORC5KMzMpz4XYB8ysh96qTP651og==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DWM2os22LUr8ZhDKf2g2SFoPx1FREyLA+mCLN34Nhew=;
- b=qDW8TqOQ8S5tGx9QKxx9HKrpeEdToo5+klrDCC/0BZ44SGj8tSnbhAiD1TJX/4apmh/rkEHJj4M6pVLOJR4MME6XnHUoexhV+ZXJfonIAo1hhdqtafVxfEgNEl0QT14KH9YlJtHew8y6bNGqltI26uqoCFzQ8SKGvjjly1fi5d0WklpjGj6m+32tE86MnJGny4nGSXkN0FPLaSpHfzsCGNYMWl4tqNEOITQUPQFGPAC8xEQvOhyTCksIAEncpFKvoxUba/SNcXn5UTq1eZ8P0H1bTzgOwup4cYvcT0DcA4zqDHwstWoEDzgm3coQM7bZUaJd2pb1gsM9IabUW7XRwQ==
+ bh=acvQROML/FODS4MuWbr4B7sgL0Z/eBASsIie1LL3B4A=;
+ b=wrLGEhEHDY2kKnWKK3Q8dByur2hUKIusZsGl+sphtQaaVKjB3AwsKB+cDdH6EqIfLruOcpT90gbZ1ut+mE2qBRIXxWLO30L2rO75Q7P98nowdgSzN7/jgg6XRCwnKzz3ab5TgFQnSS0PwSmo/H2TR6E0/B/EUUKjYVoSx7qHgLajGVj3NJS9IXO7ZcsYCcCjh7S57mV8stXPpEn4L3lyxle8Jol695sIbdD6mWpucPHEUFwRvqfFvmS3pS+SdV7ECG0/J3EITn6jdOv5Uofx4nVRfIvzMKyd3p6Y+VLVIJL1PAaJUsl9FoVgD91CYC6hw9R555xZ2K84pd8AJVj7Ag==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DWM2os22LUr8ZhDKf2g2SFoPx1FREyLA+mCLN34Nhew=;
- b=ijmaS/GSM+PYgfurlfBo95qlhhECv2pyJIHuScw3Os7Qr1k764NPxumXRJIgofKAjVpDmGkU2j7NNXCSD/W7cPXhaiP/PeptuhTWsaGE13GstF9IpiV9m+7q08uH/EFroKkfdnrGRwsnOFszJawDLGoHTAutQj6JRPx/7SqzNF4paL9NSELurV9vL9b2J19iqhsV6J2IcXMHIaYKn3QSlpXTh8h5oqW6GUWtZ/IkUtskLcL0aWEKjp5ZQkpzA6LWDOK3AD3l2UL7ojBoQK0T7lVmGmfHuSD/WFYW2IqrUJ6PHZM5HJm8tOfhorYjQze6KeyTBpe/oOV4W7o5S6a1KA==
-Received: from OSQPR06MB7252.apcprd06.prod.outlook.com (2603:1096:604:29c::6)
- by TYSPR06MB6765.apcprd06.prod.outlook.com (2603:1096:400:476::13) with
+ bh=acvQROML/FODS4MuWbr4B7sgL0Z/eBASsIie1LL3B4A=;
+ b=oLD5nxetZ8hxFdXzV7oXr/yCExntDrNrZyBrf2vnbNaVUzGYqfMFsKZNbrflAAyx7IzcdtLauhIwBDsEzikpXH2fxuy4/K96bgvWEwaX/GCxBkYdQ9CeqsAIN0kUDXuWabvXiZe/ayoMdG4+WA2EZo888xQHYMZMAeeHAaQGTQ1TcKnW7jmvBnTnSgbfqMxnhdLzpwskEAo359WEl8LFNK/zikaomyxiE6Cey75lJIov4Bj3KJYf2ZVfuTQbgc7i3ZU6F7TCotKKldd2EKLD90HP4r4S/S1tGQ7yruGOsLspL8RDlImDh4N3WIW/hiDeHFkcG9V6Y+hMdIp8RtdsWw==
+Received: from TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com (2603:1096:408::791)
+ by TY0PR06MB5125.apcprd06.prod.outlook.com (2603:1096:400:1b0::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9298.16; Tue, 11 Nov
- 2025 02:24:02 +0000
-Received: from OSQPR06MB7252.apcprd06.prod.outlook.com
- ([fe80::814e:819a:7d52:7448]) by OSQPR06MB7252.apcprd06.prod.outlook.com
- ([fe80::814e:819a:7d52:7448%3]) with mapi id 15.20.9298.015; Tue, 11 Nov 2025
- 02:24:02 +0000
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>, "lee@kernel.org"
-	<lee@kernel.org>, "robh@kernel.org" <robh@kernel.org>, "krzk+dt@kernel.org"
-	<krzk+dt@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
-	"joel@jms.id.au" <joel@jms.id.au>, "linus.walleij@linaro.org"
-	<linus.walleij@linaro.org>, "brgl@bgdev.pl" <brgl@bgdev.pl>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
+ 2025 04:57:43 +0000
+Received: from TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com
+ ([fe80::df4f:b1a1:1825:4a80]) by TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com
+ ([fe80::df4f:b1a1:1825:4a80%7]) with mapi id 15.20.9298.015; Tue, 11 Nov 2025
+ 04:57:43 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, "benh@kernel.crashing.org"
+	<benh@kernel.crashing.org>, "joel@jms.id.au" <joel@jms.id.au>,
+	"andi.shyti@kernel.org" <andi.shyti@kernel.org>, "jk@codeconstruct.com.au"
+	<jk@codeconstruct.com.au>, "robh@kernel.org" <robh@kernel.org>,
+	"krzk+dt@kernel.org" <krzk+dt@kernel.org>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>, "andrew@codeconstruct.com.au"
+	<andrew@codeconstruct.com.au>, "p.zabel@pengutronix.de"
+	<p.zabel@pengutronix.de>, "andriy.shevchenko@linux.intel.com"
+	<andriy.shevchenko@linux.intel.com>, "naresh.solanki@9elements.com"
+	<naresh.solanki@9elements.com>, "linux-i2c@vger.kernel.org"
+	<linux-i2c@vger.kernel.org>, "openbmc@lists.ozlabs.org"
+	<openbmc@lists.ozlabs.org>, "devicetree@vger.kernel.org"
+	<devicetree@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
 	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
 	<linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>, "linux-gpio@vger.kernel.org"
-	<linux-gpio@vger.kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>
-Subject: Re: [PATCH v2 3/4] pinctrl: aspeed: Add AST2700 pinmux support
-Thread-Topic: [PATCH v2 3/4] pinctrl: aspeed: Add AST2700 pinmux support
-Thread-Index: AQHcHYd18lbI5El9VE2aAexfEXfel7SjdDmAgBMm8Co=
-Date: Tue, 11 Nov 2025 02:24:02 +0000
+	<linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH v20 1/4] dt-bindings: i2c: Split AST2600 binding into a
+ new YAML
+Thread-Topic: [PATCH v20 1/4] dt-bindings: i2c: Split AST2600 binding into a
+ new YAML
+Thread-Index: AQHcQisKZrgNdIKVU0mDlJSyYndfALTQ+A6AgAfdvQCAACofAIAT7eJA
+Date: Tue, 11 Nov 2025 04:57:43 +0000
 Message-ID:
- <OSQPR06MB72523B6701362F75B01B47588BE0A@OSQPR06MB7252.apcprd06.prod.outlook.com>
-References: <20250904103401.88287-1-billy_tsai@aspeedtech.com>
-	 <20250904103401.88287-4-billy_tsai@aspeedtech.com>
- <005c9928cde01c8a3bf4840692eddf13f2c08282.camel@codeconstruct.com.au>
-In-Reply-To:
- <005c9928cde01c8a3bf4840692eddf13f2c08282.camel@codeconstruct.com.au>
-Accept-Language: en-US, zh-TW
-Content-Language: en-US
+ <TY2PPF5CB9A1BE6FE06477B9CC51B8133DAF2CFA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
+References: <20251021013548.2375190-1-ryan_chen@aspeedtech.com>
+ <20251021013548.2375190-2-ryan_chen@aspeedtech.com>
+ <0b76f196-f642-4991-ad5c-717c23938421@kernel.org>
+ <TY2PPF5CB9A1BE6597ECD46BD4CB7C5F09FF2FAA@TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com>
+ <3c3287f6-1c5c-4c4d-9349-32665a5e1585@kernel.org>
+In-Reply-To: <3c3287f6-1c5c-4c4d-9349-32665a5e1585@kernel.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
-msip_labels:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSQPR06MB7252:EE_|TYSPR06MB6765:EE_
-x-ms-office365-filtering-correlation-id: 388946a2-faa0-4056-1da8-08de20c9613b
+x-ms-traffictypediagnostic: TY2PPF5CB9A1BE6:EE_|TY0PR06MB5125:EE_
+x-ms-office365-filtering-correlation-id: 291f4fdf-01d0-4aff-7e44-08de20ded933
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|7416014|376014|1800799024|38070700021|921020;
+ BCL:0;ARA:13230040|1800799024|7416014|376014|366016|921020|38070700021|13003099007;
 x-microsoft-antispam-message-info:
- =?Windows-1252?Q?FT1mn2Do13LvE+edvb2CoN+/1NlfaWmvQrxZX75Mktl7vktfI4nJLpm5?=
- =?Windows-1252?Q?akF/Q+tessDGkdmwIm3RakjEFSNFTldSTNtNHZdZee4MjOkC3+QmsFUB?=
- =?Windows-1252?Q?QHI/DJIQL8EsC17+7xP5iFIe/zZYcT25tDaZm27wjLdKUnB8Oezua41D?=
- =?Windows-1252?Q?nJcjv0XEbZEKBcLSn4luYicF0shV9wYgBJlbqFrsGSeF44z8NBxAmsPi?=
- =?Windows-1252?Q?wDFTCg/xYtJwxhzdK0aZtB+tXDFR29aE4DXvsJMDamjcT9e0qTEiskVD?=
- =?Windows-1252?Q?9CWI1fpU62P5f61MnXV9fc7lnEZv8RTUpTSeya3HAa36wsl/I1G+jf8f?=
- =?Windows-1252?Q?h0CIKOys5HGuLR0hkS0t9wrWjvIgBVRz7WrUQFtBrKSy7xBCtnhiANwZ?=
- =?Windows-1252?Q?ZLbCw9rcE4m7IUEvSVfr95SXfjKobvizvBeLqyVU9kdzs1PxP1ERVO6a?=
- =?Windows-1252?Q?QK4gZUE7u3j4sH3BH4aVA4544zPcVnh2HMASGUkwNtg2EqKmnbLIzmC2?=
- =?Windows-1252?Q?/q+AoZyx4NnGRfgiaZZdPmnzxqQ7zo492s0GPYZE6N+OiQL9HX1vnTI/?=
- =?Windows-1252?Q?n6dTzNJYg+eA34vYNnZs2bUMNBl8aX9kAjrrMuK/iM5lXquG9s+o1m4n?=
- =?Windows-1252?Q?LxrePjJfFBCPOPTB4pizKfzm0Q7zrUhb2vFZWX2ZPS5K4Q9hhyMowPya?=
- =?Windows-1252?Q?zO8OXt/0Sqafw/0gr68wvCnj/06XixCfhdYNr+mwku9vrcFxYAenA+HW?=
- =?Windows-1252?Q?aaVxndTscF4bO7Iw9IkYE9qSgch7neKMIivjCYXIi99okarL9xul3nip?=
- =?Windows-1252?Q?1Clc91sbfzAcTQzmcI4/I4sGFrcj/pjtKB/u5elj3/1AsOF0JWKYLzjR?=
- =?Windows-1252?Q?zrA6P9xtEpNdhvIBI88/OMwCJvYhFBlUL/EcmgBL660mp9WqwZ33Vp7R?=
- =?Windows-1252?Q?7i0DbKD/krzckMJ4pCcfKD+IMLF6EUJfumN9EtifWAGUlzBS6VnP/vVH?=
- =?Windows-1252?Q?kxkoWXjEcyV79QbM39eD+IirtmAzvkfco8D4ZQkclBti5RjVPVGaEMKG?=
- =?Windows-1252?Q?g+HFJcI9BFeQUwRiknuCyQKT9s2VtDzuFWGbqJPaZ6KyRfzCDcKpU71S?=
- =?Windows-1252?Q?qlrto99g1gcRMgQZCAb2xVpopY06/LBQPenCnlqtBO1QUWawHcXdP6A0?=
- =?Windows-1252?Q?R1v/eovS4RhVSQ10Cp5AhnJytGc7vV1nGTasNLa2Yv0Hcv0jObgKsfXW?=
- =?Windows-1252?Q?nYy2EV+pWWwJyltPfOrLWs8aWz1wrbZoD29AvlWVQXs9oaYNIraJ9pti?=
- =?Windows-1252?Q?H16/t58XwefC3pdU8llI8rYddXBj2nTsNUsT6gvzNXzwkNlCHBA3KtKF?=
- =?Windows-1252?Q?Y6dg2LYwgBUw2QsoS/KLTBN6gkJiH++S+3cM36qdHtmZTOwgH6HydQpx?=
- =?Windows-1252?Q?w1LJDmrM99u/D/ahcdZAETfnMBs7xW8nRBFBulCp5nEMLGYMduC6u4AQ?=
- =?Windows-1252?Q?5OfV0HaCBeTIV9PlFf0QX0MqvZy4SGzULEkkK6kZ/qDyb9kMhwTp+6Sy?=
- =?Windows-1252?Q?wFJEuUe9LrfWBaXNRUr02lu0cngvAnw1E8j0s+5YvbzyZ0md50hFWVRb?=
- =?Windows-1252?Q?uCQWFq8PxLm295CYxSCM2ZIo750sOcZjU3KulB8MAzmtBw=3D=3D?=
+ =?utf-8?B?VWtsRnJXNlZVSWRFK1lyVUwwcVYzNzlvWUxVdnJHaWdqZTJMS2phaXZuZFVS?=
+ =?utf-8?B?bTQzLzhLRi96enN2bnBvRXQ0NFdJL1lFWHZDSHgrVG1vMU00MFhZWEhLTTVT?=
+ =?utf-8?B?RE9HS1RTY1puOVZsWkZwNmxPMk5SSGNSYW9wbUh6YTY2WENuM1Nva2pVUVNK?=
+ =?utf-8?B?UTZRQTVRNUZpUHpIc1g4M2Q2b1BMSENoeUJRRy9qbW5zN291N3VhTEJzYm9w?=
+ =?utf-8?B?cjN5OHMrS0xjQ0R4OFUyWWVzWTVYbzlqWlZMNlMxb3p6akpRMXM0ZUZtQ09O?=
+ =?utf-8?B?SCtoeCtGMzlJZFgzUFBMUWRPOG5vSFNkTUM3Vm5KMWhuOU5OU3FRYXBnRVA1?=
+ =?utf-8?B?K3I2Uy95dGhTNVM0Q1NnTVdXdll0VzJ4VDFCREJqaFNTZkllQnZyNGdNd1Bt?=
+ =?utf-8?B?TjlseTJCcksrcmJ3YTJoTlVrSUN5SGFxMGdWeHVHM3JhL2hOL05RY0phZG5N?=
+ =?utf-8?B?dTcyUGNXanpRa0UxOE8wZlNndTdBeUxmSzR1ai9neUZ6S3dDZGUrbmVVWURL?=
+ =?utf-8?B?Q0xjMXdLSmV6Mk9kSThwaHh4NzVWREhBUUFLeXhXY0lHTEtwV1lDT2hLUlJh?=
+ =?utf-8?B?eHczMmFBRGM4M04rNE9lRFV5SzNrRGhyVTJlZWcvZmpob0kzUEtzK0E4VGFB?=
+ =?utf-8?B?V1dHbjB5QldndjFhaWQweCtWRWFPTDhkZVQ5OGY3TW9jWmpBeWxqUTNWZ1Fa?=
+ =?utf-8?B?YVN4Z25lYnNRQWhSUmZ6Z25CWDBpWXVLOWxQT1pqL3BVOGZERFMvTit0Yzdk?=
+ =?utf-8?B?OTJkMEV0czF5T3ZUUkRtVHJ0akRNRjNOT0RldTZGU2gzdnJUMW9FVEZ2OTVt?=
+ =?utf-8?B?dUFBUVdxN0p1dHV0RHc1bGxub0xmRFVGTkU4eXVYdkE0TkUyTzEvd1dHSmcz?=
+ =?utf-8?B?NHpwOU05OXlCemxuOFJFY0tmWDNMVGdoTGxGdmhrWGVBMmxXcUQ2NDdHOXYw?=
+ =?utf-8?B?bFI1aEpFTE0wNllQanZ6WENUWTEzT0pCTldGeFBLUnNVUlFLWWZJcmxlSkZR?=
+ =?utf-8?B?NktVVnpseWJEaHpENm9HUnppanNmbmlvcGJHMFNMakF1SmpONlZUZCtYc3cr?=
+ =?utf-8?B?N2lOdjMybE5pVFhvU2g1a3RMK2ZaWUZiVUxjMjJ4V1AxM0tITFFIT0RneEhu?=
+ =?utf-8?B?YWRsZjd6WjdTTVdUZDNHSlhSUTNCVHJ0dlpndDdlUlU0bXZYMFl3U3pSQkxp?=
+ =?utf-8?B?VHBCME1ob05MeU1nUEo4U3lyTXFRall6VzlZS1ZNOXh3ZVVmUEtiRjAzZUFV?=
+ =?utf-8?B?STA5RDd4MUpuMTBwTENWaUhYR3hxRUV6ZWd6cVNHNTkzOUVSdTRwY3hWUk92?=
+ =?utf-8?B?c0M0ZmxWUElCWWRKSWZ0VG41aEdQaDF4VCs1ZW5nYkt3SDhlY3IySVppdG1Y?=
+ =?utf-8?B?TWFBdjg5S2VjOFh3N01kMENxeENyTkhUTVdGWStZakxTZldVaEpscUw3YWhJ?=
+ =?utf-8?B?aVpUNElDNWgrMzdmZmNUWExrNVhEcGNQTHBuOEU5b0s4SXhwWUJNWHRHdGpq?=
+ =?utf-8?B?eFQwT214b0tSKysvTDlJTzZvcmlSY2I1WDk4bmZOTDUycHBlZFBHRyt0ZTNz?=
+ =?utf-8?B?WDJzd0ZDeEE2UGUraHdhWWNVZFBmNUVQdUFCK1pjam5MZHI3dFFJY1FsaEtm?=
+ =?utf-8?B?SmNkcVlocHZ3aVJDMHNVWjZVMjFrVUx1SXA5MC90ZE95UnhGbGkzbElzN01s?=
+ =?utf-8?B?L2RCZlg1OWNkYjlNcWhTaDZrUmJnamkvRnJLamZnN0JmSjZ1bGNQTTllMkhG?=
+ =?utf-8?B?YXF2MXlGOXJ2bSsxQVhsTm9sQVRsaWx2MFI4MWswWUhPYlJnVWRmc3dOYTBB?=
+ =?utf-8?B?UUYxMWNpUTdnaitzcUtHVGRKS1lhTTFtVVZGZFlCWjN6ODQ4ckc5ZVh0NDFZ?=
+ =?utf-8?B?YU16NzIzRG1XYzZ6K1ZoWGY4eXF0UXNBR2xnWk9GQVpxZ3JxbmtTZE02TFV6?=
+ =?utf-8?B?WVdjYUpveUlqQWEzRDRtMFJPbE4wVXNIMzAzZTJxRnpkL2VwN3UxS2Fvdk5D?=
+ =?utf-8?Q?MCzeJ3AkQ8rkwu0vwKM8hZlCv1QvaE=3D?=
 x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:OSQPR06MB7252.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(38070700021)(921020);DIR:OUT;SFP:1102;
+ CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(921020)(38070700021)(13003099007);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?pp50qPgCBOYs013PkMvpkS3DI7cZ7afIoCw7pKArYPJz/WaSSAWmLCcs?=
- =?Windows-1252?Q?MT6SeTEvmCFDIJ41tp/ur2QSK+U1Ac5gmZ816YJ64KVRkG/VzB+VeuHH?=
- =?Windows-1252?Q?84gnD+A/HRaMNakP6pewLIL2lQIRucx35lPp9TMJXXcrU8fyyuP6C1kA?=
- =?Windows-1252?Q?99++IcvfamGaD43+Lk+eU05Uo8TsyegycyhWvEPVshbw3GfjzGmPAeon?=
- =?Windows-1252?Q?8xlUhRO8tb13tSfvN9fjth9Rwn7T21dNZZiN8DY528UNkoXrOPEKIaEN?=
- =?Windows-1252?Q?Izg2C/hoDkuXL1Yf++Ij5R2jMC7wGMvVXahjnqLmrj6nb3lbpBrk+wlY?=
- =?Windows-1252?Q?kDp3M8uBV2nwY6XYaWgifyzSJv5a4ZL2G7DNn9B3YOMsNJvWUR19ZgLO?=
- =?Windows-1252?Q?kNu1GQCulb+DLNEuCAVDjGUiJGHCQn35zclKwr77rptoikqLp9YmbiNh?=
- =?Windows-1252?Q?NIDaYSuGNS1wHBU2wBgHgy+7KpBINskeiAhjo8o3mA3+UqWNRdLgpJGs?=
- =?Windows-1252?Q?+Sa8KiRMdgU1ud7tECUmcT/YmGe2APOvBRxJrZRUyJ7QcMEoECc+AdcQ?=
- =?Windows-1252?Q?h+LvC2auBMY3CigVBsgLIVlezT0YG/vsfWZ3ky1xlkxifY02GDQltCXM?=
- =?Windows-1252?Q?h82Lufn5jhITlJrb+nd7ZKI8pN88zr9puPQEOtlrj01mPCJKfjcduMq4?=
- =?Windows-1252?Q?B19XkeqdbFPgNYUkykdZSLEwHAMMxnYxTxca81a2L+E4SJFHCpCQCRS3?=
- =?Windows-1252?Q?DnKOgbYQqd15d5OAesXWmYxi2LMi7SoweLP1f5WXSDarG3P80vXWzIV2?=
- =?Windows-1252?Q?UAqyH3oMHTZxdByh61FiXcoLPx45oVjewlmORVPi06Q5bRbOGyM18Asw?=
- =?Windows-1252?Q?vk5kXZdOvDmDbMuVxc86by7hrJRPcThxsoAl+3Tmkk+pl+zGsEHN/S/W?=
- =?Windows-1252?Q?MKsEefq2sU0nbfwLKuyXzAhFeL2iQ0V6lxPqKQkAl7qLDL7d5H3dXd1n?=
- =?Windows-1252?Q?dBe5Zj+vNiQhuL9g6k4+Ut4qhi6dF9MgWa+q8GW0GS5ojw007kw0hWh8?=
- =?Windows-1252?Q?wI6BJtFd+CMqxkcyg/BglJbmZGZXvLdPhxN7CBuRdAalm/Mgc9RS4HFR?=
- =?Windows-1252?Q?ktUZrXMTWyrbvpoWH34LVfA8+LDmw855PBeMqa0j0IAg05b8ke78kgRv?=
- =?Windows-1252?Q?lOf8QxW7YfNWb1C3bKd0Wl0pHDC7mKBHD1Nj8/zKBctjVsOzIF2FgNJI?=
- =?Windows-1252?Q?aDMMU9rR1iOkii7HDO6wzyED2DaaQxao+tQIznLiFHvAe0qQ6j3jWZxE?=
- =?Windows-1252?Q?cOKBILLmimclYt5q0qp37Qau9Vz8dB6uisxddwc89k5TY8M6HbOmpCjV?=
- =?Windows-1252?Q?SXIbdh/na26Iy6KTEU5Fa3yLzybuTsgBd+/Xfj3ZXr4uWGmC7/+cnn8Z?=
- =?Windows-1252?Q?j4iAFJwHtVcB4Kyfye92ya0ZyBo4H54kXLoB2wqU9QlDNfFT3f1+XaDa?=
- =?Windows-1252?Q?N2tuijGshc+A+LWfQ8es/DdiF/jiEwFVcdMKrp2rayBqa7JwB5zkuD/1?=
- =?Windows-1252?Q?f89ilPpxyk8T2EolRio6KUhOEDAaNtE9mxouGATWMqHUC2XzRy7DvFEW?=
- =?Windows-1252?Q?P64wRD2EH7KlB66eUM3/ARAKYz+xkxrFVwrmKZ8jL6Dx0EDRyPLYp//g?=
- =?Windows-1252?Q?hu/YKSqK5ZQT+dgeSOuCVk7n/xCskVsS?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+ =?utf-8?B?ZDdteGxJQ2dMSEhRNjkzNE1OQ3BBeTFQZjZLaVlpclNIOTVPdzlVSDZjYmpj?=
+ =?utf-8?B?b3pyTStETG1DNWtsSDhaN3BmWnVIQWJLQ092L0p5RHRLWk9pZ01zR2FPR1JC?=
+ =?utf-8?B?SFFiQ2c5YnRzeFluWTIvdW5oRDdZY2xjaUIvYmxkNURkUU9WY0RiWldNdFZH?=
+ =?utf-8?B?d2tXVFlFZlY0QjVtd3pvVWNRWjIzbkxZa2VSUnI0OU1aQmdlZEJqVUJxbXE4?=
+ =?utf-8?B?V0NPd2VDTXlDemFEMzB5YmRJdDFaTk4vK0JUNlhsMzgwQ2l4WjJPbGY0WXZR?=
+ =?utf-8?B?TmJrakNjL1lKcC93UnUzd1lDRVJKd0I0TUVmMlViL3F2SlIyaHRUUElqa2tm?=
+ =?utf-8?B?THV3TXlJdzFvbDRqb0dkcWxJaG83M0U3UHQrRTllZzJkRGVqSEc5WFpVeUpo?=
+ =?utf-8?B?ZWZWMVBBekp1RFVBSFdZbGZMOUNRYkZnNGpabDJCT1RwWW05N3Z3TnVWQnlE?=
+ =?utf-8?B?eUY0K041NHA2RnFiUTdFb2Y5NUFRVzYvYlBHS2daSlBlNmU3Ullra0t1ZUJi?=
+ =?utf-8?B?Tkt4OHgxZE5kdDFINGpGZEFON3hjRjhUR0RpTDcraFZ3dE9qOXZHZkNOSGpL?=
+ =?utf-8?B?YWRlMWgrVVoybmZqRnQzNVIva1NOdXBhWHRDaDNLbWdGZmVBNXhzVGhHdVZ1?=
+ =?utf-8?B?bjE3cFFNby9UazI3b3E1ZjV6ckFFN2dlY1RYV2ZHT0hTSFprQUlmTnhtNytt?=
+ =?utf-8?B?M1YxZE1QM1NvMVR3aGltUElmdC9oODNvTms0Vnlma1ZzMWRuaGpOSWpkdUU2?=
+ =?utf-8?B?dmM0WVlKV0U3amYrTUVRalgvZVBiYTdZUi9Od3pGZk1jZ0VGc2hTL0ZUT0pE?=
+ =?utf-8?B?TDBSUnJOaUdCcUFybkh3RGlDZUpaUk5OL3R0ZHZFUFBlMFdFdnhlVno5S3Y0?=
+ =?utf-8?B?aXhSeDlPTS85aHZIUXliNVBYVzZuT1VkdE82QnYvMW9HQ3JMVnlHMmlSTVdQ?=
+ =?utf-8?B?RGdEaHRTR0JWKzhsdHRUTnZWWnYyKy84QklLdmlTeElORGV5ZExvN3Q4RGMy?=
+ =?utf-8?B?eDNMR3N1MUJJZ1gyeWlpUlZERU03TUhybVVjWEZiSzJUdnFKMmZLRE1jS1A4?=
+ =?utf-8?B?WlF1TmpDdDFPZ2FtWXJnUWFhZGZQN0oxeE9VNHBWeG5FcE9BQ1BHNDBJWTRR?=
+ =?utf-8?B?c1U1bDF5czI4TklLOXl2MllrMXFHWGtPUURwVWRuL2RIalkxZ0RpWU1UQkVL?=
+ =?utf-8?B?VVJLY2V5c1NtWUJuM3N5R3VxblpMa1RtbU13M1dtLzN3dEEzQzlJaDJOeGw0?=
+ =?utf-8?B?bEtvTDJGd2wycHRzeExNVXNLOGlTSm9hZUhOUDJDMWlic25qMVJ6SHBuaGl5?=
+ =?utf-8?B?THI2clZkK1VqelZXc0h3dHZDMVMxcTJhWUd3RnRzOVY4c1dpUHIyZmJVajVx?=
+ =?utf-8?B?YUQ1UVlxUjdlV0JiaUhpOTNDY2dxTkozenRaM1c2QWY2Tzczc21KaXFwUDJH?=
+ =?utf-8?B?aEVBd0tDVm5zc0xGclVvM3NFMWg3RENQUktyTmdOZ3lVaitKQjY2TEZzQXRJ?=
+ =?utf-8?B?U0d2dktTbGFOY0FwNm1LaTNzNXphQzBoaUVGaDJrZldQVlBjRG5xYWZER0J3?=
+ =?utf-8?B?WEpVSjNrdWpQYVRCU1JLdmRpeVdackpqQm9GTm9lMm0xZ0p2byt1VHJpVWx1?=
+ =?utf-8?B?YTVacWhMRHBzMmJ6WWRHVENTdWREM29sSGlSNzQvcXVRRUtjbmdHN2N6KzJi?=
+ =?utf-8?B?WFFBTEdhZGNoSmZWeTBLeWlWd0d1K1dRUFlNMCs4aXZON1psK05CclE2OU1k?=
+ =?utf-8?B?ZThHY0JvTFBhNjg0T0hiS3VGUEtyQVp6ZCtEYU02SzFtZUFFUWxUOW9SNjFu?=
+ =?utf-8?B?Z1p3dkozd3FrQ0VvNWZlY20wUzlsR2xVeFFpOEJYNWlkWEUwNlE0K0RmZFQ1?=
+ =?utf-8?B?cnhaRUd1U2Y5YzFjY1kwR1JsSUpkQ1VrQ0JiaW1yd2FTd05jdGcwQjBXT0I1?=
+ =?utf-8?B?QXhGZlhQeFdCRVBNVWF2aVA5eEdlWXA3KytSYzIxaDB6Q3hmTjF4bmtTcHo3?=
+ =?utf-8?B?NmJ2ZE9YdWtrQXFVWDdCdjVTRy9tTUdSWmZ1Q0FTbjU3eFNFdzRSTlRsVndm?=
+ =?utf-8?B?M24vUXRQMHhNbHV2azU5UWJCVmdoS09MQmw2NndEYXd0ZXJzUHpyUlFHc1Ex?=
+ =?utf-8?Q?9B3+4z4HWQgonmwqJeh75tq7v?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -167,295 +186,103 @@ Precedence: list
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSQPR06MB7252.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 388946a2-faa0-4056-1da8-08de20c9613b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2025 02:24:02.4782
+X-MS-Exchange-CrossTenant-AuthSource: TY2PPF5CB9A1BE6.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 291f4fdf-01d0-4aff-7e44-08de20ded933
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2025 04:57:43.1691
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FL1pHugqAtRllA97+U8aXs9qJdp3YIfqrTPslpIFbQhof28PyD3DfhIlDjFrf3i64ox94HIsF8mKEq+ZBaP8TbbFC+MxWdLElznOuWilykk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6765
+X-MS-Exchange-CrossTenant-userprincipalname: a4b+WlU8e4epzwv0KB/OU5/cJDln1G9QUaUq9N5Nl5jyNsNsxvGgxP6682IIN+w/LXkRM59oXW5/4M6fbsHAY2gjRv+BpxHYzooyA9A5Qak=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5125
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
 	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-> >=A0This patch adds pinmux support for=A0the AST2700, which includes two =
-SoC=0A=
-> >=A0configurations:=0A=
-> > -=A0SoC0 closely resembles previous generations of ASPEED BMC SoCs, all=
-owing=0A=
-> >=A0the reuse of existing macros and callback functions.=0A=
-> > -=A0SoC1, however, introduces a new logic for=A0configuring pin functio=
-ns.=0A=
-> >=A0Therefore, new g7_set_mux and gpio_request_enable functions are=0A=
-> >=A0implemented to properly configure the pinctrl registers using the=0A=
-> >=A0pin_cfg table and to resolve GPIO request errors.=0A=
-=A0=0A=
->=A0Do you mind splitting support for=A0soc0 and soc1 into separate patches=
-?=0A=
->=A0Having taken a brief look I think we're also due for some further=0A=
-> separation of the code. Particularly, isolating the patch for soc0=0A=
-> would be nice, as the register design for soc1 is just _so_ much nicer,=
-=0A=
-> and I'd like to avoid dragging the baggage of previous generations=0A=
->=A0along with it.=0A=
-=A0=0A=
-Okay, I will split the support for=A0SoC0 and SoC1 into separate patches.=
-=0A=
-SoC0 will follow the existing design closely, while=A0SoC1 will introduce=
-=0A=
-a new logic for=A0configuring pin functions.=0A=
-=A0=0A=
-> >=0A=
-> >=A0The driver supports:=0A=
-> > -=A0All 12=A0GPIO-capable pins in SoC0=0A=
-> > -=A0All 212=A0GPIO-capable pins in SoC1=0A=
-> >=0A=
-> >=A0Additionally, this patch introduces several pseudo-ball definitions f=
-or=0A=
-> >=A0specific configuration purposes:=0A=
-> > -=A0USB function selection=0A=
-> > -=A0JTAG target selection=0A=
-> > -=A0PCIe RC PERST configuration=0A=
-> > -=A0SGMII PHY selection=0A=
-> >=0A=
-> >=A0Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>=0A=
-> > ---=0A=
-> >=A0drivers/pinctrl/aspeed/Kconfig | 8 +=0A=
-> >=A0drivers/pinctrl/aspeed/Makefile | 1 +=0A=
-> >=A0.../pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c | 503 ++++=0A=
-> >=A0.../pinctrl/aspeed/pinctrl-aspeed-g7-soc1.c | 2523 +++++++++++++++++=
-=0A=
-> >=A0drivers/pinctrl/aspeed/pinctrl-aspeed.c | 47 +=0A=
-> >=A0drivers/pinctrl/aspeed/pinctrl-aspeed.h | 11 +-=0A=
-> >=A0drivers/pinctrl/aspeed/pinmux-aspeed.h | 35 +-=0A=
-=A0=0A=
->=A0The impression I get from the changes to the latter three files here is=
-=0A=
->=A0that the soc0 support might even be different enough to warrant=0A=
->=A0separation from the previous generations as well. You're defining=0A=
-> similar-but-different structs and macros to what we already have. If=0A=
-> the those are genuinely necessary (not yet resolved), I'd rather they=0A=
->=A0be their own driver.=0A=
-=A0=0A=
-Understood. I will modify the patch of the SoC0 to meet the concept with pr=
-evious=0A=
-generations. If the differences are significant, I will consider creating a=
-=0A=
-separate driver for=A0it. But, at this moment, I believe the existing drive=
-r and=A0macro can=0A=
-be adapted to support SoC0 with minimal changes.=0A=
-=A0=0A=
-> > 7=A0files changed, 3123 insertions(+), 5 deletions(-)=0A=
-> >=A0create mode 100644=A0drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c=
-=0A=
-> >=A0create mode 100644=A0drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc1.c=
-=0A=
-> >=0A=
-> >=A0diff --git a/drivers/pinctrl/aspeed/Kconfig b/drivers/pinctrl/aspeed/=
-Kconfig=0A=
-> >=A0index 1a4e5b9ed471..16743091a139 100644=0A=
-> > ---=A0a/drivers/pinctrl/aspeed/Kconfig=0A=
-> > +++=A0b/drivers/pinctrl/aspeed/Kconfig=0A=
-> >=A0@@ -31,3 +31,11=A0@@ config PINCTRL_ASPEED_G6=0A=
-> >=A0help=0A=
-> >=A0Say Y here to enable pin controller support for=A0Aspeed's 6th=0A=
-> > generation SoCs. GPIO is provided by a separate GPIO driver.=0A=
-> > +=0A=
-> > +config PINCTRL_ASPEED_G7=0A=
-> > + bool "Aspeed G7 SoC pin control"=0A=
-> > + depends on (ARCH_ASPEED || COMPILE_TEST) && OF=0A=
-> > + select PINCTRL_ASPEED=0A=
-> > + help=0A=
-> > + Say Y here to enable pin controller support for Aspeed's 7th=0A=
-> > +=A0generation SoCs. GPIO is provided by a separate GPIO driver.=0A=
-> >=A0diff --git a/drivers/pinctrl/aspeed/Makefile b/drivers/pinctrl/aspeed=
-/Makefile=0A=
-> >=A0index db2a7600ae2b..1713f678a984 100644=0A=
-> > ---=A0a/drivers/pinctrl/aspeed/Makefile=0A=
-> > +++=A0b/drivers/pinctrl/aspeed/Makefile=0A=
-> >=A0@@ -6,3 +6,4=A0@@ obj-$(CONFIG_PINCTRL_ASPEED) +=3D=A0pinctrl-aspeed.=
-o pinmux-aspeed.o=0A=
-> >=A0obj-$(CONFIG_PINCTRL_ASPEED_G4) +=3D=A0pinctrl-aspeed-g4.o=0A=
-> >=A0obj-$(CONFIG_PINCTRL_ASPEED_G5) +=3D=A0pinctrl-aspeed-g5.o=0A=
-> >=A0obj-$(CONFIG_PINCTRL_ASPEED_G6) +=3D=A0pinctrl-aspeed-g6.o=0A=
-> > +obj-$(CONFIG_PINCTRL_ASPEED_G7) +=3D=A0pinctrl-aspeed-g7-soc0.o pinctr=
-l-aspeed-g7-soc1.o=0A=
-> >=A0\ No newline at end of file=0A=
-> >=A0diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c b/driver=
-s/pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c=0A=
-> >=A0new file mode 100644=0A=
-> >=A0index 000000000000..86da889cc010=0A=
-> > --- /dev/null=0A=
-> > +++=A0b/drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c=0A=
-> >=A0@@ -0,0 +1,503=A0@@=0A=
-> > +// SPDX-License-Identifier: GPL-2.0=0A=
-> > +=0A=
-> > +#include <linux/bits.h>=0A=
-> > +#include <linux/device.h>=0A=
-> > +#include <linux/gpio/driver.h>=0A=
-> > +#include <linux/interrupt.h>=0A=
-> > +#include <linux/irq.h>=0A=
-> > +#include <linux/mfd/syscon.h>=0A=
-> > +#include <linux/module.h>=0A=
-> > +#include <linux/mod_devicetable.h>=0A=
-> > +#include <linux/pinctrl/machine.h>=0A=
-> > +#include <linux/pinctrl/pinconf.h>=0A=
-> > +#include <linux/pinctrl/pinconf-generic.h>=0A=
-> > +#include <linux/pinctrl/pinctrl.h>=0A=
-> > +#include <linux/pinctrl/pinmux.h>=0A=
-> > +#include <linux/platform_device.h>=0A=
-> > +#include <linux/property.h>=0A=
-> > +#include <linux/regmap.h>=0A=
-> > +#include "pinctrl-aspeed.h"=0A=
-> > +#include "../pinctrl-utils.h"=0A=
-> > +=0A=
-> > +#define SCU200 0x200=A0/* System Reset Control #1 */=0A=
-> > +=0A=
-> > +#define SCU400 0x400=A0/* Multi-function Pin Control #1 */=0A=
-> > +#define SCU404 0x404=A0/* Multi-function Pin Control #2 */=0A=
-> > +#define SCU408 0x408=A0/* Multi-function Pin Control #3 */=0A=
-> > +#define SCU40C 0x40C=A0/* Multi-function Pin Control #3 */=0A=
-> > +#define SCU410 0x410=A0/* USB Multi-function Control Register */=0A=
-> > +#define SCU414 0x414=A0/* VGA Function Control Register */=0A=
-> > +=0A=
-> > +#define SCU480 0x480=A0/* GPIO18A0 IO Control Register */=0A=
-> > +#define SCU484 0x484=A0/* GPIO18A1 IO Control Register */=0A=
-> > +#define SCU488 0x488=A0/* GPIO18A2 IO Control Register */=0A=
-> > +#define SCU48C 0x48c=A0/* GPIO18A3 IO Control Register */=0A=
-> > +#define SCU490 0x490=A0/* GPIO18A4 IO Control Register */=0A=
-> > +#define SCU494 0x494=A0/* GPIO18A5 IO Control Register */=0A=
-> > +#define SCU498 0x498=A0/* GPIO18A6 IO Control Register */=0A=
-> > +#define SCU49C 0x49c=A0/* GPIO18A7 IO Control Register */=0A=
-> > +#define SCU4A0 0x4A0=A0/* GPIO18B0 IO Control Register */=0A=
-> > +#define SCU4A4 0x4A4=A0/* GPIO18B1 IO Control Register */=0A=
-> > +#define SCU4A8 0x4A8=A0/* GPIO18B2 IO Control Register */=0A=
-> > +#define SCU4AC 0x4AC=A0/* GPIO18B3 IO Control Register */=0A=
-> > +=0A=
-> > +enum=A0{=0A=
-> > +=A0AC14,=0A=
-> > +=A0AE15,=0A=
-=A0=0A=
->=A0Are the ball enums necessary?=A0Historically we haven't needed it as th=
-e=0A=
-> undefined macro symbols were just used for token-pasting or=0A=
-> stringification purposes.=0A=
-=A0=0A=
-The enums are used to replace the #define M24 0, #define M25 1, =85 definit=
-ions in=0A=
-the G6 pinctrl driver. Additionally, the number assigned to each ball name =
-must=0A=
-follow the sequence of GPIO numbering. In other words, the number assigned =
-to each=0A=
-ball name is meaningful, and the order should not be changed. Therefore, I =
-believe=0A=
-that using enums is a better approach than using #define macros.=0A=
-=A0=0A=
-> > + AD14,=0A=
-> > + AE14,=0A=
-> > + AF14,=0A=
-> > + AB13,=0A=
-> > + AB14,=0A=
-> > + AF15,=0A=
-> > + AF13,=0A=
-> > + AC13,=0A=
-> > + AD13,=0A=
-> > + AE13,=0A=
-> > + PORTA_U3, // SCU410[1:0]=0A=
-> > + PORTA_U2, // SCU410[3:2]=0A=
-> > + PORTB_U3, // SCU410[5:4]=0A=
-> > + PORTB_U2, // SCU410[7:6]=0A=
-> > + PORTA_U3_XHCI, // SCU410[9]=0A=
-> > + PORTA_U2_XHCI, // SCU410[9]=0A=
-> > + PORTB_U3_XHCI, // SCU410[10]=0A=
-> > + PORTB_U2_XHCI, // SCU410[10]=0A=
-> > + PORTA_MODE, // SCU410[25:24]=0A=
-> > + PORTB_MODE, // SCU410[29:28]=0A=
-> > + PORTA_U2_PHY,=0A=
-> > + PORTA_U3_PHY,=0A=
-> > + PORTB_U2_PHY,=0A=
-> > + PORTB_U3_PHY,=0A=
-> > + JTAG_PORT,=0A=
-> > + PCIERC0_PERST,=0A=
-> > + PCIERC1_PERST,=0A=
-> > +};=0A=
-> > +=0A=
-> > +GROUP_DECL(EMMCG1, AC14, AE15, AD14);=0A=
-> > +GROUP_DECL(EMMCG4, AC14, AE15, AD14, AE14, AF14, AB13);=0A=
-> > +GROUP_DECL(EMMCG8, AC14, AE15, AD14, AE14, AF14, AB13, AF13, AC13, AD1=
-3, AE13);=0A=
-> > +GROUP_DECL(EMMCWPN, AF15);=0A=
-> > +GROUP_DECL(EMMCCDN, AB14);=0A=
-> > +GROUP_DECL(VGADDC, AD13, AE13);=0A=
-> > +GROUP_DECL(VB1, AC14, AE15, AD14, AE14);=0A=
-> > +GROUP_DECL(VB0, AF15, AB14, AF13, AC13);=0A=
-=A0=0A=
-> For the previous generation drivers my philosophy was "keep things that=
-=0A=
-> go together together," so signal descriptors, groups and functions were=
-=0A=
-> all located around the definition for one or a set of balls.=0A=
-=A0=0A=
-> Given I'm potentially escaping maintenance of ASPEED pinctrl drivers=0A=
-> for=A0the 2700=A0onwards I won't complain too much, but was this a specif=
-ic=0A=
-> choice to break from that approach? You're defining all the groups,=0A=
->=A0then all the functions, then all the configurations.=0A=
-=A0=0A=
-The groups and the functions can be put together, but the ball define=0A=
-as the above reasons. So, I will keep the ball defines at the top with the =
-enums.=0A=
-=A0=0A=
-> >=A0diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc1.c b/driver=
-s/pinctrl/aspeed/pinctrl-aspeed-g7-soc1.c=0A=
-> >=A0new file mode 100644=0A=
-> >=A0index 000000000000..7c5a5e208f63=0A=
-> > --- /dev/null=0A=
-> > +++=A0b/drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc1.c=0A=
-> >=0A=
-=A0=0A=
-> *snip*=0A=
-=A0=0A=
-> > +=0A=
-> > +FUNCFG_DESCL(C16, PIN_CFG(ESPI1, SCU400, GENMASK(2, 0), 1),=0A=
-> > + PIN_CFG(LPC1, SCU400, GENMASK(2, 0), 2),=0A=
-> > + PIN_CFG(SD, SCU400, GENMASK(2, 0), 3),=0A=
-> > + PIN_CFG(DI2C0, SCU400, GENMASK(2, 0), 4),=0A=
-> > + PIN_CFG(VPI, SCU400, GENMASK(2, 0), 5));=0A=
-> > +FUNCFG_DESCL(C14, PIN_CFG(ESPI1, SCU400, GENMASK(6, 4), (1 << 4)),=0A=
-> > + PIN_CFG(LPC1, SCU400, GENMASK(6, 4), (2 << 4)),=0A=
-> > + PIN_CFG(SD, SCU400, GENMASK(6, 4), (3 << 4)),=0A=
-> > + PIN_CFG(DI2C1, SCU400, GENMASK(6, 4), (4 << 4)),=0A=
-> > + PIN_CFG(VPI, SCU400, GENMASK(6, 4), (5 << 4)));=0A=
-> > +FUNCFG_DESCL(C11, PIN_CFG(ESPI1, SCU400, GENMASK(10, 8), (1 << 8)),=0A=
-> > + PIN_CFG(LPC1, SCU400, GENMASK(10, 8), (2 << 8)),=0A=
-> > + PIN_CFG(SD, SCU400, GENMASK(10, 8), (3 << 8)),=0A=
-> > + PIN_CFG(DI2C3, SCU400, GENMASK(10, 8), (4 << 8)),=0A=
-> > + PIN_CFG(VPI, SCU400, GENMASK(10, 8), (5 << 8)));=0A=
-=A0=0A=
->=A0If we're going to continue the macro soup we need to take the=0A=
-> opportunity to clean this up. You shouldn't need to open-code the=0A=
->=A0shifts like this, the data model needs more thought.=0A=
-=A0=0A=
-Got it. I will improve the macros to avoid open-coding shifts.=0A=
-=A0=0A=
-> > +=0A=
-> > +static const struct=A0aspeed_g7_pincfg pin_cfg[] =3D=A0{=0A=
-> > + PINCFG_PIN(C16), PINCFG_PIN(C14), PINCFG_PIN(C11),=0A=
-> > + PINCFG_PIN(D9), PINCFG_PIN(F14), PINCFG_PIN(D10),=0A=
-=A0=0A=
->=A0My preference is that this array definition be one entry per line,=0A=
->=A0sorted, that way we don't get weird alignment or reflow affecting the=
-=0A=
-> remainder of the struct if we change things in the middle.=0A=
-=A0=0A=
-Okay, I will format the array definition to have one entry per line and sor=
-ted.=0A=
-=A0=0A=
-Thanks=0A=
-=A0=0A=
-Best regards,=0A=
-Billy Tsai=
+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYyMCAxLzRdIGR0LWJpbmRpbmdzOiBpMmM6IFNwbGl0IEFT
+VDI2MDAgYmluZGluZyBpbnRvIGEgbmV3DQo+IFlBTUwNCj4gDQo+IE9uIDI5LzEwLzIwMjUgMDk6
+MjksIFJ5YW4gQ2hlbiB3cm90ZToNCj4gPj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MjAgMS80XSBk
+dC1iaW5kaW5nczogaTJjOiBTcGxpdCBBU1QyNjAwIGJpbmRpbmcNCj4gPj4gaW50byBhIG5ldyBZ
+QU1MDQo+ID4+DQo+ID4+IE9uIDIxLzEwLzIwMjUgMDM6MzUsIFJ5YW4gQ2hlbiB3cm90ZToNCj4g
+Pj4+IFRoZSBBU1QyNjAwIEkyQyBjb250cm9sbGVyIGlzIGEgbmV3IGhhcmR3YXJlIGRlc2lnbiBj
+b21wYXJlZCB0byB0aGUNCj4gPj4+IEkyQyBjb250cm9sbGVycyBpbiBwcmV2aW91cyBBU1BFRUQg
+U29DcyAoZS5nLiwgQVNUMjQwMCwgQVNUMjUwMCkuDQo+ID4+Pg0KPiA+Pj4gSXQgaW50cm9kdWNl
+cyBuZXcgZmVhdHVyZXMgc3VjaCBhczoNCj4gPj4+ICAtIEEgcmVkZXNpZ25lZCByZWdpc3RlciBs
+YXlvdXQNCj4gPj4+ICAtIFNlcGFyYXRpb24gYmV0d2VlbiBjb250cm9sbGVyIGFuZCB0YXJnZXQg
+bW9kZSByZWdpc3RlcnMNCj4gPj4+ICAtIFRyYW5zZmVyIG1vZGUgc2VsZWN0aW9uIChieXRlLCBi
+dWZmZXIsIERNQSkNCj4gPj4+ICAtIFN1cHBvcnQgZm9yIGEgc2hhcmVkIGdsb2JhbCByZWdpc3Rl
+ciBibG9jayBmb3IgY29uZmlndXJhdGlvbg0KPiA+Pj4NCj4gPj4+IER1ZSB0byB0aGVzZSBmdW5k
+YW1lbnRhbCBkaWZmZXJlbmNlcywgbWFpbnRhaW5pbmcgYSBzZXBhcmF0ZQ0KPiA+Pj4gZGV2aWNl
+dHJlZSBiaW5kaW5nIGZpbGUgZm9yIEFTVDI2MDAgaGVscHMgdG8gY2xlYXJseSBkaXN0aW5ndWlz
+aCB0aGUNCj4gPj4+IGhhcmR3YXJlIGNhcGFiaWxpdGllcyBhbmQgY29uZmlndXJhdGlvbiBvcHRp
+b25zIGZyb20gdGhlIG9sZGVyDQo+ID4+PiBjb250cm9sbGVycy4NCj4gPj4+DQo+ID4+PiBTaWdu
+ZWQtb2ZmLWJ5OiBSeWFuIENoZW4gPHJ5YW5fY2hlbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPj4+IC0t
+LQ0KPiA+Pj4gIC4uLi9kZXZpY2V0cmVlL2JpbmRpbmdzL2kyYy9hc3BlZWQsaTJjLnlhbWwgICB8
+ICAzICstDQo+ID4+PiAgLi4uL2RldmljZXRyZWUvYmluZGluZ3MvaTJjL2FzdDI2MDAtaTJjLnlh
+bWwgIHwgNjYNCj4gPj4+ICsrKysrKysrKysrKysrKysrKysNCj4gPj4+ICAyIGZpbGVzIGNoYW5n
+ZWQsIDY3IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pICBjcmVhdGUgbW9kZQ0KPiA+Pj4g
+MTAwNjQ0IERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvYXN0MjYwMC1pMmMu
+eWFtbA0KPiA+Pj4NCj4gPj4+IGRpZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUv
+YmluZGluZ3MvaTJjL2FzcGVlZCxpMmMueWFtbA0KPiA+Pj4gYi9Eb2N1bWVudGF0aW9uL2Rldmlj
+ZXRyZWUvYmluZGluZ3MvaTJjL2FzcGVlZCxpMmMueWFtbA0KPiA+Pj4gaW5kZXggNWI5YmQyZmVk
+YTNiLi5kNGU0ZjQxMmZlYmEgMTAwNjQ0DQo+ID4+PiAtLS0gYS9Eb2N1bWVudGF0aW9uL2Rldmlj
+ZXRyZWUvYmluZGluZ3MvaTJjL2FzcGVlZCxpMmMueWFtbA0KPiA+Pj4gKysrIGIvRG9jdW1lbnRh
+dGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2kyYy9hc3BlZWQsaTJjLnlhbWwNCj4gPj4+IEBAIC00
+LDcgKzQsNyBAQA0KPiA+Pj4gICRpZDogaHR0cDovL2RldmljZXRyZWUub3JnL3NjaGVtYXMvaTJj
+L2FzcGVlZCxpMmMueWFtbCMNCj4gPj4+ICAkc2NoZW1hOiBodHRwOi8vZGV2aWNldHJlZS5vcmcv
+bWV0YS1zY2hlbWFzL2NvcmUueWFtbCMNCj4gPj4+DQo+ID4+PiAtdGl0bGU6IEFTUEVFRCBJMkMg
+b24gdGhlIEFTVDI0WFgsIEFTVDI1WFgsIGFuZCBBU1QyNlhYIFNvQ3MNCj4gPj4+ICt0aXRsZTog
+QVNQRUVEIEkyQyBvbiB0aGUgQVNUMjRYWCwgQVNUMjVYWCBTb0NzDQo+ID4+Pg0KPiA+Pj4gIG1h
+aW50YWluZXJzOg0KPiA+Pj4gICAgLSBSYXluIENoZW4gPHJheW5fY2hlbkBhc3BlZWR0ZWNoLmNv
+bT4gQEAgLTE3LDcgKzE3LDYgQEANCj4gPj4+IHByb3BlcnRpZXM6DQo+ID4+PiAgICAgIGVudW06
+DQo+ID4+PiAgICAgICAgLSBhc3BlZWQsYXN0MjQwMC1pMmMtYnVzDQo+ID4+PiAgICAgICAgLSBh
+c3BlZWQsYXN0MjUwMC1pMmMtYnVzDQo+ID4+PiAtICAgICAgLSBhc3BlZWQsYXN0MjYwMC1pMmMt
+YnVzDQo+ID4+Pg0KPiA+Pj4gICAgcmVnOg0KPiA+Pj4gICAgICBtaW5JdGVtczogMQ0KPiA+Pj4g
+ZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvYXN0MjYw
+MC1pMmMueWFtbA0KPiA+Pj4gYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvaTJj
+L2FzdDI2MDAtaTJjLnlhbWwNCj4gPj4NCj4gPj4gV2h5IGNvbXBsZXRlbHkgYnJlYWtpbmcgbmFt
+aW5nPyBQbGVhc2UgZm9sbG93IHdyaXRpbmcgYmluZGluZ3MgY2FyZWZ1bGx5Lg0KPiA+DQo+ID4g
+V2lsbCB1cGRhdGUNCj4gPiAkaWQ6ICJodHRwOi8vZGV2aWNldHJlZS5vcmcvc2NoZW1hcy9pMmMv
+YXNwZWVkLGFzdDI2MDAtaTJjLnlhbWwjIg0KPiA+Pg0KPiA+Pj4gbmV3IGZpbGUgbW9kZSAxMDA2
+NDQNCj4gPj4+IGluZGV4IDAwMDAwMDAwMDAwMC4uNmRkY2VjNWRlY2RjDQo+ID4+PiAtLS0gL2Rl
+di9udWxsDQo+ID4+PiArKysgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvaTJj
+L2FzdDI2MDAtaTJjLnlhbWwNCj4gPj4+IEBAIC0wLDAgKzEsNjYgQEANCj4gPj4+ICsjIFNQRFgt
+TGljZW5zZS1JZGVudGlmaWVyOiAoR1BMLTIuMC1vbmx5IE9SIEJTRC0yLUNsYXVzZSkgJVlBTUwg
+MS4yDQo+ID4+PiArLS0tDQo+ID4+PiArJGlkOiBodHRwOi8vZGV2aWNldHJlZS5vcmcvc2NoZW1h
+cy9pMmMvYXN0MjYwMC1pMmMueWFtbCMNCj4gPj4+ICskc2NoZW1hOiBodHRwOi8vZGV2aWNldHJl
+ZS5vcmcvbWV0YS1zY2hlbWFzL2NvcmUueWFtbCMNCj4gPj4+ICsNCj4gPj4+ICt0aXRsZTogQVNQ
+RUVEIEkyQyBvbiB0aGUgQVNUMjZYWCBTb0NzDQo+ID4+PiArDQo+ID4+PiArbWFpbnRhaW5lcnM6
+DQo+ID4+PiArICAtIFJ5YW4gQ2hlbiA8cnlhbl9jaGVuQGFzcGVlZHRlY2guY29tPg0KPiA+Pj4g
+Kw0KPiA+Pj4gK2FsbE9mOg0KPiA+Pj4gKyAgLSAkcmVmOiAvc2NoZW1hcy9pMmMvaTJjLWNvbnRy
+b2xsZXIueWFtbCMNCj4gPj4+ICsNCj4gPj4+ICtwcm9wZXJ0aWVzOg0KPiA+Pj4gKyAgY29tcGF0
+aWJsZToNCj4gPj4+ICsgICAgZW51bToNCj4gPj4+ICsgICAgICAtIGFzcGVlZCxhc3QyNjAwLWky
+Yy1idXMNCj4gPj4+ICsNCj4gPj4+ICsgIHJlZzoNCj4gPj4+ICsgICAgbWluSXRlbXM6IDENCj4g
+Pj4NCj4gPj4gV2h5Pw0KPiA+DQo+ID4gV2lsbCB1cGRhdGUgYXMgZm9sbG93aW5nLg0KPiA+DQo+
+ID4gcmVnOg0KPiA+ICAgbWluSXRlbXM6IDENCj4gPiAgIG1heEl0ZW1zOiAyDQo+IA0KPiANCj4g
+Tm8uIFlvdSBjaGFuZ2VkIG5vdGhpbmcuIEluc3RlYWQgZXhwbGFpbiB3aHkgdGhpcyBpcyBmbGV4
+aWJsZS4NCj4gDQo+IFNlZSB3cml0aW5nIGJpbmRpbmdzLg0KDQpTb3JyeSwgSSBzdGlsbCBub3Qg
+dW5kZXJzdGFuZCB5b3VyIHBvaW50LiBEbyB5b3UgbWVhbiBuZWVkIHRvIGV4cGxhaW4NCndoeSBy
+ZWcgaXMgZmxleGlibGUgMSAtPiAyPw0KSWYgeWVzLCBJIHdpbGwgdXBkYXRlIHRvIGZvbGxvd2lu
+Zy4NCg0KcmVnOg0KICBtaW5JdGVtczogMQ0KICBtYXhJdGVtczogMg0KICBkZXNjcmlwdGlvbjoN
+CiAgICBUaGUgZmlyc3QgcmVnaW9uIGNvdmVycyB0aGUgY29udHJvbGxlciByZWdpc3RlcnMuDQog
+ICAgVGhlIG9wdGlvbmFsIHNlY29uZCByZWdpb24gY292ZXJzIHRoZSBjb250cm9sbGVyJ3MgYnVm
+ZmVyIHNwYWNlLg0KDQoNCj4gDQo+IA0KPiAuLi4NCj4gDQo+IA0KPiA+Pj4gKyAgYnVzLWZyZXF1
+ZW5jeToNCj4gPj4+ICsgICAgbWluaW11bTogNTAwDQo+ID4+PiArICAgIG1heGltdW06IDQwMDAw
+MDANCj4gPj4+ICsgICAgZGVmYXVsdDogMTAwMDAwDQo+ID4+PiArICAgIGRlc2NyaXB0aW9uOiBm
+cmVxdWVuY3kgb2YgdGhlIGJ1cyBjbG9jayBpbiBIeiBkZWZhdWx0cyB0byAxMDANCj4gPj4+ICsg
+a0h6IHdoZW4NCj4gPj4gbm90DQo+ID4+PiArICAgICAgc3BlY2lmaWVkDQo+ID4+DQo+ID4+IERv
+bid0IHJlcGVhdCBjb25zdHJhaW50cyBpbiBmcmVlIGZvcm0gdGV4dC4NCj4gPg0KPiA+IFdpbGwg
+dXBkYXRlDQo+ID4gY2xvY2stZnJlcXVlbmN5Og0KPiA+ICAgICBkZXNjcmlwdGlvbjogRGVzaXJl
+ZCBJMkMgYnVzIGZyZXF1ZW5jeSBpbiBIeg0KPiA+ICAgICBkZWZhdWx0OiAxMDAwMDANCj4gDQo+
+IEhlaD8gWW91IGFyZSBtYWtpbmcgcmFuZG9tIHNldCBvZiBjaGFuZ2VzIGxpa2UgZGlkIG5vdCBy
+ZWFsbHkgcmVhZCB0aGUNCj4gZmVlZGJhY2suIEkgbm90IHRvIHJlcGVhdCBzb21ldGhpbmcuIFdo
+YXQgaXMgcmVwZWF0ZWQ/IENvbnN0cmFpbnRzLg0KPiBXaGVyZSBhcmUgdGhlIHJlcGVhdGVkICJp
+biBmcmVlIGZvcm0gdGV4dCIuIFdoYXQgZGlkIHlvdSBkbz8gRHJvcHBlZA0KPiBjb25zdHJhaW50
+cy4NCg0KU29ycnksIEkgbWlzdW5kZXJzdG9vZCB5b3VyIGNvbW1lbnQsDQpJIHRoaW5rIHlvdSBh
+cmUgcG9pbnQgb3V0IG15IGRlc2NyaXB0aW9uLg0KDQpJIHdpbGwgdXBkYXRlIHdpdGggZm9sbG93
+aW5nLg0KDQpjbG9jay1mcmVxdWVuY3k6DQogIGRlc2NyaXB0aW9uOiBEZXNpcmVkIG9wZXJhdGlu
+ZyBmcmVxdWVuY3kgb2YgdGhlIEkyQyBidXMgaW4gSHouDQogIG1pbmltdW06IDUwMA0KICBtYXhp
+bXVtOiA0MDAwMDAwDQogIGRlZmF1bHQ6IDEwMDAwMA0KDQo+IA0KPiBJIGRvbid0IGtub3cgd2hh
+dCB0byBzYXkuDQo+IA0KPiBCZXN0IHJlZ2FyZHMsDQo+IEtyenlzenRvZg0K
 
