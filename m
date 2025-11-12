@@ -1,87 +1,49 @@
-Return-Path: <openbmc+bounces-867-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-868-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A9D7C4E9F1
-	for <lists+openbmc@lfdr.de>; Tue, 11 Nov 2025 15:56:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 32611C5137D
+	for <lists+openbmc@lfdr.de>; Wed, 12 Nov 2025 09:57:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d5V3c423Gz2yvK;
-	Wed, 12 Nov 2025 01:56:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d5y2W22j7z2yvN;
+	Wed, 12 Nov 2025 19:57:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::62f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762872988;
-	cv=none; b=cBmGgDB7kV31zg7QwB4e5i+0ZN+oZUxuUxwgFr7JMrq7lc5vH9E+ctbhoEzdE6dUzh3ncSsypQR+z2swNYGZDkO87/tGGneHC4l5XXGZRyWAO7n9qB3mmd7dPmqfGHN1ggK44pg1RF5qO7QG8UOZHYBhN7cJ3ow+wKnchXRDEWqIK8Zu/Vmu2guVyojJoIZr+LC8Jq17i+oQgS8VKVN+PiKclRqo3jZPm68MXoM+xJYeOVdmFRftNbuyCQ6jTfl/A6WJy0RBvzODlCW2kBKZM+gRl0gdwoZqlGKeYDsE6icNIQD3Y2HYK45hDUc/Qj3fPQgHoNm9OHW7Z3f4Qstxuw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1762937827;
+	cv=none; b=Abhs314yy9/sr7CaraNKENyIP7lFXgq1O88LMX66zUqT2xkOCYE2Jx0iNCXpKB0R9J++x99nUHA5XkQ0IFFqb7gCaaZpwouS0gs9VjWdsC+i64ubchRokII8U4XeJcY11DiJdDw+TR/yVB4k4kNVJKLaB32/GUR02YHbxQtk6v0Hu7PkfDHFd1OSXV6bfDS37KpfTikQo1HuFCqpoJDGg4ukIjGrEZnvS9KkznT2kVKK22nbBMgBuglbzr9dxfx9MuaLBQFQB7TgzUJWMr8V8BbMzu0V4Y2w7KqBSJ345LfY2zooqgSwnvlVVY9xVzequXdOC0raUMdNIa34SWjvHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1762872988; c=relaxed/relaxed;
-	bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j6yB5OidS/Zt+4AGdJj9bW/vwG98AYMMfhFB9B+kWDgnPTE2Jq5LRzeDFPONXqBxju5lMXCOaKHbvyp0ikA/twQbOb7egXqo/RS7b9/pCL55Vu0Ztnt9YZIZr/MxWXeTOOobA43yIKfdKqWkKmviRE+eSfSeG/9rDkaO/CSeVoDQTjYSevjMJQiterZGM+o2H0XGRvJs2iqPCgz8PL3Amh2ODOmpUBn8Oxld0seks5z1EVZA2NxfN3pkSSO1vjhyoUdzmeegfksWlEeOgqAPs5ESrJ9GIv5+qZ0SCpefGVtSPOnLT5jig7dvjvLbmbETgwDfuI3bFz0mGVx8SoVeZg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=ktGLQds4; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org) smtp.mailfrom=bytedance.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=ktGLQds4;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1762937827; c=relaxed/relaxed;
+	bh=EWsqlTH+MSANkPY7xQcRU1HLpOHVP587dzPdggV2L7E=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OQMjNfnOx8CPyyCKrTx8B0ZVhQTR4ODc/DjKrRUBZEAMLbrDWTrnwY63FbOctbTQ277opQwGGflKhH5TvrPTDIpzNW4mrGhRylu7XaKvXrfSfSt5u5doiyleUdQUs1UMzAEkaXnBYAFmUIpEJfr0suckYwx7whbE30O3qHAL6S79/rbwCkINBjPkRaLj9fjyCtyYb651a4Lj0whxd58MXOS/duRFxVh4GD4LSSFZI1gqpc13OXE/4TDWm06WH9j2EXBV9379D+fB78jUF4C0fz003a1cP+JZPt2c4a3Ru/kotKT2UbsXrmzSQS3vPO7/pegwFoPe4jcpGihSIcE/3w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d5V3Z32NSz2ypw
-	for <openbmc@lists.ozlabs.org>; Wed, 12 Nov 2025 01:56:24 +1100 (AEDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-297e982506fso35871165ad.2
-        for <openbmc@lists.ozlabs.org>; Tue, 11 Nov 2025 06:56:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1762872982; x=1763477782; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
-        b=ktGLQds4e4UbXyFKVXSkUjhy8C23sZh99N0vMHoyUTBAYOSFig0lm/2SXEGS+E4huv
-         U7EXFGt1/Uxb85bF25ludqgUWYMazrTEgB+xpKQcQtLjBlAcokTJ6tcNcsina3q29jdS
-         nOBPesXxTVFz9BnchkXusX916Du2Tw/alQdku4g+MnDwXst1CPV8FaRdPLYn19yElnVu
-         GSPQAfvkuJdCjPsdv7ru3DhztNmX2osgYSxT0KRH6FrXF0Ekbc53DgyU9R0cqxcowHsl
-         DCeIb8uxWUztY0MTYmfUPKVXqQQggLtaJJXRRrsM8OkZTTOTc+7VUwdYZcQGovnlqJk8
-         6l1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762872982; x=1763477782;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tSrPXujcyIIc5zBIA1IqBgfqR0DS/PDQZ/DNXNkBnlA=;
-        b=kuaqvKinh9f0+bsn9OaJMLJOIA4MGXlaiUI4v6HbytJ906kVU7ulWXfqkFAnH4tzjS
-         EkMAqKt44GBvaYJgebi5Rl8426RHoQd69WhGcMgNssonOenp394pGvZeS2bSBVCL1cuK
-         iWATBnclqnghXVbarjBLk5rkNui4WhHR0Yk+4LsyWz4j5eDaXuMJyKp86GaXbW3ATJYj
-         HVlkFoBolMQ+YAYJ3GsVoEfs2kuaWeKUgBKw+YqHGoJLFEWeVZwEBGdoCJA8SRRgsy45
-         1h7jUt5K6NcfQa4GI1TaQiDG4eibrlqDb5iUODBfW5KJCUdsUhpNSyUMeJJNM6S2EeR/
-         Bx9w==
-X-Forwarded-Encrypted: i=1; AJvYcCWN4qU9b6fFVoP6AE2Zj+ZlwXPgo/TVZeZIbEm1UqwPkIW9CF7ubsuaxbvev602Fgv1Sap4cgCW@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yxnlt4Y8+BHeBnZX2GxdrrWTN5LilYiYKFLarMIkswMKqqN8+RK
-	Tb1yIT9YsyhGx8GsXDrbfzx99yrSzIDgwzYhHOyIMO7281kHTMhx0eVAhzNg50iY0Rw=
-X-Gm-Gg: ASbGnctj6GXtyDYLBUKTODjQwKEMtk70B8cM4Jz1lbI/P/3chmC8GMO/H/ayuUCJm1w
-	LfzH0T1o3EVT3tBUMvKomXiFfPLywARqu/o77NrBQ59/qKOds9mLpoYx9mQz/WNvWSwu1Cl7NT0
-	VHefuDpSM0JAN2IiwWhDCgBTmbw0GTjnHagTciBF4vYOyOa87C5fhLoKt8p0G1lhQ/5jX9vjej1
-	uc0LVUKct803X6L1sAh/BhaomAcv+nJ8uHDEw/JSUDLUJ9wR1ySv3QtJ97ji0OBaXmhNKscvC3I
-	oef/kQZbqGA1FMUvRmjPq13YO5ap7n4fN/8wKrWEJt4Gp5sZWz8VPPHTv3ykDNciTF1fGO8pYm4
-	JwfQ6TyfzuN1116Qp3rx/rQHxV6SDLsxM55cfLHgzvKpbLE6K4fJKDSMg9kDdQL1HUPVhglNIh0
-	zEmhMJPHbA
-X-Google-Smtp-Source: AGHT+IHzw7KGS5V49PmS3dPImgttpK5QuWelyEH8VVaWzQ8/JjHlzL/5enOIxdcpy8EEGYBBT6pxmw==
-X-Received: by 2002:a17:902:e891:b0:295:2cb6:f4a8 with SMTP id d9443c01a7336-297e56dd7bcmr160323645ad.51.1762872981997;
-        Tue, 11 Nov 2025 06:56:21 -0800 (PST)
-Received: from localhost ([106.38.226.56])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29650c5c6b3sm182427605ad.24.2025.11.11.06.56.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Nov 2025 06:56:21 -0800 (PST)
-From: Jian Zhang <zhangjian.3032@bytedance.com>
-To: dwmw2@infradead.org,
-	richard@nod.at,
-	linux-mtd@lists.infradead.org,
-	openbmc@lists.ozlabs.org
-Cc: Jian Zhang <zhangjian.3032@bytedance.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	linux-kernel@vger.kernel.org
-Subject: [[RFC PATCH]] jffs2: attempt to fix "Error garbage collecting node"
-Date: Tue, 11 Nov 2025 22:56:08 +0800
-Message-ID: <20251111145609.1917969-1-zhangjian.3032@bytedance.com>
-X-Mailer: git-send-email 2.47.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d5y2V482Zz2yvJ;
+	Wed, 12 Nov 2025 19:57:05 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 12 Nov
+ 2025 16:56:49 +0800
+Received: from twmbx02.aspeed.com (192.168.10.13) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Wed, 12 Nov 2025 16:56:49 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: <ryan_chen@aspeedtech.com>, <bmc-sw@aspeedtech.com>,
+	<benh@kernel.crashing.org>, <joel@jms.id.au>, <andi.shyti@kernel.org>,
+	<jk@codeconstruct.com.au>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <andrew@codeconstruct.com.au>,
+	<p.zabel@pengutronix.de>, <andriy.shevchenko@linux.intel.com>,
+	<naresh.solanki@9elements.com>, <linux-i2c@vger.kernel.org>,
+	<openbmc@lists.ozlabs.org>, <devicetree@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v22 0/4] Add ASPEED AST2600 I2C controller driver
+Date: Wed, 12 Nov 2025 16:56:45 +0800
+Message-ID: <20251112085649.1903631-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -93,266 +55,234 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-This patch shares analysis and a potential fix for the "Error garbage collecting node"
-issue observed in long-run tests with SPI NOR flash under repeated AC cycles.
+This series add AST2600 i2c new register set driver.
+The i2c driver is new register set that have new clock divider option
+for more flexiable generation. And also have separate i2c controller
+and target register set for control, patch #2 is i2c controller driver
+only, patch #3 is add i2c target mode driver.
 
-TL;DR:
-An unstable block may pass CRC checks multiple times but fail during GC.
-The practical mitigation is to locate such blocks and perform a read-erase-write
-cycle to make them stable; the actual data content is irrelevant.
+The legacy register layout is mix controller/target register control
+together. The following is add more detail description about new register
+layout. And new feature set add for register.
 
-Background:
-
-In long-run tests, JFFS2 sometimes fails to perform garbage collection, producing logs like:
-
-[    3.470788] jffs2: notice: check_node_data: wrong data CRC in data node at 0x008cc2e8: read 0xb554ca36, calculated 0xc7ac50f7
-...
-[   46.815192] jffs2: Error garbage collecting node at 008cb694, mark node obsolete!
-[   46.840646] jffs2: read_cache_page() returned error: -5
-
-Root cause:
-
-1. During GC, a power loss occurring while an `erase` operation is in progress
-   can leave a block in an unstable state. Reads from this block may yield
-   inconsistent results.
-
-2. A node may pass multiple CRC checks, but during GC — particularly when moving
-   a PRISTINE node — a CRC failure may occur, triggering the garbage collection error.
-
-Detailed analysis:
-
-- In `jffs2_garbage_collect_pristine`, moving a PRISTINE node does not increment
-  the version number. At some point, two nodes with identical version numbers may
-  exist simultaneously.
-
-- With JFFS2 SUMMARY enabled, `jffs2_mark_node_obsolete` only marks the node
-  obsolete in RAM, skipping flash updates. On the next boot, the node may be
-  re-scanned and remain unstable.
-
-- During file/node construction in `jffs2_add_tn_to_tree`, two nodes with the
-  same version number are handled as follows:
-  * Current node valid → discard the new node
-  * Current node CRC error → replace with the new node
-
-  This allows an unstable node to be selected even if it passes CRC on this pass.
-
-Relevant call flow:
-
-jffs2_find_gc_block
-    jffs2_do_crccheck_inode
-        jffs2_do_read_inode_internal
-            jffs2_get_inode_nodes
-                read_dnode
-                    jffs2_add_tn_to_tree
-
-Proposed mitigation:
-
-Locate blocks that may be unstable and perform a read-erase-write cycle to
-stabilize them. The actual data content is not important, only block stability.
-
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
----
- fs/jffs2/scan.c | 172 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 172 insertions(+)
-
-diff --git a/fs/jffs2/scan.c b/fs/jffs2/scan.c
-index 62879c218d4b..1475d2c0be4c 100644
---- a/fs/jffs2/scan.c
-+++ b/fs/jffs2/scan.c
-@@ -442,6 +442,174 @@ static int jffs2_scan_xref_node(struct jffs2_sb_info *c, struct jffs2_eraseblock
- }
- #endif
+v22:
+- update patch (1/4) commit message add dts example reason.
+- aspeed,ast2600-i2c.yaml @patch (1/4)
+ - rename ast2600-i2c.yaml to aspeed,ast2600-i2c.yaml.
+ - update reg, clock-frequency description.
+- aspeed,ast2600-i2c.yaml @patch (2/4)
+ - aspeed,transfer-mode, aspeed,transfer-mode add for ast2600.
+- i2c-aspeed-core.c,h @patch (3/4)
+ - add i2c-aspeed-core allow both old and new device trees using the
+   same compatible string "aspeed,ast2600-i2c-bus".
  
-+static inline uint32_t jffs2_calc_node_hdr_crc(const struct jffs2_unknown_node *node)
-+{
-+	struct jffs2_unknown_node crcnode;
-+
-+	crcnode.magic = node->magic;
-+	crcnode.nodetype = cpu_to_je16(je16_to_cpu(node->nodetype) | JFFS2_NODE_ACCURATE);
-+	crcnode.totlen = node->totlen;
-+
-+	return crc32(0, &crcnode, sizeof(crcnode) - 4);
-+}
-+
-+static int jffs2_pre_scan_eraseblock(struct jffs2_sb_info *c, struct jffs2_eraseblock *jeb)
-+{
-+	int ret;
-+	bool error_found = false;
-+	unsigned char *buf;
-+	uint32_t crc;
-+	struct jffs2_unknown_node *node;
-+	struct jffs2_raw_inode *ri;
-+	struct jffs2_raw_dirent *rd;
-+
-+	uint32_t ofs = 0, buf_len = c->sector_size;
-+	uint32_t retlen;
-+
-+	buf = kmalloc(buf_len, GFP_KERNEL);
-+	if (!buf) {
-+		JFFS2_WARNING("Unable to allocate scan buffer of size %u\n", buf_len);
-+		return -ENOMEM;
-+	}
-+
-+	ret = jffs2_fill_scan_buf(c, buf, jeb->offset, buf_len);
-+	if (ret) {
-+		JFFS2_WARNING("Unable to read eraseblock at 0x%08x\n", jeb->offset);
-+		goto exit;
-+	}
-+
-+	while (ofs < c->sector_size) {
-+		if (c->sector_size - ofs < sizeof(struct jffs2_unknown_node)) {
-+			/* Not enough space for a node header */
-+			break;
-+		}
-+
-+		if (*(uint32_t *)(&buf[ofs]) == 0xffffffff) {
-+			/* Reached empty space */
-+			ofs += 4;
-+			continue;
-+		}
-+
-+		node = (struct jffs2_unknown_node *)&buf[ofs];
-+		if (je16_to_cpu(node->magic) != JFFS2_MAGIC_BITMASK) {
-+			ofs += 4;
-+			continue;
-+		}
-+
-+		if (jffs2_calc_node_hdr_crc(node) != je32_to_cpu(node->hdr_crc)) {
-+			JFFS2_WARNING("node header CRC failed at %#08x\n",
-+				      jeb->offset + ofs);
-+			ofs += 4;
-+			error_found = true;
-+			goto check;
-+		}
-+
-+		if (!(je16_to_cpu(node->nodetype) & JFFS2_NODE_ACCURATE)) {
-+			/* This is an obsoleted node */
-+			ofs += PAD(je32_to_cpu(node->totlen));
-+			continue;
-+		}
-+
-+		switch (je16_to_cpu(node->nodetype)) {
-+		case JFFS2_NODETYPE_INODE:
-+			if (c->sector_size - ofs < sizeof(struct jffs2_raw_inode)) {
-+				/* Not enough space for a full inode node */
-+				ofs += 4;
-+				goto check;
-+			}
-+
-+			ri = (struct jffs2_raw_inode *)node;
-+			crc = crc32(0, ri, sizeof(*ri) - 8);
-+			if (crc != je32_to_cpu(ri->node_crc)) {
-+				JFFS2_WARNING("inode node CRC failed at %#08x, read=%#08x, calc=%#08x\n",
-+					      jeb->offset + ofs,
-+					      je32_to_cpu(ri->node_crc), crc);
-+				error_found = true;
-+				goto check;
-+			}
-+
-+			if (je32_to_cpu(ri->dsize)) {
-+				crc = crc32(0, ri->data, je32_to_cpu(ri->csize));
-+				if (je32_to_cpu(ri->data_crc) != crc) {
-+					JFFS2_WARNING("Data CRC failed data node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
-+						ofs, je32_to_cpu(ri->data_crc), crc);
-+					error_found = true;
-+					goto check;
-+				}
-+			}
-+
-+			ofs += PAD(je32_to_cpu(node->totlen));
-+			break;
-+		case JFFS2_NODETYPE_DIRENT:
-+			if (c->sector_size - ofs < sizeof(struct jffs2_raw_dirent)) {
-+				/* Not enough space for a full dirent node */
-+				ofs += 4;
-+				goto check;
-+			}
-+
-+			rd = (struct jffs2_raw_dirent *)node;
-+			crc = crc32(0, rd, sizeof(*rd) - 8);
-+			if (je32_to_cpu(rd->node_crc) != crc) {
-+				JFFS2_WARNING("Node CRC failed dirent node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
-+					ofs, je32_to_cpu(rd->node_crc), crc);
-+				error_found = true;
-+				goto check;
-+			}
-+
-+			if (strnlen(rd->name, rd->nsize) != rd->nsize) {
-+				JFFS2_WARNING("Name in dirent node at 0x%08x contains zeroes\n", ofs);
-+				error_found = true;
-+				break;
-+			}
-+
-+			if (rd->nsize) {
-+				crc = crc32(0, rd->name, rd->nsize);
-+				if (je32_to_cpu(rd->name_crc) != crc) {
-+					JFFS2_WARNING("Name CRC failed dirent node at 0x%08x: Read 0x%08x, calculated 0x%08x\n",
-+						ofs, je32_to_cpu(rd->name_crc), crc);
-+					error_found = true;
-+					goto check;
-+				}
-+			}
-+
-+			ofs += PAD(je32_to_cpu(node->totlen));
-+			break;
-+		default:
-+			ofs += PAD(je32_to_cpu(node->totlen));
-+			/* Other node types are not pre-checked */
-+			break;
-+		}
-+	}
-+
-+check:
-+	// find any error during pre-scan, if found, erase the block, and write back.
-+	if (error_found) {
-+			JFFS2_WARNING("Erasing block at 0x%08x error_count %d due to pre-scan errors\n",
-+				jeb->offset);
-+			struct erase_info instr;
-+
-+			instr.addr = jeb->offset;
-+			instr.len = c->sector_size;
-+			ret = mtd_erase(c->mtd, &instr);
-+			if (ret) {
-+				JFFS2_ERROR("Erase at 0x%08x failed during pre-scan: errno %d\n",
-+					jeb->offset, ret);
-+				goto exit;
-+			}
-+
-+			ret = jffs2_flash_direct_write(c, jeb->offset, buf_len, &retlen, buf);
-+			if (ret) {
-+				JFFS2_ERROR("Write back at 0x%08x failed during pre-scan: errno %d\n",
-+					jeb->offset, ret);
-+				goto exit;
-+			}
-+	}
-+exit:
-+
-+	kfree(buf);
-+	return ret;
-+}
-+
- /* Called with 'buf_size == 0' if buf is in fact a pointer _directly_ into
-    the flash, XIP-style */
- static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblock *jeb,
-@@ -453,6 +621,10 @@ static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblo
- 	int err;
- 	int noise = 0;
+v21:
+- update patch (1/4) commit message
+- i2c-ast2600.c
+ - move rst to local variable in ast2600_i2c_probe().
  
-+	err = jffs2_pre_scan_eraseblock(c, jeb);
-+	if (err) // only log warning, continue scanning
-+		JFFS2_WARNING("Pre-scan of eraseblock at 0x%08x failed: err=%d\n",
-+			      jeb->offset, err);
- 
- #ifdef CONFIG_JFFS2_FS_WRITEBUFFER
- 	int cleanmarkerfound = 0;
+v20:
+- ast2600-i2c.yaml
+ - fix warning at make dt_binding_check.
+
+v19:
+- Split AST2600 binding into its own YAML file
+ - Removed `aspeed,ast2600-i2c-bus` from `aspeed,i2c.yaml`
+ - Added `aspeed,global-regs` and `aspeed,transfer-mode` to AST2600 binding
+
+v18:
+- refine patch (1/3) commit message (reason for commit not list.)
+- i2c-ast2600.c
+ - remove redundant reset_control_deassert in driver probe.
+ - remove reset_control_assert(i2c_bus->rst) in driver remove.
+
+v17:
+- move i2c new mode register and feature into driver commit message.
+- aspeed,i2c.yaml
+ - remove multi-master properties.
+ - use aspeed,transfer-mode properties for aspeed,enable-byte/enable-dma.
+-i2c-ast2600.c
+ - rename dma_safe_buf to controller_dma_safe_buf.
+ - fix ast2600_i2c_recover_bus return overflow warnings.
+ - add ast2600_i2c_target_packet_buff_irq unhandle case.
+ - add parameter "cmd" in ast2600_i2c_setup_dma_rx,
+   ast2600_i2c_setup_buff_rx, ast2600_i2c_setup_byte_rx
+ - use reset_control_deassert replace
+   devm_reset_control_get_shared_deasserted.
+ - useaspeed,transfer-mode properties for transfer mode setting.
+ - change compatible = "aspeed,ast2600-i2cv2" to "aspeed,ast2600-i2c-bus".
+
+v16:
+- aspeed,i2c.yaml: add aspeed,enable-byte properties for force byte mode.
+- i2c-ast2600.c
+ - change include asm/unaligned.h to linux/unaligned.h.
+ - add reset timeout councter when slave active timeout.
+ - modify issue i2c_recovery_bus before slave re-enable.
+ - add aspeed,enable-byte properties.
+
+v15:
+- i2c-ast2600.c
+ - add include unaligned.h
+ - rename all master -> controller, slave -> target.
+ - keep multi-master to align property.
+ - remove no used element in ast2600_i2c_bus.
+
+v14:
+- aspeed,i2c.yaml
+ - v13 change people reviewed-by tag, v14 fixed to original people tag,
+   modify to Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ - struct ast2600_i2c_bus layout optimal.
+ - ast2600_select_i2c_clock refine.
+ - ast2600_i2c_recover_bus overridden fix.
+ - dma_mapping_error() returned error code shadowed modify.
+ - buffer register in a 4-byte aligned simplified
+ - remove smbus alert
+
+v13:
+ - separate i2c master and slave driver to be two patchs.
+ - modify include header list, add bits.h include. remove of*.h
+ - modify (((x) >> 24) & GENMASK(5, 0)) to (((x) & GENMASK(29, 24)) >> 24)
+ - modify ast2600_select_i2c_clock function implement.
+ - modify ast2600_i2c_recover_bus function u32 claim to
+   u32 state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+
+v12:
+- aspeed,i2c.yaml
+ - add Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+- i2c-ast2600.c
+ - update include by alphabetical order
+ - make just a one TAB and put the last two lines on the single one
+ - remove no used timing_table structre
+ - remove enum explicit assinment
+ - rewritten to avoid this and using loop in ast2600_select_i2c_clock
+ - use GENMASK for most 0xffff
+ - remove too many parentheses
+ - use str_read_write replace read write string
+ - remove redundant blank line after ast2600_i2c_bus_of_table
+ - fix wrong multi-line style of the comment
+ - use macro for i2c standard speeds
+ - remove useless noise dev_info
+
+v11:
+- aspeed,i2c.yaml
+ - no change, the same with v10.
+- i2c-ast2600.c
+ - modify alert_enable from int -> boolean.
+ - modify dbg string recovery -> recover.
+ - remove no need to init 0.
+ - remove new line after break.
+ - remove unneeded empty line.
+ - modify dma_alloc_coherent to dmam_alloc_coherent
+ - modify probe nomem return dev_err_probe
+ - modify i2c_add_adapter to devm_i2c_adapter
+ - modify checkpatch: Alignment should match open parenthesis
+ - modify checkpatch: braces {} should be used on all arms of this statement
+ - modify checkpatch: Unbalanced braces around else statement
+
+v10:
+- aspeed,i2c.yaml
+ - move unevaluatedProperties after allOf.
+ - remove extra one blank line.
+- i2c-ast2600.c
+ - no change, the same with v8.
+
+v9:
+- aspeed,i2c.yaml
+ - backoff to v7.
+  - no fix typo in maintainer's name and email. this would be another patch.
+  - no remove address-cells, size-cells, this would be another patch.
+ - use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ - fix allOf and else false properties for aspeed,ast2600-i2cv2.
+- i2c-ast2600.c
+ - no change, the same with v8
+
+v8:
+- aspeed,i2c.yaml
+ - modify commit message.
+ - Fix typo in maintainer's name and email.
+ - remove address-cells, size-cells.
+- i2c-ast2600.c
+ - move "i2c timeout counter" comment description before property_read.
+ - remove redundant code "return ret" in probe end.
+
+v7:
+- aspeed,i2c.yaml
+ - Update ASPEED I2C maintainers email.
+ - use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ - fix allOf and else false properties for aspeed,ast2600-i2cv2.
+- i2c-ast2600.c
+ - remove aspeed,xfer-mode instead of aspeed,enable-dma mode. buffer mode
+   is default.
+ - remove aspeed,timeout instead of i2c-scl-clk-low-timeout-us for
+   timeout setting.
+
+v6:
+- remove aspeed,i2cv2.yaml, merge to aspeed,i2c.yaml -add support for
+  i2cv2 properites.
+- i2c-ast2600.c
+ - fix ast2600_i2c_remove ordering.
+ - remove ast2600_i2c_probe goto labels, and add dev_err_probe -remove
+   redundant deb_dbg debug message.
+ - rename gr_regmap -> global_regs
+
+v5:
+- remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+- i2c-ast2600.c
+ - remove legacy clock divide, all go for new clock divide.
+ - remove duplicated read isr.
+ - remove no used driver match
+ - fix probe return for each labels return.
+ - global use mfd driver, driver use phandle to regmap read/write.
+- rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml -remove bus-frequency.
+- add required aspeed,gr
+- add timeout, byte-mode, buff-mode properites.
+
+v4:
+- fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+  master slave mode both enable.
+- fix kmemleak issue when use dma mode.
+- fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+- fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+- fix i2c global clock divide default value.
+- remove i2c slave no used dev_dbg info.
+
+v2:
+- add i2c global ymal file commit.
+- rename file name from new to ast2600.
+  aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+  aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+  i2c-new-aspeed.c -> i2c-ast2600.c
+- rename all driver function name to ast2600.
+
+Ryan Chen (4):
+  dt-bindings: i2c: Split AST2600 binding into a new YAML
+  dt-bindings: i2c: ast2600-i2c.yaml: Add global-regs and transfer-mode
+    properties
+  i2c: ast2600: Add controller driver for new register layout
+  i2c: ast2600: Add target mode support
+
+ .../bindings/i2c/aspeed,ast2600-i2c.yaml      |   96 +
+ .../devicetree/bindings/i2c/aspeed,i2c.yaml   |    3 +-
+ drivers/i2c/busses/Makefile                   |    2 +-
+ drivers/i2c/busses/i2c-aspeed-core.c          |   89 +
+ drivers/i2c/busses/i2c-aspeed-core.h          |   19 +
+ drivers/i2c/busses/i2c-aspeed.c               |   43 +-
+ drivers/i2c/busses/i2c-ast2600.c              | 1578 +++++++++++++++++
+ 7 files changed, 1793 insertions(+), 37 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
+ create mode 100644 drivers/i2c/busses/i2c-aspeed-core.c
+ create mode 100644 drivers/i2c/busses/i2c-aspeed-core.h
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+
 -- 
-2.47.0
+2.34.1
 
 
