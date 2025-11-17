@@ -1,54 +1,53 @@
-Return-Path: <openbmc+bounces-916-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-915-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14DC6C667F9
-	for <lists+openbmc@lfdr.de>; Mon, 17 Nov 2025 23:56:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 173C5C6669F
+	for <lists+openbmc@lfdr.de>; Mon, 17 Nov 2025 23:14:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d9NQP5PbXz30Vy;
-	Tue, 18 Nov 2025 09:56:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d9MTn00tVz3bmy;
+	Tue, 18 Nov 2025 09:14:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763400546;
-	cv=none; b=k4/yiPdn0kjBbAsHXi9x331J713r086otw4vgyZ13MSyr/owFRRJrNtFE0S5Opq6Lt/lTZ4fWdaGFN0Z5ncFhxZpQbqXKHrlW9151B9euh/nnELgfk61OlQBAlknBLhe+L5d2bYG4jcNFLVLl02wJ0oqU6CR493/FBGcD/iJww+Yd7GvolSmacsEzRnpyir3tmo9OVd/8u0wGte1RXbJDSKgd5+QwVWocJ8AJF0OCX+99Lxs+DldZFid2gaWWRgnyHx4ShiTp1+UmnZVaPwudFUPTkgDhT1ZFgS3dAwjTKDfS3nBvnGcfzOu0EjYu1LqKOYhoD2po1aa8yxdKLIsJQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763417644;
+	cv=none; b=ex+F7RfG2CvljkBHSosgON2Rsu6rwJRzfG/1THqlprQbuWpeKkg5HEwglxyAZeMzonoDZ+lOPdBeo5Z+uJbdrl5b6uQYe2ukaH+c2NNcrlIQzNnxqv8vYu2kU5vzmCc49P+o455v7jXoS/Lr3UF+2ZMbGAndOzh6Wnyz+ImLGosV87n59nyw6RmnI46jUbFPw4BXfYErCwZChz8kJQHu12JaqOJbpB6VrUeLy9GQ0ZDE6/MHAND7gsKpPqLqpmk48qxXApu4sKpf/0fRuAProF/QZbaj+OmZbOMnMgYTe5/Ogjutzrtqmu9jg6tpWUB189mSQOlQWZdrxfjCNHtzqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1763400546; c=relaxed/relaxed;
-	bh=gooMhowPOuyHbixsfPYvirfY5GzfuVPNuYdGKL2Yh4o=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=TqVfyX13NOUZ4dkpn3DGtaOtXy+E6b5L5rDRJZdMXp6nd7Ezs3yA6US548FiCVWgjpBMEKTZ58PgOnYjru71zZ2CK7uFy0xbD2y1Lf/gGH55gCrtZdmaiJkMjS4w3BZ1Fx2Gi55ibfRSVjBCiSDckTFOyBO0sGGxOPI70VJkIia/9mECStPOSa2ZMbReP0pNJYflwKuukAqKAJ+qyTfXVIu0hpsFNesYuVYd/jgcI3xNhw+LtvEt/D1plkqJL5KsUL/wsiaRxTHEeNLVlt8uoGVTrUTRMpsaCjcUZq4VbokoJEC5LGBOTofydr+Nb6MLa08ob04CIIj8IpLYACmZIg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NGeQ9Bjj; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1763417644; c=relaxed/relaxed;
+	bh=ph7duz5+vCtG80vKmUrpGbgZDiGtquiE1c4YwUv6FxI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lIvLCFCIIU+NpPEfJGemncz932JzuvFE49o7DsYt3DrlP6wywKvDJ7nurmGyecJObHcGez2iTU0kH/yHNF3dyNxzHD5tOSj5t2s1J9uQyGaKShrSlfsg5jSfuOICQMRmmlY03Rs3VWrWy/zrQNh4GC70qeDbJaHyUdEjBktUSgZBVvge+O84S922AmoAI7dVeRYW3/eBh4WF7o9ber+uwBLDgO4VVj1dwqY3i06462oYVvMiwZlIOSyiqge3yYO1ycKPXQbiZH+d7760jCWhQVDUUYC68QebA44hHiRzZPReEV695h+3bk/NT+m6yZfb7hkr4cWdwYVrSWDRSfWZiA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lI/pl0lN; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NGeQ9Bjj;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lI/pl0lN;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d9F8x2pt9z2ynC;
-	Tue, 18 Nov 2025 04:29:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d9MTl6KRPz3bmS;
+	Tue, 18 Nov 2025 09:14:03 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id AFB7160051;
-	Mon, 17 Nov 2025 17:29:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF57FC4AF0D;
-	Mon, 17 Nov 2025 17:29:01 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 72402601B0;
+	Mon, 17 Nov 2025 22:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EEEC4CEFB;
+	Mon, 17 Nov 2025 22:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763400542;
-	bh=JlsE1lph8w0DMhM6j2h7RraWGmZuAIqFU+0dI5wpwmM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=NGeQ9BjjDPbIlXZTF48buPSkHU3BW+jHvClesoPVMotHRkTEX5YtTu2a4msnQHZBn
-	 U7+pR30mHcb3+UrpiDas9215oPGJDwBDcwbWPL9rayhMjRgkLfRovzamI0WxDZAmWR
-	 ERy4qFZxO16ofbIotyielscmaIVagOGGr4gXZK9qOnwFjcl7pRvEoghMoB5ZRxqzEo
-	 KaMY5tymug/UgzZtrTnzZfJuxHOUJaI+h75Vv5r7TOD6KKsgJKWNXgGbVWhS92/2sz
-	 hEyDaM3YBYj6yZytFqOpmNVPPvtFzBthWMlEjsQCppWZ9fafXclCiQTZfztFwdfa9s
-	 bv8t2f5tJFjGA==
-Date: Mon, 17 Nov 2025 11:28:59 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
+	s=k20201202; t=1763417640;
+	bh=7Xd20imrbtGgnXJ3jPRH56ORSA3mGDUGiu8VDY8+wQg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lI/pl0lN6EX8s9iMhr6hihgzqMq8MaevBIbaVdxbeBCszr1DXBmtkgy28tbas56y7
+	 FBSRgEq9e6GtxUDy0/q80zOBM+kudxzZK60maqj0+HRQ1GPB9It3lIiyJJ2b9nJwWV
+	 M86UA5cgtRag0DHuXtiRgN5EMZQ5L4j34Fc+I8fZmQ+PpGh6pPkDXNX5wWGrlKyiAA
+	 vGVJC+PBnAv8+iuFUIbFc5rRFKi7wT/U4XA+t4dNdRyCCVHYnnLHU5FRe5CyByxrph
+	 Orr77XGG9naWfY2a45e4BdsX/smNf/REhy0VCvYfP+3Y5hLoTA5QlO97a3iIvqKw6c
+	 XaRQPx3EfSBvg==
+Date: Mon, 17 Nov 2025 16:13:57 -0600
+From: Rob Herring <robh@kernel.org>
 To: Jacky Chou <jacky_chou@aspeedtech.com>
 Cc: Vinod Koul <vkoul@kernel.org>,
 	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
 	Andrew Jeffery <andrew@codeconstruct.com.au>,
@@ -63,9 +62,10 @@ Cc: Vinod Koul <vkoul@kernel.org>,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
 	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v5 6/8] PCI: Add FMT, TYPE and CPL status definition for
- TLP header
-Message-ID: <20251117172859.GA2466937@bhelgaas>
+Subject: Re: [PATCH v5 2/8] dt-bindings: PCI: Add ASPEED PCIe RC support
+Message-ID: <20251117221357.GA806266-robh@kernel.org>
+References: <20251117-upstream_pcie_rc-v5-0-b4a198576acf@aspeedtech.com>
+ <20251117-upstream_pcie_rc-v5-2-b4a198576acf@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -79,58 +79,189 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251117-upstream_pcie_rc-v5-6-b4a198576acf@aspeedtech.com>
+In-Reply-To: <20251117-upstream_pcie_rc-v5-2-b4a198576acf@aspeedtech.com>
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Nov 17, 2025 at 08:37:53PM +0800, Jacky Chou wrote:
-> According to PCIe specification, add FMT, TYPE and CPL status
-> definition for TLP header.
+On Mon, Nov 17, 2025 at 08:37:49PM +0800, Jacky Chou wrote:
+> ASPEED AST2600 provides one PCIe RC for Gen2 and AST2700 provides three
+> PCIe RC for two Gen4 and one Gen2. All of these RCs have just one root
+> port to connect to PCIe device. And also have Mem, I/O access, legacy
+> interrupt and MSI.
 > 
 > Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-
-OK by me, but it'd be nice to move up a few lines so this is with the
-other TLP-related items and the unrelated PCI_BUS_BRIDGE_*_WINDOW
-values aren't in the middle.
-
-Might even consider moving these to be just above the Message Routing
-constants so things are generally in the order they appear in the
-spec.
-
 > ---
->  drivers/pci/pci.h | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+>  .../bindings/pci/aspeed,ast2600-pcie.yaml          | 149 +++++++++++++++++++++
+>  1 file changed, 149 insertions(+)
 > 
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index 36f8c0985430..3a075f77cf4a 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -88,6 +88,21 @@ struct pcie_tlp_log;
->  #define PCI_BUS_BRIDGE_MEM_WINDOW	1
->  #define PCI_BUS_BRIDGE_PREF_MEM_WINDOW	2
->  
-> +/* Format of TLP; PCIe r7.0, sec 2.2.1 */
-> +#define PCIE_TLP_FMT_3DW_NO_DATA	0x00 /* 3DW header, no data */
-> +#define PCIE_TLP_FMT_4DW_NO_DATA	0x01 /* 4DW header, no data */
-> +#define PCIE_TLP_FMT_3DW_DATA		0x02 /* 3DW header, with data */
-> +#define PCIE_TLP_FMT_4DW_DATA		0x03 /* 4DW header, with data */
+> diff --git a/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml b/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml
+> new file mode 100644
+> index 000000000000..459b5c49657a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml
+> @@ -0,0 +1,149 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/aspeed,ast2600-pcie.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +/* Type of TLP; PCIe r7.0, sec 2.2.1 */
-> +#define PCIE_TLP_TYPE_CFG0_RD		0x04 /* Config Type 0 Read Request */
-> +#define PCIE_TLP_TYPE_CFG0_WR		0x04 /* Config Type 0 Write Request */
-> +#define PCIE_TLP_TYPE_CFG1_RD		0x05 /* Config Type 1 Read Request */
-> +#define PCIE_TLP_TYPE_CFG1_WR		0x05 /* Config Type 1 Write Request */
+> +title: ASPEED PCIe Root Complex Controller
 > +
-> +/* Cpl. status of Complete; PCIe r7.0, sec 2.2.9.1 */
-> +#define PCIE_CPL_STS_SUCCESS		0x00 /* Successful Completion */
+> +maintainers:
+> +  - Jacky Chou <jacky_chou@aspeedtech.com>
 > +
->  extern const unsigned char pcie_link_speed[];
->  extern bool pci_early_dump;
->  
+> +description:
+> +  The ASPEED PCIe Root Complex controller provides PCI Express Root Complex
+> +  functionality for ASPEED SoCs, such as the AST2600 and AST2700.
+> +  This controller enables connectivity to PCIe endpoint devices, supporting
+> +  memory and I/O windows, MSI and INTx interrupts, and integration with
+> +  the SoC's clock, reset, and pinctrl subsystems. On AST2600, the PCIe Root
+> +  Port device number is always 8.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - aspeed,ast2600-pcie
+> +      - aspeed,ast2700-pcie
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  ranges:
+> +    minItems: 2
+> +    maxItems: 2
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +    description: INTx and MSI interrupt
+> +
+> +  resets:
+> +    items:
+> +      - description: PCIe controller reset
+> +
+> +  reset-names:
+> +    items:
+> +      - const: h2x
+> +
+> +  aspeed,ahbc:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description:
+> +      Phandle to the ASPEED AHB Controller (AHBC) syscon node.
+> +      This reference is used by the PCIe controller to access
+> +      system-level configuration registers related to the AHB bus.
+> +      To enable AHB access for the PCIe controller.
+> +
+> +  aspeed,pciecfg:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description:
+> +      Phandle to the ASPEED PCIe configuration syscon node.
+> +      This reference allows the PCIe controller to access
+> +      SoC-specific PCIe configuration registers. There are the others
+> +      functions such PCIe RC and PCIe EP will use this common register
+> +      to configure the SoC interfaces.
+> +
+> +  interrupt-controller: true
+> +
+> +allOf:
+> +  - $ref: /schemas/pci/pci-host-bridge.yaml#
+> +  - $ref: /schemas/interrupt-controller/msi-controller.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: aspeed,ast2600-pcie
+> +    then:
+> +      required:
+> +        - aspeed,ahbc
+> +    else:
+> +      properties:
+> +        aspeed,ahbc: false
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: aspeed,ast2700-pcie
+> +    then:
+> +      required:
+> +        - aspeed,pciecfg
+> +    else:
+> +      properties:
+> +        aspeed,pciecfg: false
+> +
+> +required:
+> +  - reg
+> +  - interrupts
+> +  - bus-range
+> +  - ranges
+> +  - resets
+> +  - reset-names
+> +  - msi-controller
+> +  - interrupt-controller
+> +  - interrupt-map-mask
+> +  - interrupt-map
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/ast2600-clock.h>
+> +
+> +    pcie0: pcie@1e770000 {
+> +      compatible = "aspeed,ast2600-pcie";
+> +      device_type = "pci";
+> +      reg = <0x1e770000 0x100>;
+> +      #address-cells = <3>;
+> +      #size-cells = <2>;
+> +      interrupts = <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>;
+> +      bus-range = <0x00 0xff>;
+> +
+> +      ranges = <0x01000000 0x0 0x00018000 0x00018000 0x0 0x00008000
+> +                0x02000000 0x0 0x60000000 0x60000000 0x0 0x20000000>;
+> +
+> +      resets = <&syscon ASPEED_RESET_H2X>;
+> +      reset-names = "h2x";
+> +
+> +      #interrupt-cells = <1>;
+> +      msi-controller;
+> +
+> +      aspeed,ahbc = <&ahbc>;
+> +
+> +      interrupt-controller;
+> +      interrupt-map-mask = <0 0 0 7>;
+> +      interrupt-map = <0 0 0 1 &pcie0 0>,
+> +                      <0 0 0 2 &pcie0 1>,
+> +                      <0 0 0 3 &pcie0 2>,
+> +                      <0 0 0 4 &pcie0 3>;
+> +
+> +      pcie@8,0 {
+
+This node and the properties need to be in the schema along with a ref 
+to pci-pci-bridge.yaml.
+
+> +        reg = <0x804000 0 0 0 0>;
+
+The address should not have the bus number as it is dynamic.
+
+> +        #address-cells = <3>;
+> +        #size-cells = <2>;
+> +        device_type = "pci";
+> +        resets = <&syscon ASPEED_RESET_PCIE_RC_O>;
+> +        reset-names = "perst";
+
+Not sure this name is correct. PERST is a signal on the connector going 
+downstream to the endpoint.
+
+> +        clocks = <&syscon ASPEED_CLK_GATE_BCLK>;
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&pinctrl_pcierc1_default>;
+> +        phys = <&pcie_phy1>;
+> +        ranges;
+> +      };
+> +    };
 > 
 > -- 
 > 2.34.1
