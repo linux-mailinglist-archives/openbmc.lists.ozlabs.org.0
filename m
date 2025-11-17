@@ -1,51 +1,54 @@
-Return-Path: <openbmc+bounces-904-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-905-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F408C62527
-	for <lists+openbmc@lfdr.de>; Mon, 17 Nov 2025 05:32:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60BC2C62982
+	for <lists+openbmc@lfdr.de>; Mon, 17 Nov 2025 07:54:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d8vwv28fQz2y7c;
-	Mon, 17 Nov 2025 15:32:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d8z4K2vGgz2yv6;
+	Mon, 17 Nov 2025 17:54:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763353951;
-	cv=none; b=QKO/SNmCnmmCISvmaEig5t7qa4TklVZmf++z/wecPo54nt3LmAp9OXEHHqXA2o26q70yBG/6OYDNBagNJhrbFnYZRS3yF2m+yT9PGYVYnZ1i0czhTwCye/oxslCv6dOHhePDlxJkV35VB4UuqXthbHUt7DB9jkXtUuWocrXQwIZ95Sx3OpozUq8KtdgmQP1pOF7Ua1OwERMR93gN+DQFrmGkq8nNZM6D5cbgQopFqvnE1WxuHOavbmND7SARHn81fqOQNhnpttEn7h4MXOyKJGrSL+cbUI3UMxUkFCqEhdPctBhXKTN6NezvOEIxWwoD8q18G5I8tGLcReT9uI5+oA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763362449;
+	cv=none; b=G0IU0/SbccrFih/09yXhEH8DSfMfvKT+lE7C2qRalr59UIR7keiPCdbbD1BM7a8sXM8K81prLAYbldSwGJ6KJLuprxY0RYw9e40o7EwG9y0sCUTY39wTJgap5Xrv2fUgYJOGWU2c8x4Poi9cA/x9JKePg06H2VSRozYDqSOCowe530otjRbjoeUiVgZcS59CYzmINa3snyGxTcAJbEMifpPhdlQFODTOj6hajzflMFpYb0WsvOLqfsWTWI7jZR6mJwVzAzl+ArsCqXCxTURv+6phnj7PyBqNogwCo28FdR12kRd3tuh6jQMiW+Zfbhut3ITm8xRRTSY+BM3PV+6Grw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1763353951; c=relaxed/relaxed;
-	bh=yBh/kaRoByn6GV6GRxpAfMDmXSxqGAofk5vXsebspKg=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=NzwO5EPmeYAV0myLgHSYPSHM+g3EKhfTXcMKPgsmaUBy9pZfivzsIVtau+WTxn3JW0LSdbb12TWKSncYNkfy3LaF5OGG3lkdXrRrHPevmRNoGSv8oJTMLA2WPz8fXli0Cj6dvh0VUvzHvREbpZcPdCyqh3xp4qxMXn9+klD44xZ4MTaJ390teowqPNnQH6RfkZCUQZwuOsvufOKGuLQPVhGKqllShdqTSNsBcewST6S1SbpIeUxEa7d6Khq4bXoopuFm2NW0cg/O8XC7uBLMNFEWeqJhjtNRPvNMptyra738OKU/xTDkRRBQnH+Ry2uxRHoOFqRaSAnWpYOZlLc/BA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=eS8uyNUd; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+	t=1763362449; c=relaxed/relaxed;
+	bh=BsR5lVyygVCpUMEM5x+cFAv1MD7fVQHKyDa2lkaoAlI=;
+	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:MIME-Version; b=M3ge7FCWG8BpmO71mVtgsnS9NSprUfDOvL1ev+Dx9ug2EYXk/6hIw7Pbg1XssAyei2mQOpN2HLMi/DqqmqzjfIqw11bOYDH4NxRNOPALf+fHi7PuOOJyXMTMhhtLsaGuMdEbXHQ2nu4zoD+CtzZiwYNLG1k9TfkTKmNX7PI4SI8HQNhy6PxMfYKq8k7tzirBOujmPS40zZmBsW9/9cwXkmz9qE7+kYyBMYW9LQ8IU0ropTkHa+8KlIeIMupLtrT1BR6lia453uP32CEoIlomdg4gnghFPsRnldnAN8yzrgLXkaoQT7TuduVc06hSjmOHM7bFTdATPAVTRdFuTTZVSA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bcxh7hAS; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=eS8uyNUd;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bcxh7hAS;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d8vwt1Pkzz2xQr;
-	Mon, 17 Nov 2025 15:32:30 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 67D6141878;
-	Mon, 17 Nov 2025 04:32:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C383C4CEF5;
-	Mon, 17 Nov 2025 04:32:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763353947;
-	bh=HL6MeUGnbH+gyiyOSqBbks00vNfOL44P0gMp+dpGVxk=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=eS8uyNUdvX+Eb9FUkupN5W9tMTE4VtZXmnOBnD1FAxPktA7J8tjfmrRa18EQr7Axr
-	 M0qb9yn8mZicfgAEbhaLP2G92N8qKf3jqHVbV2G3hHlJFfjvVamIc/QUBiiSVv3n19
-	 rfjWTmGsyv4p/SyiZ5L2PBF7iBjgHG/HkxvThyRBeTaLa41N+6cmR7kSo6qHbZkKtB
-	 CGECLvha9J0avRzEC1UU1+Oy+R9KHcUVW+kywJsXcDYXJeQZkYFHzwx3wDDnmE5eTc
-	 dggKcVI/FJj8MKL3ut5dYjx6m0QJ6805S2oJHpNeV/HXuN1W6f9GO8E1LDZ42j9TU2
-	 zHfv9Zrirsbyw==
-Date: Sun, 16 Nov 2025 22:32:25 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d8z4J0rf7z2ynC
+	for <openbmc@lists.ozlabs.org>; Mon, 17 Nov 2025 17:54:07 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1763362446;
+	bh=BsR5lVyygVCpUMEM5x+cFAv1MD7fVQHKyDa2lkaoAlI=;
+	h=Subject:From:To:Cc:Date;
+	b=bcxh7hAS37bzQcqTXcws3WT3z4QjAibtfd+dHxoKPRyEGtVpPcUjFU753imkTXNk6
+	 hgK1ExgGhdswebWuXGAWQqnDQxnb66xeGKoTTfsxdDh9zOZcykzsMpmKKYv0KjTxbY
+	 DC2i6+ClPwoYM6w5tFXS2rxU6QtO8y7Nu6qZ7rWWIgEMRogCODalW5sgW0eCzkE8H9
+	 6UG+DCQsTXlBWOUsC/MBww1XdERVp/1HNXPJAPcUO69pH31vxgX1yMGkkyrD9bHoCx
+	 1MllWaFb3kOL87EcArtNN6Cgi5V4XHfOHuoNugEepqwzJlSyXsQwe78/RHNhoDQISf
+	 9I15zniws7T2A==
+Received: from [192.168.68.115] (unknown [180.150.112.38])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 1BE4B6477A;
+	Mon, 17 Nov 2025 14:54:05 +0800 (AWST)
+Message-ID: <93dc30c9e93d5d99dc75f0bce87459bf03755064.camel@codeconstruct.com.au>
+Subject: Experimental openbmc/linux dev-6.17 branch
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: openbmc <openbmc@lists.ozlabs.org>
+Cc: Joel Stanley <joel@jms.id.au>
+Date: Mon, 17 Nov 2025 17:24:04 +1030
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1-1+deb13u1 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,84 +60,59 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: openbmc@lists.ozlabs.org, andi.shyti@kernel.org, 
- andriy.shevchenko@linux.intel.com, bmc-sw@aspeedtech.com, 
- jk@codeconstruct.com.au, linux-i2c@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, joel@jms.id.au, 
- andrew@codeconstruct.com.au, p.zabel@pengutronix.de, conor+dt@kernel.org, 
- naresh.solanki@9elements.com, krzk+dt@kernel.org, benh@kernel.crashing.org, 
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-In-Reply-To: <20251117025040.3622984-2-ryan_chen@aspeedtech.com>
-References: <20251117025040.3622984-1-ryan_chen@aspeedtech.com>
- <20251117025040.3622984-2-ryan_chen@aspeedtech.com>
-Message-Id: <176335394552.766711.17435291607317271489.robh@kernel.org>
-Subject: Re: [PATCH v23 1/4] dt-bindings: i2c: Split AST2600 binding into a
- new YAML
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+Hi everyone,
 
-On Mon, 17 Nov 2025 10:50:37 +0800, Ryan Chen wrote:
-> The AST2600 I2C controller introduces a completely new register
-> map and Separate control/target register sets, unlike the mixed
-> layout used in AST2400/AST2500.
-> 
-> In addition, at new AST2600 configuration registers and transfer
-> modes require new DT properties, which are incompatible with
-> existing bindings. Therefore, this creates a dedicated binding
-> file for AST2600 to properly describe these new hardware
-> capabilities.
-> 
-> A subsequent change will modify this new binding to properly
-> describe the AST2600 hardware.
-> 
-> The example section updated to reflect the actual AST2600 SoC
-> register layout and interrupt configuration.
-> Reference: aspeed-g6.dtsi (lines 885-897)
-> 
-> -I2C bus and buffer register offsets
->  - AST2600 I2C controller register base starts from 0x80, and the
->    buffer region is located at 0xc00, as defined in AST2600 SOC
->    register map.
-> 
-> -Interrupt configuration
->  - AST2600 I2C controller are connected to ARM GIC interrupt
->    controller rather than the legacy internal interrupt controller.
-> 
-> Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-> ---
->  .../bindings/i2c/aspeed,ast2600-i2c.yaml      | 66 +++++++++++++++++++
->  .../devicetree/bindings/i2c/aspeed,i2c.yaml   |  3 +-
->  2 files changed, 67 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
-> 
+Just a quick note that I've put together an experimental dev-6.17
+branch and pushed it to openbmc/linux. This is largely in preparation
+for the next LTS release, whenever that comes.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+At the time of this email I haven't done any further integration work.
+However, for the record, here are the patches that were changed or
+dropped with respect to dev-6.12:
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml:25:1: [warning] too many blank lines (2 > 1) (empty-lines)
+   Amit Sunil Dhamne (1):
+         usb: typec: tcpm: Add support for parsing pd-revision DT property
+  =20
+   Andrew Jeffery (2):
+         soc: aspeed: lpc-snoop: Rearrange channel paths
+         soc: aspeed: lpc-snoop: Lift channel config to const structs
+  =20
+   Breno Leitao (1):
+         Revert "x86/bugs: Make spectre user default depend on MITIGATION_S=
+PECTRE_V2" on v6.6 and older
+  =20
+   Cosmo Chou (1):
+         dt-bindings: trivial-devices: add mps,mp5998
+  =20
+   Eddie James (3):
+         leds: pca955x: Optimize probe led selection
+         leds: pca955x: Add HW blink support
+         leds: Ensure hardware blinking turns off when requested
+  =20
+   Jeremy Kerr (2):
+         net: mctp: Add MCTP USB transport driver
+         net: mctp: separate routing database from routing operations
+  =20
+   Leo Yang (1):
+         hwmon: Add driver for TI INA233 Current and Power Monitor
+  =20
+   Peter Yin (1):
+         dt-bindings: trivial-devices: add isil,isl69260
+  =20
+   Tomer Maimon (2):
+         reset: npcm: register npcm8xx clock auxiliary bus device
+         clk: npcm8xx: add clock controller
+  =20
+   Wensheng Wang (1):
+         dt-bindings: hwmon: Add MPS mp2869,mp29608,mp29612,mp29816 and mp2=
+9502
 
-dtschema/dtc warnings/errors:
+Cheers,
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251117025040.3622984-2-ryan_chen@aspeedtech.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Andrew
 
