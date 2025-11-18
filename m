@@ -1,71 +1,49 @@
-Return-Path: <openbmc+bounces-915-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-917-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 173C5C6669F
-	for <lists+openbmc@lfdr.de>; Mon, 17 Nov 2025 23:14:07 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79BA4C66DC0
+	for <lists+openbmc@lfdr.de>; Tue, 18 Nov 2025 02:40:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4d9MTn00tVz3bmy;
-	Tue, 18 Nov 2025 09:14:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4d9S4N2N1bz2yjm;
+	Tue, 18 Nov 2025 12:40:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763417644;
-	cv=none; b=ex+F7RfG2CvljkBHSosgON2Rsu6rwJRzfG/1THqlprQbuWpeKkg5HEwglxyAZeMzonoDZ+lOPdBeo5Z+uJbdrl5b6uQYe2ukaH+c2NNcrlIQzNnxqv8vYu2kU5vzmCc49P+o455v7jXoS/Lr3UF+2ZMbGAndOzh6Wnyz+ImLGosV87n59nyw6RmnI46jUbFPw4BXfYErCwZChz8kJQHu12JaqOJbpB6VrUeLy9GQ0ZDE6/MHAND7gsKpPqLqpmk48qxXApu4sKpf/0fRuAProF/QZbaj+OmZbOMnMgYTe5/Ogjutzrtqmu9jg6tpWUB189mSQOlQWZdrxfjCNHtzqw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763430052;
+	cv=none; b=DxIvxYjFD2MbU3OJL9IGiJVModzUEI0N2lspJm/1hk/SbvzyGEh1AGGSscQ6O1pqxNBNshk2RZlkhpc1l4OErYecFcns4TWGHKWs0d/qoe2ZgnN4F4+MFiYCFjWe0A1D5AI33zHAZGX2g9siCBqMPSbSqqpiuHOg0PISHMEHOke3Mm792nPhOoy2wt3HtnYRE9TJ3MCCaGGcYT5XgYltSBdApD3kecmjLVtMudINpteM+qUCJJ7/gAOxQ9vbxZebPVoOwjIT/XyEnPk7IMEZ1KDWi5QBJDB0if+VXT3Dalmi+Ezo5ZSrmRR2zyVTZPhGsGLD/905IK8TxOwsk614IA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1763417644; c=relaxed/relaxed;
-	bh=ph7duz5+vCtG80vKmUrpGbgZDiGtquiE1c4YwUv6FxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lIvLCFCIIU+NpPEfJGemncz932JzuvFE49o7DsYt3DrlP6wywKvDJ7nurmGyecJObHcGez2iTU0kH/yHNF3dyNxzHD5tOSj5t2s1J9uQyGaKShrSlfsg5jSfuOICQMRmmlY03Rs3VWrWy/zrQNh4GC70qeDbJaHyUdEjBktUSgZBVvge+O84S922AmoAI7dVeRYW3/eBh4WF7o9ber+uwBLDgO4VVj1dwqY3i06462oYVvMiwZlIOSyiqge3yYO1ycKPXQbiZH+d7760jCWhQVDUUYC68QebA44hHiRzZPReEV695h+3bk/NT+m6yZfb7hkr4cWdwYVrSWDRSfWZiA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lI/pl0lN; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lI/pl0lN;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1763430052; c=relaxed/relaxed;
+	bh=KW5QCTVDUkeGqoNz3msuWaSQwfVhk0alJ9VkA/q1bdo=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=L0wKnrjp8ETP/hZyiSWEYAI29MMN0bkt1MuPU7M5NVGA6m4msJ6OUhSfqwKNqkf7BGjJzmkcdm07djxIvfuLJ6F/0Ycodiz4hZBGaQUMljNmg8COsHSVhzenl0yZrIqJ1epH5WoGBW2rtebZby37pCp8nO8P5vnWfJU1doy8q75wghbeaGBcMMTDLSq12YMzUQ/MFGpLsgkYuA5FzLFs+i2B3XtyQkFKdArrSeb/X9EAvvdygsBrK4c/omYJElr2Fxp2OR9NPyLI3AdB8hiTNmbtytYRP5TahYfZ2RBDeaZi6SST8y74ccHgUhZGDiDM/6pcyyp1sGzmMagUJ6U0wg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4d9MTl6KRPz3bmS;
-	Tue, 18 Nov 2025 09:14:03 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 72402601B0;
-	Mon, 17 Nov 2025 22:14:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EEEC4CEFB;
-	Mon, 17 Nov 2025 22:13:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763417640;
-	bh=7Xd20imrbtGgnXJ3jPRH56ORSA3mGDUGiu8VDY8+wQg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lI/pl0lN6EX8s9iMhr6hihgzqMq8MaevBIbaVdxbeBCszr1DXBmtkgy28tbas56y7
-	 FBSRgEq9e6GtxUDy0/q80zOBM+kudxzZK60maqj0+HRQ1GPB9It3lIiyJJ2b9nJwWV
-	 M86UA5cgtRag0DHuXtiRgN5EMZQ5L4j34Fc+I8fZmQ+PpGh6pPkDXNX5wWGrlKyiAA
-	 vGVJC+PBnAv8+iuFUIbFc5rRFKi7wT/U4XA+t4dNdRyCCVHYnnLHU5FRe5CyByxrph
-	 Orr77XGG9naWfY2a45e4BdsX/smNf/REhy0VCvYfP+3Y5hLoTA5QlO97a3iIvqKw6c
-	 XaRQPx3EfSBvg==
-Date: Mon, 17 Nov 2025 16:13:57 -0600
-From: Rob Herring <robh@kernel.org>
-To: Jacky Chou <jacky_chou@aspeedtech.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-aspeed@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v5 2/8] dt-bindings: PCI: Add ASPEED PCIe RC support
-Message-ID: <20251117221357.GA806266-robh@kernel.org>
-References: <20251117-upstream_pcie_rc-v5-0-b4a198576acf@aspeedtech.com>
- <20251117-upstream_pcie_rc-v5-2-b4a198576acf@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4d9S4M2H7vz2xqr;
+	Tue, 18 Nov 2025 12:40:50 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 18 Nov
+ 2025 09:40:34 +0800
+Received: from twmbx02.aspeed.com (192.168.10.13) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 18 Nov 2025 09:40:34 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: <ryan_chen@aspeedtech.com>, <bmc-sw@aspeedtech.com>,
+	<andriy.shevchenko@linux.intel.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+	<conor+dt@kernel.org>, <benh@kernel.crashing.org>, <joel@jms.id.au>,
+	<andi.shyti@kernel.org>, <jk@codeconstruct.com.au>,
+	<andrew@codeconstruct.com.au>, <p.zabel@pengutronix.de>,
+	<naresh.solanki@9elements.com>, <linux-i2c@vger.kernel.org>,
+	<openbmc@lists.ozlabs.org>, <devicetree@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v24 0/4] Add ASPEED AST2600 I2C controller driver
+Date: Tue, 18 Nov 2025 09:40:30 +0800
+Message-ID: <20251118014034.820988-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -77,193 +55,249 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251117-upstream_pcie_rc-v5-2-b4a198576acf@aspeedtech.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Nov 17, 2025 at 08:37:49PM +0800, Jacky Chou wrote:
-> ASPEED AST2600 provides one PCIe RC for Gen2 and AST2700 provides three
-> PCIe RC for two Gen4 and one Gen2. All of these RCs have just one root
-> port to connect to PCIe device. And also have Mem, I/O access, legacy
-> interrupt and MSI.
-> 
-> Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
-> ---
->  .../bindings/pci/aspeed,ast2600-pcie.yaml          | 149 +++++++++++++++++++++
->  1 file changed, 149 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml b/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml
-> new file mode 100644
-> index 000000000000..459b5c49657a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/aspeed,ast2600-pcie.yaml
-> @@ -0,0 +1,149 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/aspeed,ast2600-pcie.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: ASPEED PCIe Root Complex Controller
-> +
-> +maintainers:
-> +  - Jacky Chou <jacky_chou@aspeedtech.com>
-> +
-> +description:
-> +  The ASPEED PCIe Root Complex controller provides PCI Express Root Complex
-> +  functionality for ASPEED SoCs, such as the AST2600 and AST2700.
-> +  This controller enables connectivity to PCIe endpoint devices, supporting
-> +  memory and I/O windows, MSI and INTx interrupts, and integration with
-> +  the SoC's clock, reset, and pinctrl subsystems. On AST2600, the PCIe Root
-> +  Port device number is always 8.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - aspeed,ast2600-pcie
-> +      - aspeed,ast2700-pcie
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  ranges:
-> +    minItems: 2
-> +    maxItems: 2
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +    description: INTx and MSI interrupt
-> +
-> +  resets:
-> +    items:
-> +      - description: PCIe controller reset
-> +
-> +  reset-names:
-> +    items:
-> +      - const: h2x
-> +
-> +  aspeed,ahbc:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      Phandle to the ASPEED AHB Controller (AHBC) syscon node.
-> +      This reference is used by the PCIe controller to access
-> +      system-level configuration registers related to the AHB bus.
-> +      To enable AHB access for the PCIe controller.
-> +
-> +  aspeed,pciecfg:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      Phandle to the ASPEED PCIe configuration syscon node.
-> +      This reference allows the PCIe controller to access
-> +      SoC-specific PCIe configuration registers. There are the others
-> +      functions such PCIe RC and PCIe EP will use this common register
-> +      to configure the SoC interfaces.
-> +
-> +  interrupt-controller: true
-> +
-> +allOf:
-> +  - $ref: /schemas/pci/pci-host-bridge.yaml#
-> +  - $ref: /schemas/interrupt-controller/msi-controller.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: aspeed,ast2600-pcie
-> +    then:
-> +      required:
-> +        - aspeed,ahbc
-> +    else:
-> +      properties:
-> +        aspeed,ahbc: false
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: aspeed,ast2700-pcie
-> +    then:
-> +      required:
-> +        - aspeed,pciecfg
-> +    else:
-> +      properties:
-> +        aspeed,pciecfg: false
-> +
-> +required:
-> +  - reg
-> +  - interrupts
-> +  - bus-range
-> +  - ranges
-> +  - resets
-> +  - reset-names
-> +  - msi-controller
-> +  - interrupt-controller
-> +  - interrupt-map-mask
-> +  - interrupt-map
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/ast2600-clock.h>
-> +
-> +    pcie0: pcie@1e770000 {
-> +      compatible = "aspeed,ast2600-pcie";
-> +      device_type = "pci";
-> +      reg = <0x1e770000 0x100>;
-> +      #address-cells = <3>;
-> +      #size-cells = <2>;
-> +      interrupts = <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>;
-> +      bus-range = <0x00 0xff>;
-> +
-> +      ranges = <0x01000000 0x0 0x00018000 0x00018000 0x0 0x00008000
-> +                0x02000000 0x0 0x60000000 0x60000000 0x0 0x20000000>;
-> +
-> +      resets = <&syscon ASPEED_RESET_H2X>;
-> +      reset-names = "h2x";
-> +
-> +      #interrupt-cells = <1>;
-> +      msi-controller;
-> +
-> +      aspeed,ahbc = <&ahbc>;
-> +
-> +      interrupt-controller;
-> +      interrupt-map-mask = <0 0 0 7>;
-> +      interrupt-map = <0 0 0 1 &pcie0 0>,
-> +                      <0 0 0 2 &pcie0 1>,
-> +                      <0 0 0 3 &pcie0 2>,
-> +                      <0 0 0 4 &pcie0 3>;
-> +
-> +      pcie@8,0 {
+This series add AST2600 i2c new register set driver.
+The i2c driver is new register set that have new clock divider option
+for more flexiable generation. And also have separate i2c controller
+and target register set for control, patch #2 is i2c controller driver
+only, patch #3 is add i2c target mode driver.
 
-This node and the properties need to be in the schema along with a ref 
-to pci-pci-bridge.yaml.
+The legacy register layout is mix controller/target register control
+together. The following is add more detail description about new register
+layout. And new feature set add for register.
 
-> +        reg = <0x804000 0 0 0 0>;
+v24:
+- aspeed,ast2600-i2c.yaml
+ - fix make dt_binding_check blank warning.
 
-The address should not have the bus number as it is dynamic.
+v23:
+- update typo patch (1/4) commit message.
+- aspeed,ast2600-i2c.yaml
+ - update reg and description.
+- i2c-ast2600.c controller
+ - replace ast2600_select_i2c_clock to ast2600_i2c_ac_timing_config.
+- i2c-ast2600.c target
+ - I2C_TARGET_MSG_BUF_SIZE 256 to 4096
+ - remove blank line.
+ - refine Master comment description to controller
 
-> +        #address-cells = <3>;
-> +        #size-cells = <2>;
-> +        device_type = "pci";
-> +        resets = <&syscon ASPEED_RESET_PCIE_RC_O>;
-> +        reset-names = "perst";
+v22:
+- update patch (1/4) commit message add dts example reason.
+- aspeed,ast2600-i2c.yaml @patch (1/4)
+ - rename ast2600-i2c.yaml to aspeed,ast2600-i2c.yaml.
+ - update reg, clock-frequency description.
+- aspeed,ast2600-i2c.yaml @patch (2/4)
+ - aspeed,transfer-mode, aspeed,transfer-mode add for ast2600.
+- i2c-aspeed-core.c,h @patch (3/4)
+ - add i2c-aspeed-core allow both old and new device trees using the
+   same compatible string "aspeed,ast2600-i2c-bus".
+ 
+v21:
+- update patch (1/4) commit message
+- i2c-ast2600.c
+ - move rst to local variable in ast2600_i2c_probe().
+ 
+v20:
+- ast2600-i2c.yaml
+ - fix warning at make dt_binding_check.
 
-Not sure this name is correct. PERST is a signal on the connector going 
-downstream to the endpoint.
+v19:
+- Split AST2600 binding into its own YAML file
+ - Removed `aspeed,ast2600-i2c-bus` from `aspeed,i2c.yaml`
+ - Added `aspeed,global-regs` and `aspeed,transfer-mode` to AST2600 binding
 
-> +        clocks = <&syscon ASPEED_CLK_GATE_BCLK>;
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&pinctrl_pcierc1_default>;
-> +        phys = <&pcie_phy1>;
-> +        ranges;
-> +      };
-> +    };
-> 
-> -- 
-> 2.34.1
-> 
+v18:
+- refine patch (1/3) commit message (reason for commit not list.)
+- i2c-ast2600.c
+ - remove redundant reset_control_deassert in driver probe.
+ - remove reset_control_assert(i2c_bus->rst) in driver remove.
+
+v17:
+- move i2c new mode register and feature into driver commit message.
+- aspeed,i2c.yaml
+ - remove multi-master properties.
+ - use aspeed,transfer-mode properties for aspeed,enable-byte/enable-dma.
+-i2c-ast2600.c
+ - rename dma_safe_buf to controller_dma_safe_buf.
+ - fix ast2600_i2c_recover_bus return overflow warnings.
+ - add ast2600_i2c_target_packet_buff_irq unhandle case.
+ - add parameter "cmd" in ast2600_i2c_setup_dma_rx,
+   ast2600_i2c_setup_buff_rx, ast2600_i2c_setup_byte_rx
+ - use reset_control_deassert replace
+   devm_reset_control_get_shared_deasserted.
+ - useaspeed,transfer-mode properties for transfer mode setting.
+ - change compatible = "aspeed,ast2600-i2cv2" to "aspeed,ast2600-i2c-bus".
+
+v16:
+- aspeed,i2c.yaml: add aspeed,enable-byte properties for force byte mode.
+- i2c-ast2600.c
+ - change include asm/unaligned.h to linux/unaligned.h.
+ - add reset timeout councter when slave active timeout.
+ - modify issue i2c_recovery_bus before slave re-enable.
+ - add aspeed,enable-byte properties.
+
+v15:
+- i2c-ast2600.c
+ - add include unaligned.h
+ - rename all master -> controller, slave -> target.
+ - keep multi-master to align property.
+ - remove no used element in ast2600_i2c_bus.
+
+v14:
+- aspeed,i2c.yaml
+ - v13 change people reviewed-by tag, v14 fixed to original people tag,
+   modify to Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ - struct ast2600_i2c_bus layout optimal.
+ - ast2600_select_i2c_clock refine.
+ - ast2600_i2c_recover_bus overridden fix.
+ - dma_mapping_error() returned error code shadowed modify.
+ - buffer register in a 4-byte aligned simplified
+ - remove smbus alert
+
+v13:
+ - separate i2c master and slave driver to be two patchs.
+ - modify include header list, add bits.h include. remove of*.h
+ - modify (((x) >> 24) & GENMASK(5, 0)) to (((x) & GENMASK(29, 24)) >> 24)
+ - modify ast2600_select_i2c_clock function implement.
+ - modify ast2600_i2c_recover_bus function u32 claim to
+   u32 state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+
+v12:
+- aspeed,i2c.yaml
+ - add Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+- i2c-ast2600.c
+ - update include by alphabetical order
+ - make just a one TAB and put the last two lines on the single one
+ - remove no used timing_table structre
+ - remove enum explicit assinment
+ - rewritten to avoid this and using loop in ast2600_select_i2c_clock
+ - use GENMASK for most 0xffff
+ - remove too many parentheses
+ - use str_read_write replace read write string
+ - remove redundant blank line after ast2600_i2c_bus_of_table
+ - fix wrong multi-line style of the comment
+ - use macro for i2c standard speeds
+ - remove useless noise dev_info
+
+v11:
+- aspeed,i2c.yaml
+ - no change, the same with v10.
+- i2c-ast2600.c
+ - modify alert_enable from int -> boolean.
+ - modify dbg string recovery -> recover.
+ - remove no need to init 0.
+ - remove new line after break.
+ - remove unneeded empty line.
+ - modify dma_alloc_coherent to dmam_alloc_coherent
+ - modify probe nomem return dev_err_probe
+ - modify i2c_add_adapter to devm_i2c_adapter
+ - modify checkpatch: Alignment should match open parenthesis
+ - modify checkpatch: braces {} should be used on all arms of this statement
+ - modify checkpatch: Unbalanced braces around else statement
+
+v10:
+- aspeed,i2c.yaml
+ - move unevaluatedProperties after allOf.
+ - remove extra one blank line.
+- i2c-ast2600.c
+ - no change, the same with v8.
+
+v9:
+- aspeed,i2c.yaml
+ - backoff to v7.
+  - no fix typo in maintainer's name and email. this would be another patch.
+  - no remove address-cells, size-cells, this would be another patch.
+ - use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ - fix allOf and else false properties for aspeed,ast2600-i2cv2.
+- i2c-ast2600.c
+ - no change, the same with v8
+
+v8:
+- aspeed,i2c.yaml
+ - modify commit message.
+ - Fix typo in maintainer's name and email.
+ - remove address-cells, size-cells.
+- i2c-ast2600.c
+ - move "i2c timeout counter" comment description before property_read.
+ - remove redundant code "return ret" in probe end.
+
+v7:
+- aspeed,i2c.yaml
+ - Update ASPEED I2C maintainers email.
+ - use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ - fix allOf and else false properties for aspeed,ast2600-i2cv2.
+- i2c-ast2600.c
+ - remove aspeed,xfer-mode instead of aspeed,enable-dma mode. buffer mode
+   is default.
+ - remove aspeed,timeout instead of i2c-scl-clk-low-timeout-us for
+   timeout setting.
+
+v6:
+- remove aspeed,i2cv2.yaml, merge to aspeed,i2c.yaml -add support for
+  i2cv2 properites.
+- i2c-ast2600.c
+ - fix ast2600_i2c_remove ordering.
+ - remove ast2600_i2c_probe goto labels, and add dev_err_probe -remove
+   redundant deb_dbg debug message.
+ - rename gr_regmap -> global_regs
+
+v5:
+- remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+- i2c-ast2600.c
+ - remove legacy clock divide, all go for new clock divide.
+ - remove duplicated read isr.
+ - remove no used driver match
+ - fix probe return for each labels return.
+ - global use mfd driver, driver use phandle to regmap read/write.
+- rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml -remove bus-frequency.
+- add required aspeed,gr
+- add timeout, byte-mode, buff-mode properites.
+
+v4:
+- fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+  master slave mode both enable.
+- fix kmemleak issue when use dma mode.
+- fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+- fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+- fix i2c global clock divide default value.
+- remove i2c slave no used dev_dbg info.
+
+v2:
+- add i2c global ymal file commit.
+- rename file name from new to ast2600.
+  aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+  aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+  i2c-new-aspeed.c -> i2c-ast2600.c
+- rename all driver function name to ast2600.
+
+Ryan Chen (4):
+  dt-bindings: i2c: Split AST2600 binding into a new YAML
+  dt-bindings: i2c: ast2600-i2c.yaml: Add global-regs and transfer-mode
+    properties
+  i2c: ast2600: Add controller driver for new register layout
+  i2c: ast2600: Add target mode support
+
+ .../bindings/i2c/aspeed,ast2600-i2c.yaml      |   94 +
+ .../devicetree/bindings/i2c/aspeed,i2c.yaml   |    3 +-
+ drivers/i2c/busses/Makefile                   |    2 +-
+ drivers/i2c/busses/i2c-aspeed-core.c          |   89 +
+ drivers/i2c/busses/i2c-aspeed-core.h          |   19 +
+ drivers/i2c/busses/i2c-aspeed.c               |   43 +-
+ drivers/i2c/busses/i2c-ast2600.c              | 1577 +++++++++++++++++
+ 7 files changed, 1790 insertions(+), 37 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
+ create mode 100644 drivers/i2c/busses/i2c-aspeed-core.c
+ create mode 100644 drivers/i2c/busses/i2c-aspeed-core.h
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+
+-- 
+2.34.1
+
 
