@@ -1,38 +1,57 @@
-Return-Path: <openbmc+bounces-936-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-937-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AC9DC7EDEF
-	for <lists+openbmc@lfdr.de>; Mon, 24 Nov 2025 04:05:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A85FC7F00D
+	for <lists+openbmc@lfdr.de>; Mon, 24 Nov 2025 06:36:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dF9gd5NWYz2yvN;
-	Mon, 24 Nov 2025 14:05:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dFF0x1HMtz2yvN;
+	Mon, 24 Nov 2025 16:36:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763953549;
-	cv=none; b=DZH7TKE4tv+IdY7JYIC2wWYHNgtQ7SAfnio2jmVtcnwZ9vVUUcRCFp3UFTRDOqTPrHa4hR0oKU5TWQD9QS2KxCaKvRsx8DsKa0HPQ61V41T56ZK8k+O5tTK2qsOEi4A6yrX2u0AF6ilFmFccFayfbtQnbrJp90jV9pUf32EMekYMO0PxGeJWPXQOTlYikdcD9C+vl2mhrgysIRzkrpfpgLSMuqxE0IaMj7nbgkA3a1H+KJEfDe2fgebjILdZvnMTt8bfbvnLND4pVqoMlpnEaz44MURPX5KyfuQzbpABC3gey5LArxdmDOBAZd/E1X1HOCganNh5lzkbSIEwmWhcew==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763962561;
+	cv=none; b=VRaHV+Oiz1S6jRZmedKGA210Tj31UnIt6zdPje6lNLKm0khIhQagMTv0t+1OJqE/OaiIr8vgfC7SIBNzvv/F86uRa/RbHTvXXMq94cl5uBuXTxlWPtgES8xUfa2vZ/G5SQTeZaTDqePknDJVLQP7T94ywVDr1bu4k5IpUCd68HSIhFYczdq/FBG8iSCDEANlJaf3OhEVpOzNG2k2wU1e7CY0Y8Jwc1nkQ6t2KYjCH2rbFlAVckcB+x9KPEp4oIhMAWcDBA5JNFOolrFBJqYu8pXyho4XVEHCkfRHHoqNptTjtzMOSevGgDv1Rd79RmZeUPjQK6zadqCjmQkM7daXOA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1763953549; c=relaxed/relaxed;
-	bh=Mc6O4SdjGVe0glDr2dRtnu/v/hHIP/v2O9TVaWZr76U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=eMb4phgtbakAIVcT5N8P+oCNDF/eYr/EcYoELgN7L9BWqbhCZt2dE9w6idj5QUscncCaZv7HfhDvWMXmqYH6+67VWphrzcRdfOLy+cDMQoBj5O2tba9N8Evob65tz8t2+2wza0QdFtH6pwNS+eIhKtu+levoTWRKkToHkO+0wHOdc+y5wMqgv1yNA23PbOL8mcHV/htdXDjsKxGcLlmYpOM6Wz63006jlHBcuyUXqcvBDIOMpZQejHn6qN13WetRifLexMR9FasmrjZjtN1IU4hAT9SBGT7zTmpn0+qUv/4UwLcBn6eq2YUT8bdww9mk7bPNgEvdvorGfPsQzQ6qgA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1763962561; c=relaxed/relaxed;
+	bh=X196kFX/Ou4gjUdw8NjxD+jTng0S2pIxqJUCLf6sdNs=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GfredMdUwxIC7aGvxkRWDdCUpuM24ZTQixB0jP5hTel/PUDvXwJwiyZ4nlJvUujy6RzHyadkpQCnb2jgxwmKydIDAMNMT8BzSmZ6CEFNYBWQvp0n8PrArziec5Gs2vKV7bdJ/HNAIIUgxTMc9sVgnb2s38mTzfUx8/Y+AayUmyNzAcs5pON4M0tu7PpP+vXf56T95bK4jrqd6r2rFDJ7ozQsOjhga8UHVyPpyHYwKFGYNxEtI0VfjCiliD6mAZRw6e6Kem6va30CzAPkt410PHRIu3gzdDxwWW2uAu2xdWRmlvZRVJkduXW6kPSFLAIQdoLZOCK2BsD9OaAdn3MOnQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=UmlXrqpx; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=UmlXrqpx;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dF9gc4MBhz2xS2;
-	Mon, 24 Nov 2025 14:05:47 +1100 (AEDT)
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 24 Nov
- 2025 11:05:30 +0800
-Received: from [127.0.1.1] (192.168.10.13) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 24 Nov 2025 11:05:30 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-Date: Mon, 24 Nov 2025 11:05:14 +0800
-Subject: [PATCH] media: aspeed: Fix dram hang at res-change
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dFF0w3t9vz2xS2
+	for <openbmc@lists.ozlabs.org>; Mon, 24 Nov 2025 16:36:00 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1763962560;
+	bh=X196kFX/Ou4gjUdw8NjxD+jTng0S2pIxqJUCLf6sdNs=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=UmlXrqpxb9SWBvrq0Kw0e+T+eM36OS+4GrdJOvp/1AlQbq5SoWh1VO7po7kwwO1fw
+	 ccaAn1HRD4jd0w6UIPTFZYCdvkWd98bYwomCxx5AcDGJRAMlNFzzSTG64ngdE06Nzr
+	 TraC/+EUmIGRNbJsv5gXbdCMXHqWU/WpiVtngzRLKyCiM0+X03anDpFsrhif/SYeSt
+	 u0Yq9eAjDppFhkN/2rfHw0Vie1RPeVhBbPitBH7AZleLTBc8FQbHa4kcQXJpWOaSdl
+	 Y6gJlYE9Z6y5oCH/Kg61N+Ul6hIRRCZM6mLXqYFIuZxsoW5JG6TbPl7lFEHT2nd7bp
+	 Jygs0pZwig8gQ==
+Received: from [192.168.68.115] (unknown [180.150.112.38])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id C96EF64DF4;
+	Mon, 24 Nov 2025 13:35:59 +0800 (AWST)
+Message-ID: <88585442dc88144d0cb0e46bdcac161f8baa71c4.camel@codeconstruct.com.au>
+Subject: Re: [PATCH] net: mctp: Fix tx queue stall
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Marc Olberding <molberding@nvidia.com>, openbmc@lists.ozlabs.org, 
+	joel@jms.id.au
+Date: Mon, 24 Nov 2025 16:05:59 +1030
+In-Reply-To: <20251121-mctpusb-backport-v1-1-e53b4c80e06c@nvidia.com>
+References: <20251121-mctpusb-backport-v1-1-e53b4c80e06c@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -44,127 +63,55 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20251124-video_dram_reset-v1-1-9d37229e4ec5@aspeedtech.com>
-X-B4-Tracking: v=1; b=H4sIAGnLI2kC/x3MQQqAIBBA0avErBNSs6CrRITlWLMoYwwJwrsnL
- d/i/xciMmGEoXqBMVGkcBbIuoJ1t+eGglwxqEYZKVUrEjkMs2N7zIwRb7EaLX23WNNrDyW7GD0
- 9/3Kccv4AB0H6jmIAAAA=
-X-Change-ID: 20251124-video_dram_reset-c531f6ba573f
-To: Eddie James <eajames@linux.ibm.com>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery
-	<andrew@codeconstruct.com.au>, Philipp Zabel <p.zabel@pengutronix.de>
-CC: <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
-	<linux-kernel@vger.kernel.org>, Jammy Huang <jammy_huang@aspeedtech.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1763953530; l=3275;
- i=jammy_huang@aspeedtech.com; s=20251124; h=from:subject:message-id;
- bh=T6tPkI8Yhq/QCiReLdboMNyc54/4lLjHBMvqDCJv39c=;
- b=eLjDgw5bFeCqwi/if6MHl7scB8sgk6NJB2zQCtHChWUuSG7CfiFUfK7iM21/k5xMbau7Yqt2i
- EqdhlEqPRi6BjXdvgWfAM/l/O1kQmhA1OYr/dMLO9HPhxxrSpxJPXO8
-X-Developer-Key: i=jammy_huang@aspeedtech.com; a=ed25519;
- pk=E5YwijeJZZcuDR6srvwNlXrNHvLxwipUg3Mb/xxUF9o=
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
-	autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Dram hang could happen in the steps below:
-1. start capture/compression
-2. out-of-lock watchdog raise irq because of res-change.
-3. aspeed_video_irq_res_change do clk-off
+Hi Marc,
 
-At step3, capture/compression could be not accomplished yet. If clk-off
-in the middle of video operation, dram controller could hang at ast2500.
+On Fri, 2025-11-21 at 12:29 -0800, Marc Olberding wrote:
+> From: Jinliang Wang <jinliangw@google.com>
+>=20
+> The tx queue can become permanently stuck in a stopped state due to a
+> race condition between the URB submission path and its completion
+> callback.
+>=20
+> The URB completion callback can run immediately after usb_submit_urb()
+> returns, before the submitting function calls netif_stop_queue(). If
+> this occurs, the queue state management becomes desynchronized, leading
+> to a stall where the queue is never woken.
+>=20
+> Fix this by moving the netif_stop_queue() call to before submitting the
+> URB. This closes the race window by ensuring the network stack is aware
+> the queue is stopped before the URB completion can possibly run.
+>=20
+> (cherry picked from commit da2522df3fcc6f57068470cbdcd6516d9eb76b37)
 
-Use reset rather than clk-off/on to avoid this problem.
+Interesting that this hasn't yet come in via stable, but oh well.
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
-On Aspeed KVM testing, we found it could lead to dram-hang if
-res-change. Although the issue rarely happens, the impact is serious.
+>=20
+> Fixes: 0791c0327a6e ("net: mctp: Add MCTP USB transport driver")
+> Signed-off-by: Jinliang Wang <jinliangw@google.com>
+> Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+> Link: https://patch.msgid.link/20251027065530.2045724-1-jinliangw@google.=
+com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> ---
+> Backports a fix from net-next to openbmc 6.12 for a race condition
+> in the mctp-usb driver that results in an effective deadlock.
+> This was seen to fix issues on the nvl32-obmc model with pldm
+> firmware update
+>=20
+> Signed-off-by: Marc Olberding <molberding@nvidia.com>
 
-To avoid this issue, we use reset only rathar than clk-off/on in
-res-change to avoid this issue.
----
- drivers/media/platform/aspeed/aspeed-video.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+Just a quick note that because you've put this below the --- mark git
+drops it when the patch is applied. You need to put your tag in the
+trailer section above, under Jakub's S-o-b tag.
 
-diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-index b83e432452..41cb96f601 100644
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -26,6 +26,7 @@
- #include <linux/workqueue.h>
- #include <linux/debugfs.h>
- #include <linux/ktime.h>
-+#include <linux/reset.h>
- #include <linux/regmap.h>
- #include <linux/mfd/syscon.h>
- #include <media/v4l2-ctrls.h>
-@@ -310,6 +311,7 @@ struct aspeed_video {
- 	void __iomem *base;
- 	struct clk *eclk;
- 	struct clk *vclk;
-+	struct reset_control *reset;
- 
- 	struct device *dev;
- 	struct v4l2_ctrl_handler ctrl_handler;
-@@ -720,6 +722,13 @@ static void aspeed_video_on(struct aspeed_video *video)
- 	set_bit(VIDEO_CLOCKS_ON, &video->flags);
- }
- 
-+static void aspeed_video_reset(struct aspeed_video *v)
-+{
-+	reset_control_assert(v->reset);
-+	usleep_range(100, 150);
-+	reset_control_deassert(v->reset);
-+}
-+
- static void aspeed_video_bufs_done(struct aspeed_video *video,
- 				   enum vb2_buffer_state state)
- {
-@@ -742,7 +751,9 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
- 
- 	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
- 
--	aspeed_video_off(video);
-+	aspeed_video_write(video, VE_INTERRUPT_CTRL, 0);
-+	aspeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff);
-+	aspeed_video_reset(video);
- 	aspeed_video_bufs_done(video, VB2_BUF_STATE_ERROR);
- 
- 	schedule_delayed_work(&video->res_work, delay);
-@@ -1984,8 +1995,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
- 		 * Need to force stop any DMA and try and get HW into a good
- 		 * state for future calls to start streaming again.
- 		 */
--		aspeed_video_off(video);
--		aspeed_video_on(video);
-+		aspeed_video_reset(video);
- 
- 		aspeed_video_init_regs(video);
- 
-@@ -2230,6 +2240,12 @@ static int aspeed_video_init(struct aspeed_video *video)
- 	}
- 	dev_info(video->dev, "irq %d\n", irq);
- 
-+	video->reset = devm_reset_control_get(dev, NULL);
-+	if (IS_ERR(video->reset)) {
-+		dev_err(dev, "Unable to get reset\n");
-+		return PTR_ERR(video->reset);
-+	}
-+
- 	video->eclk = devm_clk_get(dev, "eclk");
- 	if (IS_ERR(video->eclk)) {
- 		dev_err(dev, "Unable to get ECLK\n");
+See [1] for a bit of a formalisation of it all.
 
----
-base-commit: ac3fd01e4c1efce8f2c054cdeb2ddd2fc0fb150d
-change-id: 20251124-video_dram_reset-c531f6ba573f
+Andrew
 
-Best regards,
--- 
-Jammy Huang <jammy_huang@aspeedtech.com>
-
+[1]: https://git-scm.com/docs/git-interpret-trailers
 
