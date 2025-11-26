@@ -1,54 +1,54 @@
-Return-Path: <openbmc+bounces-937-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-938-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A85FC7F00D
-	for <lists+openbmc@lfdr.de>; Mon, 24 Nov 2025 06:36:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAE32C87938
+	for <lists+openbmc@lfdr.de>; Wed, 26 Nov 2025 01:22:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dFF0x1HMtz2yvN;
-	Mon, 24 Nov 2025 16:36:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dGKyl67sfz304h;
+	Wed, 26 Nov 2025 11:22:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1763962561;
-	cv=none; b=VRaHV+Oiz1S6jRZmedKGA210Tj31UnIt6zdPje6lNLKm0khIhQagMTv0t+1OJqE/OaiIr8vgfC7SIBNzvv/F86uRa/RbHTvXXMq94cl5uBuXTxlWPtgES8xUfa2vZ/G5SQTeZaTDqePknDJVLQP7T94ywVDr1bu4k5IpUCd68HSIhFYczdq/FBG8iSCDEANlJaf3OhEVpOzNG2k2wU1e7CY0Y8Jwc1nkQ6t2KYjCH2rbFlAVckcB+x9KPEp4oIhMAWcDBA5JNFOolrFBJqYu8pXyho4XVEHCkfRHHoqNptTjtzMOSevGgDv1Rd79RmZeUPjQK6zadqCjmQkM7daXOA==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764116575;
+	cv=none; b=h7e1zdfJRvFSI7WwABPqgrpA1BIJbdnqrErym0F8rr9POU5bQ2SN4YqfbHFsQ81ke9J2PNxshoGDwQ+Uk7C5nDIJIFmC/+HOd7rqnfEUyDW4a3yeyPtvYW2xO6DKZ5w1Q3TVQ7WqbTjVy0I44u2Vsi/mU9/YEl1JSScYuHslZRAilSDT+hN/dyAKAPFrFSOLIpE5S0f+S5vskpwsUqA1lZk87XAdBeVuTRqVopTk2oIZC5Nbj5fTCVoiIIU/jyE91q+FSOaRWqHH227PARW3KHUgp5HoaRf/DhzKOuOlvUmDttwdR4enB0PAxW7mAMVB3jOdOxxS7475Se25PJS4PA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1763962561; c=relaxed/relaxed;
-	bh=X196kFX/Ou4gjUdw8NjxD+jTng0S2pIxqJUCLf6sdNs=;
+	t=1764116575; c=relaxed/relaxed;
+	bh=a74Xg6fkualjUfvMajT3q1j5vLJwwgZGN28ZkfH5JFE=;
 	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GfredMdUwxIC7aGvxkRWDdCUpuM24ZTQixB0jP5hTel/PUDvXwJwiyZ4nlJvUujy6RzHyadkpQCnb2jgxwmKydIDAMNMT8BzSmZ6CEFNYBWQvp0n8PrArziec5Gs2vKV7bdJ/HNAIIUgxTMc9sVgnb2s38mTzfUx8/Y+AayUmyNzAcs5pON4M0tu7PpP+vXf56T95bK4jrqd6r2rFDJ7ozQsOjhga8UHVyPpyHYwKFGYNxEtI0VfjCiliD6mAZRw6e6Kem6va30CzAPkt410PHRIu3gzdDxwWW2uAu2xdWRmlvZRVJkduXW6kPSFLAIQdoLZOCK2BsD9OaAdn3MOnQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=UmlXrqpx; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=YQ5Ae4wZHLzTr/GMlFnXKfbnN8fOsN1vz/IlZecPCoXTJz6c9UT5CKEv/tPARbOeLjrKfzH5h4HBWo8mJuDd3VGNegbmEmwayLroHSgutpW46ett+jDQlNF5cLE0LAnoveMs2qt7bbTgYFv3XOV7CMU63gKzFRbK6AmCI1UHs6swAvWbXo4ycbOUmpylxwkZ2LqLLWLRWm+41sYcvCikt90si1tdNAhcv8gj2Vrsb6edypiiDjCsBUORWz0NgRDWplB+x/zOlGWq98x4DA8BGqIO9/h9syEAVDOuqwrkAuDzefTiUmIRQq5TxXs0PgAZDr3y0enQnCeyIEBoxK2q/g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=R2K5W13U; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=UmlXrqpx;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=R2K5W13U;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dFF0w3t9vz2xS2
-	for <openbmc@lists.ozlabs.org>; Mon, 24 Nov 2025 16:36:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dGKyk6SKzz301N
+	for <openbmc@lists.ozlabs.org>; Wed, 26 Nov 2025 11:22:54 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1763962560;
-	bh=X196kFX/Ou4gjUdw8NjxD+jTng0S2pIxqJUCLf6sdNs=;
+	d=codeconstruct.com.au; s=2022a; t=1764116573;
+	bh=a74Xg6fkualjUfvMajT3q1j5vLJwwgZGN28ZkfH5JFE=;
 	h=Subject:From:To:Date:In-Reply-To:References;
-	b=UmlXrqpxb9SWBvrq0Kw0e+T+eM36OS+4GrdJOvp/1AlQbq5SoWh1VO7po7kwwO1fw
-	 ccaAn1HRD4jd0w6UIPTFZYCdvkWd98bYwomCxx5AcDGJRAMlNFzzSTG64ngdE06Nzr
-	 TraC/+EUmIGRNbJsv5gXbdCMXHqWU/WpiVtngzRLKyCiM0+X03anDpFsrhif/SYeSt
-	 u0Yq9eAjDppFhkN/2rfHw0Vie1RPeVhBbPitBH7AZleLTBc8FQbHa4kcQXJpWOaSdl
-	 Y6gJlYE9Z6y5oCH/Kg61N+Ul6hIRRCZM6mLXqYFIuZxsoW5JG6TbPl7lFEHT2nd7bp
-	 Jygs0pZwig8gQ==
+	b=R2K5W13UcMwZ6yTTev3Y6LVu4SDFfJia9Os3uYeBMuwNFo7mCCRvNUAawMPKiaYHb
+	 GcCQhYdZdLcVB96Do5qkIMoJhE+qwZXzYIaHJ4aBd0fNye07rh8xB5doSN4M/q5hkg
+	 /qZWMneolVMJ6R6Znf/4iEt3UvqUyBlplmanWRuIanehX/SLEVQkqrtRE8FmkueYjS
+	 WyZI6HNG2Sn+2XEbXG0OLx4d0++ePv8iWGh3qDS7s/pR3n0tuJ26wI5GkmouHwDhT/
+	 07s4RcOl5e35/LOatmm42HVs8hFut2VZdkmPFgC/dXSQI6ANDO88wI2LENdBODzjHd
+	 AMD4xK2TUsOoQ==
 Received: from [192.168.68.115] (unknown [180.150.112.38])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id C96EF64DF4;
-	Mon, 24 Nov 2025 13:35:59 +0800 (AWST)
-Message-ID: <88585442dc88144d0cb0e46bdcac161f8baa71c4.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] net: mctp: Fix tx queue stall
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 4F87D64DF5;
+	Wed, 26 Nov 2025 08:22:52 +0800 (AWST)
+Message-ID: <127d5cd2b57bfd88402a27e5e03ac807d115c2cf.camel@codeconstruct.com.au>
+Subject: Re: [PATCH u-boot 0/2] aspeed: Add support for msx4
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Marc Olberding <molberding@nvidia.com>, openbmc@lists.ozlabs.org, 
-	joel@jms.id.au
-Date: Mon, 24 Nov 2025 16:05:59 +1030
-In-Reply-To: <20251121-mctpusb-backport-v1-1-e53b4c80e06c@nvidia.com>
-References: <20251121-mctpusb-backport-v1-1-e53b4c80e06c@nvidia.com>
+To: Marc Olberding <molberding@nvidia.com>, joel@jms.id.au, 
+	openbmc@lists.ozlabs.org
+Date: Wed, 26 Nov 2025 10:52:51 +1030
+In-Reply-To: <20251121-msx4-v1-0-fc0118b666c1@nvidia.com>
+References: <20251121-msx4-v1-0-fc0118b666c1@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2-0+deb13u1 
@@ -70,48 +70,20 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
 Hi Marc,
 
-On Fri, 2025-11-21 at 12:29 -0800, Marc Olberding wrote:
-> From: Jinliang Wang <jinliangw@google.com>
+On Fri, 2025-11-21 at 16:02 -0800, Marc Olberding wrote:
+> Add a board file and dts for msx4. the board file is required
+> as the BMC is strapped for ABR boot support, and this functionality
+> isn't desired as support in linux is lacking.
 >=20
-> The tx queue can become permanently stuck in a stopped state due to a
-> race condition between the URB submission path and its completion
-> callback.
->=20
-> The URB completion callback can run immediately after usb_submit_urb()
-> returns, before the submitting function calls netif_stop_queue(). If
-> this occurs, the queue state management becomes desynchronized, leading
-> to a stall where the queue is never woken.
->=20
-> Fix this by moving the netif_stop_queue() call to before submitting the
-> URB. This closes the race window by ensuring the network stack is aware
-> the queue is stopped before the URB completion can possibly run.
->=20
-> (cherry picked from commit da2522df3fcc6f57068470cbdcd6516d9eb76b37)
 
-Interesting that this hasn't yet come in via stable, but oh well.
+Can you expand on this? What's missing?
 
->=20
-> Fixes: 0791c0327a6e ("net: mctp: Add MCTP USB transport driver")
-> Signed-off-by: Jinliang Wang <jinliangw@google.com>
-> Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-> Link: https://patch.msgid.link/20251027065530.2045724-1-jinliangw@google.=
-com
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> ---
-> Backports a fix from net-next to openbmc 6.12 for a race condition
-> in the mctp-usb driver that results in an effective deadlock.
-> This was seen to fix issues on the nvl32-obmc model with pldm
-> firmware update
->=20
-> Signed-off-by: Marc Olberding <molberding@nvidia.com>
+>  In order to enable
+> BMC boot reliably, a board file that disables the FMC_WDT2 is
+> included.
 
-Just a quick note that because you've put this below the --- mark git
-drops it when the patch is applied. You need to put your tag in the
-trailer section above, under Jakub's S-o-b tag.
+Hmm. Can we do this without requiring a board file?
 
-See [1] for a bit of a formalisation of it all.
 
 Andrew
-
-[1]: https://git-scm.com/docs/git-interpret-trailers
 
