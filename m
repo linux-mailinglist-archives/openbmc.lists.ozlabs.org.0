@@ -1,76 +1,76 @@
-Return-Path: <openbmc+bounces-943-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-944-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E551BC95515
-	for <lists+openbmc@lfdr.de>; Sun, 30 Nov 2025 23:06:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FC5EC95518
+	for <lists+openbmc@lfdr.de>; Sun, 30 Nov 2025 23:06:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dKLhg75p4z2yxl;
-	Mon, 01 Dec 2025 09:06:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dKLhh6rq1z30B4;
+	Mon, 01 Dec 2025 09:06:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::52f"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764435517;
-	cv=none; b=cyvIMr6Jwcd2KTr11ozFrsoaRBnyOYW6saYyAx3yMznVWQomEowF7kmIuwRIvLFSA/natOAFACG3AKnyf/iGb6/+Gx6GQGbeMSXfmswePIyH88Hb/AmsEjuqIaf2XJbHxZ7z5JJKXq/op41IrtLCd/fefGQ2iL1+QtNBh4jusdWR3SBW6/63SXD6ka05+0ovIHzfWw/9kx9ow3g4vab+kA5l2q5wGrnkm4xfjZzcIY0guXS8rBz5B0Dez8YQQDPYI3gB8pCvd0UZS2zT/9htC1N7qOscAX6QT45HSy75F8zXYRca43NXMS/NpBoapJXtohkxO4vBkAhemhQ/j02UIQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::536"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764435529;
+	cv=none; b=N7g0TOPExJK0zPTZM27u5IBIWbUsWYsoGuMUSajDyh1tA4XOy651231p5RpDcNxnjC4FzMYdWj8rJqPx9tK911UY/fxj13TIENb3zvB922Rz7CsbIdGf6DSilTBXSw6TEonXf4OsAIAqRqrcCgLOPGaRW2Vfbg/p4F3dyPtMYT6HjrikUfrvk882sGn/yfHo4ayIqsVvwVPTWsZH6UCfib7fGx5pd+HUW5JlKrdBxCdqd2ZB4lRzVq0g1hNN4avX4Z8ckCb9mICU4+GGrrVySIaxcVpw8ZeL7mtWfW1IFDuglxdVQsC52u42fOccdLY2/nbJZ1jfDmH4vWPAI5/zLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1764435517; c=relaxed/relaxed;
-	bh=Gr1otfYaqpnm7bjSkZRheFMZkv0FIFM3TuO+TEbpsfc=;
+	t=1764435529; c=relaxed/relaxed;
+	bh=BNQekoeq5MvJ5okU84UxS4oYSbes7vTEJXlQrgYvFfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JyxGyi+K7OzVENYEoKzXpoutaMpqAI96oLcPsvEqb0lnx1m4AS+anDeGp+IfkLvIbf0yfXUUQd5SGuAMb7aH/IDip+WtK5l4Z3+fV2DHutODSOicyoIrJMhCuJaXsgM13oT6ArVcXqP8RbYuFgVD0cJOY/LqGSBMIKAO2geASM82z3uaXPdSSOnq29BZTgfVC1+w+C5nehx2tdgbpWAbdeBeMhZ2bSXaBQyFRhCWWFBR6F+lis+6ZUDUTDzu4WFzp1fyWzyEQ+a+eQ/IMEPpdGEq3tPy0Q6xd0yUDt8p9eqPLHLZOi8USRhao5YyxeiDANJzuMkoWuTmqO5vblm57g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=G2E0v82m; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
+	 MIME-Version:Content-Type; b=Vn4ahwqDIIAgF1DzuX0bhUu2Bq4+2ZuSKHTqol+CL10VHrFiOuyLi64Q1wnPlM/Wn61sWp4HNCUJKq+zT45nK0RtR38x2JZ4d5eV/I60YppENMGQ36TfeIjVtC1In/265AcEcoUQI6ir0gsvppvWp+oyPRKBuHFwp+Qty0a0agaqc1NXJg6Yz2itN7KEVAUZBaLsMN3qEKHFpS0yhcOphboeoK41ZUp7FhqiFI1JKK1LBnCyLbWRel5CpeMIIRIJdZNGxFS+hUfMlgglg2HDSShnAIfL1xuM3fDMWPwNwHbBH2WUb2mhyw4ZxLvsqDZEE0y3PXZUZp/TJi72M6XM/w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=UfOtM+BG; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::536; helo=mail-ed1-x536.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=G2E0v82m;
+	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=UfOtM+BG;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2a00:1450:4864:20::536; helo=mail-ed1-x536.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dJbwD4w0lz2yPS
-	for <openbmc@lists.ozlabs.org>; Sun, 30 Nov 2025 03:58:36 +1100 (AEDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-640b0639dabso4995331a12.3
-        for <openbmc@lists.ozlabs.org>; Sat, 29 Nov 2025 08:58:36 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dJbwS54Ppz2yvv
+	for <openbmc@lists.ozlabs.org>; Sun, 30 Nov 2025 03:58:48 +1100 (AEDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-640860f97b5so4458445a12.2
+        for <openbmc@lists.ozlabs.org>; Sat, 29 Nov 2025 08:58:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1764435513; x=1765040313; darn=lists.ozlabs.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1764435525; x=1765040325; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Gr1otfYaqpnm7bjSkZRheFMZkv0FIFM3TuO+TEbpsfc=;
-        b=G2E0v82mghepJc/AhMslvFhxDFwwJJi6cEABuhZV3uR0kPNuN+AsWyER05t6Lb9b0o
-         WrrNPYHfCAY32bQa9gIiA6xv8ka6Nsbp0QqCdYE3/24JoeJy2TjOWvh906QoFiazFtiV
-         kTA/89z/YuWvui3b4S4PjdudwIwu8/5tPlo5TPliYtI6Q0fkOX/b1LaQbPdAPZ1iKvuG
-         pxk8HVNRTaFeGznVpJQQp4z7pdv2SFb9ANEA1xemtczZAQ/J1RjqbOjrDUiULvVk0WS6
-         5T6jxFAD2wgQTiibmepfA5NcR90YZKlDgXAm9kOx70k44QQ+rfOJLPjS/mi4xMXQTtr3
-         uwZQ==
+        bh=BNQekoeq5MvJ5okU84UxS4oYSbes7vTEJXlQrgYvFfA=;
+        b=UfOtM+BGKB7v3YV9hNfMWfMONUXlBBbY+goDOaGnS3OVe7NR0+IDLsHZwEl6oURjTK
+         3Z/Ji1UZFnL1AYDJDydtu8GmcDhUbtGruCJeW3WeLcb4J6Hy0RG7WCPSh7i6J5v4ns9X
+         Va1rgvzVPUeO0acMsHLWQ8Kbt2rtW1W+C1wiQI4+ks2MU0bzPUEVqAu9t4ohixZu5ksG
+         OTTqG9LbM43D0byCOmdvQ73ZHD9SlBg91eyYI0c1Z/yxY0eJRDYvWe1X9i7qXBb9upem
+         RXRXXvr+EVL9nNsME4U5vEJ5iQvta98++xuCJTAFDSHMsO7jr2gJSGcZvsUR5p0pgeDx
+         pAYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764435513; x=1765040313;
+        d=1e100.net; s=20230601; t=1764435525; x=1765040325;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Gr1otfYaqpnm7bjSkZRheFMZkv0FIFM3TuO+TEbpsfc=;
-        b=PMhxTP+mnCaoRr4iTsx2mlgCl+Xyw9K/Tdui1KY/iTPn1tCtzUQ+5s9RPQ1whzolaD
-         FRb0jCHYvC+5+qbcGaUwtMBxW7MTv1z+vLxmxYBhImupRr1OKIbT6RtKCupWBuhBdFEa
-         6MFvUoe4JsVdK1YtwYrS3uf6dPKW/YaSPY/WvfDqemtTEq+qwmCJ1uI1laOAYtHsI8TA
-         7aygpbYRXZxFELYeXrrgcaDLJfegbooGauLzt/UQgkpFf7jV8PKuspoeWIL7odVn7MYk
-         3I/O76VV7BlcXSM11oQbeFODv/WfYHE7LC+3FyDW/53/78x8NvzosplrUGHaGo6NEnuz
-         12kg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwmP/MSMo7VcLDdi75pOdB4haT74xZOVoFlzmbAlmNHob8IHAL+KYmNswatvEhQAWppVUNvy0n@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Ywd3yX2iEx0+3RdtJ+nsOeJE5pegeRDANJnPLe3ar3usnfAFtD5
-	UEHGth22jHejRXeL+toYtqM+Wau+qTLiOQJ+yk53H0IwIlCxF2+15mZrbc+vlrShdEE=
-X-Gm-Gg: ASbGnctHDipdRC1xywpV6E+2Jc7wHfVl77wZbQ08gUHF01TGDS5ecGULyaw1ohEq7Fn
-	HpK5QJYyuD6ZFkK3dvtd9fD93643EekHjiLBxMNVyvodgad8S6htzAWOg+e4ySxna18rQa6/3Tg
-	crgdb3NS9Au0rMfK9A0QhU1E6VfGjxocMnaVTHWkUqVZGQkyig49RIsBs7/4uXNQ8Rk5zxuU8VV
-	cYgHoHOEspVb5vx8j5MRJj5yTNk8mTmvrfnbTaLpOSpn6HufjCOoYhxRPZz3hd14gFHNwjsLfou
-	pEPqlqvwwUcdpnr9P+7tr28Wjriek+oD8dfWKyqzxPz/Qf0X+AeGRr0Udt7Bq76By8D1XoGJA++
-	qP03FW6vILBuINypOOYzXuKa20+GmTs2NlSu89P1BNmzQcyW+DWTjeqGBCDhYveU1fkH+4U4bPA
-	JWzu1wqWmiUX/kZy4Q
-X-Google-Smtp-Source: AGHT+IFKnLXqE8LRIlt2QVhHOKoMN+oTpxrL+57F7QBEnjRT27+V6LIYdrwq+mi99tb4ALfJSxXVkw==
-X-Received: by 2002:a17:906:f34c:b0:b73:5db5:b6d9 with SMTP id a640c23a62f3a-b76718aab35mr2340211066b.55.1764435513394;
-        Sat, 29 Nov 2025 08:58:33 -0800 (PST)
+        bh=BNQekoeq5MvJ5okU84UxS4oYSbes7vTEJXlQrgYvFfA=;
+        b=P4uT1X8RZrOfme9LU0S2cilJYwAEyHnA0grAqdRNzJJj6vNoIXYIIoS4dfh72gkuNj
+         cX2DvlF5q7qzoIk1i9RgT3cp04Y2iAphGNCFUxfgp3RIvF57w/cPmuBI/f9C5dmzCQpN
+         O1OpUlG20RjR+WZwaJrhZAuxNLHiLDmlKj/IPFtnFFoYkx70dJOth4pWRtmoihQV4B15
+         4JG8vvtniyYQReOilRVeQUI06ksUGfNbc8YbcKRhKvfauOekoa37D7GJQ8XhD+W9Vae5
+         MpXJeLyvDLGmMK3UvUo/zP4leyDff/Ttty3xn4DGgJAVPRJCNirzetScXmOzT40yQc8b
+         mvMg==
+X-Forwarded-Encrypted: i=1; AJvYcCXMicPctNbbyV3pbANhoZE35s1/sz7be8R2IH+nYe6OVckulFCMQYHm4bDjVtw8GdGfGk1saqOV@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YzJwBrPJjVTDe6Wi3N4FmOMY0dvGHR+o8jCEopCt4oCdWxjhPuJ
+	48QW7hKzIjhzcCG8l5qI74z+yq8OT3l/h4H2cghnxQL2syRNB3U6uBzV2DvZ4G4ov0U=
+X-Gm-Gg: ASbGncv5gjsTN1zj8gKzhsPfR0/dfJrX1219sMHqZQrSgFJ/7A2FL9+FALYCVDqvbgv
+	VdcpptE9W2sHA8tqPqrwsAlX4h+BjkbghER3BGEvsk9hzcGNjKIWPVjx9f1SLlIDV/rFMYZ8dzj
+	M7DMT6pGDPr94XxTDgisAZ19/+F5nlIqM7/zo9VgM91OMasJO79Iabf5LqR10Uwz/VQg1fRg/Q2
+	g1jX/bcWgn4jODPZ2tr9xFYX+ae+xa5dJkJLPbXEHbeMpj1DUE+9xgCMEEOiQu4CEK8LvOx0epJ
+	Ntei5HiaG1rDFwnJe/cRA2MyRsMr44Vto9aEVwGKFlTzyH4/NF4OqiFTyYi9zAhvxhQXDO/rFiO
+	IHQ/4GBRy79+TqTsQXnnOob6yi7tBJcyKbL4YKnfP/ouEcDxgODldGHT19yXjjIb3+lTKvSXwL6
+	CvGOQ9QwxXO3/ot7kA
+X-Google-Smtp-Source: AGHT+IH0MuHRfQrTehiJ52oUZvyc1bRjVVlQ90Y5BVCZU/AGDxq3c6qhZBRECgPEx5G8y1z2CMPY2A==
+X-Received: by 2002:a17:907:a09:b0:b76:7b8c:a6a2 with SMTP id a640c23a62f3a-b76c5513f0amr2236776366b.30.1764435525382;
+        Sat, 29 Nov 2025 08:58:45 -0800 (PST)
 Received: from localhost ([2a02:8071:b783:6940:1d24:d58d:2b65:c291])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b76f5a4a652sm742627266b.65.2025.11.29.08.58.32
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b76f519e2a7sm746363266b.19.2025.11.29.08.58.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Nov 2025 08:58:33 -0800 (PST)
+        Sat, 29 Nov 2025 08:58:45 -0800 (PST)
 From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: Eddie James <eajames@linux.ibm.com>,
 	Andi Shyti <andi.shyti@kernel.org>
@@ -79,9 +79,9 @@ Cc: Ninad Palsule <ninad@linux.ibm.com>,
 	openbmc@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 04/12] i2c: fsi: Drop assigning fsi bus
-Date: Sat, 29 Nov 2025 17:57:40 +0100
-Message-ID:  <ef38106b5099e92395d5cc84d1bf0b806b53d1dc.1764434226.git.ukleinek@kernel.org>
+Subject: [PATCH 11/12] i2c: fsi: Convert to fsi bus probe mechanism
+Date: Sat, 29 Nov 2025 17:57:47 +0100
+Message-ID:  <1311bce0d8617c7821cfe0769e97f13dc466d749.1764434226.git.ukleinek@kernel.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <cover.1764434226.git.ukleinek@kernel.org>
 References: <cover.1764434226.git.ukleinek@kernel.org>
@@ -97,7 +97,7 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=750; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=1VfHxw2ik6pzPD8vLs+mn8BWmuJDAturdWzRRyIrqd0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpKyYN8lBrGJpOMDv2bj2UXkW6vOeHEDQSWIxFR +fQY+otSveJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaSsmDQAKCRCPgPtYfRL+ TjqhCACJ26AKCTEQ2AdYGn8TW4BjKP668+yBDwJOS/VEho+vaICy9AGZPulA2zsc7SyxgONX9UQ WByf2w5LQ1eNkxcYyKRqCPaG2XJZ3KrF93BTAD2LOt7OcwuD+1SDMMvoRY33JU8Lx9T8/2x7U2r dsLH9479cCnr9qM9gw+mt4en/auHBnxLEP1utO6n9UkLIPTFenquh2ydFCF8mRHq3082Lrd7G9B h8hvNdEtNYXz1+e3yguVT9Wl3I9PkXpl3/KPgqt6EXXKe93KiMjm9p685un7xZxJ8zpH/wdK18j n3RjFo1f2KA7qNeCBuBr/tdll8V4RQIa9tdBGt2eDa/BtZPv
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1926; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=lFoITZ+8y9h+znHwjqA5lzaUXuTbRHz9vr6xKWUfQoQ=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpKyYerMbqnhdrESWnep/VE+BwW0xpjbtreFxEN ucImWFZ8nSJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaSsmHgAKCRCPgPtYfRL+ TonZCACcm2Jdwaa3XVZ2Cp3JYYBZY68UG0Sf3G/dj+JWPDhCBlZ+/+v7prYyU4O3d63j5jPdYaY EHU3cy3rKORxvZQ7O3dHJ8Q2skeRpnrR2wTftedZVfUPNiB5jYlJKSe3sx3ktLQbThCQ1z2Zbvi l3lkI4FFBwsAaYkhjWjMj3y3qF+uJZn1qQdQSZZsqQwJFFf27tnOaNp0FRCvfmBqGmdpuMEMr5a gc85eibDINIZDLq4D+16foZZgOyemHYvJKOMt5G438IZ32J4vutnfcPLxCpIxrHsLlkcUkrFaJy CKa7WQj6VFAJxp9cuDEC1oHlZC7RgE+vdw20Qp5r1jOx9j+O
 X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
@@ -105,27 +105,70 @@ X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Since commit FIXME ("fsi: Assign driver's bus in fsi_driver_register()")
-module_fsi_driver() cares about assigning the driver's bus member. Drop the
-explicit driver specific assignment.
+The fsi bus got a dedicated probe function. Make use of that. This fixes
+a runtime warning about the driver needing to be converted to the bus
+probe method.
 
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 ---
- drivers/i2c/busses/i2c-fsi.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/i2c/busses/i2c-fsi.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-fsi.c b/drivers/i2c/busses/i2c-fsi.c
-index ae016a9431da..e98dd5dcac0f 100644
+index e98dd5dcac0f..3a7e577e6eac 100644
 --- a/drivers/i2c/busses/i2c-fsi.c
 +++ b/drivers/i2c/busses/i2c-fsi.c
-@@ -763,7 +763,6 @@ static struct fsi_driver fsi_i2c_driver = {
+@@ -674,8 +674,9 @@ static struct device_node *fsi_i2c_find_port_of_node(struct device_node *fsi,
+ 	return NULL;
+ }
+ 
+-static int fsi_i2c_probe(struct device *dev)
++static int fsi_i2c_probe(struct fsi_device *fsi_dev)
+ {
++	struct device *dev = &fsi_dev->dev;
+ 	struct fsi_i2c_ctrl *i2c;
+ 	struct fsi_i2c_port *port;
+ 	struct device_node *np;
+@@ -735,14 +736,14 @@ static int fsi_i2c_probe(struct device *dev)
+ 		list_add(&port->list, &i2c->ports);
+ 	}
+ 
+-	dev_set_drvdata(dev, i2c);
++	fsi_set_drvdata(fsi_dev, i2c);
+ 
+ 	return 0;
+ }
+ 
+-static int fsi_i2c_remove(struct device *dev)
++static void fsi_i2c_remove(struct fsi_device *fsi_dev)
+ {
+-	struct fsi_i2c_ctrl *i2c = dev_get_drvdata(dev);
++	struct fsi_i2c_ctrl *i2c = fsi_get_drvdata(fsi_dev);
+ 	struct fsi_i2c_port *port, *tmp;
+ 
+ 	list_for_each_entry_safe(port, tmp, &i2c->ports, list) {
+@@ -750,8 +751,6 @@ static int fsi_i2c_remove(struct device *dev)
+ 		i2c_del_adapter(&port->adapter);
+ 		kfree(port);
+ 	}
+-
+-	return 0;
+ }
+ 
+ static const struct fsi_device_id fsi_i2c_ids[] = {
+@@ -761,10 +760,10 @@ static const struct fsi_device_id fsi_i2c_ids[] = {
+ 
+ static struct fsi_driver fsi_i2c_driver = {
  	.id_table = fsi_i2c_ids,
++	.probe = fsi_i2c_probe,
++	.remove = fsi_i2c_remove,
  	.drv = {
  		.name = "i2c-fsi",
--		.bus = &fsi_bus_type,
- 		.probe = fsi_i2c_probe,
- 		.remove = fsi_i2c_remove,
+-		.probe = fsi_i2c_probe,
+-		.remove = fsi_i2c_remove,
  	},
+ };
+ 
 -- 
 2.47.3
 
