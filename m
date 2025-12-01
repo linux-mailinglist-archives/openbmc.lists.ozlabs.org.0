@@ -1,57 +1,57 @@
-Return-Path: <openbmc+bounces-955-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-956-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5009BC998E1
-	for <lists+openbmc@lfdr.de>; Tue, 02 Dec 2025 00:15:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03A4DC99948
+	for <lists+openbmc@lfdr.de>; Tue, 02 Dec 2025 00:24:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dL09b5CDlz30Vm;
-	Tue, 02 Dec 2025 10:14:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dL0NW4nVgz30YZ;
+	Tue, 02 Dec 2025 10:24:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764630899;
-	cv=none; b=jex4EzVG+dUyGRvKbFa3dxUjPx4Sws1P66qUjkv3K9vR0AMTJ8YYQtE7+8X9xQ6j7LbTviwJwy/e4TqrrNQzrlOw9hObDhOksXIKhRPbNzskCX5z2NQoFiLq48NqVVWf6QmwkK2KlvDecTmKNyX8wm6dxgBUxxYM+Q/Zxr802x+vQfHO+dTCdkb9XxpuS4paiBbicuh5uAiU7yLHM/PBZuTjj9S/oBSOUlyOpgYGk9uJ+QswEXiNp3+B8+skywcqb0ijZrezUSwvCadx4Xh19FllePoJNBLCFUawECYGC5P1lgJeEq+hZQsUIookPy2lF9JnFx+yw/XAYXyIdB3zbQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764631467;
+	cv=none; b=U+7y5IA1rmbwYNOMQv85x8sAMcCDvD7vql0ThtM8dSa4AvGoym2UEWu7XbfnsGcxY5QJ45A7KXhZA5mBFi3Lg4Z2Td/ULnxPHM6EfL5ztuUyD6Ve5CAOYyyScKluz7/Wz2U/o9TGgto78l4ex3WtD9LLHaGEoj8sWhy3JW2o+Fwatu4swUj6PCZrFZTiNukDJIksl5qrzVQkQuUzTMOEHJlFYMTXuzdpTqLXu1aWRJGJkHanFHyEBr/b+IBT6jvpToxzxS9lsCFLCq+FbkFYdclcveb4jmuo7Q8oDwgxzOexaXS6GxslcQlPHTDY4oqWE6AEcDIEJ7MgyyUr325clA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1764630899; c=relaxed/relaxed;
-	bh=6LgLqj85NtIHYBOgGO4mLTSbTo3gxMthLUizfzRSKyg=;
+	t=1764631467; c=relaxed/relaxed;
+	bh=32z3Fnar6DOpzeo43tQ+e60Vac+frcVlWp7nftSbSdw=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=W+vimoHB9xn+aT0gU2+PMys78f6zkOOPZeFieNnwbTd2d2kjBpf4B13PE6KCam0rzUp7/weO0kqKteGyTT+k7dwpyJx4unUbYKF79vFRZ1pjHLNs3ycTGKVNuHY1DIGw3+xbPdKOTq5vRLkDreEzJjupodHQbUnNZXr4l9pFPbrVir/kXFada54OdGYTbrTS127eg5Xf3zncHSwj78/cVLzw/4oi07E8uIl9Kinli3RoPE91v/zatXQfy+PBq6RYLj6bDUyistbf+qq3ApwQdWC0YyE5R+W7Ag9CMUuWzRDqK40G6AulZrCw0ocUUrxoQN2QipxwGo+RYeIRSxgfwQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=lipupXUo; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=gAfzgmssMmbj5mvWh/JNHjh1MM/Baa6Mxk/Qa4JEn/5moAJTw7WxVzXn9PXnRoVxHpijnKCgOE6F4pJcdsB+YpOLqo955MA1aEAtZuQYlVDnL1m81TQVPJrkPgCKaUCC7mxbPjmDyf/kYlcgv7lrkR6oPwdorZX7q2GM9jm3TkE/0Se6Vg3WMOy3wJ2QEyyaE7LVaJ3jhpu8GvSDZzOKVJN07JUrZwSh5dMf4pGO0xJaQ/L4Vov4UH34xDeqiEeB+II4GQEyevT7NxMxx+FQsFnvBPz0DeJSqF6e+sL8JP+2F1dXGt1DcPVjNWXLUf3dHBrhw6LNReuRfDSJk4eAhg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=CRJZz3wX; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=lipupXUo;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=CRJZz3wX;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dL09Z4sGpz30VR
-	for <openbmc@lists.ozlabs.org>; Tue, 02 Dec 2025 10:14:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dL0NV61mPz30Vn
+	for <openbmc@lists.ozlabs.org>; Tue, 02 Dec 2025 10:24:26 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1764630896;
-	bh=6LgLqj85NtIHYBOgGO4mLTSbTo3gxMthLUizfzRSKyg=;
+	d=codeconstruct.com.au; s=2022a; t=1764631466;
+	bh=32z3Fnar6DOpzeo43tQ+e60Vac+frcVlWp7nftSbSdw=;
 	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=lipupXUoiLjnXgqlS8ftatg8eE2WDBXbj/b0m0XULvtwFfqHKDyGvyo+rwUapLDRf
-	 IrlStPVMUTBTDMjMHgsx3j0KfsdJc/u0X9QY/p4N0Gc2aQ6LHjMXsY3DO6fG617tUz
-	 dTyLal4+FBlAtcENrzqHVOefLLcwJFuFuXYQimfqqTJBociY+t8XPG6dV5XafveKVv
-	 PiqCVG3OpFev9KpueCPWuihyht9hCBFgqDwkpq5AWyqLZD0Erp7naHebI4DgDyxBuj
-	 cRHxCLQ3FSIvvHfLYQktzL84Lw8UGQ3lgh0jMtj2uAmO4ak8YKawmrIbSaon9W18eZ
-	 o0VU3AvXbu78Q==
+	b=CRJZz3wX15BHjTcFTIf6iN/g2bJYaTE+ebs8jiK9aNTFIQCSYK316GkiRBw24uV3Z
+	 l43vxhArLPNHYvcT1DM4xNio+dVovdBORKfo4S/riyAWOw1O7LEPYAGBEaFP6C1qJv
+	 N928Q62gCPr9p4v1j8d4Ars0059L2ICfmGUqEbOlF5IhO68UOfgxEYfJWmKLMllUNJ
+	 0BZV2WTJha0KyYkNJnSxsVTL2LM7JKJlUIQFZdAKryRBcBJinX+uvuI2Tj+DpO8Rqt
+	 QmjbE1G2xUs5FV3QsAlXfkFmhGTP+mLQ7lJ+azhZbmjodgn6lsQTuSJkWBoRW9kndC
+	 fa67sQTFr6PDQ==
 Received: from [192.168.68.115] (unknown [180.150.112.216])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 861447AB4A;
-	Tue,  2 Dec 2025 07:14:55 +0800 (AWST)
-Message-ID: <4aca43d2539ce4452a3911f7fc1dbf5abcbe5de4.camel@codeconstruct.com.au>
-Subject: Re: [PATCH u-boot 1/2] Add a new board for the gigabyte msx4
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 046EA6472E;
+	Tue,  2 Dec 2025 07:24:25 +0800 (AWST)
+Message-ID: <8ec00dc3dfdf32edcd86ca007a596eb43acb66de.camel@codeconstruct.com.au>
+Subject: Re: [PATCH u-boot 0/2] aspeed: Add support for msx4
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Marc Olberding <molberding@nvidia.com>
+To: Marc Olberding <molberding@nvidia.com>, Eddie James
+ <eajames@linux.ibm.com>
 Cc: joel@jms.id.au, openbmc@lists.ozlabs.org
-Date: Tue, 02 Dec 2025 09:44:54 +1030
-In-Reply-To: <aSZYRPXSGcHImegq@molberding.nvidia.com>
+Date: Tue, 02 Dec 2025 09:54:25 +1030
+In-Reply-To: <aSZVxjFQ0+pqc/hq@molberding.nvidia.com>
 References: <20251121-msx4-v1-0-fc0118b666c1@nvidia.com>
-	 <20251121-msx4-v1-1-fc0118b666c1@nvidia.com>
-	 <9e3bee690272f89ea0f25120c95f166065a3d888.camel@codeconstruct.com.au>
-	 <aSZYRPXSGcHImegq@molberding.nvidia.com>
+	 <127d5cd2b57bfd88402a27e5e03ac807d115c2cf.camel@codeconstruct.com.au>
+	 <aSZVxjFQ0+pqc/hq@molberding.nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2-0+deb13u1 
@@ -71,67 +71,31 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Tue, 2025-11-25 at 17:30 -0800, Marc Olberding wrote:
-> On Wed, Nov 26, 2025 at 11:00:33AM +1030, Andrew Jeffery wrote:
+On Tue, 2025-11-25 at 17:20 -0800, Marc Olberding wrote:
+> On Wed, Nov 26, 2025 at 10:52:51AM +1030, Andrew Jeffery wrote:
+> > Hi Marc,
+> Hi Andrew
 > > On Fri, 2025-11-21 at 16:02 -0800, Marc Olberding wrote:
-> > > +}
+> > > Add a board file and dts for msx4. the board file is required
+> > > as the BMC is strapped for ABR boot support, and this functionality
+> > > isn't desired as support in linux is lacking.
+> > >=20
 > >=20
-> > Can we rather add support to the SPI driver, and disable it via a
-> > devicetree property?
-> >=20
-> > That way the option is available to other platforms and minimises the
-> > spread of board file code.
+> > Can you expand on this? What's missing?
 >=20
-> I think that's reasonable, and I can put up a patchset for that.
+> As far as I could tell, support to pet and eventually disable the FMC_WDT=
+2
+> doesn't exist in the linux kernel (I'm happy to be wrong, I'm not in love=
+ with this workaround)
 >=20
-> are you okay with something like:
-> ```
-> &fmc {
-> 	status =3D "okay";
-> 	fmc-wdt2-disable;
-> ....
-> };
-> ```
+> So when the 2600 is strapped for dual SPI ABR, we just end up boot loopin=
+g
+> between the two spi flashes, since no one pets the wdt.
 >=20
-> as the target config? or potentially drop the extra fmc...
+> This patch just disables this support altogether.
 
-It would be best to prefix it. What do you think of `aspeed,disable-
-watchdog`?
-
->=20
-> For what its worth, WDT2 is actually disabled in the platform.S for the 2=
-600
-> but its disabled by an #if 0 preproc directive. I think dealing with this=
- in the driver
-> is a good idea and relatively low lift. In the response to the cover lett=
-er I had asked
-> for any ideas without reading this email :). I'll get this patch set up, =
-thanks for the
-> feedback.=20
-> >=20
-> > What is the behavioural difference to what's in
-> > board/aspeed/ast2600_intel/intel.c? It's a little annoying to tell
-> > because intel.c uses macro symbols for the register offsets where
-> > you've open-coded the values here.
-> >=20
-> > Can we try to make the implementation common?
-> >=20
-> > Andrew
->=20
-> It's functionally the same, and to be honest this code is proliferated ac=
-ross
-> at least 3 board files. I can certainly make a helper function,
-> but I don't have access to test all of the boards. If you're happy with
-> it being "correct by inspection that it does the same thing" and "it buil=
-ds",
-> I can move these board files over to using the common helper.
-
-Let's get the code centralised, make the MSX4 using that centralised
-code, and then follow with patches converting the other platforms. Make
-sure to CC maintainers of the other affected platforms where you can,
-and if things are okay by inspection and no-one screams, I'll apply
-them all. Otherwise we can just apply the first couple and quibble over
-what we do about the other platforms in slow-time.
+Hmm, yeah, I think I recall disabling it in a u-boot environment script
+back at IBM. Maybe Eddie can track down whether that's still the case.
 
 Andrew
 
