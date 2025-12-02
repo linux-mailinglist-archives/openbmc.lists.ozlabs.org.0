@@ -1,62 +1,60 @@
-Return-Path: <openbmc+bounces-958-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-959-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03584C999F6
-	for <lists+openbmc@lfdr.de>; Tue, 02 Dec 2025 00:43:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFEFCC9A58E
+	for <lists+openbmc@lfdr.de>; Tue, 02 Dec 2025 07:40:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dL0pj73cjz3bb6;
-	Tue, 02 Dec 2025 10:43:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dLB3D4Bdhz3blb;
+	Tue, 02 Dec 2025 17:40:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764632621;
-	cv=none; b=Tt5AIqcPf5guE7zqR52G0jmnRg9T6CYnO9pB3SQDAu/jkB9XqCjJzSIUldB8I9CoVin8t8pMyK2Y+u76PCdDM0U92My/ZICfTyIjwJx9sSCX8aUQvDk89mQJAC4nwBv4MAWenfrhZV9f3V84czVjZyEC0xkbNhXaFUbh6hRiolRSoVbpbCjalujbki5nmHiAtQ4x479ci4qxbIjH2IB65dm/BoRJeN1/RgWoyjVOGZ6H0SdJIKT84vosudxjW72j1HtReI1iSlIbqaRsEonExL0+d9V0eY+UzshVtIo6HorenT4Gm2WejF8wxDe/fEZfnxTaKWnQ1aKG9rLZQoLAAw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=209.97.181.73
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764657608;
+	cv=none; b=RCcQOpLaHJccimWeBXF2JsqzQIMw7DT2HB6dUe9ezuWr5Lg/c6Z6cQE1bCD1Q3l/HK2GtsXCRGF86gXDm93htxoXhyOW+WrGGHK02DONuDmzhrVkqg0YD31ccsKn0YjgwAODthSNDGVHN2o9P4Nzi3+7DCoDKWjw6Tx1TcS5x1Fzx8urVXTE3klIbJoEOdVCMXXGBrFljjWm9sNrXLnnPzWC/2eETuYKycw9lknaeiObswXxoL89ZQsEjqXEFrzCHCe2iCjyAzPQa1ER+ZL+87nJ43bZWxZxw1r1LT+eKt/lu+pD03T8xL0gURjf1OH4jg5YGEvuQ3dr/jaiTJxF6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1764632621; c=relaxed/relaxed;
-	bh=yNitHKVvffQCdUL8QEIivRqGdBqTMR4kRK/fLjkDcjU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dXTOQULf9mIIXP2sIHRrZ12rHvm2AB7E41e6UoFPMveJ57Tcy6x2O12lGto3SWG1+RV8TB0KU7bEW1SyI0R57CT4l9/c9x0FIEAFKHsg788VxONURpqhaaHb3DkBIDE1tL3ZkC2KxbggojPxAGeV+7lQ/Rw9/JU2hP7IsjrxTDPGY0Me02sFpLwb5x5yqSyTXTxomyCbsNZixiMbfr0Mx0pc/7sRHnhnkwZgugZ7Iu2AOgL/XvQpbix62Q6obj1FaErGQncKxos7aTTTZFZYAg+U69tKXJTKNbL3xIZP7jj0F6AUS7LMyossAPe3TsBgUOtkis1hWZZV35MkOP6TPQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jH0oxUDO; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=jH0oxUDO;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dL0pj3bk1z3bZf
-	for <openbmc@lists.ozlabs.org>; Tue, 02 Dec 2025 10:43:41 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1764632621;
-	bh=yNitHKVvffQCdUL8QEIivRqGdBqTMR4kRK/fLjkDcjU=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=jH0oxUDOSDCjbZohNnu/fCVm8DLpLcFfyR/COU6EKP7L5a9TtgGja02oUqkVuBWcu
-	 OHSv5lRjMJqdAj8A2Xey6QTr2b8F4oX/FH5J7qHXNmoApVLhce1ra118XxCvJ1OGEv
-	 64zz4cbGwQUkbLzyPP9VolcDNUkP2rZSK4Clg9yWWOWGNPx4MlkIJdnxpOgb6Jt+L0
-	 3iZhUXoOt29WK3LY/fShdP/vOYaVDWZfslDx/gN5XHTIkTOYyFi6vbpz0L8FvnUdFL
-	 jrjrK3jPxclnRYjpHcreWnTjCAFZCaC3eXm/MO+r93lGzBCXlxruID1S+RUm6iI6nE
-	 P2b+ImPgPm91g==
-Received: from [192.168.68.115] (unknown [180.150.112.216])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id D680E6472E;
-	Tue,  2 Dec 2025 07:43:40 +0800 (AWST)
-Message-ID: <281f88870fa52a5ebeafe01f85c366b2513856c1.camel@codeconstruct.com.au>
-Subject: Re: [PATCH u-boot 1/2] Add a new board for the gigabyte msx4
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Marc Olberding <molberding@nvidia.com>
-Cc: joel@jms.id.au, openbmc@lists.ozlabs.org
-Date: Tue, 02 Dec 2025 10:13:40 +1030
-In-Reply-To: <aS4l24MfyI7XOUbY@molberding.nvidia.com>
-References: <20251121-msx4-v1-0-fc0118b666c1@nvidia.com>
-	 <20251121-msx4-v1-1-fc0118b666c1@nvidia.com>
-	 <9e3bee690272f89ea0f25120c95f166065a3d888.camel@codeconstruct.com.au>
-	 <aSZYRPXSGcHImegq@molberding.nvidia.com>
-	 <4aca43d2539ce4452a3911f7fc1dbf5abcbe5de4.camel@codeconstruct.com.au>
-	 <aS4l24MfyI7XOUbY@molberding.nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	t=1764657608; c=relaxed/relaxed;
+	bh=RaweJp3vpP7SZGfEd30gEN5CZI0ej+itqO7vCnhIY18=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=ai9IyM3UbQ1y7If6SNBg5IXcFXs4iI2Sb4dQG9sfaft/PQKq/pYnK5llsFgmHt7vx1jchK7WXs26n3wABaLSM3mackxeV1ONsevgjQTqRITnNHTWLizzUGmu8o7gwQmKDRexbFmojikfpn8eTFjrsARhzjMYfzBaYEsTHwHJeWXsCMYcUp9lg8XtnJoWD9K0GtRMgE/1csmtGRMLJUoru3TycJxi2aWL+h7FLHiarkKV72udU6GrrsHOGrZFXi64C8H+9EVf0UJ/zG4eL+mm6NqfTMVEPM7q6OIOkf0poXnS0ihu3CegnpD7NqYsy3UzjoSxFOvut9CxgCrxTtGgYw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=phytium.com.cn; spf=pass (client-ip=209.97.181.73; helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net; envelope-from=wangmin@phytium.com.cn; receiver=lists.ozlabs.org) smtp.mailfrom=phytium.com.cn
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=phytium.com.cn
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=phytium.com.cn (client-ip=209.97.181.73; helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net; envelope-from=wangmin@phytium.com.cn; receiver=lists.ozlabs.org)
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net (zg8tmja5ljk3lje4ms43mwaa.icoremail.net [209.97.181.73])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dLB3B0R1zz3bSK;
+	Tue, 02 Dec 2025 17:40:05 +1100 (AEDT)
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+	by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwCnnYmxiS5p4FPnAg--.16S2;
+	Tue, 02 Dec 2025 14:39:45 +0800 (CST)
+Received: from wangmin$phytium.com.cn ( [218.76.62.144] ) by
+ ajax-webmail-mail (Coremail) ; Tue, 2 Dec 2025 14:39:27 +0800 (GMT+08:00)
+X-Originating-IP: [218.76.62.144]
+Date: Tue, 2 Dec 2025 14:39:27 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?546L5pWP?= <wangmin@phytium.com.cn>
+To: "Jammy Huang" <jammy_huang@aspeedtech.com>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "Eddie James" <eajames@linux.ibm.com>,
+	"Mauro Carvalho Chehab" <mchehab@kernel.org>,
+	"Joel Stanley" <joel@jms.id.au>,
+	"Andrew Jeffery" <andrew@codeconstruct.com.au>,
+	"Philipp Zabel" <p.zabel@pengutronix.de>,
+	"linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+	"linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	=?UTF-8?B?6IiS5aWV5qOL?= <shuyiqi@phytium.com.cn>
+Subject: Re: RE: [PATCH] media: aspeed: Fix dram hang at res-change
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
+ 20250512(e7b47ee3) Copyright (c) 2002-2025 www.mailtech.cn OP_ICM_ICMVM
+In-Reply-To: <TYZPR06MB656876892F6046F22AD87073F1DBA@TYZPR06MB6568.apcprd06.prod.outlook.com>
+References: <20251124-video_dram_reset-v1-1-9d37229e4ec5@aspeedtech.com>
+ <120162b9.3256.19aca13d4e0.Coremail.wangmin@phytium.com.cn>
+ <TYZPR06MB656876892F6046F22AD87073F1DBA@TYZPR06MB6568.apcprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: epqE02Zvb3Rlcl90eHQ9NTc1MTozODM=
+Content-Type: text/plain; charset=UTF-8
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -68,78 +66,133 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+Message-ID: <720c855b.36b0.19addc99578.Coremail.wangmin@phytium.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:AQAAfwA3j+yfiS5ppfMIAA--.10751W
+X-CM-SenderInfo: 5zdqwzdlq61x51wl3zoofrzhdfq/1tbiAQAMCGkt9q4CNAAAsv
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangmin@ph
+	ytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvAXoW3CrWkKr1rtFy7Xr17GFyxGrg_yoW8GFy7Xo
+	Z7u3Z5GF1DJwsrArs5C3WDGF15GFs5JFW8Ar1kC3Z5XF1DJr10kryqvw4fJrnrJ39xJa40
+	qw1Dtry0qryUJ3WDn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+	J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+	UUUUUUU==
+X-Spam-Status: No, score=0.0 required=5.0 tests=RCVD_IN_MSPIKE_H5,
+	RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, 2025-12-01 at 15:33 -0800, Marc Olberding wrote:
-> On Tue, Dec 02, 2025 at 09:44:54AM +1030, Andrew Jeffery wrote:
-> > On Tue, 2025-11-25 at 17:30 -0800, Marc Olberding wrote:
-> > > On Wed, Nov 26, 2025 at 11:00:33AM +1030, Andrew Jeffery wrote:
-> > > > On Fri, 2025-11-21 at 16:02 -0800, Marc Olberding wrote:
-> > > are you okay with something like:
-> > > ```
-> > > &fmc {
-> > > 	status =3D "okay";
-> > > 	fmc-wdt2-disable;
-> > > ....
-> > > };
-> > > ```
-> > >=20
-> > > as the target config? or potentially drop the extra fmc...
-> >=20
-> > It would be best to prefix it. What do you think of `aspeed,disable-
-> > watchdog`?
->=20
-> I'm fine with aspeed,disable-watchdog. My only concern is that watchdog
-> is a little ambiguous for this, but maybe there is value in being
-> able to reuse the bindings for other things. This is a special watchdog
-> for the FMC, as opposed to the general purpose watchdogs present elsewher=
-e.
+CgoKPiAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCj4g5Y+R5Lu25Lq6OiAiSmFtbXkgSHVhbmciIDxq
+YW1teV9odWFuZ0Bhc3BlZWR0ZWNoLmNvbT4KPiDlj5HpgIHml7bpl7Q6MjAyNS0xMi0wMSAwOToz
+NDoyNSAo5pif5pyf5LiAKQo+IOaUtuS7tuS6ujog546L5pWPIDx3YW5nbWluQHBoeXRpdW0uY29t
+LmNuPgo+IOaKhOmAgTogIkVkZGllIEphbWVzIiA8ZWFqYW1lc0BsaW51eC5pYm0uY29tPiwgIk1h
+dXJvIENhcnZhbGhvIENoZWhhYiIgPG1jaGVoYWJAa2VybmVsLm9yZz4sICJKb2VsIFN0YW5sZXki
+IDxqb2VsQGptcy5pZC5hdT4sICJBbmRyZXcgSmVmZmVyeSIgPGFuZHJld0Bjb2RlY29uc3RydWN0
+LmNvbS5hdT4sICJQaGlsaXBwIFphYmVsIiA8cC56YWJlbEBwZW5ndXRyb25peC5kZT4sICJsaW51
+eC1tZWRpYUB2Z2VyLmtlcm5lbC5vcmciIDxsaW51eC1tZWRpYUB2Z2VyLmtlcm5lbC5vcmc+LCAi
+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIiA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPiwgImxp
+bnV4LWFybS1rZXJuZWxAbGlzdHMuaW5mcmFkZWFkLm9yZyIgPGxpbnV4LWFybS1rZXJuZWxAbGlz
+dHMuaW5mcmFkZWFkLm9yZz4sICJsaW51eC1hc3BlZWRAbGlzdHMub3psYWJzLm9yZyIgPGxpbnV4
+LWFzcGVlZEBsaXN0cy5vemxhYnMub3JnPiwgImxpbnV4LWtlcm5lbEB2Z2VyLmtlcm5lbC5vcmci
+IDxsaW51eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnPiwg6IiS5aWV5qOLIDxzaHV5aXFpQHBoeXRp
+dW0uY29tLmNuPgo+IOS4u+mimDogUkU6IFtQQVRDSF0gbWVkaWE6IGFzcGVlZDogRml4IGRyYW0g
+aGFuZyBhdCByZXMtY2hhbmdlCj4gCj4gSGkgV2FuZywKPiAKPiBUaGFua3MgZm9yIHlvdXIgZmVl
+ZGJhY2suCj4gCj4gUmVnYXJkcywKPiBKYW1teSBIdWFuZwo+IAo+ID4gPgo+ID4gPiBEcmFtIGhh
+bmcgY291bGQgaGFwcGVuIGluIHRoZSBzdGVwcyBiZWxvdzoKPiA+ID4gMS4gc3RhcnQgY2FwdHVy
+ZS9jb21wcmVzc2lvbgo+ID4gPiAyLiBvdXQtb2YtbG9jayB3YXRjaGRvZyByYWlzZSBpcnEgYmVj
+YXVzZSBvZiByZXMtY2hhbmdlLgo+ID4gPiAzLiBhc3BlZWRfdmlkZW9faXJxX3Jlc19jaGFuZ2Ug
+ZG8gY2xrLW9mZgo+ID4gPgo+ID4gPiBBdCBzdGVwMywgY2FwdHVyZS9jb21wcmVzc2lvbiBjb3Vs
+ZCBiZSBub3QgYWNjb21wbGlzaGVkIHlldC4gSWYKPiA+ID4gY2xrLW9mZiBpbiB0aGUgbWlkZGxl
+IG9mIHZpZGVvIG9wZXJhdGlvbiwgZHJhbSBjb250cm9sbGVyIGNvdWxkIGhhbmcgYXQKPiA+IGFz
+dDI1MDAuCj4gPiA+Cj4gPiA+IFVzZSByZXNldCByYXRoZXIgdGhhbiBjbGstb2ZmL29uIHRvIGF2
+b2lkIHRoaXMgcHJvYmxlbS4KPiA+ID4KPiA+ID4gU2lnbmVkLW9mZi1ieTogSmFtbXkgSHVhbmcg
+PGphbW15X2h1YW5nQGFzcGVlZHRlY2guY29tPgo+ID4gPiAtLS0KPiA+ID4gT24gQXNwZWVkIEtW
+TSB0ZXN0aW5nLCB3ZSBmb3VuZCBpdCBjb3VsZCBsZWFkIHRvIGRyYW0taGFuZyBpZgo+ID4gPiBy
+ZXMtY2hhbmdlLiBBbHRob3VnaCB0aGUgaXNzdWUgcmFyZWx5IGhhcHBlbnMsIHRoZSBpbXBhY3Qg
+aXMgc2VyaW91cy4KPiA+IAo+ID4gQ2FwdHVyaW5nIGFuZCBjb21wcmVzc2luZyB0aGUgdmlkZW8g
+c3RyZWFtIHRha2VzIGxvbmdlciB0aGFuIHRoZSB2aWRlbwo+ID4gZW5naW5l4oCZcyBpZGxlIHBl
+cmlvZC4KPiBTb3JyeSwgYnV0IHRoaXMgaXMgbm90IHdoYXQgSSBtZWFuLiBUaGUgaXNzdWUgaGFw
+cGVucyBiZWNhdXNlIHZpZGVvIGVuZ2luZSdzIGNsawo+IGlzIHR1cm5lZCBvZmYgZHVyaW5nIGNh
+cHR1cmUvY29tcHJlc3Npb24uCj4gCj4gPiBJZiB0aGlzIGlzIG5vdCB0aGUgaW50ZW5kZWQgYmVo
+YXZpb3IsIHBsZWFzZSBpbmNyZWFzZSB0aGUgZnJhbWUgcmF0ZS4gVGhpcyBtYWtlcwo+ID4gcmVz
+b2x1dGlvbiBzd2l0Y2hlcyBtb3JlIHByb25lIHRvIGhhcHBlbiB3aGVuIHRoZSB2aWRlbyBlbmdp
+bmUgaXMgd29ya2luZy4KPiA+IEhvd2V2ZXIsIGFjY29yZGluZyB0byB5b3VyIGVtYWlsLCB0aGlz
+IGlzc3VlIHJhcmVseSBvY2N1cnMuIElzIHRoZXJlIGEgc2ltaWxhcgo+ID4gaXNzdWUgb24gdGhl
+IEFTVDI2MDAgU29DPwo+IEluY3JlYXNlIGZyYW1lIHJhdGUgd291bGQgbm90IGhlbHBmdWwuIFRo
+aXMgaXMgYSB2aWRlbyBjb21wcmVzc2lvbiBlbmdpbmUuIFRoZSB0aW1lIHRha2VuCj4gZm9yIGVh
+Y2ggZnJhbWUncyBjYXB0dXJlL2NvbXByZXNzaW9uIGlzIHRoZSBzYW1lLiBUaGUgd2F5IHRvIHJl
+cHJvZHVjZSB0aGlzIGlzc3VlCj4gd2UgZGlkIGlzIGNvbnRpbnVvdXNseSByZXNvbHV0aW9uLXN3
+aXRjaC4KPgpUaGFuayB5b3UgZm9yIHRoZSBjbGFyaWZpY2F0aW9uLgoKSSBhbSBlbmNvdW50ZXJp
+bmcgYW5vdGhlciBpc3N1ZSByZWxhdGVkIHRvIHJlc29sdXRpb24gc3dpdGNoaW5nIG9uIHRoZSBB
+U1QyNTAwIFNvQy4gCldoZW4gcmVwZWF0ZWRseSBzd2l0Y2hpbmcgZnJvbSBvdGhlciByZXNvbHV0
+aW9ucyB0byAxNjgweDEwNTAsIG9yIGZyb20gMTY4MHgxMDUwIHRvIApvdGhlciByZXNvbHV0aW9u
+cywgdGhlcmUgaXMgYSBoaWdoIGxpa2VsaWhvb2QgdGhhdCBlaXRoZXIgdGhlIEJNQyBPUyB3aWxs
+IGhhbmcgb3IgCnRoZSBLVk0gc2NyZWVuIHdpbGwgZXhwZXJpZW5jZSB0ZWFyaW5nLiBDb3VsZCB5
+b3UgcGxlYXNlIGF0dGVtcHQgdG8gcmVwcm9kdWNlIHRoaXMgCmlzc3VlIGFuZCBwcm92aWRlIGEg
+cmVzb2x1dGlvbj8KCj4gPiAKPiA+ID4KPiA+ID4gVG8gYXZvaWQgdGhpcyBpc3N1ZSwgd2UgdXNl
+IHJlc2V0IG9ubHkgcmF0aGFyIHRoYW4gY2xrLW9mZi9vbiBpbgo+ID4gPiByZXMtY2hhbmdlIHRv
+IGF2b2lkIHRoaXMgaXNzdWUuCj4gPiA+IC0tLQo+ID4gPiAgZHJpdmVycy9tZWRpYS9wbGF0Zm9y
+bS9hc3BlZWQvYXNwZWVkLXZpZGVvLmMgfCAyMgo+ID4gPiArKysrKysrKysrKysrKysrKysrLS0t
+Cj4gPiA+ICAxIGZpbGUgY2hhbmdlZCwgMTkgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkK
+PiA+ID4KPiA+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vYXNwZWVkL2Fz
+cGVlZC12aWRlby5jCj4gPiA+IGIvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQvYXNwZWVk
+LXZpZGVvLmMKPiA+ID4gaW5kZXggYjgzZTQzMjQ1Mi4uNDFjYjk2ZjYwMSAxMDA2NDQKPiA+ID4g
+LS0tIGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQvYXNwZWVkLXZpZGVvLmMKPiA+ID4g
+KysrIGIvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQvYXNwZWVkLXZpZGVvLmMKPiA+ID4g
+QEAgLTI2LDYgKzI2LDcgQEAKPiA+ID4gICNpbmNsdWRlIDxsaW51eC93b3JrcXVldWUuaD4KPiA+
+ID4gICNpbmNsdWRlIDxsaW51eC9kZWJ1Z2ZzLmg+Cj4gPiA+ICAjaW5jbHVkZSA8bGludXgva3Rp
+bWUuaD4KPiA+ID4gKyNpbmNsdWRlIDxsaW51eC9yZXNldC5oPgo+ID4gPiAgI2luY2x1ZGUgPGxp
+bnV4L3JlZ21hcC5oPgo+ID4gPiAgI2luY2x1ZGUgPGxpbnV4L21mZC9zeXNjb24uaD4KPiA+ID4g
+ICNpbmNsdWRlIDxtZWRpYS92NGwyLWN0cmxzLmg+Cj4gPiA+IEBAIC0zMTAsNiArMzExLDcgQEAg
+c3RydWN0IGFzcGVlZF92aWRlbyB7Cj4gPiA+ICAJdm9pZCBfX2lvbWVtICpiYXNlOwo+ID4gPiAg
+CXN0cnVjdCBjbGsgKmVjbGs7Cj4gPiA+ICAJc3RydWN0IGNsayAqdmNsazsKPiA+ID4gKwlzdHJ1
+Y3QgcmVzZXRfY29udHJvbCAqcmVzZXQ7Cj4gPiA+Cj4gPiA+ICAJc3RydWN0IGRldmljZSAqZGV2
+Owo+ID4gPiAgCXN0cnVjdCB2NGwyX2N0cmxfaGFuZGxlciBjdHJsX2hhbmRsZXI7IEBAIC03MjAs
+NiArNzIyLDEzIEBAIHN0YXRpYwo+ID4gPiB2b2lkIGFzcGVlZF92aWRlb19vbihzdHJ1Y3QgYXNw
+ZWVkX3ZpZGVvICp2aWRlbykKPiA+ID4gIAlzZXRfYml0KFZJREVPX0NMT0NLU19PTiwgJnZpZGVv
+LT5mbGFncyk7ICB9Cj4gPiA+Cj4gPiA+ICtzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9fcmVzZXQo
+c3RydWN0IGFzcGVlZF92aWRlbyAqdikgewo+ID4gPiArCXJlc2V0X2NvbnRyb2xfYXNzZXJ0KHYt
+PnJlc2V0KTsKPiA+ID4gKwl1c2xlZXBfcmFuZ2UoMTAwLCAxNTApOwo+ID4gPiArCXJlc2V0X2Nv
+bnRyb2xfZGVhc3NlcnQodi0+cmVzZXQpOwo+ID4gPiArfQo+ID4gPiArCj4gPiA+ICBzdGF0aWMg
+dm9pZCBhc3BlZWRfdmlkZW9fYnVmc19kb25lKHN0cnVjdCBhc3BlZWRfdmlkZW8gKnZpZGVvLAo+
+ID4gPiAgCQkJCSAgIGVudW0gdmIyX2J1ZmZlcl9zdGF0ZSBzdGF0ZSkKPiA+ID4gIHsKPiA+ID4g
+QEAgLTc0Miw3ICs3NTEsOSBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9faXJxX3Jlc19jaGFu
+Z2Uoc3RydWN0Cj4gPiA+IGFzcGVlZF92aWRlbyAqdmlkZW8sIHVsb25nIGRlbGF5KQo+ID4gPgo+
+ID4gPiAgCXZpZGVvLT52NGwyX2lucHV0X3N0YXR1cyA9IFY0TDJfSU5fU1RfTk9fU0lHTkFMOwo+
+ID4gPgo+ID4gPiAtCWFzcGVlZF92aWRlb19vZmYodmlkZW8pOwo+ID4gPiArCWFzcGVlZF92aWRl
+b193cml0ZSh2aWRlbywgVkVfSU5URVJSVVBUX0NUUkwsIDApOwo+ID4gPiArCWFzcGVlZF92aWRl
+b193cml0ZSh2aWRlbywgVkVfSU5URVJSVVBUX1NUQVRVUywgMHhmZmZmZmZmZik7Cj4gPiA+ICsJ
+YXNwZWVkX3ZpZGVvX3Jlc2V0KHZpZGVvKTsKPiA+ID4gIAlhc3BlZWRfdmlkZW9fYnVmc19kb25l
+KHZpZGVvLCBWQjJfQlVGX1NUQVRFX0VSUk9SKTsKPiA+ID4KPiA+ID4gIAlzY2hlZHVsZV9kZWxh
+eWVkX3dvcmsoJnZpZGVvLT5yZXNfd29yaywgZGVsYXkpOyBAQCAtMTk4NCw4ICsxOTk1LDcKPiA+
+ID4gQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3N0b3Bfc3RyZWFtaW5nKHN0cnVjdCB2YjJf
+cXVldWUgKnEpCj4gPiA+ICAJCSAqIE5lZWQgdG8gZm9yY2Ugc3RvcCBhbnkgRE1BIGFuZCB0cnkg
+YW5kIGdldCBIVyBpbnRvIGEgZ29vZAo+ID4gPiAgCQkgKiBzdGF0ZSBmb3IgZnV0dXJlIGNhbGxz
+IHRvIHN0YXJ0IHN0cmVhbWluZyBhZ2Fpbi4KPiA+ID4gIAkJICovCj4gPiA+IC0JCWFzcGVlZF92
+aWRlb19vZmYodmlkZW8pOwo+ID4gPiAtCQlhc3BlZWRfdmlkZW9fb24odmlkZW8pOwo+ID4gPiAr
+CQlhc3BlZWRfdmlkZW9fcmVzZXQodmlkZW8pOwo+ID4gPgo+ID4gPiAgCQlhc3BlZWRfdmlkZW9f
+aW5pdF9yZWdzKHZpZGVvKTsKPiA+ID4KPiA+ID4gQEAgLTIyMzAsNiArMjI0MCwxMiBAQCBzdGF0
+aWMgaW50IGFzcGVlZF92aWRlb19pbml0KHN0cnVjdCBhc3BlZWRfdmlkZW8KPiA+ICp2aWRlbykK
+PiA+ID4gIAl9Cj4gPiA+ICAJZGV2X2luZm8odmlkZW8tPmRldiwgImlycSAlZFxuIiwgaXJxKTsK
+PiA+ID4KPiA+ID4gKwl2aWRlby0+cmVzZXQgPSBkZXZtX3Jlc2V0X2NvbnRyb2xfZ2V0KGRldiwg
+TlVMTCk7Cj4gPiA+ICsJaWYgKElTX0VSUih2aWRlby0+cmVzZXQpKSB7Cj4gPiA+ICsJCWRldl9l
+cnIoZGV2LCAiVW5hYmxlIHRvIGdldCByZXNldFxuIik7Cj4gPiA+ICsJCXJldHVybiBQVFJfRVJS
+KHZpZGVvLT5yZXNldCk7Cj4gPiA+ICsJfQo+ID4gPiArCj4gPiA+ICAJdmlkZW8tPmVjbGsgPSBk
+ZXZtX2Nsa19nZXQoZGV2LCAiZWNsayIpOwo+ID4gPiAgCWlmIChJU19FUlIodmlkZW8tPmVjbGsp
+KSB7Cj4gPiA+ICAJCWRldl9lcnIoZGV2LCAiVW5hYmxlIHRvIGdldCBFQ0xLXG4iKTsKPiA+ID4K
+PiA+ID4gLS0tCj4gPiA+IGJhc2UtY29tbWl0OiBhYzNmZDAxZTRjMWVmY2U4ZjJjMDU0Y2RlYjJk
+ZGQyZmMwZmIxNTBkCj4gPiA+IGNoYW5nZS1pZDogMjAyNTExMjQtdmlkZW9fZHJhbV9yZXNldC1j
+NTMxZjZiYTU3M2YKPiA+ID4KPiA+ID4gQmVzdCByZWdhcmRzLAo+ID4gPiAtLQo+ID4gPiBKYW1t
+eSBIdWFuZyA8amFtbXlfaHVhbmdAYXNwZWVkdGVjaC5jb20+Cj4gPiA+Cj4gPiAKDQoNCuS/oeaB
+r+WuieWFqOWjsOaYju+8muacrOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7
+hOe7h+aJgOaciSzlj5Hku7bkurrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInm
+nYPliKnjgILor7fmjqXmlLbogIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K64
+5Y+vLOS4jeW+l+WQkeS7u+S9leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7
+tuaJgOWQq+S/oeaBr+OAgg0KSW5mb3JtYXRpb24gU2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3Jt
+YXRpb24gY29udGFpbmVkIGluIHRoaXMgbWFpbCBpcyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNl
+bmRlcidzIG9yZ2FuaXphdGlvbi5UaGlzIG1haWwgY29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRp
+YWwuUmVjaXBpZW50cyBuYW1lZCBhYm92ZSBhcmUgb2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3Jl
+Y3kgYW5kIGFyZSBub3QgcGVybWl0dGVkIHRvIGRpc2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlz
+IGNvbW11bmljYXRpb24gdG8gb3RoZXJzLg==
 
-Right, however the idea is we specify it with respect to the fmc
-compatible strings, so that itself limits the scope of the property (in
-that it's only applicable on the FMC DT node and not any other node
-such as the generic watchdog nodes).
-
->=20
-> maybe `aspeed,disable-fmc-watchdog` ?
->=20
-> That said, I'm not ready to fight to the grave, whatever you think is rea=
-sonable
-> is fine with me. I'm more interested in having this work and being reusab=
-le
-> for people.
->=20
-> > >=20
-> > > It's functionally the same, and to be honest this code is proliferate=
-d across
-> > > at least 3 board files. I can certainly make a helper function,
-> > > but I don't have access to test all of the boards. If you're happy wi=
-th
-> > > it being "correct by inspection that it does the same thing" and "it =
-builds",
-> > > I can move these board files over to using the common helper.
-> >=20
-> > Let's get the code centralised, make the MSX4 using that centralised
-> > code, and then follow with patches converting the other platforms. Make
-> > sure to CC maintainers of the other affected platforms where you can,
-> > and if things are okay by inspection and no-one screams, I'll apply
-> > them all. Otherwise we can just apply the first couple and quibble over
-> > what we do about the other platforms in slow-time.
-> >=20
-> > Andrew
->=20
-> ACK. with the change for the FMC WDT2 to be handled by the driver,
-> we can actually just reuse the 2600evb board file (which is the default
-> for openbmc builds as far as I can tell). I can move the evb code over
-> to using this, test that on the MSX4 and then we can slow roll the rest.
->=20
-
-Sounds great.
-
-Thanks,
-
-Andrew
 
