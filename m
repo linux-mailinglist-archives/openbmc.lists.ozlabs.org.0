@@ -1,86 +1,76 @@
-Return-Path: <openbmc+bounces-972-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-970-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAB36CAA204
-	for <lists+openbmc@lfdr.de>; Sat, 06 Dec 2025 07:51:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE575CA9ACE
+	for <lists+openbmc@lfdr.de>; Sat, 06 Dec 2025 01:08:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dNf695CyJz2xpl;
-	Sat, 06 Dec 2025 17:51:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dNT984BHbz2xjN;
+	Sat, 06 Dec 2025 11:08:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::329"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764948634;
-	cv=none; b=XsLkL9NfhgXJCw0PVVdM+WgF8rxUwizwrCzTKsXzNooVWjfr7j6obBz90W+VRY+wuWDMO29lxHeOmrKN2DPn321+l2SZ/4EMgN9MDN5Tx9brTIb5QsQ59krC7cbciEbzoAEcnCD0n/PE1y71Y0qK7tjcWflo+/uDF7D3pfODrQF/1p9LLtFatGlzMEw64ihsYmh4QnbbsSfZDOVKd3LOG7hDab2m27UBZjHrT54l5AwHIopvAAOdTW290W857rrfr8vpPFJi7jccuLJfUFNQYjMaqrH99pzEOU45uyrzHUuA/W3dUFuDeE+EkYe7yoffct/OFgDaS0rrkiGSvCNhmA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1764979692;
+	cv=none; b=K1vgHTm6b1Bv7EJuWcv+POTB0QVZR3sybtL5wyv2/UZELksfpQzgSymqT9UTqV2QPCd6VfKcOxidkSmKgA+IwTLT3+4PD5InIUiLEa6sy3SDr3UDCrtzqlRYAC7pF7ihP1XIgag+fxEdR5rZ7HSiwOi7Ib7H+F+NtQHZOx4PBwhjxJr9/wdi6BaofSLsOMgO7EUbkllTy1FQglVE+Rjn1QqmPgl+MFXh7rx2loPAyjeKc2W60wk0blYOE9BxKyZtrDzfYik9xz2XAKw+60tvrQhAof8Uo0EaJpBD7hVaMM9hcJRwiQ/T8Ha8x+EahQvJURDFsDwwzAtrEtd0vBpWWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1764948634; c=relaxed/relaxed;
-	bh=bnF87if676vlxacDwch5pHFPRT0g1yDIFuiGnidHF4s=;
+	t=1764979692; c=relaxed/relaxed;
+	bh=VKJK/1vbn3UQHCzqMMe9+PhGMGn7Zr6PCz5ytRZ8gfY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hQkIJuhDrw0YsBqeoi+DZ75IyGLf8M0jsPs0ybDTu83ZysxJbKQx0rmLPkzduvljpqKeLuHeGbUoSQq/SzYYmZorAOUieCC9YnDGg0LMNb/GZWge+j7mgGsWc/RXFcaTKssqI/YprMf3mkA5wlvuiD24O2pxg4rXy6YN1gRyXFIrGcbDqwHbUdLQYOKC56eF4nimGsLOaPXXwV9cq27pwGckuotfqtrPF47apdAr9VH2GcAlbOq2Jhfzg97qbKkreNYrtC+WapBWX8OY1Hxm0tr/nDeVfHYq/6vYP0d8V/qKS2l6jNjI/ZR9i4AGbZxSUgPp3NWW4IH4mR4a6qq3cg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=jPj+r+Xq; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::329; helo=mail-wm1-x329.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=E/k3RZfHpXfv9vuLXK+qsI5lmfoJdgtl9Kgp4uN7/kJbA2PrYcgoyKpH2kPJ2SJP6gKFbmSQjAx8N7tAp0DDVMyE9ZHtAZ4rCL/thyiTB48y5rHgaXaK2bt5dJlKu2/DcSjSSPd+Ohi5hoVkPVGZR3CuEAlrUFeHw1dEFfe8w6av9rSSEP3znD1if12WOKI+sj4Ntc58QAgdWnQP+vrp64aRqN9kCmqY27uD4bvHeYxJiq04ZjGmjk/073KADLidNJXlvEtT/iwMJ/5XrC7DpouELIACKx8XMlG/KuvTRuHoP+QSGtb7eyf2lgkXMgaC8n9+904vgeTbahxXfoC6+Q==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jMarMEwP; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=jPj+r+Xq;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jMarMEwP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2a00:1450:4864:20::329; helo=mail-wm1-x329.google.com; envelope-from=ukleinek@baylibre.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dNFgq5q4wz2xPT
-	for <openbmc@lists.ozlabs.org>; Sat, 06 Dec 2025 02:30:29 +1100 (AEDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-477aa218f20so16435065e9.0
-        for <openbmc@lists.ozlabs.org>; Fri, 05 Dec 2025 07:30:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1764948621; x=1765553421; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bnF87if676vlxacDwch5pHFPRT0g1yDIFuiGnidHF4s=;
-        b=jPj+r+XqADmA6zY66dIBZqZUvNJEmtSb4vpsBUJdgE2HoDmAMSm9Xl4F9ZLxLDoonJ
-         /jyaW8ktjBZkJ980LPaG1d1HIJGyM8A6YkHbw5op6qUZFT4ALGF3lA5Guu81EoGtpAdg
-         NbmgFuG7+w6xjpGOPw+VVjcfgB3lId37UTnYqyOz+LBJ0Ej29un6ZtsZ6TWz8YbcDq98
-         WlD75tCj0wvGaR/NZl3XbrBWn7SMGDfxNQ2PUCWuGl9Ryf+KZtPyjzNXdA3/zlxSjRTV
-         3KeoFG+/WI6RZZrDK77V4XXdQJWpfGBNbl7cZOKSl5NDtpxDwK6H5Uf4rsTe+y6IXn2K
-         rlWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764948621; x=1765553421;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bnF87if676vlxacDwch5pHFPRT0g1yDIFuiGnidHF4s=;
-        b=L8CNyQPB4yqn2J5C1mGuQ4h8Vs39tHu30+PPbKWVP2ItXWxfPlOQhhkjZzB7iPIF2M
-         Rfje8kGcpBcDqpf8Gxbqcl1BMMiXLgnfQbO7ktIz8VtALtSXmlo+mO4Acl7EY2GeNlEt
-         miokXIR4S+YgHf+lztQvOJmX7oiiTyllCiGQGvOjQu7Gu286wyYHWY1Z3EYls8p0O2qa
-         wf8ecID9HSzs5tq3iPbsOqMhCrbgw3Zskpm95tTr6YASzH/cmSJcwM9+198CoRfPZdwi
-         WXo/IywJhXVjUh8MRBNOpPRz1cwUC6TGh3aUI0pNS0Y66+NAEvTX0MN1oPU15kdoyW6i
-         5zkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrpV8mMatjWQuwAB5qcApjOeC0coWF0pj/OACmc2E/mrS3tSfY5ZYPT2P1FLXy2LIq60j26abm@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzCtyPTSbqjUHaaGzyScd/L+68plMtGp101nwaBnr/o4PkWFToC
-	ffVBiow5cyUIoBgHfHaSTSnIPcJUVPPaCLd4HPM/dslhx5tbwH6MEZ6/EOyI3osyF/A=
-X-Gm-Gg: ASbGnct+xjiajjUJWRw00J1THBAFF/s2PR+l8QYGMTa75v1tf+CKSiN6/SjG0PN+6hC
-	hWsLl4s8vuFmo3K6VSkR8zJAudHknyOWmuETzSpSxq+tM07A8oYHioXMEuzA5wSr7JK8h1PSrsg
-	IVi6jO0vAGEW7wIpap80pbiArD+lnKn3zzSnyNI+DFue8uXJdcGWFJ3MR0gE4SX8d6fOjYp5RXG
-	KBDXNYbI7ATJehPOzrKurQPOr6SdKMuRkDcb4vryvIvlm47uxqWN8+EdM1tqtuQgISOEWTLrZVN
-	vmdd4EgjY8JftRkVXS0aJVJ3rklvlS/FIPpV1aLDG43ZsemSMSjwV/Z6lsISWsT74OaXKsmFJb+
-	gmYrO2QgsSOCTPucm4l7j/Sm+bcFls8dPMGkv6gXpYlyHKcd6FIggNjzjq6Ectja8VRr9G+ifTg
-	w6R1mjelBzJjqlrKK0UKxXbqysi2Rz23nykJQsYuBnq3cSakRtscdGmyZHzbs4izZeMzXxLialT
-	Q==
-X-Google-Smtp-Source: AGHT+IG9OTpWAaFioAhUqNYkEUIfjg2JVgLW6606fMapNPZXQsf9lwNr2Fe2wAiolNVCjjQfc9D6Gg==
-X-Received: by 2002:a5d:5f45:0:b0:42b:39d0:6386 with SMTP id ffacd0b85a97d-42f731e98eemr10449236f8f.31.1764948621389;
-        Fri, 05 Dec 2025 07:30:21 -0800 (PST)
-Received: from localhost (p200300f65f0066080f2a7d55dcab4de7.dip0.t-ipconnect.de. [2003:f6:5f00:6608:f2a:7d55:dcab:4de7])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-42f7cbe9065sm9319885f8f.8.2025.12.05.07.30.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Dec 2025 07:30:20 -0800 (PST)
-Date: Fri, 5 Dec 2025 16:30:19 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Eddie James <eajames@linux.ibm.com>, 
-	Andi Shyti <andi.shyti@kernel.org>, Mark Brown <broonie@kernel.org>
-Cc: Ninad Palsule <ninad@linux.ibm.com>, linux-fsi@lists.ozlabs.org, 
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org, 
-	linux-spi@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 00/12] fsi: Convert to bus probe mechanism
-Message-ID: <tkg3ut5prrbur6dqh7elxmu4djqj6dgsymmdzalg5gtqgnn6jn@6pi2fskmnbyb>
-References: <cover.1764434226.git.ukleinek@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dNT971bC7z2xGg;
+	Sat, 06 Dec 2025 11:08:11 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 06D2A40229;
+	Sat,  6 Dec 2025 00:08:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97FAC4CEF1;
+	Sat,  6 Dec 2025 00:08:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764979688;
+	bh=R7HsQDGBjcjXJ81DGGnBQnRnfKReTGHiJmsZwWhTh6Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jMarMEwPMDpFmOeAE6CeeAxtIrqgmlAO3jdHip31Ld+9XQox+jFZKJmkWBNUFYhOY
+	 J7S6GEyYhVsXristA3lxrwkN/2idujDP6kV1nOLtAPb/yVsXB+hI7ec0g2XB08s9HP
+	 61xlxNiWckbr4jPP0TM7nN3xlBE0ccvt6NqM548uJdtzfUzxt4sC+lYJzO+Plmk3tr
+	 cbS1t+wmnVO6UKA+13SyT//0y2nxOD0zykoPZHAz8bDGvix8dC/AWUMJKbXLkPUMJG
+	 qBMq3HaR7ezCM9BRmfIFxBKSnzNziHti3mhlf0Yv2u8M0IRsIym/CMdG+GKtb+9VS8
+	 h2IQo5Tgu0UdQ==
+Date: Fri, 5 Dec 2025 18:08:06 -0600
+From: Rob Herring <robh@kernel.org>
+To: Jacky Chou <jacky_chou@aspeedtech.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	"linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"linux-phy@lists.infradead.org" <linux-phy@lists.infradead.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>
+Subject: Re: [PATCH v6 0/7] Add ASPEED PCIe Root Complex support
+Message-ID: <20251206000806.GA969079-robh@kernel.org>
+References: <20251201-upstream_pcie_rc-v6-0-8c8800c56b16@aspeedtech.com>
+ <20251204195355.GA1975043-robh@kernel.org>
+ <SEYPR06MB5134D0D5911E3C86D869151E9DA7A@SEYPR06MB5134.apcprd06.prod.outlook.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -92,69 +82,45 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yfs5kz5w2cta6clk"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1764434226.git.ukleinek@kernel.org>
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+In-Reply-To: <SEYPR06MB5134D0D5911E3C86D869151E9DA7A@SEYPR06MB5134.apcprd06.prod.outlook.com>
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+On Fri, Dec 05, 2025 at 12:12:35AM +0000, Jacky Chou wrote:
+> Hi Rob,
+> 
+> Thanks for your comments.
+> 
+> > > Changes in v6:
+> > > - Refer to pci-cpi-bridge.yaml to update aspeed,ast2600-pcie.yaml and
+> > >   the pcie node of aspeed-g6.dtsi.
+> > 
+> > Where is this? You don't describe the root port and its properties at all now.
+> > 
+> 
+> May I confirm whether the pcie@8,0 in aspeed-g6.dtsi is not considered the 
+> root port? From my understanding, that node represents the root port, so I 
+> want to make sure I'm aligning with your expectation before updating the binding.
 
---yfs5kz5w2cta6clk
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 00/12] fsi: Convert to bus probe mechanism
-MIME-Version: 1.0
+I believe you told me it was the root port.
 
-Hello,
+> Could you help clarify how you would like the root port and its properties to 
+> be described in the schema?
 
-On Sat, Nov 29, 2025 at 05:57:36PM +0100, Uwe Kleine-K=F6nig wrote:
-> for the quest to drop .probe(), .remove() and .shutdown() from struct
-> device_driver, convert the fsi subsystem to make use of the respective
-> bus methods. Some cleanups are also included, I noticed those while
-> working on the conversion.
->=20
-> Regarding how to merge this series: There are two drivers touched that
-> are not in drivers/fsi, namely drivers/i2c/busses/i2c-fsi.c and
-> drivers/spi/spi-fsi.c. The easiest would be to merge this series through
-> a single tree because the i2c and spi driver changes depend on some fsi
-> core patches and fsi_bus_type can only made private when these are
-> applied. I tried to quickly resort the series to only need three steps
-> when merged separately, but this wasn't trivially possible, so I hope
-> Andi and Mark give their acks to merge their driver changes together
-> with the fsi core changes in one go.
->=20
-> Note this series is only compile tested as I don't have a machine using
-> the fsi subsystem.=20
->=20
-> All the calls to get_device() I found in these drivers look a bit
-> suspicious and I think there are some issues with lifetime tracking. But
-> I didn't try to address these, so I'm just mentioning that here.
+properties:
+  pcie@8,0:
+    $ref: /schemas/pci/pci-pci-bridge.yaml#
+    unevaluatedProperties: false
 
-While working on more such patches (for other subsystems) I found a
-problem in this patch set. Please don't apply it yet, I will prepare a
-v2 (and then also explain the things that need to be done).
+    properties:
 
-Thanks
-Uwe
+And then add all the properties you have which are not defined in 
+pci-pci-bridge.yaml (and pci-device.yaml by reference) (i.e. clocks, 
+resets, phys, etc.).
 
---yfs5kz5w2cta6clk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmky+oMACgkQj4D7WH0S
-/k4phQf/TtGRlPwbVYnyLP0xN1AzA3+J1cbc7ZQfmjPBA8VMd4NuPfJYbMYA9S6k
-v4ssPKpvMCGVgU9DVWY+HMAmtejMLoj322bJ0N/8YAt+eTlFTfctwKNRPZWU7Nbs
-HHQhj9D4Z6/mCwYdULVTeLZRzTf7lJf8MPFdlhpnHcAZrlzEt5MM1fHsMKf1TRl7
-whcDek39s9jy75CN3kR3Cb6LtmRG5eigVl6JOQ220UgKX5tZ4kKzuvDHZQAvCxzF
-pzM5L7aPOU7xjDH/d2M2CB7ooQ/OslKGo+qZ4aJu0Y9zGMEwuti9fGQ5AV75tkgL
-5Iaaxj8c2PLV0tWwemlo5uyUUYN+ng==
-=e/VW
------END PGP SIGNATURE-----
-
---yfs5kz5w2cta6clk--
+Rob
 
