@@ -1,70 +1,98 @@
-Return-Path: <openbmc+bounces-1025-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1022-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30395CBC3CE
-	for <lists+openbmc@lfdr.de>; Mon, 15 Dec 2025 03:16:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 779F7CBC3A3
+	for <lists+openbmc@lfdr.de>; Mon, 15 Dec 2025 03:07:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dV3Zd4Ynrz2yF1;
-	Mon, 15 Dec 2025 13:16:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dV3P06vHGz2xqL;
+	Mon, 15 Dec 2025 13:07:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765239373;
-	cv=none; b=LCyj8DloT3W1bvyxeeSeogNZg9vM7vGcP9k5lmizM3+uM5kBuGFcoiNCDtKsesa9/4UIVwumjpiahtuwXC8PUGywJpA40fX021DlAAoHv0rdJ+L7sddjLYxs7fnO0vCuwz+9VYTAk4YpefbqD8GKMv/PI/URpNXSc6Lb1UM7dwhi9UwOaM+lmPQyf1ldrdOHdRr7W6g7oQpovR0x3sVenTvg9tu9K2BgiKqF4AYfcYdSnJ16xAiIFWS0gbuTAsvLVFHxQNfRRT4IElZhi35qsl60RScLkb1DsEceqKSFP7ni05y0LC1iJiUSh3js/EZsNKEOZn1BMi+dMRcOFnvcHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1765239373; c=relaxed/relaxed;
-	bh=2ZscvsbGvY30JuXEtwJ/NklAkr1juTvT+P51+rUN4M8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=O/asjiRwIPc9Tj1in2qSMIoaXxl95BxN2P3XM2ehBXwVJeDOhwV1H3HRUU/mSeBwgmmIUfFIm0KVJ+d+7YGPzfzgjdLVBtNrFG4LrNdSpHxxDmcRyv3ck0bxczelAYTopRwhVO+zoTILMAypv5Kk1U0hl5yODJPs1JXuEg5IstQNPdOe6onNemPXU1vjqZMReZWKTz14wQ2HBqP2pu8wMmTXs9Tx/c77mEYQRckebo05ChFEL8xgsSAYzOlPueoeweL1uKe0+cTORzQjKecXGTHJoT/a7x4aN635C8CkBs9oB2DTFJ+64v5/6HszUD4lfqj9cvlLpY5T5nFQhb0HKw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Nzqe2YsL; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=67.231.152.168 arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765273570;
+	cv=pass; b=iTX3g0puoSeBfDbXMoWHR68xMtdz4hmRz2hImQYcSFw1SlD3j47GqyYz9C2dbVz2wx2KqbSYxCHf2sQcwBt1e9NSceyPWx+ZuENqoWcj36h7EimhVCpv4gdtiYLRQqUHehj0yi/ozIM+xXTGHyHQd0f6Xik69qcdKvr60tm3IKLfeA8/1RclSZbEniJbHChFG0OcSLOYgvL5y8vu+LqsEPMIkX5ob+LFNJdZ2v4o+60YwRvQFRmwLMqCMjuCmVaQN/koLY+MsLVtIaHIlfoYboI9mKFNlJjG8/YSUJx+HmhniutNjJvmWCRPMPi6vfDRWM5dJEiXo1CBv/8L1vJPrA==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1765273570; c=relaxed/relaxed;
+	bh=PKHXBFeexF1OLAnNorin/u5kfN3/rLU+xeTkWta0by4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NzCnIoiRtAypFF/wqZa9GzaOdNYj2qY+3bzIh+MbOWH8FDdhZJ34LWLKzESeQ2vTe8eOQQoNfQfS4M5TOMjHuNH7pGRbbwIscbQifL2vROZw3yMv14xl6mINmZq8KVrQBgvS7ZV6jcEEX639kxmA9tTB/IbOb4e6QiYnbg2FGrra8z84AOc7QbKR99/M77F+paceytoUkNG7CqIzQq9tbDSpN1t9nL66VGaS5MkqZaaERoW4cF/wU83WXz5mWK+hnjvUcfEvATosOB4vEW95GXVzqi3NCRv2c61VM/iyp9F4VwzwpoFA06qwbS50tx8sHi8D73itM/pW1jFwq0fK+g==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; dkim=pass (2048-bit key; unprotected) header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=nJMsVbkk; dkim=pass (1024-bit key; unprotected) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=rQqSpYe+; dkim-atps=neutral; spf=pass (client-ip=67.231.152.168; helo=mx0b-001ae601.pphosted.com; envelope-from=prvs=1438e353af=rf@opensource.cirrus.com; receiver=lists.ozlabs.org) smtp.mailfrom=opensource.cirrus.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Nzqe2YsL;
+	dkim=pass (2048-bit key; unprotected) header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=nJMsVbkk;
+	dkim=pass (1024-bit key; unprotected) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=rQqSpYe+;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=helgaas@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=opensource.cirrus.com (client-ip=67.231.152.168; helo=mx0b-001ae601.pphosted.com; envelope-from=prvs=1438e353af=rf@opensource.cirrus.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 510 seconds by postgrey-1.37 at boromir; Tue, 09 Dec 2025 20:46:08 AEDT
+Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dQKC03MjCz2xbQ;
-	Tue, 09 Dec 2025 11:16:12 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 31F6060125;
-	Tue,  9 Dec 2025 00:11:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF78BC4CEF1;
-	Tue,  9 Dec 2025 00:11:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239068;
-	bh=7ptARhGnIW0rweJs/X7vTtC/SQB8ulRmWeebM2Urvl0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=Nzqe2YsLmvHdUUpvvSUvm6rLElIkqyZsP8E7UC7VgLN1jMvslaQaB65EuuR2M3tQD
-	 ++rs5KQFBsdOe7SSQ8hVf+DJAugUoPM5Mqrfs69Wm5NDb1BwhrWGYUAduiY2Yokwcw
-	 UnX/Dznj2igM6Bvu9sfjXeM7bTJaA4vS7oKDjiqP6a78W6GKZiw//u+Q7WQb61e+KS
-	 HRkk6gQ/8ovRTrwFr5gibfZmzjuyR5eHFLZzYqvj1cKSwTFL0LbWpbU7omxzWiVhGp
-	 mAEOHH5Lmz7F8T0wk0TahZiroHww1QftElDdmGAe4Dk+Qfg0wy4JVD6zQ794GMZXJu
-	 /flhU9gTQ0Z9A==
-Date: Mon, 8 Dec 2025 18:11:07 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Jacky Chou <jacky_chou@aspeedtech.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-aspeed@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v6 6/7] PCI: aspeed: Add ASPEED PCIe RC driver
-Message-ID: <20251209001107.GA3430423@bhelgaas>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dQYrc3Hslz2xfC
+	for <openbmc@lists.ozlabs.org>; Tue, 09 Dec 2025 20:46:07 +1100 (AEDT)
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+	by mx0b-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5B94uIYT179684;
+	Tue, 9 Dec 2025 03:36:39 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	PODMain02222019; bh=PKHXBFeexF1OLAnNorin/u5kfN3/rLU+xeTkWta0by4=; b=
+	nJMsVbkk/0REfe2/pWPRS82FuNujSbNQPo1LBhVcs61yKmFSeTF6bSMUpRcXRxX3
+	z0I5ZH3ifEWfPTBUhu8BM49Y7ERFF57al/Tsu+Pyvye/a4M2OOE444VSoMohKB2s
+	UWNHqcHeOWDIFiom8rfWm7XL9V6rMg3inKg8EvppFi9v6BHg3d5vvMZtO5kakP9E
+	Rbui9lEqJxfY4p7/2UoS25vYCT48dlS8qwHZeDN0dmzfuKcvDsKEgmU0BWRqspaa
+	afcNJZ2o7CLGamtn4o+gWGTHLvAsbYytt6jvOf6wD9E3K8OvS7x1q5/6TJz5WHf0
+	m6wY4CKTeI7uCeVErbnzAQ==
+Received: from ch1pr05cu001.outbound.protection.outlook.com (mail-northcentralusazon11020138.outbound.protection.outlook.com [52.101.193.138])
+	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 4avhskk8kr-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 09 Dec 2025 03:36:39 -0600 (CST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RucF7YSWv+eVINCnJJz5Q4p7cK7P+xezEF3ZpKz2ripy9635PtU07jdzd7jlH33FCgnQ6awntnCFM76xH1BWfV9yo68ohSXF9RADhUShLbiR1LE1T+j7u1nVDlRFpcdAvhNSgrS9hu2l1xpTUmCDHj6rBz55N2fxzZup0S18G5yQb3BnayyUh3VSfKUkrUzeknxsUEI0Flq0E921EyKgxv9lzN0fLPlWvyyy1awX7hFU6lNQRsz1EHz9zh7BZ+dCaNVq1D6w2vWbjjBV608ojL9UecO4w+Ywo9mGsPdTR30FcP17sn7OkoayeuVH6h/O6cyIGggvFgZQ3ql1Vt7Hqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PKHXBFeexF1OLAnNorin/u5kfN3/rLU+xeTkWta0by4=;
+ b=ZTo6YWe1S4PjpS9yGxzWHkbTbbx9+oukgTRzY96RYHGY+baBGL7rciiDqFWuCR+zYbu1rhYRv33lOA5fylVrh88ulBwOLJ2b6NVTh4SyDfAG4rBRvrj2IX/i5a7a1gvw5T+K209loVrZPrHByZf6t+6MMIrajpPcV2GgX5dCVhxroUva2LlojsBkAsHMqZPRqAqri2yQHRIPSINBzxIWiMUgdxR5C6ymRjR1t53+Ep/dlmuwTUjEpJIEPklBxVoDV8f0QCss1dCQ8E87sm6oj2FC4xh+ZneSFRef/EpHdw7iI42skgSgzQA/RhMe/4AbdaZQuWXC7aFk5n4poR1qtA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 84.19.233.75) smtp.rcpttodomain=arndb.de smtp.mailfrom=opensource.cirrus.com;
+ dmarc=fail (p=reject sp=reject pct=100) action=oreject
+ header.from=opensource.cirrus.com; dkim=none (message not signed); arc=none
+ (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PKHXBFeexF1OLAnNorin/u5kfN3/rLU+xeTkWta0by4=;
+ b=rQqSpYe++dHKD8budRum+Pa/h/84bQEYkcJ8NsxvflHiSsdWjJirIQnFztPGqBm2G2XijzizPBOaxCv9Gm5ufnvkqH6gybqoWhVPPeaBzVznebkSoT1WRIPgsPS4DDs/l7EwnLwBLsubeiLWSmfsvcYBPbxhTfYJJQONr8YImys=
+Received: from BLAPR03CA0120.namprd03.prod.outlook.com (2603:10b6:208:32a::35)
+ by PH0PR19MB5396.namprd19.prod.outlook.com (2603:10b6:510:fa::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.6; Tue, 9 Dec
+ 2025 09:36:36 +0000
+Received: from BL6PEPF00022575.namprd02.prod.outlook.com
+ (2603:10b6:208:32a:cafe::fd) by BLAPR03CA0120.outlook.office365.com
+ (2603:10b6:208:32a::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.14 via Frontend Transport; Tue,
+ 9 Dec 2025 09:35:56 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 84.19.233.75)
+ smtp.mailfrom=opensource.cirrus.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=oreject header.from=opensource.cirrus.com;
+Received-SPF: Fail (protection.outlook.com: domain of opensource.cirrus.com
+ does not designate 84.19.233.75 as permitted sender)
+ receiver=protection.outlook.com; client-ip=84.19.233.75;
+ helo=edirelay1.ad.cirrus.com;
+Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
+ BL6PEPF00022575.mail.protection.outlook.com (10.167.249.43) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.4
+ via Frontend Transport; Tue, 9 Dec 2025 09:36:35 +0000
+Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id 6ED37406541;
+	Tue,  9 Dec 2025 09:36:34 +0000 (UTC)
+Received: from [198.90.208.24] (ediswws06.ad.cirrus.com [198.90.208.24])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 5F14F820247;
+	Tue,  9 Dec 2025 09:36:34 +0000 (UTC)
+Message-ID: <3b72f01e-698c-48da-a40e-431d08c7b847@opensource.cirrus.com>
+Date: Tue, 9 Dec 2025 09:36:33 +0000
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -76,223 +104,130 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251201-upstream_pcie_rc-v6-6-8c8800c56b16@aspeedtech.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+User-Agent: Mozilla Thunderbird
+Subject: Re: Kconfig dangling references (BZ 216748)
+To: Takashi Iwai <tiwai@suse.de>, Randy Dunlap <rdunlap@infradead.org>
+Cc: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Arnd Bergmann <arnd@arndb.de>, andrew.jones@linux.dev,
+        linux-omap@vger.kernel.org, openbmc@lists.ozlabs.org,
+        linux-sound@vger.kernel.org,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        linux-mips@vger.kernel.org, asahi@lists.linux.dev,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        Paul Kocialkowski <paulk@sys-base.io>, chrome-platform@lists.linux.dev,
+        Paul Cercueil <paul@crapouillou.net>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-gpio@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Matti Vaittinen <mazziesaccount@gmail.com>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Vaibhav Hiremath <hvaibhav.linux@gmail.com>, linux-sh@vger.kernel.org,
+        x86@kernel.org, Max Filippov <jcmvbkbc@gmail.com>
+References: <22b92ddf-6321-41b5-8073-f9c7064d3432@infradead.org>
+ <87fr9luyu7.wl-tiwai@suse.de>
+Content-Language: en-GB
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
+In-Reply-To: <87fr9luyu7.wl-tiwai@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00022575:EE_|PH0PR19MB5396:EE_
+X-MS-Office365-Filtering-Correlation-Id: 08c42c0c-2e81-44e5-7bbe-08de370671fc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|61400799027|36860700013|7416014|376014|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?RHIrRDJGd3cvK1dZN2c3cHlhSldLOW5aNnZtT0JNQmpoR1FwempvU1I3alpZ?=
+ =?utf-8?B?MFk4aVJDTlMwLzMxN1h3SWtQWmxMNnVJQkY3OWdBVkpWOWRVWEphMmVXd0hv?=
+ =?utf-8?B?SlJUbXBYbFhmajVQajZDa0xOUlhkTmg0VmpHOFhUcDJNVFlWUU1WcEZmMGVG?=
+ =?utf-8?B?MDBhU1RScTVVdC9xQ1oxeG44bWE5SDhRdWtHWmRld3NGTFlsTW5hZkxySVNY?=
+ =?utf-8?B?ZmM3Z3FwU3ZDOFpnczlJQXRONmNLU2FaMXlTRWE1eHBGY0Q3bzZQMXJIaDgx?=
+ =?utf-8?B?bk56QXZBclBXSkNFOGFrRjl0SmY0K2lSTk1hOWI1NlRKeXYyTkRDZGdwZzZm?=
+ =?utf-8?B?bllSTSsrbWdwRDN0bVl0aVNhUUQ5RTVHWnBqM3JBU1ZrNEJjR3BVRERHWDJP?=
+ =?utf-8?B?TmdXWExBM2gvanRkRUtISVk2RUxSM1VKQ1l2NkhxZFdUV21ha1NrVVczTk1U?=
+ =?utf-8?B?aHNkYkFMZlZIcEZuc3dtUmgvQnI5ekVrM2NJN3dOZWllWllaTzZOZHNXaHlz?=
+ =?utf-8?B?WDdGNmhnSXFMbFoxVDU4YTdKNTRXdFVRK05zY1IzcWJ6YmtDRDZKQ0tjbVJh?=
+ =?utf-8?B?V1dkMVliTVA3cWFYMzhicmNGYVhnYnU5NHJOL2RSdlRCem1RRHN4Y2pjZ0hN?=
+ =?utf-8?B?Q3NrSVExYkk1VUZTNW1WdkpxTG1BQWFKQnpqK0ZYZkVWQmM2UDFpVVI5Zkp1?=
+ =?utf-8?B?cHBpNVV0TVNQRjlua0M3V3c3OENwaUdpMGQvS01zMFdXMElvVk9mak1XWVNy?=
+ =?utf-8?B?S2hiMFFqMUJoTWprTEt3S1RsNFBVWS8zTitMbmNJSW9sRWRIMlBPL2NMbnRP?=
+ =?utf-8?B?M05Fc29xNWFuUXlhN002RWR2V0NhS1R5dC84cWRUMkdnbjV2NW1FTHJ1Z0M0?=
+ =?utf-8?B?VXZkc0VHa2pjSnhvVzI5QS85SjkxNWhUM3B6bTVPQXRKT2dpZC9jYldFaW41?=
+ =?utf-8?B?eFJJTWYvUGp6NVJ6NjdNM1cyaXlIUm0zZndGdTI0MlRCSHlJMjdtWStYRTVV?=
+ =?utf-8?B?TndIRXM3Nnl5dUlNS2ZlUk42WnZ3eTlOZGJUbFVETGU2bWJxNnFrNmlnSTBv?=
+ =?utf-8?B?WG1ub0UwM0Q5d2lqNjVKdUlpeTlXY2d6M1N6RTYxMTZNajRYejE3ZFdJekRn?=
+ =?utf-8?B?VTdBUCtpWWI3RFlxY2FKRVZsR3hwTzVKR1lGYkNWZll2WFFuTzY3eGlLSFd1?=
+ =?utf-8?B?NlJkQk1XTmVsem42cGg4TjRhUTlDcWlrOXZjTWpBbVo2bUdtNHgzTlJRcFdS?=
+ =?utf-8?B?VDVvWE9hWGtoZ1JnbEd2bWVvYXFob3NSczNFVk5VZjA1dnN3RkU1aXlnaHhG?=
+ =?utf-8?B?cnRwVGJLaGpuOW9ZZS9NRGdFUFNyM0UwUEJMT3lXSTRVdDdsZCt5RlF3d3Zu?=
+ =?utf-8?B?em1BYmNGL3RKaFc3UmpXUjVYUHl4MitGK3FzVTlKTXhBTjdyanF3RmczY0Va?=
+ =?utf-8?B?SHJqSGp5ZklqUy9SZ09sZ2I2VkVVQkc1QzV1bWZjcGJMZVNkVkhEdThScUM5?=
+ =?utf-8?B?RnFuYUk2Y3NZZDZDb1cxS0tWYjdUK2YwUmpQN1NGOGE5MUtUM1dvck1PNUlj?=
+ =?utf-8?B?Wncwa2lFd09NVWlnQWY4b2xzR3MxRjlzQjVpazJQOWxwQUowODRkK05tRGhj?=
+ =?utf-8?B?eXVVZkdpcjZ0ZTFaSjdBd25DMG1SZVIrbVNLQjQwNVBBMmVxcVRoUUplak9O?=
+ =?utf-8?B?UXd2RXI0TElBSVZJUHZvZHBjOW9waFpGWlhOZ3BjZVgwcmQwajJ1N0xnWVBs?=
+ =?utf-8?B?WUNaSmxMY1BLeS8yekVSZ0JOZDVyOUcvNjBxR2hrVWIveGIrUTc1ai8zd0tv?=
+ =?utf-8?B?KzNoZm9SREFJaEpYSjREaStpM1prSUNoVWxZbEgxNEMydmJJc2FXa1ZZMkx4?=
+ =?utf-8?B?MXFEVkhJQTlJeGhHUWdCZU1zRDE0eTZHTkJFTnQ0dCt0ZXRPSTVwdTBqTEdt?=
+ =?utf-8?B?SUJqTGlYWENpYSs0QnVML0NkOFdtZjRqMVFTUHNsOEI4NXAyZGFsVTNid3Fz?=
+ =?utf-8?B?M3ZHK0pKUjFld3FrTms1TXIzcFVKME53V1lBQk9WaGJzZlJhYkxBaWhzN3VO?=
+ =?utf-8?B?YytIYnRMeGNSYWF2YVZPNXFDcEh3WFlLRGNrQT09?=
+X-Forefront-Antispam-Report:
+	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(61400799027)(36860700013)(7416014)(376014)(82310400026);DIR:OUT;SFP:1102;
+X-OriginatorOrg: opensource.cirrus.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2025 09:36:35.2774
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 08c42c0c-2e81-44e5-7bbe-08de370671fc
+X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-BL6PEPF00022575.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR19MB5396
+X-Proofpoint-ORIG-GUID: HmELDZTK9mzkvQe1JymO9Z9NL6DpSihZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA5MDA2NyBTYWx0ZWRfX2rz8c69/HykU
+ amDi/ybpGW57WMK6dc8arxp314n78gNQL74C8fKc88pW//+dtIFUEH3C9HGcP1rxLceLzz8KRxC
+ uz3g6rG2/b9tj2r4ObAweTO7B/nAS+F/P0kyPiavpUBWeqsrcYM7vXan+fagpB02xzqMeLqcAXZ
+ GpvcWKiNNd9j4kdKZu1ikQJKs6XkojQD/OfF693xcQNDyepRUc0Qru8LLrHxJV9hb/mqfWBJZJW
+ GNmDvNtdFj3g/zpLDt/IQVyJ8mXOiJeLflQZquZiHsRANq5hw1oA+RQ8z3RlkNbs/lpgUQywV5C
+ WPVgsYLvut7rvvl1bG18/ADFTRGdZo/4XolOX6Lwg7lOv3js4+JveFBWhFsK5dUPJunby6TzVxO
+ P9CtUWZ+nV6VnkkbgLjiXdMrSdX+Bw==
+X-Authority-Analysis: v=2.4 cv=DJ6CIiNb c=1 sm=1 tr=0 ts=6937eda7 cx=c_pps
+ a=wpg3e3TFAlO0qOiIlNsFBg==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=eQQaxFmmQVRwuAb-A3wA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: HmELDZTK9mzkvQe1JymO9Z9NL6DpSihZ
+X-Proofpoint-Spam-Reason: safe
+X-Spam-Status: No, score=-0.7 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Dec 01, 2025 at 02:29:16PM +0800, Jacky Chou wrote:
-> Introduce PCIe Root Complex driver for ASPEED SoCs. Support RC
-> initialization, reset, clock, IRQ domain, and MSI domain setup.
-> Implement platform-specific setup and register configuration for
-> ASPEED. And provide PCI config space read/write and INTx/MSI
-> interrupt handling.
-> ...
+On 08/12/2025 9:06 am, Takashi Iwai wrote:
+> On Mon, 08 Dec 2025 03:04:09 +0100,
+> Randy Dunlap wrote:
+>>
+>> SND_SOC_AC97_BUS_NEW ---
+>> sound/soc/pxa/Kconfig:21:	select SND_SOC_AC97_BUS_NEW
+> 
+> This must be a bogus entry added in commit 1c8bc7b3de5e ("ASoC: pxa:
+> switch to new ac97 bus support"), which can be dropped.
+> 
+>> SND_SOC_CS35L56_CAL_SYSFS_COMMON ---
+>> sound/soc/codecs/Kconfig:920:	select SND_SOC_CS35L56_CAL_SYSFS_COMMON
+> 
+> The buggy commit was 32172cf3cb54 ("ASoC: cs35l56: Allow restoring
+> factory calibration through ALSA control").
+> This looks like a fallout at changing from sysfs to debugfs, so this
+> should be SND_SOC_CS35L56_CAL_DEBUGFS_COMMON instead.
+> 
+> 
 
-> +struct aspeed_pcie {
-> +	struct pci_host_bridge *host;
-> +	struct device *dev;
-> +	void __iomem *reg;
-> +	struct regmap *ahbc;
-> +	struct regmap *cfg;
-> +	const struct aspeed_pcie_rc_platform *platform;
-> +	struct list_head ports;
-> +
-> +	u8 tx_tag;
-> +	int host_bus_num;
-
-Only needs a u8.
-
-> +static int aspeed_pcie_port_init(struct aspeed_pcie_port *port)
-> +{
-> +	struct aspeed_pcie *pcie = port->pcie;
-> +	struct device *dev = pcie->dev;
-> +	int ret;
-> +
-> +	ret = clk_prepare_enable(port->clk);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				     "failed to set clock for slot (%d)\n",
-> +				     port->slot);
-> +
-> +	ret = phy_init(port->phy);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				     "failed to init phy pcie for slot (%d)\n",
-> +				     port->slot);
-> +
-> +	ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret,
-> +				     "failed to set phy mode for slot (%d)\n",
-> +				     port->slot);
-> +
-> +	reset_control_deassert(port->perst);
-> +	mdelay(PCIE_RESET_CONFIG_WAIT_MS);
-
-I think this should use msleep().
-
-> +static int aspeed_ast2600_setup(struct platform_device *pdev)
-> +{
-> +	struct aspeed_pcie *pcie = platform_get_drvdata(pdev);
-> +	struct device *dev = pcie->dev;
-> +
-> +	pcie->ahbc = syscon_regmap_lookup_by_phandle(dev->of_node,
-> +						     "aspeed,ahbc");
-> +	if (IS_ERR(pcie->ahbc))
-> +		return dev_err_probe(dev, PTR_ERR(pcie->ahbc),
-> +				     "failed to map ahbc base\n");
-> +
-> +	aspeed_host_reset(pcie);
-> +
-> +	regmap_write(pcie->ahbc, ASPEED_AHBC_KEY, ASPEED_AHBC_UNLOCK_KEY);
-> +	regmap_update_bits(pcie->ahbc, ASPEED_AHBC_ADDR_MAPPING,
-> +			   ASPEED_PCIE_RC_MEMORY_EN, ASPEED_PCIE_RC_MEMORY_EN);
-> +	regmap_write(pcie->ahbc, ASPEED_AHBC_KEY, ASPEED_AHBC_UNLOCK);
-> +
-> +	/* Due to the BAR assignment is fixed mapping on 0x6000_0000.*/
-> +	writel(ASPEED_AHB_REMAP_LO_ADDR(0x600) | ASPEED_AHB_MASK_LO_ADDR(0xe00),
-> +	       pcie->reg + ASPEED_H2X_AHB_ADDR_CONFIG0);
-> +	writel(ASPEED_AHB_REMAP_HI_ADDR(0),
-> +	       pcie->reg + ASPEED_H2X_AHB_ADDR_CONFIG1);
-
-I assume this ASPEED_H2X_AHB_ADDR_CONFIG is doing basically the same
-thing as aspeed_ast2700_remap_pci_addr() below, so see the comments
-there.
-
-> +	writel(ASPEED_AHB_MASK_HI_ADDR(~0),
-> +	       pcie->reg + ASPEED_H2X_AHB_ADDR_CONFIG2);
-> +	writel(ASPEED_H2X_BRIDGE_EN, pcie->reg + ASPEED_H2X_CTRL);
-> +
-> +	writel(ASPEED_PCIE_RX_DMA_EN | ASPEED_PCIE_RX_LINEAR |
-> +	       ASPEED_PCIE_RX_MSI_SEL | ASPEED_PCIE_RX_MSI_EN |
-> +	       ASPEED_PCIE_WAIT_RX_TLP_CLR | ASPEED_PCIE_RC_RX_ENABLE |
-> +	       ASPEED_PCIE_RC_ENABLE,
-> +	       pcie->reg + ASPEED_H2X_DEV_CTRL);
-> +
-> +	writel(ASPEED_RC_TLP_TX_TAG_NUM, pcie->reg + ASPEED_H2X_DEV_TX_TAG);
-> +
-> +	pcie->host->ops = &aspeed_ast2600_pcie_ops;
-> +	pcie->host->child_ops = &aspeed_ast2600_pcie_child_ops;
-> +
-> +	return 0;
-> +}
-> +
-> +static int aspeed_ast2700_remap_pci_addr(struct aspeed_pcie *pcie)
-> +{
-> +	struct device_node *dev_node = pcie->dev->of_node;
-> +	struct of_pci_range range;
-> +	struct of_pci_range_parser parser;
-> +	int ret;
-> +
-> +	ret = of_pci_range_parser_init(&parser, dev_node);
-> +	if (ret)
-> +		return ret;
-> +
-> +	for_each_of_pci_range(&parser, &range) {
-> +		if ((range.flags & IORESOURCE_TYPE_BITS) == IORESOURCE_MEM) {
-> +			writel(ASPEED_REMAP_PCI_ADDR_31_12(range.pci_addr),
-> +			       pcie->reg + ASPEED_H2X_REMAP_PCI_ADDR_LO);
-> +			writel(ASPEED_REMAP_PCI_ADDR_63_32(range.pci_addr),
-> +			       pcie->reg + ASPEED_H2X_REMAP_PCI_ADDR_HI);
-> +			return 0;
-
-It looks like this is essentially hardcoding the offset between the
-parent-bus-address and the child-bus-address in the DT 'ranges'
-property.  Since ASPEED_REMAP_PCI_ADDR_31_12() and
-ASPEED_REMAP_PCI_ADDR_63_32() do nothing except mask out the low 12
-bits, I assume that offset is zero.
-
-But this should not be hard-coded at all; it should be extracted from
-'ranges'.  I don't think we really have a consistent way of doing
-this, but you can take a look at how these other drivers program
-"outbound" mappings like this using bridge->windows:
-
-  cdns_pcie_hpa_host_init_address_translation()
-  dw_pcie_iatu_setup()
-  mobiveil_host_init()
-  xgene_pcie_map_ranges()
-  iproc_pcie_map_ranges()
-  rzg3s_pcie_parse_map_ranges()
-
-> +static int aspeed_pcie_parse_dt(struct aspeed_pcie *pcie)
-> +{
-> +	struct device *dev = pcie->dev;
-> +	struct device_node *node = dev->of_node;
-> +	int ret;
-> +
-> +	for_each_available_child_of_node_scoped(node, child) {
-> +		int slot;
-> +		const char *type;
-> +
-> +		ret = of_property_read_string(child, "device_type", &type);
-> +		if (ret || strcmp(type, "pci"))
-> +			continue;
-> +
-> +		ret = of_pci_get_devfn(child);
-> +		if (ret < 0)
-> +			return dev_err_probe(dev, ret,
-> +					     "failed to parse devfn\n");
-> +
-> +		slot = PCI_SLOT(ret);
-> +
-> +		ret = aspeed_pcie_parse_port(pcie, child, slot);
-> +		if (ret)
-> +			return ret;
-
-It looks unnecessarily complicated to put each port on a list in
-aspeed_pcie_parse_port() and then iterate over that list in
-aspeed_pcie_init_ports().
-
-I think you could just do something like:
-
-  aspeed_pcie_parse_port();
-  aspeed_pcie_port_init();
-
-and get rid of the list completely.
-
-> +	}
-> +
-> +	if (list_empty(&pcie->ports))
-> +		return dev_err_probe(dev, -ENODEV,
-> +				     "No PCIe port found in DT\n");
-> +
-> +	return 0;
-> +}
-> +
-> +static int aspeed_pcie_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct pci_host_bridge *host;
-> +	struct aspeed_pcie *pcie;
-> +	struct resource_entry *entry;
-> +	const struct aspeed_pcie_rc_platform *md;
-> +	int irq, ret;
-> +
-> +	md = of_device_get_match_data(dev);
-> +	if (!md)
-> +		return -ENODEV;
-> +
-> +	host = devm_pci_alloc_host_bridge(dev, sizeof(*pcie));
-> +	if (!host)
-> +		return -ENOMEM;
-> +
-> +	pcie = pci_host_bridge_priv(host);
-> +	pcie->dev = dev;
-> +	pcie->tx_tag = 0;
-> +	platform_set_drvdata(pdev, pcie);
-> +
-> +	pcie->platform = md;
-> +	pcie->host = host;
-> +	INIT_LIST_HEAD(&pcie->ports);
-> +
-> +	/* Get root bus num for cfg command to decide tlp type 0 or type 1 */
-> +	entry = resource_list_first_type(&host->windows, IORESOURCE_BUS);
-> +	if (entry)
-> +		pcie->host_bus_num = entry->res->start;
-
-s/host_bus_num/root_bus_nr/   to match struct altera_pcie
+Oh! I checked multiple times that I'd changed all the sysfs to debugfs
+and this STILL got through. I'll send a fix.
 
