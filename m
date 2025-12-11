@@ -1,70 +1,50 @@
-Return-Path: <openbmc+bounces-1020-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-985-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93A3BCBC394
-	for <lists+openbmc@lfdr.de>; Mon, 15 Dec 2025 03:05:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 539ABCB5283
+	for <lists+openbmc@lfdr.de>; Thu, 11 Dec 2025 09:46:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dV3Lg57WDz2xRm;
-	Mon, 15 Dec 2025 13:05:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dRmQs0xlQz2xQr;
+	Thu, 11 Dec 2025 19:46:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=185.233.101.22
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765404622;
-	cv=none; b=ZaZBFjeclGZyjZJfIELXzU3hRunoMTAAqE9k97ibckErNOi0DCOl+WeGaPy6dasCKbMtPmhr7TmKPOJV76ErYm8X987i9jtI90cKrWBRNUVgshj00FNkewHZg8FU4jf0KNtzE64R7SV1SRjQ3uvrH3h4Zuip2nsEhwdUr54r1X0aaiDOdFke81re31ChhW0IBtcJkXXMA+SV2vT52h7h/hmGpBrZoTLgmOV9QThcJs5ZyyjUt2PIeEC1XzdK9deVCWWlZqC2IzyVso1R+JA5rs2wZyAAk62ZfkEQtA0VREVTcSH3s7E9O6mH0jk8+1rX0AcAFYvfbFebGA6isGtwwQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765442789;
+	cv=none; b=hhunO3zGFyJjRCLlGhfEsHcANuIxboQa0DS8YN3dMjekpkOezRBNAtQT2iN1RC6Ut4pUpIwCo6SLL52ydUoLl5RqeNdO7LXRXtIZatVouxqpduOg0wYMHxZcxOHbh3Z+CDursxQ3Dke17LmBY77bn4CIvmOHGW1yF08ekBoEjW3PN3bIQwKK81E2Wqqf/M1uZnNFHpeTGgYtLBMiidqKK1pC5CFEy3CgFi573C8YQ/GstgETaL0RhKXvPqA6+/YnQp/GSE0fWWhi3w5op3wu1sOgw/hqcfZMTM6wBrUfo0pJZmUzGEnwM3mr9hKYLGKE1nJD2Ha/QgHM68utVirZ4g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1765404622; c=relaxed/relaxed;
-	bh=KCynLH+/fhRkEbtiJ1u45Hb0z3MADBEynR2QqQHrsTw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XzFz4FfTEoPTgkRUYntiHnC9OKEAWWtTIMeVrd11zrE+fVUWhCmU1B37klhYHlXCfK2IFTMgWM16hCQm0jsFxugl2v390vKuA5Yxa3slABr0+G8icS/JNo7p3fFNxGTi8eegWyci0u8kKuKhsNkNmqWhi6aDTFG5TmFW1AlfRBrjbIFIWHwg9wa8PUrEDReHhFzrgpKei25RRTGpVIEhNDvlVx3cAuQg6HxjY006RaOphZ4CuKpSdZK4VZR2zMP5dXvj14qQ23nzyb7UOsiy2LuiWRbIQy7txI7U0gpci+uDGbHrZInP5iT8h37Ob0Y9r8kBcf9QgZIU/Cpr8njbGg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sys-base.io; spf=pass (client-ip=185.233.101.22; helo=leonov.paulk.fr; envelope-from=paulk@sys-base.io; receiver=lists.ozlabs.org) smtp.mailfrom=sys-base.io
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=sys-base.io
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sys-base.io (client-ip=185.233.101.22; helo=leonov.paulk.fr; envelope-from=paulk@sys-base.io; receiver=lists.ozlabs.org)
-Received: from leonov.paulk.fr (leonov.paulk.fr [185.233.101.22])
+	t=1765442789; c=relaxed/relaxed;
+	bh=e/DM6Sr1SqiFaFi6So6itNGziX/g9agVvmrw9nqOKwk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MWsF9GKsloT9OJ9uyQIL5nqZ/QPJXSF+oGBucO4zM0geQ1YHZ9DtEDucT6cPQms3ydCtKAQKuRpHBH6WSAWOaDODuZp++jpf8IpLzqavRIHyx7v7dH7ArAgzUnhifa9SxFlOvXUOduPg/bhBGGwemiaefgaP/Vsr7XUQyUGyP6x7B0VfirBSrN5nZcbIPizEA+uBIJxIecPvkH8MSFyoY7xPk8Mu0M0bSZ6nQ/x8YXUQPZTIPM1yA5MV5ip6CnhDjoHeNEbZD9J1vNAcrUNmoFeIcwIQB0P59IT57PHFSKO1cpoBxLGUshNOqxH5DViZctAeC+7qqIap2dyTxu/tAg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bqC5HF97; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=bqC5HF97;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRVJr4sRcz2yQH
-	for <openbmc@lists.ozlabs.org>; Thu, 11 Dec 2025 09:10:18 +1100 (AEDT)
-Received: from laika.paulk.fr (12.234.24.109.rev.sfr.net [109.24.234.12])
-	by leonov.paulk.fr (Postfix) with ESMTPS id B99BF1F8005E
-	for <openbmc@lists.ozlabs.org>; Wed, 10 Dec 2025 22:09:47 +0000 (UTC)
-Received: by laika.paulk.fr (Postfix, from userid 65534)
-	id 52AC4B127FA; Wed, 10 Dec 2025 22:09:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
-Received: from collins (unknown [192.168.1.1])
-	by laika.paulk.fr (Postfix) with ESMTPSA id EBB48B127E9;
-	Wed, 10 Dec 2025 22:09:35 +0000 (UTC)
-Date: Wed, 10 Dec 2025 23:09:33 +0100
-From: Paul Kocialkowski <paulk@sys-base.io>
-To: Janne Grunau <j@jannau.net>
-Cc: Randy Dunlap <rdunlap@infradead.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>, andrew.jones@linux.dev,
-	linux-omap@vger.kernel.org, openbmc@lists.ozlabs.org,
-	linux-sound@vger.kernel.org,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	linux-mips@vger.kernel.org, asahi@lists.linux.dev,
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-	chrome-platform@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Linux ARM <linux-arm-kernel@lists.infradead.org>,
-	linux-gpio@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Vaibhav Hiremath <hvaibhav.linux@gmail.com>,
-	linux-sh@vger.kernel.org, x86@kernel.org,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: Re: Kconfig dangling references (BZ 216748)
-Message-ID: <aTnvnaRuJ5lF4dVv@collins>
-References: <22b92ddf-6321-41b5-8073-f9c7064d3432@infradead.org>
- <aTcVXrUXVsyjaT22@shepard>
- <20251208200555.GA333481@robin.jannau.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRmQq4MBvz2xLR;
+	Thu, 11 Dec 2025 19:46:27 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1765442785;
+	bh=e/DM6Sr1SqiFaFi6So6itNGziX/g9agVvmrw9nqOKwk=;
+	h=From:Subject:Date:To:Cc;
+	b=bqC5HF97IEXGGiwn8BjKImcZTCClNnB5F20Ne02GYuzhc+xDMiDRF+Z09oKeAgrrL
+	 jLJwO0XqylJgqUw5ZMQxQBGVLJk8bZNZm//deP56z5ytmmRPS1z919GTDPdpgieASR
+	 wQj3FYYvWzGaCnsX7lvoNg6pAbH8wMrWcz+aeqHbvZsOqDZNdr6zUbki4wtinbPe/p
+	 YEMg+SviXUlGezg5bkwlU/iDzeNrtJ4W0Viu8jpT69TRVD/cg7WOIPEiaS8gkz2iCb
+	 W68/0xn4kthIfGBvzsjLKS29+37YApjp2QqNC4f8WR7bnVOuDqSn7QTMljkot5glDw
+	 DoCvbsMthhpKQ==
+Received: from [127.0.1.1] (fs98a57d9c.tkyc007.ap.nuro.jp [152.165.125.156])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 490B164DF5;
+	Thu, 11 Dec 2025 16:46:19 +0800 (AWST)
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PATCH RFC 00/16] Eliminate warnings for AST2500 and AST2600 EVB
+ devicetrees
+Date: Thu, 11 Dec 2025 17:45:42 +0900
+Message-Id: <20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -76,93 +56,118 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MEb6eXQ93P1+3Wd8"
-Content-Disposition: inline
-In-Reply-To: <20251208200555.GA333481@robin.jannau.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALeEOmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1NDI0ND3ZTUMt2UEt3yxKK8zLz0Yt3EnBzdpBRTC1OTJAOTFDMDJaDOgqL
+ UtMwKsKnRSkFuzkqxtbUAFLhwe2oAAAA=
+X-Change-ID: 20251211-dev-dt-warnings-all-bd5854b04d60
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Linus Walleij <linusw@kernel.org>
+Cc: Joel Stanley <joel@jms.id.au>, linux-hwmon@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
+ openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, linux-crypto@vger.kernel.org, 
+ linux-iio@vger.kernel.org, Andrew Jeffery <andrew@codeconstruct.com.au>
+X-Mailer: b4 0.14.3
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
+X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
+Hi all,
 
---MEb6eXQ93P1+3Wd8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This series removes the remaining warnings produced by `make
+CHECK_DTBS=y ...` for the AST2500 and AST2600 EVBs and their related
+DTSIs. The tidy-up has the usual benefit of making it clear to
+contributors that any warnings are likely their own to fix before their
+patches will be considered for merging.
 
-Hi Janne,
+I've framed it as an RFC with all patches contained in the one series
+so the goal is clear, we can see what's needed to reach it, and we can
+decide whether and how it should be split or merged going forward.
 
-Le Mon 08 Dec 25, 21:05, Janne Grunau a =C3=A9crit :
-> On Mon, Dec 08, 2025 at 07:13:50PM +0100, Paul Kocialkowski wrote:
-> > Hi Randy,
-> >=20
-> > On Sun 07 Dec 25, 18:04, Randy Dunlap wrote:
-> > > from  https://bugzilla.kernel.org/show_bug.cgi?id=3D216748
-> > >=20
-> > > The bugzilla entry includes a Perl script and a shell script.
-> > > This is the edited result of running them (I removed some entries tha=
-t were noise).
-> >=20
-> > [...]
-> >=20
-> > > DRM_KMS_DMA_HELPER ---
-> > > drivers/gpu/drm/adp/Kconfig:9:	select DRM_KMS_DMA_HELPER
-> > > drivers/gpu/drm/logicvc/Kconfig:7:	select DRM_KMS_DMA_HELPER
-> >=20
-> > For these two, the symbol was removed in commit
-> > 09717af7d13d63df141ae6e71686289989d17efd
->=20
-> That commit removed DRM_KMS_CMA_HELPER. Later commit 6bcfe8eaeef0
-> ("drm/fb: rename FB CMA helpers to FB DMA helpers") renamed
-> DRM_KMS_CMA_HELPER erroneously to DRM_KMS_DMA_HELPER.
->=20
-> > but these two drivers either were
-> > missed by the batch rename or were introduced a bit later.
->=20
-> In the case of drivers/gpu/drm/adp/Kconfig it was missed much later
-> during review (but iirc went through the same rename out of tree).
->=20
-> > Since the symbol selected DRM_GEM_CMA_HELPER (which is still needed by =
-the
-> > drivers), it should be replaced with DRM_GEM_CMA_HELPER.
->=20
-> That symbol doesn't exist anymore either. It's now DRM_GEM_DMA_HELPER
-> which is already present in both files.
+As it stands there's little in the way of code change, except to
+pinctrl (though also not much there). As such I've included the
+binding maintainers and subsystem lists as recipients but not yet Cc'ed
+subsystem maintainers directly because there are quite a few and I hope
+to avoid mostly uninteresting patches being a source of irritation.
 
-Thanks for the details! It seems that I was looking at an older tree.
+The patches fall into several groups:
 
-> So the "select DRM_KMS_DMA_HELPER" lines can be removed from both files.
+Patch 1:
+  Rob's conversion of the PWM/tach binding to DT schema with fixes
+  applied for the license and typos identified by Krzysztof.
 
-Good, then I'll craft a patch removing these two lines.
+Patches 2-5:
+  Fixes for the warnings related to the LPC and pinctrl nodes, touching
+  relevant drivers and the devicetrees.
 
-All the best,
+  I expect that if this approach is acceptable that we'll need to split
+  application of the patches across successive release cycles, with the
+  driver changes going in first.
 
-Paul
+Patches 6-8:
+  Fix MMC/SDHCI warnings, touching the relevant binding and devicetrees
 
---=20
-Paul Kocialkowski,
+Patches 9-10:
+  Clarify the relationships between the ACRY and AHB controller
 
-Independent contractor - sys-base - https://www.sys-base.io/
-Free software developer - https://www.paulk.fr/
+Patches 11-16:
+  The remaining pieces that eliminate the warnings
 
-Expert in multimedia, graphics and embedded hardware support with Linux.
+I'm at plumbers so don't have hardware on hand to test with, but some
+brief smoke tests under qemu look okay. Given that it's all RFC that
+should be enough for the moment. I'll do more testing after discussions
+and when I have boards at hand.
 
---MEb6eXQ93P1+3Wd8
-Content-Type: application/pgp-signature; name=signature.asc
+Please review!
 
------BEGIN PGP SIGNATURE-----
+Andrew
 
-iQIzBAEBCgAdFiEEAbcMXZQMtj1fphLChP3B6o/ulQwFAmk5750ACgkQhP3B6o/u
-lQxOag/+J9Lwmq+hqcg9BxoDCZl6KmFGAh/RmelPeBUew6LlQphMcDpjQ0yJavK3
-bxojss4r12rV5307+f47JlSMFJa/100MablzoWV0koupx/JCRszhYf2w1lxYHKJh
-7jwy8GLd9NnaZGaiscrckVEcfaVRufzSM2I6ErSZIMSYEZ1LUTCakTPAwrgtarZb
-b9FzHmCrau56mdC2M6StWaolU90t4em1/We8XVRtLY87MEY/VQK6qLylL2fbpuIX
-5+DjnOBDMrvyB7UJFVbzcQA4ev1ckCBvnB2JdzGOfquj6XTO23m5/L5qfxTVk6qa
-yp9ShU6lQZ9RjinifpGWf8JTYl46U7hch9PrUCE/n0FgVl2frQHb/N08ynKUniCB
-1U76zgnG48Wkj08Sz6anRvER3dqEhzJgxJxpkW1UqoXFOSBQeeJZzZONuuUxYw3M
-8JKSldwJVj/oLlvCOI6QO0Q9T+U4YS1gpNBfHbysPaJgZyqld5tXaElOo9k8P8pX
-kAMhcvAn6FaXqkX5qJOAN+91M+CkQwQlWf16G7HKV0LcOvzCtGHYWVrxb7xWw9Em
-JBZRsrdq4CaQc34D8GkBR14H6WGWkGR4OQSTqxshPv7x/S4u9vV8FQWIhLW2LToY
-kw9ephtALgBj6D79R84K2DGlmZwPH2sunV3y9huDh3SNlR5dZg8=
-=EEMR
------END PGP SIGNATURE-----
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+---
+Andrew Jeffery (15):
+      pinctrl: aspeed: g5: Constrain LPC binding revision workaround to AST2500
+      pinctrl: aspeed: g5: Allow use of LPC node instead of LPC host controller
+      ARM: dts: aspeed: g5: Use LPC phandle for pinctrl aspeed,external-nodes
+      ARM: dts: aspeed: Remove unspecified LPC host controller node
+      dt-bindings: mmc: Switch ref to sdhci-common.yaml
+      ARM: dts: aspeed: Remove sdhci-drive-type property from AST2600 EVB
+      ARM: dts: aspeed: Use specified wp-inverted property for AST2600 EVB
+      dt-bindings: bus: aspeed: Require syscon for AST2600 AHB controller
+      dt-bindings: crypto: Document aspeed,ahbc property for Aspeed ACRY
+      ARM: dts: aspeed: Drop syscon compatible from EDAC in g6 dtsi
+      ARM: dts: aspeed: g6: Drop unspecified aspeed,ast2600-udma node
+      ARM: dts: aspeed: ast2600-evb: Tidy up A0 work-around for UART5
+      dt-bindings: iio: adc: Allow interrupts property for AST2600
+      ARM: dts: aspeed: g6: Drop clocks property from arm,armv7-timer
+      dt-bindings: mfd: Document smp-memram node for AST2600 SCU
 
---MEb6eXQ93P1+3Wd8--
+Rob Herring (Arm) (1):
+      dt-bindings: hwmon: Convert aspeed,ast2400-pwm-tacho to DT schema
+
+ .../bindings/bus/aspeed,ast2600-ahbc.yaml          |   8 +-
+ .../bindings/crypto/aspeed,ast2600-acry.yaml       |   7 ++
+ .../bindings/hwmon/aspeed,ast2400-pwm-tacho.yaml   | 106 +++++++++++++++++++++
+ .../devicetree/bindings/hwmon/aspeed-pwm-tacho.txt |  73 --------------
+ .../bindings/iio/adc/aspeed,ast2600-adc.yaml       |   3 +
+ .../bindings/mfd/aspeed,ast2x00-scu.yaml           |  18 ++++
+ .../devicetree/bindings/mmc/aspeed,sdhci.yaml      |   2 +-
+ arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts    |   7 +-
+ .../dts/aspeed/aspeed-bmc-facebook-clemente.dts    |   4 -
+ arch/arm/boot/dts/aspeed/aspeed-g4.dtsi            |   5 -
+ arch/arm/boot/dts/aspeed/aspeed-g5.dtsi            |   8 +-
+ arch/arm/boot/dts/aspeed/aspeed-g6.dtsi            |  17 +---
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c         |  32 ++++---
+ 13 files changed, 165 insertions(+), 125 deletions(-)
+---
+base-commit: 5ce74bc1b7cb2732b22f9c93082545bc655d6547
+change-id: 20251211-dev-dt-warnings-all-bd5854b04d60
+
+Best regards,
+-- 
+Andrew Jeffery <andrew@codeconstruct.com.au>
+
 
