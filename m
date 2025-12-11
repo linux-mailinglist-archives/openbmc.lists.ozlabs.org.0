@@ -1,70 +1,71 @@
-Return-Path: <openbmc+bounces-1003-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1004-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE671CB5A78
-	for <lists+openbmc@lfdr.de>; Thu, 11 Dec 2025 12:33:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E7AAECB5A84
+	for <lists+openbmc@lfdr.de>; Thu, 11 Dec 2025 12:33:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dRr7T4C5Sz2xNk;
-	Thu, 11 Dec 2025 22:33:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dRr7Z49h9z2yFj;
+	Thu, 11 Dec 2025 22:33:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=74.125.224.46
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765452805;
-	cv=none; b=FdDJt5jzSjH/rj7+L/q/o7QtKuLByYaaP2Eqtdg3hD8YOSJtOR4kuoT+8AQKtnAscZnoXN/lKD1xpmWgi9oMn/K5MpS6EAb1HLqrdVMewCWa9eKUTgVia/M71K2kLLiDG7zekgUCEgED4lGiwgJ2gtaKE8wbOh5c06WvCXd7mUm8g0N9xxPqkXGb4wko7VfW4XKPXDF5wROygaqrQ80rgxyFGejGpUhZ8WLcjMiFNmcZk7Fm9ntFonMemMkOpU9aiQp2o268Zlql6bcfNrAT70AkXvhJ3Ym58AJ0t8YZRqNczzCt1sUhE07gUGCeJB6MaDZVBJuQMrVm/TSeNwEn+w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=209.85.128.171
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765452810;
+	cv=none; b=S2sY9V+ePZIF5a9ZFG/t6Tar8S2LrzpYyjZ9aNhO5l/QB6EoJkX1DWimGSHg3307ZIStKFChScRoINM6sbpQ56F2AQzDABOe0AOBeCTY9jlCvMjS3VPxXm/1H9shrKztAMCG3oIOBJehCrequgLbzA/z+6A+AMBEzCxaIykZJaW6W2or/1b19sHSy+FZmCt6CwohEw5RYRlwEP/QSaRBKMQzS+h7DTBPujC6Hge5B0dCdO9KLLb+hyXgSxojSeKeNa8gT+jf0NCXMuVfDCazXz4g1A1wUysFbydy2V60saBVe1FS/E5XCdqvo5IqzL3uNxo+HGUnxUiNd6YQ9BSeLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1765452805; c=relaxed/relaxed;
-	bh=phiy9ied8gdfxveKkebHqanag2hE7Otb50tt4bxl1+s=;
+	t=1765452810; c=relaxed/relaxed;
+	bh=tsAQFyywzgQt8hTuOma0wGcWOIPVIjI9LIgrRTCikK4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=awY6kXZp8+K2HzcNF3zzUD+w2qvEwe2KA2JYe/zFn2EohEDUUp2iPLlRQDH8oP23/Rrm0Iml1ULY5rfLbEtrjluRpvvjXN3JNbxQIlUdohQAGiS6I8g593MldYE/0b8VDzPZiRdolaF0b2NOdNYJXYyyzry4K7eCAq2edtozfWQNKZEOF2CD7rgW7mvVSqbdrlSB9bTdNzHviSfFdELXVj7ks/0HAiHXGvo6FcsUeoxcX9aF3QurZn1wEnN7+SsCKZdwQel21a3AN7Jb9NQLWltxeOPUS94QLYzQ3Wvsr5XgajQ7H2Q5V+62u1t2i0f20LTYSTjeRaEYl+HWtOHPUA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yGEhlB92; dkim-atps=neutral; spf=pass (client-ip=74.125.224.46; helo=mail-yx1-f46.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=iMWLqE8g6JpwqW8IpeVUKgGO6uYtHyWl38x0xkrmjCPAj5ASEtJ4kbxjUq+WBf0M1SyUTWLOmNnH5sMk2O4DOsnwV7j/zzRb10m7g28JIWWocdM8F8rTMGT6A5Mo1Eumi5KNXhPKuXUHoan57BQciKfkHFOY6wI7pdOcfpwEGp4zjCOgo5AIYaWpEMuHE4gk5LsCHLp8+vgafSMRRiTWrOvBvvdBQ2Bwctd8uTZMYtOJOvvvfnYmduOMsRqerA31n18JK2KVTjhcd7nvVODUjd9nq8I8tMjBIXHQjYElZKZT5NE4LkLr69os7W2REPWyX7eK8y4qsmnHauSAI2UKzg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org; dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HfOKV2yU; dkim-atps=neutral; spf=pass (client-ip=209.85.128.171; helo=mail-yw1-f171.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org) smtp.mailfrom=linaro.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yGEhlB92;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HfOKV2yU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=74.125.224.46; helo=mail-yx1-f46.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=209.85.128.171; helo=mail-yw1-f171.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRr7S6qNxz2y7b
-	for <openbmc@lists.ozlabs.org>; Thu, 11 Dec 2025 22:33:24 +1100 (AEDT)
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-6420c0cf4abso817924d50.1
-        for <openbmc@lists.ozlabs.org>; Thu, 11 Dec 2025 03:33:24 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRr7Y6TKRz2y7b
+	for <openbmc@lists.ozlabs.org>; Thu, 11 Dec 2025 22:33:29 +1100 (AEDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78a6a7654a4so8966177b3.0
+        for <openbmc@lists.ozlabs.org>; Thu, 11 Dec 2025 03:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765452742; x=1766057542; darn=lists.ozlabs.org;
+        d=linaro.org; s=google; t=1765452747; x=1766057547; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=phiy9ied8gdfxveKkebHqanag2hE7Otb50tt4bxl1+s=;
-        b=yGEhlB92E9tSv7yMeEbG+SJ/1lMLtCv/yGGbQZCX32vp+PKh8VNunhtnnwLXjx+Km8
-         2vDpPZDdMlbr06C7t0cLpv+hal9N2nUXeaANlPiqgRKFxLqqT6xk8LT1uTc6kXqEpP4Q
-         8bO3Fgo1LUxtMDb+dhvQrt6gA9YqAxuaG6njbAQJlNJIk+fd8GGfYEvWfm20iEYKCsba
-         Mcaby0kbbtRH+33xtIchYKiy92XuhXj5C7H0qwEmMMJ/CvLuZrdrfMUWCkVHkmYGo8XE
-         MfVJvgDi+5n57PrNLzwOwJlycLbsBoSyHDi7bLB32llXGGucoSvCkWgp5jISA/c6ProF
-         xJgQ==
+        bh=tsAQFyywzgQt8hTuOma0wGcWOIPVIjI9LIgrRTCikK4=;
+        b=HfOKV2yUpaYhlWtqBMl/wAYMyoZRx/F1/azn8aEquyefckTJFplT6frkvFjZRDHKSK
+         MgzpCuRRYKvv25UGoetFxBZoZiRouIv6AplnuFoi/SU2kPDbl6VCshs2clffppkXiVCe
+         fbEmWDsRlsjUATBIacUOH1Emhk7Gry0yulCTDgZNLIelh9tF+6g0wR8muXTXLwcR2FyX
+         3fUqqEkTwZlbqYrN2ItSyeCC03Su6RyH0JQi1wlkS5EAXd0Fx2rdhum+bkUw0VQyjEPO
+         MI/6me8WWodj13ppbKKiMhtMIlU6iTwY/oa4uhIHMsuqMd/rXtKc4hi5qhKzJp3GL2db
+         sHmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765452742; x=1766057542;
+        d=1e100.net; s=20230601; t=1765452747; x=1766057547;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=phiy9ied8gdfxveKkebHqanag2hE7Otb50tt4bxl1+s=;
-        b=UgNIFpDCOk+ZzlqLNHw8Vp2iNulIx2ORhkRfDenRZgrRYbDMsvC+ayuKujtpAjEIS2
-         Vr2meIcO1cQvcosZ9OjIcgY67lnFUBhsMSXylSmyFxYlZPJW7Mav5OTWBIwt66kaiez3
-         yR2nwP+zuwZPDwaq+0soWB5UL9uq1bF1OA/ysxNTQf1c8fzBLzCFxD6pW6rAMJsRhA3b
-         MU7OOT+moaJxTdg1OTRPhpOdld2Yxh74w7hkqieI34imNj/nnmUb7JFc9haGEUq+ofrg
-         3zwVdSCQ/Ud4IRPyUJe9kQmSOS+HaJI7522u4SLn0Pi63doZj9rJg4nDsyaeovKBL6NJ
-         gnmA==
-X-Forwarded-Encrypted: i=1; AJvYcCXWqAPpkq/kqE0orNmTzDFBPMETYcaJsBTJmYnQ9fHC/EXNAoufmdVtKgcIija2UAnDYq8NcdHv@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YytsT0Dw2G8eadSfU7tP8qrQSAqmp+RHL0/XPlmCcxS53GJV0Xo
-	/1eGtcCp/RnYnV8u416DdtL7lO4ynuAKFMTjttqBWRvKNFCpyQD/1CrdNlqDsCZPYZdKJQj+az1
-	e9qXJM27gU+O0zXHAhH0X3K90927xt6LvB2ZIX48R8A==
-X-Gm-Gg: AY/fxX4hewCVlYY5MbmmHR+oJCcXOKi0Jsix492BvP0aBjkwZUYRy0R2Sj1Qo8XnKV2
-	hzdSrqS96P7WtBkhQ6rEW40E1DkSrW2xs+BQG6UlIBG3a2dCL0Ph95S2a7Fk0IfN0KpwyKxbwR5
-	C7i+yNK8vwCKodzJJakvPUX0eRd7DrusLOIIbIlPVMIaok/z2bRrNslrz3W1yamCoHXGdpsMpny
-	QtcMWY5kdEqCfvfsDHTzta/r95EH/177sgleUKc3lK3IVsvmrPOlZyNup5YmpU2GILr3AKm
-X-Google-Smtp-Source: AGHT+IGcqwaxtfJMJnD56RcASi/uVKO/lK/0JnQ8qMBQTGtHR3OnnoyAdnC7R6PIycF4XsJLibnnvktvbwIlYjUAVZY=
-X-Received: by 2002:a05:690e:120e:b0:63f:96d7:a350 with SMTP id
- 956f58d0204a3-6446eb4a92cmr4347837d50.66.1765452742333; Thu, 11 Dec 2025
- 03:32:22 -0800 (PST)
+        bh=tsAQFyywzgQt8hTuOma0wGcWOIPVIjI9LIgrRTCikK4=;
+        b=FqHhIUXfbOBbRv9u9B9kAiBDDwN3he+Hqs7WlHFhvutlDHWyECnpyLkcLN2rnlppLa
+         iISsuL9Nrmok5cCeSUnIA64cwmlxFHHGI7A39RNdMzeNn+zScRD62WoMTr3pM9jxjoVH
+         eBTEwuHUyeDAzPfwVfI4ewkULINgyJy4IcLbYvmrma2I1l6PivdcqFFAKiTKdxllVSQz
+         sRnA8lI6JsrgwMbThkZ971iIzw3/H4MrqE+yqY5a7BnPWcFQSLIwaH6hdL5AEDft7snn
+         /IA/DUx0NMXZbAOsH/TTJsD9iW3T1owEffHYhE8deeYWBCI2KWNAwJRNmY1R7zoEKSfF
+         d+2A==
+X-Forwarded-Encrypted: i=1; AJvYcCWE/7T7X5lejnZSEhZYNK12cGtex7fOYpf8Hj9I4GQijhHJsR9C8YlaygYRi5b2pFpsGG2XLSPh@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yx1f39lgliygiz7wcNPoABgQSOrq78Waw5mJjb8G/Lgr525Rs2X
+	ccRddB0uGBXwdcNe9Mdvx7YC3b1MrTtx818tIEjXK3Ou6t3hqdb6wzSUdsgEyLQPVZVEaP/KHOJ
+	fdjbKbxl8oN0RAQreO34S/I1Lmym0xH9wzc5jQJvjHw==
+X-Gm-Gg: AY/fxX7Quyarh66LEGqae22S55jRp/pmFD8hoP+rKM64f53x9mFwu4eIXejjJF0OMLu
+	/gW5UWAcxTGAs/3U9ZVEaZqL9sYW9zFQXTgeYPutZRFzbUF2IGwZcW6XThSuW/cnDu3POMtfe2V
+	CCLkgPh0Ulml5I89gAFjebbRb/xX2QAVqO/ekfttDlmqRB4Mey3HSRqZnV+3FbPYGq5IN6V7yfi
+	zfUsQT3Lcag+qpkGwyO8aZTKFxJYCjyCJcb61qtWabQRedkJodo2QMuB4pgeFanu8bET0h9Qly/
+	t3sL0Vo=
+X-Google-Smtp-Source: AGHT+IGi8FI7tue2F1muYiYdXCcwa1VCSq2fLFaLgh7A0p4DE+EvhP5UsxEj9lkt3uuk+LvjC2KVDNW0gmzNrvJK74w=
+X-Received: by 2002:a05:690c:45c5:b0:787:bf16:d489 with SMTP id
+ 00721157ae682-78ca64495eamr51688117b3.62.1765452747098; Thu, 11 Dec 2025
+ 03:32:27 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -77,14 +78,14 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 References: <20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
- <20251211-dev-dt-warnings-all-v1-7-21b18b9ada77@codeconstruct.com.au>
-In-Reply-To: <20251211-dev-dt-warnings-all-v1-7-21b18b9ada77@codeconstruct.com.au>
+ <20251211-dev-dt-warnings-all-v1-8-21b18b9ada77@codeconstruct.com.au>
+In-Reply-To: <20251211-dev-dt-warnings-all-v1-8-21b18b9ada77@codeconstruct.com.au>
 From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 11 Dec 2025 12:31:45 +0100
-X-Gm-Features: AQt7F2oiHWORIK5IUrdndTpX-opjO6A0dESgetC9ddqm2QKKAaLxTanuvA5lEio
-Message-ID: <CAPDyKFqZQUurBNSNUBKE7rgBf+UHxKiYBWt+xxSY+dh7PgdPPQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 07/16] ARM: dts: aspeed: Remove sdhci-drive-type
- property from AST2600 EVB
+Date: Thu, 11 Dec 2025 12:31:50 +0100
+X-Gm-Features: AQt7F2pk6E2fyrBRST0HoIuBOhvmNQUfLJiP182o7R-P0Ig55Fk3IUyQwfYuHbU
+Message-ID: <CAPDyKFpQXYFFrZ-unVxa9m2+tKLEyFZyo7Tv7JD_7vTbqqfmDQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 08/16] ARM: dts: aspeed: Use specified wp-inverted
+ property for AST2600 EVB
 To: Andrew Jeffery <andrew@codeconstruct.com.au>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
 	Conor Dooley <conor+dt@kernel.org>, Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>, 
@@ -102,8 +103,10 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 On Thu, 11 Dec 2025 at 09:47, Andrew Jeffery
 <andrew@codeconstruct.com.au> wrote:
 >
-> The property isn't specified in the bindings and is not used by the
-> corresponding driver, so drop it.
+> While sdhci-pltfm supports sdhci,wp-inverted, it also supports
+> the un-prefixed and specified wp-inverted property. Switch the EVB
+> devicetree to use the specified property to remove warnings when
+> checking the DTB.
 >
 > Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
@@ -113,29 +116,31 @@ Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
 
 > ---
->  arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts | 2 --
->  1 file changed, 2 deletions(-)
+>  arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
 > diff --git a/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
-> index de83c0eb1d6e..3eba676e57f1 100644
+> index 3eba676e57f1..c51977dcb56b 100644
 > --- a/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
 > +++ b/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
-> @@ -314,7 +314,6 @@ &sdhci0 {
->         status = "okay";
+> @@ -315,7 +315,7 @@ &sdhci0 {
 >         bus-width = <4>;
 >         max-frequency = <100000000>;
-> -       sdhci-drive-type = /bits/ 8 <3>;
 >         sdhci-caps-mask = <0x7 0x0>;
->         sdhci,wp-inverted;
+> -       sdhci,wp-inverted;
+> +       wp-inverted;
 >         vmmc-supply = <&vcc_sdhci0>;
-> @@ -326,7 +325,6 @@ &sdhci1 {
->         status = "okay";
+>         vqmmc-supply = <&vccq_sdhci0>;
+>         clk-phase-sd-hs = <7>, <200>;
+> @@ -326,7 +326,7 @@ &sdhci1 {
 >         bus-width = <4>;
 >         max-frequency = <100000000>;
-> -       sdhci-drive-type = /bits/ 8 <3>;
 >         sdhci-caps-mask = <0x7 0x0>;
->         sdhci,wp-inverted;
+> -       sdhci,wp-inverted;
+> +       wp-inverted;
 >         vmmc-supply = <&vcc_sdhci1>;
+>         vqmmc-supply = <&vccq_sdhci1>;
+>         clk-phase-sd-hs = <7>, <200>;
 >
 > --
 > 2.47.3
