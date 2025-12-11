@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-998-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-999-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25AF7CB5345
-	for <lists+openbmc@lfdr.de>; Thu, 11 Dec 2025 09:49:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2FDCB5357
+	for <lists+openbmc@lfdr.de>; Thu, 11 Dec 2025 09:49:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dRmSB4BTPz2yYs;
-	Thu, 11 Dec 2025 19:47:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dRmSH49Zdz2yfl;
+	Thu, 11 Dec 2025 19:47:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765442858;
-	cv=none; b=bcm+CYlboEASK3XoVuHShnzwu8LCsKzWW3l1MhDWo80enn1L9WhZ4PhxbWoeEyUqalwFhfL3EOErhCM2EKbq/NjQGHNZREngBupzwExMky0izNaw+2FMXkhke2kb2r5JzThKzyyBAkssUTZ6ypK+GeVNvvhP80OPkXTpu3x9g9nVm69vlyi5NmGcsVlTTxC5oEMb98iVSDZti43xyKzu3rE9HlgHU8MwKyMVo29ar4G9ofsckOY5tm5nBV3bDT4RXCBiTUvU3P8q1yAwF1fo8IAu3kY0D7/dWb2+VswJ4QG9xqjokGJ9LJGUXJefQoedxZFxoZSOdYxpfg/RRMY08g==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1765442863;
+	cv=none; b=K3NMlIulr7Izh1r4BQzf4MnfSSigG7hJAbtwwWqVFpXV1wQ0PNI9jZB1NGKu+wrJzKhDF93uqMHrAhP4AesfCvZqSN7UsKEIhIUqrih9qnGneXl8xJbjCIjHvMnTk7SGwAhA5snTL890uu4cvcpCd/E3HWUPXBu25mxE+Jh6LBydLHssHtkjTB99Ykp2YT+U5zULiK3PtWq8HhZTyporgs+W5YPe0tajBjkpKJWIdocfoVawUbOI/IINf9+hHE+vwCONa+yRUJZvWowx92M1SL8rFJsUIBf+nMVjNn906Ox+GbdPO7NqVEAIdZDBLnyyl5I4Hd2A5QsYDFG6UkRpBg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1765442858; c=relaxed/relaxed;
-	bh=rpT9+i/Mb1SzFndodK6pjHk1FnR6Em20V+C0liaihVU=;
+	t=1765442863; c=relaxed/relaxed;
+	bh=QA5RNQcEfirms9HgWj8AssmGCc/5FNo1GGf/ysp2RSE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gI8idlLIegNC8/FXHVgSO/QC20UCm+ZLEQRRGdJE20RuxJqmQ5NZyjvOUkt3Wq51K67dyKrjN0KB2b9RwO8L51c+N9zYHvPlnNWqua+bTo4myxXD56/L98gO2fap24OHWcBMGt4kVKVLmsfhPUBDtOAsVfgQsDe/weTFqYafs0En7q4aQNjYoeYhjSmc55rFZDJM98IluFLDIeFZtjjzEj01+1p3qtVt5zayq3ja26DLmoKdhz823VWlq39MYTPuQywt5gS67i5LCWMAYl8lA0pOI2ouZ1Br8KZ7iqtEmmo2r4mTaCxcrgLlYYO+g/Jm/woXQKohq5nVLjeH+82uvw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=mPJU9qQD; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 In-Reply-To:To:Cc; b=Le7enTEKVN9dNKXN4G6Nf3ZNGJtDpJ7Z2SamEiq+PVkiIhyyqjKBazUZ5S79LcGxq52kyk5abBmlK5mgTAPW7SpuJB55cDa4oE4o6P1RWdXYO8ZDSGPLRvAhRPZO3xQhUCpVCxgatBO1ftZhCOxjXXFVW+A9wV0gW7JtquPr2FYRMv00tPb0/IKpCYQ6FiifRXnnoQM5LS87tB5pRep/ioklyHTNSAdqlE5kgcs3DJJLC297UXdoGrcBwsdnZk7FKWruqATgjubL/p6EFxcu4Xps8jWCfGTHuP3nDascSqhuzBwwVw3xvSYyv5FPfNI4duvvvymmeGZwynTjxj/DCw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=N0E4UmYM; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=mPJU9qQD;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=N0E4UmYM;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRmSB0FNrz2yYq;
-	Thu, 11 Dec 2025 19:47:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dRmSH1lYjz2yFj;
+	Thu, 11 Dec 2025 19:47:43 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1765442857;
-	bh=rpT9+i/Mb1SzFndodK6pjHk1FnR6Em20V+C0liaihVU=;
+	d=codeconstruct.com.au; s=2022a; t=1765442862;
+	bh=QA5RNQcEfirms9HgWj8AssmGCc/5FNo1GGf/ysp2RSE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=mPJU9qQDNoqh6NyKrVyLU5d/zHaZ3HmrsgYxTaXWxGDJqrLl9XCO5Kyym/D44eTwb
-	 kw3QVLMOGJo0VhETRgFYBiU0uaQUx/4B831bSKtILSHUHMLX+9NU2qc8owG/48faS6
-	 VfbuLxJRbGLUJmhfw01dlr+OJrYK1h2k8VVY2ycPQoJ2PKNEt0i/Kwu4GcaJ7cWDly
-	 XJuikW9rtL/XPJF8nFDxgHeOM2duqxRRlLO0KUMuRt19FeCfqi0gKNNF7nhS7kCgoi
-	 GgnaR3/gCJhRcVhSrYyWsnBQTrJxgkhKzdlt5wthe8DSysaNhnzafs8KSTLLOmIGop
-	 ZgjwksnDNe0Tg==
+	b=N0E4UmYMR2ijnu8okYEs3ej0qTmDYPSsnolgBDBHQXQUyBeklOSMTxvmwqiB1XfUU
+	 kN3ZpVQfS67dqTf19F28O4LUE8MSV38xyX7ibzXktLyUNi69uS23ZIJyY28lE5N+df
+	 VBeUUNrZlX9i0MzdEEuxqoysSM/GgXD6esgTzWtH5H6Tcyoev2EhySg4EOCEDJk8XJ
+	 GIa23Q/YY58ZvlrfHve5yA73oxn2+tA8rBnZhDPbz5bfvIEBVDYSuHX8w25wP0uPqw
+	 /wg5SoDm2WGhjTpspHP7NTxW6ekroF7I+DLH+mP2eSdQELxc/1fLg0vNh+4Qd/zpZ5
+	 kJ/XRzBv/LSKw==
 Received: from [127.0.1.1] (fs98a57d9c.tkyc007.ap.nuro.jp [152.165.125.156])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id B49F87D6B0;
-	Thu, 11 Dec 2025 16:47:32 +0800 (AWST)
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 29A0C7D6BB;
+	Thu, 11 Dec 2025 16:47:37 +0800 (AWST)
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-Date: Thu, 11 Dec 2025 17:45:55 +0900
-Subject: [PATCH RFC 13/16] ARM: dts: aspeed: ast2600-evb: Tidy up A0
- work-around for UART5
+Date: Thu, 11 Dec 2025 17:45:56 +0900
+Subject: [PATCH RFC 14/16] dt-bindings: iio: adc: Allow interrupts property
+ for AST2600
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -58,7 +58,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251211-dev-dt-warnings-all-v1-13-21b18b9ada77@codeconstruct.com.au>
+Message-Id: <20251211-dev-dt-warnings-all-v1-14-21b18b9ada77@codeconstruct.com.au>
 References: <20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
 In-Reply-To: <20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -75,26 +75,29 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Changing the compatible changes the properties allowed -
-snps,dw-apb-uart doesn't specify no-loopback-test, so remove it.
+The device has interrupts allocated according to the datasheet, and
+the devicetree already defines the interrupt property. Address existing
+warnings by allowing the property.
 
 Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 ---
- arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/iio/adc/aspeed,ast2600-adc.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
-index c51977dcb56b..3f2ca9da0be2 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-ast2600-evb.dts
-@@ -205,6 +205,7 @@ flash@0 {
- &uart5 {
- 	// Workaround for A0
- 	compatible = "snps,dw-apb-uart";
-+	/delete-property/ no-loopback-test;
- };
+diff --git a/Documentation/devicetree/bindings/iio/adc/aspeed,ast2600-adc.yaml b/Documentation/devicetree/bindings/iio/adc/aspeed,ast2600-adc.yaml
+index 509bfb1007c4..249101b55cf4 100644
+--- a/Documentation/devicetree/bindings/iio/adc/aspeed,ast2600-adc.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/aspeed,ast2600-adc.yaml
+@@ -44,6 +44,9 @@ properties:
+       Input clock used to derive the sample clock. Expected to be the
+       SoC's APB clock.
  
- &i2c0 {
++  interrupts:
++    maxItems: 1
++
+   resets:
+     maxItems: 1
+ 
 
 -- 
 2.47.3
