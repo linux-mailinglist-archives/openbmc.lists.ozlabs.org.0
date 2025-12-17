@@ -1,64 +1,58 @@
-Return-Path: <openbmc+bounces-1053-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1054-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96519CC9A72
-	for <lists+openbmc@lfdr.de>; Wed, 17 Dec 2025 23:01:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BCADCC9C0D
+	for <lists+openbmc@lfdr.de>; Wed, 17 Dec 2025 23:59:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dWnmr0yDtz30Vy;
-	Thu, 18 Dec 2025 09:01:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dWq4g14WQz2xqj;
+	Thu, 18 Dec 2025 09:59:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1766008860;
-	cv=none; b=g79wPkERUJJKeUyxcJNB6msmefIgnd8cDLvtt1VGwup1ZXGKDrc6mroP7vomVWPj56oiVxhOqdgD0x4PhPuAPI1JGoTDaI6RBI3v31VTwDRVhM4YjO1Vnh0ekVpgEsQl66EZicd5YC0ezX7q77b0bCKro0MgoKQi+yYa415sGnEH/mvEvBxaFtI8TCZO9THK5Oy31Zf8n8fC1rlMWrJnRAiGvM2IlMgBGJgxKphUC+6soZOKPiEGDMesOm3I3Fl8umv0ckISzAYogu7R4O+aVlPgVIGc3xXS3aWlyrPnaZZIVT3GSFWKhYoEI97/vgzmdHI3cm5Al8xj0lFEpyRZgw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1766012387;
+	cv=none; b=oprWlAd6akZal2Nc5kozsc703hKx3xhIY5664w5P/nEn8ClHQVpitHLddY73x9RAvgS/8ntB5TXbW3b7I1k1wmFTJUDEegjLL+0eXHKghyDO9i4S+T/c9KQPRW8YEe0SU5uhUckd6504e491Iv3pyj6gaCWm2CwrbmVAes0MfUlAOQfCQMmf8U1FaJwqLs7hvqX9fnBU0k8nb5PSplhq/w1F6MNDGbz4heA2gIZQ9g5s8qkMYeN2TkGpWBRFfzVf33VdFKSIiJOmpNZ8xoRPUgBMcgngVocg1kGginX74q4PYSl9C0M1SH8H61DwkXS4g4puYz4G88Qs1EwbCHC78Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1766008860; c=relaxed/relaxed;
-	bh=fzcRsvXylZN9aaLtqwzTReh1wZfElthhV45WDpSLtLM=;
+	t=1766012387; c=relaxed/relaxed;
+	bh=h0ZQpPnP6V0VHVG4T/qTaG7HGafVff3MtURtDkNB+7o=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=f5f090CeSX4i830cefDn5tA2Pz8mTIjA/rdsmQOps764ctiQqjMmPkeKgvEHGHReJDVgGNKGfQHYyxxD3s4ULOuusV5jS6t/YceTwin1sZPbq+zKMG36Inb9+bEM/gQlNCZFsUcsleDM1WkpHeae4YqNL+FYqkfbXcA4gIInDrfc1/nB7dTLsh9Uzxh3ZgehnteFTMIfEVa8McF579chBt/DpdjM4r7ZuP/k4T4Z6u+vdCqru/0gHtvFwrtEKTak49CRrDVxfaoWZK9opLl5d/noRRCBCF/2RbgG7vAhcE/fqjmIP8JZOHBz3X9A3vUiZHJRdkUeMotTl2PPgpWZ1w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=fApoOOfA; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+	 Content-Type:MIME-Version; b=QpZ+wMA1tjAfrz3myS52IJ8uabUzoGRGIC/ceeMEWKV9vZIEFjhiKlbxrD3ZExh9+MYCpqnbwScGwgNX0gg7ch8wqSs1lFGnLbFNen+0f1xXVMrZm1Nn4hM2fG3O7NGw9HVWwp0wD37FqzaIBBOdiOf3w0p7mTc3I9XjQ9+pX2GjRtmqcprNggQzh8LWj08pYTQR7T2sDH8bgBz4/9gfn+Ruf7uaqIXEbFGOcu5gD19Bmn0KjWzgXDxS5Tmvk1ShXtldEflq4VTRGP1hahQWu0EZ2XxEJipnr6H0cWysGnNYsJsFcyhPKyIRvVE4EnLjilVEO690GbtFj2m5pTvh9g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=D6L574Kl; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=fApoOOfA;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=D6L574Kl;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
 Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dWnmp6T0Kz2xl0;
-	Thu, 18 Dec 2025 09:00:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dWq4f0Cxsz2x99;
+	Thu, 18 Dec 2025 09:59:45 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1766008855;
-	bh=fzcRsvXylZN9aaLtqwzTReh1wZfElthhV45WDpSLtLM=;
+	d=codeconstruct.com.au; s=2022a; t=1766012385;
+	bh=h0ZQpPnP6V0VHVG4T/qTaG7HGafVff3MtURtDkNB+7o=;
 	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=fApoOOfAOl/WLHh2U99ktvCT0tJMUee5y+YJOw2D6yPmlO3QXfrC4pXyDavNvNOFQ
-	 0ZrLl2bX3drG8K46ydoTHG/YL8MJMBt3Pe/eVVR1eqZnijWe1OvGNMSVrM8q7bfXJs
-	 brC4+s/JlkwpbSiFhenmsEWkVTI5ibT6QqI+0gUr7p0qDPwDtBCBsWoXwo43xF/+vi
-	 lMW7yiKE8BHSKDNwW7TiyML1D20eSbBYZFMhNZ2ZHfluXXf1HbQdQv358qvwkwywKt
-	 VaVXXCJC+ozudhxI89GAzXLN1F4yrkcFrCPjXWe8s43Y7u44/mfwV4Ignyu/jXDdJn
-	 fUSaF6GA/zSUg==
+	b=D6L574KlgyqzSiWjJnQy9D8H7anarJ75r5sI+bRpxh5ii3G2KVXGenqFNpIFW03G3
+	 9chSFdeSExk1LhJTLixQa0Rtkp4mZ2cTamqmy5LpgLXeYrixa0LPPmSt8Xgo7IcBW9
+	 MK6vkDTNKvWpvhFM5H2RA2XD1EdhQkSbudltYdehH/6CuVxo0WKxqJNreLhyRLeoS7
+	 HdcZ3w01f1DmE7Zc8BDo9aqKFP6S9R0wg6Ffq/A5LT+r2YltNEcbfMBYYjA9pvqxZZ
+	 pmpJW+MRqyE3y8C38vClToSpNSfFpu+Cb2dENC6tga6iEcr6qT4j2gSgDdz6jSsf55
+	 z7DKlQOWcuHVw==
 Received: from [192.168.68.115] (unknown [180.150.112.216])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 5400D7C1B2;
-	Thu, 18 Dec 2025 06:00:54 +0800 (AWST)
-Message-ID: <d6046a94820cda6bfcc3953d6c737152a9f0cf37.camel@codeconstruct.com.au>
-Subject: Re: [PATCH RFC 01/16] dt-bindings: hwmon: Convert
- aspeed,ast2400-pwm-tacho to DT schema
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 03A677C1B2;
+	Thu, 18 Dec 2025 06:59:44 +0800 (AWST)
+Message-ID: <61f561d95af86a46f1e1075df39e1ce0f1324098.camel@codeconstruct.com.au>
+Subject: Re: [PATCH] arm: dts: aspeed: add an alt 128M flash layout
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,  Linus Walleij <linusw@kernel.org>, Joel Stanley
- <joel@jms.id.au>, linux-hwmon@vger.kernel.org, 	devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, 	linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, 	openbmc@lists.ozlabs.org,
- linux-gpio@vger.kernel.org, linux-mmc@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-iio@vger.kernel.org
-Date: Thu, 18 Dec 2025 08:30:51 +1030
-In-Reply-To: <CAL_JsqJUaKKsJ8BCNbVXe4vLVsQ2Av7VuWqf9DnUKHeLzLb8NQ@mail.gmail.com>
-References: 
-	<20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
-	 <20251211-dev-dt-warnings-all-v1-1-21b18b9ada77@codeconstruct.com.au>
-	 <CAL_JsqJUaKKsJ8BCNbVXe4vLVsQ2Av7VuWqf9DnUKHeLzLb8NQ@mail.gmail.com>
+To: Marc Olberding <molberding@nvidia.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski
+	 <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Joel Stanley
+	 <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Date: Thu, 18 Dec 2025 09:29:44 +1030
+In-Reply-To: <20251211-alt-128-layout-v1-1-100f57d2bc4a@nvidia.com>
+References: <20251211-alt-128-layout-v1-1-100f57d2bc4a@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2-0+deb13u1 
@@ -78,25 +72,67 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Wed, 2025-12-17 at 09:37 -0600, Rob Herring wrote:
-> On Thu, Dec 11, 2025 at 2:46=E2=80=AFAM Andrew Jeffery
-> <andrew@codeconstruct.com.au> wrote:
-> >=20
-> > From: "Rob Herring (Arm)" <robh@kernel.org>
-> >=20
-> > Convert the ASpeed fan controller binding to DT schema format.
-> >=20
-> > The '#cooling-cells' value used is 1 rather than 2. '#size-cells' is 0
-> > rather 1.
+On Thu, 2025-12-11 at 13:35 -0800, Marc Olberding wrote:
+> Add a 128M layout for the BMC flash chip we didn't boot from.
+> Including
+> this allows the user to write to each partition on the alternate spi
+> chip. This dtsi follows the existing standard of using the same
+> layout
+> as non alt version and prepending `alt` to each partition's name.
 >=20
-> Okay, I can't figure out why I thought '#cooling-cells' needed to be 1
-> here. I don't see that anywhere in the tree. The driver for sure only
-> supports 2, so anything that's not is an error in any case.
+> Testing: Include this in msx4 and cat size, offsets and name
+> ```
+> for devdir in /sys/class/mtd/mtd*; do
+> > =C2=A0=C2=A0=C2=A0 [[ -d $devdir && -r $devdir/name ]] || continue
+> > =C2=A0=C2=A0=C2=A0 name=3D$(<"$devdir/name")
+> > =C2=A0=C2=A0=C2=A0 [[ $name =3D=3D alt* ]] || continue
+> >=20
+> > =C2=A0=C2=A0=C2=A0 size=3D$(<"$devdir/size")
+> > =C2=A0=C2=A0=C2=A0 offset=3D0
+> > =C2=A0=C2=A0=C2=A0 [[ -r $devdir/offset ]] && offset=3D$(<"$devdir/offs=
+et")
+> >=20
+> > =C2=A0=C2=A0=C2=A0 dev=3D$(basename "$devdir")
+> > =C2=A0=C2=A0=C2=A0 printf "%s name=3D%s offset=3D0x%X size=3D0x%X\n" "$=
+dev" "$name" \
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "$offset" "$size"
+> > done
+> mtd10 name=3Dalt-rofs offset=3D0xA00000 size=3D0x5600000
+> mtd11 name=3Dalt-rwfs offset=3D0x6000000 size=3D0x2000000
+> mtd7 name=3Dalt-u-boot offset=3D0x0 size=3D0xE0000
+> mtd8 name=3Dalt-u-boot-env offset=3D0xE0000 size=3D0x20000
+> mtd9 name=3Dalt-kernel offset=3D0x100000 size=3D0x900000
+> ```
+>=20
+> Also ran dtbs_check on an existing dts with this included.
+>=20
+> Signed-off-by: Marc Olberding <molberding@nvidia.com>
+> ---
+> Add a layout for an alternate 128M flash layout. This is
+> useful for the aspeed ast2500[2] and ast2600[1] SoCs,
+> where it has the ability to boot from one of two spi chips,
+> nominally the primary and backup SPIs. Adding a layout allows
+> userspace
+> to flash the alternate spi by partition and switch over to it,
+> allowing
+> lower downtime for firmware flash, or for updating the primary
+> flash from the golden backup flash. This is already an established
+> scheme for the 32M and 64M layouts, where the layout is the same
+> but each partition has `alt` prepended to its name. This allows
+> userspace to just prepend alt to the images in the update process
+> to specify which flash chip to update.
+>=20
+> References:
+>=20
+> [1] https://www.aspeedtech.com/server_ast2600/
+> [2] https://www.aspeedtech.com/server_ast2500/
+> ---
+> =C2=A0.../dts/aspeed/openbmc-flash-layout-128-alt.dtsi=C2=A0=C2=A0 | 32
+> ++++++++++++++++++++++
+> =C2=A01 file changed, 32 insertions(+)
 
-Yeah, I'd started doing some digging to understand your statement about
-it needing to be 1 but hadn't got to the bottom of it.
-
-If it can be 2 then great, I can fix up the #size-cells and resend.
+This may be fine, but please add it in a series that also introduces a
+board that consumes it.
 
 Andrew
 
