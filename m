@@ -1,118 +1,63 @@
-Return-Path: <openbmc+bounces-1075-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1076-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3F32CE5B36
-	for <lists+openbmc@lfdr.de>; Mon, 29 Dec 2025 02:46:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02650CE5B3F
+	for <lists+openbmc@lfdr.de>; Mon, 29 Dec 2025 02:46:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dffFY4Czhz2xqj;
-	Mon, 29 Dec 2025 12:46:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dffFZ4h89z2xrL;
+	Mon, 29 Dec 2025 12:46:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=205.220.168.131
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1766580289;
-	cv=none; b=jlPVqwX1dRx8GkP3T7YKXtTa5EeM/LpRNDg40houR8peYx6QMxYXrmIXdihcaCtz+GbBxsm0NR1cwP6DMAHcNet4dnYVBPIcSvJA/+0kqRJ+vnu7Uhi2pX5/pXLu6kURKmpEGiUQaUpmtOE8/0wEWWfX8PGiNZ6sbeJyfkNhuGk4rVLFq1cpIjU+/YmM6b0qqtwxIeuZb3pM/7Zz37RWTeDx+NZNrAxNIlEE3R0qgvJHtzAlt3KD7E9lWEVktR5HQe2wxocmdCL/44Xipjoytry2iBc80zIEpzhUCvZLrCkFU3IJTpQqhgc/Ku5/mIh7vUC38gbrOI+LBqZdxBe8TA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=68.232.154.123
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1766593978;
+	cv=none; b=hMI4icYwmT48v74n3/hw8QRPcTo6tnDOL0PhskT45OuzCxIB3eCFLYhF83iJ2Wnk3h7DNWyahJshcd/ERJ4qHlPU7Tr1ofTVyQ8EENSbeuV7R319EQLS9aA/pELxxb4rjGgW2hNn5BvdeGjT3KfOofrJGOmYpHu/GwArc1SLyM3LheWnO1VJ8SpOKQ2pVDwD19fQKc91xyYOZuQWsYwLO7FgC2cuycYliw6Dx5YprTTwpmn8lvsQOxqEIDeGvGpUqj8aZCND6PaDGF8/t+Vjdn7KURE5kXOq9pLsanRL4QoLTBzsvsGjFsNsPfDdPz0NAc8pGAwiKQrWyTmzXVcFvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1766580289; c=relaxed/relaxed;
-	bh=pIBKnWae4catNyYhM3q80mHwGLIsFVJVcGLF7SAAxtM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oU5i0wvuRb6T5aTws9WPdAJGwVTxNi/FnIEYVKOblbhI+n/55KJC6W66xUeWIBxExDUcjY7sFF5BMRG9/hJRsSfsV1heagu4Nn2g2Ii3YPRDNeVOuVpF77XPTMEzKiFVFZpCmVOVM3+HZ05nxOhhwbearovq/sYULI3uOwrrD9zhUNUwHZ2U3YsnQaWabryyRq+0duECZ/UUmeGvnPEDh3aQqdygAI3yFWtgytLlH5NhfNdNnEVtdXRIjMTbYgtt7EHK2bwb1CWtZhFqNTJxsg2w0ZUV1VPhJ8xEVd0yBOp2O8s1uFmBgSo13gtGKoVgFrLcZWd6vKIMRbgmOP99Eg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; dkim=pass (2048-bit key; unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YmVfTXwS; dkim=pass (2048-bit key; unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dq5qkc74; dkim-atps=neutral; spf=pass (client-ip=205.220.168.131; helo=mx0a-0031df01.pphosted.com; envelope-from=krzysztof.kozlowski@oss.qualcomm.com; receiver=lists.ozlabs.org) smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+	t=1766593978; c=relaxed/relaxed;
+	bh=eb1GWSMtwiCjjrRom1gCzEi9SBcGoDJFeRiB5e+S/SU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=cjM7R4EY9Q6Bom5NbadszOyaFijjJvknLm0ju+liPeGF1XghjABijA5+b9R7X8g9WArOgaxbTpxR/rdkwbMDUo7dC8hDZInV5mmYcLYcqOUUFnA7BEF5uIswCcox1btlO0RYM0V+izMSxjXD+vMbMb9vjZ+/gaF2Tbfi+1xSemtWKho0ayIrUwMRNbN9VzpSYGUoWIhjSIZPEZCpRJCEBiFiPf2UpGahKOez64IqtyeKoGVlCJ6j5RT9qxEHLZhtmiYRQWwrkeJDWHhgyffMwz0EnFui3b8C4WpJko74P9/sekitO77nJpNMsBz31zDKEcc/YzEvUx2jbcpIgLKoSw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; dkim=pass (2048-bit key; unprotected) header.d=microchip.com header.i=@microchip.com header.a=rsa-sha256 header.s=mchp header.b=drhZpYRG; dkim-atps=neutral; spf=pass (client-ip=68.232.154.123; helo=esa.microchip.iphmx.com; envelope-from=prvs=4464f8a09=nicolas.ferre@microchip.com; receiver=lists.ozlabs.org) smtp.mailfrom=microchip.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YmVfTXwS;
-	dkim=pass (2048-bit key; unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dq5qkc74;
+	dkim=pass (2048-bit key; unprotected) header.d=microchip.com header.i=@microchip.com header.a=rsa-sha256 header.s=mchp header.b=drhZpYRG;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=oss.qualcomm.com (client-ip=205.220.168.131; helo=mx0a-0031df01.pphosted.com; envelope-from=krzysztof.kozlowski@oss.qualcomm.com; receiver=lists.ozlabs.org)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=microchip.com (client-ip=68.232.154.123; helo=esa.microchip.iphmx.com; envelope-from=prvs=4464f8a09=nicolas.ferre@microchip.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 123 seconds by postgrey-1.37 at boromir; Thu, 25 Dec 2025 03:32:56 AEDT
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dbs5s1pQgz2yPM
-	for <openbmc@lists.ozlabs.org>; Wed, 24 Dec 2025 23:44:49 +1100 (AEDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BO3wKQ23796513
-	for <openbmc@lists.ozlabs.org>; Wed, 24 Dec 2025 12:44:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=pIBKnWae4ca
-	tNyYhM3q80mHwGLIsFVJVcGLF7SAAxtM=; b=YmVfTXwSg+dzYWqzDS2Fpsnl+k+
-	SoCPXSRlgSckh5iv5ayAMfxhfXcHJOkKcOHnKH8GO+G+PiIEOqh5yxvfzsvHvagh
-	DsfzldtCWsLRZYfFfMiyj4BBioW9ZIbpAmldVI2UZI+qRHzxOuer4u5TqfyiuuHl
-	bACTzaQOJHgjRDbHTNTpnL9981mFYhB5FqCtQQeIjKlpeVDTHcG2+McanmvDXwBi
-	LPforIBOwwkdCel6R8oWLCRoBnJkER8aYz3DGpb93+EsTNsEcEqGtmlpfBAjdAbj
-	WRgUUrxD5HDQbiZhGy+FNKF/BgDimrPDuNV872iYi/jr1GpII2a2ac7jPpg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b88r696pv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 24 Dec 2025 12:44:47 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4f1d26abbd8so160833021cf.1
-        for <openbmc@lists.ozlabs.org>; Wed, 24 Dec 2025 04:44:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1766580286; x=1767185086; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pIBKnWae4catNyYhM3q80mHwGLIsFVJVcGLF7SAAxtM=;
-        b=dq5qkc74Tg1Tt963mVD31YOeiymX+nmvlJL88YdFwBTokXVzpUdrU4WVdt4FdSew7X
-         vweNGD8s9lSzFcRwIaA4KDHASA3CxnoFwEpGbAX5U3tNpcKJh7ymf2mrOseWIDmfAUdt
-         sJ+C/SBz9t52XoZegozOEb4NYtBvcq+qwtLtIUQxF9DL1xnCuv+OgEyfPCWMbcKNpuVa
-         OVc+bApWUn++mEjXpQKUlQstLiBh1WuQ28DiamUp2sBal7oocfSScx4ABdOeAUtwViv+
-         zG69AbaU7/VvVQu5rHElYY4PCOHkry+CXBL0Z0rXxGcGqW/lQgmV4HTgN5FsSSeByRkf
-         UwGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766580286; x=1767185086;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pIBKnWae4catNyYhM3q80mHwGLIsFVJVcGLF7SAAxtM=;
-        b=BSQ3tjpSEpvQ7kTv5bSdYYQIu0MnVtqMBFvsD8PqwAXz+45h/xFNJNpr1UGDzhuBRp
-         yL/58iz+CdNJPnyGLmsGzbpNedLrh50UTNDo/Pu4+XnLe75SRFGmLgdnB9GC5noe4OZ1
-         9C3NLYvDMhdzZ2XPAdGqapkBiQVh/rR9ii1r0YBN2r4F8DX9tBHHOxzCRiiVL7jZwcSr
-         FitapBoGVbP9BkiWcQPEr29TdtWuEzVwh5yDzrA+IdyBxiGu8KR7+GSiy6Nyiqpc8XQ8
-         NNcPuE+lkM0LJ5NcwasCgc4S8QFc+7nUehqGi/plLGw2CTd0H8p89UamPswndGalZRUQ
-         jF0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW60EdDdNujwT6ZDv6m7NNhweYwVg232UEth9izqpQHHqAtBsiS2giNru+znT0Gy0QxkcfWPPKz@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yy09KosS2ZY9FTjZtTsNMDV4IZBZ/G/bsrGk4Fj9pc9TbI704Ew
-	/KnEWfBttEwL6xWfA4yDVnjZreXCv05PWRuiaKikjX5dw3lo1mN73SjfJq1R9c8Wf8ciHXbnvAw
-	j4SwAA9RZWzjlbM0hNcnjLANnYFvUvIcpcuExU7B5863WT7zIPIZvJWqUIiu8ZQ==
-X-Gm-Gg: AY/fxX62YryRv8ALL+B1hi++H+uwtZGJm7u7xoK+iRE84wp/AWAayPwOJgTNXX9hrF8
-	PUlsGuKqFpCAxY5z49EcRtOas6quWbZH0m1i4vKWVqsPrUKKE2gykh0bw1VjKNklo+fGuyhVxPZ
-	AJgJPVFX2lRXdcPo/R+AGAx2swJsMvZjEVx7WBGiic5ws3Yy2NsVNAe0X155mQQ/k2AOa92eN42
-	VrEbOFDaN+xztZzLecSj9EaPzm7FJMtz8EmcHMJk1YlpFugG1sJ0x2Lf2i4qvy1j9qdqx1e5JG1
-	VrPfJdr9QaA2Etm2ZJD/BBk8VaHx5ZtY73ldcB/0lrck4Y8weWcF0r87Qb45eFOBCqR4XoDyMxM
-	Gfp05YMBi46fcwPclhw8/yWko/JhCoC3Xv2QZO3HefN85AacZYsXs+M6KevoHBOV+ts8Fog==
-X-Received: by 2002:ac8:5a4c:0:b0:4f1:ab28:d9f6 with SMTP id d75a77b69052e-4f4abd03195mr248360331cf.26.1766580286442;
-        Wed, 24 Dec 2025 04:44:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFTZXliHT1pgcb3I+/DNRDGU4Mh4keA+YHzBcuOF/mpCrQZKYCA78vOX3Oe8oOjwDHK4oJOAA==
-X-Received: by 2002:ac8:5a4c:0:b0:4f1:ab28:d9f6 with SMTP id d75a77b69052e-4f4abd03195mr248359981cf.26.1766580286049;
-        Wed, 24 Dec 2025 04:44:46 -0800 (PST)
-Received: from quoll.home (83.5.187.232.ipv4.supernova.orange.pl. [83.5.187.232])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-64b9159a6d0sm16832679a12.28.2025.12.24.04.44.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Dec 2025 04:44:45 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-To: Aubin Constans <aubin.constans@microchip.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Robert Richter <rric@kernel.org>, Paul Cercueil <paul@crapouillou.net>,
-        Andrew Jeffery <andrew@codeconstruct.com.au>,
-        Adrian Hunter <adrian.hunter@intel.com>, Joel Stanley <joel@jms.id.au>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>, linux-mmc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-        openbmc@lists.ozlabs.org, llvm@lists.linux.dev
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH 4/4] mmc: sdhci: aspeed: Simplify with scoped for each OF child loop
-Date: Wed, 24 Dec 2025 13:44:35 +0100
-Message-ID: <20251224124431.208434-8-krzysztof.kozlowski@oss.qualcomm.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251224124431.208434-5-krzysztof.kozlowski@oss.qualcomm.com>
-References: <20251224124431.208434-5-krzysztof.kozlowski@oss.qualcomm.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dby943DJbz2yLg;
+	Thu, 25 Dec 2025 03:32:56 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1766593976; x=1798129976;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=xnT+EvR0s5oIZp/3XXt4XA68h5snb9BsA7e9vL/N/vM=;
+  b=drhZpYRG0jYy4s+kgDoXF7JwGzgGt/VORI1y8MdOXX3YtmcmwUjrUnuE
+   2AvRPev5Po+xvTJMxEzstgqGof7FilCj/Ld0NF79Ns1KSS29UZQIJQ3M6
+   nl6gx2eNik2VcW+jbsqv89OC8dVsOkD+E3Ktj7obBMv9TlqhAZdf76bya
+   Bnf9vxZGIjakWLrdeN3uhjHazL/5iE+uOmoh8z1B5bC7kfYuPvjhx3O+A
+   mGDiPEsyiz0Fqcm6QZTIrUhjdluAdVJM3HsnZ+DUnyuOEowuljh4mYwU/
+   5BNE8ONaRRH5IjVWfRdR3jfJT8i2BdukijY9E5TWN9zWYhbvgKJojoLKr
+   g==;
+X-CSE-ConnectionGUID: 1mpAtqqvTWKDWP3ouM+OuA==
+X-CSE-MsgGUID: bJulCPQ/SGmZ0iD/Mn03NA==
+X-IronPort-AV: E=Sophos;i="6.21,174,1763449200"; 
+   d="scan'208";a="51495333"
+X-Amp-Result: SKIPPED(no attachment in message)
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa2.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 24 Dec 2025 09:29:48 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.58; Wed, 24 Dec 2025 09:29:25 -0700
+Received: from [10.171.248.28] (10.10.85.11) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server id 15.1.2507.58 via Frontend
+ Transport; Wed, 24 Dec 2025 09:29:20 -0700
+Message-ID: <9faff0a3-0f3d-4e51-ab5b-0cf0204ee4fd@microchip.com>
+Date: Wed, 24 Dec 2025 17:29:19 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -124,85 +69,102 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1202; i=krzysztof.kozlowski@oss.qualcomm.com;
- h=from:subject; bh=k3fIiJQnt3//kLj8p1O4BhrfyE8J8CFmxoc44wKmiXk=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpS+AxsqyFxFGGpeZZHIhCyKOnvdjTJf+CTZuIW
- G78x7Z+JzWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaUvgMQAKCRDBN2bmhouD
- 17GWD/9Ixj1ULpYkMSdzu/q3hf0Kyx/91sewvClr8ICZPurrL/DEHrytAOup7j0UsUf2tqG+OyT
- q6YcG4NKAewr+dd4p6QyFCs6nsZ4iElL7Poc82/r2gIRHtRdWcCDaRZWlFvKMiR4pbqXC95Z0Zz
- s9fK2CprxcJVIOTMdjDqP0zIsBY7bn23YlXQmVkcnwj6tyDPDVeppRSNuLAC380N2f7msIhKcJQ
- hJkCfAP/LP92Cb8Yui3UoJ0pk0mYh2q1irGN9ANWu1j7Yv1py9TbXofb32r0aNUPL4eCkt6i9AX
- zFwqoAPZYFBnvUNpXZYwSzVTgpo+JA5kT7t1vKdt6z102UMhDrrYhFl/n/s7UnUZZnk+DiC45Xc
- GZeD1kOX3T1q3SuYwV8kE+G8vr+p1QLOS5wuBWwEidmkJfHGc/KRDVwreOXDAgeSMK93UbZqiDx
- +TXPEPeJ4QH2Y67axdeOdhhhsHD8xZ7XWxKOcjNoXkyIe26f4zdZ0F0NUBD47rgPILROWsCmicy
- waGD9LyfGuE8rVmiOhslBqiSQ3/fyNbBSlOfegAl1K/1fQHLCdl5E+ckDPH5j+NnzSiJGl/Ebvf
- jiLZwczT4DSEMogX90P/8nlA/WHEX+S/g9SdtVK2prE1TUsOpmany/Fame9afDjdsGeXptNT+8J g0yiZTEko+NQNlA==
-X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: -DpsZbP12qs_SGYPssxedM7F7ktjfIXW
-X-Proofpoint-ORIG-GUID: -DpsZbP12qs_SGYPssxedM7F7ktjfIXW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjI0MDExMCBTYWx0ZWRfXwJVtlhQvBM+M
- iWxXUT/cY+2MebtIcv63IdemygFAb/zAA+EVgxkeOmyECTKzHeqjgzSgNpZPuAVevC9f15jik96
- Gu8dXN09N41RlXk4WLoetAt/njrJzk+uEP0HoNpwO2GjzptbAjWm8odhI9InkmcvVCP/f+Pa2qi
- 1hRa19ZgKksYGLSBIIe4f451ObU0Col1Gzu4Jc4EFfY6Eob75+LCvOHdN6t1RN1ZpoJmENCuJju
- 4/Kw7hU/mA7lUO5ospxGPXHsmL2e3fm3AE3eGIV7fw0vxttmNDfrBAKz8SrKdIDXzitT4A9hRQ/
- npB8ADmkMocrXobsOxgVLCJ4bfbZi8WkQxYKkU0jB0O/+EcdRqYIs/GN4IHIXCWvf2C0N7U9gx0
- gdQqriEL6CU25pUjWr9jt6+JGwa4DD3Z31gIW/i5sNMxoI+En3V86eKh7S7rWFADnh7AbK4ZPUZ
- tAijFXidTbt1pAvarfg==
-X-Authority-Analysis: v=2.4 cv=Qahrf8bv c=1 sm=1 tr=0 ts=694be03f cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=urQ9wjG1USoGuMoDBEOPbA==:17
- a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=v5e_MpXYYeFlSKZv_FQA:9 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-24_03,2025-12-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 spamscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2512240110
-X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] mmc: atmel-mci: Simplify with scoped for each OF
+ child loop
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Aubin Constans
+	<aubin.constans@microchip.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea
+	<claudiu.beznea@tuxon.dev>, Robert Richter <rric@kernel.org>, Paul Cercueil
+	<paul@crapouillou.net>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Adrian
+ Hunter" <adrian.hunter@intel.com>, Joel Stanley <joel@jms.id.au>, "Nathan
+ Chancellor" <nathan@kernel.org>, Nick Desaulniers
+	<nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, "Justin
+ Stitt" <justinstitt@google.com>, <linux-mmc@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<linux-mips@vger.kernel.org>, <linux-aspeed@lists.ozlabs.org>,
+	<openbmc@lists.ozlabs.org>, <llvm@lists.linux.dev>
+References: <20251224124431.208434-5-krzysztof.kozlowski@oss.qualcomm.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
+Content-Language: en-US, fr
+Organization: microchip
+In-Reply-To: <20251224124431.208434-5-krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Use scoped for-each loop when iterating over device nodes to make code a
-bit simpler.
+On 24/12/2025 at 13:44, Krzysztof Kozlowski wrote:
+> Use scoped for-each loop when iterating over device nodes to make code a
+> bit simpler.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
----
- drivers/mmc/host/sdhci-of-aspeed.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Reviewed-by: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index ca97b01996b1..4296def69436 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -519,7 +519,7 @@ static struct platform_driver aspeed_sdhci_driver = {
- static int aspeed_sdc_probe(struct platform_device *pdev)
- 
- {
--	struct device_node *parent, *child;
-+	struct device_node *parent;
- 	struct aspeed_sdc *sdc;
- 	int ret;
- 
-@@ -548,12 +548,11 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
- 	dev_set_drvdata(&pdev->dev, sdc);
- 
- 	parent = pdev->dev.of_node;
--	for_each_available_child_of_node(parent, child) {
-+	for_each_available_child_of_node_scoped(parent, child) {
- 		struct platform_device *cpdev;
- 
- 		cpdev = of_platform_device_create(child, NULL, &pdev->dev);
- 		if (!cpdev) {
--			of_node_put(child);
- 			ret = -ENODEV;
- 			goto err_clk;
- 		}
--- 
-2.51.0
+Thanks Krzysztof, best regards,
+   Nicolas
+
+> ---
+>   drivers/mmc/host/atmel-mci.c | 12 +++---------
+>   1 file changed, 3 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+> index fdf6926ea468..3b4928f5b9b2 100644
+> --- a/drivers/mmc/host/atmel-mci.c
+> +++ b/drivers/mmc/host/atmel-mci.c
+> @@ -629,14 +629,13 @@ static int atmci_of_init(struct atmel_mci *host)
+>   {
+>          struct device *dev = host->dev;
+>          struct device_node *np = dev->of_node;
+> -       struct device_node *cnp;
+>          u32 slot_id;
+>          int err;
+> 
+>          if (!np)
+>                  return dev_err_probe(dev, -EINVAL, "device node not found\n");
+> 
+> -       for_each_child_of_node(np, cnp) {
+> +       for_each_child_of_node_scoped(np, cnp) {
+>                  if (of_property_read_u32(cnp, "reg", &slot_id)) {
+>                          dev_warn(dev, "reg property is missing for %pOF\n", cnp);
+>                          continue;
+> @@ -645,7 +644,6 @@ static int atmci_of_init(struct atmel_mci *host)
+>                  if (slot_id >= ATMCI_MAX_NR_SLOTS) {
+>                          dev_warn(dev, "can't have more than %d slots\n",
+>                                   ATMCI_MAX_NR_SLOTS);
+> -                       of_node_put(cnp);
+>                          break;
+>                  }
+> 
+> @@ -658,10 +656,8 @@ static int atmci_of_init(struct atmel_mci *host)
+>                                                "cd", GPIOD_IN, "cd-gpios");
+>                  err = PTR_ERR_OR_ZERO(host->pdata[slot_id].detect_pin);
+>                  if (err) {
+> -                       if (err != -ENOENT) {
+> -                               of_node_put(cnp);
+> +                       if (err != -ENOENT)
+>                                  return err;
+> -                       }
+>                          host->pdata[slot_id].detect_pin = NULL;
+>                  }
+> 
+> @@ -673,10 +669,8 @@ static int atmci_of_init(struct atmel_mci *host)
+>                                                "wp", GPIOD_IN, "wp-gpios");
+>                  err = PTR_ERR_OR_ZERO(host->pdata[slot_id].wp_pin);
+>                  if (err) {
+> -                       if (err != -ENOENT) {
+> -                               of_node_put(cnp);
+> +                       if (err != -ENOENT)
+>                                  return err;
+> -                       }
+>                          host->pdata[slot_id].wp_pin = NULL;
+>                  }
+>          }
+> --
+> 2.51.0
+> 
 
 
