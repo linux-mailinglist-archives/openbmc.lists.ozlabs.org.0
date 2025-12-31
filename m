@@ -1,58 +1,58 @@
-Return-Path: <openbmc+bounces-1083-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1084-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C017CEF9EE
-	for <lists+openbmc@lfdr.de>; Sat, 03 Jan 2026 02:22:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E8E97CEFA01
+	for <lists+openbmc@lfdr.de>; Sat, 03 Jan 2026 02:31:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4djjTz72BDz2yFW;
-	Sat, 03 Jan 2026 12:22:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4djjh12PlYz2xl0;
+	Sat, 03 Jan 2026 12:31:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1767217055;
-	cv=none; b=ONhnaXelACus2HZiPkv/zaq2d2R10hMULot3j5bKUIdZ1Q69vptpc64kMtNC/NeFyKN2Hsg2GMjJK1e64Y/cFEg3ApDbJDl7wSrWeWDVJoJmzCYsDuZIk9mZogkBfqQvSd+qKDVMTHe1P07M/EZ7vVVybkdnQbxSInE9rzDNFsQUu1Um/mUwuyZmB7Oezv4nE6GC1iPnVTjABUxICZgm3kBjK9sAt6P2MB0PBbxiL6kxqBgxadG+5ARmOardKjiqGaoRktMKDtn03RhdMRVMX0feU1SEOl///h0wdQAUzSKBgnrUgARRlNORAWTuy2UHbnpIsdy7SvQVlIQOBzHePw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1767217136;
+	cv=none; b=IkykA8gkMxzWPZfa2lnQSlWqYHWBQc9nVSh8noKvl8jLQGWOXTkfzDtCbk/+wRRMBCt0n6GYxcV5IqEsBZNAUEDUxxugOrgfcnDMESQwbm0r3nNeFIjljNtfOn3R231YrsJVWP255+K+tagzJxg1PsEQSSHuU3mAe7kSnSfLHVDVOI2R1d5A1jbMw+PKmEo0KmDW/Feczy3oRBPNoZDsJiCMQS0R1rI0G+DBFNlnIVM0UafVT+qxP5/ROSu0vCzkylNGskLBR8GoPGY7Iz5lz0BH9cEQtp+ba8uzM1L5JvyewxEL/OLhDTeUI24Vvr+ezuWlRnJqJRvPdLPByV9vVA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1767217055; c=relaxed/relaxed;
-	bh=3Rfnf2qhGGwgV00DUgX+jw89Q5Q97DzPe9bYdiAb1ps=;
+	t=1767217136; c=relaxed/relaxed;
+	bh=bNI4moxHzlL6mKNWIZsVYWKbjwRce0cuGLHEF0rQIaQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YUalhNjHpz2SX6NE3fj0VrnJ/ra6fj/vypk2q7pjXgVdf1YBFMCPXrY/CxWDD5Ty9ujK/0acUFGFm8n2xHpk2sUjLMB3ueXp3JBoBEkH+d3GuCKBQiWYEXkdpGhCDfQTx1ujhX5uFHJ9oIEjub+vjc3EEjsx81IyA7ble2RcWMaX6bIIgT2bJJqHkEwwa98Nr5QbwuE2m2F/t8WhkytBUqJ+lsg2UckpPZJ+Ic+TjH3eN7iHuMAfb2coMXVSQK3OTn9M1yPR1ASmBnF5ZE4sJ//QZRlrcfeRQ95Jyp66LOMAmRZPtJH9WajCtKgWYnMuzJ3uSX/gH8ZkP0tNk8IODQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=S/myJmuv; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 To:Cc:Content-Type; b=f63YQvMJrJu3R7PcRfMoUqd1n7s3JOn5vFyvwxEUxXwimfDnbmb2cFjOatX7MGRtLbEqQVY/KINhh3r0iFuWb49zAE0ml4hs7J75qrvv7x65Hd3J2A5zEd90o2264YPgAX03pUsCKLUh1CbRCujmfuPMAORPP7ad2ZBrgEKXyUEnAo1Xf4T/zbki7Y79KjtaK65gBlunchEj5fnjLnd+F3pS4UUSe6l2vZs0TUERKsONstyJJTvsHMBilBUcrgRalGMafJOOUSRf53tYsvfmE8sCGE4HKKJdcmDve+ETSJROBKHMZhnof+6hNFx0mGn2fmE3jr9psQknup4hyfY8+g==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Ud1JCDQ6; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=S/myJmuv;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Ud1JCDQ6;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org)
 Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dhNbL5r0kz2x99
-	for <openbmc@lists.ozlabs.org>; Thu, 01 Jan 2026 08:37:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dhNcv6Prvz2x9M
+	for <openbmc@lists.ozlabs.org>; Thu, 01 Jan 2026 08:38:55 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 85302443BF
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 21:37:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F125C2BCB1
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 21:37:27 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 58F69443BF
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 21:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E35C2BC86
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 21:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767217047;
-	bh=3Rfnf2qhGGwgV00DUgX+jw89Q5Q97DzPe9bYdiAb1ps=;
+	s=k20201202; t=1767217104;
+	bh=bNI4moxHzlL6mKNWIZsVYWKbjwRce0cuGLHEF0rQIaQ=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=S/myJmuvkQhoJ8EppRf3vex1oHqN6qlqOFLVY9fq6nDRgajD26aH7kRPXmgv928XN
-	 DF+TI78MG0UkXzZMdQuw/GlDgWSTvvxshjuoWDv9HPqT/ygN9fSm4tM6/4gtAfbWRo
-	 QzgG3od32ACcdrA4U/CqlZorWWrLyM+hVKKc9JprOQAISIoIWyWLrac6n3tEKlvdbz
-	 pn7SDd/cIIVAUBaCaNAtbKkHkMk4EWxb3ubqdSGLJYW7BHJG77tQL9PBBKd5n9kxil
-	 vefx2gkquaNmsHtp/u9YwXN07/1/wFU4m8CwszxqBuN+8dVBrt7VZWgJ48dhsHZj/v
-	 RFgKGQWveyeJQ==
-Received: by mail-yx1-f50.google.com with SMTP id 956f58d0204a3-641e9422473so9139469d50.2
-        for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 13:37:27 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWMM7G/36YR/BqOBzVrFF9W1+/ZPs33UIUHHaP4X3vu835e2V6lYLBEUx0j5vdJU5v6JbyT0vgg@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YyN691WxjuY80e5WRVEwgcgaAhvn6bbmp2igMAzTAa3f6mRfKVS
-	ki5wJt3JB9K/MBe+SEhEJ+Mtl5o3HoQ+B45vV4MpTVAgtxm+s8k1QxX5ilAgyAK9TddMXfUnw+W
-	YScHkxW+5BsfqR3W1B4Y136BrQbsUkz4=
-X-Google-Smtp-Source: AGHT+IHHeH8zJG7rfiI2GFfedkzIC0YK/SbYafxSnkK2MFdRLnSCHEYor5QZDiE7b0zGilhY27fuPDjyGexn5uPgcoQ=
-X-Received: by 2002:a05:690c:3803:b0:78f:984b:4bb5 with SMTP id
- 00721157ae682-78fb40c5f09mr590051547b3.64.1767217046540; Wed, 31 Dec 2025
- 13:37:26 -0800 (PST)
+	b=Ud1JCDQ6O191m3kYD44vkt1ShFs9vgo4JobjnhWd+evWDfkmkNYuJI5wcSNL4tWrL
+	 0Z7WpJ+bn7kwco/mfx1YQUb+Cf2JEoE/aLmZRvF04wFMC+yaiiiu1Wrne8U3CLXW7m
+	 rlf4vA2wklUadaJzq65C3YgpX5x29MdV+ltwo/Vd2zN8HofhUcqV8WbtJ0uksC688J
+	 ++6tS4KWFBNxOPHIOXyel+T5t0WvUdmHTbHNbqpkG920NCyjtE7n4FDHgl2Y4TBj64
+	 W6M7ykqRfovFexXy0AhEWH8mXR/2CkOb0cvGL234hY0g3gpG0VTXQnHhEZE4eY7Nqc
+	 84vzL6TQKrNEA==
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78a712cfbc0so101524427b3.1
+        for <openbmc@lists.ozlabs.org>; Wed, 31 Dec 2025 13:38:24 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUnreOiyGSLAW1tmDsN0Vu3kvlmzMM+wUnhw6Xj8TiQNQJoViZuIEW4ZPfnE2HKmbwRszNdpuut@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YxTxS6wa2jhKTgONfUQGTFMNTVEv+hFNxqgrhPTmU/9nt0PaHat
+	nL/vlCvVCgRiN7QyrUhM4IaJZL3ZAkCvACSxfwOpIb7YzQXuS1LLVGSOCiIAiDQxaSykbrNS0mg
+	jdQysRLkLncfvyCfxIuNUojlrzizCmEE=
+X-Google-Smtp-Source: AGHT+IHGZ+h0d0MHZDCxvMCHygNM5e2LD8BSbr6KIbsOXsE3Z3p+Mpa0Okg+bD8neauLjOFoWJ8WBhGUbfiIcHde2OA=
+X-Received: by 2002:a05:690c:90:b0:78f:a9e9:f784 with SMTP id
+ 00721157ae682-78fb3f5d4f4mr320728627b3.31.1767217103495; Wed, 31 Dec 2025
+ 13:38:23 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -65,15 +65,15 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 References: <20251211-dev-dt-warnings-all-v1-0-21b18b9ada77@codeconstruct.com.au>
- <20251211-dev-dt-warnings-all-v1-2-21b18b9ada77@codeconstruct.com.au>
-In-Reply-To: <20251211-dev-dt-warnings-all-v1-2-21b18b9ada77@codeconstruct.com.au>
+ <20251211-dev-dt-warnings-all-v1-3-21b18b9ada77@codeconstruct.com.au>
+In-Reply-To: <20251211-dev-dt-warnings-all-v1-3-21b18b9ada77@codeconstruct.com.au>
 From: Linus Walleij <linusw@kernel.org>
-Date: Wed, 31 Dec 2025 22:37:15 +0100
-X-Gmail-Original-Message-ID: <CAD++jLmNGrDt3_w=DFnBnjEuz3LN-=uc1o9KHv1j=4gbGPoPQg@mail.gmail.com>
-X-Gm-Features: AQt7F2oNijhkSY2l2xLUahhHBTqPWX5BBKamnMGV8HdX2c29O6a9KTnJl-DXNNE
-Message-ID: <CAD++jLmNGrDt3_w=DFnBnjEuz3LN-=uc1o9KHv1j=4gbGPoPQg@mail.gmail.com>
-Subject: Re: [PATCH RFC 02/16] pinctrl: aspeed: g5: Constrain LPC binding
- revision workaround to AST2500
+Date: Wed, 31 Dec 2025 22:38:12 +0100
+X-Gmail-Original-Message-ID: <CAD++jL=TXQyGD5nSdg37KK=OrUJDwi=2pXQciLr+udC9hjCVkw@mail.gmail.com>
+X-Gm-Features: AQt7F2oBzR1qfgGQMAe5k9Xw2nDJvErMxOKzOVsHNn8uiB-Wg9Ho6D3OL063WYs
+Message-ID: <CAD++jL=TXQyGD5nSdg37KK=OrUJDwi=2pXQciLr+udC9hjCVkw@mail.gmail.com>
+Subject: Re: [PATCH RFC 03/16] pinctrl: aspeed: g5: Allow use of LPC node
+ instead of LPC host controller
 To: Andrew Jeffery <andrew@codeconstruct.com.au>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
 	Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, linux-hwmon@vger.kernel.org, 
@@ -92,14 +92,19 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 On Thu, Dec 11, 2025 at 9:46=E2=80=AFAM Andrew Jeffery
 <andrew@codeconstruct.com.au> wrote:
 
-> Discovering a phandle to an AST2400 or AST2600 LPC node indicates an
-> error for the purpose of the AST2500 pinctrl driver.
+> There's currently a wart where the Aspeed LPC host controller has no
+> binding specified, but the pinctrl binding depends on referencing its
+> node.
+>
+> Allow specification of a phandle to the parent LPC controller instead.
+> Fall back to testing for a compatible parent node if the provided
+> phandle doesn't directly resolve to the LPC controller node.
 >
 > Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
 Reviewed-by: Linus Walleij <linusw@kernel.org>
 
-Also pretty obviously correct, can't I just apply this one?
+I guess when this is non-RFC I will just apply these two patches.
 
 Yours,
 Linus Walleij
