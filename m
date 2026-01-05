@@ -1,126 +1,87 @@
-Return-Path: <openbmc+bounces-1090-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1089-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C25C5CF5B49
-	for <lists+openbmc@lfdr.de>; Mon, 05 Jan 2026 22:46:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 52B44CF5B20
+	for <lists+openbmc@lfdr.de>; Mon, 05 Jan 2026 22:41:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dlSXy3w0Hz2xXB;
-	Tue, 06 Jan 2026 08:46:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dlSRF3hnRz2xQB;
+	Tue, 06 Jan 2026 08:41:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=91.207.212.93 arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1767603781;
-	cv=pass; b=kfKNrMF7TDxOdvRiqXBxxTpFvJMKOo/Z2RO3DQnxlNvcGn7zyVGQzziU3kpZzGI6RktxXaZrwJvnl2hOkAwJIfXzuANm3/d97nPahb5yZL1xbpLFWgpX8coGfAnczk29Y36ZZugwzgpzT4LClOqCrfxv/vvFeXM0oLW53pXnLdjMkVGxJh1dar4EsUrCp2tP6Lwe779x4eAdXlTZIpT4fJMXQi1APnYuUboy6l2c4vSJCFJvd9wXWInAULNVZb2SWZcLUi2nXIz8LR7Ek4fd6GMl4fA3Dc5sbEv1b+7Fj1jLQ2gg1pDDPeOOQcb6VXvFNgyGJwwUstv6JKUNWE7I8w==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1767603781; c=relaxed/relaxed;
-	bh=w3xh52/XKjC0tF4Djvh3yy7jAWyZvoLKM3db4JuEmpQ=;
-	h=Message-ID:Subject:From:To:CC:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ccS41h6qsO03f9ecj2kSd+ZxvIit5oy4nD8adq5nX4iTuja62iIeEga95Pyk+euoIIhGvY6y5/DPXbxUZcrT76rMU6daxsfDUPL9x3guuwARDTHrSvY6k31LZ7Rgj0zpWd8RCYqNFfu1H6eebdS6as0gCwTfx3laniiGzmKmHNeRCebftihW0Yk/6wEMev8RrU28Owd7gomKomg0Oufz/Az2mhrtZ9sMB2OmiL2yE134mVi4nos/v8/R3mcKtGxi6bKBZSuOOFqA9nGURpBVeSc/P6VBKOkr/ecg/FtNN4z/nOYLybLrz2hK833LI/XEmfaNW7udy2hsLP4O2bvREg==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; dkim=pass (2048-bit key; unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=NObvD2ws; dkim-atps=neutral; spf=pass (client-ip=91.207.212.93; helo=mx07-00178001.pphosted.com; envelope-from=prvs=5465abcf28=antonio.borneo@foss.st.com; receiver=lists.ozlabs.org) smtp.mailfrom=foss.st.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.152.74
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1767638717;
+	cv=none; b=oslzQa8NqVpVuPCEJ6ZPFn8N7BuEgm1Xpzyh1LYk8ILtKWDMsq0aTZaroTPDKcPazsaGEA7yBTeTLBrqEFLk7Aq7e1DZz3j7upuw62vRn40FK01R1xEaOIk8ku5l6bBxNwHuZasKWLjBG733RMoAb8PpuWdow4912GKfrHc25Jveh5ocajLhnHezfwd9AUYbNFEa5RG3r8Fy4TmWGS1ssSQOaY4DOoXdfuYM5jNhBIJ8Roc7QPiX1gPWsJYhTfFtqoqKH+F3oTI/g5NGnTr/vEmn9BvlIC++6wOZEfGrRMTFPjWLO4tK93Msv3S8w1DHHusSgBhfuRBKxPq78CTldA==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1767638717; c=relaxed/relaxed;
+	bh=MbgnOUHtakK0Of5xhhfurS4ghIX+EFFAUL8QgWLVdIQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=kjGpnQyF//Dg2BpXrtFe2qCtl6AlybqTJ31RfUc83ebliCBeIiym/spSC76utzKy079GmwCdM2vC5lnnPTSyqC7kKTCiCKhmgVkWJn+STUvB39fbS/2cpDKIsa/icw6eo2hbGMod7Sw1SuDv2Xs0dZ4OX5rhYRBgmMw4pTd5zY76ldU53wSEP+2E16CCmnzyAfYG3VmoaSPFi9TET+aKMSyAbw+iAIWZFLX7Q3AGRiETUGPxGlU5uMH/h4mVuPWIBiUBa2n3759WJ2It+L6CClP6qWtCNdab2pQr5mdO7NDkNBscvTC9UJJljmsWme8NkjDhykJhrLsk1AUb5sTmbg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=coreweave.com; dkim=pass (2048-bit key; unprotected) header.d=coreweave.com header.i=@coreweave.com header.a=rsa-sha256 header.s=pps05102023 header.b=LK6EWaxa; dkim=pass (2048-bit key; unprotected) header.d=coreweave.com header.i=@coreweave.com header.a=rsa-sha256 header.s=google header.b=gR3bo916; dkim-atps=neutral; spf=pass (client-ip=148.163.152.74; helo=mx0b-0072dd01.pphosted.com; envelope-from=ext_jtruong@coreweave.com; receiver=lists.ozlabs.org) smtp.mailfrom=coreweave.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=coreweave.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=foss.st.com header.i=@foss.st.com header.a=rsa-sha256 header.s=selector2 header.b=NObvD2ws;
+	dkim=pass (2048-bit key; unprotected) header.d=coreweave.com header.i=@coreweave.com header.a=rsa-sha256 header.s=pps05102023 header.b=LK6EWaxa;
+	dkim=pass (2048-bit key; unprotected) header.d=coreweave.com header.i=@coreweave.com header.a=rsa-sha256 header.s=google header.b=gR3bo916;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=foss.st.com (client-ip=91.207.212.93; helo=mx07-00178001.pphosted.com; envelope-from=prvs=5465abcf28=antonio.borneo@foss.st.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 795 seconds by postgrey-1.37 at boromir; Mon, 05 Jan 2026 20:02:58 AEDT
-Received: from mx07-00178001.pphosted.com (mx08-00178001.pphosted.com [91.207.212.93])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=coreweave.com (client-ip=148.163.152.74; helo=mx0b-0072dd01.pphosted.com; envelope-from=ext_jtruong@coreweave.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 718 seconds by postgrey-1.37 at boromir; Tue, 06 Jan 2026 05:45:15 AEDT
+Received: from mx0b-0072dd01.pphosted.com (mx0b-0072dd01.pphosted.com [148.163.152.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dl7cL483jz2yCL
-	for <openbmc@lists.ozlabs.org>; Mon, 05 Jan 2026 20:02:57 +1100 (AEDT)
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6058f1ma2140274;
-	Mon, 5 Jan 2026 09:47:47 +0100
-Received: from db3pr0202cu003.outbound.protection.outlook.com (mail-northeuropeazon11010011.outbound.protection.outlook.com [52.101.84.11])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 4bes49cn6v-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 05 Jan 2026 09:47:46 +0100 (CET)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=atLwhXyWsrkiPnw+n/2tb48IsKZ19JAHIQ/yGTjDROOa8HryReXXHRFox05XK3tsCapEDhBkzVMm7aTtL6aB2Vka0cZa43qU70xVI9J/qDBpdTaEkNhsbGTBXNiybD5zwcPo3dKutU5XX97pCftRbwvFG7cfC5oME8vlWcH6KO3Xe4tX839AH/TRAhCosM9u1PyMaYK3L4nIQgksWXEEf75ZTFHFfM1LXEDGqlTHcCfmNM1bKGCx19B6+63z1z1Hv6MoUc0DL0fLeTqnhjqtf9VqFAPxKvn2XCg8rUejdwaaqC83KTRmjlhBrtgkIVoz0WBuRNv74RcDnAILLjgWag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w3xh52/XKjC0tF4Djvh3yy7jAWyZvoLKM3db4JuEmpQ=;
- b=PY8u0T26w6D4doBOn7GsXkjId6DOOcJRfNZnY7n3bDNotmApxSvS1jFk0Z4P3S9xZvsFIUtiDRAJqQH8Z63kvxTPfmnH3Y+810T6YSAYdbd0MNdNJqnTO9kjQ9reRtRTvJ55zy5hoePuhSrBLj4oALvmLTz2iVPOBllTv/olm2Ub3Y0Pry97vKhgdbGetqlsdQ8rmYZsNVV/GlvOruKzuT4CKhUzYxCzTCpwXD0rz46QBoj6I2koU0Cy1wy8Uk1sge3rNpe7ULLLaNpRaeDJFtzIR5KRTMvAWHqN9bp9O3dwQbtfwOST2XpP/REKkhgqZsGJcuO2tT6+3iCGZoNZoQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 164.130.1.59) smtp.rcpttodomain=infradead.org smtp.mailfrom=foss.st.com;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w3xh52/XKjC0tF4Djvh3yy7jAWyZvoLKM3db4JuEmpQ=;
- b=NObvD2wsewLhvUbGa0Z+MRSG55jUVxSW8rg3UEc6NfyiHHa9rCCSfwpsVRkkXZJioy+QAAXm0/CeNHjcS6zGe9/dOt2iHSp1nTCTf1f9RilAGvp8aEuyoFtKATzjw+O0OgIx0m1F3m5JaEtYzpzA7MmvgHCzHY1sAPEtrwWjzadJlmJSnZ+LJaW1Cz+A+gdHAELsw+yviV27LZ9LG3distgm5eyYqCJllxCri7jt5NUI9udAB9xY3Y9fP1SfYG6hs3qQpZLAwPP6AKgGPzNfa6s5bUNYNdeATFwBhdNBva1pKqk7gCLggdKAMulFy5Qww3BXghqB+L153xA98hB+SA==
-Received: from AS9PR06CA0476.eurprd06.prod.outlook.com (2603:10a6:20b:49a::35)
- by DB9PR10MB6450.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:3d9::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.4; Mon, 5 Jan
- 2026 08:47:44 +0000
-Received: from AM4PEPF00027A65.eurprd04.prod.outlook.com
- (2603:10a6:20b:49a:cafe::f3) by AS9PR06CA0476.outlook.office365.com
- (2603:10a6:20b:49a::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9478.4 via Frontend Transport; Mon, 5
- Jan 2026 08:47:29 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 164.130.1.59)
- smtp.mailfrom=foss.st.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=foss.st.com;
-Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
- designate 164.130.1.59 as permitted sender) receiver=protection.outlook.com;
- client-ip=164.130.1.59; helo=smtpO365.st.com;
-Received: from smtpO365.st.com (164.130.1.59) by
- AM4PEPF00027A65.mail.protection.outlook.com (10.167.16.86) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9499.1 via Frontend Transport; Mon, 5 Jan 2026 08:47:44 +0000
-Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpo365.st.com
- (10.250.44.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 5 Jan
- 2026 09:48:41 +0100
-Received: from [192.168.8.15] (10.252.15.57) by STKDAG1NODE2.st.com
- (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 5 Jan
- 2026 09:47:24 +0100
-Message-ID: <8491c1e39e94af90bf3d281fd786535eecf0d37d.camel@foss.st.com>
-Subject: Re: [Linux-stm32] Kconfig dangling references (BZ 216748)
-From: Antonio Borneo <antonio.borneo@foss.st.com>
-To: Randy Dunlap <rdunlap@infradead.org>, Arnd Bergmann <arnd@arndb.de>,
-        "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
-CC: <linux-sh@vger.kernel.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Vaibhav Hiremath
-	<hvaibhav.linux@gmail.com>,
-        "dri-devel@lists.freedesktop.org"
-	<dri-devel@lists.freedesktop.org>,
-        <andrew.jones@linux.dev>, Paul Cercueil
-	<paul@crapouillou.net>,
-        Max Filippov <jcmvbkbc@gmail.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <chrome-platform@lists.linux.dev>, <openbmc@lists.ozlabs.org>,
-        <x86@kernel.org>, Andy Shevchenko <andy.shevchenko@gmail.com>,
-        "Matti
- Vaittinen" <mazziesaccount@gmail.com>,
-        Philipp Zabel
-	<p.zabel@pengutronix.de>,
-        Paul Kocialkowski <paulk@sys-base.io>, <linux-sound@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM"
-	<linux-gpio@vger.kernel.org>,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        Linux
- ARM <linux-arm-kernel@lists.infradead.org>,
-        <linux-mips@vger.kernel.org>, <asahi@lists.linux.dev>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        "Jonathan
- Cameron" <jic23@kernel.org>
-Date: Mon, 5 Jan 2026 09:47:23 +0100
-In-Reply-To: <eb7c246a-6c5f-4d8d-bc96-2a71ece2e042@infradead.org>
-References: <22b92ddf-6321-41b5-8073-f9c7064d3432@infradead.org>
-	 <5e335232-89b4-4c35-93bd-efad7e4d8995@app.fastmail.com>
-	 <0220ec0592b6ef8936c25cffbc6cbfa0539fb71a.camel@foss.st.com>
-	 <eb7c246a-6c5f-4d8d-bc96-2a71ece2e042@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dlNXC5qjBz2xm5
+	for <openbmc@lists.ozlabs.org>; Tue, 06 Jan 2026 05:45:14 +1100 (AEDT)
+Received: from pps.filterd (m0355331.ppops.net [127.0.0.1])
+	by mx0b-0072dd01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 605HJQh73083876
+	for <openbmc@lists.ozlabs.org>; Mon, 5 Jan 2026 18:33:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=coreweave.com;
+	 h=content-type:date:from:message-id:mime-version:subject:to; s=
+	pps05102023; bh=MbgnOUHtakK0Of5xhhfurS4ghIX+EFFAUL8QgWLVdIQ=; b=
+	LK6EWaxaMIDyOEHPzGqVHRaXZJEq9AJoIkAq16IEjvpdaJKLlcFyjwGpGKNWOL0c
+	h/1aj6xBrteYxpUvAJXNaIA1+MzOA1RlslvWlDhokw0k9SB6/HqD9x8isJlfq67F
+	QVGV0Crth4KypDEpnMs+n80oRjn7AardcVHA/eKy9meWarGrNS1YOvnGwywYf7gt
+	w01nuiexnNtSPIs0nUy95Os1MJK3co/jbcRwcZJTJa46syRXIGXRcNlttHfJiaJZ
+	OmFcdbH+THIMtGxLxulkQf8AqgfZDVuOWdGIZWE3i7M8T/RWW8AtMeb+0BY2+Z7Z
+	pphdTmuDB8fNR1y693oQaQ==
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com [209.85.128.198])
+	by mx0b-0072dd01.pphosted.com (PPS) with ESMTPS id 4bfdkh20yf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Mon, 05 Jan 2026 18:33:11 +0000 (GMT)
+Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-7881cff41b7so4201957b3.2
+        for <openbmc@lists.ozlabs.org>; Mon, 05 Jan 2026 10:33:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=coreweave.com; s=google; t=1767637991; x=1768242791; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MbgnOUHtakK0Of5xhhfurS4ghIX+EFFAUL8QgWLVdIQ=;
+        b=gR3bo916bPXtJm2JtzOcGVc8kluCSp2VM+QuWHc+zPikr4SA/KSwHqQNWOg5PpmSBl
+         RznWJTViOREeILvz8qQOjIT3BvXNcG2K8SIKuC4dCqyChw6i9qa33aOkLw89cQJ5GM0b
+         mK4pi3WvCRzfO2ceZEMrFVh8CP7BuADdP3KCqf7SN7mUe6eNWEH+bOXM9K2dNUv7jVs7
+         kUptej47KKpdSYIZh7ZrD6cRFNG/45hNXolCgXbtI7pBy3OTNIb3ciVCT0e1eZJC62RR
+         L8DyHddUpVDcAiy0mWU5xgnNly6LB8dC6yHKMyTyCQIY7K0dJWa4pxqeNT3Inut4EFZB
+         C9Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767637991; x=1768242791;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MbgnOUHtakK0Of5xhhfurS4ghIX+EFFAUL8QgWLVdIQ=;
+        b=Yo9UsMClDDGGpJIOz1CC6Rd9oObJh5F9Aodsk7DDpmKku0ZtY2cPcsPZTuqbR9tY7T
+         MdonnnhxYqMxSabKFvijbN3Fsb/eN2svNtn95mdJ13yJ5Y7KPaKXF8TM2E9oT+QYj5e7
+         vBks57pXpvwrE5f9jt1uDPYtP15EICbahivw68iSZK1LGNZrn1DwfHJ1drQf27eSI7ub
+         1rE0k7ytFoBzP0Ec4tyN89aPynCZgqr33g9kaWs1Z6yhrFP/niFP1KPokLPqf+FGQKj7
+         UwWRnwnCDJc4wS55bfO/SG26V6Cmpnb9P3REtjSdVPgQSwSC9JrzeJm45btpjVv8Ivid
+         uTcg==
+X-Gm-Message-State: AOJu0Yz+tQgmmnrnESAX8IPUx8jTVTbU52ALnYVFzjORq//7u7wpu2vf
+	4fyyy9ApsDZ71NDVdt9kxQWaLKUApYonFlxlY68ceeZLNIk/FHg9Xe7TW+zkpuM3LrLOqwITz7b
+	tLSHNi2bqmiL19xL1tTXMR7E6a+wad5dU0EM+g3Snf9Lw7oKxGsr32uJP6gFZcqZdhrwN2bcTrB
+	ZA/6141/6qkA2bRxZpygeeKI7ojGTXKkk9aallIk2w77hSS9o=
+X-Gm-Gg: AY/fxX5xo27nBl2QMrRmjkFMyTVQdt6SiIEfxAFFrLwALRP3kLe5l5RMkRwNrtjnA7r
+	Y6D3yJtkbG0wLKIFGPoLORXnAJsdSyvzCUBDj5m98V92q4ViGTrfAeihJGNOoeiY0YL9+h0HSgl
+	bzE1y5mw8Ypto2NTD2dblKnW5nf0LIHi74+fwhDxnYiMELjuzTFpgiokyHXKkW3apmIpPT
+X-Received: by 2002:a05:690c:c451:b0:784:8153:c61a with SMTP id 00721157ae682-790a8ae072bmr4509187b3.34.1767637991136;
+        Mon, 05 Jan 2026 10:33:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IESfQnd9xMSXyx1Lw0Z/wdWpnCAsTe4rbzOnxtX4Ke06h512ym5BRNAu0ETGFXLcIkvlti7ArbJWvuMFIOFRnw=
+X-Received: by 2002:a05:690c:c451:b0:784:8153:c61a with SMTP id
+ 00721157ae682-790a8ae072bmr4509067b3.34.1767637990580; Mon, 05 Jan 2026
+ 10:33:10 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -132,140 +93,246 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Originating-IP: [10.252.15.57]
-X-ClientProxiedBy: STKCAS1NODE1.st.com (10.75.128.134) To STKDAG1NODE2.st.com
- (10.75.128.133)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM4PEPF00027A65:EE_|DB9PR10MB6450:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47e4c786-d4dc-47d6-203e-08de4c3717f9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|36860700013|82310400026|1800799024|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NnNVOVNNMnVpNkE1TlkyWERpNi9iNm9nSkJQd3VtdnNMUFZVMllnTDVGMXE4?=
- =?utf-8?B?SzEzRHp5cXhkaWhvS1R1NlZDRGRpNFRTdCt4amJxUHJ1T25ndUhZKzlQZTZK?=
- =?utf-8?B?eFpaMHdwZnYrZndIZUhWQU81bXFzM1ZtTTBRc2prVk1CRVM2c01tUkdQSDV5?=
- =?utf-8?B?WW1ibFFpNHBaZ3h4STVnT0szWU9jQjFEdDlaTlBVc2tJdFJQOFVEUjJucXhC?=
- =?utf-8?B?c2FKUnVNM3VkQ3ppa0JBWEFyTHkwVWpkYW00ZkwvNzhoRlpweElTWjJjS0VR?=
- =?utf-8?B?Wm52bk5NUmdhWjRuQld1SWpBc3JQeUZOcXk3eWQxU2xtc1RYV2sxSEY1Smw2?=
- =?utf-8?B?TzNuSTMxMklCZEl0TmlLN2VndUZrU2dwZWJqR0NIa0F6VFdGWksrd2VpWDVj?=
- =?utf-8?B?dm5FNVMyTzRZZXFlWjVkUFJTeGQzVFNnaExmSi95d3dEN2ZQdnI2d2R4WUpv?=
- =?utf-8?B?Z1dRM0k2NlR3VkZ1UDZTLzdVTzVXTTRYWWVZZ3g0bWt6OUFLYlZxZ2U2QUhX?=
- =?utf-8?B?TzEzVlUxVVBMSlpHekc5WG9LMWVwQkl1NE1mTUhlbEdxbVlpUE9KK2s2NFp0?=
- =?utf-8?B?Y0NzTkJCZnJmVS9Lejk3a1ZreGZZQmRSc0pFZUpmZnRZQUQ1STlYa1QyWDBl?=
- =?utf-8?B?V0dlRUZVVzhWc1gzTEYxVzV3N1dvQWF0dVdOTnI0RW4vUEVzdkdkVEltUWR2?=
- =?utf-8?B?RVFWQ1JSMUFTdWk5bjNSWVZKNlg5NHkzelRUVDdYckY5aFdrdU9XN0pPSy9w?=
- =?utf-8?B?am5za25qUVVpTkVGVVgvRTlhS1RVczJDdVpTbis5SkRnbzdGdGREeEJDeUlx?=
- =?utf-8?B?ZFc3R3FTUGhOb3FEQVhTcjF6ejYxM2RHemp0Snp5Y3o3Z1hKR2Y4ZXBhcjhm?=
- =?utf-8?B?eTN0VGtlS2c1TnNBTTVtajdxNWNGUHJnMkhab2Z6RVU2ZU8xR2xZMUdURHNi?=
- =?utf-8?B?TCthbngxOFZ5WGd6TXltZkFUalZtdmJTV0dvMmh4ejZ1amFkK0dLZmJ2VHYv?=
- =?utf-8?B?ODRBZGFQcW1iY1orOHVxLzg5akZUK3g0ZnFJOFpPdkRGRWJKNFZKZHJtVDhm?=
- =?utf-8?B?N1RJNXJzNlR0Q3VvWHB0T0hNUkU3WGZWK3VETFgwOUpJdmtaMGEwN21KbFZN?=
- =?utf-8?B?ZmtBWG1QNE85WEpoWkdyUUJvRjM5YUhudCs5ZE9DcFk5MzBjR2ZyVmVaUWtj?=
- =?utf-8?B?bFJ4dlJ6TjZyYVdDeWxqR2htZ3l4YkZVRDlVY2sybXZxVFJTR1o0b2hIbWE4?=
- =?utf-8?B?TE1OOFJVOUFVWjAxTWlaZnpUY3paSlJOVGNXMXdlSG5KRkVwUTRFSzVoTFkw?=
- =?utf-8?B?UGgvL2Q4TVBkc3owNi85UE9jbk5tZDM5aFl6TkgydWNCSndoRi9vcmVEeFlZ?=
- =?utf-8?B?VTU4ZnpjSEZXcHBsSDhlZk9MZTdlYTMxejFRem9SWjZ1MWQ0YjYvelhKUzJP?=
- =?utf-8?B?VEdZamtMb0lkQzdVSy9NUWpiMWl3NWE3SU1rZE80ckhjN3E5c0Q0cFVjQjBz?=
- =?utf-8?B?Mm1lVk1LWnZDelB0TXZyTitnN0kzZ05hM1Z6QnNMeHd5TGFsL1dqWW52RHlB?=
- =?utf-8?B?dkZBUUQ1clJPaXU1dXpnYlhCTm1ZaDBlZjF0Y1g4KzVQVE5pTDY3T0taSS95?=
- =?utf-8?B?L3g2dnFlbjgyTWR0cCsyVEhNOWs3azluU0kvNVV6Y2NDMC9PcCtySDlWUVY5?=
- =?utf-8?B?bG1XU0lYRnBaR3JyUVcxaWZXeHRKd24vVEVXaDZseFNZRzNVRVNmTkJWQzRy?=
- =?utf-8?B?TEVhak13dlAvWGZaUURibmpBbTBPeTNQR29qRER2Tmg2ODR3V05hSGxsWmxK?=
- =?utf-8?B?eUVHSVR5Y2k3NUtFNlpCbmpsQmlLeEE3UU1leXhoN3lXRXFhQk5VT1pWTTBC?=
- =?utf-8?B?VmRDSW1BNTFhSnVLMDhIeHhnYWtMSU0vei9CT2FYL2JKVXJjNVNWODNEcjU0?=
- =?utf-8?B?UzZobDJJUVJ4ZDRyRzRZK1h1ajJHMGNHb0k5dER2QzRBNThMYzRCS0tzOW94?=
- =?utf-8?B?NDRITGlXcnJuVFhkcG96bURjamJrdjFpNXlFZzlUTDZxbmYxY3FEZkhGT0lo?=
- =?utf-8?B?ZVIwdVV4MHNid0xrYmxqMnF0Y21WRXo5cGxnclNzZ2J5K3VpaXJTNXd0Ymlp?=
- =?utf-8?Q?lwx0=3D?=
-X-Forefront-Antispam-Report:
-	CIP:164.130.1.59;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(7416014)(376014)(36860700013)(82310400026)(1800799024)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: foss.st.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2026 08:47:44.1505
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47e4c786-d4dc-47d6-203e-08de4c3717f9
-X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.59];Helo=[smtpO365.st.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AM4PEPF00027A65.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR10MB6450
-X-Proofpoint-ORIG-GUID: Q2xKsimjn_8_SEndxbUNjFjJidJ8T85Z
-X-Authority-Analysis: v=2.4 cv=SvWdKfO0 c=1 sm=1 tr=0 ts=695b7ab3 cx=c_pps
- a=BbQle/hX7okVSdMXVTYbXQ==:117 a=d6reE3nDawwanmLcZTMRXA==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=mo3wKCK1YPMA:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s63m1ICgrNkA:10 a=KrXZwBdWH7kA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=6Atwf4u63_rCRDoeYiIA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDA3OCBTYWx0ZWRfX17JPRf1rRGFD
- RqZ6B16ua571ljquLm7pUgZITWEuUhXtIkChw39JOYsXQmKakuZwVkB3sRUsNBvHZy+GqAaaO5V
- JVR/pPLfSJWmvkK0vjy46E9eQCtfIXt8rnYoa0EwoQCYDOW1tSa3mBpzSkR2UpYL0QNFaXd9Ycb
- /zzpNIQ5BhNwbHzybgWefK3f3cR2kkjrg9iv/Z1hCl0+8goWI9Ufz0kJ1eK0tcPIRu2GsNN9jhd
- /YeEDdOQ840esuG2PNKhCzNE/j5BbD10z6+NL11asXGmXRjLjDc63Sd2y8LfnOlfIuDB3dx7GyB
- 5vtuoMXd4y/bkNBfijOSCn9cfYO/WhWCIpNQM9S/GgZT4sRHWmiTqRKvQ+DVHuBPJHALMB7deMm
- 25u4N/pelmmUTSONDJ8ic6XZkaYkRm2YVpTUfWVoV6Rtm3jJ2/yyCIxxYdq7fMM0JRuZ8xfoosu
- 6m5ch5AUlS202tabLzw==
-X-Proofpoint-GUID: Q2xKsimjn_8_SEndxbUNjFjJidJ8T85Z
+From: Judy Truong <ext_jtruong@coreweave.com>
+Date: Mon, 5 Jan 2026 10:32:55 -0800
+X-Gm-Features: AQt7F2oGgOWX62Qi8_mrJ6mzvK0ExbIbUVQ3AcRxsiPW7WrFaoFtvpQKY7gs188
+Message-ID: <CAKRF4E5NM5Zkh6UijWQVS1PtSQwKr8ttPk=-RasBh1V2oJBe9A@mail.gmail.com>
+Subject: =?UTF-8?Q?=F0=9F=9A=80_We=E2=80=99re_Hiring=3A_Firmware_Engineers_=28Mid_to_Seni?=
+	=?UTF-8?Q?or_Levels=29_=40_CoreWeave?=
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000008535ba0647a84ace"
+X-Proofpoint-ORIG-GUID: ud2Wqg6SbQPT8EfvLtbzPq2y3icoIrrY
+X-Proofpoint-GUID: ud2Wqg6SbQPT8EfvLtbzPq2y3icoIrrY
+X-Authority-Analysis: v=2.4 cv=YY+wJgRf c=1 sm=1 tr=0 ts=695c03e7 cx=c_pps
+ a=g1v0Z557R90hA0UpD/5Yag==:117 a=vUbySO9Y5rIA:10 a=5KLPUuaC_9wA:10
+ a=l-fz8MELSNkA:10 a=VkNPw1HP01LnGYTKEx00:22 a=59x7OiLhAAAA:8
+ a=5CRca_UmfOXlflA8JWMA:9 a=QEXdDO2ut3YA:10 a=itSJYf9FAAAA:8
+ a=kmbGXolErplFgTUaSAoA:9 a=BaFHy3l2QECDViLX:21 a=lqcHg5cX4UMA:10
+ a=MFSWADHSvvjO3QEy5MdX:22 a=r0nIxo0k5eNsyZar2h_5:22 a=BSB95dMbIMw5xNolKfBJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTA1MDE2MSBTYWx0ZWRfX1IVeOhD4EipI
+ Y6yAicTd9flOckD4XSwUBYI9sH8QRE04YotuRRIjMa25B/qClCNqqqND4FOu/wcXIj1ZFhjN30b
+ VjwUNzJjtehqQxRYnDQ4xIjRvT1C1Knh4nRxn6sCHIsTweDaP+2K0DIVqh+BCGPnZ/O2KZlDU8v
+ sNZwRXvJ7SbKwqeb3U5A1GscFBJBLDvKRQXmMKP3B/XCvP1pSqGAtGVJEd2yGa+eGozmnfLeZc2
+ Jx1P94ygJznoxIv7pWJ0LjhlZ0wD4CytH82tcyrNjMERCuHwJs7u97inxhXvIUeBsLbzsL5BpMW
+ BtidqDvtRf6YLJJmRwYcJ7POBZtg7m/xiCR252deIECGCL8dQ64G0LJSyKFD5/LW7+FhTnaMT8V
+ bhWJMUDzrrxbdb+90CLVmcd7y9OjAqXI41E4Dhk5cayLIujtlozc8x/sgMuBM9a+eRUKwfjWzRI
+ KaK7APflp84ID3gE2AA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-05_01,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015
- bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- phishscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601050078
-X-Spam-Status: No, score=-0.9 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+ definitions=2026-01-05_01,2026-01-05_01,2025-10-01_01
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,HTML_MESSAGE,RCVD_IN_DNSWL_NONE,
 	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Sun, 2026-01-04 at 17:17 -0800, Randy Dunlap wrote:
->=20
->=20
-> On 12/8/25 1:48 AM, Antonio Borneo wrote:
-> > On Mon, 2025-12-08 at 09:55 +0100, Arnd Bergmann wrote:
-> > > On Mon, Dec 8, 2025, at 03:04, Randy Dunlap wrote:
-> > > > from=C2=A0 https://bugzilla.kernel.org/show_bug.cgi?id=3D216748
-> > > >=20
-> > > > The bugzilla entry includes a Perl script and a shell script.
-> > > > This is the edited result of running them (I removed some entries t=
-hat=20
-> > > > were noise).
-> > > >=20
-> > > > I'll try to Cc: all of the relevant mailing lists or individuals.
-> > > >=20
-> > > > ...
-> > > >=20
-> > > > MACH_STM32MP25 ---
-> > > > drivers/pinctrl/stm32/Kconfig:58:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0default MACH_STM32MP25 || (ARCH_STM32=20
-> > > > && ARM64)
-> > >=20
-> > > This was likely intended for 32-bit kernels on 64-bit STM32MP25
-> > > chips, which we don't support. I think this can go.
-> >=20
-> > Yes, I fully agree!
-> >=20
-> > I have a series pinctrl stm32 to be rebased on v6.19-rc1 and I can incl=
-ude the
-> > drop of MACH_STM32MP25 inside it.
->=20
-> and what about this dangling symbol?
-> arch/arm64/Kconfig.platforms:375:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0select ARM_SMC_MBOX
->=20
-> It was merged with ARCH_STM32 in
-> 9e4e24414cc6 ("arm64: introduce STM32 family on Armv8 architecture")
->=20
-> Same answer as for MACH_STM32MP25?
-> If so, Antonio, can you take care of that one also, please?
+--0000000000008535ba0647a84ace
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sure, I can take care of it.
-But probably not in the same series for pinctrl.
+Happy New Year everyone-
 
-Regards,
-Antonio
+
+CoreWeave <https://www.coreweave.com/> is expanding our firmware team to
+scale the world=E2=80=99s most advanced AI cloud. We have multiple openings=
+ ranging
+from *Mid-level (3+ yrs)* to *Senior (8+ yrs)* across several of our hub
+locations.
+
+
+=F0=9F=93=8D* Locations:* NYC | Livingston, NJ | Bellevue, WA | Sunnyvale, =
+CA  ***listed
+in order of preference*
+
+
+*The Roles:*
+
+   - *Mid-Level:* Great for those with ~3 years of experience looking to
+   grow into a key technical contributor within OpenBMC and AMI environment=
+s.
+   - *Senior-Level:* Seeking 8+ years of experience to lead projects,
+   mentor junior engineers, and drive innovation in our Redfish API and BMC
+   stacks.
+
+
+*Technical Core:*
+
+   - Strong *C/C++* for embedded systems.
+   - Hands-on with *OpenBMC*, AMI MegaRAC, or SPX.
+   - Familiarity with Linux, Git, and hardware interfaces (I2C, SPI, UART).
+
+
+*Why CoreWeave?* Since our 2025 IPO (Nasdaq: CRWV), we=E2=80=99ve been movi=
+ng
+faster than ever. You=E2=80=99ll be building the actual infrastructure that=
+ powers
+global AI breakthroughs.
+
+*Know someone?* If you aren't the right fit but know a firmware pro
+who is, *please
+forward this to them!*
+
+
+Apply Here: Firmware Engineer,
+<https://coreweave.com/careers/job?4615564006&board=3Dcoreweave&gh_jid=3D46=
+15564006>
+Senior
+Firmware Engineer
+<https://coreweave.com/careers/job?gh_jid=3D4452431006&board=3Dcoreweave>
+
+--=20
+
+Judy Truong | Senior Technical Recruiter
+
+ext_jtruong@coreweave.com <sgee@coreweave.com>
+www.coreweave.com
+
+--0000000000008535ba0647a84ace
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>
+
+
+
+
+
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Happy=
+ New Year everyone-=C2=A0</p><p class=3D"gmail-p1" style=3D"margin:0px;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alterna=
+tes:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:no=
+rmal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quo=
+t;Helvetica Neue&quot;"><br></p><p class=3D"gmail-p1" style=3D"margin:0px;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings=
+:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&=
+quot;Helvetica Neue&quot;"><span class=3D"gmail-s1" style=3D"text-decoratio=
+n-line:underline"><a href=3D"https://www.coreweave.com/">CoreWeave</a></spa=
+n> is expanding our firmware team to scale the world=E2=80=99s most advance=
+d AI cloud. We have multiple openings ranging from <b>Mid-level (3+ yrs)</b=
+> to <b>Senior (8+ yrs)</b> across several of our hub locations.</p><p clas=
+s=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-variant=
+-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;fon=
+t-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:1=
+3px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">=F0=
+=9F=93=8D<b> Locations:</b> NYC | Livingston, NJ | Bellevue, WA | Sunnyvale=
+, CA<span class=3D"gmail-Apple-converted-space">=C2=A0 </span><i>**listed i=
+n order of preference</i></p>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;min-he=
+ight:16px"><b></b><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>Th=
+e Roles:</b><b></b></p>
+<ul class=3D"gmail-ul1">
+<li class=3D"gmail-li1" style=3D"margin:0px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>=
+Mid-Level:</b> Great for those with ~3 years of experience looking to grow =
+into a key technical contributor within OpenBMC and AMI environments.</li>
+<li class=3D"gmail-li1" style=3D"margin:0px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>=
+Senior-Level:</b> Seeking 8+ years of experience to lead projects, mentor j=
+unior engineers, and drive innovation in our Redfish API and BMC stacks.</l=
+i>
+</ul>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;min-he=
+ight:16px"><b></b><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>Te=
+chnical Core:</b><b></b></p>
+<ul class=3D"gmail-ul1">
+<li class=3D"gmail-li1" style=3D"margin:0px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Str=
+ong <b>C/C++</b> for embedded systems.</li>
+<li class=3D"gmail-li1" style=3D"margin:0px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Han=
+ds-on with <b>OpenBMC</b>, AMI MegaRAC, or SPX.</li>
+<li class=3D"gmail-li1" style=3D"margin:0px;font-variant-numeric:normal;fon=
+t-variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust=
+:none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Fam=
+iliarity with Linux, Git, and hardware interfaces (I2C, SPI, UART).</li>
+</ul>
+<p class=3D"gmail-p2" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;min-he=
+ight:16px"><b></b><br></p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>Wh=
+y CoreWeave?</b> Since our 2025 IPO (Nasdaq: CRWV), we=E2=80=99ve been movi=
+ng faster than ever. You=E2=80=99ll be building the actual infrastructure t=
+hat powers global AI breakthroughs.</p>
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:n=
+one;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;font=
+-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><b>Kn=
+ow someone?</b> If you aren&#39;t the right fit but know a firmware pro who=
+ is, <b>please forward this to them!</b>=C2=A0</p><p class=3D"gmail-p1" sty=
+le=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal=
+;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;fon=
+t-feature-settings:normal;font-stretch:normal;font-size:13px;line-height:no=
+rmal;font-family:&quot;Helvetica Neue&quot;"><br></p><p class=3D"gmail-p1" =
+style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:auto;=
+font-feature-settings:normal;font-stretch:normal;line-height:normal"><font =
+face=3D"georgia, serif" style=3D"" size=3D"4">Apply Here: <a href=3D"https:=
+//coreweave.com/careers/job?4615564006&amp;board=3Dcoreweave&amp;gh_jid=3D4=
+615564006" style=3D"">Firmware Engineer,</a> <a href=3D"https://coreweave.c=
+om/careers/job?gh_jid=3D4452431006&amp;board=3Dcoreweave" style=3D"">Senior=
+ Firmware Engineer</a></font></p></div><div><br></div><span class=3D"gmail_=
+signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature" =
+data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><p dir=3D"ltr" style=3D=
+"color:rgb(136,136,136);line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-family:Arial;color:rgb(0,0,0);background-color:transpar=
+ent;vertical-align:baseline"><span style=3D"border:none;display:inline-bloc=
+k;overflow:hidden;width:112px;height:75px"><font size=3D"1"><img src=3D"htt=
+ps://lh5.googleusercontent.com/Y-ahxaMl-0xzC4ikwQIOtbdWNAjxVHVf6NxSD27TAhpH=
+O0MkiLy6r1ru7f4V-e759JHUNvdo06J2Ox3yo5itEyIbTpWk2U4Jfv3mJI6X8W1I4Qo2o80ds63=
+O1vxqk4kQ4boKYNm_ILcZvOzMnUxFffs" width=3D"112" height=3D"75" style=3D"marg=
+in-left:0px;margin-top:0px"></font></span></span></p><p dir=3D"ltr" style=
+=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><font size=3D"1"><sp=
+an style=3D"font-family:Arial;background-color:transparent;font-weight:700;=
+vertical-align:baseline"><font color=3D"#666666">Judy Truong</font></span><=
+span style=3D"color:rgb(0,0,0);font-family:Arial;background-color:transpare=
+nt;font-weight:700;vertical-align:baseline"> </span><font color=3D"#444444"=
+><span style=3D"font-family:Arial;background-color:transparent;font-weight:=
+700;vertical-align:baseline">|=C2=A0</span><span style=3D"font-family:Arial=
+;background-color:transparent;vertical-align:baseline">Senior Technical Rec=
+ruiter</span></font></font></p><p dir=3D"ltr" style=3D"color:rgb(136,136,13=
+6);line-height:1.44;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-f=
+amily:Arial;color:rgb(17,85,204);background-color:transparent;vertical-alig=
+n:baseline"><a href=3D"mailto:sgee@coreweave.com" style=3D"color:rgb(17,85,=
+204)" target=3D"_blank"><font size=3D"1">ext_jtruong@coreweave.com</font></=
+a></span></p><a href=3D"http://www.coreweave.com/" style=3D"color:rgb(17,85=
+,204)" target=3D"_blank"><span style=3D"font-family:Arial;background-color:=
+transparent;vertical-align:baseline"><font size=3D"1">www.coreweave.com</fo=
+nt></span></a></div></div></div>
+
+--0000000000008535ba0647a84ace--
 
