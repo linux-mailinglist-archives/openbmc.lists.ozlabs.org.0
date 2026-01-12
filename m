@@ -1,193 +1,52 @@
-Return-Path: <openbmc+bounces-1162-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1164-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 714D8D12719
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 13:04:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3ED8D1393D
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 16:18:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dqWJf2ty7z308g;
-	Mon, 12 Jan 2026 23:04:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dqbbx3p03z2xKx;
+	Tue, 13 Jan 2026 02:18:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.13
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768219474;
-	cv=none; b=dizd42cbEzfSMayaIUlb8I+3jObW/oU+19oD3ITaPI6/yIJwzmynlenKBKTrOOv7S48n5tfLE3FejMCdezUMZK/kQ4C6+VFBgVKIuHBjcPye5LrvN7LJYxs67KqiMt6FwldJJhKLUuOIj2DZr7FpUsayCrfqZb9GmoajAwD2uTHT6ytM+BBvHXROGJriaYhtjh/LFT48D8lZtSg3dOgSjjjqFPnvws5m7orCGjrEqAmgot2yrdTj4z1Gti3RWfL5qoM0J/lO8oi2nAY1WEUVZZEcVPRq88M7ClPMcDwpY+UqYpLiU/8rf5uAfP3MLjqQoPfpvJh/GmZvfyq4/PyCsw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768231085;
+	cv=none; b=MgQIGafprpkvuQ7i52oys5RpF64t4o84MaC90RxXJ2gREvSdWJ0h+vU+ukYz8V//HGaVuQATponBQyakop5QgaeSefIzZdm05QOCUXxhGyjPtjaXGRCR4OA0ezJCVC7P7xUW3knUWH0Pi8o9G/DFopKxNFvi8993n1DTIYiu1u3nPdWxEJmlkSca6G7X94J4bfwusJqyF4YrOIcQN/5gc1GBLCCZvcD9d7yVbiQAVylVIRQHUYEDcQz3KQCWzSZqQwzQ1dy8UCKj7OraHAYxFhPnGI1vahFL22/CFEjulmXMfwv7sJcib7blg4wgtF6YX/IQ5LySiI5htrEp5QsFcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768219474; c=relaxed/relaxed;
-	bh=Wxs+qjr5nDGobnt3QTZgndIEJMo19D5435ExYe496Ws=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X05+TI82wNZxtNzFJgfgNLKGNemYcbyXAbEi8lXqn/SNLGDXiQ+VEwCfaaV5CMn8Jn4YZxUEEAtWoYVXm05oiZ7N0+GGuFJkgGOznUt1acgaokFbOhmg/NTiprMsEOd1QGpvPuw5VlF5IZEI4W2G4yXaCHKmo/7Mi9+3Y5LojHV6ZuIbJuX0y+Rovgo0uGJ6yo88f4dliq9sC71AgDxffiptvKV/QqAeoDRa4QruRMNp1hz81uPbw7itQAO3GPiRypH/4f/7qse88x8FuY7IKvOjbgg3dm/r8rpfSuQ4HlHqujxtcn3E/A4yTGyQMJIIMUY7ti+O80rXJ2dLs+zn0g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=U14jl0WG; dkim-atps=neutral; spf=pass (client-ip=198.175.65.13; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+	t=1768231085; c=relaxed/relaxed;
+	bh=Fq2c9XCdhmDNHEtVguthHgPbf/NaarWlGDrScQBVJRA=;
+	h=From:Date:Content-Type:MIME-Version:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=UmGnTSuveagxuwZqD858w+V1pcZjgUEGMFTyClIxF2bo7hujQto0/uibpXlhg85iXV8FakH+7TL5yjHOBSmOyS9gOELDxKZ0eiYdJwUgTQnPoKOPA8ytTCpuo4QKAXLYRU2EzLhox7MOqC/pcyfxHh2OGGzHhZD0rk8hDotfRDV0QcLwGNBRCrQMHpTuqtnaMQuuS7f5OaVCKSbVBFR0lCFd6wQ3Gdshc5FO7hRiwLAglNKAeM7/7KbYpXjUuv3LxLVs+JaTJq5vV3c9R9eVSAuNU4zP8yiIf/Ma0r0c6IYGLoT+xGLGwitOfS+lEKIAQJsb6pdx2fGaOFMu/LM1kg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=A9TJGe1f; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=U14jl0WG;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=A9TJGe1f;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.13; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqWJb1MM1z3050;
-	Mon, 12 Jan 2026 23:04:28 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1768219472; x=1799755472;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5BiEA3YT3OvxJlu4+BexDLoaIF8cPC1fj4FQDGyymNA=;
-  b=U14jl0WGEStOWs4HoiFtTptEh1y18IisBWH/s1lU4uRfSgFaQCC0S2m3
-   YJuiTGViAC7VgsEKmlLUxp6OTxiigneq+ylS99lYVDBPzp303kBX3mVAb
-   o2q7q+3NrOautyhB8vfguBXyc8WyqiiWvYYFfDfaedz16TSMJAxCp6JXx
-   wn8kkXacwk86RxLsIBqrvZvRScg8ouefuaiMI6CjGk1vS7UYZcjVbNnWg
-   PvRLOGyMbfFnNve/Y7W9Fxvw5olZ5vcUKzFXdWpEK+JuCYrYbKR+GNhwQ
-   T/CE+HXCIEqNwYqJVLiAt+JEA/rrWMxbtlwndXJLeJMXOxZUhGd0f1Tqj
-   g==;
-X-CSE-ConnectionGUID: PpB9ds2MQMi2yyNQ/65m7A==
-X-CSE-MsgGUID: A56o2pP6Roq35M6nbC4L0g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11669"; a="80597353"
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
-   d="scan'208";a="80597353"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 04:04:25 -0800
-X-CSE-ConnectionGUID: XAibRldxTZ6xSE7cKV3erw==
-X-CSE-MsgGUID: kqm52HRnSw29im3jfiPOTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,219,1763452800"; 
-   d="scan'208";a="208554124"
-Received: from dhhellew-desk2.ger.corp.intel.com (HELO localhost) ([10.245.245.37])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 04:03:57 -0800
-Date: Mon, 12 Jan 2026 14:03:54 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Charles Keepax <ckeepax@opensource.cirrus.com>
-Cc: Mark Brown <broonie@kernel.org>,
-	Varshini Rajendran <varshini.rajendran@microchip.com>,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	CL Wang <cl634@andestech.com>,
-	Manikandan Muralidharan <manikandan.m@microchip.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>,
-	Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	=?iso-8859-1?Q?Beno=EEt?= Monin <benoit.monin@bootlin.com>,
-	Shiji Yang <yangshiji66@outlook.com>,
-	James Clark <james.clark@linaro.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Carlos Song <carlos.song@nxp.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
-	Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Haibo Chen <haibo.chen@nxp.com>, Gabor Juhos <j4g8y7@gmail.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Luis de Arquer <luis.dearquer@inertim.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	=?iso-8859-1?Q?Cl=E9ment?= Le Goffic <clement.legoffic@foss.st.com>,
-	Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Darshan R <rathod.darshan.0896@gmail.com>,
-	Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>,
-	Haixu Cui <quic_haixcui@quicinc.com>,
-	Darshan Rathod <darshanrathod475@gmail.com>,
-	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	asahi@lists.linux.dev, linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, patches@opensource.cirrus.com,
-	imx@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-mediatek@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>,
-	Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>,
-	=?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Ryan Wanner <ryan.wanner@microchip.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	Anand Gore <anand.gore@broadcom.com>,
-	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>,
-	Jean-Marie Verdun <verdun@hpe.com>,
-	Nick Hawkins <nick.hawkins@hpe.com>,
-	Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Lixu Zhang <lixu.zhang@intel.com>, Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>, Han Xu <han.xu@nxp.com>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Li-hao Kuo <lhjeff911@gmail.com>,
-	Masahisa Kojima <masahisa.kojima@linaro.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	Michal Simek <michal.simek@amd.com>,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: Re: [PATCH v1 1/4] spi: Propagate default fwnode to the SPI
- controller device
-Message-ID: <aWTjKvbThxx9hSuL@smile.fi.intel.com>
-References: <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
- <20260108203004.3538449-2-andriy.shevchenko@linux.intel.com>
- <aWTgzqXrGMcdpFOr@opensource.cirrus.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqbbw3BRbz2xKh
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 02:18:04 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 356B0600C3;
+	Mon, 12 Jan 2026 15:17:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB475C16AAE;
+	Mon, 12 Jan 2026 15:17:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768231050;
+	bh=oeljyyib6Pl18XuDgLYw+CXyCHm8RbZngF2pGgWjgN4=;
+	h=From:Date:Cc:To:In-Reply-To:References:Subject:From;
+	b=A9TJGe1fGfegv9iMpzDCpYR4GWh065Wv2k8Bx/crHdrnbPIHBRZwNtb6Ex8WEcz69
+	 Pz3gxY7LjZIvModEiUTFk8ZSjPAXs4wsh8KcM5UT7gJ1nqSCCZ008yKwHJWhniE65F
+	 XRO951zA7/h2jUwXmO9JKdt6r6kyxTXWq+Fvt2PIUDoU9ahQxtae6i5DiWSoQgabNp
+	 Jx+/E+MbHIBF8KFbcIT1Rzz2zPJuA27D29HmNTRwV1bPPDc5fWmU5tkqZMPL8Co6A/
+	 Fpld+yXzyECkRlP3klOyY4IaFcEgws5SNkZt2E8NWTeJVOKUk3QaQs/xkoosOGFFd4
+	 Q8mSL0DVL21BA==
+From: Rob Herring <robh@kernel.org>
+Date: Mon, 12 Jan 2026 09:17:30 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -199,33 +58,108 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aWTgzqXrGMcdpFOr@opensource.cirrus.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
-X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+Cc: devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ SriNavmani A <srinavmani@axiado.com>, openbmc@lists.ozlabs.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Prasad Bolisetty <pbolisetty@axiado.com>, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, linux-phy@lists.infradead.org, 
+ linux-arm-kernel@lists.infradead.org, Vinod Koul <vkoul@kernel.org>
+To: Tzu-Hao Wei <twei@axiado.com>
+In-Reply-To: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com>
+References: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com>
+Message-Id: <176822994353.7723.17700786956910310022.robh@kernel.org>
+Subject: Re: [PATCH 0/4] Add eMMC PHY support for Axiado AX3000 SoC
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, Jan 12, 2026 at 11:53:50AM +0000, Charles Keepax wrote:
-> On Thu, Jan 08, 2026 at 09:23:38PM +0100, Andy Shevchenko wrote:
-> > Most of the SPI controller drivers share the parent's fwnode
-> > by explicit assignment. Propagate the default by SPI core,
-> > so they may drop that in the code. Only corner cases may require
-> > a special treatment and we simply (re)assign the controller's
-> > fwnode explicitly (as it's done right now, no changes required
-> > for that).
+
+On Fri, 09 Jan 2026 17:43:28 +0800, Tzu-Hao Wei wrote:
+> Axiado AX3000 SoC contains Arasan PHY which provides the interface to the
+> HS200 eMMC controller.
 > 
-> Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-> Tested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+> This series includes:
+> 1. Add bindings for Axiado AX3000 eMMC PHY
+> 2. Add Axiado AX3000 eMMC phy driver
+> 3. Update MAINTAINERS for the new driver
+> 4. Update Axiado AX3000 device tree
+> 
+> Changes: (The previous version was mixed with Host driver, so I separate
+> the PHY driver as a new thread)
+> - Fix property order in required section to match properties section
+> - Fixed example to use lowercase hex and proper node naming
+> - Removed wrapper functions, use readl/writel directly
+> - Replaced manual polling loops with read_poll_timeout macro
+> - Used devm_platform_ioremap_resource instead of separate calls
+> - Removed unnecessary of_match_node check
+> - Used dev_err_probe for error reporting
+> - Added proper Kconfig dependencies (ARCH_AXIADO || COMPILE_TEST)
+> - Fixed various coding style issues
+> - Link to previous patches: https://lore.kernel.org/all/20251222-axiado-ax3000-add-emmc-host-driver-support-v1-0-5457d0ebcdb4@axiado.com/
+> 
+> Signed-off-by: Tzu-Hao Wei <twei@axiado.com>
+> ---
+> SriNavmani A (3):
+>       dt-bindings: phy: axiado,ax3000-emmc-phy: add Axiado eMMC PHY
+>       phy: axiado: add Axiado eMMC PHY driver
+>       arm64: dts: axiado: Add eMMC PHY node
+> 
+> Tzu-Hao Wei (1):
+>       MAINTAINERS: Add Axiado AX3000 eMMC PHY driver
+> 
+>  .../bindings/phy/axiado,ax3000-emmc-phy.yaml       |  38 ++++
+>  MAINTAINERS                                        |  10 +
+>  arch/arm64/boot/dts/axiado/ax3000.dtsi             |   7 +
+>  drivers/phy/Kconfig                                |   1 +
+>  drivers/phy/Makefile                               |   1 +
+>  drivers/phy/axiado/Kconfig                         |  11 ++
+>  drivers/phy/axiado/Makefile                        |   1 +
+>  drivers/phy/axiado/phy-axiado-emmc.c               | 220 +++++++++++++++++++++
+>  8 files changed, 289 insertions(+)
+> ---
+> base-commit: f0b9d8eb98dfee8d00419aa07543bdc2c1a44fb1
+> change-id: 20260108-axiado-ax3000-add-emmc-phy-driver-support-d61aead8f622
+> 
+> Best regards,
+> --
+> Tzu-Hao Wei <twei@axiado.com>
+> 
+> 
+> 
 
-Thank you very much! I'm now pretty much confident about the change.
 
--- 
-With Best Regards,
-Andy Shevchenko
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Deps: looking for dependencies matching 4 patch-ids
+ Deps: Applying prerequisite patch: [PATCH 1/4] dt-bindings: phy: axiado,ax3000-emmc-phy: add Axiado eMMC PHY
+ Deps: Applying prerequisite patch: [PATCH 2/4] phy: axiado: add Axiado eMMC PHY driver
+ Deps: Applying prerequisite patch: [PATCH 3/4] MAINTAINERS: Add Axiado AX3000 eMMC PHY driver
+ Deps: Applying prerequisite patch: [PATCH 4/4] arm64: dts: axiado: Add eMMC PHY node
+ Base: f10c325a345fef0a688a2bcdfab1540d1c924148 (use --merge-base to override)
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/axiado/' for 20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com:
+
+arch/arm64/boot/dts/axiado/ax3000-evk.dtb: /soc/phy@80801c00: failed to match any schema with compatible: ['axiado,ax3000-emmc-phy']
+
+
+
 
 
 
