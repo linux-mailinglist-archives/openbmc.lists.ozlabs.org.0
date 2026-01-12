@@ -1,219 +1,80 @@
-Return-Path: <openbmc+bounces-1168-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1175-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81CA8D1542F
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 21:36:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DB43D159B3
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 23:46:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dqkfq51shz2yFb;
-	Tue, 13 Jan 2026 07:36:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dqnXy0z61z2yKr;
+	Tue, 13 Jan 2026 09:46:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.17
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768250163;
-	cv=none; b=nyRlpUYJlAwyNnjvam+iBssvQ0KLMVfJEJKoTyvwhWzasHrCk2qOdngpga6GgM4BLo8jDJMjgpfZX276qQhUnDWP6ncrQUS6DlIZvjSDxE+rvxQpYzadoTCRt1sy3kUJQbsqieNOpFxPC0I+An28x4ABwbUcl2YeP7QP25gQV7iVRVDd2URl4l9cXb/yDS0YmtlWZp2c9wGWFJbUp3vbQjD+Y9eNTmfqqW+8uQeEQj9LNf8QIzGnu/4A7z3M3twl3Tq/tK5gQ9ly5dkviYAdntxrJ597/hHh54fJcUOlznjzYwzfho2/5wfWHTgJC8t9C1IoSXxQ+j7q4fxXUb/lzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768250163; c=relaxed/relaxed;
-	bh=M/Ba6LzjkeB+zWjL+Z4zxIoZTZTGVcvTDdy3SdutseQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=COS5IHlNn6DppVA/3kvwQIjxYd63w/8qLbwkrhsH9graV0Z1Q54Al8QzD9399Y5SeSTFOqVDlxofr2VIZe+O18FoiQYqN85pxJ1ejgpDYfqtG0JkmwkFKmkuhgyaTQHGvYxJwpJpKp5Hjn6a0z3eYofJswzjgft4K8htMxAOfTFg7P1isPPqnUqzLtdtLdFGJSk5m9NbbQEt7PP9lNg6vk4fGARLHJEQdkBM0w6KECLcMHJDTPybiU+d/jKVL9h74d3ixZ/xc0jygEVEfL/FOnaNoSUkB2mMk4EJR8Dral+HilJJuzSdetc4xmg+CjLgsLnPdAcEvPhtyKJa/xcJag==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ZCUwE37w; dkim-atps=neutral; spf=pass (client-ip=198.175.65.17; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=40.93.198.128 arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768197796;
+	cv=pass; b=amqPSdNVKnfcbROupLTAdlNWDfeYhwgitBj8BDxhtQ5rpFCtQ0nDBnJPcxN+IyC4mYWNgrT2DRCXs07/OpgNYl+2K+EzAfOnJNqMhF2F7tQHBjdbkX3Y2yp2smcbYuQjGA3Pf3guRp46YCkXlU05OYi299z6sQgXc9zRD+zQ+veMzNxzpvAsr2cvuktgBn0lLeNi0xdKvSjpR+tw9tNW2/TXqJ47RdzcCkPq+W44NrC/Tw30Q3yJCthrsAvqxpovkoMlPFGK5SzUwpt/gpPE5uhm6fjvjkng0tzlc4qG1TmJXXLzD+5Um0/6RNRIA3ucMgvf2h8LA5xEUKURZxYydQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1768197796; c=relaxed/relaxed;
+	bh=Rv2KDkibwGJzaVRSaPxItP+RjPLwxfJXFZMkcf0A8yA=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=jLE07uSXxEhyrw+vm3grmpzUEnw2P6PSMZ4o8Hruxc5PN29HodqURTBgMF8RdD+IaVxrWwX2LftHl2tSeAJ0PhprmEeR6ovmWd5r54Ks7gRukenJbiHNERdPtXF48AMoyz+7vqZ6hOap7K0OZ6oYn3Uj8xD1crvNgir6CZEywdD/EorI/Ldcq7K9Tf+PWGgtjL9T3B3wN0mqRNPMuxh00naFGLI/E49QXT3vMS0I+3AvbsocXw53oGfT/cKbqv183LMsb+BWEbWbygsQ2Wjqiac/vHn6CHjPKyIPxRcfmJJZwnmZO/W/iL13sk8zA7s6y6XbQjdt0opZLw8dAfQryg==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=lqLoLEeQ; dkim-atps=neutral; spf=pass (client-ip=40.93.198.128; helo=cy7pr03cu001.outbound.protection.outlook.com; envelope-from=pbolisetty@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ZCUwE37w;
+	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=lqLoLEeQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.17; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=axiado.com (client-ip=40.93.198.128; helo=cy7pr03cu001.outbound.protection.outlook.com; envelope-from=pbolisetty@axiado.com; receiver=lists.ozlabs.org)
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11020128.outbound.protection.outlook.com [40.93.198.128])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqkfp26LZz2xKh;
-	Tue, 13 Jan 2026 07:36:01 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1768250163; x=1799786163;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=qUj8niNVfX9+vDdYMcQmMtutkkFc8vAbK8eRfRuvapk=;
-  b=ZCUwE37w0DyAg6/SuoSndUuDCrdiTEHJ9MfGHuJblFQdhBWxXx8FVSh0
-   qb/FKGFz0dUUIXy3aP9DUsP4v7fUL5orfnd2+BUgvID8fpeEbdqo21yHT
-   B2hr2hKPZUMOtvhJSxVHfSBYuQtTlCejkNSJ5uCvSBvcs+kW1pF7TzpGK
-   GQj2IoY2oo31fhWxPagCT37+fr3j6G1HhH406TBEEf6d1KB5Ss7B0iyb5
-   YX/fEhq7ALmrwy2qRCBkigXhJxP1mPQ89TWq2ug2hFXFVZuPi9edXeJkV
-   KQzL1LFX+bu2TbRPXQk2RjMJQVkHfhFPY6eg0hL2ww2nXvXEfgqq1NB/K
-   w==;
-X-CSE-ConnectionGUID: W2YnuZw+Rz6HZr2gv1t06g==
-X-CSE-MsgGUID: JTHZMfsGRg6CVbe5rC9xLA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11669"; a="69515964"
-X-IronPort-AV: E=Sophos;i="6.21,221,1763452800"; 
-   d="scan'208";a="69515964"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jan 2026 12:36:02 -0800
-X-CSE-ConnectionGUID: KbqM50wVTBi9mkZFufPllA==
-X-CSE-MsgGUID: EmIaMJEFQ0yXjAOlv7xnIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,221,1763452800"; 
-   d="scan'208";a="209262148"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa005.jf.intel.com with ESMTP; 12 Jan 2026 12:35:51 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 8AD1A9D; Mon, 12 Jan 2026 21:35:37 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Mark Brown <broonie@kernel.org>,
-	Varshini Rajendran <varshini.rajendran@microchip.com>,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Sunny Luo <sunny.luo@amlogic.com>,
-	Janne Grunau <j@jannau.net>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	CL Wang <cl634@andestech.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	William Zhang <william.zhang@broadcom.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Manikandan Muralidharan <manikandan.m@microchip.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Hang Zhou <929513338@qq.com>,
-	Jun Guo <jun.guo@cixtech.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Shiji Yang <yangshiji66@outlook.com>,
-	James Clark <james.clark@linaro.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Carlos Song <carlos.song@nxp.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>,
-	Sergio Perez Gonzalez <sperezglz@gmail.com>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Md Sadre Alam <quic_mdalam@quicinc.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Luis de Arquer <luis.dearquer@inertim.com>,
-	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	=?UTF-8?q?Cl=C3=A9ment=20Le=20Goffic?= <clement.legoffic@foss.st.com>,
-	Alessandro Grassi <alessandro.grassi@mailbox.org>,
-	Darshan R <rathod.darshan.0896@gmail.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Vishwaroop A <va@nvidia.com>,
-	Haixu Cui <quic_haixcui@quicinc.com>,
-	Darshan Rathod <darshanrathod475@gmail.com>,
-	linux-spi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-amlogic@lists.infradead.org,
-	asahi@lists.linux.dev,
-	linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com,
-	imx@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	virtualization@lists.linux.dev
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Ray Liu <ray.liu@airoha.com>,
-	Sven Peter <sven@kernel.org>,
-	Neal Gompa <neal@gompa.dev>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Ryan Wanner <ryan.wanner@microchip.com>,
-	Michael Hennerich <michael.hennerich@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Kursad Oney <kursad.oney@broadcom.com>,
-	Anand Gore <anand.gore@broadcom.com>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jean-Marie Verdun <verdun@hpe.com>,
-	Nick Hawkins <nick.hawkins@hpe.com>,
-	Yang Shen <shenyang39@huawei.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Lixu Zhang <lixu.zhang@intel.com>,
-	Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Han Xu <han.xu@nxp.com>,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Daniel Mack <daniel@zonque.org>,
-	Haojian Zhuang <haojian.zhuang@gmail.com>,
-	Robert Jarzmik <robert.jarzmik@free.fr>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Li-hao Kuo <lhjeff911@gmail.com>,
-	Masahisa Kojima <masahisa.kojima@linaro.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Michal Simek <michal.simek@amd.com>,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 4/4] spi: Drop duplicate device_set_node() call
-Date: Mon, 12 Jan 2026 21:21:26 +0100
-Message-ID: <20260112203534.4186261-5-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
-References: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqMHk56djz2ytT
+	for <openbmc@lists.ozlabs.org>; Mon, 12 Jan 2026 17:03:14 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=w/YNZ5PQSjURQh7GoKFwSKuJotbV3HHiRjNIYGa/4YHlIbUFbX4m7AVqmLyUC1mpLVW7NtzQ9QmWgKmLACkeGIYJLsDTNz88YJXheqglNkXv4s3uKJX1VW3N2CgCbU6U/PEO3INTFYGh9lrpp4G6mwJDohxpdxhYm7dNIoI0x3uDRTya6sx1hOkT7y/swxD6MA7Gdgd+9OmeOezgq6/LWfTqVpSqL+czu5m/mGIXue0jPmY8IeMkU+nCBnMlxAH9DLzZBXLwoM554BvOs7LZLsMJVBE6q2IMQruXSRiHvIT1jUaCwGtHZ3uO7URUxpaS9T7s5D/1pko4ujmPrwBFUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Rv2KDkibwGJzaVRSaPxItP+RjPLwxfJXFZMkcf0A8yA=;
+ b=bOp/62ld+N2SG+gLoTQhxu3VJB/MHa2eZgih3zrUmdP0zw9aMMyWcF+3xeOyJXfluhzAlV/p2Bxf6WA8hNaRJcOcmJU8xkUA+EKnLBcztYMCpLx7RfRjm/+IHsST/SLak8y5oa2wVrJvzuWGXr02kZ7pA3mEyzZisaPYJ4wfs3Z1FIwzikmzbyKwRKbIVK9pUpayAIkVY8ycHmOPZcL2/0ydh8Uh+0BrfTTKbH5e4k/jNUfSFnGdNbFaLZbCdDvdnd/5yUX0mCmM7MoXiw3UOy998wDR9sWVKdo98KUHyC8vG8u9LWqbGrI65fcDLAtnlNYKjXCelwuQuABZ83vbmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Rv2KDkibwGJzaVRSaPxItP+RjPLwxfJXFZMkcf0A8yA=;
+ b=lqLoLEeQBjAInBD++JfJYA+1kwmeIeUDI/kcO2MLiNq/4+eh894m16c1Iq23syaL2s9YBnHIEmU+zCCRX0bcXkn4/d1vhY1NmFy/cHzYrKxcSUzfCVNScxwVr5x5Lw3J+PouCFfF6UjFyLFPm5NbMguXTBj+xBcDWTBbj8XJWPtlnW+GPTQptV+dnIAwH1lHgJK5Ie+ZFh1/m47iBRhalL8ywWfsbvfSr8o6G7rt8sVF3ArmFZ8AC4bvzmlPjmcSXNmtTESn2Y/+TLjjzPQ264ZDZy4zvkb0JpZU/xL6goH3ReUI6VukhFOaxWJLVnKlXQgQwGQiSVIkMAra6DsljQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from CO6PR18MB4436.namprd18.prod.outlook.com (2603:10b6:303:138::16)
+ by SA1PR18MB927427.namprd18.prod.outlook.com (2603:10b6:806:4b5::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Mon, 12 Jan
+ 2026 06:02:34 +0000
+Received: from CO6PR18MB4436.namprd18.prod.outlook.com
+ ([fe80::d3e5:42d6:c423:a253]) by CO6PR18MB4436.namprd18.prod.outlook.com
+ ([fe80::d3e5:42d6:c423:a253%3]) with mapi id 15.20.9499.003; Mon, 12 Jan 2026
+ 06:02:33 +0000
+Message-ID: <fb0b7c73-767e-4d01-a014-0a28bee228cb@axiado.com>
+Date: Sun, 11 Jan 2026 22:02:32 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] MAINTAINERS: Add Axiado AX3000 eMMC PHY driver
+To: Tzu-Hao Wei <twei@axiado.com>, SriNavmani A <srinavmani@axiado.com>,
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org
+References: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com>
+ <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-3-dd43459dbfea@axiado.com>
+Content-Language: en-US
+From: Prasad Bolisetty <pbolisetty@axiado.com>
+In-Reply-To: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-3-dd43459dbfea@axiado.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0P220CA0005.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:a03:41b::12) To CO6PR18MB4436.namprd18.prod.outlook.com
+ (2603:10b6:303:138::16)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -225,261 +86,130 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR18MB4436:EE_|SA1PR18MB927427:EE_
+X-MS-Office365-Filtering-Correlation-Id: b29fe563-90d5-407c-f7e1-08de51a02da0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|10070799003|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?djE4RERCbUduSEJyc3NPNDVJT3lpOGtRR0xSRUljdm80enRKWXY3QlF5cXVQ?=
+ =?utf-8?B?UHZpRG5ReGltRmRPT25qTUdiN2xQRXFSS0p2ZytVcldKbXFHSHJrUUcwY1FS?=
+ =?utf-8?B?ZW5LOWpPNkp2S3ZrMlJjNTVocVlSeGg5UXhWY2NYNkxMUVo1RXpPN2NpeWZj?=
+ =?utf-8?B?YUFJL3Q4MldiV0RCMTBITjhQYjVwbWhDRG9hT1oxNDh6VGtVWksrZ0Eyayt5?=
+ =?utf-8?B?dFdaaGhkbTF3cVFDRVY2bjIreTV5RVh0clpXMUxBZDcxMko4dUI3MUlPZWhl?=
+ =?utf-8?B?YlRhWE5pR2VsWmF4WHpxRGFGQjRPWVk5R1hSaVVHQ1l2VnZ6VmlRcGZvUHVI?=
+ =?utf-8?B?SEJGV1RGQjdtVzJqWDFnaDBJVzdsTkVEM1N5dXUySk5sNkI2N2libEVXcXgr?=
+ =?utf-8?B?S3A3RHJpdnUrYm4wbmRRMWNmZ3VWS0xFaUlsamw0b0FsZkNhbW94dEZhSnZD?=
+ =?utf-8?B?bGdWSzNMWnN2V3d6SVpLcjdwTUx5dlg3VytmSE1ESGpiMUNYUlpNWld2NHpC?=
+ =?utf-8?B?amNVdTBQSWVtbVpraWJTVDZkUENzeXNxSVJ1SjlySFdBTFdwNEpDSWJ6bndq?=
+ =?utf-8?B?cEljRUV2dEVPUTlFMFJpMGF6cVNEdjRWWjkzUzJuTG5PcVdrakZha29ZaWFN?=
+ =?utf-8?B?OFQ0aEdmQkMyMC9VQUpORURXYzQ3cjNWNU1SbEYvdUZlWGhNcTlpU2lJTHgv?=
+ =?utf-8?B?cnc3eERSZFIycysxb01CVEdydkdYRjdQdUVTOTE5Q3hIS1l5U0p0RHpoT2pQ?=
+ =?utf-8?B?Zm5UUnNwQ2tOaitsc01FaEhheFltUXJhV0hjOE5oMWhUK3ZON3JUeSs0bVE2?=
+ =?utf-8?B?VEF3MVVtV2llTWdUd1JLVFY0djJuYVppZ2pLOUFleS9VbDF2dGtXb2t3RGRO?=
+ =?utf-8?B?Y1Z5b01LT25IL0lIZzAxcFJKbDFzSjVQb2dFUFhsZC9JYUQ1MTVvSnJLUUV4?=
+ =?utf-8?B?SElXcnF5QW4zRHN5LzFBU2haejJVM0dORkhHNW5ZVzRaSlJ4TnA5dS9kSkRp?=
+ =?utf-8?B?TGdaeWlaMGh3KzUxdjU3dFRHRWdlMWs0UTlITXUxcHVybkg2Qzg1ZERMK1Zr?=
+ =?utf-8?B?L2pHWTlKaGlMdzJDRFA4cURmSy9JUC9PbVNlOEFFVmFxVGtjcm1keHduSlRC?=
+ =?utf-8?B?V0w4dzdaMDJlQjQ1NW0vaDRHYS9HNUtDMW5POWtRRkNXa2IyVkh4MVo4cjBh?=
+ =?utf-8?B?dmIzOVZ6MmdjTUxLWWROclJsZE15ME93aDYzTEpYcVZXNmhmZ0lFcGVHL3Nu?=
+ =?utf-8?B?ZzlUVmw5alM4aEw3d0RmYTBETVo2MDBYWnZ2YXR1SjJyZHJ6Vkl3OFlnbEFt?=
+ =?utf-8?B?d1ViaE1ja3VnSk1oYmFBMHV1clMva2luei9TM05DUTVVSDdlRi9Ed3ZaQlJR?=
+ =?utf-8?B?TXhrTkFyZzcyRjZLUHVIdzEvRXZQZTB1VmVnQzNEQVRaQitmNmFPR01qTlYv?=
+ =?utf-8?B?bUduQzRKQXN1WmF4Q3h5L09zSkZzNEZLOVhOanQrNUNrcDlrUVdzOU5yNTE4?=
+ =?utf-8?B?NE9CZTltZlNoSzRTOFc2dWJqamxXRk1ZSjZQRG9EbWJ3dVkwc241OGdlYXpH?=
+ =?utf-8?B?cEswMldCTWxnQ25zM1pBeTRjUG9rVUZtUWFTT0dSejQyTHduNUl6dTFlK01x?=
+ =?utf-8?B?VlE3ZkZkYTdoSmlhMGgwTXZoVjcyM2NNWGR4d29nZCtnRm5JRVBXOGIwY1Bt?=
+ =?utf-8?B?eGRqN09sb0U0WXlHQ2FwL3Zna3BscHQzUWFlQW5HMFpsNWxGbmpnY1RXd0pk?=
+ =?utf-8?B?dVpnQTJMMGRVZFpiN3ZSSG1BY0dqN0xYWXlsR0RMTlk3d1N6ZEpQNGNUZXZB?=
+ =?utf-8?B?SWpnaHZUcG1uakpRRGJ2OWJwMyttSEtGNXB5Q2ZRN2NJeHhhMmQ0TmRhZE1i?=
+ =?utf-8?B?ZU9XZFRLdXJnYk5tOXNlTEZFRkpwK3VZbWFGSjV4R25OMWtFc1N6MVQycE8x?=
+ =?utf-8?B?NGpuU3NpV25OY3Z5WjM2NXc2azR4RjhJSWJOdEI4TU5LaFJjdGdUQXI0ejgw?=
+ =?utf-8?B?b3FZZmFPUDdBPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR18MB4436.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(7416014)(376014)(366016);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?TGd5Yi9ORFNFUjZkRHlyMFAreG1ndm9mZU4xL1loQTBxWk8yOVZ4SE9tYjNo?=
+ =?utf-8?B?S2lsYnpVait0Sm9QeU1WQTNvSytDaStYMytWOWlPbVl4akxuNW5uQnFaS3J6?=
+ =?utf-8?B?bVBVckpOL3NMQ0VOL1VMeW5LUzcvRkhidnhLNVRHendnOVdyR0ZUTXZncHVv?=
+ =?utf-8?B?blFSRmY3UkJQakJPWUN0V0x4dEZZd3EzKzlDOXFHcUZRR0llQ1NWVmhwaCt1?=
+ =?utf-8?B?V09RdlZJeVl4cXhiOVdHajhQR3hETUJCeXlWRjYvVFJRNGx1a09VTGJmUCtn?=
+ =?utf-8?B?Z1B2V3NzbHdzbW5LOXJZMzhsZG1GQldDNUdDRjUyWmlaR2NQL0JqOU12akR0?=
+ =?utf-8?B?a0FOSzVQVDZRdXVQR1l3ODhsYVdITXpuc1hSTURFbk5ZVjhRSDV4RUplQTdN?=
+ =?utf-8?B?OTZqNHdlcHNwK2tvM0pEcWQydXB6NURMdjhOVUVVZmRPSUlzV00zdmRhNXo2?=
+ =?utf-8?B?angvd0ZSeHh4RExjVDNSeVhGeW5VZWFkRmxEQ3pIUFM5YW9RbWs4c0lHTFZR?=
+ =?utf-8?B?U3IrSVZLajRDb2V1TXM2ZWFzbmEyUXE1b1ZRejNlcURESHZLUHFPSERZRjZt?=
+ =?utf-8?B?aWQ4Q0RuN0JqNzdOdUxzUEhqeXAyOWRVNnJuUWYxWlBObHVQMWFXWlVMNzZu?=
+ =?utf-8?B?R3h3N2I0WlRHSnl0R2pIckFQRjY2dm1PRElQYVhxdDdEUnZXTUptT2xwZ3Nr?=
+ =?utf-8?B?dXpxdkZpZVRkN3R5c05WRE8xWTlKc21DbW1DOEVwQ0ZDdlRvNHllWDl1M2Z4?=
+ =?utf-8?B?b1JNejdweE9qQ2Znbk04YTlWa05nU1EyTEdINTB4RUNFYzh5QUtFK3FiRE0x?=
+ =?utf-8?B?SDdxQVpjRGxlL0dIazB2Ylg3T05jMFEwNjhSS0hxa0lWd29pVWcyeEVpWjVV?=
+ =?utf-8?B?ZW91N3hBTmZhVWhrbVVNZ2dobjhsOFEzbWZYWG43WHZvem81dTN4STY5Zjha?=
+ =?utf-8?B?bjVMOWZaUFU4QVYvbkxyRk9qV3krVmNzOXVEcDlMSnBKTDB4bWNGVk1tY0ZU?=
+ =?utf-8?B?WTdoUDFtZ3MzejloUmVGaUIyMzc1OTdyNHNsUVlZaGNnaFBOOTQ1NWhPUmk4?=
+ =?utf-8?B?OXgyZGo2c3A3T2RlUmFIbGR0M2w4L2lNNEo1TEtDS25xY291T04vS3JFYWhX?=
+ =?utf-8?B?b3BPbW1nd3JPcTRqYVBHMGF1bDBtOVYvY0h5L3RRYmN5eTlmbDdIcC9VUmQw?=
+ =?utf-8?B?Z1QveUN6ejN3UUZlN0dpQXh4T3pTSWU5d0U3Q21UeE5OMkNTdnIxcXFFOFFy?=
+ =?utf-8?B?NHBBUXBEanNZQnduNWlGVEJhSFVSRlE2SjZhV01FcTNOb1lTRmpucVZJcVFR?=
+ =?utf-8?B?UDlKOGQvbi84U01IYWtuWldzNTFiV2MwWWxyeWYvdlAyTVVrVG1HdEh4Mmo4?=
+ =?utf-8?B?eXhPU28vSHJaVjY1SGFCZU9BUTExNEZlUTlBTzZGcUxUQzNvUTkrYzRRU2Nx?=
+ =?utf-8?B?NnI0RU50Q0tuK05lMXBoTmxRaWlzRHR5akJLWm9ZV2V4azJWb1RzWDlIek5N?=
+ =?utf-8?B?MXFoSy9OVVd2ejR2bk1JRHBKUHpGaW1Ea1ljNGUrWkFoZ1AvWjhxdFNrVkYr?=
+ =?utf-8?B?WEtXbG5TRXNoTzc0UkZwUENVZENrcFJZZEkvaVpyeG5JbDEya1I0VkUrVFdQ?=
+ =?utf-8?B?NTRKemxQS3VQUGNpb1d3ZGw4ZDFVVDlld0JiTUhIRGZoVU9qbmZWeG5zaGRx?=
+ =?utf-8?B?UGduQlk0NmROdHVuNW03RXY5S2t2NUwzRm5IOGdUbVRyNmJNd29MWnM3OHFC?=
+ =?utf-8?B?cHlKU3RWMjNieVZ4QTF6cERpcjc1dHpBL0VESUlQN2Y5SzVxeDFnZ2lmRzVk?=
+ =?utf-8?B?bE8zekExTm5NMTRYb2k3cVlGOVpqak5ySndxUHB0bWpDbmRBQ0VnWjdXNDRl?=
+ =?utf-8?B?ODY1eTZ0SHV4RVdMWXhkYUpCWmtnVUtiL0hXWFo4ZnNBZ1dwYU9YOXd0ZDJ4?=
+ =?utf-8?B?dVlMVjlFWWhySG9HeDBhUHlSQTNvSUpnTXlwRW03N2pya1hSeTIyM3JXUVEz?=
+ =?utf-8?B?NWRCaUcxek1FTW96YjU2c1VTRVk4Q1p6NW10aWNZbGV0aWdnTjdqTENTT2p2?=
+ =?utf-8?B?YmNhRFFIV2dXNHFKMHR3WWM2eTIxbUNJT0krOFNKZ0pSYzhWL1lxU21CaitK?=
+ =?utf-8?B?c1dhVHRUSXRjenU1MlhBcWVWTVVHY1kxZHhlbG1Dd2FobnVGM0xDNzNYbEh2?=
+ =?utf-8?B?UDIyeXVQYXVUSXVFRERIMzRVaGFZQUwzUFZ3U3dwWFhwSkpvV3RRL3g5Wm1D?=
+ =?utf-8?B?ZmgweklxSy91V2NVb0ovSFpLK2Q1dSt2Q1ZYK1dPZTNVdDdCb2lBQUZpT0p0?=
+ =?utf-8?B?YmRoM0JZUWpLRDkyT2ZSV1RIM09VZVJEUHY2SUVndDIwbTJmRlJibGY1aEtw?=
+ =?utf-8?Q?BUgJt9+vHs0OTwk+8JnTW0FhUfnMixsCuHxRhuj2u4Nad?=
+X-MS-Exchange-AntiSpam-MessageData-1: NoredFj2iDeI6Q==
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b29fe563-90d5-407c-f7e1-08de51a02da0
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR18MB4436.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2026 06:02:33.7122
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dlSP2wuWFMteHOA0b+eytUuashYBBKxJRiJ0u6epZl/6Ja9fq+9DWcdv9XoRamD626J16/67LFUuX30b1K5Fww==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR18MB927427
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+	RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-The SPI core provides the default fwnode for the controller,
-assigned by device_set_node(). No need to repeat it in the driver.
-
-Tested-by: Benoît Monin <benoit.monin@bootlin.com> # dw mobileye
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be> # renesas
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/spi/spi-airoha-snfi.c       | 1 -
- drivers/spi/spi-dln2.c              | 3 ---
- drivers/spi/spi-dw-core.c           | 2 --
- drivers/spi/spi-ep93xx.c            | 1 -
- drivers/spi/spi-gpio.c              | 1 -
- drivers/spi/spi-ljca.c              | 1 -
- drivers/spi/spi-loongson-core.c     | 1 -
- drivers/spi/spi-mpc512x-psc.c       | 2 --
- drivers/spi/spi-mpc52xx-psc.c       | 2 --
- drivers/spi/spi-nxp-fspi.c          | 2 --
- drivers/spi/spi-pxa2xx.c            | 2 --
- drivers/spi/spi-realtek-rtl-snand.c | 1 -
- drivers/spi/spi-rzv2h-rspi.c        | 2 --
- drivers/spi/spi-rzv2m-csi.c         | 2 --
- drivers/spi/spi-sc18is602.c         | 2 --
- drivers/spi/spi-sunplus-sp7021.c    | 1 -
- drivers/spi/spi-virtio.c            | 2 --
- 17 files changed, 28 deletions(-)
-
-diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index 70327aebc26b..7b6c09f91fef 100644
---- a/drivers/spi/spi-airoha-snfi.c
-+++ b/drivers/spi/spi-airoha-snfi.c
-@@ -1124,7 +1124,6 @@ static int airoha_snand_probe(struct platform_device *pdev)
- 	ctrl->bits_per_word_mask = SPI_BPW_MASK(8);
- 	ctrl->mode_bits = SPI_RX_DUAL;
- 	ctrl->setup = airoha_snand_setup;
--	device_set_node(&ctrl->dev, dev_fwnode(dev));
- 
- 	err = airoha_snand_nfi_init(as_ctrl);
- 	if (err)
-diff --git a/drivers/spi/spi-dln2.c b/drivers/spi/spi-dln2.c
-index 2013bc56ded8..d90282960ab6 100644
---- a/drivers/spi/spi-dln2.c
-+++ b/drivers/spi/spi-dln2.c
-@@ -682,15 +682,12 @@ static int dln2_spi_probe(struct platform_device *pdev)
- 	struct spi_controller *host;
- 	struct dln2_spi *dln2;
- 	struct dln2_platform_data *pdata = dev_get_platdata(&pdev->dev);
--	struct device *dev = &pdev->dev;
- 	int ret;
- 
- 	host = spi_alloc_host(&pdev->dev, sizeof(*dln2));
- 	if (!host)
- 		return -ENOMEM;
- 
--	device_set_node(&host->dev, dev_fwnode(dev));
--
- 	platform_set_drvdata(pdev, host);
- 
- 	dln2 = spi_controller_get_devdata(host);
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index 9ebf244294f8..0d59c141beb0 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -936,8 +936,6 @@ int dw_spi_add_controller(struct device *dev, struct dw_spi *dws)
- 	if (!ctlr)
- 		return -ENOMEM;
- 
--	device_set_node(&ctlr->dev, dev_fwnode(dev));
--
- 	dws->ctlr = ctlr;
- 	dws->dma_addr = (dma_addr_t)(dws->paddr + DW_SPI_DR);
- 
-diff --git a/drivers/spi/spi-ep93xx.c b/drivers/spi/spi-ep93xx.c
-index e1d097091925..90d5f3ea6508 100644
---- a/drivers/spi/spi-ep93xx.c
-+++ b/drivers/spi/spi-ep93xx.c
-@@ -689,7 +689,6 @@ static int ep93xx_spi_probe(struct platform_device *pdev)
- 	/* make sure that the hardware is disabled */
- 	writel(0, espi->mmio + SSPCR1);
- 
--	device_set_node(&host->dev, dev_fwnode(&pdev->dev));
- 	error = devm_spi_register_controller(&pdev->dev, host);
- 	if (error) {
- 		dev_err(&pdev->dev, "failed to register SPI host\n");
-diff --git a/drivers/spi/spi-gpio.c b/drivers/spi/spi-gpio.c
-index c8dadb532c40..072127a38fad 100644
---- a/drivers/spi/spi-gpio.c
-+++ b/drivers/spi/spi-gpio.c
-@@ -351,7 +351,6 @@ static int spi_gpio_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	if (fwnode) {
--		device_set_node(&host->dev, fwnode);
- 		host->use_gpio_descriptors = true;
- 	} else {
- 		status = spi_gpio_probe_pdata(pdev, host);
-diff --git a/drivers/spi/spi-ljca.c b/drivers/spi/spi-ljca.c
-index 3f412cf8f1cd..0c6e6248d8ba 100644
---- a/drivers/spi/spi-ljca.c
-+++ b/drivers/spi/spi-ljca.c
-@@ -238,7 +238,6 @@ static int ljca_spi_probe(struct auxiliary_device *auxdev,
- 	controller->auto_runtime_pm = false;
- 	controller->max_speed_hz = LJCA_SPI_BUS_MAX_HZ;
- 
--	device_set_node(&ljca_spi->controller->dev, dev_fwnode(&auxdev->dev));
- 	auxiliary_set_drvdata(auxdev, controller);
- 
- 	ret = spi_register_controller(controller);
-diff --git a/drivers/spi/spi-loongson-core.c b/drivers/spi/spi-loongson-core.c
-index b46f072a0387..f50423c3db4c 100644
---- a/drivers/spi/spi-loongson-core.c
-+++ b/drivers/spi/spi-loongson-core.c
-@@ -210,7 +210,6 @@ int loongson_spi_init_controller(struct device *dev, void __iomem *regs)
- 	controller->unprepare_message = loongson_spi_unprepare_message;
- 	controller->set_cs = loongson_spi_set_cs;
- 	controller->num_chipselect = 4;
--	device_set_node(&controller->dev, dev_fwnode(dev));
- 	dev_set_drvdata(dev, controller);
- 
- 	spi = spi_controller_get_devdata(controller);
-diff --git a/drivers/spi/spi-mpc512x-psc.c b/drivers/spi/spi-mpc512x-psc.c
-index 3c1638ba5bee..a1aeb5403a74 100644
---- a/drivers/spi/spi-mpc512x-psc.c
-+++ b/drivers/spi/spi-mpc512x-psc.c
-@@ -480,8 +480,6 @@ static int mpc512x_psc_spi_of_probe(struct platform_device *pdev)
- 	host->use_gpio_descriptors = true;
- 	host->cleanup = mpc512x_psc_spi_cleanup;
- 
--	device_set_node(&host->dev, dev_fwnode(dev));
--
- 	tempp = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
- 	if (IS_ERR(tempp))
- 		return dev_err_probe(dev, PTR_ERR(tempp), "could not ioremap I/O port range\n");
-diff --git a/drivers/spi/spi-mpc52xx-psc.c b/drivers/spi/spi-mpc52xx-psc.c
-index 3bbeb8d5bfb8..73d2383461ca 100644
---- a/drivers/spi/spi-mpc52xx-psc.c
-+++ b/drivers/spi/spi-mpc52xx-psc.c
-@@ -319,8 +319,6 @@ static int mpc52xx_psc_spi_of_probe(struct platform_device *pdev)
- 	host->transfer_one_message = mpc52xx_psc_spi_transfer_one_message;
- 	host->cleanup = mpc52xx_psc_spi_cleanup;
- 
--	device_set_node(&host->dev, dev_fwnode(dev));
--
- 	mps->psc = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
- 	if (IS_ERR(mps->psc))
- 		return dev_err_probe(dev, PTR_ERR(mps->psc), "could not ioremap I/O port range\n");
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 50a7e4916a60..320b3d93df57 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -1383,8 +1383,6 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	else
- 		ctlr->mem_caps = &nxp_fspi_mem_caps;
- 
--	device_set_node(&ctlr->dev, fwnode);
--
- 	ret = devm_add_action_or_reset(dev, nxp_fspi_cleanup, f);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/spi/spi-pxa2xx.c b/drivers/spi/spi-pxa2xx.c
-index ec7117a94d5f..78c399e95ef2 100644
---- a/drivers/spi/spi-pxa2xx.c
-+++ b/drivers/spi/spi-pxa2xx.c
-@@ -1290,8 +1290,6 @@ int pxa2xx_spi_probe(struct device *dev, struct ssp_device *ssp,
- 	drv_data->controller_info = platform_info;
- 	drv_data->ssp = ssp;
- 
--	device_set_node(&controller->dev, dev_fwnode(dev));
--
- 	/* The spi->mode bits understood by this driver: */
- 	controller->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LOOP;
- 
-diff --git a/drivers/spi/spi-realtek-rtl-snand.c b/drivers/spi/spi-realtek-rtl-snand.c
-index 741cf2af3e91..7d5853d202c6 100644
---- a/drivers/spi/spi-realtek-rtl-snand.c
-+++ b/drivers/spi/spi-realtek-rtl-snand.c
-@@ -400,7 +400,6 @@ static int rtl_snand_probe(struct platform_device *pdev)
- 	ctrl->mem_ops = &rtl_snand_mem_ops;
- 	ctrl->bits_per_word_mask = SPI_BPW_MASK(8);
- 	ctrl->mode_bits = SPI_RX_DUAL | SPI_RX_QUAD | SPI_TX_DUAL | SPI_TX_QUAD;
--	device_set_node(&ctrl->dev, dev_fwnode(dev));
- 
- 	return devm_spi_register_controller(dev, ctrl);
- }
-diff --git a/drivers/spi/spi-rzv2h-rspi.c b/drivers/spi/spi-rzv2h-rspi.c
-index aae916882915..23f0e92ae208 100644
---- a/drivers/spi/spi-rzv2h-rspi.c
-+++ b/drivers/spi/spi-rzv2h-rspi.c
-@@ -797,8 +797,6 @@ static int rzv2h_rspi_probe(struct platform_device *pdev)
- 		controller->dma_rx = NULL;
- 	}
- 
--	device_set_node(&controller->dev, dev_fwnode(dev));
--
- 	ret = devm_spi_register_controller(dev, controller);
- 	if (ret)
- 		dev_err(dev, "register controller failed\n");
-diff --git a/drivers/spi/spi-rzv2m-csi.c b/drivers/spi/spi-rzv2m-csi.c
-index 7c0442883ac0..5d80939dddb5 100644
---- a/drivers/spi/spi-rzv2m-csi.c
-+++ b/drivers/spi/spi-rzv2m-csi.c
-@@ -634,8 +634,6 @@ static int rzv2m_csi_probe(struct platform_device *pdev)
- 	controller->use_gpio_descriptors = true;
- 	controller->target_abort = rzv2m_csi_target_abort;
- 
--	device_set_node(&controller->dev, dev_fwnode(dev));
--
- 	ret = devm_request_irq(dev, irq, rzv2m_csi_irq_handler, 0,
- 			       dev_name(dev), csi);
- 	if (ret)
-diff --git a/drivers/spi/spi-sc18is602.c b/drivers/spi/spi-sc18is602.c
-index 1627aa66c965..78c558e7228e 100644
---- a/drivers/spi/spi-sc18is602.c
-+++ b/drivers/spi/spi-sc18is602.c
-@@ -251,8 +251,6 @@ static int sc18is602_probe(struct i2c_client *client)
- 	if (!host)
- 		return -ENOMEM;
- 
--	device_set_node(&host->dev, dev_fwnode(dev));
--
- 	hw = spi_controller_get_devdata(host);
- 
- 	/* assert reset and then release */
-diff --git a/drivers/spi/spi-sunplus-sp7021.c b/drivers/spi/spi-sunplus-sp7021.c
-index 256ae07db6be..789b092fe8c0 100644
---- a/drivers/spi/spi-sunplus-sp7021.c
-+++ b/drivers/spi/spi-sunplus-sp7021.c
-@@ -419,7 +419,6 @@ static int sp7021_spi_controller_probe(struct platform_device *pdev)
- 		ctlr = devm_spi_alloc_host(dev, sizeof(*pspim));
- 	if (!ctlr)
- 		return -ENOMEM;
--	device_set_node(&ctlr->dev, dev_fwnode(dev));
- 	ctlr->bus_num = pdev->id;
- 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
- 	ctlr->auto_runtime_pm = true;
-diff --git a/drivers/spi/spi-virtio.c b/drivers/spi/spi-virtio.c
-index 6aad9f1fd016..9e66c917fb75 100644
---- a/drivers/spi/spi-virtio.c
-+++ b/drivers/spi/spi-virtio.c
-@@ -344,8 +344,6 @@ static int virtio_spi_probe(struct virtio_device *vdev)
- 	priv->vdev = vdev;
- 	vdev->priv = priv;
- 
--	device_set_node(&ctrl->dev, dev_fwnode(&vdev->dev));
--
- 	dev_set_drvdata(&vdev->dev, ctrl);
- 
- 	virtio_spi_read_config(vdev);
--- 
-2.50.1
-
+On 1/9/2026 1:43 AM, Tzu-Hao Wei wrote:
+> Add SriNavmani, Prasad and me as maintainers for Axiado AX3000 eMMC PHY
+> driver
+>
+> Signed-off-by: Tzu-Hao Wei <twei@axiado.com>
+> ---
+>   MAINTAINERS | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a0dd762f5648b7e4e6fc62560662e43720422e01..6d1af11eb289ffb7c0d8634ac7d8f903aed1799c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4250,6 +4250,16 @@ W:	https://ez.analog.com/linux-software-drivers
+>   F:	Documentation/devicetree/bindings/hwmon/adi,axi-fan-control.yaml
+>   F:	drivers/hwmon/axi-fan-control.c
+>   
+> +AXIADO EMMC PHY DRIVER
+> +M:	SriNavmani A <srinavmani@axiado.com>
+> +M:	Tzu-Hao Wei <twei@axiado.com>
+> +M:	Prasad Bolisetty <pbolisetty@axiado.com>
+Acked-by: Prasad Bolisetty <pbolisetty@axiado.com>
 
