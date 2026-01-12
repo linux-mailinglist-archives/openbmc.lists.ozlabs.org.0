@@ -1,50 +1,50 @@
-Return-Path: <openbmc+bounces-1158-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1159-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B314D113A1
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 09:31:07 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F19ED113E4
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jan 2026 09:32:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dqQZJ5GJMz2yvL;
-	Mon, 12 Jan 2026 19:31:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dqQcR6xJ2z2yvc;
+	Mon, 12 Jan 2026 19:32:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768206664;
-	cv=none; b=n8zwQIo86DPSuPkRqF2NCSskevHoSPC+Kl3ClW0P7ZJS0+b/cof4Wz2WiybVnrT2WxvlGV7XjvqTEPyp2//FWJXO29UfRm9/IocQbsLe9o7WCO+JVsVFoKaff5wIP3wWMhm/bw+7WAC2VasU3BsxOjTnjcHdbgIHOk0vsmoevvLGHonKwCumdzih6NMq+Eynxpr6C+FZD4lbdAyQUI210qK5IbRQK+r/v0oa4x+3R/lHkZuMctesuGzq5B0DLNtQB+2u3o1WyElSmLbMfacFfP1L2ftYbVBAR8aOwkvZWNCkVNJVC+Ow9/ueA0Yn8Tbx0RJ5TJEmOYdE4AM3u/KP7g==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768206775;
+	cv=none; b=bj1cwbM6ChSewTWIv4bN1ay0Ewf33u+esTA7n9Qxp8QWO7k4hRv5LZPIqI1iMyfopvilz3WSgV+NJuItUgukf4EofSfbAbO5vI4vmmiMkqv99stR2IG+FEresDEKwv6H9ehA2HoMzlVADtbq+Fg1QfTQtHJNFWIvhii0jKYxnzZ15FPBaVg4xUs0h5cXjsqXZ3rhaEAwH2oNYjYtAe0IOlCkIatXymHWTqWnjiTvkzFvpgu8fMWn9x8hmAsCq1Wl2GJHZAAdV+Eu2It5b0RCwoOfb3iuTk7KrkjJOoBIrQRdozFBlMSrpSlntTuie5l0dnJvWEz36gOeALnFN8+tsA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768206664; c=relaxed/relaxed;
-	bh=f9dT1+vRFaWhX0kR7OPssNFii0eBpddlvQn5jfz8XJw=;
+	t=1768206775; c=relaxed/relaxed;
+	bh=Fusf43Ejfke2bRmUKBUA8k6pTY0MXTcVOuVWGegHOD0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EjaT0KGqkQn7Mm0VQtFxfgf6E1TxQ6h0BUTX6FzMkzkJu1VOC41X1DytVNCfULvg2/3LfIAq1q2xHhIRx67U2UsxjpZNJpmpZ/36hvu1SYM0/1qnxa6AmdQSvDV8wfo+VMcr+12B0nZFT/pCBfzf/A6hDpBFIgUT6Nz8K7j8woap9F+NeDDpLNzRoU2mhHXGdXxQJy7wnceXMPS34TOPe9k8k9qkZMz+d8UQF3G6yIlmkcd6J1Efkjug3I+z+kmeZMo88Jmt/K9IXnSp+GNBu1rGwzAg504EB6Ly3t/FAeMlrzqopYy5wvZJznAv86jaBuVfpWliGd212BcPTDoWHg==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=u5kVPdf1; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=TzJYAa+ERAld/YosdpEKhcn1QccGHoREmCxbMIdfev/V5MFlg71//gPEjk/S0z+Wf4ah8tGrhYhotalkLYKLCFNXGxLPxBNF7jOhoY1nWq+ghCIysrFKqSSrpK7BcWyf1QLPd/tWJjHvrsAxpoODvwaDYrsOqSSdp/PvpXzyMrZpgKXrya1Qm5p/ySFAZ6UD6m2gFHjwztwX9eguv5XCnkDlmJiZ9KFcpzBMZ5OLToseuZuWyeGK89yQN2ugQCAi3mJcDqd/RzpVFbUy3NHOgblIkf5JuYlKJ80MCoUjAyXvO7GSzhKZk9PsjEwBrpPOdDzP2l3QrNzX3S58JEvadA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Gkk/jaHB; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=u5kVPdf1;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Gkk/jaHB;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
 Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqQZG5Spyz2yv9
-	for <openbmc@lists.ozlabs.org>; Mon, 12 Jan 2026 19:31:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dqQcR1nsvz2yvV
+	for <openbmc@lists.ozlabs.org>; Mon, 12 Jan 2026 19:32:55 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 429F643DB0;
-	Mon, 12 Jan 2026 08:30:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F168C116D0;
-	Mon, 12 Jan 2026 08:30:26 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 803ED44462;
+	Mon, 12 Jan 2026 08:32:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99368C116D0;
+	Mon, 12 Jan 2026 08:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768206630;
-	bh=S/2O9k6BAmXtV41W0BCUF8zMdfng6qfMm7Fbec/Ssp8=;
+	s=k20201202; t=1768206773;
+	bh=5NpKbb5d/pvUHiup5RnvYALNkAbAryBwn/L0XuOoao8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=u5kVPdf1hGojtOP370/DPw/VDkNYiUOO/E2eJUbqmWev+mClSmfVZ6Rf2keN+7bMQ
-	 9Mi1dLL8kr/FNeAio7m7sVJ33JbnUexbxlezW8uU3+CMrCIC70W7UfjMUd+Ein62hO
-	 3MhWCRZMko4CVG2AkV6rJH13LbfmrWpjN8kpQtzXd412fyJjM7Qbh4V0LXXlG0FXr9
-	 SPc2uxCLx+SS/r0ABR25AYgDSiVu0gCWPLZKIll7PLNJdXBP74L5CMrtYFk+wZGvsS
-	 zGt9WDNFiEeafegkjRXUbfFleP4fzbFbPLZ5HYTBdH+e2sVh2aHAQNssBSm+yTKd8I
-	 6mv8xhGsQ0W0Q==
-Message-ID: <55a2c060-014f-4077-85a1-15f6f799d263@kernel.org>
-Date: Mon, 12 Jan 2026 09:30:24 +0100
+	b=Gkk/jaHBmYBnSxlRwKQVZvNkbiiu1Dct4T5GYn22tSzAI8ytnrmn5U/OFwYwcQwAr
+	 9UqERHRfKcJNEitb/3Zua/zRDPXp9M7Hthmzyvjlnzu2dRU3pE58qU4OeAP61oeVmI
+	 1TTdfmFU1esIH0rEIlzOeS0Om64qnSyFLV8boW/Y2t5eVn4XahPql9R+84y+TPXbwN
+	 PIFN1Sx+hEOQfC62WH48S9u4f1u2/UfZz9cDX7FcToZs/sIgw0jDlHRy6N7v09xlfh
+	 gjs/VbtXqgifJkflOPsCh8tUTnMcXS+AilxJhdvSv8N1VtUeRBiPn++CgxI1JdJDlD
+	 xskharAgKNYvg==
+Message-ID: <85c3fe42-22a1-4b8d-85a6-f7541d8c942e@kernel.org>
+Date: Mon, 12 Jan 2026 09:32:49 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -57,17 +57,15 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Add Axiado AX3000 eMMC Host Controller Support
+Subject: Re: [PATCH 0/4] Add eMMC PHY support for Axiado AX3000 SoC
 To: Tzu-Hao Wei <twei@axiado.com>, SriNavmani A <srinavmani@axiado.com>,
  Prasad Bolisetty <pbolisetty@axiado.com>, Vinod Koul <vkoul@kernel.org>,
  Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
- Adrian Hunter <adrian.hunter@intel.com>, Michal Simek <michal.simek@amd.com>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-mmc@vger.kernel.org, openbmc@lists.ozlabs.org
-References: <20260109-axiado-ax3000-add-emmc-host-driver-support-v2-0-934f1a61f7c0@axiado.com>
+ openbmc@lists.ozlabs.org
+References: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,7 +111,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260109-axiado-ax3000-add-emmc-host-driver-support-v2-0-934f1a61f7c0@axiado.com>
+In-Reply-To: <20260109-axiado-ax3000-add-emmc-phy-driver-support-v1-0-dd43459dbfea@axiado.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -121,41 +119,31 @@ X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On 09/01/2026 10:46, Tzu-Hao Wei wrote:
-> Axiado AX3000 SoC eMMC controller is based on Arasan eMMC controller.
+On 09/01/2026 10:43, Tzu-Hao Wei wrote:
+> Axiado AX3000 SoC contains Arasan PHY which provides the interface to the
+> HS200 eMMC controller.
 > 
 > This series includes:
-> 1. Add bindings for AX3000 SoC eMMC controller
-> 2. Add arasan sdhci support for eMMC in Axiado AX3000
+> 1. Add bindings for Axiado AX3000 eMMC PHY
+> 2. Add Axiado AX3000 eMMC phy driver
+> 3. Update MAINTAINERS for the new driver
+> 4. Update Axiado AX3000 device tree
 > 
-> Signed-off-by: Tzu-Hao Wei <twei@axiado.com>
-> ---
-> Changes in v2:
-> - Keep host controller changes in this patchset
-> - Use pdata instead of mix compatible string
-> - Fix coding style
-> - Link to v1: https://lore.kernel.org/r/20251222-axiado-ax3000-add-emmc-host-driver-support-v1-0-5457d0ebcdb4@axiado.com
+> Changes: (The previous version was mixed with Host driver, so I separate
+> the PHY driver as a new thread)
+> - Fix property order in required section to match properties section
+> - Fixed example to use lowercase hex and proper node naming
+> - Removed wrapper functions, use readl/writel directly
+> - Replaced manual polling loops with read_poll_timeout macro
+> - Used devm_platform_ioremap_resource instead of separate calls
+> - Removed unnecessary of_match_node check
+> - Used dev_err_probe for error reporting
+> - Added proper Kconfig dependencies (ARCH_AXIADO || COMPILE_TEST)
+> - Fixed various coding style issues
+> - Link to previous patches: https://lore.kernel.org/all/20251222-axiado-ax3000-add-emmc-host-driver-support-v1-0-5457d0ebcdb4@axiado.com/
 > 
-> ---
-> SriNavmani A (2):
->       dt-bindings: mmc: arasan,sdhci: Add Axiado AX3000 SoC
->       mmc: sdhci-of-arasan: add support on Axiado AX3000 SoC
-> 
->  Documentation/devicetree/bindings/mmc/arasan,sdhci.yaml |  3 +++
->  drivers/mmc/host/sdhci-of-arasan.c                      | 14 ++++++++++++++
->  2 files changed, 17 insertions(+)
-> ---
-> base-commit: f10c325a345fef0a688a2bcdfab1540d1c924148
-> change-id: 20251222-axiado-ax3000-add-emmc-host-driver-support-2cc84a8f889a
-> prerequisite-change-id: 20260108-axiado-ax3000-add-emmc-phy-driver-support-d61aead8f622:v1
-> prerequisite-patch-id: 03617f4dadb7ed33653d1e0b3c03e732ed4948c5
-> prerequisite-patch-id: 454a64fb94f3c1b6cf6fb7fbfce97f706933b7e3
-> prerequisite-patch-id: 7961935b88d6c3056b55b4058c1ba878aa00490c
-> prerequisite-patch-id: f87b65e3c93f8f1edf2305784ea3f81a04c4ad58
 
-Huh, why and how?
-
-It's impossible to apply this.
+So v2. Always version your patches correctly.
 
 Best regards,
 Krzysztof
