@@ -1,93 +1,58 @@
-Return-Path: <openbmc+bounces-1182-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1183-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA8D0D1B4EB
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jan 2026 21:56:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87BB4D1BB44
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jan 2026 00:24:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4drM3l2nT4z2xWJ;
-	Wed, 14 Jan 2026 07:56:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4drQLm0rkxz2xqL;
+	Wed, 14 Jan 2026 10:24:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=209.85.167.42
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768337779;
-	cv=none; b=Ge5uwrRVtH94/D24uOqjoeHS+dGJeHujfn6QDvgF3XlJKx1mutFIW5KhaX6kY//Ke4wSyscr8n0VvIX1nuK37W/4yA8n9B27BIfONa/DROOY6cJimKcBuyD3VNM+QDkt+nJoRm70zqPK4G0zaq2RIc2fouvlsKCyvYWRziOAmelizimNNzxSQMT6Nl1EgFRj+OaSc5+BtxW+nNdeI66UjlUARYdoADaFaDs7HxGo+CqpM/HrJnPpDCnqWEQkaFuoLwwK5sSO/jW0YpJbBMTv9fZgtmr/0rNdtsHb8ZmbwZV3VudTQvZQ9cRLLa98Beg5uge2gLW1/S33Zdvph3mruA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768299219;
+	cv=none; b=Nrr0aIbZrWcC+Kqj9qSwn/ayZy2m0GBy0XAYkk3tGnHkshpgoPRdc1TT/DBVOZ4zKXiPA12s4DnTmtoO8I/3yC4Oqq8Z/udjhaBBaHZsO6s81tV2s7sxeHHdQBOEuUpzM7dysv6TdDp+/d/4qDiQYCJ9CzVxP5tVoo/hVWDSFulYyfFTXlQkR490P/XCxi0N1/hWu6MXMsEJCazbQyzQa9C6MKIiDgT9vXVNKhSWO90ifdwulb1mzG72b4/9dcDTcPSBem5mj0wcUnA7PJU8fC7qVSRKVPDZLoAPBRgEsMRtLWeer3kEH+ygIIJHOf4W1EhK6vUPfvn8kwTzmaia0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768337779; c=relaxed/relaxed;
-	bh=5pHsVJecFD4YbT0rXEDVv0Au939ch3w9H6zdTMjQty8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=AcYUP/rxeDKeYO+ETdM/kbf4l55E7CgwiI/gjTeSr3LHLb/zenJ5H6sVzFIeCJ2nV3qUbr7fdVVhozwJEPJaFf6eNe79kqmMbm5QRcNXdD+bnOKegVTh8Q8dD0eXnFMowNwdvwmhzLaCH8tJ06O89Fir8yh5hDhdW88XWAvH3zhBjroEWdp2URHnoRKCuajGafsVbCVC465uAl8EPsD4D7dbM51EDojup4hrgsRGS/s7zdChm8MQi0xaP/FiuJJ1shWd0588YEvTwCW35kgSxoicdm480XZggMYXEPfZDZmA/eWmWGYW8zcXlKE8h6HJPWqwWTCqaRdhIfUkHTRYTw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nb/tU+Cz; dkim-atps=neutral; spf=pass (client-ip=209.85.167.42; helo=mail-lf1-f42.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1768299219; c=relaxed/relaxed;
+	bh=+LRLoreM4o+gGDWAZYVe2aUygCSNCbLkY2YsP8OXzQQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QdOntV/yJ2wsHqsSfkTCnWYfWYX9E+CCA2ZZR5y6DY1pjXE8Dvi3mHRLxHh8JTNvIb2SK9P4MvT8gqc9pFkeuu+jiFqKPBpFg/9ZKEBtfZOmgXb+NxpkE8T5OjNKEp3FaBeA+8NCoqDyCenmY5JUgp3Vn2iFXpKKOx8Nfe8XUXkp2nMvKKv2qWN/qWMuQBfvrKPBIb9CZ7xiOyLIU1cvhmaLJ590H+uCxAU6MapeKNufpnXIAwnpZxO2gPzVcQ1HqCINgRrTn6IyQwjZKxaLkvbjSEX7hsJY6UvmKes8gRckQilqycL9DBR0Vv3l8vORqyqggJLKJ4T9YgRxu02i+w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dBkyBNzZ; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=nb/tU+Cz;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dBkyBNzZ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.167.42; helo=mail-lf1-f42.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4drM3j54gTz2xQs
-	for <openbmc@lists.ozlabs.org>; Wed, 14 Jan 2026 07:56:17 +1100 (AEDT)
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59b7bb3b913so263670e87.1
-        for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 12:56:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768337713; x=1768942513; darn=lists.ozlabs.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5pHsVJecFD4YbT0rXEDVv0Au939ch3w9H6zdTMjQty8=;
-        b=nb/tU+CzTYqH/wX7LzAlVBzccc5U627Kv5ofhc4xRzJxt3+0V8IvbzxhiA4ntnqV5f
-         8ae3zCKoRhX1+hROK1JIHvzIAi+NRtjmdZjReY6iz34I4p7m5eXzTZkNiqg2vLp+JCq2
-         iNxMCUYx8DS2Wc6X7JQ1ouSmKIupHY7VN/036pgCZvinroQaKSKfppKvpBA/SCkah6ns
-         8eQbwVLWOn4P7iX2oILpmpJ+mkkFShMqales3WVj6YlWWLUgJFeD/4BMeH9q0t3fLytK
-         jZTGUi8lCuQfmlCKfmhgx6R5lJZXnMPwpOZ6vrZGI43WNYAiubbBaPOGxoFUISRZmB9+
-         4wTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768337713; x=1768942513;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5pHsVJecFD4YbT0rXEDVv0Au939ch3w9H6zdTMjQty8=;
-        b=byHk7f4bbZsNXBdZlUZ4kO7bjrzawcEmU2D71BGBIEBuDi3Di1cVW5IFK7RcwZePBi
-         fdnpFw1Joao7KXY1wUP+eLqUkFehy2FuY5LeuD5loLAoc3xUA/oVBKCxvBfbQ6ZaZ8yW
-         l4bn0WuVqZ2X+Lxr+PB4aEM/YbrsaWOgBwYUp8u5kxy3Q0shVoa/2E9TBCoUBirJaNf4
-         83tkxgCXEIGj0FphnvvEE3+J1M+jj/fY7K1cW7fU0zLJwWPTuqWsg3C8gE9ocLKC/EdI
-         jshVAnRGTSpd3dTGVdOwZSv4j6wNbB7uojLIAGp2j5Yb7PRcWNIcT5oEZ+sH2Kh/SXYl
-         /f/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXg6GDXgy6gJy3GWgdlNRsf/jQhKq26ZhvbOVC2jefkBaFYhzJPCONPFwqTGLT5ID2B5S3zwTbQ@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Ywbnn5scI279cSV9ny5kVi6KUaA4QBIrC/ch68F4fF4hIpxQ+xa
-	z7G3p5vAq7/kjZnoZ3YRujvl8mb12b4YBWYSkgDhp/Auqj7jLx6LsACC
-X-Gm-Gg: AY/fxX689hUoAWRxnl6pNNYEtsd3/GnqoIcmffuDoEA4z31cGYwRxsAS6LURJtV/h9k
-	Mbv/tIHI7kz/bhiiTEA7V4FAcQXS4a4PEUDa7Jr6EOBhC97yKDx0mN+nicJi+SHL3JWV8ARuSPN
-	0rTt1dutByjgo7G7p5+WLIJwCzNG05/+y8i0QZ4y4OQDSCTr6GbdIqZseFeCdjhN/eSnPwHq6g0
-	4SjldbRMX9hNJsZMKVrW/H6RSgB/wO9wGoazDeuNRu2n2MJVZVujgJ6a3KfFPXWqJhoeFexBb1o
-	KIy3HkTW1bQXgSD9+NfS/scgswMLs44pyL9PE8BzFKebOmP0A7BS9E7LnwudTkxKANS7XXen4ls
-	+FheTPpW+JVCeDAGWwBEAwbn863qJ/iDacUtG+JtJ7nKkXSq3Jfe0YhXzlTTS4hCTM3BlkuUDKW
-	AcApXwezAN6CJn
-X-Received: by 2002:a05:6512:1328:b0:59b:92a2:19b8 with SMTP id 2adb3069b0e04-59b99435132mr1389992e87.25.1768337712576;
-        Tue, 13 Jan 2026 12:55:12 -0800 (PST)
-Received: from [192.168.1.161] ([81.200.11.23])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-382fd34bc69sm37649391fa.19.2026.01.13.12.55.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jan 2026 12:55:10 -0800 (PST)
-Message-ID: <c0fb8ab537cc9b234bf0afd4289c0e72a7e5ca04.camel@gmail.com>
-Subject: Re: [PATCH u-boot v2 1/2] drivers: spi: Add support for disabling
- FMC_WDT2 for aspeed
-From: Ivan Mikhaylov <fr0st61te@gmail.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>, Marc Olberding
-	 <molberding@nvidia.com>
-Cc: joel@jms.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com
-Date: Tue, 13 Jan 2026 23:55:06 +0300
-In-Reply-To: <324c2abf90b0c1712b2407b9a9b6f80ae590cb4c.camel@codeconstruct.com.au>
-References: <20251202-msx4-v2-0-a605d448bd02@nvidia.com>
-		 <20251202-msx4-v2-1-a605d448bd02@nvidia.com>
-		 <CAKkNK0JOPAyw8HA0XnD836d115p5YBbo=uBD9eXXvByzCv92Yg@mail.gmail.com>
-		 <aVxRrM14yN3YZ6Xo@molberding.nvidia.com>
-		 <CAKkNK0JGjmurZQ4C5jnOBGAig3n24xr4FAxHpyvqWyTTTHW8eg@mail.gmail.com>
-	 <324c2abf90b0c1712b2407b9a9b6f80ae590cb4c.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.0 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dr4pB5YjGz2xQB
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 21:13:38 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id C54F8444C4
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 10:13:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A00AC4AF0C
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 10:13:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768299216;
+	bh=RpOnPNW4xfI0Kz9zhPqicYu/rLC2pTmpoM33Trm+SMg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dBkyBNzZyikYWHBI84mEzG69MRM616RZBoMsO0F3Q1c1T/St0KrZ9e2JUQUHBxmA2
+	 3ghOxlMMpbwvS/wL74la9lRVcw7lVZLTyWJiprsxF5/oDzdFtYs3SmKTcdV3GQohVx
+	 6ukv6oI7L/80VLsINJQ3gIGwywWiYE4fp1vBKJEyuSQnejwmmr6sqzttwZsXeXj3ba
+	 X+Klx3wBvBhfpoXyoeO/EffiVahCypVxOcHqGQ6XJH0tDrCHhaz16CsG2xGrUPWY6N
+	 NsymtWt2Boevzn0e3ExO19xgQ8iQhqLMnifQUiiSr4WPa1qIiWHnrxefRm2bdiPR2v
+	 DCFLKopJUBlYA==
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7927541abfaso25774657b3.3
+        for <openbmc@lists.ozlabs.org>; Tue, 13 Jan 2026 02:13:36 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUZpwxe5OOu5n3XA6rfSMbgD9Stcu056HF7lUCMmVUdXZHi7cjFJ4Q9YyhTXJpXVGn+fC9X36tZ@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YyelGqFujV+gRIzvb7eAEbwTwDIf/Z+XorKTu/rr/6D/4B/Yjj3
+	5YCxVPvavzc8Lk8jnHLyKfnN7ux5LHHVw91PLewzymqKS4eurQ2jkcIeOSVydm4NIwqyEuVHHoz
+	p8jB0e+tN5T+nlQQTpmwLEm4abugOCd8=
+X-Google-Smtp-Source: AGHT+IEjXK4zNU3B8MFfoIndGOeB/FKQBt1cyG91VMuMhesDC6zUrt9ZhhHY6gJ4lWXzCFjcVvXXmBBHZkq1dqdQ1TU=
+X-Received: by 2002:a05:690e:1442:b0:644:51a4:4f1a with SMTP id
+ 956f58d0204a3-64716c67be2mr17455597d50.46.1768299214202; Tue, 13 Jan 2026
+ 02:13:34 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -99,112 +64,122 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+References: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 13 Jan 2026 11:13:22 +0100
+X-Gmail-Original-Message-ID: <CAD++jLkBKcK9eKOCfry2H1DzG=5Z93w2U-SRwHf2dkRBhyxQRw@mail.gmail.com>
+X-Gm-Features: AZwV_Qgxd8O6AeWZ_24rr74gIMc3R8RlMUxlB-x9t8krXDZ9OpAu7ZlluLqPS50
+Message-ID: <CAD++jLkBKcK9eKOCfry2H1DzG=5Z93w2U-SRwHf2dkRBhyxQRw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] spi: Make SPI core to take care of fwnode assignment
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mark Brown <broonie@kernel.org>, 
+	Varshini Rajendran <varshini.rajendran@microchip.com>, 
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Haotian Zhang <vulab@iscas.ac.cn>, 
+	Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Chen-Yu Tsai <wens@kernel.org>, 
+	Amelie Delaunay <amelie.delaunay@foss.st.com>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, 
+	CL Wang <cl634@andestech.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
+	Heiko Stuebner <heiko@sntech.de>, William Zhang <william.zhang@broadcom.com>, 
+	=?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+	Manikandan Muralidharan <manikandan.m@microchip.com>, David Lechner <dlechner@baylibre.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Jonas Gorski <jonas.gorski@gmail.com>, 
+	Hang Zhou <929513338@qq.com>, Jun Guo <jun.guo@cixtech.com>, 
+	Philipp Stanner <phasta@kernel.org>, Charles Keepax <ckeepax@opensource.cirrus.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, =?UTF-8?Q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>, 
+	Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>, 
+	Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>, 
+	Sakari Ailus <sakari.ailus@linux.intel.com>, Huacai Chen <chenhuacai@kernel.org>, 
+	Xianwei Zhao <xianwei.zhao@amlogic.com>, 
+	Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>, 
+	Sergio Perez Gonzalez <sperezglz@gmail.com>, Qianfeng Rong <rongqianfeng@vivo.com>, 
+	Haibo Chen <haibo.chen@nxp.com>, Gabor Juhos <j4g8y7@gmail.com>, 
+	Md Sadre Alam <quic_mdalam@quicinc.com>, Rosen Penev <rosenp@gmail.com>, 
+	Marek Szyprowski <m.szyprowski@samsung.com>, Luis de Arquer <luis.dearquer@inertim.com>, 
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
+	Tudor Ambarus <tudor.ambarus@linaro.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Longbin Li <looong.bin@gmail.com>, Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+	=?UTF-8?Q?Cl=C3=A9ment_Le_Goffic?= <clement.legoffic@foss.st.com>, 
+	Alessandro Grassi <alessandro.grassi@mailbox.org>, Darshan R <rathod.darshan.0896@gmail.com>, 
+	Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>, 
+	Haixu Cui <quic_haixcui@quicinc.com>, Darshan Rathod <darshanrathod475@gmail.com>, 
+	linux-spi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	asahi@lists.linux.dev, linux-aspeed@lists.ozlabs.org, 
+	openbmc@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org, 
+	linux-sound@vger.kernel.org, patches@opensource.cirrus.com, 
+	imx@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	virtualization@lists.linux.dev, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>, Sven Peter <sven@kernel.org>, 
+	Neal Gompa <neal@gompa.dev>, Joel Stanley <joel@jms.id.au>, 
+	Andrew Jeffery <andrew@codeconstruct.com.au>, Ryan Wanner <ryan.wanner@microchip.com>, 
+	Michael Hennerich <michael.hennerich@analog.com>, =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>, 
+	Kamal Dasu <kamal.dasu@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, Kursad Oney <kursad.oney@broadcom.com>, 
+	Anand Gore <anand.gore@broadcom.com>, =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>, 
+	David Rhodes <david.rhodes@cirrus.com>, Richard Fitzgerald <rf@opensource.cirrus.com>, 
+	Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, Jean-Marie Verdun <verdun@hpe.com>, 
+	Nick Hawkins <nick.hawkins@hpe.com>, Yang Shen <shenyang39@huawei.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Lixu Zhang <lixu.zhang@intel.com>, Yinbo Zhu <zhuyinbo@loongson.cn>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Conor Dooley <conor.dooley@microchip.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+	Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+	Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, Han Xu <han.xu@nxp.com>, 
+	Yogesh Gaur <yogeshgaur.83@gmail.com>, Daniel Mack <daniel@zonque.org>, 
+	Haojian Zhuang <haojian.zhuang@gmail.com>, Robert Jarzmik <robert.jarzmik@free.fr>, 
+	Chris Packham <chris.packham@alliedtelesis.co.nz>, 
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Andi Shyti <andi.shyti@kernel.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Paul Walmsley <pjw@kernel.org>, 
+	Samuel Holland <samuel.holland@sifive.com>, Orson Zhai <orsonzhai@gmail.com>, 
+	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Alain Volmat <alain.volmat@foss.st.com>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Li-hao Kuo <lhjeff911@gmail.com>, Masahisa Kojima <masahisa.kojima@linaro.org>, 
+	Jassi Brar <jaswinder.singh@linaro.org>, Laxman Dewangan <ldewangan@nvidia.com>, 
+	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Sowjanya Komatineni <skomatineni@nvidia.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	=?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+	Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Mon, 2026-01-12 at 11:42 +1030, Andrew Jeffery wrote:
-> On Tue, 2026-01-06 at 17:52 +0300, Ivan Mikhaylov wrote:
-> > On Tue, Jan 6, 2026 at 3:05=E2=80=AFAM Marc Olberding
-> > <molberding@nvidia.com> wrote:
-> > >=20
-> > > On Sat, Jan 03, 2026 at 12:24:07AM +0300, =D0=98=D0=B2=D0=B0=D0=BD =
-=D0=9C=D0=B8=D1=85=D0=B0=D0=B9=D0=BB=D0=BE=D0=B2 wrote:
-> > > > On Wed, Dec 3, 2025 at 2:53=E2=80=AFAM Marc Olberding
-> > > > <molberding@nvidia.com> wrote:
-> > > > >=20
-> > > > > Adds support for disabling the ast2600 FMC_WDT2 through
-> > > > > a device tree entry in the fmc node.
-> > > > > Set `aspeed,watchdog-disable` in your device tree to have
-> > > > > the driver disable it.
-> > > >=20
-> > > > Marc, FMC_WDT2 doesn't disable watchdog, it controls ABR mode.
-> > > > Watchdog with or without ABR still in operational mode.
-> > > > So, maybe aspeed,abr-disable?
-> > > >=20
-> > > > Below namings probably should be corrected.
-> > > We aren't disabling ABR mode with this change, right? That's only
-> > > done through hardware straps or OTP changes. All this is doing is
-> > > clearing bit 0
-> > > of FMC64, which per the datasheet disables the watchdog. The idea
-> > > here is
-> > > to just allow boot to progress normally, without the watchdog.
-> > > For ping pong update,
-> > > userspace can flash the alternative SPI and re-enable the
-> > > watchdog timer on complete,
-> > > and the BMC will boot from the new image upon reset. Let me know
-> > > if I'm misunderstanding
-> > > your comment.
-> > >=20
-> >=20
-> > Marc, when you clrbits_le on FMC64/FMC_WDT2, then you disable ABR
-> > mode, I
-> > assume you can check it with evb board or ast2600-a3 to prove. On
-> > my board
-> > ast2600-a3 it works in that way I described with enabled OTP strap
-> > for ABR.
->=20
-> Can you elaborate on the sequences involved?
+On Mon, Jan 12, 2026 at 9:35=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 
-Andrew, same as in this patch but with mw in u-boot run script=C2=A0with
-enabled OTP strap for ABR.
+> It seems all of the SPI drivers want to propagate fwnode (or of_node)
+> of the physical device to the SPI device. Make sure we don't duplicate
+> it over and over in each new driver (+2 in this cycle) by making core
+> to take care of that. Note, similar is done already by IIO and
+> I=C2=B2C subsystems.
+>
+> There is one noticeable and quite specific case that is taken care in
+> the first patch and now we have a confirmation from Cirrus that everythin=
+g
+> is okay.  The rest is just a mechanical conversion after checking that
+> the parent device is assigned to the same that provides the respective
+> fwnode.
 
-> The reset definitions for the FMC suggest it's affected by an ARM
-> reset, which should in-turn reinitialise FMC_WDT2 and follow the boot
-> flow to enable the ABR again. In my understanding disabling it in
-> firmware shouldn't prevent ABR operations subsequent to future
-> resets?
+This is clearly making the kernel a better place.
 
-As I know, yes.
+The series:
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
->=20
-> Further, the aspeed,watchdog-disable property is to be taken in the
-> context of the node with the FMC compatible string, referring to the
-> FMC's watchdog and not the (separate) SoC watchdogs. However the FMC
-> does have multiple watchdogs, one for address mode detection and the
-> other for ABR. So maybe the name of the property could be improved in
-> that regard. I think it's still reasonable to have watchdog in the
-> name. My immediate reaction is that "aspeed,abr-disable" overstates
-> its
-> behaviour. How about "aspeed,abr-watchdog-disable"? Previous
-> suggestions were "fmc-wdt2-disable", and the current
-> "aspeed,watchdog-
-> disable"
->=20
-
-I like both of these: "aspeed,abr-watchdog-disable", "aspeed,fmc-wdt2-
-disable".
-
-> >=20
-> > Also description of it in 14.2.2 Alternative Boot Recovery
-> > Function.
->=20
-> The second bullet in that section says:
->=20
-> =C2=A0=C2=A0 When the firmware booting successfully, it should disable FM=
-C_WDT2
-> =C2=A0=C2=A0 to stop booting switch
->=20
-> This is what Marc is trying to achieve by providing the property.
-> Other
-> platforms may want to make the choice elsewhere.
->=20
-> Andrew
-
-I'm not saying that is Marc is doing something wrong about it, I just
-want to say that need to distinguish WDT2 and FMC_WDT2 because it
-puzzles when you reading the code in which you see something like:
-
-/* FMC_WDT2 ... */
-#define WDT2_ENABLE ...
-
-I'd be use exactly what it should be:
-/* FMC_WDT2 ... */
-#define FMC_WDT2_ENABLE ...
-
-and everything else which relates to FMC_WDT2.
-
-Thanks.
+Yours,
+Linus Walleij
 
