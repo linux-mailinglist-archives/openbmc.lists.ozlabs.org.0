@@ -1,75 +1,60 @@
-Return-Path: <openbmc+bounces-1211-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1212-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D132D25A7B
-	for <lists+openbmc@lfdr.de>; Thu, 15 Jan 2026 17:15:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B988D270A2
+	for <lists+openbmc@lfdr.de>; Thu, 15 Jan 2026 19:02:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dsSkZ2pX4z2yFm;
-	Fri, 16 Jan 2026 03:15:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dsW6817Hjz309H;
+	Fri, 16 Jan 2026 05:02:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=185.11.138.130
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768493718;
-	cv=none; b=TFdUVMYONpv9HUis1FF3UmIz75ztEks+pI/+gKPPZB4nyb9dV3tjIjX9FVYuAD9aq5dBGXXk0uDUoC4xDJ1GNHDo6Qs4VbKIIPsBmsPVr2yGDgeanprKXenLV5e6QDK2ssLorJC8/ugoz0q6YRqcet+frSa1UMQE3NAnIGKqc/A9miRw+I/WeMdecKeb1jhgvum88j9htkwWZUSF9s8qD7monXeQ4V5FCuVRHemhHgLZkM078/iXdLtcDPYI839eRacPl5fIeDGfYvBy0lRkJMYVKDIweCd+PCQdcfGJFZTd4SLghiVqslX1i2w81K/1QLQyRvaionnLiyc64poYdQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768500144;
+	cv=none; b=CzojlsQAJFV6GUVbd9229kIqkIPb7bVDHkaj4ch/ptokKWV+ctUp/VASRF2b0aH8VnoxJsF/UxkRAnotA3Oo0PEPS0F4Ew+zsqNQ4JAmfIhhxWpourZKla60sCLqbZgviJAU1Vu0OpytswmB09IEroOt1KyMfhm/RE+ZuNWhw1V/j+pZTHS97aSowf0uZyi8ZnHVZfNwZKQoLdxnPFs1KGCyr9ywAyffDYPhQ3h5aeRahK0fX9MpnhrXcj8h0Q+TfZLqkIXbTw4q+jdGhIIwWxeqO0XS6FYMJRu26ZF/r/OEv+9/TqVBbYAMnO5tWXvow3lP+KjxDjxKUXamRPQ6Zw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768493718; c=relaxed/relaxed;
-	bh=zjAI4sw5fZWleNcy5E+bpQXvW8kKtlqPBKTICHmyuec=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KYLiEIhRvwpKwoDGqsVnrDa/xFzn113eViM4FwS+1GScYuqHISC7CkOE/2JhV5qfAhpVF+UIieuU/ZaZdEicl65eLFzETLiOfujz+6updC7ljVxAkr7QWaDddfTudXivlHvKpvllZYg5VaG8nXngkYLRc3aKrujsHV38l28Cy+xTH9/3o0hGVbgVcrR4CEEpXCKw2vpmd5mI1cosoTWKT+5RB8LjZmbVlzd/T2dlxVYxkqS/a5ksImw+g9SW/paErdplzYFvx7DRL2gjl1RvWPwPSjN5ggVqgrD7GyJowkpf84ubkbai7cfy7A8LOxG3EDylueeQUx7/vXS5rGH5JQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=sntech.de; dkim=pass (2048-bit key; secure) header.d=sntech.de header.i=@sntech.de header.a=rsa-sha256 header.s=gloria202408 header.b=SgdIcZUf; dkim-atps=neutral; spf=pass (client-ip=185.11.138.130; helo=gloria.sntech.de; envelope-from=heiko@sntech.de; receiver=lists.ozlabs.org) smtp.mailfrom=sntech.de
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=sntech.de
+	t=1768500144; c=relaxed/relaxed;
+	bh=rJlnrgsaFVoPcoz34q36AUaoD7Zky3yzLdKE9x1VEEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bVyOd27nvkiG0WzvPc/Gsn8s2sE/u7e3mOFZPyCLJ30lKFjc9/3plBqPE/pERZRZbghf3+iuwLdKF//Ugbexg2SxvMETG9BBK2abNJcjUvEDKcoeZsls+v/8Z0xwAp7N8UWBgtbej/O/H9gbKgEzussiFOvFPuAxyZ85PPbH4CQfRpvcc53HjbsQSUHCM00ZBOKj9a6Hpw7XwAs0I7lOBcSDRnaNzXNZysHJ9zsW2bDabNwJMUjPl45a2Wm3nU9bYdyeCIPwpgOReDju4vvvOJe5cLK19k89aHx7h/Y5Y5X4ynCtXpEFahWAnVWJiASfY5T1J87/lfcBPcjJ5udhsQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EnqmmgYL; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=sntech.de header.i=@sntech.de header.a=rsa-sha256 header.s=gloria202408 header.b=SgdIcZUf;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EnqmmgYL;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sntech.de (client-ip=185.11.138.130; helo=gloria.sntech.de; envelope-from=heiko@sntech.de; receiver=lists.ozlabs.org)
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dsSkW45mmz2xNg;
-	Fri, 16 Jan 2026 03:15:12 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
-	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To;
-	bh=zjAI4sw5fZWleNcy5E+bpQXvW8kKtlqPBKTICHmyuec=; b=SgdIcZUflo3NqJzUtZoYf3GC3K
-	JoftSOW3X/lY1Pi0hsKuGnEAdP4Xkf5RvordXf9jqy/NXsqZI+Z3rm0864ea3sOV7wd/8n9x7TvtR
-	ARiOH/6XDRwyxFUUZHmrpZt0rTw3cKAEfr/8D2rBa/g7KXdHd4XnhJA71SnSWDqVtE46lIRk+gy1J
-	Q0WOnuPWm0qZF9cm/OdeCNOkNotf4XE+ZUvm31xeAo65yyG78TGmmnh9t5FRX88lrDB46GzObUFAh
-	+/gpCNBZZk3YysdtvJL0VWcu3kTeeVsfbo57gmVuXzvKtkhX3JI40zs0p7BTnQcxIo1BAyB3m1W7H
-	bUiVO0eg==;
-Received: from i53875b85.versanet.de ([83.135.91.133] helo=diego.localnet)
-	by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <heiko@sntech.de>)
-	id 1vgPzV-002UXc-0C; Thu, 15 Jan 2026 17:14:33 +0100
-From: Heiko =?UTF-8?B?U3TDvGJuZXI=?= <heiko@sntech.de>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>,
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
- Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
- Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
- Bartosz Golaszewski <brgl@kernel.org>,
- Steen Hegelund <Steen.Hegelund@microchip.com>,
- Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject:
- Re: [PATCH 10/11] pinctrl: rockchip: Simplify locking with scoped_guard()
-Date: Thu, 15 Jan 2026 17:14:32 +0100
-Message-ID: <2415619.22IY78Rhhi@diego>
-In-Reply-To:
- <20260114-pinctrl-cleanup-guard-v1-10-a14572685cd3@oss.qualcomm.com>
-References:
- <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
- <20260114-pinctrl-cleanup-guard-v1-10-a14572685cd3@oss.qualcomm.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dsW67314wz2xNg;
+	Fri, 16 Jan 2026 05:02:23 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by tor.source.kernel.org (Postfix) with ESMTP id 3043960130;
+	Thu, 15 Jan 2026 18:02:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A19EC116D0;
+	Thu, 15 Jan 2026 18:02:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768500140;
+	bh=Kn6CM13muJURtMblhTu+B8XKHuWGrLq8ki08pxGulnM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EnqmmgYLIO6vRVPEhJA3xqQRcAHI6Tr3rX+0ylbgKHHb5hZzfFXPsbTSHSvUoTfcy
+	 KSEvpK0KVybSKHRc9Mk22oQmrUiJfX6pOUH/YzS6T51JTeH3qJ38gmod01boQy8jqo
+	 K35TBA4GxXb79819zJk5FTZ9ho+8gmxwDHciXSKrh45aHekKYMN+BJwNVdDSkq8hL7
+	 IORdvIetisScuTmE9sGnsLeiqZOFuNuYEGCDYzZ3ZVovKy/YM8jkjJohVCRKXhg465
+	 xtFDN2HOrzraBuxvz5OPud2GyD4ZVDXuC0Efsy/YU6x4r6gu2PY7zv5onXLoqE3IBh
+	 AG+iQhZhbQCYA==
+Date: Thu, 15 Jan 2026 18:02:15 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+Cc: clg@kaod.org, boris.brezillon@bootlin.com, joel@jms.id.au,
+	andrew@codeconstruct.com.au, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	BMC-SW@aspeedtech.com
+Subject: Re: [PATCH 2/2] spi: aspeed: Add support for non-spi-mem devices
+Message-ID: <1adf54a9-56f5-4fc4-bba2-837a132fd123@sirena.org.uk>
+References: <20260115150454.1575970-1-chin-ting_kuo@aspeedtech.com>
+ <20260115150454.1575970-3-chin-ting_kuo@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -81,21 +66,52 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_PASS,T_SPF_HELO_TEMPERROR
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xvW1NsWVoVmF5xI9"
+Content-Disposition: inline
+In-Reply-To: <20260115150454.1575970-3-chin-ting_kuo@aspeedtech.com>
+X-Cookie: Are you sure the back door is locked?
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Am Mittwoch, 14. Januar 2026, 16:30:11 Mitteleurop=C3=A4ische Normalzeit sc=
-hrieb Krzysztof Kozlowski:
-> Simplify error handling by removing two mutex_unlock() calls with
-> scoped_guard().
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+--xvW1NsWVoVmF5xI9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+On Thu, Jan 15, 2026 at 11:04:54PM +0800, Chin-Ting Kuo wrote:
 
+> +static int aspeed_spi_user_transfer(struct spi_controller *ctlr,
+> +				    struct spi_message *msg)
+> +{
+
+I'm not seeing anything here that won't work with transfer_one() rather
+than transfer_one_message(), that would reduce open coding so if you can
+do it it's preferable.
+
+> +	ctrl_val = chip->ctl_val[ASPEED_SPI_BASE];
+> +	ctrl_val &= ~CTRL_IO_MODE_MASK & data->hclk_mask;
+> +	ctrl_val |= clk_div;
+> +	chip->ctl_val[ASPEED_SPI_BASE] = ctrl_val;
+
+This should fit with the prepare_message() callback.
+
+--xvW1NsWVoVmF5xI9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmlpK6cACgkQJNaLcl1U
+h9DIhwf/W8/a6WTvTXkoR6TsMYE4X1woUmylZmwsFN2UaCmgI1L/AfPz/YPV++Kg
+zpWoAhy89sXrI0dewD0d/9r5c6eV/TvYD0nF4IHAwCU7lDxZf3fet4WOztYITdcI
+J9XpQD+PGCwrjHTRjq+aXUYYhrS7vGhDUOUuY0xwgglOgygS/c8TRAAe7kcaR/jg
+a2X3FYPadw1n/Y44EqG84FWyElTCFCz3V38pry5fc5IPQ9eYIgxD+MkxWa5ReSAg
+byWuVsR0D55WyOEdf+ZSkYm4tvHmiM29MuVJmF5MXfP9jnJeG+2KSwKoDRYDQYWZ
+9bvRisvSKoCqiQKNeacaATDXKGw6Eg==
+=ENSf
+-----END PGP SIGNATURE-----
+
+--xvW1NsWVoVmF5xI9--
 
