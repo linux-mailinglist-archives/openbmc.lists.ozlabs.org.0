@@ -1,100 +1,72 @@
-Return-Path: <openbmc+bounces-1265-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1266-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kJIMHOpMcWkahAAAu9opvQ
-	(envelope-from <openbmc+bounces-1265-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:02:18 +0100
+	id SNEMJelNcWkahAAAu9opvQ
+	(envelope-from <openbmc+bounces-1266-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:06:33 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C12A5E6EE
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:02:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A14D85E7BE
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:06:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dxJ7p57Jrz2yFl;
-	Thu, 22 Jan 2026 09:01:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dxJF15cKRz2yDY;
+	Thu, 22 Jan 2026 09:06:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::42c"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768567868;
-	cv=none; b=ES9GVVVneC1wnfyxSHzWJ6z++MyLUp8USAyUrK4gPx34K9EtUeNPxTs4musIbJW3xVLsAyisZFdUsbP95vzMMQ0q8B35kNcy+PReQ5FLvJ44c2UZOoBNA/SmICchnvVYtPfGkLYDp4zQlXL4hyPJADr83tIM6+XpfmPDkyfEcAAqNj7lMGXLZwxSaQv/c7BaVtPw2NnNsvyGxJkT7klqhhGnPY6kzzQUakeIIlD/DPUZY+VdRbJenV3TfuGU1WJRD9WGte/5oM8CyGOKmRNOSWP/WCloK869EpNcBNscbZXkxJcjIrx9JmnTIi4/GlLGWBXB/XgW9W/pZahExLbi+Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::334"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768582993;
+	cv=none; b=nnE6xlXO6fKJVx/hjWF7TAH2CsYyxd+v8s2YYI6ci0XvRWSzvFi43yYFuvE2x9G+pmXU4QbRoPJ7OomNZU1kpMpxBvLs5MqXaq0s7DNwcSNz+KoBP+B1wvhL6iwHSmLtYICyf8Tl1IypeCxEP0aMApMWXlai1rzg1Jv9MlUVHOe39CwytC7TV92m/mReRbLidxw+iVJkzFA6/YAy7Fj6XoxRj+G9+rwFAQD99QyYAeuIFn2AJTFo6CNvIhBfjela51t0Kd+Y+MHTKJxGGm3hF2ytOCEso2HQ1LeRnd9SJhV+lGlis5IaEahxr6fug4ULxGLma95dW/7/Zaht9S3bhw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768567868; c=relaxed/relaxed;
-	bh=zTkxHu8mh7w4aqi9Nu456ezpUXh108CX0ltHIeT0yH8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jmg2G3hTPMTr0q4PxcISWHuWs180m0SEoPu+2UpRidtkfz5wrQrGrIpKsCUf26N6jrfIdhqRfc7Wi/y8nHQmXmvRvUMOMLFcVP63/H3rC2CN2cBHlBQTyZj5skX8kq8+7EJszzerkeJmG9UsbLC7zXBPNskWxl7ub4BCjgDuW59eEZQ/lTl/l4z11ZP3eAPSgK9a7idHpBZF1k4K45ycDGLkHIeFy59Uadu/3qg7L9zu/9OHi0H4OaHsKaTx0pKw/uW+/45/tpZDvzxJfOu/z0f3I6PP/phtAmhFSLflROmwM/RHIk53UtbAtc4xs/w+JOQZ0FwGCIu5q/ELqLSglA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kF/+dBNp; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=thierry.reding@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1768582993; c=relaxed/relaxed;
+	bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YF8baDIb3mRTA2h7vhOq3lzwETUsH31K/qR2xZnGDBHurSftm8lRT7IGs1mgEpDj1l+nFJ2/DpueBS/L07pkbmdiPybpgh7B+5ea0Wx4aIVjgex/K4p7leHkpfIabXrg1vlGvcUT2W/xo7hxff1E5c826dcOFbwL3ENL7EoTbiA1N80WH7Z8yiK6Rq1W9L+NobF+JH5P1cz1ZEECSG0WLoL/4hxvYTNrH6kJ54ZqNBhMTh3YwkogAi7SRFOFcobOb71Ios9hlz9+Qs9YvCuXznnSxbTbSqc0GCYzAqyYJjwxejts+ua1cWqzBYacxbNzC4gufxLejxoXt0Xs4JOdpA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bUeISNcp; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kF/+dBNp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bUeISNcp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=thierry.reding@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dt08V3b1gz2xSN
-	for <openbmc@lists.ozlabs.org>; Fri, 16 Jan 2026 23:51:05 +1100 (AEDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-432dc56951eso1293782f8f.0
-        for <openbmc@lists.ozlabs.org>; Fri, 16 Jan 2026 04:51:05 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dt5lN0wJkz2xS2
+	for <openbmc@lists.ozlabs.org>; Sat, 17 Jan 2026 04:03:11 +1100 (AEDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4801d98cf39so8397155e9.1
+        for <openbmc@lists.ozlabs.org>; Fri, 16 Jan 2026 09:03:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768567862; x=1769172662; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zTkxHu8mh7w4aqi9Nu456ezpUXh108CX0ltHIeT0yH8=;
-        b=kF/+dBNpqBdTzgiUzJzwfRDDubDv8uQDKX2vvRK1TJQI7ZbQkXAQheMOaM6ZgidZ3C
-         J9RlXg40fFX6xeuwqas4FDM2qIssiad8a4BTbWgChSjP0CYgGKUGAs3ZjtLsSAkHz1Kb
-         xzww3Mb+j6uH5JqUFQZMRKN+zlmtjZgi1enCn3iXz/VqpcFm9x+Gg6frl8SWd/XJImhV
-         ulljeDYHqPXdNUy+4bwF3l/ETnikPyFrIjU3rGVrAU42vnZ4wLoHigpDh3/yRvHEWHkA
-         DTp9zRNkh3ps1bykxE6H0/ZIc3nNz2tiwpTRmBa/S4ASHr8kQ4TCQHztjS6HHgkb4sDR
-         EEww==
+        d=gmail.com; s=20230601; t=1768582987; x=1769187787; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
+        b=bUeISNcpcP2n+9evfsa3UgR1ZtodzMosVILRzXPw3Ly0hcUHYRqGLmviL1NoL3eDd2
+         xD9NX63YmtKbP2zucpdS89W7YVkrR09zgJmSeZIp+HVvMtYMAgkEqHotcTEAV6P2LKO+
+         yuwBT7JqTiuVlDSM0kiZxZbualLZ/jHBcmYIHkXFvOqxukELtWMdarQo74KN8voJMM6b
+         DSPgU/4pxarZZZ2dsw9apl6WEUhTFYwkOZoXRGB6W065ozy/hZyKWDU6fbapX+WFhg0o
+         bCMJBCnPan9doRFZGuCMNMLhzlunQrYsnu+ENP4IcpUWO1bXrJbFaipqjac+J8iXFa90
+         tcZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768567862; x=1769172662;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zTkxHu8mh7w4aqi9Nu456ezpUXh108CX0ltHIeT0yH8=;
-        b=MAM3ETaSeZWktg7BdWtgJUn8CXqkCuxJvfARdL4n/v/oWr95mtGU7/Xfe5Lsj9XsvN
-         /VVzYYsPzXWRxSMmMvZ/bnRmsBAD1b75i9uAiLjJc1AFAoqipLnTGZkllGgDZxthMr1g
-         /S+pwvdTwU28vvasOE97DY47Ir+mYHGBgRppGjAmkRxsbNVVnuiPVqJxJdYsSXsRPxr0
-         DOJb0AR7lj0IFPyZFA/Sb2We2IlyDT+i18KI9KN/SZ8xknjkTPWTFUF1qKTuoPPv4YoQ
-         eGl/q3BbJN7sL5Q/hZ6tQ7KVnQJarRgKpO099BEySBMtuTPEmlyrCd6PyGUBQNMN1Rcj
-         TtZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWypg6QgaCc6GNIA5SnIyOBWIhnL99osn2x4Esl4HAGfvQCXTeQjf4Q8WnP7YbgImEn/n02jJu2@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzeghCZd8B0wu0aRtyUGf3mArByOTWPnRTBQ5z52SCAY+58NWnE
-	SmJEB70GgG4e8mysKJy2ImQxrbfjsxcEWB147+N/gtmeH63JtSaEwOU2
-X-Gm-Gg: AY/fxX7pcQxskjHf/SEJyNEpXnaYNWDKde/igE/yZ8AWMeo+K6n4I+5CmV79z0ks99x
-	ITzamjGeuAy6RuRTxCUcIkmsXuX5Cgg1AyQ55sn3y4Yv35Uk9/s63OMEl04qZik8/+vEObRCLhE
-	HsG+L5PlynRCYWoiTwMKcHJG0oG/W8yjOf2BqPl9KOapEsg6CFXjwLs6/5yycIcdWVBvCr3C77l
-	wXi6FWX87f9Lix88A8hqTyljBImhf0zr8JYY0ShAsMl13hE7Exjd0rEgBY5SUAz7dpgtHpfCu/r
-	WUAC1zR48qixZPGseAaPq/9r+7ESTDFP3etdjkiQ4408QtTHitoS9TCfr23Fay54FdUX0jeX17U
-	8XE0rezd4pTunDIQZiF57P2uhl0ihr4i6dR9+BxZSo3BXUaNIH4aauaDcFcAYXhkp1P57M6/zwg
-	aChXT75HMUh5K96VWMDr+B6k6o5t9iocmWGNBw5Zj/g0ZHv5PwFPA5GuHGiE5HdA+eMdePg+Vdd
-	Q==
-X-Received: by 2002:a05:6000:2004:b0:433:2f55:7cab with SMTP id ffacd0b85a97d-43569bbafd6mr3570766f8f.37.1768567861918;
-        Fri, 16 Jan 2026 04:51:01 -0800 (PST)
-Received: from orome (p200300e41f0ffa00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f0f:fa00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4356997eb0bsm5012584f8f.34.2026.01.16.04.50.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 04:51:00 -0800 (PST)
-Date: Fri, 16 Jan 2026 13:50:58 +0100
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>, 
-	Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>, Shyam Sundar S K <Shyam-sundar.S-k@amd.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Patrice Chotard <patrice.chotard@foss.st.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 08/11] pinctrl: tegra-xusb: Return void in padctl
- enable/disable functions
-Message-ID: <aWo0LESc5bIs1kHi@orome>
-References: <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
- <20260114-pinctrl-cleanup-guard-v1-8-a14572685cd3@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1768582987; x=1769187787;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
+        b=ISJWrYOxzJZy7Zbd2sASsmj/JmxhZP87MhJf3R0fzmWDcDKuBQYgEDdF2QV6ebT4wQ
+         cHnmWBtc/OpEPgco1DQKzu4jVqivxxwSdc6TDAbfzaEPD3TbTtQk6AQsGj9MgfKBcr+6
+         36mIcH39gWo0YLmqkChYNUPUvPrG+C+u0ENqKO5umkf8WEND7ONbhornlU5E5aTObRqE
+         ZRdSoDDq8zsKrTld6JQIqRJpMVYGKR1LASVMA1boeB4N39Z7hOBhO9WYLSp//bQn+Lqb
+         qDQuAGitU6hHppvdYleLjmIfCqAixA93GImYMh9aF75owiDILIicYcdA6mbMVIBkxWmA
+         S9ng==
+X-Gm-Message-State: AOJu0YxOue1KrOS5Wu8NqRclW97iEJuoCxuCtIzQcf8t7WK5KdEjfx9k
+	fmYC5P67/+mGvxikA5p7z01A4D3qYfG0krZe30T2rp4t9z7LC+MGq8tA+qq0qSQMVs9Iux26TbV
+	pgojh4xd4bWPPEt8gRk7qnUvANJHzdtH3hNdy
+X-Gm-Gg: AY/fxX4i6Zrsqf2LimEQKBfa0f6Wy18jGKqTqEENi/4NvBjnCpEGo4hBtKb/9qF7ifR
+	mwT1mEFdIRTYpestkcKwMP4VNYpPinv/7oIUhGCOg3hLj/PY2WTkKPhCSHWH0Q6UcmPwjjS5K9n
+	1HDvwG0N/h5YolMXZy+J3+XNPSMSA4hGEWHyWVYqNb489nB9rG8g//Cb577gXZeMPAh5OWXFZSe
+	Bng2NKWM/OjJzmTRGsF0VBidM1HvV7V2gv2vBBXEkvGDhF3nyvjW61N9EcJsW42/iL2uGFO9osG
+	P6d2fhh7iekKTeQ=
+X-Received: by 2002:a05:600c:4fc6:b0:47a:7fd0:9f01 with SMTP id
+ 5b1f17b1804b1-4801eacf142mr45943725e9.16.1768582987327; Fri, 16 Jan 2026
+ 09:03:07 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -106,93 +78,81 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bhhiv6s43avuu3l7"
-Content-Disposition: inline
-In-Reply-To: <20260114-pinctrl-cleanup-guard-v1-8-a14572685cd3@oss.qualcomm.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+From: Nathan Jian <nathan.jian7@gmail.com>
+Date: Sat, 17 Jan 2026 01:02:56 +0800
+X-Gm-Features: AZwV_Qj1DxTY0Qk3Y9PSApyeoy4p5NAKLZo3jLJ6aby7vaLJ2KMZTB-3GQM8sYk
+Message-ID: <CAAFL+NPbt+TkgsMZYZQQoGAhhUhYJSB_Hzn_U9nCzBQoTnSPEg@mail.gmail.com>
+Subject: Request for Gerrit account approval
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000b731010648845083"
+X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spamd-Result: default: False [-2.80 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	DATE_IN_PAST(1.00)[129];
+X-Spamd-Result: default: False [-1.20 / 15.00];
+	DATE_IN_PAST(1.00)[125];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
 	MAILLIST(-0.19)[generic];
+	MIME_GOOD(-0.10)[multipart/alternative,text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-1266-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzysztof.kozlowski@oss.qualcomm.com,m:andrew@codeconstruct.com.au,m:linusw@kernel.org,m:joel@jms.id.au,m:kernel@esmil.dk,m:hal.feng@starfivetech.com,m:unicorn_wang@outlook.com,m:inochiama@gmail.com,m:Basavaraj.Natikar@amd.com,m:Shyam-sundar.S-k@amd.com,m:brgl@kernel.org,m:Steen.Hegelund@microchip.com,m:daniel.machon@microchip.com,m:UNGLinuxDriver@microchip.com,m:jonathanh@nvidia.com,m:heiko@sntech.de,m:patrice.chotard@foss.st.com,m:linux-aspeed@lists.ozlabs.org,m:openbmc@lists.ozlabs.org,m:linux-gpio@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:sophgo@lists.linux.dev,m:linux-tegra@vger.kernel.org,m:linux-rockchip@lists.infradead.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_SENDER(0.00)[thierryreding@gmail.com,openbmc@lists.ozlabs.org];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	TAGGED_FROM(0.00)[bounces-1265-lists,openbmc=lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TO_DN_SOME(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[thierryreding@gmail.com,openbmc@lists.ozlabs.org];
-	FREEMAIL_CC(0.00)[codeconstruct.com.au,kernel.org,jms.id.au,esmil.dk,starfivetech.com,outlook.com,gmail.com,amd.com,microchip.com,nvidia.com,sntech.de,foss.st.com,lists.ozlabs.org,vger.kernel.org,lists.infradead.org,lists.linux.dev];
-	TAGGED_RCPT(0.00)[openbmc];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email,qualcomm.com:email]
-X-Rspamd-Queue-Id: 7C12A5E6EE
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	TO_DN_NONE(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[nathanjian7@gmail.com,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	TAGGED_RCPT(0.00)[openbmc];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,openbmc.org:url,lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
+X-Rspamd-Queue-Id: A14D85E7BE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+--000000000000b731010648845083
+Content-Type: text/plain; charset="UTF-8"
 
---bhhiv6s43avuu3l7
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+Hi,
+
+I'm a new contributor and just submitted my first change:
+https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739
+
+I received "User not approved, see admin, no CI" message.
+
+Could an admin please approve my account?
+
+Username: nathanjian7
+
+Thanks!
+
+--000000000000b731010648845083
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 08/11] pinctrl: tegra-xusb: Return void in padctl
- enable/disable functions
-MIME-Version: 1.0
 
-On Wed, Jan 14, 2026 at 04:30:09PM +0100, Krzysztof Kozlowski wrote:
-> Make the padctl functions a bit simpler by returning void instead of
-> always '0'.  The callers - phy init/exit - still need to return 0, but
-> these are smaller function without if/branching.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> ---
->  drivers/pinctrl/tegra/pinctrl-tegra-xusb.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+<div><div style=3D"font-size:inherit" dir=3D"auto">Hi,<br style=3D"font-siz=
+e:inherit"><br style=3D"font-size:inherit">I&#39;m a new contributor and ju=
+st submitted my first change:<br style=3D"font-size:inherit"><a href=3D"htt=
+ps://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739" target=3D"_bla=
+nk">https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739</a><br s=
+tyle=3D"font-size:inherit"><br style=3D"font-size:inherit">I received &quot=
+;User not approved, see admin, no CI&quot; message.<br style=3D"font-size:i=
+nherit"><br style=3D"font-size:inherit">Could an admin please approve my ac=
+count?<br style=3D"font-size:inherit"><br style=3D"font-size:inherit">Usern=
+ame: nathanjian7<br style=3D"font-size:inherit"><br style=3D"font-size:inhe=
+rit">Thanks!</div>
+</div>
 
-Acked-by: Thierry Reding <treding@nvidia.com>
-
---bhhiv6s43avuu3l7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmlqNDIACgkQ3SOs138+
-s6HKVA//WbWB3AVvEbOYpT8fr129RiWvQ5lRtQceA8fb/1Ep4k0qX0M5cVujq72g
-OFie2IcJyCzuci1ZmKEf7fTaR/cjlzExIrXvmox2TLmtKm5kBAFTu2UcHzvAbRcs
-VbasfUeQ/Wi7dlT6+I6JeNLYaXbstuH2RQV3NQ2BC3zPUsJk27p7DARdqBLUSNTJ
-7jX2sBu0xKu5n0hrBhesTMi/zBLMI3pZvqmMlhGzTU01GSlmPz72GMI5J6YmeeF0
-Midhy4ZCbs40l7nJPghjxdtQoKLhUPG6z+NzTyp9Hfelr7q/cYZ1avlAGkJ/39fI
-ugJEOfjl0ed/HMarlvwrRPSTjF6f2BUKH1Ub2xGxErbhGaGvOsKGJizbjsK0CGzl
-jdVsdFUF/wmzPeX27RIel8DxTdTYnhpUyZoylg7l9thjdhYGceKGJHeHb1DaOOZ+
-OhsSUZlejccTbalvk7OeBxtnujGfE56nEXsSByA0C6kaDRxPZmsH9WWtp4mwIzXg
-rvw2hOERLedWoFTjFynl0+3hazgw2hh21iH/uE+uOEiVwHNhPiEXeb+lJMGQbH/9
-Bm2mL/1gvDYA3KxeFZbTTyNwEiGkZyPFLvwZ4hpapk8AvhFdEu/60sMZWsTRlSgx
-H7CJIWp6MSs4e2ErCXbhjjucu3eJo1lFTm/bGVBosixPjjSZ720=
-=VB+5
------END PGP SIGNATURE-----
-
---bhhiv6s43avuu3l7--
+--000000000000b731010648845083--
 
