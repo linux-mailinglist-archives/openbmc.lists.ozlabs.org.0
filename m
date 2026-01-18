@@ -1,40 +1,177 @@
-Return-Path: <openbmc+bounces-1219-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1221-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9C77D391C2
-	for <lists+openbmc@lfdr.de>; Sun, 18 Jan 2026 00:49:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E95FD394F8
+	for <lists+openbmc@lfdr.de>; Sun, 18 Jan 2026 13:39:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dttjd44fNz2xm3;
-	Sun, 18 Jan 2026 10:49:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dvCny4fz4z2yFW;
+	Sun, 18 Jan 2026 23:39:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=141.14.17.11
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768693765;
-	cv=none; b=F7zQcxX3Ng2kakC3VGAsBOajq4erNXNcdxE/xCmgA3tzcstGGeN+UXe64OHKiTOGPGg4JN8kk0xdgwjQ20w0hRgVXZFp15rjLIK49mA3XFP72kSxMacAT5meJKxuvR6UAlLbfkGZLW9zTWVWNl+/1SRYtZkuV5Mf5X5nh/5aAoBvxFF96YpSX5d6EE2pvZYTdF9dnLK4+ogate9nE4S2Sg3h3Aa3U5dClRqlOFthv6+/mXhdi45vPgbhAgYD2m5NNLFpQWDzOCWk/Vn+dsa/6txW4K+uacCcZ5hLNMzUf2DsZR7icMpxBsGYWwEw1dHRt5P2h5+Gx/nQZtLrWaRqww==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768693765; c=relaxed/relaxed;
-	bh=otIkd+LO6QKagpEPq00JPFJXYFw6mYJcj2mQ1vgAGDM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=O2+umT5T2RFAjYzPOy47QmGb+tf0a6mcipwyeTBSdK/LbXcgVaiyxveMix/0WjOZSKnWumsF8IufAyRRQtMOTVgp6aa7O1wfSv2p6tlPsAe2RnQZ/842Zy9kVZt/+EGJPaL5bs5T1DHebg5Yo/s/VqhG+2c50whzfAebuci9kGIt+lUxmFZ0ni+W2eFf/ZeZADuYsWIhgEkTeyxQsEjk759zMhBchlwHKttXIJy07smUHod74by8A6RKUWZFrhOl22vMWPhwRqTduO2e/ljgUirfzoPTjapZM9Hu7vhdSCh2fl2xZhEYwM1iKRBoCY44OkxrbqVe1U9YEbiibMdFQw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org) smtp.mailfrom=molgen.mpg.de
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=lists.ozlabs.org)
-X-Greylist: delayed 60 seconds by postgrey-1.37 at boromir; Sun, 18 Jan 2026 10:49:23 AEDT
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c405::7" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768739958;
+	cv=pass; b=ogDwSnKjYDpwdCtQC+V4z+V+dnFJZ8IFsyKCHVmEn1hspZDewpiEBVUUqVEZ7ypQJOzjxvByPWfdnVZngop7R/fwo0lwFZhK+BPFWyExxAjsrdWCPhUjSJ1cD+yy4aCjQVKEGUPYb96yqWABK6pFJjsSUWkezEOoKoQjS9Pz/EMUKd+Ric51pzbUbyMDitFjOjAneJpDEzGm9zYp6s2azCJs81rq4troQS6geZxTHrIWAKz+QfeX5gyEb6b49P0jzjQji+dACxIXTea+w+Awz2XRK1w1UQ2cled9NYAQWvUdoxll+p64STqLU5y5Og10HzSZ0A4h0to52ExlxJIpDg==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1768739958; c=relaxed/relaxed;
+	bh=qTSb7xI2loIiR9y00bf5djy27OgpYwM0bJYmXmXUqIs=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=FUsDkURmc29PRP/cNvIBFIU9eBMgbez6pn72Do/UUpsuMW9szKWjqbCAOavUAn+58zTVMx/2zCBouSLM70mISJH/C0O6Vc7NxKWAK/5blAbSktGVtWZitXDyVtJaohWHR4407jRPr1B0tcIfwuKEWiO7T3dmrfswle4j/PW7H2D6eqhW3IQ3vAMhOCvtSuKFAv2P+L1AX5vDzotAREkyj5859PIxc6ljOU/82ui+Jhl8lYAOy8jWNuqoaJijkGOhTIuQFA01PBk7IFYD2h95w9GcvEGuXgQpo7sxMz7EmqwZ3d6ifFigghCKLwy/tr5DnIKsigFGYa5UJBuk07MhwA==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=OFua44bX; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c405::7; helo=tydpr03cu002.outbound.protection.outlook.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=OFua44bX;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:c405::7; helo=tydpr03cu002.outbound.protection.outlook.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazlp170130007.outbound.protection.outlook.com [IPv6:2a01:111:f403:c405::7])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bit raw public key) server-digest SHA256)
+	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dttjb4QpVz2xLv;
-	Sun, 18 Jan 2026 10:49:23 +1100 (AEDT)
-Received: from [10.0.57.151] (unknown [62.214.191.67])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 508CD4C4430071;
-	Sun, 18 Jan 2026 00:48:40 +0100 (CET)
-Message-ID: <3153512e-8325-4d0b-a869-a2a5062abefd@molgen.mpg.de>
-Date: Sun, 18 Jan 2026 00:48:37 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dvCns2F9Cz2xSZ;
+	Sun, 18 Jan 2026 23:39:12 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=a43xfWIfTSjwc9yxXy7x19Whu4zQRuINLym/Wou6CPc6U+SF7m7IaXFTRWR92hTmSdRVDXmNQgp5p2Zk0KzoGnk0VZYhuJ7w4KIpql6GS7/mvnAUTl9xplh+njzbjQQvOytkxIeJRqfP+6iGhfGzWh70NA+AZBksqGxGxCxunV5OXt0EOgskG+UTuBMuLwBwmkbWExb8qbeWxcawBMdXdv0z7rbRFZOvATX6tcuMizu2CqLkXSbkcXcBVv3TuiUExHVWD3klV6z49ZCEBsJAQzw5Eboj3uUCZiVvDivDI5osuYkoL4pcU6m+vs/r8upqguB0lgaCr2szlAM96x+ifg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qTSb7xI2loIiR9y00bf5djy27OgpYwM0bJYmXmXUqIs=;
+ b=KdzvKUb5vbtzC+Diq4yW3IZQHkhkWs1Vvk+4u5GxBzF97sqbsdGRJHaMlwMYjzgOBlps3JzTLrHS5O8WTEk98DMgHxO/8g37TNeWXHlSdOt29KiAf7oi4iMBvTmBX+FR18QZLGqNV8G0u1k8Kr2QoUAdUGReL/0TkMGLycUplHjHHRguO/rycOni1b9yD22oBuKez/YE9RQLw3CJqDYmna1MZo6UWhs38xUFvtymxOMzwOrSreKatMTss+Cjl5WgZ5tq55nPRQ3pKzgtmCFk304xPRHjXhYqHqoJpYM3PjEXSUDFjAZpqp/3o+DZobYwdGWIauVr+dF1Vm72eNjVLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qTSb7xI2loIiR9y00bf5djy27OgpYwM0bJYmXmXUqIs=;
+ b=OFua44bX6r3+1DSracTOMIGhkoYKFdHxFcR7pY6l1USmzc3hhvaKi5m5XufXReDbTpBUHweBiCCsFWasu2CPNST0ye/nMwfmK5t1Dt8y6A2NjgRcA+fcEbYgVvodXerRsEwzCybP/nYKdxiEpZg+qUTvoYkj+imJ2fefMI/ik9DOoGB5bvN9l33ThZgAf1yK+d2b8HkH/N8LKIYjMbX5+wsa5nnIgKh5i/o4Dwz49wFQwzwLZzTVNnrTb1oEb/PrvyctzdE/DJu1wHs2ux8EVYHS+czmqAveMh07mbFd6wZpFkRqKWP879PkwF7apEpFJfXjMq1O0kbXup7I73Df2w==
+Received: from TYZPR06MB5203.apcprd06.prod.outlook.com (2603:1096:400:1f9::9)
+ by SEZPR06MB5365.apcprd06.prod.outlook.com (2603:1096:101:7d::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.10; Sun, 18 Jan
+ 2026 12:38:44 +0000
+Received: from TYZPR06MB5203.apcprd06.prod.outlook.com
+ ([fe80::e25a:ec7b:633d:7489]) by TYZPR06MB5203.apcprd06.prod.outlook.com
+ ([fe80::e25a:ec7b:633d:7489%3]) with mapi id 15.20.9520.009; Sun, 18 Jan 2026
+ 12:38:44 +0000
+From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+CC: "clg@kaod.org" <clg@kaod.org>, "broonie@kernel.org" <broonie@kernel.org>,
+	"boris.brezillon@bootlin.com" <boris.brezillon@bootlin.com>, "joel@jms.id.au"
+	<joel@jms.id.au>, "andrew@codeconstruct.com.au"
+	<andrew@codeconstruct.com.au>, "linux-aspeed@lists.ozlabs.org"
+	<linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org"
+	<openbmc@lists.ozlabs.org>, "linux-spi@vger.kernel.org"
+	<linux-spi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>
+Subject: RE: [PATCH v2 1/2] spi: spi-mem: Protect dirmap_create() with
+ spi_mem_access_start/end
+Thread-Topic: [PATCH v2 1/2] spi: spi-mem: Protect dirmap_create() with
+ spi_mem_access_start/end
+Thread-Index: AQHch7caU+B4ENmezUy9QJpIzL+wwLVXB7OAgADV5cA=
+Date: Sun, 18 Jan 2026 12:38:43 +0000
+Message-ID:
+ <TYZPR06MB5203B67C187C52A47C0A29D5B28BA@TYZPR06MB5203.apcprd06.prod.outlook.com>
+References: <20260117134216.595436-1-chin-ting_kuo@aspeedtech.com>
+ <20260117134216.595436-2-chin-ting_kuo@aspeedtech.com>
+ <ccb6b5b3-84cd-4197-a770-7e626c1ddcf3@molgen.mpg.de>
+In-Reply-To: <ccb6b5b3-84cd-4197-a770-7e626c1ddcf3@molgen.mpg.de>
+Accept-Language: en-US, zh-TW
+Content-Language: zh-TW
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB5203:EE_|SEZPR06MB5365:EE_
+x-ms-office365-filtering-correlation-id: 2b61cf88-2b11-4108-f68a-08de568e8462
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700021;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?NzRPeXhSVGhNazJNRU5CSWh5L0MvWUVVVTVOWGJudlczS1Y4UFRXMTh4bExZ?=
+ =?utf-8?B?dk9oKzhyY2dwbzN0VTlkNkFTR2RQdWE2UEQ3RXA4ZDdmSEdseU1TY0QvVTkz?=
+ =?utf-8?B?ak1jWVZiTTBDTWh6Z0tJQzFNYjZtNHRhbkRwRTV0bXVFOWtyUlVRenZJUS9a?=
+ =?utf-8?B?dGVUVFpaMENPZG5BRm52aFdqdXNjOEF4YUMrR3A0a21Ya21sMVAxeHp4TDFj?=
+ =?utf-8?B?dkgvZXJGSitBRDQzU1hyaVIxRkJoUjVFaVJxK0U4MGRvUHJmaERZbElaZWk4?=
+ =?utf-8?B?N1pleXAxeVprbUZvblJzcm5JalJ6ME9GUUx1bjJjU1QxMUYzU3FXNjhzVWNn?=
+ =?utf-8?B?Q0J1YzhiVGkxSktYSXNMcm1Md3ZDMllJaXB0Rzk5ZWczTEd6RVhEWEp2QU8w?=
+ =?utf-8?B?cTJtOXIvY0Yvcm5uOUp5Q3FvR1YwV2Y0UDUrU3lkZHFRU3lPaU00NFcvMmRu?=
+ =?utf-8?B?NjhCelREVDlHeDVudlFFTHhwT0RydGx5OCs3dE0zOVYyYzh4UGxFWFErNGNY?=
+ =?utf-8?B?RVpKeHZqd3QxVituMnhnc3hWeGhmQjFkNm5GT1lCM1dtcm5oZzNIcm16Z3ZN?=
+ =?utf-8?B?OWYrWVFEMEkwNUtlR3hocXcvSjBPL1hSYmFWWW1IbWpPdmRaLzZteGRySXhZ?=
+ =?utf-8?B?bmc4M1ZBajJNdUI3Vk14bkFGakRiTkpZbDcyTndwcEh0WmYxcThYM1AzcHJD?=
+ =?utf-8?B?UUxkNVpLUGFHQlQ4WUJIdVA5dncxcVdxUVpkZ2xXdmhrY3V3VnVvV3ZCOTM3?=
+ =?utf-8?B?VGxnVWxGZkhRcW54ZzFlL0xTL1RIRGxLcElhK1ptMHcrSCtveDVuN3premFM?=
+ =?utf-8?B?MjBoMFpRdlNBTHlVZ2RPVm5rQTVENDBpcEd5U0lGaDdobnFPTm1oK2VLNnNZ?=
+ =?utf-8?B?cittNm80ejhpVFp0WlhJUFFtM3hzYmQ0ME9MNmc5MlI2azZjM1MvY3JXRkZF?=
+ =?utf-8?B?WmFoYnduZmxOOUppRWZtWkFPbG5wVkh3bU5CVWsxK2lOQmhsMnFzbkIrS0I5?=
+ =?utf-8?B?a1BVUnVKMkZOM2t6Smo5WEJOdFhua3JmTFBOdHpPMGs0VUljdzNwaWJDS1di?=
+ =?utf-8?B?ZDZ0L2ptLzRDc1NBemZGakQ3SnVWZ3ZGbGVZTzdwQmhzYStyZGpzSlRhSS9o?=
+ =?utf-8?B?cUk3K1ZqQkszUnVkVWhvbXhlbFVTMjFFTlRNZ2VQOXZsN3VmajhLNWQvdC9s?=
+ =?utf-8?B?diswZ0tYQzg2MERCR1lmYkI3ZXR3R1pyMDV6aWhvR0h1R2NEMTVLYVdjT3BU?=
+ =?utf-8?B?UjRuaENVdU04ZmdVU0RGM2h2L214WS9DcVM4ZnNjNWhhUVRMSTMvSVk1TURF?=
+ =?utf-8?B?TDlGMC9yeVpqOEJ0SlkzWUtwZDhnUHA4ZzhNSVpBeVdTRnZZK201RzZMbEx3?=
+ =?utf-8?B?dEc2VjkyVXc4NnR6MnlJa1pZVlRoN2txL0d3TkdMalVmaWV3UnY3aC9vd1Jp?=
+ =?utf-8?B?ZXB2SkN5bnc4MlAyK0laUnVmQi94enFvWE8yQUZUdXA4eXNCMndUZktHeVl4?=
+ =?utf-8?B?Sy8zd1JKUGhSTXR5WTN0ZUVwMnhvNFUrd3ZDeUFUQ1ZpNkxsZEV6MnVWTkY1?=
+ =?utf-8?B?TC9RZHhGcHcwTHJTM0VhUkUyZHVtYXFzV2huTkY5Wmd1R2FSemFuNFpoTE9I?=
+ =?utf-8?B?YUZmb0RSdzllL0U0UjMrMzNHUmd1K0gxWDl4SklzTkNRc1F6WkdVYTBiNk5B?=
+ =?utf-8?B?S3pkQzhRRUdZQUpud2ZtdGRsMkhLVlQ0TWtPalJ1ZHNJL2ZFU1NmckV2cXR4?=
+ =?utf-8?B?V2prVHg0ZzNSNEhvTUJrL0wrUkdRNzZYeDJGZDFWbnZJZUhEU2RxeTF0eW80?=
+ =?utf-8?B?WWNWaWNBL01rNHdIWmoyZkZwYzEzVlBNcnQrQVNId3lEcVN1QWx3SlJOMmlS?=
+ =?utf-8?B?Qkw5MWlrL1VKNXdmc0U3TWZHTENYOVFwMGhUY1hLSkU4TXQwZ3pTRlBEUHk3?=
+ =?utf-8?B?Q2NzYzV6dWdaTHVFcHVPRC8wbDUyendaSmJpSDRQSzFVU0Q0VmNzV1pjV2M4?=
+ =?utf-8?B?Q3VEY0RIenpNbTcxTFFEcUVHL0xLd0JQdzhoWmZVNXkxVnV5U3NIMkl1ZmxI?=
+ =?utf-8?B?RVcwd3JGMkY2NDhEem5udVJDWnZXTzZzRmdLZFk5ZjRpQUlydklqL3A1T05V?=
+ =?utf-8?B?UTFDSXJoMlBFNldiMFl4bjEzeG8zaWtMVWtwUmZnSHBLSEFvL1J4a00xSTVQ?=
+ =?utf-8?Q?ikoqyK4ftkRg3PsodITiltU=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-tw;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB5203.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?WHlTZlcxZ0tlOWlXME02RTV5WE9Id29Kc1V0cnRFb3o2Z1JMc3JyUDRtN2Uy?=
+ =?utf-8?B?T2ZBL0NBWkxPRUUvelc0UW42Q1ZnaFo5ZXF5ZVMzeStwNzRPbnhYaE1pUUpU?=
+ =?utf-8?B?TmxURmtjTGlQUDlTdVpNSGF6MUhmcnQ5d21taGwwZmFibWhDK0F5cjhLVm5n?=
+ =?utf-8?B?R2FLcXgxNVptWmN2L1lndGcxbDdYczFxSnB0Ym1LU2xDTmhIYVBlN0hvRjcv?=
+ =?utf-8?B?M1huNGhCdk9RRlFLNkVER0N6VVdnRU9WVzhsWWV1WEZmR3JBenV6ODRxcFc5?=
+ =?utf-8?B?eVdDV0l5VVRBaDFQZmt4RzVWUDBJZG5QTVYrVmV5cEU2R1hYYjJtV254dUZQ?=
+ =?utf-8?B?aURwSnBWa0tCZmxjVkcrQ0lZcWsyN3p0dGhlYXNhemw5ZEd2cjhhSU0rRlB2?=
+ =?utf-8?B?VnBsTC9qTzQ5c0N6dG8rWmdWN3lJTVh3NENxMG1OclZKY25SaHFQc3FoQnEr?=
+ =?utf-8?B?VE9PejR3bFIvM0E3MzZNQVlCVk1Ib3M4dC9Tc2pkQ05jVzJEUE9pdnFVdXNs?=
+ =?utf-8?B?YU9YK1k4V1NnQWFVQStVOThWQXFDRHV6L2FjTFRNZGVOVGtSdDVaOTcwRkhW?=
+ =?utf-8?B?ZGYxb3pVNWFWR0tPQjhzQ2N1Z1JPQ1k2eVBYT0VPa29oWTNZRk56SFpFakVq?=
+ =?utf-8?B?bDFLZWhuZXJSZmFzWjlHZHIvQlRXSEFvZ2IxWVFSTG1HN2lpd1dIY2V0L3BI?=
+ =?utf-8?B?aFNzbG5yNnpCOWdheVRESkJROFp3ZzVGKzk4YjZiQ0ZUWWF2UFJUV3dTZCtr?=
+ =?utf-8?B?Zlg2amtHczRPaWRrNDlXNngvRmJ2Zml4UzU5a25aMVNjT3FQL1VmOWoyWkhP?=
+ =?utf-8?B?N2E4dy9qU29JUmo0c0NjQVRtc1RoRkVuK0RZZS8yVElsWXdqN3drVDhBNSs0?=
+ =?utf-8?B?OHg5enpJSDBWek9EWWRBci9CN0c0ZEZLV0p3aWM4WU9KNDk3c3JTL3NRQThx?=
+ =?utf-8?B?dVRpanB3MmVlU3FWOE1tUExxQkhwc3ptZUxaY0hiZGZUWmZvRTdxbXM5azQr?=
+ =?utf-8?B?TllSMVFoY1paMjIyZDd1VTVrRVBEVERKbnJsNlo4aHZMcUkwWWE1bE5CYmxz?=
+ =?utf-8?B?MVorN05QQ25NL2VoT0JUb1VBMFRleHd0eExUNC85NnlzMnM4aXhteEE0TjU2?=
+ =?utf-8?B?cXp3VWpkaHB2ZWRSdElDckticmZVbWNKenBJeTRFR09xalJTOUdKM3lpdFZJ?=
+ =?utf-8?B?TVJkcEJCQXlSYWdXWXYrem16N2lkQ2dHQVFLODMzS3ZrQ1l1aEhLWENLS0Er?=
+ =?utf-8?B?SEswNGlUNnd4QmIrTURkZnpnS3h3UkRpaGJ5ck04MnhhUWFkYXlmTiswcGRX?=
+ =?utf-8?B?UndYRVRteVdIaEYxZFl4aGx0cWQwMTZueU1qOWdxZTlZRC9IaHRJUWZTSkQ4?=
+ =?utf-8?B?ZTVyaW1lSjlTWFlyWTJhRU9mUXB2Mld5KzFYRWJBSlVNZXpIa1VVWE5aYWFl?=
+ =?utf-8?B?OUxvME15WkpibVIrbFY1S2ZlYUd1aVk0WERBNUd6U1l6bGxCL3dicnRRTlNN?=
+ =?utf-8?B?N0FuZ2JzUDl3M20wdk9hZkZ6aHBaYU9wY1pxaVFIR1BXSFBhelNmYVJGeUNv?=
+ =?utf-8?B?L0tPWWFzWHhaeklwemlZUkNoRGIzdTVnVFplVEd6MGRpKzZoMTFtUWdsTm91?=
+ =?utf-8?B?di92enhqdHVBS1J0T00zM2hQWDYrNnB6RFFpejVjQytHMTVQald6RXA2R1dC?=
+ =?utf-8?B?bUQ1RFNXQXB3MFN2ajdaVjE1b2xTdUhYbG0wSktTbmptaW5ZaDJXczRHdDBI?=
+ =?utf-8?B?VnV0cjhlQ0xzY0lwenJwTWIrOTUxcXpPa256M2VuS3BpR1psbmdseURWU0xh?=
+ =?utf-8?B?Z0lmNEhZa1lFUno5ZTVnS2VkMFl5c2trb25yS2h6T3o2dWI2VWhVdXgwemJk?=
+ =?utf-8?B?VDZBY0VTVVVPOWJnbzBaV1VTekRVTUZoRmdtcFRoMTMyRlZnMmZhcmw2VUxi?=
+ =?utf-8?B?dFRHalZkNTd0VGZxb0plY0J1bUV3WldySjRrVUFINEZCTFJLQnZFQ0JjNFMz?=
+ =?utf-8?B?d3pJR2R3Y0orZVdCMGQ0eE84cktILzJFVnR4WUxnOHk2YnlRZ3IyY0hxVWdo?=
+ =?utf-8?B?WEFwYjFEWnU3b2ZsVW1tZDhvU3d0aGdCNDROeDV5enIwUTJ2NndCRWlEK1Rj?=
+ =?utf-8?B?RUcvdHVIbGJFdzJzZFU0L0REelY1aVA2RXlvTWJWVm5TQm0rVHd2UER6RTUx?=
+ =?utf-8?B?di9sejhwR3ZIMUxkNTlSZW5sd0IydVAzbGdCNzlldmU2ano4R0QvRzhuWE5w?=
+ =?utf-8?B?clFnWENidUQ3S2MzN2MrbnZ1RmsyeEJCTmcvSkxidFlBWC90WEZMenBGNDRh?=
+ =?utf-8?B?cHdEVmVrLzdXampqdVZVYmJNbUIvNjdnL2s5MDJIRVZWRXIvOE03RjlVTlVW?=
+ =?utf-8?Q?L8I/xwMmc13S8tx0=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -46,319 +183,58 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] spi: aspeed: Add support for non-spi-mem devices
-To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-References: <20260117134216.595436-1-chin-ting_kuo@aspeedtech.com>
- <20260117134216.595436-3-chin-ting_kuo@aspeedtech.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: clg@kaod.org, broonie@kernel.org, boris.brezillon@bootlin.com,
- joel@jms.id.au, andrew@codeconstruct.com.au, linux-aspeed@lists.ozlabs.org,
- openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- BMC-SW@aspeedtech.com
-In-Reply-To: <20260117134216.595436-3-chin-ting_kuo@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=2.9 required=5.0 tests=RCVD_IN_DNSWL_LOW,
-	RCVD_IN_SBL_CSS,SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
-X-Spam-Level: **
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB5203.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b61cf88-2b11-4108-f68a-08de568e8462
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jan 2026 12:38:43.8515
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lkeSbc37FaIJQWanpRza0wvxDj513/INMm9Wrf7vItXF1uqGePsZUgNdhg84NHsLhXAWSvwD2S0pOqDktmQ1GRKbPstoEqPalQm0AiPjmx0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5365
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-Dear Chin-Ting,
-
-
-Thank you for your patch.
-
-Am 17.01.26 um 14:42 schrieb Chin-Ting Kuo:
-> The ASPEED FMC/SPI controller may be shared by spi-mem devices and
-> other SPI peripherals that do not use the spi-mem framework.
-> 
-> The driver currently assumes spi-mem semantics for all devices,
-> while the controller also supports direct user mode access commonly
-> used by non-spi-mem devices. This mismatch can result in incorrect
-> behavior when different types of devices share the same controller.
-> 
-> Update the driver to properly handle non-spi-mem devices, allowing
-> them to operate correctly in pure user mode alongside spi-mem
-> devices on a shared SPI controller.
-
-It’d be great if you added a paragraph on how the driver ist updated.
-
-Also, documented on how to test your change, would be great.
-
-> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-> ---
->   drivers/spi/spi-aspeed-smc.c | 134 +++++++++++++++++++++++++++++++++--
->   1 file changed, 128 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-> index db3e096f2eb0..3949f94b6667 100644
-> --- a/drivers/spi/spi-aspeed-smc.c
-> +++ b/drivers/spi/spi-aspeed-smc.c
-> @@ -48,6 +48,8 @@
->   /* CEx Address Decoding Range Register */
->   #define CE0_SEGMENT_ADDR_REG		0x30
->   
-> +#define FULL_DUPLEX_RX_DATA		0x1e4
-> +
->   /* CEx Read timing compensation register */
->   #define CE0_TIMING_COMPENSATION_REG	0x94
->   
-> @@ -81,6 +83,7 @@ struct aspeed_spi_data {
->   	u32	hclk_mask;
->   	u32	hdiv_max;
->   	u32	min_window_size;
-> +	bool	full_duplex;
->   
->   	phys_addr_t (*segment_start)(struct aspeed_spi *aspi, u32 reg);
->   	phys_addr_t (*segment_end)(struct aspeed_spi *aspi, u32 reg);
-> @@ -105,6 +108,7 @@ struct aspeed_spi {
->   
->   	struct clk		*clk;
->   	u32			 clk_freq;
-> +	u8			 cs_change;
->   
->   	struct aspeed_spi_chip	 chips[ASPEED_SPI_MAX_NUM_CS];
->   };
-> @@ -280,7 +284,8 @@ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
->   }
->   
->   /* support for 1-1-1, 1-1-2 or 1-1-4 */
-> -static bool aspeed_spi_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
-> +static bool aspeed_spi_supports_mem_op(struct spi_mem *mem,
-> +				       const struct spi_mem_op *op)
->   {
->   	if (op->cmd.buswidth > 1)
->   		return false;
-> @@ -305,7 +310,8 @@ static bool aspeed_spi_supports_op(struct spi_mem *mem, const struct spi_mem_op
->   
->   static const struct aspeed_spi_data ast2400_spi_data;
->   
-> -static int do_aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
-> +static int do_aspeed_spi_exec_mem_op(struct spi_mem *mem,
-> +				     const struct spi_mem_op *op)
->   {
->   	struct aspeed_spi *aspi = spi_controller_get_devdata(mem->spi->controller);
->   	struct aspeed_spi_chip *chip = &aspi->chips[spi_get_chipselect(mem->spi, 0)];
-> @@ -367,11 +373,12 @@ static int do_aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
->   	return ret;
->   }
->   
-> -static int aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
-> +static int aspeed_spi_exec_mem_op(struct spi_mem *mem,
-> +				  const struct spi_mem_op *op)
->   {
->   	int ret;
->   
-> -	ret = do_aspeed_spi_exec_op(mem, op);
-> +	ret = do_aspeed_spi_exec_mem_op(mem, op);
->   	if (ret)
->   		dev_err(&mem->spi->dev, "operation failed: %d\n", ret);
->   	return ret;
-> @@ -773,8 +780,8 @@ static ssize_t aspeed_spi_dirmap_read(struct spi_mem_dirmap_desc *desc,
->   }
->   
->   static const struct spi_controller_mem_ops aspeed_spi_mem_ops = {
-> -	.supports_op = aspeed_spi_supports_op,
-> -	.exec_op = aspeed_spi_exec_op,
-> +	.supports_op = aspeed_spi_supports_mem_op,
-> +	.exec_op = aspeed_spi_exec_mem_op,
->   	.get_name = aspeed_spi_get_name,
->   	.dirmap_create = aspeed_spi_dirmap_create,
->   	.dirmap_read = aspeed_spi_dirmap_read,
-> @@ -843,6 +850,110 @@ static void aspeed_spi_enable(struct aspeed_spi *aspi, bool enable)
->   		aspeed_spi_chip_enable(aspi, cs, enable);
->   }
->   
-> +static int aspeed_spi_user_prepare_msg(struct spi_controller *ctlr,
-> +				       struct spi_message *msg)
-> +{
-> +	struct aspeed_spi *aspi =
-> +		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-> +	const struct aspeed_spi_data *data = aspi->data;
-> +	struct spi_device *spi = msg->spi;
-> +	u32 cs = spi_get_chipselect(spi, 0);
-> +	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-> +	u32 ctrl_val;
-> +	u32 clk_div = data->get_clk_div(chip, spi->max_speed_hz);
-> +
-> +	ctrl_val = chip->ctl_val[ASPEED_SPI_BASE];
-> +	ctrl_val &= ~CTRL_IO_MODE_MASK & data->hclk_mask;
-> +	ctrl_val |= clk_div;
-> +	chip->ctl_val[ASPEED_SPI_BASE] = ctrl_val;
-> +
-> +	if (aspi->cs_change == 0)
-> +		aspeed_spi_start_user(chip);
-> +
-> +	return 0;
-> +}
-> +
-> +static int aspeed_spi_user_unprepare_msg(struct spi_controller *ctlr,
-> +					 struct spi_message *msg)
-> +{
-> +	struct aspeed_spi *aspi =
-> +		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-> +	struct spi_device *spi = msg->spi;
-> +	u32 cs = spi_get_chipselect(spi, 0);
-> +	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-> +
-> +	if (aspi->cs_change == 0)
-> +		aspeed_spi_stop_user(chip);
-> +
-> +	return 0;
-> +}
-> +
-> +static void aspeed_spi_user_transfer_tx(struct aspeed_spi *aspi,
-> +					struct spi_device *spi,
-> +					const u8 *tx_buf, u8 *rx_buf,
-> +					void *dst, u32 len)
-> +{
-> +	const struct aspeed_spi_data *data = aspi->data;
-> +	bool full_duplex_transfer = data->full_duplex && tx_buf == rx_buf;
-> +	u32 i;
-> +
-> +	if (full_duplex_transfer &&
-> +	    !!(spi->mode & (SPI_TX_DUAL | SPI_TX_QUAD |
-> +			    SPI_RX_DUAL | SPI_RX_QUAD))) {
-> +		dev_err(aspi->dev,
-> +			"full duplex is only supported for single IO mode\n");
-> +		return;
-> +	}
-> +
-> +	for (i = 0; i < len; i++) {
-> +		writeb(tx_buf[i], dst);
-> +		if (full_duplex_transfer)
-> +			rx_buf[i] = readb(aspi->regs + FULL_DUPLEX_RX_DATA);
-> +	}
-> +}
-> +
-> +static int aspeed_spi_user_transfer(struct spi_controller *ctlr,
-> +				    struct spi_device *spi,
-> +				    struct spi_transfer *xfer)
-> +{
-> +	struct aspeed_spi *aspi =
-> +		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-> +	u32 cs = spi_get_chipselect(spi, 0);
-> +	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-> +	void __iomem *ahb_base = aspi->chips[cs].ahb_base;
-> +	const u8 *tx_buf = xfer->tx_buf;
-> +	u8 *rx_buf = xfer->rx_buf;
-> +
-> +	dev_dbg(aspi->dev,
-> +		"[cs%d] xfer: width %d, len %u, tx %p, rx %p\n",
-> +		cs, xfer->bits_per_word, xfer->len,
-> +		tx_buf, rx_buf);
-> +
-> +	if (tx_buf) {
-> +		if (spi->mode & SPI_TX_DUAL)
-> +			aspeed_spi_set_io_mode(chip, CTRL_IO_DUAL_DATA);
-> +		else if (spi->mode & SPI_TX_QUAD)
-> +			aspeed_spi_set_io_mode(chip, CTRL_IO_QUAD_DATA);
-> +
-> +		aspeed_spi_user_transfer_tx(aspi, spi, tx_buf, rx_buf,
-> +					    (void *)ahb_base, xfer->len);
-> +	}
-> +
-> +	if (rx_buf && rx_buf != tx_buf) {
-> +		if (spi->mode & SPI_RX_DUAL)
-> +			aspeed_spi_set_io_mode(chip, CTRL_IO_DUAL_DATA);
-> +		else if (spi->mode & SPI_RX_QUAD)
-> +			aspeed_spi_set_io_mode(chip, CTRL_IO_QUAD_DATA);
-
-Should other modes be handled?
-
-> +
-> +		ioread8_rep(ahb_base, rx_buf, xfer->len);
-> +	}
-> +
-> +	xfer->error = 0;
-> +	aspi->cs_change = xfer->cs_change;
-> +
-> +	return 0;
-> +}
-> +
->   static int aspeed_spi_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
-> @@ -899,6 +1010,9 @@ static int aspeed_spi_probe(struct platform_device *pdev)
->   	ctlr->cleanup = aspeed_spi_cleanup;
->   	ctlr->num_chipselect = of_get_available_child_count(dev->of_node);
->   	ctlr->dev.of_node = dev->of_node;
-> +	ctlr->prepare_message = aspeed_spi_user_prepare_msg;
-> +	ctlr->unprepare_message = aspeed_spi_user_unprepare_msg;
-> +	ctlr->transfer_one = aspeed_spi_user_transfer;
->   
->   	aspi->num_cs = ctlr->num_chipselect;
->   
-> @@ -1455,6 +1569,7 @@ static const struct aspeed_spi_data ast2400_fmc_data = {
->   	.hclk_mask     = 0xfffff0ff,
->   	.hdiv_max      = 1,
->   	.min_window_size = 0x800000,
-> +	.full_duplex   = false,
->   	.calibrate     = aspeed_spi_calibrate,
->   	.get_clk_div   = aspeed_get_clk_div_ast2400,
->   	.segment_start = aspeed_spi_segment_start,
-> @@ -1471,6 +1586,7 @@ static const struct aspeed_spi_data ast2400_spi_data = {
->   	.timing	       = 0x14,
->   	.hclk_mask     = 0xfffff0ff,
->   	.hdiv_max      = 1,
-> +	.full_duplex   = false,
->   	.get_clk_div   = aspeed_get_clk_div_ast2400,
->   	.calibrate     = aspeed_spi_calibrate,
->   	/* No segment registers */
-> @@ -1485,6 +1601,7 @@ static const struct aspeed_spi_data ast2500_fmc_data = {
->   	.hclk_mask     = 0xffffd0ff,
->   	.hdiv_max      = 1,
->   	.min_window_size = 0x800000,
-> +	.full_duplex   = false,
->   	.get_clk_div   = aspeed_get_clk_div_ast2500,
->   	.calibrate     = aspeed_spi_calibrate,
->   	.segment_start = aspeed_spi_segment_start,
-> @@ -1502,6 +1619,7 @@ static const struct aspeed_spi_data ast2500_spi_data = {
->   	.hclk_mask     = 0xffffd0ff,
->   	.hdiv_max      = 1,
->   	.min_window_size = 0x800000,
-> +	.full_duplex   = false,
->   	.get_clk_div   = aspeed_get_clk_div_ast2500,
->   	.calibrate     = aspeed_spi_calibrate,
->   	.segment_start = aspeed_spi_segment_start,
-> @@ -1520,6 +1638,7 @@ static const struct aspeed_spi_data ast2600_fmc_data = {
->   	.hclk_mask     = 0xf0fff0ff,
->   	.hdiv_max      = 2,
->   	.min_window_size = 0x200000,
-> +	.full_duplex   = false,
->   	.get_clk_div   = aspeed_get_clk_div_ast2600,
->   	.calibrate     = aspeed_spi_ast2600_calibrate,
->   	.segment_start = aspeed_spi_segment_ast2600_start,
-> @@ -1538,6 +1657,7 @@ static const struct aspeed_spi_data ast2600_spi_data = {
->   	.hclk_mask     = 0xf0fff0ff,
->   	.hdiv_max      = 2,
->   	.min_window_size = 0x200000,
-> +	.full_duplex   = false,
->   	.get_clk_div   = aspeed_get_clk_div_ast2600,
->   	.calibrate     = aspeed_spi_ast2600_calibrate,
->   	.segment_start = aspeed_spi_segment_ast2600_start,
-> @@ -1556,6 +1676,7 @@ static const struct aspeed_spi_data ast2700_fmc_data = {
->   	.hclk_mask     = 0xf0fff0ff,
->   	.hdiv_max      = 2,
->   	.min_window_size = 0x10000,
-> +	.full_duplex   = true,
->   	.get_clk_div   = aspeed_get_clk_div_ast2600,
->   	.calibrate     = aspeed_spi_ast2600_calibrate,
->   	.segment_start = aspeed_spi_segment_ast2700_start,
-> @@ -1573,6 +1694,7 @@ static const struct aspeed_spi_data ast2700_spi_data = {
->   	.hclk_mask     = 0xf0fff0ff,
->   	.hdiv_max      = 2,
->   	.min_window_size = 0x10000,
-> +	.full_duplex   = true,
->   	.get_clk_div   = aspeed_get_clk_div_ast2600,
->   	.calibrate     = aspeed_spi_ast2600_calibrate,
->   	.segment_start = aspeed_spi_segment_ast2700_start,
-
-
-Kind regards,
-
-Paul
+SGkgUGF1bCwNCg0KVGhhbmtzIGZvciB0aGUgcmV2aWV3Lg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQo+IEZyb206IFBhdWwgTWVuemVsIDxwbWVuemVsQG1vbGdlbi5tcGcuZGU+DQo+
+IFNlbnQ6IFN1bmRheSwgSmFudWFyeSAxOCwgMjAyNiA3OjQ3IEFNDQo+IFN1YmplY3Q6IFJlOiBb
+UEFUQ0ggdjIgMS8yXSBzcGk6IHNwaS1tZW06IFByb3RlY3QgZGlybWFwX2NyZWF0ZSgpIHdpdGgN
+Cj4gc3BpX21lbV9hY2Nlc3Nfc3RhcnQvZW5kDQo+IA0KPiBEZWFyIENoaW4tVGluZywNCj4gDQo+
+IA0KPiBUaGFuayB5b3UgZm9yIHlvdXIgcGF0Y2guDQo+IA0KPiBBbSAxNy4wMS4yNiB1bSAxNDo0
+MiBzY2hyaWViIENoaW4tVGluZyBLdW86DQo+ID4gc3BpX21lbV9kaXJtYXBfY3JlYXRlKCkgbWF5
+IHJlY29uZmlndXJlIGNvbnRyb2xsZXItd2lkZSBzZXR0aW5ncywNCj4gPiB3aGljaCBjYW4gaW50
+ZXJmZXJlIHdpdGggY29uY3VycmVudCB0cmFuc2ZlcnMgdG8gb3RoZXIgZGV2aWNlcyBzaGFyaW5n
+DQo+ID4gdGhlIHNhbWUgU1BJIGNvbnRyb2xsZXIgYnV0IHVzaW5nIGRpZmZlcmVudCBjaGlwIHNl
+bGVjdHMuDQo+ID4NCj4gPiBXcmFwIHRoZSAtPmRpcm1hcF9jcmVhdGUoKSBjYWxsYmFjayB3aXRo
+IHNwaV9tZW1fYWNjZXNzX3N0YXJ0KCkgYW5kDQo+ID4gc3BpX21lbV9hY2Nlc3NfZW5kKCkgdG8g
+c2VyaWFsaXplIGFjY2VzcyBhbmQgcHJldmVudCBjcm9zcy1DUw0KPiA+IGludGVyZmVyZW5jZSBk
+dXJpbmcgZGlybWFwIGNyZWF0aW9uLg0KPiANCj4gRG8geW91IGhhdmUgYSByZXByb2R1Y2VyIGZv
+ciB0aGlzIGlzc3VlIHRvIHRlc3QgeW91ciBwYXRjaD8gSWYgeWVzLCBpdOKAmWQgYmUNCj4gZ3Jl
+YXQsIGlmIHlvdSBkb2N1bWVudGVkIGl0Lg0KPiANCg0KWWVzLCBJIHZlcmlmaWVkIHRoaXMgd2l0
+aCBhIHNjZW5hcmlvIHdoZXJlIGFuIFNQSSBUUE0gaXMgY29ubmVjdGVkIHRvIENTMCBvZiBhIFNQ
+SSBjb250cm9sbGVyLCB3aGlsZSBhbiBTUEkgTk9SIGZsYXNoIGlzIGNvbm5lY3RlZCB0byBDUzEg
+b2YgdGhlIHNhbWUgY29udHJvbGxlci4gSSB3aWxsIGFkZCB0aGlzIGRlc2NyaXB0aW9uIHRvIHRo
+ZSBuZXh0IHBhdGNoIHZlcnNpb24uDQoNCj4gPiBTaWduZWQtb2ZmLWJ5OiBDaGluLVRpbmcgS3Vv
+IDxjaGluLXRpbmdfa3VvQGFzcGVlZHRlY2guY29tPg0KPiA+IC0tLQ0KPiA+ICAgZHJpdmVycy9z
+cGkvc3BpLW1lbS5jIHwgMTEgKysrKysrKysrKy0NCj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAxMCBp
+bnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvZHJpdmVy
+cy9zcGkvc3BpLW1lbS5jIGIvZHJpdmVycy9zcGkvc3BpLW1lbS5jIGluZGV4DQo+ID4gYzhiMmFk
+ZDI2NDBlLi44NTcwMmE3N2IzYzggMTAwNjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9zcGkvc3BpLW1l
+bS5jDQo+ID4gKysrIGIvZHJpdmVycy9zcGkvc3BpLW1lbS5jDQo+ID4gQEAgLTcwOCw5ICs3MDgs
+MTggQEAgc3BpX21lbV9kaXJtYXBfY3JlYXRlKHN0cnVjdCBzcGlfbWVtICptZW0sDQo+ID4NCj4g
+PiAgIAlkZXNjLT5tZW0gPSBtZW07DQo+ID4gICAJZGVzYy0+aW5mbyA9ICppbmZvOw0KPiA+IC0J
+aWYgKGN0bHItPm1lbV9vcHMgJiYgY3Rsci0+bWVtX29wcy0+ZGlybWFwX2NyZWF0ZSkNCj4gPiAr
+CWlmIChjdGxyLT5tZW1fb3BzICYmIGN0bHItPm1lbV9vcHMtPmRpcm1hcF9jcmVhdGUpIHsNCj4g
+PiArCQlyZXQgPSBzcGlfbWVtX2FjY2Vzc19zdGFydChtZW0pOw0KPiA+ICsJCWlmIChyZXQpIHsN
+Cj4gPiArCQkJa2ZyZWUoZGVzYyk7DQo+ID4gKwkJCXJldHVybiBFUlJfUFRSKHJldCk7DQo+ID4g
+KwkJfQ0KPiA+ICsNCj4gPiAgIAkJcmV0ID0gY3Rsci0+bWVtX29wcy0+ZGlybWFwX2NyZWF0ZShk
+ZXNjKTsNCj4gPg0KPiA+ICsJCXNwaV9tZW1fYWNjZXNzX2VuZChtZW0pOw0KPiA+ICsJfQ0KPiA+
+ICsNCj4gPiAgIAlpZiAocmV0KSB7DQo+ID4gICAJCWRlc2MtPm5vZGlybWFwID0gdHJ1ZTsNCj4g
+PiAgIAkJaWYgKCFzcGlfbWVtX3N1cHBvcnRzX29wKGRlc2MtPm1lbSwgJmRlc2MtPmluZm8ub3Bf
+dG1wbCkpDQo+IA0KPiBSZXZpZXdlZC1ieTogUGF1bCBNZW56ZWwgPHBtZW56ZWxAbW9sZ2VuLm1w
+Zy5kZT4NCj4gDQo+IA0KPiBLaW5kIHJlZ2FyZHMsDQo+IA0KPiBQYXVsDQo=
 
