@@ -1,57 +1,62 @@
-Return-Path: <openbmc+bounces-1236-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1237-lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE6FED39B9E
-	for <lists+openbmc@lfdr.de>; Mon, 19 Jan 2026 01:18:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C705D3AA77
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jan 2026 14:37:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dvWJc5zbCz2xnj;
-	Mon, 19 Jan 2026 11:18:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dvs2P4kzJz3bhq;
+	Tue, 20 Jan 2026 00:37:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768781555;
-	cv=none; b=hGGGNq9waWzIVKnAUZnD82icWKXe+FE94UDzn8hGLMr+WYGmxrFq/GhotDY5vpg/AJ0MaeUu6o1TwbBk+g9isMXh5dznWZBujTxOEJX8Wx0SiaYZ2zvLB3GwEQWjD1cXQIA26594BdvR4pYcksL+TWQVcKnXAG/AShEn4+XjSvdEiRjfeMM/zC+LBq63+XCcashzBaZU3wIBmSl5C7Q01m5w2cXy8vSXwCmRNulAy3CbHWXX1DK6GqAIPAzpfy1gMqInVsCqZHPE0uCfBZNQFcTBWwYMvvDrnw4jB34d2vV78co9cGSWdMAKZ5L+9vM2swsi2UR+NFRNaNeKZicq4g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768829837;
+	cv=none; b=A4c5mlpqR3Y97gzDl2IS/upENo01d+wKpPNrVvATCzp6w1X7pI8HKAkckQA498WyzdaCqxCI3ZHGxbdIxWslDrm6FR4PZbn0UoFTZleGaoqiBK+ulaGHhvvNmpi1a+mVmSp39H/nosWDPXfmqbsCWSwcWftZYdnicsNcMpfrG6GbeaMOcoMNWEN87SkGh7BxIRtaWu0oFSHY8HfJOnymRjS4GxVMR4C11zRBBXtlpRGlxck30okwE473WMTkkNYUf120c9QTX7C0WhIc2uOvb9xrboHTP+HLfjbooX4FzT7RsH3ylN92RiWQ07n4mlZYqxDPY4g+IIUGNFwHxM5p+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768781555; c=relaxed/relaxed;
-	bh=77e96+tn9mecLGBrZtPY9Ll7+CLmgZeo5o+F4wCK57E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nXZoZMb30Jyssmipn1dnk3yEkA2xzPrWe4FNnOgywkd7k37BPmyvWIY59dDlwM4UKJHkIC0/F0z/v4Vv9gOAM3qFH41drV2+I8fFgiAg8iPzJtl8G3K0Z1yLutEETGX/Dvsqn4fGvtRDL8YU/IVh7IW2PDtOQwk92jBOQp/v5NcD5RgDTFpg4SdqcFEjE19rCWMDSBRJ4DHZEPJEBRvkQyusBN91pJDstmJRCIFGURb/pelu77PRKtJiVUNE6bbCxJ3vUsbCUPrlOs86Eo17WHsXjHfPP7WBLjJCYE0/Dr8hsb0tmHfgw6ik9G7nsROjbA1PaEs8hqgWi+ZeX+uoyw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nW7h+1My; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1768829837; c=relaxed/relaxed;
+	bh=lJb3R19nkiYopQmNx5R8476OrkmBP08hMcFQKv47fKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E07VvsF7uSsUPP+Wpx7B7zxrliVg7zt0xet8F2szTtCZe+EoYrXle50ROZ0QeAWhJl8wItka+AlPhW1cwSKIFdGxkSbZEz50TfCGRdurMABz0FkbVBr1RFiRqBDumxLPeMXTcPTJBoLDku65dWPdNUPQqqu/BZB3cAZ2Fi8801uf1slj/ieNu4cEK90sGWbealBTcj5uJaaJI4LkRCYiWt2BHX/U4GYRXtfVwx08TRu1H9djlkW9sjeNWQICr/FTngpCExOv//CkM8HKEwKAAUL5hz+wAkJ7bn+7S5jWbnMChjVfJwhIb5Hghzj881MLDSst93FPTaNBiz6ICT4JCA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=A0Yy+O9m; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nW7h+1My;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=A0Yy+O9m;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=linusw@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dvW9t3g8dz2xnj
-	for <openbmc@lists.ozlabs.org>; Mon, 19 Jan 2026 11:12:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dvs2N64tKz3bfY;
+	Tue, 20 Jan 2026 00:37:16 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 98C276012B
-	for <openbmc@lists.ozlabs.org>; Mon, 19 Jan 2026 00:12:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D5DC2BCC4
-	for <openbmc@lists.ozlabs.org>; Mon, 19 Jan 2026 00:12:31 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 677F543C4C;
+	Mon, 19 Jan 2026 13:37:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E63C116C6;
+	Mon, 19 Jan 2026 13:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768781551;
-	bh=GM6hjWxnbx0Rs5/7Y45dHtccDdEstdeBQZhCBY29WCk=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=nW7h+1MyHv+XY/D+QMgQoPSEsvqC4xZS08EgMm5QgWJWAQqCzRkqWlAFfEeFeKwzk
-	 uoviDMATdhhTN9GYHHY9iRFzkaxxUD9pLBAMVOYbGJeVRuCnSJApuxVhY8BCvxlQ5E
-	 dgoArPak6gRs4bBLk5jVHbVkVkg4zsSs+2pVVD3EOiqYMmh34OZJEd/rJul6jkgQJ+
-	 e9oaDFyyAJoQ1Qp1DeErXTf+NherfvJ7rOJgwo457Bfp0Mm6oQ9fii3A6VAYrU5mb5
-	 JbGTWaIr7+xmJpWRxkx0Zf99/arNagUn4ATg1W9VXanBKldhTQJ3Mec8vROa2lsBl2
-	 3o8700Mmbeq+g==
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-64471fcdef0so2917143d50.1
-        for <openbmc@lists.ozlabs.org>; Sun, 18 Jan 2026 16:12:31 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXFZZpptLGinK9kxNUmFg7HGQ08QkMeCpB1s/IZU1P453wWmi9Dj4oNGheblFCztE1EtuBwQ0Fw@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwZ+4c3Uf12cXSBVglOgzP7fJL2XkxMD1RH69c9qXcFFlIv8CAG
-	pdNNL8+YGgYwKqjsJx9KZXmqB6s5diMGjslp54r8DPyy7LI3L56yBjpNgvl9sMILyzEM7Ru+Obd
-	wp/o1nMn4c+khbXmVPDLMxahtkiA9x7E=
-X-Received: by 2002:a05:690c:f96:b0:788:989:fdae with SMTP id
- 00721157ae682-793c52a3abdmr187836947b3.28.1768781550470; Sun, 18 Jan 2026
- 16:12:30 -0800 (PST)
+	s=k20201202; t=1768829833;
+	bh=NQhlNmakp9XzCvOKm+K/DiXWdOuvD8Ykc7UWybaRfrA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=A0Yy+O9m3bpEWejSb8AZVey2Vkiwx0Eax1Yq7MFX+zQfpIW9vXJjBQavwlH/TErRH
+	 qW66JhnYseJiJfY2MKbXCI54CthEcjVWyI6bb/ms2w53GHTvZLz6J3jazd5/uSl2Ps
+	 FTn7n87f/C1RBrwV1i6bt5ETR8tzAWb0QlnyYbPPk0g6AQe4B1dYCGNXRpxzsRjpvG
+	 O/O1cX7wCx42r0asHpVNvtwg9Az048pE37WW7oOey/+uBFiI33P8bnOHzVHf9i0y12
+	 XwB/K0dlvP1LZpCmhHgmmT6v5qbWg3jaahCpW3/N9FB90ik68JPzCM7hNszYr4JJ4q
+	 hXVNgNbeGbjXQ==
+Date: Mon, 19 Jan 2026 13:37:08 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, clg@kaod.org,
+	boris.brezillon@bootlin.com, joel@jms.id.au,
+	andrew@codeconstruct.com.au, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	BMC-SW@aspeedtech.com
+Subject: Re: [PATCH v2 2/2] spi: aspeed: Add support for non-spi-mem devices
+Message-ID: <e4f133db-928e-49ae-9ee8-99e119d14708@sirena.org.uk>
+References: <20260117134216.595436-1-chin-ting_kuo@aspeedtech.com>
+ <20260117134216.595436-3-chin-ting_kuo@aspeedtech.com>
+ <3153512e-8325-4d0b-a869-a2a5062abefd@molgen.mpg.de>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -63,50 +68,51 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <20260118-pinctrl-cleanup-guard-v2-0-bd36f681bdc0@oss.qualcomm.com>
-In-Reply-To: <20260118-pinctrl-cleanup-guard-v2-0-bd36f681bdc0@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 19 Jan 2026 01:12:19 +0100
-X-Gmail-Original-Message-ID: <CAD++jL=+MP0UZsPRAh=+1TL+7ow+rZ_VqNW=XZN1Ht82Lw88FQ@mail.gmail.com>
-X-Gm-Features: AZwV_QgFwFIzeGhMFaeDXLwmJd24DRy_tYYmpsNkgD6HAMBqdqwm-YSi6s6fPfs
-Message-ID: <CAD++jL=+MP0UZsPRAh=+1TL+7ow+rZ_VqNW=XZN1Ht82Lw88FQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/11] pinctrl: Some code cleanup including guards
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>, Shyam Sundar S K <Shyam-sundar.S-k@amd.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Heiko Stuebner <heiko@sntech.de>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	Thierry Reding <treding@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gk42q0GFzUogNGdb"
+Content-Disposition: inline
+In-Reply-To: <3153512e-8325-4d0b-a869-a2a5062abefd@molgen.mpg.de>
+X-Cookie: Does not include installation.
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 
-On Sun, Jan 18, 2026 at 7:10=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@oss.qualcomm.com> wrote:
 
-> Changes in v2:
-> - Patch #9 (pinctrl: tegra-xusb) - Drop stale mutex_unlock (Jon)
-> - Add tags
-> - Link to v1: https://patch.msgid.link/20260114-pinctrl-cleanup-guard-v1-=
-0-a14572685cd3@oss.qualcomm.com
->
-> Few cleanups - from unused headers - or code simplifyings, including
-> usage of guards when beneficial.  I did not conver cases where guards
-> would be mixed with gotos, because this is discouraged practice.
+--gk42q0GFzUogNGdb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-v2 looks good so patches applied!
+On Sun, Jan 18, 2026 at 12:48:37AM +0100, Paul Menzel wrote:
+> Am 17.01.26 um 14:42 schrieb Chin-Ting Kuo:
+> > The ASPEED FMC/SPI controller may be shared by spi-mem devices and
+> > other SPI peripherals that do not use the spi-mem framework.
+> >=20
+> > The driver currently assumes spi-mem semantics for all devices,
+> > while the controller also supports direct user mode access commonly
+> > used by non-spi-mem devices. This mismatch can result in incorrect
+> > behavior when different types of devices share the same controller.
 
-Yours,
-Linus Walleij
+Please delete unneeded context from mails when replying.  Doing this
+makes it much easier to find your reply in the message, helping ensure
+it won't be missed by people scrolling through the irrelevant quoted
+material.
+
+--gk42q0GFzUogNGdb
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmluM4MACgkQJNaLcl1U
+h9AOpAf+KY6H92cdg3gOoQqgQu7crH6a+7XIW9D8d4DUyutJ3AVxvUSJHgxNAl3c
+V4ilv0msLOJJ6HpX/r5PQwBxtXyJ8B+4awixyqucFxMc5rOTbOhTUfSQs5CEk0Ye
+ZA0i4zbi0ugsYRl329wp62zOsYNbdZu0zDZmaAwIGUnZhuyarMsk3xfSkg8i7oor
+/uQhG8Z+bw1Y9rW5+WBFPLHsEiOhsf/o7pIIKUtTkaJkrE8hvfvszgIzObDQwKPM
+EXIlzMbd2tlKgIHfwIRcRK+NzbpvC/BIHEBZmiYPR/Ura1meOTlsrD9UR0rpd5Gg
+RrZG1vxcsH4KwCDJfTCUxBBlMfcFlg==
+=Arfl
+-----END PGP SIGNATURE-----
+
+--gk42q0GFzUogNGdb--
 
