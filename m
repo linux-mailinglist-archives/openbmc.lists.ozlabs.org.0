@@ -1,79 +1,44 @@
-Return-Path: <openbmc+bounces-1245-lists+openbmc=lfdr.de@lists.ozlabs.org>
-X-Original-To: lists+openbmc@lfdr.de
+Return-Path: <openbmc+bounces-1246-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61648D3BD0F
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 02:47:31 +0100 (CET)
+Received: from mail.lfdr.de
+	by lfdr with LMTP
+	id YHBZOhOhb2nrCgAAu9opvQ
+	(envelope-from <openbmc+bounces-1246-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 16:36:51 +0100
+X-Original-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5418046382
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 16:36:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dw9Dv4v5Fz2y7b;
-	Tue, 20 Jan 2026 12:47:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwQSW678Yz2x9M;
+	Tue, 20 Jan 2026 22:43:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::1032"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768872893;
-	cv=none; b=kXICUgFAWTj/0QJNT18UHfOLhFDmXm5CtoK4fpMRmoHsKrPBI/bCYgkPYKkov+tcfHeScWyWhiy3Buu1lpXEUbS8puTx19GAWEi5+4OYLljOcvrQuyGTG5qpMnqDW6DsYKhT/jQVYHU8KtkyFUGvNEHhUU+bgnz2C/J6LLe0+A3oCygyp1SBGKxMu2LmZ82d04mMWhZxaNLlHnHajzvdCTG8JFQTeUJ7qVd+ZC7RTXG0K2Y0pLmsmrq8wIfPjZnPpHnmmOJjF3wWpQGCUOXZtv1oOPtGeR5ICWGU8H+BiGz4iigp6j1hwXeZHJEsy7PFySGYFzmVDB7nDXmSVY1yGQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768909403;
+	cv=none; b=QBbKxOKRA1ustZ//O4kdlOhNzTfkMli8Ik4pdn5KXx2WGYkFWGAg9GSDaDCVIK2vPqM846ER65CkbqcRW3qvE7/b1pVEYt6u2oG/rWaUR1oLK/fIuNDgdCc6fhfOx41bZSGS3T+mBh9ZiGeyAcbq1oJGxJlY40GhwmGMH7VMtOo2grpCEWtU3cKcpJMk5/nAeCNFj8YvdM6pXZEn846gkVGgg4Vh/Pc003lUW4U28JHHfGCU2JQKEyGnNgy8gPk8gp4AJy81XuG/NbLq7VUAPF712SUGqI5dyiLp2nX+6Gxwgv3Jv6lWfyqOZinE1AIZtIXCulw4IJQP7hP/WiHsVg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768872893; c=relaxed/relaxed;
-	bh=RrH9sDwa3QtPj5gSU1d7cy8zDFpQYEGB5vrm976c5QE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XWWf/e4B3KFAn8mhxkqun/UwBIrV6uWP9WR3YOs2RGdLVflggUvSEjX4WQ4LzaqUiR+d6DjZODW9lct7SVPLDUcn/ego0oHcV65NmD6gUHzcx95zNIhAv9y8RevHXqCh20ft+/Dk5LA/r31spi1CFSaEo6dzPgDcpC7iUSPMEZ+w2Ch//GUqo7gjMw2an3RbluzERkkggyW3Cj0f7VFmEAMXgOVn6TD2B8XYgxpovZq3uEq8XmOwbgKhNim07UpDABUzQq6HMDZYCJay2jugjr4T4QEmJXMaPTzo64s1vcu0r6dvfrPxTn+KmmukRgJh/M1xeQ4jINqfCRtBpAgdAA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Lgfexlst; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Lgfexlst;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	t=1768909403; c=relaxed/relaxed;
+	bh=dKEiXSCwdojell1kyAFXQf/IfqH1mRcSaT2Kaw98+kw=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=R3ZEL/F4Nt6RyQuUA6piQpI6AMNITrEppZJhVKQ8SfYJzai3Ls2xszwyGQw77oFiH5Zf3NAx4xoZn2nOZ7oYgnzEKniL78uNsdDM/SPx821BAnZyBAeWXo0JQ0wDxJX7TpXY0bpn/SmEJogJg3z5mZetynHPSN6lK8FZnLaRlyvSh9RV4vKJ6Ypcl7xpK8azt1364i8I+7mHvyydjtK/qGvUAehTvMWccLk0TKtKPYpmElw/hXOFSbvCYxNqbgtkt55K+nJDk+7aN0Wm78R/UhwcbxEgAsUiQo0vPeOHsuWVyFBR6MEdI7GHeC8UAYTxhJ9fSnKfyGilq/s4th1HrQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=billy_tsai@aspeedtech.com; receiver=lists.ozlabs.org)
+Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dw8yM6Fspz2xjQ
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Jan 2026 12:34:51 +1100 (AEDT)
-Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-34f634dbfd6so3720848a91.2
-        for <openbmc@lists.ozlabs.org>; Mon, 19 Jan 2026 17:34:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768872889; x=1769477689; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RrH9sDwa3QtPj5gSU1d7cy8zDFpQYEGB5vrm976c5QE=;
-        b=LgfexlstvGm84WHgfmw0wureC7A5XyI1iDZHw05LXScRrb+Wd887G92IMM7E6IFTUM
-         Ghx6W1AXHGdcDxPxmgJzanAZvi+hLEGIdR8tm1JJMJDfjzgeJCrw6roqk9cXCeUmJoaJ
-         aiedD0IIykfNlfbPPWl0zYFkMw95KEsJrKNya5Gojo2K8jUw57eoJMcXR+z3XTUnWMfY
-         SMGsxfvZ1AAkFPIuXqlkQplr3+I4oFXeTqXnfD5qbHmIdcfEseRZif/ag5gb2hw86IVp
-         1Y5qid/lfB+fTCs48a815r3XIrYJhRWtKtmFiyniMUTL3YfEW6ppQO54toai40QOx9ng
-         kOwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768872889; x=1769477689;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RrH9sDwa3QtPj5gSU1d7cy8zDFpQYEGB5vrm976c5QE=;
-        b=mkXi4ZtPYo7DSIZfCl/kVUjMb9l4as2O5R//RzTQWs9q9SKpYZBxTvUkYBarcwvuEN
-         7Rz06jz6IX1yvXbKIrs/tjsd3tl6iA9lcZK7s94iTiYXJ6yzmxxQz21eJcPxwRdH621Q
-         Rju3yrK0ztgohyEMx0VwF+o+VQZIEs8ENVXw/jEWQVhtZ7kFEUfu4toamRnGt+Q5qUTk
-         VxRkLNSvYAeh44YFh5Xcz7BfjJXyEbwVs+6rZPGRhjaxHwxK6O7XuznXvRiuS5P6PH1b
-         B6rdbqFGmfOOuaYvZr/S/ju36WD55tIA7R6VK/CX8ek6BeMwvIOxysQH11nhLDHw3hEX
-         xOIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXwJWqMPmioLqiM70+HkCuPwEVB/72kpThwUz1FFfqmWcDWmptB3pYtrIeL+Mq+HmSA5PxvO2m4@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YxnjUkSb5ql9CxTFcljdEonaWJwQxf3gMgmfZaP0f0JpdLa50LI
-	HKQ2vOcPvn2Ax0MgKJQkwNkU0UNdPi6effwWHMghqMUjqyFYm0zlmYqx
-X-Gm-Gg: AZuq6aJSmNrokLTvGNNC3SlsFVZWUwEgaf3rXUJT1FSheItGgtQUdJlZL1MjRfbyiej
-	hLBxniEuiG/27ao1dhzIiFQENZtffh9bcWq4EoVRtKjyH6X2Vk2zbgLCcRf2eJg0E1WAZ0q2hyu
-	16tivcE/EorfmqubH6pHVJr8Z5apUbBBmoi990gUgxe6QLw+cR3H2bDOipSYoPBh2upa57F2Qii
-	XuyJnifQZI3rAQ3eI9Ooih8+vcnB9hEQYYwJzE0yrT6px/xZoXHZsJHG629jpGPhDZvsxkHnbj/
-	xELLxBfN8qkrHfRWYpsNaLom0eal3zQJsu6D/j7I0MN2E0bhri2Dt2tH6pa6lml8X+rd5yG5U/R
-	zweaJ2GXJGeaO23D7BFc7h7P8OYFWXSK+JWyh6NlPJGWky2H4HRYJJCLBeC4msTTdRdhr2AUACS
-	Cb84oc8CIglwSkM5azKH8nj7xt+EqyOcD9G+mzIYC5V+UN7N1FAGRiv6CmE6dPI8YmZIaz+hT2y
-	ZA=
-X-Received: by 2002:a17:90a:c110:b0:336:9dcf:ed14 with SMTP id 98e67ed59e1d1-352c407a272mr335012a91.23.1768872888766;
-        Mon, 19 Jan 2026 17:34:48 -0800 (PST)
-Received: from [192.168.0.102] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-352677ca9acsm12931529a91.1.2026.01.19.17.34.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jan 2026 17:34:48 -0800 (PST)
-Message-ID: <a5cb949f-34c1-470c-bd04-0b35c249455f@gmail.com>
-Date: Tue, 20 Jan 2026 09:34:39 +0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwQSV6S3pz2x99;
+	Tue, 20 Jan 2026 22:43:22 +1100 (AEDT)
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
+ 2026 19:43:05 +0800
+Received: from [127.0.1.1] (192.168.10.13) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 20 Jan 2026 19:43:05 +0800
+From: Billy Tsai <billy_tsai@aspeedtech.com>
+Subject: [PATCH v3 0/3] Add pinctrl support for AST2700 SoC
+Date: Tue, 20 Jan 2026 19:43:04 +0800
+Message-ID: <20260120-upstream_pinctrl-v3-0-868fbf8413b5@aspeedtech.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -85,71 +50,126 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v8 2/3] arm64: dts: nuvoton: Add Ethernet nodes
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
- alexandre.torgue@foss.st.com, joabreu@synopsys.com, ychuang3@nuvoton.com,
- schung@nuvoton.com, yclu4@nuvoton.com, peppe.cavallaro@st.com,
- linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-stm32@st-md-mailman.stormreply.com
-References: <20260119073342.3132502-1-a0987203069@gmail.com>
- <20260119073342.3132502-3-a0987203069@gmail.com>
- <04df4909-4fdb-4046-917f-2f2e47832c62@lunn.ch>
-Content-Language: en-US
-From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <04df4909-4fdb-4046-917f-2f2e47832c62@lunn.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEhqb2kC/z3MQQ7CIBBA0as0s5YGaEmpK+9hTIN0kEloSwCNp
+ undJS5cvsX/O2RMhBnOzQ4JX5RpWyu6UwPWm/WBjOZqkFwqIYViz5hLQrNMkVZbUmDaiVHNjpt
+ xUFCzmNDR+7e83qpd2hZWfG3+Iz7yXvCu56LVWuqBCXanED5TyYYuJkfEuaD1rd0WOI4vfEq54
+ KUAAAA=
+X-Change-ID: 20251215-upstream_pinctrl-8f195df0a975
+To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, "Joel
+ Stanley" <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+	"Linus Walleij" <linusw@kernel.org>, Billy Tsai <billy_tsai@aspeedtech.com>,
+	"Bartosz Golaszewski" <brgl@kernel.org>
+CC: Andrew Jeffery <andrew@aj.id.au>, <devicetree@vger.kernel.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<linux-gpio@vger.kernel.org>, <bmc-sw@aspeedtech.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768909385; l=3007;
+ i=billy_tsai@aspeedtech.com; s=20251118; h=from:subject:message-id;
+ bh=XQLWMm3YsOhtEHJ6iLz4rU8Uz2JmnALhlntXC1iQkvA=;
+ b=Gxi0bOC2k4CwxLCGJ3+75SuENKeJa42aygju/Eb16ieiH0uqpGEPvIX1fxidn3KU7k4v7A5Ps
+ XtN9gTyxx6EA2EG7f/Ajdtc5Z9m9A08NkB9awKP6WiVs6dQwixj8jxr
+X-Developer-Key: i=billy_tsai@aspeedtech.com; a=ed25519;
+ pk=/A8qvgZ6CPfnwKgT6/+k+nvXOkN477MshEGJvVdzeeQ=
+X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
+X-Spamd-Result: default: False [1.50 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	DMARC_POLICY_QUARANTINE(1.50)[aspeedtech.com : SPF not aligned (relaxed), No valid DKIM,quarantine];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	MAILLIST(-0.19)[generic];
+	MIME_GOOD(-0.10)[text/plain];
+	HAS_LIST_UNSUB(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_RCPT(0.00)[openbmc,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[billy_tsai@aspeedtech.com,openbmc@lists.ozlabs.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-1246-lists,openbmc=lfdr.de];
+	R_DKIM_NA(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[]
+X-Rspamd-Queue-Id: 5418046382
+X-Rspamd-Action: no action
+X-Rspamd-Server: lfdr
 
-Dear Andrew,
+This series adds device tree bindings and a pinctrl driver for the
+ASPEED AST2700 SoC.
 
-Thanks for the clarification.
+AST2700 is composed of two interconnected SoC instances, each providing
+its own pin control hardware. This series introduces bindings describing
+the AST2700 pinctrl architecture and adds pinctrl driver support for the
+SoC0 instance.
 
-In our design, the Ethernet PHYs are located on the base boards, not on 
-the MA35D1 SOM.
+The bindings document the AST2700 dual-SoC design and follow common
+pinctrl conventions, while the driver implementation builds upon the
+existing ASPEED pinctrl infrastructure.
 
-The SOM base board routes two RGMII interfaces from the SOM to two 
-external PHYs on the carrier board.
+---
+Changes in v3:
+dt-bindings: pinctrl: aspeed: AST2700 pinctrl improvements
+- Improved binding descriptions for SoC0 and SoC1 to better explain the
+  AST2700 dual-SoC architecture with independent pin control blocks
+- Switched from additionalProperties to patternProperties using the
+  '-state$' suffix to restrict child node naming
+- Removed per-binding examples based on review feedback
+- Added additionalProperties: false at the top level for stricter schema
+  validation
+- Dropped the aspeed,ast2700-soc1-pinctrl binding, as the SoC1 pinctrl
+  registers follow a regular layout and can be described using an
+  existing generic pinctrl binding
+- Updated the function and group enum lists to match the definitions
+  used by the AST2700 pinctrl driver
 
-On the MA35D1 IoT board, there is no separate SOM and carrier board - it 
-is a single integrated board.
+dt-bindings: mfd: aspeed: Add AST2700 SCU example with pinctrl
+- Added a complete AST2700 SCU0 example demonstrating pinctrl integration
+- Example covers both pin function/group configuration and pin
+  drive-strength settings
+- Updated child node naming to use the '-state' suffix, following common
+  pinctrl conventions
 
-I will update the DTS accordingly so that no PHY nodes appear in .dtsi.
+pinctrl: aspeed: AST2700 SoC0 driver improvements
+- Refactored pin and signal declarations to use common ASPEED pinmux
+  macros (SIG_EXPR_LIST_DECL_SEMG, SIG_EXPR_LIST_DECL_SESG, PIN_DECL_*)
+- Added SCU010 register definition for hardware strap control
+- Reworked code structure to better align with existing ASPEED pinctrl
+  drivers
 
-Thanks!
+- Link to v2: https://lore.kernel.org/r/20250904103401.88287-1-billy_tsai@aspeedtech.com
+
+Changes in v2:
+- Update pinctrl aspeed binding files.
+- Update the commit message for pinctrl binding patch.
+- Link to v1: https://lore.kernel.org/r/20250829073030.2749482-1-billy_tsai@aspeedtech.com
+
+---
+Billy Tsai (3):
+      Add compatible strings for AST2700 pinctrl to the SCU binding.
+      dt-bindings: pinctrl: aspeed: Add support for AST27xx
+      pinctrl: aspeed: add G7(AST2700) SoC0 pinctrl support
+
+ .../bindings/mfd/aspeed,ast2x00-scu.yaml           |  28 +
+ .../pinctrl/aspeed,ast2700-soc0-pinctrl.yaml       | 130 ++++
+ drivers/pinctrl/aspeed/Kconfig                     |   8 +
+ drivers/pinctrl/aspeed/Makefile                    |   1 +
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g7-soc0.c    | 683 +++++++++++++++++++++
+ 5 files changed, 850 insertions(+)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20251215-upstream_pinctrl-8f195df0a975
 
 Best regards,
+-- 
+Billy Tsai <billy_tsai@aspeedtech.com>
 
-Joey
-
-Andrew Lunn 於 1/19/2026 11:22 PM 寫道:
-> On Mon, Jan 19, 2026 at 03:33:40PM +0800, Joey Lu wrote:
->> Add GMAC nodes for our MA35D1 development boards:
->> two RGMII interfaces for SOM board, and one RGMII
->> and one RMII interface for IoT board.
->>
->> Signed-off-by: Joey Lu <a0987203069@gmail.com>
->> ---
->>   .../boot/dts/nuvoton/ma35d1-iot-512m.dts      | 12 +++++
->>   .../boot/dts/nuvoton/ma35d1-som-256m.dts      | 10 ++++
->>   arch/arm64/boot/dts/nuvoton/ma35d1.dtsi       | 54 +++++++++++++++++++
-> I'm somewhat confused with your naming here.
->
-> A SoM generally needs a carrier board. So the SoM is described as a
-> .dtsi file, which the carrier board .dts file can then include.
->
-> Where are the PHYs? Sometimes the PHYs are on the SoM, sometimes they
-> are on the carrier board. If they are not actually on the SoM, the
-> PHYs should not be listed as part of the SoM.
->
->       Andrew
 
