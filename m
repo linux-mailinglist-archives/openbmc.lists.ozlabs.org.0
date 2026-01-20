@@ -1,170 +1,94 @@
-Return-Path: <openbmc+bounces-1258-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1260-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MDUgNB3Wb2mVRQAAu9opvQ
-	(envelope-from <openbmc+bounces-1258-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:23:09 +0100
+	id YPTaDP8NcGlyUwAAu9opvQ
+	(envelope-from <openbmc+bounces-1260-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 00:21:35 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3B524A3C2
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:23:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B32754DB48
+	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 00:21:33 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dwcfy52rHz2xS2;
-	Wed, 21 Jan 2026 06:23:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwjy252MYz2xqL;
+	Wed, 21 Jan 2026 10:21:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768936986;
-	cv=none; b=kfXFjRW+f/j3oSS26kemdqrCXnj3jwpmZcgtS9NTFeXwryGwwWx15iuIJJ4FyI+ioyEEmQ5tT/lT1qKZLi0nwlRwzB4bRU4FX+KKNIh246jHwiqhNTlyZr3bqa9pwYX45HCXC0y29mSxnbht6tMwTDvmeYhjQfXRiP4tRxFrHhwnHG/VNbnWl1+WQLxL3gXP+GP16XpAcERrGUtZdPYOHMU4SG0eeek2kfa6kjnzATdLi71nOaRwF35qiJPR3RoNjX/FGz9CwcA/wWdkGgImXDTvu190Vyjuw8bKE4PzqBi3AzyxfY0RUc/blFXwLWNAH4oBKH0TqJYe14UEkrDYLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768936986; c=relaxed/relaxed;
-	bh=QC7n6HVwZ0EMJZYSS+nH+tnqVbWk5qUbcH3nkVMrG1E=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=jCSk0//JFQ77EEncHS60KjYidafP81MtedAOxKlFcJex4gCtgWwZD9Bn0gxrpfoJ5nDWEXC3eCYs3EhfgtOW7U2YOzIinxugDC68qW6WIvQCQVZYU5nmXVZt05nkaRbL07xCt3fOssvk1OaBu4YmT33qjg7+cNFf4M9y7/+ttSM7LIj2YkUCRExljhH4JS0Uwdm5Zwjgtg0vd5japGpLcM18Wsr87dtZ1ClX4JW9TQWt0i5hZ87LdiI4PUiqxeWFtefMZofkWggDhDtLf8VjvKY35nnmTjU6CsT57Yh2L+Qd3A26ZEykrvnXEVNdhP7cIEekdHgjqrL5L7QjEazoUA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jgX58MKi; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2607:f8b0:4864:20::1135" arc.chain=google.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768937980;
+	cv=pass; b=Ts3WmMj9QzMUbNOWsM5Zbyaoubap8+3dr/cC4kvTbIT+OyKYoVdQtdcTNhgPjIl467pAnkTzd/BN7axe2BsrI+aXu7Y6mG3lI7lff2V/YwMAEPaSB/rpjBjxuu7oWDPI7u87dgx8urFf65rDcvm31I3wv8UIFsU1JxGkKCUEckNGHVDDrUQC/5NDu1c7R7abBkjRGQguy5Du2LrERqsvNfaSY22bgh9SuBOENH6urVtCneJi8QlpAl22rLd/iRjCupDBrSXQoNziBmMBZB9s6Rgoa7G2t14c1UgCaKtqVYaNvIJmLFdDJDEzYj6JCuJRgJkb79ZwJWv50n/Ef27flw==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1768937980; c=relaxed/relaxed;
+	bh=C/zphfTB4X5kRLrKJxXPnRK/nQ2NI+GlC/4vHcLAb/w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OWzdH0Mx3g76h2PuzHmDeU4ikKrDnKJ0gDXuXBNJiYN4MA/9hn192NpyeMblUufPoZmUCmwLP6Ys+CoPMq4h2zB+Xu6GJdqD8sZeWQ5yyl8JxZykJLdkSnGl0RcB1OG6kZfZIrh1hyjF3vIMnUGCLVFYcnSmBrxt1Xhgo1LWtLqm2lieRfSnFn+lMqzAqbWgihNxRS8JLBB98bIXNkBf+oJ+dWMEquebiSKaLaxQna11/0yrq0gpswvMYocgmsf9Wrcop/ttWxM8+oaY0sCUQ/KrCJNbWAyGka3+5pdr8+acY16Krl2tAh0JJIUgMaty7+klt06Gw2ZNozsNc4bJug==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=lfprojects.org; dkim=pass (2048-bit key; unprotected) header.d=lfprojects-org.20230601.gappssmtp.com header.i=@lfprojects-org.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=CX3WtRwD; dkim-atps=neutral; spf=softfail (client-ip=2607:f8b0:4864:20::1135; helo=mail-yw1-x1135.google.com; envelope-from=manager@lfprojects.org; receiver=lists.ozlabs.org) smtp.mailfrom=lfprojects.org
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none) header.from=lfprojects.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jgX58MKi;
+	dkim=pass (2048-bit key; unprotected) header.d=lfprojects-org.20230601.gappssmtp.com header.i=@lfprojects-org.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=CX3WtRwD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=lfprojects.org (client-ip=2607:f8b0:4864:20::1135; helo=mail-yw1-x1135.google.com; envelope-from=manager@lfprojects.org; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwcfx6t79z2x9M;
-	Wed, 21 Jan 2026 06:23:05 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 8683142E46;
-	Tue, 20 Jan 2026 19:23:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA9BC16AAE;
-	Tue, 20 Jan 2026 19:22:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768936983;
-	bh=8rZs4ctIFUWV+s7flKGQlMaVzkDSCztd/ihtff8Ht6w=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jgX58MKi+zjgv/xDIQx4cHK0wTdbY5WHIpWy6zaWGiyru1YA6cG7Qbw7G8M9RhL3S
-	 SSiru+ZKHzsLIh6rtTpzRanq5020WDpXXkfsUjC/Hil6perlOH41PXAjqsRSipdXvS
-	 IPP61htVkOsCqcy9Pqn5fLS8BPsTMosoZ9eOUO70Q6cEURtv9hoJC0lOmTM5QlYWiG
-	 wz6tqUkz/prRaWfMAFRhQ1iN0dHrXg8oROA8glqKMy/5Onkhv0z+Jp0+qs66q2UQYi
-	 BzO1NPQx1qqbWombFmTG5JqwfCmxs4g31+tAPZmi39pA4KsUWJBmYbw0vvIV/lZYxv
-	 FMvcuLOxsC4SQ==
-From: Mark Brown <broonie@kernel.org>
-To: Varshini Rajendran <varshini.rajendran@microchip.com>, 
- Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Haotian Zhang <vulab@iscas.ac.cn>, Sunny Luo <sunny.luo@amlogic.com>, 
- Janne Grunau <j@jannau.net>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Chen-Yu Tsai <wens@kernel.org>, 
- Amelie Delaunay <amelie.delaunay@foss.st.com>, 
- Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>, 
- Patrice Chotard <patrice.chotard@foss.st.com>, 
- Heiko Stuebner <heiko@sntech.de>, 
- William Zhang <william.zhang@broadcom.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Manikandan Muralidharan <manikandan.m@microchip.com>, 
- David Lechner <dlechner@baylibre.com>, 
- Florian Fainelli <florian.fainelli@broadcom.com>, 
- Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>, 
- Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>, 
- Charles Keepax <ckeepax@opensource.cirrus.com>, 
- Bartosz Golaszewski <brgl@kernel.org>, 
- =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>, 
- Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>, 
- Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, 
- Huacai Chen <chenhuacai@kernel.org>, 
- Xianwei Zhao <xianwei.zhao@amlogic.com>, 
- Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>, 
- Sergio Perez Gonzalez <sperezglz@gmail.com>, 
- Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>, 
- Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>, 
- Rosen Penev <rosenp@gmail.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
- Luis de Arquer <luis.dearquer@inertim.com>, 
- Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>, 
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
- =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clement.legoffic@foss.st.com>, 
- Alessandro Grassi <alessandro.grassi@mailbox.org>, 
- Darshan R <rathod.darshan.0896@gmail.com>, 
- Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>, 
- Haixu Cui <quic_haixcui@quicinc.com>, 
- Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-amlogic@lists.infradead.org, asahi@lists.linux.dev, 
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
- linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
- patches@opensource.cirrus.com, imx@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
- linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>, 
- Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>, 
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Ryan Wanner <ryan.wanner@microchip.com>, 
- Michael Hennerich <michael.hennerich@analog.com>, 
- =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
- Kamal Dasu <kamal.dasu@broadcom.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
- Kursad Oney <kursad.oney@broadcom.com>, 
- Anand Gore <anand.gore@broadcom.com>, 
- =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>, 
- David Rhodes <david.rhodes@cirrus.com>, 
- Richard Fitzgerald <rf@opensource.cirrus.com>, 
- Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
- Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
- Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>, 
- Yinbo Zhu <zhuyinbo@loongson.cn>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Daire McNamara <daire.mcnamara@microchip.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
- Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
- Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>, 
- Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>, 
- Haojian Zhuang <haojian.zhuang@gmail.com>, 
- Robert Jarzmik <robert.jarzmik@free.fr>, 
- Chris Packham <chris.packham@alliedtelesis.co.nz>, 
- Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
- Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
- Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Alain Volmat <alain.volmat@foss.st.com>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>, 
- Masahisa Kojima <masahisa.kojima@linaro.org>, 
- Jassi Brar <jaswinder.singh@linaro.org>, 
- Laxman Dewangan <ldewangan@nvidia.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Sowjanya Komatineni <skomatineni@nvidia.com>, 
- Masami Hiramatsu <mhiramat@kernel.org>, 
- =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
- Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
-In-Reply-To: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
-References: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
-Subject: Re: [PATCH v2 0/4] spi: Make SPI core to take care of fwnode
- assignment
-Message-Id: <176893695845.778248.8132133480043006428.b4-ty@kernel.org>
-Date: Tue, 20 Jan 2026 19:22:38 +0000
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwd2225GPz2x9M
+	for <openbmc@lists.ozlabs.org>; Wed, 21 Jan 2026 06:39:37 +1100 (AEDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-790b7b3e594so54902387b3.3
+        for <openbmc@lists.ozlabs.org>; Tue, 20 Jan 2026 11:39:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768937974; cv=none;
+        d=google.com; s=arc-20240605;
+        b=CCI8Ydwtn6Zo7qGUrd4SoLQc5RZYUk/hLG2pY0l0840im7s8iM/EH2ze2a7tZsGw1r
+         DhyIYLw4YlqFj2z54Ran82Ael2drM+uVjmW+DG7m0SI3u7exWWF0Q71XTPuhNh81h6pL
+         FDvUODW1SteJg2RY/mYBM2X50wQIqrN3PirDxyVXN3DNBbgOv2Ti/U4eNAzMQxa6k9xj
+         kB1zj9INmu7lbPs4LF6ngaRGYSMMEK8gX4kIpCpSrzAs4mN11qzaIBFRoZjR4OwepX6b
+         PPk5WxGsm6Md391AsLavkmG/+UClcVbUgxdHoOEc4wXyTaCrxlfFgtikxgaxopthFSES
+         fvRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=C/zphfTB4X5kRLrKJxXPnRK/nQ2NI+GlC/4vHcLAb/w=;
+        fh=fqs75KMZsr7LK8dA4hTwPjqPKcLXNRA2vTqFHa08EIk=;
+        b=Eo3yTjDY4mehPEsyIg1Q+gjpktVo8PbrAhr/Dxi1rI/qeivUa24PJNmFe0+oHMnBBY
+         dTdM52YxGxrxVlZCb7JNQCGe4UItg6CEC9dBBxI3hwoKX4Iz1/VTiFZYfEZSEjhWUmYM
+         youAvk1ApcpFrWXrvVVXJOjqK+q+XimXMzbz44HGhdm9ARhFQboMqSHrcbc3sgEYIdp/
+         JUb8txWXWvR3UldQmaKv6z2RI+3RdiUTEVEGh78Ag2wcJyxdDx7sVlq8fGQD/DsvrQvq
+         ka0IGsQCEeZCKC0JbuqEBP4sqsctJqVSTC0BOxzdhx5lWLm0ZW/Ji60WSjn+ZxiYL0FZ
+         qo6Q==;
+        darn=lists.ozlabs.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=lfprojects-org.20230601.gappssmtp.com; s=20230601; t=1768937974; x=1769542774; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C/zphfTB4X5kRLrKJxXPnRK/nQ2NI+GlC/4vHcLAb/w=;
+        b=CX3WtRwD260xTE15NtY17VSA5N94r81sHeJogAASA8+udKTVN92xX7bAta5KE4ztw0
+         vESlvLj6nuR9xDc2ARZzumGu4zo8lrfhl0VbKrh+sgn0lE7hKIHCviA4a+OwsJzRtKfe
+         WQ6CFUjTtyVTrKXvNhsPTApHoF4kRdbwMhRW+f2SZzz7/TcoKoAeYzGKnwEa8mnA4wmj
+         qCXlpz3zjz5J7W64MEqZeBFQAMYDHWiAw85TG9uYZyggy/AZZraNRBn6tiv8GnpYHWD3
+         dzh+cvXZd9L3VGaZmsrod/a0+PaqcxZnDeQuZ+T4kJFjvnhlW8JzoshQUIuCBnkRnowA
+         qpiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768937974; x=1769542774;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C/zphfTB4X5kRLrKJxXPnRK/nQ2NI+GlC/4vHcLAb/w=;
+        b=CF7uTGU46D2CzC9L3LC1gNbH3bYqNRYIvRP2KCVxV1W9qjikzJMnKOg61WnN4SEXLV
+         oUeluy0NTSIoX37/iYILCuf+seTaFySE0ZPjRYTH8P2DKdV1W07y/dKueztyIqAMTwaT
+         PjfOil8DxrUavsjiN4JvN8aUw3u9nmOxF39i7E+kmZxSwem5IQvmyMzik6u1zvP2Mx5m
+         ueis1wZjhgNmikCisovaC62FkHIO7cns6uFqZAaWM8XVhEJcTRr/OC5zknwbaq4ccFTG
+         03PAsiUhbZ4/4+o3VlqlzRAtU158rmhauv8OUFuXKgfNDD2ImHhipDDMmKjQIuBPToJS
+         p8Mg==
+X-Gm-Message-State: AOJu0YzKcEp/FDTn6AWV/qq1bq2zWf80KkEfXbxT7ygo/eN5U1aQZmUC
+	11CIHBRmYUkPdbDbKJ0WTw6Jz+IxV6W8BToaeF5qyyXcMwwHn67Ibm+qTIcpytsvGJ+bdI87c7d
+	A22j4zsY+TGFsWSipNwi3ymfHcP9ZMMouUQVayRTVuw==
+X-Gm-Gg: AZuq6aJXpW9ZcrjAiYLcm6hpgbsZic6HAD7Qmd/2Jekrx15JaJdFs8ggq3fMj3Vi+aN
+	oUej9lBEeh3gwo6QphtCOCIucXXqPxyo4IAx4/5ThimsiRULkXzib+H3PI4/M3gu0+Wu/7kBOnR
+	blwZFmAb8lPehqcEUu3GjSR01Ne7qWA2CMKZFzU7P2gcuIg/eDMHi5QuNgoPYCb+dhQNgmLZbyp
+	knU0XcS3TC9z2W8gpvbkvnE49BP7ieYNTw/I00IYLl6IfTEBLdPy7JGByVMp01QUPzU1XE=
+X-Received: by 2002:a05:690e:158a:20b0:644:60d9:865e with SMTP id
+ 956f58d0204a3-64916526709mr9722126d50.97.1768937973926; Tue, 20 Jan 2026
+ 11:39:33 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -176,91 +100,117 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.15-dev-47773
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+References: <CAC-r_nQqTUQfmGZYenvpJJHDQ499iDibAg0s2ymcERxfknXZjw@mail.gmail.com>
+In-Reply-To: <CAC-r_nQqTUQfmGZYenvpJJHDQ499iDibAg0s2ymcERxfknXZjw@mail.gmail.com>
+From: Mike Dolan <manager@lfprojects.org>
+Date: Tue, 20 Jan 2026 14:39:22 -0500
+X-Gm-Features: AZwV_QhMtVIQh4YzH7clMu0-oNPEZcaU-xJkURhNwDf-QmQknxcGHSAfUpDYLiE
+Message-ID: <CALVHhedmzXx4-b9HG=RKf+KpKynjU1kE4DQy1n-SfR7gbqUjRQ@mail.gmail.com>
+Subject: Re: TechDesign OpenBmc CCLA
+To: alice.lim@design.tech
+Cc: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000090d9780648d6f72b"
+X-Spam-Status: No, score=1.0 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
+	SPF_SOFTFAIL,T_FILL_THIS_FORM_SHORT autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spamd-Result: default: False [-0.70 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+X-Spamd-Result: default: False [-1.60 / 15.00];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+	R_DKIM_ALLOW(-0.20)[lfprojects-org.20230601.gappssmtp.com:s=20230601];
 	MAILLIST(-0.19)[generic];
-	MIME_GOOD(-0.10)[text/plain];
+	MIME_GOOD(-0.10)[multipart/alternative,text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[lfprojects.org : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1258-lists,openbmc=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS(0.00)[m:alice.lim@design.tech,m:openbmc@lists.ozlabs.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	RCPT_COUNT_TWO(0.00)[2];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[microchip.com,iopsys.eu,collabora.com,iscas.ac.cn,amlogic.com,jannau.net,googlemail.com,glider.be,kernel.org,foss.st.com,aspeedtech.com,andestech.com,sntech.de,broadcom.com,kaod.org,baylibre.com,gmail.com,qq.com,cixtech.com,opensource.cirrus.com,bootlin.com,outlook.com,linaro.org,marek.ca,nxp.com,linux.intel.com,vivo.com,quicinc.com,samsung.com,inertim.com,renesas.com,socionext.com,mailbox.org,nvidia.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[microchip.com,bootlin.com,tuxon.dev,kernel.org,airoha.com,gompa.dev,jms.id.au,codeconstruct.com.au,analog.com,broadcom.com,milecki.pl,cirrus.com,opensource.cirrus.com,gmail.com,nxp.com,hpe.com,huawei.com,pengutronix.de,intel.com,loongson.cn,linaro.org,baylibre.com,google.com,zonque.org,free.fr,alliedtelesis.co.nz,renesas.com,samsung.com,sifive.com,linux.alibaba.com,foss.st.com,nvidia.com,gmx.net,amd.com];
+	FORGED_SENDER(0.00)[manager@lfprojects.org,openbmc@lists.ozlabs.org];
+	TAGGED_FROM(0.00)[bounces-1260-lists,openbmc=lfdr.de];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[150];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc,renesas];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
-X-Rspamd-Queue-Id: F3B524A3C2
+	TO_DN_NONE(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[manager@lfprojects.org,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[lfprojects-org.20230601.gappssmtp.com:+];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	TAGGED_RCPT(0.00)[openbmc];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,lists.ozlabs.org:rdns,lists.ozlabs.org:helo,lfprojects-org.20230601.gappssmtp.com:dkim]
+X-Rspamd-Queue-Id: B32754DB48
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 12 Jan 2026 21:21:22 +0100, Andy Shevchenko wrote:
-> It seems all of the SPI drivers want to propagate fwnode (or of_node)
-> of the physical device to the SPI device. Make sure we don't duplicate
-> it over and over in each new driver (+2 in this cycle) by making core
-> to take care of that. Note, similar is done already by IIO and
-> I²C subsystems.
-> 
-> There is one noticeable and quite specific case that is taken care in
-> the first patch and now we have a confirmation from Cirrus that everything
-> is okay.  The rest is just a mechanical conversion after checking that
-> the parent device is assigned to the same that provides the respective
-> fwnode.
-> 
-> [...]
+--00000000000090d9780648d6f72b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Applied to
+Alice, for our trade compliance purposes, we need to ask for
+additional information about TechDesign House d.o.o Beograd.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+First, can you provide an official address that is not a rental mailbox?
 
-Thanks!
+Second, we have additional questions we will need to review for trade
+compliance. Please send the details below.
 
-[1/4] spi: Propagate default fwnode to the SPI controller device
-      commit: f2d1a3318eb1ec860999db48cb8d13b43261624d
-[2/4] spi: Drop duplicate of_node assignment
-      commit: 3974a585be78a1dc90a19d5cf1846a99954e3842
-[3/4] spi: Drop duplicate fwnode assignment
-      commit: 103c510e1c6832720059756d155dd13a42baa7ab
-[4/4] spi: Drop duplicate device_set_node() call
-      commit: 37fbc1ab0f225d23f0839260a11375b4f1f7cf8c
+   - Legal company name
+   - Business address
+   - National/Tax ID number
+   - List of owners and respective percentages
+   - List of persons or entities (other than owners noted above) that
+   control the activities, policies direction of the entity in question
+   (whether by contract, position/office/board seat, or otherwise)
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
 
 Thanks,
-Mark
 
+Mike
+
+
+On Mon, Jan 19, 2026 at 10:10=E2=80=AFAM Alice Lim <alice.lim@design.tech> =
+wrote:
+
+> Dear OpenBMC team,
+>
+> Please find attached signed CLA from TechDesign House d.o.o Beograd.
+> We are designing both hardware and software for the server equipment.
+> Would love to contribute our findings to the OpenBMC community.
+>
+> Thank you,
+> Alice Lim
+>
+
+--00000000000090d9780648d6f72b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Alice, for our trade compliance purposes, we need to ask f=
+or additional=C2=A0information about TechDesign House d.o.o Beograd.=C2=A0<=
+div><br></div><div>First, can you provide an official address that is not a=
+ rental mailbox?=C2=A0</div><div><br></div><div>Second, we have additional =
+questions we will need to review for trade compliance. Please send the deta=
+ils below.</div><div><ul><li>Legal company name</li><li>Business address</l=
+i><li>National/Tax ID number</li><li>List of owners and respective percenta=
+ges</li><li>List of persons or entities (other than owners noted above) tha=
+t control the activities, policies direction of the entity in question (whe=
+ther by contract, position/office/board seat, or otherwise)</li></ul></div>=
+<div><br></div><div>Thanks,</div><div><br></div><div>Mike</div><div><br></d=
+iv></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"l=
+tr" class=3D"gmail_attr">On Mon, Jan 19, 2026 at 10:10=E2=80=AFAM Alice Lim=
+ &lt;alice.lim@design.tech&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex"><div dir=3D"ltr">Dear OpenBMC team,<br><br>Please fin=
+d attached signed CLA from TechDesign House d.o.o Beograd.<br>We are design=
+ing both hardware and software for the server equipment.=C2=A0 Would love t=
+o contribute our findings to the OpenBMC community.<br><br>Thank you,<br>Al=
+ice Lim</div>
+</blockquote></div>
+
+--00000000000090d9780648d6f72b--
 
