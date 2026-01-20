@@ -1,56 +1,167 @@
-Return-Path: <openbmc+bounces-1253-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1257-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id xSTtBPWtb2k7GgAAu9opvQ
-	(envelope-from <openbmc+bounces-1253-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:31:49 +0100
+	id 0FPzBgnWb2mgMQAAu9opvQ
+	(envelope-from <openbmc+bounces-1257-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:22:49 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C102F47971
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:31:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B54864A368
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:22:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dwRRs1FsJz3bf8;
-	Tue, 20 Jan 2026 23:27:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwcfV5HJGz2xS2;
+	Wed, 21 Jan 2026 06:22:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768912073;
-	cv=none; b=bwlBoj/blWPDyTXsWP9f9iziyf/wqYsNLSqp9YMikxik3Qhf3fbJjV0PflLD2IbrdnYM0SaobX1AzisndxjIZwcFPur3Z19eq1mo0wUCBZBCZPKpgDQMFnP1BZCnpH5okW9gfh4y3qepsSj/NRDLIFZlHs5mhmwco6eC8z7IzlvwaL/iZbtoxRnP4sSethb/vAeAQVUAUuUl6QCtg93qx7PU2g9Es7wgO4pjb5EVC2NYJ+L9V69tgIGxrR53sp5fIGzjmfc2z3nPWX18VCFBag93HxWGNcOfq+RWAj/SsQxc5H8qzS3QjPCL9yaO+bxgu2AV9jUX0nqW9QizJE+MwA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768936962;
+	cv=none; b=RPmQUB6ALscQELto12EN9GMZNNEj+JbKG5s4MxSX/jVKPVr0/TJz3KBwjP/0EyPfMfPmV3U8lEOLnCOLa+PItw2g2C5Et1ohV1WaOwunVzrV+t+LWod6anXWqah/Yxr71jnCK2mvc2V5cLGUIyQkoS2k8QqLtyj79GSbSby9VebrD8mbAqUBs0e680cmyOz9eGG0TiYQmBuJ89W8b5bKuSW+gvcxs31cGQJsec5TZC65NlF2eeJg7M02n5NzbGH6bFtbF7n13zQ3ZywjHt5tJG8lD9zrX21QBZ6SQJV3L3YsOi+lzsVEcG8ve0HDJYFUzyj36DhMTsKvKx/BKEvxvQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768912073; c=relaxed/relaxed;
-	bh=dWzUL86zeloyhVgkXz4snN6gH5GJmE76J80J6yEf0kk=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=jebF9VdZ2izzUNmp40IoRdW3KEkpCASj3kKTeJ436wfFlw2v7CPtGEiIn3z7X9OPSNrZZVNMA9LvuPxWR871jZh194KuMCIo6+kq+J578wf0SDhHPiDlWETwNsKcVXTREzsW5BhpNJSxHaSen0GPQ07+6asUDOv84+Rlpq0RVKv2u5PUXCFtiYNlpx1p7uVdrZKZkfShDbs+k38vot8m1TRQ7SzmLku278hFkPYVsQL1VwgQnEntXf9HI5WRjuQFiUGUaJSbINkucu2vbm3kXn28BpuSjbxvy4V/uMAEoliZmSaZB9z/OHUTuUNQMXWPMVW5XmPNYN6GmKcrgVlfVQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=hHyqsg7S; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	t=1768936962; c=relaxed/relaxed;
+	bh=lcXd3cvPTu9VkrGcGqRVsztLa61LAEuGhmJQzieO1wY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=d4nxwcoPJKBVEFo52F9zzUWHmhGA9I2bcwNGtUp9g45JNiXqgrT/wvTNV5nNjp1t4MW4SbSDW6iK+EsfGEnszXBBC2kq6GEpm+3Sof2piLGEV9EPs0Kh7M2U5790r4A3ozOYaA+RoGzO90FwvciA/jWOs9r28U4yFA67m2TTP91jXzI41iR3QF2JtwgoRQ72TBM/zPLeD1hA5M9mIq4Ryq83dTNHsprQklx0o7Df+JExdJXJZYgujlXKVCpRlnXlVwHOUxhnzZfUvMmfrEPwtQIneuSpiBIGkcCBo0BedaqdxrOTFD9DvyGtIZLiPdjYBlcCoIlA/hBY6MYw93dwXQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YlIDWci6; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=hHyqsg7S;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YlIDWci6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwRRr2XfJz30T8;
-	Tue, 20 Jan 2026 23:27:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwcfT3kzRz2x9M;
+	Wed, 21 Jan 2026 06:22:41 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id 3380D4376F;
-	Tue, 20 Jan 2026 12:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B855DC16AAE;
-	Tue, 20 Jan 2026 12:27:49 +0000 (UTC)
+	by sea.source.kernel.org (Postfix) with ESMTP id 56DD542E46;
+	Tue, 20 Jan 2026 19:22:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BB5C19422;
+	Tue, 20 Jan 2026 19:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768912069;
-	bh=OBQa66E8qIIZZ+a5/f/YUB/uMB9Oa+5RXnBGA2tH1VA=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=hHyqsg7SLKU6D/+NrFAwaN3MhGr5XHbaGDgQQaIQvl+t/iY5qBmfoYu4l8P1Lcgm2
-	 oqJ3zQmgw1zYfVFAqf8RWA870XZkWL9FQDro7p9evW2z0tw4c4/sBvgKaSQtE4S5hn
-	 CdQsPuEKhcpai1OKgQmiT+5ZVmFPe9frZIGN4ZfeuxtJ7DNvwhniQ85cZa9PK0IB8T
-	 LRTiByz0h8vDb+LxO4ccWKXYiOI8JKsTMY1lsJ9exLUtk9yiLYW4Mi8tjUvTgSQUVa
-	 U4O5JcFDH62U61e3HJyoNXKzJhwJ7VTiD1wcAU6iW1MKXr8WJHEzxlNP0uS3iWfgpB
-	 YOcSVoJ6njokA==
-Date: Tue, 20 Jan 2026 06:27:48 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1768936958;
+	bh=OVmbkw3k7fJ26f3GTMylBqqrvRkFQLNjf2AcM9UevMU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=YlIDWci6NaIrYvDjAq2yhQz8tWegT2Dg6owXkPTtWwCCNZy6TIGjxdkf0SjWMqrBS
+	 HZ1OYluozzxuGUb+8XWZyPhjHzhZZBTdn+x4fAQviriIGxbMX1dqT/c1f/SDma9EII
+	 glDqd9riC4rVx6B2QSNL57WNsH5WjpCsMft/TEmFUb+YsHy2dFuwVHN2w/p0QKAC/w
+	 5Sj7i2icD1/pyQOPwPNE/B2LChkgA736lCjfJaMApcMxmC8AfGe77IDEawz4zO7gsp
+	 7BnFoBJwZbhJtt0PHorTsf9ENVZR5l7hg6xF7YMzjdh3zo3J0vrT/Hr5cse6h9pQHI
+	 VNOGdReIfciTA==
+From: Mark Brown <broonie@kernel.org>
+To: Varshini Rajendran <varshini.rajendran@microchip.com>, 
+ Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Sunny Luo <sunny.luo@amlogic.com>, Janne Grunau <j@jannau.net>, 
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>, 
+ Manikandan Muralidharan <manikandan.m@microchip.com>, 
+ David Lechner <dlechner@baylibre.com>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>, 
+ Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>, 
+ Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>, 
+ Charles Keepax <ckeepax@opensource.cirrus.com>, 
+ Bartosz Golaszewski <brgl@kernel.org>, 
+ =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>, 
+ Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>, 
+ Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>, 
+ Sakari Ailus <sakari.ailus@linux.intel.com>, 
+ Huacai Chen <chenhuacai@kernel.org>, 
+ Xianwei Zhao <xianwei.zhao@amlogic.com>, 
+ Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>, 
+ Sergio Perez Gonzalez <sperezglz@gmail.com>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>, 
+ Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Rosen Penev <rosenp@gmail.com>, Luis de Arquer <luis.dearquer@inertim.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
+ Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>, 
+ Patrice Chotard <patrice.chotard@foss.st.com>, 
+ =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clement.legoffic@foss.st.com>, 
+ Alessandro Grassi <alessandro.grassi@mailbox.org>, 
+ Chen-Yu Tsai <wens@kernel.org>, Darshan R <rathod.darshan.0896@gmail.com>, 
+ Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>, 
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-amlogic@lists.infradead.org, asahi@lists.linux.dev, 
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
+ linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+ patches@opensource.cirrus.com, imx@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+ linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+ linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+ Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>, 
+ Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Ryan Wanner <ryan.wanner@microchip.com>, 
+ Michael Hennerich <michael.hennerich@analog.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Kamal Dasu <kamal.dasu@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ William Zhang <william.zhang@broadcom.com>, 
+ Kursad Oney <kursad.oney@broadcom.com>, 
+ Anand Gore <anand.gore@broadcom.com>, 
+ =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>, 
+ David Rhodes <david.rhodes@cirrus.com>, 
+ Richard Fitzgerald <rf@opensource.cirrus.com>, 
+ Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
+ Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
+ Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>, 
+ Yinbo Zhu <zhuyinbo@loongson.cn>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Daire McNamara <daire.mcnamara@microchip.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
+ Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>, 
+ Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, 
+ Chris Packham <chris.packham@alliedtelesis.co.nz>, 
+ Heiko Stuebner <heiko@sntech.de>, 
+ Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
+ Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
+ Orson Zhai <orsonzhai@gmail.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Alain Volmat <alain.volmat@foss.st.com>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>, 
+ Masahisa Kojima <masahisa.kojima@linaro.org>, 
+ Jassi Brar <jaswinder.singh@linaro.org>, 
+ Laxman Dewangan <ldewangan@nvidia.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Sowjanya Komatineni <skomatineni@nvidia.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+ Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
+In-Reply-To: <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
+References: <20260108203004.3538449-1-andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v1 0/4] spi: Make SPI core to take care of fwnode
+ assignment
+Message-Id: <176893693352.778248.9155805475563647239.b4-ty@kernel.org>
+Date: Tue, 20 Jan 2026 19:22:13 +0000
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -62,120 +173,89 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: bmc-sw@aspeedtech.com, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org, 
- Linus Walleij <linusw@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bartosz Golaszewski <brgl@kernel.org>, Joel Stanley <joel@jms.id.au>, 
- Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org
-To: Billy Tsai <billy_tsai@aspeedtech.com>
-In-Reply-To: <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
-References: <20260120-upstream_pinctrl-v3-0-868fbf8413b5@aspeedtech.com>
- <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
-Message-Id: <176891206887.1610236.16662937885214497301.robh@kernel.org>
-Subject: Re: [PATCH v3 2/3] dt-bindings: pinctrl: aspeed: Add support for
- AST27xx
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-47773
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spamd-Result: default: False [0.30 / 15.00];
+X-Spamd-Result: default: False [-0.70 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1253-lists,openbmc=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	TAGGED_FROM(0.00)[bounces-1257-lists,openbmc=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[microchip.com,iopsys.eu,collabora.com,amlogic.com,jannau.net,aspeedtech.com,andestech.com,baylibre.com,broadcom.com,gmail.com,qq.com,cixtech.com,kernel.org,opensource.cirrus.com,bootlin.com,outlook.com,linaro.org,marek.ca,nxp.com,linux.intel.com,vivo.com,quicinc.com,inertim.com,glider.be,renesas.com,foss.st.com,mailbox.org,nvidia.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[microchip.com,bootlin.com,tuxon.dev,kernel.org,airoha.com,gompa.dev,kaod.org,jms.id.au,codeconstruct.com.au,analog.com,broadcom.com,milecki.pl,cirrus.com,opensource.cirrus.com,gmail.com,nxp.com,hpe.com,huawei.com,pengutronix.de,intel.com,loongson.cn,linaro.org,baylibre.com,googlemail.com,google.com,zonque.org,free.fr,alliedtelesis.co.nz,sntech.de,renesas.com,samsung.com,sifive.com,linux.alibaba.com,foss.st.com,nvidia.com,socionext.com,gmx.net,amd.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,openbmc@lists.ozlabs.org];
 	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[148];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,aspeedtech.com:email,0.0.1.144:email,lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
-X-Rspamd-Queue-Id: C102F47971
+	TAGGED_RCPT(0.00)[openbmc,renesas];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
+X-Rspamd-Queue-Id: B54864A368
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-On Tue, 20 Jan 2026 19:43:06 +0800, Billy Tsai wrote:
-> Add bindings for the pin controller found in ASPEED AST27xx SoCs.
+On Thu, 08 Jan 2026 21:23:37 +0100, Andy Shevchenko wrote:
+> It seems all of the SPI drivers want to propagate fwnode (or of_node)
+> of the physical device to the SPI device. Make sure we don't duplicate
+> it over and over in each new driver (+2 in this cycle) by making core
+> to take care of that. Note, similar is done already by IIO and
+> I²C subsystems.
 > 
-> The AST2700 SoC consists of two interconnected SoC instances, each
-> with its own pin controller register block managed by a separate
-> System Control Unit (SCU).
+> There is one noticeable and quite specific case that is taken care in
+> the first patch and would be nice to have a confirmation from Cirrus
+> that everything is okay. The rest is just a mechanical conversion.
 > 
-> Introduce the "aspeed,ast2700-soc0-pinctrl" compatible string to
-> describe the SoC0 pin controller, which is not compatible with
-> existing ASPEED pinctrl bindings.
-> 
-> The SoC1 pin controller follows a regular and predictable register
-> layout and can be described using an existing generic pinctrl
-> binding, therefore no dedicated AST2700-specific compatible string
-> is introduced for it.
-> 
-> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-> ---
->  .../bindings/mfd/aspeed,ast2x00-scu.yaml           |  27 +++++
->  .../pinctrl/aspeed,ast2700-soc0-pinctrl.yaml       | 130 +++++++++++++++++++++
->  2 files changed, 157 insertions(+)
-> 
+> [...]
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Applied to
 
-yamllint warnings/errors:
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'anyOf' conditional failed, one must be fixed:
-	'pins' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'anyOf' conditional failed, one must be fixed:
-	'drive-strength' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'pins' is not one of ['type', 'description', 'dependencies', 'dependentRequired', 'dependentSchemas', 'properties', 'patternProperties', 'additionalProperties', 'unevaluatedProperties', 'deprecated', 'required', 'not', 'if', 'else', 'then', 'allOf', 'anyOf', 'oneOf', '$ref']
-	from schema $id: http://devicetree.org/meta-schemas/nodes.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'drive-strength' is not one of ['type', 'description', 'dependencies', 'dependentRequired', 'dependentSchemas', 'properties', 'patternProperties', 'additionalProperties', 'unevaluatedProperties', 'deprecated', 'required', 'not', 'if', 'else', 'then', 'allOf', 'anyOf', 'oneOf', '$ref']
-	from schema $id: http://devicetree.org/meta-schemas/nodes.yaml
-Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dts:63.13-50: Warning (ranges_format): /example-1/syscon@12c02000:ranges: "ranges" property has invalid length (16 bytes) (parent #address-cells == 1, child #address-cells == 1, #size-cells == 1)
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: syscon@12c02000 (aspeed,ast2700-scu0): reg: [[0, 314580992], [0, 4096]] is too long
-	from schema $id: http://devicetree.org/schemas/mfd/aspeed,ast2x00-scu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: pinctrl@400 (aspeed,ast2700-soc0-pinctrl): 'reg' does not match any of the regexes: '-state$', '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: pinctrl@400 (aspeed,ast2700-soc0-pinctrl): emmcclk-driving-state: 'drive-strength', 'pins' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
+Thanks!
 
-doc reference errors (make refcheckdocs):
+[1/4] spi: Propagate default fwnode to the SPI controller device
+      commit: f2d1a3318eb1ec860999db48cb8d13b43261624d
+[2/4] spi: Drop duplicate of_node assignment
+      commit: 3974a585be78a1dc90a19d5cf1846a99954e3842
+[3/4] spi: Drop duplicate fwnode assignment
+      commit: 103c510e1c6832720059756d155dd13a42baa7ab
+[4/4] spi: Drop duplicate device_set_node() call
+      commit: 37fbc1ab0f225d23f0839260a11375b4f1f7cf8c
 
-See https://patchwork.kernel.org/project/devicetree/patch/20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-pip3 install dtschema --upgrade
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks,
+Mark
 
 
