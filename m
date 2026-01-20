@@ -1,54 +1,56 @@
-Return-Path: <openbmc+bounces-1256-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1253-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oOfgKBOhb2kLCAAAu9opvQ
-	(envelope-from <openbmc+bounces-1256-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 16:36:51 +0100
+	id xSTtBPWtb2k7GgAAu9opvQ
+	(envelope-from <openbmc+bounces-1253-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:31:49 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BDAD4637C
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 16:36:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C102F47971
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:31:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dwRVl1GqXz3c1J;
-	Tue, 20 Jan 2026 23:30:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwRRs1FsJz3bf8;
+	Tue, 20 Jan 2026 23:27:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768912223;
-	cv=none; b=a7CRhAi1R2FRTNzC4ZjGU7e+PbybF2sKhoAtniA5gNK87+qbBDfEWLeoHx0Br5gBOwlIsUuatTLGO1hoeZVT313f7wlDxXvrOaqc+VuiHeYOujct0UDHh1amOr3ZISjUI1YlrQyKOgDSAyBC1ppI7RsBMjfWYqQb3r5waryaYnsXmJCoyW0M8aWPHtelWvF7qKKNlra1aQnRxS2CQXPQOxka4YnqRZ1nX26n5v0r+7IvlBkaJz6rcKuWo0VVaaED0DsJN7BxT80xrDcfdiJsyFcrljnu9cQcAdFN/fNa6e9t4TjiB58KfGQXyu7ubDEsjjfKCJavPEScAQT86mb5QQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.234.252.31
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768912073;
+	cv=none; b=bwlBoj/blWPDyTXsWP9f9iziyf/wqYsNLSqp9YMikxik3Qhf3fbJjV0PflLD2IbrdnYM0SaobX1AzisndxjIZwcFPur3Z19eq1mo0wUCBZBCZPKpgDQMFnP1BZCnpH5okW9gfh4y3qepsSj/NRDLIFZlHs5mhmwco6eC8z7IzlvwaL/iZbtoxRnP4sSethb/vAeAQVUAUuUl6QCtg93qx7PU2g9Es7wgO4pjb5EVC2NYJ+L9V69tgIGxrR53sp5fIGzjmfc2z3nPWX18VCFBag93HxWGNcOfq+RWAj/SsQxc5H8qzS3QjPCL9yaO+bxgu2AV9jUX0nqW9QizJE+MwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768912223; c=relaxed/relaxed;
-	bh=x4U/KqrlkovWrEFeaTiGkh/Luq0q6dmHQVuEhJlPhds=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CS9NJkQ4st6Wf3xzsUZL3yC8LoaSFgybLdr8miPEJQ5NzJp4z+JuUARzqc/h50R3gDMdImecQcdO1KuQ4eMS9nroSvVxO3AzyXdB+/O0iW2DRB+WBXMfk1PPQeJsnCbO8dUJEEPxIBciX3Z4ztWMdjXCaaKSoiKovGIwc1K9QMycA8J05mr1/32PuoJga9MdA0KN6VZ9PkwXFB94UWeQIbE0vi2bXzdg5BXieL/l4fI0EvmMuG7UX4Yk73qUmQ5FDCS9Z/ugqYAWDgg0vyBciWfhyFTgaAnu1wW4KYlsv83exktubTYNhyIJAK6AzaWa63Z0L1N76appWwjl882R3w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=chin-ting_kuo@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	t=1768912073; c=relaxed/relaxed;
+	bh=dWzUL86zeloyhVgkXz4snN6gH5GJmE76J80J6yEf0kk=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=jebF9VdZ2izzUNmp40IoRdW3KEkpCASj3kKTeJ436wfFlw2v7CPtGEiIn3z7X9OPSNrZZVNMA9LvuPxWR871jZh194KuMCIo6+kq+J578wf0SDhHPiDlWETwNsKcVXTREzsW5BhpNJSxHaSen0GPQ07+6asUDOv84+Rlpq0RVKv2u5PUXCFtiYNlpx1p7uVdrZKZkfShDbs+k38vot8m1TRQ7SzmLku278hFkPYVsQL1VwgQnEntXf9HI5WRjuQFiUGUaJSbINkucu2vbm3kXn28BpuSjbxvy4V/uMAEoliZmSaZB9z/OHUTuUNQMXWPMVW5XmPNYN6GmKcrgVlfVQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=hHyqsg7S; dkim-atps=neutral; spf=pass (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=hHyqsg7S;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.234.252.31; helo=sea.source.kernel.org; envelope-from=robh@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [172.234.252.31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwRVk3W8pz3bt7;
-	Tue, 20 Jan 2026 23:30:22 +1100 (AEDT)
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 20:30:05 +0800
-Received: from aspeedtech.com (192.168.10.13) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 20:30:05 +0800
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-To: <clg@kaod.org>, <broonie@kernel.org>, <boris.brezillon@bootlin.com>,
-	<joel@jms.id.au>, <andrew@codeconstruct.com.au>,
-	<linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
-	<linux-spi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>, <BMC-SW@aspeedtech.com>,
-	<pmenzel@molgen.mpg.de>
-Subject: [PATCH v3 2/2] spi: aspeed: Add support for non-spi-mem devices
-Date: Tue, 20 Jan 2026 20:30:05 +0800
-Message-ID: <20260120123005.1392071-3-chin-ting_kuo@aspeedtech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260120123005.1392071-1-chin-ting_kuo@aspeedtech.com>
-References: <20260120123005.1392071-1-chin-ting_kuo@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwRRr2XfJz30T8;
+	Tue, 20 Jan 2026 23:27:52 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 3380D4376F;
+	Tue, 20 Jan 2026 12:27:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B855DC16AAE;
+	Tue, 20 Jan 2026 12:27:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768912069;
+	bh=OBQa66E8qIIZZ+a5/f/YUB/uMB9Oa+5RXnBGA2tH1VA=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=hHyqsg7SLKU6D/+NrFAwaN3MhGr5XHbaGDgQQaIQvl+t/iY5qBmfoYu4l8P1Lcgm2
+	 oqJ3zQmgw1zYfVFAqf8RWA870XZkWL9FQDro7p9evW2z0tw4c4/sBvgKaSQtE4S5hn
+	 CdQsPuEKhcpai1OKgQmiT+5ZVmFPe9frZIGN4ZfeuxtJ7DNvwhniQ85cZa9PK0IB8T
+	 LRTiByz0h8vDb+LxO4ccWKXYiOI8JKsTMY1lsJ9exLUtk9yiLYW4Mi8tjUvTgSQUVa
+	 U4O5JcFDH62U61e3HJyoNXKzJhwJ7VTiD1wcAU6iW1MKXr8WJHEzxlNP0uS3iWfgpB
+	 YOcSVoJ6njokA==
+Date: Tue, 20 Jan 2026 06:27:48 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -60,324 +62,120 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: bmc-sw@aspeedtech.com, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org, 
+ Linus Walleij <linusw@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bartosz Golaszewski <brgl@kernel.org>, Joel Stanley <joel@jms.id.au>, 
+ Lee Jones <lee@kernel.org>, linux-gpio@vger.kernel.org
+To: Billy Tsai <billy_tsai@aspeedtech.com>
+In-Reply-To: <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
+References: <20260120-upstream_pinctrl-v3-0-868fbf8413b5@aspeedtech.com>
+ <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
+Message-Id: <176891206887.1610236.16662937885214497301.robh@kernel.org>
+Subject: Re: [PATCH v3 2/3] dt-bindings: pinctrl: aspeed: Add support for
+ AST27xx
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spamd-Result: default: False [1.50 / 15.00];
-	DMARC_POLICY_QUARANTINE(1.50)[aspeedtech.com : SPF not aligned (relaxed), No valid DKIM,quarantine];
+X-Spamd-Result: default: False [0.30 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_RCPT(0.00)[openbmc];
-	R_DKIM_NA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[chin-ting_kuo@aspeedtech.com,openbmc@lists.ozlabs.org];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TO_DN_NONE(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1256-lists,openbmc=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[]
-X-Rspamd-Queue-Id: 0BDAD4637C
+	TAGGED_FROM(0.00)[bounces-1253-lists,openbmc=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[openbmc,dt];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,openbmc@lists.ozlabs.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,aspeedtech.com:email,0.0.1.144:email,lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
+X-Rspamd-Queue-Id: C102F47971
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The ASPEED FMC/SPI controller may be shared by spi-mem devices and
-other SPI peripherals that do not use the spi-mem framework.
 
-The driver currently assumes spi-mem semantics for all devices,
-while the controller also supports direct user mode access commonly
-used by non-spi-mem devices. This mismatch can result in incorrect
-behavior when different types of devices share the same controller.
+On Tue, 20 Jan 2026 19:43:06 +0800, Billy Tsai wrote:
+> Add bindings for the pin controller found in ASPEED AST27xx SoCs.
+> 
+> The AST2700 SoC consists of two interconnected SoC instances, each
+> with its own pin controller register block managed by a separate
+> System Control Unit (SCU).
+> 
+> Introduce the "aspeed,ast2700-soc0-pinctrl" compatible string to
+> describe the SoC0 pin controller, which is not compatible with
+> existing ASPEED pinctrl bindings.
+> 
+> The SoC1 pin controller follows a regular and predictable register
+> layout and can be described using an existing generic pinctrl
+> binding, therefore no dedicated AST2700-specific compatible string
+> is introduced for it.
+> 
+> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> ---
+>  .../bindings/mfd/aspeed,ast2x00-scu.yaml           |  27 +++++
+>  .../pinctrl/aspeed,ast2700-soc0-pinctrl.yaml       | 130 +++++++++++++++++++++
+>  2 files changed, 157 insertions(+)
+> 
 
-Therefore, a user mode based path for non-spi-mem devices is added
-by implementing the transfer_one() callback and wiring up
-prepare_message() and unprepare_message() so controller state is
-initialized and restored for user mode transfers. This allows
-non-spi-mem devices to operate correctly alongside spi-mem devices
-on a shared controller.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-This patch has been tested on:
-- AST2700 EVB + Infineon and ST SPI TPM device.
-- AST2x00 EVB + spidev_test utility and the output waveforms are
-  verified with logic analyzer.
-- AST2x00 EVB + SPI NOR flash read/write regression.
+yamllint warnings/errors:
 
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
----
- drivers/spi/spi-aspeed-smc.c | 134 +++++++++++++++++++++++++++++++++--
- 1 file changed, 128 insertions(+), 6 deletions(-)
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'anyOf' conditional failed, one must be fixed:
+	'pins' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	'type' was expected
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'anyOf' conditional failed, one must be fixed:
+	'drive-strength' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	'type' was expected
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'pins' is not one of ['type', 'description', 'dependencies', 'dependentRequired', 'dependentSchemas', 'properties', 'patternProperties', 'additionalProperties', 'unevaluatedProperties', 'deprecated', 'required', 'not', 'if', 'else', 'then', 'allOf', 'anyOf', 'oneOf', '$ref']
+	from schema $id: http://devicetree.org/meta-schemas/nodes.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml: patternProperties:-state$: 'drive-strength' is not one of ['type', 'description', 'dependencies', 'dependentRequired', 'dependentSchemas', 'properties', 'patternProperties', 'additionalProperties', 'unevaluatedProperties', 'deprecated', 'required', 'not', 'if', 'else', 'then', 'allOf', 'anyOf', 'oneOf', '$ref']
+	from schema $id: http://devicetree.org/meta-schemas/nodes.yaml
+Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dts:63.13-50: Warning (ranges_format): /example-1/syscon@12c02000:ranges: "ranges" property has invalid length (16 bytes) (parent #address-cells == 1, child #address-cells == 1, #size-cells == 1)
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: syscon@12c02000 (aspeed,ast2700-scu0): reg: [[0, 314580992], [0, 4096]] is too long
+	from schema $id: http://devicetree.org/schemas/mfd/aspeed,ast2x00-scu.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: pinctrl@400 (aspeed,ast2700-soc0-pinctrl): 'reg' does not match any of the regexes: '-state$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.example.dtb: pinctrl@400 (aspeed,ast2700-soc0-pinctrl): emmcclk-driving-state: 'drive-strength', 'pins' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/aspeed,ast2700-soc0-pinctrl.yaml
 
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index db3e096f2eb0..3949f94b6667 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -48,6 +48,8 @@
- /* CEx Address Decoding Range Register */
- #define CE0_SEGMENT_ADDR_REG		0x30
- 
-+#define FULL_DUPLEX_RX_DATA		0x1e4
-+
- /* CEx Read timing compensation register */
- #define CE0_TIMING_COMPENSATION_REG	0x94
- 
-@@ -81,6 +83,7 @@ struct aspeed_spi_data {
- 	u32	hclk_mask;
- 	u32	hdiv_max;
- 	u32	min_window_size;
-+	bool	full_duplex;
- 
- 	phys_addr_t (*segment_start)(struct aspeed_spi *aspi, u32 reg);
- 	phys_addr_t (*segment_end)(struct aspeed_spi *aspi, u32 reg);
-@@ -105,6 +108,7 @@ struct aspeed_spi {
- 
- 	struct clk		*clk;
- 	u32			 clk_freq;
-+	u8			 cs_change;
- 
- 	struct aspeed_spi_chip	 chips[ASPEED_SPI_MAX_NUM_CS];
- };
-@@ -280,7 +284,8 @@ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
- }
- 
- /* support for 1-1-1, 1-1-2 or 1-1-4 */
--static bool aspeed_spi_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
-+static bool aspeed_spi_supports_mem_op(struct spi_mem *mem,
-+				       const struct spi_mem_op *op)
- {
- 	if (op->cmd.buswidth > 1)
- 		return false;
-@@ -305,7 +310,8 @@ static bool aspeed_spi_supports_op(struct spi_mem *mem, const struct spi_mem_op
- 
- static const struct aspeed_spi_data ast2400_spi_data;
- 
--static int do_aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
-+static int do_aspeed_spi_exec_mem_op(struct spi_mem *mem,
-+				     const struct spi_mem_op *op)
- {
- 	struct aspeed_spi *aspi = spi_controller_get_devdata(mem->spi->controller);
- 	struct aspeed_spi_chip *chip = &aspi->chips[spi_get_chipselect(mem->spi, 0)];
-@@ -367,11 +373,12 @@ static int do_aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *o
- 	return ret;
- }
- 
--static int aspeed_spi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
-+static int aspeed_spi_exec_mem_op(struct spi_mem *mem,
-+				  const struct spi_mem_op *op)
- {
- 	int ret;
- 
--	ret = do_aspeed_spi_exec_op(mem, op);
-+	ret = do_aspeed_spi_exec_mem_op(mem, op);
- 	if (ret)
- 		dev_err(&mem->spi->dev, "operation failed: %d\n", ret);
- 	return ret;
-@@ -773,8 +780,8 @@ static ssize_t aspeed_spi_dirmap_read(struct spi_mem_dirmap_desc *desc,
- }
- 
- static const struct spi_controller_mem_ops aspeed_spi_mem_ops = {
--	.supports_op = aspeed_spi_supports_op,
--	.exec_op = aspeed_spi_exec_op,
-+	.supports_op = aspeed_spi_supports_mem_op,
-+	.exec_op = aspeed_spi_exec_mem_op,
- 	.get_name = aspeed_spi_get_name,
- 	.dirmap_create = aspeed_spi_dirmap_create,
- 	.dirmap_read = aspeed_spi_dirmap_read,
-@@ -843,6 +850,110 @@ static void aspeed_spi_enable(struct aspeed_spi *aspi, bool enable)
- 		aspeed_spi_chip_enable(aspi, cs, enable);
- }
- 
-+static int aspeed_spi_user_prepare_msg(struct spi_controller *ctlr,
-+				       struct spi_message *msg)
-+{
-+	struct aspeed_spi *aspi =
-+		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-+	const struct aspeed_spi_data *data = aspi->data;
-+	struct spi_device *spi = msg->spi;
-+	u32 cs = spi_get_chipselect(spi, 0);
-+	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-+	u32 ctrl_val;
-+	u32 clk_div = data->get_clk_div(chip, spi->max_speed_hz);
-+
-+	ctrl_val = chip->ctl_val[ASPEED_SPI_BASE];
-+	ctrl_val &= ~CTRL_IO_MODE_MASK & data->hclk_mask;
-+	ctrl_val |= clk_div;
-+	chip->ctl_val[ASPEED_SPI_BASE] = ctrl_val;
-+
-+	if (aspi->cs_change == 0)
-+		aspeed_spi_start_user(chip);
-+
-+	return 0;
-+}
-+
-+static int aspeed_spi_user_unprepare_msg(struct spi_controller *ctlr,
-+					 struct spi_message *msg)
-+{
-+	struct aspeed_spi *aspi =
-+		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-+	struct spi_device *spi = msg->spi;
-+	u32 cs = spi_get_chipselect(spi, 0);
-+	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-+
-+	if (aspi->cs_change == 0)
-+		aspeed_spi_stop_user(chip);
-+
-+	return 0;
-+}
-+
-+static void aspeed_spi_user_transfer_tx(struct aspeed_spi *aspi,
-+					struct spi_device *spi,
-+					const u8 *tx_buf, u8 *rx_buf,
-+					void *dst, u32 len)
-+{
-+	const struct aspeed_spi_data *data = aspi->data;
-+	bool full_duplex_transfer = data->full_duplex && tx_buf == rx_buf;
-+	u32 i;
-+
-+	if (full_duplex_transfer &&
-+	    !!(spi->mode & (SPI_TX_DUAL | SPI_TX_QUAD |
-+			    SPI_RX_DUAL | SPI_RX_QUAD))) {
-+		dev_err(aspi->dev,
-+			"full duplex is only supported for single IO mode\n");
-+		return;
-+	}
-+
-+	for (i = 0; i < len; i++) {
-+		writeb(tx_buf[i], dst);
-+		if (full_duplex_transfer)
-+			rx_buf[i] = readb(aspi->regs + FULL_DUPLEX_RX_DATA);
-+	}
-+}
-+
-+static int aspeed_spi_user_transfer(struct spi_controller *ctlr,
-+				    struct spi_device *spi,
-+				    struct spi_transfer *xfer)
-+{
-+	struct aspeed_spi *aspi =
-+		(struct aspeed_spi *)spi_controller_get_devdata(ctlr);
-+	u32 cs = spi_get_chipselect(spi, 0);
-+	struct aspeed_spi_chip *chip = &aspi->chips[cs];
-+	void __iomem *ahb_base = aspi->chips[cs].ahb_base;
-+	const u8 *tx_buf = xfer->tx_buf;
-+	u8 *rx_buf = xfer->rx_buf;
-+
-+	dev_dbg(aspi->dev,
-+		"[cs%d] xfer: width %d, len %u, tx %p, rx %p\n",
-+		cs, xfer->bits_per_word, xfer->len,
-+		tx_buf, rx_buf);
-+
-+	if (tx_buf) {
-+		if (spi->mode & SPI_TX_DUAL)
-+			aspeed_spi_set_io_mode(chip, CTRL_IO_DUAL_DATA);
-+		else if (spi->mode & SPI_TX_QUAD)
-+			aspeed_spi_set_io_mode(chip, CTRL_IO_QUAD_DATA);
-+
-+		aspeed_spi_user_transfer_tx(aspi, spi, tx_buf, rx_buf,
-+					    (void *)ahb_base, xfer->len);
-+	}
-+
-+	if (rx_buf && rx_buf != tx_buf) {
-+		if (spi->mode & SPI_RX_DUAL)
-+			aspeed_spi_set_io_mode(chip, CTRL_IO_DUAL_DATA);
-+		else if (spi->mode & SPI_RX_QUAD)
-+			aspeed_spi_set_io_mode(chip, CTRL_IO_QUAD_DATA);
-+
-+		ioread8_rep(ahb_base, rx_buf, xfer->len);
-+	}
-+
-+	xfer->error = 0;
-+	aspi->cs_change = xfer->cs_change;
-+
-+	return 0;
-+}
-+
- static int aspeed_spi_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -899,6 +1010,9 @@ static int aspeed_spi_probe(struct platform_device *pdev)
- 	ctlr->cleanup = aspeed_spi_cleanup;
- 	ctlr->num_chipselect = of_get_available_child_count(dev->of_node);
- 	ctlr->dev.of_node = dev->of_node;
-+	ctlr->prepare_message = aspeed_spi_user_prepare_msg;
-+	ctlr->unprepare_message = aspeed_spi_user_unprepare_msg;
-+	ctlr->transfer_one = aspeed_spi_user_transfer;
- 
- 	aspi->num_cs = ctlr->num_chipselect;
- 
-@@ -1455,6 +1569,7 @@ static const struct aspeed_spi_data ast2400_fmc_data = {
- 	.hclk_mask     = 0xfffff0ff,
- 	.hdiv_max      = 1,
- 	.min_window_size = 0x800000,
-+	.full_duplex   = false,
- 	.calibrate     = aspeed_spi_calibrate,
- 	.get_clk_div   = aspeed_get_clk_div_ast2400,
- 	.segment_start = aspeed_spi_segment_start,
-@@ -1471,6 +1586,7 @@ static const struct aspeed_spi_data ast2400_spi_data = {
- 	.timing	       = 0x14,
- 	.hclk_mask     = 0xfffff0ff,
- 	.hdiv_max      = 1,
-+	.full_duplex   = false,
- 	.get_clk_div   = aspeed_get_clk_div_ast2400,
- 	.calibrate     = aspeed_spi_calibrate,
- 	/* No segment registers */
-@@ -1485,6 +1601,7 @@ static const struct aspeed_spi_data ast2500_fmc_data = {
- 	.hclk_mask     = 0xffffd0ff,
- 	.hdiv_max      = 1,
- 	.min_window_size = 0x800000,
-+	.full_duplex   = false,
- 	.get_clk_div   = aspeed_get_clk_div_ast2500,
- 	.calibrate     = aspeed_spi_calibrate,
- 	.segment_start = aspeed_spi_segment_start,
-@@ -1502,6 +1619,7 @@ static const struct aspeed_spi_data ast2500_spi_data = {
- 	.hclk_mask     = 0xffffd0ff,
- 	.hdiv_max      = 1,
- 	.min_window_size = 0x800000,
-+	.full_duplex   = false,
- 	.get_clk_div   = aspeed_get_clk_div_ast2500,
- 	.calibrate     = aspeed_spi_calibrate,
- 	.segment_start = aspeed_spi_segment_start,
-@@ -1520,6 +1638,7 @@ static const struct aspeed_spi_data ast2600_fmc_data = {
- 	.hclk_mask     = 0xf0fff0ff,
- 	.hdiv_max      = 2,
- 	.min_window_size = 0x200000,
-+	.full_duplex   = false,
- 	.get_clk_div   = aspeed_get_clk_div_ast2600,
- 	.calibrate     = aspeed_spi_ast2600_calibrate,
- 	.segment_start = aspeed_spi_segment_ast2600_start,
-@@ -1538,6 +1657,7 @@ static const struct aspeed_spi_data ast2600_spi_data = {
- 	.hclk_mask     = 0xf0fff0ff,
- 	.hdiv_max      = 2,
- 	.min_window_size = 0x200000,
-+	.full_duplex   = false,
- 	.get_clk_div   = aspeed_get_clk_div_ast2600,
- 	.calibrate     = aspeed_spi_ast2600_calibrate,
- 	.segment_start = aspeed_spi_segment_ast2600_start,
-@@ -1556,6 +1676,7 @@ static const struct aspeed_spi_data ast2700_fmc_data = {
- 	.hclk_mask     = 0xf0fff0ff,
- 	.hdiv_max      = 2,
- 	.min_window_size = 0x10000,
-+	.full_duplex   = true,
- 	.get_clk_div   = aspeed_get_clk_div_ast2600,
- 	.calibrate     = aspeed_spi_ast2600_calibrate,
- 	.segment_start = aspeed_spi_segment_ast2700_start,
-@@ -1573,6 +1694,7 @@ static const struct aspeed_spi_data ast2700_spi_data = {
- 	.hclk_mask     = 0xf0fff0ff,
- 	.hdiv_max      = 2,
- 	.min_window_size = 0x10000,
-+	.full_duplex   = true,
- 	.get_clk_div   = aspeed_get_clk_div_ast2600,
- 	.calibrate     = aspeed_spi_ast2600_calibrate,
- 	.segment_start = aspeed_spi_segment_ast2700_start,
--- 
-2.34.1
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
