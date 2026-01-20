@@ -1,72 +1,170 @@
-Return-Path: <openbmc+bounces-1266-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1258-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SNEMJelNcWkahAAAu9opvQ
-	(envelope-from <openbmc+bounces-1266-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:06:33 +0100
+	id MDUgNB3Wb2mVRQAAu9opvQ
+	(envelope-from <openbmc+bounces-1258-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:23:09 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A14D85E7BE
-	for <lists+openbmc@lfdr.de>; Wed, 21 Jan 2026 23:06:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3B524A3C2
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 20:23:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dxJF15cKRz2yDY;
-	Thu, 22 Jan 2026 09:06:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwcfy52rHz2xS2;
+	Wed, 21 Jan 2026 06:23:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::334"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768582993;
-	cv=none; b=nnE6xlXO6fKJVx/hjWF7TAH2CsYyxd+v8s2YYI6ci0XvRWSzvFi43yYFuvE2x9G+pmXU4QbRoPJ7OomNZU1kpMpxBvLs5MqXaq0s7DNwcSNz+KoBP+B1wvhL6iwHSmLtYICyf8Tl1IypeCxEP0aMApMWXlai1rzg1Jv9MlUVHOe39CwytC7TV92m/mReRbLidxw+iVJkzFA6/YAy7Fj6XoxRj+G9+rwFAQD99QyYAeuIFn2AJTFo6CNvIhBfjela51t0Kd+Y+MHTKJxGGm3hF2ytOCEso2HQ1LeRnd9SJhV+lGlis5IaEahxr6fug4ULxGLma95dW/7/Zaht9S3bhw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768936986;
+	cv=none; b=kfXFjRW+f/j3oSS26kemdqrCXnj3jwpmZcgtS9NTFeXwryGwwWx15iuIJJ4FyI+ioyEEmQ5tT/lT1qKZLi0nwlRwzB4bRU4FX+KKNIh246jHwiqhNTlyZr3bqa9pwYX45HCXC0y29mSxnbht6tMwTDvmeYhjQfXRiP4tRxFrHhwnHG/VNbnWl1+WQLxL3gXP+GP16XpAcERrGUtZdPYOHMU4SG0eeek2kfa6kjnzATdLi71nOaRwF35qiJPR3RoNjX/FGz9CwcA/wWdkGgImXDTvu190Vyjuw8bKE4PzqBi3AzyxfY0RUc/blFXwLWNAH4oBKH0TqJYe14UEkrDYLw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768582993; c=relaxed/relaxed;
-	bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YF8baDIb3mRTA2h7vhOq3lzwETUsH31K/qR2xZnGDBHurSftm8lRT7IGs1mgEpDj1l+nFJ2/DpueBS/L07pkbmdiPybpgh7B+5ea0Wx4aIVjgex/K4p7leHkpfIabXrg1vlGvcUT2W/xo7hxff1E5c826dcOFbwL3ENL7EoTbiA1N80WH7Z8yiK6Rq1W9L+NobF+JH5P1cz1ZEECSG0WLoL/4hxvYTNrH6kJ54ZqNBhMTh3YwkogAi7SRFOFcobOb71Ios9hlz9+Qs9YvCuXznnSxbTbSqc0GCYzAqyYJjwxejts+ua1cWqzBYacxbNzC4gufxLejxoXt0Xs4JOdpA==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bUeISNcp; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1768936986; c=relaxed/relaxed;
+	bh=QC7n6HVwZ0EMJZYSS+nH+tnqVbWk5qUbcH3nkVMrG1E=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=jCSk0//JFQ77EEncHS60KjYidafP81MtedAOxKlFcJex4gCtgWwZD9Bn0gxrpfoJ5nDWEXC3eCYs3EhfgtOW7U2YOzIinxugDC68qW6WIvQCQVZYU5nmXVZt05nkaRbL07xCt3fOssvk1OaBu4YmT33qjg7+cNFf4M9y7/+ttSM7LIj2YkUCRExljhH4JS0Uwdm5Zwjgtg0vd5japGpLcM18Wsr87dtZ1ClX4JW9TQWt0i5hZ87LdiI4PUiqxeWFtefMZofkWggDhDtLf8VjvKY35nnmTjU6CsT57Yh2L+Qd3A26ZEykrvnXEVNdhP7cIEekdHgjqrL5L7QjEazoUA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jgX58MKi; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=bUeISNcp;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=jgX58MKi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=broonie@kernel.org; receiver=lists.ozlabs.org)
+Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dt5lN0wJkz2xS2
-	for <openbmc@lists.ozlabs.org>; Sat, 17 Jan 2026 04:03:11 +1100 (AEDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4801d98cf39so8397155e9.1
-        for <openbmc@lists.ozlabs.org>; Fri, 16 Jan 2026 09:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768582987; x=1769187787; darn=lists.ozlabs.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
-        b=bUeISNcpcP2n+9evfsa3UgR1ZtodzMosVILRzXPw3Ly0hcUHYRqGLmviL1NoL3eDd2
-         xD9NX63YmtKbP2zucpdS89W7YVkrR09zgJmSeZIp+HVvMtYMAgkEqHotcTEAV6P2LKO+
-         yuwBT7JqTiuVlDSM0kiZxZbualLZ/jHBcmYIHkXFvOqxukELtWMdarQo74KN8voJMM6b
-         DSPgU/4pxarZZZ2dsw9apl6WEUhTFYwkOZoXRGB6W065ozy/hZyKWDU6fbapX+WFhg0o
-         bCMJBCnPan9doRFZGuCMNMLhzlunQrYsnu+ENP4IcpUWO1bXrJbFaipqjac+J8iXFa90
-         tcZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768582987; x=1769187787;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ryz/kFTNFKVINZFAt4aXBH3C+UeBVgyLhc/OIrJOjCU=;
-        b=ISJWrYOxzJZy7Zbd2sASsmj/JmxhZP87MhJf3R0fzmWDcDKuBQYgEDdF2QV6ebT4wQ
-         cHnmWBtc/OpEPgco1DQKzu4jVqivxxwSdc6TDAbfzaEPD3TbTtQk6AQsGj9MgfKBcr+6
-         36mIcH39gWo0YLmqkChYNUPUvPrG+C+u0ENqKO5umkf8WEND7ONbhornlU5E5aTObRqE
-         ZRdSoDDq8zsKrTld6JQIqRJpMVYGKR1LASVMA1boeB4N39Z7hOBhO9WYLSp//bQn+Lqb
-         qDQuAGitU6hHppvdYleLjmIfCqAixA93GImYMh9aF75owiDILIicYcdA6mbMVIBkxWmA
-         S9ng==
-X-Gm-Message-State: AOJu0YxOue1KrOS5Wu8NqRclW97iEJuoCxuCtIzQcf8t7WK5KdEjfx9k
-	fmYC5P67/+mGvxikA5p7z01A4D3qYfG0krZe30T2rp4t9z7LC+MGq8tA+qq0qSQMVs9Iux26TbV
-	pgojh4xd4bWPPEt8gRk7qnUvANJHzdtH3hNdy
-X-Gm-Gg: AY/fxX4i6Zrsqf2LimEQKBfa0f6Wy18jGKqTqEENi/4NvBjnCpEGo4hBtKb/9qF7ifR
-	mwT1mEFdIRTYpestkcKwMP4VNYpPinv/7oIUhGCOg3hLj/PY2WTkKPhCSHWH0Q6UcmPwjjS5K9n
-	1HDvwG0N/h5YolMXZy+J3+XNPSMSA4hGEWHyWVYqNb489nB9rG8g//Cb577gXZeMPAh5OWXFZSe
-	Bng2NKWM/OjJzmTRGsF0VBidM1HvV7V2gv2vBBXEkvGDhF3nyvjW61N9EcJsW42/iL2uGFO9osG
-	P6d2fhh7iekKTeQ=
-X-Received: by 2002:a05:600c:4fc6:b0:47a:7fd0:9f01 with SMTP id
- 5b1f17b1804b1-4801eacf142mr45943725e9.16.1768582987327; Fri, 16 Jan 2026
- 09:03:07 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwcfx6t79z2x9M;
+	Wed, 21 Jan 2026 06:23:05 +1100 (AEDT)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sea.source.kernel.org (Postfix) with ESMTP id 8683142E46;
+	Tue, 20 Jan 2026 19:23:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA9BC16AAE;
+	Tue, 20 Jan 2026 19:22:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768936983;
+	bh=8rZs4ctIFUWV+s7flKGQlMaVzkDSCztd/ihtff8Ht6w=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=jgX58MKi+zjgv/xDIQx4cHK0wTdbY5WHIpWy6zaWGiyru1YA6cG7Qbw7G8M9RhL3S
+	 SSiru+ZKHzsLIh6rtTpzRanq5020WDpXXkfsUjC/Hil6perlOH41PXAjqsRSipdXvS
+	 IPP61htVkOsCqcy9Pqn5fLS8BPsTMosoZ9eOUO70Q6cEURtv9hoJC0lOmTM5QlYWiG
+	 wz6tqUkz/prRaWfMAFRhQ1iN0dHrXg8oROA8glqKMy/5Onkhv0z+Jp0+qs66q2UQYi
+	 BzO1NPQx1qqbWombFmTG5JqwfCmxs4g31+tAPZmi39pA4KsUWJBmYbw0vvIV/lZYxv
+	 FMvcuLOxsC4SQ==
+From: Mark Brown <broonie@kernel.org>
+To: Varshini Rajendran <varshini.rajendran@microchip.com>, 
+ Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Haotian Zhang <vulab@iscas.ac.cn>, Sunny Luo <sunny.luo@amlogic.com>, 
+ Janne Grunau <j@jannau.net>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Chen-Yu Tsai <wens@kernel.org>, 
+ Amelie Delaunay <amelie.delaunay@foss.st.com>, 
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, CL Wang <cl634@andestech.com>, 
+ Patrice Chotard <patrice.chotard@foss.st.com>, 
+ Heiko Stuebner <heiko@sntech.de>, 
+ William Zhang <william.zhang@broadcom.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Manikandan Muralidharan <manikandan.m@microchip.com>, 
+ David Lechner <dlechner@baylibre.com>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>, 
+ Jonas Gorski <jonas.gorski@gmail.com>, Hang Zhou <929513338@qq.com>, 
+ Jun Guo <jun.guo@cixtech.com>, Philipp Stanner <phasta@kernel.org>, 
+ Charles Keepax <ckeepax@opensource.cirrus.com>, 
+ Bartosz Golaszewski <brgl@kernel.org>, 
+ =?utf-8?q?Beno=C3=AEt_Monin?= <benoit.monin@bootlin.com>, 
+ Shiji Yang <yangshiji66@outlook.com>, James Clark <james.clark@linaro.org>, 
+ Jonathan Marek <jonathan@marek.ca>, Carlos Song <carlos.song@nxp.com>, 
+ Sakari Ailus <sakari.ailus@linux.intel.com>, 
+ Huacai Chen <chenhuacai@kernel.org>, 
+ Xianwei Zhao <xianwei.zhao@amlogic.com>, 
+ Prajna Rajendra Kumar <prajna.rajendrakumar@microchip.com>, 
+ Sergio Perez Gonzalez <sperezglz@gmail.com>, 
+ Qianfeng Rong <rongqianfeng@vivo.com>, Haibo Chen <haibo.chen@nxp.com>, 
+ Gabor Juhos <j4g8y7@gmail.com>, Md Sadre Alam <quic_mdalam@quicinc.com>, 
+ Rosen Penev <rosenp@gmail.com>, Marek Szyprowski <m.szyprowski@samsung.com>, 
+ Luis de Arquer <luis.dearquer@inertim.com>, 
+ Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>, 
+ Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Longbin Li <looong.bin@gmail.com>, 
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
+ =?utf-8?q?Cl=C3=A9ment_Le_Goffic?= <clement.legoffic@foss.st.com>, 
+ Alessandro Grassi <alessandro.grassi@mailbox.org>, 
+ Darshan R <rathod.darshan.0896@gmail.com>, 
+ Aaron Kling <webgeek1234@gmail.com>, Vishwaroop A <va@nvidia.com>, 
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Darshan Rathod <darshanrathod475@gmail.com>, linux-spi@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-amlogic@lists.infradead.org, asahi@lists.linux.dev, 
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
+ linux-rpi-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+ patches@opensource.cirrus.com, imx@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+ linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, 
+ linux-tegra@vger.kernel.org, virtualization@lists.linux.dev, 
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+ Lorenzo Bianconi <lorenzo@kernel.org>, Ray Liu <ray.liu@airoha.com>, 
+ Sven Peter <sven@kernel.org>, Neal Gompa <neal@gompa.dev>, 
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Ryan Wanner <ryan.wanner@microchip.com>, 
+ Michael Hennerich <michael.hennerich@analog.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Kamal Dasu <kamal.dasu@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ Kursad Oney <kursad.oney@broadcom.com>, 
+ Anand Gore <anand.gore@broadcom.com>, 
+ =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>, 
+ David Rhodes <david.rhodes@cirrus.com>, 
+ Richard Fitzgerald <rf@opensource.cirrus.com>, 
+ Vladimir Oltean <olteanv@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
+ Jean-Marie Verdun <verdun@hpe.com>, Nick Hawkins <nick.hawkins@hpe.com>, 
+ Yang Shen <shenyang39@huawei.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Lixu Zhang <lixu.zhang@intel.com>, 
+ Yinbo Zhu <zhuyinbo@loongson.cn>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Conor Dooley <conor.dooley@microchip.com>, 
+ Daire McNamara <daire.mcnamara@microchip.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, 
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, 
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, 
+ Han Xu <han.xu@nxp.com>, Yogesh Gaur <yogeshgaur.83@gmail.com>, 
+ Linus Walleij <linusw@kernel.org>, Daniel Mack <daniel@zonque.org>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>, 
+ Chris Packham <chris.packham@alliedtelesis.co.nz>, 
+ Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
+ Andi Shyti <andi.shyti@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Paul Walmsley <pjw@kernel.org>, Samuel Holland <samuel.holland@sifive.com>, 
+ Orson Zhai <orsonzhai@gmail.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Alain Volmat <alain.volmat@foss.st.com>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Li-hao Kuo <lhjeff911@gmail.com>, 
+ Masahisa Kojima <masahisa.kojima@linaro.org>, 
+ Jassi Brar <jaswinder.singh@linaro.org>, 
+ Laxman Dewangan <ldewangan@nvidia.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Sowjanya Komatineni <skomatineni@nvidia.com>, 
+ Masami Hiramatsu <mhiramat@kernel.org>, 
+ =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+ Michal Simek <michal.simek@amd.com>, Max Filippov <jcmvbkbc@gmail.com>
+In-Reply-To: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+References: <20260112203534.4186261-1-andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v2 0/4] spi: Make SPI core to take care of fwnode
+ assignment
+Message-Id: <176893695845.778248.8132133480043006428.b4-ty@kernel.org>
+Date: Tue, 20 Jan 2026 19:22:38 +0000
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -78,81 +176,91 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-From: Nathan Jian <nathan.jian7@gmail.com>
-Date: Sat, 17 Jan 2026 01:02:56 +0800
-X-Gm-Features: AZwV_Qj1DxTY0Qk3Y9PSApyeoy4p5NAKLZo3jLJ6aby7vaLJ2KMZTB-3GQM8sYk
-Message-ID: <CAAFL+NPbt+TkgsMZYZQQoGAhhUhYJSB_Hzn_U9nCzBQoTnSPEg@mail.gmail.com>
-Subject: Request for Gerrit account approval
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000b731010648845083"
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.15-dev-47773
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Spamd-Result: default: False [-1.20 / 15.00];
-	DATE_IN_PAST(1.00)[125];
+X-Spamd-Result: default: False [-0.70 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.19)[generic];
-	MIME_GOOD(-0.10)[multipart/alternative,text/plain];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-1266-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	RCPT_COUNT_ONE(0.00)[1];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-1258-lists,openbmc=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	TO_DN_NONE(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nathanjian7@gmail.com,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	TAGGED_RCPT(0.00)[openbmc];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,openbmc.org:url,lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
-X-Rspamd-Queue-Id: A14D85E7BE
+	FREEMAIL_TO(0.00)[microchip.com,iopsys.eu,collabora.com,iscas.ac.cn,amlogic.com,jannau.net,googlemail.com,glider.be,kernel.org,foss.st.com,aspeedtech.com,andestech.com,sntech.de,broadcom.com,kaod.org,baylibre.com,gmail.com,qq.com,cixtech.com,opensource.cirrus.com,bootlin.com,outlook.com,linaro.org,marek.ca,nxp.com,linux.intel.com,vivo.com,quicinc.com,samsung.com,inertim.com,renesas.com,socionext.com,mailbox.org,nvidia.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[microchip.com,bootlin.com,tuxon.dev,kernel.org,airoha.com,gompa.dev,jms.id.au,codeconstruct.com.au,analog.com,broadcom.com,milecki.pl,cirrus.com,opensource.cirrus.com,gmail.com,nxp.com,hpe.com,huawei.com,pengutronix.de,intel.com,loongson.cn,linaro.org,baylibre.com,google.com,zonque.org,free.fr,alliedtelesis.co.nz,renesas.com,samsung.com,sifive.com,linux.alibaba.com,foss.st.com,nvidia.com,gmx.net,amd.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[150];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[openbmc,renesas];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:rdns,lists.ozlabs.org:helo]
+X-Rspamd-Queue-Id: F3B524A3C2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
---000000000000b731010648845083
-Content-Type: text/plain; charset="UTF-8"
+On Mon, 12 Jan 2026 21:21:22 +0100, Andy Shevchenko wrote:
+> It seems all of the SPI drivers want to propagate fwnode (or of_node)
+> of the physical device to the SPI device. Make sure we don't duplicate
+> it over and over in each new driver (+2 in this cycle) by making core
+> to take care of that. Note, similar is done already by IIO and
+> I²C subsystems.
+> 
+> There is one noticeable and quite specific case that is taken care in
+> the first patch and now we have a confirmation from Cirrus that everything
+> is okay.  The rest is just a mechanical conversion after checking that
+> the parent device is assigned to the same that provides the respective
+> fwnode.
+> 
+> [...]
 
-Hi,
+Applied to
 
-I'm a new contributor and just submitted my first change:
-https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739
-
-I received "User not approved, see admin, no CI" message.
-
-Could an admin please approve my account?
-
-Username: nathanjian7
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
 Thanks!
 
---000000000000b731010648845083
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[1/4] spi: Propagate default fwnode to the SPI controller device
+      commit: f2d1a3318eb1ec860999db48cb8d13b43261624d
+[2/4] spi: Drop duplicate of_node assignment
+      commit: 3974a585be78a1dc90a19d5cf1846a99954e3842
+[3/4] spi: Drop duplicate fwnode assignment
+      commit: 103c510e1c6832720059756d155dd13a42baa7ab
+[4/4] spi: Drop duplicate device_set_node() call
+      commit: 37fbc1ab0f225d23f0839260a11375b4f1f7cf8c
 
-<div><div style=3D"font-size:inherit" dir=3D"auto">Hi,<br style=3D"font-siz=
-e:inherit"><br style=3D"font-size:inherit">I&#39;m a new contributor and ju=
-st submitted my first change:<br style=3D"font-size:inherit"><a href=3D"htt=
-ps://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739" target=3D"_bla=
-nk">https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739</a><br s=
-tyle=3D"font-size:inherit"><br style=3D"font-size:inherit">I received &quot=
-;User not approved, see admin, no CI&quot; message.<br style=3D"font-size:i=
-nherit"><br style=3D"font-size:inherit">Could an admin please approve my ac=
-count?<br style=3D"font-size:inherit"><br style=3D"font-size:inherit">Usern=
-ame: nathanjian7<br style=3D"font-size:inherit"><br style=3D"font-size:inhe=
-rit">Thanks!</div>
-</div>
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
---000000000000b731010648845083--
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
