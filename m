@@ -1,55 +1,55 @@
-Return-Path: <openbmc+bounces-1250-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1251-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eFfdL8isb2miEwAAu9opvQ
-	(envelope-from <openbmc+bounces-1250-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:26:48 +0100
+	id CmyQG5yrb2mgEwAAu9opvQ
+	(envelope-from <openbmc+bounces-1251-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:21:48 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD7764779E
-	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:26:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7534247580
+	for <lists+openbmc@lfdr.de>; Tue, 20 Jan 2026 17:21:47 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dwR6s2jpbz30M6;
-	Tue, 20 Jan 2026 23:13:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dwRNj3g9hz30N8;
+	Tue, 20 Jan 2026 23:25:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c04:e001:324:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768911189;
-	cv=none; b=AlBX9L9xB5YBZRhklN3gE/gUusRj/qJhILSSOzPaDJM6Yhnr5Z8B0SRXHrfKmdgVIX5PmunrvHXjjhKGAjd9Cmx5ccds8nP2o3Ej666gXeTuORwKSenzR6sIRkXNEuzvD/HguJ9y+jMtuJJjy6nD99VNAgdxuOD/spQ9B74Bcpz2rg+dgZKJvsNN7UFJBGUwnI3rSJUviOMnpKvU47BSCmtIo5ZnwFbvmBbgiwMzB+BCAqALAxlqGSmiX1JUBmw/GKollK4XNGXkqzj/jLdIXf4l0QqgqeYrTNvGwA3miXbN9kV18TTWLfjMWvJiUTfoDFw0MQB79tF1cSBwslfLAA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=172.105.4.254
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1768911909;
+	cv=none; b=h3FbKzi6prxCeyMnj3PHAs32y2RoqkduK/09WRfPaOkXHKxXJsmIgermITND+Yg5i85tPDjdFyadOp0fRpYYcEuwcCTigkcR0hNPkRbwLpB50LBXmMQYAvOGlll87aukR62r9SfJjmmX3yyBZGDRZHJml5AzJzkXR99xK0xV0JeCCrcYy4D9izufKyeH0H94c9A96inG95aCjJLPjuiQzO95rcgfptG0G5dABSOzTQlFPTTlFwUQVhmzAm9tPIOp3yHN/SXhuSTj5wgXGYU3anL7TtSC4FQzxR3BZ/SaaoBIx3NQWWceirdH6edRqhmNgm3w4taXcMm/d+WhsthO4A==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1768911189; c=relaxed/relaxed;
-	bh=cQavtXRfI3u4KztW86vPo3O2a8HplyqLeGiawtgz3xs=;
+	t=1768911909; c=relaxed/relaxed;
+	bh=B/FgHK+pzlkCaNNisT+qoF/i0PlfVt8s+magiThvv14=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QpIGF89dOZTZpsRLTkHz7QoQmmwAWw8iOV+wjEv/L3FCmMdc/uckRx3CClQx2BK3KNS7HOP08EVzBH56U+dSAKqsrb7u4wquxOWbF4PwI3TMVsp5LDX9MbjqHcXEJ5q1VXKIMEJAmZU0AbMtzCdE7W3uvzpbXuFhhFOp1Y0Hiybllc41JZTz5/0a5yKPnC37px2UYXIPsJldqddJqA40dpgxcnhQkyALF12DyZguxn5h8DXvyreUwi3SLZ7oTh3DCVHtevflCAhRIiZ2HSMEQl4LzVK6Haio+O0zvLnym/acc05yhD+fL9KzcXh6uednFb/IqbiTD35267hvmpSc+w==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IGZdCx7N; dkim-atps=neutral; spf=pass (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
+	 In-Reply-To:Content-Type; b=fY8KfPiNGBG0fF6A8JJFkJp4Fz0EZqZHU7HvMRcXx8Sp5TWJVh/qNpTebHrpBcFawvrMggxxX9eT03nenJ7Fw2Esv+XCkkRJ1z05ywYqjH3ElTKGmCL4DWa1zCQGa3/XlBdEO1I4n/nZEGRsizV+nqZGh1EvKl7B44pCPtn3cJrlYV2XfUmtjci2xyauEhj5QwiWPGH5UgAjzilpg4E8nBhsgH+AruM2J29TN5IvkfQrrhECWsDyJRKMB4r/7Sk84dSwf6OzShPFPR2IOiZSGbfh7vCtuYLgVXqNlpnCQ7SoHn5XiPueoHDPl+ntd4VvOfACTl2LSTMj/YwtDAxbJA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org; dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IIaZnQxv; dkim-atps=neutral; spf=pass (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org) smtp.mailfrom=kernel.org
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IGZdCx7N;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=IIaZnQxv;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2600:3c04:e001:324:0:1991:8:25; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from tor.source.kernel.org (tor.source.kernel.org [IPv6:2600:3c04:e001:324:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=172.105.4.254; helo=tor.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwR6r0Ks6z30BR;
-	Tue, 20 Jan 2026 23:13:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dwRNh3pYVz30BR;
+	Tue, 20 Jan 2026 23:25:08 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 81A776011F;
-	Tue, 20 Jan 2026 12:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3230C16AAE;
-	Tue, 20 Jan 2026 12:13:00 +0000 (UTC)
+	by tor.source.kernel.org (Postfix) with ESMTP id 956D360018;
+	Tue, 20 Jan 2026 12:25:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4669C16AAE;
+	Tue, 20 Jan 2026 12:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768911184;
-	bh=cQavtXRfI3u4KztW86vPo3O2a8HplyqLeGiawtgz3xs=;
+	s=k20201202; t=1768911904;
+	bh=bLSG0tEveb+gncpwTtyqmY3n1fbc+iPmbTX/cVlIgjo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IGZdCx7N6W3P6BdiheOz8GnY8jt6HJSaxh0falyH99QYGzA61M4PlGpMxT2ZiUfwD
-	 jB0Oc/Xd2M0bEkD0SGna7iE7qFSjvhqr8A3z9Bvn76h19bIA+C8L18+ENT7+b2c+Wy
-	 ScRYuQRkYlETHyt9jQ4FvwURGJ7BFio3zwcFypdr+nAkIeLPrg/C19Wefc39feodP6
-	 Rvsv/cHZrtFdpV7jfs4HQBZxnWmuMRwW76DgtzPo0EMDQcVhFVyXuSiCkgsK57+JxJ
-	 yPguRHbRN3DUa994puFNEBEc4qNgrYnDfVqDaCaY7Gn9hTAr+3RzeUNij4seaFi9qP
-	 5yuwSUAzJedIg==
-Message-ID: <85579870-370a-4bbf-94d5-6e70d3bdc944@kernel.org>
-Date: Tue, 20 Jan 2026 13:12:58 +0100
+	b=IIaZnQxvVk2+qt+Mlgp8OUNj0PN/kPCJgeWJPwt/wC9Tf91T9cMch3wsZDSUISe7N
+	 aJ/tUVy0ek8oZwyYaByCenkvW9fM3sCa5r2tt01VVYggu1iOccwcbfKRFs72MNUzSJ
+	 fp1enaMxHoy85UP291aH82jbFVSe44hpTRVqw7IFcGS1TCbsirqOj7caxvu6Tm3NYD
+	 K/muEe2rx2YnLbj44mIBGCFQkwNaqQhORFBWBzahjUSEEzM9bwz9g4x6sTioTHdbje
+	 dShHh+MtAglD4nEzVRLKqN3m7Rd5l73oFdXw7h+mmp3Xf6eJqpxCJgjKh8UclFPLXp
+	 E+E8Da302a5LQ==
+Message-ID: <f81c20f4-5e6a-4ec2-8946-a78bccc14e8f@kernel.org>
+Date: Tue, 20 Jan 2026 13:24:58 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -62,8 +62,8 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] Add compatible strings for AST2700 pinctrl to the
- SCU binding.
+Subject: Re: [PATCH v3 2/3] dt-bindings: pinctrl: aspeed: Add support for
+ AST27xx
 To: Billy Tsai <billy_tsai@aspeedtech.com>, Lee Jones <lee@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
@@ -74,7 +74,7 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
  linux-gpio@vger.kernel.org, bmc-sw@aspeedtech.com
 References: <20260120-upstream_pinctrl-v3-0-868fbf8413b5@aspeedtech.com>
- <20260120-upstream_pinctrl-v3-1-868fbf8413b5@aspeedtech.com>
+ <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -120,7 +120,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260120-upstream_pinctrl-v3-1-868fbf8413b5@aspeedtech.com>
+In-Reply-To: <20260120-upstream_pinctrl-v3-2-868fbf8413b5@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
@@ -131,38 +131,71 @@ X-Spamd-Result: default: False [-0.70 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,openbmc@lists.ozlabs.org];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	TAGGED_FROM(0.00)[bounces-1250-lists,openbmc=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+]
-X-Rspamd-Queue-Id: DD7764779E
+	TAGGED_FROM(0.00)[bounces-1251-lists,openbmc=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[openbmc,dt];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[aspeedtech.com:email,lists.ozlabs.org:rdns,lists.ozlabs.org:helo,12c02000:email]
+X-Rspamd-Queue-Id: 7534247580
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 20/01/2026 12:43, Billy Tsai wrote:
-> AST2700 consists of two interconnected SoC instances. Each SoC has
-> its own pinctrl register block, which needs to be described
-> independently in the device tree.
+> Add bindings for the pin controller found in ASPEED AST27xx SoCs.
+> 
+> The AST2700 SoC consists of two interconnected SoC instances, each
+> with its own pin controller register block managed by a separate
+> System Control Unit (SCU).
+> 
+> Introduce the "aspeed,ast2700-soc0-pinctrl" compatible string to
+> describe the SoC0 pin controller, which is not compatible with
+> existing ASPEED pinctrl bindings.
+> 
+> The SoC1 pin controller follows a regular and predictable register
+> layout and can be described using an existing generic pinctrl
+> binding, therefore no dedicated AST2700-specific compatible string
+> is introduced for it.
+> 
+> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> ---
+>  .../bindings/mfd/aspeed,ast2x00-scu.yaml           |  27 +++++
+>  .../pinctrl/aspeed,ast2700-soc0-pinctrl.yaml       | 130 +++++++++++++++++++++
+>  2 files changed, 157 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> index ff6cf8f63cbc..7eda8fddc560 100644
+> --- a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> @@ -164,4 +164,31 @@ examples:
+>              reg = <0x7c 0x4>, <0x150 0x8>;
+>          };
+>      };
+> +
+> +  - |
+> +    syscon@12c02000 {
+> +        compatible = "aspeed,ast2700-scu0", "syscon", "simple-mfd";
 
-You lost subject.
+No changes in the binding, so please do not add unnecessary examples.
 
-
+Plus this makes little sense now in way you split patches :/. Either you
+keep separate MFD from pinctrl for merging or, if not separate, you
+squash patches.
 
 Best regards,
 Krzysztof
