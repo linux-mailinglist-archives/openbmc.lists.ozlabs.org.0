@@ -1,183 +1,70 @@
-Return-Path: <openbmc+bounces-1272-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1273-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2CETLwQLc2mWrwAAu9opvQ
-	(envelope-from <openbmc+bounces-1272-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Fri, 23 Jan 2026 06:45:40 +0100
+	id aCilAVQWc2l3sAAAu9opvQ
+	(envelope-from <openbmc+bounces-1273-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jan 2026 07:33:56 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6D1A70890
-	for <lists+openbmc@lfdr.de>; Fri, 23 Jan 2026 06:45:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2FB971074
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jan 2026 07:33:53 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4dy6NJ6Q5vz2xHt;
-	Fri, 23 Jan 2026 16:45:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dy7Rz0Nkrz2xHt;
+	Fri, 23 Jan 2026 17:33:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip=67.231.145.42 arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769147136;
-	cv=pass; b=ArthN+cAh72y+WiCs1MbH80RzR2l/mGN3MyYe4zC8guNgsIBQJKiM/tFNUBj4xhFsAQ/wf6ErcWS2kQQ4VVJCSOlEyfEZXClPVtYJON2/5hHiITfoJvIVjihhQd5vbPZwfyTL4QLDYtQwxLPZT/TXLx4Y+7jepJuCgbpVcxqJgWaDLhp4Fwvq00ZGQUPhNUg0V3G5ezPGj3y9ijwp/vBuLwjj2iqgP//w3WqX45gEqKzwMR5cMcReLCfkztHhzMZ4iF39NXi4cDqIEWwNoofKbmR870Hro0nmelz56/wm5/+fz3Sg1FcyiwwAQS3uO8HTsA26IuOCyJbnVa3JUrVmw==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1769147136; c=relaxed/relaxed;
-	bh=EzK88MeA/uqj/ZXUq63+ZbCDPrhoE12OA6Fun4TGYtM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=k/xrHWYnnsaCY+Cs/6G/VOIO+xZjBE0YBOL7F1Nw5fPd5sWyB/FhTASWndQbJSB6+P44rG4kxsMbqtJXYVQOR5E7kA5Y/rEiMqh7kn52BaOOgsvLD7nVLuT6r2jsy+hIGo2kuBQ6ON7pL5TaYKmd4wdHiLDLDd8ymEws1MH25SvSGoFyEQFw6I+4vFj3HNrUKclFW1aLRNX9Q3Ng7x+3XCPLRtwO62JsrsjDAzIBQ/9YnXoDziLMIdIBU/NKcTjGvqhs10uP7Jmm3hqNc5Y+50V/XHdvlDuNdOysIQEl01WnjmWGpZhpJl1XdRRjWzlhxZOoEG0BsGN9H49k8Bwulg==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=meta.com; dkim=pass (2048-bit key; unprotected) header.d=meta.com header.i=@meta.com header.a=rsa-sha256 header.s=s2048-2025-q2 header.b=IeIcMj0a; dkim-atps=neutral; spf=pass (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com; envelope-from=prvs=948327f6de=jagpalgill@meta.com; receiver=lists.ozlabs.org) smtp.mailfrom=meta.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=meta.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769150030;
+	cv=none; b=ccKhy5wWXNmxRqmgW4Rn4All1LocmTlpP1cbC2XrRHfxCZONEcBWmVQxiRLD+JzKxyuPvNzNiNWeYAMfTHYp0euX58O3fRK0fjANvccQ0J3rLqPD0iMX38ImMOJvsWeAld3e5Py5IX+T9gYLZiaivASJgDyjqr6Hb5bZb1sLLaBu87Td9DmxETxVDVJ+sSwF9Bz+AcXWY9Hy68ZoBP0pDlCTIMBaC4vcOGDfJhVmj2D+WENu5EKpmFhob1OCeqLvHDi9SC6FLhKKfaMhlnL+bwOeDN3M1NNg9/o5+Z3JnBzN84eQYduJZzZGiT5HBQ+CnGX8spdjLs9AEZbXIfcOUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1769150030; c=relaxed/relaxed;
+	bh=hnUiivgV1GJFcmOh4pDO9k/tTrjNiMK55wQcL+7/7RA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=SgOC5U2qRpE2HoAtxTIkTmayt5u7Ijx5fdytApbaaXUvVfgzT62pDKaQNzlD4yOscsiHb6wtx8kWKrCwawM38Ze+ts3tlUCK9uvs9A6ioHSnhsEm6g70eEQjdj12zUkljmXd//P+zBGutncByr2yRlz1TQXv3cZgNzjJuSGdCd37OkFSGhf5sxsq/RxyHv2ZEYVHyp1QyUa5tMIOtaZt/Cg8xeJ1cLFLwKnwjjYUGVS/iIzrJZNVI7hGN5UMto1N/Pf+pdFfmvw9NISJKgSppaDk8dmTnqaYroDNLdmchcgvBytbGvAyJvum3QyKaG0eVYKhqW3RNe+xxKTcWwq4yw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=W5vjeQei; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=meta.com header.i=@meta.com header.a=rsa-sha256 header.s=s2048-2025-q2 header.b=IeIcMj0a;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=W5vjeQei;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=meta.com (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com; envelope-from=prvs=948327f6de=jagpalgill@meta.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 407 seconds by postgrey-1.37 at boromir; Fri, 23 Jan 2026 16:45:35 AEDT
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com [67.231.145.42])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dy6NH11C2z2x9M
-	for <openbmc@lists.ozlabs.org>; Fri, 23 Jan 2026 16:45:34 +1100 (AEDT)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
-	by mx0a-00082601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60MKdPup3679210;
-	Thu, 22 Jan 2026 21:38:43 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=meta.com; h=cc
-	:content-id:content-transfer-encoding:content-type:date:from
-	:in-reply-to:message-id:mime-version:references:subject:to; s=
-	s2048-2025-q2; bh=EzK88MeA/uqj/ZXUq63+ZbCDPrhoE12OA6Fun4TGYtM=; b=
-	IeIcMj0aY/iX9tZWeRvECCKW3k2OGNVzsZB8Hq7uDuCAAx0CUG89IG4rlBdQ7JXs
-	tMDeQUgQnXmtrD6fr7W43bSImtBNY5fBKMDFlNwldI09YjVwH57HTA0UfwqmT8OY
-	OkgkTu5BEB6FweVLW+TLEaKlbqay9gb1aXErNc8rn+D34/aawlUXGob+lK7HyWaR
-	S6IMCRONtbcf/U60ERx8cnLtKgjy5/nBpH7VIa4gG+cJIr3o2XVP3voD1thjcfVe
-	pMsK+2x4q0tbtvGMahcR5x6es0FQHUFcd/sbFCS7pbjHKQPBG+ODzAUR/zf0eiJ7
-	mjuLQwMofQLhW4D0hhtISA==
-Received: from cy7pr03cu001.outbound.protection.outlook.com (mail-westcentralusazon11010022.outbound.protection.outlook.com [40.93.198.22])
-	by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 4buu4ekb7v-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 22 Jan 2026 21:38:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V2JTABTyjlaxxqAJ7qcHxGJ7n6u/7v6ohwHCsTOGoYCaveANOgkS59k6EYa4fHUckMICRaUpGlSlM//RoEZYd3hjdXzk/hmbxI+tr3pDuOFHsKtdmHoOlT8aFzJ+7heOxjfZ/RzAgdw5TddOB0aEZm6U7huJKzCUmPNBVQbSkAKtqovmc72H4RkLBufhF8P5yflhDSgfzmJWyLruB/a9EzUNXboMnd366RIuys+Jep0yBJ2lVis5b1mIlZgrTsWQrUyp3eqF28qe7RovYJpTw1CNzcY7WXUvuynM/jYiz7yOR5NcwkmYzOelDJgL/GyUn4134gaGMznQtvNS7CmIOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EzK88MeA/uqj/ZXUq63+ZbCDPrhoE12OA6Fun4TGYtM=;
- b=MNvdO7iBa4lo2jy5OaVKwmxsAGvL6AOyPpbBYZ1hD+g/rUcCJk95y5jKykIhebCPmPZq7UBJ/694hPeThCsx4CXB40EN20n6yg0RzU3WfoD78abgmEk71qOywJALBk9O5CdP39QaI3QQ/0E5ZZ4IX2FZIZ6nR9g7dcXOvNHKT9k12/TOI6m7OalWZldnbuACM3Y4g7JkSIugQ/5LhAi1Wn/Dz5pK7kOnQkmHwTXi9Fo8/rpby3tM1Izb+S86LGtZ+te2sYXmkKJXnYELK1BlYS6euaXS5Uypu8LFAgvtWDys9NAlyS3bY4FlqUza7tmP3Wfzb3tmUtRNYWOhqMpJ6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=meta.com; dmarc=pass action=none header.from=meta.com;
- dkim=pass header.d=meta.com; arc=none
-Received: from CH3PR15MB6396.namprd15.prod.outlook.com (2603:10b6:610:1b7::6)
- by CO6PR15MB4226.namprd15.prod.outlook.com (2603:10b6:5:340::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Fri, 23 Jan
- 2026 05:38:41 +0000
-Received: from CH3PR15MB6396.namprd15.prod.outlook.com
- ([fe80::139b:8b25:6fbf:3e72]) by CH3PR15MB6396.namprd15.prod.outlook.com
- ([fe80::139b:8b25:6fbf:3e72%5]) with mapi id 15.20.9542.010; Fri, 23 Jan 2026
- 05:38:41 +0000
-From: Jagpal Singh Gill <jagpalgill@meta.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-CC: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: TOF elections for 2026H1
-Thread-Topic: TOF elections for 2026H1
-Thread-Index: AQHciuR/6+Q2ymkGzkCqnmOWwvAAQLVfPzqA
-Date: Fri, 23 Jan 2026 05:38:41 +0000
-Message-ID: <083E4495-0C78-4B8C-B6C3-B717D722037D@meta.com>
-References: <aXDmS4BmR6AGXKGW@heinlein>
-In-Reply-To: <aXDmS4BmR6AGXKGW@heinlein>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR15MB6396:EE_|CO6PR15MB4226:EE_
-x-ms-office365-filtering-correlation-id: dbe6fd42-ef53-47e7-26eb-08de5a41aab8
-x-fb-source: Internal
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|366016|10070799003|376014|38070700021;
-x-microsoft-antispam-message-info:
- =?utf-8?B?YStwZ3JMcTVOUm1pL04xc3B1Q3FPVm5MaTRIY1VaRUJqeEVnbFMxUWhaa1BV?=
- =?utf-8?B?ZDduS2ZRODNjSXhkNTBKR1hoQnlFZlBrRXFSdHB5Zllka3R0U0d1UzF5UGhJ?=
- =?utf-8?B?cUlBbWhUMEZ3cm9EbGVCOHZoU04vbXozeXdTSzZCVGtjbzFyaVpBeDNvWkFC?=
- =?utf-8?B?azY1VzRnRkZJSW92YlIyZnBGdFpMV3J4M0ZiS2hWeFowM3l0aFdaMlN1aDdH?=
- =?utf-8?B?aFh0MEw4SWdSU2dSSTBIQ0RBeGI0WHY2eWsrUGhpa1FqbUlscGE0cnBhN3R1?=
- =?utf-8?B?TFRJZmc1L3UvOWJsNmRDa0NoN0FIRTg1MTNHRThOL0JpUkdYcE9SM0tldEFZ?=
- =?utf-8?B?OFVncUozNmZJZUg3ekcveUVyLzcyV2ZIaFZpRGZnWS9kR1A1dnZELzRVZ1Zy?=
- =?utf-8?B?bkp1R3hMQjhsZW8rUmliT2ZCclRsK0ZUM3lmMEwva0trTTI4S1hGYm9mTmt5?=
- =?utf-8?B?RXk4V1N2QjJzai9kN2ppaXpGYjlkTGJHV2xSaGdoRFYvOTNIQlJ5N2xxVnE1?=
- =?utf-8?B?SFhSbE92UkdDd1RuY3AwVTF6dXFidk8rblpsRENxaThXdU02S1RtajBJQ1Va?=
- =?utf-8?B?TzBUb1pXdlc3K0RnUDJranhGeDJ6K2dCdm5lWERkdUUrdVNKbTZENmZhRE11?=
- =?utf-8?B?MlR6bElNcmhuZWVXUXdweVMyTkd4SU90QXFqdytjSTJMdE9WSDFuajc4Ry93?=
- =?utf-8?B?c0t5QVNwQkVmUFZYSW1WSC9XMnI5MTZCTDNnZDlMM0FWUlpVK3pMVVNpRHFp?=
- =?utf-8?B?bkhSTFMrV2xSTjlLZ05tcUZibE40V1FLREhtZ2xVVnZCU0ZDOHJkRlhBYURH?=
- =?utf-8?B?OWFNRGNtTEVyNjYzVnJJbXoyWXlIbGY4QUxCOEpJWDZSSXlnT0d3ODNmQlVZ?=
- =?utf-8?B?VHJFR3liV3pDWU44RG1xdWFuc1FlaTdybWMvK0huVEN1UDd3YmxOcHVYek43?=
- =?utf-8?B?cmY3Sm9SWTV5Mm5VTUV0Y1AvWjRqbkxFeXdzMFAwekhIREt1TlRXcGNXREJ2?=
- =?utf-8?B?M1Y3SGJtcTNXUWxrVi91MlRWV1ZnRDkrK2ZTQ2g3NER5L1JnQkZlYmR0bEZa?=
- =?utf-8?B?NkY3OUhlMW5ZaUF0d0FybjV5elh0TCtldlpUYWgxa0VzQU1EQmFmUEhURHg0?=
- =?utf-8?B?eUpQSjRKVGNlT0JqeTNXajRVVlhNOElZdVk5MEJ1VlViaDhzcFhucDVUV2ox?=
- =?utf-8?B?ZTRRSGlNSE9jbmIyRllLZnFlTUdwUk1IMFd4UXdMYW9KNE5GWVpzOVFGRUR6?=
- =?utf-8?B?TnJkSDFQVEFlOURNbXphUE9qTzl6dkZCamNqRURoUm9COTJqMjZGK3RkaW5V?=
- =?utf-8?B?aUpHRDM1bFBMMndwbSt3emdXZU9PVXRyS2tneUtRVURiWUJGZFZ0Um16dkVk?=
- =?utf-8?B?ZWxpTXU3emJzWVdpN2pZUVBocWMxOGE4VE4wTGEyRzg1ck1FT2lqVGdlOWdv?=
- =?utf-8?B?R3krTEN4UzR3MFZwZ2xHZVVuYVVFajRmdVFieVZtZ2xyWHArSHd0eXgybDc2?=
- =?utf-8?B?WTQ3QmZtQmE1NkFLdVY5dnExZExFZTVwdmJ1QVNseDQxRHFFdnllTk1pelAr?=
- =?utf-8?B?TGtjM2JWNDVBWFhodEhRMzkySklBR2NIZzl5MGN0TjJ6b1JLUXBWWEFWQmRo?=
- =?utf-8?B?YTZGSzVDQUFzUVJEdUpTMnNRY0JGeHNtNTMzdGwraGwrZDZ1QkQ2WVFHcjN5?=
- =?utf-8?B?eDhjRWI3R1M2OUFEaUtCbUQzUU5xOUdCaEhTcFhvc21jV0tUbXJoWUR2YWhI?=
- =?utf-8?B?bU83L2pTTWw4WFJBdmt2aFFaVExzSnRBOTRHVllrNy9weHNjVkZtOU1TYldG?=
- =?utf-8?B?T2JVTUdERDlwazU5RVJuMDBjUkp4Y0t3V0VVbWtWTzQycCtyZlMwMkpWSmYv?=
- =?utf-8?B?ZlhTbGVmcEtmZ2hhU2JYbStRaHFjZkhPZ2FqUHBKS0ltUWpXZGFEcUpuMFVV?=
- =?utf-8?B?dHQwMDZlcS94dEV1NWpsaW1yNHp2TlVLQzZUUys5cThaZ2cvSTZmelNRV1dT?=
- =?utf-8?B?dFVUbXlOSm9UWW1PakhRUjMzRnBzeGJuTnRuZTU5eFh4ajJqRjNTSksxWFB5?=
- =?utf-8?B?VVdqSkVPKy83a09FTjBYcVZiUlNLdWxlK0R2Y2FCdFc2NmdIUFp0UUVJMmFq?=
- =?utf-8?B?WG9lQ1J6bHFpVkZBKzEyUlNtSzZxd0tOTldqMXF5cjVBdGR0ZjVpdGRHb1Qx?=
- =?utf-8?Q?KJk3i514qmD1XjCE7rZ/LTg=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR15MB6396.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(10070799003)(376014)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?TkNnaEhpcFp1ZkpMVW1lRE5Hdk4zUENHUHV1Wm9DaExOOTE4bVpDMjlGWVVL?=
- =?utf-8?B?NFFOcVBPNUFqaEdlWElHUjFTdHhwV1lFSUhkWmF2YkZYVUhNNy9BMS95aVRE?=
- =?utf-8?B?MTNSeWM2WkNHV1JaMXFBaTMxaWNScUpTWDRJWXBBbzZMZ1lxQ0hOaTBvdCtT?=
- =?utf-8?B?RWpoSmxOSS9hR0ROSWNveWtSWCtVNjJLR2xkWkJUZmlFU2ljVmFCbXNpZVlM?=
- =?utf-8?B?R2hUc1NVNlNOYmVjOG5mYlJJQTJNKzFCb1cwL0RwekhzUkJzNXdYa3pMRCtv?=
- =?utf-8?B?cUNnWDRmNEtHQXJ2UGVyVEZvOW1CNTV0M2g5am1oMno3SkVncTRmcmxVUmhu?=
- =?utf-8?B?TGcwbkNKMEVXM2pGZlNHaWp4emtLVFgya2oyTjd0YjNrdWlSWGxic3VUNTg1?=
- =?utf-8?B?NDRVUjdHUVdGOHg5UzBTanA1ZmI0RGN2c0ZRMW02aC9EYXBMT1drME5VczB1?=
- =?utf-8?B?bnJya2lma1pUd3liQUJhRS8vKytBVzdRbldNazNadGVZaVl0bXk1TzZCS2d0?=
- =?utf-8?B?WlJScDJmSEpQSDZFUVJNaTJTaTdGOW8zNEJONTJtNVhFVW9vdENiT3lDc2R5?=
- =?utf-8?B?emkrdG5KRWw1UFBxWk8rZi9XTk5EOXc3emw4a1BKZGdiZU55MUJrTmpPMlZ5?=
- =?utf-8?B?Nm03Uy9ITHdEVndPVXFISHNXUDlJaWVJTUxsMkN0YjRUalJwbCt1QXU2NVdN?=
- =?utf-8?B?REZ5eEl2blZ5UUJZMHJOSG50UTl0UmRTRW1CSlZuMHV5Z3VxWExNVXJPOWtv?=
- =?utf-8?B?NzBoSHlBRW9HaUExVXlIMjJETVFlZUIwdmZYUkNHV3c0ek5MSVlsTTBJY2cx?=
- =?utf-8?B?NVBZY29NM1FTUndHajhXUFhnbGV6YUl6b1hCay9lUFRHblorNUlsSTBzcGJy?=
- =?utf-8?B?ZFFCdXFHWHpxLzF4dlYrMG9vejZFU3JZekFFNVNLUlJQNWFaWHBTOEhPZWg4?=
- =?utf-8?B?WGRJblVOOTR3ZTRZZ0c1bUdLUjlaZXIzNEJ1Q1lGY2VlU2dROG5tQjBRS3Vq?=
- =?utf-8?B?b3hETUx4UUhtMUdaYk1OeUYrKzdyNlhpa1g0V0lHOEtURjJCMEJjM0NMTk9O?=
- =?utf-8?B?ZktpcFQwRTN5REQxTVBUSlh3MFdSSXE1aGxSVWJ1UjRLY3hLV0s4ZjBJelZG?=
- =?utf-8?B?S2ZTeWpGU21xM29RRnI0SjZkUDU3OGpMUHc1OHpRS0hJdjZSMzRnNi8zUDFW?=
- =?utf-8?B?ak5EUEZSNHZWUU10bWI3WkVHUTQyb2tnaUdxczhtakpEaVcxMHF1ZmtDQ25w?=
- =?utf-8?B?cmkyVTdHRFpFZDIrUFF0ZmlrUXFJaDUvZGl1dkdjb2YvckxNS2pBdlpPT0lN?=
- =?utf-8?B?dlpYOEpUK21QVzNDaTZjeS90V3RuVXVKaVQ3QnlBN0k5dldoTXdoeVZ2ZERk?=
- =?utf-8?B?QU93Zk5ONEwzbkxXa0JwbVdEWk9zd3g1Q3g3TXBjWVhZbkVrMmE4UUV5d3Nq?=
- =?utf-8?B?RE1Wb3NwRUVqRzZvZHg3eFg5RmxMOG15eFJNSVd4Z212ZEE3ZlZSV2VkeUM3?=
- =?utf-8?B?OVRvWm1JMGNHb0U3c2RTTUlLMGNPUFlIQml6MGsyM3RzSktJekwwRTA2ZGhn?=
- =?utf-8?B?TU1JU241ZDc2ck4vQ1FwMnZ3aUtFWXhZNzRjcTdsVEE2czZiQzZSandyc2dR?=
- =?utf-8?B?alBKQkpqTldReWdNS1VTMEkvRVhHK1B0a05QeWswYVJ2N0owY2pJNzF3T09F?=
- =?utf-8?B?clVQeXpHZEZoUncxZzlLS0JpbGt5STY3UUJKMTJoTDNjOURZUDNpWG5pdHgw?=
- =?utf-8?B?Q2NmNTlud05DcDV5b3NOUlZIc0xTVm93WjkrL3dXVUU2NjEyaVZEZElvSzRG?=
- =?utf-8?B?dGs3SGY2Q2hwTFVYN3Y4b2FSeVZMOXFvVC95b1MwUDRaUXRoR0VXTFdBcjJq?=
- =?utf-8?B?Z05oREpiSG5oZkZoVWhkQlQ0QjVuUUFOQlR5OHVRd1lucUdET2NwMGtpSitm?=
- =?utf-8?B?QnBjeG9UTW5aRE84ZUFJMjFjd1R3dDJ2b3RMQWQvaUQzSytNM05QMDFFTFd1?=
- =?utf-8?B?bWk2eXJWYlVsRHZ3dzBtRDhGU3QxUFUvQXRETVJ6czdlaVRhSnJJVnNQLytp?=
- =?utf-8?B?RzZqWXdqQWFrS3lvQTB2MjByYjVyaDNIeGpzM2ZLSzJ1Y2Q3R1VtRW9ENjZ1?=
- =?utf-8?B?dk5rOU44QjRNRGlpRUQwS0hhb09SWEhKQXRNanBqQ0x3WVh2SWczUFRVeUpu?=
- =?utf-8?B?c3Z3MVVDV3hvZFY5OGJNK3JoaHJ0aC9yYUJiRFRPNWZJQjU2QThrNTRPNDFX?=
- =?utf-8?B?VUNlM1ZQUmJVWDZJTTdzV1VVRHZtTGtEdk5FRlArVVRUcDdsQWhPSVJING5E?=
- =?utf-8?B?RDQzT28rN2RJK1VmYTFxR1hZRWtoN3VubTliZ0gxQnk0TWwzREtJNXJ1c2xt?=
- =?utf-8?Q?BTcJOFx2QTkSpSamckgquI7ILV7gZHVBeFfJaN42roEkv?=
-x-ms-exchange-antispam-messagedata-1: FklWOQ8f6mTFdQ==
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <053DB909E64556459763D434C2FCCDE5@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dy7Rx6DKKz2x9M;
+	Fri, 23 Jan 2026 17:33:49 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1769150028;
+	bh=hnUiivgV1GJFcmOh4pDO9k/tTrjNiMK55wQcL+7/7RA=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=W5vjeQeiU0ULdPQtUv9eAf70pYeEokLhFo21iZX0KDC3rHz4fGY+DMK2en6l6RbxT
+	 ubNmsduQCSihVOdVHiTEzDdHb9QYkr88QX2j8Y0dsp5YmXJvKLQrl7WwnQw6bNn8fH
+	 PrRjnuRiUpgy2WQhq7RlsVHnjb5Gj6ve3pEsB2sL0WEcSghQ9ardd/1JuYPoy0Uy6S
+	 81exLyxBAYf1P9Cn3jDbAvZdUypm1nCqymrQniDwLrO25Aq1RzDdM/uDWuLsFnFk0G
+	 P5eHOOXOhs8PCx8JHKccE5MSTsY4jKxFAN9y+R3P8g30Ll0zT6R2KNaIH1tCe8NzlQ
+	 tGFau5QEV+LXg==
+Received: from [192.168.68.117] (unknown [180.150.112.60])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 66DCE7C8E7;
+	Fri, 23 Jan 2026 14:33:44 +0800 (AWST)
+Message-ID: <459f84c56a5010910ecbf8b445c092674f060691.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v3 1/3] Add compatible strings for AST2700 pinctrl to
+ the SCU binding.
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Billy Tsai <billy_tsai@aspeedtech.com>, Lee Jones <lee@kernel.org>, Rob
+ Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor
+ Dooley	 <conor+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Linus Walleij
+	 <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
+	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, 
+	linux-gpio@vger.kernel.org, bmc-sw@aspeedtech.com
+Date: Fri, 23 Jan 2026 17:03:43 +1030
+In-Reply-To: <20260120-upstream_pinctrl-v3-1-868fbf8413b5@aspeedtech.com>
+References: <20260120-upstream_pinctrl-v3-0-868fbf8413b5@aspeedtech.com>
+	 <20260120-upstream_pinctrl-v3-1-868fbf8413b5@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -189,90 +76,157 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-OriginatorOrg: meta.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR15MB6396.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dbe6fd42-ef53-47e7-26eb-08de5a41aab8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2026 05:38:41.6729
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 86D0vuS3kSG+4GiLbvcD0vM95NdzIJC4OMZjLpoHHCgIYIfsOR5sEm25d9bpuAGwrtxz9sQl+ANwFAho9TjnCA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR15MB4226
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA0MCBTYWx0ZWRfXx5J24MN5+XmU
- fhUntC9y59wwU6FjvgFd6cu0C1wpJqk7JWDY+56myxQZxducPmv58uf1osmQaE2546SQSNhnWG+
- KN2cIitGkMDqLYmKR+YMnuyW6InS+KXy3LTqbDgR+K4hLW4wpypz6HtNc1d8M5p0dQl72ug/yof
- 1tFUVNH5ejc8Yve4zRSl7SGH0sZjnIY7QKqFQXhL4Ydx3UysbI5oYJMlNLaVXdsBO+BzCA0hwKQ
- Xqlv6WMS/HgXI5v62ESYHLgnR3uAW+goczfB7Wil2Xn1GcAA3IJEz3+qHHxLYi/6m8BJpakJoE5
- Q8Gf32zj276TabMgPwsn93xHRj0seqe27cus8b1+PIn8zF+YKMqafrML8PAnnZTHzgIdYTwbgvL
- gvhIHrc3aR6WfYe0k1xcnaI5S9Yec163aZhqhdIkU/FbtqTLEgjyTDj8Yh5UQFWyfihLgUMc+Ow
- QQj7NYG3N0HZWcQO2NA==
-X-Proofpoint-GUID: BAdrniTxng-ZA18dn0DwSuhyQG6cRgjM
-X-Authority-Analysis: v=2.4 cv=KPFXzVFo c=1 sm=1 tr=0 ts=69730963 cx=c_pps
- a=F9MFHRSrL/QBKEkL9+MzCA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=2VGnaFk_AAAA:8
- a=C7Xc0mtc_V5xQub3elMA:9 a=QEXdDO2ut3YA:10 a=xuWaqJMTYXf3QM4Ho2sr:22
-X-Proofpoint-ORIG-GUID: BAdrniTxng-ZA18dn0DwSuhyQG6cRgjM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_06,2026-01-22_02,2025-10-01_01
-X-Spam-Status: No, score=-0.9 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS
-	autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.10 / 15.00];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[meta.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
-	R_DKIM_ALLOW(-0.20)[meta.com:s=s2048-2025-q2];
+X-Spamd-Result: default: False [-0.70 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[codeconstruct.com.au,none];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+	R_DKIM_ALLOW(-0.20)[codeconstruct.com.au:s=2022a];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	MIME_BASE64_TEXT(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1272-lists,openbmc=lfdr.de];
-	TO_DN_ALL(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:patrick@stwcx.xyz,m:openbmc@lists.ozlabs.org,s:lists@lfdr.de];
-	RCPT_COUNT_TWO(0.00)[2];
+	TAGGED_FROM(0.00)[bounces-1273-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[jagpalgill@meta.com,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[meta.com:+];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jagpalgill@meta.com,openbmc@lists.ozlabs.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.942];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.997];
+	FROM_NEQ_ENVFROM(0.00)[andrew@codeconstruct.com.au,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[codeconstruct.com.au:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	TAGGED_RCPT(0.00)[openbmc];
-	MIME_TRACE(0.00)[0:+]
-X-Rspamd-Queue-Id: B6D1A70890
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[openbmc,dt];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[aspeedtech.com:email,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
+X-Rspamd-Queue-Id: D2FB971074
 X-Rspamd-Action: no action
 
-SSByZS1ub21pbmF0ZSBteXNlbGYuDQoNClJlZ2FyZHMNCkphZ3BhbCBTIEdpbGwNCg0KPiBPbiBK
-YW4gMjEsIDIwMjYsIGF0IDg6MTTigK9QTSwgUGF0cmljayBXaWxsaWFtcyA8cGF0cmlja0BzdHdj
-eC54eXo+IHdyb3RlOg0KPiANCj4gSGVsbG8sDQo+IA0KPiBJdCBpcyB0aW1lIGFnYWluIGZvciBU
-T0YgZWxlY3Rpb25zLiAgVGhlIGN1cnJlbnQgcm9sbC1jYWxsIGlzIGF2YWlsYWJsZQ0KPiBhdDoN
-Cj4gICAgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvdG9mLWVsZWN0aW9uL3RyZWUvbWFpbi8y
-MDI2SDEvcm9sbGNhbGwuanNvbg0KPiANCj4gRm9yIHRoaXMgaGFsZiwgd2UgaGF2ZSA0IHNlYXRz
-IHVwIGZvciBlbGVjdGlvbi4gIEN1cnJlbnRseSB0aG9zZSBhcmUNCj4gaGVsZCBieSBBbmRyZXcg
-SmVmZmVyeSwgUGF0cmljayBXaWxsaWFtcywgSmFncGFsIEdpbGwgYW5kIEpheWFudGggT3RoYXlv
-dGguDQo+IEFsbCA0IGFyZSBlbGlnaWJsZSBmb3IgcmUtbm9taW5hdGlvbiAvIHJlLWVsZWN0aW9u
-Lg0KPiANCj4gTm9taW5hdGlvbnMgZm9yIHRob3NlIDQgc2VhdHMgbWF5IGJlIHNlbnQgdG8gdGhl
-IG1haWxpbmcgbGlzdCBieQ0KPiByZXBseWluZyB0byB0aGlzIGVtYWlsLiAgT25seSB0aG9zZSBl
-bGlnaWJsZSB0byB2b3RlIG1heSBub21pbmF0ZSBvciBiZQ0KPiBub21pbmF0ZWQuDQo+IA0KPiBO
-b21pbmF0aW9ucyBhcmUgZHVlIGJ5IFN1bmRheSBGZWIgMTUsIDIwMjYuICBUaGUgZWxlY3Rpb24s
-IGlmDQo+IHJlcXVpcmVkLCB3aWxsIGJlIGhlbGQgYmVnaW5uaW5nIE1hcmNoIDFzdCB3aXRoIG1v
-cmUgZGV0YWlscyB0byBmb2xsb3cuDQo+IA0KPiBBcyB1c3VhbCwgZGlzYWdyZWVtZW50cyB3aXRo
-IHRoZSByb2xsY2FsbCByZXN1bHRzIGNhbiBiZSByYWlzZWQgdG8gdGhlDQo+IFRPRi4NCj4gDQo+
-IC0tIA0KPiBQYXRyaWNrIFdpbGxpYW1zDQoNCg==
+On Tue, 2026-01-20 at 19:43 +0800, Billy Tsai wrote:
+> AST2700 consists of two interconnected SoC instances. Each SoC has
+> its own pinctrl register block, which needs to be described
+> independently in the device tree.
+>=20
+> Introduce "aspeed,ast2700-soc0-pinctrl" for the SoC0 pinctrl, which
+> follows the same usage model as the existing AST2600 pinctrl.
+>=20
+> The SoC1 pinctrl registers follow a regular and predictable layout,
+> which allows describing them using an existing generic pinctrl
+> binding without introducing a new SoC-specific compatible string.
+>=20
+> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> ---
+> =C2=A0Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml | 1 +
+> =C2=A01 file changed, 1 insertion(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yam=
+l b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> index da1887d7a8fe..ff6cf8f63cbc 100644
+> --- a/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> +++ b/Documentation/devicetree/bindings/mfd/aspeed,ast2x00-scu.yaml
+> @@ -87,6 +87,7 @@ patternProperties:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+- aspeed,ast2400-pinctrl
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+- aspeed,ast2500-pinctrl
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+- aspeed,ast2600-pinctrl
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - asp=
+eed,ast2700-soc0-pinctrl
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 required:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - compatible
+
+So, in addition to Krzysztof's concern about the patch subject, I think
+it's worth mulling over some further concerns that we might address
+with a clean break for the AST2700. Specifically, whether we can tidy
+up historical baggage by exploiting auxiliary bus[0] instead continuing
+to pretend the SCU is an simple-mfd.
+
+[0]: https://docs.kernel.org/driver-api/auxiliary_bus.html
+
+The original AST2400 SCU bindings were cooked up in darker times and
+have been a regular source of regret (same for the LPC bindings - we
+can consider them later). The use of simple-mfd unnecessarily invokes a
+bunch of machinery in the driver core to avoid explicit iteration of
+subnodes in the driver(s), and causes tension between the need to
+specify regs and the typically haphazard register layout of the SCUs.
+
+Related, this entry from "DOs and DON=E2=80=99Ts for designing and writing
+Devicetree bindings"[1] stands out:
+
+ * DON=E2=80=99T create nodes just for the sake of instantiating drivers.
+   Multi-function devices only need child nodes when the child nodes
+   have their own DT resources. A single node can be multiple providers
+   (e.g. clocks and resets).
+
+[1]: https://docs.kernel.org/devicetree/bindings/writing-bindings.html#over=
+all-design
+
+We have a collection of all sorts of odd-ball bits of functionality,
+and all of it can largely be implied by the SCU compatible. Avoiding
+specifying things that are implied is also touched on by[2]:
+
+ * DON=E2=80=99T add properties to avoid a specific compatible. DON=E2=80=
+=99T add
+   properties if they are implied by (deducible from) the compatible.
+
+[2]: https://docs.kernel.org/devicetree/bindings/writing-bindings.html#prop=
+erties
+
+So, can we use auxiliary bus instead, and avoid extending the regret in
+the devicetree?
+
+Well, the interesting news is that auxiliary bus is already on the way
+by way of the AST2700 clock and reset drivers[3].
+
+[3]: https://lore.kernel.org/all/20250917020539.3690324-1-ryan_chen@aspeedt=
+ech.com/
+
+A noteworthy observation is the auxiliary bus approach for pinctrl was
+already used by (at least) the mobileye eyeq5 platform:
+
+- Documentation/devicetree/bindings/soc/mobileye/mobileye,eyeq5-olb.yaml
+- arch/mips/boot/dts/mobileye/eyeq5.dtsi
+- arch/mips/boot/dts/mobileye/eyeq5-pins.dtsi
+- drivers/clk/clk-eyeq.c
+- drivers/pinctrl/pinctrl-eyeq5.c
+
+So, we're not inventing anything new here.
+
+Going down this path for pinctrl to fix the SCU situation will require
+some rework of what's already merged for the AST2700. However, we've
+not yet merged either a DTS or DTSI using the compatibles (and by
+extension, aren't using the AST2700 support from the drivers), so I
+hope that allows us to do a course-correction without too much
+collateral damage.
+
+A possible path forward is to:
+
+ * Move AST2700 definitions out of mfd/aspeed,ast2x00-scu.yaml into one
+   of:
+    - soc/aspeed/aspeed,ast2700-scu.yaml: Follow the example of
+      mobileye,eyeq5-olb?
+    - arm/aspeed/aspeed,ast2700-scu.yaml: We already have e.g. the secure
+      boot controller documented under arm/aspeed
+ * Retain compatible strings but require simple-mfd is not specified
+ * Rework AST2700 support introduced in:
+    - drivers/irqchip/irq-aspeed-scu-ic.c
+    - drivers/soc/aspeed/aspeed-socinfo.c
+
+This is my preference, at least for the moment. The change to make the
+SoC0 pinctrl driver compatible with auxiliary bus shouldn't take much
+overall. Unwinding the binding situation is a little more involved, but
+not too much. I think it just needs consensus on the direction from the
+devicetree maintainers.
+
+Andrew
 
