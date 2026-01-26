@@ -1,94 +1,151 @@
-Return-Path: <openbmc+bounces-1288-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1274-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kOnRGEJAeWmAwAEAu9opvQ
-	(envelope-from <openbmc+bounces-1288-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jan 2026 23:46:26 +0100
+	id tjrwCPTEdmkaWAEAu9opvQ
+	(envelope-from <openbmc+bounces-1274-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 26 Jan 2026 02:35:48 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 377E39B35F
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jan 2026 23:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C0698353F
+	for <lists+openbmc@lfdr.de>; Mon, 26 Jan 2026 02:35:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f10rG3JT3z2xQ1;
-	Wed, 28 Jan 2026 09:46:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4dzrhZ5TmCz2yGM;
+	Mon, 26 Jan 2026 12:35:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2607:f8b0:4864:20::32c" arc.chain=google.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769233809;
-	cv=pass; b=eoQOHRLCvBLpS70XbTX38dQCUKdtSk7G+nS/igcpcc264/qCZ/uDJEJ8XnE018ZzsYz0kDzKqp+YZYt8oJd3KZfV3J8R5MwldM12PQNq8hWDp9iogUnd9Tk08jLYKGWc46M0yi+gsWCXUUsmpWyfc9aaEGUo5u61YZuVi4Wc7+QpXXgBGT5d09/JJvhLlorUU8zH7Xo/iVmbqOotz1NWjzjhtSi6s2RYay1TTTJA1sUJGmrS7zKVudMyxGrw3n8A8YbF8OO7RyHmdC5qxKGwXXqMXnc6FC+AZiFKAge4k2DnW/h+lqkbVm+4M2juExaVmElMChptJH0JK32veOeBpA==
+Authentication-Results: lists.ozlabs.org; arc=fail smtp.remote-ip="2a01:111:f403:c112::5"
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769387828;
+	cv=fail; b=ESCWxbhNOUS1FbbVx4tPHhqqUvpC6pl2/kQytbIuqcKwdynWset9nw+Qz16Lqn8RWp7Tat/xcV4Gl5uk4F5qJCfwBl+V5rzBX8xH0b5k1NFEdGBGL9Gc+oyxobGn8LksFe8gU/mVIGFgE5ak4YAkz7yfLFFZ2/KbtHjMlW45bRtPuKlcHYrg1uXuHZG+6wrOzAfaxSjHznDsU/iJRm1OQ+YE8UvPH1zKQmEJNDXg7BneX8PprCdJVqyweeBuPWQG1oneaOpxBcHdDYNTYrSj8x5BGA6ImHHGBm8+cTSKqytWtG1YTwsyLdWPhASVSufnxwUt63HOv0lHt7MGxuDnsw==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1769233809; c=relaxed/relaxed;
-	bh=RvqGklUjyseX2xE/W6cGH9FaaCtn8xkx7HvadpPYIKE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f51XQn0ZjvcE/Afpu/zJP7E0wecpSkgU3IENBZ4g4i4aj6K/q6Af0SNftEOhiSkRBwktqfJJMfYPaljN9/pET8s1aMwjd53Xo7Xy9mAPWGCrWMq7d2YIk4BdFhIzhkSwQD0u5gN8yoE7KsWLrZZlaRmha/b/8xhgArSPSQ2lyDepzM8ESVt8laCtMAJ+VzuyrkYSaZm3vj5/Pln8Wk5cy1X+HjRfuYRCnlKdsZrc1FErfytzhYB4ILl/Y98PCRTiIDX0dappO3osuSFJPeqJifdGFWnP4cc18DFjIF0fxRsHyaxdNLxx7sCKlT5yNDZ13st+EA7QhuMDgoFtgvirfg==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kwH8DAws; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::32c; helo=mail-ot1-x32c.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1769387828; c=relaxed/relaxed;
+	bh=4AWeCYCMm6Li4XnmMPP8Z2VTthmEuv6+9xV9PtoXKPM=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=RFIcTZwQ2GCgnO7UkkJ5KFmEgwLmgRSmrzMGZOhn/+qXUX9E5acLww3RCc2Aejawfi9gmS/7pTFC4A8XPX3S+6MCY1e0Y9slUIlHxvjGWljWPEkAO0VeMidoGf8ukWKmtnAyf4XoLO6c4lpJCwPQ3Ya22Zdj5VE6mCDNenWiVjCUZT5m7QIY8sWYY+igknOCFBRbGebUBEoc4Yc6TSOOqxdeoQM/GGCGca4sXG1ZJab2Bp0ky4A7LzHMNLuQpNFToECUQrdd/FLiKijbG0dP5AR27+5kGMxPOrUKUHte6oMbKYymxGDYWjPEhleUhCyAXR/gYHo1H+xooHCgevVWCw==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; dkim=pass (1024-bit key; unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=UYnfRkee; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c112::5; helo=cy7pr03cu001.outbound.protection.outlook.com; envelope-from=garybeihl@microsoft.com; receiver=lists.ozlabs.org) smtp.mailfrom=microsoft.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kwH8DAws;
+	dkim=pass (1024-bit key; unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=UYnfRkee;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32c; helo=mail-ot1-x32c.google.com; envelope-from=nathan.jian7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=microsoft.com (client-ip=2a01:111:f403:c112::5; helo=cy7pr03cu001.outbound.protection.outlook.com; envelope-from=garybeihl@microsoft.com; receiver=lists.ozlabs.org)
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazlp170100005.outbound.protection.outlook.com [IPv6:2a01:111:f403:c112::5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4dykR323d0z2x9M
-	for <openbmc@lists.ozlabs.org>; Sat, 24 Jan 2026 16:50:06 +1100 (AEDT)
-Received: by mail-ot1-x32c.google.com with SMTP id 46e09a7af769-7d122733808so1172164a34.2
-        for <openbmc@lists.ozlabs.org>; Fri, 23 Jan 2026 21:50:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769233802; cv=none;
-        d=google.com; s=arc-20240605;
-        b=htfLPHcBJ1OFNeaJYbhVTJ0EzFeqTlFkP/AEiaUqn/Wt4AgPAPyckCVY/Q+aDNibVg
-         t86Lef3tOywHqYBfTI9bPtMmc+7At0oyqbupBk3TlBYERVOjNyW0xOgzYGs1TD5or/+t
-         vvGBilgDP6O3j+JaHpLYxA8nUxayhs3wKCvQB/zKXLmuOA+8fFsiHz4Egn1jN1JYrsMo
-         wi1cmOyAa6iIwKt4/kelx32CroxaM6tWkM3zWQyGjYEBDQlIOsD2uMmowzwFPMkH41Jf
-         +HezK+gtpbWdX+2HfxN56VzTTRp+4ZDhPwPC/p4P4EuqEmcuZBPlPFG7VSXv9SZG69l5
-         0sAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=RvqGklUjyseX2xE/W6cGH9FaaCtn8xkx7HvadpPYIKE=;
-        fh=jgE4hDT3df2VOYVB8PiXtkngkS44kC13o2CPtBSLsks=;
-        b=QCfUNTwvmfROPZLpc9/Zo3ygm5bsr/1wxeYy/1h+V7s6ZtppGjlZTlyq8fNiUT2e31
-         2rRoSsptkIc9oDTIWHzhOI8pq8XeLx1/rlVCHuuqpwypdMhY+7zqOmu7tweIltIEhUv2
-         OZf0qbKSKlqtWjPvl75uyxhP/rwjXuvZX7jNjQtfQdYbGaGrQQtG9iEDIefcg9ApUouE
-         zai4oqNw6LkBsADQC7eZRBWMQXyLsjBKDtK5aqI9ewDo6gLA86lKnzFUpyEtu0SwivuB
-         4AxoVgjRhCJiK2Fj0C1EQGRdgsyTd5WfZn+aUNVmM2zMkhTw7TkOEhKPA44HLg/kV68N
-         Nhqg==;
-        darn=lists.ozlabs.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769233802; x=1769838602; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RvqGklUjyseX2xE/W6cGH9FaaCtn8xkx7HvadpPYIKE=;
-        b=kwH8DAwsquRUYvjlWPhbQH0iZZ8L9YG9PJSOxKwmCj1TABL+kVerrqfx8KiIYkWTJL
-         9EFPstvb63w38UzqEKGsYPvTN46rhEOmI9U9JDC428/vMjb0jKhTo+1KDD7jsEtQQJKs
-         ylOsysAZP7WvNO6BxbjSAnbtmuJbCusi7qL5ggaZZ2rYTk5hp0WJVNjVCSjgAWhkAVO2
-         9WZ9mG1Ik5mWMGyo4DDkdmg/j93wNhp9LJLU2QssV3Iug/86evbHyqj8qkL2a4JnXK2C
-         dieh7OB3MTd8x1PdyLUY4/lo6w+tzPelwFudBKUBpw3A2InlkOLGlg7N776EBonIEpAR
-         vRNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769233802; x=1769838602;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RvqGklUjyseX2xE/W6cGH9FaaCtn8xkx7HvadpPYIKE=;
-        b=ISfuucyTn7d4LuI4/+Mabh5szj5hRnLwR4U4Z9iS7A46e2jPxggwW6v8zuMsA4DVzN
-         fUvUUbgKxBXWGhHOV0QbWHpW37vYzUK7upv0da/VuQTY8NNkr45l6qInwWcR2FtgkiVR
-         w08JG7FQRmxaVSdnmQAMxuhK4ZTuEOBnL/b4+lfErQx60SKY63XK5qE7rQZjzZM2zobC
-         0IXpGFVXJBCme85p7obKYl8fwSLhY/bqSPZNTAUT2jzxsxwgPgJri7K+DAeKM5miWCjL
-         TVtqBYxyChNEMQE0cY/gJpzZigx5vhFpwr3WgGEtU/aAS3wQFFQphogRqyhWDB+YM9yI
-         ojBg==
-X-Gm-Message-State: AOJu0Yz/t0ntBDXSe+8QQPr5Vltsle4oiUj5JZF0Nw5ROsYOen4DUP5o
-	+skPKSCG0/B2aYEhuPFKwbGrzg04vn+L4yBVMImSe5SALJiPDztICHO0AYOdb/wnAzUaCAWaZKJ
-	tBiGnyr1TohNop/PTk8I7qpsRGvsFG5u5rA==
-X-Gm-Gg: AZuq6aLG/2HSuPavoK1nbeo4u9pGyLTCN0tsm3sV77rtE1c/Qtt0DbdDyodptc7kXDK
-	nNG8w9ozOdtyxePy8M6+2dNDC9hQBVcv/uE3XoWqjdqX6IVCVrXzNy7i2ZcqiMae4jvcZLdjhvY
-	UgrNTxylnl1DO1LmWxJ20MufNMfbBBvUgEWBnAqz1QtgcnutZlF0SCtBmez8bpdKsGTxNpwd7VU
-	pjSK2Sak6jzMqX8F1f9a/7l8Vh/bFP4teYySE+Rb/RPmvwmLl0cX/xEE+pFc9iyWZ2/s1k=
-X-Received: by 2002:a05:6830:2589:b0:7c5:3c7d:7e65 with SMTP id
- 46e09a7af769-7d15a5d524dmr3229861a34.16.1769233801978; Fri, 23 Jan 2026
- 21:50:01 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4dzqNx2ndDz2xZK
+	for <openbmc@lists.ozlabs.org>; Mon, 26 Jan 2026 11:37:04 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=aBu1G8bMM+GeMD6VuxkU+CW85BLumJjwLjsWQzq5fGdF4LmcrhGuJDF3rF0fWLho5i1dDAwrdmWdZbUq4Q4xq02r2kmvXUKOcIkD+2FILgDNPDPb5UvNBLXDMzS7wGpCUjmmdqS+SoTRBVA+v7mSrqSUQcSTgY0sitcQkRDk5yv2gzLAJiAl2gnlGocJvAU9FuTuHZnLUChJrJvj7GSVJacSTuAVTS5pTWyeRQu9AWAm3BRblu+p94ri3GqtbEw9GF4xKcKUo5ohV3AbjLbPQVrVxl+OogsEvK8CVp6SSHGZC/aJXr10CFB5cZ0ofI0sWYF3/GmjsK3G8jTFHRychQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4AWeCYCMm6Li4XnmMPP8Z2VTthmEuv6+9xV9PtoXKPM=;
+ b=oSpEzNa8sOTiCaA7LBC2CnHsUNNwPFn2jMv/afEIxupB5pzwGR8IyvzWUiiVCy5dg7bF5IPL8+Mb/sqKIiVc/p8ONAyOArkViF5wtPEnSyKXlCtmzDHtNAe8ODuDbg0aUqCZCyIgTW0dsy1+b1EW8CTtpjzzB0jGf0ySGa9lAG/uXDpt30MZnxBFQQ2UldzJZtl96wC3/11Ed84ar/nTq8DLPbMukBHhtbdQy/aPr8FRLL6LLYS0XyolVN2DWz9J6wM19VoXihiLbHz1bHhL6OC35bUtxaieDoqkDTr+5jsDMJO6RQ6iI64rx1HMp+IqUgdLN9tK0yNc2bkTFDDVnw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4AWeCYCMm6Li4XnmMPP8Z2VTthmEuv6+9xV9PtoXKPM=;
+ b=UYnfRkee6VRZHvGY4TvxFmoSBdGc6cxj1fc38jL5uqJF04x1X2E2REprbaNrIUvLePwgyntzeinAYDGgyVxsb8t3nLmEscJqmmDN8YxxbCQkaJicu4naiGQ6DczeBjcp56ll1+O3or4Acys5sQHSYoRkpHdRJzwZEnx8MpudAl4=
+Received: from SA6PR21MB4461.namprd21.prod.outlook.com (2603:10b6:806:429::16)
+ by LV0PR21MB6025.namprd21.prod.outlook.com (2603:10b6:408:33a::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.6; Mon, 26 Jan
+ 2026 00:36:40 +0000
+Received: from SA6PR21MB4461.namprd21.prod.outlook.com
+ ([fe80::7638:a7db:6fa1:fdb7]) by SA6PR21MB4461.namprd21.prod.outlook.com
+ ([fe80::7638:a7db:6fa1:fdb7%5]) with mapi id 15.20.9564.001; Mon, 26 Jan 2026
+ 00:36:40 +0000
+From: Gary Beihl <garybeihl@microsoft.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"manager@lfprojects.org" <manager@lfprojects.org>
+Subject: Request for addition to Microsoft CCLA for OpenBMC
+Thread-Topic: Request for addition to Microsoft CCLA for OpenBMC
+Thread-Index: AdyOW9WzDkmenIwEQTWSZddInzyTYQ==
+Date: Mon, 26 Jan 2026 00:36:40 +0000
+Message-ID:
+ <SA6PR21MB44617BF0999CA8D83524DF83A693A@SA6PR21MB4461.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=d26c4199-0c14-4244-8253-35507e237b5f;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-01-26T00:32:54Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA6PR21MB4461:EE_|LV0PR21MB6025:EE_
+x-ms-office365-filtering-correlation-id: c68fda08-cbef-4a69-07b4-08de5c72f91c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|376014|1800799024|10070799003|8096899003|38070700021;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?xzl5FTaI64gIdtMOJ8A2jOSOQQGScwN3R5qFCUdXiNq4NMcv8y70bLpYMi/S?=
+ =?us-ascii?Q?2oRrAHsOnGK2Ht49q71bQ1ewnnE71ja8bIHPTXdN6qRGBCJL/3Qjmlq0ZWet?=
+ =?us-ascii?Q?vcs0T2kwdSn3lM4EpuKCaClwDB/CGEj5jqwBF4a/YBDtUfwjzr/HIohEf9Gr?=
+ =?us-ascii?Q?mOqX80Q6L/vHjb/CKgNTBvgF4OUOFfich7kP8v933ud4HuBGWAyLR/wlNbYj?=
+ =?us-ascii?Q?z8TgCkmGwqGCHxiWbiVe6dudA/5z4PptbHhKEB6xs2bUBQSfQprvGwBV4V2R?=
+ =?us-ascii?Q?Q38UMiFusMK/hJyEh7bqWMGBesz88Lbir9eE75NJJ06w6amRR8O/ZLrNnmsh?=
+ =?us-ascii?Q?cVK9zFeRJYhT2KrbBiPWIFjIH9IhZZYfc9Nj8NlrZWEAHZylrqkrfegZbkN+?=
+ =?us-ascii?Q?lQuRXVIAxGnHMh9cQCmwUeqZzRmupeggkaSb48c1GAGZovEUlFTfVpyoQyLc?=
+ =?us-ascii?Q?iqUlLtTOErSb9I6XUzNJ2dj2Mh/X6FSQpiJPQ4lEjsU/bXdCB5M5469olwr7?=
+ =?us-ascii?Q?mhgf+q4ddm+DkF/jgC3sO35iuwg1ibu9uH76nzHLkoels2lmMwF9lJB58gg4?=
+ =?us-ascii?Q?tw05gLETp4vhLsQHc3FeY2sQF4D58cndog+GLEUFJY6MfOXo430+R0zQMiYT?=
+ =?us-ascii?Q?+mnQpy2IxiEs6aSMm7yI39ADEDHl8pdGnnTycHLbHVZa124UotbfATNkQLeW?=
+ =?us-ascii?Q?MP7x1UU6Q/3HuleJ+K55Qn79BfEXtdbsCPOyqYG/rumHFTxFfhP7et3l3MkM?=
+ =?us-ascii?Q?xE3RUInLIkfFv0hrZUjeLru32PgqBLYbZGqO27rqErIratrV8xlI8KrzCQZM?=
+ =?us-ascii?Q?TpnWvfORq1/ZoB7hOcsJigmSHuOA7wPEWH3CaiM06tGN0XNajI0jHMKki+J8?=
+ =?us-ascii?Q?4YSqRpqc06BTqtwjO+wIVvjZ9saXmAJ3A5N/hXLvw4H8bH+vSi7lp6uQFGJ8?=
+ =?us-ascii?Q?I5zRJYKJpIFmH7bieESlgyEHjROUvcMSCIq05w0FyYErKMsyXep0zs/M17CR?=
+ =?us-ascii?Q?66wjlQ9tE0Rc4bsbYV7IjeYRHy6JCjxEVlRzUQjQmOSeQ1TUapvWKFxXwfoa?=
+ =?us-ascii?Q?ETP3tjDUxHHPLig5tVN4VuW600FjLkDG27Tkd8bScj+gHGIt0CayT/TwseOr?=
+ =?us-ascii?Q?1E6Aio2gFvhd40PCi+v88vYWi3qnZiqIcKOPm2vivt8mW9o62I/gYtECiUEZ?=
+ =?us-ascii?Q?ZGkEdmZNOk4fAngyXdZxREBDNghZkgXZG6bSi3hYtT/erxItpfxwxLCKQys6?=
+ =?us-ascii?Q?6q0S2vSPuXfgodsBzBQmd33A94baQ2RqMdkMt2rK40TOVrUTdJdpE1NJiGgo?=
+ =?us-ascii?Q?0/thge+RkFouyrEKK9AgtiLmQmFR/dEDyLDwdIcVoGzzpkmBQkOhRl9B1W7i?=
+ =?us-ascii?Q?qg8ooBxaMRqPh9JdGn4jJ7EGhp6gmy26R8LeiW9IE4MHJ/PKCEprYPXmV92l?=
+ =?us-ascii?Q?YMIUZB5Uljk+8xyJAvy4zOg3gP+PPOu26jyrWCvzGfJGGaCqueA25LUS70TR?=
+ =?us-ascii?Q?aJBtoshCg9LN3bvW2lE50i0tKc59PyjDw9+SRAro145aqaqqpM/nhUjHNcSX?=
+ =?us-ascii?Q?GGt++KHox5Q579sqd2/pQlRy0wZTLLjSxOKUAKz71iChi2CJ67xKHrGLUolc?=
+ =?us-ascii?Q?Xd7DELc7ef4zvMZ+l+3KyzE=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA6PR21MB4461.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(10070799003)(8096899003)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?dFk7T7rdVGVCw6nYTGAbm6l6gv1JRILZ/PqtoUmhocp3Ud8/ldoVuC+p9GS7?=
+ =?us-ascii?Q?Zy36+jlEZ6EjKN1I1fKjO8A85Ovr+UlTZiIPXKTyvTjZX+/qKwUHIVxyl5VR?=
+ =?us-ascii?Q?iojHEPn0vlYCxzElnVdpqpvepUGeKfHIAVqlmVI23EUBMzgoIY7XAbvXHqea?=
+ =?us-ascii?Q?3nP2G1cpedp4T+Rr8uuGfgOxrIWOea7YJqzNRdD0ImYH//FAkW/2JAHnftI5?=
+ =?us-ascii?Q?+HqrZuvZu+7o7UP9iNrN8mTa6i3giANeYOI959JbaQRcn/knwgyN9xYfpnWi?=
+ =?us-ascii?Q?AH2f6RFYmoPDCa3KaKzmaX+kawRriercFnzjzY38lK0Js7detJvl1nrGmySe?=
+ =?us-ascii?Q?KZXYkBewKKPKD+Dk9SnmMojCHv8yTG8MFQVop+ZUkRKLbMkvHNQ3dfm+oXA/?=
+ =?us-ascii?Q?DpnTISQSjp1JgNxA8MmbWwFRgqMFe5LBshVtALRu+ARa9NKwiVQJpQEod+hm?=
+ =?us-ascii?Q?XgeM+7mnlV3vQCgwwyztbaNQmswXoor+HV9RLpOHLyYGIEzJRmYFu449tKZ5?=
+ =?us-ascii?Q?YiQVBsikt5YCF5Fr31kF7Th8Ab0vuwVimJ6Llh6mnvg0lVPfIYq63rsFfb6N?=
+ =?us-ascii?Q?Cqes+G3JeFXkXeIHCf2uAfTk/Qi7FMMbY0Ic068JRZDJ9zpDKP1tCMEE3yvS?=
+ =?us-ascii?Q?tDRpAMOQUoEnSnWQSufkKaSGHl8FBfSCbq1zsuOiG5JqueT309WnS0ur1qoH?=
+ =?us-ascii?Q?J0iLYLFm/vBbHidLFfz5SKJGrJGWCNMWmN/2YK2nx5l1MgwBKe/G/EjflIW5?=
+ =?us-ascii?Q?eBkL5CquKH8jsrAYUNrhaEiWf2SSZERI2orCysst/8t/VxYB8lJUOnx82qmc?=
+ =?us-ascii?Q?vyDIu4OUY0NwE06xPUft2dLC1NYC6QhBZrtB9CxRlHVKpELQDD5PAYp7huk6?=
+ =?us-ascii?Q?keC+y0/cxT69/rd34LsEntc/zSU89lTzMA47G6m5dbqwELubNwqLr2rCRKbm?=
+ =?us-ascii?Q?8u+Wk1yaR0ODeP2ksMq+yHsJRZ9Yye5RE9Tb9yLjyaCKpM1p6K8aEPhTmw6R?=
+ =?us-ascii?Q?wiQK8pFlwIsdtpC+o5OSAC7udVi8seuh1eDgnDQ6t26DvAaUGLvPlcw1IVfx?=
+ =?us-ascii?Q?V0EUT0UXjFnCnW+rqA5FoFBeOU2yM7pOrvuHUVN3f+c0A/FTbdw6hjmoIfCK?=
+ =?us-ascii?Q?RRcgx4LmTuPYKSTClHlZTssTqqV5UGHqKlMSt2g/agW994ThGoOI0H1loyWE?=
+ =?us-ascii?Q?fPZXDeEzm8O8cASo+kLPB3jTHFCoGHNuePveMW8p/NR7Z6DcJ7lbtaOhtLg+?=
+ =?us-ascii?Q?5FdQoRwKXmCBb2iNlvLBSoSfyTLT3vBPWTmAeA52Q6BdMw1a22POY5UNZDb2?=
+ =?us-ascii?Q?VMfXV0x5r6xFld9wUwJ0mFnvH0tnvPAMM55fLh9anvVXrzdIPmVqxeuQHfZL?=
+ =?us-ascii?Q?7qk+buQHTdTikhkgwvsSaqXJYG2cMK+MpRzrTaq35Xnalu0Y0xlEaUTxo1a6?=
+ =?us-ascii?Q?FBHN4ik7BflnjzKoW90t2SSKFBMDfeOIz1PPOVMb033Iomf23dVHHEBzTyUn?=
+ =?us-ascii?Q?elGbePBwkZBz6ONz64lYVR2aAby7bwishjz60ww+nkmF9Pvq282Z28vLtebc?=
+ =?us-ascii?Q?U+8yALTjQ54mojDtsPqjg7MaMBFEHOD8bl3CpycF40MaTobf4eCtt6580i2q?=
+ =?us-ascii?Q?U6F7QKnkxRM31IW8kQIc9BTGxJ9Qq2KvD+11F6iFc6PobdVsjOITGMB7iSVC?=
+ =?us-ascii?Q?elIdNzpQ5YPyVyerc0V8ETQhLfdqwTdVkoHh/9W7Wi9TH5D4IJHW5nLjeSV/?=
+ =?us-ascii?Q?1MeRI5HGfQ=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA6PR21MB44617BF0999CA8D83524DF83A693ASA6PR21MB4461namp_"
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -100,171 +157,167 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-References: <CAAFL+NPbt+TkgsMZYZQQoGAhhUhYJSB_Hzn_U9nCzBQoTnSPEg@mail.gmail.com>
- <CALLMt=o3x3i51Fscq_YZ1mRpM_mKV9dHt1ea5i0Ya5QHtswvAQ@mail.gmail.com>
-In-Reply-To: <CALLMt=o3x3i51Fscq_YZ1mRpM_mKV9dHt1ea5i0Ya5QHtswvAQ@mail.gmail.com>
-From: Nathan Jian <nathan.jian7@gmail.com>
-Date: Sat, 24 Jan 2026 13:49:50 +0800
-X-Gm-Features: AZwV_QiWRMEZxRcHpbav9mCkJb7OvSl4pbcAUg6k9PwFm1QV8yS_VfcxT8XYYX4
-Message-ID: <CAAFL+NN255PQWamHJn8QtZrqdE4HwWY8EwoyUfqsR8iLUqkGeQ@mail.gmail.com>
-Subject: Re: Request for Gerrit account approval
-To: Andrew Geissler <geissonator@gmail.com>
-Cc: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000004aa5a906491bd89e"
-X-Spam-Status: No, score=0.1 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-	FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,HTML_MESSAGE,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA6PR21MB4461.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c68fda08-cbef-4a69-07b4-08de5c72f91c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2026 00:36:40.8165
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xUFBgpVfmM/CGqZrgRt0+kwZmpVMqQOueRZMeE71FJjUn9iwPo2p9M3CR2m81HbVUNnA6phvVITy/q8LNL+RQA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR21MB6025
+X-Spam-Status: No, score=-0.1 required=5.0 tests=ARC_INVALID,ARC_SIGNED,
+	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+	HTML_MESSAGE,RCVD_IN_DNSWL_NONE,SPF_HELO_PASS,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.20 / 15.00];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
-	DATE_IN_PAST(1.00)[88];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+X-Spamd-Result: default: False [-0.20 / 15.00];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[microsoft.com,reject];
+	R_DKIM_ALLOW(-0.20)[microsoft.com:s=selector2];
 	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[multipart/alternative,text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:geissonator@gmail.com,m:openbmc@lists.ozlabs.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER(0.00)[nathanjian7@gmail.com,openbmc@lists.ozlabs.org];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
 	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	TAGGED_FROM(0.00)[bounces-1288-lists,openbmc=lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	NEURAL_HAM(-0.00)[-1.000];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nathanjian7@gmail.com,openbmc@lists.ozlabs.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,lists.ozlabs.org:helo,lists.ozlabs.org:rdns,openbmc.org:url]
-X-Rspamd-Queue-Id: 377E39B35F
+	FORGED_SENDER_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[openbmc];
+	RCVD_COUNT_THREE(0.00)[4];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[garybeihl@microsoft.com,openbmc@lists.ozlabs.org];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	TO_DN_EQ_ADDR_ALL(0.00)[];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	TAGGED_FROM(0.00)[bounces-1274-lists,openbmc=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[microsoft.com:+]
+X-Rspamd-Queue-Id: 9C0698353F
 X-Rspamd-Action: no action
 
---0000000000004aa5a906491bd89e
-Content-Type: text/plain; charset="UTF-8"
+--_000_SA6PR21MB44617BF0999CA8D83524DF83A693ASA6PR21MB4461namp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Andrew,
+Hello,
 
-I am currently employed by Quanta Computer.
-I need to verify with my management regarding our internal process and
-whether I should contribute under an existing Corporate CLA instead of the
-Individual CLA I previously submitted.
+I am a Microsoft employee contributing to the OpenBMC project and would lik=
+e to confirm my inclusion under Microsoft's Corporate Contributor License A=
+greement (CCLA) with the Linux Foundation/OpenBMC.
 
-Could you please put my Individual CLA application on hold for now? I will
-get back to you as soon as I have confirmed the correct procedure with my
-employer.
+Please add me to the authorized contributor list for Microsoft's CCLA.
 
-Thanks,
-Qi-Han Jian
+Details:
+- Full Name: Gary Beihl
+- Microsoft Email: garybeihl@microsoft.com
+- GitHub Username: garybeihl
+
+Microsoft has an active CCLA with OpenBMC, and I am requesting to be added =
+as an approved contributor under that agreement.
+
+Please let me know if you need any additional information or steps from my =
+side.
+
+Thank you for your assistance.
+
+Best regards,
+Gary Beihl
 
 
-Andrew Geissler <geissonator@gmail.com>=E6=96=BC 2026=E5=B9=B41=E6=9C=8822=
-=E6=97=A5 =E9=80=B1=E5=9B=9B=EF=BC=8C=E4=B8=8B=E5=8D=889:49=E5=AF=AB=E9=81=
-=93=EF=BC=9A
-
-> On Wed, Jan 21, 2026 at 4:06=E2=80=AFPM Nathan Jian <nathan.jian7@gmail.c=
-om>
-> wrote:
-> >
-> > Hi,
-> >
-> > I'm a new contributor and just submitted my first change:
-> > https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86739
-> >
-> > I received "User not approved, see admin, no CI" message.
-> >
-> > Could an admin please approve my account?
->
-> Hi Nathan, I manage the CLA's for the project and one must be filed
-> and approved to be added to the gerrit CI approval group. If you sent
-> it to the linux foundation email then it usually takes a week or two
-> to make it to me.
->
-> If you prefer, you can send the signed CLA directly to me. Please note
-> that if it is an individual CLA then we need confirmation that you are
-> not employed by any company with an interest in OpenBMC. If you are
-> employed by a company with an interest in OpenBMC then you must work
-> with them to get a corporate CLA.
->
-> Andrew
->
-> >
-> > Username: nathanjian7
-> >
-> > Thanks!
->
-
---0000000000004aa5a906491bd89e
-Content-Type: text/html; charset="UTF-8"
+--_000_SA6PR21MB44617BF0999CA8D83524DF83A693ASA6PR21MB4461namp_
+Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div><div style=3D"font-size:inherit" dir=3D"auto">Hi Andrew,</div><div sty=
-le=3D"font-size:inherit" dir=3D"auto"><br style=3D"font-size:inherit">I am =
-currently employed by Quanta Computer.<br style=3D"font-size:inherit">I nee=
-d to verify with my management regarding our internal process and whether I=
- should contribute under an existing Corporate CLA instead of the Individua=
-l CLA I previously submitted.</div><div style=3D"font-size:inherit" dir=3D"=
-auto"><br style=3D"font-size:inherit">Could you please put my Individual CL=
-A application on hold for now? I will get back to you as soon as I have con=
-firmed the correct procedure with my employer.</div><div style=3D"font-size=
-:inherit" dir=3D"auto"><br style=3D"font-size:inherit">Thanks,<br style=3D"=
-font-size:inherit">Qi-Han Jian</div><br></div><div><br><div class=3D"gmail_=
-quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">Andrew G=
-eissler &lt;<a href=3D"mailto:geissonator@gmail.com">geissonator@gmail.com<=
-/a>&gt;=E6=96=BC 2026=E5=B9=B41=E6=9C=8822=E6=97=A5 =E9=80=B1=E5=9B=9B=EF=
-=BC=8C=E4=B8=8B=E5=8D=889:49=E5=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width=
-:1px;border-left-style:solid;padding-left:1ex;border-left-color:rgb(204,204=
-,204)">On Wed, Jan 21, 2026 at 4:06=E2=80=AFPM Nathan Jian &lt;<a href=3D"m=
-ailto:nathan.jian7@gmail.com" target=3D"_blank">nathan.jian7@gmail.com</a>&=
-gt; wrote:<br>
-&gt;<br>
-&gt; Hi,<br>
-&gt;<br>
-&gt; I&#39;m a new contributor and just submitted my first change:<br>
-&gt; <a href=3D"https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/86=
-739" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc.org/c/open=
-bmc/x86-power-control/+/86739</a><br>
-&gt;<br>
-&gt; I received &quot;User not approved, see admin, no CI&quot; message.<br=
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-&gt;<br>
-&gt; Could an admin please approve my account?<br>
-<br>
-Hi Nathan, I manage the CLA&#39;s for the project and one must be filed<br>
-and approved to be added to the gerrit CI approval group. If you sent<br>
-it to the linux foundation email then it usually takes a week or two<br>
-to make it to me.<br>
-<br>
-If you prefer, you can send the signed CLA directly to me. Please note<br>
-that if it is an individual CLA then we need confirmation that you are<br>
-not employed by any company with an interest in OpenBMC. If you are<br>
-employed by a company with an interest in OpenBMC then you must work<br>
-with them to get a corporate CLA.<br>
-<br>
-Andrew<br>
-<br>
-&gt;<br>
-&gt; Username: nathanjian7<br>
-&gt;<br>
-&gt; Thanks!<br>
-</blockquote></div></div>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Aptos",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Hello,<o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">I am a Microsoft em=
+ployee contributing to the OpenBMC project and would like to confirm my inc=
+lusion under Microsoft&#8217;s Corporate Contributor License Agreement (CCL=
+A) with the Linux Foundation/OpenBMC.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Please add me to th=
+e authorized contributor list for Microsoft&#8217;s CCLA.<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Details:<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">- Full Name: Gary B=
+eihl<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">- Microsoft Email: =
+garybeihl@microsoft.com<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">- GitHub Username: =
+garybeihl<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Microsoft has an ac=
+tive CCLA with OpenBMC, and I am requesting to be added as an approved cont=
+ributor under that agreement.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Please let me know =
+if you need any additional information or steps from my side.<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Thank you for your =
+assistance.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Best regards,&nbsp;=
+ <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt">Gary Beihl<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt"><o:p>&nbsp;</o:p></=
+span></p>
+</div>
+</body>
+</html>
 
---0000000000004aa5a906491bd89e--
+--_000_SA6PR21MB44617BF0999CA8D83524DF83A693ASA6PR21MB4461namp_--
 
