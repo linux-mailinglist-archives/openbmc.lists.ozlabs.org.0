@@ -1,76 +1,97 @@
-Return-Path: <openbmc+bounces-1287-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1289-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eEPoC0TaeGmwtgEAu9opvQ
-	(envelope-from <openbmc+bounces-1287-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jan 2026 16:31:16 +0100
+	id YBceLhGDeWmexQEAu9opvQ
+	(envelope-from <openbmc+bounces-1289-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jan 2026 04:31:29 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E6C696BE9
-	for <lists+openbmc@lfdr.de>; Tue, 27 Jan 2026 16:31:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB5399CB3F
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jan 2026 04:31:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f0qB84nQzz2yGM;
-	Wed, 28 Jan 2026 02:31:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f17992VgRz2xT6;
+	Wed, 28 Jan 2026 14:31:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769527872;
-	cv=none; b=IFFbsfqDqcRbl/2cjY2XmRkWfd7dSbqXwcixaehAKWd4q+tXz7W3XQBBmeSczH/C3aHKABGvMjC6uYvYoWLfS3cRCs+hCZ8NwIIL9lTSDkCj9k6uTYzqjIu5TUbZBY/Oz3m/tIttAXg1qXt+7t8+kyVe11EKcBk2MOliCs/kbkvmu9oCqWDEkotSuvnGVijFWO/s3q6nfZoVuwwWAyr3MfF4yjJDnjorV5vDeuOXzGzmxoJPrEdCVjJuau52jyrsHnlpmhfPSrPpEELZbpbRvKzvi18YBv+0z1s8/hs+PsnF0xHRVtPaqp2jqQFFflts7nrZPbbuRRVx8HNmpaS82w==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=103.168.172.148
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769571085;
+	cv=none; b=CcsQ7IhaVJSsn01fot/7HDGWjnriTjeddPLaxyeUEellZriuhM11p28guZXyIq2jqx+5u6c4EZySJXwSekVJye4p+FYOhJ2HGSdUNJTXnORbEJ+i4jdLJN2iBAEcLSUZYYxfIxGJdkrbM/GjYPBrn8iv9J2Sye1pN49npJ+NgT6HigDgeJfBij7B4JE51lMGPuht+dN16vODOB4XKtc576epQyBUWhzrEYJzxop88Czv+ghTXxFmRhQzIPxAjjS/24leLmefbE8VPFGEi5DWM4cjr8TUg4/ttLHQgNibpMzzD4dHe+4+KkglHYjBy7//pC1j+m1N06qU95Q/8v7stg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1769527872; c=relaxed/relaxed;
-	bh=CcuRSYpvHj6NoHofQbMK93lkeOoKjGd3IwYs/c/IxcQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cO3ZxbkuZsh1PqRZi2zowvYUko7cWHaN+K+Lr44kW9aNEViGBmxJQRU7WCfB5v4I2vWJBw0eG0jubTJoyv5o8mlIqVltMvnYjXtXRmQOS5oDd5VuvZoQrU8wI2QgQ65zS1zZN+AkJ1dejsKjiMiFvSMYixkpx52gnkGMk6Me+Mml87N/LToh1/6twGAYiZjb7HTNkA/52Dy3M2RXJOdFo1Pt8GId8fR6Y7j80Mib97KQX+LHBrAXPpVaVMECeNbc9Y9s2oBZ9akcyfOd2Dylox+UHR9uoKsfxvWAUOBhKtj+wjzfq8qAmtX/2pJmXhsh+4i0TAZOl7erIY2ZqEne9A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iCH3j8ia; dkim-atps=neutral; spf=pass (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org) smtp.mailfrom=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+	t=1769571085; c=relaxed/relaxed;
+	bh=U6VKrY9l+UeLGDIJtF04k5MU3v07+f6V3Au3Tw9XSJo=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=m4eRQeW/xdP++Xk9b50X+z0IU1BUIwd/JoP0hhld70wwSHjYes/PEVAsM9IZ3qdU52z21BNfvAT4C4aQLOOrEyscGpdi7fHafvYeVGHLN66ySx1Mc8AXIDeUchSgsTHvSTUD1cuNKDdVPd1n2Gym0sFanGJ0gvISXIiMTcy6BQHs1/fOzfr3b2VpLb5Vl1VGodkJNvzNK0xDYZRPojoR3UbanTVSTlL6CapafpJ1A5+GxEeyxnpTbDmrGlEBS/3zt+etVmS0ZQpxeZzPm1HOhakG8mrOOQ84zYPpdHCJiRmNu+YiP4nGGmBWxIN5ZoLcs7Ao+IWh+P+RrHqBbwmHxA==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz; dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=jdcY5Iyg; dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DOCqRlMS; dkim-atps=neutral; spf=pass (client-ip=103.168.172.148; helo=fout-a5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org) smtp.mailfrom=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iCH3j8ia;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=jdcY5Iyg;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DOCqRlMS;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=103.168.172.148; helo=fout-a5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+X-Greylist: delayed 336 seconds by postgrey-1.37 at boromir; Wed, 28 Jan 2026 14:31:21 AEDT
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f0qB74z7pz2xXB;
-	Wed, 28 Jan 2026 02:31:11 +1100 (AEDT)
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60R53arZ031029;
-	Tue, 27 Jan 2026 15:31:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=CcuRSY
-	pvHj6NoHofQbMK93lkeOoKjGd3IwYs/c/IxcQ=; b=iCH3j8ia3qRRLntKhAZHwU
-	WbCNDPZtVaxKK4wvgFSTcNtRgfu60RXVXdxYtMsZVJq22XZ0OP2pauAY+ynIxuGq
-	eGkG8UCNBbVACirf8pobSq2rN90OGqzww7XxnyVkjUcPj+ldyzcf+At3EYETmxQJ
-	zQhLJZ/HzcuGz9mGRGTV1V2EI7yn/FXVXQN7P1HGlvAbCxzAVg7JWiOkdWfHn62d
-	d01/x5wf4JUgIHkSL2U1Xmh8uJXuGebLmSq6mmRTVFPu1DHB1Sf/IOseSFAqeNa3
-	Y6vwxTHRwzFVqlcXTtzvJIoz9gSYJ4umc/UHMj9OVp3RYH4E1X1PBsyvmncJREfQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr64ajh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Jan 2026 15:31:05 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60RDBBYE006725;
-	Tue, 27 Jan 2026 15:31:04 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw8sy994r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Jan 2026 15:31:04 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 60RFV4Cv31785556
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 27 Jan 2026 15:31:04 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F219C5805D;
-	Tue, 27 Jan 2026 15:31:03 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9BC2458052;
-	Tue, 27 Jan 2026 15:31:03 +0000 (GMT)
-Received: from [9.61.135.234] (unknown [9.61.135.234])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 27 Jan 2026 15:31:03 +0000 (GMT)
-Message-ID: <e29b29d7-b002-4d18-a476-dd129154ba08@linux.ibm.com>
-Date: Tue, 27 Jan 2026 09:31:03 -0600
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f17954LmFz2xHt
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Jan 2026 14:31:21 +1100 (AEDT)
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id DE5BEEC02AA;
+	Tue, 27 Jan 2026 22:25:41 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 27 Jan 2026 22:25:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1769570741;
+	 x=1769657141; bh=U6VKrY9l+UeLGDIJtF04k5MU3v07+f6V3Au3Tw9XSJo=; b=
+	jdcY5Iygl7HocWUMYqfgEMzRwnSzjScI/5fJhv7+CKncomNbx4fMzNyXwxXrPAle
+	9LIjJpARR/Aaz2EhQtcNmrmFwq1EegMg7xbLtnOb22DFPyBcpR05TCotFoDKn6eh
+	UtA+1k/0pTDm28nBKXnSHX+LZwjE1WrRJJz+rHDmiG5Ct/hDCzuR0NQ4qWZT4SPo
+	k2mqyE43J2S8AFpuBGXNBFWfd3Mk+0st6XiES5Hsk3T/AXRJ8PkszyhfgomGbKst
+	4xFS+/6xRwJCq01vKjhvIGXueLGjQxnALbK4evgKSv1XEy1xk+5VwMNypjUpfuxi
+	wuHn0L73K5elu8Mt3QFNfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769570741; x=
+	1769657141; bh=U6VKrY9l+UeLGDIJtF04k5MU3v07+f6V3Au3Tw9XSJo=; b=D
+	OCqRlMS5zOR6RBMwO00L0g3QWCm52yfoIwC4rT8btK4KqzGVtzUwLhhuYzUhZBK2
+	JOjxem5FtTcrT6+055hMsyuXOAVj+VnKTNlJ4pDOaYEPNXeUH/o0XO2NrNmb9OTT
+	X+054anhqPrTcyRc/iTFDEQ675+gj2WxSUB0p//HHIJJT1E8wYzd3vXqwxUB6Se5
+	k2b557tZecIhqk3asOJJfrYB3J0ODsCyC7OyGyIjIbqcHfIGsd+atTMPMuB71xdg
+	UJPMUs4Ti1e5Q4ca8oJgnpRdKPnWURSDKK+aSWAZnqEnpbzpUMRnilbrDBx9cjol
+	vDIDe6UCpjwPxNcuwGJDg==
+X-ME-Sender: <xms:tIF5aaGY4aF3PGWpj-XO6yUkY5NX5UVXKHkzQ4weYY9yLxSXBBqSkQ>
+    <xme:tIF5aSyabKD05IkMyXPiD_aKcP2jagluBuozcRcGDe40fDhprwE5Mwv4uxVJ9gnze
+    zTeNt6Y_LPwEgcCP4PohGcZdpeXE6d15FqI3NXkLorqATMvj5lQYw>
+X-ME-Received: <xmr:tIF5aRg1z13p-h7j-vF-uYAL12C0rqthc3VpuCmFnaJuh9ZFHpXlEPxczte_fmn96dY1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduiedvvdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnefqnh
+    hlhicuohhnvgcuphgrrhhtucdlhedumdenfghrlhcuvffnffculddvfedmnecujfgurhep
+    tgfghfggufffkfhfvegjvffosegrjehmrehhtdejnecuhfhrohhmpefrrghtrhhitghkuc
+    ghihhllhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrght
+    thgvrhhnpeehhfetieeihfffjefgvefhueeuhfejudekkedtveeutdeikeekfeefledttd
+    fgffenucffohhmrghinhepohhpvghnsghmtgdrohhrghenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighi
+    iipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeho
+    phgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrghdprhgtphhtthhopehnrghthh
+    grnhdrjhhirghnjeesghhmrghilhdrtghomhdprhgtphhtthhopehgvghishhsohhnrght
+    ohhrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:tIF5adyu18W8wN3OekmnAmvmZ7BT3nNMGXhqi3Wmufpql3v3Zxb3bQ>
+    <xmx:tIF5aUKXIGmIozlo5UiYaTW58VpEmeJDuEfdz4PiHQc9arXKIHQo3g>
+    <xmx:tIF5aUQ0L8KSnNu-ZGo05Iwbdl-7JXUseOgIuzJQ9VBPfcvkaXPOJg>
+    <xmx:tIF5acpikasOtqUtdwuupwnRh2zXVhfiERna38HEtbahcarhGCl3VA>
+    <xmx:tYF5aaoVV93gXupnbf_vYGQdlodG1DHxLg1dZUrsavNq_BaHmjKwMQPw>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Jan 2026 22:25:40 -0500 (EST)
+Content-Type: multipart/alternative; boundary=Apple-Mail-73AC95FB-4929-4EAD-9DA2-E51AE39CCAA2
+Content-Transfer-Encoding: 7bit
+From: Patrick Williams <patrick@stwcx.xyz>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -81,125 +102,127 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
   <mailto:openbmc+subscribe-nomail@lists.ozlabs.org>
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/13] fsi: Convert to bus probe mechanism
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Ninad Palsule <ninad@linux.ibm.com>, linux-fsi@lists.ozlabs.org,
-        linux-kernel@vger.kernel.org, Andi Shyti <andi.shyti@kernel.org>,
-        linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
-        Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org
-References: <cover.1765279318.git.u.kleine-koenig@baylibre.com>
- <rwvoi4v3wcrfcbj2sg6mknlasp5klrlpacgwgl2jvwh6ub6vls@iovrqjblvz44>
-Content-Language: en-US
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <rwvoi4v3wcrfcbj2sg6mknlasp5klrlpacgwgl2jvwh6ub6vls@iovrqjblvz44>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEyNSBTYWx0ZWRfX5+4qhV5CuyMd
- 6mz2ij7H/90BTOVTToBPAGimZNpON3mEFuu8RYU2ei3t1OzD0z66dwXvU1ojN/gMNAcx+qORL6O
- CUbQh0t0u2qfpUZM7/KJzRESq3SAw9r2FQrk5uIyTv1CDnB3iAFpLrvMUdfCTULY38usEWFRHl4
- DWYOHv9Eg6qLc2C/wrZPFid4htoWdr9duOKeYK+S2bPRdasBX/DFXB8ZED6R3+kPSCQpF+Xh8tN
- QeCeA/8RasupiV36oqfT6e9L7Iy5YB9eorhwCY96vQL5uvOCD8DkdzgclNTqt/OT8VhReX+uiIu
- 5uVv0HagKt7VT/ArPdu/m9DoiJhbgHngy1rPgD77rrWgPxAPDxzSgjNUJWs3aFcZMa5PWxzaKid
- VLTBl2vvO0ph746qScEeAj92RY2pwlJ8fx02QGbmM7ZUq8AQ+L+7UFW6ursd4HR5sivvvIq3J+G
- /fBR64CN2AxZWKNjD8w==
-X-Proofpoint-GUID: OrbwkcODKPI3bhAADLWK0Xbh4LjB6tbb
-X-Proofpoint-ORIG-GUID: OrbwkcODKPI3bhAADLWK0Xbh4LjB6tbb
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=6978da39 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=NN-yl_if-6FwqtqQtZUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_03,2026-01-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1011 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601270125
-X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+Mime-Version: 1.0 (1.0)
+Subject: Re: Request for Gerrit account approval
+Date: Tue, 27 Jan 2026 22:25:29 -0500
+Message-Id: <5DF62D20-B18A-454B-B91D-BEE5E6184D04@stwcx.xyz>
+References: <CAAFL+NN255PQWamHJn8QtZrqdE4HwWY8EwoyUfqsR8iLUqkGeQ@mail.gmail.com>
+Cc: Andrew Geissler <geissonator@gmail.com>, openbmc@lists.ozlabs.org
+In-Reply-To: <CAAFL+NN255PQWamHJn8QtZrqdE4HwWY8EwoyUfqsR8iLUqkGeQ@mail.gmail.com>
+To: Nathan Jian <nathan.jian7@gmail.com>
+X-Mailer: iPhone Mail (23C55)
+X-Spam-Status: No, score=2.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,HTML_MESSAGE,
+	MIME_HTML_ONLY,MIME_HTML_ONLY_MULTI,MPART_ALT_DIFF,PDS_OTHER_BAD_TLD,
+	RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+	version=4.0.1
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.20 / 15.00];
+X-Spamd-Result: default: False [-0.50 / 15.00];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ibm.com,none];
-	R_DKIM_ALLOW(-0.20)[ibm.com:s=pp1];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
+	URI_COUNT_ODD(1.00)[3];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
+	R_DKIM_ALLOW(-0.20)[stwcx.xyz:s=fm1,messagingengine.com:s=fm2];
+	MIME_HTML_ONLY(0.20)[];
 	MAILLIST(-0.19)[generic];
-	MIME_GOOD(-0.10)[text/plain];
+	MIME_GOOD(-0.10)[multipart/alternative];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_SEVEN(0.00)[10];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_RCPT(0.00)[openbmc];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[eajames@linux.ibm.com,openbmc@lists.ozlabs.org];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.ibm.com:mid,lists.ozlabs.org:helo,lists.ozlabs.org:rdns];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1287-lists,openbmc=lfdr.de];
-	DKIM_TRACE(0.00)[ibm.com:+]
-X-Rspamd-Queue-Id: 2E6C696BE9
+	FORGED_RECIPIENTS(0.00)[m:geissonator@gmail.com,m:openbmc@lists.ozlabs.org,m:nathan.jian7@gmail.com,m:nathanjian7@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1289-lists,openbmc=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:~];
+	DMARC_NA(0.00)[stwcx.xyz];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	FORGED_SENDER(0.00)[patrick@stwcx.xyz,openbmc@lists.ozlabs.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,lists.ozlabs.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[patrick@stwcx.xyz,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[stwcx.xyz:+,messagingengine.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[openbmc];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	APPLE_IOS_MAILER_COMMON(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[messagingengine.com:dkim,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
+X-Rspamd-Queue-Id: EB5399CB3F
 X-Rspamd-Action: no action
 
 
-On 1/12/26 3:47 AM, Uwe Kleine-König wrote:
-> Hello Eddie,
->
-> On Tue, Dec 09, 2025 at 12:39:28PM +0100, Uwe Kleine-König wrote:
->> Hello,
->>
->> this is the 2nd installment of the series converting the fsi bus to use
->> bus methods for .probe and .remove. The changes since the first
->> iteration---that can be found at
->> https://lore.kernel.org/lkml/cover.1764434226.git.ukleinek@kernel.org/
->> --- are:
->>
->>   - (trivially) rebase to v6.18
->>   - add tags by Andi (for the i2c parts) and Mark Brown (for the spi
->>     parts)
->>   - Add a patch converting drivers/fsi/i2cr-scom.c (#8)
->>
->> In the earlier thread I thought I made a mistake for (implicit) v1, but
->> I confused fsi with fsl and the problem doesn't apply here as it doesn't
->> touch the shutdown callback.
->>
->> This series is not urgent, but it would be great to get this into
->> v6.19-rc1.  With Mark's Acks and Andi's tags (though they are not an
->> Ack) this should be fine to be picked up in one go by Eddie.
->>
->> As before there are two commit refs that should refer to the commit for
->> patch #2 ("fsi: Assign driver's bus in fsi_driver_register()"). As I
->> cannot know the commit hash yet, I wrote "FIXME" and these need updating
->> when the series is picked up.
-> gentle ping. While my quest to drop .probe() and .remove() is still in
-> early stages, I'd like to see this series go in before it bitrots. It
-> should have all the acks necessary to merge it.
+--Apple-Mail-73AC95FB-4929-4EAD-9DA2-E51AE39CCAA2
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+<html class=3D"apple-mail-supports-explicit-dark-mode"><head><meta http-equi=
+v=3D"content-type" content=3D"text/html; charset=3Dutf-8"></head><body dir=3D=
+"auto">Hi Nathan,<div><br></div><div>If you are currently working for Quanta=
+, you must be covered by their Corporate CLA and not an Individual one. &nbs=
+p;Thank you for looking into this.&nbsp;</div><div><br id=3D"lineBreakAtBegi=
+nningOfSignature"><div dir=3D"ltr"><span style=3D"background-color: rgba(255=
+, 255, 255, 0);">=E2=80=94 Patrick Williams</span></div><div dir=3D"ltr"><br=
+><blockquote type=3D"cite">On Jan 27, 2026, at 5:46=E2=80=AFPM, Nathan Jian &=
+lt;nathan.jian7@gmail.com&gt; wrote:<br><br></blockquote></div><blockquote t=
+ype=3D"cite"><div dir=3D"ltr">=EF=BB=BF<div><div style=3D"font-size:inherit"=
+ dir=3D"auto">Hi Andrew,</div><div style=3D"font-size:inherit" dir=3D"auto">=
+<br style=3D"font-size:inherit">I am currently employed by Quanta Computer.<=
+br style=3D"font-size:inherit">I need to verify with my management regarding=
+ our internal process and whether I should contribute under an existing Corp=
+orate CLA instead of the Individual CLA I previously submitted.</div><div st=
+yle=3D"font-size:inherit" dir=3D"auto"><br style=3D"font-size:inherit">Could=
+ you please put my Individual CLA application on hold for now? I will get ba=
+ck to you as soon as I have confirmed the correct procedure with my employer=
+.</div><div style=3D"font-size:inherit" dir=3D"auto"><br style=3D"font-size:=
+inherit">Thanks,<br style=3D"font-size:inherit">Qi-Han Jian</div><br></div><=
+div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">Andrew Geissler &lt;<a href=3D"mailto:geissonator@gmail.c=
+om">geissonator@gmail.com</a>&gt;=E6=96=BC 2026=E5=B9=B41=E6=9C=8822=E6=97=A5=
+ =E9=80=B1=E5=9B=9B=EF=BC=8C=E4=B8=8B=E5=8D=889:49=E5=AF=AB=E9=81=93=EF=BC=9A=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left-width:1px;border-left-style:solid;padding-left:1ex;border-left=
+-color:rgb(204,204,204)">On Wed, Jan 21, 2026 at 4:06=E2=80=AFPM Nathan Jian=
+ &lt;<a href=3D"mailto:nathan.jian7@gmail.com" target=3D"_blank">nathan.jian=
+7@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Hi,<br>
+&gt;<br>
+&gt; I'm a new contributor and just submitted my first change:<br>
+&gt; <a href=3D"https://gerrit.openbmc.org/c/openbmc/x86-power-control/+/867=
+39" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc.org/c/openbm=
+c/x86-power-control/+/86739</a><br>
+&gt;<br>
+&gt; I received "User not approved, see admin, no CI" message.<br>
+&gt;<br>
+&gt; Could an admin please approve my account?<br>
+<br>
+Hi Nathan, I manage the CLA's for the project and one must be filed<br>
+and approved to be added to the gerrit CI approval group. If you sent<br>
+it to the linux foundation email then it usually takes a week or two<br>
+to make it to me.<br>
+<br>
+If you prefer, you can send the signed CLA directly to me. Please note<br>
+that if it is an individual CLA then we need confirmation that you are<br>
+not employed by any company with an interest in OpenBMC. If you are<br>
+employed by a company with an interest in OpenBMC then you must work<br>
+with them to get a corporate CLA.<br>
+<br>
+Andrew<br>
+<br>
+&gt;<br>
+&gt; Username: nathanjian7<br>
+&gt;<br>
+&gt; Thanks!<br>
+</blockquote></div></div>
+</div></blockquote></div></body></html>=
 
-So sorry for the delay. Thank you very much for the series! Greg, please 
-merge at your earliest convenience.
-
-
-Thanks!
-
-Eddie
-
-
->
-> Alternatively, should I ask Greg (added to Cc:) to merge?
->
-> Best regards
-> Uwe
+--Apple-Mail-73AC95FB-4929-4EAD-9DA2-E51AE39CCAA2--
 
