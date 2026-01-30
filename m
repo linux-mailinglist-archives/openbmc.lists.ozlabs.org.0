@@ -1,85 +1,89 @@
-Return-Path: <openbmc+bounces-1302-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1303-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eInFATIVfGn4KQIAu9opvQ
-	(envelope-from <openbmc+bounces-1302-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	id wPizBDIVfGkNKgIAu9opvQ
+	(envelope-from <openbmc+bounces-1303-lists+openbmc=lfdr.de@lists.ozlabs.org>)
 	for <lists+openbmc@lfdr.de>; Fri, 30 Jan 2026 03:19:30 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B808B65D9
+	by mail.lfdr.de (Postfix) with ESMTPS id 13377B65DA
 	for <lists+openbmc@lfdr.de>; Fri, 30 Jan 2026 03:19:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f2KT84J76z2xl0;
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f2KT84s5hz2xpg;
 	Fri, 30 Jan 2026 13:19:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::52c"
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::534"
 ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1769739564;
-	cv=none; b=JT2+o3Wfr45o6IAsMjUXNOOKairbzy+cFY2jKbK1j2TCHLy5DK2OS/HyyOJ3gUWKBRcj1nToH4YzncfRhKdIJnpP08wQ+jwWW7DwJH2CxeC3nmGC5K3YfctOHtjQPRE6RIwf//rEE11iuxlMV+sB5TCSVo4HA+Gtg0JP7U+GwGmOgkdiNuHUgOkL4yAG7dKROYBc5xZgbfVFK1AQYTIpriYxZttfC4hySL4LV4Ldw3wyyNmalZ7eEw1wY0RUbmfy7rvUrbBzcjyUcj0VVqrVcNn8q7VnALzeFu5FiDQJCa3tZYFRQWE8f/afE3lzmYuE+m2U8R3b9G6DWJ0rcCWBIg==
+	cv=none; b=l8Yz+UggZpZBt//zVwVtbXg51fpFDbNzoXVB+kU+B3yj3hehoXQO8WwF/kypjHi82Qgt2TmnqQbjuy46oJlU6xTK1mv/eNI3VcPfMk6R2Eg7Fzn4D16vBUp66RLGiEedxpjbeXulX1O/Zcfofllmh3zDKo6o94P300xXAm4j9s0F4rYGrw1FkSgtImA7st7joVVsrX1B52EGAS77d/r6Cl5vki3uXSqrqb7aUy0xvXiAyvYICmxpk2SCy2Mi+J6xesqwE6MeRsA5PbKohCrNePu1AK919mYFosyDI42T9O59rKZBLbtqKjE6UbIsUHRBoLVpVs6LC/qE+eP5FQvnkg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
 	t=1769739564; c=relaxed/relaxed;
-	bh=ODF3pkf3MPuGaUsYyV7diAAf1LvjdBQFXn2ZphaGvPA=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version; b=VijmsAiloQVmRQetlxgKRyx9vVMSGMiseznyPHWn8EkoRmziRSU8jDpc8TlsxnrMA5zs+AqYOAu2EdGgzqve7CL2TfBmLJ7N5GuAiO+WaukccvlrV4Bl7BBfjwoiMpAUHs3MXsH7vJYQOt/Ryylo7hTXfVUrxPTt7tvU473GtV+bv2ptSFqagTPMmyfPTSUdBt/WqWKP47Yab9aGUt/TW1jUoiD6CLC8l8SSqdKcXJuoArXGaXgyOiCEXRPhnYMNqBw83RlYGOWw1wyU7wn51zUoHftObYImXZn4HVctiZTE1PQN07jm66jbQgjHSvFsMcvgdZyUBK6iyZwWEdo4Dw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jesfBjzm; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::52c; helo=mail-pg1-x52c.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	bh=7YDIrTHn8QceeoWgvEQkI/gRY9K9cFBiYFZtx0hOpm0=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZP+skFzJ4Hso+oP6Xgw1xheAT5atBGyNZIBcgHsCaG6iIDRAAyaRvrJ8JleAMPBrW0wINzN3xppsM/NHecxI5VDlqwdm0zPX/uLbV6EfXEO+YZawTpW0wg0Ghv51nmb+evtxdHo2fhwblyjZFcGhuG1px6LcnDSEt/iB7sKOjDkqTSjagyf/BuMvdPZEi/pZwi9R0BVM0RHFGEdySXOA59jDV5NX61AHTACc6Gx05koApAVsDnb8/m3vY7C9tRsZPPylRcljchZKIkaX7Nx1hMhuQ4Vp0TFhnf2Z9rtFEAzZG3H2UjiEWAGBMWCcPxz93XXWUryDlcZ4WxIirRHKCw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=No2KT9tX; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jesfBjzm;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=No2KT9tX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52c; helo=mail-pg1-x52c.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f2KT747N8z2xS7
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f2KT746ltz2xKx
 	for <openbmc@lists.ozlabs.org>; Fri, 30 Jan 2026 13:19:22 +1100 (AEDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-c626bd75628so568156a12.3
+Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-c2a9a9b43b1so892133a12.2
         for <openbmc@lists.ozlabs.org>; Thu, 29 Jan 2026 18:19:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769739559; x=1770344359; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ODF3pkf3MPuGaUsYyV7diAAf1LvjdBQFXn2ZphaGvPA=;
-        b=jesfBjzmqLhW9r2zKbciwb0gUpqfd5pE9vt565pnmKzdrhr2lzmEmhb9rg+/Mkt2Vz
-         ai+KHvl7qu1U7RTXsBkyasVzqTroOWRf7p79Vy0tiok/zRK5TtKcop0+lyty79/unCL5
-         Tu4xNd6fJw9T3OZk8Nr/2ylEVTQNoPIXUdjwsP+BhORqWMp5hqOsP3sKJncB9aWMSRy8
-         xDv4b+gtIIguNZhtUqGAjb6Bfu9IOEx10xSso2CXr8Y02BAvRbRw4IzhE7GEwjpdSSfs
-         8DSq/eou8s7oq5DIlcE0nuD3WkjBPA/12dnBlXjTVSd4JGEMdVmY6Hc3vom+Pm8ITxHY
-         MysQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769739559; x=1770344359;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1769739560; x=1770344360; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ODF3pkf3MPuGaUsYyV7diAAf1LvjdBQFXn2ZphaGvPA=;
-        b=m3thlQFZ5jhzMxKM3/CVwW9RB15AWGYcrQgbM8ymoMVPbTnKxk41Z1m4dptQi9Ju+7
-         ZdtJk2Am3/1Lcq1A221U0lbhrPzOblJrVzjYkO5RVsJVugtlyvIOrEdVfty4MNOLDEmQ
-         D8t81v5kUOMiCk8oMKixbwUYPC0yYT+CW0cgX0G5bfnObwsuOxi+liEtpghkEE28fYwu
-         QVcvaWx4h9MU0dPwgeTSzILhabPFgRVtGCCdYpqAewsHADmWgVP9mdJJbnSbgCTy4TZq
-         Z84ipdDowwF8I+HEy/Pl1qVdoSVInKDkgpueA8STgyvYVo1uPgdzCj2R1Am9xJez8hLH
-         yg4A==
-X-Gm-Message-State: AOJu0YxnfxX6QWbDfhWLk/SOR6MUGyDzK5NXcMn4oSXtuoAJUh47ez1V
-	fSBZ7GhC5aeZD2BZuN705AchYs18hlEoP6+WETEtTVXOg6erTh7XEXI6R+ABKg==
-X-Gm-Gg: AZuq6aLo///9iyaq1vDqitfPT9tZZCOAoC/w3m3SiPGEPsATgguNRepJNiJpIVLL9fP
-	IDSn9U25gPOyj3+Lu7nMJKzyoJUEcnEvaTimJ3Oww6DHj+bXI7atbUbWcqXbeYKpqCnb1X1pDiU
-	WQi+VgAPsZ3dmnrlc837QPTnfS8bRW81otVM7m2QmtjvdqJoQpKtB0DuHdXEOynlu+LE5R+4gQT
-	k9daY1EmxlkqPU49692XNLH7NZg0NvjuvastRMDPafzfdag0P84CXbGmS44QGzgmw7YceZ+NR7/
-	g8CVlucm0XJ/79OnxRhVFnzIvuCFEA+C+svdbf6PXyOXRasmPkLmtJOX0PbtlfNuX/jQE9IpPVe
-	Lm2sX+PllqCMY/9YBJH8C4G7L5LsRbdUTNmyX2ZbXd1TRh3ZpvCHVtFw/VTaT1dfpAoM+v8XkXM
-	XU8SCJaiZaSPRPi04mhucOz/XD5khmbjcLH+Afa6ZLueEBBJdt+7lJng5cRGjZnwc=
-X-Received: by 2002:a17:90a:d40f:b0:340:bb64:c5e with SMTP id 98e67ed59e1d1-3543b32dc40mr1375394a91.14.1769739558594;
-        Thu, 29 Jan 2026 18:19:18 -0800 (PST)
+        bh=7YDIrTHn8QceeoWgvEQkI/gRY9K9cFBiYFZtx0hOpm0=;
+        b=No2KT9tXuBHKSu5qhje1eSJXl0TQVLjo3/ehJmeNPYXKVJ5/7KWCi1CzJdMkn/ReCv
+         iCLj5U8NE4bHMUuo4nvh6FkkQ560eL04yqifLtbyl5OkSGU8XnV8tKrh3dgHXGjyJA9c
+         j2aXp3G0Aqgm5tZbdzU33WcD9PwGGG9Zk/HLAyxApH9Y/Dj4kT0Cx0TtxuP2OIN1CXGe
+         Ga0RzDGwecIgQAF77rp4H5G8F6CZRxnIfk8DO2v8QGwN/xzIzxjFvW5xUDnKxu/c79lU
+         oToPhwMRmo4AWoftJvVfiaNEYMiK2SAuB7BFcSd3KBoKYkUqEfzYdYJ3e2uWe0yT9K9K
+         JujQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769739560; x=1770344360;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7YDIrTHn8QceeoWgvEQkI/gRY9K9cFBiYFZtx0hOpm0=;
+        b=Bgi3bPKEnkgZTNjCmEPaTLDBt9B+bQ+Jz4O1z8nqdKnZrGGlbcQb2CoDFttfF6Gvqy
+         /ZfSGq+aHQrWD/ptEkZinGV5j2+w7lqmwYMXiAOFXOah9jtlczx838RVDtD4/9hRpJR5
+         FiA5SDdzg25c7nyRtnMAGe0UDVR1YJ36VRtlHjJonZAob7TsWkVn5BNVQMCKL6h0T8fQ
+         xYrqFPFJDLWpA6Nzfe7BK97K84VCWF7i2ZEdDU+KctjGrlgHMjhd6SbnATPm9Q4LyDXU
+         xJBWxt0JjAvG5hxfJkM5QLgC4v2nTdSJcRqRlbkClG6/H8w2G3Hoi8ExYFFqgJz6LxyF
+         jweQ==
+X-Gm-Message-State: AOJu0YyVx+SFUqqG0pl62rxRb5RNKRzYU+qLzVemlFTFrta7FS9gvS6H
+	6r8/0dU90sLGqTrw7k4eqmj+1qm3jdG8a2GcAgY4OvwclM542f4NNIA0KGTZZQ==
+X-Gm-Gg: AZuq6aKL+u0XNnspONBNTB7q3AJOmBzBxLaox4QiTOAbP4fRovGqQ09TkHuc3OnRxkn
+	InGqt12Dm437sHbOnB61jpgSDHg5rMuuOCv409a0LAbAUURsh01XjVLzuvy5hliyAulb2XYqj2D
+	3pI+oBs20ZMKtTYp6tiuzofIW5kq3pGEo1aPtYTuFVd5pqmj2mRrwitIol4UOsydjvMe2WUHrrf
+	3NDa6ASb905KP1Jp0dBhmWQb94rkqMHGGM7Z8L/OjhwckETW1J8ZpdBM0KSbMneVzhEw3yIl799
+	MAwc5YiVrGGe4H+uFgo0+VKIhRGR40kwIWB5WdzvpOHo5NvLw7QYMR1HXg6GmzgnAvvDA7YRX6H
+	HOtu9pRLJsWucTLCDekPUMgdeQ6DvXbJ4YNbmDeAIBkoiK6+ypF59uwZeoGW3XNRy5wqIZN46wX
+	7Ei3b4oa0FgSgQ3XAfQADKCGvtJgJQATEBa4kJlM7q2ZpRsCpPOWxBL1hNnY30ruU=
+X-Received: by 2002:a05:6a21:6b11:b0:366:19fd:dbe4 with SMTP id adf61e73a8af0-392dfff6b08mr1178450637.4.1769739559912;
+        Thu, 29 Jan 2026 18:19:19 -0800 (PST)
 Received: from localhost.localdomain (61-220-246-151.hinet-ip.hinet.net. [61.220.246.151])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c642afbeaf3sm6018082a12.33.2026.01.29.18.19.17
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c642afbeaf3sm6018082a12.33.2026.01.29.18.19.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 18:19:18 -0800 (PST)
+        Thu, 29 Jan 2026 18:19:19 -0800 (PST)
 From: Potin Lai <potin.lai.pt@gmail.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au,
 	andrew@codeconstruct.com.au
-Subject: [PATCH linux dev-6.18 0/2] hwmon: Add support for MPS mp5926 chip
-Date: Fri, 30 Jan 2026 10:16:59 +0800
-Message-Id: <20260130021701.2357288-1-potin.lai.pt@gmail.com>
+Subject: [PATCH linux dev-6.18 1/2] dt-bindings: hwmon: Add mps mp5926 driver bindings
+Date: Fri, 30 Jan 2026 10:17:00 +0800
+Message-Id: <20260130021701.2357288-2-potin.lai.pt@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20260130021701.2357288-1-potin.lai.pt@gmail.com>
+References: <20260130021701.2357288-1-potin.lai.pt@gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -107,7 +111,7 @@ X-Spamd-Result: default: False [-1.70 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1302-lists,openbmc=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1303-lists,openbmc=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_NONE(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -125,26 +129,32 @@ X-Spamd-Result: default: False [-1.70 / 15.00];
 	TAGGED_RCPT(0.00)[openbmc];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: 0B808B65D9
+X-Rspamd-Queue-Id: 13377B65DA
 X-Rspamd-Action: no action
 
-Backport mp5926 driver support to kernel 6.18.
+From: Yuxi Wang <Yuxi.Wang@monolithicpower.com>
 
-Yuxi Wang (2):
-  dt-bindings: hwmon: Add mps mp5926 driver bindings
-  hwmon: add mp5926 driver
+Add a device tree bindings for mp5926 device.
 
- .../devicetree/bindings/trivial-devices.yaml  |   2 +
- Documentation/hwmon/index.rst                 |   1 +
- Documentation/hwmon/mp5926.rst                |  92 +++++++++
- MAINTAINERS                                   |   7 +
- drivers/hwmon/pmbus/Kconfig                   |   9 +
- drivers/hwmon/pmbus/Makefile                  |   1 +
- drivers/hwmon/pmbus/mp5926.c                  | 183 ++++++++++++++++++
- 7 files changed, 295 insertions(+)
- create mode 100644 Documentation/hwmon/mp5926.rst
- create mode 100644 drivers/hwmon/pmbus/mp5926.c
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Yuxi Wang <Yuxi.Wang@monolithicpower.com>
+---
+ Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+index c286f180d52c..4aaec3a6d461 100644
+--- a/Documentation/devicetree/bindings/trivial-devices.yaml
++++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+@@ -315,6 +315,8 @@ properties:
+           - mps,mp5023
+             # Monolithic Power Systems Inc. multi-phase hot-swap controller mp5920
+           - mps,mp5920
++            # Monolithic Power Systems Inc. multi-phase hot-swap controller mp5926
++          - mps,mp5926
+             # Monolithic Power Systems Inc. multi-phase hot-swap controller mp5990
+           - mps,mp5990
+             # Monolithic Power Systems Inc. multi-phase hot-swap controller mp5998
 -- 
 2.31.1
 
