@@ -1,77 +1,83 @@
-Return-Path: <openbmc+bounces-1312-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1307-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJZhOjErgWlgEgMAu9opvQ
-	(envelope-from <openbmc+bounces-1312-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:54:41 +0100
+	id uKjhJtnggGl0CQMAu9opvQ
+	(envelope-from <openbmc+bounces-1307-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 18:37:29 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 332F6D284B
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:54:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD3BBCFAE8
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 18:37:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f4hkD52pjz3bW7;
-	Tue, 03 Feb 2026 09:53:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f4Yhz40DWz309N;
+	Tue, 03 Feb 2026 04:37:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c005::5" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770038240;
-	cv=pass; b=g0KPr9+b0U5YnSiseXS+Bozb+ItNplkWoQqql4X8ShSDzlXELWR+63N8UbEZRsVZm5o9jEKPFysf92xIAHojtTTdLIQAb4K0NU/bqB3SdRw6JFZpRIzt810lNQjkOLNpRouGO3++159k//HU9vwMKPjrkzp7fxVgoiTLNYk7kxtoR05K3l2c1Bnea34H+tfQ9xp0gjzMKhsbk+WtAXCJ7fBDdN249/6Kt+9tUG+soV3TgFRXBVrJhe8M2r+QPHS2dmTb72rOqjWUo34nYMZc+K3T9oRzDUZmtaFhwizSYALxUqoSJm/kE4GZolfsF7ZO9VCfqMP1aCpzPLPReT1a/A==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770038240; c=relaxed/relaxed;
-	bh=XE/gUTpMp05dQTr74GUgf3DlEpZZ4za0PyRVDLu5DXo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hHxN4ZaDwFEbZ5lRJxLCBZIF5joBfOPoQgLAVw/VZI6NHoUrwGO4CfHWv5dn8gdG8dspdp0BGlnZWjnLwB/PwVuAFYZOakIUwQv8xr3tYFl2y0vssX6xbz9NDkDQywyPX2jLieLAV/2tNBtjNXiiK3IUjNLvPqWuc9J8vFBxA1zdfVhrnzo96n0m4q9RQf6lZWhhnddSQfNRX8FVsRIbsamMHEqZidTHmDNzvYEB4gmsqnxwHOl32ogpoOCTw0veG/jKMvkcSVyDg51baoJO2s0uuL7iNpFdSmQG1wCjiTzgR9gdJzFYaHdG2KZYgJg5ygzVpc6RytF3gntvimxinw==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=JAp7Nzo5; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c005::5; helo=co1pr03cu002.outbound.protection.outlook.com; envelope-from=vmoravcevic@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.10
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770053843;
+	cv=none; b=Nd0VeJ12ocHiyk5XL9g2PnSRQkvMPZdAqAvHuuNqwdzfVIQSDsn59su69sHsnpNu5gO64s9iGZ6ld2tK23HbLGLMMu238OUeKHJAcKxbA6vdBorcYhJdImKTklls3d89YCtojfNyRe2N5MGHPFcYbQOPqG9yYFe1mJzjFjDCXa18Z10rdm+0HNMvbrXzyh2yCsqwxTCfPmi+ZgQUO6pdNHp3VFxpeNO2iyl2ObyFsEGK4CDojOozhtIVxvDEf/xQlfQr0x6aYvTeKYh4Zz4+hDDs6O1CO2a+kl2MkFPYnhsKU4SzOhiEjw29GGv1d2w6or4urvcvDhpKrV5piJY8og==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1770053843; c=relaxed/relaxed;
+	bh=UuT7BSbTpA9YqGylIgcZMjHRBgp33SIFds1E3lD+FRM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GREm73mOEVd4bMtqGLwLy4YgCS2D9xo65GyeOZ0xj56sRJLL+X2R6oW7OSNNcozKFvlnxGrQECHkaqFj8aEWn3Q6C6tw88yE3v8/aV1R2TPWcmVo40AUP1+dAKtjXqQA1TyOXgvs2bjZU6uesepqFWHAgeXQTNO0kIImUwjJPkEDfeqAQR89F+LHSZLjtAtUhd+KX98VDUtq2uSpfPxmrwzJ4mdoFtlJmb1Jm/2UcH8QlGj1Z5tbHHVHa0xzGl+cwxvtK1IoxWRtlnbROPnYx8KHmmTY3KHUJKKqdD4SZRMxp14HTneOr51YJLEYEY99J2h0KseRqcKjTdFwpXt71A==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WAk7AcUa; dkim-atps=neutral; spf=pass (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=JAp7Nzo5;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WAk7AcUa;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=axiado.com (client-ip=2a01:111:f403:c005::5; helo=co1pr03cu002.outbound.protection.outlook.com; envelope-from=vmoravcevic@axiado.com; receiver=lists.ozlabs.org)
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azlp170100005.outbound.protection.outlook.com [IPv6:2a01:111:f403:c005::5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4Rwv1YmYz30BR
-	for <openbmc@lists.ozlabs.org>; Tue, 03 Feb 2026 00:17:19 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LUzow0aNliCr5yP3rdhRrsm18qhc/mXa8lUdzCwhLdc/E+8HoaUmSnoykciFYffzaeVjYNDo1vd2hoC+GIXUwrq8YGOSnFheNaRt5r2udUmbvAc0z6cjjAqgX3fQoBjU2EF3iahmMa/OG814M/tE60mVcb7yPlwWsaGdDq4DmTzj1EZ6CsNPAan5dQ/OWi+yU04N4Mzujxe/AV/8uD1TVw6JR5JG5TtOHWNUahrXLJ2JyfWloGEYHRu8KTTnom3jcAo69qbS3q8r1QXdLa8q79f4CJllBKeExMB5ERpk8xcAlqIcIXz9816emE6ffJXWVI1CqaMlTt6SIeec9LVYIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XE/gUTpMp05dQTr74GUgf3DlEpZZ4za0PyRVDLu5DXo=;
- b=W8UKcq/sB6agHMD+jfDAwQJpR+LBRrohMq1HmK8nO65yEzqp2H9gZ17w43pSCqTFa3rwzJFhD7TGvOzYpfCxPGRm3sMDK706hi7ynQss7/90cDdsJHHKPh1Mf2duj8cnFzonB3z29mpdgRXe3fvzCa74NGW6TVVCJQ3KXyT4tablUlkcsOJDkZeWHPN+IUbkzC3Itnt0A7DdbZMBuOngpa3vyabMD3+6F/BExrBAhlX0YvIpDGnIuvS9nldDj0gEVbefANnarYT7dS6i5cpo8n5cH0IE8A4tBDkvmvzDM8A93gLYxCl3vFA5+N6upAaCFoo0BSL03p3aVORbWizExg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 4.227.125.105) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XE/gUTpMp05dQTr74GUgf3DlEpZZ4za0PyRVDLu5DXo=;
- b=JAp7Nzo50x6Av264w2Sfz2TKNca5biynu71I1q4nw6LQqMB3ODvsnp8JBPM0Y26F5wgl682e7wLV+RvU45F2DfoTMPyFp2Cb9B1hh6AHCMUDkgZ/6Fbs4C0VhhYntlR+z57mj8qCk0UTJbYP6E5rn/BqlbP0IMqHn2l1S+GKmuEVoCdcmIFn0YMCL6FRji/c+Q12Etih2qAfFCOFRlegMUeKmkkhRsafb6XzbYmk2EQ3aDDj0SREYGv7I5w3odsNyd5Kb/ec6mvC/xP9tTmpzxwqkdwXzOn5X3w4BPCihFUWNlGKeyG+b/fZpnqwIAMm9RWosSjRTpUYY4K1/b2AWg==
-Received: from SJ0PR13CA0225.namprd13.prod.outlook.com (2603:10b6:a03:2c1::20)
- by SA3PR18MB5626.namprd18.prod.outlook.com (2603:10b6:806:396::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.12; Mon, 2 Feb
- 2026 13:16:55 +0000
-Received: from SJ5PEPF00000203.namprd05.prod.outlook.com
- (2603:10b6:a03:2c1:cafe::29) by SJ0PR13CA0225.outlook.office365.com
- (2603:10b6:a03:2c1::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.12 via Frontend Transport; Mon,
- 2 Feb 2026 13:16:48 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 4.227.125.105)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 4.227.125.105 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.227.125.105; helo=[127.0.0.1];
-Received: from [127.0.0.1] (4.227.125.105) by
- SJ5PEPF00000203.mail.protection.outlook.com (10.167.244.36) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.10
- via Frontend Transport; Mon, 2 Feb 2026 13:16:54 +0000
-From: Vladimir Moravcevic <vmoravcevic@axiado.com>
-Date: Mon, 02 Feb 2026 05:16:30 -0800
-Subject: [PATCH 3/3] MAINTAINERS: Add entries for the Axiado USB UDC
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4Yhx2Lt2z2xpn
+	for <openbmc@lists.ozlabs.org>; Tue, 03 Feb 2026 04:37:19 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1770053841; x=1801589841;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=qnUdp0fecZJL9WMPJ0BhqY7uIDclw68asQkR5FLPZ6A=;
+  b=WAk7AcUa5reiwABO7r/OrOaqN7Y/BuasEZAB9cP6RieJx64spScgWFKI
+   4y0pWodUrwVbZDEpZZhJV/fqQZsjsMUYdoaacko1iZrJbNp467Lz3JoeC
+   DMX7rFTP2JAM5ksS3ULDQCTzhiw4reTHfajqFXHHYUI7qCoq2bvL59mR/
+   0B6OdDDiRTG8TYz85Pv5k30pfiH0dQJBS4o93SA3J+jLq6gWa1oROIA7u
+   dSihZpndTXc/efICbNP4Dg5a6lgIiZ2JpOpapIiq93ExaEjCjM2r+PHQC
+   ShM14P12RQaUI/btltDG+w1i/bGFUa3TPz1Vfoy43deglSAVQtWPjYExx
+   Q==;
+X-CSE-ConnectionGUID: tqDxxCpKQlySw+IR1Uh9MQ==
+X-CSE-MsgGUID: 2INVSzMdTeejDWzSzxBs7g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82584542"
+X-IronPort-AV: E=Sophos;i="6.21,269,1763452800"; 
+   d="scan'208";a="82584542"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2026 09:37:15 -0800
+X-CSE-ConnectionGUID: mNWRr4kkTkKaw6XHoiHtJA==
+X-CSE-MsgGUID: /VpVgHcER1S748B3+00oVw==
+X-ExtLoop1: 1
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by fmviesa003.fm.intel.com with ESMTP; 02 Feb 2026 09:37:13 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vmxrK-00000000foG-3J1S;
+	Mon, 02 Feb 2026 17:37:10 +0000
+Date: Tue, 3 Feb 2026 01:37:05 +0800
+From: kernel test robot <lkp@intel.com>
+To: Vladimir Moravcevic <vmoravcevic@axiado.com>,
+	Krutik Shah <krutikshah@axiado.com>,
+	Prasad Bolisetty <pbolisetty@axiado.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+	Vladimir Moravcevic <vmoravcevic@axiado.com>
+Subject: Re: [PATCH 2/3] usb: gadget: udc: Add UDC driver for Axiado Device
+ controller IP Corigine
+Message-ID: <202602030131.VCTzZ4me-lkp@intel.com>
+References: <20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f@axiado.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -83,112 +89,31 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260202-axiado-ax3000-usb-device-controller-v1-3-45ce0a8b014f@axiado.com>
-References: <20260202-axiado-ax3000-usb-device-controller-v1-0-45ce0a8b014f@axiado.com>
-In-Reply-To: <20260202-axiado-ax3000-usb-device-controller-v1-0-45ce0a8b014f@axiado.com>
-To: Krutik Shah <krutikshah@axiado.com>, 
- Prasad Bolisetty <pbolisetty@axiado.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- openbmc@lists.ozlabs.org, Vladimir Moravcevic <vmoravcevic@axiado.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770038210; l=1165;
- i=vmoravcevic@axiado.com; s=20250904; h=from:subject:message-id;
- bh=a6qvZkig+pybK/x4cqEI0Br3sS95b4VbSIeqdNAr0wE=;
- b=Y+LRgCQrxVPRFnbFVYYY4wCtp2aBj9UntFkjIwHv6moaUP+ddKpQxuksrQ/b0efv5rOhw0YmB
- QJq0dHRnS05BDUXfWKpCQ/BKCYMmoV/7YJ58H4xYzjq3YWXSUiAnM9s
-X-Developer-Key: i=vmoravcevic@axiado.com; a=ed25519;
- pk=iiyhWhM1F4HlCbbW3I3qKZhPCE8JsCrDQMgCBRg4YMA=
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|SA3PR18MB5626:EE_
-X-MS-Office365-Filtering-Correlation-Id: 232cbf40-5070-4d69-978e-08de625d5670
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|36860700013|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NVNzaEhSR0hkYmdNb0VyMG04ZG5zNHBlQXd2Mnc4aEI3NXBFM0t5bnhVOWV1?=
- =?utf-8?B?TXg5QjFUM210a0picGJXc2wvWk41a3lrZVRVcW1Ra29xYXZzdHBUZURQRnZM?=
- =?utf-8?B?ZXBxenhvazBFUUx4bHFQSWpac1ZxTDZ2LzViNXg2amJod3NJMW9TeWl1bVda?=
- =?utf-8?B?RlZkbTFsZWlwWEw0eGQ5SVBOdmU2ZFVvWHlrTk1hVHRzVWZwZ1htM1N5Tzk0?=
- =?utf-8?B?MXRqOHpWYkVGb1p6dmVraGRMN09kOHd4bVZ1NkdCV3NpQTI5RWpBV05XdmpP?=
- =?utf-8?B?bTNWcmdSdzRLU0x3bEtPaDE5OUdlU0lPSzZCejFhT004VDBEYlRtNGxrNmNv?=
- =?utf-8?B?OVJwV3FvVWgvWFZXaVhrc1FkaTdvREdsSi9xcXBIUnpHZS94L2ZvWDl6ODRq?=
- =?utf-8?B?SHpmZW50dDhKc21XT2hERUVvckJyVm9MVWRzM0JISVExRStpczl5Z0VTSzlS?=
- =?utf-8?B?OTZUdjJPd0JyWXpTM25vemx5cFFKRk9ubW1JQ2N3S2gzdHBTNGVmWlVxcFNE?=
- =?utf-8?B?cFN3aTdxanNsaVZ3N1lUTTdTZE14Qm5jWnNFMEZFWFE2VjlIT21ObEo0QTFP?=
- =?utf-8?B?Q0tUUHhwSmU2VnlmamRFYTJTc1V0T09RMGx4VUFqTEZ4T1B4dWYxcUEwV20v?=
- =?utf-8?B?dmFZdHZ0RnRZUjJET2txUEtOM0tQMjZKSzRLMmxxSDdmT0ZuRUpHM1BqQjky?=
- =?utf-8?B?enZaSDdFeW9nRVN0aXFmYml0TTVaQVB4MFlNVG5sQTNNbEtpanhNQ2Y1RmJQ?=
- =?utf-8?B?L3hobFY5bW8rR1ArZlZZM1ZYVXVubC9LUm9Ebk0vV3VpcHdRQ0t4SFdSbXN5?=
- =?utf-8?B?blpCbGlQYTBWVG00SlJGVUd5V1hMclhRQkJQZlNYVC9OR0tVZDJJODlCa29T?=
- =?utf-8?B?akMwQW8xdDhOV1h0aGJLZVIybGdEaEpiNkpvcWw4VW5BTjlKdDBQaE9UbEpG?=
- =?utf-8?B?aEI5OWNOY0Y5b2VWL3pGZmdVa201SlZia1RtTzBFWmJqZWZYNHF4NkZlOGxh?=
- =?utf-8?B?YVFwN203cXY4NXJFUVpUcE44ajBOR0ZKcVk0NlNrUmhVa1JvN3dGWGhZSkli?=
- =?utf-8?B?eXlVWnhYNUlLUmNHOGFxRWR0Q1NSbWVuNjVUT1RPcmJkUk9yQ2dhVFhhSlM1?=
- =?utf-8?B?ZUdETkVDeHdZVGpuQTI5cFJOUVd3NnpydkkwNVgzczh3TGxJNVZZdlhKdURi?=
- =?utf-8?B?M3BpVkp4L2t1QkdjMzBnVGJtd040TW15K2FZbEoreXd0anU3b3VPR0ZRaFR6?=
- =?utf-8?B?ZkVTSG94MXNKZ2doUFgrRXZiRzRwK3FpSU9Lcm82ODh3M08yNmNuTlFmejVp?=
- =?utf-8?B?S2JIVjUyYStkY3ZmVW9kb3dmc0xjM2pSRnFqWnR1RU0rSExKMGt5YUhuNnVE?=
- =?utf-8?B?c3h1cHUzN3BzRVVSWGRCaHZsb29FMHZxSGRWRWdXRVNKRjUzOWRYYXFLQU1N?=
- =?utf-8?B?Vlh4UG4xNzJmaVNRMmQ5MGpmN3E5akZpcjFXcnc0d3VoVkhBKzRudk5KWE1C?=
- =?utf-8?B?aWNuelRzZ0szNUViU1BzeVJUeWYyZlpIUkJIZndlRm83TTdpdG1QeThxYkpD?=
- =?utf-8?B?dVZEQmlaR3R5ZEpQcGd0dzhQcVo3Q1lLc1BXV3o5NXI0QjB3M20xaHV0Rk5B?=
- =?utf-8?B?OEtLSmg3WUhhVTFzTms2NkdJTStCTUJlOWxtVFpFcStJQ3Y2UUJXMU1EVVRj?=
- =?utf-8?B?OTdwZTJOTTkyM2Z3M0pFd1VBSUtMQWZGSjdIU2ZCYmhBRFBzMm9qMzdVck5X?=
- =?utf-8?B?by90azhGMXRodFBON0dzYm1Kd3poWjJPZkEzdFpQV0NzWWduRTFndUpPd2xI?=
- =?utf-8?B?RG9TZlRrdUNiQUQ0akZYeW9aRlN3M2pVTGNSbEJvUk52ZDM4Y1R1NlhjMFNy?=
- =?utf-8?B?Q003RWdZNTdZUGRpQllpRldBTDhtM1hHNWpza3VXVlFuYWVMVkRQV0dKcXdo?=
- =?utf-8?B?QTFoM045a0RGTUgzV09lS01XV1RSS3ZmUjBzRHpDMG10Wm5NcGFXYU9Fa3ds?=
- =?utf-8?B?MnlxaFN1REhwV01IRHNiODlYOFR5YmxIUTRnanNTcGJQS3hBK3ZyUnoyMVM5?=
- =?utf-8?B?UTJZYW5vMllHMWtHZkpMOEU4U0hTSE1ZNTFGUm1hdEZHMGllR0JMdTdVQllm?=
- =?utf-8?B?KzhHeEdsR1NUb2ppQ0JhdTY3RW85cy9IVWZ2cUxUcktIdVY4cVZBVmVuTkVs?=
- =?utf-8?B?K1U4OFlxcXFIVHMzMHpqdzVNVnNtc3dNOTJoUEZHNWVzdTc1Wm1lRmRuam92?=
- =?utf-8?B?bktLWHhmM1hIY0JtRW91VVJhR2JRPT0=?=
-X-Forefront-Antispam-Report:
-	CIP:4.227.125.105;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:[127.0.0.1];PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024)(7053199007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	DT7ri9IJSoRszv0ibvFSOGZIvxPRBd8dwenzPthuKVmlDQ/Nysk0bgLK8J/hfyiFDibZxusmXlpNFEdIG9c5uxChY58dAGCFRFCc3rOr8BuRdXo4EUOhgaW/OcKdIkM5lqr/XAGq7/yQqE1o8DupuwdMiTnUzPYn09HC2RiKhL78TkNNKliRHcrfWmEWT4BKqmczKW622YJ6GZvksIqqjqGd15qrhbrajXh4cn3BdWrGlv7hZNS919PR6FVPiUiCyvqFZPaW+4zFx2p5v2y3WStEEzN0K8izcTvsqXOiHnpjFbEwcEYYjtHUQa4Zf3OYkG1CvCER77lD7mI/Q8e6ar428KeDvpbgJh66SERomYCN/QCJkbqV6pUj2IJXT0Oz0+x/c3AvsuuoC8BRvGBfWWXvEV9/8jw9XLSzoALvVaJMYxmc3IQzzllqAoQKy5xt
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2026 13:16:54.9812
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 232cbf40-5070-4d69-978e-08de625d5670
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7;Ip=[4.227.125.105];Helo=[[127.0.0.1]]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ5PEPF00000203.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR18MB5626
-X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f@axiado.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
 	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.20 / 15.00];
+X-Spamd-Result: default: False [0.30 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
-	R_DKIM_ALLOW(-0.20)[axiado.com:s=selector1];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-1307-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krutikshah@axiado.com,m:pbolisetty@axiado.com,m:gregkh@linuxfoundation.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:vmoravcevic@axiado.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[vmoravcevic@axiado.com,openbmc@lists.ozlabs.org];
-	TAGGED_FROM(0.00)[bounces-1312-lists,openbmc=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DMARC_NA(0.00)[axiado.com];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER(0.00)[lkp@intel.com,openbmc@lists.ozlabs.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORGED_RECIPIENTS(0.00)[m:vmoravcevic@axiado.com,m:krutikshah@axiado.com,m:pbolisetty@axiado.com,m:gregkh@linuxfoundation.org,m:robh@kernel.org,m:krzk@kernel.org,m:conor+dt@kernel.org,m:oe-kbuild-all@lists.linux.dev,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -196,51 +121,208 @@ X-Spamd-Result: default: False [-0.20 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vmoravcevic@axiado.com,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[axiado.com:+];
-	NEURAL_HAM(-0.00)[-0.990];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[openbmc,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[axiado.com:email,axiado.com:dkim,axiado.com:mid,axis.com:email,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: 332F6D284B
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,intel.com:mid,01.org:url,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
+X-Rspamd-Queue-Id: DD3BBCFAE8
 X-Rspamd-Action: no action
 
-Add the MAINTAINERS entries for the Axiado USB Device Controller.
+Hi Vladimir,
 
-Co-developed-by: Krutik Shah <krutikshah@axiado.com>
-Signed-off-by: Krutik Shah <krutikshah@axiado.com>
-Co-developed-by: Prasad Bolisetty <pbolisetty@axiado.com>
-Signed-off-by: Prasad Bolisetty <pbolisetty@axiado.com>
-Signed-off-by: Vladimir Moravcevic <vmoravcevic@axiado.com>
----
- MAINTAINERS | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+kernel test robot noticed the following build warnings:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 67db88b04537..e63b6b308a3f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4234,6 +4234,16 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/sound/axentia,*
- F:	sound/soc/atmel/tse850-pcm5142.c
- 
-+AXIADO USB UDC DRIVER
-+M:	Krutik Shah <krutikshah@axiado.com>
-+M:	Prasad Bolisetty <pbolisetty@axiado.com>
-+M:	Vladimir Moravcevic <vmoravcevic@axiado.com>
-+L:	linux-usb@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/usb/axiado,ax3000-udc.yaml
-+F:	drivers/usb/gadget/udc/crg_udc.c
-+F:	drivers/usb/gadget/udc/crg_udc.h
-+
- AXIS ARTPEC ARM64 SoC SUPPORT
- M:	Jesper Nilsson <jesper.nilsson@axis.com>
- M:	Lars Persson <lars.persson@axis.com>
+[auto build test WARNING on 63804fed149a6750ffd28610c5c1c98cce6bd377]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Vladimir-Moravcevic/dt-bindings-usb-axiado-ax3000-udc-Add-Axiado-UDC/20260202-211951
+base:   63804fed149a6750ffd28610c5c1c98cce6bd377
+patch link:    https://lore.kernel.org/r/20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f%40axiado.com
+patch subject: [PATCH 2/3] usb: gadget: udc: Add UDC driver for Axiado Device controller IP Corigine
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20260203/202602030131.VCTzZ4me-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260203/202602030131.VCTzZ4me-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202602030131.VCTzZ4me-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_queue_trbs':
+>> drivers/usb/gadget/udc/crg_udc.c:881:13: warning: variable 'num_sgs' set but not used [-Wunused-but-set-variable]
+     881 |         u32 num_sgs = 0;
+         |             ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_ep_enable':
+>> drivers/usb/gadget/udc/crg_udc.c:1812:26: warning: variable 'uccr' set but not used [-Wunused-but-set-variable]
+    1812 |         struct crg_uccr *uccr;
+         |                          ^~~~
+>> drivers/usb/gadget/udc/crg_udc.c:1811:25: warning: variable 'epcx' set but not used [-Wunused-but-set-variable]
+    1811 |         struct ep_cx_s *epcx;
+         |                         ^~~~
+   drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_common_irq':
+>> drivers/usb/gadget/udc/crg_udc.c:4250:13: warning: variable 'retval' set but not used [-Wunused-but-set-variable]
+    4250 |         int retval = 0;
+         |             ^~~~~~
+   drivers/usb/gadget/udc/crg_udc.c: At top level:
+>> drivers/usb/gadget/udc/crg_udc.c:126:19: warning: 'driver_name' defined but not used [-Wunused-const-variable=]
+     126 | static const char driver_name[] = "crg_udc";
+         |                   ^~~~~~~~~~~
+--
+>> Warning: drivers/usb/gadget/udc/crg_udc.c:4325 cannot understand function prototype: 'const struct of_device_id of_crg_udc_match[] ='
+
+
+vim +/num_sgs +881 drivers/usb/gadget/udc/crg_udc.c
+
+   858	
+   859	static int crg_udc_queue_trbs(struct crg_udc_ep *udc_ep_ptr,
+   860			struct crg_udc_request *udc_req_ptr,  bool b_isoc,
+   861			u32 xfer_ring_size,
+   862			u32 num_trbs_needed, u64 buffer_length)
+   863	{
+   864		struct crg_gadget_dev *crg_udc = udc_ep_ptr->crg_udc;
+   865		struct transfer_trb_s *p_xfer_ring = udc_ep_ptr->first_trb;
+   866		u32 num_trbs_ava = 0;
+   867		struct usb_request *usb_req = &udc_req_ptr->usb_req;
+   868		u64 buff_len_temp = 0;
+   869		u32 i, j = 1;
+   870		struct transfer_trb_s *enq_pt = udc_ep_ptr->enq_pt;
+   871		u8 td_size;
+   872		u8 chain_bit = 1;
+   873		u8 short_pkt = 0;
+   874		u8 intr_on_compl = 0;
+   875		u32 count;
+   876		bool full_td = true;
+   877		u32 intr_rate;
+   878		dma_addr_t trb_buf_addr;
+   879		bool need_zlp = false;
+   880		struct scatterlist *sg = NULL;
+ > 881		u32 num_sgs = 0;
+   882		u64 sg_addr = 0;
+   883	
+   884		dev_dbg(crg_udc->dev, "%s %s\n", __func__, udc_ep_ptr->usb_ep.name);
+   885		if (udc_req_ptr->usb_req.num_sgs) {
+   886			num_sgs = udc_req_ptr->usb_req.num_sgs;
+   887			sg = udc_req_ptr->usb_req.sg;
+   888			sg_addr = (u64) sg_dma_address(sg);
+   889			buffer_length = sg_dma_len(sg);
+   890	
+   891			dev_dbg(crg_udc->dev, "num_sgs = %d, num_mapped_sgs = %d\n",
+   892				udc_req_ptr->usb_req.num_sgs,
+   893				udc_req_ptr->usb_req.num_mapped_sgs);
+   894			dev_dbg(crg_udc->dev,
+   895				"sg_addr = %p, buffer_length = %llu, num_trbs = %d\n",
+   896				(void *)sg_addr, buffer_length, num_trbs_needed);
+   897		}
+   898	
+   899		if (!b_isoc) {
+   900			if (udc_req_ptr->usb_req.zero == 1 &&
+   901				udc_req_ptr->usb_req.length != 0 &&
+   902				((udc_req_ptr->usb_req.length %
+   903				  udc_ep_ptr->usb_ep.maxpacket) == 0)) {
+   904				need_zlp = true;
+   905			}
+   906		}
+   907	
+   908		td_size = num_trbs_needed;
+   909	
+   910		num_trbs_ava = room_on_ring(crg_udc, xfer_ring_size,
+   911			p_xfer_ring, udc_ep_ptr->enq_pt, udc_ep_ptr->deq_pt);
+   912	
+   913		/* trb_buf_addr points to the addr of the buffer that we write in
+   914		 * each TRB. If this function is called to complete the pending TRB
+   915		 * transfers of a previous request, point it to the buffer that is
+   916		 * not transferred, or else point it to the starting address of the
+   917		 * buffer received in usb_request
+   918		 */
+   919		if (udc_req_ptr->trbs_needed) {
+   920			/* Here udc_req_ptr->trbs_needed is used to indicate if we
+   921			 * are completing a previous req
+   922			 */
+   923			trb_buf_addr = usb_req->dma +
+   924				(usb_req->length - udc_req_ptr->buff_len_left);
+   925		} else {
+   926			if (sg_addr)
+   927				trb_buf_addr = sg_addr;
+   928			else
+   929				trb_buf_addr = usb_req->dma;
+   930		}
+   931	
+   932		if (num_trbs_ava >= num_trbs_needed) {
+   933			count = num_trbs_needed;
+   934		} else {
+   935			if (b_isoc) {
+   936				struct crg_udc_request *udc_req_ptr_temp;
+   937				u8 temp = 0;
+   938	
+   939				list_for_each_entry(udc_req_ptr_temp,
+   940						&udc_ep_ptr->queue, queue) {
+   941					temp++;
+   942				}
+   943	
+   944				if (temp >= 2) {
+   945					dev_err(crg_udc->dev, "%s don't do isoc discard\n", __func__);
+   946					/*  we already scheduled two mfi in advance. */
+   947					return 0;
+   948				}
+   949			}
+   950	
+   951			/* always keep one trb for zlp. */
+   952			count = num_trbs_ava;
+   953			full_td = false;
+   954			dev_dbg(crg_udc->dev, "TRB Ring Full. Avail: 0x%x Req: 0x%x\n",
+   955					num_trbs_ava, num_trbs_needed);
+   956			udc_ep_ptr->tran_ring_full = true;
+   957	
+   958			/*if there is still some trb not queued,
+   959			 *it means last queued
+   960			 *trb is not the last trb of TD, so no need zlp
+   961			 */
+   962			need_zlp = false;
+   963		}
+   964	
+   965		for (i = 0; i < count; i++) {
+   966			if ((udc_req_ptr->usb_req.num_sgs) && (buffer_length == 0)) {
+   967				sg = sg_next(sg);
+   968				if (sg) {
+   969					trb_buf_addr = (u64) sg_dma_address(sg);
+   970					buffer_length = sg_dma_len(sg);
+   971					dev_dbg(crg_udc->dev,
+   972						"trb_buf_addr = %p, num_trbs = %d\n",
+   973						(void *)trb_buf_addr, num_trbs_needed);
+   974					dev_dbg(crg_udc->dev, "buffer_length = %llu\n",
+   975						buffer_length);
+   976				} else {
+   977					dev_err(crg_udc->dev,
+   978						"scatterlist ended unexpectedly (i=%d, count=%d)\n",
+   979						i, count);
+   980					return -EINVAL;
+   981				}
+   982			}
+   983	
+   984			if (buffer_length > TRB_MAX_BUFFER_SIZE)
+   985				buff_len_temp = TRB_MAX_BUFFER_SIZE;
+   986			else
+   987				buff_len_temp = buffer_length;
+   988	
+   989			buffer_length -= buff_len_temp;
+   990	
+   991			if (usb_endpoint_dir_out(udc_ep_ptr->desc))
+   992				short_pkt = 1;
+   993	
+   994			if ((buffer_length == 0) && (i == (count - 1))) {
+   995				chain_bit = 0;
+   996				intr_on_compl = 1;
+   997				udc_req_ptr->all_trbs_queued = 1;
+   998			}
+   999	
+  1000	
 
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
