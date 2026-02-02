@@ -1,67 +1,69 @@
-Return-Path: <openbmc+bounces-1307-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1308-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uKjhJtnggGl0CQMAu9opvQ
-	(envelope-from <openbmc+bounces-1307-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 18:37:29 +0100
+	id WPcaO+7qgGleCAMAu9opvQ
+	(envelope-from <openbmc+bounces-1308-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 19:20:30 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD3BBCFAE8
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 18:37:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 436B3D0135
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 19:20:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f4Yhz40DWz309N;
-	Tue, 03 Feb 2026 04:37:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f4Zfd2cg9z30FP;
+	Tue, 03 Feb 2026 05:20:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.10
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770053843;
-	cv=none; b=Nd0VeJ12ocHiyk5XL9g2PnSRQkvMPZdAqAvHuuNqwdzfVIQSDsn59su69sHsnpNu5gO64s9iGZ6ld2tK23HbLGLMMu238OUeKHJAcKxbA6vdBorcYhJdImKTklls3d89YCtojfNyRe2N5MGHPFcYbQOPqG9yYFe1mJzjFjDCXa18Z10rdm+0HNMvbrXzyh2yCsqwxTCfPmi+ZgQUO6pdNHp3VFxpeNO2iyl2ObyFsEGK4CDojOozhtIVxvDEf/xQlfQr0x6aYvTeKYh4Zz4+hDDs6O1CO2a+kl2MkFPYnhsKU4SzOhiEjw29GGv1d2w6or4urvcvDhpKrV5piJY8og==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=192.198.163.12
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770056425;
+	cv=none; b=Kmz4vUqOsUbmmslMiehWnFOvceXkmy5udRJKDYiKmIWnovKeeZTuoramDm76zJZuLKBwwHAwnvPliNfXwRLO9hGdyIT/JppaNcDLTflZTzXb5HYJrm8k4nZ7KEgGhUiwBaK2nepHaED0w1qeNkdXCkHaNh0NLgoBWgWpzN8vF22A8cicUDuUq0k96bNvc8S0CknLP1+HkNEZmzgSbfWeIj9SCcuhk6gwd6Ax7KDWyYwzpXVU/a8SnIDYHTL4Oaa6NHJnzcWCPKwPbs6A7KqsfKcsFUm96jG2s1IQ2KUVY59bkdeQEHTGh0bv4uATe4lRQUHSlPIe+PpGpjDS52nKsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770053843; c=relaxed/relaxed;
-	bh=UuT7BSbTpA9YqGylIgcZMjHRBgp33SIFds1E3lD+FRM=;
+	t=1770056425; c=relaxed/relaxed;
+	bh=2G1YPwbreUxncFwnY/ItlGnuP4ErdGMc1jU89ycS1Q0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GREm73mOEVd4bMtqGLwLy4YgCS2D9xo65GyeOZ0xj56sRJLL+X2R6oW7OSNNcozKFvlnxGrQECHkaqFj8aEWn3Q6C6tw88yE3v8/aV1R2TPWcmVo40AUP1+dAKtjXqQA1TyOXgvs2bjZU6uesepqFWHAgeXQTNO0kIImUwjJPkEDfeqAQR89F+LHSZLjtAtUhd+KX98VDUtq2uSpfPxmrwzJ4mdoFtlJmb1Jm/2UcH8QlGj1Z5tbHHVHa0xzGl+cwxvtK1IoxWRtlnbROPnYx8KHmmTY3KHUJKKqdD4SZRMxp14HTneOr51YJLEYEY99J2h0KseRqcKjTdFwpXt71A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WAk7AcUa; dkim-atps=neutral; spf=pass (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=fGo7xlCwbw8AnxgsixDe0JWQbSV2deZdXDkfdvfsGJ2wTYBYcEzoed/ImyqHCtQt5jm4eGgOKYNJtRc8SlfjLQ++K+9ti5XdwQWLATh1bnTXMis9jOPgwr9IM4Uv3Ykcm+eZBLmJ3MKnsfjUrRj9wlUrJ3r8EIxHROIXGv+iEbpxkWw4PLpmbO/asUfdSOt664087vbf05f0nsq66APUwmAcyUNjgvvTPJPgb2yQnkgJCOqqjBJVzl9lhIQwT1QDKaqEztyw5b7l8F2qECKnBfCkYRZeG8DwoUXRtaWWO/6AycTCLnQbZ53hVElOQduOludPG3ah7c0K9WVvX2VDog==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OcuL7esr; dkim-atps=neutral; spf=pass (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WAk7AcUa;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OcuL7esr;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.10; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.12; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4Yhx2Lt2z2xpn
-	for <openbmc@lists.ozlabs.org>; Tue, 03 Feb 2026 04:37:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4ZfZ2yB7z30BR
+	for <openbmc@lists.ozlabs.org>; Tue, 03 Feb 2026 05:20:20 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1770053841; x=1801589841;
+  t=1770056423; x=1801592423;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=qnUdp0fecZJL9WMPJ0BhqY7uIDclw68asQkR5FLPZ6A=;
-  b=WAk7AcUa5reiwABO7r/OrOaqN7Y/BuasEZAB9cP6RieJx64spScgWFKI
-   4y0pWodUrwVbZDEpZZhJV/fqQZsjsMUYdoaacko1iZrJbNp467Lz3JoeC
-   DMX7rFTP2JAM5ksS3ULDQCTzhiw4reTHfajqFXHHYUI7qCoq2bvL59mR/
-   0B6OdDDiRTG8TYz85Pv5k30pfiH0dQJBS4o93SA3J+jLq6gWa1oROIA7u
-   dSihZpndTXc/efICbNP4Dg5a6lgIiZ2JpOpapIiq93ExaEjCjM2r+PHQC
-   ShM14P12RQaUI/btltDG+w1i/bGFUa3TPz1Vfoy43deglSAVQtWPjYExx
-   Q==;
-X-CSE-ConnectionGUID: tqDxxCpKQlySw+IR1Uh9MQ==
-X-CSE-MsgGUID: 2INVSzMdTeejDWzSzxBs7g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="82584542"
+  bh=rbCK6zyQfYtDifhYSyzXCEckvE8IP7GcmV+g5x8drgg=;
+  b=OcuL7esrisYHVWPLsutJGauTRLX4lJa0c8VBZwUcGz6DzRysNGhMqeNa
+   c30MriwCc/VeCNOngNqD7K2W8tJoDXmwWwyHixwEWXbRtdcVLIQqZqDjh
+   JWTDjqq6NBthohjcjvp/Mvg/iHsp4m8R1XQzvRnlLejkJUsbvHuLOlNp7
+   urh4w2V7f9Px9Nzbj13TZA3jbn4e58mYBHQQAH3gFcj26Y86M6eZ7Gv7o
+   FhQnQyHbPYhJQUXHe545hB5T7DDrKHwoMnLh8TSQnEl9i9qH/ieU7p/Qt
+   +T8zn8hCyR373vuPoklORonFZ6ZpmtcRDHxZq4leVQS+uX1CastdVR87v
+   A==;
+X-CSE-ConnectionGUID: N54JaLSQQZK0/XYw2POy0A==
+X-CSE-MsgGUID: jAxxYXBLSiCHosQhk1ViXw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11690"; a="75076674"
 X-IronPort-AV: E=Sophos;i="6.21,269,1763452800"; 
-   d="scan'208";a="82584542"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2026 09:37:15 -0800
-X-CSE-ConnectionGUID: mNWRr4kkTkKaw6XHoiHtJA==
-X-CSE-MsgGUID: /VpVgHcER1S748B3+00oVw==
+   d="scan'208";a="75076674"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2026 10:20:18 -0800
+X-CSE-ConnectionGUID: 1ikHsIPOT3SbygX7/wxZrA==
+X-CSE-MsgGUID: Zm5hPKFcT9qmEjWYYsSCvw==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,269,1763452800"; 
+   d="scan'208";a="214121632"
 Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
-  by fmviesa003.fm.intel.com with ESMTP; 02 Feb 2026 09:37:13 -0800
+  by orviesa004.jf.intel.com with ESMTP; 02 Feb 2026 10:20:15 -0800
 Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1vmxrK-00000000foG-3J1S;
-	Mon, 02 Feb 2026 17:37:10 +0000
-Date: Tue, 3 Feb 2026 01:37:05 +0800
+	id 1vmyWx-00000000fq0-47hS;
+	Mon, 02 Feb 2026 18:20:11 +0000
+Date: Tue, 3 Feb 2026 02:20:11 +0800
 From: kernel test robot <lkp@intel.com>
 To: Vladimir Moravcevic <vmoravcevic@axiado.com>,
 	Krutik Shah <krutikshah@axiado.com>,
@@ -76,7 +78,7 @@ Cc: oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
 	Vladimir Moravcevic <vmoravcevic@axiado.com>
 Subject: Re: [PATCH 2/3] usb: gadget: udc: Add UDC driver for Axiado Device
  controller IP Corigine
-Message-ID: <202602030131.VCTzZ4me-lkp@intel.com>
+Message-ID: <202602030223.QlbiPC8d-lkp@intel.com>
 References: <20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f@axiado.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
@@ -103,11 +105,11 @@ X-Spamd-Result: default: False [0.30 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-1307-lists,openbmc=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1308-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER(0.00)[lkp@intel.com,openbmc@lists.ozlabs.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -123,13 +125,13 @@ X-Spamd-Result: default: False [0.30 / 15.00];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,openbmc@lists.ozlabs.org];
 	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-0.999];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[openbmc,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,intel.com:mid,01.org:url,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: DD3BBCFAE8
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,intel.com:mid]
+X-Rspamd-Queue-Id: 436B3D0135
 X-Rspamd-Action: no action
 
 Hi Vladimir,
@@ -142,185 +144,403 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Vladimir-Moravcevic/dt-bi
 base:   63804fed149a6750ffd28610c5c1c98cce6bd377
 patch link:    https://lore.kernel.org/r/20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f%40axiado.com
 patch subject: [PATCH 2/3] usb: gadget: udc: Add UDC driver for Axiado Device controller IP Corigine
-config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20260203/202602030131.VCTzZ4me-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 15.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260203/202602030131.VCTzZ4me-lkp@intel.com/reproduce)
+config: nios2-allmodconfig (https://download.01.org/0day-ci/archive/20260203/202602030223.QlbiPC8d-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260203/202602030223.QlbiPC8d-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202602030131.VCTzZ4me-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202602030223.QlbiPC8d-lkp@intel.com/
 
 All warnings (new ones prefixed by >>):
 
+   In file included from include/linux/printk.h:621,
+                    from include/asm-generic/bug.h:31,
+                    from ./arch/nios2/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/random.h:6,
+                    from include/linux/net.h:18,
+                    from drivers/usb/gadget/udc/crg_udc.c:7:
+   drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_epcx_setup':
+>> drivers/usb/gadget/udc/crg_udc.c:624:31: warning: format '%ld' expects argument of type 'long int', but argument 5 has type 'unsigned int' [-Wformat=]
+     624 |         dev_dbg(crg_udc->dev, "DCI %d, sizeof ep_cx %ld\n", DCI, sizeof(struct ep_cx_s));
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:231:29: note: in definition of macro '__dynamic_func_call_cls'
+     231 |                 func(&id, ##__VA_ARGS__);                       \
+         |                             ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:261:9: note: in expansion of macro '_dynamic_func_call_cls'
+     261 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:284:9: note: in expansion of macro '_dynamic_func_call'
+     284 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:30: note: in expansion of macro 'dev_fmt'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                              ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:624:9: note: in expansion of macro 'dev_dbg'
+     624 |         dev_dbg(crg_udc->dev, "DCI %d, sizeof ep_cx %ld\n", DCI, sizeof(struct ep_cx_s));
+         |         ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:624:55: note: format string is defined here
+     624 |         dev_dbg(crg_udc->dev, "DCI %d, sizeof ep_cx %ld\n", DCI, sizeof(struct ep_cx_s));
+         |                                                     ~~^
+         |                                                       |
+         |                                                       long int
+         |                                                     %d
+   In file included from include/linux/printk.h:621,
+                    from include/asm-generic/bug.h:31,
+                    from ./arch/nios2/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/random.h:6,
+                    from include/linux/net.h:18,
+                    from drivers/usb/gadget/udc/crg_udc.c:7:
+   drivers/usb/gadget/udc/crg_udc.c: In function 'setup_datastage_trb':
+>> drivers/usb/gadget/udc/crg_udc.c:774:31: warning: format '%llx' expects argument of type 'long long unsigned int', but argument 4 has type 'dma_addr_t' {aka 'unsigned int'} [-Wformat=]
+     774 |         dev_dbg(crg_udc->dev, "dma = 0x%llx, ", usb_req->dma);
+         |                               ^~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:231:29: note: in definition of macro '__dynamic_func_call_cls'
+     231 |                 func(&id, ##__VA_ARGS__);                       \
+         |                             ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:261:9: note: in expansion of macro '_dynamic_func_call_cls'
+     261 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:284:9: note: in expansion of macro '_dynamic_func_call'
+     284 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:30: note: in expansion of macro 'dev_fmt'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                              ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:774:9: note: in expansion of macro 'dev_dbg'
+     774 |         dev_dbg(crg_udc->dev, "dma = 0x%llx, ", usb_req->dma);
+         |         ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:774:43: note: format string is defined here
+     774 |         dev_dbg(crg_udc->dev, "dma = 0x%llx, ", usb_req->dma);
+         |                                        ~~~^
+         |                                           |
+         |                                           long long unsigned int
+         |                                        %x
+   In file included from include/linux/printk.h:621,
+                    from include/asm-generic/bug.h:31,
+                    from ./arch/nios2/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/random.h:6,
+                    from include/linux/net.h:18,
+                    from drivers/usb/gadget/udc/crg_udc.c:7:
    drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_queue_trbs':
->> drivers/usb/gadget/udc/crg_udc.c:881:13: warning: variable 'num_sgs' set but not used [-Wunused-but-set-variable]
+>> drivers/usb/gadget/udc/crg_udc.c:896:25: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     896 |                         (void *)sg_addr, buffer_length, num_trbs_needed);
+         |                         ^
+   include/linux/dynamic_debug.h:231:29: note: in definition of macro '__dynamic_func_call_cls'
+     231 |                 func(&id, ##__VA_ARGS__);                       \
+         |                             ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:261:9: note: in expansion of macro '_dynamic_func_call_cls'
+     261 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:284:9: note: in expansion of macro '_dynamic_func_call'
+     284 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:894:17: note: in expansion of macro 'dev_dbg'
+     894 |                 dev_dbg(crg_udc->dev,
+         |                 ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:881:13: warning: variable 'num_sgs' set but not used [-Wunused-but-set-variable]
      881 |         u32 num_sgs = 0;
          |             ^~~~~~~
    drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_ep_enable':
->> drivers/usb/gadget/udc/crg_udc.c:1812:26: warning: variable 'uccr' set but not used [-Wunused-but-set-variable]
+   drivers/usb/gadget/udc/crg_udc.c:1812:26: warning: variable 'uccr' set but not used [-Wunused-but-set-variable]
     1812 |         struct crg_uccr *uccr;
          |                          ^~~~
->> drivers/usb/gadget/udc/crg_udc.c:1811:25: warning: variable 'epcx' set but not used [-Wunused-but-set-variable]
+   drivers/usb/gadget/udc/crg_udc.c:1811:25: warning: variable 'epcx' set but not used [-Wunused-but-set-variable]
     1811 |         struct ep_cx_s *epcx;
          |                         ^~~~
+   In file included from include/linux/printk.h:621,
+                    from include/asm-generic/bug.h:31,
+                    from ./arch/nios2/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/random.h:6,
+                    from include/linux/net.h:18,
+                    from drivers/usb/gadget/udc/crg_udc.c:7:
+   drivers/usb/gadget/udc/crg_udc.c: In function 'init_ep0':
+   drivers/usb/gadget/udc/crg_udc.c:2681:31: warning: format '%llx' expects argument of type 'long long unsigned int', but argument 4 has type 'dma_addr_t' {aka 'unsigned int'} [-Wformat=]
+    2681 |         dev_dbg(crg_udc->dev, "ep0 ring dma addr = 0x%llx\n", udc_ep_ptr->tran_ring_info.dma);
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:231:29: note: in definition of macro '__dynamic_func_call_cls'
+     231 |                 func(&id, ##__VA_ARGS__);                       \
+         |                             ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:261:9: note: in expansion of macro '_dynamic_func_call_cls'
+     261 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:284:9: note: in expansion of macro '_dynamic_func_call'
+     284 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:30: note: in expansion of macro 'dev_fmt'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                              ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:2681:9: note: in expansion of macro 'dev_dbg'
+    2681 |         dev_dbg(crg_udc->dev, "ep0 ring dma addr = 0x%llx\n", udc_ep_ptr->tran_ring_info.dma);
+         |         ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:2681:57: note: format string is defined here
+    2681 |         dev_dbg(crg_udc->dev, "ep0 ring dma addr = 0x%llx\n", udc_ep_ptr->tran_ring_info.dma);
+         |                                                      ~~~^
+         |                                                         |
+         |                                                         long long unsigned int
+         |                                                      %x
+   In file included from include/linux/printk.h:621,
+                    from include/asm-generic/bug.h:31,
+                    from ./arch/nios2/include/generated/asm/bug.h:1,
+                    from include/linux/bug.h:5,
+                    from include/linux/random.h:6,
+                    from include/linux/net.h:18,
+                    from drivers/usb/gadget/udc/crg_udc.c:7:
+   drivers/usb/gadget/udc/crg_udc.c: In function 'getstatusrequest':
+   drivers/usb/gadget/udc/crg_udc.c:3131:31: warning: format '%llx' expects argument of type 'long long unsigned int', but argument 4 has type 'dma_addr_t' {aka 'unsigned int'} [-Wformat=]
+    3131 |         dev_dbg(crg_udc->dev, "udc_req_ptr->usb_req.dma = 0x%llx\n",
+         |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:231:29: note: in definition of macro '__dynamic_func_call_cls'
+     231 |                 func(&id, ##__VA_ARGS__);                       \
+         |                             ^~~~~~~~~~~
+   include/linux/dynamic_debug.h:261:9: note: in expansion of macro '_dynamic_func_call_cls'
+     261 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dynamic_debug.h:284:9: note: in expansion of macro '_dynamic_func_call'
+     284 |         _dynamic_func_call(fmt, __dynamic_dev_dbg,              \
+         |         ^~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:9: note: in expansion of macro 'dynamic_dev_dbg'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |         ^~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:165:30: note: in expansion of macro 'dev_fmt'
+     165 |         dynamic_dev_dbg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                              ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:3131:9: note: in expansion of macro 'dev_dbg'
+    3131 |         dev_dbg(crg_udc->dev, "udc_req_ptr->usb_req.dma = 0x%llx\n",
+         |         ^~~~~~~
+   drivers/usb/gadget/udc/crg_udc.c:3131:64: note: format string is defined here
+    3131 |         dev_dbg(crg_udc->dev, "udc_req_ptr->usb_req.dma = 0x%llx\n",
+         |                                                             ~~~^
+         |                                                                |
+         |                                                                long long unsigned int
+         |                                                             %x
    drivers/usb/gadget/udc/crg_udc.c: In function 'crg_udc_common_irq':
->> drivers/usb/gadget/udc/crg_udc.c:4250:13: warning: variable 'retval' set but not used [-Wunused-but-set-variable]
+   drivers/usb/gadget/udc/crg_udc.c:4250:13: warning: variable 'retval' set but not used [-Wunused-but-set-variable]
     4250 |         int retval = 0;
-         |             ^~~~~~
-   drivers/usb/gadget/udc/crg_udc.c: At top level:
->> drivers/usb/gadget/udc/crg_udc.c:126:19: warning: 'driver_name' defined but not used [-Wunused-const-variable=]
-     126 | static const char driver_name[] = "crg_udc";
-         |                   ^~~~~~~~~~~
---
->> Warning: drivers/usb/gadget/udc/crg_udc.c:4325 cannot understand function prototype: 'const struct of_device_id of_crg_udc_match[] ='
 
 
-vim +/num_sgs +881 drivers/usb/gadget/udc/crg_udc.c
+vim +624 drivers/usb/gadget/udc/crg_udc.c
 
-   858	
-   859	static int crg_udc_queue_trbs(struct crg_udc_ep *udc_ep_ptr,
-   860			struct crg_udc_request *udc_req_ptr,  bool b_isoc,
-   861			u32 xfer_ring_size,
-   862			u32 num_trbs_needed, u64 buffer_length)
-   863	{
-   864		struct crg_gadget_dev *crg_udc = udc_ep_ptr->crg_udc;
-   865		struct transfer_trb_s *p_xfer_ring = udc_ep_ptr->first_trb;
-   866		u32 num_trbs_ava = 0;
-   867		struct usb_request *usb_req = &udc_req_ptr->usb_req;
-   868		u64 buff_len_temp = 0;
-   869		u32 i, j = 1;
-   870		struct transfer_trb_s *enq_pt = udc_ep_ptr->enq_pt;
-   871		u8 td_size;
-   872		u8 chain_bit = 1;
-   873		u8 short_pkt = 0;
-   874		u8 intr_on_compl = 0;
-   875		u32 count;
-   876		bool full_td = true;
-   877		u32 intr_rate;
-   878		dma_addr_t trb_buf_addr;
-   879		bool need_zlp = false;
-   880		struct scatterlist *sg = NULL;
- > 881		u32 num_sgs = 0;
-   882		u64 sg_addr = 0;
-   883	
-   884		dev_dbg(crg_udc->dev, "%s %s\n", __func__, udc_ep_ptr->usb_ep.name);
-   885		if (udc_req_ptr->usb_req.num_sgs) {
-   886			num_sgs = udc_req_ptr->usb_req.num_sgs;
-   887			sg = udc_req_ptr->usb_req.sg;
-   888			sg_addr = (u64) sg_dma_address(sg);
-   889			buffer_length = sg_dma_len(sg);
-   890	
-   891			dev_dbg(crg_udc->dev, "num_sgs = %d, num_mapped_sgs = %d\n",
-   892				udc_req_ptr->usb_req.num_sgs,
-   893				udc_req_ptr->usb_req.num_mapped_sgs);
-   894			dev_dbg(crg_udc->dev,
-   895				"sg_addr = %p, buffer_length = %llu, num_trbs = %d\n",
-   896				(void *)sg_addr, buffer_length, num_trbs_needed);
-   897		}
-   898	
-   899		if (!b_isoc) {
-   900			if (udc_req_ptr->usb_req.zero == 1 &&
-   901				udc_req_ptr->usb_req.length != 0 &&
-   902				((udc_req_ptr->usb_req.length %
-   903				  udc_ep_ptr->usb_ep.maxpacket) == 0)) {
-   904				need_zlp = true;
-   905			}
-   906		}
-   907	
-   908		td_size = num_trbs_needed;
-   909	
-   910		num_trbs_ava = room_on_ring(crg_udc, xfer_ring_size,
-   911			p_xfer_ring, udc_ep_ptr->enq_pt, udc_ep_ptr->deq_pt);
-   912	
-   913		/* trb_buf_addr points to the addr of the buffer that we write in
-   914		 * each TRB. If this function is called to complete the pending TRB
-   915		 * transfers of a previous request, point it to the buffer that is
-   916		 * not transferred, or else point it to the starting address of the
-   917		 * buffer received in usb_request
-   918		 */
-   919		if (udc_req_ptr->trbs_needed) {
-   920			/* Here udc_req_ptr->trbs_needed is used to indicate if we
-   921			 * are completing a previous req
-   922			 */
-   923			trb_buf_addr = usb_req->dma +
-   924				(usb_req->length - udc_req_ptr->buff_len_left);
-   925		} else {
-   926			if (sg_addr)
-   927				trb_buf_addr = sg_addr;
-   928			else
-   929				trb_buf_addr = usb_req->dma;
-   930		}
-   931	
-   932		if (num_trbs_ava >= num_trbs_needed) {
-   933			count = num_trbs_needed;
-   934		} else {
-   935			if (b_isoc) {
-   936				struct crg_udc_request *udc_req_ptr_temp;
-   937				u8 temp = 0;
-   938	
-   939				list_for_each_entry(udc_req_ptr_temp,
-   940						&udc_ep_ptr->queue, queue) {
-   941					temp++;
-   942				}
-   943	
-   944				if (temp >= 2) {
-   945					dev_err(crg_udc->dev, "%s don't do isoc discard\n", __func__);
-   946					/*  we already scheduled two mfi in advance. */
-   947					return 0;
-   948				}
-   949			}
-   950	
-   951			/* always keep one trb for zlp. */
-   952			count = num_trbs_ava;
-   953			full_td = false;
-   954			dev_dbg(crg_udc->dev, "TRB Ring Full. Avail: 0x%x Req: 0x%x\n",
-   955					num_trbs_ava, num_trbs_needed);
-   956			udc_ep_ptr->tran_ring_full = true;
-   957	
-   958			/*if there is still some trb not queued,
-   959			 *it means last queued
-   960			 *trb is not the last trb of TD, so no need zlp
-   961			 */
-   962			need_zlp = false;
-   963		}
-   964	
-   965		for (i = 0; i < count; i++) {
-   966			if ((udc_req_ptr->usb_req.num_sgs) && (buffer_length == 0)) {
-   967				sg = sg_next(sg);
-   968				if (sg) {
-   969					trb_buf_addr = (u64) sg_dma_address(sg);
-   970					buffer_length = sg_dma_len(sg);
-   971					dev_dbg(crg_udc->dev,
-   972						"trb_buf_addr = %p, num_trbs = %d\n",
-   973						(void *)trb_buf_addr, num_trbs_needed);
-   974					dev_dbg(crg_udc->dev, "buffer_length = %llu\n",
-   975						buffer_length);
-   976				} else {
-   977					dev_err(crg_udc->dev,
-   978						"scatterlist ended unexpectedly (i=%d, count=%d)\n",
-   979						i, count);
-   980					return -EINVAL;
-   981				}
-   982			}
-   983	
-   984			if (buffer_length > TRB_MAX_BUFFER_SIZE)
-   985				buff_len_temp = TRB_MAX_BUFFER_SIZE;
-   986			else
-   987				buff_len_temp = buffer_length;
-   988	
-   989			buffer_length -= buff_len_temp;
-   990	
-   991			if (usb_endpoint_dir_out(udc_ep_ptr->desc))
-   992				short_pkt = 1;
-   993	
-   994			if ((buffer_length == 0) && (i == (count - 1))) {
-   995				chain_bit = 0;
-   996				intr_on_compl = 1;
-   997				udc_req_ptr->all_trbs_queued = 1;
-   998			}
-   999	
-  1000	
+   609	
+   610	static void crg_udc_epcx_setup(struct crg_udc_ep *udc_ep)
+   611	{
+   612		struct crg_gadget_dev *crg_udc = udc_ep->crg_udc;
+   613		const struct usb_endpoint_descriptor *desc = udc_ep->desc;
+   614		const struct usb_ss_ep_comp_descriptor *comp_desc = udc_ep->comp_desc;
+   615		u8 DCI = udc_ep->DCI;
+   616		struct ep_cx_s *epcx = (struct ep_cx_s *)(crg_udc->p_epcx + DCI - 2);
+   617		enum EP_TYPE_E ep_type;
+   618		u16 maxburst = 0;
+   619		u8 maxstreams = 0;
+   620		u16 maxsize;
+   621		u32 dw;
+   622	
+   623		dev_dbg(crg_udc->dev, "crgudc->p_epcx %p, epcx %p\n", crg_udc->p_epcx, epcx);
+ > 624		dev_dbg(crg_udc->dev, "DCI %d, sizeof ep_cx %ld\n", DCI, sizeof(struct ep_cx_s));
+   625		dev_dbg(crg_udc->dev, "desc epaddr = 0x%x\n", desc->bEndpointAddress);
+   626	
+   627		/*corigine gadget dir should be opposite to host dir*/
+   628		if (usb_endpoint_dir_out(desc))
+   629			ep_type = usb_endpoint_type(desc) + EP_TYPE_INVALID2;
+   630		else
+   631			ep_type = usb_endpoint_type(desc);
+   632	
+   633		maxsize = usb_endpoint_maxp(desc) & 0x07ff; /* D[0:10] */
+   634	
+   635		if (crg_udc->gadget.speed >= USB_SPEED_SUPER) {
+   636			maxburst = comp_desc->bMaxBurst;
+   637	
+   638			if (usb_endpoint_xfer_bulk(udc_ep->desc))
+   639				maxstreams = comp_desc->bmAttributes & 0x1f;
+   640	
+   641		} else if ((crg_udc->gadget.speed == USB_SPEED_HIGH ||
+   642			crg_udc->gadget.speed == USB_SPEED_FULL) &&
+   643				(usb_endpoint_xfer_int(udc_ep->desc) ||
+   644					usb_endpoint_xfer_isoc(udc_ep->desc))) {
+   645			if (crg_udc->gadget.speed == USB_SPEED_HIGH)
+   646				maxburst = (usb_endpoint_maxp(desc) >> 11) & 0x3;
+   647			if (maxburst == 0x3) {
+   648				dev_err(crg_udc->dev, "invalid maxburst\n");
+   649				maxburst = 0x2;
+   650			}
+   651		}
+   652	
+   653		/* fill ep_dw0 */
+   654		dw = 0;
+   655		dw = SETF_VAR(EP_CX_LOGICAL_EP_NUM, dw, udc_ep->DCI / 2);
+   656		dw = SETF_VAR(EP_CX_INTERVAL, dw, desc->bInterval);
+   657		if (maxstreams) {
+   658			dev_err(crg_udc->dev, "%s maxstream=%d is not expected\n",
+   659				__func__, maxstreams);
+   660		}
+   661		epcx->dw0 = cpu_to_le32(dw);
+   662	
+   663		/* fill ep_dw1 */
+   664		dw = 0;
+   665		dw = SETF_VAR(EP_CX_EP_TYPE, dw, ep_type);
+   666		dw = SETF_VAR(EP_CX_MAX_PACKET_SIZE, dw, maxsize);
+   667		dw = SETF_VAR(EP_CX_MAX_BURST_SIZE, dw, maxburst);
+   668		epcx->dw1 = cpu_to_le32(dw);
+   669	
+   670		/* fill ep_dw2 */
+   671		dw = lower_32_bits(udc_ep->tran_ring_info.dma) & EP_CX_TR_DQPT_LO_MASK;
+   672		dw = SETF_VAR(EP_CX_DEQ_CYC_STATE, dw, udc_ep->pcs);
+   673		epcx->dw2 = cpu_to_le32(dw);
+   674	
+   675		/* fill ep_dw3 */
+   676		dw = upper_32_bits(udc_ep->tran_ring_info.dma);
+   677		epcx->dw3 = cpu_to_le32(dw);
+   678		/* Ensure that epcx is updated */
+   679		wmb();
+   680	}
+   681	
+   682	static void crg_udc_epcx_update_dqptr(struct crg_udc_ep *udc_ep)
+   683	{
+   684		struct crg_gadget_dev *crg_udc = udc_ep->crg_udc;
+   685		u8 DCI = udc_ep->DCI;
+   686		struct ep_cx_s *epcx = (struct ep_cx_s *)(crg_udc->p_epcx + DCI - 2);
+   687		u32 dw;
+   688		dma_addr_t dqptaddr;
+   689		u32 cmd_param0;
+   690	
+   691		if (DCI == 0) {
+   692			dev_err(crg_udc->dev, "%s Cannot update dqptr for ep0\n", __func__);
+   693			return;
+   694		}
+   695	
+   696		dqptaddr = tran_trb_virt_to_dma(udc_ep, udc_ep->deq_pt);
+   697	
+   698		/* fill ep_dw2 */
+   699		dw = lower_32_bits(dqptaddr) & EP_CX_TR_DQPT_LO_MASK;
+   700		dw = SETF_VAR(EP_CX_DEQ_CYC_STATE, dw, udc_ep->pcs);
+   701		epcx->dw2 = cpu_to_le32(dw);
+   702	
+   703		/* fill ep_dw3 */
+   704		dw = upper_32_bits(dqptaddr);
+   705		epcx->dw3 = cpu_to_le32(dw);
+   706	
+   707		cmd_param0 = (0x1 << udc_ep->DCI);
+   708		/* Ensure that dqptr is updated */
+   709		wmb();
+   710	
+   711		crg_issue_command(crg_udc, CRG_CMD_SET_TR_DQPTR, cmd_param0, 0);
+   712	}
+   713	
+   714	static void setup_status_trb(struct crg_gadget_dev *crg_udc,
+   715			struct transfer_trb_s *p_trb,
+   716			struct usb_request *usb_req, u8 pcs, u8 set_addr, u8 stall)
+   717	{
+   718		u32 tmp, dir = 0;
+   719	
+   720		/* There are some cases where seutp_status_trb() is called with
+   721		 * usb_req set to NULL.
+   722		 */
+   723	
+   724		p_trb->dw0 = 0;
+   725		p_trb->dw1 = 0;
+   726	
+   727		dev_dbg(crg_udc->dev, "data_buf_ptr_lo = 0x%x, data_buf_ptr_hi = 0x%x\n",
+   728			p_trb->dw0, p_trb->dw1);
+   729	
+   730		tmp = 0;
+   731		tmp = SETF_VAR(TRB_INTR_TARGET, tmp, 0);
+   732		p_trb->dw2 = tmp;
+   733	
+   734		tmp = 0;
+   735		tmp = SETF_VAR(TRB_CYCLE_BIT, tmp, pcs);
+   736		tmp = SETF_VAR(TRB_INTR_ON_COMPLETION, tmp, 1);/*IOC:1*/
+   737		tmp = SETF_VAR(TRB_TYPE, tmp, TRB_TYPE_XFER_STATUS_STAGE);
+   738	
+   739		dir = (crg_udc->setup_status == STATUS_STAGE_XFER) ? 0 : 1;
+   740		tmp = SETF_VAR(DATA_STAGE_TRB_DIR, tmp, dir);
+   741	
+   742		tmp = SETF_VAR(TRB_SETUP_TAG, tmp, crg_udc->setup_tag);
+   743		tmp = SETF_VAR(STATUS_STAGE_TRB_STALL, tmp, stall);
+   744		tmp = SETF_VAR(STATUS_STAGE_TRB_SET_ADDR, tmp, set_addr);
+   745	
+   746		p_trb->dw3 = tmp;
+   747		dev_dbg(crg_udc->dev, "trb_dword2 = 0x%x, trb_dword3 = 0x%x\n",
+   748				p_trb->dw2, p_trb->dw3);
+   749		/* Ensure that status trb is updated */
+   750		wmb();
+   751	}
+   752	
+   753	static void knock_doorbell(struct crg_gadget_dev *crg_udc, int DCI)
+   754	{
+   755		u32 tmp;
+   756		struct crg_uccr *uccr;
+   757	
+   758		uccr = crg_udc->uccr;
+   759		/* Ensure evreything is written before notifying the HW */
+   760		wmb();
+   761	
+   762		tmp = CRG_U3DC_DB_TARGET(DCI);
+   763		dev_dbg(crg_udc->dev, "DOORBELL = 0x%x\n", tmp);
+   764		writel(tmp, &uccr->doorbell);
+   765	}
+   766	
+   767	static void setup_datastage_trb(struct crg_gadget_dev *crg_udc,
+   768			struct transfer_trb_s *p_trb, struct usb_request *usb_req,
+   769			u8 pcs, u32 num_trb, u32 transfer_length, u32 td_size,
+   770			u8 IOC, u8 AZP, u8 dir, u8 setup_tag)
+   771	{
+   772		u32 tmp;
+   773	
+ > 774		dev_dbg(crg_udc->dev, "dma = 0x%llx, ", usb_req->dma);
+   775		dev_dbg(crg_udc->dev, "buf = 0x%lx, ", (unsigned long)usb_req->buf);
+   776	
+   777		p_trb->dw0 = lower_32_bits(usb_req->dma);
+   778		p_trb->dw1 = upper_32_bits(usb_req->dma);
+   779	
+   780		dev_dbg(crg_udc->dev, "data_buf_ptr_lo = 0x%x, data_buf_ptr_hi = 0x%x\n",
+   781			p_trb->dw0, p_trb->dw1);
+   782	
+   783	
+   784		/* TRB_Transfer_Length
+   785		 *For USB_DIR_OUT, this field is the number of data bytes expected from
+   786		 *xhc. For USB_DIR_IN, this field is the number of data bytes the device
+   787		 *will send.
+   788		 */
+   789		tmp = 0;
+   790		tmp = SETF_VAR(TRB_TRANSFER_LEN, tmp, transfer_length);
+   791		tmp = SETF_VAR(TRB_TD_SIZE, tmp, td_size);
+   792		tmp = SETF_VAR(TRB_INTR_TARGET, tmp, 0);
+   793		p_trb->dw2 = tmp;
+   794	
+   795		tmp = 0;
+   796		tmp = SETF_VAR(TRB_CYCLE_BIT, tmp, pcs);
+   797		tmp = SETF_VAR(TRB_INTR_ON_SHORT_PKT, tmp, 1);
+   798		tmp = SETF_VAR(TRB_INTR_ON_COMPLETION, tmp, IOC);
+   799		tmp = SETF_VAR(TRB_TYPE, tmp, TRB_TYPE_XFER_DATA_STAGE);
+   800		tmp = SETF_VAR(TRB_APPEND_ZLP, tmp, AZP);
+   801		tmp = SETF_VAR(DATA_STAGE_TRB_DIR, tmp, dir);
+   802		tmp = SETF_VAR(TRB_SETUP_TAG, tmp, setup_tag);
+   803	
+   804		p_trb->dw3 = tmp;
+   805		/* Ensure that datastage trb is updated */
+   806		wmb();
+   807	
+   808		dev_dbg(crg_udc->dev, "trb_dword0 = 0x%x, trb_dword1 = 0x%x trb_dword2 = 0x%x, trb_dword3 = 0x%x\n",
+   809				p_trb->dw0, p_trb->dw1, p_trb->dw2, p_trb->dw3);
+   810	}
+   811	
 
 -- 
 0-DAY CI Kernel Test Service
