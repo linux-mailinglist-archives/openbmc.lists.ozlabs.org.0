@@ -1,84 +1,85 @@
-Return-Path: <openbmc+bounces-1314-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1313-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yMGhOE8rgWlgEgMAu9opvQ
-	(envelope-from <openbmc+bounces-1314-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:55:11 +0100
+	id 2Od3BEArgWkwEgMAu9opvQ
+	(envelope-from <openbmc+bounces-1313-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:54:56 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00418D286F
-	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:55:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D59AD285A
+	for <lists+openbmc@lfdr.de>; Mon, 02 Feb 2026 23:54:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f4hks0Q0qz3bkL;
-	Tue, 03 Feb 2026 09:54:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f4hkV0P7Rz3bf8;
+	Tue, 03 Feb 2026 09:54:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::532"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770010886;
-	cv=none; b=flpv6TGiapO6VatOqfKN5XdwEKHyWDnBXUrdTQoX5tUHChzLN6P0+vri943ZBKrh8sAbaoXWNuQ8Y8wDcWii3skiSUYn9da6216ri9INKlZTbFEZfiT6T6Tt2hVXegvW55J0O0UkoMHcThSrxkfiQP2sk90Kc7L5mwQewfrWwN8hxC06U7c2vNCSa9BRh2Qy0yuep6lQ3BIzgTywjDrZOCVRzLLrUDv9r+HqZZgSNVYtk6YLDkZ4c9Oj5Mu4iUyQs6qeuVA37SNkZtWcIfGIhtyjoWbUw2i0uDnsm20ZK8wYtMLsp6hJv1RWeZACV/aILFYnlHN9rmdXuPB3ufKy/Q==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::32b"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770031180;
+	cv=none; b=R6+y+FJ7UV+7vQX6M9BGE4puI01jV9ihVrFZa3UBffNyLFag2WMI+UF+j4S0Zo69F0xK+irbnw3OZQmjVhtDXrGoY8cs8diHwpr2IYYKAMWzmG5CLwwLoN2iHGaVdXNnQAN8jo54Hg8KOK3SimGVC0DAeb0JpIQny+Lc+Oi8mOmc30pvLccPeWpm5ZWLb4enBAH+uJIPyQ9vG6fv3pM/nT08bU83zAgYOoXgF3P71CA3IDGovQ0c6YGaEmtMJgCrbE5nQBzhdhgCol1Ci2yO/+5nXKwDjCBTAd0Hrv/oPqQU5t3rG+/ef0yFzaHjPk7SMK1aspiaiPc8/YP0Wlc/4g==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770010886; c=relaxed/relaxed;
-	bh=w/OodEpFjOF1QKMpfh/He7lSljXTwFAUK5yvvx1mDI8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Kedp4mlfm9TilL9VLilFQPDTbVLq5v/PLRKC7ACWJLRjjkrhXbnEGGcJrdwifn5pjCp8Hb3gNxMyqnuoi4ijvADa1Y42DZjDn841Gk1Q2f3zhso1mSGyfRkbfKLPI41UM/vZET4QOYMZUe4k8BJ1tierfBfsuYBuw8ztxoULa8jZodjyNXwhG7StAw7whcwuJXN1+2XBJEi0ya4rSHMd8U7gQPmcB5J+N1uHRjzmsc9wwIdohB0LMJ4c6d9v+iNf6NimHX+FzO/fPra7ZREYJSLaz2yDoxZ7XK6wTr7TGOWVtovG+IY4G7ai4WmKiiFiFxnjpPP32DSKu9I46KO0jQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eQbZhbFw; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::532; helo=mail-pg1-x532.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1770031180; c=relaxed/relaxed;
+	bh=vkH3uyDe1IYJlfN4Vrhf9/CvNIbaIvxv6mm2y5l5B9I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Ot/zzB59G2RnhOsU9zxYE7V+l8szFPx/6Bv1w301HuKKqgUocGcEaZ460A8bo/XhQw0oNVxGsoqKUn1NJ3RUrkGDPFK3UtRzWcCZ55nFeq2UyZbqZbcydEPbYJA8vv3VeRw730RkX2GD9wk7GJGOisSuGPL69Y+LKf2N0GTbmdwWNQvBNYbCHDvEXVfwIi4g7UjADNygd8191inaiVv0NNDCVYLdcE/0Qr53TmGaaiUnJJAHJzuvJzOk6/pyvs7c1A1092zz9OmPPLO138e6eJXnK119F8XQIGiUD6P5j7YhgUYQqWIgJibmwjsMyQuHF/trf1awoTJf7vtZJpE52w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com; dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=fIEV1KvD; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::32b; helo=mail-wm1-x32b.google.com; envelope-from=christopher.meis@9elements.com; receiver=lists.ozlabs.org) smtp.mailfrom=9elements.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=9elements.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=eQbZhbFw;
+	dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=fIEV1KvD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::532; helo=mail-pg1-x532.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::32b; helo=mail-wm1-x32b.google.com; envelope-from=christopher.meis@9elements.com; receiver=lists.ozlabs.org)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4Fpr25Kwz30BR
-	for <openbmc@lists.ozlabs.org>; Mon, 02 Feb 2026 16:41:23 +1100 (AEDT)
-Received: by mail-pg1-x532.google.com with SMTP id 41be03b00d2f7-c2dd0c24e5cso1548567a12.3
-        for <openbmc@lists.ozlabs.org>; Sun, 01 Feb 2026 21:41:23 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f4PK70N3Xz2xd6
+	for <openbmc@lists.ozlabs.org>; Mon, 02 Feb 2026 22:19:37 +1100 (AEDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-481188b7760so27869215e9.0
+        for <openbmc@lists.ozlabs.org>; Mon, 02 Feb 2026 03:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770010880; x=1770615680; darn=lists.ozlabs.org;
+        d=9elements.com; s=google; t=1770031173; x=1770635973; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=w/OodEpFjOF1QKMpfh/He7lSljXTwFAUK5yvvx1mDI8=;
-        b=eQbZhbFwEof6Y7SlZbVyN6JqPqQv2HN9ieOZEwzxToGgP95UukEI8fsQuzuPGUsiSd
-         ItNzaS1NY4ahZkS+y6Z+otxBwmcgTNSlPwYJi28UrEeYwc3Q0Uu6i5k91POywfNLPOxO
-         UR8szJyrx1VR8/7136R2uihetPQmn4APK4k8+kHaJZigLRlLKmjd8zDBR7f80Ywke0bB
-         7YMWRQc0e4sKAFeRolFFKdq9XmX44KNxBjnwblpNnCcUDjFUiuKWEmb4+5cDVLJWjk/h
-         2ZNtsarr4FFsQaOVqVexiduHQlcsGqh19/Df9JSRgepdCfBmdrz+yseFOgmFbzW/uvt+
-         Vpag==
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vkH3uyDe1IYJlfN4Vrhf9/CvNIbaIvxv6mm2y5l5B9I=;
+        b=fIEV1KvDsjB65qqXDAPe+jag4H0gFpwrKkPR+g43TD+WYGvVY9DAa9g9vDRxhSl3/V
+         6ra4QJdLkRHYLBV7FxcMaJ5yulkhukUNBxUkVeeLR5ZiBad/W+y5zBlmZ7xwuDjImwN5
+         9E/dtA618gcjUs6+qvzv5GFqZt8XdaBHfdmzB5GiQkowYGsgxYUP71b3IBv86aYJBdhA
+         vt5hiYqDnRnCdHpq4FoFRisNScS6BucI0sjsxqxrV2bTV0ElcdaG1GNfE9PmPbUQlG3s
+         s1lIdWPgVgsGbRbgTu2hycPzzgNGX51JOCyDEIeI6mbC+m2CHBGqaLxwrmTSQVB6CUi0
+         ulKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770010880; x=1770615680;
+        d=1e100.net; s=20230601; t=1770031173; x=1770635973;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=w/OodEpFjOF1QKMpfh/He7lSljXTwFAUK5yvvx1mDI8=;
-        b=b3HgqppGTpUd/gmRj6ypiIeCzREnTip48Yo+PNBsV0HQJHSwFnQcZRrlUCvt43ohxa
-         igdVDodcxpjHDkSTIZWgGvFm7kAH+Z+kWnG0FmqxrzuZXMNEGE3dM8/aCi4SDsNTSj/+
-         0PdKSFgURCG32U7Vop4z8NO40yjWaIoK08cCm2+xf89bAOLcZaSVk7z5jgw9FsoZoIHl
-         7VikgEw68HuA7Hd+qL+n0bdJf1iSoUCJDfckBvd89zhlWZRa1xTJowtezCrp133WPXf9
-         xFjQ0lj5E3mYOm3P058H1qQTITHvt8fRE3cqpXX5S+tuhTgyWpW1jY5oRulbMnLA+IhU
-         YkJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVe4R5aRT49lAOjG1bWGTFuI+pklQp4AgDDEmU/CQvlDbczOspZGDLmlH+sTCnPfc+or8rKNbVV@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzA9pN3xEeuJXCyajwjIXPH46QDrnc/JzxcUNZ76PgH093KpFlh
-	4ElwmyQgaui5d1D9guroSMYXEypQiF085oEQZ1TLEnQc0G4G1+ZT/ETI
-X-Gm-Gg: AZuq6aL3J60taeyRffHjELy8m1SW1NAB2TmDvApKFS2JGUuBGLYFe7p229se+hIP4LG
-	q+0kGQpyVuDyazsXSaRe8iLbUkSy8FqBlo+V15AIjIA4ho4HsMyORe6QTqM1c2X3E/KvU0I5O2A
-	n8Ckcn/guZU29vs6QG7tLj8nlf8OEwkKKAoWnM19EJuXhPHl70En+0ohmF/kPZN6er87v8jN+82
-	hD5XiHOCpCzUhfAFdW+azhhmZOA0ej2QB2/E4MkVCWsx2Zg5eRuqtAxSQPh/E0jVhO0jbsQdudH
-	oPvCjkyYu1X1Of9uzlePVNJsybQ4GWDvn5G3ncj66uaDLFCs5lj6jYedz8xjkQdGCFnRMosIfzo
-	fJ/hD3yTAJUgOrn8m/HvpYGaSFhdum55CTGDzi7jmIUFkUctFsCRLPCaybjxrIEHQNSsubGOUow
-	4CFQI56sO5XEtU0HAqWtm5pdp1xhABYxmm3bhy7i8jvQ46jFThrGzYXFiRXT6pMLn1ksLD8fsYO
-	4Q=
-X-Received: by 2002:a05:6a20:12d6:b0:351:2c6e:6246 with SMTP id adf61e73a8af0-392e0148042mr8658013637.56.1770010879891;
-        Sun, 01 Feb 2026 21:41:19 -0800 (PST)
-Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c64276efb16sm13296475a12.4.2026.02.01.21.41.16
+        bh=vkH3uyDe1IYJlfN4Vrhf9/CvNIbaIvxv6mm2y5l5B9I=;
+        b=f1633NKhOjt1+639tq4KDJcphF9Blnd4SXNFKNiDtfCD/yzzjgL5nP07btYcIdRq86
+         6GjgWbvztWB9nDQMNaOg2U/NM7mdWnTUJvY4sZ4VUlhIpMen5dbLOfKymzRnCxKkIeSx
+         G/DvPFAStnoVjZHSANqJrAe+jvFlS47j+coQipYpXRmhTENBZBBG+4MIaljoms12bMM0
+         2jFXoXo/ahwiVWUBpHQKUI4mstgPzqS/uWOM7d2bzp0flnwpBBq3BZT9bfqUtaW/wWoO
+         V+fO4f+D4Aj4e72FP7tNZtCAmSoQ8p853lnQE2uDJRnivVLJzF6miks1X4EScw0CjI4Z
+         0pcg==
+X-Gm-Message-State: AOJu0Yz9lCrJJEkuiQQuqohpitAArH/XMnTYM2Oi+fMo2uOKtiGD4DoB
+	fG3h99BhZgg1n/c07/rdRz53GuJ1AtM0Kpomxa/lZSoYk282OBowc16Yle7lVCxU+0OcJp5J/jB
+	dfF+O
+X-Gm-Gg: AZuq6aKnKQk8H0rVAE2fj1xiUS3RZ0xLh0LF+LkaGtCLDCe6pmn39UEqtR6DM/Jiwe1
+	iKfiaoaWoPkg8C0PuQrZZ4DCa/btzaiCMi0FQ3fSCfsVXUlmX+jYvwZBjx3eSn7y2i8tjc1fBsG
+	urWGiwiJ0yfEkTJGkO3LYCxSnbDPZmVgOl2V7HJjrTSEcWETA0ErvGxLozc4mmzP/ldGL+/3Bpj
+	kARRZKjlKJacab37u9S3/hYZIHDAx9Q8hX1r+ImLkbemHKt4bxPcw6MaPymVEWarREhunINbK7j
+	/zd8E7AJfHaltI5TiQcISzpAswS+aQ+sNNhKinprTfs0QuQCvJjOOsH6hkT+x1TR14KYr8iDPKj
+	ZFVNuaOT3f5UrYd3kJV7Pe7xO+InxSHnTuPjxDbgE8/El0n3emVXgW8sAJ4TU6gtHJNQ2e+8Iwh
+	pb7zOvyvgJG5DfHR/R8sYxNGULFuPNod0BlTk1Eh8Vwlos3LYqtPJVrSaEjR4CVBbiC2GFLZY5o
+	xDb
+X-Received: by 2002:a05:600c:4ecd:b0:480:3230:6c89 with SMTP id 5b1f17b1804b1-482db4616damr145869025e9.12.1770031173368;
+        Mon, 02 Feb 2026 03:19:33 -0800 (PST)
+Received: from [10.93.128.226] (ip-078-094-000-050.um19.pools.vodafone-ip.de. [78.94.0.50])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48066c428basm478784975e9.12.2026.02.02.03.19.32
+        for <openbmc@lists.ozlabs.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Feb 2026 21:41:19 -0800 (PST)
-Message-ID: <217f7407-ede2-4be8-bbd8-f2e499170e24@gmail.com>
-Date: Mon, 2 Feb 2026 13:41:13 +0800
+        Mon, 02 Feb 2026 03:19:33 -0800 (PST)
+Message-ID: <473fac36-69a2-4675-8bfa-de26170387cf@9elements.com>
+Date: Mon, 2 Feb 2026 12:19:32 +0100
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -91,121 +92,69 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [net-next,v10,3/3] net: stmmac: dwmac-nuvoton: Add dwmac glue for
- Nuvoton MA35 family
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- openbmc@lists.ozlabs.org, ychuang3@nuvoton.com, andrew+netdev@lunn.ch,
- linux-stm32@st-md-mailman.stormreply.com, yclu4@nuvoton.com,
- pabeni@redhat.com, davem@davemloft.net, andrew@lunn.ch,
- peppe.cavallaro@st.com, joabreu@synopsys.com, linux-kernel@vger.kernel.org,
- conor+dt@kernel.org, richardcochran@gmail.com, krzk+dt@kernel.org,
- edumazet@google.com, robh@kernel.org, schung@nuvoton.com,
- netdev@vger.kernel.org, mcoquelin.stm32@gmail.com,
- alexandre.torgue@foss.st.com
-References: <20260129054445.416242-4-a0987203069@gmail.com>
- <20260131015008.970729-1-kuba@kernel.org>
+Subject: Re: TOF elections for 2026H1
+To: openbmc@lists.ozlabs.org
+References: <aXDmS4BmR6AGXKGW@heinlein>
 Content-Language: en-US
-From: Joey Lu <a0987203069@gmail.com>
-In-Reply-To: <20260131015008.970729-1-kuba@kernel.org>
+From: Christopher Meis <christopher.meis@9elements.com>
+In-Reply-To: <aXDmS4BmR6AGXKGW@heinlein>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.70 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.20 / 15.00];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
+	DMARC_POLICY_ALLOW(-0.50)[9elements.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	R_DKIM_ALLOW(-0.20)[9elements.com:s=google];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-1314-lists,openbmc=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[a0987203069@gmail.com,openbmc@lists.ozlabs.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_RECIPIENTS(0.00)[m:kuba@kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:openbmc@lists.ozlabs.org,m:ychuang3@nuvoton.com,m:andrew+netdev@lunn.ch,m:linux-stm32@st-md-mailman.stormreply.com,m:yclu4@nuvoton.com,m:pabeni@redhat.com,m:davem@davemloft.net,m:andrew@lunn.ch,m:peppe.cavallaro@st.com,m:joabreu@synopsys.com,m:linux-kernel@vger.kernel.org,m:conor+dt@kernel.org,m:richardcochran@gmail.com,m:krzk+dt@kernel.org,m:edumazet@google.com,m:robh@kernel.org,m:schung@nuvoton.com,m:netdev@vger.kernel.org,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:conor@kernel.org,m:krzk@kernel.org,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	RCPT_COUNT_ONE(0.00)[1];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TO_DN_SOME(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	NEURAL_HAM(-0.00)[-1.000];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[a0987203069@gmail.com,openbmc@lists.ozlabs.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,lists.ozlabs.org,nuvoton.com,lunn.ch,st-md-mailman.stormreply.com,redhat.com,davemloft.net,st.com,synopsys.com,kernel.org,gmail.com,google.com,foss.st.com];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc,netdev,dt];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-1313-lists,openbmc=lfdr.de];
+	DKIM_TRACE(0.00)[9elements.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	TO_DN_NONE(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[christopher.meis@9elements.com,openbmc@lists.ozlabs.org];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[openbmc];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,linux.dev:url]
-X-Rspamd-Queue-Id: 00418D286F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,9elements.com:mid,9elements.com:dkim]
+X-Rspamd-Queue-Id: 2D59AD285A
 X-Rspamd-Action: no action
 
+Am 21.01.26 um 15:44 schrieb Patrick Williams:
+> Hello,
+> 
+> It is time again for TOF elections.  The current roll-call is available
+> at:
+>      https://github.com/openbmc/tof-election/tree/main/2026H1/rollcall.json
+> 
+> For this half, we have 4 seats up for election.  Currently those are
+> held by Andrew Jeffery, Patrick Williams, Jagpal Gill and Jayanth Othayoth.
+> All 4 are eligible for re-nomination / re-election.
+> 
+> Nominations for those 4 seats may be sent to the mailing list by
+> replying to this email.  Only those eligible to vote may nominate or be
+> nominated.
+> 
+> Nominations are due by Sunday Feb 15, 2026.  The election, if
+> required, will be held beginning March 1st with more details to follow.
+> 
+> As usual, disagreements with the rollcall results can be raised to the
+> TOF.
+> 
 
-On 1/31/2026 9:50 AM, Jakub Kicinski wrote:
-> This is an AI-generated review of your patch. The human sending this
-> email has considered the AI review valid, or at least plausible.
->
-> For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
-> ---
-> net: stmmac: dwmac-nuvoton: Add dwmac glue for Nuvoton MA35 family
->
-> Adds Gigabit Ethernet support for Nuvoton MA35 series SoCs using
-> the stmmac driver framework.
->
->> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
->> --- /dev/null
->> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-nuvoton.c
-> [ ... ]
->
->> +static struct nvt_priv_data *
->> +nvt_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
->> +{
->> +	struct device *dev = &pdev->dev;
->> +	struct nvt_priv_data *bsp_priv;
-> [ ... ]
->
->> +	bsp_priv->regmap =
->> +		syscon_regmap_lookup_by_phandle_args(dev->of_node, "nuvoton,sys", 1, &macid);
->> +	if (IS_ERR(bsp_priv->regmap)) {
->> +		dev_err_probe(dev, PTR_ERR(bsp_priv->regmap), "Failed to get sys register\n");
->> +		return ERR_PTR(-ENODEV);
->                             ^^^^^^
->
-> Should this propagate the actual error code from
-> syscon_regmap_lookup_by_phandle_args() instead of always returning
-> -ENODEV? If the syscon lookup returns -EPROBE_DEFER, this will lose
-> that error code and prevent the driver from properly deferring its
-> probe when dependencies aren't ready yet.
->
-> Other dwmac drivers (dwmac-loongson1, dwmac-starfive, dwmac-sun8i) use
-> something like:
->
->      return dev_err_probe(dev, PTR_ERR(regmap), "...\n");
->
-> or
->
->      return PTR_ERR(regmap);
->
-> to propagate the error.
-
-Thanks for pointing this out. I'll fix it in the next revision.
-
-Joey
-
->
->> +	}
-> [ ... ]
+I nominate Alexander Hansen (pointbazaar)
 
