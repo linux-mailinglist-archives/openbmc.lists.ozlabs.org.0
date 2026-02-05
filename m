@@ -1,65 +1,79 @@
-Return-Path: <openbmc+bounces-1327-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1328-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +hTXEJJNhGkE2gMAu9opvQ
-	(envelope-from <openbmc+bounces-1327-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Thu, 05 Feb 2026 08:58:10 +0100
+	id +MvuAURnhGkh2wMAu9opvQ
+	(envelope-from <openbmc+bounces-1328-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Thu, 05 Feb 2026 10:47:48 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45511EFA7C
-	for <lists+openbmc@lfdr.de>; Thu, 05 Feb 2026 08:58:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83E7BF1052
+	for <lists+openbmc@lfdr.de>; Thu, 05 Feb 2026 10:47:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f68j93rwgz2yFb;
-	Thu, 05 Feb 2026 18:58:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f6C7g4QDKz2xrk;
+	Thu, 05 Feb 2026 20:47:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2600:3c0a:e001:78e:0:1991:8:25"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770278285;
-	cv=none; b=fWMHyeME8p6heD85scOO6VdmCwWlREtNrWdhwoPdUmTRhnQ5xI13ENzLPKiOJWLJTfnsDK99og44ElWsBUqdV4lHUFxVOSXkxc9PS35L72JXbrwVzP7NIyx2dKBOiSRWMk1rt9ZPElxhIrH32ldtw+XfN8wRlahX8MjYmkwgQsGHF1vh6rK89HiUUueTwoTMI8/xvs1Xg5kWfHwVE9eisvFsYecjP2R/PjU/A6Kg/Qiu33LtAiquWIqbLJVTHK1WnKSnSUkaeHE9B965TWetALmql7wj/IhDUe/yTeWDDxDgqwzOAhuoaG7frlRBnTGNun3MJ007++tr39/tnyJSjw==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4d48:ad52:32c8:5054:ff:fe00:142"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770284863;
+	cv=none; b=V25LPPJEEvaRb002Q3gIlN4m6Fx5CihJ0KE+g1Tmle/oJ7rGimw0nHct5s7m8X/YzDQyjVlT8NXhIjqQLLRdn9FrmUJa+dqQAyye/MRNB8BqqGdN2dV/ZWtNIpgcR3My0Oqm3KjxRWQ+cMArIfncHUfGHt4DD7TLSCd7IZ5oy3ZgVyy8uGExh65oDUdi4e4LOZkysb6EIuGgxGcZ+miu2EKZB15z2Ve06yHY2Cm2XI0sV14WcyDlC4h0vgattSSBQ5YbVd7MR8Q5JeQfI0/Tc+orTCX/u0GPPcFRc4d7auhBS3J07PqNFNmxbAw09P/wYvhFP4JbSnTGHbKou4G53w==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770278285; c=relaxed/relaxed;
-	bh=SYZxuy4+r97DBcLZRP2AjmjXQAVaMV67/+bY3fSZDJc=;
+	t=1770284863; c=relaxed/relaxed;
+	bh=dpdEjTwUa2nIvssyS9tGP8C8RHluBGKgaX0/8wOSLqY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T9Lc2n+wIFrgKcPMKr7IxidcV113azLVVGWyeVv6KVHkbKHqF/hGBiIhtfPlUBOh7m3QkNKjRXENvb2WtI/HhYDEf0GJMeBTbhjXQnt4IhbqfJB3CYV/C3cBjYjksJKL6kBtR14gLpwvE4Y9gtn905LakwfQGIqo/Owa6SadWR+vKL7N81wzxgsXBDMdh84NED5oz6D9VNK0q4+j41yJNiXQa1AXgEMW54x9IJHK41bSP8OokDKCofhlKrLCN9F+r9a/4gW00LZpaAqwJBegRYQIBLKSXL65DT6wMSVWF+i0VSMl/8yoz6oUZ7UI+Qc5s17U5bEd6oiClm2NYNCljQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0i2xJRAN; dkim-atps=neutral; spf=pass (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=lists.ozlabs.org) smtp.mailfrom=linuxfoundation.org
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=jR7Xt8FD/ANhs2vmACHtmoTv0S0CebfirosX6prgBRMIXhfJD1KUsEk8iVoyv3etAqvfO6Fiban/iZRHNtkZpybczzU9iOxUBillhxvHp7gTD7jygGZAyFdrRzv46fJ1DNIoJJh2c/18+MuYtn4Yzx1yGKF6dwUdpepVtnFALIttyt+BthSmERWXzeIBCzq9uy86WzmW6ABLnnTffTBG9lRnstns1x8FtAYM0e1Yol9L0EQTBtJXFJ6lvNyQcfXVXFSa/IEHwTwNWlhEgPqPunoX6NAbm44OsYMqC6EHdPKMxAgIOe1U36uZC9WQHuyqsgdHmJnoruXETmrv8lK31w==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=QHr++8aD; dkim-atps=neutral; spf=none (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org) smtp.mailfrom=armlinux.org.uk
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0i2xJRAN;
+	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=QHr++8aD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=2600:3c0a:e001:78e:0:1991:8:25; helo=sea.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=lists.ozlabs.org)
-Received: from sea.source.kernel.org (sea.source.kernel.org [IPv6:2600:3c0a:e001:78e:0:1991:8:25])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
+X-Greylist: delayed 493 seconds by postgrey-1.37 at boromir; Thu, 05 Feb 2026 20:47:40 AEDT
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f68j808Zmz2xrk
-	for <openbmc@lists.ozlabs.org>; Thu, 05 Feb 2026 18:58:03 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sea.source.kernel.org (Postfix) with ESMTP id B45AC432B5;
-	Thu,  5 Feb 2026 07:58:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6DAC4CEF7;
-	Thu,  5 Feb 2026 07:58:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770278281;
-	bh=IuIN+/tQw8rFvzNWx5ic6DmL1v6XYIXu6N8WQIOCMQ0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=0i2xJRANXQHk5EVOm/PFr9o5rDzC2BFe6Z1ahpEKxFsl72rQgICz696k7R8qlKd/E
-	 RhJJ4SVfNNFDVZJdXh86oHTXB5KcG6JbY8KsdeM7DoyvrkeCEk7zSxqzIGVRth3EkK
-	 1J1v86grCzROkZfUxunkydh+8A7SSPp0rSlt9DIY=
-Date: Thu, 5 Feb 2026 08:57:58 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vladimir Moravcevic <vmoravcevic@axiado.com>
-Cc: Krutik Shah <krutikshah@axiado.com>,
-	Prasad Bolisetty <pbolisetty@axiado.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH 2/3] usb: gadget: udc: Add UDC driver for Axiado Device
- controller IP Corigine
-Message-ID: <2026020545-headed-twirl-125c@gregkh>
-References: <20260202-axiado-ax3000-usb-device-controller-v1-0-45ce0a8b014f@axiado.com>
- <20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f@axiado.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f6C7c1BSwz2xg9
+	for <openbmc@lists.ozlabs.org>; Thu, 05 Feb 2026 20:47:39 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=dpdEjTwUa2nIvssyS9tGP8C8RHluBGKgaX0/8wOSLqY=; b=QHr++8aDpN/fqF0E0cSew5phMI
+	eOaaHQaJem+IazKxQZH7RxAdBMUpjfUNxVqyhuRscxO36yvJg+GRBQyAoHUH0WcBLhHyiRRsh1RgQ
+	beaCJEKCRn3JxrS1R7cpvCkJXtetHGrGo0Fd9ettY94gAuW7M50+Jt2adpl6dnSqhCPom978IV6W7
+	VAEnODHHo+wjSFRjfnNdunhiVM15F0PIx9pI57/uRyKMaVfYVz/JtqMEmNchlvHblcysBhFfLMpOz
+	s2/Onlz03KvzKqJ2rFt/pZcWV8xcYc2aTEb33F0p+axybcHjHIBmTrf0MB+Ma6NM4tdfDXmJzFoID
+	xij5+MNw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:43544)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vnvpA-0000000077B-0RIT;
+	Thu, 05 Feb 2026 09:38:56 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vnvp4-000000006FN-2Zn1;
+	Thu, 05 Feb 2026 09:38:50 +0000
+Date: Thu, 5 Feb 2026 09:38:50 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Joey Lu <a0987203069@gmail.com>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, mcoquelin.stm32@gmail.com,
+	richardcochran@gmail.com, alexandre.torgue@foss.st.com,
+	joabreu@synopsys.com, ychuang3@nuvoton.com, schung@nuvoton.com,
+	yclu4@nuvoton.com, peppe.cavallaro@st.com,
+	linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org, linux-stm32@st-md-mailman.stormreply.com,
+	Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH net-next v11 3/3] net: stmmac: dwmac-nuvoton: Add dwmac
+ glue for Nuvoton MA35 family
+Message-ID: <aYRlKk-cCIhqGWX7@shell.armlinux.org.uk>
+References: <20260205014006.735408-1-a0987203069@gmail.com>
+ <20260205014006.735408-4-a0987203069@gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -73,263 +87,221 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260202-axiado-ax3000-usb-device-controller-v1-2-45ce0a8b014f@axiado.com>
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+In-Reply-To: <20260205014006.735408-4-a0987203069@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [3.80 / 15.00];
-	MID_END_EQ_FROM_USER_PART(4.00)[];
+X-Spamd-Result: default: False [1.10 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
-	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
 	MAILLIST(-0.19)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1327-lists,openbmc=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:vmoravcevic@axiado.com,m:krutikshah@axiado.com,m:pbolisetty@axiado.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[gregkh@linuxfoundation.org,openbmc@lists.ozlabs.org];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	TAGGED_FROM(0.00)[bounces-1328-lists,openbmc=lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_SENDER(0.00)[linux@armlinux.org.uk,openbmc@lists.ozlabs.org];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	FORGED_RECIPIENTS(0.00)[m:a0987203069@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mcoquelin.stm32@gmail.com,m:richardcochran@gmail.com,m:alexandre.torgue@foss.st.com,m:joabreu@synopsys.com,m:ychuang3@nuvoton.com,m:schung@nuvoton.com,m:yclu4@nuvoton.com,m:peppe.cavallaro@st.com,m:linux-arm-kernel@lists.infradead.org,m:netdev@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:linux-stm32@st-md-mailman.stormreply.com,m:andrew@lunn.ch,m:krzk@kernel.org,m:conor@kernel.org,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
 	NEURAL_HAM(-0.00)[-1.000];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,openbmc@lists.ozlabs.org];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[linuxfoundation.org:+];
+	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,gmail.com,foss.st.com,synopsys.com,nuvoton.com,st.com,lists.infradead.org,vger.kernel.org,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[axiado.com:email,lists.ozlabs.org:helo,lists.ozlabs.org:rdns,linuxfoundation.org:dkim]
-X-Rspamd-Queue-Id: 45511EFA7C
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[openbmc,netdev,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:url,shell.armlinux.org.uk:mid]
+X-Rspamd-Queue-Id: 83E7BF1052
 X-Rspamd-Action: no action
 
-On Mon, Feb 02, 2026 at 05:16:29AM -0800, Vladimir Moravcevic wrote:
-> Add Corigine USB IP Driver for Axiado AX3000 SoC's
-> USB peripheral (USB 2.0/3.0).
-> The driver is based on the Corigine USB IP core with
-> Axiado-specific enhancements including VBUS detection and USB link
-> stability fixes.
-> 
-> The driver supports both USB 2.0 High-Speed and USB 3.0 SuperSpeed
-> modes with control, bulk, interrupt, and isochronous transfer types.
-> 
-> Co-developed-by: Krutik Shah <krutikshah@axiado.com>
-> Signed-off-by: Krutik Shah <krutikshah@axiado.com>
-> Co-developed-by: Prasad Bolisetty <pbolisetty@axiado.com>
-> Signed-off-by: Prasad Bolisetty <pbolisetty@axiado.com>
-> Signed-off-by: Vladimir Moravcevic <vmoravcevic@axiado.com>
-> ---
->  drivers/usb/gadget/udc/Kconfig   |   15 +
->  drivers/usb/gadget/udc/Makefile  |    1 +
->  drivers/usb/gadget/udc/crg_udc.c | 4522 ++++++++++++++++++++++++++++++++++++++
->  drivers/usb/gadget/udc/crg_udc.h |  364 +++
->  4 files changed, 4902 insertions(+)
-> 
-> diff --git a/drivers/usb/gadget/udc/Kconfig b/drivers/usb/gadget/udc/Kconfig
-> index 26460340fbc9..b94d113aad99 100644
-> --- a/drivers/usb/gadget/udc/Kconfig
-> +++ b/drivers/usb/gadget/udc/Kconfig
-> @@ -417,6 +417,21 @@ config USB_ASPEED_UDC
->  	  dynamically linked module called "aspeed_udc" and force all
->  	  gadget drivers to also be dynamically linked.
->  
-> +config USB_CRG_UDC
-> +	tristate "AXIADO CORIGINE-based AX3000 Device Controller"
-> +	depends on ARCH_AXIADO || COMPILE_TEST
-> +	depends on USB_GADGET
-> +	help
-> +	  Enables AX3000 USB device controller driver for Axiado
-> +	  SoCs and evaluation boards.
+Hi,
+
+On Thu, Feb 05, 2026 at 09:40:05AM +0800, Joey Lu wrote:
 > +
-> +	  Based on the Corigine USB IP core driver with Axiado specific
-> +	  enhancements. Supports USB 2.0 (High-Speed) and USB 3.0
-> +	  (SuperSpeed), including control, bulk, interrupt, and
-> +	  isochronous transfers.
-> +
-> +	  Say "y" to build statically, or "m" to build as a module.
+> +struct nvt_priv_data {
+> +	struct platform_device *pdev;
 
-What is the module name?  The other entries in this file all describe
-this.
+This looks to me like it's write-only, does it serve a useful purpose?
 
-> --- /dev/null
-> +++ b/drivers/usb/gadget/udc/crg_udc.c
-> @@ -0,0 +1,4522 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +	struct regmap *regmap;
 
-That is very odd, and I need a bit of justification as to why, and how,
-MIT is allowed here.  Did you look at any of the existing gadget udc
-drivers when working on this code?  If so, how can MIT still work?
+This doesn't seem to be used outside of nvt_gmac_setup().
 
-Anyway, as this is a "not normal" selection for this type of driver, I
-will need a signed-off-by from your corporate lawyer with the reason why
-it is dual licensed described in the changelog comment for it showing
-that you all understand all of the issues involved in doing something
-like this, and attempting to keep it under a dual license over time.
-
-thanks,
-
-greg k-h
-
-> +//
-> +// Copyright (c) 2019 Corigine Inc.
-> +// Copyright (c) 2022-2026 Axiado Corporation.
-> +//
-> +
-> +#include <linux/net.h>
-> +#include <asm/byteorder.h>
-> +#include <linux/errno.h>
-> +#include <linux/io.h>
-> +#include <linux/unaligned.h>
-> +#include <linux/types.h>
-> +#include <linux/bitops.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/usb/ch9.h>
-> +#include <linux/usb/gadget.h>
-> +#include <linux/delay.h>
-> +#include <linux/irq.h>
-> +#include <linux/irqreturn.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/ctype.h>
-> +#include <linux/module.h>
-> +#include <linux/sched.h>
-> +#include <linux/kthread.h>
-> +#include <linux/err.h>
-> +#include <linux/wait.h>
-> +#include <linux/kernel.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/of_address.h>
-> +#include <linux/of_gpio.h>
-> +#include <linux/scatterlist.h>
-> +#include "crg_udc.h"
-> +
-> +#define INIT_ZERO					-1
-
-Why is "ZERO" defined as -1?
-
-> +#define UDC_FALSE					false
-
-Please just use "false" where needed.
-
-> +
-> +#define MAX_PACKET_SIZE 1024
-> +
-> +#define	DMA_ADDR_INVALID	(~(dma_addr_t)0)
-
-Isn't this in the dma headers somewhere instead?  if not, why not?
-
-And you mix tabs with spaces after the "#define" on these lists, please
-don't.
-
-
-> +
-> +#define CRG_ERST_SIZE 1
-> +#define CRG_EVENT_RING_SIZE 256
-
-Why no tabs here, but:
-
-> +#define CRG_NUM_EP_CX	32
-
-Tabs here?  Be consistent please.
-
-> +#define TRB_MAX_BUFFER_SIZE		65536
-> +#define CRGUDC_CONTROL_EP_TD_RING_SIZE	16
-> +#define CRGUDC_BULK_EP_TD_RING_SIZE	1024
-> +#define CRGUDC_ISOC_EP_TD_RING_SIZE	32
-> +#define CRGUDC_INT_EP_TD_RING_SIZE	8
-> +#define CRGUDC_ROLE_DEVICE		0x1
-> +
-> +#define	U1_TIMEOUT_VAL	0x70
-> +#define	U2_TIMEOUT_VAL	0x70
-
-And then tabs here after "define"?
-
-Anyway, it just stands out instantly as something odd.
-
-> +
-> +#define STATE_USB_LINK_STABLE 4
-> +
-> +/*********Feature switches********************/
-> +#define U12_FORBIDDEN	1
-> +#define U12_INITIATE_FORBIDDEN 1
-> +#define CRG_UDC_INT_EN
-> +#define REINIT_EP0_ON_BUS_RESET
-
-We do not have "feature switches" in kernel drivers that require you to
-rebuild the code.  Please handle these properly like all other drivers
-do (i.e. not this way.)
-
-> +/*Table 127*/
-
-No spaces?
-
-Anyway, what is "table 127"?  And what is it for?
-
-> +enum TRB_CMPL_CODES_E {
-> +	CMPL_CODE_INVALID       = 0,
-> +	CMPL_CODE_SUCCESS,
-> +	CMPL_CODE_DATA_BUFFER_ERR,
-> +	CMPL_CODE_BABBLE_DETECTED_ERR,
-> +	CMPL_CODE_USB_TRANS_ERR,
-> +	CMPL_CODE_TRB_ERR,  /*5*/
-
-If this really is "5", then set it to 5!
-
-
-> +	CMPL_CODE_TRB_STALL,
-> +	CMPL_CODE_INVALID_STREAM_TYPE_ERR = 10,
-> +	CMPL_CODE_SHORT_PKT = 13,
-> +	CMPL_CODE_RING_UNDERRUN,
-> +	CMPL_CODE_RING_OVERRUN, /*15*/
-
-Same here.  Don't assume that enums will be properly set without
-actually setting them all, as I don't think the C standard guarantees
-this (I could be wrong, but it can trip you up...)
-
-If you want a specific value, set it so you _know_ it will be correct.
-
-> +	CMPL_CODE_EVENT_RING_FULL_ERR = 21,
-> +	CMPL_CODE_STOPPED = 26,
-> +	CMPL_CODE_STOPPED_LENGTH_INVALID = 27,
-> +	CMPL_CODE_ISOCH_BUFFER_OVERRUN = 31,
-> +	/*192-224 vendor defined error*/
-
-You are the vendor!
-
-> +	CMPL_CODE_PROTOCOL_STALL = 192,
-> +	CMPL_CODE_SETUP_TAG_MISMATCH = 193,
-> +	CMPL_CODE_HALTED = 194,
-> +	CMPL_CODE_HALTED_LENGTH_INVALID = 195,
-> +	CMPL_CODE_DISABLED = 196,
-> +	CMPL_CODE_DISABLED_LENGTH_INVALID = 197,
 > +};
-> +
-> +static const char driver_name[] = "crg_udc";
 
-Why is this needed and why not use KBUILD_MODNAME instead?
+Given the above two comments, do you actually need struct nvt_priv_data ?
 
 > +
-> +struct buffer_info {
-> +	void *vaddr;
+> +static struct nvt_priv_data *
+> +nvt_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct nvt_priv_data *bsp_priv;
+> +	phy_interface_t phy_mode;
+> +	u32 macid, arg, reg;
+> +	u32 tx_delay_step;
+> +	u32 rx_delay_step;
+> +	u32 miscr;
+> +
+> +	bsp_priv = devm_kzalloc(dev, sizeof(*bsp_priv), GFP_KERNEL);
+> +	if (!bsp_priv)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	bsp_priv->regmap =
+> +		syscon_regmap_lookup_by_phandle_args(dev->of_node, "nuvoton,sys", 1, &macid);
+> +	if (IS_ERR(bsp_priv->regmap))
+> +		return ERR_PTR(dev_err_probe(dev, PTR_ERR(bsp_priv->regmap),
+> +				     "Failed to get sys register\n"));
+> +	if (macid > 1) {
+> +		dev_err(dev, "Invalid sys arguments\n");
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	if (of_property_read_u32(dev->of_node, "tx-internal-delay-ps", &arg)) {
+> +		tx_delay_step = 0;
+> +	} else {
+> +		if (arg <= 2000) {
+> +			tx_delay_step = (arg == 2000) ? 0xf : (arg / NVT_PATH_DELAY_STEP);
+> +			dev_dbg(dev, "Set Tx path delay to 0x%x\n", tx_delay_step);
+> +		} else {
+> +			dev_err(dev, "Invalid Tx path delay argument.\n");
+> +			return ERR_PTR(-EINVAL);
+> +		}
+> +	}
+> +	if (of_property_read_u32(dev->of_node, "rx-internal-delay-ps", &arg)) {
+> +		rx_delay_step = 0;
+> +	} else {
+> +		if (arg <= 2000) {
+> +			rx_delay_step = (arg == 2000) ? 0xf : (arg / NVT_PATH_DELAY_STEP);
+> +			dev_dbg(dev, "Set Rx path delay to 0x%x\n", rx_delay_step);
+> +		} else {
+> +			dev_err(dev, "Invalid Rx path delay argument.\n");
+> +			return ERR_PTR(-EINVAL);
+> +		}
+> +	}
 
-What is a vaddr?
+Each of these could be moved into a separate function:
 
-I'll stop here.  Also note the 0-day bot issues that it found, which
-precludes us from take this as-is.
+static int nvt_gmac_get_delay(struct device *dev, const char *property)
+{
+	u32 arg;
 
-thanks,
+	if (of_property_read_u32(dev->of_node, property, &arg))
+		return 0;
 
-greg k-h
+	if (arg > 2000) {
+		dev_err(dev, "Invalid %s argument.\n", property);
+		return -EINVAL;
+	}
+
+	if (arg == 2000)
+		return 15;
+
+	return arg / NVT_PATH_DELAY_STEP;
+}
+
+then:
+	int ret;
+
+	ret = nvt_gmac_get_delay(dev, "tx-internal-delay-ps");
+	if (ret < 0)
+		return ERR_PTR(ret);
+
+	tx_delay = ret;
+
+	ret = nvt_gmac_get_delay(dev, "rx-internal-delay-ps");
+	if (ret < 0)
+		return ERR_PTR(ret);
+
+	rx_delay = ret;
+
+> +
+> +	miscr = (macid == 0) ? NVT_REG_SYS_GMAC0MISCR : NVT_REG_SYS_GMAC1MISCR;
+> +	regmap_read(bsp_priv->regmap, miscr, &reg);
+> +	reg &= ~(NVT_TX_DELAY_MASK | NVT_RX_DELAY_MASK);
+> +
+> +	if (of_get_phy_mode(pdev->dev.of_node, &phy_mode)) {
+> +		dev_err(dev, "missing phy mode property\n");
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	switch (phy_mode) {
+> +	case PHY_INTERFACE_MODE_RGMII:
+> +	case PHY_INTERFACE_MODE_RGMII_ID:
+> +	case PHY_INTERFACE_MODE_RGMII_RXID:
+> +	case PHY_INTERFACE_MODE_RGMII_TXID:
+> +		reg &= ~NVT_MISCR_RMII;
+> +		break;
+> +	case PHY_INTERFACE_MODE_RMII:
+> +		reg |= NVT_MISCR_RMII;
+> +		break;
+> +	default:
+> +		dev_err(dev, "Unsupported phy-mode (%d)\n", phy_mode);
+> +		return ERR_PTR(-EINVAL);
+> +	}
+> +
+> +	if (!(reg & NVT_MISCR_RMII)) {
+> +		reg |= FIELD_PREP(NVT_TX_DELAY_MASK, tx_delay_step);
+> +		reg |= FIELD_PREP(NVT_RX_DELAY_MASK, rx_delay_step);
+
+You can move this inside the switch above under the RGMII case. Theses
+delays are, after all, only for RGMII.
+
+> +	}
+> +
+> +	regmap_write(bsp_priv->regmap, miscr, reg);
+
+Consider:
+
+	regmap_update_bits(bsp_priv->regmap, miscr,
+			   NVT_TX_DELAY_MASK | NVT_RX_DELAY_MASK |
+			   NVT_MISCR_RMII, reg);
+
+> +	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
+> +	if (IS_ERR(plat_dat))
+> +		return PTR_ERR(plat_dat);
+> +
+> +	/* Nuvoton DWMAC configs */
+> +	plat_dat->core_type = DWMAC_CORE_GMAC;
+
+Is the hardware not compatible with any of the compatible types that
+devm_stmmac_probe_config_dt() will automatically set this for you?
+Which version of the core do you have?
+
+> +	plat_dat->tx_fifo_size = 2048;
+> +	plat_dat->rx_fifo_size = 4096;
+
+There are tx-fifo-depth / rx-fifo-depth properties that can be used to
+describe these in DT.
+
+> +	plat_dat->multicast_filter_bins = 0;
+> +	plat_dat->unicast_filter_entries = 8;
+
+If this core is v3.50, v3.70 or v3.72, then there are
+snps,multicast-filter-bins and snps,perfect-filter-entries which
+can be used to describe both of these.
+
+Thanks.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
