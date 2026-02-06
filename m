@@ -1,71 +1,70 @@
-Return-Path: <openbmc+bounces-1336-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1337-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ODL2Ky4QiWnG1wQAu9opvQ
-	(envelope-from <openbmc+bounces-1336-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:37:34 +0100
+	id MCqSCToQiWnG1wQAu9opvQ
+	(envelope-from <openbmc+bounces-1337-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:37:46 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB27010A7BB
-	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:37:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A10B10A7C4
+	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:37:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f8N3j58b5z2ydj;
-	Mon, 09 Feb 2026 09:36:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f8N3p5Jnkz2xqk;
+	Mon, 09 Feb 2026 09:36:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c111::5" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770366166;
-	cv=pass; b=iUNF5tlLAxK5lkkJLoU+Mm0E8RIRJ2v1sYzEuye2qXAuNId1H+/v/+Y+W38sf2HoAL9ktvvwcOlQ3lIizHY43Xnt2/1URXI5i8GSyvbUot8Qt5M/mRFPvNiNB7i6gb240MwTqndWvRnUo9NMpcblDNbGxvEmlSOe3FA2YnKUh9N/wjBduns4SprzeZD1J3D/n7LtXaVVDVIEEA+gFe0EUl2Qf3UHQ0bEF7DST6iZVra536r5hR4/q1jBhXQmCL7OxkWb5KWjWkJfXrDG+p0YXiTh0TX5JwkIyY5lHFZiAMuoj3MF7pNnSz+rUB7O3tAq3o5OlcgnBuVjA4PuFgCRDw==
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770366167;
+	cv=pass; b=jDjCSbYjAywcl1ETZon+uA0iqiDMDhqFiJr43hU5ciunQTSbQJMoQPxaF3Js/3rDejD1/V00o1ApbqbNeUfZRvzUvWudv/U61lDVorjZyXZHUawngwLrcOkuWU0fXvj709tpVaOLmt7JciF1B48F/1lgr8187V89jFhERjRPRFqsNzLK8I1Y1UlBTNpejUYsXnjkmhlbwNC3oFS+J3SjBHkLs/iZKID32F+9DyWJYJIVo/1KUm4OmXWCQx02uLpc0mrSt2LEggFK+cHsQOGcF4KXwmCGniwV19mEXelxXxi/cdudICKa8KfkRY+Nmq9P/YKfVxK2IHPiRDxLDntwWQ==
 ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770366166; c=relaxed/relaxed;
-	bh=UgPJlgCL7hM53W4rulPh73OCjxaP0vLCMVnlO+e4Ed4=;
+	t=1770366167; c=relaxed/relaxed;
+	bh=yQaUVtsV5eZKPc/Ggg63SLB17LC3PhULQJu28QTXL94=;
 	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=oZvzfXqrJxs1voHbHUanhx8Pv7XBAABkrj6jU8G55knWPG/VQIMfhYUkGThqgXYjyFqwZh6Mqo536AeqZCSM63Qhif12yNMMXqU77cqTVLjUY0jjhjImh7nh93ol/Mrf5/HRjpgxmWQQ/xK70G1WJptPoLnGMc2REsF/XRBzF9Am4Dk/onFLFUPMFHR5MFd874e1kPg2Q3jOkTnsYXgO9Q+A/OGIBO6eeA3Zql5XS7eD4+c6wcfX4/sDKiezWqj5WEKash9vIkV3YLiqx76m32cY5Flvd54AZEnSiErP90GqyrVfYADbtVYUqHQ4taXLh5jGXoRpxYOzJVD2Ej7x8g==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=LUVglVh5; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c111::5; helo=dm1pr04cu001.outbound.protection.outlook.com; envelope-from=twei@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
+	 To:Cc:MIME-Version; b=KOey2GPqxHx6mnUCiFUidlqKRDJ3XWEsR12CpuOROn4q/fz2UdoiLbEwgryynIUTVdqButbOovMO0aOVq+CAKVerRN7hXbDcnVmseUIbfZzCninmgI35wMcDeTxUat9EjrGzQ/mQRmByGJ3hbEhOl418qCc5lw3xZMFaGuEf6Z/29tqFQWwXE47huksVLSWl/ivOryYpH+FFd4mTVFiYlX4ch43MajMlA9PiHuBnwB0A6Y4KO9AIn2+6torwTvajuhAlu7TXdvy02JkY+spoZaFlTtCs/IS0vR4JZOvE6AM5EcbI2y9UHb8GlOuHvn10EKduOcdI2z0yW26ZWHzpNA==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=bz/EGjWm; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c111::5; helo=dm1pr04cu001.outbound.protection.outlook.com; envelope-from=twei@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=LUVglVh5;
+	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=bz/EGjWm;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=axiado.com (client-ip=2a01:111:f403:c111::5; helo=dm1pr04cu001.outbound.protection.outlook.com; envelope-from=twei@axiado.com; receiver=lists.ozlabs.org)
 Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazlp170100005.outbound.protection.outlook.com [IPv6:2a01:111:f403:c111::5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f6nC95tS4z30FP
-	for <openbmc@lists.ozlabs.org>; Fri, 06 Feb 2026 19:22:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f6nCC0DKVz30M0
+	for <openbmc@lists.ozlabs.org>; Fri, 06 Feb 2026 19:22:47 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G1qggFQBHR6lvM0ccegSuJxeFqAfDr4P2U2DrUOM8MOfrWNmNEn0f2rV4QCY9GYPkm96g5fC36hCTnyiaf6LWcUAqBuILC4Gx2B03SD+sZJptAv7XsQNwBsHwdjqPcKOtRN5rVDf4Fzu+onUrurokDSH4+ukkKn5RW7wJWF+E+k1EmGVzga//p5vWAqB9DiJyT+5A2BwocoA7L9AUJpEn0qgFYkPSNYzNYM9rs79pN0nBDihbENXOSP3kdNuV431DBNFK9nuRxj5tYJmcEtmJzrgTK+QopJvYBnCykSXZ79p81YjBY+l2D3QuGAgdVKP2CQuMGN9TQaDH5v1VhKObw==
+ b=Y3FPu4oh+yGr/EfTL7Vrt7QADxT7xOLlApIlnuDGhJE1nDYuRf+mI09kzcBYK+QBat0bc4sQNzYw2JGrKIe2iclghrZjloepi6WuD8IE3XBM6uIp+Ccd4uSXHVhQQYV9frsrJSYUbbVzIGDw1WnN61ALR4h8kklCLk1gv2fo8hVjz7EQrndAHSeDoZuOVvzLJev5pMDPeEXWGxNggPe0IP06KWSuoaTROsWPwFGHl3VgIVp6ved9zFKXI+e0PFr2nDUfrK+oTc+/cMX8AK4EQh6MKRVGRjDumcjpyhLh+j5jJ6NaDnt6rSv6m/heSXmKHiV6HVoSvM//nzxyEEjHhQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UgPJlgCL7hM53W4rulPh73OCjxaP0vLCMVnlO+e4Ed4=;
- b=vu8aBmFt1lAjKVekcqH66dTGcREgzogSbdzTZhntY/wkjWlJ0eY/Zd5AMQcx++QR2xsMfA4DPCG4UBbanzpItu8KLrgSSuHRuFnyxA5qakb4JxIPqLSWcAe9REPGEgJmEEEbpyJpiou6fO8C930gUUgTP0pmlvO4L4qMabbf7DY9Qqfte7gn1VfDGd0XXUMrnU8EvH7sMzvtjTbcazEiCX70yzDNQm5p0jjkXD97Ghca+cmE15XQbfGlMrJIVeYYjZBSkhuxy0+dJc+8UjRUbKSaGKHVOvSu1qCUpWLMQIaabN8bVfPSzjIgXt6AMetqlyNoQYFmDhXUaeduu39mGA==
+ bh=yQaUVtsV5eZKPc/Ggg63SLB17LC3PhULQJu28QTXL94=;
+ b=yHWq2hcf8F7ope8+OfbXZKysq33ndP83cLDQN6hy0HAw43jvXDgyowL6kMtFGfR/vJnGkbVkpIwsPLrBw8Jl3Mpp1VWMiNZp5K88Q7jLwdcB59XYe9JdsJ8HNkFe0Gzdyn+FsXjtZJUnZD23p27jk/v0DtF8qUiewDkrfX8XKwOFgb1gWvSWJzaXuKwMSoeG4qEATmcXGOVpZYmV4Ed94EU8PNnUVey8InlYTWMIDnNa9iuzSudqzJJUV5ArHOydD8zI4VQq3uRrnEM4xuLnr/YhtIs7rduXD3eaUv+mv57Jej8OwkGLEidjMGpptnSh8HDGFqjQruxPKu2ZQfjFmg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
  dkim=pass header.d=axiado.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UgPJlgCL7hM53W4rulPh73OCjxaP0vLCMVnlO+e4Ed4=;
- b=LUVglVh5KnsgMIT6zIuUuu7bcNMKnk9VEE6cBcPQMG7Js3bCK042EsFtV/NygQ2CGBx6cXvccgFmSLvA+f2JsLtz2tRd//tuQaQqXmcyahaOp7LsiHeekkOu3gylVPQFOJNOop5u7Xghx6RrwjjTJTzwpukfYWD3tf1xNrmmdchJMhlc2zKvbfz5YniTW/peKOSGCLSfiI31H8SLe9iJrT6575ULmpDI3qB0rT7uAUaZZniAhrD1O3XgajR0l7oXCHC1EiB2P2DEciXWIqJxbnhfGxnoiBAAhlypnvWvVyhYLJIqbkyPXQbztWhXm7tLcdNNjXSEkHZ7XEug7/zgKw==
+ bh=yQaUVtsV5eZKPc/Ggg63SLB17LC3PhULQJu28QTXL94=;
+ b=bz/EGjWmeNBN1p2q25rUAWSKOfLTBKPdwkMaylbkNFkpweQh1obnbOr5/iNDiCSgigNS8wQnSehgrAvyG0KNX8ONJ5SVMQyb68+iwT/svj+6W4igiInVlawzli/fhpv+jbOV4bDZNjJlAVbAWyW54JqpDP9vsoowbXlkHrPYJA8SVkhMkJOqH8UJAWwMwVotw5qGRmIH4HDOgmnOad9q1AZz43OCfiZXQdN6aWCMVMdfPXen2PofXZ6olFjMg8sn/Fv+6b3nvJ2MpYrwF3iHwaqyvivh/fbsrT7XjOyWdcZvvZk+xglxNzgThcKAeignop8kdX8hqM3flEZx+S4ckg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=axiado.com;
 Received: from PH0PR18MB4558.namprd18.prod.outlook.com (2603:10b6:510:ac::13)
  by DM6PR18MB3667.namprd18.prod.outlook.com (2603:10b6:5:2ae::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 08:22:19 +0000
+ 2026 08:22:20 +0000
 Received: from PH0PR18MB4558.namprd18.prod.outlook.com
  ([fe80::7a75:75a5:694b:2311]) by PH0PR18MB4558.namprd18.prod.outlook.com
  ([fe80::7a75:75a5:694b:2311%7]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 08:22:19 +0000
+ 08:22:20 +0000
 From: Tzu-Hao Wei <twei@axiado.com>
-Date: Fri, 06 Feb 2026 16:22:08 +0800
-Subject: [PATCH v2 1/4] dt-bindings: phy: axiado,ax3000-emmc-phy: add
- Axiado eMMC PHY
+Date: Fri, 06 Feb 2026 16:22:09 +0800
+Subject: [PATCH v2 2/4] phy: axiado: add Axiado eMMC PHY driver
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260206-axiado-ax3000-add-emmc-phy-driver-support-v2-1-a2f59e97a92d@axiado.com>
+Message-Id: <20260206-axiado-ax3000-add-emmc-phy-driver-support-v2-2-a2f59e97a92d@axiado.com>
 References: <20260206-axiado-ax3000-add-emmc-phy-driver-support-v2-0-a2f59e97a92d@axiado.com>
 In-Reply-To: <20260206-axiado-ax3000-add-emmc-phy-driver-support-v2-0-a2f59e97a92d@axiado.com>
 To: SriNavmani A <srinavmani@axiado.com>, 
@@ -77,17 +76,17 @@ Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
  openbmc@lists.ozlabs.org, Tzu-Hao Wei <twei@axiado.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1494; i=twei@axiado.com;
- h=from:subject:message-id; bh=UKn+27Cd/+9wGfoIbXplaEOl6p7AzuvBQ/uFXejBAYQ=;
- b=owEB7QES/pANAwAKAXgQMF3EWvHXAcsmYgBphaS5XOuIdxuTZDsSVJTwFo/Xo5FH8ySOY1dca
- CqPTmDx7lWJAbMEAAEKAB0WIQSZyWINOowtFmDvdYF4EDBdxFrx1wUCaYWkuQAKCRB4EDBdxFrx
- 13UCC/4sk0YZQn2Q7izKbF1QB9GCwZa8jvB/Ia8JSu4F06fQhinWRmOGsR1X3so2FzGUb3Oplm6
- EocfH8uJ+MjjVq3QadiikQVXhasdSM2DBTpzEv0wk+aNS3Pf9AfCyeJ2esHnStqIcGcWivztPoE
- 0anDP5TRElcsxqTenkmPzInYVAxb1hdhnWaoQgM0tBGQ47Z0YMbDTFhh2044lrPNOVL/U6SRT1d
- 7s77oqIFeMn10jZ+xTnaw1qfYGzGySz/hkzYtuXFdSuUROPd8FQ4bPZxKaP2fIza+VIj2aJjUFW
- xNxAbuYl/EUiXcYg1nJMk+rySXnCM35DDo6cj2LoZIuBtlrgmbcOeT4uyDMBQVJR+G8zzC2vwQb
- VbmhKQrYAe6OWak6Jx1BuyH17KpOSQ41yEZZlIbXBcLEadIHP8/JPmLpnHunsRIXHfIYZTa3xaT
- Ny79wUAGKTwtzDu4Jl+/7N8xLhmQIylWOyg/iz4QhWjvLbQ44xGEZ7mERtULWzuA0pHPc=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9234; i=twei@axiado.com;
+ h=from:subject:message-id; bh=XTDIF1da24JB5QFFJCOouIbpzH8ph5S2EmF/RAzCbeQ=;
+ b=owEB7QES/pANAwAKAXgQMF3EWvHXAcsmYgBphaS5oIwXbgXd6c66r7J12ZIKxpG7oPionERk7
+ bzW4XCg6g2JAbMEAAEKAB0WIQSZyWINOowtFmDvdYF4EDBdxFrx1wUCaYWkuQAKCRB4EDBdxFrx
+ 1wI+C/9nbebu7Y3iM2AdL1gsMbxDGHt3yAHvEbodabmM637ABzqSfh/3DT+PSPo5aHpid9pXf2F
+ flqWGLA8eS94X5LgI3jlCOE9WpSNBjgTV+5+RoJLVHDyu78Myfkvgd7KcsQJD/YK/T3utr3DYML
+ nZs3Rcchk+A0mp9g2+hPn4bm15eESC+eEEzCK4TGZNjaUyshs8JlLfl85OVy3BNsBcMCscfpwML
+ vjAQyr1TJfBUrwv4UGWP07dU/1FZK+J1TBllQXjO+BzH9Bxamz0BtJgAc+x2+iVry9MSOcvamrc
+ S3cwYx/4CT6HjcTofbNoJPFG4issEj1TpWRMtXex76UIMClMILYlJEMERSQK4bwRGWmSy8bLgwS
+ ujSuPm1Qgi//x1cyqiFh5SrEMaO2SJZqfRK/wzHbwsSrSeh+nM3RK4hFiFC7TLz6rxVLzwxNplO
+ PAdqolvP19au2mvwp4JmtMPdVzoWbVzf78wE1D7Im77HMuc5J+ygWnL5HqEic9Q7a4YyI=
 X-Developer-Key: i=twei@axiado.com; a=openpgp;
  fpr=99C9620D3A8C2D1660EF75817810305DC45AF1D7
 X-ClientProxiedBy: PH7PR17CA0044.namprd17.prod.outlook.com
@@ -106,102 +105,102 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH0PR18MB4558:EE_|DM6PR18MB3667:EE_
-X-MS-Office365-Filtering-Correlation-Id: 437f46cc-abc5-4bc0-5a06-08de6558d81c
+X-MS-Office365-Filtering-Correlation-Id: 0d3f091a-0e1c-4e33-b8ca-08de6558d866
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|52116014|7416014|1800799024|366016|42112799006|38350700014;
 X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?eUkreGlaNS9OZ1ZMUk00WThKZmdhbVdhV3NzL1pBTWR2MElUcEpicVJ0MjNT?=
- =?utf-8?B?YlBMbXltVXNkdUI5WCsybGY1UXhJWXVac3ZzZCtPd2orV0UzS1ZPa0JubWVj?=
- =?utf-8?B?K0pONytmTnhGNjZVNDdiY2ZyckFyNVo1aUZiSS9qNk5PbG95SE90YjgrNWZl?=
- =?utf-8?B?SFBFOHFZKzJ6dVV0MHl1ZmRkaStoVkNFU0hGTlMrNUQ3Y3V6bEx1REZHbE9r?=
- =?utf-8?B?c1FlRFJZL01DU0NlcHRESmZiSGU2ckxXb0cyMmd4SVRiMm9zZ1NrbWhFZXAz?=
- =?utf-8?B?K3h3ZjUyczI0UE5lZnJnVFpRTFBLUDdkV2pNWnJsTnBwc0txSzk3RW5IdDhZ?=
- =?utf-8?B?UDJpeUtTdDVBYXI0c2EvU2NKZjh0T04rUUhnVWR1djErYlBHSjRsQ05hdisy?=
- =?utf-8?B?Vjl1dEoyYlRSYjR3QWF0L2UrUnpab2VIZ3V3TStIeFZkblBlN2tDem9ibXZi?=
- =?utf-8?B?QWRjdmdXd1hkMjNSOFFGVTFZWFhUaUIxSFBQclZWUC85MDhtR1FINnlUaUM1?=
- =?utf-8?B?VUsyTnowdThJMi9CK0ZtUWF5VmRhMmdkSkVjN3h2dFc2aXNFVlpqSkJ0OE9T?=
- =?utf-8?B?bGJFbzlpUEJyaGpZT0d1SU9tWDRxL0RWV29Ic0t1UUkzalEyN1ZkanNPK0tG?=
- =?utf-8?B?QUpsK3cyOWxQait3SzhYVUIyUE8rOU9CdWQyeWJ4b09VbUQxVElzb3JFVDRJ?=
- =?utf-8?B?Z29Yd1ByZnVpU0tiWVdkSUNKZFgyTXNiRTY0MWtONW5FQ2xBc3VLZUlJeEQ0?=
- =?utf-8?B?VGVsV2JnQzY1cHZST2NTY1M3YUZaZDJaWlRQUnZ0Z3BUUU05UGRjM0trRXBm?=
- =?utf-8?B?dnJjbmUvNzFxL0FpcFp2a0NOdTdIdFAxcFNWQVRLRlNidXBscXdXVi94K2Ju?=
- =?utf-8?B?dXQwenJJWWJTM251VDcyTm05UkFEandtK2xiWTVzdmFDczlEamkrclRxbU9J?=
- =?utf-8?B?UEFYam0vMUlTRTEzNitjS1BQVEFpQ1FCOWpQUHhpUmRWUFRpL2s4RkVDa29G?=
- =?utf-8?B?U2crb20yRUdwYW16N0tVT0dCOE9Bd1Ywa01nT3dUYkJlSlBzd1RIT2NhSTVa?=
- =?utf-8?B?UGE1bWxZZWZ3endoMEVaRFJxOUlQSG9rajZQZTV0K0pSbmF4Q1d0UTM3RlRE?=
- =?utf-8?B?VXU4eTNHaGI2SkF6SUducTI5czZ4UHcvb2FaQ084aE1XNUw4dXVaYjJzWEUz?=
- =?utf-8?B?MHo3Yzhpc1NzR3lpSGNTRXpCdDh3RUtkRmNqeUlldmhMVmFCYk5Sbk1pWWFD?=
- =?utf-8?B?S3hqYUNaQ0llM1IreE5oUjNEb0tQSVEwVXRuRVB2cDl1NGtrWXVUK2NEUWJj?=
- =?utf-8?B?QXh2WkRpdExEWWJBWFE5YnVJSFdLYWhhRFZhb3M1VldCcXJkTFgrY1dpajhF?=
- =?utf-8?B?UXZWaTMzaDY1WEg5QmZoaEYvNzRlb2hBNG1vUjZVMmppMzVVdVJyNWlwcWVQ?=
- =?utf-8?B?Q1d0WlZNNWF3bFI4SllPSERnY3Z4SGRUYkd5ZVF4Z1htTXJ5MzJCa1U3NHoy?=
- =?utf-8?B?OU5BaEdROGJSZ043L1FqdFlYajFDeEJkRTRRbmlUTFVKL09ka0NiRTBSWGhu?=
- =?utf-8?B?N3ZXSGtLWkRtSGZ3dzRQVzI2eFVCc0lkbUNEZTZkak9hRTZiL0xwK3kxS1U4?=
- =?utf-8?B?Z0t0aHFOUzZsaHptRWJxVWNjV05YSm04cEVVSHVVZ09VbmwvNXVsTzNBdWJv?=
- =?utf-8?B?QUJVZnRMTHF0ZXpyd2kxRngwd0p5aDV4bE41SEJnTGxnT1BUb2N3RC9vdWlG?=
- =?utf-8?B?N3RoallvZGo2ak5lMWhXY3Y1dmpJdXIvY2pGZFpGMDNNekhNL2VZWjVueEl2?=
- =?utf-8?B?eVNVdUJYKzdOalA3NEhTdWVoQnZzSkJ1UDBneTE2cmNQZ3JmSGhJTlNDb1FS?=
- =?utf-8?B?YlVnNTQ2RWw0YitsTlFHN1l2TTU3WGg4My93NDk3V2xMNlRwL1l6SEtQODZW?=
- =?utf-8?B?YzR5TEhkaTlSL3JndkgvSEsvMks0S0ZqOTl6R1FPeURFaTRGdUVvMm5EMVUw?=
- =?utf-8?B?dEZ5cUwwSjR5MUpwVGNmeE95c0MxOXRWSFdpTGY3QmtKVDU3RDNNVmV0aEE3?=
- =?utf-8?B?NUFtS25qVkVkQzJBK0RxeW4vbTM3MlA3OFZXVFF3aXdHRGdUVXZVSEsxUll6?=
- =?utf-8?B?RE1rTGtRTnVXSnhKQWZTYUIrdTR6Z09BNTFQN285c0gybUc0d1J3Z3c1b2Qx?=
- =?utf-8?Q?5MUiPwL2ksa1b7Za0eql998=3D?=
+	=?utf-8?B?MlRtNHdBbGZ4cnRTOVY4dXEzY0RPOS9rOGRVRXRQZnlTMWMxa2ZBVFpLdWpD?=
+ =?utf-8?B?Wmo4N0pSR2dVeWJ6dEdpQVYzdnRKSWJkVWNVSGdyN2xNNncrWGQ3VENIcGd2?=
+ =?utf-8?B?aVFaNWd1cVRiNnArZmtkc3VYdnNTWEJpelh2Y29hcmx3c0g1TWxNSDJidVFx?=
+ =?utf-8?B?WWg0bm1kOFlwRy9tWFNaeGx0anNETzlMWEFIK1AybDhJUHRHYzJGdXV0aWE1?=
+ =?utf-8?B?aFdNKysyRmFJV0lGcmNPSXVUZHJuT2I2SUFwNXhoMFJ1Y0J1SVBZWWhwWUZn?=
+ =?utf-8?B?UTlxdnByMGZ0SERmOENQNFNOWEltK3N3RWdaSlBqLzZUeUFRZTlDVGRWaVI0?=
+ =?utf-8?B?a3hHRTNjWEc4R3JOb3Y5eGdIMVkvSE9kaHNoNzlPSXFyUFdRNTdKaS9xT1Bv?=
+ =?utf-8?B?ZHEzSEQzbWFJaEFjUWhLS2hpK2NQM1o0T3ZHRW5ib0lwSFRDS3R6TnFEc2JJ?=
+ =?utf-8?B?SjdhYUtOSHp2Zm13cEVlNG9Qdmo1OHVSWHZjdkt5elNCTDhYcEg4SWxlSkYy?=
+ =?utf-8?B?VU9qQlhBUEw0QzA1ZWZFSFpmK3A0Wk02WTVudThNdExnVG5nQ2VNcENZMXdW?=
+ =?utf-8?B?M3FtUDNiTVh4SDdJd3I1RkpmS1dGR1h1T2xHblBFTzI1TWRUMGd5ZDRlNEVn?=
+ =?utf-8?B?THZwanhNM1c4K3puU2tqSWxYR1BpY2w0SUxoaWVSYjIzaitndGY5ZjJ1N2Zr?=
+ =?utf-8?B?RWpXWjhmbXVQdFdabnBCRHU2eTNBNkc1djJwcG5HOVE4Z1dUd1RJOW05N2ZI?=
+ =?utf-8?B?UUJjWjUrdFF2eG5IT2FmTUdaMWo2Q01jeU9TUHNXelp6NjFRQ2thQndTOS9t?=
+ =?utf-8?B?LytwcW1Bb2NqdmpJMC8wUForVDIxTHc4ODBiUUVsU0Y0YUpoTWZPeTJ2MTQz?=
+ =?utf-8?B?eW9zSEI0dURobU5CY1hPZTFQSk9EYnkzNEsyWnVIR1I1YmJkQTNiL1cvL2ND?=
+ =?utf-8?B?TjJPUFF5THFiem9sQjlmYzNMWGU4bUFWMXhMdzlXL21hQ2czYUV1OWZhSTln?=
+ =?utf-8?B?OXQ2Zk1TbzlFN2ttUFFKZVJ1R0xYbWcyMnYrOHJvODVrRHV2VUs3V1BkeGt5?=
+ =?utf-8?B?Y0ZPbDFsOTVYQVNPbitETWEvUzU2T2RPOEVnK1RvUjdrWjhYUFBRL2xseXNv?=
+ =?utf-8?B?ZjVqbmszSy9VbjF1KzZ1MGorclVzTE9KV3lWRXpmVHB2VldDOUh5dnVDdlBp?=
+ =?utf-8?B?R2ZzZVRRd0pqOHRKSXZ0Kzk2N3dnWWx2dzMwUXY4V1Q5WGlCR0hGZWVXRTJa?=
+ =?utf-8?B?N3pzRVRnR0ptd0Z1RHV2UTNuMmtRSjhENW9Rd1pidDFaeEoveVVabG5SMG9Y?=
+ =?utf-8?B?WE1aWlRwdHhGYkVvbnpwSmQ5b0NlQ2N6ZFowUG9vcll1VkRNdlVoQ0FSUEo3?=
+ =?utf-8?B?dnpOcGhJaXFSTVZ2clRaaGlzY3VHd1BYWGNGNU81TnlVUWhDUlFDM3RLeXdt?=
+ =?utf-8?B?djBVOXEreVNyTms3eTJuNXlndVR6d2N6YjFRRzNWVkdxM1lJVHlsL09weEFn?=
+ =?utf-8?B?bmwyZy9hbHJmd0k4VXB5bVhDUlFOVk16OXk0M1lKUXZlUThvQmw0OXJXMHh3?=
+ =?utf-8?B?UDdiTEx4dWFZT3RHenRuNTk1dFFLT25yNHkwWGhRTHNLTWpZOVBsYS9Fa3dz?=
+ =?utf-8?B?eU1WanpYcHpKb2ZYMEFsT3VlS0VxM1laOUhQaUxZb1lBZDNrcC9QMGhkTlBS?=
+ =?utf-8?B?bjFpN0FZK2V6a3QxajhzMXlaWFVHbUUwclZWb2I4bFV3ZzlPb2wvbGNmSU55?=
+ =?utf-8?B?WkJkNUFicFVtL3c0RVFjM1U5cUtpZlBWdzZUQU9jZzdhWjl0YS9OcVQvN1Rm?=
+ =?utf-8?B?WCtPdDR3QVJRWVhPMkZmZnBSUnZmSFZlOXZyNGlqYStrcHlKN0V0QzlDTVQ1?=
+ =?utf-8?B?aDduTldoanVpdlphK3pjdWJvbFlJOVRLTXcyNW9EWUJwaGIzSHhTNVc1U2wv?=
+ =?utf-8?B?QUM0b0hxQUptNmRuMzdpYUhIb21IS2xiZ0MwN1FRakd3RjVKc0lDL2RPaitT?=
+ =?utf-8?B?Uzdrc3hZeEx1QXZYdWd0K0V0VnFNYmR0RjdGZXpRa0UvWm51UEJFT0pvV1dH?=
+ =?utf-8?B?UEo4ZkZvaUZ6Rm9iQXk4UmVtaU1tUEJFZmo2K29xeGIvaTlZdjhIZUhNS1hR?=
+ =?utf-8?B?dEVpS1pVcFZtbkRCRngyblovd0ZTTkVHWHN3Y2YzU2ZoV0p3a2lCS3hUaS9y?=
+ =?utf-8?Q?uFQFXSczoC9JydAZpOZtyv4=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR18MB4558.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(7416014)(1800799024)(366016)(42112799006)(38350700014);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?K1lxSXp4aCtUc0ZkTlRnM2U3YjVHM01wcitWRG54ckxTYWJHaGYxN3Ixb0xz?=
- =?utf-8?B?WlprdkN5VHdRQ05MM1VBbDc0Y0djY25KS2N5YU82MU5rMFM4L2U4aUdmQlAx?=
- =?utf-8?B?bmxtSnRKaFFCTmEyZWZPeGNnN2VjTXhQNU9nSnpvZlJIZG9WakhuNUhycGN5?=
- =?utf-8?B?cm1uOHFGZWtnQW5TS0h5dnFkaE9NWGI4RGRWd2xOODZFeTFZdFdKd1BXY0Y3?=
- =?utf-8?B?L2xhRFJsYjVUbUdpSnBrRVd0VjZhZlFaM1VhRFY4cWYzZXp6UEFnbHpRcFZ0?=
- =?utf-8?B?blNFWDg4ZWpBUU9vamhZZytOVlhQQzFEUHZvWk51ZXpXRHBheFlLMTVCY3dH?=
- =?utf-8?B?M1FuWmtKUjBJQ1lpemluMXdaRVNidTlPZ2J0M0tCY3IwY2NHeTFhK2hKL0pt?=
- =?utf-8?B?UzBWeEE3ZUNBaVRPZEtpcCtWRENVZGlOUmtuY2djRUtVNzlXaXVhblhMUm50?=
- =?utf-8?B?a1NIMGxaQ3JwSG5ONi9SOUhIUTFqTnUzUGhCcnZyZ0dIK2dURndHUHd1OURj?=
- =?utf-8?B?YzdnL0p0aUtYYi9RQU0zWm9tVm4zWmtmZU4wK0tCd25RWXZidWJBSm9HTFAz?=
- =?utf-8?B?SzVoNS90RFBzYXBwdjN3VjU4V2NGalZKa0xjcGVVNzNJVmFvQ2czbnZHRGN6?=
- =?utf-8?B?SXV0Q3FUaUcvT3NJMDhlSktoUVJYWTd1UWtHZ3FBbFJleXlYYjFObXhBelZI?=
- =?utf-8?B?YzBKRGw4aDJaNEx0L2hjOGJjb1QwYzVQUnhFVkkwOWZSMTdkcXkxVlA4MjAx?=
- =?utf-8?B?dGRaY1hmc2kxSVc2SWRyTEZDcWtFWmh3Q2tWamlrYWRNTURsSmxrbnFjaFVY?=
- =?utf-8?B?WDdBckd1ZjdQM0JrY0dIaUFkZmNZL1BUNGYrdmZGamdld2dsSUJMYnQ3NWNM?=
- =?utf-8?B?c2k0QVowKzc0Tkg0ZTBPd2hBeFZCSjVubzl4aHhuaWRDVndTTit5Uzk0MkpI?=
- =?utf-8?B?ajZkOVpvcFJ5a2FDT2xFMGdOTHhnZkhvSXRmSUdIVFFtbGo5QjY3MFJlL3Fj?=
- =?utf-8?B?SkhNbnpyWnhaUEFzblZHcjJmL1ZPd04rckg5VmpaNXBZTUpLN3B2V1ZsbEpP?=
- =?utf-8?B?cll5NG9HSCs3bXZuZXBwTFRtWlRDQVZML3RIQUk0N0pndmhUWENCRy9qQlNs?=
- =?utf-8?B?Yys2cFY5S1pLRURhVFRJUkFhcFlQaG8wMHpPcisrZDBtQUlnZU44TGJSelA3?=
- =?utf-8?B?ZWtrRGxhQjZVRWpaRDFobDkxeDRYTkZaNms4YWdkREI3VHI2K0FTcGdxQyt3?=
- =?utf-8?B?M2lNNGNxcERnYXpscFQyemQ3cDUzK1BiZUJvZUVma0ZncUppa1ZLVVo2bmlL?=
- =?utf-8?B?OU9HY1BmbG9pOUJIeWJxVllhakFPaUhEall3MHQxTmN4dmd4YTlQOFVudE5D?=
- =?utf-8?B?b2libGRGeFk1MUNZUTc4a3FXTzZDQzNOTW4xVGE3YUJ1TW9YWjRNYzU5Sk0z?=
- =?utf-8?B?M0pDRWZXVWJ0MUhQTDJCMWE3Yi9pTGV1dThhWFNtRzlSelNGNTUwZzdoV3c1?=
- =?utf-8?B?MW5ZbHNyeW9ubFJEcXNRcmUrOGhnUHVSVmVINzc4STAwbWU3dE4yZU0xeWox?=
- =?utf-8?B?WUxSdXNKVEhxYVJrYUFBR0JETGkyNVFHN3F6MFB0TnVUby9qZHVqTE16amk4?=
- =?utf-8?B?RHpKUEZuNkFQVHlZaWpCN1h2QnhuZ0Fia1p0WWNQdnpGYVh6dXpvVWg3dHpk?=
- =?utf-8?B?L3U5elk2Tjh3czhCa3JJS2EzU2p3NnZheGkrblMxMHdqdmV0ZHR5U0N6dVE4?=
- =?utf-8?B?b3lDVWttTEJJSzdZeWtuVHNuTEdqSUVSZXRLV3pIZmhBRlNnT0xVSlFWUFJL?=
- =?utf-8?B?RW5xdkJTU3RJTStrQzRKdE5mTDdOWG9PRzZNZTVwRGczZmVEdzA1MmgwNzhG?=
- =?utf-8?B?R2FBaXZ3WTlPUmJFMWIvbVBkZlNXNTNJVnBvU2JUdmJ3ZEY4RzZqYlRraVdD?=
- =?utf-8?B?K1pUUE5yNEhoc0xpYWRiaHBDeFk2bXpMcEowSjVEUDN6N1pQbVo1RUhDaFdv?=
- =?utf-8?B?MFh6dFRBa0owNWRnZFhxK1dMMko4VkdzTURlN011U3Y5NWlSSW01WTNXL1pn?=
- =?utf-8?B?dERiYTBNeUUrQXdialhGVlB1TWZwSHpWVUQxV0UwYWU2eGkrYWpsZUM1QndI?=
- =?utf-8?B?RWtrc01Lb0VxazJENkVWVHVMMG1iZmZ2RWNQUS8yaG1VcXI5bTZDcDNranhj?=
- =?utf-8?B?VU8vZDR1dDZVVDhvbnp5ZDdSTXAyOWJWYStNeXlrUHJtRUtoT05XQXR0YmpF?=
- =?utf-8?B?NW5EWUpTamRYVWFlL1F1RmtKZSsrSUFxeGRDTUhBc2hHeHFTOG5uOTZ0VmNN?=
- =?utf-8?Q?phCsH/H6zhDQmi0gO7?=
+	=?utf-8?B?ZG1xeFp2ak5QNGZBc09ESkc2OTFleFZ4QmljenlnbjE4VGVwaWNlS3o1VU5U?=
+ =?utf-8?B?bTZ2N2Q5Zm1BVHhoelNHWnNHaUdtdmdFRUFQb2xoYnJBZE1rOEduWnp6UFZU?=
+ =?utf-8?B?WFhPTTduaTk5OWxBV2oweVFVMnNrZXQyTENGLzdXMUNoaE80VkZ6MzZrWFRi?=
+ =?utf-8?B?dCtaaVRYWkpLanFDSVA3S1ZheFFGTkE4QkU4bFJyT3cyNEtsMmMrd1plSURt?=
+ =?utf-8?B?STVLWGN6TWhrTmdBUERSK3htQXh4T2phUHY1Y284ZEFVWWxPYkorWGxTYzN0?=
+ =?utf-8?B?TC9SV29QcVVBRUhHQUJwSER5dWcraC9ZYjgvcnI1aEpkcUp3ME1IOHF2bU8w?=
+ =?utf-8?B?ZC9VT2VYMTA5WGJXUUkycnIxRWl6VUlwTWpSdkNZclJHWlhPbDczYlpyWTFF?=
+ =?utf-8?B?UWNUVGdoQmY3Vk9GUmlQWHc5d05QVmNLM0F4TnN0U292NkNXQ3o2QytqdXY1?=
+ =?utf-8?B?OXF1N1Exd0t1RzBKZklQUTJPK1JjSG0xeExRL3NWNy9QN0UvN2QxZmltTWEr?=
+ =?utf-8?B?QkpLQ1UrS0c5M1pDUUxnbXc2eG9kZDZEZk82cmx3bzMya1N6bXRLYWxWNWhZ?=
+ =?utf-8?B?cW9DQThoTHVoT1dRZDlyR3NBNzltYnFYRWxJL09XTFNMczVsVjhFbVRpS2g4?=
+ =?utf-8?B?UUYybTlRanQ0WTV5NFk4U1JSYStDb3ZKM2NFZkN4UUEwTU5GeDBxMjRGQkRz?=
+ =?utf-8?B?NmhBb0NVOXczSEh5WTdxT0F0UU9QaE13ZkVoNTNZaU85a3MvRWJHcHNmdVc3?=
+ =?utf-8?B?am1QSWFxTFgvU2d2T1NPZllHeTMyZDBPQ2RFeGpibFkweTN6VG15RkJWbjUz?=
+ =?utf-8?B?ejlqMmEvL3pIRGdUb1QzMVlBbm1FcmN4WE1yemgzM1ZpQlM1QVl3U0ZLR1ZC?=
+ =?utf-8?B?Y2JUa294N25ndmtZZDhTVzQ2ZThtNjZRMWVLM2tzZWw1QjM2bitTd1lBcEc2?=
+ =?utf-8?B?K3JEWjhNZTYyRFJjQ1BmRisrMll1cndWZ3J3anIxa2RHaHdsRnNDUlUweHpU?=
+ =?utf-8?B?dHZ6eWQ3UkJpSjEyU3FBbUhaTHZvNVB6R1Z1blpPb2RsdHFKaHB5VlhHK1kz?=
+ =?utf-8?B?b09JaWVPalhwaUg1VGpGYWlzRWlPSXMyVS96dFRlUm4xWUN4US9TU1g5U09I?=
+ =?utf-8?B?OXVLK3ZyQlJrTDdOek44UVE5V1RMbzRRK0kvY2x1bHUvdytXYndEbHlHWmo4?=
+ =?utf-8?B?d0V1c1Eyc0V2V242ZGdMTmZPYkxTejlZalRndkV3Q1lwN0p2czY3KzBNSnNJ?=
+ =?utf-8?B?Zno5UzY5RmY1bWprNDEwdVM4c2pGN3F6VmpSaUJnZDVML0VKVExxSzBEUWZJ?=
+ =?utf-8?B?bGNDR3NlZkZSTWVZVkFMMmhPOVdZQ1R5SW40eS9ZekhlSUtFZGFwemFqcGNJ?=
+ =?utf-8?B?R2JzcnRyTnp0bDgyU3BndGxHRTZVS1FoN2djUE5QMUt5b1F2VXVYQzJIaUoz?=
+ =?utf-8?B?Zy9uYk9yTjFrMWgvNDJaWlBCTmVPZ0xZT2dVN0Urb1EvblVLaUNGaFBTcmVk?=
+ =?utf-8?B?US9wRG5FRmFmdEQxQXRUS0tUeks0Qy9SWVE2ZkdncWlFUEZ2QjYzNkxycFQ2?=
+ =?utf-8?B?ZWE1bHBtZ21MNkJkUG16TGY0NEozYUZIWDljWUtDSktWK3U4NTVyaTA1aC9r?=
+ =?utf-8?B?MGRzbWg2Z0JtUGFQNjVFa3dFdlg5eS9mek04dTM1Q3UycEJaMW93cVZYSldP?=
+ =?utf-8?B?VC9GMlhoN0E4SEw4OEV6Vkk4eWNzU3N5MGE2N3FPTGkxamdIa0d6blR1cVRj?=
+ =?utf-8?B?Z1JPMUh4cjBaYjhqNkVQUzFyK1B0eGRZVHgxMWQxd3h2UGtVNjJEY2pKV0ox?=
+ =?utf-8?B?WjkxVUxHVTlRVnp2MVJPb2huMk9wZTBQUjhYS0h4Nlhmbjc2MGtTcGZhVlJJ?=
+ =?utf-8?B?Tk5Xczk4YmhhSFdEWmJ5eFo2Rkw4MFZYZWZFdFZjOEdjMDBRaDZTV2ltRmlO?=
+ =?utf-8?B?d3R6TVR6bVM2WW9xbUYvODlpZS9mME01dHVqTFBkcmNaN2I5cGRGRTRXQmpU?=
+ =?utf-8?B?ODZLNGk0eENMdkZqRkdKVVU0cFlJYVN2YzkzNFIvalZTSGN5OUtOYW01dW83?=
+ =?utf-8?B?NEkrNDdnL1BrYS83M2VoWXRhT2trdktLS2ZaVy91UE9pdkQrTTlZY2VWaE9x?=
+ =?utf-8?B?ZnpSNFpDeGtuNGROZHFGZ2RzdWhJYnlIVXBIZmRBU0hiZ1lsblhKcis0eklP?=
+ =?utf-8?B?aTZtNXpJdnM0Z1hlQVF6ZEdvbTF5V0t6Zm5kWkR0RkFlOWVBYkJHdFY3a1pn?=
+ =?utf-8?B?M1k0MkxHWjFDR0RNWmRJcFhCa0dxbTYrb29HNDhQTG5LYktqME5aWUVrSWlm?=
+ =?utf-8?Q?FflA7Ba/8fDp5IUmbA?=
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 437f46cc-abc5-4bc0-5a06-08de6558d81c
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0d3f091a-0e1c-4e33-b8ca-08de6558d866
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR18MB4558.namprd18.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 08:22:19.1317
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 08:22:19.6691
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5M2i/7x8RKHDdInxpSCVzDxWuDQfTGVbMMk4NFi4bzUJV0NBuTVarVrQpEj1p1oY
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8WPyxyYopPvFDyfPYaSCeiYgQRlvQBnvfCHHLj8MaCgt+8qBd2fj6U1sMqf1Lnc6
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR18MB3667
 X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -227,76 +226,314 @@ X-Spamd-Result: default: False [0.80 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	TAGGED_FROM(0.00)[bounces-1336-lists,openbmc=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1337-lists,openbmc=lfdr.de];
 	DKIM_TRACE(0.00)[axiado.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[twei@axiado.com,openbmc@lists.ozlabs.org];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.951];
+	NEURAL_HAM(-0.00)[-0.912];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
 	TAGGED_RCPT(0.00)[openbmc,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,axiado.com:email,axiado.com:dkim,axiado.com:mid,80801c00:email,devicetree.org:url]
-X-Rspamd-Queue-Id: CB27010A7BB
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,axiado.com:email,axiado.com:dkim,axiado.com:mid]
+X-Rspamd-Queue-Id: 5A10B10A7C4
 X-Rspamd-Action: no action
 
 From: SriNavmani A <srinavmani@axiado.com>
 
-Axiado AX3000 SoC contains Arasan PHY which provides the interface to the
-HS200 eMMC host controller.
+It provides the required configurations for Axiado eMMC PHY driver for
+HS200 mode.
 
 Signed-off-by: SriNavmani A <srinavmani@axiado.com>
+Co-developed-by: Prasad Bolisetty <pbolisetty@axiado.com>
+Signed-off-by: Prasad Bolisetty <pbolisetty@axiado.com>
 Signed-off-by: Tzu-Hao Wei <twei@axiado.com>
 ---
- .../bindings/phy/axiado,ax3000-emmc-phy.yaml       | 37 ++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/phy/Kconfig                  |   1 +
+ drivers/phy/Makefile                 |   1 +
+ drivers/phy/axiado/Kconfig           |  11 ++
+ drivers/phy/axiado/Makefile          |   1 +
+ drivers/phy/axiado/phy-axiado-emmc.c | 221 +++++++++++++++++++++++++++++++++++
+ 5 files changed, 235 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/axiado,ax3000-emmc-phy.yaml b/Documentation/devicetree/bindings/phy/axiado,ax3000-emmc-phy.yaml
+diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
+index 678dd0452f0aa0597773433f04d2a9ba77474d2a..b802274ea45a84bd36d7c0b7fb90e368a5c018b4 100644
+--- a/drivers/phy/Kconfig
++++ b/drivers/phy/Kconfig
+@@ -103,6 +103,7 @@ config PHY_NXP_PTN3222
+ 
+ source "drivers/phy/allwinner/Kconfig"
+ source "drivers/phy/amlogic/Kconfig"
++source "drivers/phy/axiado/Kconfig"
+ source "drivers/phy/broadcom/Kconfig"
+ source "drivers/phy/cadence/Kconfig"
+ source "drivers/phy/freescale/Kconfig"
+diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
+index bfb27fb5a494283d7fd05dd670ebd1b12df8b1a1..f1b9e4a8673bcde3fdc0fdc06a3deddb5785ced1 100644
+--- a/drivers/phy/Makefile
++++ b/drivers/phy/Makefile
+@@ -15,6 +15,7 @@ obj-$(CONFIG_PHY_AIROHA_PCIE)		+= phy-airoha-pcie.o
+ obj-$(CONFIG_PHY_NXP_PTN3222)		+= phy-nxp-ptn3222.o
+ obj-y					+= allwinner/	\
+ 					   amlogic/	\
++					   axiado/	\
+ 					   broadcom/	\
+ 					   cadence/	\
+ 					   freescale/	\
+diff --git a/drivers/phy/axiado/Kconfig b/drivers/phy/axiado/Kconfig
 new file mode 100644
-index 0000000000000000000000000000000000000000..61700b80e93f7185e16ca9eab0922fe6bb29fe86
+index 0000000000000000000000000000000000000000..d159e0345345987c7f48dcd12d3237997735d2b5
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/axiado,ax3000-emmc-phy.yaml
-@@ -0,0 +1,37 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/phy/axiado,ax3000-emmc-phy.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/phy/axiado/Kconfig
+@@ -0,0 +1,11 @@
++#
++# PHY drivers for Axiado platforms
++#
 +
-+title: Axiado AX3000 Arasan eMMC PHY
++config PHY_AX3000_EMMC
++	tristate "Axiado eMMC PHY driver"
++	depends on OF && (ARCH_AXIADO || COMPILE_TEST)
++	select GENERIC_PHY
++	help
++	  Enables this to support for the AX3000 EMMC PHY driver.
++	  If unsure, say N.
+diff --git a/drivers/phy/axiado/Makefile b/drivers/phy/axiado/Makefile
+new file mode 100644
+index 0000000000000000000000000000000000000000..1e2b1ba016092eaffdbd7acbd9cdc8577d79b35c
+--- /dev/null
++++ b/drivers/phy/axiado/Makefile
+@@ -0,0 +1 @@
++obj-$(CONFIG_PHY_AX3000_EMMC)		+= phy-axiado-emmc.o
+diff --git a/drivers/phy/axiado/phy-axiado-emmc.c b/drivers/phy/axiado/phy-axiado-emmc.c
+new file mode 100644
+index 0000000000000000000000000000000000000000..28d2a30c3b35ee7dba917487959e226941e8ea4b
+--- /dev/null
++++ b/drivers/phy/axiado/phy-axiado-emmc.c
+@@ -0,0 +1,221 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ * Axiado eMMC PHY driver
++ *
++ * Copyright (C) 2017 Arasan Chip Systems Inc.
++ * Copyright (C) 2022-2025 Axiado Corporation (or its affiliates).
++ *
++ * Based on Arasan Driver (sdhci-pci-arasan.c)
++ * sdhci-pci-arasan.c - Driver for Arasan PCI Controller with integrated phy.
++ */
++#include <linux/bitfield.h>
++#include <linux/delay.h>
++#include <linux/io.h>
++#include <linux/iopoll.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/phy/phy.h>
++#include <linux/platform_device.h>
 +
-+maintainers:
-+  - SriNavmani A <srinavmani@axiado.com>
-+  - Tzu-Hao Wei <twei@axiado.com>
-+  - Prasad Bolisetty <pbolisetty@axiado.com>
++/* Arasan eMMC 5.1 - PHY configuration registers */
++#define CAP_REG_IN_S1_LSB		0x00
++#define CAP_REG_IN_S1_MSB		0x04
++#define PHY_CTRL_1			0x38
++#define PHY_CTRL_2			0x3C
++#define PHY_CTRL_3			0x40
++#define STATUS				0x50
 +
-+properties:
-+  compatible:
-+    const: axiado,ax3000-emmc-phy
++#define DLL_ENBL	BIT(26)
++#define RTRIM_EN	BIT(21)
++#define PDB_ENBL	BIT(23)
++#define RETB_ENBL	BIT(1)
 +
-+  reg:
-+    maxItems: 1
++#define REN_STRB	BIT(27)
++#define REN_CMD		BIT(12)
++#define REN_DAT0	BIT(13)
++#define REN_DAT1	BIT(14)
++#define REN_DAT2	BIT(15)
++#define REN_DAT3	BIT(16)
++#define REN_DAT4	BIT(17)
++#define REN_DAT5	BIT(18)
++#define REN_DAT6	BIT(19)
++#define REN_DAT7	BIT(20)
++#define REN_CMD_EN	(REN_CMD | REN_DAT0 | REN_DAT1 | REN_DAT2 | \
++		REN_DAT3 | REN_DAT4 | REN_DAT5 | REN_DAT6 | REN_DAT7)
 +
-+  "#phy-cells":
-+    const: 0
++/* Pull-UP Enable on CMD Line */
++#define PU_CMD		BIT(3)
++#define PU_DAT0		BIT(4)
++#define PU_DAT1		BIT(5)
++#define PU_DAT2		BIT(6)
++#define PU_DAT3		BIT(7)
++#define PU_DAT4		BIT(8)
++#define PU_DAT5		BIT(9)
++#define PU_DAT6		BIT(10)
++#define PU_DAT7		BIT(11)
++#define PU_CMD_EN (PU_CMD | PU_DAT0 | PU_DAT1 | PU_DAT2 | PU_DAT3 | \
++		PU_DAT4 | PU_DAT5 | PU_DAT6 | PU_DAT7)
 +
-+required:
-+  - compatible
-+  - reg
-+  - "#phy-cells"
++/* Selection value for the optimum delay from 1-32 output tap lines */
++#define OTAP_DLY	0x02
++/* DLL charge pump current trim default [1000] */
++#define DLL_TRM_ICP	0x08
++/* Select the frequency range of DLL Operation */
++#define FRQ_SEL	0x01
 +
-+additionalProperties: false
++#define OTAP_SEL_MASK		GENMASK(10, 7)
++#define DLL_TRM_MASK		GENMASK(25, 22)
++#define DLL_FRQSEL_MASK		GENMASK(27, 25)
 +
-+examples:
-+  - |
-+    phy@80801c00 {
-+        compatible = "axiado,ax3000-emmc-phy";
-+        reg = <0x80801c00 0x1000>;
-+        #phy-cells = <0>;
-+    };
++#define OTAP_SEL(x)		(FIELD_PREP(OTAP_SEL_MASK, x) | OTAPDLY_EN)
++#define DLL_TRM(x)		(FIELD_PREP(DLL_TRM_MASK, x) | DLL_ENBL)
++#define DLL_FRQSEL(x)	FIELD_PREP(DLL_FRQSEL_MASK, x)
++
++#define OTAPDLY_EN	BIT(11)
++
++#define SEL_DLY_RXCLK	BIT(18)
++#define SEL_DLY_TXCLK	BIT(19)
++
++#define CALDONE_MASK	0x40
++#define DLL_RDY_MASK	0x1
++#define MAX_CLK_BUF0	BIT(20)
++#define MAX_CLK_BUF1	BIT(21)
++#define MAX_CLK_BUF2	BIT(22)
++
++#define CLK_MULTIPLIER	0xC008E
++#define POLL_TIMEOUT_MS	3000
++#define POLL_DELAY_US	100
++
++struct axiado_emmc_phy {
++	void __iomem *reg_base;
++	struct device *dev;
++};
++
++static int axiado_emmc_phy_init(struct phy *phy)
++{
++	struct axiado_emmc_phy *ax_phy = phy_get_drvdata(phy);
++	struct device *dev = ax_phy->dev;
++	u32 val;
++	int ret;
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_1);
++	writel(val | RETB_ENBL | RTRIM_EN, ax_phy->reg_base + PHY_CTRL_1);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_3);
++	writel(val | PDB_ENBL, ax_phy->reg_base + PHY_CTRL_3);
++
++	ret = readl_poll_timeout(ax_phy->reg_base + STATUS, val,
++				 val & CALDONE_MASK, POLL_DELAY_US,
++				 POLL_TIMEOUT_MS * 1000);
++	if (ret) {
++		dev_err(dev, "PHY calibration timeout\n");
++		return ret;
++	}
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_1);
++	writel(val | REN_CMD_EN | PU_CMD_EN, ax_phy->reg_base + PHY_CTRL_1);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_2);
++	writel(val | REN_STRB, ax_phy->reg_base + PHY_CTRL_2);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_3);
++	writel(val | MAX_CLK_BUF0 | MAX_CLK_BUF1 | MAX_CLK_BUF2,
++	       ax_phy->reg_base + PHY_CTRL_3);
++
++	writel(CLK_MULTIPLIER, ax_phy->reg_base + CAP_REG_IN_S1_MSB);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_3);
++	writel(val | SEL_DLY_RXCLK | SEL_DLY_TXCLK,
++	       ax_phy->reg_base + PHY_CTRL_3);
++
++	return 0;
++}
++
++static int axiado_emmc_phy_power_on(struct phy *phy)
++{
++	struct axiado_emmc_phy *ax_phy = phy_get_drvdata(phy);
++	struct device *dev = ax_phy->dev;
++	u32 val;
++	int ret;
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_1);
++	writel(val | RETB_ENBL, ax_phy->reg_base + PHY_CTRL_1);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_3);
++	writel(val | PDB_ENBL, ax_phy->reg_base + PHY_CTRL_3);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_2);
++	writel(val | OTAP_SEL(OTAP_DLY), ax_phy->reg_base + PHY_CTRL_2);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_1);
++	writel(val | DLL_TRM(DLL_TRM_ICP), ax_phy->reg_base + PHY_CTRL_1);
++
++	val = readl(ax_phy->reg_base + PHY_CTRL_3);
++	writel(val | DLL_FRQSEL(FRQ_SEL), ax_phy->reg_base + PHY_CTRL_3);
++
++	ret = read_poll_timeout(readl, val, val & DLL_RDY_MASK, POLL_DELAY_US,
++				POLL_TIMEOUT_MS * 1000, false,
++				ax_phy->reg_base + STATUS);
++	if (ret) {
++		dev_err(dev, "DLL ready timeout\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static const struct phy_ops axiado_emmc_phy_ops = {
++	.init = axiado_emmc_phy_init,
++	.power_on = axiado_emmc_phy_power_on,
++	.owner = THIS_MODULE,
++};
++
++static const struct of_device_id axiado_emmc_phy_of_match[] = {
++	{ .compatible = "axiado,ax3000-emmc-phy" },
++	{ /* sentinel */ },
++};
++MODULE_DEVICE_TABLE(of, axiado_emmc_phy_of_match);
++
++static int axiado_emmc_phy_probe(struct platform_device *pdev)
++{
++	struct axiado_emmc_phy *ax_phy;
++	struct phy_provider *phy_provider;
++	struct device *dev = &pdev->dev;
++	struct phy *generic_phy;
++
++	if (!dev->of_node)
++		return -ENODEV;
++
++	ax_phy = devm_kzalloc(dev, sizeof(*ax_phy), GFP_KERNEL);
++	if (!ax_phy)
++		return -ENOMEM;
++
++	ax_phy->reg_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(ax_phy->reg_base))
++		return PTR_ERR(ax_phy->reg_base);
++
++	ax_phy->dev = dev;
++
++	generic_phy = devm_phy_create(dev, dev->of_node, &axiado_emmc_phy_ops);
++	if (IS_ERR(generic_phy))
++		return dev_err_probe(dev, PTR_ERR(generic_phy),
++				     "failed to create PHY\n");
++
++	phy_set_drvdata(generic_phy, ax_phy);
++	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
++
++	return PTR_ERR_OR_ZERO(phy_provider);
++}
++
++static struct platform_driver axiado_emmc_phy_driver = {
++	.probe = axiado_emmc_phy_probe,
++	.driver = {
++		.name = "axiado-emmc-phy",
++		.of_match_table = axiado_emmc_phy_of_match,
++	},
++};
++module_platform_driver(axiado_emmc_phy_driver);
++
++MODULE_DESCRIPTION("AX3000 eMMC PHY Driver");
++MODULE_AUTHOR("Axiado Corporation");
++MODULE_LICENSE("GPL");
 
 -- 
 2.34.1
