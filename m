@@ -1,101 +1,83 @@
-Return-Path: <openbmc+bounces-1331-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1329-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WOOpAfMPiWnG1wQAu9opvQ
-	(envelope-from <openbmc+bounces-1331-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:36:35 +0100
+	id +JyfDNYPiWnG1wQAu9opvQ
+	(envelope-from <openbmc+bounces-1329-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:36:06 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3326410A795
-	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:36:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA1DD10A785
+	for <lists+openbmc@lfdr.de>; Sun, 08 Feb 2026 23:36:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f8N3C2CVrz2yrn;
-	Mon, 09 Feb 2026 09:36:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f8N2n2GG0z2xqf;
+	Mon, 09 Feb 2026 09:36:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c000::1" arc.chain=microsoft.com
-ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770366219;
-	cv=pass; b=FQrQj7CjvM+vuI5vJFnE2p5P8vtulc7Z+ray1KJOEVzvJUSyW72BEdaKxT+n09fMhNQkHGveAVSMwOnEa4R+OpQ6FOtIKpnbSQw1a0gCO3nkneZwAkqpcPED+LdtSDNgX8CEECFP5XjnN+Fw5e7gdRNdrm4fG0UqwWgfNU9r+tHHsYGZKvAXKqhuikfoG1MK7WtivoKosRi3gqaohKQN3ZbvAoer2vh6eqj+AUAATAzsC3s/ddRxv7VJBqDH8onfd4OKdS26F2VzhZBSsb1IFE9nWL44FiwlCfdCRH5PW9Qff+vExvyYVmoV3jJdLi7deXCd+59I/IejOjgLu42m/A==
-ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770366219; c=relaxed/relaxed;
-	bh=HGiqsJ3YYdcu1HU2VkhXeOL9E4lKp4z07ZLAyzmvsVE=;
-	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=aVdEDa4lRWXwXA0R+Vs+PBicbkhU5ICHHAyTlee2slpwGrG0Z1keMdwhWSZnA+s3B/yOlcGUG5eHikAczK4kFjxq2XNJQkxY7jENVu3/AtY2BazKbJjnBG9jnhRwrvS5hTZXvPHdKL0t5XlcC5RvDPdFHI3hoqcloRuUycanIWVD5+WPvPRA90wc5x9OPiia3PIwsNGOhKzOjBDqpduLcyQDk1nJMPGWhVvONkqR2qDaGPJqC+dYaBJenY7Y4ON5v7sua9u3ReuQzsD1Osuy3QXbkPRpXX9XSObDM3TLfaYsubM1ypxWVzQi3Nxozj2UmnPWXl8DHrI58e5snGb5aw==
-ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=bSilDG2e; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c000::1; helo=byapr05cu005.outbound.protection.outlook.com; envelope-from=twei@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::634"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770371634;
+	cv=none; b=HNWntstnMf2WHULxXcDwVGHn4xrvStEeXD0XrbFPCQwU8iPu94osOc4Rwk8HdMGbAuiZ6EtkB2HmNqsQEVsxNk2lI8LwGCI4Xl/0P11e9ciouGav5Ij2QuEfwi5JwJtKVC9TpRrI+HMOZVY54hiIlPEkOs4oGn10rLeVaxT7YTfDIgI6+2MvSFO+Km3BpjriR3xYr4GaOKEmI5td+jD4olVLOOAxQhsGQh44pnJAY3B+rcAWV5OXcTLyu0tq2uvJNDbdwOaU3oQ27tGYPCAh5jg3tm7SMMi2XM2eIYvoo3tSq+e9C/bZxkafRud8iww8yhXSxcjmrISOl8pXhhJEJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1770371634; c=relaxed/relaxed;
+	bh=qpEDLnYj95OpOlLlWla7+a1PBaolL4JOvRD2mY4U/kc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=REJ0f4waTWTnczUxFjl3GMrnQpgC/DmJfsQZ6VppYYR8okS31gYRkzXY8llq9/yyXpRRQ6GzsgMyBuNVU+gxH1zAMDiz6/d4BNbmUqqstEY01YODx985gSWKmTq+FO2tOwoQasWaRR5sxDXRCttscj1Sm1m7K5vGik5mXnTaMHDwKgHsyu2uqmqeJHeLd5620OCAS4uctVzoeQg+XX8CHaIfXeL/wUA9aJaDZiPeh065vJRl7G5EXAWK0TYYFQtOa+p0fj22mdP0gZqNGFYjwzip8aKWXBoeDEoWmmFuoNctnP8U4EypOtBOv1ljBH4SxmMDzD7brPEovgM+yEl5iw==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=O1MC7ewU; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=bSilDG2e;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=O1MC7ewU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=axiado.com (client-ip=2a01:111:f403:c000::1; helo=byapr05cu005.outbound.protection.outlook.com; envelope-from=twei@axiado.com; receiver=lists.ozlabs.org)
-Received: from BYAPR05CU005.outbound.protection.outlook.com (mail-westusazlp170100001.outbound.protection.outlook.com [IPv6:2a01:111:f403:c000::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=a0987203069@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f6nDB59Lrz30M0
-	for <openbmc@lists.ozlabs.org>; Fri, 06 Feb 2026 19:23:38 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eQprZne0zoVZJfTdIavI/ZbSTNxqvXL0ZpHDgz9NXUFzYrnUEV4QaOvHPJX4rMVOLMXsO+TeBmOqhrG3Jr3UeLPOeCx4e0lOeEVazeTo3YU4yJKKOWPGOwZrxzjrZBU0cybUNdo2pVRxo8rCd93xx6JfcqM/vtIFl0SeuO6iP6AiagkEL752TOMzqAXrEhnaIzSgpZjHcmzkGDFgauEFssSVugQt28QQLXgMjqjC89TNqWLQZ0XstR1HgMlJeEKT07ylcj0qINu4Wc604bY8BnCnZFev3CeqrAO4o+G53Yoy4TG87P58xhntTLlZXyBOWL0+F1YoFSi3wA+vxjod6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HGiqsJ3YYdcu1HU2VkhXeOL9E4lKp4z07ZLAyzmvsVE=;
- b=AwIp1UE2iFLfTXUz7LG6rPMALs4ILHp7IfzFhr36Zq9+1u8eFDeyKhMd+YHfrbYlGV3VQsQXN9SlyGTHJxnCktm4josxxXnFk1yPI8JRFx9n0VNB1L6dKZcxoBdtx9KYZ/x5/vo1LF7vrDV2meamVjuJGth6RcQBV3bRZ0Ei3mbz9gMmTJBH65+ba8LPMeQiVjvmY6sOtNY5S74eQyHzXz2v244BbhHt/EKUVRaZFNhMwMcpNmItzTrAQuQrIHjRE07/hPrG/AfuDIuXWvf/EZyTgBNKFP0D+HqtSEt/kN11AVq83UAhsT/IElx21w8hqpiU/fFbZJipxEKwer0QiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HGiqsJ3YYdcu1HU2VkhXeOL9E4lKp4z07ZLAyzmvsVE=;
- b=bSilDG2eeye+sdJiEFl35VHZHG95YLaSwKWudGtKu+Zp9b2vQnlycIl4vcA1qsiodWa5YWhAwLNHs+Yl8TXsim43Gr+Uio6GsjLNQWNx/+p9/r1tkVVcS+tnvQHzKM65wUfOotgFdvvYTCeB14zkI0kqU/8tkmUotJ1ujD4XJHieO7bGi8sN/s6RUN1cUhhFmEpL2pp4SxcDvXksQvyP1GZj71iupAYY6h3IRRgaaM3BLR8BEE0YqMOHwRvcxVtXyWCFYRrbpzKZNWP4vVVfqEYKSq6k/eP+PV85noKrTMqQ794fD//hViBqHqUCkx7dhqe9/jxGC0jvmn3NB0jGBw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from PH0PR18MB4558.namprd18.prod.outlook.com (2603:10b6:510:ac::13)
- by DM6PR18MB3667.namprd18.prod.outlook.com (2603:10b6:5:2ae::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.15; Fri, 6 Feb
- 2026 08:23:16 +0000
-Received: from PH0PR18MB4558.namprd18.prod.outlook.com
- ([fe80::7a75:75a5:694b:2311]) by PH0PR18MB4558.namprd18.prod.outlook.com
- ([fe80::7a75:75a5:694b:2311%7]) with mapi id 15.20.9587.013; Fri, 6 Feb 2026
- 08:23:16 +0000
-From: Tzu-Hao Wei <twei@axiado.com>
-Date: Fri, 06 Feb 2026 16:23:08 +0800
-Subject: [PATCH v3 2/2] mmc: sdhci-of-arasan: add support on Axiado AX3000
- SoC
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260206-axiado-ax3000-add-emmc-host-driver-support-v3-2-ef83b09325be@axiado.com>
-References: <20260206-axiado-ax3000-add-emmc-host-driver-support-v3-0-ef83b09325be@axiado.com>
-In-Reply-To: <20260206-axiado-ax3000-add-emmc-host-driver-support-v3-0-ef83b09325be@axiado.com>
-To: SriNavmani A <srinavmani@axiado.com>, 
- Prasad Bolisetty <pbolisetty@axiado.com>, Vinod Koul <vkoul@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
- Adrian Hunter <adrian.hunter@intel.com>, 
- Michal Simek <michal.simek@amd.com>
-Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-mmc@vger.kernel.org, openbmc@lists.ozlabs.org, 
- Tzu-Hao Wei <twei@axiado.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1508; i=twei@axiado.com;
- h=from:subject:message-id; bh=I4Vo8Qn3Sj3LishM2f+4R8M1+J3i/RSYnBRaMawYJSc=;
- b=owEB7QES/pANAwAKAXgQMF3EWvHXAcsmYgBphaTyJFUmFKFNC13l8wrbKalG+9sVHGZvpjGHU
- FtPlVSaCMyJAbMEAAEKAB0WIQSZyWINOowtFmDvdYF4EDBdxFrx1wUCaYWk8gAKCRB4EDBdxFrx
- 12KeDAC1ojpyHuZCXImhP9oKLwIpos60FlTT1c0ESdF0jEgjvDVP7h2U2PHtMBH0mg54gtL05RT
- AWM463BTTjop2oAJ6jpSKrwMbAHznLTxFRxxL4b3LZjUYZkbqPLvtS7l3u1VVI2OZpZOhSpnBq5
- u+Q3q3+fsxQlt0m1ofjFp01lRygZdCzSpV37vMaq47yJIzKkEHrv+ljTSir+DePkHaXz8gz2noN
- XrN7p3RanF8x7MTFpHI+VD0I8blK01QgNVnN0j2Ws3BqtUuIxmzWIeMewnkZui5PQZbSplVUqjO
- oC3AXVbCMQkRrFfxzahOvPeXqixKHCOPoi/xBIlu2Vz3FKrg5KG6E3EJsQykjDD3JrQoZNZ/pz7
- IggJFfNZDq2+dK2pqD3G1Pk5v1TmBNSUJX8lFR8T3JJW3EYpaHc8+mtjWb6ZBbU4aLGxFi/nmld
- NNcj74NKJEp4EvSb6IAEhKRH27nZ2XxkOcK9tNmP6S9T+J4/YtNkOWKAU7VnkhQaOJwQc=
-X-Developer-Key: i=twei@axiado.com; a=openpgp;
- fpr=99C9620D3A8C2D1660EF75817810305DC45AF1D7
-X-ClientProxiedBy: PH8PR22CA0016.namprd22.prod.outlook.com
- (2603:10b6:510:2d1::9) To PH0PR18MB4558.namprd18.prod.outlook.com
- (2603:10b6:510:ac::13)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f6qDK3xvNz2xJ5
+	for <openbmc@lists.ozlabs.org>; Fri, 06 Feb 2026 20:53:52 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-2a947d01939so10303405ad.0
+        for <openbmc@lists.ozlabs.org>; Fri, 06 Feb 2026 01:53:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770371629; x=1770976429; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qpEDLnYj95OpOlLlWla7+a1PBaolL4JOvRD2mY4U/kc=;
+        b=O1MC7ewUiDLFPiv+dfstLXUrdd07MRNkY7fMo/doHCgXdTI1YDoN42dDm+GseqeIAe
+         5y3BRhFK00mSPHcob7CqK9ygCVmDvm0i8A4fLU7kBVT+TjGUW0sEN5csZ35Y1wKRNKlK
+         ElB3TdSMgnCU8/7mU7wM+uNXh1u9qYuoCsynoGkQ+DKckNW01XyTSse5Cn4wwNGE9J3d
+         JepTQJnzUCwBIlMGnuNsYLBwWZhegOuAn5yP8Sg8+el5bogfXD8znv3HFA6l3AxyXhzD
+         /MZ48nIRPITvRcV0YTgQL20XKn7N3/tirbkuqwfSFsYcjF5dnXpzAinnSmwwo54CjzUB
+         zD1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770371629; x=1770976429;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qpEDLnYj95OpOlLlWla7+a1PBaolL4JOvRD2mY4U/kc=;
+        b=GqIftFu+10PQ/Knzp9ctudFJKSpJPxegYXbLfsp9mcpMUZbt4l3J0vL9psjVzXM/WX
+         Ylz5ivYPmEXtxPHocLfgAjCwEDithzjz6q2s0wpRRD9DY0MLclDpfFSOIbttcrAo3M/a
+         HYk7bCGVP/ENt4oHcJThnSTZpSDyKgY4Tac8f35EEaLUSS2KZwZhOd/LrJcqEoxD3RiO
+         YdUlQI6YL3xlHg7dPY9SOT1ZDV6eLpU5lhQK4co3w9oIt29ed1DZORC99Pxzk5zMkOrD
+         S7zV/7z+845V+1hOORk6PDKmRsrWXnCrRw1TvqRkDiIjsJiasCei9XR/6uh/XhHBT9SY
+         n7cg==
+X-Forwarded-Encrypted: i=1; AJvYcCVaqogVj3Q84hJvC8XUqwpWlVKpzKfSX3KUw3NTw3kXbZX29bVrkASmZKPGo0VF8RkDP/4eXiKu@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwGq+57WIIn6+ThSTyyzdTxk+Wi81gqXCeV2B++I1jvteO7tsrl
+	cSnnoZdqFjJ3yunmjC8m1kOu6Rmy19LWWKPs7WWorTUtZNDi2zs9C0Ub
+X-Gm-Gg: AZuq6aKBVTT5x1UplYAX0Ok123evAXmohLcji5SiXU3Fkhm69cA2i7zL37Hfwp13IjJ
+	kbNeoqtY7gvB8A+48LyycbLDGaR80JUFKqpZX9dHvfnj+Kek71LkK/3sXweNLvSpol5ICAo1O+1
+	Y93ZMIVpJgzz+EKQy/ms6eJGysgzXGQ9ntVypBzxJw9ERIussrbDZsavh3qdcedmxQfrMJ5XgUF
+	T4OM8xAbtbpl403BOWigKwy7iig4n5huebTMYQfGzUPveVkbGTSJ5hhB63xODhJizPJDqSk0H7S
+	0qmntn85zJFrJzKL2hjflc/wxs6iZ+j1d9jF9xA+84D3FegF367vgsMsQv7ElMQaWTPOtOql7jO
+	p9o58ijU0I5qKrb2OwXKoNk66oZHpEYgJB54Nw1IxnwnMw7fNNX2SRbeAsmOwrgzQyxmj+h5cv4
+	YNOcOl1+FCH/zdWpnducSmkY1/opxfpgpOatQu7LgaF7gtkExdZxBOIQlEu0BneO+y
+X-Received: by 2002:a17:902:cf4c:b0:295:592f:94a3 with SMTP id d9443c01a7336-2a9519a19e0mr23066635ad.48.1770371628931;
+        Fri, 06 Feb 2026 01:53:48 -0800 (PST)
+Received: from [192.168.0.100] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a9521b9761sm19141145ad.48.2026.02.06.01.53.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Feb 2026 01:53:48 -0800 (PST)
+Message-ID: <4281a709-04a4-4b9f-b511-bff0a332f9bd@gmail.com>
+Date: Fri, 6 Feb 2026 17:53:42 +0800
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -107,191 +89,246 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR18MB4558:EE_|DM6PR18MB3667:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92242437-ba68-4ecc-4ed2-08de6558fa2d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|52116014|7416014|1800799024|366016|42112799006|921020|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UlpRMVlKNTRHL0lDb0NZMHZqdzdyVGhQVGdCRk9mMjdwNENuc3BHbEs5L21h?=
- =?utf-8?B?dUJzc3Fmc3hMRW9BcDZXN0M2MDdZd0lrNUJNMXRvUlFCT2R0SGRLWlRxWVpZ?=
- =?utf-8?B?S1A3d01vUThlcTBpdVpSZVVTbXc5YUs1RFRQRWRiN3lTVWJJTEV5eG0zYnor?=
- =?utf-8?B?a3lmWHlGUzVaMzByOWtUOVdNOGQ5Y28wSldic0UvOGxCOURXVUpKNzVtTXIw?=
- =?utf-8?B?UnVROXZ5TFJOZjltT25aNEtocDQrcllKdG94TlkrMkFwN0tPVUp5TXF3NGNp?=
- =?utf-8?B?YndqMS9ISHByYkMySjZBakVsSTJlVkxvVmU2M2czTDB6dmlOT3ZxQm54aytn?=
- =?utf-8?B?ODIwWFhsM1FXcjBVNWF5Nk5Na3Z4ekVsNDd0VUhJb0dUU2JrQ3RObXgrYjRx?=
- =?utf-8?B?YU51bGNiejBzc2trdkVVL1E5QWJrbHgxS3ArVGsvYlJMTGNFL1JEMnVhcEVM?=
- =?utf-8?B?WkhjTzAxT3RNZGRNQU0rS3pMV3BGbUdxSzRzY2lBelNsdDNTb3c5b2ZrL0xu?=
- =?utf-8?B?enZjMXdSZkF1SE5Tc1B2Q2cxSkU3T2JCUWdDMnNHMk9wNVFmRTNtaGlXUlpP?=
- =?utf-8?B?eC80c0xvM2pOcktGQ2t0QWdRZ05XTHBQSFF2emZEWWlmR1pRQmxBemJNUHpH?=
- =?utf-8?B?R3lRTkZaeW1sODJBbW44TXF6NEt3cjR3S2p6R0syQ2t4bGJaZXdoQ3FhVnFi?=
- =?utf-8?B?Wm80U0Q4aHpsa2ErWTdBalFHTVhnNndZZTY1WEhWOU9VS0p3bDR3QzlzK3E2?=
- =?utf-8?B?UFVsb21GOElZQmpGcmFWSSthalVRTnkxWTB4b3NMeWpqajB6dVNJN0N5aFVi?=
- =?utf-8?B?Y29pRjhsc2tIbUFia2hOU0FYTTlIckhnQU53UXJPZXZHbndGbGczZFdFVmhP?=
- =?utf-8?B?YmgwVjlhZVcvSGxJekQ2UDNIMEJ4MFdXZDJBcGluODE3aU4vdGhEWmhqeXdl?=
- =?utf-8?B?OFd0dmNyKzlscUNreFJ0SUNkL1FjSmZRYWExMmxSYzFPWHhMUFYxUUpMWUNr?=
- =?utf-8?B?OTBpNzRvS3FxWC96c1FZYUc3eDBuNU9sRERhWU01aGg4Y3pWQkU3TEpWR3pV?=
- =?utf-8?B?V01GSmdKckx3aTVBQ1d6b0xYb0REclVpN2RXTnhkTHhwT2xIbzdNYUwxQkdL?=
- =?utf-8?B?V3ZnMjJxMWFhUGpTLzQ5Tk1RcVRmUDhWamp4bzl6dDJ2YlllT1hWdjVBelpj?=
- =?utf-8?B?eDhqRXhYL3l3MktBL0xZN2hxRlNWMktrQjYxcFpxcmkvNnFEeGJBdUM2UWdo?=
- =?utf-8?B?R3BqVUtnUlQwa1kvZmEyaE0vUVRwRU04YW5jcnJnSWdWd3hLelRWYTR0Tm1s?=
- =?utf-8?B?TjljRi81MGE3bTRtY3hsOCtDV1FjWi9SMmM0czA2WFp5OWRaazVPc3lVeDVR?=
- =?utf-8?B?MWNEcFRkZE1iNHhab2ttUU44RFdzMUhkVi9CeTVMRWFTZ0h3WmViaFQyc0FF?=
- =?utf-8?B?K3RXMVJ6U2JNbTZQRFhoQnhFbnhPSElNa05yVkJpQmRFRmY0OEVHclhMb1hM?=
- =?utf-8?B?cFBlOENWMU83dzZuM29kRy93TXRHUVRUNGN6dCsvQ3VEZE5ZcmlZeVdCMmRU?=
- =?utf-8?B?WlZjMmFua2U2bDFENHB6UkxoclZ3VWVuek90Z2VqdWhQWXFRVktUbDBmOFA0?=
- =?utf-8?B?em8zMCt2VFdrZEZyQmRFRmRhV2M5U0FVUW8ybjNzRFczc0VyQlpVWHJVNEk2?=
- =?utf-8?B?L1IxUWh5WUdDZkk5UEUvNTU0UDdwVGZjRHFhV05KN0YxT0JoRHBkUCtqK245?=
- =?utf-8?B?ZUEvVUJqUjhCSEhkbUo0aUlJbDN1NU9JN2l5d2xpRWhsWWlTSk9LRTFWc0E3?=
- =?utf-8?B?VE00REdPY0hDa3dRdUtETlFUbU1OSzZuekoyb3dRYVlaR3ZMTXRBUWpzM2RC?=
- =?utf-8?B?RHdHNVNIWi94N0pHemw0NHdpQTlNZktXTTBzbEFUeTdGU2xyeUhaczVpNlV5?=
- =?utf-8?B?ajNiazI5U29uV1RJN3lSelpaUEgxU294cURjWEovTVh3WFhrWW9HY0RqcFBM?=
- =?utf-8?B?UXd5bkdhemkyYXJLamw0UkY2eFhvbFpjZFh3b2orZThZdFJRYlBPclVPZ1Rn?=
- =?utf-8?B?dWJlaFBkSCtKaC9aV0dwVEtvZVAxRU1jNktvOVJzQWp3ZGg1ZGhBUVZzVEg4?=
- =?utf-8?B?WE9XWERlYzA3SzVzWWQ4bkQ4TlZMWGJyVndBNG1pWWsxaTRnRUZ1Nmw0K1hO?=
- =?utf-8?Q?S8oPSWSiVOihBUhWV6AkGppO9SfC1u2zoJMHh74PT5dq?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR18MB4558.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(7416014)(1800799024)(366016)(42112799006)(921020)(38350700014);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Tk5lY050Zk1qWjRFZmpxdzRxY1AzSmRFbTZJUzBFRVRFR0kxQUxka28wcTI0?=
- =?utf-8?B?WWFYTVEyb3JnRmFiMHAxTFdtVGFtOTJQUVh3V3JMUjRncmdqUDdmVUtJNXdJ?=
- =?utf-8?B?VFV6T3lIUjZlMUl5SVVRV1dKbmx5dzBVTmQ0aXpnRjE4ZjdJOFlEcVk3S2hJ?=
- =?utf-8?B?LzZOMkhES1JqVDl3UTJ6K3ovZW5RSzJ5bjhMKyt0UDh4bHpKSWsxTU0rZG15?=
- =?utf-8?B?bWxvRy9haXd5akZZUEZudHdVY2VkUHZ5ZWJJYTRtMlg4RDNNdVlndlI4SjBs?=
- =?utf-8?B?ZWtMVmY4ck8yRHpJVzE5YXV2SitsRjdEQWxDZ3hxbExUSTAvTjBmc1JmSDJo?=
- =?utf-8?B?Q2RRRmtJT0NjVEpjS2dDQUpWb1ZsSFErcGJsVU11alFZYTR2OTd6a29JekNT?=
- =?utf-8?B?Q1hrL0tVaHBsZnhmQWVpeDNwKzBWNFBCZVFVc1J6aC9aRDRFQkRLVGVHNmdN?=
- =?utf-8?B?S3ZaQkdpbjF3TWlSWG1wQkFXUGtrVkhKOCtLYTFLdG5UNEh4aGpKN3g4WGtQ?=
- =?utf-8?B?UXB3MXlUNUY1MzZQWkhtd0Y2bXZKZXl0bkMxSUJjb25xem54NWgySTd2b3dE?=
- =?utf-8?B?YWw2N2lmVE5FZitFTm9TM2d5REpPUjBaSHFWRlpkKy9xY0VWOXQ0Q1ltT3JG?=
- =?utf-8?B?WTF4ZEx2MFRrKzk4MUxyaHRxWnVKRHFXRmgwUnNPTGVGTERkNmlBZVNOS2hL?=
- =?utf-8?B?UkRPQ2hlRG12SzRrNzdsR01jVldNRXhNZ2pSQWl2UXFDR3BhaWZ2R3pRVEt1?=
- =?utf-8?B?MjlmN2tXUjZqdjhoSXVDeGd5Q1FkNkZHdGplbSswRnk4cXFZSnBKdW4ybVZX?=
- =?utf-8?B?MVVxb01YdGJSYVZUdUxzMk1CR0NTWGtJNmdpMmVXZmlXYTVpaUdqamVhcEtX?=
- =?utf-8?B?RzFGUFFmZUpUM2htT1o2MVZmMThnc2pqcDNVRlo0S2lzY3Fpc0NiQzVIVXRZ?=
- =?utf-8?B?SkROeC9pRjVvbmZLN0R1VnU5YUxnbnA1cXpPbE0wemljc2hkZ0k1Zk1QLy9V?=
- =?utf-8?B?RUhoVkdob0xveVQ2TmRPOHJDalFkeHpWajNCQzFFb09lbVQyNHRJeTZRcm9i?=
- =?utf-8?B?WWxsa0tsMXlleTdDU2JEczhsUFlTNTNidjZuZERGcHIwY3hUS013WUsxUGZn?=
- =?utf-8?B?WEtWT2R6KzBqYlZOZXZLaUFrR1Y4K0JEYjdpQVR5dCsxeis1Tk9TU050VWQ3?=
- =?utf-8?B?dzhmS3hrZUdVTTE2clRJRzQ0ZWY1V1NDSDkxZHdjOVh1VHZUSW5nako0RlA1?=
- =?utf-8?B?MTdnL3YycGNrTXQ2bFNQOGFoS2g1SXFHYjlnRy9IdXQyQ2p0b3h5a1R2VnIz?=
- =?utf-8?B?ZjEwcG1DaTJiVnJsamhrVmxneDBudHNBT244VGtOTnAraTBNSDNIRHpzMCt1?=
- =?utf-8?B?b0U5UjRZVHJTVGIwL0Y1TnJuM2ZqUmhBSnJWRlUrcmtINk82ekUvTVpPU053?=
- =?utf-8?B?blNSdFQwYldiNjJQK1VrRlQ3M0pGV0c3V2IyUThHVlJ1SzhadE9rMVlvdVRt?=
- =?utf-8?B?b3BNYkZmOVgyQStlSDE2cHIzd1hKMWZNOEVBR040c1pxcW1DWCtUY0ZMV2hY?=
- =?utf-8?B?YjhMcmsvOW1oK2gyRHVEM1ZHTHVSWFdJWmJiUy8yU1FoUGhHTDBJaEQ5S3p6?=
- =?utf-8?B?QTR6L25DOGZZb1E3VlBMWE1hTFhXRk9Iek9VUFRkdlphWmxVQlVDZ2tCWFVG?=
- =?utf-8?B?MVg1OHJBWUtOcmRULy8yZWlsZXdXcWFQU0tRVDJ4VElYUHJLcUlwWk1MK0JO?=
- =?utf-8?B?MzlzRXR1QXVwaWhWZFlHU25QTzFNNzk5V1hJbGIzSkNTNHJ1Yy94YzQ2Tmsw?=
- =?utf-8?B?Ym9QYzkvQVhoSjdYK1RFMjFZak1aV24rNnBZTHhQcERqdk1UUXRUQ2lPZ0Fw?=
- =?utf-8?B?blR1eXdnczRHSnNxWlFNby95eElOUVhDZG9YMGxGUm44L0hybGZuZnQzUURC?=
- =?utf-8?B?TTN6NkpyUHBlMEFCS3lSYmc3NjZjeFNHMCtRWTZXUWpXQ05pbnd3eFNiWmRh?=
- =?utf-8?B?Zng4dTVLRmEwRFplTmxWUjFFdXlnMEV0N3JFeWpEU0YrYjVHbzYzVExqVFVh?=
- =?utf-8?B?UFg3Z20vdmxDYkYyb2hGekRvTjBLcDdJNXFPOXBsVU0xOEFhTVNJbVJXOUtS?=
- =?utf-8?B?dDNsaEdHR1F4WXBsSWgvYVhwSnN3QzBGdlRCUjJzbWdLbzRtRVNaS05Tamxl?=
- =?utf-8?B?ODlQQUdRY2xZTGU4dFFONWc1N0FTaWtqUjJZQ043bHRidlNvQWpvMWNYYTBy?=
- =?utf-8?B?YnFHUUtMVkRSWUkyMklZZEZMNHJDWDA0dDU4VWZtUytKaEFoS2xOb2pMMzQy?=
- =?utf-8?Q?lW2+aQMuw4EK/gWXUr?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92242437-ba68-4ecc-4ed2-08de6558fa2d
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR18MB4558.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2026 08:23:16.3044
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: J78/95Pftv/UAu+Efc1vSHLGDiLW1SHD3APqInTbteiEMEv6Ne1e9ZduCr220KAv
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR18MB3667
-X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_PASS,SPF_PASS autolearn=disabled version=4.0.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v11 3/3] net: stmmac: dwmac-nuvoton: Add dwmac
+ glue for Nuvoton MA35 family
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mcoquelin.stm32@gmail.com, richardcochran@gmail.com,
+ alexandre.torgue@foss.st.com, joabreu@synopsys.com, ychuang3@nuvoton.com,
+ schung@nuvoton.com, yclu4@nuvoton.com, peppe.cavallaro@st.com,
+ linux-arm-kernel@lists.infradead.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-stm32@st-md-mailman.stormreply.com,
+ Andrew Lunn <andrew@lunn.ch>
+References: <20260205014006.735408-1-a0987203069@gmail.com>
+ <20260205014006.735408-4-a0987203069@gmail.com>
+ <aYRlKk-cCIhqGWX7@shell.armlinux.org.uk>
+Content-Language: en-US
+From: Joey Lu <a0987203069@gmail.com>
+In-Reply-To: <aYRlKk-cCIhqGWX7@shell.armlinux.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=0.4 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
+	FROM_LOCAL_HEX,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.80 / 15.00];
+X-Spamd-Result: default: False [0.30 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	DATE_IN_PAST(1.00)[62];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
-	R_DKIM_ALLOW(-0.20)[axiado.com:s=selector1];
+	DATE_IN_PAST(1.00)[60];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DMARC_NA(0.00)[axiado.com];
-	FORGED_SENDER(0.00)[twei@axiado.com,openbmc@lists.ozlabs.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_RECIPIENTS(0.00)[m:srinavmani@axiado.com,m:pbolisetty@axiado.com,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:ulf.hansson@linaro.org,m:adrian.hunter@intel.com,m:michal.simek@amd.com,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:twei@axiado.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1329-lists,openbmc=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:linux@armlinux.org.uk,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mcoquelin.stm32@gmail.com,m:richardcochran@gmail.com,m:alexandre.torgue@foss.st.com,m:joabreu@synopsys.com,m:ychuang3@nuvoton.com,m:schung@nuvoton.com,m:yclu4@nuvoton.com,m:peppe.cavallaro@st.com,m:linux-arm-kernel@lists.infradead.org,m:netdev@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:linux-stm32@st-md-mailman.stormreply.com,m:andrew@lunn.ch,m:krzk@kernel.org,m:conor@kernel.org,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[a0987203069@gmail.com,openbmc@lists.ozlabs.org];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	TAGGED_FROM(0.00)[bounces-1331-lists,openbmc=lfdr.de];
-	DKIM_TRACE(0.00)[axiado.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	NEURAL_HAM(-0.00)[-0.996];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[twei@axiado.com,openbmc@lists.ozlabs.org];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.922];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[a0987203069@gmail.com,openbmc@lists.ozlabs.org];
+	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,gmail.com,foss.st.com,synopsys.com,nuvoton.com,st.com,lists.infradead.org,vger.kernel.org,lists.ozlabs.org,st-md-mailman.stormreply.com];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,axiado.com:email,axiado.com:dkim,axiado.com:mid]
-X-Rspamd-Queue-Id: 3326410A795
+	TAGGED_RCPT(0.00)[openbmc,netdev,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: AA1DD10A785
 X-Rspamd-Action: no action
 
-From: SriNavmani A <srinavmani@axiado.com>
 
-Axiado AX3000 SoC eMMC controller is based on Arasan eMMC 5.1 host
-controller IP.
+On 2/5/2026 5:38 PM, Russell King (Oracle) wrote:
+> Hi,
+>
+> On Thu, Feb 05, 2026 at 09:40:05AM +0800, Joey Lu wrote:
+>> +
+>> +struct nvt_priv_data {
+>> +	struct platform_device *pdev;
+> This looks to me like it's write-only, does it serve a useful purpose?
+>
+>> +	struct regmap *regmap;
+> This doesn't seem to be used outside of nvt_gmac_setup().
+>
+>> +};
+> Given the above two comments, do you actually need struct nvt_priv_data ?
+You are right. I'll drop it in the next revision.
+>
+>> +
+>> +static struct nvt_priv_data *
+>> +nvt_gmac_setup(struct platform_device *pdev, struct plat_stmmacenet_data *plat)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct nvt_priv_data *bsp_priv;
+>> +	phy_interface_t phy_mode;
+>> +	u32 macid, arg, reg;
+>> +	u32 tx_delay_step;
+>> +	u32 rx_delay_step;
+>> +	u32 miscr;
+>> +
+>> +	bsp_priv = devm_kzalloc(dev, sizeof(*bsp_priv), GFP_KERNEL);
+>> +	if (!bsp_priv)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	bsp_priv->regmap =
+>> +		syscon_regmap_lookup_by_phandle_args(dev->of_node, "nuvoton,sys", 1, &macid);
+>> +	if (IS_ERR(bsp_priv->regmap))
+>> +		return ERR_PTR(dev_err_probe(dev, PTR_ERR(bsp_priv->regmap),
+>> +				     "Failed to get sys register\n"));
+>> +	if (macid > 1) {
+>> +		dev_err(dev, "Invalid sys arguments\n");
+>> +		return ERR_PTR(-EINVAL);
+>> +	}
+>> +
+>> +	if (of_property_read_u32(dev->of_node, "tx-internal-delay-ps", &arg)) {
+>> +		tx_delay_step = 0;
+>> +	} else {
+>> +		if (arg <= 2000) {
+>> +			tx_delay_step = (arg == 2000) ? 0xf : (arg / NVT_PATH_DELAY_STEP);
+>> +			dev_dbg(dev, "Set Tx path delay to 0x%x\n", tx_delay_step);
+>> +		} else {
+>> +			dev_err(dev, "Invalid Tx path delay argument.\n");
+>> +			return ERR_PTR(-EINVAL);
+>> +		}
+>> +	}
+>> +	if (of_property_read_u32(dev->of_node, "rx-internal-delay-ps", &arg)) {
+>> +		rx_delay_step = 0;
+>> +	} else {
+>> +		if (arg <= 2000) {
+>> +			rx_delay_step = (arg == 2000) ? 0xf : (arg / NVT_PATH_DELAY_STEP);
+>> +			dev_dbg(dev, "Set Rx path delay to 0x%x\n", rx_delay_step);
+>> +		} else {
+>> +			dev_err(dev, "Invalid Rx path delay argument.\n");
+>> +			return ERR_PTR(-EINVAL);
+>> +		}
+>> +	}
+> Each of these could be moved into a separate function:
+>
+> static int nvt_gmac_get_delay(struct device *dev, const char *property)
+> {
+> 	u32 arg;
+>
+> 	if (of_property_read_u32(dev->of_node, property, &arg))
+> 		return 0;
+>
+> 	if (arg > 2000) {
+> 		dev_err(dev, "Invalid %s argument.\n", property);
+> 		return -EINVAL;
+> 	}
+>
+> 	if (arg == 2000)
+> 		return 15;
+>
+> 	return arg / NVT_PATH_DELAY_STEP;
+> }
+>
+> then:
+> 	int ret;
+>
+> 	ret = nvt_gmac_get_delay(dev, "tx-internal-delay-ps");
+> 	if (ret < 0)
+> 		return ERR_PTR(ret);
+>
+> 	tx_delay = ret;
+>
+> 	ret = nvt_gmac_get_delay(dev, "rx-internal-delay-ps");
+> 	if (ret < 0)
+> 		return ERR_PTR(ret);
+>
+> 	rx_delay = ret;
+I'll update the code according to your suggestions.
+>> +
+>> +	miscr = (macid == 0) ? NVT_REG_SYS_GMAC0MISCR : NVT_REG_SYS_GMAC1MISCR;
+>> +	regmap_read(bsp_priv->regmap, miscr, &reg);
+>> +	reg &= ~(NVT_TX_DELAY_MASK | NVT_RX_DELAY_MASK);
+>> +
+>> +	if (of_get_phy_mode(pdev->dev.of_node, &phy_mode)) {
+>> +		dev_err(dev, "missing phy mode property\n");
+>> +		return ERR_PTR(-EINVAL);
+>> +	}
+>> +
+>> +	switch (phy_mode) {
+>> +	case PHY_INTERFACE_MODE_RGMII:
+>> +	case PHY_INTERFACE_MODE_RGMII_ID:
+>> +	case PHY_INTERFACE_MODE_RGMII_RXID:
+>> +	case PHY_INTERFACE_MODE_RGMII_TXID:
+>> +		reg &= ~NVT_MISCR_RMII;
+>> +		break;
+>> +	case PHY_INTERFACE_MODE_RMII:
+>> +		reg |= NVT_MISCR_RMII;
+>> +		break;
+>> +	default:
+>> +		dev_err(dev, "Unsupported phy-mode (%d)\n", phy_mode);
+>> +		return ERR_PTR(-EINVAL);
+>> +	}
+>> +
+>> +	if (!(reg & NVT_MISCR_RMII)) {
+>> +		reg |= FIELD_PREP(NVT_TX_DELAY_MASK, tx_delay_step);
+>> +		reg |= FIELD_PREP(NVT_RX_DELAY_MASK, rx_delay_step);
+> You can move this inside the switch above under the RGMII case. Theses
+> delays are, after all, only for RGMII.
+Got it. I'll move them into the RGMII case.
+>> +	}
+>> +
+>> +	regmap_write(bsp_priv->regmap, miscr, reg);
+> Consider:
+>
+> 	regmap_update_bits(bsp_priv->regmap, miscr,
+> 			   NVT_TX_DELAY_MASK | NVT_RX_DELAY_MASK |
+> 			   NVT_MISCR_RMII, reg);
+>
+>> +	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
+>> +	if (IS_ERR(plat_dat))
+>> +		return PTR_ERR(plat_dat);
+>> +
+>> +	/* Nuvoton DWMAC configs */
+>> +	plat_dat->core_type = DWMAC_CORE_GMAC;
+> Is the hardware not compatible with any of the compatible types that
+> devm_stmmac_probe_config_dt() will automatically set this for you?
+> Which version of the core do you have?
+>
+>> +	plat_dat->tx_fifo_size = 2048;
+>> +	plat_dat->rx_fifo_size = 4096;
+> There are tx-fifo-depth / rx-fifo-depth properties that can be used to
+> describe these in DT.
+>
+>> +	plat_dat->multicast_filter_bins = 0;
+>> +	plat_dat->unicast_filter_entries = 8;
+> If this core is v3.50, v3.70 or v3.72, then there are
+> snps,multicast-filter-bins and snps,perfect-filter-entries which
+> can be used to describe both of these.
+>
+> Thanks.
 
-Signed-off-by: SriNavmani A <srinavmani@axiado.com>
-Signed-off-by: Tzu-Hao Wei <twei@axiado.com>
----
- drivers/mmc/host/sdhci-of-arasan.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Thanks for the feedback.
 
-diff --git a/drivers/mmc/host/sdhci-of-arasan.c b/drivers/mmc/host/sdhci-of-arasan.c
-index ab7f0ffe7b4f007a58eb0a26868b08b0b02b40f3..caf97238a58b487312d6cc2b7a868913ace60f22 100644
---- a/drivers/mmc/host/sdhci-of-arasan.c
-+++ b/drivers/mmc/host/sdhci-of-arasan.c
-@@ -1512,6 +1512,17 @@ static struct sdhci_arasan_of_data intel_keembay_sdio_data = {
- 	.clk_ops = &arasan_clk_ops,
- };
- 
-+static const struct sdhci_pltfm_data sdhci_arasan_axiado_pdata = {
-+	.ops = &sdhci_arasan_ops,
-+	.quirks = SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN |
-+			SDHCI_QUIRK_BROKEN_CQE,
-+};
-+
-+static struct sdhci_arasan_of_data sdhci_arasan_axiado_data = {
-+	.pdata = &sdhci_arasan_axiado_pdata,
-+	.clk_ops = &arasan_clk_ops,
-+};
-+
- static const struct of_device_id sdhci_arasan_of_match[] = {
- 	/* SoC-specific compatible strings w/ soc_ctl_map */
- 	{
-@@ -1538,6 +1549,10 @@ static const struct of_device_id sdhci_arasan_of_match[] = {
- 		.compatible = "intel,keembay-sdhci-5.1-sdio",
- 		.data = &intel_keembay_sdio_data,
- 	},
-+	{
-+		.compatible = "axiado,ax3000-sdhci-5.1-emmc",
-+		.data = &sdhci_arasan_axiado_data,
-+	},
- 	/* Generic compatible below here */
- 	{
- 		.compatible = "arasan,sdhci-8.9a",
+This GMAC is based on v3.73a. While this specific revision isn’t 
+explicitly documented in the current DT binding YAML, the relevant FIFO 
+sizing and filter capabilities match the behavior introduced in earlier 
+v3.70+ cores.
 
--- 
-2.34.1
+Given that, I agree it makes sense to describe these parameters using 
+the existing DT properties.
 
+I will update the DT and driver accordingly in the next revision.
+
+Joey
+
+>
 
