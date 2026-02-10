@@ -1,85 +1,82 @@
-Return-Path: <openbmc+bounces-1348-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1349-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IFoyIQ81i2myRgAAu9opvQ
-	(envelope-from <openbmc+bounces-1348-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:27 +0100
+	id 8KMUOV5Vi2k1UAAAu9opvQ
+	(envelope-from <openbmc+bounces-1349-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 16:57:18 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3DEF11B4D1
-	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53E4A11CD57
+	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 16:57:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f9N2J3DLKz30Lv;
-	Wed, 11 Feb 2026 00:39:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f9R5j5Lhtz2xN5;
+	Wed, 11 Feb 2026 02:57:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::336"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770730744;
-	cv=none; b=SM13uoAbkEbT6vtrwkd0axt8Boru7cIQG/RT/sq6wnKu5PP4pzBJZOq3ha5EIbvXI5ASKLcs8UDsQYQusyB+GscZ6En8Vd7i7KqpRFikWwavwRgXfSS5SSDWBxWWA6dHbQW5D5kY1qwet8e1F15jmm1Ska11fX49dXNZbQe3Hy0miOy43aGoVJ6g3fsd+nDgE+o1G+hoJSFVhHCGJcp3RWwleEHE3elJWZ7aMxt6xk+3fTIModXDmCVId22ktVcHb/aN5dblmGj92q43cy8f2X540SWC5BbuvHdmhl+rskP44iDBZpq5aOGJnEDCjyU27jNRt/IpUMdSiiYTZnBXFQ==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::32e"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770739033;
+	cv=none; b=Z6qu2HftYy5AZoAPTyCN/ASRSo1BhfQT8Kv5KYK+4L1SuLi6pykc3ANBGMInHZKrQZXMVeCZKPBML/bTFRfnNpKTvIkDUNStVVd/PxvTsF8S9laySubyLDELRKUqMXUBFaVBNrCMAGF7xCR6qf6kzMv7IOr7cA/Zjj2XARMlZxCXgSpjsfgp8O31Sn4P6xfz01746eUT5sx5wGnl1xlD9tG3HYnIxDM4DqA6LBybFWzoxA+YeitQtJgy0D3SsREego58LwvIeldgbdqgXCXfEZ+ZowyQa8bqH+Nv7Kx4CZQ46l8AmzPShun9YXRswSq66gXKQdvcGvz0DNGclHOTTw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770730744; c=relaxed/relaxed;
-	bh=HGNEecakAfXorcTTEznVuRkn8Ex5W+QcTjU+PIsrpQQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hfNpRHHU8AL4TFERoOzHM3593YVTP+D8uD/lQBGZDOC4Ma0ovMgPRRhiSwdg+tn0M0KQnZVojt7/E6giDfwJXMLdhdOYfog7RReV6dCZJPht6ehInQdT+gCjXDloasjAnJdTwamadlbqpF82baxjWpydzI8/2IDqi4AtaIjdwr6jnlD6TxuB+xSXZ315WQzi0gfpjJyFs7+ynJ/faaBazgUCHCzMcuv32qRHWWV8mdDwJo2TzXdDwFN45vA/o6oRkVsV8VlrbUxFozWIVrnOSAMTNy452IRJfx6Qkr0Zu7FaKcSfd3Lk/DaicMP/+OzihFpkg2/JjwymlmxIaU9OxQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h6fMtwce; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::336; helo=mail-wm1-x336.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1770739033; c=relaxed/relaxed;
+	bh=KDxHw3Hq9zG9KAhSV/T4bFN5OhynGtCKzUgVN+dy8Fc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ZKos9oVnh45Kd5wAt42VfivCFQuNYgWMn5zWp0/LzWSdm5vity/VGXtaK/cwn+QrsXqxt4zDyUFAmZz+DxvIZebgmOS7KrPsdceFY74dpKOjW6xye8MKtnx5ylKBHUFTocXd56FLWOA/oc5S3b9sxQVFP2EIAUh2PQdHp1X7HtPjxqZU4kTHQn6uPCMujaIck6QoHCTvyEScSfe5rmewABVT3AbALnRkm108PbbQW1r/46wzja4mOVzm8xfR33ZlV5pEJRHjbftZuNvKL53mSLZX8MCjS01DS86ArvshY17wkaCr3cCmRKvWVtIDnU9He2dUIIt11ZdlE8ME8cYaKQ==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aOeKICEF; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::32e; helo=mail-wm1-x32e.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h6fMtwce;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=aOeKICEF;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::336; helo=mail-wm1-x336.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32e; helo=mail-wm1-x32e.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f9N2H1BXyz2xQ1
-	for <openbmc@lists.ozlabs.org>; Wed, 11 Feb 2026 00:39:03 +1100 (AEDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-480142406b3so43822985e9.1
-        for <openbmc@lists.ozlabs.org>; Tue, 10 Feb 2026 05:39:02 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f9R5g2351z2xKx
+	for <openbmc@lists.ozlabs.org>; Wed, 11 Feb 2026 02:57:10 +1100 (AEDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-47edd9024b1so54486265e9.3
+        for <openbmc@lists.ozlabs.org>; Tue, 10 Feb 2026 07:57:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770730740; x=1771335540; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HGNEecakAfXorcTTEznVuRkn8Ex5W+QcTjU+PIsrpQQ=;
-        b=h6fMtwceAyA2jgPVv1aj+Hb2Jj1dR+UlmJGEigiMOVhB0ZXSbhb1+a6trZ14etxRXx
-         FmIiSQ3k0SapRYonKxdD2Z7MAjyMZGST92xljxpMGLVdxtwhAjZddkaUKwH/beJ9+ZXe
-         zZb6NImd0n+Xk9g98AeAIJQ3fhnvlCw4HdVTPue2ly3cZQ7m49r9GreR/1UZdTcWbjoi
-         da3gBBM0vl1Q4Sbalj5jxEr81eB3m25ppfO7+ITzpRou7wIUr0R9ZVllSiyLkH/WpLVr
-         TKsea3iatDZvlyqwYVjpQ2ZHvJpQg9fZ9r1LP8Ej7BZYH0fCoVL/Deqj+qtsp84vK90h
-         3rAw==
+        d=gmail.com; s=20230601; t=1770739025; x=1771343825; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KDxHw3Hq9zG9KAhSV/T4bFN5OhynGtCKzUgVN+dy8Fc=;
+        b=aOeKICEF22QuKQtlrRvQKgZYpOHHaLWUs4MiIKQwmFfJXFEGrjhTG9LW+MAD2m3Ump
+         /7nw6BtwkWHywXCXWyHHNOgvIOtlwG89+i0u4rKKPerQVHZ0awz3uCgkgWlkbSi6MBSp
+         +f3zc0rEp+yfzTR9Vf0bXRhNaso2I5XQZz6qnS9orRQgzn1amF4gZqwQOAvepHRli5Ee
+         CV3HJacv2KfQYcGYfjQG8MEByOXCdhqEYr+hEFbZHbJglhmwk+SbbaO/JQ5WB3Op7zFK
+         vcM1Uc/EGkQn9l5/4ie5wjl70tpJ12vzQCoF7wZKPAn3J4F0aRVtZRzaGAs5cx1bBdXn
+         FDqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770730740; x=1771335540;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=HGNEecakAfXorcTTEznVuRkn8Ex5W+QcTjU+PIsrpQQ=;
-        b=eo4BSGIeEIsBIl8tHp8OLicTsm/XdmHORof6mtgEG6y0qbkYiwLdlgT8soOp7xx50x
-         Bj391WVhKGF8kSlh8NiGpiDFWrGI56vAcAaudi/B1sCa0d/DHYe3txjW2WWQr+LxiDtg
-         1i+66f4x4Cq4ag4Y04N2Htbyx1iEcW/bcrZwmn0JwAnqlAbiGOi5fDJT+8XxlMwFWNbt
-         qeAMxcVcMrkZ2IihclnSvwvkHibIFGreALZMimat0dj6u5sVVeZBzNU/M9/ZkXuLFR9h
-         yRFXmgfj1OV9R6fRpoXoB+yTW3CiVMD+juKcdfoLMCxMwvut1bb5I760QlI003USX/lu
-         bCag==
-X-Forwarded-Encrypted: i=1; AJvYcCVJB+1it5xAvb0wDDebFWC5XoEOD5vZC8MxKmm4a+W1sivp/qNo4Z5NoLuBsVgaKyrXiN+ct3s2@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YzwbHPuNPW/CHEFUF22D2ztByq7l/GyKdP8hmKNze2eWDaOfsC8
-	md5b0hY1OaqHMI+YYv0kG/OUt9qyqFButk3L6bprTcbUmSOAgkCgwxMd
-X-Gm-Gg: AZuq6aLqyhk9dQSqLYsYcRgGIoFYpMFxgQdoWyUSSx1ZThzag1kDB7HYolFMpIltoIq
-	tK702AqKxXelJcTeErstW5WwUGlcxY/uNIKnaNnATeDGkajx/wwzPls11+HP4M99GMMPFIPpp7w
-	IBbBI/6TfMVR7zb9jSf2OvKrFs/HZkM4VNMiRDP32ME/DfbDv2qlOj1VHnaRMyt9IayLYmXGPMQ
-	YNdQLIPqQTIwcqwtXAFBSS0k7Lj7D7Phme6OhJydpoaTuyR7Ji80ZSBzlgrik2hmN+fVwHKk0DF
-	DP/0R7tLRa8qpFdBEHTnFibaJrI/vxvLFX8enws5JezxJxzb5BLxNRdRdlKMfPUtUOzjiYM7ZI2
-	AM6L4LJ4d8MXlbqNTv0dv2PmJsH2/WWlcilvw6WdiLnP8i5atVSxfNUnKFLVbbf9fOR2ddS8VyC
-	LQdCmwdHYgcQdye78sP5g+Ph8TuIr9oehXsA==
-X-Received: by 2002:a05:600c:3b1e:b0:482:eec4:772 with SMTP id 5b1f17b1804b1-48350833938mr27829925e9.32.1770730739808;
-        Tue, 10 Feb 2026 05:38:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770739025; x=1771343825;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KDxHw3Hq9zG9KAhSV/T4bFN5OhynGtCKzUgVN+dy8Fc=;
+        b=Fke+AbRAZ1RAVG0UFjNYPhX/09iXi6IeB67Hft1jAwhJeSAZ/Ex1YEQB/fwg5eHYUZ
+         LOWdQ6ACjrOJ05nErqzU3+HNmRPHcvS6yckxG7ESW4b4JaDftJSE6ry2i0LQK0787jqq
+         VtT1LjtUs0i0GwepMuWlmGHDSQXG4ki70YoDrUmgV/xcOQqnMUR/lv1hHtR1v2XOpNCF
+         vIn0zwf4ZDBA7IcCCpskKX9z7uOB1ZR4oNFYepUXD5KrowA7rFCqYFTbt/uWgEZCCQPy
+         lTyjCIJnHcRrFn7rM7Q/c0M0ay28HSdX6q/RyE6MAGLOqXHX4GF+NRRHheRZfyeODWZ1
+         n//g==
+X-Forwarded-Encrypted: i=1; AJvYcCUnhWSma6cgFTotQFGuFWEeORNpla3PanZsURA0DNBzXVezzSPvRBuhA9L5Cemot2xb4RZ3+n6C@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YznHgY3SLQDMvvGpEP8IKWjxyEmm2sbIv8lgl7BAO2EUdEt0GSk
+	PcjLcthbIswUN4ebuq82o33YZbBiWMGQt7/YiB+7gc7lYqqZpviNb59h
+X-Gm-Gg: AZuq6aKruIW7EMd8UVUsdSo/jJenAqVD+QsMC3URmrqWzfm88uSBrmNybz327VDG7Of
+	IauWtXYC3TkcbAeoEhSykIj/zcqdRveedrbugOaYrvfABH5KYKGJadaNgiwui0Y7AlAeVk8JqYp
+	QjbQVzB8aZ7wLuIwfCLXksbad/lUbSofayuaddgiopgYoF8UQBAKw2FtEQwu/YAVe82d0NRHtbq
+	O9kqaGFE5lt2DlvZE/fGhil8XXIrxgAC8OpxXPCvUo+N7HCABAC1wPwZMNNu+VNEVlisF5HUGjm
+	z4PrMTgHqanRJrgUtPYiWcSLHAKL8bGhVhcBCJZ1sRPhgEOrQHAmASFfNZ5qoCpz9wWZZvQv6OZ
+	zWBRC1wSeb88hE+IM/RFGeyUk8/VC6ubb9EYpehlx8I1X52QP2x2xNUqx0z/3Z/5ULhRfqtPsDQ
+	IMpluaoIj3hK9D91EhqPIrxkj6I75+T++Zmw==
+X-Received: by 2002:a05:6000:2010:b0:437:71cc:a246 with SMTP id ffacd0b85a97d-43771cca558mr10374442f8f.10.1770739024825;
+        Tue, 10 Feb 2026 07:57:04 -0800 (PST)
 Received: from taln60.nuvoton.co.il ([212.199.177.18])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d8df8sm66773415e9.3.2026.02.10.05.38.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4376806626fsm22051809f8f.37.2026.02.10.07.57.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 05:38:59 -0800 (PST)
+        Tue, 10 Feb 2026 07:57:04 -0800 (PST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: andrew@codeconstruct.com.au,
 	avifishman70@gmail.com,
 	tali.perry1@gmail.com,
-	wim@linux-watchdog.org,
 	linux@roeck-us.net,
 	robh@kernel.org,
 	krzk+dt@kernel.org,
@@ -87,18 +84,15 @@ To: andrew@codeconstruct.com.au,
 Cc: venture@google.com,
 	yuenn@google.com,
 	benjaminfair@google.com,
-	joel@jms.id.au,
 	openbmc@lists.ozlabs.org,
-	linux-watchdog@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v1 2/2] watchdog: npcm: Add reset status support
-Date: Tue, 10 Feb 2026 15:38:43 +0200
-Message-Id: <20260210133843.1078463-3-tmaimon77@gmail.com>
+Subject: [PATCH v1] dt-bindings: hwmon: convert npcm750-pwm-fan to DT schema
+Date: Tue, 10 Feb 2026 17:41:17 +0200
+Message-Id: <20260210154117.1126857-1-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260210133843.1078463-1-tmaimon77@gmail.com>
-References: <20260210133843.1078463-1-tmaimon77@gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -124,192 +118,281 @@ X-Spamd-Result: default: False [0.80 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:andrew@codeconstruct.com.au,m:avifishman70@gmail.com,m:tali.perry1@gmail.com,m:linux@roeck-us.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:venture@google.com,m:yuenn@google.com,m:benjaminfair@google.com,m:openbmc@lists.ozlabs.org,m:linux-hwmon@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tmaimon77@gmail.com,m:taliperry1@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	FORGED_RECIPIENTS(0.00)[m:andrew@codeconstruct.com.au,m:avifishman70@gmail.com,m:tali.perry1@gmail.com,m:wim@linux-watchdog.org,m:linux@roeck-us.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:venture@google.com,m:yuenn@google.com,m:benjaminfair@google.com,m:joel@jms.id.au,m:openbmc@lists.ozlabs.org,m:linux-watchdog@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tmaimon77@gmail.com,m:taliperry1@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[codeconstruct.com.au,gmail.com,roeck-us.net,kernel.org];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[codeconstruct.com.au,gmail.com,linux-watchdog.org,roeck-us.net,kernel.org];
 	FORGED_SENDER(0.00)[tmaimon77@gmail.com,openbmc@lists.ozlabs.org];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[google.com,jms.id.au,lists.ozlabs.org,vger.kernel.org,gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1348-lists,openbmc=lfdr.de];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-1349-lists,openbmc=lfdr.de];
+	FREEMAIL_CC(0.00)[google.com,lists.ozlabs.org,vger.kernel.org,gmail.com];
 	FROM_NEQ_ENVFROM(0.00)[tmaimon77@gmail.com,openbmc@lists.ozlabs.org];
+	TAGGED_RCPT(0.00)[openbmc,dt];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_PROHIBIT(0.00)[0.0.0.2:email,0.1.146.88:email];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: A3DEF11B4D1
+	DKIM_TRACE(0.00)[gmail.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,0.0.0.1:email,devicetree.org:url,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
+X-Rspamd-Queue-Id: 53E4A11CD57
 X-Rspamd-Action: no action
 
-Add reset status detection for NPCM watchdog driver on both NPCM7XX and
-NPCM8XX platforms. Implement GCR register integration via syscon for
-reset status detection and configurable reset type mapping via device
-tree properties.
+Convert the Nuvoton HWMON PWM and FAN controllers binding to schema
+format.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- drivers/watchdog/npcm_wdt.c | 110 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 110 insertions(+)
+ .../bindings/hwmon/npcm750-pwm-fan.txt        |  88 ------------
+ .../bindings/hwmon/npcm750-pwm-fan.yaml       | 132 ++++++++++++++++++
+ 2 files changed, 132 insertions(+), 88 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt
+ create mode 100644 Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.yaml
 
-diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
-index e62ea054bc61..ebece5d6240a 100644
---- a/drivers/watchdog/npcm_wdt.c
-+++ b/drivers/watchdog/npcm_wdt.c
-@@ -12,9 +12,25 @@
- #include <linux/platform_device.h>
- #include <linux/slab.h>
- #include <linux/watchdog.h>
-+#include <linux/regmap.h>
-+#include <linux/mfd/syscon.h>
+diff --git a/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt b/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt
+deleted file mode 100644
+index 18095ba87a5a..000000000000
+--- a/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt
++++ /dev/null
+@@ -1,88 +0,0 @@
+-Nuvoton NPCM PWM and Fan Tacho controller device
+-
+-The Nuvoton BMC NPCM7XX supports 8 Pulse-width modulation (PWM)
+-controller outputs and 16 Fan tachometer controller inputs.
+-
+-The Nuvoton BMC NPCM8XX supports 12 Pulse-width modulation (PWM)
+-controller outputs and 16 Fan tachometer controller inputs.
+-
+-Required properties for pwm-fan node
+-- #address-cells : should be 1.
+-- #size-cells	: should be 0.
+-- compatible	: "nuvoton,npcm750-pwm-fan" for Poleg NPCM7XX.
+-				: "nuvoton,npcm845-pwm-fan" for Arbel NPCM8XX.
+-- reg			: specifies physical base address and size of the registers.
+-- reg-names	: must contain:
+-					* "pwm" for the PWM registers.
+-					* "fan" for the Fan registers.
+-- clocks		: phandle of reference clocks.
+-- clock-names	: must contain
+-					* "pwm" for PWM controller operating clock.
+-					* "fan" for Fan controller operating clock.
+-- interrupts	: contain the Fan interrupts with flags for falling edge.
+-- pinctrl-names	: a pinctrl state named "default" must be defined.
+-- pinctrl-0	: phandle referencing pin configuration of the PWM and Fan
+-					controller ports.
+-
+-fan subnode format:
+-===================
+-Under fan subnode can be upto 8 child nodes, each child node representing a fan.
+-Each fan subnode must have one PWM channel and at least one Fan tach channel.
+-
+-For PWM channel can be configured cooling-levels to create cooling device.
+-Cooling device could be bound to a thermal zone for the thermal control.
+-
+-Required properties for each child node:
+-- reg : specify the PWM output channel.
+-	integer value in the range 0 through 7, that represent
+-	the PWM channel number that used.
+-
+-- fan-tach-ch : specify the Fan tach input channel.
+-		integer value in the range 0 through 15, that represent
+-		the fan tach channel number that used.
+-
+-		At least one Fan tach input channel is required
+-
+-Optional property for each child node:
+-- cooling-levels: PWM duty cycle values in a range from 0 to 255
+-                  which correspond to thermal cooling states.
+-
+-Examples:
+-
+-pwm_fan:pwm-fan-controller@103000 {
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+-	compatible = "nuvoton,npcm750-pwm-fan";
+-	reg = <0x103000 0x2000>,
+-		<0x180000 0x8000>;
+-	reg-names = "pwm", "fan";
+-	clocks = <&clk NPCM7XX_CLK_APB3>,
+-		<&clk NPCM7XX_CLK_APB4>;
+-	clock-names = "pwm","fan";
+-	interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
+-			<GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pwm0_pins &pwm1_pins &pwm2_pins
+-			&fanin0_pins &fanin1_pins &fanin2_pins
+-			&fanin3_pins &fanin4_pins>;
+-	fan@0 {
+-		reg = <0x00>;
+-		fan-tach-ch = /bits/ 8 <0x00 0x01>;
+-		cooling-levels = <127 255>;
+-	};
+-	fan@1 {
+-		reg = <0x01>;
+-		fan-tach-ch = /bits/ 8 <0x02 0x03>;
+-	};
+-	fan@2 {
+-		reg = <0x02>;
+-		fan-tach-ch = /bits/ 8 <0x04>;
+-	};
+-
+-};
+diff --git a/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.yaml b/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.yaml
+new file mode 100644
+index 000000000000..954ba7d38b93
+--- /dev/null
++++ b/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.yaml
+@@ -0,0 +1,132 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/hwmon/npcm750-pwm-fan.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+#define NPCM7XX_RESSR_OFFSET	0x6C
-+#define NPCM7XX_INTCR2_OFFSET	0x60
- 
- #define NPCM_WTCR	0x1C
- 
-+#define NPCM7XX_PORST	BIT(31)
-+#define NPCM7XX_CORST	BIT(30)
-+#define NPCM7XX_WD0RST	BIT(29)
-+#define NPCM7XX_WD1RST	BIT(24)
-+#define NPCM7XX_WD2RST	BIT(23)
-+#define NPCM7XX_SWR1RST	BIT(28)
-+#define NPCM7XX_SWR2RST	BIT(27)
-+#define NPCM7XX_SWR3RST	BIT(26)
-+#define NPCM7XX_SWR4RST	BIT(25)
-+#define NPCM8XX_RST	(GENMASK(31, 23) | GENMASK(15, 12))
++title: Nuvoton NPCM7xx/NPCM8xx PWM and Fan Tach Controller
 +
- #define NPCM_WTCLK	(BIT(10) | BIT(11))	/* Clock divider */
- #define NPCM_WTE	BIT(7)			/* Enable */
- #define NPCM_WTIE	BIT(6)			/* Enable irq */
-@@ -45,6 +61,9 @@ struct npcm_wdt {
- 	struct watchdog_device  wdd;
- 	void __iomem		*reg;
- 	struct clk		*clk;
-+	u32			card_reset;
-+	u32			ext1_reset;
-+	u32			ext2_reset;
- };
- 
- static inline struct npcm_wdt *to_npcm_wdt(struct watchdog_device *wdd)
-@@ -185,6 +204,95 @@ static const struct watchdog_ops npcm_wdt_ops = {
- 	.restart = npcm_wdt_restart,
- };
- 
-+static u32 npcm_wdt_reset_type(const char *reset_type)
-+{
-+	if (!strcmp(reset_type, "porst"))
-+		return NPCM7XX_PORST;
-+	else if (!strcmp(reset_type, "corst"))
-+		return NPCM7XX_CORST;
-+	else if (!strcmp(reset_type, "wd0"))
-+		return NPCM7XX_WD0RST;
-+	else if (!strcmp(reset_type, "wd1"))
-+		return NPCM7XX_WD1RST;
-+	else if (!strcmp(reset_type, "wd2"))
-+		return NPCM7XX_WD2RST;
-+	else if (!strcmp(reset_type, "sw1"))
-+		return NPCM7XX_SWR1RST;
-+	else if (!strcmp(reset_type, "sw2"))
-+		return NPCM7XX_SWR2RST;
-+	else if (!strcmp(reset_type, "sw3"))
-+		return NPCM7XX_SWR3RST;
-+	else if (!strcmp(reset_type, "sw4"))
-+		return NPCM7XX_SWR4RST;
++maintainers:
++  - Tomer Maimon <tmaimon77@gmail.com>
 +
-+	return 0;
-+}
++description: |
++  The NPCM7xx/NPCM8xx family includes a PWM and Fan Tachometer controller.
++  The controller provides up to 8 (NPCM7xx) or 12 (NPCM8xx) PWM channels and up
++  to 16 tachometer inputs. It is used for fan speed control and monitoring.
 +
-+static void npcm_get_reset_status(struct npcm_wdt *wdt, struct device *dev)
-+{
-+	const char *card_reset_type;
-+	const char *ext1_reset_type;
-+	const char *ext2_reset_type;
-+	struct regmap *gcr_regmap;
-+	u32 rstval, ressrval;
-+	int ret;
++properties:
++  compatible:
++    enum:
++      - nuvoton,npcm750-pwm-fan
++      - nuvoton,npcm845-pwm-fan
 +
-+	gcr_regmap = syscon_regmap_lookup_by_phandle(dev->of_node, "syscon");
-+	if (IS_ERR(gcr_regmap)) {
-+		dev_warn(dev, "Failed to find gcr syscon, WD reset status not supported\n");
-+		return;
-+	}
++  reg:
++    maxItems: 2
++    description: Register addresses for PWM and Fan Tach units.
 +
-+	ret = of_property_read_string(dev->of_node,
-+				      "nuvoton,card-reset-type",
-+				      &card_reset_type);
-+	if (ret)
-+		wdt->card_reset = NPCM7XX_PORST;
-+	else
-+		wdt->card_reset = npcm_wdt_reset_type(card_reset_type);
++  reg-names:
++    items:
++      - const: pwm
++      - const: fan
 +
-+	ret = of_property_read_string(dev->of_node,
-+				      "nuvoton,ext1-reset-type",
-+				      &ext1_reset_type);
-+	if (ret)
-+		wdt->ext1_reset = 0;
-+	else
-+		wdt->ext1_reset = npcm_wdt_reset_type(ext1_reset_type);
++  clocks:
++    maxItems: 2
++    description: Clocks for the PWM and Fan Tach modules.
 +
-+	ret = of_property_read_string(dev->of_node,
-+				      "nuvoton,ext2-reset-type",
-+				      &ext2_reset_type);
-+	if (ret)
-+		wdt->ext2_reset = 0;
-+	else
-+		wdt->ext2_reset = npcm_wdt_reset_type(ext2_reset_type);
++  clock-names:
++    items:
++      - const: pwm
++      - const: fan
 +
-+	regmap_read(gcr_regmap, NPCM7XX_INTCR2_OFFSET, &rstval);
-+	/* prefer the most specific SoC first */
-+	if (of_device_is_compatible(dev->of_node, "nuvoton,npcm845-wdt")) {
-+		regmap_write(gcr_regmap, NPCM7XX_INTCR2_OFFSET,
-+			     rstval & ~NPCM8XX_RST);
-+	} else if (of_device_is_compatible(dev->of_node, "nuvoton,npcm750-wdt")) {
-+		if ((rstval & NPCM7XX_PORST) == 0) {
-+			rstval = NPCM7XX_PORST;
-+			regmap_write(gcr_regmap, NPCM7XX_INTCR2_OFFSET,
-+				     rstval | NPCM7XX_PORST);
-+		} else {
-+			rstval = 0;
-+		}
-+		regmap_read(gcr_regmap, NPCM7XX_RESSR_OFFSET, &ressrval);
-+		rstval |= ressrval;
-+		regmap_write(gcr_regmap, NPCM7XX_RESSR_OFFSET, ressrval);
-+	}
++  interrupts:
++    description: |
++      Contains the Fan interrupts with flags for falling edge.
++      For NPCM7XX, 8 interrupt lines are expected (one per PWM channel).
++      For NPCM8XX, 12 interrupt lines are expected (one per PWM channel).
++    minItems: 8
++    maxItems: 12
 +
-+	if (rstval & wdt->card_reset)
-+		wdt->wdd.bootstatus |= WDIOF_CARDRESET;
-+	if (rstval & wdt->ext1_reset)
-+		wdt->wdd.bootstatus |= WDIOF_EXTERN1;
-+	if (rstval & wdt->ext2_reset)
-+		wdt->wdd.bootstatus |= WDIOF_EXTERN2;
-+}
++  "#address-cells":
++    const: 1
 +
- static int npcm_wdt_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -208,6 +316,8 @@ static int npcm_wdt_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	npcm_get_reset_status(wdt, dev);
++  "#size-cells":
++    const: 0
 +
- 	wdt->wdd.info = &npcm_wdt_info;
- 	wdt->wdd.ops = &npcm_wdt_ops;
- 	wdt->wdd.min_timeout = 1;
++patternProperties:
++  "^fan@[0-9a-f]+$":
++    type: object
++    $ref: fan-common.yaml#
++    unevaluatedProperties: false
++
++    properties:
++      reg:
++        maxItems: 1
++        description: |
++          Specify the PWM output channel. Integer value in the range 0-7 for
++          NPCM7XX or 0-11 for NPCM8XX, representing the PWM channel number.
++
++      fan-tach-ch:
++        $ref: /schemas/types.yaml#/definitions/uint32-array
++        description: |
++          The tach channel(s) used for the fan.
++          Integer values in the range 0-15.
++
++      cooling-levels:
++        $ref: /schemas/types.yaml#/definitions/uint32-array
++        description: |
++          PWM duty cycle values in a range from 0 to 255 which
++          correspond to thermal cooling states. This property enables
++          thermal zone integration for automatic fan speed control
++          based on temperature.
++
++    required:
++      - reg
++      - fan-tach-ch
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    pwm_fan: pwm-fan@103000 {
++        compatible = "nuvoton,npcm750-pwm-fan";
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        reg = <0x103000 0x2000>, <0x180000 0x8000>;
++        reg-names = "pwm", "fan";
++
++        clocks = <&clk NPCM7XX_CLK_APB3>, <&clk NPCM7XX_CLK_APB4>;
++        clock-names = "pwm", "fan";
++
++        interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
++                     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&pwm0_pins &fanin0_pins>;
++
++        fan@0 {
++            reg = <0>;
++            fan-tach-ch = <0 1>;
++            cooling-levels = <64 128 192 255>;
++        };
++
++        fan@1 {
++            reg = <1>;
++            fan-tach-ch = <2>;
++        };
++    };
 -- 
 2.34.1
 
