@@ -1,78 +1,80 @@
-Return-Path: <openbmc+bounces-1346-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1347-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wFCCA/s0i2myRgAAu9opvQ
-	(envelope-from <openbmc+bounces-1346-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:07 +0100
+	id SGd2OQM1i2myRgAAu9opvQ
+	(envelope-from <openbmc+bounces-1347-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:15 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE8A611B4A3
-	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11A1711B4C3
+	for <lists+openbmc@lfdr.de>; Tue, 10 Feb 2026 14:39:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4f9N2D17YDz2xN5;
-	Wed, 11 Feb 2026 00:39:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4f9N2F0PWCz2xKx;
+	Wed, 11 Feb 2026 00:39:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::334"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770730740;
-	cv=none; b=Iv4jjpRN7oooeplhN74MTiGyxD+GfK63Bfba2qYQTUz4qVtetb3A6GtD0r3rtvnXdY3rcjukoc4zdlXYHrjXCGjnuqT1hWectqfGopexNB2P94z51ZcizGGU06aIzFgul9GioEoP9JQzmVgaEdJdSBbCttbkXLQH8kCfYui+ClseZcaEkFxyp83AESFVigfTKkV8fg4ENFHKzTfeXbVbYxHe+J70HzYIah2N0X5DA68IB1TBA1lAA4qygO5jxGdUnWa3SAb1biaA6Kh9G2VZN1WtJTYDGV4fiaGtDtUMj4oES7eJVESuUPn3nxMl8wZNkWMcNhVNyqkPp5IXgsCoXw==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770730741;
+	cv=none; b=TJFJ8gxGCigXjY4eMTnmGS7JyuaaolVXL98Nd7t5ahml0U9BYdE9jws/CBEuPkYx2arNr10rniAJOExZTAu6QFg/D5b0ChTz/9E/hzPiHG/lf0tVy2wp/JgL2OchEcdLlxH1Zhvvp8gtjNaCF4/MDR+0ypZ0sqZd5la0pR9DUHrr5oE15T/wIjWiPPZi6NvmpMgmZ8yHDONQJBdt/GOr69u0iUStg2QBYXU0GnJ5kMpzrIsSLekdjxesVOKbe0LuIiDLawfgoxHuSilJIUvZrgNEPAbKxJiCnuQ3RfgFH3YQKsob4yYz60e1wbQkN/Jix/53Zcal/tK3khLqWj6xAg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770730740; c=relaxed/relaxed;
-	bh=3C+qeBfFCnkgIVyeJUvVd06s8dBHvEo1iIcon3aaEiM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=K0dIgKtNstrMtYCHyOTwWe6fi2c5keLB5v41wZ+gZ5juZSWsDDJGe7ZHkSkJHH2nUzUV8/G6sIyD561Qmjrb3Af/L7CnUXib7xbP6hhxdhUnhj1zu6DmMr8uiI/e1Sq3htT8NVN1zPDXquSMmS6RDvH31VqPLmVqhtYOEvLKJf1c8Uc4eeoLDhe4ENdOyVWnWT4/qD4PZ1R9LYCuMBXhRUOGNKn9Nbff5pCWU8Hc8cQBY6Vx/j7de4G3fUZgk69FEvlbaWw7L2WOtbbjxQz0/JFEL8LQnSMJdCh8X5DFy4P9Cjw0N5OqlZxxSiq8UH7c0xJ2vh73i2KA/smGKwWvkw==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=XsXUvE48; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+	t=1770730741; c=relaxed/relaxed;
+	bh=iODKpq8SiTOJupDlKbF2WoG4lC9wFyKPKfQ6o0K08dg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=AcfcXjxiHxa8X7Lhf+EalFh0i3eaDJJ3v+pwiB7J+pm/8ERznBnHeMwjzAbLWfyV6k1tB4HFR4MlBZ+VZkT5LWULmxWeMic8hGkhhwsLxo6v9GRoZ+qK0j9BCxtpONZmUgx+H5eaizU2KPoMqeE3//1zLmL604JaFf2ioH0NDvWbGLsP907R58syA3gnktFky/nHVkMW5ZD9JhrYj4HllQzAm7Nb9x4woJyoYlHDusGph3vN04ChLSxlajGVjxAzDSSvHmBVrAvdv4gGxJx3LYh+9WOj5myOjbqVbYz0yXW6NqGMz0jMbBaRjblV44HwpgOqV5ZVswHLhueYCb1EKg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VJ6j1KaR; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=XsXUvE48;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=VJ6j1KaR;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
 Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4f9N2B4P1Nz2xKx
-	for <openbmc@lists.ozlabs.org>; Wed, 11 Feb 2026 00:38:58 +1100 (AEDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-482f454be5bso56162085e9.0
-        for <openbmc@lists.ozlabs.org>; Tue, 10 Feb 2026 05:38:58 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4f9N2D1ztKz2xQ1
+	for <openbmc@lists.ozlabs.org>; Wed, 11 Feb 2026 00:39:00 +1100 (AEDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so53669995e9.0
+        for <openbmc@lists.ozlabs.org>; Tue, 10 Feb 2026 05:38:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770730734; x=1771335534; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3C+qeBfFCnkgIVyeJUvVd06s8dBHvEo1iIcon3aaEiM=;
-        b=XsXUvE48Mfe8psMOzJ666klHVJbV933XJowj6ze2+WvPjF5Jwtts4I1D57uZcaDGtw
-         DoFz5Jz2et38+bn8aTh91ROpcJbjFa+Spv/v7zLG7z2hDfpF3KmAeJvMOS5dTf21l5a7
-         z20QoqWqyEpr83ZC5sLaY6gMy/kYBtTY2YWJ2oCNZgUav/z6hwpcYIhKub5UE8BTlLZy
-         474G5Eh9xCo4jm+TOP6/AJCatImfgW9dACl3+8bhlh+lRuMWmzBCY6H5uvSxAQxlsADF
-         knoETuBiD1YgiEaGk0NpaWVx6wPDDnVvOs4LS+nM+ldm03b3YL9XJNifT+H0bA74ZCJ+
-         U+5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770730734; x=1771335534;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1770730737; x=1771335537; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3C+qeBfFCnkgIVyeJUvVd06s8dBHvEo1iIcon3aaEiM=;
-        b=cvl/LMBTdOCMe3vb0ymwNVt4if3Q8BDYpVNIATueorfuT4RGRpwS+53VR1ys1yfIFx
-         7X7ri2nON4hTeAbgWIIJ8g7GGCySZEkss78l7bYLLf30gGJjuXgBiFDSzaKcjW6R+69j
-         uk5zAy8rZ0urM+bqJAgSDIq/uYXI8LVjhRCpbeW44n2rTE6EofuleFgWAR8xb/U/ErEo
-         mMnXXhg7ZSfeehF37qVKSesJtYkem40hoZFyxZejWOpFr4ih7rsBe9DDqgNZnROMR1AN
-         0H55khybYbfHoYfPue9roAqW98PkKHKaL7ilr8m/bqXR+17Iu77C6R57xEylYjNSQdJa
-         GDhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgfLe1FeY7r7z1TDnlD9JDKMhZJTLsZyBwqVbBbgmbeJm7TH8WPS81B29pvcLYbuJDqzY3X6B5@lists.ozlabs.org
-X-Gm-Message-State: AOJu0YwJkw34HaROrSgxQm1xfNqelCltK05hqkS/fRUp79A8O/F7cJSy
-	7KpzdYGQOKg8c/Ly6wCwywOkTs7e/Qp8xFJBdeyxGz1QAqJ+Q/wmVp/z
-X-Gm-Gg: AZuq6aJ5ZxrkaQ7Wfb5s94+sRT1giEipfHj0p/KKklKhVB8UPoEtT2PY0+cfnADN3ly
-	k71qjsG8Y4Z4P9Zx6eyL7X1qE0AndtavJpnMGBVzFFf6Kza6Mb9fT6ZLjx1L1waYBhyhLDtmvrY
-	LYG6LYoMQXzB+cHdKiHPnwCqfYWoutBu38hNL0+uoCuPXrcLXknm2j61DTg805PxwDA7OmrISxg
-	vgFKL7q4VrnTJYwGfMIlxi4n86hWANkOQQ9KWigg6KYsyBHjf098HeFMYXwzLf127UhIMboJLVN
-	iwqBoYuMnUBuuiaGKzD+VBPV4FLu1HpkoFOkyFfnyzOvD46SX/9/uMTwDzGwJb0kSHo7/PlDCS6
-	CT6ZSwpRQ/brT9dvqnwWSf6VVPpHUVuzv3IycWaoeqdRP21XYL6DqprFIlwuRqkBuKBRARvnd/u
-	Re8etsXsaNttLHxeArw8iA0dsAT8h7C8zOuDqlPeNbvFLw
-X-Received: by 2002:a05:600c:16d6:b0:47e:e0b3:2437 with SMTP id 5b1f17b1804b1-4834f6cf029mr24422505e9.5.1770730734144;
-        Tue, 10 Feb 2026 05:38:54 -0800 (PST)
+        bh=iODKpq8SiTOJupDlKbF2WoG4lC9wFyKPKfQ6o0K08dg=;
+        b=VJ6j1KaRFE3sgnUJiaOxA/LJmB3Z84bbNEz6Bbp6z71BHisu3ZLhPKZCKUOG+ZWEvq
+         OmaxFkkTGsnlR5i9jTBzlryqJL6ZpdzoFCIT86eE8gBoZ/S56jv2lXzQqwTP984LDiM7
+         pl0F0o7CnA3WZ+ikw4q3887upke7/1iC4VNO5wqmZu+NwblXjvKVU/NEMIkNU8pAwfNT
+         gZoHJGGVRwQb6OUeAT2Migs4BlnWf2w6K3WDwEJYSrsPt66DiVVmGT27wgnLH2TTkVuO
+         R1UWk/wHZZycA6mbPgW7O86Ns+H+CLxvS79IyFrMXmY5+gbkAGcsmcVD2UHbEK6qxQqL
+         PWGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770730737; x=1771335537;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=iODKpq8SiTOJupDlKbF2WoG4lC9wFyKPKfQ6o0K08dg=;
+        b=F3vsgV98hiONAKRBVy4gef9Qyjk7xU+7kqouOUbTxUxq+klXNp0D4BqGyI3EEfms5k
+         t0RxV6l8JnsSPZnnqFV4Ggwurd5KuvK4uut4bIIEQgdMnGVZbn1YD+ZqTr0Khh412pnB
+         WakwL6ggvekWiusWBc4N0dF7Dmc3EE0gn1qHc/LJhrgc8YXtAcXF0wuvfDj8INtEJmlu
+         V99Af6+uzVg6FqItgU4rFblhXWrjIhyFgG/HbUyQB+4UaSmcUCQD8GPeBgv1XA5mRrP4
+         oqBB1jd//d4sPizYkRSkW6HE2pvRfmuTkpftTkWq90wRRX+nOCNPZ5l1vrd4hyECTQ5K
+         SXig==
+X-Forwarded-Encrypted: i=1; AJvYcCUl/zeFKWZyVQtjYrRl7p+FTlnmUzMbkqppjUBErv6rvCyu8gVrRTCj/NFHCKy3eb5QTfABjfc5@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YwBLw2q2i90//EqcpGXsbyHpuqlCKHLU1+cA1NH+sktts9uxbtn
+	Qe0VpeL2F44Lo7PPdSNWmkK60sNEvbeQydxlHoZX8BjfPO/sOayi/Uds
+X-Gm-Gg: AZuq6aL7yT+VzUNrZOVuZYq/v0UCJ9KtmfhLxvJGGOs7gM2SycO3C5dGjfCpW35QD6R
+	GJim3HC9uLlPVX3J4Za/zI2HT6u2My0AR0muIEMmAUEpsqk0SqcL6SPhFr4IH8ABXleFFw1W0Mh
+	byCZonyrvUpXox3pbbYZsHQ8GP11cIm4ip4giC4BHwgKzbhLD88I+5hFfoKDST9t70QJVDdAn/z
+	9g1CMsTUTisubqD/3k58REsgAhPET4uaAYpHhaauGhMP8xkbTVkjfwCAr+PmmvDu2Ev3oyf0jJE
+	rMCcSYBXIdEYGZaj6OlVpa3xJNLrJOSSTbdHSrbDOPrLhXempPX6IIHqAFYAs9eRL0VLStE/88Y
+	A5wBg7t4DuMeYWMm/xFGBjnstQuyjnpM9mY6/CeaS6JiRF0eY/hqr965J7KXVQVQpLG79VArhcw
+	l9UPRbbDgMxjc8tabl5shPONqOifC+b8w1hw==
+X-Received: by 2002:a05:600c:3e1a:b0:480:1c1c:47d6 with SMTP id 5b1f17b1804b1-483505116camr34660955e9.6.1770730737018;
+        Tue, 10 Feb 2026 05:38:57 -0800 (PST)
 Received: from taln60.nuvoton.co.il ([212.199.177.18])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d8df8sm66773415e9.3.2026.02.10.05.38.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d8df8sm66773415e9.3.2026.02.10.05.38.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 05:38:53 -0800 (PST)
+        Tue, 10 Feb 2026 05:38:56 -0800 (PST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: andrew@codeconstruct.com.au,
 	avifishman70@gmail.com,
@@ -91,10 +93,12 @@ Cc: venture@google.com,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v1 0/2] watchdog: npcm: Add reset status detection support
-Date: Tue, 10 Feb 2026 15:38:41 +0200
-Message-Id: <20260210133843.1078463-1-tmaimon77@gmail.com>
+Subject: [PATCH v1 1/2] dt-bindings: watchdog: Add NPCM reset status support
+Date: Tue, 10 Feb 2026 15:38:42 +0200
+Message-Id: <20260210133843.1078463-2-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260210133843.1078463-1-tmaimon77@gmail.com>
+References: <20260210133843.1078463-1-tmaimon77@gmail.com>
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -141,37 +145,106 @@ X-Spamd-Result: default: False [0.80 / 15.00];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	TAGGED_RCPT(0.00)[openbmc,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1346-lists,openbmc=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1347-lists,openbmc=lfdr.de];
 	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[tmaimon77@gmail.com,openbmc@lists.ozlabs.org];
 	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: CE8A611B4A3
+X-Rspamd-Queue-Id: 11A1711B4C3
 X-Rspamd-Action: no action
 
-This series adds reset status detection support to the NPCM watchdog
-driver for both NPCM7XX (Poleg) and NPCM8XX (Arbel) platforms.
+Add reset status detection for NPCM7XX and NPCM8XX platforms via syscon
+integration. Document syscon property and three configurable reset type
+properties (nuvoton,card-reset-type, nuvoton,ext1-reset-type,
+nuvoton,ext2-reset-type)that map reset signal detection to specific
+reset bit positions.
 
-Patch 1 updates the device-tree bindings to support reset status
-detection on NPCM750 and NPCM8XX platforms. It introduces the
-`nuvoton,card-reset-type`, `nuvoton,ext1-reset-type`, and
-`nuvoton,ext2-reset-type` properties, and integrates the syscon
-interface required for accessing the reset status registers.
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+---
+ .../watchdog/nuvoton,npcm750-wdt.yaml         | 51 ++++++++++++++++++-
+ 1 file changed, 49 insertions(+), 2 deletions(-)
 
-Patch 2 implements the watchdog driver changes, including the reset
-status detection infrastructure and platform restart support for both
-NPCM7XX and NPCM8XX.
-
-Tomer Maimon (2):
-  dt-bindings: watchdog: Add NPCM reset status support
-  watchdog: npcm: Add reset status support
-
- .../watchdog/nuvoton,npcm750-wdt.yaml         |  51 +++++++-
- drivers/watchdog/npcm_wdt.c                   | 110 ++++++++++++++++++
- 2 files changed, 159 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
+index 7aa30f5b5c49..054cc0115af2 100644
+--- a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
++++ b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm750-wdt.yaml
+@@ -12,7 +12,7 @@ maintainers:
+ description:
+   Nuvoton NPCM timer module provides five 24-bit timer counters, and a watchdog.
+   The watchdog supports a pre-timeout interrupt that fires 10ms before the
+-  expiry.
++  expiry and reset status detection via syscon integration.
+ 
+ allOf:
+   - $ref: watchdog.yaml#
+@@ -40,12 +40,55 @@ properties:
+   clock-frequency:
+     description: Frequency in Hz of the clock that drives the NPCM timer.
+ 
++  syscon:
++    description: phandle to the Global Control Register (GCR) syscon node.
++    $ref: /schemas/types.yaml#/definitions/phandle
++
++  nuvoton,card-reset-type:
++    description: Reset type for external card reset signal detection.
++    enum:
++      - porst
++      - corst
++      - wd0
++      - wd1
++      - wd2
++      - sw1
++      - sw2
++      - sw3
++      - sw4
++
++  nuvoton,ext1-reset-type:
++    description: Reset type for external reset signal 1 detection.
++    enum:
++      - porst
++      - corst
++      - wd0
++      - wd1
++      - wd2
++      - sw1
++      - sw2
++      - sw3
++      - sw4
++
++  nuvoton,ext2-reset-type:
++    description: Reset type for external reset signal 2 detection.
++    enum:
++      - porst
++      - corst
++      - wd0
++      - wd1
++      - wd2
++      - sw1
++      - sw2
++      - sw3
++      - sw4
++
+ required:
+   - compatible
+   - reg
+   - interrupts
+ 
+-unevaluatedProperties: false
++additionalProperties: false
+ 
+ examples:
+   - |
+@@ -57,4 +100,8 @@ examples:
+         interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+         reg = <0xf000801c 0x4>;
+         clocks = <&clk NPCM7XX_CLK_TIMER>;
++        syscon = <&gcr>;
++        nuvoton,card-reset-type = "porst";
++        nuvoton,ext1-reset-type = "wd0";
++        nuvoton,ext2-reset-type = "wd2";
+     };
 -- 
 2.34.1
 
