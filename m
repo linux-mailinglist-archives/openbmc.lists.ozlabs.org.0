@@ -1,81 +1,76 @@
-Return-Path: <openbmc+bounces-1363-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1369-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +Mr1LdZgjmnLBwEAu9opvQ
-	(envelope-from <openbmc+bounces-1363-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Fri, 13 Feb 2026 00:23:02 +0100
+	id oNzkOR1MkmkLswEAu9opvQ
+	(envelope-from <openbmc+bounces-1369-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Sun, 15 Feb 2026 23:43:41 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2417D131B5C
-	for <lists+openbmc@lfdr.de>; Fri, 13 Feb 2026 00:23:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EB6C13FEAD
+	for <lists+openbmc@lfdr.de>; Sun, 15 Feb 2026 23:43:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4fBrv55DsZz2xnh;
-	Fri, 13 Feb 2026 10:22:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4fDgsz367sz30FD;
+	Mon, 16 Feb 2026 09:43:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2607:f8b0:4864:20::636"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770900113;
-	cv=none; b=nXLnmCNtn+/t5aAbwdKHgO9NpmjBr8tjnqBHd7fPBx5abRvt1Fxw9L5paw+BjZGBgbNQVempv6P30ztNEbPwiiDiMBygPRJxXi9UPoMEW6etej1ONFI6mE7uPQ6QWPqetEpae2RPE9bK0MAdoITRhsEszo7KbUOyP56fsBtJXDsQNAuEG/fa6fUBt6thk1EdJ+q1BbKbLKjdfrSL6o+cMlv2aG2eXtnhkNzE7lvQd62Jm7HIxsoe82JxBaYNdZONzea0Vy5x8T8zNS57LHUXNb/yVfnZgIkncrODTFSu7RevM9hTZMN12tiRX4yrH5qTv3l8onEIvWRf7t1mkLE8sA==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1770900113; c=relaxed/relaxed;
-	bh=NIZiZtGtHzT/irepT+VZQ4zYZLwWPZLEhQN/aE3V0gU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=m3B2ClA784QLFsZ7a7Mz0gJELyl7fF6vLy98FZC8K4DnExbaTuEvHxO2UcZAcdlPG17nBg5W+TadNwvn2ISgkrVMrCxIo9vp3pilYn6p6Auy25uLUK4/nyA4RBCciwy9+6fwpyQZwf0eThTjbPnrRAGhKZiZbmQ8TZMoStl4cLGXEUwagHAkDSTqYOJ+FtDo+YfdEULCMuhdmaGCpCX6Jr7+Pdi2ndy+W0jN7QI3iNz25/T4ufkP+M51DkNcQPv1w5sHuQdnca7L3BXbjF057j+8sX3YjTKG7jfWvZCaIa/1sdE2nKJIyrKuJD3Rp3m6eldiJTYvPuiMSB5zsFeb7g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WLAOwHSB; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=ustc.gu@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2a01:111:f403:c10d::3" arc.chain=microsoft.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1770966634;
+	cv=pass; b=EeX35iRCo6JQO0chWuZ6GwsPwphJktIcwqRNJCOxxYRZzYGhj9y5C9g1OltYzIighah+SLDrtee2Zt3gPs9AL6gxvc0PUVcJyBZNDaxG/KinQpw4u0znzZPWNtaAdmgJas3ISgZyjCL+ZBZ0Q5tGqsqJPmWA/MwNxSdgz7dr9ggDouubFcLui0JNZCCiEJIbzPLTi6G6dUwOl587CjJxzlenm2yw1KwmZCV1k6JP8wVypA/P++BGBPNE4F5Z8xrBqLnlIGGpSjEsBPceAHpNKYXdioH0tbIQkZVukXsg5uBO0zFlulSGGRaK7CHmJjgwSN4+rzeAfO52f/+QfZnIBw==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1770966634; c=relaxed/relaxed;
+	bh=QwkYJaSuexYDq6xw9TdLOgp+XNTCmGPtSmGEXtdxGOM=;
+	h=From:To:Subject:Date:Message-Id:Content-Type:MIME-Version; b=M6VlDYftdbSKFsXiq0gZUmA2i8ME/uOw1jr6gaEdrE/wW7JVBGc3mApgFy44wklXPAG0d7hU8m3ZOD4c3SpqUNkDHBkQjt4Nz8T6QZF1b2w8cDVU+qP+uOserp3vf4ryLWw47SRiXcCZOl0nCWMsbnrGIMfPWwrnjXVKvbMt7t0b//pDfhrTogDctIC6Y0y9kINXbYDwUE1sbS8/UmTAscXY5Dj5o5CR+3irPTCZs492FBfDFH/3JBEP5mINinMzRRCABQ2g0tdgu7eVKmMrfO8eXIl8rsbnxaTWGD1qMdSSbMGfg7SuienmBjBGhGFOBYOtrPFXhTf/VHTC2+klhQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com; dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=iXyOUm1R; dkim-atps=neutral; spf=pass (client-ip=2a01:111:f403:c10d::3; helo=sn4pr0501cu005.outbound.protection.outlook.com; envelope-from=kchiu@axiado.com; receiver=lists.ozlabs.org) smtp.mailfrom=axiado.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=axiado.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=WLAOwHSB;
+	dkim=pass (2048-bit key; unprotected) header.d=axiado.com header.i=@axiado.com header.a=rsa-sha256 header.s=selector1 header.b=iXyOUm1R;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=ustc.gu@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=axiado.com (client-ip=2a01:111:f403:c10d::3; helo=sn4pr0501cu005.outbound.protection.outlook.com; envelope-from=kchiu@axiado.com; receiver=lists.ozlabs.org)
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazlp170110003.outbound.protection.outlook.com [IPv6:2a01:111:f403:c10d::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange secp256r1 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4fBZgN1P2Cz2xlh
-	for <openbmc@lists.ozlabs.org>; Thu, 12 Feb 2026 23:41:51 +1100 (AEDT)
-Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-2a79998d35aso55795025ad.0
-        for <openbmc@lists.ozlabs.org>; Thu, 12 Feb 2026 04:41:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770900104; x=1771504904; darn=lists.ozlabs.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NIZiZtGtHzT/irepT+VZQ4zYZLwWPZLEhQN/aE3V0gU=;
-        b=WLAOwHSBqXmfAthtIXZa79Ubp/E7ctMkNzLQx0f06aEH3XOjdCAzlhK4/p7Ax1jc/k
-         SACGM+LRNEh27Tzgvm3KGf1mcPoKksG4Xeco77UWg5sOGQOIfKrQtx8gkqmgx71e0/sC
-         AJs79xby21duSFRoaq7XVn6+2MC8zsmU1jzqEUzd1TQBCpDQXxFPuwgcanW6L64/euZB
-         YB8TUAEVIQfEHcHa+6Ii2dvdpX1JjzNs55v5FuXOKAfgY/ahYB7Q2oLtSSx4ENcN8Uyg
-         MUPNZ8Gd1dL6hudYIlKb6kdcDrHzykRmWHitskgxnjX1Kjjst0Xzj/2K5xymv1R4AYlM
-         Xmjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770900104; x=1771504904;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NIZiZtGtHzT/irepT+VZQ4zYZLwWPZLEhQN/aE3V0gU=;
-        b=ZgC0OALMJu8ojLwf0NUuhmaFNVt5qB+V+okb3URtwK0249Lkq8/cEGwE3/fG4ndQNB
-         8H+YM7djVUZ0vY/VYQowlWKvXQyY8O4OSNNSkTpHB5iBt1aieEP6BoRzJLDChdSDvAQV
-         cPmG5aXj7I3I9LAmLLw6ZE3dbFS1r9fBXb1eZli3Hoffmm8aQrbTBIg7FVqY4zSMCzKI
-         C6lDxXe4tSgYt0fs9aVib5XIaXsH8tuTms7f078oC5W+dMbHJITqPAlQY5LYQbD1Zm0P
-         ch4oqsfopxpMZ8QpwDx7dKTFOB9OibyFRf0/VhtvtX6R3meHRGXdzZWMbTbwgsbt6Pno
-         mNpg==
-X-Gm-Message-State: AOJu0YwEVfAnkkTknIKiYiBUWFgrVfSXeoQRu8KrKXKBt7uDyBt+DLXJ
-	MJAf8EDypnrhJE5te/Bc/xI7xld/tpgT/NBzVPtTJMw2sKMguhatyfRQ
-X-Gm-Gg: AZuq6aJRpvKbyJVzpD0YV64OuK4AiiYEVg1JDCvnCHnd70zxR/EpCBARjbjbHFgzeV1
-	V3GsYWgDSmOwBaOn46NcZY5Ja+g8uPlHi+9t6AcPx9QhjDQe0V58DLGpl9Mxd0oYPgB4LUJWW19
-	58vAEj6ZPpZFnCI7xRdlVY93GbjEg8Cyur0J/BfNGZervmeKL2ZMtvfp36AvP6ijc/L5iQ3qSOP
-	IxcBEbKtspqWS+QfDkeJmKAFSGE2D3noerLY0ZQl1iQz43jK/SkWuY73MtyjUOqglBtq4HOVN7J
-	FZKGZeSzAMjy9IKyHs5fVW2g4XU5W2I6n//2A0SdeaFZaemcyzFpAus2gzAX6FpW41cIOsRjqhu
-	GSKklKWY5hyia3YpgGiedyQ/h0MOCy0r0y0fJUttoBD+3a5D6135dBWIK7Xn0UDGu4+/o34fDhn
-	9V5/8zxc9I5K/JxHEf4lIKAtPPgdSZ6/e0kYkk
-X-Received: by 2002:a17:902:d4c3:b0:2aa:dc84:251f with SMTP id d9443c01a7336-2ab398a922amr24090025ad.2.1770900103789;
-        Thu, 12 Feb 2026 04:41:43 -0800 (PST)
-Received: from junjungu-PC.localdomain ([2408:820c:9008:ba52:dc7:da9e:7bba:3b99])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ab29979b13sm49087875ad.61.2026.02.12.04.41.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Feb 2026 04:41:43 -0800 (PST)
-From: Felix Gu <ustc.gu@gmail.com>
-Date: Thu, 12 Feb 2026 20:41:40 +0800
-Subject: [PATCH] spi: wpcm-fiu: Fix potential NULL pointer dereference in
- wpcm_fiu_probe()
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4fC3Gc6QMTz2xdY
+	for <openbmc@lists.ozlabs.org>; Fri, 13 Feb 2026 18:10:32 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ygd/8N13FBJortAByA4+CLuMYEP84C4MnPnCYOB7QXw9nCUwiDHYfvuMqFAFTi4VHBPMhreQZJR9AGnOYsZf6+EaqlykcSycp7Tv8V1TPayuCwRGCH9GSC64L9d5BvVPh3RE+dPdNdhLJPhxWDg6SJt5pPYJZqxSNMyn4P5efvKRAM1FreMBlsSYd7q2ntJ/xBtrEOB71VQZGPMAuRzrOzoS0r2i0XsVfg9LQ7LgKfL4e+GdSNH1YvtOboLY18uxKBd9UVApORm2gdN1g0GL5xOdjLMc/3wCvhussJj6BvDpzfMWJv7cCHRwc+X2G8BNGUrzGpHSF9MpnKBaHGPdUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QwkYJaSuexYDq6xw9TdLOgp+XNTCmGPtSmGEXtdxGOM=;
+ b=JU4UpF8MAUmOXQ8/hPEyCfHGRq4o+JsIuQvK/pM0200Z6l3A/MGzPDwt6x3poS8LeORyX//2Nt7kMLwdgcpwUhaLcrYp4Qx+6YK7Zc0l6bb7T2Mo+IdneucD++PZbaGTjuZqQWtNXKQN1iYcHN9V7JSYk8mR4RvS+tKTTfRiTrG6vPqoteTdvdd/+amskKoCVzaWm+lFyEwuwhQc5DtaFhyek7ciPgGxHnAWc16z4v7Rbxe4HpNWVoCBSx71rzfaFcEF9Sf00cBYXXovsBXnYPtmA5YbAUxKvmAKke9HNuEPvgT4WXY7k2DgSW9BV03h5QS5AMqPVjEq97XI3a7oKg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QwkYJaSuexYDq6xw9TdLOgp+XNTCmGPtSmGEXtdxGOM=;
+ b=iXyOUm1R2+d55IFoFhEu42732vZMOLao6qPin2XWt+G8W8Q6hSVxVDwSJqc/bVkj8TuCHb3/1tv+SSm6xRWoZ3Dgr88Q3nAM1+zSUefwEGY2npTwTN6utWVIBCGimGjbXq9x1su8Nr4ijOzH4b73qE6jhW6HoQDZ1DqGynXNFgXGb5jIZUXxjFqSZCa9lrFRhlXvp/8p1xpbhjsfm/jXgYj57htoXYNTPTh+/bss0qZfWSUeqrLoIeM4/hDu0w5BW+EUW/mb5AvgyK8x2q3bbPajjihUYMsG0yw6IMDtMXPZc7/CjFjc6G6HuTBMVHEyHmUKecpLj0w8NkIrFglSKA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by BN9PR18MB4121.namprd18.prod.outlook.com (2603:10b6:408:132::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.10; Fri, 13 Feb
+ 2026 07:10:04 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::2bc8:6a5c:b10f:9e21]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::2bc8:6a5c:b10f:9e21%3]) with mapi id 15.20.9611.012; Fri, 13 Feb 2026
+ 07:10:03 +0000
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: openbmc@lists.ozlabs.org,
+	joel@jms.id.au,
+	andrew@codeconstruct.com.au
+Subject: [PATCH linux dev-6.18 v1 0/3] Axiado AX3000 SoC SPI DB controller driver
+Date: Thu, 12 Feb 2026 23:09:24 -0800
+Message-Id: <20260213070927.1114371-1-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH8P221CA0018.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d8::19) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -87,102 +82,145 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260212-wpcm-v1-1-5b7c4f526aac@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIPKjWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDI0Mj3fKC5FzdFAuzNHMzczNDMxNTJaDSgqLUtMwKsDHRsbW1AOx28a1
- WAAAA
-X-Change-ID: 20260212-wpcm-d86f76761645
-To: =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
- Mark Brown <broonie@kernel.org>
-Cc: openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Felix Gu <ustc.gu@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770900102; l=1414;
- i=ustc.gu@gmail.com; h=from:subject:message-id;
- bh=EkBsQjHkvpT+EDzlTJQoxDY16uNrl2PUIqqeXh4h1+I=;
- b=BBb4/US8KhK9xEjwgm+JhoNpUwUaYp/aSYN8vFEydw0Kn85dWRKlCrGmjTK+xqoauYss/QjW7
- IePX0f8tTVWAekP85XxHNtVHDcn2ylipgiSiNTKP6nUKjBDB+LmTiAm
-X-Developer-Key: i=ustc.gu@gmail.com; a=ed25519;
- pk=fjUXwmjchVN7Ja6KGP55IXOzFeCl9edaHoQIEUA+/hw=
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,
-	SPF_HELO_NONE,SPF_PASS autolearn=disabled version=4.0.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|BN9PR18MB4121:EE_
+X-MS-Office365-Filtering-Correlation-Id: 04b135a2-cbf2-4264-74c4-08de6acee861
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|52116014|1800799024|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?D4WeoqGBAWYx4XzaAWAINlXlM5F8Lzx948j/hsaCGqbHkGJE4L3y+qRJHKwi?=
+ =?us-ascii?Q?ccSmG/IxOwzzq28wwZYToKX/jKll/60u4/pZY/e/aCl5NMq/UPtWd0rZT5qn?=
+ =?us-ascii?Q?NFZJnyVBO/lENZrNfJ0D+HdgUogCYnmxxrY74+1hfKLkhCOzshMCdEUPecvT?=
+ =?us-ascii?Q?EJcUseMU+c0izuN3wHV8+fOkByTtXYw3KXz60sEgWNEsYfw6YZ1RB++35sGB?=
+ =?us-ascii?Q?TyyeNmzvnYY0EaL1u1u5tc320OdWxcfNIfB8nSBSqHYJdNFii7fXA7T68gLP?=
+ =?us-ascii?Q?irMK6uqk6snBEuioUZARWxsDkPa9xtEDSldWVE5uV2TdKFP9IoeicEtj9hXH?=
+ =?us-ascii?Q?39rlkwmO2YcAFqUFa2HkAkgWe0KPjRklLDsyvb8rmC79AqjnZHvKx4yB0W2i?=
+ =?us-ascii?Q?Kjbqf1j4d7ubeUXXHhCaiyX+Ct0rcanjCMJqaVkv+3oPdQ2CrKVLJZrVdX/k?=
+ =?us-ascii?Q?MpNUStNgp6giBMhaNK78U+B0d6lZfMQG4weA9kRrAB6aKtSBdUkxRc0FaJjW?=
+ =?us-ascii?Q?ODMD5Tt/viKN3qBTm4eYIbczRyVROAYOwuUINxkXDSxIK1U66zQjJ3LtGqe5?=
+ =?us-ascii?Q?WmdJQmR84/wp0sN/WI5nKyLRX2peG86bYUXmHCTrr+ZnuwDPPIUbFvtZ0Zzh?=
+ =?us-ascii?Q?ucJCs3OQE11UtlftZEFnr0eDkkdHEJxI1p4Vv+RuAw/5E5r8R6ewXpineMXs?=
+ =?us-ascii?Q?E7NI0XMqlBsZtk8Nk4eaiz1DNVEDpldXpY0XChmOAoAA8rl73tmQjLVmblhZ?=
+ =?us-ascii?Q?DNE7sNbWLuKFeTkU3rWoNzx76mrKSYLxM+i9ZoQnD0+W4qa3/jO/vJcYFsAu?=
+ =?us-ascii?Q?ARE/yUGczeTWhk1T+at5Z208/Mx3wM72kiHQwIlWk0zuBMKG11m6Zb4rnPQ0?=
+ =?us-ascii?Q?Bx/d+v3JqQ3UoU8Rg1CTfXn3jnyXw8lh3syMOkZhOXi6Qa6gbIjjwZwZRJr2?=
+ =?us-ascii?Q?Tqa6r/t6wZFdZJgSEsm+b/R4UqBO2edRiqVCB9pOI7ANEX6A1B6MGfFm5PQ1?=
+ =?us-ascii?Q?Q/l5QbpPd/NMAEyt/r19bv0+yitewnnFKZjWIfTOCRcsIguLkzZAWiE6Dc9e?=
+ =?us-ascii?Q?9tc4bHAKiFoRtbkdCg75QdlG6aOAkUAArSwGnR+coeaGizolW4eu6UpeVbF+?=
+ =?us-ascii?Q?PLFB352hax4VOjSWY+Q/bSJcLxZ0YUrBTQe5Lh0w1Tx8OQ6h/TOwS5sGEBHO?=
+ =?us-ascii?Q?wN0vkL1Hv1cZ2IcewGHpGqBIAJwRUVRh+T3eyKXoSH4zneCUcXInVLeLKiws?=
+ =?us-ascii?Q?/IjFQv7sqnujQ3/C8T5Cb4IwI9G1b8i1I9xBzBTAB6F44nfSEI6Qaa7S3W5Z?=
+ =?us-ascii?Q?FM2VkI6DXfPrP687TP9J+eU7O7BxFxfSY9/H5A6js7ftK3yGpUYiFxFl+C3T?=
+ =?us-ascii?Q?7GzO8K/Zr5aGCsSKS8Bu0H91GrKqaeitJ8Tn0vn6ahkAfqdIL/s2EQEQn6Ym?=
+ =?us-ascii?Q?cXOmrO9suYZloJ4bUDejCZkMijoNiMaVCQzYfzQPYGe8AGzTgSjpFuJcR73+?=
+ =?us-ascii?Q?b1ZgdKId79Xsr6oZxLiadtzo7bY93QSvf5JFWUnmnWtob57xU+OHvS566Tuu?=
+ =?us-ascii?Q?TlY/IcBJwESJbE2SeAU0CRhxVIAkhTJGBX/HkdsDlMkEMr72wg42ZlPIdyXc?=
+ =?us-ascii?Q?e+UkBbe4RVgpAhcgGETmQq4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR18MB4479.namprd18.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(52116014)(1800799024)(38350700014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kEv9JuFuYf3XED1bJxWYpZW22XLl7A991vDIgiGsiT7+c8PsuT9rvYiXxEoR?=
+ =?us-ascii?Q?OM3fVMsqnJgmhZ8vFcwd8mKen1Z6LCqrLV6SPEJitlwUePHzNzCnlaKiRWIq?=
+ =?us-ascii?Q?WZ4vrY9NIeQNnNZ2Q94x1ps82J0rYlp2EDS8H7LW+lZa/pbPgDAPWoXcLezz?=
+ =?us-ascii?Q?r2uD0zKbH87EX3qA/4AndhDL9Mv0VPqnGkLPqzjobJCtn2JDYraXrsdpcZou?=
+ =?us-ascii?Q?rhv+Sio7VnbqWdmU3JFEvVPvEMo1Cowj4ys02fQNN+Nq/YpWaPT/GO2out3K?=
+ =?us-ascii?Q?Kf0ohv5WYyqrC9PAbhBHOqQ5s2VKIsc2N8GC6vpfVLplVhGMwEsRSHs44lR6?=
+ =?us-ascii?Q?WO6AhDnRMc4HpEFNgsGjWg20LzSwj5FB4nUsSEOVDUEoiew7dWuAf1mNj5ui?=
+ =?us-ascii?Q?yBEwQ9tPnPEkttvOriifcvAyzjX/LU93awXejRfNyJcAHTB+hHdrX8JCtFa+?=
+ =?us-ascii?Q?PqJnfkeoUdlDqcqr8wxXp7kiqrqeq0Edwfw5D/4hqCLvZXBwZJKQfpeFinWa?=
+ =?us-ascii?Q?K9vZU/fUtydZSSotYFYHqSUBsz0/v4q2pR+KU2qbSEkiXRDUvb51ReIrZLrC?=
+ =?us-ascii?Q?yjIEQFmvXbo6EXzo38MOShy1wL2S5ifBj/EJdC50WhzjLGqfQZaXRJpzrCwY?=
+ =?us-ascii?Q?ejzweod0aT+CHyYP/epIHviEUKSW7ncZ29tNO1CQ2SGqSF6o6zZdAdGX96St?=
+ =?us-ascii?Q?GCzDaPkrLbrxEl1tbj/gGG0zkwcwvudqdaXyrzqbETR2QcqPiHCrYg1uMshq?=
+ =?us-ascii?Q?9x1axsU4CY9dNlQ0a0REq6CM2dIpLux9q0X8n+/iH5dN69p43AffIsFnpnM5?=
+ =?us-ascii?Q?aUMrBAEhqFMons4IWaZcG19qOSIBwsWf9iJkpl7E9iG62PE7AmTmw2MQxT7o?=
+ =?us-ascii?Q?9oi0OP+BUMhZC+YzcPYwZxehX1VEJqvVCP3ONH3UNwMl5kcDOGoQ4BNup434?=
+ =?us-ascii?Q?zhileiQ3m6DMKPrsp4W810fmdr0PgdRrtt0zlSFAp3Vkk+UlvmqWiFJTiDb5?=
+ =?us-ascii?Q?s010zvghMXwsKq8444T4qo9bdlj2j/zMznWMTSRFAXGOEe1a9uR98r9C0gc4?=
+ =?us-ascii?Q?rEqOyoR3/Ra1GUn8XhmxoymTtte9pYXmAssKOlBU7DfMZKgVWR8mqQmXDzMb?=
+ =?us-ascii?Q?75rohShj780N6izryTeumWt7gsvD0h9LrLJ2NR0qZq+D/tNjkwqWQhhKAUSm?=
+ =?us-ascii?Q?bCock2jf1MLVvXXKv7CtXA+cOQQXF/VSgWoNyorUsG+5qcGGEZMnhlR8Y25y?=
+ =?us-ascii?Q?LDNZusly6O0BuuzpIPNHK4+YBlaLYNt39plKrtBpNMNMFSJRBMOuOBE2G2hk?=
+ =?us-ascii?Q?sFeoZzFgv6Ltwki1mpPnlr6jeZZwEbViymUwRusc3BvJA2f+TCyZiH/fJ+0E?=
+ =?us-ascii?Q?744G4tkqQATJvQt0CzFmcptS4bWG71T/CDppk2gFzRXdV6Xy5ONjpiPpJkez?=
+ =?us-ascii?Q?JU4yPGZ517pab3UBG6LiYTrQPS0Kuq6mw1Pl01W6Pl+kx9UVe3drfBBEqeiK?=
+ =?us-ascii?Q?nusyNaahVGTnLUcZpgfU/3xHV1PGTPidg2s06XMJh1PRlsnruSo2uTZjxEMF?=
+ =?us-ascii?Q?2/LZabVbyXAEZbwbCEtszWrU3B0ozrA8SjzP6xkPUISo6bfPBBHPoM17tQP7?=
+ =?us-ascii?Q?PYn/RaVrJdhTz3cVd6WHJchF+uJiD7EmTgT0RgJ4yRmPB9atz6HCfwJHN8KU?=
+ =?us-ascii?Q?35bQY+DFqdsyjgCDSnqkcJX4zMu2p62aW8u6ejae6TPqUm0l?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04b135a2-cbf2-4264-74c4-08de6acee861
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 07:10:03.5220
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uBu6z5Hdn7oRpIww9kA4k7TyAIYa3VdKw3vI032NNlBHvBwsWddKJgg0rJxP9wNjN2pW0JXE5hnr7mojrBS/3Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR18MB4121
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,
+	SPF_PASS autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.70 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+X-Spamd-Result: default: False [0.80 / 15.00];
+	DATE_IN_PAST(1.00)[63];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
+	R_DKIM_ALLOW(-0.20)[axiado.com:s=selector1];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-1369-lists,openbmc=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:j.neuschaefer@gmx.net,m:broonie@kernel.org,m:openbmc@lists.ozlabs.org,m:linux-spi@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ustc.gu@gmail.com,m:ustcgu@gmail.com,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[gmx.net,kernel.org];
-	FORGED_SENDER(0.00)[ustcgu@gmail.com,openbmc@lists.ozlabs.org];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1363-lists,openbmc=lfdr.de];
+	DMARC_NA(0.00)[axiado.com];
+	RCPT_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	FROM_NEQ_ENVFROM(0.00)[kchiu@axiado.com,openbmc@lists.ozlabs.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ustcgu@gmail.com,openbmc@lists.ozlabs.org];
-	FREEMAIL_CC(0.00)[lists.ozlabs.org,vger.kernel.org,gmail.com];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[axiado.com:+];
+	TO_DN_NONE(0.00)[];
 	TAGGED_RCPT(0.00)[openbmc];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	RCPT_COUNT_FIVE(0.00)[6]
-X-Rspamd-Queue-Id: 2417D131B5C
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[axiado.com:mid,axiado.com:dkim]
+X-Rspamd-Queue-Id: 3EB6C13FEAD
 X-Rspamd-Action: no action
 
-platform_get_resource_byname() can return NULL, which would cause a crash
-when passed the pointer to resource_size().
+This patch series introduces new SPI controller driver for Axiado AX3000 SoC and its evaluation board.
 
-Move the fiu->memory_size assignment after the error check for
-devm_ioremap_resource() to prevent the potential NULL pointer dereference.
+The SPI controller provides:
+- Full-duplex and half-duplex transfer support
+- Configurable clock polarity and phase
+- Interrupt-driven
 
-Fixes: 9838c182471e ("spi: wpcm-fiu: Add direct map support")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
----
- drivers/spi/spi-wpcm-fiu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Vladimir Moravcevic (3):
+  spi: dt-bindings: axiado,ax3000-spi: Add binding for Axiado SPI DB
+    controller
+  spi: axiado: Add driver for Axiado SPI DB controller
+  MAINTAINERS: Add entries for the Axiado SPI DB controller
 
-diff --git a/drivers/spi/spi-wpcm-fiu.c b/drivers/spi/spi-wpcm-fiu.c
-index 0e3ee5516587..0e26ff178505 100644
---- a/drivers/spi/spi-wpcm-fiu.c
-+++ b/drivers/spi/spi-wpcm-fiu.c
-@@ -459,11 +459,11 @@ static int wpcm_fiu_probe(struct platform_device *pdev)
- 
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "memory");
- 	fiu->memory = devm_ioremap_resource(dev, res);
--	fiu->memory_size = min_t(size_t, resource_size(res), MAX_MEMORY_SIZE_TOTAL);
- 	if (IS_ERR(fiu->memory))
- 		return dev_err_probe(dev, PTR_ERR(fiu->memory),
- 			       "Failed to map flash memory window\n");
- 
-+	fiu->memory_size = min_t(size_t, resource_size(res), MAX_MEMORY_SIZE_TOTAL);
- 	fiu->shm_regmap = syscon_regmap_lookup_by_phandle_optional(dev->of_node, "nuvoton,shm");
- 
- 	wpcm_fiu_hw_init(fiu);
+ .../bindings/spi/axiado,ax3000-spi.yaml       |   73 ++
+ MAINTAINERS                                   |   11 +
+ drivers/spi/Kconfig                           |   10 +
+ drivers/spi/Makefile                          |    1 +
+ drivers/spi/spi-axiado.c                      | 1007 +++++++++++++++++
+ drivers/spi/spi-axiado.h                      |  133 +++
+ 6 files changed, 1235 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/axiado,ax3000-spi.yaml
+ create mode 100644 drivers/spi/spi-axiado.c
+ create mode 100644 drivers/spi/spi-axiado.h
 
----
-base-commit: 9152bc8cebcb14dc16b03ec81f2377ee8ce12268
-change-id: 20260212-wpcm-d86f76761645
-
-Best regards,
 -- 
-Felix Gu <ustc.gu@gmail.com>
+2.34.1
 
 
