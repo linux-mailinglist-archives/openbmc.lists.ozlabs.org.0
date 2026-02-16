@@ -1,98 +1,110 @@
-Return-Path: <openbmc+bounces-1366-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1382-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yIa1HgD2kWl4ogEAu9opvQ
-	(envelope-from <openbmc+bounces-1366-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Sun, 15 Feb 2026 17:36:16 +0100
+	id 8rnsIUaek2lB7AEAu9opvQ
+	(envelope-from <openbmc+bounces-1382-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 16 Feb 2026 23:46:30 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A793413F1B2
-	for <lists+openbmc@lfdr.de>; Sun, 15 Feb 2026 17:36:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A4B4147F50
+	for <lists+openbmc@lfdr.de>; Mon, 16 Feb 2026 23:46:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4fDWkK6fqpz2xlw;
-	Mon, 16 Feb 2026 03:36:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4fFHv3640Kz2xm3;
+	Tue, 17 Feb 2026 09:46:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2a00:1450:4864:20::436"
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1771173369;
-	cv=none; b=eKwnR4YSj3j5AVK+TaNjxUDM7xrxj54wI6F8NJEXaTOGCGfcBxg5lQnE3b0TOuRBwQE3yC1MjctnuaUGsHWZx2D+TPCOP56e+F6/ZtLqUlKBY9zr+1kEV8knFwALsaHg8mV0m4ZiMSk1Zhd/Lj2BUKl3JW/I885jzHobUxA7pxDh9DFLswATln4PODfXubPENv7RanYkiHwbIa4r24RvQAyeoYCqGCPWKLyayQjbCV7TroIo0x3WoO5f4uxlTbwepAws0eHqn1Z0nLVbhABIu68xnnZPzhBzTBOEGxQ15DTNb3gw2tegs2eWtG0iDLOh10rZQFqXHzWR0Jq7Mdv7/g==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=205.220.180.131
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1771232321;
+	cv=none; b=LfGrod20MY2Cc9MKZ+9EHsX/FNBlzguyI7XeceDbnBO340gHVLGkYT4DqTWlFuc3NR30POtoUfWTCjshBG7fgcPwQ4NyoUItUvt7Rnxe375kv4nMyiZ1guZCX1Si8oueZ0zEEtgRfM/X751qWtAHUnJJJxuNXx6DKphG7uKW7L+ccwIBCoZoJhI0mhdkHGwUvfkCyR5EMPQy20BeQJMgOZ7WYuFTfsEp3kaXCTYIQ7Klr5wUXkZPCZoSXIpSrNh5Mq+lwxgCbTZJI3q8ObGBAfOkK9ikKoy1iN3To+1T/5UNdIj7OEgy/402Rk45GQSGiDp65DNFvi4w2TxKChw9lw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1771173369; c=relaxed/relaxed;
-	bh=Rkgk08i2VDNmIlHOtwetmTzX3cu5OCSN90qqnNHKmCo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XbX6gD0pHaxBxMvdc8eBmhnrdaHV8qdRQUIA9mbhuSt6krD9p1g5w0aUBB3vYHsTkf3oDqqOoFoQLLHiQ2tBp0MXZQ8W+nM6AUEYrX6ICWrR4Z52JrnqOtZ0AGKrWzgGrxVWALpqfUvbJLJs5+8MR44DTFHK0YCrcNbEvYaQvURWfRFdpFmPAn5af9WBdGxZ8mJTBCyL6/ZtHD80jD0Bu5XEScpcVd1FnonvGVaMJESXY9+lJkQs+ZxCFQVARWG4LRVcqaMRkxkoUPf/VPJDfeZlMCLvQKfeYzIufuT4WzsU/FTTQvkdCAdcFNavWDFWawdP3HqU+upoyfsZfxde2A==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NL/aBeaY; dkim-atps=neutral; spf=pass (client-ip=2a00:1450:4864:20::436; helo=mail-wr1-x436.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	t=1771232321; c=relaxed/relaxed;
+	bh=9mdP1sEEv3DicMUKY7bSjSANFfPYJzLjnK0jreJ9ZYc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ApU2Z9YBR+Ln2KOWt/NHOBEIPRjh4FWHwZPI/oVqugGyF2RCegQy5vfNfcGftX1y32mT1PojyUDVu9qSNq3N5+DJlaydgsLXpFBnh//dgjgPGQPWT+ObNSn4VPw+S2yUyzY+j1NuWHM3eqhVFuWQMDU2YPlVnEMfLuDiYYVXgF+Blg0Gerft2dTwMoIEsE1Jm6ijdRSlmtbY5qoTbybA+5ZQRxc4RkDqVUk1EsoF8iAnRKQxZco1xwq2j7KXjbeXNUUY9Bd6G9qumKIXSq3meU750f1OzVZ1Jclat1YX3zbAHxhayoIRjnpK1qdTWAkRyWTEwMCKLkQfidrpjAaxBg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; dkim=pass (2048-bit key; unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pI0PCEaq; dkim=pass (2048-bit key; unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CWQd+m7f; dkim-atps=neutral; spf=pass (client-ip=205.220.180.131; helo=mx0b-0031df01.pphosted.com; envelope-from=krzysztof.kozlowski@oss.qualcomm.com; receiver=lists.ozlabs.org) smtp.mailfrom=oss.qualcomm.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NL/aBeaY;
+	dkim=pass (2048-bit key; unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pI0PCEaq;
+	dkim=pass (2048-bit key; unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CWQd+m7f;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::436; helo=mail-wr1-x436.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=oss.qualcomm.com (client-ip=205.220.180.131; helo=mx0b-0031df01.pphosted.com; envelope-from=krzysztof.kozlowski@oss.qualcomm.com; receiver=lists.ozlabs.org)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4fDWkH4Yhvz2xlm
-	for <openbmc@lists.ozlabs.org>; Mon, 16 Feb 2026 03:36:06 +1100 (AEDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-436309f1ad7so1975746f8f.3
-        for <openbmc@lists.ozlabs.org>; Sun, 15 Feb 2026 08:36:06 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4fDxX01JzMz2xN4
+	for <openbmc@lists.ozlabs.org>; Mon, 16 Feb 2026 19:58:37 +1100 (AEDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61G1iD9V2108540
+	for <openbmc@lists.ozlabs.org>; Mon, 16 Feb 2026 08:58:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=9mdP1sEEv3DicMUKY7bSjSANFfPYJzLjnK0
+	jreJ9ZYc=; b=pI0PCEaq6yuacdESyQI3Xxu5yUgIKlr1pbhByXdK2cpGfdymriL
+	1upMcvYNJS8w/ZU/kA0Sz3oQHDbeIjMiv8hfpmVH8ETEhzjR9wxqaFQDGsSR8HyQ
+	Y1jvlPveJNCi7oxAqLaHgPad1jtQOf1gfImtjH0jWjwtpzEYbDfTny4UgvexHfS+
+	BJ3IEwr3kSI/Mw9czgw9ErBy8WEyFaB9ZY7tsb67991r/y/9O+SUBIeFvgZfaOhe
+	HWyvtXdNq2GPHLoiHsbP0joOIjYwFWTahPoMazEu6GAr8IWYA4YpqqxVHV7sKPTc
+	53MeTb8NImYTGI5oF/w53QdnGGZvTZZqfZg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cbnv9h2us-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Mon, 16 Feb 2026 08:58:30 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb390a0c4eso2591798785a.1
+        for <openbmc@lists.ozlabs.org>; Mon, 16 Feb 2026 00:58:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771173358; x=1771778158; darn=lists.ozlabs.org;
+        d=oss.qualcomm.com; s=google; t=1771232310; x=1771837110; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rkgk08i2VDNmIlHOtwetmTzX3cu5OCSN90qqnNHKmCo=;
-        b=NL/aBeaYYSziAD2k0SYTYpAhpy2v8pOjb9ZkitovZbmuJ7Pmrw7/zBfQdswGQ0WLjz
-         1wNJ6HlYOYZt4K/vmJ6Or4X7a+IeeSl8amzvY/A6AyFdaKAlINxprJlHCFwqnKxyug9h
-         bwuJPR3g/OGmxgSkwVlqZau67KQSHhonLOqS3ZJEgaYnXC6jOlATVwIQaXvU7K5WW7Qd
-         HNDEVqKKv7KJUK1NvPggz03NowzopttSa+QM6+/EeU9ttKD0Cw24yJCXebOrO+VF4Z75
-         GOr0e9xlkp+bxmyFaW7qVkhmjDgFrdclRXR22bB2X6pRm4f2RKuthSG1nSWmHQH0kjhQ
-         3opw==
+        bh=9mdP1sEEv3DicMUKY7bSjSANFfPYJzLjnK0jreJ9ZYc=;
+        b=CWQd+m7fX/NPUbJYAs3eD7DZCHRmbJ20bvlg76wBL19F5fu8stIFiZi4WE6UTTeNfK
+         ET25p433d/RY3x00GUYm+okEC7gO6NolFJtPRM3JhnoQDbhyhzgpxtp9X8gjx0CytGRP
+         rk1RMwlTgGXotiSii0cpi0yxBYasskspNoQayTs/MmsyPmafJhJpmSyTjb7LsxCt7iub
+         TYvoZDMuLqpdcBPVVTGJT+Tj1RSdoi3FUtTrZ3PsOu9Bvg2jX+33XaWMmDrXr8IuBAuD
+         /B5uvuM+2Bfs8kpLs1iFe1h4n85bqyIHEbjD/6PQJkYzgyW5d3h7sduNhSzX4LgOifhD
+         wNjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771173358; x=1771778158;
+        d=1e100.net; s=20230601; t=1771232310; x=1771837110;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Rkgk08i2VDNmIlHOtwetmTzX3cu5OCSN90qqnNHKmCo=;
-        b=Z/Efowireja6o6FEuqqTYAXLZ8U+kQ3cVC3A/jFfwuuU0b4IOPku7AVDr+To5nrBSI
-         ziDdjbo/Se7Fi5QmIrnpXW6jFXysbkQxRb9HOlcf+Ql+CL4XLXHhUGIAH/oG5XTrwwPs
-         FqCn/zAmlr6dvcDybWJlQTBrgDMmuwM42ewVC+gpBS5/+TTzeW4KZU622cULoM4G8i/g
-         zsTKE+9nYM92JEFsdKpVvZIOq8Jcwur8+Dk+9Mn5+4oMtxfH6ayjfb7HB/ARnk/DpWks
-         31iGS5dIAcVlgRdkIFPMp8OnYQVm6Uk/5taOyvzspOk/SGCoAqVyoBMtU9GBU/4dZCIN
-         7fvg==
-X-Forwarded-Encrypted: i=1; AJvYcCUBjIoRdNxVAwzbc9AfWdy+8hcEoEc2/NrnacnheEwj6+qz595bu3Eti8oUR0xN9aigpgRROhsm@lists.ozlabs.org
-X-Gm-Message-State: AOJu0Yx1y3HzSOcEuAnbF29Sx3NzSzpt7DzO6vX+3NnaDxmSv3Wfr7z1
-	EgwVCPDcw2wgym+CbShcO/njHan+HPzKaVRwB1TrqTySQA3VssIU3sQc
-X-Gm-Gg: AZuq6aIV3I7DVXCo1L8kaF1JRTWAFSVEu44F16RzgMzOfjoiYugWhd3jmDW0r6JSCxy
-	5X9sNNJySkJwErk3wxS+hLeZF9FGvojDY8I0g1F35JbOif5Ez9oh2NJvW+NwyRy/FRI5Zo+1Izd
-	kmvzNH5RuNL2ycbWl5fJtQNvXX/eql2Sbp7bne8LgCTSiHP8D5TP/BMURpcfmJrBykPEtd8Jfmh
-	B3M2+crQMfWrIypq0JUfFDrq9BczCRwUcXGleI+AXDV8VF2z7RfVEuc+XdfRhgdF18fObwAXqmL
-	z4mGde8MCvjZwDygdVjjQsjjUTOjpy3jRvSZCMD35yeSp22RtL/FQ+x0hC/re3f+BwLr047ByZN
-	2YlOAkssBI4jSKqCDyGbkgO5RboPflMwOdnf13iHta4bP3/2ik48vvL3Z6+9JvEr0OZ6ISOOW7n
-	4DUT6Hbe/uxB1Ay2d2ciIorlvq9Y1KuBCHeQ==
-X-Received: by 2002:a05:6000:2901:b0:435:7154:2a7 with SMTP id ffacd0b85a97d-4379db3411emr7986116f8f.6.1771173357710;
-        Sun, 15 Feb 2026 08:35:57 -0800 (PST)
-Received: from taln60.nuvoton.co.il ([212.199.177.18])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43796ac8209sm22085970f8f.30.2026.02.15.08.35.55
+        bh=9mdP1sEEv3DicMUKY7bSjSANFfPYJzLjnK0jreJ9ZYc=;
+        b=iexBazaDQK7l/bbk9Pp6yeQJB8BqBVPTd1bR6OcPYTy5uK7EaD679whqlkxeac225a
+         ES+g9DYkN8N/UEaPANJFhsUkKxnQKJogU+BLcCxNahFJo7Nf6D6k8WFvP00cAlGj7LP2
+         UKPbn+wq8iV5lw0v+qsBbRL66iwmW8U4PUw7mao1pKou+OxSEFBJ1NtKaKIsoiZvU0vy
+         Fn5zCTnAF8eonr26MLeLjVmD9HZU6VCCkFIRorvm/gNNC/m8B0yVpyEEkReofB2HUO5x
+         wqxKkx+PnzsHsSejEd84t+VG8/bPa+SxUmIXbcx2Asex3EU5Q1DJ9ugn6J3/TPPxFQsQ
+         aERQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCe4RmISCWoLO/5rrGGz48+y2RExklWBir/GjJ/L0i7AQE/sDJh88sYakRKTcgsJ0UhkYMFPa4@lists.ozlabs.org
+X-Gm-Message-State: AOJu0YydvgcwIYwxlxJmU8f40M1Y3korFsaoC1L2nZmQwDWQvMsf1o9I
+	cxetxwwz8QzPRxjEdqfmDukqZIG5sEFI5B5VeY5qBfC1s4fQXQSubGRpzVzJaDkRY6m1Y2jRaE1
+	JM8Y5A6gvA/+cvGDqA4tHEfw0gqOwq7ffiSOg+DziZYZthMlc2cbmu6+pzifCfA==
+X-Gm-Gg: AZuq6aL5CtwWfB8IsDtIaHQn6ZAdGc8yci6IQdzhNTA+/2RIT2ANpsnWijhXfKtEqs3
+	hBKB9PM7Ufg33bRFa8eEJMt0Ytz3tYz7hktqHCPvUEz1yMOEi/0j5CBCnCStYUntVqZIU//aIvb
+	0uZbIVcUzP6Yyt7S0n5H+LR7/W1GqqSldbHMRlrJy6efaHBcAUn5TLxr9kaqbcyyqLUX8+/ce9L
+	b0LJq0d0Qouh28Vzyy0mxVrFdSrBw6YLeb0qOWkELm1VHvjOfAeovWI1A2yD975QuVoSellnHrc
+	lqTqeyAvYWQRyGQfNIfw/S3XIo3f9ZMNR5X3NmRv69pbgDYE0jUZDbcLHXWpairp9Am3oguvvGi
+	c1Bx6MthpRDFCBVL6fMA2mGGPNIQTy0zgxN7Y8w==
+X-Received: by 2002:a05:620a:4487:b0:89f:8bb8:c103 with SMTP id af79cd13be357-8cb4bff2bd4mr845019285a.49.1771232310060;
+        Mon, 16 Feb 2026 00:58:30 -0800 (PST)
+X-Received: by 2002:a05:620a:4487:b0:89f:8bb8:c103 with SMTP id af79cd13be357-8cb4bff2bd4mr845017585a.49.1771232309653;
+        Mon, 16 Feb 2026 00:58:29 -0800 (PST)
+Received: from quoll ([178.197.223.140])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835dcfafcdsm644400165e9.9.2026.02.16.00.58.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Feb 2026 08:35:57 -0800 (PST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: andrew@codeconstruct.com.au,
-	avifishman70@gmail.com,
-	tali.perry1@gmail.com,
-	linux@roeck-us.net,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com,
-	openbmc@lists.ozlabs.org,
-	linux-hwmon@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v2] dt-bindings: hwmon: convert npcm750-pwm-fan to DT schema
-Date: Sun, 15 Feb 2026 18:35:53 +0200
-Message-Id: <20260215163553.1334475-1-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        Mon, 16 Feb 2026 00:58:29 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
+        Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+        Benjamin Fair <benjaminfair@google.com>,
+        Andi Shyti <andi.shyti@kernel.org>, openbmc@lists.ozlabs.org,
+        linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH] i2c: npcm7xx: Use NULL instead of 0 for pointer
+Date: Mon, 16 Feb 2026 09:58:26 +0100
+Message-ID: <20260216085825.70568-2-krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: git-send-email 2.51.0
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -104,320 +116,109 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=0.1 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
-	version=4.0.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=929; i=krzysztof.kozlowski@oss.qualcomm.com;
+ h=from:subject; bh=SpvqgitAm5DBJSVPgUSEucLUHNRZc2U0J5AJUKtXN0Y=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpktwxbeX3OO3EWdHHHK0tcuimC80VWGXUHBWb/
+ TcNUsr+0x2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaZLcMQAKCRDBN2bmhouD
+ 10wDD/9aOai/6YTX7krBZ4deU7lzy8oIaMnkFJiPfNFcD74mDJvAb0xMBxiT2xykteztHQHyhlJ
+ 7QBZsq/F9vhzh+jHHsqi+NNRxY7BRukmUW+Yy865W9sNxQEusH8cY71MR9xm79eMjX31apL4tUT
+ k9bYQkU3DFOhiAmdh4VnH8qtecqeD/DKXVNPOlzTTs+CmPuRJA3tzpezwJw8W/HVavRfJ0+o7sa
+ OqSiNS1oj8KCAzsyxEyPJ1ld+cwXTrBsyWvcqj9EpTpQJRrd0H232k4MxOC1kUFZ0R3PgM3NfMO
+ m2i1nPEDdMA+Z6De7noJ1wg+GpjWHnefY7T2rfXNAqXqEGxk4VpEUZD3GfFiaynXOeYqAJq/YDl
+ Iu89ub+d1xndMbS/oZSZ3YR/DdETPeZEC7lU7bsD/D5ZMyGesyP/Gda1gqai9ibOfPtzgRliYzK
+ zzGc+OmBiXyZS5FEGCjMDuRarDrwYVfBOPo4PW6AVVCyPJtctGYWeKmjzDO6KX1QsEaTLrmWRq0
+ i6tWHraMtGcSKqQWMAMvnEQUaQaQAkTrbZrF5MzNdwpbqbMmrUBwtG/DMRgn7wdHKHYoFgaVs2z
+ 0ILT24WuIHzzqc2Q9Asq3Gv86Nb250UKTWZmyDbNs2kUJzAPnMsDJd3VI4yYpw7xLc0bnMVblhi s8cR3vbkqSfmVaA==
+X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: epz2uWD7C_LbDNUVqEQtUsff2bwTmlPT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE2MDA3NCBTYWx0ZWRfX2YvlCfEC0Im5
+ 6auW9QU9LqXifuwaFP5QBJO7fIOwl99FnuPiYD0/NmE43ZDhZci1JjjVNDDlbunGxH3uEBfwLP5
+ I4SwwyVriMZmixNUNHLHT+Yslr9QoXDRtEIbquiV6NLpSA6aRXQfhHj4EdqZYvZ7jQla0JLs8ir
+ Y/aZnAzFwrmhVKWVAYKV1HfoRApWmfBRDjBczsk3RDnyrhL5FztAEga2aB1CQxp2u2s7Teic7qT
+ /0Ylwb3gpoyFjzKsbiZzaLLh/nbxbyLzYiO/C3wSrObdJQpDyak0y4/UtD960JxO+KJ9QbIO44o
+ ROKoigSO29xL7/TS9ZDm06nd8Gtc9KZ3mPz4IJfFZKMZf6255KFke7EsAsiLYKSUJ7bez196QU+
+ sfFF6Rclbd+EpgGyoqtsoOdcwDMAUW2DZQtPEsKph8EJ58NpfMY7271dO4o4YZbmpC7gOtisjkt
+ YgGrx2eBABZyx2Xeg9w==
+X-Authority-Analysis: v=2.4 cv=b7K/I9Gx c=1 sm=1 tr=0 ts=6992dc36 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=6nO30s3o7FuWeffXwhKHTA==:17
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=EUspDBNiAAAA:8
+ a=pz2CoIr9GbPYS4DEQB0A:9 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: epz2uWD7C_LbDNUVqEQtUsff2bwTmlPT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-16_03,2026-02-16_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0
+ phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602160074
+X-Spam-Status: No, score=-0.9 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_PASS
+	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.80 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:andrew@codeconstruct.com.au,m:avifishman70@gmail.com,m:tali.perry1@gmail.com,m:linux@roeck-us.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:venture@google.com,m:yuenn@google.com,m:benjaminfair@google.com,m:openbmc@lists.ozlabs.org,m:linux-hwmon@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tmaimon77@gmail.com,m:taliperry1@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	FREEMAIL_TO(0.00)[codeconstruct.com.au,gmail.com,roeck-us.net,kernel.org];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[tmaimon77@gmail.com,openbmc@lists.ozlabs.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andrew@codeconstruct.com.au,m:avifishman70@gmail.com,m:tmaimon77@gmail.com,m:tali.perry1@gmail.com,m:venture@google.com,m:yuenn@google.com,m:benjaminfair@google.com,m:andi.shyti@kernel.org,m:openbmc@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzysztof.kozlowski@oss.qualcomm.com,m:taliperry1@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1382-lists,openbmc=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER(0.00)[krzysztof.kozlowski@oss.qualcomm.com,openbmc@lists.ozlabs.org];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-1366-lists,openbmc=lfdr.de];
-	FREEMAIL_CC(0.00)[google.com,lists.ozlabs.org,vger.kernel.org,gmail.com];
-	FROM_NEQ_ENVFROM(0.00)[tmaimon77@gmail.com,openbmc@lists.ozlabs.org];
-	TAGGED_RCPT(0.00)[openbmc,dt];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.2:email];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[codeconstruct.com.au,gmail.com,google.com,kernel.org,lists.ozlabs.org,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
 	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.1.146.88:email,0.0.0.1:email,devicetree.org:url,0.0.0.0:email,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: A793413F1B2
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FROM_NEQ_ENVFROM(0.00)[krzysztof.kozlowski@oss.qualcomm.com,openbmc@lists.ozlabs.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	TAGGED_RCPT(0.00)[openbmc];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim]
+X-Rspamd-Queue-Id: 8A4B4147F50
 X-Rspamd-Action: no action
 
-Convert the Nuvoton HWMON PWM and FAN controllers binding to schema
-format.
+Pointers should use NULL instead of explicit '0', as pointed out by
+sparse:
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----=0D
-Addressed comments from:=0D
- - Rob Herring : https://www.spinics.net/lists/kernel/msg6047623.html=0D
-=0D
-Changes since version 1:=0D
- - Modify yaml file.=0D
- - Remove unnecessary symbols.=0D
- - Add items.=0D
+  i2c-npcm7xx.c:1387:61: warning: Using plain integer as NULL pointer
 
- .../bindings/hwmon/npcm750-pwm-fan.txt        |  88 -----------
- .../hwmon/nuvoton,npcm750-pwm-fan.yaml        | 139 ++++++++++++++++++
- 2 files changed, 139 insertions(+), 88 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan=
-.txt
- create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,npcm750=
--pwm-fan.yaml
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+---
+ drivers/i2c/busses/i2c-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt b/=
-Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt
-deleted file mode 100644
-index 18095ba87a5a..000000000000
---- a/Documentation/devicetree/bindings/hwmon/npcm750-pwm-fan.txt
-+++ /dev/null
-@@ -1,88 +0,0 @@
--Nuvoton NPCM PWM and Fan Tacho controller device
--
--The Nuvoton BMC NPCM7XX supports 8 Pulse-width modulation (PWM)
--controller outputs and 16 Fan tachometer controller inputs.
--
--The Nuvoton BMC NPCM8XX supports 12 Pulse-width modulation (PWM)
--controller outputs and 16 Fan tachometer controller inputs.
--
--Required properties for pwm-fan node
--- #address-cells : should be 1.
--- #size-cells	: should be 0.
--- compatible	: "nuvoton,npcm750-pwm-fan" for Poleg NPCM7XX.
--				: "nuvoton,npcm845-pwm-fan" for Arbel NPCM8XX.
--- reg			: specifies physical base address and size of the registers.
--- reg-names	: must contain:
--					* "pwm" for the PWM registers.
--					* "fan" for the Fan registers.
--- clocks		: phandle of reference clocks.
--- clock-names	: must contain
--					* "pwm" for PWM controller operating clock.
--					* "fan" for Fan controller operating clock.
--- interrupts	: contain the Fan interrupts with flags for falling edge.
--- pinctrl-names	: a pinctrl state named "default" must be defined.
--- pinctrl-0	: phandle referencing pin configuration of the PWM and Fan
--					controller ports.
--
--fan subnode format:
--=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
--Under fan subnode can be upto 8 child nodes, each child node representing =
-a fan.
--Each fan subnode must have one PWM channel and at least one Fan tach chann=
-el.
--
--For PWM channel can be configured cooling-levels to create cooling device.
--Cooling device could be bound to a thermal zone for the thermal control.
--
--Required properties for each child node:
--- reg : specify the PWM output channel.
--	integer value in the range 0 through 7, that represent
--	the PWM channel number that used.
--
--- fan-tach-ch : specify the Fan tach input channel.
--		integer value in the range 0 through 15, that represent
--		the fan tach channel number that used.
--
--		At least one Fan tach input channel is required
--
--Optional property for each child node:
--- cooling-levels: PWM duty cycle values in a range from 0 to 255
--                  which correspond to thermal cooling states.
--
--Examples:
--
--pwm_fan:pwm-fan-controller@103000 {
--	#address-cells =3D <1>;
--	#size-cells =3D <0>;
--	compatible =3D "nuvoton,npcm750-pwm-fan";
--	reg =3D <0x103000 0x2000>,
--		<0x180000 0x8000>;
--	reg-names =3D "pwm", "fan";
--	clocks =3D <&clk NPCM7XX_CLK_APB3>,
--		<&clk NPCM7XX_CLK_APB4>;
--	clock-names =3D "pwm","fan";
--	interrupts =3D <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
--			<GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
--	pinctrl-names =3D "default";
--	pinctrl-0 =3D <&pwm0_pins &pwm1_pins &pwm2_pins
--			&fanin0_pins &fanin1_pins &fanin2_pins
--			&fanin3_pins &fanin4_pins>;
--	fan@0 {
--		reg =3D <0x00>;
--		fan-tach-ch =3D /bits/ 8 <0x00 0x01>;
--		cooling-levels =3D <127 255>;
--	};
--	fan@1 {
--		reg =3D <0x01>;
--		fan-tach-ch =3D /bits/ 8 <0x02 0x03>;
--	};
--	fan@2 {
--		reg =3D <0x02>;
--		fan-tach-ch =3D /bits/ 8 <0x04>;
--	};
--
--};
-diff --git a/Documentation/devicetree/bindings/hwmon/nuvoton,npcm750-pwm-fa=
-n.yaml b/Documentation/devicetree/bindings/hwmon/nuvoton,npcm750-pwm-fan.ya=
-ml
-new file mode 100644
-index 000000000000..73464af3078e
---- /dev/null
-+++ b/Documentation/devicetree/bindings/hwmon/nuvoton,npcm750-pwm-fan.yaml
-@@ -0,0 +1,139 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/hwmon/nuvoton,npcm750-pwm-fan.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Nuvoton NPCM7xx/NPCM8xx PWM and Fan Tach Controller
-+
-+maintainers:
-+  - Tomer Maimon <tmaimon77@gmail.com>
-+
-+description:
-+  The NPCM7xx/NPCM8xx family includes a PWM and Fan Tachometer controller.
-+  The controller provides up to 8 (NPCM7xx) or 12 (NPCM8xx) PWM channels a=
-nd up
-+  to 16 tachometer inputs. It is used for fan speed control and monitoring.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - nuvoton,npcm750-pwm-fan
-+      - nuvoton,npcm845-pwm-fan
-+
-+  reg:
-+    maxItems: 2
-+    description: Register addresses for PWM and Fan Tach units.
-+
-+  reg-names:
-+    items:
-+      - const: pwm
-+      - const: fan
-+
-+  clocks:
-+    maxItems: 2
-+    description: Clocks for the PWM and Fan Tach modules.
-+
-+  clock-names:
-+    items:
-+      - const: pwm
-+      - const: fan
-+
-+  interrupts:
-+    description:
-+      Contains the Fan interrupts with flags for falling edge.
-+      For NPCM7XX, 8 interrupt lines are expected (one per PWM channel).
-+      For NPCM8XX, 12 interrupt lines are expected (one per PWM channel).
-+
-+    minItems: 8
-+    maxItems: 12
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+patternProperties:
-+  "^fan@[0-9a-f]+$":
-+    type: object
-+    $ref: fan-common.yaml#
-+    unevaluatedProperties: false
-+
-+    properties:
-+      reg:
-+        description:
-+          Specify the PWM output channel. Integer value in the range 0-7 f=
-or
-+          NPCM7XX or 0-11 for NPCM8XX, representing the PWM channel number.
-+
-+        maximum: 11
-+
-+      fan-tach-ch:
-+        $ref: /schemas/types.yaml#/definitions/uint8-array
-+        description:
-+          The tach channel(s) used for the fan.
-+          Integer values in the range 0-15.
-+
-+        items:
-+          maximum: 15
-+
-+      cooling-levels:
-+        description:
-+          PWM duty cycle values in a range from 0 to 255 which
-+          correspond to thermal cooling states. This property enables
-+          thermal zone integration for automatic fan speed control
-+          based on temperature.
-+
-+        items:
-+          maximum: 255
-+
-+    required:
-+      - reg
-+      - fan-tach-ch
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - clocks
-+  - clock-names
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    pwm_fan: pwm-fan@103000 {
-+        compatible =3D "nuvoton,npcm750-pwm-fan";
-+        #address-cells =3D <1>;
-+        #size-cells =3D <0>;
-+
-+        reg =3D <0x103000 0x2000>, <0x180000 0x8000>;
-+        reg-names =3D "pwm", "fan";
-+
-+        clocks =3D <&clk NPCM7XX_CLK_APB3>, <&clk NPCM7XX_CLK_APB4>;
-+        clock-names =3D "pwm", "fan";
-+
-+        interrupts =3D <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-+                     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
-+        pinctrl-names =3D "default";
-+        pinctrl-0 =3D <&pwm0_pins &fanin0_pins>;
-+
-+        fan@0 {
-+            reg =3D <0>;
-+            fan-tach-ch =3D <0 1>;
-+            cooling-levels =3D <64 128 192 255>;
-+        };
-+
-+        fan@1 {
-+            reg =3D <1>;
-+            fan-tach-ch =3D <2>;
-+        };
-+    };
---=20
-2.34.1
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 8b7e15240fb0..f667a873b81e 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -1384,7 +1384,7 @@ static irqreturn_t npcm_i2c_int_slave_handler(struct npcm_i2c *bus)
+ 		 */
+ 		bus->operation = I2C_NO_OPER;
+ 		bus->own_slave_addr = 0xFF;
+-		i2c_slave_event(bus->slave, I2C_SLAVE_STOP, 0);
++		i2c_slave_event(bus->slave, I2C_SLAVE_STOP, NULL);
+ 		iowrite8(NPCM_I2CST_SLVSTP, bus->reg + NPCM_I2CST);
+ 		if (bus->fifo_use) {
+ 			npcm_i2c_clear_fifo_int(bus);
+-- 
+2.51.0
 
 
