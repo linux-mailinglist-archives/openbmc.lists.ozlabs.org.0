@@ -1,67 +1,83 @@
-Return-Path: <openbmc+bounces-1401-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1407-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KMTbGSemmGl5KgMAu9opvQ
-	(envelope-from <openbmc+bounces-1401-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Fri, 20 Feb 2026 19:21:27 +0100
+	id aKmEN5vdnGl/LwQAu9opvQ
+	(envelope-from <openbmc+bounces-1407-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Tue, 24 Feb 2026 00:07:07 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23F8916A00B
-	for <lists+openbmc@lfdr.de>; Fri, 20 Feb 2026 19:21:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 047F817ED1C
+	for <lists+openbmc@lfdr.de>; Tue, 24 Feb 2026 00:07:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4fHdqR0rv6z30MY;
-	Sat, 21 Feb 2026 05:21:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4fKc1L5x4nz3c8s;
+	Tue, 24 Feb 2026 10:06:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=198.175.65.21
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1771611683;
-	cv=none; b=Ocx/AA35NYe3ub6u5F5n08cnlALnP/TaS+K/tCHQHhviI8CghJAvzZWhq19rpAjwC0xAuidsF9wmmZtaziqTQMd5V1IopAp1dBOjJ6U14DUNmIyNwYf4zhFqXu0rfdPc6PXqGazgToImtiaNODwSKo6OpXJmSUslOqcuOt8HWejHGzaQUFT1Q1w+CXUhQZfLWGgl2LlTiRjKJ7X+aSfIwbZgEEsUIFFOHEEp/kMRPzp7ZFKxWbcMon5tbyW+JopBI4+EMZzZOtO96wCM7hecoZseth1eHrXlA/liEbkEd85Wu+xUjm6qrOSBXgrSzOVkwrLJGx3SsGzOxuHVdtRfuA==
+Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip="2001:4860:4864:20::33"
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1771805533;
+	cv=none; b=fQXIOKam0DsjJDcvgi1TaQ8ChLyY5qMLo3gKvg0Gr7J6bBiS7vEal8vgN4dncA396iguNmIkm4oyqP6RWQwRwfAB0aAS8m8Qj1TqDBQ4bycdDCXV5xntiuJSBD4NEXcAq1bjBtPXcSfOVljq9zDboEUgULxhOuDhnOMzP0O9LA7oHg4548Z9fyA4aOF9iC0jfW8p9/TGos9tUIMJY9Rmhd7UtmIcz94QOF9l1EN+h3GnKwx0qP1ZX2yWnyiWK+p85R6H1XShNJWMcfBNkdghV+/QOH8JoYI1aXYhvnawCrecUQjhI2riR1r87T0IrJZsrETN8+wVUtCBfGVo6nbWpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1771611683; c=relaxed/relaxed;
-	bh=nwk71gfs305xSTl1e48UXPZOAL0BM2a0cLnNVKOkgrE=;
+	t=1771805533; c=relaxed/relaxed;
+	bh=f/cjh3P6a7yxOJcaGA1eGYzRpZFWZsrKDRxEVGR8r7c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lnBltn/affxJl29qPOi0NwDTlF87AYajPn4SBFjJOkCws2/SnqH1W2tQ9UthzND015XPS3nDg3DJK456aDt1fd+vugNvv23G8vrdBGNDzqKJ9Q6nn+1cGh05rfvZITP0orTCjok0i0FL920dtbFCjp1ntWjSuyeDIdPJHsphdJWLY2TWU1mBNUqHfW4UhA/Fyxue19IHUfnnTEymWplBxD7P49q65c/2SmOxZoareZCY6M9x7YdUEb/roLgTdcnzNqnzYSUZXXV9uckdlFh+jAhm0yIAiLTW5+4Z1oSRfa1N1uOHY52EfL9pd9FuPTvbZeH8tMLMnmYP7mJjS37W4g==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com; dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=btHINM5T; dkim-atps=neutral; spf=pass (client-ip=198.175.65.21; helo=mgamail.intel.com; envelope-from=dave.hansen@intel.com; receiver=lists.ozlabs.org) smtp.mailfrom=intel.com
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=intel.com
+	 In-Reply-To:Content-Type; b=dYIj2GOho8KNe6yBjJipTUBmbSITCQhZ65TEJqVMMzJAzZQ8XrX6ioTbV7UqSY4Y+QN9dX67W6OszgwJbVB/44arD+2oP38FHhyDpDo+wlCzTx0e6XUJHdtzKznFzHzvc/r09jvxxpBs+AS6U97obC5FLd+e4ejOYeWq/lJhR7laA5A7bQC0OBYXB8XAGnJm+XvYHtBfGPI06ZAVr8XdmWEziInU13SljX9ckyJBHJ9eYoZua2k1yIkDlRC12BGKZsQGB3GUZ3RJRDM5U6iO96yM2I9Uv4EIZ2lFZeUsOw4buWZnfG/dN0EtWwRDKo9/Cj9i+Gifoyayek03BvfZjg==
+ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com; dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=HOeOB5yP; dkim-atps=neutral; spf=pass (client-ip=2001:4860:4864:20::33; helo=mail-oa1-x33.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org) smtp.mailfrom=baylibre.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=btHINM5T;
+	dkim=pass (2048-bit key; unprotected) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=HOeOB5yP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=198.175.65.21; helo=mgamail.intel.com; envelope-from=dave.hansen@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Sat, 21 Feb 2026 05:21:21 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=baylibre.com (client-ip=2001:4860:4864:20::33; helo=mail-oa1-x33.google.com; envelope-from=dlechner@baylibre.com; receiver=lists.ozlabs.org)
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4fHdqP56Ccz30Lw
-	for <openbmc@lists.ozlabs.org>; Sat, 21 Feb 2026 05:21:21 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771611682; x=1803147682;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=M3KxmJSpm/J/Qer0dyNiUpPXvP+M/PLw6HPD7xRheQ8=;
-  b=btHINM5TLvjvTvEVJgzpiTeNiP8Z3GjOmxfla6svYVSh9D3aTPrRvgaL
-   P7TGiPny0bH0zzsthAQVa9pMBa7jsfyx95yngvWVFMJOCUAxQIY5F7blE
-   UMqakLBCBwptP7cZ7xD+19ZYYT6qzz1RfaYV1qEPJOH0pTup4gBZ0FvqO
-   xivUG/igiTo8fqinufJ3UdXfb5y8tKOmdY7IDAhFr2PQIz8l0wOQV/cJh
-   Vi5VP+zoLhZO6yaOSPaG0SAwwhSvAhu9bgRcj1mEDcH99T5vO+LMHl/db
-   rpnwcsanqAfl9dsm7QzexvE2jyWRsxHIE4JzfLhI/o+l8VV31fbAPNWok
-   w==;
-X-CSE-ConnectionGUID: dBlbOJ7NSo2eWQNDyq3agQ==
-X-CSE-MsgGUID: gVE3+CqgTYKdmjMj098LFA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11707"; a="72586539"
-X-IronPort-AV: E=Sophos;i="6.21,302,1763452800"; 
-   d="scan'208";a="72586539"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 10:20:13 -0800
-X-CSE-ConnectionGUID: 7Z8YEr0EQR2fhEiXFHG6+A==
-X-CSE-MsgGUID: CT3ruYKTSZ6ESuEnPWoC6Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,302,1763452800"; 
-   d="scan'208";a="212662795"
-Received: from dnelso2-mobl.amr.corp.intel.com (HELO [10.125.110.77]) ([10.125.110.77])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 10:20:13 -0800
-Message-ID: <13b9f03f-04e2-4363-af95-edded1c895c4@intel.com>
-Date: Fri, 20 Feb 2026 10:20:14 -0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4fK1WH2yzFz30T9
+	for <openbmc@lists.ozlabs.org>; Mon, 23 Feb 2026 11:12:11 +1100 (AEDT)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-40ee8b4f925so2556429fac.3
+        for <openbmc@lists.ozlabs.org>; Sun, 22 Feb 2026 16:12:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1771805524; x=1772410324; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f/cjh3P6a7yxOJcaGA1eGYzRpZFWZsrKDRxEVGR8r7c=;
+        b=HOeOB5yPm1JFrx3/OarVsMm8tbF+K0zF33r8VUALIQtyL+AUnhaiNlCM69WSOHIuBd
+         PFK221Eax9Jb/msu2De/G2XA2770D0qgBsAG0OWEPQ52jIq8hfgco9K4FSaORRr42xK3
+         sK1LToR8Ti4GjHfirOGiD6/bIW+YQYxDtPcd4y4/cKxnu2+webN+cISxMEReUPrE7hDv
+         Ywfj6igIg/0Chu02STMnNC1bKqiogIMxuOWpr728LxIpD5pSFXF5VL1nXc6nZegha3l5
+         V6YkhWVYnLAGJzUc1YAUEZe8B6HWYubcAKJK3boHwuSGYB85arhEzRIuedF+ou742UxJ
+         Q3LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771805524; x=1772410324;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f/cjh3P6a7yxOJcaGA1eGYzRpZFWZsrKDRxEVGR8r7c=;
+        b=u26S2xJ/UoD+LqL9M5PdRne1D3HpH9wczyKprq3IBWqYgYvVtKmP11i+wliYzz7B+1
+         dGmOewH0xjOJKilUDchGhwd+b7Rk6vZR7A4tqgGDZg6GcVl04Q5ZEH8o7w59AjodLsCA
+         JLFjMEy3Mh/3x3n+l6xKd6+wz+tvu9hcO4obGWXuMtwMYnL3E9YVsgynkVonvNJmmSc2
+         kecWTCduWfSZ8L/2fzzp2pocYSzQ0NxfYLFTWmMi03ITuHpi17b8tITIUiZVB9W8DY/e
+         1XFZl4PTGkJqDM0YLNskDbk7P3zF4ZYS9JQ57FRuqMUkaLJzHSWzl/dc3s/0UtSqY9ba
+         xq3g==
+X-Forwarded-Encrypted: i=1; AJvYcCWFY/t04TirSJvABI/ywnEtGFE7yQ0o7pGCAh98Tw/JV2ZBvwmdm8W/tpaYvTqbMIc/XS+xo2qk@lists.ozlabs.org
+X-Gm-Message-State: AOJu0Yy4QPsMIDIg/EjXvwI7YJ+RIHmW5PS26Pm5j+5jPmYalCv/pfab
+	QG9DGBM+R+fTaumJX1D7InF2aO7mhAJj2WtdE+25yfdKqJeFMVS1OOVYUWDC4X9Yahc=
+X-Gm-Gg: AZuq6aJcVPX2rVgYy7kt6mRCNIOvzsfMRxHgj2tPyzkx8OhVotXGBiGyZQA3JmM7roe
+	6eUhTYBCM+8oJ/5a1YfHGZW6btBAbNOtvHuf1l84675OHD8spN9ZYJP6wkYQAU0Eyx+zL5LA6X0
+	Wa4Yn2Cu4BBotqpdgL9nfURRQ2+gs0zcVeGSTPFary6LnKYhP8N+CS3QT9Eyr7bO3fwpengHM8Q
+	oUmSjRZ5Jnq4No3anJdTm1Ve+7+SpFKDQbJ19SG460JvnRkv1rdWbPKoss6WykGBiSQchXHylFe
+	QMZqdY9szfDPgrlIodBmzilH3BDAq8zeDmsCteik7voBi9vV+UBAZij7j7JPEWKyKolpdQcAZ11
+	+quEg148zfvEqdG4sD6rXRpVE3Lr7K87JXnMW2++PwFdiNS8iBjBQkopaDwxieb2b7J60bSowaz
+	oDGJjaTRTAQ+N6fwXxEqZMpdcyzIJxEqGvCEU11ccD1z9eMXeLlLib75XrkkUsh1S3yGn3hJo=
+X-Received: by 2002:a05:6870:f61b:b0:409:794e:fe9 with SMTP id 586e51a60fabf-4157b1b3fd3mr3557313fac.54.1771805524220;
+        Sun, 22 Feb 2026 16:12:04 -0800 (PST)
+Received: from ?IPV6:2600:8803:e7e4:500:e37:2309:3937:4469? ([2600:8803:e7e4:500:e37:2309:3937:4469])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-4157ca3df7fsm6409978fac.0.2026.02.22.16.12.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 22 Feb 2026 16:12:02 -0800 (PST)
+Message-ID: <f5b38942-a584-4e78-a893-de4a219070b2@baylibre.com>
+Date: Sun, 22 Feb 2026 18:12:00 -0600
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -74,118 +90,133 @@ List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] [v2] peci: Remove dependency on x86 CPU variables
-To: Sohil Mehta <sohil.mehta@intel.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, linux-kernel@vger.kernel.org
-Cc: Borislav Petkov <bp@alien8.de>, Guenter Roeck <linux@roeck-us.net>,
- "H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
- Iwona Winiarska <iwona.winiarska@intel.com>, linux-hwmon@vger.kernel.org,
- openbmc@lists.ozlabs.org, Thomas Gleixner <tglx@kernel.org>,
- Tony Luck <tony.luck@intel.com>, x86@kernel.org
-References: <20260220175121.C16ADAAA@davehans-spike.ostc.intel.com>
- <b59da36c-4ddd-4cd9-98f2-b5a1db698889@intel.com>
-From: Dave Hansen <dave.hansen@intel.com>
+Subject: Re: [PATCH v2 10/11] pinctrl: rockchip: Simplify locking with
+ scoped_guard()
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Emil Renner Berthing <kernel@esmil.dk>, Hal Feng
+ <hal.feng@starfivetech.com>, Chen Wang <unicorn_wang@outlook.com>,
+ Inochi Amaoto <inochiama@gmail.com>,
+ Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+ Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+ Bartosz Golaszewski <brgl@kernel.org>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>,
+ Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Heiko Stuebner <heiko@sntech.de>,
+ Patrice Chotard <patrice.chotard@foss.st.com>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org
+References: <20260118-pinctrl-cleanup-guard-v2-0-bd36f681bdc0@oss.qualcomm.com>
+ <20260118-pinctrl-cleanup-guard-v2-10-bd36f681bdc0@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- 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
-In-Reply-To: <b59da36c-4ddd-4cd9-98f2-b5a1db698889@intel.com>
+From: David Lechner <dlechner@baylibre.com>
+In-Reply-To: <20260118-pinctrl-cleanup-guard-v2-10-bd36f681bdc0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.5 required=5.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-	SPF_PASS autolearn=disabled version=4.0.1
+X-Spam-Status: No, score=0.0 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.20 / 15.00];
+X-Spamd-Result: default: False [-0.20 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
+	R_DKIM_ALLOW(-0.20)[baylibre-com.20230601.gappssmtp.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:sohil.mehta@intel.com,m:dave.hansen@linux.intel.com,m:linux-kernel@vger.kernel.org,m:bp@alien8.de,m:linux@roeck-us.net,m:hpa@zytor.com,m:mingo@redhat.com,m:iwona.winiarska@intel.com,m:linux-hwmon@vger.kernel.org,m:openbmc@lists.ozlabs.org,m:tglx@kernel.org,m:tony.luck@intel.com,m:x86@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[dave.hansen@intel.com,openbmc@lists.ozlabs.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-1401-lists,openbmc=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	FORGED_RECIPIENTS(0.00)[m:krzysztof.kozlowski@oss.qualcomm.com,m:andrew@codeconstruct.com.au,m:linusw@kernel.org,m:joel@jms.id.au,m:kernel@esmil.dk,m:hal.feng@starfivetech.com,m:unicorn_wang@outlook.com,m:inochiama@gmail.com,m:Basavaraj.Natikar@amd.com,m:Shyam-sundar.S-k@amd.com,m:brgl@kernel.org,m:Steen.Hegelund@microchip.com,m:daniel.machon@microchip.com,m:UNGLinuxDriver@microchip.com,m:thierry.reding@gmail.com,m:jonathanh@nvidia.com,m:heiko@sntech.de,m:patrice.chotard@foss.st.com,m:linux-aspeed@lists.ozlabs.org,m:openbmc@lists.ozlabs.org,m:linux-gpio@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:sophgo@lists.linux.dev,m:linux-tegra@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:thierryreding@gmail.com,s:lists@lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,codeconstruct.com.au,kernel.org,jms.id.au,esmil.dk,starfivetech.com,outlook.com,gmail.com,amd.com,microchip.com,nvidia.com,sntech.de,foss.st.com];
+	FORGED_SENDER(0.00)[dlechner@baylibre.com,openbmc@lists.ozlabs.org];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	DMARC_NA(0.00)[baylibre.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	TAGGED_FROM(0.00)[bounces-1407-lists,openbmc=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	NEURAL_HAM(-0.00)[-0.996];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dave.hansen@intel.com,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-0.999];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dlechner@baylibre.com,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[baylibre-com.20230601.gappssmtp.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
 	TAGGED_RCPT(0.00)[openbmc];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:mid,intel.com:dkim,lists.ozlabs.org:helo,lists.ozlabs.org:rdns]
-X-Rspamd-Queue-Id: 23F8916A00B
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.ozlabs.org:helo,lists.ozlabs.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 047F817ED1C
 X-Rspamd-Action: no action
 
-On 2/20/26 10:14, Sohil Mehta wrote:
-> On 2/20/2026 9:51 AM, Dave Hansen wrote:
+On 1/18/26 12:09 PM, Krzysztof Kozlowski wrote:
+> Simplify error handling by removing two mutex_unlock() calls with
+> scoped_guard().
 > 
->>   * struct peci_device_id - PECI device data to match
->>   * @data: pointer to driver private data specific to device
->> - * @x86_vfm: device vendor-family-model
->> + * @device_id: device identifier, includes CPU vendor-family-model
-> Just a nit. There is an inconsistency between the two Kdoc comments.
+> Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> ---
+>  drivers/pinctrl/pinctrl-rockchip.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
 > 
-> device_id no longer stores the vendor. The one below one is correct.
-> CPUID.01H:EAX only gives the family-model-stepping information which is
-> stored in the device_id after removing the stepping.
+> diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+> index e44ef262beec..bbe1cf712965 100644
+> --- a/drivers/pinctrl/pinctrl-rockchip.c
+> +++ b/drivers/pinctrl/pinctrl-rockchip.c
+> @@ -3640,17 +3640,16 @@ static int rockchip_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
 
-Very true. I'll change that for v3. I'll just be:
+Filling in some context from the existing code...
 
- * @device_id: device identifier, includes CPU family-model
+	for (i = 0; i < num_configs; i++) {
+		param = pinconf_to_config_param(configs[i]);
+		arg = pinconf_to_config_argument(configs[i]);
 
+		if (param == PIN_CONFIG_LEVEL || param == PIN_CONFIG_INPUT_ENABLE) {
+			/*
+			 * Check for gpio driver not being probed yet.
+
+>  			 * The lock makes sure that either gpio-probe has completed
+>  			 * or the gpio driver hasn't probed yet.
+>  			 */
+> -			mutex_lock(&bank->deferred_lock);
+> -			if (!gpio || !gpio->direction_output) {
+> -				rc = rockchip_pinconf_defer_pin(bank, pin - bank->pin_base, param,
+> -								arg);
+> -				mutex_unlock(&bank->deferred_lock);
+> -				if (rc)
+> -					return rc;
+> -
+> -				break;
+> +			scoped_guard(mutex, &bank->deferred_lock) {
+> +				if (!gpio || !gpio->direction_output) {
+> +					rc = rockchip_pinconf_defer_pin(bank,
+> +									pin - bank->pin_base,
+> +									param, arg);
+> +					if (rc)
+> +						return rc;
+> +					break;
+
+I think there is an unintentional change here.
+
+scoped_guard() is implemented by a for loop. So the break statement is now
+breaking out of the scoped_guard() scope rather than breaking out of the
+outer for loop.
+
+> +				}
+>  			}
+> -			mutex_unlock(&bank->deferred_lock);
+>  		}
+>  
+>  		switch (param) {
+> 
 
 
