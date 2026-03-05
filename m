@@ -1,62 +1,96 @@
-Return-Path: <openbmc+bounces-1436-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1437-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SAwlDiETqWlz1AAAu9opvQ
-	(envelope-from <openbmc+bounces-1436-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Thu, 05 Mar 2026 06:22:41 +0100
+	id mA7JOm2UqWlCAQEAu9opvQ
+	(envelope-from <openbmc+bounces-1437-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Thu, 05 Mar 2026 15:34:21 +0100
 X-Original-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35A3820AF9E
-	for <lists+openbmc@lfdr.de>; Thu, 05 Mar 2026 06:22:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 83D0E2138BE
+	for <lists+openbmc@lfdr.de>; Thu, 05 Mar 2026 15:34:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4fRHwq5qmGz3c1J;
-	Thu, 05 Mar 2026 16:22:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4fRX9N3RR6z3c5f;
+	Fri, 06 Mar 2026 01:34:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=203.29.241.158
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1772688155;
-	cv=none; b=BKF0E0JTR++QEOmuSpoXc3DOwEHR2LQP8YsZfykaBm96tRm/vUy5UY4Dqos6t3mevIzdFhzCBw0QEkZo285ZGIAued/l04p/+j1u3Ntit24cIr2bkVaNa8VaDinhBwxJBUgKatrTYyv1dQHlu6xasZorXzEVbfS2YTxLPAXWq6vZR4l0weje+ote7AuNeOoLHUROTjZ9rJFginA98jvGIX1WBIn6cJWdj8Eik8b86zft2Q96ln3+e3ZdPTCx1Vscsj/PXaqDqUWHcmUsDj4u2vSZod3RpqE3z3iCDQjqdt/snzXCJT6cquh+tHjSgo6P0vaXzmp7q8CGiDBIYh6yEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1772688155; c=relaxed/relaxed;
-	bh=1xqEuJIPBU6HBenB2oOvbqiXrz9G+UT+w95rj+3C2Nk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dIlMB+McCh67ZFW6HPN55GfAiMHlo52am8AigOle7hUmpO6txfZD+87LwN3Pn4JrjSuRnan5t06cf4QPxyTYGExZJzq2TgBYQIA3EbV8Dn6fajwkVG9LWI7h4vpIRikLq2uYDWp7DzsmYTWNMUdRYdQey7dAmnt8FModK5zHDJIvviAj4DmwmoDlT2D5ze+qtB+fOxAGeovHMA4lZQHsfSlOvHE8TO27zLf5hXzsyoCZt6LN8k+V1pLMcieXx1GzJV1l3J2ko1f7DtKVfWgLGJiSuA5ihC7Lpf+oRab6TIAjrvQuZ5MMLqx2y3n4sp9xnCGushMNZMfXOpwMhvGIPQ==
-ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=V1XIV1PY; dkim-atps=neutral; spf=pass (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org) smtp.mailfrom=codeconstruct.com.au
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: lists.ozlabs.org; arc=pass smtp.remote-ip="2607:f8b0:4864:20::e2f" arc.chain=google.com
+ARC-Seal: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1772721256;
+	cv=pass; b=ixvGhMDgjto1a18Hjr54wDrwnMR/pQa/n3QN2+HK+tMPTpVLCG3a46yGO91GDi6hrSyHGIo2fiuU+APbvoGO4x+CR1fPdagPjzK+bouqeyBAikE6ylQNdMMv7vHFoHdUS933qBtrjtBjgebOUP2Mz8fRMJsKZX7+I/TXxTMxe+3kXhzd6cKoe6qoFoaKGVTb03NL7KmDPBmy4ZrwcUHTafOHZ7W8RqSJU7ajPUx6VGNKzxTA06ljZTMyz95fG4InrL5bMNpHaFiSwdueMqhFHwL/sLYgV3G2zmSc3nSQ+5gfaLH0JVyrc5uyzxsDU1lhASwyhOyXBBpqzfHmAmYXRQ==
+ARC-Message-Signature: i=2; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
+	t=1772721256; c=relaxed/relaxed;
+	bh=NScwBoqrIN54PmMpUqktmMr71N0AYYlMad814fO0L9E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nwW0tsHwbW43FQRX9UBbBpPW2UTwfNoTivEjMgDZ/f1hu9eTnMvjmbOhSJmqTa0eOSJzCGalBj4/LXQ2SXy5gQSb9gS9B3El6V+rRp3iGBHuyh12e4b/SassoHjceMqljto+FwRo3UukF+Z08g20qqK0jtNzJU+VQOiOxbPHSdZaQmfuq1Oz8OhSR720l/C8tGJvYD08dtsy2RwdAhl857HGP7/q/p4NjpESOrv+3gIjMNAi5SCSfcxW/fI6g++bO8ea1fgYszLy4TeZ6m6jpEUK/74C2A8P6sS1G9jS55UlpXdPu9tgDbGSd97YbOz+7r7KOKyvGX8nT7XncTVLcQ==
+ARC-Authentication-Results: i=2; lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com; dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Bk+l6ZgD; dkim-atps=neutral; spf=pass (client-ip=2607:f8b0:4864:20::e2f; helo=mail-vs1-xe2f.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org) smtp.mailfrom=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=V1XIV1PY;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Bk+l6ZgD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2f; helo=mail-vs1-xe2f.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4fRHwp5SyWz3bhG
-	for <openbmc@lists.ozlabs.org>; Thu, 05 Mar 2026 16:22:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4fRX9L56HKz30MZ
+	for <openbmc@lists.ozlabs.org>; Fri, 06 Mar 2026 01:34:13 +1100 (AEDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id ada2fe7eead31-5ff9d047981so1893606137.1
+        for <openbmc@lists.ozlabs.org>; Thu, 05 Mar 2026 06:34:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772721250; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JSMBF69mGJrcrFyJ69H8C1bGhuA4zmSHX1pywOTc3eKq7OcQOxA7vE3vlv+J2yO+/J
+         D6oL50bQZ36Xs5Neld3dr/FBpAtkvUA6+B0uARN9xuz8SHrWqTlbPTQW96JmkJWYKbzC
+         WcU78La7bp9/vnl6m2OlTAseS0IgOb2hJ/LR6qZ02kmcoJa5cKSt58pRd3REeNc6cDy5
+         XB0BNv1YXVor+C5NA0HviiAfCk79pUIVpCPAabfIDDDVB/UlP5WKAosU1Ksd1Kz/iUJU
+         dXidtw7oaNxZeGlJrSOrcuYhuS9UWQhCKweryXNKFqM31ebyRWAzrjlWSY3vrApVRzMP
+         16vQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=NScwBoqrIN54PmMpUqktmMr71N0AYYlMad814fO0L9E=;
+        fh=+nwYwJK03Ehej1j2YipOK7ULFLBAfPu9utOMaU9g0fc=;
+        b=RAe9Twi/udd1jdZgpCQ9ctnIeoVpFDR8lgpuJX0XkSMmy9+elWsSiZOFKSUf685gjA
+         Dhh3zDYSmILceAbl1PqH8+3ALhVShFO1MNJt8RtshsZEmJR1e+/kkUA1cawciSLVm+Y2
+         lxEEFbxYDJrvJ8+UBfoXy26Sa7kVbQeaaEaEUehdFG5TKkR4oEirJGUA+yQl1TRVLD5t
+         lcNuURkSkIDPFITUAVWCVJnS0vDACG90v6I+Ho3ESzicUOWaZ/3pyfaypfEmIpUnG56I
+         Nj2bSuztx8Uv4aZMsUS9pRPbVZkmVdQPiqwRVE06ZxWdlvC1GCfsu9FyhtYZbn4gKCaK
+         anzw==;
+        darn=lists.ozlabs.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1772688153;
-	bh=1xqEuJIPBU6HBenB2oOvbqiXrz9G+UT+w95rj+3C2Nk=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=V1XIV1PYgyQVfg+QLmmd7zTU0ztr3PiTynz8Vp8caOYtJPJPPT8DukJLHrSv1X+c8
-	 BiFZIqLpfpiKGvHiJuue73/SJkcagZsIHqfsHiYyNmw8TmE6tc2hRLY9dPY8qCpxzE
-	 pJ9rdhQ8IJXPpBMQ8+jExHvsIVIQRcSDBK7oqYogWXXW1DUSNcbOqB27904T4k0zyF
-	 SCdAnNtUgCqnjFLXXgK/3ABB08Ynoq63jgsLyYOlIZgbvIfwwKwibbmNqMqDdzNJ96
-	 l6BMT4DKCYSW5N9aStoONprJv/FFVUiE5sl4i+PDH8KTdS8QakqrFfC4V3QXXwacFQ
-	 Ks13c+r3RzErw==
-Received: from [192.168.68.117] (unknown [180.150.112.60])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 281486000D;
-	Thu,  5 Mar 2026 13:22:33 +0800 (AWST)
-Message-ID: <0f0a1a6862a8b94bf4f5c00da85bad4efce7c071.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] ARM: dts: aspeed: Add dts for ASUS Kommando IPMI card
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Anirudh Srinivasan <anirudhsriniv@gmail.com>, joel@jms.id.au
-Cc: openbmc@lists.ozlabs.org
-Date: Thu, 05 Mar 2026 15:52:32 +1030
-In-Reply-To: <20260228-asus-kommando-v1-1-9a288620096d@gmail.com>
-References: <20260228-asus-kommando-v1-1-9a288620096d@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+        d=gmail.com; s=20230601; t=1772721250; x=1773326050; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NScwBoqrIN54PmMpUqktmMr71N0AYYlMad814fO0L9E=;
+        b=Bk+l6ZgDQDpNDc6XwH2M0R7kLZgm+P6bGMWNsvjEZP3W4w8H/yUXw5NphiyED2Q5v3
+         VxIk9Pxqhfx9uIRz2cehC8yQU9uciibIu/pYMPCrdBON7ltceEw+0OOHgNSb5l7AzJG6
+         8enb/x1jDDlEQ+Hn5xYaSmdQWSPBJseQkscP96eLLLgeYZakIJzf33V5B2OiCYOeAHd8
+         G8SJLFe1I7uFYImnFMkfsc8EJX7UMWY3cV8szkb4BSCmDHRX84JPRZo/b4l+08wAy/xc
+         +MYny9RXaUgWVYEIOs/rNraJW9vT6w1SR1EOWfmufod41L111GWhNla6zHWHMBbzVqIH
+         VA/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772721250; x=1773326050;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=NScwBoqrIN54PmMpUqktmMr71N0AYYlMad814fO0L9E=;
+        b=ILFiLFHnQ7ZM8Ft2rW13ibyS7TFk1dPMl7HsBa2DnJuC471DWGWAV/J5IHuXCaDjwq
+         RpCvJKWzhO2Orjd26K7R9EsYk+bMBHx8zmzmcPGQeivV9CC3gf5detLePTjF5da4RmZS
+         U7BC1YTbnUmUZ+uUATApVKA1D5kdNbuA+0kN0dM7rU26WvOsdYwaN9Lfeot8mtlTm+10
+         PFbiTI89geVZaSaKJvj0Xau7e7/gUB62vSykj5i8Vl5eBLvzO4eKJoATgdWFGWh7qkc6
+         HNWE+5Oa2zQoX68GVu0clF2vnx+PMh9lz02Fn+cxL8Foi26+xaZ5jFeMH0WFixqghU5B
+         i1bA==
+X-Gm-Message-State: AOJu0YxXLsfpMYo4xAPJ22eU2BQyhg3TreVnugr+n3h/EgELQnV18bv0
+	XdBhXi3E2/IUSJsQLHv0U2BkLYqS4VFubQ2rKMx3u62QZgWxA1ZlSYXHorfRHxXOu70+aIbL8X3
+	BCzJ3h9WNW9M6KBQ4riLr3g8I8fVBLuw=
+X-Gm-Gg: ATEYQzxEkHOH4T7J7zDv7T5ctoTzfyza0JHkA/bn1ROiZ3UTtwXPxIENfIX3dMXK9u2
+	NQ3gfosOdyZ8Uu7UXI1EF0gSTwN/6XaZtz+Bg438aFTuGNmONvJqGugHBdnsAHWpcKpyqpzi31d
+	BHez2nphwh4jZZu555r/1Cck2ZVWwmqFzg1rxvwEwVBkKOQxhNesxUBh3cG+EfdhR9bNArC4vyt
+	MGgNjBYiDmxLqOwO9toMaGgW4Qkb1gvozmTWPBW2ypuUTAXKJvf8wRViT3Qu2LofW+OLnTnubAr
+	wNNNKlhIkv9gZOuAEFtYyNWUYNUahcrHgQ90jyiEvBHn+5C6pdrwVsCXTPkuIHemzdde
+X-Received: by 2002:a05:6102:3049:b0:5f9:2ac5:2fc4 with SMTP id
+ ada2fe7eead31-5ffc8ee1c77mr1033092137.17.1772721250354; Thu, 05 Mar 2026
+ 06:34:10 -0800 (PST)
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -68,196 +102,66 @@ List-Subscribe: <mailto:openbmc+subscribe@lists.ozlabs.org>,
 List-Unsubscribe: <mailto:openbmc+unsubscribe@lists.ozlabs.org>
 Precedence: list
 MIME-Version: 1.0
-X-Spam-Status: No, score=-0.2 required=5.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS autolearn=disabled
+References: <SJ0PR84MB1505D06E519A74D6DC18A272F07FA@SJ0PR84MB1505.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <SJ0PR84MB1505D06E519A74D6DC18A272F07FA@SJ0PR84MB1505.NAMPRD84.PROD.OUTLOOK.COM>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 5 Mar 2026 08:33:53 -0600
+X-Gm-Features: AaiRm51NjfyTOUDC-h0xia2xr2CcTPYCy5UkuiBEbe42J5S8-9rPHoQIpcHJ2Zo
+Message-ID: <CALLMt=pCmZy1SuSikqFSSaovxJKt0iv-Vn-nbEf7iaq6jMeWaQ@mail.gmail.com>
+Subject: Re: Updating HPE CLA
+To: "Fischer, Matt" <matthew.fischer@hpe.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
+	"Mujawar, Tausiff Hussain Umarsab" <tausiff-hussain-umarsab.mujawar@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.2 required=5.0 tests=ARC_SIGNED,ARC_VALID,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=disabled
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Rspamd-Queue-Id: 35A3820AF9E
+X-Rspamd-Queue-Id: 83D0E2138BE
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.20 / 15.00];
-	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[codeconstruct.com.au,none];
+	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117];
-	R_DKIM_ALLOW(-0.20)[codeconstruct.com.au:s=2022a];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-1437-lists,openbmc=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1436-lists,openbmc=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
-	FREEMAIL_TO(0.00)[gmail.com,jms.id.au];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:anirudhsriniv@gmail.com,m:joel@jms.id.au,m:openbmc@lists.ozlabs.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
-	FORGED_SENDER(0.00)[andrew@codeconstruct.com.au,openbmc@lists.ozlabs.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
-	RCPT_COUNT_THREE(0.00)[3];
-	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
-	DBL_PROHIBIT(0.00)[0.0.0.1:email];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andrew@codeconstruct.com.au,openbmc@lists.ozlabs.org];
-	DKIM_TRACE(0.00)[codeconstruct.com.au:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:matthew.fischer@hpe.com,m:openbmc@lists.ozlabs.org,m:tausiff-hussain-umarsab.mujawar@hpe.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER(0.00)[geissonator@gmail.com,openbmc@lists.ozlabs.org];
+	FORWARDED(0.00)[openbmc@lists.ozlabs.org];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[3];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PREVIOUSLY_DELIVERED(0.00)[openbmc@lists.ozlabs.org];
+	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[geissonator@gmail.com,openbmc@lists.ozlabs.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	TAGGED_RCPT(0.00)[openbmc];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,codeconstruct.com.au:dkim,codeconstruct.com.au:mid,0.0.0.2:email]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	FORGED_SENDER_MAILLIST(0.00)[]
 X-Rspamd-Action: no action
 
-On Sat, 2026-02-28 at 22:00 -0600, Anirudh Srinivasan wrote:
-> Add dts for Asus Kommando IPMI card, an ast2600 based pcie bmc card
->=20
-> Signed-off-by: Anirudh Srinivasan <anirudhsriniv@gmail.com>
-> ---
-> =C2=A0arch/arm/dts/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
-> =C2=A0arch/arm/dts/ast2600-asus-kommando-ipmi-card.dts | 98
-> ++++++++++++++++++++++++
-> =C2=A02 files changed, 99 insertions(+)
->=20
-> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-> index
-> 5141c3dc3aa025e2f5c9b2bb98216ee5c72cdf70..fa6837be747da4fbe102ac27e60
-> ee3d81e230cb7 100755
-> --- a/arch/arm/dts/Makefile
-> +++ b/arch/arm/dts/Makefile
-> @@ -682,6 +682,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
-> =C2=A0	ast2500-genesis3.dtb \
-> =C2=A0	ast2500-romulus.dtb \
-> =C2=A0	ast2600-ampere.dtb \
-> +	ast2600-asus-kommando-ipmi-card.dtb \
-> =C2=A0	ast2600-bletchley.dtb \
-> =C2=A0	ast2600-dcscm.dtb \
-> =C2=A0	ast2600-evb-ecc.dtb \
-> diff --git a/arch/arm/dts/ast2600-asus-kommando-ipmi-card.dts
-> b/arch/arm/dts/ast2600-asus-kommando-ipmi-card.dts
-> new file mode 100644
-> index
-> 0000000000000000000000000000000000000000..11fee8d5403541f2453f6b8c6f1
-> 23c5d1108137d
-> --- /dev/null
-> +++ b/arch/arm/dts/ast2600-asus-kommando-ipmi-card.dts
-> @@ -0,0 +1,98 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/dts-v1/;
-> +
-> +#include "ast2600-u-boot.dtsi"
-> +
-> +/ {
-> +	model =3D "ASUS Kommando IPMI Card";
-> +	compatible =3D "asus,kommando-ipmi-card", "aspeed,ast2600";
-> +
-> +	memory {
-> +		device_type =3D "memory";
-> +		reg =3D <0x80000000 0x40000000>;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path =3D &uart5;
-> +	};
-> +
-> +	aliases {
-> +		spi0 =3D &fmc;
-> +		ethernet0 =3D &mac2;
-> +	};
-> +
-> +	cpus {
-> +		cpu@0 {
-> +			clock-frequency =3D <800000000>;
-> +		};
-> +		cpu@1 {
-> +			clock-frequency =3D <800000000>;
-> +		};
-> +	};
-> +};
-> +
-> +&fmc {
-> +	status =3D "okay";
-> +
-> +	pinctrl-names =3D "default";
-> +	pinctrl-0 =3D <&pinctrl_fmcquad_default>;
-> +
-> +	flash@0 {
-> +		status =3D "okay";
-> +		spi-max-frequency =3D <50000000>;
-> +		spi-tx-bus-width =3D <4>;
-> +		spi-rx-bus-width =3D <4>;
-> +	};
-> +};
-> +
-> +&hace {
-> +	status =3D "okay";
-> +	u-boot,dm-pre-reloc;
-> +};
-> +
-> +&mac2 {
-> +	status =3D "okay";
-> +	phy-mode =3D "rgmii";
-> +	phy-handle =3D <&ethphy2>;
-> +	pinctrl-names =3D "default";
-> +	pinctrl-0 =3D <&pinctrl_rgmii3_default>;
-> +};
-> +
-> +&mdio {
-> +	status =3D "okay";
-> +	pinctrl-names =3D "default";
-> +	pinctrl-0 =3D <&pinctrl_mdio3_default>;
-> +	#address-cells =3D <1>;
-> +	#size-cells =3D <0>;
-> +
-> +	ethphy2: ethernet-phy@2 {
-> +		reg =3D <0>;
-> +	};
-> +};
-> +
-> +&scu {
-> +	mac2-clk-delay =3D <0x08 0x04
-> +			=C2=A0 0x08 0x04
-> +			=C2=A0 0x08 0x04>;
+On Wed, Mar 4, 2026 at 5:21=E2=80=AFPM Fischer, Matt <matthew.fischer@hpe.c=
+om> wrote:
+>
+> Attached is an update for the CLA for HPE.
 
-Before we go too far down this path, are you aware of the discussions
-on the kernel side?
+Thanks for keeping your CLA up to date. I've uploaded it to the
+projects google drive.
 
-https://lore.kernel.org/all/20260302-rgmii_delay_2600-v6-0-68319a4c4110@asp=
-eedtech.com/
-
-Essentially, can we defer configuring the delays via the SCU here so we
-can isolate that problem in the kernel?
-
-I recognise that you might want networking in u-boot as well though :)
-
-> +};
-> +
-> +&sdrammc {
-> +	clock-frequency =3D <400000000>;
-> +};
-> +
-> +&uart5 {
-> +	status =3D "okay";
-> +	u-boot,dm-pre-reloc;
-> +};
-> +
-> +&wdt1 {
-> +	status =3D "okay";
-> +};
-> +
-> +&wdt2 {
-> +	status =3D "okay";
-> +};
-> +
-> +&wdt3 {
-> +	status =3D "okay";
-> +};
->=20
-> ---
-> base-commit: d40130c7056b84dc5213f3ff6764d0e45bb84035
-> change-id: 20260228-asus-kommando-9de4d6b779a8
->=20
-> Best regards,
+Andrew
 
