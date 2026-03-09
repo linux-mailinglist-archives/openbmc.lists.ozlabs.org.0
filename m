@@ -1,34 +1,34 @@
-Return-Path: <openbmc+bounces-1451-lists+openbmc=lfdr.de@lists.ozlabs.org>
+Return-Path: <openbmc+bounces-1452-lists+openbmc=lfdr.de@lists.ozlabs.org>
 Delivered-To: lists+openbmc@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qLWoNadurmn8EAIAu9opvQ
-	(envelope-from <openbmc+bounces-1451-lists+openbmc=lfdr.de@lists.ozlabs.org>)
-	for <lists+openbmc@lfdr.de>; Mon, 09 Mar 2026 07:54:31 +0100
+	id KGTfG7Zurmn8EAIAu9opvQ
+	(envelope-from <openbmc+bounces-1452-lists+openbmc=lfdr.de@lists.ozlabs.org>)
+	for <lists+openbmc@lfdr.de>; Mon, 09 Mar 2026 07:54:46 +0100
 X-Original-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EDBA23478F
-	for <lists+openbmc@lfdr.de>; Mon, 09 Mar 2026 07:54:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:21b9:f100::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEF8E2347C1
+	for <lists+openbmc@lfdr.de>; Mon, 09 Mar 2026 07:54:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [127.0.0.1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4fTnmg6P0Jz3cB0;
-	Mon, 09 Mar 2026 17:54:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4fTnmh5cy4z3c9j;
+	Mon, 09 Mar 2026 17:54:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; arc=none smtp.remote-ip=211.20.114.72
-ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1773039251;
-	cv=none; b=NCogvAz1cJADtQVqbhs8M/CqpJCkF91doEWWLQzkU5wJ8YEHpJCba4SslW24/ZU+FgKj7gc4J8AlzSQeXtP3SZjDsD1Rm+5hV5zaf6zmxWWAyAqexfr28l/p/byQSQOHG8hZUiwj+wbs16lbp2FDchZESGrSC9zssfsiFlEqUgYPTBrJnGkR3jBB9oJdTT2AI27bT7V+dLHWhmhKVRW55VOSke0X+X1SCPweGc86HjhsQgaA0tqrFJIKj+UywWPgDtGDFnB3vGmuSWNfCpfr5n2SW/sfqYvHQXeOb6dqHrFtgoZpSaxntggYPX7bb37egsib1gXyCOBpWI1A1KNnYQ==
+ARC-Seal: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707; t=1773039252;
+	cv=none; b=IfIi8sX0O24rEobH8W0JgqJSCqOW+L81kyWBuAtL0wbahFF5K4pQ9wsotNj38gm/lnsK3lZhTvmZ0tzEQ/Uz4Uoefg0Pkud5bGKFma6sloJPVs2oPyyPe3650ZzlEHvxW/A/EPQu1oSOetzR3fKoTtNvS52wFC51eWMVBCJ+h15BNEf4QhtE1Pa8rvwXfh6eJXmqIXXEB/JdsEvRFQ8RmxfWwnmSdo3hb2Sm6gWyH/OnAEyGJjaGWJiVP6w0tESZVLFs4vvYByTFtEZpFpM5GAfgAbv7U5b4EmPIUw2ewMdPosYzykPSE8uHW+0l7ql4zxKd2Gp4AOPD3ryBLdGfDg==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=lists.ozlabs.org; s=201707;
-	t=1773039251; c=relaxed/relaxed;
-	bh=L0WdrOPHBiinlmWuuOWYkjfATE33JBqjsFD6TNkEf4c=;
+	t=1773039252; c=relaxed/relaxed;
+	bh=CTl7LFm29tMK7hJoHkXE+zLw5bUiMG/UnqgDuJwDl5Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=klO5fy4pysE7V+dwfSxE4VeE7NTZIsQbOUuE9/Eqmrf5MoCUg+OgVDxViRQ/7+n/IEUoLyEmfmqCo3OsQ5lOEZJfpM1uG6si5KGPFykUVDphNgSBOPPYjwhSfVHgK4Oc4qtcE7vAiYUeGtBVZ81+NliWUKQgQJ6f2Q3mgv3108quGq9D/Xf1gS8sLZkf3JzcQxdHSdKKXC/OUkvr47yh9nwi9lumrIUCjlpyXMksbBax4vhesH1vRjL9rz0ZM335aRL2puX7molaPi97PViPO2SN2E34HsSZIbmMN7So+QgF2KO1V80VAt40i0u7oXDu2g+VF0RHkW9g0SjWnaoaEg==
+	 In-Reply-To:To:CC; b=Jj0srshZZqXyE1eqmxE4ZgBGFKTS2ZS/t6jCR7bbAWw2Uho+bu/hsmdZKk2qol2P5EDPAlCblcrpfNU1PFUHCX6aIhM12e9d9V91qhtpdynDlP1gqAS40CRVNmDu1SiqkcfPel9JWCJj5DJqie4dxYLsUJE8z1t0YckwsZuxf8TAUp5F3/lYOETFqLQXFNmmysKAlgYDNoaL2UmE2ppO1+Z2dYBdekkQaCKTzxTgFYsrDiy8t+tmKpK9ghgEHcufywSpRGdRtCJ/Ga464n0dLdReEXK0LNB7/HOWBxj85Cj8wB3KwJFz15C87qHy4qM16XteLYoyPpUVxNe/f9OMsg==
 ARC-Authentication-Results: i=1; lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com; spf=pass (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org) smtp.mailfrom=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none) header.from=aspeedtech.com
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.72; helo=twmbx01.aspeed.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
 Received: from TWMBX01.aspeed.com (mail.aspeedtech.com [211.20.114.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4fTnmf3ZqYz3c9j;
-	Mon, 09 Mar 2026 17:54:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4fTnmh0lWjz3cB5;
+	Mon, 09 Mar 2026 17:54:12 +1100 (AEDT)
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 9 Mar
@@ -37,9 +37,9 @@ Received: from [127.0.1.1] (192.168.10.13) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
  Transport; Mon, 9 Mar 2026 14:53:53 +0800
 From: Ryan Chen <ryan_chen@aspeedtech.com>
-Date: Mon, 9 Mar 2026 14:53:52 +0800
-Subject: [PATCH v26 1/4] dt-bindings: i2c: Split AST2600 binding into a new
- YAML
+Date: Mon, 9 Mar 2026 14:53:53 +0800
+Subject: [PATCH v26 2/4] dt-bindings: i2c: ast2600-i2c.yaml: Add
+ global-regs and transfer-mode properties
 X-Mailing-List: openbmc@lists.ozlabs.org
 List-Id: <openbmc.lists.ozlabs.org>
 List-Help: <mailto:openbmc+help@lists.ozlabs.org>
@@ -53,7 +53,7 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20260309-upstream_i2c-v26-1-5fedcff8ffe8@aspeedtech.com>
+Message-ID: <20260309-upstream_i2c-v26-2-5fedcff8ffe8@aspeedtech.com>
 References: <20260309-upstream_i2c-v26-0-5fedcff8ffe8@aspeedtech.com>
 In-Reply-To: <20260309-upstream_i2c-v26-0-5fedcff8ffe8@aspeedtech.com>
 To: <jk@codeconstruct.com.au>, <andriy.shevchenko@linux.intel.com>, Andi Shyti
@@ -67,159 +67,105 @@ CC: <linux-i2c@vger.kernel.org>, <devicetree@vger.kernel.org>,
 	<linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>, Ryan Chen
 	<ryan_chen@aspeedtech.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773039232; l=3549;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773039232; l=2731;
  i=ryan_chen@aspeedtech.com; s=20251126; h=from:subject:message-id;
- bh=y16S4hcxAJwB0pyqLtb5Y4AIAVCk4wmOv1io+0cDITE=;
- b=SoSi+zPDhNAd+EyDeCFCM6wDff5eeDMU0nsYP6FH3jMluCSfRU68ZSLB0ee7XX2v0qnbhb1l/
- 9hILMfeRgEdBmtMW1mTpwesylkbsaI4B0q1btbVX60Ve7sn5A3vhHHA
+ bh=OSCeKlXxfRUVxy4RSS8MIELV7WCLvYWFhFrL+v3vWEw=;
+ b=jo5UpvRiPIQn90hv2zsKOKq9gwa3fBWtvw0tr0gR++FndDuc99ryFOvZxehAnu27OdPsM4bQB
+ +Hdu7qKnlPaAlLKK1eAXAZXjPmpVe/+WgFmf/+neS7RMLDiYouW2IND
 X-Developer-Key: i=ryan_chen@aspeedtech.com; a=ed25519;
  pk=Xe73xY6tcnkuRjjbVAB/oU30KdB3FvG4nuJuILj7ZVc=
 X-Spam-Status: No, score=0.0 required=5.0 tests=SPF_HELO_FAIL,SPF_PASS
 	autolearn=disabled version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-25) on lists.ozlabs.org
-X-Rspamd-Queue-Id: 2EDBA23478F
+X-Rspamd-Queue-Id: CEF8E2347C1
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.50 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	DMARC_POLICY_QUARANTINE(1.50)[aspeedtech.com : SPF not aligned (relaxed), No valid DKIM,quarantine];
 	ARC_ALLOW(-1.00)[lists.ozlabs.org:s=201707:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:112.213.38.117:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2404:9400:21b9:f100::1:c];
 	MAILLIST(-0.19)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:133159, ipnet:112.213.32.0/21, country:AU];
+	ASN(0.00)[asn:133159, ipnet:2404:9400:2000::/36, country:AU];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
 	TAGGED_RCPT(0.00)[openbmc,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.80:email,aspeedtech.com:mid,aspeedtech.com:email,devicetree.org:url,lists.ozlabs.org:rdns,lists.ozlabs.org:helo];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[aspeedtech.com:mid,aspeedtech.com:email,lists.ozlabs.org:rdns,lists.ozlabs.org:helo];
 	FROM_NEQ_ENVFROM(0.00)[ryan_chen@aspeedtech.com,openbmc@lists.ozlabs.org];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-1451-lists,openbmc=lfdr.de];
-	NEURAL_HAM(-0.00)[-0.098];
+	TAGGED_FROM(0.00)[bounces-1452-lists,openbmc=lfdr.de];
+	NEURAL_HAM(-0.00)[-0.151];
 	RCVD_TLS_LAST(0.00)[];
 	R_DKIM_NA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[]
 X-Rspamd-Action: no action
 
-The AST2600 I2C controller introduces a completely new register layout
-with separate controller and target register blocks, unlike the mixed
-register layout used by AST2400/AST2500.
+The AST2600 I2C controller supports three transfer modes (byte, buffer,
+DMA). Add "aspeed,transfer-mode" so DT can select the preferred transfer
+method per controller instance. Also add the "aspeed,global-regs"
+phandle to reference the AST2600 global registers syscon/regmap used by
+the controller.
 
-Move AST2600 I2C binding from aspeed,i2c.yaml to a dedicated
-aspeed,ast2600-i2c.yaml schema.
-
-Besides the split, this also adjusts for AST2600-specific requirements.
-- require two reg regions (controller register block + buffer block)
-- use clock-frequency for bus speed description
-- interrupts are required on AST2600
-- use correct DTS coding style in example
-
-No compatible strings are changed.
+These properties apply only to the AST2600 binding and are not part of
+the legacy binding, which uses a mixed controller/target register layout
+and does not have the split register blocks or these new configuration
+registers. Legacy DTs remain unchanged.
 
 Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
 ---
-Changes in v26:
-- commit message: include details of changes from original binding
-- fix example property ordering to follow DTS coding style
-- use consistent "AST2600" naming
----
- .../bindings/i2c/aspeed,ast2600-i2c.yaml           | 62 ++++++++++++++++++++++
- .../devicetree/bindings/i2c/aspeed,i2c.yaml        |  3 +-
- 2 files changed, 63 insertions(+), 2 deletions(-)
+ .../bindings/i2c/aspeed,ast2600-i2c.yaml           | 29 ++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml b/Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
-new file mode 100644
-index 000000000000..de2c359037da
---- /dev/null
+index de2c359037da..323e4f9b290a 100644
+--- a/Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
 +++ b/Documentation/devicetree/bindings/i2c/aspeed,ast2600-i2c.yaml
-@@ -0,0 +1,62 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/i2c/aspeed,ast2600-i2c.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: ASPEED I2C on the AST2600 SoCs
-+
-+maintainers:
-+  - Ryan Chen <ryan_chen@aspeedtech.com>
-+
-+allOf:
-+  - $ref: /schemas/i2c/i2c-controller.yaml#
-+
-+properties:
-+  compatible:
+@@ -37,6 +37,33 @@ properties:
+   resets:
+     maxItems: 1
+ 
++  aspeed,transfer-mode:
++    description: |
++      ASPEED ast2600 platform equipped with 16 I2C controllers each i2c controller
++      have 1 byte transfer buffer(byte mode), 32 bytes buffer(buffer mode), and
++      share a DMA engine.
++      Select I2C transfer mode for this controller. Supported values are:
++        - "byte": Use 1 byte for i2c transmit (1-byte buffer).
++        - "buffer": Use buffer (32-byte buffer) for i2c transmit. (default)
++                    Better performance then byte mode.
++        - "dma": Each controller DMA mode is shared DMA engine. The AST2600 SoC
++                 provides a single DMA engine shared for 16 I2C controllers,
++                 so only a limited number of controllers can use DMA simultaneously.
++                 Therefore, the DTS must explicitly assign which controllers are
++                 configured to use DMA.
++      On AST2600, each controller supports all three modes.
++      If not specified, buffer mode is used by default.
 +    enum:
-+      - aspeed,ast2600-i2c-bus
++      - byte
++      - buffer
++      - dma
 +
-+  reg:
-+    items:
-+      - description: controller registers
-+      - description: controller buffer space
++  aspeed,global-regs:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description:
++      Phandle reference to the i2c global syscon node, containing the
++      SoC-common i2c register set.
 +
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-frequency:
-+    description: Desired operating frequency of the I2C bus in Hz.
-+    minimum: 500
-+    maximum: 4000000
-+    default: 100000
-+
-+  resets:
-+    maxItems: 1
-+
-+required:
-+  - reg
-+  - compatible
-+  - clocks
-+  - resets
-+  - interrupts
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/aspeed-clock.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    i2c@80 {
-+        compatible = "aspeed,ast2600-i2c-bus";
-+        reg = <0x80 0x80>, <0xc00 0x20>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        clocks = <&syscon ASPEED_CLK_APB>;
-+        resets = <&syscon ASPEED_RESET_I2C>;
-+        clock-frequency = <100000>;
-+        interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
-+    };
-diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-index 5b9bd2feda3b..d4e4f412feba 100644
---- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-+++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
-@@ -4,7 +4,7 @@
- $id: http://devicetree.org/schemas/i2c/aspeed,i2c.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: ASPEED I2C on the AST24XX, AST25XX, and AST26XX SoCs
-+title: ASPEED I2C on the AST24XX, AST25XX SoCs
- 
- maintainers:
-   - Rayn Chen <rayn_chen@aspeedtech.com>
-@@ -17,7 +17,6 @@ properties:
-     enum:
-       - aspeed,ast2400-i2c-bus
-       - aspeed,ast2500-i2c-bus
--      - aspeed,ast2600-i2c-bus
- 
-   reg:
-     minItems: 1
+ required:
+   - reg
+   - compatible
+@@ -59,4 +86,6 @@ examples:
+         resets = <&syscon ASPEED_RESET_I2C>;
+         clock-frequency = <100000>;
+         interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
++        aspeed,global-regs = <&i2c_global>;
++        aspeed,transfer-mode = "buffer";
+     };
 
 -- 
 2.34.1
